@@ -1743,6 +1743,11 @@
     "root": "table-virtual-fixture"
   },
   {
+    "id": "table-custom-body",
+    "module": "./TableCustomBodyFixture.svelte",
+    "root": "table-custom-body-fixture"
+  },
+  {
     "id": "table-columns",
     "module": "./TableColumnsFixture.svelte",
     "root": "table-columns-fixture"

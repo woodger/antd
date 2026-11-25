@@ -1,5 +1,5 @@
-// Переводит смещения окна или контейнера в координаты единственного scrollport.
-// Таблица остаётся владельцем горизонтальной прокрутки для всех своих частей.
+// Переводит смещения окна или контейнера в координаты scrollport.
+// Для отдельного тела считает полосу от секции, объединяющей тело и шапку.
 import type { TableSticky } from './table.types';
 
 export const tableStickyBarHeight = 8;
@@ -13,11 +13,12 @@ export interface TableStickyBarLayout {
 
 /** Обновляет позицию шапки, итогов и дополнительной полосы в одном кадре. */
 export function observeTableSticky(
-  viewport: HTMLDivElement,
-  table: HTMLTableElement,
+  viewport: HTMLElement,
+  table: HTMLTableElement | undefined,
   options: TableSticky,
   summary: 'top' | 'bottom' | 'inline' | undefined,
-  setBar: (layout: TableStickyBarLayout | undefined) => void
+  setBar: (layout: TableStickyBarLayout | undefined) => void,
+  section?: HTMLElement
 ) {
   const view = viewport.ownerDocument.defaultView;
   if (!view) {
@@ -35,14 +36,16 @@ export function observeTableSticky(
     const ownerBottom = ownerTop + (element?.clientHeight ?? view.innerHeight);
     const rect = viewport.getBoundingClientRect();
     const visibleBottom = rect.top + viewport.clientHeight;
-    const headTop = Math.max(0, ownerTop + offsetHeader - rect.top);
-    const footBottom = Math.max(0, visibleBottom - ownerBottom + offsetSummary);
-    viewport.style.setProperty('--ant-table-sticky-head-top', `${headTop}px`);
-    viewport.style.setProperty('--ant-table-sticky-summary-bottom', `${footBottom}px`);
+    if (!section) {
+      const headTop = Math.max(0, ownerTop + offsetHeader - rect.top);
+      const footBottom = Math.max(0, visibleBottom - ownerBottom + offsetSummary);
+      viewport.style.setProperty('--ant-table-sticky-head-top', `${headTop}px`);
+      viewport.style.setProperty('--ant-table-sticky-summary-bottom', `${footBottom}px`);
+    }
 
-    const headHeight = table.tHead?.offsetHeight ?? 0;
-    const captionHeight = table.caption?.offsetHeight ?? 0;
-    const footHeight = table.tFoot?.offsetHeight ?? 0;
+    const headHeight = table?.tHead?.offsetHeight ?? 0;
+    const captionHeight = table?.caption?.offsetHeight ?? 0;
+    const footHeight = table?.tFoot?.offsetHeight ?? 0;
     const bodyTop = rect.top + headHeight + captionHeight + (summary === 'top' ? footHeight : 0);
     const bodyBottom = visibleBottom - (summary === 'bottom' ? footHeight : 0);
     const barTop = ownerBottom - offsetScroll - tableStickyBarHeight;
@@ -54,7 +57,8 @@ export function observeTableSticky(
     }
 
     const offset = Math.min(range - size, Math.abs(viewport.scrollLeft));
-    setBar({ top: barTop - rect.top, offset, range, size });
+    const origin = section?.getBoundingClientRect().top ?? rect.top;
+    setBar({ top: barTop - origin, offset, range, size });
   };
 
   /** Объединяет уведомления scroll и resize до следующей отрисовки. */
@@ -72,7 +76,8 @@ export function observeTableSticky(
   const Observer = view.ResizeObserver;
   const observer = Observer && new Observer(schedule);
   observer?.observe(viewport);
-  observer?.observe(table);
+  if (table) observer?.observe(table);
+  if (section) observer?.observe(section);
   if (element) observer?.observe(element);
   view.addEventListener('scroll', schedule, { capture: true, passive: true });
   view.addEventListener('resize', schedule);
@@ -86,8 +91,10 @@ export function observeTableSticky(
     view.removeEventListener('scroll', schedule, true);
     view.removeEventListener('resize', schedule);
     element?.removeEventListener('scroll', schedule);
-    viewport.style.removeProperty('--ant-table-sticky-head-top');
-    viewport.style.removeProperty('--ant-table-sticky-summary-bottom');
+    if (!section) {
+      viewport.style.removeProperty('--ant-table-sticky-head-top');
+      viewport.style.removeProperty('--ant-table-sticky-summary-bottom');
+    }
     setBar(undefined);
   };
 }

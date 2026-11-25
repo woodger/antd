@@ -975,7 +975,57 @@ onSelectionChange. Фильтрация, сортировка, выбор и п�
 перехода по ключу зависит от оценок высоты. Сверка проверяет положение целевой
 строки относительно видимой области.
 Нативные клавиатура, caption, фокус и гидратация проверяются в Chromium.
-React-замена `components.body` остаётся отдельным пробелом.
+
+### Пользовательское тело прокрутки
+
+`components.body` принимает snippet с корневыми записями текущей страницы
+после сортировки и фильтрации. Table использует его при `scroll.y` или
+`sticky`. При штатной виртуализации работает встроенное окно строк.
+Snippet размечает строки, задаёт размеры контейнера и обеспечивает их
+доступность. Для общей сетки укажите числовые ширины колонок.
+
+```svelte
+<script lang="ts">
+  import { Table, type TableBodyRenderInfo, type TableColumn } from '@woodger/antd';
+
+  interface Person { key: number; name: string; }
+  const people: Person[] = [{ key: 1, name: 'Анна' }];
+  const columns: TableColumn<Person>[] = [
+    { key: 'name', title: 'Имя', dataIndex: 'name', width: 640 }
+  ];
+</script>
+
+{#snippet body(page: readonly Person[], info: TableBodyRenderInfo)}
+  <div role="region" aria-label="Участники" style="max-height:240px;overflow:auto"
+    {@attach info.ref} onscroll={info.onScroll}>
+    <div style="width:640px">
+      {#each page as person (person.key)}
+        <div data-row-key={person.key}>{person.name}</div>
+      {/each}
+    </div>
+  </div>
+{/snippet}
+
+<Table dataSource={people} {columns} components={{ body }} scroll={{ x: 640, y: 240 }} />
+```
+
+`info.ref` как attachment регистрирует DOM-контейнер. `scrollTo({ key })` ищет
+`data-row-key`, а `scrollTo({ index })` берёт ключ записи текущей страницы.
+`info.onScroll` передаёт горизонтальное положение шапке и закреплённым
+итогам. Пользовательское событие прокрутки обрабатывается в самом snippet.
+`info.scrollbarSize` содержит ширину вертикальной полосы в пикселях и
+равен нулю при SSR. Итоги внутри тела можно вывести в том же snippet.
+
+Внешний виртуализатор может передать в `info.ref` объект с физическим
+`scrollLeft` и методом `scrollTo`. Table передаёт методу исходный запрос.
+Вызов `info.onScroll({ scrollLeft })` синхронизирует положение. Cleanup,
+который вернул `info.ref`, освобождает регистрацию.
+
+[Замеры UMD](../../../tests/browser/fixtures/ant-design-table-custom-body-reference.json)
+· [Замеры с видимой полосой](../../../tests/browser/fixtures/ant-design-table-custom-body-gutter-reference.json)
+· [Chromium](../../../tests/browser/table-custom-body.spec.ts)
+· [SSR](../../../tests/package/table-custom-body.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
 
 ## Фильтры колонок
 

@@ -2,6 +2,7 @@
 // уменьшают видимую область строк, обычные итоги удлиняют прокрутку после них.
 import { untrack } from 'svelte';
 import { scrollFrame } from './scroll.engine';
+import { alignTableRow } from './table-layout.dom';
 import { tableVirtualAlign, tableVirtualColumns, tableVirtualDimension } from './table-virtual.engine';
 import type { TableKey, TableScrollConfig, TableScrollOptions } from './table.types';
 import { measureVirtualListRow } from './virtual-list.dom';
@@ -19,36 +20,6 @@ function measureTableRow(row: HTMLElement): number | undefined {
     ? height + (measureVirtualListRow(details) ?? 0) : height;
 }
 
-/** Выравнивает видимую строку между закреплёнными полосами scrollport. */
-function alignTableRow(
-  element: HTMLDivElement,
-  row: HTMLElement,
-  insets: { top: number; bottom: number; },
-  align: ScrollLogicalPosition,
-  offset: number
-) {
-  const viewport = element.getBoundingClientRect();
-  const rect = row.getBoundingClientRect();
-  const start = rect.top - viewport.top - insets.top;
-  const end = rect.bottom - viewport.bottom + insets.bottom;
-  let delta: number;
-
-  if (align === 'start') {
-    delta = start;
-  }
-  else if (align === 'end') {
-    delta = end;
-  }
-  else if (align === 'center') {
-    delta = (start + end) / 2;
-  }
-  else {
-    delta = start < 0 ? start : Math.max(0, end);
-  }
-
-  element.scrollTop += delta + offset;
-}
-
 /** Удерживает DOM-окно, горизонтальную позицию и отменяемый сброс scrollTop. */
 export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(options: {
   rows: () => readonly Entry[];
@@ -60,6 +31,8 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   scroll: () => TableScrollOptions | undefined;
   table: () => HTMLTableElement | undefined;
   element: () => HTMLDivElement | undefined;
+  /** null означает собственное тело без зарегистрированного DOM-контейнера. */
+  customElement: () => HTMLElement | null | undefined;
   header: () => boolean;
   caption: () => boolean;
   summary: () => 'top' | 'bottom' | 'inline' | undefined;
@@ -180,6 +153,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
 
   $effect(() => {
     void options.element();
+    void options.customElement();
     return cancelReset;
   });
 
@@ -281,11 +255,14 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
 
   /** Сохраняет позицию по запросу и придерживается длительности _util/scrollTo. */
   function resetAfterChange() {
-    if (!(scroll?.scrollToFirstRowOnChange ?? active)) {
+    const custom = options.customElement();
+    const shouldReset = scroll?.scrollToFirstRowOnChange ?? (custom === undefined
+      ? active : scroll !== undefined);
+    if (!shouldReset) {
       return;
     }
 
-    const element = options.element();
+    const element = custom === undefined ? options.element() : custom;
     const view = element?.ownerDocument.defaultView;
     const from = element?.scrollTop ?? 0;
     if (!element || !view || !from) {
@@ -294,7 +271,8 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
 
     cancelReset();
     if (view.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      scrollTo({ top: 0 });
+      if (active) list.scrollTo(0);
+      else element.scrollTop = 0;
       return;
     }
 
@@ -353,6 +331,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     getSize: list.getSize,
     attachRow: list.attach,
     attachDetails,
+    cancelReset,
     dragScrollbar,
     handleScroll,
     resetAfterChange,

@@ -3,6 +3,36 @@
 import { getTableFixedOffsets } from './table-layout.engine';
 import type { TableFixed } from './table.types';
 
+/** Выравнивает строку внутри владельца прокрутки с учётом закреплённых полос. */
+export function alignTableRow(
+  element: HTMLElement,
+  row: HTMLElement,
+  insets: { top: number; bottom: number; },
+  align: ScrollLogicalPosition,
+  offset: number
+) {
+  const viewport = element.getBoundingClientRect();
+  const rect = row.getBoundingClientRect();
+  const start = rect.top - viewport.top - insets.top;
+  const end = rect.bottom - viewport.bottom + insets.bottom;
+  let delta: number;
+
+  if (align === 'start') {
+    delta = start;
+  }
+  else if (align === 'end') {
+    delta = end;
+  }
+  else if (align === 'center') {
+    delta = (start + end) / 2;
+  }
+  else {
+    delta = start < 0 ? start : Math.max(0, end);
+  }
+
+  element.scrollTop += delta + offset;
+}
+
 /** Составные заголовки измеряются по листьям в порядке колонок данных. */
 function measureCells(header: HTMLTableSectionElement) {
   if (header.rows.length < 2) {
@@ -81,12 +111,15 @@ export function observeTableLayout(options: {
   stickyHeader: boolean;
   hasBodyRows: boolean;
   measureColumns?: boolean;
+  endGutter?: number;
 }) {
-  const { table, viewport, fixed, stickyHeader, hasBodyRows, measureColumns } = options;
+  const { table, viewport, fixed, stickyHeader, hasBodyRows, measureColumns, endGutter = 0 } = options;
   const head = table.tHead;
   // При spans число ячеек и число физических колонок могут различаться.
   const cells = measureColumns
-    ? Array.from(table.querySelectorAll<HTMLElement>(':scope > colgroup > col'))
+    ? Array.from(table.querySelectorAll<HTMLElement>(
+      ':scope > colgroup > col:not([data-ant-table-scrollbar])'
+    ))
     : head ? measureCells(head) : hasBodyRows ? findBodyCells(table) : [];
   const rows = stickyHeader ? Array.from(head?.rows ?? []) : [];
 
@@ -96,13 +129,13 @@ export function observeTableLayout(options: {
     const headHeight = stickyHeader ? head?.getBoundingClientRect().height ?? 0 : 0;
     const viewportWidth = viewport.clientWidth;
     const offsets = getTableFixedOffsets(fixed, widths);
-    const pinnedWidth = widths.reduce(
+    const pinnedWidth = endGutter + widths.reduce(
       (sum, width, index) => sum + (fixed[index] ? width : 0),
       0
     );
     const enabled = cells.length === fixed.length && pinnedWidth < viewportWidth;
     let startWidth = 0;
-    let endWidth = 0;
+    let endWidth = endGutter;
 
     for (const [index, offset] of offsets.entries()) {
       const property = `--ant-table-fixed-${index}`;
@@ -111,7 +144,8 @@ export function observeTableLayout(options: {
         continue;
       }
 
-      table.style.setProperty(property, `${offset}px`);
+      const inset = fixed[index] === 'end' ? offset + endGutter : offset;
+      table.style.setProperty(property, `${inset}px`);
       if (fixed[index] === 'end') {
         endWidth += widths[index];
       }

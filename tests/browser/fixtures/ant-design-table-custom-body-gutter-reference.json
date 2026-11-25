@@ -1,0 +1,122 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "viewport": {
+      "width": 1000,
+      "height": 700
+    },
+    "repeat": 2,
+    "visibleScrollbars": true
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "gutter",
+        "y": 135,
+        "gutter": true,
+        "summary": "bottom",
+        "actions": [
+          [
+            "left",
+            150
+          ]
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "custom": true,
+            "keys": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9"
+            ],
+            "top": 0,
+            "left": 0,
+            "headerLeft": 0,
+            "summaryLeft": 0,
+            "summary": "bottom",
+            "widths": [
+              120,
+              525,
+              15
+            ],
+            "scrollbar": 15,
+            "gutterWidth": 15,
+            "empty": false,
+            "changes": [],
+            "selected": [],
+            "requests": [],
+            "callbackCount": 0
+          }
+        },
+        {
+          "action": [
+            "left",
+            150
+          ],
+          "state": {
+            "custom": true,
+            "keys": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9"
+            ],
+            "top": 0,
+            "left": 150,
+            "headerLeft": 150,
+            "summaryLeft": 150,
+            "summary": "bottom",
+            "widths": [
+              120,
+              525,
+              15
+            ],
+            "scrollbar": 15,
+            "gutterWidth": 15,
+            "empty": false,
+            "changes": [],
+            "selected": [],
+            "requests": [],
+            "callbackCount": 0
+          }
+        }
+      ],
+      "ssr": {
+        "custom": true,
+        "keys": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "empty": false
+      }
+    }
+  ]
+}

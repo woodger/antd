@@ -6,6 +6,55 @@ import { fileURLToPath } from 'node:url';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
+test('Table hydrates a custom scroll body and preserves the focused editor', async ({ page }) => {
+  const artifacts = new URL('../../.upstream/artifacts/table-custom-body-hydration-', import.meta.url);
+  const cacheDir = await mkdtemp(fileURLToPath(artifacts));
+  let server: ViteDevServer | undefined;
+  try {
+    server = await createServer({
+      configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+      server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+      appType: 'custom', cacheDir
+    });
+    const entry = new URL('./fixtures/table-virtual-hydration.server.ts', import.meta.url);
+    const { renderCustomTableBodyFixture } = await server.ssrLoadModule(fileURLToPath(entry));
+    const { body, head } = renderCustomTableBodyFixture();
+    await page.goto('/select-components-hydration.html?custom-body');
+    await page.addScriptTag({ type: 'module', url: '/table-virtual-hydration.client.ts' });
+    const root = page.locator('#root');
+    await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+    await root.evaluate((node, html) => {
+      document.head.insertAdjacentHTML('beforeend', html.head);
+      node.innerHTML = html.body;
+    }, { body, head });
+    const holder = root.locator('[data-probe-body]');
+    const editor = holder.getByRole('textbox', { name: 'Editor', exact: true });
+    const original = await editor.elementHandle();
+    await editor.fill('SSR draft');
+    await editor.evaluate((node: HTMLInputElement) => node.setSelectionRange(2, 5));
+    await editor.focus();
+
+    await root.dispatchEvent('hydrate-table-virtual');
+
+    await expect(root).toHaveAttribute('data-hydrated', 'true');
+    await expect(editor).toBeFocused();
+    await expect(editor).toHaveValue('SSR draft');
+    expect(await editor.evaluate((node, before) => node === before, original)).toBe(true);
+    expect(await editor.evaluate((node: HTMLInputElement) => [
+      node.selectionStart, node.selectionEnd
+    ])).toEqual([2, 5]);
+
+    await root.getByTestId('scroll-0').dispatchEvent('click');
+
+    await expect.poll(() => holder.evaluate(node => node.scrollTop)).toBe(98);
+    await expect(editor).toBeFocused();
+  }
+  finally {
+    await server?.close();
+    await rm(cacheDir, { recursive: true, force: true });
+  }
+});
+
 test('virtual Table hydrates the focused editor before changing the visible window', async ({ page }) => {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-table-virtual-'));
   let server: ViteDevServer | undefined;

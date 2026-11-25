@@ -393,6 +393,36 @@ export interface TableScrollConfig {
   offset?: number;
 }
 
+/** Интерфейс пользовательского виртуализатора с собственной системой координат. */
+export interface TableBodyScrollHandle {
+  /** Физическая горизонтальная позиция, отрицательная в RTL. */
+  scrollLeft: number;
+  scrollTo?: (config: TableScrollConfig) => void;
+}
+
+/** Нативный scroll event или координата, сообщённая виртуализатором. */
+export interface TableBodyScrollEvent {
+  currentTarget?: HTMLElement;
+  scrollLeft?: number;
+}
+
+/** Связывает собственное тело с шапкой, итогами и TableRef.scrollTo. */
+export interface TableBodyRenderInfo {
+  readonly scrollbarSize: number;
+  /** Svelte attachment для DOM или регистрация handle с возвращаемым cleanup. */
+  ref: (target: HTMLElement | TableBodyScrollHandle) => () => void;
+  onScroll: (event: TableBodyScrollEvent) => void;
+}
+
+/** Snippet получает корневые записи обработанной страницы и владеет разметкой тела. */
+export type TableBodyRender<Row extends object> =
+  Snippet<[data: readonly Row[], info: TableBodyRenderInfo]>;
+
+export interface TableComponents<Row extends object> {
+  /** Заменяет тело при scroll.y или sticky без штатной виртуализации. */
+  body?: TableBodyRender<Row>;
+}
+
 /** Методы bind:this. Корневой DOM-узел доступен через bind:nativeElement. */
 export interface TableRef {
   scrollTo(config: TableScrollConfig): void;
@@ -495,6 +525,7 @@ export interface TableProps<Row extends object> {
   /** Локальные подписи таблицы и содержимое пустой ячейки. */
   locale?: TableLocaleOverrides;
   empty?: Snippet;
+  components?: TableComponents<Row>;
   scroll?: TableScrollOptions;
   /** Задаёт алгоритм ширин обычной таблицы. Виртуальное окно использует общую сетку. */
   tableLayout?: TableLayout;

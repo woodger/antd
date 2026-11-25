@@ -31,6 +31,7 @@
     isTableMultipleSorter, isTableSortable, tableSortDirections, type TableSortState
   } from './table-sorter.engine';
   import { createTableSelection } from './table-selection.model.svelte';
+  import { createTableCustomBody } from './table-custom-body.model.svelte';
   import { observeTableSticky, type TableStickyBarLayout } from './table-sticky.dom';
   import { provideTableSummary, type TableFixedCell } from './table-summary-context';
   import { tableVirtualRowHeight } from './table-virtual.engine';
@@ -121,6 +122,7 @@
     getPopupContainer,
     locale,
     empty,
+    components,
     scroll,
     tableLayout,
     sticky,
@@ -231,6 +233,8 @@
     return 'inline';
   });
   const pinHeader = $derived(Boolean(sticky) || scroll?.y !== undefined);
+  const bodyRenderer = $derived(!virtual && pinHeader && typeof components?.body === 'function'
+    ? components.body : undefined);
   // Пустая или незакреплённая таблица использует обычное тело даже при virtual.
   const useBodyWrapperSlot = $derived(!virtual || !pinHeader || pageRows.length === 0);
   let expandedRowRender = $derived(expandable?.expandedRowRender);
@@ -335,6 +339,31 @@
     side: fixed === true ? 'start' : fixed || undefined,
     offset: `var(--ant-table-fixed-${index}, auto)`
   })));
+  let tableSection = $state<HTMLDivElement>();
+  let customHead = $state<HTMLDivElement>();
+  let customFoot = $state<HTMLDivElement>();
+
+  const customBody = createTableCustomBody({
+    container: () => tableSection,
+    bands: () => [customHead, customFoot],
+    rows: () => pageRows,
+    rtl: () => config.direction === 'rtl'
+  });
+  const customGutter = $derived(scroll?.y === undefined ? 0 : customBody.info.scrollbarSize);
+  const fixedGutter = $derived(fixedColumns.at(-1) === 'end');
+  const customWidths = $derived.by(() => {
+    if (!bodyRenderer || !pageRows.length) {
+      return undefined;
+    }
+
+    const widths = columnWidths.map((width, index) => {
+      const measured = index === columnWidths.length - 1
+        ? Number(width) - customBody.info.scrollbarSize : width;
+      return typeof measured === 'number' && Number.isFinite(measured) ? Math.max(0, measured) : 0;
+    });
+    return widths.some(Boolean) ? widths : undefined;
+  });
+  const stickyOptions = $derived(typeof sticky === 'object' ? sticky : {});
 
   provideTableSummary({
     get prefix() { return prefix; },
@@ -342,7 +371,8 @@
   });
 
   $effect(() => {
-    const view = content?.ownerDocument.defaultView;
+    const owner = bodyRenderer ? tableSection : content;
+    const view = owner?.ownerDocument.defaultView;
     if (view && hasResponsiveColumns) {
       // useBreakpoint подключает пороги темы на время текущей подписки.
       return breakpoint.connect(view, untrack(() => mediaQueries));
@@ -365,6 +395,7 @@
     scroll: () => scroll,
     table: () => table,
     element: () => content,
+    customElement: () => bodyRenderer ? customBody.element ?? null : undefined,
     header: () => showHeader,
     caption: () => Boolean(caption),
     summary: () => summaryPlacement,
@@ -466,7 +497,13 @@
 
   /** Прокручивает текущую страницу по абсолютной позиции, ключу или индексу. */
   export function scrollTo(target: TableScrollConfig): void {
-    scrollport.scrollTo(target);
+    if (bodyRenderer) {
+      scrollport.cancelReset();
+      customBody.scrollTo(target);
+    }
+    else {
+      scrollport.scrollTo(target);
+    }
   }
 
   function cssSize(value: string | number | undefined) {
@@ -594,6 +631,36 @@
     }
   }
 
+  /** Закрепляет колонки вынесенной полосы по её собственной сетке и scrollbar gutter. */
+  function attachCustomBand(band: HTMLDivElement) {
+    const disconnect = customBody.attachBand(band);
+    const bandTable = band.querySelector('table');
+    if (bandTable) {
+      $effect(() => observeTableLayout({
+        table: bandTable,
+        viewport: band,
+        fixed: fixedColumns,
+        stickyHeader: false,
+        hasBodyRows: false,
+        measureColumns: true,
+        endGutter: customGutter
+      }));
+    }
+    return disconnect;
+  }
+
+  /** Обновляет полосу на текущем владельце горизонтальной прокрутки. */
+  function dragStickyScrollbar(offset: number) {
+    if (bodyRenderer) {
+      scrollport.cancelReset();
+      const scrollLeft = config.direction === 'rtl' ? -offset : offset;
+      customBody.syncScroll({ scrollLeft });
+    }
+    else {
+      scrollport.scrollHorizontal(offset);
+    }
+  }
+
   $effect(() => {
     const element = table;
     const viewport = content;
@@ -624,10 +691,21 @@
       return;
     }
 
-    const options = typeof sticky === 'object' ? sticky : {};
-    return observeTableSticky(viewport, element, options, summaryPlacement, layout => {
+    return observeTableSticky(viewport, element, stickyOptions, summaryPlacement, layout => {
       stickyBar = layout;
     });
+  });
+
+  $effect(() => {
+    const viewport = customBody.element;
+    const section = tableSection;
+    if (!bodyRenderer || !sticky || !viewport || !section) {
+      return;
+    }
+
+    return observeTableSticky(viewport, undefined, stickyOptions, undefined, layout => {
+      stickyBar = layout;
+    }, section);
   });
 
   function readTableData(sorts: readonly TableSortState[], selected: TableFilters) {
@@ -891,6 +969,9 @@
   .table-scroll-y { overflow-y: auto; overscroll-behavior-y: contain; scroll-padding-top: var(--ant-table-header-height, 0px); }
   .table-virtual-container { position: relative; isolation: isolate; }
   .table-sticky-container { position: relative; }
+  .table-custom-band { max-width: 100%; overflow: hidden; }
+  .table-sticky-band { position: sticky; z-index: 3; }
+  .table-custom-band th[data-ant-table-scrollbar] { padding: 0; }
   [data-ant-table-part="content"].table-virtual-scroll { scrollbar-width: none; overflow-anchor: none; }
   .table-virtual-scroll::-webkit-scrollbar { display: none; }
   .table-virtual-scroll caption, [data-ant-table-pin-summary] caption {
@@ -1299,6 +1380,73 @@
   />
 {/snippet}
 
+{#snippet columnGroup(widths: readonly number[] | undefined, gutter: number)}
+  {#if leaves.length || gutter}
+    <colgroup>
+      {#each leaves as leaf, columnIndex (leaf.key)}
+        {@const width = widths ? cssSize(widths[columnIndex]) : columnWidth(columnIndex)}
+        {#if leaf.service === 'selection'}
+          <col class={[
+            (designTheme.enabled || selection.commands) && `${prefix}-selection-col`,
+            selection.commands && `${prefix}-selection-col-with-dropdown`
+          ]} style:width={width} />
+        {:else if leaf.service === 'expand'}
+          <col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
+            style:width={width} />
+        {:else}
+          <col style:width={width}
+            style:min-width={resolvedLayout === 'auto' ? cssSize(leaf.column.minWidth)
+              : undefined} />
+        {/if}
+      {/each}
+      {#if gutter}
+        <col data-ant-table-scrollbar style:width={cssSize(gutter)} />
+      {/if}
+    </colgroup>
+  {/if}
+{/snippet}
+
+{#snippet tableHeader(gutter: number)}
+  {#if showHeader}
+    <thead data-ant-table-part="head" class={[`${prefix}-thead`, classes.header.wrapper]}
+      style={slots.header.wrapper}>
+      {#each headerRows as row, depth}
+        {@const attributes = headerRowProperties?.[depth]}
+        <tr {...attributes}
+          class={[attributes?.class, classes.header.row]}
+          style={appendSemanticStyle(attributes?.style, slots.header.row)}
+          aria-rowindex={virtualRowIndices ? depth + 1 : attributes?.['aria-rowindex']}>
+          {#each row as cell (cell.key)}
+            {#if cell.service}
+              {@render serviceHeading(cell, cell.service)}
+            {:else}
+              {@render columnHeading(cell)}
+            {/if}
+          {:else}
+            <th data-ant-table-part="cell" class={[`${prefix}-cell`, classes.header.cell]}
+              style={slots.header.cell}></th>
+          {/each}
+          {#if gutter && depth === 0}
+            <th data-ant-table-part="cell" data-ant-table-scrollbar
+              class={[`${prefix}-cell ${prefix}-cell-scrollbar`,
+                fixedGutter && 'table-fixed-cell']}
+              style:inset-inline-end={fixedGutter ? '0' : undefined}
+              rowspan={headerRows.length} aria-hidden="true"></th>
+          {/if}
+        </tr>
+      {/each}
+    </thead>
+  {/if}
+{/snippet}
+
+{#snippet tableSummary(fixed: 'top' | 'bottom' | undefined)}
+  {#if summaryRender}
+    <tfoot data-ant-table-part="summary" data-fixed={fixed} class={`${prefix}-summary`}>
+      {@render summaryRender(panelData)}
+    </tfoot>
+  {/if}
+{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
     `${prefix}-wrapper ant-table-css-var`,
     componentTheme.className,
@@ -1322,212 +1470,198 @@
     ]}>
     {#if title}<div class={[`${prefix}-title`, classes.title]}
       style={slots.title}>{@render title(panelData)}</div>{/if}
-    <div class={[
+    <div bind:this={tableSection} class={[
       `${prefix}-container`,
       scrollport.active && 'table-virtual-container',
       sticky && 'table-sticky-container',
       classes.section
     ]} style={slots.section}>
-      <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус нужен для прокрутки таблицы с клавиатуры.) -->
-      <div bind:this={content}
-        data-ant-table-part="content"
-        data-ant-table-virtual={scrollport.active || undefined}
-        data-ant-table-pin-summary={summaryPlacement === 'top' || summaryPlacement === 'bottom'
-          ? summaryPlacement : undefined}
-        class={[
-          `${prefix}-content`,
-          (pinHeader || fixedColumns.some(Boolean)) && 'table-sticky',
-          pinHeader && 'table-pin-head',
-          scroll?.y !== undefined && 'table-scroll-y',
-          scrollport.active && 'table-virtual-scroll',
-          !pinHeader && classes.content
-        ]}
-        style={contentStyle}
-        role="region"
-        aria-label={caption ?? ariaLabel ?? strings.label}
-        tabindex="0"
-        onscroll={handleScroll}
-      >
-        <table bind:this={table}
-          aria-label={ariaLabel ?? (caption ? undefined : strings.label)}
-          aria-busy={loading || undefined}
-          aria-rowcount={virtualRowIndices
-            ? visibleRows.length + headerCount : undefined}
-          style:min-width={virtual ? '100%' : cssSize(scroll?.x)}
-          style:width={cssSize(scrollport.tableWidth)}
-          style:table-layout={resolvedLayout}
+      {#if bodyRenderer}
+        {#if showHeader}
+          <div bind:this={customHead} data-ant-table-custom-band="header"
+            class={[`${prefix}-header table-custom-band`, sticky && 'table-sticky-band']}
+            style:inset-block-start={sticky ? cssSize(stickyOptions.offsetHeader ?? 0) : undefined}
+            {@attach attachCustomBand}>
+            <table aria-label={ariaLabel ?? (caption ? undefined : strings.label)}
+              aria-busy={loading || undefined} style:min-width="100%"
+              style:width={cssSize(scroll?.x)} style:table-layout={resolvedLayout}>
+              {#if caption}<caption>{caption}</caption>{/if}
+              {@render columnGroup(customWidths, customGutter)}
+              {@render tableHeader(customGutter)}
+              {#if summaryPlacement === 'top'}{@render tableSummary('top')}{/if}
+            </table>
+          </div>
+        {/if}
+        {@render bodyRenderer(panelData, customBody.info)}
+        {#if summaryPlacement === 'bottom'}
+          <div bind:this={customFoot} data-ant-table-custom-band="summary"
+            class={[`${prefix}-summary table-custom-band`, sticky && 'table-sticky-band']}
+            style:inset-block-end={sticky ? cssSize(stickyOptions.offsetSummary ?? 0) : undefined}
+            {@attach attachCustomBand}>
+            <table style:min-width="100%" style:width={cssSize(scroll?.x)}
+              style:table-layout={resolvedLayout}>
+              {@render columnGroup(customWidths, customGutter)}
+              {@render tableSummary('bottom')}
+            </table>
+          </div>
+        {/if}
+      {:else}
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус нужен для прокрутки таблицы с клавиатуры.) -->
+        <div bind:this={content}
+          data-ant-table-part="content"
+          data-ant-table-virtual={scrollport.active || undefined}
+          data-ant-table-pin-summary={summaryPlacement === 'top' || summaryPlacement === 'bottom'
+            ? summaryPlacement : undefined}
+          class={[
+            `${prefix}-content`,
+            (pinHeader || fixedColumns.some(Boolean)) && 'table-sticky',
+            pinHeader && 'table-pin-head',
+            scroll?.y !== undefined && 'table-scroll-y',
+            scrollport.active && 'table-virtual-scroll',
+            !pinHeader && classes.content
+          ]}
+          style={contentStyle}
+          role="region"
+          aria-label={caption ?? ariaLabel ?? strings.label}
+          tabindex="0"
+          onscroll={handleScroll}
         >
-          {#if caption}<caption>{caption}</caption>{/if}
-          {#if leaves.length}<colgroup>
-            {#each leaves as leaf, columnIndex (leaf.key)}
-              {#if leaf.service === 'selection'}
-                <col class={[
-                  (designTheme.enabled || selection.commands) && `${prefix}-selection-col`,
-                  selection.commands && `${prefix}-selection-col-with-dropdown`
-                ]} style:width={columnWidth(columnIndex)} />
-              {:else if leaf.service === 'expand'}
-                <col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
-                  style:width={columnWidth(columnIndex)} />
-              {:else}
-                <col style:width={columnWidth(columnIndex)}
-                  style:min-width={resolvedLayout === 'auto' ? cssSize(leaf.column.minWidth)
-                    : undefined} />
-              {/if}
-            {/each}
-          </colgroup>{/if}
-          {#if showHeader}
-            <thead data-ant-table-part="head" class={[`${prefix}-thead`, classes.header.wrapper]}
-              style={slots.header.wrapper}>
-              {#each headerRows as row, depth}
-                {@const attributes = headerRowProperties?.[depth]}
+          <table bind:this={table}
+            aria-label={ariaLabel ?? (caption ? undefined : strings.label)}
+            aria-busy={loading || undefined}
+            aria-rowcount={virtualRowIndices
+              ? visibleRows.length + headerCount : undefined}
+            style:min-width={virtual ? '100%' : cssSize(scroll?.x)}
+            style:width={cssSize(scrollport.tableWidth)}
+            style:table-layout={resolvedLayout}
+          >
+            {#if caption}<caption>{caption}</caption>{/if}
+            {@render columnGroup(undefined, 0)}
+            {@render tableHeader(0)}
+            {#if summaryPlacement === 'top'}{@render tableSummary('top')}{/if}
+            <tbody data-ant-table-part="body"
+              class={[`${prefix}-tbody`, useBodyWrapperSlot && classes.body.wrapper]}
+              style={useBodyWrapperSlot ? slots.body.wrapper : undefined}
+              class:table-span-body={mergedRows.length > 0}>
+              {@render virtualSpacer(scrollport.before)}
+              {#each scrollport.rows as entry, windowIndex (entry.row.key)}
+                {@const { row, depth } = entry}
+                {@const index = scrollport.start + windowIndex}
+                {@const attributes = bodyRowProperties?.get(row.key)}
+                {@const canExpand = canExpandRow(row)}
+                {@const expanded = expandedKeys.has(row.key)}
+                {@const hasDetails = expandedRowRender && canExpand && (expanded || forceExpandedRows)}
+                {@const expansionClass = depth > 0 || hasDetails
+                  ? expandedRowClass(row.record, index, depth) : undefined}
+                <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
                 <tr {...attributes}
-                  class={[attributes?.class, classes.header.row]}
-                  style={appendSemanticStyle(attributes?.style, slots.header.row)}
-                  aria-rowindex={virtualRowIndices ? depth + 1 : attributes?.['aria-rowindex']}>
-                  {#each row as cell (cell.key)}
-                    {#if cell.service}
-                      {@render serviceHeading(cell, cell.service)}
-                    {:else}
-                      {@render columnHeading(cell)}
+                  data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
+                  data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
+                    `${prefix}-row`,
+                    tree && `${prefix}-row-level-${depth}`,
+                    typeof rowClassName === 'function'
+                      ? rowClassName(row.record, index, depth) : rowClassName,
+                    depth > 0 && expansionClass,
+                    attributes?.class,
+                    classes.body.row,
+                    rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
+                  ]}
+                  style={appendSemanticStyle(attributes?.style, slots.body.row)}
+                  data-row-key={row.key}
+                  aria-rowindex={virtualRowIndices
+                    ? index + headerCount + 1 : attributes?.['aria-rowindex']}
+                  id={attributes?.id ?? (depth > 0 ? expansionId(row.key, 'row') : undefined)}
+                  onclick={rowClick(row, canExpand, attributes?.onclick)}
+                  {@attach scrollport.active ? element => scrollport.attachRow(element, row.key)
+                    : undefined}
+                >
+                  {#each leaves as leaf, columnIndex (leaf.key)}
+                    {@const cell = bodyCellProps(leaf.column, row.record, index, columnIndex)}
+                    {@const placeholder = cellPlan?.placeholders.get(index)?.[columnIndex]}
+                    {#if placeholder !== undefined}
+                      {#if placeholder > 0}
+                        <!-- Ширина остаётся в сетке, содержимое находится в строке span. -->
+                        <td aria-hidden="true" class={`${prefix}-cell`}
+                          colspan={placeholder > 1 ? placeholder : undefined}
+                          style:visibility="hidden"></td>
+                      {/if}
+                    {:else if cell.colSpan !== 0 && cell.rowSpan !== 0}
+                      {@render bodyCell(leaf, columnIndex, entry, index, cell, canExpand, expanded)}
                     {/if}
                   {:else}
-                    <th data-ant-table-part="cell" class={[`${prefix}-cell`, classes.header.cell]}
-                      style={slots.header.cell}></th>
+                    <td data-ant-table-part="cell" class={[`${prefix}-cell`, classes.body.cell]}
+                      style={slots.body.cell}>
+                      {#if showTreeControls}
+                        {@render expansionControl(row, canExpand, expanded, depth)}
+                      {/if}
+                    </td>
+                  {/each}
+                </tr>
+                {#if hasDetails && expandedRowRender}
+                  <tr data-ant-table-part="expanded-row" hidden={!expanded}
+                    class={[
+                      `${prefix}-expanded-row`,
+                      `${prefix}-expanded-row-level-${depth + 1}`,
+                      expansionClass
+                    ]}
+                    {@attach scrollport.active && expanded ? scrollport.attachDetails : undefined}>
+                    <td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>
+                      <div class="expanded-content" id={expansionId(row.key)}>
+                        {@render expandedRowRender(row.record, index, depth + 1, expanded)}
+                      </div>
+                    </td>
+                  </tr>
+                {/if}
+              {:else}
+                <tr class={`${prefix}-placeholder`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>{#if !loading}
+                  {#snippet nativeEmpty()}<Empty image="simple" description={strings.emptyText} />{/snippet}
+                  <RenderEmpty componentName="Table" local={empty ?? locale?.emptyText}
+                    fallback={nativeEmpty} />
+                {:else}&nbsp;{/if}</td></tr>
+              {/each}
+              {@render virtualSpacer(scrollport.after)}
+              {#each mergedRows as entry (entry.row.key)}
+                {@const { row, depth, sourceIndex, top, parts } = entry}
+                {@const attributes = bodyRowProperties?.get(row.key)}
+                {@const hasPrimaryRow = sourceIndex >= scrollport.start
+                  && sourceIndex < scrollport.start + scrollport.rows.length}
+                {@const canExpand = canExpandRow(row)}
+                {@const expanded = expandedKeys.has(row.key)}
+                <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
+                <tr {...attributes}
+                  data-ant-table-part="span-row" data-row-key={row.key}
+                  id={hasPrimaryRow ? undefined : attributes?.id}
+                  tabindex={hasPrimaryRow ? undefined : attributes?.tabindex}
+                  data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
+                  class={[
+                    'table-span-row', `${prefix}-row ${prefix}-row-extra`,
+                    tree && `${prefix}-row-level-${depth}`,
+                    typeof rowClassName === 'function'
+                      ? rowClassName(row.record, sourceIndex, depth) : rowClassName,
+                    depth > 0 && expandedRowClass(row.record, sourceIndex, depth),
+                    attributes?.class,
+                    classes.body.row,
+                    rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
+                  ]}
+                  style={appendSemanticStyle(attributes?.style, slots.body.row)}
+                  style:top={cssSize(top)}
+                  onclick={rowClick(row, canExpand, attributes?.onclick)}
+                >
+                  {#each parts as part (part.columnIndex)}
+                    {@const leaf = leaves[part.columnIndex]}
+                    {@render bodyCell(
+                      leaf, part.columnIndex, entry, sourceIndex, part.cell, canExpand, expanded, part
+                    )}
                   {/each}
                 </tr>
               {/each}
-            </thead>
-          {/if}
-          {#if summaryPlacement === 'top' && summaryRender}
-            <tfoot data-ant-table-part="summary" data-fixed="top" class={`${prefix}-summary`}>
-              {@render summaryRender(panelData)}
-            </tfoot>
-          {/if}
-          <tbody data-ant-table-part="body"
-            class={[`${prefix}-tbody`, useBodyWrapperSlot && classes.body.wrapper]}
-            style={useBodyWrapperSlot ? slots.body.wrapper : undefined}
-            class:table-span-body={mergedRows.length > 0}>
-            {@render virtualSpacer(scrollport.before)}
-            {#each scrollport.rows as entry, windowIndex (entry.row.key)}
-              {@const { row, depth } = entry}
-              {@const index = scrollport.start + windowIndex}
-              {@const attributes = bodyRowProperties?.get(row.key)}
-              {@const canExpand = canExpandRow(row)}
-              {@const expanded = expandedKeys.has(row.key)}
-              {@const hasDetails = expandedRowRender && canExpand && (expanded || forceExpandedRows)}
-              {@const expansionClass = depth > 0 || hasDetails
-                ? expandedRowClass(row.record, index, depth) : undefined}
-              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
-              <tr {...attributes}
-                data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
-                data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
-                  `${prefix}-row`,
-                  tree && `${prefix}-row-level-${depth}`,
-                  typeof rowClassName === 'function'
-                    ? rowClassName(row.record, index, depth) : rowClassName,
-                  depth > 0 && expansionClass,
-                  attributes?.class,
-                  classes.body.row,
-                  rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
-                ]}
-                style={appendSemanticStyle(attributes?.style, slots.body.row)}
-                data-row-key={row.key}
-                aria-rowindex={virtualRowIndices
-                  ? index + headerCount + 1 : attributes?.['aria-rowindex']}
-                id={attributes?.id ?? (depth > 0 ? expansionId(row.key, 'row') : undefined)}
-                onclick={rowClick(row, canExpand, attributes?.onclick)}
-                {@attach scrollport.active ? element => scrollport.attachRow(element, row.key)
-                  : undefined}
-              >
-                {#each leaves as leaf, columnIndex (leaf.key)}
-                  {@const cell = bodyCellProps(leaf.column, row.record, index, columnIndex)}
-                  {@const placeholder = cellPlan?.placeholders.get(index)?.[columnIndex]}
-                  {#if placeholder !== undefined}
-                    {#if placeholder > 0}
-                      <!-- Ширина остаётся в сетке, содержимое находится в строке span. -->
-                      <td aria-hidden="true" class={`${prefix}-cell`}
-                        colspan={placeholder > 1 ? placeholder : undefined}
-                        style:visibility="hidden"></td>
-                    {/if}
-                  {:else if cell.colSpan !== 0 && cell.rowSpan !== 0}
-                    {@render bodyCell(leaf, columnIndex, entry, index, cell, canExpand, expanded)}
-                  {/if}
-                {:else}
-                  <td data-ant-table-part="cell" class={[`${prefix}-cell`, classes.body.cell]}
-                    style={slots.body.cell}>
-                    {#if showTreeControls}
-                      {@render expansionControl(row, canExpand, expanded, depth)}
-                    {/if}
-                  </td>
-                {/each}
-              </tr>
-              {#if hasDetails && expandedRowRender}
-                <tr data-ant-table-part="expanded-row" hidden={!expanded}
-                  class={[
-                    `${prefix}-expanded-row`,
-                    `${prefix}-expanded-row-level-${depth + 1}`,
-                    expansionClass
-                  ]}
-                  {@attach scrollport.active && expanded ? scrollport.attachDetails : undefined}>
-                  <td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>
-                    <div class="expanded-content" id={expansionId(row.key)}>
-                      {@render expandedRowRender(row.record, index, depth + 1, expanded)}
-                    </div>
-                  </td>
-                </tr>
-              {/if}
-            {:else}
-              <tr class={`${prefix}-placeholder`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>{#if !loading}
-                {#snippet nativeEmpty()}<Empty image="simple" description={strings.emptyText} />{/snippet}
-                <RenderEmpty componentName="Table" local={empty ?? locale?.emptyText}
-                  fallback={nativeEmpty} />
-              {:else}&nbsp;{/if}</td></tr>
-            {/each}
-            {@render virtualSpacer(scrollport.after)}
-            {#each mergedRows as entry (entry.row.key)}
-              {@const { row, depth, sourceIndex, top, parts } = entry}
-              {@const attributes = bodyRowProperties?.get(row.key)}
-              {@const hasPrimaryRow = sourceIndex >= scrollport.start
-                && sourceIndex < scrollport.start + scrollport.rows.length}
-              {@const canExpand = canExpandRow(row)}
-              {@const expanded = expandedKeys.has(row.key)}
-              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
-              <tr {...attributes}
-                data-ant-table-part="span-row" data-row-key={row.key}
-                id={hasPrimaryRow ? undefined : attributes?.id}
-                tabindex={hasPrimaryRow ? undefined : attributes?.tabindex}
-                data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
-                class={[
-                  'table-span-row', `${prefix}-row ${prefix}-row-extra`,
-                  tree && `${prefix}-row-level-${depth}`,
-                  typeof rowClassName === 'function'
-                    ? rowClassName(row.record, sourceIndex, depth) : rowClassName,
-                  depth > 0 && expandedRowClass(row.record, sourceIndex, depth),
-                  attributes?.class,
-                  classes.body.row,
-                  rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
-                ]}
-                style={appendSemanticStyle(attributes?.style, slots.body.row)}
-                style:top={cssSize(top)}
-                onclick={rowClick(row, canExpand, attributes?.onclick)}
-              >
-                {#each parts as part (part.columnIndex)}
-                  {@const leaf = leaves[part.columnIndex]}
-                  {@render bodyCell(
-                    leaf, part.columnIndex, entry, sourceIndex, part.cell, canExpand, expanded, part
-                  )}
-                {/each}
-              </tr>
-            {/each}
-          </tbody>
-          {#if summaryRender && summaryPlacement !== 'top'}
-            <tfoot data-ant-table-part="summary" data-fixed={summaryPlacement === 'bottom'
-              ? 'bottom' : undefined} class={`${prefix}-summary`}>
-              {@render summaryRender(panelData)}
-            </tfoot>
-          {/if}
-        </table>
-      </div>
+            </tbody>
+            {#if summaryPlacement !== 'top'}
+              {@render tableSummary(summaryPlacement === 'bottom' ? 'bottom' : undefined)}
+            {/if}
+          </table>
+        </div>
+      {/if}
       {#if scrollport.active && scrollport.height > 0}
         <div class="table-virtual-bars"
           style:height={cssSize(scrollport.height)}
@@ -1553,7 +1687,7 @@
       {/if}
       {#if stickyBar}
         <TableStickyScrollbar {prefix} layout={stickyBar} rtl={config.direction === 'rtl'}
-          onScroll={scrollport.scrollHorizontal} onMoving={scrollport.dragScrollbar} />
+          onScroll={dragStickyScrollbar} onMoving={scrollport.dragScrollbar} />
       {/if}
     </div>
     {#if footer}<div class={[`${prefix}-footer`, classes.footer]}
