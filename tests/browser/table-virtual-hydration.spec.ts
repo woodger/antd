@@ -6,6 +6,60 @@ import { fileURLToPath } from 'node:url';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
+test('virtual Table hydrates inferred column keys and preserves the editor when a peer is hidden',
+  async ({ page }) => {
+    const artifacts = new URL(
+      '../../.upstream/artifacts/table-column-keys-hydration-',
+      import.meta.url
+    );
+    const cacheDir = await mkdtemp(fileURLToPath(artifacts));
+    let server: ViteDevServer | undefined;
+    try {
+      server = await createServer({
+        configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+        server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+        appType: 'custom', cacheDir
+      });
+      const entry = new URL('./fixtures/table-virtual-hydration.server.ts', import.meta.url);
+      const { renderTableColumnKeysFixture } = await server.ssrLoadModule(fileURLToPath(entry));
+      const { body, head } = renderTableColumnKeysFixture();
+      await page.goto('/select-components-hydration.html?table-column-keys');
+      await page.addScriptTag({ type: 'module', url: '/table-virtual-hydration.client.ts' });
+      const root = page.locator('#root');
+      await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+      await root.evaluate((node, html) => {
+        document.head.insertAdjacentHTML('beforeend', html.head);
+        node.innerHTML = html.body;
+      }, { body, head });
+      const header = root.locator('[data-probe-title="column"]');
+      const editor = root.getByRole('textbox', { name: 'Cell draft', exact: true });
+      const original = await editor.elementHandle();
+      await expect(header).toHaveAttribute('data-probe-key', 'label_next');
+      await editor.fill('Edited before hydration');
+      await editor.evaluate((input: HTMLInputElement) => input.setSelectionRange(3, 8));
+
+      await root.dispatchEvent('hydrate-table-virtual');
+
+      await expect(root).toHaveAttribute('data-hydrated', 'true');
+      await expect(editor).toHaveValue('Edited before hydration');
+      await root.getByRole('button', { name: 'Toggle peer', exact: true }).dispatchEvent('click');
+
+      await expect(root.locator('[data-probe-title="peer"]')).toHaveCount(0);
+      await expect(header).toHaveAttribute('data-probe-key', 'label_next');
+      await expect(editor).toBeFocused();
+      await expect(editor).toHaveValue('Edited before hydration');
+      expect(await editor.evaluate((node, before) => node === before, original)).toBe(true);
+      expect(await editor.evaluate((input: HTMLInputElement) => [
+        input.selectionStart, input.selectionEnd
+      ])).toEqual([3, 8]);
+    }
+    finally {
+      await server?.close();
+      await rm(cacheDir, { recursive: true, force: true });
+    }
+  }
+);
+
 test('virtual Table hydrates the caption and accessibility attributes around a focused draft',
   async ({ page }) => {
     const artifacts = new URL(

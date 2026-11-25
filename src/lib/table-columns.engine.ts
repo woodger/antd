@@ -3,7 +3,9 @@
 // физический лист сетки только в режимах выбора и раскрытия подробностей.
 // Ant Design 6.6.8, rc-table 1.11.1. MIT, vendor/LICENSE.ant-design.
 import type { GridScreenMap } from './grid.types';
-import type { TableColumn, TableColumnsType, TableFixed } from './table.types';
+import type {
+  TableColumn, TableColumnDefaults, TableColumnInput, TableColumnsType, TableFixed, TableKey
+} from './table.types';
 
 const serviceRole = Symbol('Table column role');
 export type TableServiceColumn = 'selection' | 'expand';
@@ -28,9 +30,10 @@ function getDefinedColumnProps(column: object) {
 }
 
 /** Заполняет группы и листья одним набором props, сохраняя служебные маркеры. */
-export function fillTableColumns<Row extends object>(
-  columns: TableColumnsType<Row>, defaults: Partial<TableColumn<Row>> | undefined
-): TableColumnsType<Row> {
+function fillColumnDefaults<Row extends object>(
+  columns: readonly TableColumnInput<Row>[],
+  defaults: Partial<TableColumnInput<Row>> | undefined
+): readonly TableColumnInput<Row>[] {
   if (!defaults) {
     return columns;
   }
@@ -39,14 +42,14 @@ export function fillTableColumns<Row extends object>(
   const shared = getDefinedColumnProps(defaultsWithoutChildren);
 
   /** Переопределяет общие props локальными и обходит собственное дерево группы. */
-  function fillColumn(column: TableColumn<Row>): TableColumn<Row> {
+  function fillColumn(column: TableColumnInput<Row>): TableColumnInput<Row> {
     if (getServiceRole(column)) {
       return column;
     }
 
     const own = getDefinedColumnProps(column);
     // Object.entries теряет типы ключа и свойств исходной колонки.
-    const filled = { ...shared, ...own } as TableColumn<Row>;
+    const filled = { ...shared, ...own } as TableColumnInput<Row>;
     const children = column.children;
     if (Array.isArray(children)) {
       filled.children = children.map(fillColumn);
@@ -56,6 +59,121 @@ export function fillTableColumns<Row extends object>(
   }
 
   return columns.map(fillColumn);
+}
+
+/** Сохраняет объект колонки, если её ключ и ключи потомков уже строковые. */
+function hasStringColumnKeys<Row extends object>(
+  column: TableColumnInput<Row>
+): column is TableColumn<Row> {
+  return typeof column.key === 'string' && (column.children?.every(hasStringColumnKeys) ?? true);
+}
+
+/** Переводит явный числовой ключ в строковый ключ состояния, сохраняя 0 и ''. */
+function readExplicitKey(key: TableKey | null | undefined): string | undefined {
+  if (key === null || key === undefined) {
+    return undefined;
+  }
+  if (typeof key === 'string' || (typeof key === 'number' && Number.isFinite(key))) {
+    return String(key);
+  }
+
+  throw new Error('Table column key must be a string or finite number');
+}
+
+/** Проверяет глобальную уникальность ключа среди групп и листьев. */
+function reserveColumnKey(keys: Set<string>, key: string) {
+  if (keys.has(key)) {
+    throw new Error(`Table column key "${key}" is not unique`);
+  }
+  keys.add(key);
+}
+
+/** Резервирует явные ключи до вычисления ключей из dataIndex и позиции. */
+function collectExplicitKeys<Row extends object>(
+  columns: readonly TableColumnInput<Row>[],
+  keys: Set<string>
+) {
+  for (const column of columns) {
+    if (getServiceRole(column)) {
+      continue;
+    }
+
+    const key = readExplicitKey(column.key);
+    if (key !== undefined) {
+      reserveColumnKey(keys, key);
+    }
+    if (column.children?.length) {
+      collectExplicitKeys(column.children, keys);
+    }
+  }
+}
+
+/** Использует путь или поле для состояния. Для dataIndex 0 и '' Source берёт позицию. */
+function getInferredColumnKey(
+  dataIndex: PropertyKey | readonly (string | number)[] | undefined,
+  position: string
+) {
+  if (Array.isArray(dataIndex)) {
+    return dataIndex.join('.');
+  }
+  if (dataIndex && (typeof dataIndex === 'string' || typeof dataIndex === 'number')) {
+    return String(dataIndex);
+  }
+
+  return position;
+}
+
+/** Сохраняет независимые состояния колонок, даже когда совпадают выведенные ключи. */
+function reserveInferredColumnKey(
+  keys: Set<string>,
+  dataIndex: PropertyKey | readonly (string | number)[] | undefined,
+  position: string
+) {
+  let key = getInferredColumnKey(dataIndex, position);
+  while (keys.has(key)) {
+    key += '_next';
+  }
+  keys.add(key);
+  return key;
+}
+
+/** Разрешает ключи полного дерева до сортировки, скрытия и размещения служебных колонок. */
+export function resolveTableColumns<Row extends object>(
+  columns: readonly TableColumnInput<Row>[],
+  defaults: TableColumnDefaults<Row> | undefined
+): TableColumnsType<Row> {
+  const configured = fillColumnDefaults(columns, defaults);
+  if (configured.every(hasStringColumnKeys)) {
+    return configured;
+  }
+
+  const keys = new Set<string>();
+  collectExplicitKeys(configured, keys);
+
+  /** Сохраняет позицию группы при рекурсивной обработке её потомков. */
+  function resolve(
+    items: readonly TableColumnInput<Row>[],
+    parent?: string
+  ): TableColumnsType<Row> {
+    return items.map((column, index) => {
+      if (hasStringColumnKeys(column)) {
+        return column;
+      }
+
+      const position = parent === undefined ? String(index) : `${parent}-${index}`;
+      const { children, ...props } = column;
+      const explicitKey = readExplicitKey(column.key);
+      const key = explicitKey ?? getServiceRole(column)
+        ?? reserveInferredColumnKey(keys, props.dataIndex, position);
+      if (children) {
+        return { ...props, key, children: resolve(children, position) };
+      }
+
+      return { ...props, key };
+    });
+  }
+
+  return resolve(configured);
 }
 
 interface TableColumnServices<Row extends object> {
@@ -94,11 +212,7 @@ export function getTableColumnOrder<Row extends object>(columns: TableColumnsTyp
         continue;
       }
 
-      if (keys.has(column.key)) {
-        throw new Error(`Table column key "${column.key}" is not unique`);
-      }
-
-      keys.add(column.key);
+      reserveColumnKey(keys, column.key);
       ordered.push(column);
       if (column.children?.length) {
         visit(column.children);

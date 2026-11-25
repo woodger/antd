@@ -6,6 +6,7 @@ import TableLoadingFixture from './TableLoadingFixture.svelte';
 import TableConfigFixture from './TableConfigFixture.svelte';
 import TableCellUpdateFixture from './TableCellUpdateFixture.svelte';
 import TableDomAttributesFixture from './TableDomAttributesFixture.svelte';
+import TableColumnKeysFixture from './TableColumnKeysFixture.svelte';
 
 /** Рендерит то же начальное окно, с которым клиент начинает гидратацию. */
 export function renderVirtualTableFixture() {
@@ -44,4 +45,11 @@ export function renderTableCellUpdateFixture() {
 /** Рендерит caption, связи ARIA и редактор до подключения виртуального окна. */
 export function renderTableDomAttributesFixture() {
   return render(TableDomAttributesFixture, { props: { profileId: 'virtual', editor: true } });
+}
+
+/** Готовит окно с разрешёнными ключами и редактором для строгой гидратации. */
+export function renderTableColumnKeysFixture() {
+  return render(TableColumnKeysFixture, {
+    props: { profileId: 'explicit-collision', virtual: true, editor: true }
+  });
 }

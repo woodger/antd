@@ -12,7 +12,7 @@
   import { getGridMediaQueries } from './grid.engine';
   import { getPaginationState } from './pagination.engine';
   import {
-    fillTableColumns, getTableColumnLayout, getTableColumnOrder, type TableHeading, type TableLeaf,
+    getTableColumnLayout, getTableColumnOrder, resolveTableColumns, type TableHeading, type TableLeaf,
     type TableServiceColumn
   } from './table-columns.engine';
   import {
@@ -166,7 +166,7 @@
   const componentTheme = useComponentTheme('Table');
   const designTheme = useDesignTokenContext();
   const breakpoint = createBreakpoint();
-  const resolvedColumns = $derived(fillTableColumns(columns, column));
+  const resolvedColumns = $derived(resolveTableColumns(columns, column));
   const hasResponsiveColumns = $derived(
     resolvedColumns.some(column => column.responsive !== undefined)
   );

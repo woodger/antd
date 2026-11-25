@@ -111,7 +111,7 @@ export interface TableCellProps extends Omit<HTMLTdAttributes, 'children' | 'col
 /** DOM-атрибуты и Svelte events строки. Ячейки остаются у Table. */
 export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
 
-/** Колонка данных или заголовок группы колонок. Ключ уникален во всём дереве. */
+/** Колонка с разрешённым строковым ключом. Ключ уникален во всём дереве. */
 export interface TableColumn<Row extends object> {
   key: string;
   /** Число или строка выводятся как текст. Snippet получает состояние Table. */
@@ -190,8 +190,15 @@ export interface TableColumn<Row extends object> {
 export type TableColumnType<Row extends object> = TableColumn<Row>;
 export type TableColumnsType<Row extends object> = readonly TableColumn<Row>[];
 
+/** Входное определение. Table выводит отсутствующий ключ из dataIndex или позиции. */
+export interface TableColumnInput<Row extends object>
+  extends Omit<TableColumn<Row>, 'key' | 'children'> {
+  key?: TableKey;
+  children?: readonly TableColumnInput<Row>[];
+}
+
 /** Общие свойства колонок. Дочернее дерево задаётся в columns. */
-export type TableColumnDefaults<Row extends object> = Partial<Omit<TableColumn<Row>, 'children'>>;
+export type TableColumnDefaults<Row extends object> = Partial<Omit<TableColumnInput<Row>, 'children'>>;
 
 /** У группы собственный заголовок, а поля данных находятся у её дочерних колонок. */
 export interface TableColumnGroupType<Row extends object>
@@ -530,7 +537,7 @@ export interface TableProps<Row extends object> extends AriaAttributes, TableDat
   total?: number;
   /** Пустой массив задаёт известный пустой результат. */
   dataSource?: readonly Row[] | null;
-  columns: TableColumnsType<Row>;
+  columns: readonly TableColumnInput<Row>[];
   /** Заполняет отсутствующие или равные undefined свойства групп и листьев. */
   column?: TableColumnDefaults<Row>;
   rowKey?: TableRowKey<Row>;

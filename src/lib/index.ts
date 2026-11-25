@@ -891,6 +891,7 @@ export type {
 export type {
   TableProps,
   TableColumn,
+  TableColumnInput,
   TableCellProps,
   TableRowProps,
   TableColumnType,

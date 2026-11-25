@@ -20035,6 +20035,24 @@
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 33 состояния, renderToString даёт девять серверных структур. Дерево children строит шапку с colspan, rowspan и scope и задаёт порядок листьев. Служебные ячейки шапки занимают все уровни. Hidden убирает поддерево. Видимая группа без видимых детей остаётся колонкой. Скрытые определения сохраняют участие в sort/filter. Responsive применяется на верхнем уровне, пустой список скрывает колонку. Используются пороги Grid и подписка после SSR. Лист наследует fixed, явный false отключает наследование. Заголовок группы использует крайние листья для своей стороны и offset. Native сохраняет один table, измеряет листовые ширины и высоты уровней, а виртуализация сохраняет окно строк и scrollTo. Геометрия шапки и тела сравнивается с точностью до целого пикселя. Browser и строгая hydration проверяют фокус, выделение и identity редактора при обновлении видимости."
         },
         {
+          "id": "column-keys",
+          "title": "Явные и вычисляемые ключи колонок Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-columns.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-column-key-reference.json",
+            "tests/browser/table-column-keys.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-column-keys.ssr.test.ts",
+            "tests/package/table-column-keys.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 дали 84 браузерных состояния и 28 SSR-снимков. Проверены явные 0 и '', ключ из поля, пути, позиции группы и общих настроек column в обычной и виртуальной таблице. В Source фильтр вложенной позиционной колонки меняет строки в onChange, а DOM оставляет старые. При скрытой колонке перед группой так же расходится сортировка. При совпавших ключах один критерий помечает два заголовка. Svelte использует уникальный строковый ключ для DOM, bind:sorter, bind:filters и callbacks. Ключ вычисляется до начала обработки видимости, явные ключи имеют приоритет, совпавшие вычисленные получают _next. Строгая гидратация подтверждает сохранение редактора и фокуса."
+        },
+        {
           "id": "column-defaults",
           "title": "Общие свойства колонок Table",
           "state": "supported",
