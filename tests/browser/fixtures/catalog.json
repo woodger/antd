@@ -475,6 +475,11 @@
     "root": "drawer-geometry-fixture"
   },
   {
+    "id": "drawer-focus",
+    "module": "./DrawerFocusFixtures.svelte",
+    "root": "drawer-focus-fixture"
+  },
+  {
     "id": "alert",
     "module": "./AlertFixtures.svelte",
     "root": "alert-fixture"

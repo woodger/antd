@@ -23247,7 +23247,15 @@
         "tests/browser/fixtures/ant-design-drawer-geometry-reference.json",
         "tests/browser/drawer-geometry.spec.ts",
         "tests/browser/drawer-geometry-hydration.spec.ts",
-        "tests/package/drawer-geometry.ssr.test.ts"
+        "tests/package/drawer-geometry.ssr.test.ts",
+        "src/lib/drawer-focus.dom.ts",
+        "src/lib/ConfigProvider.svelte",
+        "src/lib/popup.dom.ts",
+        "tests/browser/fixtures/DrawerFocusFixtures.svelte",
+        "tests/browser/fixtures/ant-design-drawer-focus-reference.json",
+        "tests/browser/drawer-focus.spec.ts",
+        "tests/browser/drawer-focus-hydration.spec.ts",
+        "tests/package/drawer-focus.ssr.test.ts"
       ],
       "features": [
         {
@@ -23260,11 +23268,11 @@
         },
         {
           "id": "gap-1",
-          "title": "Немодальный режим и focusable-настройки",
+          "title": "Дополнительный API содержимого и оформления панели",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нативный Drawer сохраняет модальность. Mask=false, focusable, дополнительные настройки панели и semantic DOM остаются в работе. Resize, push и afterOpenChange описаны отдельными features."
+          "note": "Открыты loading/Skeleton, closable с placement/closeIcon, semantic slots, дополнительные поля ConfigProvider.drawer и drawerRender. Депрекейтнутые поля исключены."
         },
         {
           "id": "compact-isolation",
@@ -23290,7 +23298,7 @@
             "tests/browser/dialog-container-interaction.spec.ts",
             "tests/package/dialog-container.ssr.test.ts"
           ],
-          "note": "GetContainer: false, Element, DocumentFragment/ShadowRoot, selector и функция без аргументов. Undefined наследует global getter; Drawer передаёт document.body; destroyOnHidden без forceRender не вызывает getter, пока panel не нужен. Первый перенос готового контейнера сохраняет SSR DOM; новая функция с тем же target сохраняет state/draft/selection/focus, смена target пересоздаёт содержимое. Detached nodes/DocumentFragment ожидают подключения; стили ShadowRoot принадлежат потребителю. Native modal/inert/fullscreen/scroll lock, возврат фокуса, прежний SSR shell и lifecycle сохранены. 36 UMD-эталонов покрывают priorities, payload, undefined/false, selectors, retention и remount. Source absolute inline-геометрия при getContainer=false ещё отсутствует; false выбирает DOM-ветку с сохранением native fullscreen. Остальной API и подробный аудит остаются в работе. Head-style condition расположен вне keyed dialog range: перенос не удаляет исходный insertion anchor и не создаёт self-observer loop. Default/custom shared prefix сохраняют target remount; Drawer во время leave отменяет motion/старое destruction state и остаётся закрытым до следующего открытия."
+          "note": "GetContainer: false, Element, DocumentFragment/ShadowRoot, selector и функция без аргументов. Undefined наследует global getter; Drawer передаёт document.body; destroyOnHidden без forceRender не вызывает getter, пока panel не нужен. Первый перенос готового контейнера сохраняет SSR DOM; новая функция с тем же target сохраняет state/draft/selection/focus, смена target пересоздаёт содержимое. Detached nodes/DocumentFragment ожидают подключения; стили ShadowRoot принадлежат потребителю. Native modal/inert/fullscreen/scroll lock, возврат фокуса, прежний SSR shell и lifecycle сохранены. 36 UMD-эталонов покрывают priorities, payload, undefined/false, selectors, retention и remount. Остальной API и подробный аудит остаются в работе. Head-style condition расположен вне keyed dialog range: перенос не удаляет исходный insertion anchor и не создаёт self-observer loop. Default/custom shared prefix сохраняют target remount; Drawer во время leave отменяет motion/старое destruction state и остаётся закрытым до следующего открытия. В управляемых режимах getContainer=false размещает панель абсолютно внутри исходного host. Совместимый модальный inline использует полноэкранный нативный dialog."
         },
         {
           "id": "component-theme",
@@ -23408,6 +23416,28 @@
             "tests/package/drawer-geometry.ssr.test.ts"
           ],
           "note": "Четыре UMD-профиля 6.6.8 проверяют внешний open, начальный показ, forceRender, destroyOnHidden и прерванный уход. afterOpenChange(false) вызывается с ещё смонтированным содержимым после закрытия native dialog. Прерывание инвалидирует предыдущую фазу. SSR готовит оболочку и содержимое без уведомления."
+        },
+        {
+          "id": "mask-focusability",
+          "title": "Немодальный режим, маска и управление фокусом",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/Drawer.svelte",
+            "src/lib/drawer.dom.ts",
+            "src/lib/dialog-container.model.svelte.ts",
+            "src/lib/drawer-focus.dom.ts",
+            "src/lib/drawer.engine.ts",
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/popup.dom.ts",
+            "tests/browser/fixtures/DrawerFocusFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-focus-reference.json",
+            "tests/browser/drawer-focus.spec.ts",
+            "tests/browser/drawer-focus-hydration.spec.ts",
+            "tests/package/drawer-focus.ssr.test.ts"
+          ],
+          "note": "21 профиль и 118 кадров UMD Ant Design 6.6.8. Boolean и object mask, наследование ConfigProvider.drawer, autoFocus, trap, focusTriggerAfterClose, ScrollLocker при default/custom/inline portal, поведение Escape в стеке и изменение props без пересоздания DOM. Сохраняется нативный showModal при прежних defaults, включая getContainer=false. Svelte указывает aria-modal только при маске и trap. В управляемом режиме Tab замыкается внутри явно ограниченной области. Для вложения в нативный dialog сохраняются его top layer и корректный фокус портального Popover. При изменении mask во время показа маска переключается сразу; открытие и закрытие панели сохраняют fade. Проверены ShadowRoot, реальная прокрутка и переиспользование SSR-узлов при hydration."
         }
       ]
     },

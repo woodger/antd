@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   getDrawerMotionDuration, getDrawerPushDistance, getDrawerResizeSize, getDrawerSize,
-  getDrawerTransform
+  getDrawerTransform, resolveDrawerInteraction
 } from './drawer.engine';
 
 describe('Drawer dimensions', () => {
@@ -46,6 +46,39 @@ describe('Drawer nested push distance', () => {
     expect(getDrawerPushDistance({ distance: 0 }, 68)).toBe(0);
     expect(getDrawerPushDistance({ distance: '36' })).toBe(36);
     expect(getDrawerPushDistance({ distance: '36px' })).toBe(0);
+  });
+});
+
+describe('Drawer mask and focus settings', () => {
+  it('resolves the default and keeps focus settings independent of mask and blur', () => {
+    expect(resolveDrawerInteraction(undefined, undefined, true)).toMatchObject({
+      mask: { enabled: true, closable: true, blur: false },
+      trap: true,
+      restoreFocus: true,
+      native: true
+    });
+    expect(resolveDrawerInteraction(false, { trap: true }, true)).toMatchObject({
+      mask: { enabled: false },
+      trap: true,
+      restoreFocus: true,
+      native: false
+    });
+  });
+
+  it('merges mask fields and lets local focusable settings override provider fields', () => {
+    const config = {
+      mask: { enabled: false, blur: true, closable: false },
+      focusable: { trap: false, focusTriggerAfterClose: false }
+    };
+
+    const settings = resolveDrawerInteraction(true, { trap: true }, true, config);
+
+    expect(settings).toMatchObject({
+      mask: { enabled: true, closable: false, blur: true },
+      trap: true,
+      restoreFocus: false,
+      native: false
+    });
   });
 });
 

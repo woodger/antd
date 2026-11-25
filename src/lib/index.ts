@@ -668,7 +668,8 @@ export type {
   CollapseExpandIconInfo
 } from './collapse.types';
 export type {
-  DrawerProps, DrawerPlacement, DrawerSize, DrawerResizableConfig, DrawerPushConfig
+  DrawerProps, DrawerPlacement, DrawerSize, DrawerResizableConfig, DrawerPushConfig,
+  DrawerConfig, DrawerMask, DrawerMaskConfig, DrawerFocusableConfig
 } from './drawer.types';
 export type {
   AlertProps,

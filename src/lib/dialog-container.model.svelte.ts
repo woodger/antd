@@ -8,6 +8,7 @@ interface DialogContainerOptions {
   getContainer?: GetContainer;
   getPopupContainer?: GetPopupContainer;
   enabled?: boolean;
+  portalByDefault?: boolean;
   style?: string;
   onPointerDown?: (event: PointerEvent) => void;
   onPointerUp?: (event: PointerEvent) => void;
@@ -24,6 +25,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
   let currentRevision = 0;
   let activeNode: HTMLDialogElement | undefined;
   let mounted = $state(false);
+  const portalByDefault = $derived(getOptions().portalByDefault === true);
   // Контейнер/selector разрешается после DOM commit, как повторная проверка Portal в effect.
   onMount(() => { mounted = true; });
 
@@ -73,30 +75,57 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       const document = node.ownerDocument;
       const view = document.defaultView!;
       const marker = document.createComment('dialog-container');
+      const origin = node.parentElement ?? node;
       node.before(marker);
-      const current = container ? connectPopupPortal(node, {
-        getPopupContainer: () => container,
-        origin: node.parentElement ?? node,
-        marker,
-        autoLock: false,
-        // Cleanup старого keyed panel не должен возвращать уничтожаемый DOM в исходную ветку.
-        get restoreOnDestroy() { return node.isConnected && nodeRevision === currentRevision; },
-        get preserveVariables() {
-          const style = document.createElement('span').style;
-          style.cssText = getOptions().style ?? '';
-          return [
-            '--ant-svelte-drawer-size',
-            ...Array.from(style).filter(name => name.startsWith('--'))
-          ];
-        }
-      }) : undefined;
-      connection = current;
+      let explicitPortal: (() => void) | undefined;
+
+      /** Переносит тот же DOM и оставляет владельцу его inline CSS variables. */
+      function attachPortal(destination: Element | DocumentFragment) {
+        const current = connectPopupPortal(node, {
+          getPopupContainer: () => destination,
+          origin,
+          marker,
+          autoLock: false,
+          // Cleanup старого keyed panel не возвращает удаляемый DOM в исходную ветку.
+          get restoreOnDestroy() { return node.isConnected && nodeRevision === currentRevision; },
+          get preserveVariables() {
+            const style = document.createElement('span').style;
+            style.cssText = getOptions().style ?? '';
+            return [
+              '--ant-svelte-drawer-size',
+              ...Array.from(style).filter(name => name.startsWith('--'))
+            ];
+          }
+        });
+        connection = current;
+
+        return () => {
+          current();
+          if (connection === current) connection = undefined;
+        };
+      }
+
+      if (container) {
+        explicitPortal = attachPortal(container);
+      }
+      else if (container === undefined && getOptions().component === 'drawer') {
+        $effect(() => {
+          if (portalByDefault) {
+            // Ближайший dialog держит вложенный Drawer перед своей панелью и в своём focus scope.
+            const destination = origin.closest('dialog') ?? document.body;
+            return untrack(() => attachPortal(destination));
+          }
+        });
+      }
+
       let lock: HTMLStyleElement | undefined;
 
       function sync() {
         connected = node.isConnected;
         // :has() в document не видит modal внутри ShadowRoot; модальность остаётся нативной.
-        const shadowModal = node.isConnected && node.open && node.getRootNode() instanceof ShadowRoot;
+        const shadowModal = node.isConnected && node.open
+          && !node.hasAttribute('data-ant-dialog-unlocked')
+          && node.getRootNode() instanceof ShadowRoot;
         if (shadowModal && !lock) {
           lock = document.createElement('style');
           lock.dataset.antDialogLock = '';
@@ -109,7 +138,10 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
         }
       }
       const observer = new view.MutationObserver(sync);
-      observer.observe(node, { attributes: true, attributeFilter: ['open'] });
+      observer.observe(node, {
+        attributes: true,
+        attributeFilter: ['open', 'data-ant-dialog-unlocked']
+      });
       // Контейнер может быть временно отключён или быть DocumentFragment до вставки владельцем.
       if (container) observer.observe(document, { childList: true, subtree: true });
       sync();
@@ -128,9 +160,8 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
         observer.disconnect();
         for (const remove of listeners) remove();
         lock?.remove();
-        current?.();
+        explicitPortal?.();
         marker.remove();
-        if (connection === current) connection = undefined;
         if (activeNode === node) {
           activeNode = undefined;
           connected = false;
@@ -141,6 +172,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
 
   return {
     get key() { return revision; },
+    get target() { return target; },
     get connected() { return connected; },
     attach
   };

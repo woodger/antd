@@ -1,0 +1,2658 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "name": "default",
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "mask-false",
+        "local": {
+          "mask": false
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "mask-object-disabled",
+        "local": {
+          "mask": {
+            "enabled": false,
+            "blur": true,
+            "closable": true
+          }
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "mask-false-no-auto",
+        "local": {
+          "mask": false,
+          "autoFocus": false
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "masked-free-focus",
+        "local": {
+          "focusable": {
+            "trap": false
+          }
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "maskless-trap",
+        "local": {
+          "mask": false,
+          "focusable": {
+            "trap": true
+          }
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "masked-no-auto",
+        "local": {
+          "autoFocus": false
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-close",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "masked-no-return",
+        "local": {
+          "focusable": {
+            "focusTriggerAfterClose": false
+          }
+        },
+        "steps": [
+          "open",
+          "focus-last",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "focus-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "maskless-no-return",
+        "local": {
+          "mask": false,
+          "focusable": {
+            "focusTriggerAfterClose": false
+          }
+        },
+        "steps": [
+          "open",
+          "focus-last",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "focus-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "keyboard-disabled",
+        "local": {
+          "mask": false,
+          "keyboard": false
+        },
+        "steps": [
+          "open",
+          "escape",
+          "close"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "close",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "provider-mask",
+        "provider": {
+          "mask": false
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "local-mask-fields",
+        "provider": {
+          "mask": {
+            "enabled": false,
+            "blur": true,
+            "closable": false
+          }
+        },
+        "local": {
+          "mask": true
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": true,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": true,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": true,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": true,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": true,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "provider-masks-nested",
+        "provider": {
+          "mask": false
+        },
+        "nestedProvider": {},
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "focus-fields",
+        "provider": {
+          "focusable": {
+            "trap": false,
+            "focusTriggerAfterClose": false
+          }
+        },
+        "local": {
+          "mask": false,
+          "focusable": {
+            "trap": true
+          }
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "body",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "inline-default",
+        "container": "inline",
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "inline-maskless",
+        "container": "inline",
+        "local": {
+          "mask": false
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true",
+              "rootHeight": 320
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true",
+              "rootHeight": 320
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true",
+              "rootHeight": 320
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true",
+              "rootHeight": 320
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true",
+              "rootHeight": 320
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "custom-container",
+        "container": "custom",
+        "local": {
+          "focusable": {
+            "trap": false
+          }
+        },
+        "steps": [
+          "open",
+          "tab-last",
+          "shift-first",
+          "focus-outside",
+          "click-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "after",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "shift-first",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "live-mask",
+        "local": {},
+        "steps": [
+          "open",
+          "focus-last",
+          "mask-off",
+          "click-outside",
+          "mask-on",
+          "tab-last",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "focus-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "mask-off",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-last",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "click-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "mask-on",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-close",
+          "locked": true,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "tab-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "body",
+          "locked": true,
+          "outsideClicks": 1,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 1,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "live-trap",
+        "local": {
+          "mask": false
+        },
+        "steps": [
+          "open",
+          "focus-outside",
+          "trap-on",
+          "focus-outside",
+          "trap-off",
+          "focus-outside",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "trap-on",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-close",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-close",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "trap-off",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-close",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "focus-outside",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "outside",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "nested-maskless",
+        "nested": {
+          "mask": false
+        },
+        "steps": [
+          "open",
+          "open-child",
+          "focus-parent-last",
+          "escape",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open-child",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            {
+              "node": 2,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            }
+          ],
+          "focus": "b-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "b",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "focus-parent-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            {
+              "node": 2,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            }
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "b"
+            ],
+            [
+              "settled",
+              "b",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "nested-keyboard-disabled",
+        "nested": {
+          "mask": false,
+          "keyboard": false
+        },
+        "steps": [
+          "open",
+          "open-child",
+          "focus-parent-last",
+          "escape",
+          "close-child",
+          "escape"
+        ]
+      },
+      "frames": [
+        {
+          "action": "open",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "a",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open-child",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            {
+              "node": 2,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            }
+          ],
+          "focus": "b-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "b",
+              true
+            ]
+          ]
+        },
+        {
+          "action": "focus-parent-last",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            {
+              "node": 2,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            }
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "escape",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            {
+              "node": 2,
+              "visible": true,
+              "mask": false,
+              "blur": false,
+              "ariaModal": "true"
+            }
+          ],
+          "focus": "a-last",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": []
+        },
+        {
+          "action": "close-child",
+          "panels": [
+            {
+              "node": 1,
+              "visible": true,
+              "mask": true,
+              "blur": false,
+              "ariaModal": "true"
+            },
+            null
+          ],
+          "focus": "a-root",
+          "locked": true,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "settled",
+              "b",
+              false
+            ]
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            null,
+            null
+          ],
+          "focus": "before",
+          "locked": false,
+          "outsideClicks": 0,
+          "events": [
+            [
+              "request",
+              "a"
+            ],
+            [
+              "settled",
+              "a",
+              false
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

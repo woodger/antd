@@ -10,7 +10,7 @@ import type { PopupFlipCache, PopupSourceAlign } from './popup-position.engine';
 import type { AdjustOverflow, TooltipPlacement } from './tooltip.types';
 
 const openPopups = new WeakMap<Document, HTMLElement[]>();
-const popupConnections = new WeakMap<HTMLElement, object>();
+const popupConnections = new WeakMap<HTMLElement, { anchor: Element; }>();
 
 /** Cleanup остаётся вызываемой функцией; forceAlign использует тот же контроллер позиции. */
 export interface PopupConnection {
@@ -24,6 +24,28 @@ export interface PopupConnection {
 export function getPopupActiveElement(element: Element) {
   const root = element.getRootNode() as Document | ShadowRoot;
   return root.activeElement ?? element.ownerDocument.activeElement;
+}
+
+/** Учитывает логическую связь с trigger, даже когда панель вынесена из scope порталом. */
+export function isPopupFocusWithin(scope: HTMLElement, element: Element | null): boolean {
+  let current = element;
+  const visited = new Set<Element>();
+  while (current && !visited.has(current)) {
+    if (scope === current || scope.contains(current)) return true;
+
+    visited.add(current);
+    const popup = current.closest<HTMLElement>('[popover]:popover-open');
+    const owner = popup ? popupConnections.get(popup) : undefined;
+    if (owner) {
+      current = owner.anchor;
+    }
+    else {
+      const root = current.getRootNode();
+      current = root instanceof ShadowRoot ? root.host : null;
+    }
+  }
+
+  return false;
 }
 
 // Начинает измерения и возвращает единый handle обновления и очистки popup.
@@ -67,7 +89,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   const document = anchor.ownerDocument;
   // Правило 2: подключение popup выполняется только в browser lifecycle.
   const view = document.defaultView!;
-  const owner = {};
+  const owner = { anchor };
   popupConnections.set(popup, owner);
   let frame = 0;
   let shown = false;

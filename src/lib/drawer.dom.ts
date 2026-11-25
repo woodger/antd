@@ -1,16 +1,20 @@
 // Связывает фазы Drawer с native dialog и анимациями panel и mask. Ревизия motion исключает
 // применение завершения старого кадра.
-import { getDrawerMotionDuration, getDrawerTransform } from './drawer.engine';
+import {
+  getDrawerMotionDuration, getDrawerTransform, type DrawerInteraction
+} from './drawer.engine';
+import { connectDrawerFocus } from './drawer-focus.dom';
 import type { DrawerPlacement } from './drawer.types';
 
 // Создаёт DOM-контроллер для шаблона с panel и mask.
 export function createDrawerDialog(
   dialog: HTMLDialogElement,
   onClosing: (closing: boolean) => void,
-  onSettled: (open: boolean) => void
+  onSettled: (open: boolean) => void,
+  getInteraction: () => DrawerInteraction
 ) {
-  const panel = dialog.querySelector<HTMLElement>('[data-ant-drawer-content-wrapper]')!;
-  const mask = dialog.querySelector<HTMLElement>('[data-ant-drawer-mask]')!;
+  const panel = dialog.querySelector<HTMLElement>(':scope > [data-ant-drawer-content-wrapper]')!;
+  const focus = connectDrawerFocus(dialog, getInteraction);
   const view = dialog.ownerDocument.defaultView!;
   const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   let animations: Animation[] = [];
@@ -41,15 +45,29 @@ export function createDrawerDialog(
     }
 
     phase = 'closed';
-    if (dialog.open) dialog.close();
+    const restore = focus.close();
 
     const settledRevision = revision;
     try {
       onSettled(false);
     }
     finally {
-      if (revision === settledRevision) onClosing(false);
+      if (revision === settledRevision) {
+        onClosing(false);
+        restore?.();
+      }
     }
+  }
+
+  // Маска может исчезнуть независимо от панели и направления её движения.
+  function getMask() {
+    return dialog.querySelector<HTMLElement>(':scope > [data-ant-drawer-mask]');
+  }
+
+  // Берёт начало fade из текущего кадра, когда изменение open прерывает движение.
+  function getMaskOpacity() {
+    const mask = getMask();
+    return mask && dialog.open ? view.getComputedStyle(mask).opacity : '0';
   }
 
   // Выносит уведомление нулевой фазы из синхронного DOM-обновления.
@@ -77,7 +95,11 @@ export function createDrawerDialog(
       fill: 'both'
     };
     const motion = panel.animate([{ transform: from }, { transform: to }], options);
-    animations = [motion, mask.animate([{ opacity }, { opacity: opening ? '1' : '0' }], options)];
+    animations = [motion];
+    const mask = getMask();
+    if (mask) {
+      animations.push(mask.animate([{ opacity }, { opacity: opening ? '1' : '0' }], options));
+    }
     void motion.finished.then(() => finish(current, opening), () => {});
   }
 
@@ -88,7 +110,7 @@ export function createDrawerDialog(
     }
 
     if (open) {
-      if (dialog.open && !dialog.matches(':modal')) dialog.close();
+      if (dialog.open) focus.sync();
       if (dialog.open && phase !== 'closing') {
         if (side !== placement) {
           cancelMotion();
@@ -101,18 +123,17 @@ export function createDrawerDialog(
       const from = dialog.open
         ? view.getComputedStyle(panel).transform
         : getDrawerTransform(placement);
-      const opacity = dialog.open ? view.getComputedStyle(mask).opacity : '0';
+      const opacity = getMaskOpacity();
       cancelMotion();
       side = placement;
       phase = 'opening';
       onClosing(false);
-      if (!dialog.open)
-        dialog.showModal();
+      if (!dialog.open) focus.open();
       animate(from, 'translate(0, 0)', opacity, true);
     }
     else if (dialog.open && phase !== 'closing') {
       const from = view.getComputedStyle(panel).transform;
-      const opacity = view.getComputedStyle(mask).opacity;
+      const opacity = getMaskOpacity();
       cancelMotion();
       side = placement;
       phase = 'closing';
@@ -138,14 +159,14 @@ export function createDrawerDialog(
       cancelMotion();
       phase = 'closed';
       onClosing(false);
+      focus.close()?.();
     },
     // Отключает слушатель, отменяет motion и освобождает открытый dialog.
     destroy() {
       disposed = true;
       reducedMotion.removeEventListener('change', handleReducedMotion);
       cancelMotion();
-      if (dialog.open)
-        dialog.close();
+      focus.close()?.();
     }
   };
 }

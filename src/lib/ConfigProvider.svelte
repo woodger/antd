@@ -27,6 +27,7 @@
   import type { TooltipConfig } from './tooltip.types';
   import type { PopoverConfig } from './popover.types';
   import type { PopconfirmConfig } from './popconfirm.types';
+  import type { DrawerConfig } from './drawer.types';
   import type { RateConfig } from './rate.types';
   import type { WatermarkConfig } from './watermark.types';
   import type { AffixConfig } from './affix.types';
@@ -124,6 +125,7 @@
     tooltip?: TooltipConfig;
     popover?: PopoverConfig;
     popconfirm?: PopconfirmConfig;
+    drawer?: DrawerConfig;
     rate?: RateConfig;
     watermark?: WatermarkConfig;
     affix?: AffixConfig;
@@ -231,6 +233,7 @@
     tooltip,
     popover,
     popconfirm,
+    drawer,
     rate,
     watermark,
     affix,
@@ -395,6 +398,9 @@
     },
     get popconfirm() {
       return popconfirm ?? parent.popconfirm;
+    },
+    get drawer() {
+      return drawer ?? parent.drawer;
     },
     get button() {
       return button ?? parent.button;

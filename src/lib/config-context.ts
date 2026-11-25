@@ -53,6 +53,7 @@ import type { EmptyConfig } from './empty.types';
 import type { ResultConfig } from './result.types';
 import type { AlertConfig } from './alert.types';
 import type { CollapseConfig } from './collapse.types';
+import type { DrawerConfig } from './drawer.types';
 import type { SegmentedConfig } from './segmented.types';
 import type { SpaceConfig } from './space.types';
 import type { ColorPickerConfig } from './color-picker.types';
@@ -100,6 +101,7 @@ export interface ConfigContext {
   readonly tooltip?: TooltipConfig;
   readonly popover?: PopoverConfig;
   readonly popconfirm?: PopconfirmConfig;
+  readonly drawer?: DrawerConfig;
   readonly button?: ButtonConfig;
   readonly rate?: RateConfig;
   readonly watermark?: WatermarkConfig;

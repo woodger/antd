@@ -1,5 +1,42 @@
 // Преобразует dimension и placement Drawer в размер, смещение и параметры движения без DOM.
-import type { DrawerPlacement, DrawerPushConfig, DrawerSize } from './drawer.types';
+import type {
+  DrawerConfig, DrawerFocusableConfig, DrawerMask, DrawerMaskConfig,
+  DrawerPlacement, DrawerPushConfig, DrawerSize
+} from './drawer.types';
+
+/** Boolean меняет только видимость маски; остальные поля могут прийти из ConfigProvider. */
+function maskOptions(value: DrawerMask | undefined): DrawerMaskConfig {
+  return typeof value === 'boolean' ? { enabled: value } : value ?? {};
+}
+
+/** Выбирает native modality для прежних настроек и разрешает независимые режимы фокуса. */
+export function resolveDrawerInteraction(
+  mask: DrawerMask | undefined,
+  focusable: DrawerFocusableConfig | undefined,
+  autoFocus: boolean,
+  config?: DrawerConfig
+) {
+  const ownMask = maskOptions(mask);
+  const inheritedMask = maskOptions(config?.mask);
+  const mergedMask = { ...inheritedMask, ...ownMask };
+  const enabled = mergedMask.enabled !== false;
+  const closable = ownMask.closable ?? inheritedMask.closable ?? true;
+  const { trap = enabled, focusTriggerAfterClose: restoreFocus = true } = {
+    ...config?.focusable,
+    ...focusable
+  };
+  const native = enabled && trap && autoFocus && restoreFocus;
+
+  return {
+    mask: { enabled, closable, blur: Boolean(mergedMask.blur) },
+    trap,
+    restoreFocus,
+    autoFocus,
+    native
+  };
+}
+
+export type DrawerInteraction = ReturnType<typeof resolveDrawerInteraction>;
 
 /** Сохраняет CSS-длины. Ноль допустим как результат изменения размера панели. */
 export function getDrawerSize(size: DrawerSize = 'default', allowZero = false): string {

@@ -13,7 +13,8 @@
   import { useWatermarkPanel } from './watermark-context';
   import { createDrawerDialog } from './drawer.dom';
   import {
-    getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal
+    getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal,
+    resolveDrawerInteraction
   } from './drawer.engine';
   import { provideDrawerPush, useDrawerPush } from './drawer-push-context';
   import { connectDrawerResize } from './drawer-resize.dom';
@@ -37,6 +38,8 @@
     closable = true,
     keyboard = true,
     mask,
+    focusable,
+    autoFocus = true,
     forceRender = false,
     destroyOnHidden = false,
     getContainer,
@@ -51,6 +54,7 @@
   }: DrawerProps = $props();
 
   const config = useConfig();
+  const interaction = $derived(resolveDrawerInteraction(mask, focusable, autoFocus, config.drawer));
   let componentPrefix = $derived(config.getPrefixCls('drawer', customizePrefixCls));
   let prefixCss = $derived(getDrawerPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Drawer');
@@ -99,20 +103,30 @@
     getContainer,
     getPopupContainer: config.getPopupContainer,
     enabled: !destroyOnHidden || open || closing || forceRender,
+    portalByDefault: !interaction.native && (open || closing),
     style: rootStyle,
     onPointerDown: event => {
-      backdropPointer = event.button === 0 && isBackdrop(event) ? event.pointerId : undefined;
+      backdropPointer = interaction.mask.enabled && event.button === 0 && isBackdrop(event)
+        ? event.pointerId : undefined;
     },
     onPointerUp: handlePointerUp,
     onPointerCancel: () => { backdropPointer = undefined; }
   }));
+  const scrollUnlocked = $derived.by(() => {
+    if (!interaction.mask.enabled) return true;
+    if (interaction.native) return false;
+
+    const target = container.target;
+    return target === false || target !== undefined && target !== dialog?.ownerDocument.body;
+  });
 
   function connectRuntime(node: HTMLDialogElement) {
     closing = false;
     const current = createDrawerDialog(
       node,
       value => { closing = value; },
-      next => afterOpenChange?.(next)
+      next => afterOpenChange?.(next),
+      () => interaction
     );
     runtime = current;
     return () => {
@@ -160,6 +174,8 @@
     const requested = open;
     const side = placement;
     const current = runtime;
+    // Смена mask или focusable должна обновить режим открытого dialog.
+    void interaction;
     if (!node || !current || !container.connected || !node.isConnected) {
       return;
     }
@@ -214,7 +230,7 @@
   function handlePointerUp(event: PointerEvent) {
     const dismiss = event.pointerId === backdropPointer && isBackdrop(event);
     backdropPointer = undefined;
-    if (mask?.closable !== false && dismiss)
+    if (interaction.mask.enabled && interaction.mask.closable && dismiss)
       requestClose(event);
   }
 
@@ -229,8 +245,12 @@
 </script>
 
 <style>
-  :global(html:has(dialog.ant-svelte-drawer[open])) { overflow: hidden; }
+  :global(html:has(dialog.ant-svelte-drawer[open]:not([data-ant-dialog-unlocked]))) {
+    overflow: hidden;
+  }
   .ant-svelte-drawer { width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent; pointer-events: auto; outline: none; }
+  .ant-svelte-drawer[data-ant-drawer-maskless] { pointer-events: none; }
+  .ant-svelte-drawer[data-ant-drawer-inline] { position: absolute; height: 100%; }
   .ant-svelte-drawer:not([open]) { display: none; }
   .ant-svelte-drawer::backdrop { background: transparent; }
   .ant-svelte-drawer > [data-ant-drawer-content-wrapper] {
@@ -289,19 +309,30 @@
 
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`drawer-prefix:${componentPrefix}`} />{/if}{#key container.key}<dialog data-ant-drawer-prefix={componentPrefix} data-ant-drawer-placement={placement} bind:this={dialog} id={rootId} class={[
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`drawer-prefix:${componentPrefix}`} />{/if}{#key container.key}<dialog data-ant-drawer-prefix={componentPrefix} data-ant-drawer-placement={placement}
+  data-ant-drawer-maskless={!interaction.mask.enabled || undefined}
+  data-ant-drawer-inline={!interaction.native && getContainer === false || undefined}
+  data-ant-dialog-unlocked={scrollUnlocked || undefined}
+  closedby="closerequest"
+  tabindex={interaction.native ? undefined : -1}
+  bind:this={dialog} id={rootId} class={[
     `${componentPrefix} ant-drawer-css-var ant-svelte-drawer`,
     componentTheme.className,
     designTheme.enabled && 'drawer-source-theme',
     `${componentPrefix}-${placement}`,
+    !interaction.mask.enabled && 'no-mask',
     config.direction === 'rtl' && `${componentPrefix}-rtl`,
     className
-  ]} style={rootStyle} style:--ant-svelte-drawer-size={sizeInCss} dir={config.direction} aria-modal="true" aria-label={ariaLabel} aria-labelledby={ariaLabelledby
+  ]} style={rootStyle} style:--ant-svelte-drawer-size={sizeInCss} dir={config.direction}
+    aria-modal={interaction.mask.enabled && interaction.trap || undefined}
+    aria-label={ariaLabel} aria-labelledby={ariaLabelledby
       ?? (ariaLabel === undefined && title !== undefined
         ? titleId
         : undefined)} aria-describedby={ariaDescribedby} oncancel={handleCancel} onclose={handleClose}
     {@attach container.attach} {@attach connectRuntime}>
-  <div data-ant-drawer-mask class={[`${componentPrefix}-mask`, mask?.blur && `${componentPrefix}-mask-blur`]} aria-hidden="true"></div>
+  {#if interaction.mask.enabled}<div data-ant-drawer-mask class={[
+    `${componentPrefix}-mask`, interaction.mask.blur && `${componentPrefix}-mask-blur`
+  ]} aria-hidden="true"></div>{/if}
   <div data-ant-drawer-content-wrapper data-ant-drawer-dragging={resizing || undefined} class={[
     `${componentPrefix}-content-wrapper`,
     resizing && `${componentPrefix}-content-wrapper-dragging`

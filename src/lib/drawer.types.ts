@@ -4,6 +4,27 @@ import type { GetContainer } from './types';
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left';
 export type DrawerSize = 'default' | 'large' | number | (string & {});
 
+export interface DrawerMaskConfig {
+  enabled?: boolean;
+  blur?: boolean;
+  closable?: boolean;
+}
+
+export type DrawerMask = boolean | DrawerMaskConfig;
+
+export interface DrawerFocusableConfig {
+  /** Удерживает фокус в открытой панели. По умолчанию действует при включённой маске. */
+  trap?: boolean;
+  /** Возвращает фокус к исходному элементу после закрытия. @defaultValue true */
+  focusTriggerAfterClose?: boolean;
+}
+
+/** Настройки маски и фокуса, передаваемые Drawer через ConfigProvider. */
+export interface DrawerConfig {
+  mask?: DrawerMask;
+  focusable?: DrawerFocusableConfig;
+}
+
 export interface DrawerResizableConfig {
   /** Текущий размер в пикселях при захвате границы панели. */
   onResizeStart?: (size: number) => void;
@@ -18,7 +39,7 @@ export interface DrawerPushConfig {
   distance?: number | string;
 }
 
-/** Модальная выдвижная панель с управлением open, фокусом и жизненным циклом children. */
+/** Выдвижная панель с управлением open, фокусом и жизненным циклом children. */
 export interface DrawerProps {
   /** Локальный CSS-префикс Drawer и его частей; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
@@ -46,7 +67,11 @@ export interface DrawerProps {
   closable?: boolean;
   /** @defaultValue true */
   keyboard?: boolean;
-  mask?: { closable?: boolean; blur?: boolean; };
+  /** Маска, размытие и закрытие при полном нажатии на фон. @defaultValue true */
+  mask?: DrawerMask;
+  focusable?: DrawerFocusableConfig;
+  /** Передаёт фокус панели при открытии. @defaultValue true */
+  autoFocus?: boolean;
   /** @defaultValue false */
   forceRender?: boolean;
   /** @defaultValue false */
