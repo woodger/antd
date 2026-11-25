@@ -55,7 +55,9 @@ test('App keeps APIs and existing notices while applying updated count and place
     await expect(page.locator('.ant-message-notice')).toContainText('Message 4');
     await expect(page.locator('.ant-notification-topRight .ant-notification-notice'))
       .toHaveCount(1);
-    await expect(page.locator('.ant-notification-notice')).toContainText('Notification 4');
+    const notifications = page.locator('.ant-notification-notice');
+    await expect(notifications).toHaveCount(1);
+    await expect(notifications).toContainText('Notification 4');
   });
 
 test('App merges nested options and isolates its queues', async ({ page }) => {
