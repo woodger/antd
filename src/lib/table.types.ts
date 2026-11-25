@@ -334,12 +334,15 @@ export interface TableConfig {
   styles?: TableConfigSemantic;
 }
 
-/** Настройки Pagination, которыми управляет Table; total вычисляется по данным. */
-export type TablePaginationConfig = Pick<
-  PaginationProps,
-  'showSizeChanger' | 'pageSizeOptions' | 'hideOnSinglePage' | 'showTotal' | 'aria-label'
-    | 'classNames' | 'styles'
->;
+/** Сторона по вертикали и логическое выравнивание пейджера относительно таблицы. */
+export type TablePaginationPlacement = 'topStart' | 'topCenter' | 'topEnd'
+  | 'bottomStart' | 'bottomCenter' | 'bottomEnd' | 'none';
+
+/** Настройки общего состояния страницы и обоих экземпляров Pagination. */
+export interface TablePaginationConfig extends PaginationProps {
+  /** Первый вариант для каждой стороны. Пустой массив и ['none'] скрывают оба пейджера. */
+  placement?: readonly TablePaginationPlacement[];
+}
 
 /** Размеры области прокрутки и сброс после пользовательского изменения данных. */
 export interface TableScrollOptions {

@@ -126,3 +126,43 @@ test('Table hydrates semantic styles and updates them around the existing editor
     node.selectionStart, node.selectionEnd
   ])).toEqual([2, 7]);
 });
+
+test('Table hydrates both pagers around the same editor', async ({ page }) => {
+  const entry = new URL('./fixtures/table-column-layout.server.ts', import.meta.url);
+  const { renderTablePagination } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTablePagination();
+  await page.goto('/select-components-hydration.html?pagination');
+  await page.addScriptTag({ type: 'module', url: '/table-column-layout.client.ts' });
+  const container = page.locator('#root');
+  await expect(container).toHaveAttribute('data-hydration-ready', 'true');
+  await container.evaluate((root, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    root.innerHTML = html.body;
+  }, { body, head });
+  const pagers = container.getByRole('navigation', { name: 'Table pages', exact: true });
+  const editor = container.getByRole('textbox', { name: 'Editor 2', exact: true });
+  const originalTop = await pagers.first().elementHandle();
+  const originalEditor = await editor.elementHandle();
+  await expect(pagers).toHaveCount(2);
+  await editor.fill('Draft before pager hydration');
+  await editor.evaluate((node: HTMLInputElement) => node.setSelectionRange(2, 7));
+
+  await container.dispatchEvent('hydrate-table-column-layout');
+  await expect(container).toHaveAttribute('data-hydrated', 'true');
+  await container.getByRole('button', { name: 'Center top', exact: true }).dispatchEvent('click');
+
+  await expect(pagers.first().locator('ul')).toHaveCSS('justify-content', 'center');
+  expect(await pagers.first().evaluate((node, before) => node === before, originalTop)).toBe(true);
+  expect(await editor.evaluate((node, before) => node === before, originalEditor)).toBe(true);
+  await expect(editor).toBeFocused();
+  await expect(editor).toHaveValue('Draft before pager hydration');
+  expect(await editor.evaluate((node: HTMLInputElement) => [
+    node.selectionStart, node.selectionEnd
+  ])).toEqual([2, 7]);
+  await expect(container.getByLabel('Pagination events')).toHaveText('[]');
+
+  await pagers.last().getByRole('button', { name: /^next page$/i }).click();
+
+  await expect(pagers.locator('[aria-current="page"]')).toHaveText(['3', '3']);
+  await expect(container.getByRole('textbox', { name: 'Editor 4', exact: true })).toBeVisible();
+});

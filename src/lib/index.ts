@@ -914,6 +914,7 @@ export type {
   TableSelectionItem,
   TableSelectionPreset,
   TablePaginationConfig,
+  TablePaginationPlacement,
   TableChange,
   TableFilters,
   TableFilterOption,

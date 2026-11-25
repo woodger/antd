@@ -1,6 +1,7 @@
 import { render } from 'svelte/server';
 import DefaultsFixture from './TableColumnDefaultsFixture.svelte';
 import Fixture from './TableColumnLayoutFixture.svelte';
+import PaginationFixture from './TablePaginationFixture.svelte';
 import SemanticFixture from './TableSemanticFixture.svelte';
 
 /** Формирует исходную сетку и редактор до подключения измерений. */
@@ -16,4 +17,9 @@ export function renderColumnDefaults() {
 /** Передаёт исходные semantic слои и редактор до запуска hydration. */
 export function renderTableSemantic() {
   return render(SemanticFixture, { props: { profileId: 'reactive' } });
+}
+
+/** Готовит верхний и нижний пейджеры вокруг одной страницы с редактором. */
+export function renderTablePagination() {
+  return render(PaginationFixture, { props: { profileId: 'live' } });
 }

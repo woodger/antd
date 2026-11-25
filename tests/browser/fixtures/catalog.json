@@ -1813,6 +1813,11 @@
     "root": "table-semantic-fixture"
   },
   {
+    "id": "table-pagination",
+    "module": "./TablePaginationFixture.svelte",
+    "root": "table-pagination-fixture"
+  },
+  {
     "id": "table-sorter",
     "module": "./TableSorterFixture.svelte",
     "root": "table-sorter-fixture"

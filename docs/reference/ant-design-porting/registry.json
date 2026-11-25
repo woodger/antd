@@ -20001,6 +20001,24 @@
           "note": "Два одинаковых прогона Ant Design 6.6.8 и rc-table 1.11.1 дают 17 состояний и 13 SSR-снимков. Проверены обычное тело при пустых виртуальных данных и без scroll.y, object и callback, сокращённые классы групп, размер из контекста, накопление классов, CSS-контекст и inline порядок внешнего узла, замена вложенного стиля и явно заданный undefined. Слоты покрывают заголовки и подвал, scroll, обычные и виртуальные строки, служебные ячейки, пустую таблицу и скрытую шапку. rootClassName передаётся панели фильтра вместе с её локальным классом. Классы и стили Pagination разрешаются с параметрами пейджера. Native сохраняет nav и tr/td виртуального тела, класс onHeaderRow и существующее расположение пагинации. Строгая гидратация и смена семантических настроек сохраняют редактор, черновик, фокус и выделение."
         },
         {
+          "id": "pagination-config",
+          "title": "Расположение и общее состояние пейджеров Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-pagination.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-pagination-reference.json",
+            "tests/browser/table-pagination.spec.ts",
+            "tests/browser/table-column-layout-hydration.spec.ts",
+            "tests/package/table-pagination.ssr.test.ts",
+            "tests/package/table-pagination.types.ts"
+          ],
+          "note": "Два одинаковых прогона Ant Design 6.6.8, rc-table 1.11.1 и rc-pagination 1.4.0 дают 58 состояний и 24 SSR-снимка. Перенесены шесть положений, none, пустой список, первый вариант на каждой стороне, RTL и три независимых префикса. Два nav используют одну страницу и размер. Проверены default, принятие и отклонение вложенных current/pageSize, размер, порядок onShowSizeChange → pagination.onChange → Table.onChange, фильтрация, trim, скрытие при нуле и hideOnSinglePage, simple с локальным текстом, быстрый переход с клавиатуры, семантические стили, внешнее total и снимок события при синхронной замене строк. Native props/bindings и total режима server имеют приоритет, загруженные строки server сохраняются. Строгая гидратация проверяет оба пейджера и сохранение редактора. Deprecated pagination.position исключён."
+        },
+        {
           "id": "filter-state",
           "title": "Начальные и управляемые фильтры колонок",
           "state": "supported",

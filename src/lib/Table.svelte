@@ -20,6 +20,10 @@
   } from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
   import { getTableLayout } from './table-layout.engine';
+  import {
+    getTablePageRows, getTablePagerPlacements, getTablePagerSize, getTablePagingTotal,
+    type TablePagerAlignment
+  } from './table-pagination.engine';
   import { getTablePaginationSemantics, getTableSemantics } from './table-semantic.engine';
   import {
     changeTableSorts, getControlledTableSorts, getInitialTableSorts, getTableColumnTitleSorts,
@@ -72,7 +76,9 @@
     filters = $bindable(),
     filters: providedFilters,
     current = $bindable(),
+    current: providedCurrent,
     pageSize = $bindable(),
+    pageSize: providedPageSize,
     selectedRowKeys = $bindable(),
     nativeElement = $bindable(),
     ...rawProps
@@ -94,8 +100,8 @@
     sortDirections = tableSortDirections,
     showSorterTooltip = true,
     defaultFilters,
-    defaultCurrent = 1,
-    defaultPageSize = 10,
+    defaultCurrent,
+    defaultPageSize,
     pagination,
     rowSelection = false,
     defaultSelectedRowKeys,
@@ -153,10 +159,18 @@
     }
     return localSorts;
   });
-  const initialCurrent = untrack(() => defaultCurrent);
-  const initialSize = untrack(() => defaultPageSize);
-  let pageRequest = $state.raw(untrack(readPageRequest));
-  $effect.pre(syncPageRequest);
+  const pagerOptions = $derived(pagination || undefined);
+  // Локальный запрос живёт отдельно от props, включая объект с расположением пейджеров.
+  let localPage = $state.raw(untrack(() => ({
+    current: defaultCurrent ?? pagerOptions?.defaultCurrent ?? 1,
+    pageSize: defaultPageSize ?? pagerOptions?.defaultPageSize ?? 10
+  })));
+  const requestedCurrent = $derived(
+    (providedCurrent === undefined ? pagerOptions?.current : current) ?? localPage.current
+  );
+  const requestedPageSize = $derived(
+    (providedPageSize === undefined ? pagerOptions?.pageSize : pageSize) ?? localPage.pageSize
+  );
   const initialFilters = untrack(() => getInitialTableFilters(dataColumns, defaultFilters));
   let localColumnFilters = $state.raw<TableFilters>();
   const hasTableFilterDefaults = untrack(() => defaultFilters !== undefined);
@@ -187,20 +201,18 @@
   let hasFilters = $derived(
     dataColumns.some(column => column.filterDropdown || getTableFilterOptions(column, mode)?.length)
   );
-  let paging = $derived(
-    getPaginationState(
-      mode === 'server' ? total ?? dataSource.length : tableData.rows.length,
-      pageRequest.current,
-      pageRequest.pageSize
-    )
+  const pagingTotal = $derived(getTablePagingTotal(
+    mode,
+    mode === 'server' ? dataSource.length : tableData.rows.length,
+    total,
+    pagerOptions?.total
+  ));
+  const paging = $derived(getPaginationState(pagingTotal, requestedCurrent, requestedPageSize));
+  const pagerPlacements = $derived(
+    pagination !== false && paging.total > 0 ? getTablePagerPlacements(pagerOptions?.placement) : {}
   );
-  let pageRows = $derived(
-    mode === 'server' || pagination === false
-      ? tableData.rows
-      : tableData.rows.slice(
-        (paging.current - 1) * paging.pageSize,
-        paging.current * paging.pageSize
-      )
+  const pageRows = $derived(
+    getTablePageRows(tableData.rows, paging, pagination !== false, mode)
   );
   let panelData = $derived(pageRows.map(row => row.record));
   const summaryRender = $derived(typeof summary === 'function' ? summary : summary?.render);
@@ -241,6 +253,7 @@
   const treeControlColumn = $derived(rowSelection ? 1 : 0);
 
   let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loading);
+  const pagerDisabled = $derived(resolvedDisabled || Boolean(pagerOptions?.disabled));
   let selectionOptions = $derived(typeof rowSelection === 'object' ? rowSelection : undefined);
   const selection = createTableSelection({
     enabled: () => Boolean(rowSelection),
@@ -259,6 +272,9 @@
   const selectionWidth = $derived(selectionOptions?.columnWidth ?? (designTheme.enabled
     ? designTheme.state.token.Table?.selectionColumnWidth : 48));
   let resolvedSize = $derived(size ?? config.componentSize);
+  const pagerSize = $derived(
+    getTablePagerSize(pagerOptions?.size, size ?? config.explicitComponentSize)
+  );
   const semanticProps: TableProps<Row> = $derived({
     ...rawProps,
     sorter, filters, current, pageSize, selectedRowKeys, nativeElement,
@@ -616,22 +632,34 @@
     return getTableData(dataSource, resolvedColumns, rowKey, sorts, selected, mode, childrenColumnName);
   }
 
-  function notifyChange(
-    action: TableChange<Row>['action'],
-    requested?: { sorts?: readonly TableSortState[]; filters?: TableFilters; }
-  ) {
+  interface TableChangeRequest {
+    sorts?: readonly TableSortState[];
+    filters?: TableFilters;
+    data?: ReturnType<typeof readTableData>;
+    pagination?: TableChange<Row>['pagination'];
+  }
+
+  /** Управляемые колонки могут запрашивать данные, отличные от отображаемых. */
+  function getChangeData(requested?: TableChangeRequest) {
+    if (requested?.sorts === undefined && requested?.filters === undefined) {
+      return tableData;
+    }
+
+    return readTableData(requested.sorts ?? activeSorts, requested.filters ?? appliedFilters);
+  }
+
+  function notifyChange(action: TableChange<Row>['action'], requested?: TableChangeRequest) {
     scrollport.resetAfterChange();
     if (!onChange) {
       return;
     }
 
-    const data = requested
-      ? readTableData(requested.sorts ?? activeSorts, requested.filters ?? appliedFilters)
-      : tableData;
+    const data = requested?.data ?? getChangeData(requested);
     const showSorters = multipleSort || data.sorters.length > 1;
+    const page = requested?.pagination ?? paging;
     onChange({
       action,
-      pagination: { current: paging.current, pageSize: paging.pageSize, total: paging.total },
+      pagination: { current: page.current, pageSize: page.pageSize, total: page.total },
       sorter: data.sorter ? { ...data.sorter } : null,
       ...(showSorters ? { sorters: data.sorters.map(state => ({ ...state })) } : {}),
       ...(hasFilters ? { filters: getTableFilters(resolvedColumns, data.filters, mode) } : {}),
@@ -656,28 +684,31 @@
     notifyChange('sort', controlledSorts.length ? { sorts: requested } : undefined);
   }
 
-  function readPageRequest() {
-    return { current: current ?? initialCurrent, pageSize: pageSize ?? initialSize };
-  }
-
-  // Управляемые props обновляют тот же запрос до рендера, действия Table — до onChange.
-  function syncPageRequest() {
-    const next = readPageRequest();
-    const previous = untrack(() => pageRequest);
-    if (next.current !== previous.current || next.pageSize !== previous.pageSize) {
-      pageRequest = next;
-    }
-  }
-
   function changePage(page: number, size: number) {
-    if (resolvedDisabled) {
+    if (pagerDisabled) {
       return;
     }
 
+    // Обработчик пейджера может синхронно заменить строки и total.
+    const request = {
+      data: tableData,
+      pagination: { current: page, pageSize: size, total: paging.total }
+    };
+    const options = pagerOptions;
+    options?.onChange?.(page, size);
     current = page;
     pageSize = size;
-    syncPageRequest();
-    notifyChange('paginate');
+    localPage = { current: page, pageSize: size };
+    notifyChange('paginate', request);
+  }
+
+  // Изменения пейджера проходят через onChange, чтобы оба экземпляра читали одну страницу.
+  function keepPageRequest() {}
+
+  function changePagerSize(previous: number, size: number) {
+    if (!pagerDisabled) {
+      pagerOptions?.onShowSizeChange?.(previous, size);
+    }
   }
 
   function changeFilter(columnKey: string, values: TableFilterValue[]) {
@@ -709,8 +740,15 @@
 
     filters = next;
     current = 1;
-    syncPageRequest();
-    notifyChange('filter', reportRequested ? { filters: active } : undefined);
+    localPage = { ...localPage, current: 1 };
+
+    const options = pagerOptions;
+    const requestedFilters = reportRequested ? active : undefined;
+    const requestedPage = { current: 1, pageSize: paging.pageSize, total: paging.total };
+    const data = onChange && options?.onChange
+      ? getChangeData({ filters: requestedFilters }) : undefined;
+    options?.onChange?.(requestedPage.current, requestedPage.pageSize);
+    notifyChange('filter', { filters: requestedFilters, pagination: requestedPage, data });
   }
 
   function sortDescription(order: TableSortOrder | undefined): string {
@@ -1241,6 +1279,22 @@
   </th>
 {/snippet}
 
+{#snippet tablePager(alignment: TablePagerAlignment)}
+  <Pagination
+    {...pagerOptions}
+    {...pagerSemantics}
+    total={paging.total}
+    bind:current={() => paging.current, keepPageRequest}
+    bind:pageSize={() => paging.pageSize, keepPageRequest}
+    disabled={pagerDisabled}
+    size={pagerSize}
+    class={[`${prefix}-pagination ${prefix}-pagination-${alignment}`, pagerOptions?.class]
+      .filter(Boolean).join(' ')}
+    onChange={changePage}
+    onShowSizeChange={changePagerSize}
+  />
+{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
     `${prefix}-wrapper ant-table-css-var`,
     componentTheme.className,
@@ -1253,6 +1307,7 @@
     classes.root
   ]} dir={config.direction} style={rootStyle}>
   {#if loading}<div class="loading-state" role="status"><Spin size="small" aria-hidden />{strings.loadingText}</div>{/if}
+  {#if pagerPlacements.top}{@render tablePager(pagerPlacements.top)}{/if}
   <div data-ant-table-part="table" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} data-ant-table-size={resolvedSize} class={[
       `${prefix}`,
       `${prefix}-${resolvedSize}`,
@@ -1499,10 +1554,5 @@
     {#if footer}<div class={[`${prefix}-footer`, classes.footer]}
       style={slots.footer}>{@render footer(panelData)}</div>{/if}
   </div>
-  {#if pagination !== false}
-    <Pagination {...pagination} {...pagerSemantics}
-      total={paging.total} current={paging.current} pageSize={paging.pageSize}
-      disabled={resolvedDisabled} size={resolvedSize}
-      class={`${prefix}-pagination ${prefix}-pagination-end`} onChange={changePage} />
-  {/if}
+  {#if pagerPlacements.bottom}{@render tablePager(pagerPlacements.bottom)}{/if}
 </div>

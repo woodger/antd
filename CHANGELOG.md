@@ -24,6 +24,9 @@
 
 ### Added
 
+- Table размещает Pagination сверху и снизу через `pagination.placement`.
+  Оба пейджера используют общую страницу и размер.
+
 - Table поддерживает `classNames`, `styles` и `rootClassName`, включая настройки
   оформления в `ConfigProvider.table` и слоты Pagination.
 

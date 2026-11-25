@@ -2,6 +2,7 @@ import '@woodger/antd/styles.css';
 import { hydrate } from 'svelte';
 import DefaultsFixture from './TableColumnDefaultsFixture.svelte';
 import Fixture from './TableColumnLayoutFixture.svelte';
+import PaginationFixture from './TablePaginationFixture.svelte';
 import SemanticFixture from './TableSemanticFixture.svelte';
 
 const target = document.getElementById('root');
@@ -13,7 +14,10 @@ const query = new URLSearchParams(location.search);
 const profileId = query.get('profile') ?? 'fixed-rtl';
 // Стенд оставляет серверные DOM-узлы доступными до начала строгой гидратации.
 target.addEventListener('hydrate-table-column-layout', () => {
-  if (query.has('semantic')) {
+  if (query.has('pagination')) {
+    hydrate(PaginationFixture, { target, props: { profileId: 'live' }, recover: false });
+  }
+  else if (query.has('semantic')) {
     hydrate(SemanticFixture, { target, props: { profileId: 'reactive' }, recover: false });
   }
   else if (query.has('defaults')) {
