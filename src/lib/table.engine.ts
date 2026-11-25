@@ -52,7 +52,8 @@ export function getTableData<Row extends object>(
     return { ...state, rows: roots };
   }
 
-  const filteredColumns = dataColumns.filter((item) => Object.hasOwn(activeFilters, item.key));
+  const filteredColumns = dataColumns.filter(column =>
+    column.onFilter && Object.hasOwn(activeFilters, column.key));
   if (roots.some(row => row.children !== undefined)) {
     // В дереве Ant Design сначала сортирует каждый уровень. Фильтр родителя видит
     // отсортированные и отфильтрованные дочерние записи.

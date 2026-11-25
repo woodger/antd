@@ -1,3 +1,4 @@
+import { createRawSnippet } from 'svelte';
 import { describe, expect, it } from 'vitest';
 import {
   areTableFiltersEqual,
@@ -292,6 +293,30 @@ describe('Table filtering', () => {
     expect(getTableFilters([{ ...filterColumns[0], filters: [] }], { name: ['Anna'] })).toEqual(
       {}
     );
+  });
+
+  it.each([false, true])('keeps custom criteria without a predicate in tree=%s', tree => {
+    const definitions: TableColumn<RecordRow>[] = [
+      {
+        key: 'remote',
+        filterDropdown: createRawSnippet(() => ({ render: () => '<span>Remote criterion</span>' }))
+      },
+      {
+        key: 'score',
+        filters: [{ text: 'At least 20', value: 20 }],
+        onFilter: (value, record) => typeof value === 'number' && record.score >= value
+      }
+    ];
+    const parent = { ...records[0], children: [records[1], records[2]] };
+    const input = tree ? [parent, records[3]] : records;
+
+    const result = getTableData(input, definitions, 'id', null, { remote: ['owner'], score: [20] });
+
+    expect(result.filters).toEqual({ remote: ['owner'], score: [20] });
+    expect(result.rows.map(row => row.key)).toEqual(tree ? [0, 3] : [0, 2, 3]);
+    if (tree) {
+      expect(result.rows[0]?.children?.map(row => row.key)).toEqual([2]);
+    }
   });
 
   it('supports column keys matching Object prototype names', () => {
