@@ -113,6 +113,9 @@
   scrollLock={options.scrollLock}
   forceRender={options.forceRender}
   destroyOnHidden={options.destroyOnHidden}
+  transitionName={options.transitionName}
+  maskTransitionName={options.maskTransitionName}
+  mousePosition={options.mousePosition}
   getContainer={options.getContainer}
   class={['modal-confirm-dialog', `${componentPrefix}-confirm`, `${componentPrefix}-confirm-${confirmation.type}`, options.class]
     .filter(Boolean).join(' ')}

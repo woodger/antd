@@ -39,6 +39,9 @@ export interface ModalConfirmConfig {
   scrollLock?: ModalProps['scrollLock'];
   forceRender?: ModalProps['forceRender'];
   destroyOnHidden?: ModalProps['destroyOnHidden'];
+  transitionName?: ModalProps['transitionName'];
+  maskTransitionName?: ModalProps['maskTransitionName'];
+  mousePosition?: ModalProps['mousePosition'];
   getContainer?: ModalProps['getContainer'];
   class?: string;
   footer?: Snippet | null;

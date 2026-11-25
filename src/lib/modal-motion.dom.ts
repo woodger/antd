@@ -1,9 +1,33 @@
-// Движение панели определяет момент завершения Modal. Маска движется отдельно;
-// разворот и удаление dialog отменяют анимации незавершённого перехода.
+// Выбирает штатное движение или CSS-фазы на границе перехода. Только панель определяет
+// окончание открытия и закрытия Modal. Маска может закончить свою фазу самостоятельно.
+import type { CssMotionState } from './css-motion.dom';
+import type { CssMotionEvent } from './css-motion.types';
+import { createModalNamedMotion } from './modal-named-motion.dom';
+import { getModalMousePoint, getModalTransformOrigin } from './modal-origin.dom';
+import type { ModalMousePosition } from './modal.types';
 import type { AliasToken } from './theme-token.types';
 
 type ModalMotionToken = Pick<AliasToken,
   'motion' | 'motionDurationMid' | 'motionDurationSlow' | 'motionEaseOutCirc' | 'motionEaseInOutCirc'>;
+
+export type ModalMotionPart = 'panel' | 'mask';
+
+export interface ModalMotionSettings {
+  token: ModalMotionToken;
+  named: boolean;
+  masked: boolean;
+  forceRender: boolean;
+  rootPrefix: string;
+  transitionName?: string;
+  maskTransitionName?: string;
+  mousePosition?: ModalMousePosition | null;
+}
+
+export interface ModalMotionCallbacks {
+  settled(open: boolean): void;
+  paint(part: ModalMotionPart, state: CssMotionState, commit?: boolean): void;
+  origin(value: string | undefined): void;
+}
 
 const hiddenPanel = { transform: 'scale(0.2)', opacity: '0' };
 const shownPanel = { transform: 'scale(1)', opacity: '1' };
@@ -19,15 +43,17 @@ function getDurationMs(value: string, fallback: number): number {
   return Number.isFinite(milliseconds) ? milliseconds : fallback;
 }
 
-/** Поддерживает нативный ::backdrop и DOM-маску управляемого dialog. */
-export function createModalMotion(dialog: HTMLDialogElement, onSettled: (open: boolean) => void) {
-  const documentView = dialog.ownerDocument.defaultView;
+/** Штатные эффекты без transitionName сохраняют нативный ::backdrop и разворот WAAPI. */
+function createModalStockMotion(
+  dialog: HTMLDialogElement,
+  view: Window & typeof globalThis,
+  callbacks: ModalMotionCallbacks
+) {
   const panel = dialog.querySelector<HTMLElement>(':scope > [data-ant-modal-panel]');
-  if (!documentView || !panel) {
-    throw new Error('Modal requires a panel in an active document');
+  if (!panel) {
+    throw new Error('Modal requires a panel');
   }
 
-  const view = documentView;
   const surface = panel;
   const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   let requested: boolean | undefined;
@@ -42,12 +68,6 @@ export function createModalMotion(dialog: HTMLDialogElement, onSettled: (open: b
     maskAnimation?.cancel();
     panelAnimation = undefined;
     maskAnimation = undefined;
-  }
-
-  /** После нативного закрытия следующее открытие начинает новый переход. */
-  function reset() {
-    cancel();
-    requested = undefined;
   }
 
   /** Отключение движения доводит текущую панель до запрошенной видимости. */
@@ -109,7 +129,8 @@ export function createModalMotion(dialog: HTMLDialogElement, onSettled: (open: b
   }
 
   /** Планирует только последний запрошенный переход. Маска не задерживает callback панели. */
-  function sync(open: boolean, token: ModalMotionToken, masked: boolean) {
+  function sync(open: boolean, options: ModalMotionSettings) {
+    const { token, masked, mousePosition } = options;
     const enabled = token.motion && !reducedMotion.matches;
     if (requested === open) {
       if (!enabled) finish();
@@ -121,6 +142,10 @@ export function createModalMotion(dialog: HTMLDialogElement, onSettled: (open: b
     const from = enabled && panelDuration > 0 ? panelStart(open) : undefined;
     const mask = enabled && maskDuration > 0 ? maskStart(open, masked) : undefined;
     cancel();
+    if (open) {
+      const point = getModalMousePoint(dialog.ownerDocument, mousePosition);
+      callbacks.origin(getModalTransformOrigin(surface, point));
+    }
     requested = open;
     const current = revision;
 
@@ -129,7 +154,7 @@ export function createModalMotion(dialog: HTMLDialogElement, onSettled: (open: b
       if (current === revision) {
         panelAnimation?.cancel();
         panelAnimation = undefined;
-        onSettled(open);
+        callbacks.settled(open);
       }
     }
 
@@ -152,11 +177,61 @@ export function createModalMotion(dialog: HTMLDialogElement, onSettled: (open: b
   reducedMotion.addEventListener('change', handleReducedMotion);
   return {
     sync,
-    reset,
     /** Удаляет браузерный listener и отменяет ожидающие завершения. */
     destroy() {
       cancel();
       reducedMotion.removeEventListener('change', handleReducedMotion);
+    }
+  };
+}
+
+/** При смене режима отменяет старый движок до запуска новой фазы. */
+export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMotionCallbacks) {
+  const documentView = dialog.ownerDocument.defaultView;
+  if (!documentView) {
+    throw new Error('Modal requires an active document');
+  }
+  const view = documentView;
+  type Driver = { named: true; connection: ReturnType<typeof createModalNamedMotion> }
+    | { named: false; connection: ReturnType<typeof createModalStockMotion> };
+  let driver: Driver | undefined;
+  let requested: boolean | undefined;
+
+  /** Новый набор имён в открытом Modal применяется к следующей смене видимости. */
+  function sync(open: boolean, options: ModalMotionSettings) {
+    if (!driver || (requested !== open && driver.named !== options.named)) {
+      driver?.connection.destroy();
+      driver = options.named
+        ? { named: true, connection: createModalNamedMotion(dialog, view, requested, callbacks) }
+        : { named: false, connection: createModalStockMotion(dialog, view, callbacks) };
+    }
+    requested = open;
+    driver.connection.sync(open, options);
+  }
+
+  /** Нативное закрытие отменяет панель. Именованная маска может оставаться в leave. */
+  function closed() {
+    if (!driver?.named || requested !== false) {
+      driver?.connection.destroy();
+      driver = undefined;
+    }
+    requested = false;
+  }
+
+  /** Размонтирование скрытой панели сбрасывает её историю appear/enter. */
+  function reset() {
+    driver?.connection.destroy();
+    driver = undefined;
+    requested = undefined;
+  }
+
+  return {
+    sync,
+    closed,
+    reset,
+    /** События CSS обрабатывает только текущий именованный переход. */
+    end(part: ModalMotionPart, event: CssMotionEvent) {
+      if (driver?.named) driver.connection.end(part, event);
     }
   };
 }

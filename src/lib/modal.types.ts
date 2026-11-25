@@ -9,6 +9,12 @@ export type ModalMaskConfig = DrawerMaskConfig;
 export type ModalFocusableConfig = DrawerFocusableConfig;
 export type ModalWidth = number | string | GridResponsive<number | string>;
 
+/** Координаты страницы для начала масштабирования панели. */
+export interface ModalMousePosition {
+  x: number;
+  y: number;
+}
+
 /** Унаследованные настройки маски, фокуса и размещения из ConfigProvider.modal. */
 export interface ModalConfig {
   mask?: ModalMask;
@@ -55,6 +61,12 @@ export interface ModalProps {
   forceRender?: boolean;
   /** Удаляет содержимое после закрытия. При forceRender=true содержимое сохраняется. */
   destroyOnHidden?: boolean;
+  /** Имя CSS-перехода панели. Пустая строка отключает движение панели. */
+  transitionName?: string;
+  /** Имя независимого CSS-перехода маски. Пустая строка отключает движение маски. */
+  maskTransitionName?: string;
+  /** Null и undefined используют положение недавнего клика. */
+  mousePosition?: ModalMousePosition | null;
   okText?: string;
   cancelText?: string;
   onOk?: () => void;

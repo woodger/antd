@@ -10,6 +10,8 @@ interface DialogFocusOptions {
 }
 
 const dialogsByDocument = new WeakMap<Document, HTMLDialogElement[]>();
+const nativePresentationOrder = new WeakMap<HTMLDialogElement, number>();
+let nextNativePresentation = 0;
 const tabbableSelector = [
   'button', 'input', 'select', 'textarea', 'a[href]', 'area[href]', 'summary', 'iframe',
   '[tabindex]', '[contenteditable]', 'audio[controls]', 'video[controls]'
@@ -134,6 +136,7 @@ export function connectDialogFocus(
   function present(modal: boolean) {
     native = modal;
     if (modal) {
+      nativePresentationOrder.set(dialog, ++nextNativePresentation);
       dialog.showModal();
     }
     else {
@@ -155,6 +158,20 @@ export function connectDialogFocus(
       target.focus({ preventScroll: true });
     }
     keepFocus();
+  }
+
+  /** showModal при смене режима поднимает диалог, сохраняя логический стек фокуса. */
+  function ownsNativeLayer() {
+    const order = nativePresentationOrder.get(dialog);
+    if (order === undefined || !dialog.matches(':modal')) {
+      return false;
+    }
+
+    return !stack.some(node => {
+      const otherOrder = nativePresentationOrder.get(node);
+      return otherOrder !== undefined && otherOrder > order && node.isConnected
+        && node.matches(':modal');
+    });
   }
 
   /** Живое изменение mask/focusable переводит тот же открытый dialog в другой режим. */
@@ -210,5 +227,5 @@ export function connectDialogFocus(
     } : undefined;
   }
 
-  return { open, sync, close };
+  return { open, sync, close, ownsNativeLayer };
 }

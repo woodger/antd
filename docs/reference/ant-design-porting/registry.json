@@ -23737,6 +23737,11 @@
           "referenceVersion": "1.10.0"
         },
         {
+          "name": "@rc-component/motion",
+          "range": "^1.3.3",
+          "referenceVersion": "1.3.3"
+        },
+        {
           "name": "@rc-component/portal",
           "range": "^2.1.0",
           "referenceVersion": "2.1.3"
@@ -23814,7 +23819,13 @@
         "tests/browser/fixtures/ant-design-modal-layout-reference.json",
         "tests/browser/modal-layout.spec.ts",
         "tests/browser/modal-layout-hydration.spec.ts",
-        "tests/package/modal-layout.ssr.test.ts"
+        "tests/package/modal-layout.ssr.test.ts",
+        "src/lib/modal-named-motion.dom.ts",
+        "src/lib/modal-origin.dom.ts",
+        "tests/browser/fixtures/ant-design-modal-motion-reference.json",
+        "tests/browser/modal-motion.spec.ts",
+        "tests/browser/modal-motion-hydration.spec.ts",
+        "tests/package/modal-motion.ssr.test.ts"
       ],
       "features": [
         {
@@ -24008,7 +24019,39 @@
             "tests/browser/modal-lifecycle-hydration.spec.ts",
             "tests/package/modal-lifecycle.ssr.test.ts"
           ],
-          "note": "Восемь циклов и две смены forceRender повторены на UMD 6.6.8. forceRender, destroyOnHidden, штатные zoom и fade по токенам темы, afterClose перед afterOpenChange(false), прерывание закрытия с сохранением DOM и draft. Колбэки доступны и контекстным подтверждениям. Svelte сохраняет eager SSR и DOM закрытого Modal без явных настроек монтажа. Ленивый default из React доступен через forceRender=false. Положение нативной панели сохраняется. Поддержаны reduced motion и строгая гидратация. Пользовательские имена переходов и точка масштабирования входят в оставшийся объём."
+          "note": "Восемь циклов и две смены forceRender повторены на UMD 6.6.8. forceRender, destroyOnHidden, штатные zoom и fade по токенам темы, afterClose перед afterOpenChange(false), прерывание закрытия с сохранением DOM и draft. Колбэки доступны и контекстным подтверждениям. Svelte сохраняет eager SSR и DOM закрытого Modal без явных настроек монтажа. Ленивый default из React доступен через forceRender=false. Положение нативной панели сохраняется. Поддержаны reduced motion и строгая гидратация."
+        },
+        {
+          "id": "modal-named-motion",
+          "title": "Именованные CSS-переходы панели и маски и координаты начала движения",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/Modal.svelte",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/modal-motion.dom.ts",
+            "src/lib/modal-named-motion.dom.ts",
+            "src/lib/modal-origin.dom.ts",
+            "src/lib/dialog-focus.dom.ts",
+            "tests/browser/fixtures/ant-design-modal-motion-reference.json",
+            "tests/browser/modal-motion.spec.ts",
+            "tests/browser/modal-motion-hydration.spec.ts",
+            "tests/package/modal-motion.ssr.test.ts"
+          ],
+          "note": "Два прогона UMD 6.6.8 для 19 профилей проверяют transitionName, maskTransitionName, пустые имена, штатные токены, CSS animation и transition, независимое время жизни маски, destroyOnHidden/forceRender и mousePosition с приоритетом явных координат. Клавиатура и истечение 100 мс оставляют обычную точку масштабирования. Маска верхнего native dialog может остаться в верхнем слое после закрытия, пропуская ввод к родителю. Проверены порядок наложения нескольких диалогов, живые update подтверждения, разворот, отключение движения, cleanup и гидратация."
+        },
+        {
+          "id": "source-modal-motion-missing-rules",
+          "title": "Наблюдение upstream: имя без CSS-правил удерживает оболочку Modal",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "tests/browser/fixtures/ant-design-modal-motion-reference.json",
+            "tests/browser/modal-motion.spec.ts",
+            "src/lib/modal-named-motion.dom.ts"
+          ],
+          "note": "В обоих прогонах UMD 6.6.8 имена missing-panel и missing-mask создают ноль CSS-эффектов. За 450 мс открытия и 450 мс закрытия колбэки не приходят. Wrapper остаётся видимым. В Svelte активная фаза без собственного CSS-эффекта завершается после проверки кадра и освобождает окно."
         },
         {
           "id": "source-confirm-null-autofocus",
@@ -24028,7 +24071,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender, оформление wrapper и root ещё не перенесены. MousePosition, transitionName и maskTransitionName требуют отдельного аудита."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender, оформление wrapper и root ещё не перенесены."
         },
         {
           "id": "native-zero-title",

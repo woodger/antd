@@ -1,7 +1,8 @@
 <script lang="ts">
-  // Удерживает native dialog, модальность и содержимое до окончания закрытия.
-  // Заменяет содержимое при loading независимо от переходов видимости.
+  // Удерживает native dialog до завершения панели. Именованная маска может доиграть после
+  // освобождения модальности. Содержимое при loading заменяется независимо от видимости.
   import { flushSync, tick, untrack } from 'svelte';
+  import { on } from 'svelte/events';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
@@ -16,7 +17,10 @@
   import { createDialogContainer } from './dialog-container.model.svelte.js';
   import { connectDialogFocus } from './dialog-focus.dom';
   import { resolveDialogFocusable, resolveDialogMask } from './dialog-interaction.engine';
-  import { createModalMotion } from './modal-motion.dom';
+  import { createModalMotion, type ModalMotionPart, type ModalMotionSettings }
+    from './modal-motion.dom';
+  import type { CssMotionState } from './css-motion.dom';
+  import type { CssMotionEvent } from './css-motion.types';
   import { getPopupActiveElement, isPopupFocusWithin } from './popup.dom';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
   import Button from './Button.svelte';
@@ -46,6 +50,9 @@
     loading = false,
     forceRender,
     destroyOnHidden,
+    transitionName,
+    maskTransitionName,
+    mousePosition,
     okText,
     cancelText,
     onOk,
@@ -92,18 +99,47 @@
   let backdropPointer: number | undefined;
   let presented = $state(false);
   let visited = $state(false);
+  let panelMotion = $state.raw<CssMotionState>({});
+  let maskMotion = $state.raw<CssMotionState>({});
+  let transformOrigin = $state<string>();
+  const maskLeaving = $derived(maskMotion.phase === 'leave');
   // Без параметров lifecycle остаётся прежний eager SSR и монтаж закрытых snippets.
   const preload = $derived(forceRender ?? (destroyOnHidden === undefined));
-  const renderDialog = $derived(open || presented || preload || (visited && !destroyOnHidden));
+  const renderPanel = $derived(open || presented || preload || (visited && !destroyOnHidden));
+  const renderDialog = $derived(renderPanel || maskLeaving);
   const motionToken = $derived(designTheme.state.token);
-  let runtime = $state.raw<{ sync(open: boolean, token: typeof motionToken): void; closed(): void }>();
+  const namedMotion = $derived(transitionName !== undefined || maskTransitionName !== undefined);
+  const motionSettings = $derived<ModalMotionSettings>({
+    token: motionToken,
+    named: namedMotion,
+    masked: interaction.mask.enabled,
+    forceRender: forceRender === true,
+    rootPrefix,
+    transitionName,
+    maskTransitionName,
+    mousePosition
+  });
+  const namedBackdrop = $derived((namedMotion || Boolean(maskMotion.phase))
+    && (open || presented || maskLeaving));
+  const backdropVisible = $derived(namedBackdrop
+    ? (open && interaction.mask.enabled) || maskLeaving
+    : interaction.mask.enabled);
+  const stockZoom = $derived(transitionName === undefined || transitionName === `${rootPrefix}-zoom`);
+  const stockFade = $derived(maskTransitionName === undefined || maskTransitionName === `${rootPrefix}-fade`);
+  const zoomFrame = $derived(stockZoom ? stockFrame(panelMotion) : undefined);
+  const fadeFrame = $derived(stockFade ? stockFrame(maskMotion) : undefined);
+  let runtime = $state.raw<{
+    sync(open: boolean, settings: ModalMotionSettings, movingMask: boolean): void;
+    closed(): void;
+    end(part: ModalMotionPart, event: CssMotionEvent): void;
+  }>();
   const container = createDialogContainer(() => ({
     component: 'modal',
     open,
     getContainer,
     getPopupContainer: config.getPopupContainer,
     resolveWhenClosed: renderDialog,
-    portalByDefault: !interaction.native && (open || presented),
+    portalByDefault: !interaction.native && (open || presented || maskLeaving),
     style,
     onPointerDown: event => {
       backdropPointer = event.button === 0 && isBackdrop(event) ? event.pointerId : undefined;
@@ -126,13 +162,13 @@
   $effect(() => {
     const current = runtime;
     const requested = open;
-    const token = motionToken;
-    void interaction;
+    const settings = motionSettings;
+    const movingMask = maskLeaving;
     if (!current || !container.connected || !dialog?.isConnected) {
       return;
     }
 
-    untrack(() => current.sync(requested, token));
+    untrack(() => current.sync(requested, settings, movingMask));
   });
 
   $effect(() => {
@@ -146,12 +182,18 @@
       const autofocus = controls.find(control => control.hasAttribute('autofocus'));
       return autofocus ?? (interaction.trap ? controls[0] : undefined);
     });
-    const motion = createModalMotion(node, settled);
+    const motion = createModalMotion(node, {
+      settled,
+      paint,
+      origin: value => { transformOrigin = value; }
+    });
     let shown = false;
+    let passiveMask = false;
     let pendingRestore: (() => void) | undefined;
 
-    function sync(visible: boolean, token: typeof motionToken) {
+    function sync(visible: boolean, options: ModalMotionSettings, movingMask: boolean) {
       if (visible) {
+        releaseMask();
         if (node.open) focus.sync();
         else focus.open();
 
@@ -161,9 +203,52 @@
           presented = true;
         }
       }
-      if (node.open) {
-        motion.sync(visible, token, interaction.mask.enabled);
+      if (node.open || movingMask) {
+        motion.sync(visible, options);
       }
+    }
+
+    function paint(part: ModalMotionPart, state: CssMotionState, commit?: boolean) {
+      if (runtime !== current) {
+        return;
+      }
+      function apply() {
+        if (part === 'panel') {
+          panelMotion = state;
+        }
+        else {
+          maskMotion = state;
+          if (state.phase !== 'leave') releaseMask();
+        }
+      }
+
+      if (commit) flushSync(apply);
+      else apply();
+    }
+
+    function presentMask(keepNativeLayer: boolean) {
+      passiveMask = true;
+      node.inert = true;
+      node.setAttribute('aria-hidden', 'true');
+      // Маска верхнего dialog остаётся над предыдущим, сохраняя доступ к его элементам.
+      if (keepNativeLayer && typeof node.showPopover === 'function') {
+        node.popover = 'manual';
+        node.showPopover();
+      }
+    }
+
+    function releaseMask() {
+      if (!passiveMask) {
+        return;
+      }
+
+      passiveMask = false;
+      if (typeof node.hidePopover === 'function' && node.matches(':popover-open')) {
+        node.hidePopover();
+      }
+      node.removeAttribute('popover');
+      node.removeAttribute('aria-hidden');
+      node.inert = false;
     }
 
     function settled(visible: boolean) {
@@ -174,7 +259,9 @@
         afterOpenChange?.(true);
       }
       else {
+        const keepNativeLayer = maskLeaving && focus.ownsNativeLayer();
         pendingRestore = focus.close();
+        if (maskLeaving && node.isConnected) presentMask(keepNativeLayer);
       }
     }
 
@@ -187,21 +274,31 @@
       shown = false;
       const restore = pendingRestore ?? focus.close();
       pendingRestore = undefined;
-      motion.reset();
-      finishClose();
+      motion.closed();
+      const destroy = destroyOnHidden === true && forceRender !== true;
+      finishClose(destroy);
       restore?.();
-      afterClose?.();
-      afterOpenChange?.(false);
+      try {
+        afterClose?.();
+        afterOpenChange?.(false);
+      }
+      finally {
+        // При destroyOnHidden маска доступна в колбэках, затем уходит вместе с оболочкой.
+        if (destroy) motion.reset();
+      }
     }
 
-    const current = { sync, closed };
+    const current = { sync, closed, end: motion.end };
+    panelMotion = {};
+    maskMotion = {};
     visited = true;
     runtime = current;
     return () => {
       const document = node.ownerDocument;
       const active = getPopupActiveElement(node);
       const restore = pendingRestore ?? focus.close();
-      motion.destroy();
+      releaseMask();
+      motion.reset();
       if (runtime === current) {
         runtime = undefined;
         presented = false;
@@ -221,8 +318,8 @@
     };
   }
 
-  function finishClose() {
-    if (destroyOnHidden && forceRender !== true) {
+  function finishClose(destroy: boolean) {
+    if (destroy) {
       // afterClose наблюдает удалённые children и завершённый cleanup.
       flushSync(() => {
         open = false;
@@ -234,6 +331,30 @@
       open = false;
       presented = false;
     }
+  }
+
+  function stockFrame(motion: CssMotionState) {
+    if (!motion.phase) {
+      return undefined;
+    }
+    if (motion.step === 'active') {
+      return motion.phase === 'leave' ? 'leave' : 'enter';
+    }
+
+    return motion.phase === 'leave' ? undefined : 'before';
+  }
+
+  function endPanelMotion(event: CssMotionEvent) {
+    runtime?.end('panel', event);
+  }
+
+  function endMaskMotion(event: CssMotionEvent) {
+    runtime?.end('mask', event);
+  }
+
+  function listenForAnimationCancel(node: HTMLElement) {
+    const part = node.hasAttribute('data-ant-modal-panel') ? 'panel' : 'mask';
+    return on(node, 'animationcancel', event => runtime?.end(part, event));
   }
 
   function handleClose(event: Event) {
@@ -308,8 +429,34 @@
   .ant-svelte-dialog::backdrop { background: var(--ant-color-bg-mask); }
   .ant-svelte-dialog[data-ant-modal-mask-blur]::backdrop,
   [data-ant-modal-mask][data-ant-modal-mask-blur] { backdrop-filter: blur(4px); }
+  .ant-svelte-dialog[data-ant-modal-element-mask]::backdrop {
+    background: transparent;
+    backdrop-filter: none;
+  }
+  .ant-svelte-dialog[data-ant-modal-mask-tail]:not([open]) {
+    display: block;
+    position: fixed;
+    pointer-events: none;
+  }
+  .ant-svelte-dialog[data-ant-modal-mask-tail]:not([open]) > [data-ant-modal-panel] { display: none; }
   [data-ant-modal-backdrop] { position: fixed; inset: 0; z-index: -1; }
   [data-ant-modal-mask] { background: var(--ant-color-bg-mask); }
+  [data-ant-modal-zoom='before'] { opacity: 0; }
+  [data-ant-modal-zoom='enter'] { animation: antZoomIn var(--ant-svelte-modal-zoom-in) both; }
+  [data-ant-modal-zoom='leave'] { animation: antZoomOut var(--ant-svelte-modal-zoom-out) both; }
+  [data-ant-modal-fade='before'] { opacity: 0; }
+  [data-ant-modal-fade='enter'] { animation: antFadeIn var(--ant-svelte-modal-fade) linear both; }
+  [data-ant-modal-fade='leave'] { animation: antFadeOut var(--ant-svelte-modal-fade) linear both; }
+  @keyframes antZoomIn {
+    from { transform: scale(0.2); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @keyframes antZoomOut {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(0.2); opacity: 0; }
+  }
+  @keyframes antFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes antFadeOut { from { opacity: 1; } to { opacity: 0; } }
   [data-ant-modal-panel] { top: auto; max-width: none; width: 100%; margin: 0; padding: 0; }
   [data-ant-modal-container] {
     max-height: calc(100dvh - var(--ant-svelte-modal-offset, 24px) - 24px);
@@ -331,6 +478,8 @@
   data-ant-modal-layout={layout.scope}
   data-ant-modal-top={placement === false || undefined}
   data-ant-modal-managed={!interaction.native || undefined}
+  data-ant-modal-element-mask={namedBackdrop || undefined}
+  data-ant-modal-mask-tail={maskLeaving || undefined}
   data-ant-modal-mask-blur={interaction.mask.enabled && interaction.mask.blur || undefined}
   data-ant-dialog-unlocked={scrollUnlocked || undefined}
   bind:this={dialog}
@@ -345,6 +494,9 @@
   style:width={layout.width}
   style:height={layout.height}
   style:z-index={layer.zIndex}
+  style:--ant-svelte-modal-zoom-in={zoomFrame ? `${motionToken.motionDurationSlow} ${motionToken.motionEaseOutCirc}` : undefined}
+  style:--ant-svelte-modal-zoom-out={zoomFrame ? `${motionToken.motionDurationMid} ${motionToken.motionEaseInOutCirc}` : undefined}
+  style:--ant-svelte-modal-fade={fadeFrame ? motionToken.motionDurationMid : undefined}
   dir={config.direction}
   aria-label={ariaLabel}
   aria-labelledby={ariaLabelledBy ?? (ariaLabel?.trim() ? undefined : hasTitle ? titleId : undefined)}
@@ -354,13 +506,25 @@
   {@attach container.attach}
   {@attach connectDialog}
 >
-  {#if !interaction.native}<div data-ant-modal-backdrop
-    data-ant-modal-mask={interaction.mask.enabled || undefined}
+  {#if !interaction.native || namedBackdrop}<div data-ant-modal-backdrop
+    data-ant-modal-mask={backdropVisible || undefined}
     data-ant-modal-mask-blur={interaction.mask.blur || undefined}
+    data-ant-modal-fade={fadeFrame}
+    class={[namedBackdrop && backdropVisible && `${componentPrefix}-mask`, maskMotion.className]}
+    style={maskMotion.style}
+    {@attach listenForAnimationCancel}
+    onanimationend={endMaskMotion}
+    ontransitionend={endMaskMotion} ontransitioncancel={endMaskMotion}
     aria-hidden="true" bind:this={backdrop}></div>{/if}
-  <div data-ant-modal-panel data-ant-modal-prefix={componentPrefix}
-    data-ant-modal-root-prefix={rootPrefix} class={componentPrefix}
-    style:height={layout.height === undefined ? undefined : '100%'}>
+  {#if renderPanel}<div data-ant-modal-panel data-ant-modal-prefix={componentPrefix}
+    data-ant-modal-root-prefix={rootPrefix} class={[componentPrefix, panelMotion.className]}
+    data-ant-modal-zoom={zoomFrame}
+    style={panelMotion.style}
+    style:transform-origin={transformOrigin}
+    style:height={layout.height === undefined ? undefined : '100%'}
+    {@attach listenForAnimationCancel}
+    onanimationend={endPanelMotion}
+    ontransitionend={endPanelMotion} ontransitioncancel={endPanelMotion}>
     <div data-ant-modal-container class={`${componentPrefix}-container`} {@attach watermarkPanel}>
       {#if closable}
         <button type="button" data-ant-modal-close class={`${componentPrefix}-close`} disabled={confirmLoading} aria-label={config.locale.closeText} onclick={cancel}>
@@ -382,7 +546,7 @@
         </div>
       {/if}
     </div>
-  </div>
+  </div>{/if}
 </dialog>
 {/key}{/if}
 </NoCompactStyle>

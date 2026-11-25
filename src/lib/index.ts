@@ -1005,7 +1005,8 @@ export type {
   FormSemanticSlots, FormSemantic, FormTooltipProps, FormItemTooltip, FormFeedbackIcons, FormFeedbackInfo
 } from './form.types';
 export type {
-  ModalProps, ModalContent, ModalConfig, ModalMask, ModalMaskConfig, ModalFocusableConfig, ModalWidth
+  ModalProps, ModalContent, ModalConfig, ModalMask, ModalMaskConfig, ModalFocusableConfig, ModalWidth,
+  ModalMousePosition
 } from './modal.types';
 export type { ConfigProviderProps } from './ConfigProvider.svelte';
 export type {
