@@ -122,6 +122,8 @@ export interface TableColumn<Row extends object> {
    * аргументом. Snippet можно вызвать и с двумя аргументами.
    */
   render?: Snippet<[record: Row, index: number, value?: unknown]>;
+  /** Разрешает обновить содержимое ячейки относительно последней принятой записи. */
+  shouldCellUpdate?: (record: Row, previousRecord: Row) => boolean;
   sorter?: boolean | TableSortCompare<Row> | TableColumnSorter<Row>;
   /** Явное null оставляет колонку без направления под управлением владельца. */
   sortOrder?: TableSortOrder | null;

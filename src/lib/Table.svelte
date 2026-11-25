@@ -278,6 +278,15 @@
   const collapsed = new Set<TableKey>();
   let visibleRows = $derived(flattenTableRows(pageRows, tree ? expandedKeys : collapsed));
   type TableRowEntry = (typeof visibleRows)[number];
+
+  interface TableCellContent {
+    record: Row;
+    index: number;
+    render: TableColumn<Row>['render'];
+    value: unknown;
+    display: ReturnType<typeof resolveTableCellDisplay<Row>>;
+  }
+
   const treeControlColumn = $derived(rowSelection ? 1 : 0);
 
   let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loadingRequested);
@@ -569,6 +578,37 @@
     }
 
     return column.onCell ? resolveTableCell(column.onCell(record, index)) : emptyCell;
+  }
+
+  /** Хранит принятое содержимое, пока смонтирована конкретная ячейка. */
+  function createCellContentReader() {
+    let accepted: TableCellContent | undefined;
+
+    /** Передаёт предикату исходные записи, сохраняя параметры предыдущего вывода при отказе. */
+    return function readCellContent(leaf: TableLeaf<Row>, entry: TableRowEntry) {
+      if (leaf.service) {
+        return undefined;
+      }
+
+      const { row: { record }, index } = entry;
+      const { dataIndex, render, shouldCellUpdate } = leaf.column;
+      const previous = accepted;
+
+      // Состояние, которое читает callback владельца, не становится зависимостью ячейки.
+      if (previous && shouldCellUpdate
+        && !untrack(() => shouldCellUpdate(record, previous.record))) {
+        return previous;
+      }
+
+      accepted = {
+        record,
+        index,
+        render,
+        value: render ? readTableCellValue(record, dataIndex) : undefined,
+        display: render ? undefined : resolveTableCellDisplay(record, dataIndex)
+      };
+      return accepted;
+    };
   }
 
   function inHoveredRows(first: number, last = first) {
@@ -1446,15 +1486,17 @@
   {@const { column, service } = leaf}
   {@const fixed = fixedCells[columnIndex]}
   {@const sorted = !service && sortsByColumn.has(column.key)}
-  {@const display = service ? undefined : resolveTableCellDisplay(entry.row.record, column)}
-  {@const wrapText = Boolean(column.ellipsis) && !column.render
+  {@const readContent = createCellContentReader()}
+  {@const content = readContent(leaf, entry)}
+  {@const showTitle = column.ellipsis === true || (column.ellipsis && column.ellipsis.showTitle)}
+  {@const wrapText = Boolean(column.ellipsis) && !content?.render
     && isFixedBoundary(columnIndex, cell.colSpan)}
   {@const attributes = {
     ...cell.attributes,
     ...cellHoverEvents(cell, key, columnIndex, index),
     'data-ant-table-part': 'cell',
     'data-ant-table-sorted': sorted || undefined,
-    title: cell.attributes.title ?? display?.title,
+    title: cell.attributes.title ?? (showTitle ? content?.display?.title : undefined),
     class: [
       `${prefix}-cell`, service ? serviceCellClass(service) : column.className,
       column.ellipsis && `${prefix}-cell-ellipsis`,
@@ -1469,7 +1511,7 @@
     rowspan: cell.rowSpan !== 1 ? cell.rowSpan : undefined
   }}
   {#snippet body()}
-    {@render bodyContent(leaf, columnIndex, entry, canExpand, expanded, display?.text, wrapText)}
+    {@render bodyContent(leaf, columnIndex, entry, canExpand, expanded, content, wrapText)}
   {/snippet}
   {@render dataCell(column.rowScope ? 'th' : 'td', {
     ...attributes,
@@ -1479,10 +1521,16 @@
 {/snippet}
 
 {#snippet bodyContent(
-  leaf: TableLeaf<Row>, columnIndex: number, entry: TableRowEntry,
-  canExpand: boolean, expanded: boolean, text: string | undefined, wrapText: boolean
+  leaf: TableLeaf<Row>,
+  columnIndex: number,
+  entry: TableRowEntry,
+  canExpand: boolean,
+  expanded: boolean,
+  content: TableCellContent | undefined,
+  wrapText: boolean
 )}
   {@const { row, depth, index } = entry}
+  {@const text = content?.display?.text ?? ''}
   {#if showTreeControls && columnIndex === treeControlColumn}
     {@render expansionControl(row, canExpand, expanded, depth)}
   {/if}{#if leaf.service === 'selection'}
@@ -1507,9 +1555,13 @@
     {/if}
   {:else if leaf.service === 'expand'}
     {@render expansionControl(row, canExpand, expanded)}
-  {:else if leaf.column.render}{@render leaf.column.render(
-    row.record, index, readTableCellValue(row.record, leaf.column.dataIndex)
-  )}{:else if wrapText}<span class={`${prefix}-cell-content table-ellipsis-content`}>{text ?? ''}</span>{:else}{text ?? ''}{/if}
+  {:else if content?.render}{@render content.render(
+    content.record,
+    content.index,
+    content.value
+  )}{:else if wrapText}<span
+    class={`${prefix}-cell-content table-ellipsis-content`}
+  >{text}</span>{:else}{text}{/if}
 {/snippet}
 
 {#snippet virtualSpacer(height: number)}

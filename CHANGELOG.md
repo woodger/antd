@@ -24,6 +24,8 @@
 
 ### Added
 
+- Table поддерживает условное обновление содержимого через `column.shouldCellUpdate`.
+
 - Table наследует `rowKey` и `scroll` из ConfigProvider. `scroll.x` принимает `true`.
 
 - Table принимает параметры Spin в `loading`, включая задержку, описание и прогресс.

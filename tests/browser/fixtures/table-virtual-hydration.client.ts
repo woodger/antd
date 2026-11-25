@@ -5,6 +5,7 @@ import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
 import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
 import TableLoadingFixture from './TableLoadingFixture.svelte';
 import TableConfigFixture from './TableConfigFixture.svelte';
+import TableCellUpdateFixture from './TableCellUpdateFixture.svelte';
 
 const target = document.getElementById('root');
 if (!target) {
@@ -31,6 +32,11 @@ target.addEventListener('hydrate-table-virtual', () => {
   else if (query.has('table-config')) {
     hydrate(TableConfigFixture, {
       target, props: { profileId: 'inherit', editor: true }, recover: false
+    });
+  }
+  else if (query.has('table-cell-update')) {
+    hydrate(TableCellUpdateFixture, {
+      target, props: { profile: 'virtual', editor: true }, recover: false
     });
   }
   else {

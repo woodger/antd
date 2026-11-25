@@ -29,10 +29,12 @@ export function readTableCellValue<Row extends object>(
   return value;
 }
 
-/** Нативный title выводится из строки или числа. У snippet свой title через onCell. */
-export function resolveTableCellDisplay<Row extends object>(record: Row, column: TableColumn<Row>) {
-  const { dataIndex, render, ellipsis } = column;
-  if (render || dataIndex === undefined || (isDataPath(dataIndex) && !dataIndex.length)) {
+/** Сохраняет текст и возможный title независимо от текущих настроек ellipsis. */
+export function resolveTableCellDisplay<Row extends object>(
+  record: Row,
+  dataIndex: TableDataIndex<Row> | undefined
+) {
+  if (dataIndex === undefined || (isDataPath(dataIndex) && !dataIndex.length)) {
     return undefined;
   }
 
@@ -42,9 +44,7 @@ export function resolveTableCellDisplay<Row extends object>(record: Row, column:
   }
 
   const text = String(value);
-  const showTitle = ellipsis === true || (ellipsis && ellipsis.showTitle);
-  const title = showTitle && (typeof value === 'string' || typeof value === 'number')
-    ? text : undefined;
+  const title = typeof value === 'string' || typeof value === 'number' ? text : undefined;
   return { text, title };
 }
 

@@ -19699,6 +19699,24 @@
           "note": "Два одинаковых UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 10 профилей дают 34 состояния и 10 SSR-снимков. Отдельный профиль видимой полосы даёт два состояния с gutter 15 px. Snippet получает корневые записи текущей страницы. Проверены scroll.y, sticky, showHeader, пустое тело, приоритет встроенного virtual, DOM scrollTo по позиции и ключу, offset и index, прямая передача запроса proxy handle, LTR/RTL, синхронизация колёсика, закреплённых итогов и положения владельца. Применение сортировки и страницы следует scrollToFirstRowOnChange. Svelte читает фактический DOM gutter и сохраняет caption в видимой шапке. Строгая гидратация подтверждает DOM identity, ввод и фокус."
         },
         {
+          "id": "conditional-cell-update",
+          "title": "Условное обновление содержимого Table через shouldCellUpdate",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-cell.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-cell-update-reference.json",
+            "tests/browser/table-cell-update.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-cell-update.ssr.test.ts",
+            "tests/package/table-cell-update.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 дали 25 браузерных состояний и 3 SSR-снимка. Проверены последняя принятая запись, сохранение значения и render при отказе, актуальные onCell, перестановка и замена ключа строки, отключение предиката и повторный вход строки в виртуальное окно. Нативный snippet сохраняет собственную реактивность, а строгая гидратация сохраняет DOM редактора, фокус и выделение."
+        },
+        {
           "id": "provider-row-key-scroll",
           "title": "Ключи строк и прокрутка из ConfigProvider.table",
           "state": "supported",

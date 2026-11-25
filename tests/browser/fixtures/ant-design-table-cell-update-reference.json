@@ -1,0 +1,1025 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "ordinary"
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "rows": [
+              [
+                "a",
+                [
+                  [
+                    "custom/A0/0",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A0/0",
+                    "A0"
+                  ]
+                ]
+              ],
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/1",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/1",
+                    "B0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": []
+          }
+        },
+        {
+          "action": "reject",
+          "state": {
+            "rows": [
+              [
+                "a",
+                [
+                  [
+                    "custom/A1/0",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A1/0",
+                    "A0"
+                  ]
+                ]
+              ],
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/1",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/1",
+                    "B0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A1",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "reject-again",
+          "state": {
+            "rows": [
+              [
+                "a",
+                [
+                  [
+                    "custom/A2/0",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A2/0",
+                    "A0"
+                  ]
+                ]
+              ],
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/1",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/1",
+                    "B0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A2",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "move",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A2/1",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A2/1",
+                    "A0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A2",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "new-renderer",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A2/1",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A2/1",
+                    "A0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A2",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "accept",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A3/1",
+                    "second/A3/1"
+                  ],
+                  [
+                    "plain/A3/1",
+                    "A3"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A3",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "content-only",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A4/1",
+                    "second/A3/1"
+                  ],
+                  [
+                    "plain/A4/1",
+                    "A3"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A4",
+                "A3"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "ungate",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "second/B0/0"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A4/1",
+                    "second/A4/1"
+                  ],
+                  [
+                    "plain/A4/1",
+                    "A4"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": []
+          }
+        },
+        {
+          "action": "gate",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "second/B0/0"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A4/1",
+                    "second/A4/1"
+                  ],
+                  [
+                    "plain/A4/1",
+                    "A4"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A4",
+                "A4"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "new-key",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "second/B0/0"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "next",
+                [
+                  [
+                    "custom/A5/1",
+                    "second/A5/1"
+                  ],
+                  [
+                    "plain/A5/1",
+                    "A5"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": [
+        [
+          "a",
+          [
+            [
+              "custom/A0/0",
+              "first/A0/0"
+            ],
+            [
+              "plain/A0/0",
+              "A0"
+            ]
+          ]
+        ],
+        [
+          "b",
+          [
+            [
+              "custom/B0/1",
+              "first/B0/1"
+            ],
+            [
+              "plain/B0/1",
+              "B0"
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "virtual",
+        "virtual": true
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "rows": [
+              [
+                "a",
+                [
+                  [
+                    "custom/A0/0",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A0/0",
+                    "A0"
+                  ]
+                ]
+              ],
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/1",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/1",
+                    "B0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A0",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "reject",
+          "state": {
+            "rows": [
+              [
+                "a",
+                [
+                  [
+                    "custom/A1/0",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A1/0",
+                    "A0"
+                  ]
+                ]
+              ],
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/1",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/1",
+                    "B0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A1",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "reject-again",
+          "state": {
+            "rows": [
+              [
+                "a",
+                [
+                  [
+                    "custom/A2/0",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A2/0",
+                    "A0"
+                  ]
+                ]
+              ],
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/1",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/1",
+                    "B0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A2",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "move",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A2/1",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A2/1",
+                    "A0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A2",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "new-renderer",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A2/1",
+                    "first/A0/0"
+                  ],
+                  [
+                    "plain/A2/1",
+                    "A0"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A2",
+                "A0"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "accept",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A3/1",
+                    "second/A3/1"
+                  ],
+                  [
+                    "plain/A3/1",
+                    "A3"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A3",
+                "A0"
+              ],
+              [
+                "a",
+                "A3",
+                "A3"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "content-only",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "first/B0/1"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A4/1",
+                    "second/A3/1"
+                  ],
+                  [
+                    "plain/A4/1",
+                    "A3"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A4",
+                "A3"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "ungate",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "second/B0/0"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A4/1",
+                    "second/A4/1"
+                  ],
+                  [
+                    "plain/A4/1",
+                    "A4"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": []
+          }
+        },
+        {
+          "action": "gate",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "second/B0/0"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  [
+                    "custom/A4/1",
+                    "second/A4/1"
+                  ],
+                  [
+                    "plain/A4/1",
+                    "A4"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "a",
+                "A4",
+                "A4"
+              ],
+              [
+                "b",
+                "B0",
+                "B0"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "new-key",
+          "state": {
+            "rows": [
+              [
+                "b",
+                [
+                  [
+                    "custom/B0/0",
+                    "second/B0/0"
+                  ],
+                  [
+                    "plain/B0/0",
+                    "B0"
+                  ]
+                ]
+              ],
+              [
+                "next",
+                [
+                  [
+                    "custom/A5/1",
+                    "second/A5/1"
+                  ],
+                  [
+                    "plain/A5/1",
+                    "A5"
+                  ]
+                ]
+              ]
+            ],
+            "pairs": [
+              [
+                "b",
+                "B0",
+                "B0"
+              ],
+              [
+                "next",
+                "A5",
+                "A5"
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": [
+        [
+          "a",
+          [
+            [
+              "custom/A0/0",
+              "first/A0/0"
+            ],
+            [
+              "plain/A0/0",
+              "A0"
+            ]
+          ]
+        ],
+        [
+          "b",
+          [
+            [
+              "custom/B0/1",
+              "first/B0/1"
+            ],
+            [
+              "plain/B0/1",
+              "B0"
+            ]
+          ]
+        ]
+      ]
+    }
+  ],
+  "virtualWindow": {
+    "snapshots": [
+      {
+        "action": null,
+        "row": [
+          "a",
+          [
+            [
+              "custom/A0/0",
+              "first/A0/0"
+            ],
+            [
+              "plain/A0/0",
+              "A0"
+            ]
+          ]
+        ]
+      },
+      {
+        "action": "reject",
+        "row": [
+          "a",
+          [
+            [
+              "custom/A1/0",
+              "first/A0/0"
+            ],
+            [
+              "plain/A1/0",
+              "A0"
+            ]
+          ]
+        ]
+      },
+      {
+        "action": "leave",
+        "row": null
+      },
+      {
+        "action": "reject-again",
+        "row": null
+      },
+      {
+        "action": "return",
+        "row": [
+          "a",
+          [
+            [
+              "custom/A2/0",
+              "first/A2/0"
+            ],
+            [
+              "plain/A2/0",
+              "A2"
+            ]
+          ]
+        ]
+      }
+    ],
+    "ssr": [
+      [
+        "a",
+        [
+          [
+            "custom/A0/0",
+            "first/A0/0"
+          ],
+          [
+            "plain/A0/0",
+            "A0"
+          ]
+        ]
+      ]
+    ]
+  }
+}

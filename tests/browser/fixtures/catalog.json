@@ -1693,6 +1693,11 @@
     "root": "table-row-options-fixture"
   },
   {
+    "id": "table-cell-update",
+    "module": "./TableCellUpdateFixture.svelte",
+    "root": "table-cell-update-fixture"
+  },
+  {
     "id": "table-header",
     "module": "./TableHeaderFixtures.svelte",
     "root": "table-header-fixture"

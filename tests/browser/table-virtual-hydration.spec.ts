@@ -6,6 +6,52 @@ import { fileURLToPath } from 'node:url';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
+test('virtual Table preserves the hydrated editor when a cell update is rejected', async ({
+  page
+}) => {
+  const artifacts = new URL('../../.upstream/artifacts/table-cell-update-hydration-', import.meta.url);
+  const cacheDir = await mkdtemp(fileURLToPath(artifacts));
+  let server: ViteDevServer | undefined;
+  try {
+    server = await createServer({
+      configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+      server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+      appType: 'custom', cacheDir
+    });
+    const entry = new URL('./fixtures/table-virtual-hydration.server.ts', import.meta.url);
+    const { renderTableCellUpdateFixture } = await server.ssrLoadModule(fileURLToPath(entry));
+    const { body, head } = renderTableCellUpdateFixture();
+    await page.goto('/select-components-hydration.html?table-cell-update');
+    await page.addScriptTag({ type: 'module', url: '/table-virtual-hydration.client.ts' });
+    const root = page.locator('#root');
+    await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+    await root.evaluate((node, html) => {
+      document.head.insertAdjacentHTML('beforeend', html.head);
+      node.innerHTML = html.body;
+    }, { body, head });
+    const editor = root.getByRole('textbox', { name: 'Cell editor', exact: true });
+    const original = await editor.elementHandle();
+    await editor.fill('Draft before hydration');
+    await editor.evaluate((input: HTMLInputElement) => input.setSelectionRange(2, 6));
+
+    await root.dispatchEvent('hydrate-table-virtual');
+
+    await expect(root).toHaveAttribute('data-hydrated', 'true');
+    await root.getByRole('button', { name: 'reject', exact: true }).dispatchEvent('click');
+    await expect(root.locator('[data-probe-content="plain/A1/0"]')).toHaveText('A0');
+    await expect(editor).toBeFocused();
+    await expect(editor).toHaveValue('Draft before hydration');
+    expect(await editor.evaluate((node, before) => node === before, original)).toBe(true);
+    expect(await editor.evaluate((input: HTMLInputElement) => [
+      input.selectionStart, input.selectionEnd
+    ])).toEqual([2, 6]);
+  }
+  finally {
+    await server?.close();
+    await rm(cacheDir, { recursive: true, force: true });
+  }
+});
+
 for (const stringTag of [false, true]) {
   test(`virtual Table hydrates a replaced cell using a ${stringTag ? 'tag' : 'snippet'}`, async ({
     page

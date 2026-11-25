@@ -4,6 +4,7 @@ import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
 import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
 import TableLoadingFixture from './TableLoadingFixture.svelte';
 import TableConfigFixture from './TableConfigFixture.svelte';
+import TableCellUpdateFixture from './TableCellUpdateFixture.svelte';
 
 /** Рендерит то же начальное окно, с которым клиент начинает гидратацию. */
 export function renderVirtualTableFixture() {
@@ -32,4 +33,9 @@ export function renderLoadingTableFixture() {
 /** Рендерит Table с унаследованными ключами и размерами до первого resize. */
 export function renderTableConfigFixture() {
   return render(TableConfigFixture, { props: { profileId: 'inherit', editor: true } });
+}
+
+/** Рендерит начальное содержимое виртуальных ячеек до любого сравнения записей. */
+export function renderTableCellUpdateFixture() {
+  return render(TableCellUpdateFixture, { props: { profile: 'virtual', editor: true } });
 }
