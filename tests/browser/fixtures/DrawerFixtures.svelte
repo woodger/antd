@@ -89,6 +89,7 @@
   >
     <PanelContent name="Drawer" onLifecycle={(event) => lifecycle.push(event)} />
     <label>Drawer choice<Select
+      aria-label="Drawer choice"
       options={[{ value: 'alpha', label: 'Alpha' }, { value: 'beta', label: 'Beta' }]}
     /></label>
     <Tabs
