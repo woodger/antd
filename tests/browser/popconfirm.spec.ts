@@ -515,7 +515,8 @@ test(
 );
 
 test.describe('mobile Popconfirm', () => {
-  test.use({ viewport: { width: 375, height: 812 }, hasTouch: true });
+  // Сравниваем границы панели и кнопок в одной геометрии, вне zoom-анимации.
+  test.use({ viewport: { width: 375, height: 812 }, hasTouch: true, reducedMotion: 'reduce' });
 
   test('supports touch and wraps long labels within the viewport', async ({ page }, testInfo) => {
     await page.getByLabel('Long Popconfirm labels', { exact: true }).check();
