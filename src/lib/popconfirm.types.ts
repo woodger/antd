@@ -102,6 +102,10 @@ export interface PopconfirmProps {
   /** Передаётся Popover: локальная функция → ConfigProvider. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   onOpenChange?: (open: boolean) => void;
+  /** Вызывается после завершения изменения видимости наружного Popover. */
+  afterOpenChange?: TooltipProps['afterOpenChange'];
+  /** Имя CSSMotion наружного Popover. */
+  motion?: TooltipProps['motion'];
   /** Promise удерживает loading; rejection сохраняет возможность повтора. */
   onConfirm?: (event: MouseEvent) => void | PromiseLike<unknown>;
   onCancel?: (event: MouseEvent) => void;

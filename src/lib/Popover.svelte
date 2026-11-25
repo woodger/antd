@@ -9,6 +9,7 @@
   import { useComponentTheme } from './theme-component.svelte';
   import { getOverlaySemantics } from './overlay-semantic.engine';
   import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { useOverlayMotion } from './overlay-motion.svelte';
   import { getPopupArrowStyle, getPopupPlacement, getPopupPlacements } from './popup-position.engine';
   import { getTooltipColor } from './tooltip-color.engine';
   import { getOverlayPrefixCss } from './overlay-prefix.engine';
@@ -17,7 +18,7 @@
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { consumePopconfirmTheme } from './popover-theme-context';
-  import { connectPopup, getPopupActiveElement } from './popup.dom';
+  import { connectPopup, getPopupActiveElement, type PopupConnection } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { connectPopoverTrigger, focusPopover } from './popover.dom';
   import { connectTooltipOpenClass } from './tooltip.dom';
@@ -148,7 +149,7 @@
   let shown = $state(false);
   let actualPlacement = $state(untrack(() => placement));
   let actualPosition = $state.raw<TooltipPosition>();
-  let realign: (() => void) | undefined;
+  let connection: PopupConnection | undefined;
   let pending: ReturnType<typeof setTimeout> | undefined;
   let hovered = false;
   let focused = false;
@@ -198,6 +199,15 @@
   let hasBody = $derived(hasContent(content));
   let available = $derived(hasTitle || hasBody);
   let visible = $derived(!props.disabled && available && rawOpen);
+  const motion = useOverlayMotion(() => popup, () => ({
+    visible,
+    forceRender,
+    enabled: designTokens.state.token.motion,
+    defaultName: `${config.getPrefixCls()}-zoom-big`,
+    customName: props.motion?.motionName,
+    afterOpenChange: settleVisibility
+  }));
+  const presented = $derived(visible || motion.leaving);
   let destroy = $derived(destroyOnHidden ?? false);
   let payload = $derived({
     id: providedId || fallbackId,
@@ -216,11 +226,11 @@
   let id = $derived(rendered.id);
   let renderedTitle = $derived(hasContent(rendered.title));
   let renderedBody = $derived(hasContent(rendered.content));
-  let renderContent = $derived(!destroy || mounted && (forceRender || visible));
+  let renderContent = $derived(!destroy || mounted && (forceRender || visible || motion.retained));
   let initialized = false;
   const initialContainerStyle = untrack(() => serializeInlineStyleLayers(rendered.layers));
   const portal = createPopupContainer(() => ({
-    open: forceRender || visible,
+    open: forceRender || presented,
     reference: anchor,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
     themeStyle: rootStyle
@@ -250,13 +260,18 @@
       );
   }
 
+  function settleVisibility(next: boolean) {
+    if (next) connection?.align();
+    props.afterOpenChange?.(next);
+  }
+
   onMount(() => {
     mounted = true;
     ref = {
       get nativeElement() { return active ? anchor : undefined; },
       get popupElement() { return active ? popup : undefined; },
       forceAlign: () => untrack(() => {
-        if (active && visible) realign?.();
+        if (active && visible) connection?.forceAlign();
       })
     };
 
@@ -283,13 +298,20 @@
 
   $effect(() => {
     if (anchor && available) {
-      return connectPopoverTrigger(anchor, id, shown);
+      return connectPopoverTrigger(anchor, id, visible && shown);
     }
   });
 
   $effect(() => {
     if (anchor && visible) {
       return connectTooltipOpenClass(anchor, resolvedOpenClassName);
+    }
+  });
+
+  $effect(() => {
+    if (visible && shown && popup && !popup.inert && focusOnShow) {
+      focusOnShow = false;
+      focusPopover(popup);
     }
   });
 
@@ -319,13 +341,15 @@
     const surface = popup;
     const source = anchor;
 
-    if (!surface || !source || !visible) {
+    if (!surface || !source || !presented) {
       return;
     }
 
     // Положение меняется без повторного hide/show, чтобы сохранить ввод и фокус.
     const disconnect = untrack(() => connectPopup(surface, source, {
       trigger: host,
+      get interactive() { return visible; },
+      pauseAlignment: () => motion.pauseAlignment,
       get outsideEvents() { return actionOverrides ? 'mouse' : undefined; },
       get placement() {
         return placement;
@@ -359,7 +383,7 @@
         shown = next;
         if (next && customPosition) {
           queueMicrotask(() => {
-            if (visible) realign?.();
+            if (visible) connection?.forceAlign();
           });
         }
         if (!next) {
@@ -376,10 +400,10 @@
         }
       }
     }));
-    realign = disconnect.forceAlign;
+    connection = disconnect;
 
     return () => {
-      realign = undefined;
+      connection = undefined;
       resumeFocus = surface.contains(getPopupActiveElement(surface))
         ? getPopupActiveElement(surface) as HTMLElement
         : undefined;
@@ -452,7 +476,7 @@
         clicked = false;
         focusOnShow = false;
       }
-      if (next && visible && shown && focusOnShow && popup) {
+      if (next && visible && shown && focusOnShow && popup && !popup.inert) {
         focusOnShow = false;
         focusPopover(popup);
       }
@@ -704,8 +728,9 @@
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`popover-prefix:${prefix}`} />{/if}<span bind:this={host} role="presentation" class={['ant-popover-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>
 <NoCompactStyle>
 <div bind:this={popup} {id} role="dialog" popover="manual" hidden tabindex="-1" dir={config.direction}
+  inert={motion.leaving || undefined}
   data-ant-popover="" data-ant-custom-prefix={prefix !== 'ant-popover' || undefined}
-  data-ant-placement={classPlacement}
+  data-ant-placement={classPlacement} data-ant-overlay-motion={motion.zoom}
   aria-label={ariaLabel} aria-labelledby={!ariaLabel
     ? ariaLabelledby ?? (renderedTitle ? titleId : undefined)
     : undefined} aria-describedby={ariaDescribedby} aria-busy={ariaBusy} class={[
@@ -717,14 +742,15 @@
         colorInfo.className,
         classPlacement && `${prefix}-placement-${classPlacement}`,
         config.direction === 'rtl' && `${prefix}-rtl`,
-        rootClassName, config.popover?.class, semantics.classNames.root
+        rootClassName, config.popover?.class, semantics.classNames.root,
+        motion.className
       ]} style={initialStyle}
     {@attach popupStyle.attach} {@attach portal}
     onpointerenter={(event) => {
       if (event.pointerType !== 'touch')
         handlePopupHover(true);
     }} onpointerleave={() => handlePopupHover(false)} onfocusin={handlePopupFocus}
-    onfocusout={handlePopupBlur}>
+    onfocusout={handlePopupBlur} onanimationend={motion.end} ontransitionend={motion.end}>
   {#if arrowConfig.show}<div data-ant-popover-arrow="" class={[`${prefix}-arrow`, semantics.classNames.arrow]}
     style={[arrowPositionStyle, semantics.styles.arrow].filter(Boolean).join(';') || undefined}
     aria-hidden="true"></div>{/if}

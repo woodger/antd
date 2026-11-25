@@ -5,6 +5,8 @@ import type { TooltipActionCase } from './fixtures/tooltip-actions.types';
 
 const cases = reference.cases as readonly TooltipActionCase[];
 
+test.use({ reducedMotion: 'reduce' });
+
 async function pauseClock(page: Page) {
   await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
   await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));

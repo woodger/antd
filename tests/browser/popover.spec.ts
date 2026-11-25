@@ -147,6 +147,7 @@ test('Popover respects child click cancellation and disabled native triggers', a
 test(
   'Popover hover delays are cancellable and hovering or focusing its content keeps it open',
   async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
     await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
     await mode(page, 'hover');

@@ -123,7 +123,8 @@ DOM-состояние и состояние вложенного
 При включённом удалении SSR не вызывает title snippet, включая начальный open/defaultOpen.
 Прежний скрытый native shell и его ID/ARIA сохраняются; default SSR остаётся eager.
 Это также работает в ellipsis Tooltip Typography и подсказках Slider.
-Удаление следует native закрытию без ожидания исходной CSS motion.
+У Tooltip и Typography содержимое удаляется после завершения закрытия.
+Подсказки Slider по-прежнему используют собственный немедленный lifecycle.
 
 `forceRender=true` заранее монтирует скрытое содержимое после hydration и вызывает
 getPopupContainer, даже без открытия и при disabled. При destroyOnHidden=true оно
@@ -148,7 +149,33 @@ Title/overlay и fresh дополнительно сверяются с
 [24 UMD-сценариями содержимого и 80 кадрами кэша](../../../tests/browser/fixtures/ant-design-tooltip-content-reference.json),
 [SSR](../../../tests/package/tooltip-content.ssr.test.ts) и
 [browser](../../../tests/browser/tooltip-content.spec.ts), `?fixture=tooltip-content`.
-Исходные motion/UniqueProvider и оставшиеся delegated props ещё требуют переноса.
+UniqueProvider и оставшиеся delegated props ещё требуют переноса.
+
+## Завершение открытия и закрытия
+
+`onOpenChange(open)` сообщает о запросе от trigger. `afterOpenChange(open)` вызывается
+после применения видимости и завершения анимации, включая начальный `defaultOpen`,
+внешнее изменение `open` и скрытие через `disabled`. В режиме без анимации вызов
+следует за обновлением DOM. Отклонённый владельцем запрос через `bind:open` не меняет
+видимость. При прерывании анимации callback получает только завершённое состояние.
+`forceRender` подготавливает скрытое содержимое без вызова `afterOpenChange`.
+
+По умолчанию Tooltip использует CSSMotion `zoom-big-fast` с длительностью темы
+(100 мс по умолчанию). Префикс классов движения берётся из ConfigProvider.
+`motion={{ motionName: 'my-motion' }}` применяет пользовательские классы фаз
+appear, enter и leave. Пустое имя, `theme.token.motion=false` и
+`prefers-reduced-motion: reduce` отключают движение. При отсутствии события
+завершения для пользовательского имени действует deadline в 1000 мс.
+
+Панель при уходе остаётся в top layer вне порядка фокуса. В
+`afterOpenChange(false)` она уже скрыта, но её содержимое доступно через
+`popupElement`. При `destroyOnHidden` без `forceRender` snippet удаляется
+после callback, а скрытый native shell и ID сохраняются.
+
+Сверка для Tooltip, Popover и Popconfirm включает 19 сценариев закреплённого
+React UMD, каждый снят дважды. [Эталон](../../../tests/browser/fixtures/ant-design-overlay-motion-reference.json),
+[браузерные сценарии](../../../tests/browser/overlay-motion.spec.ts) и
+[SSR-проверка](../../../tests/package/overlay-motion.ssr.test.ts).
 
 Placement принимает top/bottom/left/right, topLeft/topRight/bottomLeft/bottomRight
 и leftTop/leftBottom/rightTop/rightBottom. Направления физические и не меняются
@@ -218,7 +245,7 @@ Portal переносит наследуемые variables и сохраняет
 Вложенные popup сохраняют собственные координаты и цвет стрелки.
 
 Поддерживаются строки, числа и rich snippets.
-Исходные motion/UniqueProvider и оставшиеся delegated props ещё не перенесены.
+UniqueProvider и оставшиеся delegated props ещё не перенесены.
 AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0 | 1 }`.
 Числовой 0 тоже разрешает flip, как в rc-trigger; отключение обеих коррекций
 задаётся boolean false.
@@ -303,7 +330,7 @@ Root styles имеют приоритет над вычисленными коо
 Tooltip Typography. У Typography без config сохраняется исходный hover trigger;
 его Tooltip создаётся лениво после DOM-измерения и не вызывает semantic callbacks при SSR.
 
-Tooltip.unique, motion и остальные delegated rc-trigger props
+Tooltip.unique и остальные delegated rc-trigger props
 пока не поддерживаются. Границы fresh cache для Snippet и CSS-transform/clipping
 описаны выше.
 

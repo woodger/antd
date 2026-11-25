@@ -229,6 +229,7 @@
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`popconfirm-prefix:${prefix}`} />{/if}<Popover content={hasTitle ? content : undefined} bind:ref bind:open={() => visible, request}
   trigger={resolvedDisabled ? [] : resolvedTrigger} mouseEnterDelay={enterDelay} mouseLeaveDelay={leaveDelay}
   showAction={props.showAction} hideAction={props.hideAction}
+  motion={props.motion} afterOpenChange={props.afterOpenChange}
   focusDelay={props.focusDelay} blurDelay={props.blurDelay}
   align={props.align} builtinPlacements={props.builtinPlacements} onPopupAlign={props.onPopupAlign}
   id={props.id} forceRender={props.forceRender} fresh={props.fresh} zIndex={props.zIndex}

@@ -75,7 +75,11 @@ export interface PopoverProps {
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Удаляет title/content при закрытии; по умолчанию содержимое сохраняется. */
+  /** Вызывается после применения видимости и завершения её CSS motion. */
+  afterOpenChange?: TooltipProps['afterOpenChange'];
+  /** Имя CSSMotion; пустая строка отключает анимацию. По умолчанию zoom-big. */
+  motion?: TooltipProps['motion'];
+  /** Удаляет title/content после afterOpenChange(false); native shell сохраняется. */
   destroyOnHidden?: boolean;
   /** Монтирует скрытое содержимое и portal после hydration, включая destroyOnHidden. */
   forceRender?: boolean;

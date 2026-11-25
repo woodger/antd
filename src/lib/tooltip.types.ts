@@ -99,7 +99,11 @@ export interface TooltipProps {
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Удаляет содержимое при закрытии; скрытый native shell сохраняется. @defaultValue false */
+  /** Вызывается после применения видимости и завершения её CSS motion. */
+  afterOpenChange?: (open: boolean) => void;
+  /** Имя CSSMotion; пустая строка отключает анимацию. По умолчанию zoom-big-fast. */
+  motion?: { motionName?: string };
+  /** Удаляет содержимое после afterOpenChange(false). @defaultValue false */
   destroyOnHidden?: boolean;
   /**
    * Заранее монтирует скрытое содержимое и portal после hydration, включая destroyOnHidden.

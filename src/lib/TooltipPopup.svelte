@@ -7,6 +7,7 @@
   import { useComponentTheme } from './theme-component.svelte';
   import { getOverlaySemantics } from './overlay-semantic.engine';
   import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { useOverlayMotion } from './overlay-motion.svelte';
   import { getPopupArrowStyle, getPopupPlacement, getPopupPlacements } from './popup-position.engine';
   import type { TooltipPosition } from './tooltip.engine';
   import { getTooltipColor } from './tooltip-color.engine';
@@ -24,7 +25,7 @@
     hasTooltipContent,
     isTooltipCorner
   } from './tooltip.engine';
-  import { connectPopup } from './popup.dom';
+  import { connectPopup, type PopupConnection } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import type {
     AdjustOverflow,
@@ -113,7 +114,7 @@
   const layer = $derived(zIndexLayer ?? localLayer);
   provideZIndex(() => layer.contextZIndex);
   let popup = $state<HTMLSpanElement>();
-  let realign: (() => void) | undefined;
+  let connection: PopupConnection | undefined;
   let actualPlacement = $state(untrack(() => placement));
   let actualPosition = $state.raw<TooltipPosition>();
   let resolvedAlign = $derived(align ?? semanticProps?.align);
@@ -212,11 +213,21 @@
   const initialStyle = untrack(() => rootStyle);
   const popupStyle = createOverlayStyle(() => rootLayers);
   let available = $derived(contentAvailable ?? hasTooltipContent(title));
+  const visible = $derived(open && available);
+  const motion = useOverlayMotion(() => popup, () => ({
+    visible,
+    forceRender: force,
+    enabled: designTokens.state.token.motion,
+    defaultName: semanticProps ? `${config.getPrefixCls()}-zoom-big-fast` : undefined,
+    customName: semanticProps?.motion?.motionName,
+    afterOpenChange: settleVisibility
+  }));
+  const presented = $derived(visible || motion.leaving);
   let mounted = $state(false);
-  let renderContent = $derived(!destroy || mounted && (force || open && available));
+  let renderContent = $derived(!destroy || mounted && (force || visible || motion.retained));
   let initialized = false;
   const portal = createPopupContainer(() => ({
-    open: force || open && available,
+    open: force || presented,
     reference: anchor,
     getPopupContainer: container,
     themeStyle: rootStyle
@@ -256,8 +267,13 @@
 
   export function forceAlign() {
     untrack(() => {
-      if (open && available) realign?.();
+      if (open && available) connection?.forceAlign();
     });
+  }
+
+  function settleVisibility(next: boolean) {
+    if (next) connection?.align();
+    semanticProps?.afterOpenChange?.(next);
   }
 
   $effect(() => {
@@ -277,12 +293,14 @@
     const reference = anchor;
     const source = trigger;
 
-    if (!surface || !reference || !open || !available) {
+    if (!surface || !reference || !presented) {
       return;
     }
 
-    const connection = untrack(() => connectPopup(surface, reference, {
+    const disconnect = untrack(() => connectPopup(surface, reference, {
       trigger: source,
+      get interactive() { return visible; },
+      pauseAlignment: () => motion.pauseAlignment,
       get placement() { return placement; },
       get autoAdjustOverflow() { return autoAdjustOverflow; },
       get sourcePlacement() {
@@ -300,7 +318,7 @@
       onVisibilityChange: shown => {
         if (shown && customPosition) {
           queueMicrotask(() => {
-            if (open && available) realign?.();
+            if (open && available) connection?.forceAlign();
           });
         }
       },
@@ -314,11 +332,11 @@
         actualPlacement = next;
       }
     }));
-    realign = connection.forceAlign;
+    connection = disconnect;
 
     return () => {
-      realign = undefined;
-      connection();
+      connection = undefined;
+      disconnect();
     };
   });
 </script>
@@ -335,7 +353,8 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`tooltip-prefix:${prefix}`} />{/if}<span bind:this={popup} {id} role="tooltip" popover="manual" hidden dir={config.direction}
-  data-ant-tooltip="" data-ant-placement={classPlacement}
+  inert={motion.leaving || undefined}
+  data-ant-tooltip="" data-ant-placement={classPlacement} data-ant-overlay-motion={motion.zoom}
   data-ant-tooltip-inline={!container || undefined} class={[
     prefix,
     'ant-tooltip-css-var',
@@ -344,13 +363,15 @@
     classPlacement && `${prefix}-placement-${classPlacement}`,
     config.direction === 'rtl' && `${prefix}-rtl`,
     semanticProps?.rootClassName,
-    config.tooltip?.class, semantics.classNames.root
+    config.tooltip?.class, semantics.classNames.root,
+    motion.className
   ]} style={initialStyle}
   {@attach popupStyle.attach} {@attach portal}
   onpointerenter={(event) => {
       if (event.pointerType !== 'touch')
         onHoverChange?.(true);
-    }} onpointerleave={() => onHoverChange?.(false)}>
+    }} onpointerleave={() => onHoverChange?.(false)}
+  onanimationend={motion.end} ontransitionend={motion.end}>
   {#if arrowConfig.show}<span data-ant-tooltip-arrow="" class={[`${prefix}-arrow`, semantics.classNames.arrow]}
     style={arrowPositionStyle
       ? `${arrowPositionStyle};${semantics.styles.arrow ?? ''}` : semantics.styles.arrow}

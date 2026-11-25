@@ -18612,7 +18612,13 @@
         "tests/package/popover-lifecycle.ssr.test.ts",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
-        "tests/browser/prefix-text-boundaries.spec.ts"
+        "tests/browser/prefix-text-boundaries.spec.ts",
+        "src/lib/overlay-motion.svelte.ts",
+        "src/lib/overlay-motion.css",
+        "tests/browser/fixtures/OverlayMotionFixtures.svelte",
+        "tests/browser/fixtures/ant-design-overlay-motion-reference.json",
+        "tests/browser/overlay-motion.spec.ts",
+        "tests/package/overlay-motion.ssr.test.ts"
       ],
       "features": [
         {
@@ -18629,7 +18635,7 @@
           "state": "partial",
           "requiredForV1": false,
           "evidence": [],
-          "note": "12 placements, pointAtCenter/object overflow, align/builtinPlacements/onPopupAlign, refs, id/forceRender/zIndex, контейнеры, destroyOnHidden, semantic/config и actions перенесены отдельными features. Fresh cache поддержан для текущих props с отдельной opaque Snippet boundary; motion и оставшиеся delegated props требуют переноса. Общий подробный аудит v1 не завершён."
+          "note": "12 placements, pointAtCenter/object overflow, align/builtinPlacements/onPopupAlign, refs, id/forceRender/zIndex, контейнеры, destroyOnHidden, semantic/config и actions перенесены отдельными features. Fresh cache поддержан для текущих props с отдельной opaque Snippet boundary; motion описан отдельной feature, оставшиеся delegated props требуют переноса. Общий подробный аудит v1 не завершён."
         },
         {
           "id": "compact-isolation",
@@ -18676,7 +18682,7 @@
             "tests/browser/fixtures/ant-design-overlay-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion остаётся в работе; общий аудит семейств не завершён."
+          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion описан в open-change-motion; общий аудит семейств не завершён."
         },
         {
           "id": "popup-container",
@@ -18698,7 +18704,7 @@
             "tests/browser/overlay-container.spec.ts",
             "tests/package/overlay-container.ssr.test.ts"
           ],
-          "note": "Наследует source Tooltip container chain: getPopupContainer → ConfigProvider. Own undefined не отключает provider. Getter ленивый и browser-only. Reactive portal сохраняет контент, focus/selection и popup при неизменном target, переносит наследуемые CSS variables без потери своих Popover/Tooltip aliases; changes/removal overrides проверяются в DOM. Открытый ShadowRoot использует собственные стили потребителя; focus lookup и возврат на trigger учитывают фактический root. 52 общих UMD-эталона задают priority, getter payload и state retention; native default inline/top-layer surface и прежний retained content сохраняются. Destroy описан отдельной feature; motion и прочие rc-trigger props остаются gaps. Унаследованные arrow coordinates и CSS-derived arrow variables родительского popup не перезаписывают собственный controller текущей поверхности."
+          "note": "Наследует source Tooltip container chain: getPopupContainer → ConfigProvider. Own undefined не отключает provider. Getter ленивый и browser-only. Reactive portal сохраняет контент, focus/selection и popup при неизменном target, переносит наследуемые CSS variables без потери своих Popover/Tooltip aliases; changes/removal overrides проверяются в DOM. Открытый ShadowRoot использует собственные стили потребителя; focus lookup и возврат на trigger учитывают фактический root. 52 общих UMD-эталона задают priority, getter payload и state retention; native default inline/top-layer surface и прежний retained content сохраняются. Destroy описан отдельной feature; motion описан в open-change-motion. Унаследованные arrow coordinates и CSS-derived arrow variables родительского popup не перезаписывают собственный controller текущей поверхности."
         },
         {
           "id": "content-lifecycle",
@@ -18723,7 +18729,7 @@
             "tests/package/avatar-group-popover.ssr.test.ts",
             "docs/reference/components/popover.md"
           ],
-          "note": "Исходный isReactRenderable: false опускает секцию, true создаёт пустую, 0 отображается. DestroyOnHidden управляет удалением содержимого; deprecated destroyTooltipOnHide исключён. Native default сохраняет прежнее eager/retained содержимое; удаляемые snippets не вызываются при SSR даже при начальном open/defaultOpen. Без forceRender при закрытии сначала возвращается фокус, затем удаляются title/content. Синхронный отказ function binding от открытия не блокирует повторные callbacks. Проверено по 33 UMD-последовательностям AvatarGroup, собственным SSR и standalone browser cases. Source CSSMotion/deadline/fresh cache не входят в эту feature; закрытие остаётся немедленным по прежнему native контракту."
+          "note": "Исходный isReactRenderable: false опускает секцию, true создаёт пустую, 0 отображается. DestroyOnHidden управляет удалением содержимого; deprecated destroyTooltipOnHide исключён. Native default сохраняет прежнее eager/retained содержимое; удаляемые snippets не вызываются при SSR даже при начальном open/defaultOpen. Без forceRender при закрытии сначала возвращается фокус, затем удаляются title/content. Синхронный отказ function binding от открытия не блокирует повторные callbacks. Проверено по 33 UMD-последовательностям AvatarGroup, собственным SSR и standalone browser cases. Удаление и кэш при анимации описаны в open-change-motion и source-fresh-cache."
         },
         {
           "id": "corner-placements",
@@ -18906,7 +18912,7 @@
             "tests/browser/overlay-lifecycle.spec.ts",
             "tests/package/overlay-lifecycle.ssr.test.ts"
           ],
-          "note": "DestroyOnHidden управляет удалением содержимого; false сохраняет его. При закрытии очищается содержимое, включая DOM draft и локальное состояние child component; при открытии оно создаётся заново. Изменение флага в открытой панели сохраняет DOM/draft/selection/focus, в закрытой включает удаление сразу. Semantic props Tooltip получают разрешённый boolean, Popover/Popconfirm сохраняют входной prop. Настройки передаются ellipsis Tooltip Typography и single/active range/pinned range Slider. Контроллер Popconfirm сохраняет защиту от старого Promise при уничтоженном содержимом. 24 официальных UMD-сценария / 124 кадра фиксируют приоритет, initial/default open, body portals, скрытые обновления и reset/retention. Motion в эталоне отключена. Согласованная native граница: скрытый shell и ID/ARIA сохраняются, default SSR/content остаются eager, Typography и destroy=true ленивы при SSR; удаление следует native закрытию без ожидания source CSS motion. Исходные fresh cache, motion/unique и остальные delegated props остаются в работе."
+          "note": "DestroyOnHidden управляет удалением содержимого; false сохраняет его. При закрытии очищается содержимое, включая DOM draft и локальное состояние child component; при открытии оно создаётся заново. Изменение флага в открытой панели сохраняет DOM/draft/selection/focus, в закрытой включает удаление сразу. Semantic props Tooltip получают разрешённый boolean, Popover/Popconfirm сохраняют входной prop. Настройки передаются ellipsis Tooltip Typography и single/active range/pinned range Slider. Контроллер Popconfirm сохраняет защиту от старого Promise при уничтоженном содержимом. 24 официальных UMD-сценария / 124 кадра фиксируют приоритет, initial/default open, body portals, скрытые обновления и reset/retention. Motion в эталоне отключена. Согласованная native граница: скрытый shell и ID/ARIA сохраняются, default SSR/content остаются eager, Typography и destroy=true ленивы при SSR; порядок удаления с CSS motion описан в open-change-motion. Остальные delegated props остаются в работе."
         },
         {
           "id": "empty-trigger",
@@ -18979,7 +18985,7 @@
             "tests/package/popover-align.ssr.test.ts",
             "docs/reference/components/popover.md"
           ],
-          "note": "Popover и Popconfirm принимают общие TooltipAlignConfig/placements/callback; AvatarGroup.max.popover передаёт их без отдельного адаптера. Полная замена карты, включая {}, shallow merge align/overflow, points, percent/parseFloat offset и targetOffset, htmlRegion, dynamicInset/_experimental, autoArrow и legacy metadata используют общий движок useAlign 3.10.1. Placement class выбирается по первому совпадению points; root/arrow semantic styles имеют приоритет. Callback получает реальный popup и итоговый align до применения новых координат; открытие, фактические изменения и resize не создают callback на idle frames. 84 UMD-сценария фиксируют bbox/arrow/class/payload, nested AvatarGroup forwarding, styles priority, RTL, resize и изменяемые props; SSR остаётся скрытым без DOM/timers. Native fixed/top-layer, viewport/transform/clipping boundaries, draft/focus/selection и cleanup сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/trigger 3.10.1: при существующей записи placements смена align или карты сама не выравнивает popup. В шести reactive-сценариях beforeForceAlign хранит прежнюю геометрию, changed — результат явного forceAlign. Для отдельного разбора; прежнее автоматическое tracking Svelte сохранено. Полный lifecycle/fresh/motion API остаётся в работе."
+          "note": "Popover и Popconfirm принимают общие TooltipAlignConfig/placements/callback; AvatarGroup.max.popover передаёт их без отдельного адаптера. Полная замена карты, включая {}, shallow merge align/overflow, points, percent/parseFloat offset и targetOffset, htmlRegion, dynamicInset/_experimental, autoArrow и legacy metadata используют общий движок useAlign 3.10.1. Placement class выбирается по первому совпадению points; root/arrow semantic styles имеют приоритет. Callback получает реальный popup и итоговый align до применения новых координат; открытие, фактические изменения и resize не создают callback на idle frames. 84 UMD-сценария фиксируют bbox/arrow/class/payload, nested AvatarGroup forwarding, styles priority, RTL, resize и изменяемые props; SSR остаётся скрытым без DOM/timers. Native fixed/top-layer, viewport/transform/clipping boundaries, draft/focus/selection и cleanup сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/trigger 3.10.1: при существующей записи placements смена align или карты сама не выравнивает popup. В шести reactive-сценариях beforeForceAlign хранит прежнюю геометрию, changed — результат явного forceAlign. Для отдельного разбора; прежнее автоматическое tracking Svelte сохранено. Lifecycle, fresh и motion описаны отдельными features."
         },
         {
           "id": "imperative-ref",
@@ -19000,7 +19006,7 @@
             "tests/package/popover-ref.ssr.test.ts",
             "docs/reference/components/popover.md"
           ],
-          "note": "Bind:ref Popover и Popconfirm использует общий PopoverRef с nativeElement, popupElement и forceAlign. Стабильный Svelte handle/getters отслеживает button/SVG/replacement trigger и portal; API создаётся после mount, binding очищается при unmount, сохранённый handle возвращает undefined DOM и безопасный no-op forceAlign. Метод использует тот же controller и coalesced microtask без новых listeners/timers или зависимостей пользовательского effect. Восемь официальных UMD-сценариев / 40 lifecycle frames и manual geometry сверяют поля ref, сдвиг 80px при остановленном requestAnimationFrame, callback/batch delta=1 и замену trigger с тем же popup. Native retained div shell существует до первого открытия и при destroyOnHidden; Source popup в этих состояниях отсутствует или уже отключён от DOM. Native open/focus/selection/draft, скрытый SSR, async confirmation/parked focus и прочие guards сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: TooltipRef в components/tooltip/index.tsx объявляет HTMLElement/HTMLDivElement без nullable-состояний, но UMD подтверждает SVG trigger и отсутствие popup до первого открытия. Для отдельного разбора; Svelte использует Element | undefined и HTMLDivElement | undefined вместо этих non-null assertions. Общий motion/fresh/lifecycle API переносится отдельно."
+          "note": "Bind:ref Popover и Popconfirm использует общий PopoverRef с nativeElement, popupElement и forceAlign. Стабильный Svelte handle/getters отслеживает button/SVG/replacement trigger и portal; API создаётся после mount, binding очищается при unmount, сохранённый handle возвращает undefined DOM и безопасный no-op forceAlign. Метод использует тот же controller и coalesced microtask без новых listeners/timers или зависимостей пользовательского effect. Восемь официальных UMD-сценариев / 40 lifecycle frames и manual geometry сверяют поля ref, сдвиг 80px при остановленном requestAnimationFrame, callback/batch delta=1 и замену trigger с тем же popup. Native retained div shell существует до первого открытия и при destroyOnHidden; Source popup в этих состояниях отсутствует или уже отключён от DOM. Native open/focus/selection/draft, скрытый SSR, async confirmation/parked focus и прочие guards сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: TooltipRef в components/tooltip/index.tsx объявляет HTMLElement/HTMLDivElement без nullable-состояний, но UMD подтверждает SVG trigger и отсутствие popup до первого открытия. Для отдельного разбора; Svelte использует Element | undefined и HTMLDivElement | undefined вместо этих non-null assertions. Motion, fresh и lifecycle описаны отдельными features."
         },
         {
           "id": "source-lifecycle-props",
@@ -19084,6 +19090,22 @@
             "tests/package/z-index-context.ssr.test.ts"
           ],
           "note": "Popover передаёт числовой уровень триггеру и содержимому. Вложенная панель получает слой владельца плюс 100 с учётом явного zIndex, темы и приоритета root styles. Браузерная сверка включает Popover в Modal и Popover с дочерними Dropdown, Menu и Tooltip."
+        },
+        {
+          "id": "open-change-motion",
+          "title": "Завершение смены видимости и CSS-анимация",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/popover.md",
+            "src/lib/overlay-motion.svelte.ts",
+            "src/lib/overlay-motion.css",
+            "tests/browser/fixtures/OverlayMotionFixtures.svelte",
+            "tests/browser/fixtures/ant-design-overlay-motion-reference.json",
+            "tests/browser/overlay-motion.spec.ts",
+            "tests/package/overlay-motion.ssr.test.ts"
+          ],
+          "note": "AfterOpenChange следует после DOM/CSS motion и до удаления destroyOnHidden content. Внешний open, отклонённая запись через bind:open, defaultOpen, forced mount и прерывание проверены в 19 профилях UMD. Popover использует zoom-big (200 мс по умолчанию); уходящая панель временно остаётся в top layer вне порядка фокуса. Пользовательский motionName задаёт классы фаз и deadline. Theme motion и reduced motion отключают анимацию; SSR сохраняет скрытый native shell."
         }
       ]
     },
@@ -21343,7 +21365,13 @@
         "tests/package/tooltip-actions.ssr.test.ts",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
-        "tests/browser/prefix-text-boundaries.spec.ts"
+        "tests/browser/prefix-text-boundaries.spec.ts",
+        "src/lib/overlay-motion.svelte.ts",
+        "src/lib/overlay-motion.css",
+        "tests/browser/fixtures/OverlayMotionFixtures.svelte",
+        "tests/browser/fixtures/ant-design-overlay-motion-reference.json",
+        "tests/browser/overlay-motion.spec.ts",
+        "tests/package/overlay-motion.ssr.test.ts"
       ],
       "features": [
         {
@@ -21425,7 +21453,7 @@
             "tests/browser/fixtures/ant-design-overlay-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion остаётся в работе; общий аудит семейств не завершён."
+          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion описан в open-change-motion; общий аудит семейств не завершён."
         },
         {
           "id": "popup-container",
@@ -21613,7 +21641,7 @@
             "tests/browser/tooltip-lifecycle.spec.ts",
             "tests/package/tooltip-lifecycle.ssr.test.ts"
           ],
-          "note": "DestroyOnHidden управляет удалением содержимого; false сохраняет его. При закрытии без forceRender очищается содержимое, включая DOM draft и локальное состояние child component; при открытии оно создаётся заново. Изменение флага в открытой панели сохраняет DOM/draft/selection/focus, в закрытой без forceRender включает удаление сразу. Semantic props Tooltip получают разрешённый boolean, Popover/Popconfirm сохраняют входной prop. Настройки передаются ellipsis Tooltip Typography и single/active range/pinned range Slider. Контроллер Popconfirm сохраняет защиту от старого Promise при уничтоженном содержимом. 24 официальных UMD-сценария / 124 кадра фиксируют приоритет, initial/default open, body portals, скрытые обновления и reset/retention. Motion в эталоне отключена. Согласованная native граница: скрытый shell и ID/ARIA сохраняются, default SSR/content остаются eager, Typography и destroy=true ленивы при SSR; удаление следует native закрытию без ожидания source CSS motion. Полный fresh cache для opaque Snippet, motion/unique и остальные delegated props остаются в работе. Tooltip.forceRender=true сохраняет скрытое содержимое также при destroyOnHidden; его выключение у закрытой подсказки разрешает удаление."
+          "note": "DestroyOnHidden управляет удалением содержимого; false сохраняет его. При закрытии без forceRender очищается содержимое, включая DOM draft и локальное состояние child component; при открытии оно создаётся заново. Изменение флага в открытой панели сохраняет DOM/draft/selection/focus, в закрытой без forceRender включает удаление сразу. Semantic props Tooltip получают разрешённый boolean, Popover/Popconfirm сохраняют входной prop. Настройки передаются ellipsis Tooltip Typography и single/active range/pinned range Slider. Контроллер Popconfirm сохраняет защиту от старого Promise при уничтоженном содержимом. 24 официальных UMD-сценария / 124 кадра фиксируют приоритет, initial/default open, body portals, скрытые обновления и reset/retention. Motion в эталоне отключена. Согласованная native граница: скрытый shell и ID/ARIA сохраняются, default SSR/content остаются eager, Typography и destroy=true ленивы при SSR; порядок удаления с CSS motion описан в open-change-motion. Полный fresh cache для opaque Snippet, UniqueProvider и остальные delegated props остаются в работе. Tooltip.forceRender=true сохраняет скрытое содержимое также при destroyOnHidden; его выключение у закрытой подсказки разрешает удаление."
         },
         {
           "id": "empty-trigger",
@@ -21692,7 +21720,7 @@
             "tests/browser/tooltip-lifecycle.spec.ts",
             "tests/package/tooltip-lifecycle.ssr.test.ts"
           ],
-          "note": "Fresh=false фиксирует последний открытый payload: scalar/array content, container semantic class/style и legacy/color layers; true обновляет скрытый payload. Root/arrow styles остаются реактивными. Снимок вложенного массива отделён от Svelte proxy. 80 UMD-кадров закрепляют default/false/true, динамический fresh и destroyOnHidden; native eager initial content и скрытый shell сохраняются. Snippet selection кэшируется, но захваченные reactive значения и эффекты Svelte продолжают обновляться: полный React.memo opaque captures не воспроизводится. Fresh передаётся Typography и single/active range/pinned range Slider; браузер проверяет данные consumers, DOM/state retention и отложенную замену Snippet. Source motion/UniqueProvider и остальной delegated API остаются в работе. Скрытый id Tooltip также следует fresh cache; первый force mount получает текущий payload."
+          "note": "Fresh=false фиксирует последний открытый payload: scalar/array content, container semantic class/style и legacy/color layers; true обновляет скрытый payload. Root/arrow styles остаются реактивными. Снимок вложенного массива отделён от Svelte proxy. 80 UMD-кадров закрепляют default/false/true, динамический fresh и destroyOnHidden; native eager initial content и скрытый shell сохраняются. Snippet selection кэшируется, но захваченные reactive значения и эффекты Svelte продолжают обновляться: полный React.memo opaque captures не воспроизводится. Fresh передаётся Typography и single/active range/pinned range Slider; браузер проверяет данные consumers, DOM/state retention и отложенную замену Snippet. UniqueProvider и остальной delegated API остаются в работе. Скрытый id Tooltip также следует fresh cache; первый force mount получает текущий payload."
         },
         {
           "id": "imperative-ref",
@@ -21739,7 +21767,7 @@
             "tests/package/tooltip-align.ssr.test.ts",
             "docs/reference/components/tooltip.md"
           ],
-          "note": "BuiltinPlacements заменяет всю карту, включая пустой объект; align накладывается поверх выбранной записи без deep merge overflow. Points, offset/targetOffset с процентами и parseFloat strings, htmlRegion, dynamicInset/_experimental и autoArrow используют useAlign 3.10.1. Class выбирается по первому совпадению points; custom key/no class допустимы. Legacy CSS flags сохраняются в metadata, но Source их не использует. 38 UMD-сценариев фиксируют bbox/arrow/final align и resize без изменения координат, class, styles priority, initial callbacks и coalesced manual forceAlign, RTL и prop updates. Native fixed/top-layer, viewport limits и автоматическое anchor tracking сохраняются; полный CSS-transform/scroll-container clipping не заявлен. OnPopupAlign получает native DOM и итоговый align до координат; новые параметры передаются Typography и single/active/pinned range Slider. ForceAlign объединяет синхронные запросы в одну microtask, как Source; idle frames/SSR/closed popup не вызывают callback. Ref geometry проверки продолжают работать без animation frames; DOM/draft/focus/selection сохраняются. Общий аудит и motion/UniqueProvider остаются в работе."
+          "note": "BuiltinPlacements заменяет всю карту, включая пустой объект; align накладывается поверх выбранной записи без deep merge overflow. Points, offset/targetOffset с процентами и parseFloat strings, htmlRegion, dynamicInset/_experimental и autoArrow используют useAlign 3.10.1. Class выбирается по первому совпадению points; custom key/no class допустимы. Legacy CSS flags сохраняются в metadata, но Source их не использует. 38 UMD-сценариев фиксируют bbox/arrow/final align и resize без изменения координат, class, styles priority, initial callbacks и coalesced manual forceAlign, RTL и prop updates. Native fixed/top-layer, viewport limits и автоматическое anchor tracking сохраняются; полный CSS-transform/scroll-container clipping не заявлен. OnPopupAlign получает native DOM и итоговый align до координат; новые параметры передаются Typography и single/active/pinned range Slider. ForceAlign объединяет синхронные запросы в одну microtask, как Source; idle frames/SSR/closed popup не вызывают callback. Ref geometry проверки продолжают работать без animation frames; DOM/draft/focus/selection сохраняются. Общий аудит и UniqueProvider остаются в работе."
         },
         {
           "id": "trigger-lifecycle-options",
@@ -21824,6 +21852,22 @@
             "tests/package/z-index-context.ssr.test.ts"
           ],
           "note": "Контекст Tooltip доступен триггеру и popup. Вложенный слой, явный ноль, базовый токен темы и перенос DOM проверены по исходным профилям. Для встроенных TooltipPopup тот же расчёт применяется без повторного смещения."
+        },
+        {
+          "id": "open-change-motion",
+          "title": "Завершение смены видимости и CSS-анимация",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/tooltip.md",
+            "src/lib/overlay-motion.svelte.ts",
+            "src/lib/overlay-motion.css",
+            "tests/browser/fixtures/OverlayMotionFixtures.svelte",
+            "tests/browser/fixtures/ant-design-overlay-motion-reference.json",
+            "tests/browser/overlay-motion.spec.ts",
+            "tests/package/overlay-motion.ssr.test.ts"
+          ],
+          "note": "AfterOpenChange следует после DOM/CSS motion и до удаления destroyOnHidden content. Внешний open, отклонённая запись через bind:open, defaultOpen, forced mount и прерывание проверены в 19 профилях UMD. Tooltip использует zoom-big-fast (100 мс по умолчанию). Typography передаёт общие motion props; Slider сохраняет свой lifecycle. Пользовательский motionName задаёт классы фаз и deadline. Theme motion и reduced motion отключают анимацию; SSR сохраняет скрытый native shell."
         }
       ]
     },
@@ -24034,7 +24078,13 @@
         "tests/package/popover-lifecycle.ssr.test.ts",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
-        "tests/browser/prefix-text-boundaries.spec.ts"
+        "tests/browser/prefix-text-boundaries.spec.ts",
+        "src/lib/overlay-motion.svelte.ts",
+        "src/lib/overlay-motion.css",
+        "tests/browser/fixtures/OverlayMotionFixtures.svelte",
+        "tests/browser/fixtures/ant-design-overlay-motion-reference.json",
+        "tests/browser/overlay-motion.spec.ts",
+        "tests/package/overlay-motion.ssr.test.ts"
       ],
       "features": [
         {
@@ -24098,7 +24148,7 @@
             "tests/browser/fixtures/ant-design-overlay-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion остаётся в работе; общий аудит семейств не завершён."
+          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion описан в open-change-motion; общий аудит семейств не завершён."
         },
         {
           "id": "popup-container",
@@ -24303,7 +24353,7 @@
             "tests/browser/overlay-lifecycle.spec.ts",
             "tests/package/overlay-lifecycle.ssr.test.ts"
           ],
-          "note": "DestroyOnHidden управляет удалением содержимого; false сохраняет его. При закрытии очищается содержимое, включая DOM draft и локальное состояние child component; при открытии оно создаётся заново. Изменение флага в открытой панели сохраняет DOM/draft/selection/focus, в закрытой включает удаление сразу. Semantic props Tooltip получают разрешённый boolean, Popover/Popconfirm сохраняют входной prop. Настройки передаются ellipsis Tooltip Typography и single/active range/pinned range Slider. Контроллер Popconfirm сохраняет защиту от старого Promise при уничтоженном содержимом. 24 официальных UMD-сценария / 124 кадра фиксируют приоритет, initial/default open, body portals, скрытые обновления и reset/retention. Motion в эталоне отключена. Согласованная native граница: скрытый shell и ID/ARIA сохраняются, default SSR/content остаются eager, Typography и destroy=true ленивы при SSR; удаление следует native закрытию без ожидания source CSS motion. Исходные fresh cache, motion/unique и остальные delegated props остаются в работе."
+          "note": "DestroyOnHidden управляет удалением содержимого; false сохраняет его. При закрытии очищается содержимое, включая DOM draft и локальное состояние child component; при открытии оно создаётся заново. Изменение флага в открытой панели сохраняет DOM/draft/selection/focus, в закрытой включает удаление сразу. Semantic props Tooltip получают разрешённый boolean, Popover/Popconfirm сохраняют входной prop. Настройки передаются ellipsis Tooltip Typography и single/active range/pinned range Slider. Контроллер Popconfirm сохраняет защиту от старого Promise при уничтоженном содержимом. 24 официальных UMD-сценария / 124 кадра фиксируют приоритет, initial/default open, body portals, скрытые обновления и reset/retention. Motion в эталоне отключена. Согласованная native граница: скрытый shell и ID/ARIA сохраняются, default SSR/content остаются eager, Typography и destroy=true ленивы при SSR; порядок удаления с CSS motion описан в open-change-motion. Остальные delegated props остаются в работе."
         },
         {
           "id": "empty-trigger",
@@ -24376,7 +24426,7 @@
             "tests/package/popover-align.ssr.test.ts",
             "docs/reference/components/popconfirm.md"
           ],
-          "note": "Popover и Popconfirm принимают общие TooltipAlignConfig/placements/callback; AvatarGroup.max.popover передаёт их без отдельного адаптера. Полная замена карты, включая {}, shallow merge align/overflow, points, percent/parseFloat offset и targetOffset, htmlRegion, dynamicInset/_experimental, autoArrow и legacy metadata используют общий движок useAlign 3.10.1. Placement class выбирается по первому совпадению points; root/arrow semantic styles имеют приоритет. Callback получает реальный popup и итоговый align до применения новых координат; открытие, фактические изменения и resize не создают callback на idle frames. 84 UMD-сценария фиксируют bbox/arrow/class/payload, nested AvatarGroup forwarding, styles priority, RTL, resize и изменяемые props; SSR остаётся скрытым без DOM/timers. Native fixed/top-layer, viewport/transform/clipping boundaries, draft/focus/selection и cleanup сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/trigger 3.10.1: при существующей записи placements смена align или карты сама не выравнивает popup. В шести reactive-сценариях beforeForceAlign хранит прежнюю геометрию, changed — результат явного forceAlign. Для отдельного разбора; прежнее автоматическое tracking Svelte сохранено. Полный lifecycle/fresh/motion API остаётся в работе."
+          "note": "Popover и Popconfirm принимают общие TooltipAlignConfig/placements/callback; AvatarGroup.max.popover передаёт их без отдельного адаптера. Полная замена карты, включая {}, shallow merge align/overflow, points, percent/parseFloat offset и targetOffset, htmlRegion, dynamicInset/_experimental, autoArrow и legacy metadata используют общий движок useAlign 3.10.1. Placement class выбирается по первому совпадению points; root/arrow semantic styles имеют приоритет. Callback получает реальный popup и итоговый align до применения новых координат; открытие, фактические изменения и resize не создают callback на idle frames. 84 UMD-сценария фиксируют bbox/arrow/class/payload, nested AvatarGroup forwarding, styles priority, RTL, resize и изменяемые props; SSR остаётся скрытым без DOM/timers. Native fixed/top-layer, viewport/transform/clipping boundaries, draft/focus/selection и cleanup сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/trigger 3.10.1: при существующей записи placements смена align или карты сама не выравнивает popup. В шести reactive-сценариях beforeForceAlign хранит прежнюю геометрию, changed — результат явного forceAlign. Для отдельного разбора; прежнее автоматическое tracking Svelte сохранено. Lifecycle, fresh и motion описаны отдельными features."
         },
         {
           "id": "imperative-ref",
@@ -24397,7 +24447,7 @@
             "tests/package/popover-ref.ssr.test.ts",
             "docs/reference/components/popconfirm.md"
           ],
-          "note": "Bind:ref Popover и Popconfirm использует общий PopoverRef с nativeElement, popupElement и forceAlign. Стабильный Svelte handle/getters отслеживает button/SVG/replacement trigger и portal; API создаётся после mount, binding очищается при unmount, сохранённый handle возвращает undefined DOM и безопасный no-op forceAlign. Метод использует тот же controller и coalesced microtask без новых listeners/timers или зависимостей пользовательского effect. Восемь официальных UMD-сценариев / 40 lifecycle frames и manual geometry сверяют поля ref, сдвиг 80px при остановленном requestAnimationFrame, callback/batch delta=1 и замену trigger с тем же popup. Native retained div shell существует до первого открытия и при destroyOnHidden; Source popup в этих состояниях отсутствует или уже отключён от DOM. Native open/focus/selection/draft, скрытый SSR, async confirmation/parked focus и прочие guards сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: TooltipRef в components/tooltip/index.tsx объявляет HTMLElement/HTMLDivElement без nullable-состояний, но UMD подтверждает SVG trigger и отсутствие popup до первого открытия. Для отдельного разбора; Svelte использует Element | undefined и HTMLDivElement | undefined вместо этих non-null assertions. Общий motion/fresh/lifecycle API переносится отдельно."
+          "note": "Bind:ref Popover и Popconfirm использует общий PopoverRef с nativeElement, popupElement и forceAlign. Стабильный Svelte handle/getters отслеживает button/SVG/replacement trigger и portal; API создаётся после mount, binding очищается при unmount, сохранённый handle возвращает undefined DOM и безопасный no-op forceAlign. Метод использует тот же controller и coalesced microtask без новых listeners/timers или зависимостей пользовательского effect. Восемь официальных UMD-сценариев / 40 lifecycle frames и manual geometry сверяют поля ref, сдвиг 80px при остановленном requestAnimationFrame, callback/batch delta=1 и замену trigger с тем же popup. Native retained div shell существует до первого открытия и при destroyOnHidden; Source popup в этих состояниях отсутствует или уже отключён от DOM. Native open/focus/selection/draft, скрытый SSR, async confirmation/parked focus и прочие guards сохранены. Наблюдение upstream 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: TooltipRef в components/tooltip/index.tsx объявляет HTMLElement/HTMLDivElement без nullable-состояний, но UMD подтверждает SVG trigger и отсутствие popup до первого открытия. Для отдельного разбора; Svelte использует Element | undefined и HTMLDivElement | undefined вместо этих non-null assertions. Motion, fresh и lifecycle описаны отдельными features."
         },
         {
           "id": "source-lifecycle-props",
@@ -24482,6 +24532,22 @@
             "tests/package/z-index-context.ssr.test.ts"
           ],
           "note": "Popconfirm разрешает и передаёт уровень через Popover. Сверены вложенный Popconfirm, потомки в description и явные overrides, включая нулевой контекст родителя."
+        },
+        {
+          "id": "open-change-motion",
+          "title": "Завершение смены видимости и CSS-анимация",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/popconfirm.md",
+            "src/lib/overlay-motion.svelte.ts",
+            "src/lib/overlay-motion.css",
+            "tests/browser/fixtures/OverlayMotionFixtures.svelte",
+            "tests/browser/fixtures/ant-design-overlay-motion-reference.json",
+            "tests/browser/overlay-motion.spec.ts",
+            "tests/package/overlay-motion.ssr.test.ts"
+          ],
+          "note": "AfterOpenChange следует после DOM/CSS motion и до удаления destroyOnHidden content. Внешний open, отклонённая запись через bind:open, defaultOpen, forced mount и прерывание проверены в 19 профилях UMD. Popconfirm передаёт lifecycle внешнему Popover. Согласованный disabled Svelte скрывает открытую карточку, сохраняя raw open и защиту Promise. Пользовательский motionName задаёт классы фаз и deadline. Theme motion и reduced motion отключают анимацию; SSR сохраняет скрытый native shell."
         }
       ]
     },

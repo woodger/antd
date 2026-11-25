@@ -56,6 +56,7 @@ test('Tooltip hides a zero-size trigger and reappears when its size returns', as
 test(
   'Tooltip respects enter and leave delays, remains hoverable and keeps focus on its trigger',
   async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
     await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
 
@@ -339,6 +340,7 @@ test('Tooltip remains outside clipping ancestors in the native top layer', async
 test(
   'Tooltip follows scrolling, layout changes and viewport resizing while open',
   async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     const button = page.getByRole('button', { name: 'Scrolling Tooltip trigger', exact: true });
 
     await button.focus();

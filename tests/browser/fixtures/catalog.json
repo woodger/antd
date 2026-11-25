@@ -385,6 +385,11 @@
     "root": "popover-lifecycle-fixture"
   },
   {
+    "id": "overlay-motion",
+    "module": "./OverlayMotionFixtures.svelte",
+    "root": "overlay-motion-fixture"
+  },
+  {
     "id": "popover-ref",
     "module": "./PopoverRefFixtures.svelte",
     "root": "popover-ref-fixture"

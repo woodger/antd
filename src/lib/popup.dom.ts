@@ -16,6 +16,8 @@ const popupConnections = new WeakMap<HTMLElement, object>();
 export interface PopupConnection {
   (retainSurface?: boolean): void;
   forceAlign: () => void;
+  /** После CSS motion возвращает позицию до уведомления о видимости. */
+  align: () => void;
 }
 
 // Учитывает активный узел в ShadowRoot до перехода к документу.
@@ -309,7 +311,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   if (options.preserveFocus !== false)
     popup.addEventListener('pointerdown', preserveFocus);
 
-  return Object.assign(disconnect, { forceAlign });
+  return Object.assign(disconnect, { forceAlign, align: update });
 
   // Снимает слушатели сразу. При retarget может отложить освобождение DOM-поверхности.
   function disconnect(retainSurface = false) {
