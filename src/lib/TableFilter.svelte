@@ -19,13 +19,14 @@
   import TableFilterOptions from './TableFilterOptions.svelte';
 
   let {
-    prefixCls, dropdownPrefix, title, titleReference, options, value, filtered, resetValues,
+    prefixCls, dropdownPrefix, rootClassName, title, titleReference, options, value, filtered, resetValues,
     multiple, disabled,
     filterMode = 'menu', filterSearch = false, filterDropdown, filterDropdownProps,
     filterOnClose = false, filterIcon, onApply
   }: {
     prefixCls: string;
     dropdownPrefix: string;
+    rootClassName?: string;
     title: string;
     titleReference?: string;
     options?: readonly TableFilterOption[];
@@ -74,6 +75,9 @@
   const labelReference = $derived(titleReference ? `${filterLabelId} ${titleReference}` : undefined);
   const dropdownLabelReference = $derived(filterDropdownProps?.['aria-labelledby']
     ?? (filterDropdownProps?.['aria-label'] === undefined ? labelReference : undefined));
+  const dropdownRootClass = $derived(
+    [rootClassName, filterDropdownProps?.rootClassName].filter(Boolean).join(' ') || undefined
+  );
   const optionList = $derived(options ?? []);
   const optionSnapshot = $derived(snapshotTableFilterOptions(optionList));
   const advanced = $derived(
@@ -437,6 +441,7 @@
 {#if usesDropdown}
   <Dropdown
     {...filterDropdownProps}
+    rootClassName={dropdownRootClass}
     {open}
     disabled={blocked}
     placement={dropdownPlacement}
@@ -453,7 +458,8 @@
   <div
     bind:this={panel}
     id={`ant-filter-${id}`}
-    class={[`filter-popover ${config.getPrefixCls('dropdown')}`, designTheme.enabled && 'table-filter-source']}
+    class={[`filter-popover ${config.getPrefixCls('dropdown')}`, rootClassName,
+      designTheme.enabled && 'table-filter-source']}
     popover="auto"
     role="dialog"
     tabindex="-1"

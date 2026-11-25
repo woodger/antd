@@ -20,6 +20,7 @@
   } from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
   import { getTableLayout } from './table-layout.engine';
+  import { getTablePaginationSemantics, getTableSemantics } from './table-semantic.engine';
   import {
     changeTableSorts, getControlledTableSorts, getInitialTableSorts, getTableColumnTitleSorts,
     isTableMultipleSorter, isTableSortable, tableSortDirections, type TableSortState
@@ -67,6 +68,17 @@
   import ListyScrollbar from './ListyScrollbar.svelte';
 
   let {
+    sorter = $bindable(),
+    filters = $bindable(),
+    filters: providedFilters,
+    current = $bindable(),
+    pageSize = $bindable(),
+    selectedRowKeys = $bindable(),
+    nativeElement = $bindable(),
+    ...rawProps
+  }: TableProps<Row> = $props();
+
+  let {
     mode = 'client',
     total,
     dataSource,
@@ -78,20 +90,14 @@
     onHeaderRow,
     rowHoverable = true,
     showHeader = true,
-    sorter = $bindable(),
     defaultSorter,
     sortDirections = tableSortDirections,
     showSorterTooltip = true,
-    filters = $bindable(),
-    filters: providedFilters,
     defaultFilters,
-    current = $bindable(),
     defaultCurrent = 1,
-    pageSize = $bindable(),
     defaultPageSize = 10,
     pagination,
     rowSelection = false,
-    selectedRowKeys = $bindable(),
     defaultSelectedRowKeys,
     onChange,
     onSelectionChange,
@@ -112,11 +118,10 @@
     sticky,
     virtual = false,
     onScroll,
-    nativeElement = $bindable(),
     'aria-label': ariaLabel,
     class: className = '',
-    style
-  }: TableProps<Row> = $props();
+    rootClassName
+  } = $derived(rawProps);
 
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('table', prefixCls));
@@ -133,7 +138,6 @@
   let mediaQueries = $derived(hasResponsiveColumns && designTheme.enabled
     ? getGridMediaQueries(designTheme.state.token) : undefined);
   untrack(() => mediaQueries);
-  let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
   const id = $props.id();
   const dataColumns = $derived(getTableColumnOrder(resolvedColumns));
   const columnIndices = $derived(new Map(dataColumns.map((entry, index) => [entry.key, index])));
@@ -213,6 +217,8 @@
     return 'inline';
   });
   const pinHeader = $derived(Boolean(sticky) || scroll?.y !== undefined);
+  // Пустая или незакреплённая таблица использует обычное тело даже при virtual.
+  const useBodyWrapperSlot = $derived(!virtual || !pinHeader || pageRows.length === 0);
   let expandedRowRender = $derived(expandable?.expandedRowRender);
   const forceExpandedRows = $derived(expandable?.forceRender === true);
   const expandIcon = $derived(expandable?.expandIcon ?? config.table?.expandable?.expandIcon);
@@ -253,6 +259,19 @@
   const selectionWidth = $derived(selectionOptions?.columnWidth ?? (designTheme.enabled
     ? designTheme.state.token.Table?.selectionColumnWidth : 48));
   let resolvedSize = $derived(size ?? config.componentSize);
+  const semanticProps: TableProps<Row> = $derived({
+    ...rawProps,
+    sorter, filters, current, pageSize, selectedRowKeys, nativeElement,
+    size: size ?? config.explicitComponentSize,
+    bordered
+  });
+  const semantics = $derived(getTableSemantics(config.table, semanticProps));
+  const classes = $derived(semantics.classes);
+  const slots = $derived(semantics.styles);
+  const rootStyle = $derived(appendSemanticStyle(componentTheme.style || undefined, slots.root));
+  const pagerSemantics = $derived(
+    getTablePaginationSemantics(classes.pagination, slots.pagination, pagination)
+  );
   let strings = $derived({ ...ruRU.table, ...config.locale.table });
   let content = $state<HTMLDivElement>();
   let table = $state<HTMLTableElement>();
@@ -333,6 +352,7 @@
     summary: () => summaryPlacement,
     rtl: () => config.direction === 'rtl'
   });
+  const contentStyle = $derived.by(getContentStyle);
   const resolvedLayout = $derived.by(() => {
     if (scrollport.active) {
       // Шапка и виртуальные строки используют уже вычисленные общие ширины.
@@ -483,16 +503,49 @@
     };
   }
 
-  // Пользовательский стиль имеет приоритет над выравниванием и закреплением ячейки.
+  /** Сохраняет стиль строки или темы и добавляет настроенный semantic слой. */
+  function appendSemanticStyle(base?: string | null, semantic?: string) {
+    if (!semantic) {
+      return base;
+    }
+
+    return base ? `${base};${semantic}` : semantic;
+  }
+
+  /** Не отбрасывает свойства слота, когда раскладка не задаёт их значения. */
+  function getContentStyle() {
+    const dimensions = {
+      'max-height': cssSize(scrollport.maxHeight ?? scroll?.y),
+      'scroll-padding-top': cssSize(scrollport.topInset),
+      'scroll-padding-bottom': cssSize(scrollport.bottomInset),
+      '--ant-table-virtual-caption-height': cssSize(scrollport.captionHeight)
+    };
+    const declarations: string[] = [];
+    for (const [property, value] of Object.entries(dimensions)) {
+      if (value != null && value !== '') {
+        declarations.push(`${property}: ${value};`);
+      }
+    }
+
+    const layout = declarations.join(' ') || undefined;
+    if (pinHeader) {
+      return layout;
+    }
+
+    return appendSemanticStyle(layout, slots.content);
+  }
+
+  // Слоты ячеек применяются после CSS раскладки и атрибутов вызывающего кода.
   function cellStyle(
     fixed: TableFixedCell | undefined,
     zIndex: number,
     align: TableColumn<Row>['align'],
-    custom: TableCell['style']
+    custom: TableCell['style'],
+    semantic?: string
   ) {
     const side = fixed?.side;
     const inset = side && `inset-inline-${side}: ${fixed.offset}; z-index: ${zIndex}`;
-    return [inset, align && `text-align: ${align}`, custom]
+    return [inset, align && `text-align: ${align}`, custom, semantic]
       .filter(Boolean).join('; ') || undefined;
   }
 
@@ -958,6 +1011,7 @@
     {#if titleSnippet}{@render titleSnippet(columnTitleInfo)}{/if}
   {/snippet}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
+    {@const align = column.align ?? (props.colSpan > 1 ? 'center' : undefined)}
     <th
       {...props.attributes}
       title={props.attributes.title ?? (column.ellipsis ? titleText : undefined)}
@@ -975,9 +1029,10 @@
         fixed?.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
         sortable && `${prefix}-column-has-sorters`,
         order && `${prefix}-column-sort`,
+        classes.header.cell,
         props.className
       ]}
-      style={cellStyle(fixed, 3, column.align ?? (props.colSpan > 1 ? 'center' : undefined), props.style)}
+      style={cellStyle(fixed, 3, align, props.style, slots.header.cell)}
       aria-sort={order === 'ascend' ? 'ascending' : order === 'descend' ? 'descending' : undefined}
     >
       <div class="column-heading" class:column-heading-ellipsis={Boolean(column.ellipsis)}>
@@ -1009,6 +1064,7 @@
           <TableFilter
             prefixCls={prefix}
             {dropdownPrefix}
+            {rootClassName}
             title={titleLabel}
             titleReference={titleReference}
             options={filterOptions}
@@ -1060,9 +1116,10 @@
       fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
       sorted && `${prefix}-column-sort`,
       inHoveredRows(index, index + Math.max(1, cell.rowSpan) - 1) && `${prefix}-cell-row-hover`,
+      classes.body.cell,
       cell.className
     ],
-    style: cellStyle(fixed, 1, column.align, cell.style),
+    style: cellStyle(fixed, 1, column.align, cell.style, slots.body.cell),
     colspan: cell.colSpan !== 1 ? cell.colSpan : undefined,
     rowspan: cell.rowSpan !== 1 ? cell.rowSpan : undefined
   }}
@@ -1169,9 +1226,10 @@
       ? detailsTitle ?? strings.expandColumn : undefined}
     class={[
       `${prefix}-cell`, serviceCellClass(service),
-      fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`
+      fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
+      classes.header.cell
     ]}
-    style={cellStyle(fixed, 3, cell.column.align, undefined)}
+    style={cellStyle(fixed, 3, cell.column.align, undefined, slots.header.cell)}
   >
     {#if service === 'selection'}
       {@render selectionHeading()}
@@ -1189,7 +1247,10 @@
     designTheme.enabled && 'table-source-theme',
     !rowHoverable && 'table-hover-disabled',
     config.direction === 'rtl' && `${prefix}-wrapper-rtl`,
-    className
+    config.table?.class,
+    className,
+    rootClassName,
+    classes.root
   ]} dir={config.direction} style={rootStyle}>
   {#if loading}<div class="loading-state" role="status"><Spin size="small" aria-hidden />{strings.loadingText}</div>{/if}
   <div data-ant-table-part="table" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} data-ant-table-size={resolvedSize} class={[
@@ -1200,12 +1261,14 @@
       showHeader === false && !title && `${prefix}-no-header`,
       !visibleRows.length && `${prefix}-empty`
     ]}>
-    {#if title}<div class={`${prefix}-title`}>{@render title(panelData)}</div>{/if}
+    {#if title}<div class={[`${prefix}-title`, classes.title]}
+      style={slots.title}>{@render title(panelData)}</div>{/if}
     <div class={[
       `${prefix}-container`,
       scrollport.active && 'table-virtual-container',
-      sticky && 'table-sticky-container'
-    ]}>
+      sticky && 'table-sticky-container',
+      classes.section
+    ]} style={slots.section}>
       <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус нужен для прокрутки таблицы с клавиатуры.) -->
       <div bind:this={content}
         data-ant-table-part="content"
@@ -1217,12 +1280,10 @@
           (pinHeader || fixedColumns.some(Boolean)) && 'table-sticky',
           pinHeader && 'table-pin-head',
           scroll?.y !== undefined && 'table-scroll-y',
-          scrollport.active && 'table-virtual-scroll'
+          scrollport.active && 'table-virtual-scroll',
+          !pinHeader && classes.content
         ]}
-        style:max-height={cssSize(scrollport.maxHeight ?? scroll?.y)}
-        style:scroll-padding-top={cssSize(scrollport.topInset)}
-        style:scroll-padding-bottom={cssSize(scrollport.bottomInset)}
-        style:--ant-table-virtual-caption-height={cssSize(scrollport.captionHeight)}
+        style={contentStyle}
         role="region"
         aria-label={caption ?? ariaLabel ?? strings.label}
         tabindex="0"
@@ -1256,10 +1317,13 @@
             {/each}
           </colgroup>{/if}
           {#if showHeader}
-            <thead data-ant-table-part="head" class={`${prefix}-thead`}>
+            <thead data-ant-table-part="head" class={[`${prefix}-thead`, classes.header.wrapper]}
+              style={slots.header.wrapper}>
               {#each headerRows as row, depth}
                 {@const attributes = headerRowProperties?.[depth]}
                 <tr {...attributes}
+                  class={[attributes?.class, classes.header.row]}
+                  style={appendSemanticStyle(attributes?.style, slots.header.row)}
                   aria-rowindex={virtualRowIndices ? depth + 1 : attributes?.['aria-rowindex']}>
                   {#each row as cell (cell.key)}
                     {#if cell.service}
@@ -1268,7 +1332,8 @@
                       {@render columnHeading(cell)}
                     {/if}
                   {:else}
-                    <th data-ant-table-part="cell" class={`${prefix}-cell`}></th>
+                    <th data-ant-table-part="cell" class={[`${prefix}-cell`, classes.header.cell]}
+                      style={slots.header.cell}></th>
                   {/each}
                 </tr>
               {/each}
@@ -1279,7 +1344,9 @@
               {@render summaryRender(panelData)}
             </tfoot>
           {/if}
-          <tbody data-ant-table-part="body" class={`${prefix}-tbody`}
+          <tbody data-ant-table-part="body"
+            class={[`${prefix}-tbody`, useBodyWrapperSlot && classes.body.wrapper]}
+            style={useBodyWrapperSlot ? slots.body.wrapper : undefined}
             class:table-span-body={mergedRows.length > 0}>
             {@render virtualSpacer(scrollport.before)}
             {#each scrollport.rows as entry, windowIndex (entry.row.key)}
@@ -1301,8 +1368,10 @@
                     ? rowClassName(row.record, index, depth) : rowClassName,
                   depth > 0 && expansionClass,
                   attributes?.class,
+                  classes.body.row,
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
+                style={appendSemanticStyle(attributes?.style, slots.body.row)}
                 data-row-key={row.key}
                 aria-rowindex={virtualRowIndices
                   ? index + headerCount + 1 : attributes?.['aria-rowindex']}
@@ -1325,7 +1394,8 @@
                     {@render bodyCell(leaf, columnIndex, entry, index, cell, canExpand, expanded)}
                   {/if}
                 {:else}
-                  <td data-ant-table-part="cell" class={`${prefix}-cell`}>
+                  <td data-ant-table-part="cell" class={[`${prefix}-cell`, classes.body.cell]}
+                    style={slots.body.cell}>
                     {#if showTreeControls}
                       {@render expansionControl(row, canExpand, expanded, depth)}
                     {/if}
@@ -1374,8 +1444,10 @@
                     ? rowClassName(row.record, sourceIndex, depth) : rowClassName,
                   depth > 0 && expandedRowClass(row.record, sourceIndex, depth),
                   attributes?.class,
+                  classes.body.row,
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
+                style={appendSemanticStyle(attributes?.style, slots.body.row)}
                 style:top={cssSize(top)}
                 onclick={rowClick(row, canExpand, attributes?.onclick)}
               >
@@ -1424,9 +1496,13 @@
           onScroll={scrollport.scrollHorizontal} onMoving={scrollport.dragScrollbar} />
       {/if}
     </div>
-    {#if footer}<div class={`${prefix}-footer`}>{@render footer(panelData)}</div>{/if}
+    {#if footer}<div class={[`${prefix}-footer`, classes.footer]}
+      style={slots.footer}>{@render footer(panelData)}</div>{/if}
   </div>
   {#if pagination !== false}
-    <Pagination {...pagination} total={paging.total} current={paging.current} pageSize={paging.pageSize} disabled={resolvedDisabled} size={resolvedSize} class={`${prefix}-pagination ${prefix}-pagination-end`} onChange={changePage} />
+    <Pagination {...pagination} {...pagerSemantics}
+      total={paging.total} current={paging.current} pageSize={paging.pageSize}
+      disabled={resolvedDisabled} size={resolvedSize}
+      class={`${prefix}-pagination ${prefix}-pagination-end`} onChange={changePage} />
   {/if}
 </div>

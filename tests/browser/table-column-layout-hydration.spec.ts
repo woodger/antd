@@ -91,3 +91,38 @@ test('Table hydrates inherited column renders and preserves the editor when defa
     ])).toEqual([2, 8]);
   }
 );
+
+test('Table hydrates semantic styles and updates them around the existing editor', async ({ page }) => {
+  const entry = new URL('./fixtures/table-column-layout.server.ts', import.meta.url);
+  const { renderTableSemantic } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableSemantic();
+  await page.goto('/select-components-hydration.html?semantic');
+  await page.addScriptTag({ type: 'module', url: '/table-column-layout.client.ts' });
+  const container = page.locator('#root');
+  await expect(container).toHaveAttribute('data-hydration-ready', 'true');
+  await container.evaluate((root, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    root.innerHTML = html.body;
+  }, { body, head });
+  const editor = container.getByRole('textbox', { name: 'Name 0', exact: true });
+  const original = await editor.elementHandle();
+  const cell = editor.locator('..');
+  await expect(cell).toHaveClass(/observed-local-body-cell/);
+  await editor.fill('Draft from SSR');
+  await editor.evaluate((node: HTMLInputElement) => node.setSelectionRange(2, 7));
+
+  await container.dispatchEvent('hydrate-table-column-layout');
+  await expect(container).toHaveAttribute('data-hydrated', 'true');
+  await container.getByRole('button', { name: 'Update semantics', exact: true })
+    .dispatchEvent('click');
+
+  await expect(cell).toHaveClass(/observed-updated-body-cell/);
+  await expect(cell).toHaveClass(/observed-caller-cell/);
+  await expect(cell).toHaveCSS('--observed-slot', 'updated-body-cell');
+  await expect(editor).toBeFocused();
+  await expect(editor).toHaveValue('Draft from SSR');
+  expect(await editor.evaluate((node, before) => node === before, original)).toBe(true);
+  expect(await editor.evaluate((node: HTMLInputElement) => [
+    node.selectionStart, node.selectionEnd
+  ])).toEqual([2, 7]);
+});

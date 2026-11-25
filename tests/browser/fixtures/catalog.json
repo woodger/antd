@@ -1808,6 +1808,11 @@
     "root": "table-column-title-fixture"
   },
   {
+    "id": "table-semantic",
+    "module": "./TableSemanticFixture.svelte",
+    "root": "table-semantic-fixture"
+  },
+  {
     "id": "table-sorter",
     "module": "./TableSorterFixture.svelte",
     "root": "table-sorter-fixture"

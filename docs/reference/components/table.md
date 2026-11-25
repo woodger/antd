@@ -742,6 +742,50 @@ Native default size по-прежнему наследует `componentSize` (`m
 Сравнение с эталоном, границы покрытия и наблюдение root style описаны в
 [справочнике темы](../theme-context.md#тема-table).
 
+## Семантическое оформление
+
+`Table` и `ConfigProvider.table` принимают `classNames` и `styles` как объект
+или функцию от `{ props }`. Функция получает свойства таблицы с учётом явно
+заданного размера провайдера. `styles` принимает строки CSS.
+
+| Слот | Элемент |
+| --- | --- |
+| `root` | Внешний контейнер таблицы |
+| `section` | Контейнер вокруг области прокрутки |
+| `content` | Область прокрутки в обычном режиме без закреплённой шапки |
+| `title`, `footer` | Панели над таблицей и под ней |
+| `header.wrapper`, `header.row`, `header.cell` | `thead`, строка и ячейка заголовка |
+| `body.wrapper`, `body.row`, `body.cell` | `tbody`, строка данных и ячейка |
+| `pagination.root`, `pagination.item` | `nav` Pagination и его пункты |
+
+`classNames.header` и `classNames.body` в виде строки оформляют соответствующий
+`wrapper`. Строка `classNames.pagination` добавляется к корню Pagination.
+Слот `body.wrapper` действует для обычного и пустого тела таблицы. Для окна
+виртуальных строк действуют `body.row` и `body.cell`.
+Слоты ячеек включают колонки выбора и раскрытия. Строка пустого состояния и
+отдельная строка подробностей используют собственное оформление.
+
+Классы провайдера и таблицы складываются. `rootClassName` добавляется к
+внешнему контейнеру и открытым панелям фильтра. Атрибуты строк и ячеек из
+`onHeaderRow`, `onRow`, `onHeaderCell` и `onCell` сохраняются, их CSS дополняется
+соответствующим слотом. На корне последовательно применяются стили темы,
+`ConfigProvider.table.styles.root`, `ConfigProvider.table.style`,
+`Table.styles.root` и `Table.style`.
+
+В группах `header`, `body` и `pagination` экземпляр наследует пропущенный слот
+от провайдера. Переданный слот заменяет его целиком. Явный `undefined` снимает
+унаследованный стиль группы. Для Pagination классы из `Table.classNames.pagination`
+добавляются перед классами `pagination.classNames`. Стили таблицы применяются
+после `pagination.styles`.
+
+Порядок слоёв и элементы сверены с 17 состояниями и 13 серверными снимками
+Ant Design 6.6.8. Проверка гидратации сохраняет узел редактора, его значение,
+фокус и выделение при смене оформления.
+[Снимки React](../../../tests/browser/fixtures/ant-design-table-semantic-reference.json),
+[браузерные проверки](../../../tests/browser/table-semantic.spec.ts),
+[гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+и [SSR](../../../tests/package/table-semantic.ssr.test.ts).
+
 ## Закрепление заголовка и колонок
 
 В обычном режиме `scroll.y` задаёт максимальную высоту прокручиваемой области

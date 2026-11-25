@@ -24,6 +24,9 @@
 
 ### Added
 
+- Table поддерживает `classNames`, `styles` и `rootClassName`, включая настройки
+  оформления в `ConfigProvider.table` и слоты Pagination.
+
 - Заголовок колонки Table принимает число и Svelte snippet с состоянием сортировки
   и фильтров.
 

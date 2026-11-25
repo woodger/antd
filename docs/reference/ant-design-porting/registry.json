@@ -19577,6 +19577,7 @@
         "dropdown",
         "input",
         "menu",
+        "pagination",
         "tooltip",
         "tree"
       ],
@@ -19978,6 +19979,26 @@
             "tests/package/table-column-title.types.ts"
           ],
           "note": "Два одинаковых прогона Ant Design 6.6.8 и rc-table 1.11.1 дают 27 состояний и шесть SSR-снимков. Заголовки групп и листьев получают применённые фильтры и sortColumns в порядке состояния, включая order=null. Проверены начальное и управляемое состояние, запросы владельцу, несколько сортировок, число 0, пустой заголовок и нативный title. Для snippet Svelte использует onHeaderCell.title. Нативная кнопка сортировки находится рядом с контролами заголовка, а подсказка учитывает выбранную область. Имена фильтра и сортировки меняются вместе с текстом. Строгая гидратация сохраняет сортировку, состояние редактора и фокус."
+        },
+        {
+          "id": "semantic-styles",
+          "title": "Семантическое оформление таблицы и пагинации",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/TableFilter.svelte",
+            "src/lib/table-semantic.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/TableSemanticFixture.svelte",
+            "tests/browser/fixtures/ant-design-table-semantic-reference.json",
+            "tests/browser/table-semantic.spec.ts",
+            "tests/browser/table-column-layout-hydration.spec.ts",
+            "tests/package/table-semantic.ssr.test.ts",
+            "tests/package/table-semantic.types.ts"
+          ],
+          "note": "Два одинаковых прогона Ant Design 6.6.8 и rc-table 1.11.1 дают 17 состояний и 13 SSR-снимков. Проверены обычное тело при пустых виртуальных данных и без scroll.y, object и callback, сокращённые классы групп, размер из контекста, накопление классов, CSS-контекст и inline порядок внешнего узла, замена вложенного стиля и явно заданный undefined. Слоты покрывают заголовки и подвал, scroll, обычные и виртуальные строки, служебные ячейки, пустую таблицу и скрытую шапку. rootClassName передаётся панели фильтра вместе с её локальным классом. Классы и стили Pagination разрешаются с параметрами пейджера. Native сохраняет nav и tr/td виртуального тела, класс onHeaderRow и существующее расположение пагинации. Строгая гидратация и смена семантических настроек сохраняют редактор, черновик, фокус и выделение."
         },
         {
           "id": "filter-state",

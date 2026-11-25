@@ -4,6 +4,7 @@ import type { PaginationProps } from './Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
 import type { DropdownProps } from './dropdown.types';
 import type { GridBreakpoint } from './grid.types';
+import type { PaginationSlots } from './pagination.types';
 import type { RadioChangeEvent } from './radio.types';
 import type { TooltipProps } from './tooltip.types';
 import type { ComponentSize } from './types';
@@ -291,15 +292,53 @@ export interface TableExpandable<Row extends object> {
   fixed?: TableFixed;
 }
 
-/** Настройки переключателя раскрытия для дочерних таблиц. */
+interface TableSemanticGroup {
+  wrapper?: string;
+  row?: string;
+  cell?: string;
+}
+
+/** Семантические области таблицы. Значения styles записываются строками CSS. */
+export interface TableSemanticSlots {
+  root?: string;
+  section?: string;
+  title?: string;
+  footer?: string;
+  content?: string;
+  header?: TableSemanticGroup;
+  body?: TableSemanticGroup;
+  pagination?: PaginationSlots;
+}
+
+/** Строка группы оформляет wrapper шапки или тела либо корень пагинации. */
+export interface TableClassNameSlots
+  extends Omit<TableSemanticSlots, 'header' | 'body' | 'pagination'> {
+  header?: string | TableSemanticGroup;
+  body?: string | TableSemanticGroup;
+  pagination?: string | PaginationSlots;
+}
+
+export type TableSemantic<Row extends object, Slots extends TableClassNameSlots = TableSemanticSlots>
+  = Slots | ((info: { props: TableProps<Row>; }) => Slots | undefined);
+
+/** Настройки провайдера подходят таблицам с разными типами записей. */
+export type TableConfigSemantic<Slots extends TableClassNameSlots = TableSemanticSlots>
+  = Slots | (<Row extends object>(info: { props: TableProps<Row>; }) => Slots | undefined);
+
+/** Общие настройки оформления и переключателя раскрытия дочерних таблиц. */
 export interface TableConfig {
   expandable?: Pick<TableExpandable<object>, 'expandIcon'>;
+  class?: string;
+  style?: string;
+  classNames?: TableConfigSemantic<TableClassNameSlots>;
+  styles?: TableConfigSemantic;
 }
 
 /** Настройки Pagination, которыми управляет Table; total вычисляется по данным. */
 export type TablePaginationConfig = Pick<
   PaginationProps,
   'showSizeChanger' | 'pageSizeOptions' | 'hideOnSinglePage' | 'showTotal' | 'aria-label'
+    | 'classNames' | 'styles'
 >;
 
 /** Размеры области прокрутки и сброс после пользовательского изменения данных. */
@@ -443,6 +482,10 @@ export interface TableProps<Row extends object> {
   onScroll?: (event: Event & { currentTarget: HTMLDivElement; }) => void;
   nativeElement?: HTMLDivElement;
   'aria-label'?: string;
+  classNames?: TableSemantic<Row, TableClassNameSlots>;
+  styles?: TableSemantic<Row>;
+  /** Дополняет класс корня и панелей фильтров. */
+  rootClassName?: string;
   class?: string;
   style?: string;
 }
