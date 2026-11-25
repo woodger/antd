@@ -30,6 +30,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   virtual: () => boolean;
   scroll: () => TableScrollOptions | undefined;
   table: () => HTMLTableElement | undefined;
+  body: () => HTMLElement | undefined;
   element: () => HTMLDivElement | undefined;
   /** null означает собственное тело без зарегистрированного DOM-контейнера. */
   customElement: () => HTMLElement | null | undefined;
@@ -108,7 +109,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
       return;
     }
 
-    const body = active ? table.tBodies[0] : undefined;
+    const body = active ? options.body() : undefined;
     const head = options.header() ? table.tHead : null;
     const caption = options.caption() ? table.caption : null;
     const foot = summary ? table.tFoot : null;
@@ -118,7 +119,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   /** Наблюдает размеры закреплённых частей отдельно от высот виртуальных строк. */
   function connect(
     element: HTMLDivElement,
-    body: HTMLTableSectionElement | undefined,
+    body: HTMLElement | undefined,
     head: HTMLTableSectionElement | null,
     caption: HTMLTableCaptionElement | null,
     foot: HTMLTableSectionElement | null
@@ -158,7 +159,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   });
 
   /** Следит за изменениями раскрытых деталей, в том числе после загрузки контента. */
-  function attachDetails(details: HTMLTableRowElement) {
+  function attachDetails(details: HTMLElement) {
     const Observer = details.ownerDocument.defaultView?.ResizeObserver;
     const observer = Observer && new Observer(list.collect);
     observer?.observe(details);
@@ -240,7 +241,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     }
 
     const table = options.table();
-    const body = table?.tBodies[0];
+    const body = options.body();
     const rowsInDom = body?.querySelectorAll<HTMLTableRowElement>(
       ':scope > [data-ant-table-part="row"]'
     );

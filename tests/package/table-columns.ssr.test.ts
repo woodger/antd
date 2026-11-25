@@ -32,7 +32,8 @@ function readTable(body: string) {
     ([, key, row]) => [key,
       Array.from(row.matchAll(/<(?:td|th)\b([^>]*)>/g), cell => columnKey(cell[1]))]
   );
-  const placeholder = body.match(/<tr\b[^>]*ant-table-placeholder[^>]*>\s*<td\b([^>]*)>/)?.[1];
+  const html = body.replaceAll(/<!--[\s\S]*?-->/g, '');
+  const placeholder = html.match(/<tr\b[^>]*ant-table-placeholder[^>]*>\s*<td\b([^>]*)>/)?.[1];
   const emptySpan = placeholder === undefined
     ? null : Number(placeholder.match(/\bcolspan="(\d+)"/)?.[1] ?? 1);
   return { headers, body: data, emptySpan };

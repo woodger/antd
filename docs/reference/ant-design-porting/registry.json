@@ -19664,7 +19664,7 @@
         {
           "id": "gap-1",
           "title": "Виртуализация Table и прокрутка к строке",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/Table.svelte",
@@ -19677,7 +19677,7 @@
             "tests/browser/table-virtual-hydration.spec.ts",
             "tests/package/table-virtual.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона десяти профилей, 44 состояния. Локальный virtual включает окно тела с scroll.y, измеряет строку вместе с подробностями и использует ширины видимых колонок. Проверяются scrollTo по top, key и index, offsets, RTL, скрытый заголовок, короткие и пустые таблицы, вертикальный onScroll, сброс по sort/paginate и сохранение позиции. Выбор и события работают на всей обработанной странице. Native сохраняет семантическую таблицу с закреплённым caption и браузерной прокруткой. SSR выводит первое окно, строгая гидратация сохраняет редактор и фокус. Объединённые ячейки покрыты feature cell-spans. Функция components.body вынесена в custom-scroll-body. Замена wrapper, row и cell виртуального тела пока отсутствует."
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона десяти профилей, 44 состояния. Нативный virtual включает окно тела с scroll.y, измеряет строку вместе с подробностями и использует ширины видимых колонок. Проверяются scrollTo по top, key и index, offsets, RTL, скрытый заголовок, короткие и пустые таблицы, вертикальный onScroll, сброс по sort/paginate и сохранение позиции. Выбор и события работают на всей обработанной странице. Native сохраняет семантическую таблицу с закреплённым caption и браузерной прокруткой. SSR выводит первое окно, строгая гидратация сохраняет редактор и фокус. Объединённые ячейки покрыты feature cell-spans. Функция components.body покрыта custom-scroll-body, замена wrapper, row и cell виртуального тела покрыта element-components."
         },
         {
           "id": "custom-scroll-body",
@@ -19697,6 +19697,25 @@
             "tests/package/table-custom-body.types.ts"
           ],
           "note": "Два одинаковых UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 10 профилей дают 34 состояния и 10 SSR-снимков. Отдельный профиль видимой полосы даёт два состояния с gutter 15 px. Snippet получает корневые записи текущей страницы. Проверены scroll.y, sticky, showHeader, пустое тело, приоритет встроенного virtual, DOM scrollTo по позиции и ключу, offset и index, прямая передача запроса proxy handle, LTR/RTL, синхронизация колёсика, закреплённых итогов и положения владельца. Применение сортировки и страницы следует scrollToFirstRowOnChange. Svelte читает фактический DOM gutter и сохраняет caption в видимой шапке. Строгая гидратация подтверждает DOM identity, ввод и фокус."
+        },
+        {
+          "id": "element-components",
+          "title": "Замена элементов таблицы, шапки и тела",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-layout.dom.ts",
+            "src/lib/table-custom-body.model.svelte.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-element-components-reference.json",
+            "tests/browser/table-element-components.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-element-components.ssr.test.ts",
+            "tests/package/table-element-components.types.ts"
+          ],
+          "note": "Два одинаковых прогона UMD Ant Design 6.6.8 и rc-table 1.11.1 дают 19 состояний и 8 SSR-снимков. Перенесены table, header.table и wrapper/row/cell шапки и тела. Table передаёт штатные атрибуты, scope, события и дочерние узлы. Проверены вложенность и слоты шапки, отдельные таблицы закреплённых итогов, скрытая шапка, пустые данные, общие ширины, колесо и позиция при сортировке. Svelte использует семантические tbody/tr/td/th для виртуального тела. Attachment регистрирует фактические элементы для прокрутки и измерений, в том числе после смены renderer и высоты viewport. Проверены клавиатурный фокус и строгая гидратация th/td при замене тегом и snippet."
         },
         {
           "id": "tree-data",

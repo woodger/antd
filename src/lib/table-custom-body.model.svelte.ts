@@ -1,7 +1,7 @@
 // Пользовательское тело владеет строками и прокруткой. Table переводит положение
 // в координаты шапки и итогов, а imperative handle остаётся у его владельца.
 import { untrack } from 'svelte';
-import { alignTableRow } from './table-layout.dom';
+import { alignTableRow, getTableFocusOffset } from './table-layout.dom';
 import type {
   TableBodyRenderInfo, TableBodyScrollEvent, TableBodyScrollHandle, TableKey, TableScrollConfig
 } from './table.types';
@@ -122,24 +122,74 @@ export function createTableCustomBody(options: {
     }
   }
 
-  /** Горизонтальное колесо шапки прокручивает тело в пределах области колонок. */
+  /** Переводит колесо и клавиатурную навигацию полосы в прокрутку тела. */
   function attachBand(band: HTMLDivElement) {
+    /** Учитывает максимальную прокрутку полосы, включая отличие от ширины тела. */
+    function clamp(left: number) {
+      const range = band.scrollWidth - band.clientWidth;
+      return options.rtl() ? Math.max(-range, Math.min(0, left))
+        : Math.max(0, Math.min(range, left));
+    }
+
     /** Передаёт физическую координату RTL/LTR в пределах полосы. */
     function wheel(event: WheelEvent) {
       if (!event.deltaX || !target) {
         return;
       }
 
-      const range = band.scrollWidth - band.clientWidth;
-      const next = band.scrollLeft + event.deltaX;
-      const left = options.rtl() ? Math.max(-range, Math.min(0, next))
-        : Math.max(0, Math.min(range, next));
+      const left = clamp(band.scrollLeft + event.deltaX);
       syncScroll({ scrollLeft: left });
       event.preventDefault();
     }
 
+    /** Браузер может оставить видимым лишь край широкой сфокусированной кнопки. */
+    function revealFocus(event: FocusEvent) {
+      const focused = event.target;
+      const view = band.ownerDocument.defaultView;
+      if (!view || !(focused instanceof view.Element) || !focused.matches(':focus-visible')) {
+        return;
+      }
+
+      const cell = focused.closest('th, td');
+      if (cell && view.getComputedStyle(cell).position === 'sticky') {
+        return;
+      }
+
+      const start = parseFloat(band.style.getPropertyValue('--ant-table-fixed-start-width')) || 0;
+      const end = parseFloat(band.style.getPropertyValue('--ant-table-fixed-end-width')) || 0;
+      const offset = getTableFocusOffset(band, focused, start, end, options.rtl());
+      if (offset) {
+        syncScroll({ scrollLeft: clamp(band.scrollLeft + offset) });
+      }
+    }
+
+    /** Удерживает общую позицию при клике и открывает видимую область для Tab. */
+    function scroll() {
+      const current = target;
+      if (!current || syncing) {
+        return;
+      }
+
+      const expected = clamp(current.scrollLeft);
+      if (Math.abs(band.scrollLeft - expected) < 1) {
+        return;
+      }
+      if (band.querySelector(':focus-visible')) {
+        syncScroll({ scrollLeft: band.scrollLeft });
+      }
+      else {
+        band.scrollLeft = expected;
+      }
+    }
+
     band.addEventListener('wheel', wheel, { passive: false });
-    return () => band.removeEventListener('wheel', wheel);
+    band.addEventListener('scroll', scroll, { passive: true });
+    band.addEventListener('focusin', revealFocus);
+    return () => {
+      band.removeEventListener('wheel', wheel);
+      band.removeEventListener('scroll', scroll);
+      band.removeEventListener('focusin', revealFocus);
+    };
   }
 
   /** Ищет DOM-строку по ключу текущей страницы или передаёт исходный запрос handle. */

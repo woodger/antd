@@ -978,7 +978,7 @@ onSelectionChange. Фильтрация, сортировка, выбор и п�
 
 ### Пользовательское тело прокрутки
 
-`components.body` принимает snippet с корневыми записями текущей страницы
+`components.body` в форме snippet получает корневые записи текущей страницы
 после сортировки и фильтрации. Table использует его при `scroll.y` или
 `sticky`. При штатной виртуализации работает встроенное окно строк.
 Snippet размечает строки, задаёт размеры контейнера и обеспечивает их
@@ -1025,6 +1025,42 @@ Snippet размечает строки, задаёт размеры конте�
 · [Замеры с видимой полосой](../../../tests/browser/fixtures/ant-design-table-custom-body-gutter-reference.json)
 · [Chromium](../../../tests/browser/table-custom-body.spec.ts)
 · [SSR](../../../tests/package/table-custom-body.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
+
+### Замена отдельных элементов
+
+`components.table` задаёт основную таблицу. При `scroll.y` или `sticky`
+замена таблицы выносит шапку и закреплённые итоги в отдельные полосы.
+Их таблицы настраивает `components.header.table`. Горизонтальная прокрутка
+и ширины колонок синхронизируются между полосами и телом.
+При клавиатурном переходе видна вся кнопка в шапке, если она помещается
+между закреплёнными колонками. Шапка, тело и итог прокручиваются вместе.
+
+`components.header` и объект `components.body` принимают `wrapper`, `row`
+и `cell`. Каждый элемент можно задать именем HTML-тега или snippet. В
+виртуальном окне основное тело отрисовывает встроенный список. Его
+заменяемые элементы сохраняют семантику `tbody`, `tr`, `td` и `th`.
+Пустая виртуальная таблица использует штатное тело.
+
+Snippet получает `tag` штатного элемента, `attributes` с уже собранными
+атрибутами и обработчиками, `children` и attachment `ref`. Передайте их
+соответствующему HTML-элементу, чтобы Table могла измерять строки и сохранять
+клавиатурное управление. Например, свойство для CSS можно добавить в snippet
+и передать его как `components={{ body: { row: editableRow } }}`.
+
+```svelte
+<script lang="ts">
+  import type { TableElementRenderInfo } from '@woodger/antd';
+</script>
+
+{#snippet editableRow({ attributes, children, ref }: TableElementRenderInfo<'tr'>)}
+  <tr {...attributes} data-editable="" {@attach ref}>{@render children()}</tr>
+{/snippet}
+```
+
+[Эталон элементов](../../../tests/browser/fixtures/ant-design-table-element-components-reference.json)
+· [Chromium](../../../tests/browser/table-element-components.spec.ts)
+· [SSR](../../../tests/package/table-element-components.ssr.test.ts)
 · [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
 
 ## Фильтры колонок

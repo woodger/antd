@@ -2,6 +2,7 @@ import '@woodger/antd/styles.css';
 import { hydrate } from 'svelte';
 import TableVirtualFixture from './TableVirtualFixture.svelte';
 import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
+import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
 
 const target = document.getElementById('root');
 if (!target) {
@@ -10,7 +11,14 @@ if (!target) {
 
 // Редактирование поля до запуска клиента позволяет проверить DOM identity и caret.
 target.addEventListener('hydrate-table-virtual', () => {
-  if (new URLSearchParams(location.search).has('custom-body')) {
+  const query = new URLSearchParams(location.search);
+  if (query.has('custom-elements')) {
+    hydrate(TableElementComponentsFixture, {
+      target, props: { profileId: 'virtual', editor: true, stringTag: query.has('string-tag') },
+      recover: false
+    });
+  }
+  else if (query.has('custom-body')) {
     hydrate(TableCustomBodyFixture, { target, props: { profileId: 'dom' }, recover: false });
   }
   else {

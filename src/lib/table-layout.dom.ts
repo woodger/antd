@@ -67,6 +67,25 @@ function placeHeaderRows(rows: readonly HTMLTableRowElement[]) {
   }
 }
 
+/** Считает горизонтальное смещение, которое открывает control между закреплёнными колонками. */
+export function getTableFocusOffset(
+  viewport: HTMLDivElement,
+  focused: Element,
+  startWidth: number,
+  endWidth: number,
+  rtl: boolean
+) {
+  const viewportLeft = viewport.getBoundingClientRect().left + viewport.clientLeft;
+  const left = viewportLeft + (rtl ? endWidth : startWidth);
+  const right = viewportLeft + viewport.clientWidth - (rtl ? startWidth : endWidth);
+  const rect = focused.getBoundingClientRect();
+  if (rect.width <= 0 || rect.width > right - left) {
+    return 0;
+  }
+
+  return rect.left < left ? rect.left - left : Math.max(0, rect.right - right);
+}
+
 /** При измерении колонок оставляет уже сфокусированный итог видимым между ними. */
 function revealSummaryFocus(
   table: HTMLTableElement,
@@ -87,19 +106,9 @@ function revealSummaryFocus(
 
   const view = viewport.ownerDocument.defaultView;
   const rtl = view?.getComputedStyle(viewport).direction === 'rtl';
-  const viewportLeft = viewport.getBoundingClientRect().left + viewport.clientLeft;
-  const left = viewportLeft + (rtl ? endWidth : startWidth);
-  const right = viewportLeft + viewport.clientWidth - (rtl ? startWidth : endWidth);
-  const rect = focused.getBoundingClientRect();
-  if (rect.width <= 0 || rect.width > right - left) {
-    return;
-  }
-
-  if (rect.left < left) {
-    viewport.scrollLeft += rect.left - left;
-  }
-  else if (rect.right > right) {
-    viewport.scrollLeft += rect.right - right;
+  const offset = getTableFocusOffset(viewport, focused, startWidth, endWidth, rtl);
+  if (offset) {
+    viewport.scrollLeft += offset;
   }
 }
 
@@ -112,8 +121,11 @@ export function observeTableLayout(options: {
   hasBodyRows: boolean;
   measureColumns?: boolean;
   endGutter?: number;
+  onMeasure?: (widths: readonly number[], tableWidth: number) => void;
 }) {
-  const { table, viewport, fixed, stickyHeader, hasBodyRows, measureColumns, endGutter = 0 } = options;
+  const {
+    table, viewport, fixed, stickyHeader, hasBodyRows, measureColumns, endGutter = 0, onMeasure
+  } = options;
   const head = table.tHead;
   // При spans число ячеек и число физических колонок могут различаться.
   const cells = measureColumns
@@ -126,6 +138,7 @@ export function observeTableLayout(options: {
   /** Обновляет offsets после resize без переустановки разметки или обработчиков. */
   function measure() {
     const widths = cells.map(cell => cell.getBoundingClientRect().width);
+    onMeasure?.(widths, table.getBoundingClientRect().width);
     const headHeight = stickyHeader ? head?.getBoundingClientRect().height ?? 0 : 0;
     const viewportWidth = viewport.clientWidth;
     const offsets = getTableFixedOffsets(fixed, widths);

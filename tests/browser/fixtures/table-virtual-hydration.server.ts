@@ -1,6 +1,7 @@
 import { render } from 'svelte/server';
 import TableVirtualFixture from './TableVirtualFixture.svelte';
 import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
+import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
 
 /** Рендерит то же начальное окно, с которым клиент начинает гидратацию. */
 export function renderVirtualTableFixture() {
@@ -10,4 +11,11 @@ export function renderVirtualTableFixture() {
 /** Создаёт пользовательское тело до подключения владельца прокрутки. */
 export function renderCustomTableBodyFixture() {
   return render(TableCustomBodyFixture, { props: { profileId: 'dom' } });
+}
+
+/** Формирует первое окно с заменёнными элементами и редактируемой ячейкой. */
+export function renderTableElementsFixture(stringTag: boolean) {
+  return render(TableElementComponentsFixture, {
+    props: { profileId: 'virtual', editor: true, stringTag }
+  });
 }

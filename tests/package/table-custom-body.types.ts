@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type {
-  TableBodyRender, TableBodyRenderInfo, TableBodyScrollEvent, TableBodyScrollHandle,
+  TableBodyComponents, TableBodyRender, TableBodyRenderInfo, TableBodyScrollEvent, TableBodyScrollHandle,
   TableComponents, TableProps, TableScrollConfig
 } from '@woodger/antd';
 
@@ -11,7 +11,7 @@ type Assert<T extends true> = T;
 
 export type TableCustomBodyContracts = [
   Assert<Equal<TableProps<Row>['components'], TableComponents<Row> | undefined>>,
-  Assert<Equal<TableComponents<Row>['body'], TableBodyRender<Row> | undefined>>,
+  Assert<Equal<TableComponents<Row>['body'], TableBodyComponents | TableBodyRender<Row> | undefined>>,
   Assert<Equal<TableBodyRender<Row>, Snippet<[readonly Row[], TableBodyRenderInfo]>>>,
   Assert<Equal<TableBodyRenderInfo['ref'],
     (target: HTMLElement | TableBodyScrollHandle) => () => void>>,

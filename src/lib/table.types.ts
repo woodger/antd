@@ -1,5 +1,8 @@
 import type { Snippet } from 'svelte';
-import type { HTMLAttributes, HTMLInputAttributes, HTMLTdAttributes } from 'svelte/elements';
+import type { Attachment } from 'svelte/attachments';
+import type {
+  HTMLAttributes, HTMLInputAttributes, HTMLTableAttributes, HTMLTdAttributes, HTMLThAttributes
+} from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
 import type { DropdownProps } from './dropdown.types';
@@ -418,9 +421,52 @@ export interface TableBodyRenderInfo {
 export type TableBodyRender<Row extends object> =
   Snippet<[data: readonly Row[], info: TableBodyRenderInfo]>;
 
+/** Семантический тег штатного элемента, в том числе внутри виртуального окна. */
+export type TableElementTag = 'table' | 'thead' | 'tbody' | 'tr' | 'th' | 'td';
+
+interface TableElementAttributeMap {
+  table: Omit<HTMLTableAttributes, 'children'>;
+  thead: Omit<HTMLAttributes<HTMLTableSectionElement>, 'children'>;
+  tbody: Omit<HTMLAttributes<HTMLTableSectionElement>, 'children'>;
+  tr: TableRowProps;
+  td: Omit<HTMLTdAttributes, 'children'>;
+  th: Omit<HTMLThAttributes, 'children'>;
+}
+
+export type TableElementAttributes<Tag extends TableElementTag> = TableElementAttributeMap[Tag]
+  & { [name: `data-${string}`]: string | number | boolean | undefined; };
+
+/** Передайте attributes, children и ref реальному элементу с семантикой этого места. */
+export interface TableElementRenderInfo<Tag extends TableElementTag = TableElementTag> {
+  tag: Tag;
+  attributes: TableElementAttributes<Tag>;
+  children: Snippet;
+  ref: Attachment<HTMLElement>;
+}
+
+/** Имя HTML-элемента либо snippet с готовыми атрибутами и штатными дочерними узлами. */
+export type TableElement<Tag extends TableElementTag> =
+  string | Snippet<[info: TableElementRenderInfo<Tag>]>;
+
+export interface TableHeaderComponents {
+  /** Таблица отдельной шапки и закреплённых итогов при scroll.y или sticky. */
+  table?: TableElement<'table'>;
+  wrapper?: TableElement<'thead'>;
+  row?: TableElement<'tr'>;
+  cell?: TableElement<'th'>;
+}
+
+export interface TableBodyComponents {
+  wrapper?: TableElement<'tbody'>;
+  row?: TableElement<'tr'>;
+  cell?: TableElement<'td' | 'th'>;
+}
+
 export interface TableComponents<Row extends object> {
-  /** Заменяет тело при scroll.y или sticky без штатной виртуализации. */
-  body?: TableBodyRender<Row>;
+  table?: TableElement<'table'>;
+  header?: TableHeaderComponents;
+  /** Настраивает элементы тела или отдаёт прокрутку отдельному renderer. */
+  body?: TableBodyComponents | TableBodyRender<Row>;
 }
 
 /** Методы bind:this. Корневой DOM-узел доступен через bind:nativeElement. */
