@@ -5,6 +5,8 @@
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { componentThemeVariables } from './theme-component-style.engine';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import type { DropdownProps } from './dropdown.types';
   import {
     areTableFilterOptionsEqual, snapshotTableFilterOptions
@@ -52,6 +54,7 @@
 
   const config = useConfig();
   const designTheme = useDesignTokenContext();
+  const layer = useZIndex('popup');
   const id = $props.id();
   let trigger = $state<HTMLButtonElement>();
   let panel = $state<HTMLDivElement>();
@@ -62,6 +65,12 @@
   const hasPanelOptions = $derived(Boolean(filterDropdown || filterDropdownProps || filterOnClose));
   let retainedDropdown = $state(untrack(() => Boolean(tableContainer)));
   const usesDropdown = $derived(hasPanelOptions || Boolean(tableContainer) || retainedDropdown);
+  const dropdownLayerVariable = '--ant-dropdown-z-index-popup';
+  const dropdownZIndex = $derived(designTheme.enabled
+    ? componentThemeVariables('Dropdown', designTheme.state.token)[dropdownLayerVariable]
+    : undefined);
+  // Встроенная панель передаёт ненулевой слой. В ветке Dropdown он вычисляется там.
+  provideZIndex(() => usesDropdown || !layer.zIndex ? layer.parentZIndex : layer.contextZIndex);
   const blocked = $derived(disabled || Boolean(filterDropdownProps?.disabled));
   const open = $derived(
     usesDropdown ? !blocked && (filterDropdownProps?.open ?? requestedOpen) : nativeOpen
@@ -390,6 +399,7 @@
   [data-ant-table-filter-part="trigger"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
   /* visibility наследуется Checkbox с transition: all и задерживает фокус при открытии. */
   .filter-popover { position: fixed; inset: auto; width: min(260px, calc(100vw - 16px)); max-height: min(360px, calc(100dvh - 16px)); margin: 0; padding: 0; overflow-y: auto; opacity: 0; pointer-events: none; border: 0; border-radius: var(--ant-border-radius-lg); background: var(--ant-color-bg-container); color: var(--ant-color-text); box-shadow: var(--ant-box-shadow-secondary); font: var(--ant-font-size)/var(--ant-line-height) var(--ant-font-family); font-weight: 400; text-align: start; }
+  .filter-popover { z-index: var(--ant-dropdown-z-index-popup, 1050); }
   .dropdown-content {
     max-inline-size: calc(100vw - 16px);
     max-block-size: calc(100dvh - 16px);
@@ -505,6 +515,8 @@
     popover="auto"
     role="dialog"
     tabindex="-1"
+    style:z-index={layer.zIndex}
+    style:--ant-dropdown-z-index-popup={dropdownZIndex}
     aria-label={label}
     aria-labelledby={labelReference}
     dir={config.direction}

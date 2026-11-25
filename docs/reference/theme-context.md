@@ -484,19 +484,19 @@ SVG берутся из глобальных токенов. Для собств
 ### Тема Tour
 
 `components.Tour` задаёт размер кнопки закрытия, цвета навигации и индикатора,
-оформление стрелки. Для изменения слоя открытой подсказки задайте `zIndex` на
-самом `Tour`: его значение по умолчанию 1001 имеет приоритет над `zIndexPopup`.
+оформление стрелки. Корневой Tour без явного слоя использует 1001.
+Вложенный Tour берёт слой из контекста, а `zIndex` задаёт его явно.
 Кнопки в подвале используют тему `Button`.
 
 ## Уровни вложенных панелей
 
-Modal, Drawer, Tooltip, Popover и Popconfirm передают числовой уровень
-потомкам, в том числе при переносе DOM в портал. Без явного `zIndex`
-корневая поверхность использует CSS-токен компонента, а её потомки
-получают базу `zIndexPopupBase + 100`.
+Modal, Drawer, Tooltip, Popover, Popconfirm, Tour и ColorPicker передают числовой
+уровень потомкам, в том числе при переносе DOM в портал. Корневая поверхность
+без явного слоя использует CSS-токен компонента. Корневой Tour использует 1001.
+В обоих случаях потомки получают базу `zIndexPopupBase + 100`.
 
-Вложенные Modal, Drawer, Tooltip, Popover и Popconfirm прибавляют 100
-к уровню родителя. При явном нуле у родителя используется
+Эти вложенные поверхности и FloatButton, FloatButtonGroup и FloatButtonBackTop
+прибавляют 100 к уровню родителя. При явном нуле у родителя используется
 `zIndexPopupBase + 100`. Dropdown и всплывающие подменю Menu прибавляют 50,
 включая случай нулевой базы. Dropdown передаёт свой ненулевой слой
 потомкам, а явное целое `z-index` читается из итоговых стилей панели с
@@ -512,6 +512,16 @@ RangePicker, TimePicker и TimeRangePicker также прибавляют 50 к
 в Modal прибавляет 100 к уровню Modal.
 [Эталон полей](../../tests/browser/fixtures/ant-design-input-z-index-context-reference.json)
 · [Chromium](../../tests/browser/input-z-index-context.spec.ts)
+· [SSR](../../tests/package/z-index-context.ssr.test.ts)
+
+Панель фильтра Table использует правила Dropdown. Встроенная панель берёт
+CSS-токен Dropdown в корне и прибавляет 50 к унаследованному уровню.
+Просмотр одного изображения или группы прибавляет 1 к уровню владельца.
+Потомки FloatButton, FloatButtonGroup и просмотрщика читают контекст владельца.
+Явный CSS FloatButton сохраняет приоритет. Числовой `preview.zIndex` задаёт
+слой просмотрщика, включая 0.
+[Эталон дополнительных поверхностей](../../tests/browser/fixtures/ant-design-auxiliary-z-index-context-reference.json)
+· [Chromium](../../tests/browser/auxiliary-z-index-context.spec.ts)
 · [SSR](../../tests/package/z-index-context.ssr.test.ts)
 
 Числовой `zIndex` на диалоге задаёт его слой и уровень для потомков.

@@ -60,9 +60,14 @@ marginXXL/marginLG и padding группы. Button сохраняет свои c
 Вложенные и соседние providers изолированы, поддержаны custom cssVar prefix,
 реактивные изменения и возврат к legacy defaults.
 
-Сохраняются прежние ограничения Button/Badge/Tooltip; произвольный prefixCls и
-общий React z-index context ещё не перенесены. CSS-рецепт воспроизводит 42 правила;
-глобальный fade адаптирован через WAAPI с исходными длительностями и reduced motion.
+FloatButton, Group и BackTop используют [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Явный CSS в `styles.root` и `style` сохраняет приоритет. Кнопки внутри Group
+читают тот же контекст владельца, что и сама группа.
+В React 6.6.8 явный слой задаётся через `style.zIndex`. Поле `styles.root.zIndex`
+в замере перекрывалось расчётом. Svelte сохраняет заданный CSS в этом слоте.
+
+Сохраняются прежние ограничения Button, Badge и Tooltip. CSS-рецепт воспроизводит
+42 правила. Глобальный fade адаптирован через WAAPI с исходными длительностями и reduced motion.
 У FloatButtonBackTop fade меняет только opacity по linear-кривой; локальный
 transform сохраняется во время появления и исчезновения. Промежуточные кадры
 официального UMD сверяются в [browser](../../../tests/browser/float-button-motion.spec.ts).

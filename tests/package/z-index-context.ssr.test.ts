@@ -1,15 +1,18 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
 import registry from '@woodger/antd/porting/registry.json';
+import AuxiliaryFixture from '../browser/fixtures/AuxiliaryZIndexContextFixture.svelte';
 import InputFixture from '../browser/fixtures/InputZIndexContextFixture.svelte';
 import Fixture from '../browser/fixtures/ZIndexContextFixture.svelte';
+import auxiliary from '../browser/fixtures/ant-design-auxiliary-z-index-context-reference.json';
 import inputs from '../browser/fixtures/ant-design-input-z-index-context-reference.json';
 import source from '../browser/fixtures/ant-design-z-index-context-reference.json';
 
 /** Читает последнюю числовую декларацию в SSR-профилях без important. */
-function inlineLayer(body: string, className: string) {
+function inlineLayer(body: string, ...classNames: string[]) {
   for (const [tag, classes] of body.matchAll(/<[^>]+\sclass="([^"]*)"[^>]*>/g)) {
-    if (!classes.split(/\s+/).includes(className)) {
+    const tokens = classes.split(/\s+/);
+    if (!classNames.every(className => tokens.includes(className))) {
       continue;
     }
 
@@ -19,6 +22,34 @@ function inlineLayer(body: string, className: string) {
   }
 
   return undefined;
+}
+
+it('pins the auxiliary surface layers to the Ant Design archive', () => {
+  const { version, revision, archiveSha256 } = registry.upstream;
+
+  expect(auxiliary.reference).toMatchObject({ version, revision, archiveSha256, repeat: 2 });
+  expect(auxiliary.cases).toHaveLength(12);
+});
+
+const auxiliaryProfiles = new Set(['root', 'modal', 'modal-zero', 'modal-local-zero']);
+for (const { profile, initial } of auxiliary.cases.filter(entry =>
+  auxiliaryProfiles.has(entry.profile.id))) {
+  it(`renders available auxiliary layers on the server in ${profile.id}`, () => {
+    const { body } = render(AuxiliaryFixture, { props: { profileId: profile.id } });
+
+    expect(inlineLayer(body, 'zi-color')).toBe(initial.color.inline);
+    expect(inlineLayer(body, 'zi-float')).toBe(initial.float.inline);
+    expect(inlineLayer(body, 'zi-float-semantic')).toBe(String(profile.child ?? 1660));
+    expect(inlineLayer(body, 'zi-float-group')).toBe(initial.floatGroup.inline);
+    expect(inlineLayer(body, 'zi-float-item')).toBe(initial.floatItem.inline);
+    expect(inlineLayer(body, 'ant-float-btn-group-trigger')).toBe(initial.floatTrigger.inline);
+    expect(inlineLayer(body, 'zi-float-back-top')).toBe(initial.floatBackTop.inline);
+    expect(inlineLayer(body, 'zi-table-default', 'filter-popover')).toBe(initial.tableDefault.inline);
+    expect(inlineLayer(body, 'zi-table-icon-tooltip')).toBe(initial.tableTriggerTip.inline);
+    expect(inlineLayer(body, 'zi-tour')).toBeUndefined();
+    expect(inlineLayer(body, 'zi-image')).toBeUndefined();
+    expect(inlineLayer(body, 'zi-image-group')).toBeUndefined();
+  });
 }
 
 it('pins the overlay layers to the Ant Design archive', () => {

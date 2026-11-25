@@ -374,11 +374,20 @@
         },
         {
           "id": "global-parity",
-          "title": "Общий z-index context",
-          "state": "missing",
+          "title": "Унаследованный слой FloatButton, Group и BackTop",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "FloatButton использует собственный CSS-слой. Подключение к унаследованному числовому слою остаётся отдельным этапом. Prefix подключён отдельной feature, ограничения Button/Badge/Tooltip сохраняются."
+          "evidence": [
+            "src/lib/FloatButton.svelte",
+            "src/lib/FloatButtonGroup.svelte",
+            "docs/reference/components/float-button.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-auxiliary-z-index-context-reference.json",
+            "tests/browser/auxiliary-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Кнопка, BackTop, группа, её элементы и триггер используют уровень владельца плюс 100. Уровень группы не задаёт базу дочерним кнопкам. В Svelte явный CSS styles.root сохраняет приоритет над наследуемым уровнем. React 6.6.8 перекрывает свойство styles.root.zIndex расчётом и читает явное значение из style.zIndex."
         },
         {
           "id": "source-wave",
@@ -395,7 +404,7 @@
             "tests/browser/fixtures/ant-design-wave-token-keys-reference.json",
             "docs/reference/wave.md"
           ],
-          "note": "FloatButton, BackTop и Group trigger используют общий Button, как в upstream. Наследуют ConfigProvider.wave, source trigger/effect и Button guards; info.component=Button. Href остаётся anchor без Wave. Общие prefix/z-index gaps остаются отдельной feature; FloatButton aliases/algorithms покрыты component-theme."
+          "note": "FloatButton, BackTop и Group trigger используют общий Button, как в upstream. Наследуют ConfigProvider.wave, source trigger/effect и Button guards; info.component=Button. Href остаётся anchor без Wave. FloatButton aliases/algorithms покрыты component-theme."
         },
         {
           "id": "component-theme",
@@ -6349,6 +6358,22 @@
         "src/lib/popup-position.engine.test.ts"
       ],
       "features": [
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой и контекст палитры",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/ColorPicker.svelte",
+            "docs/reference/components/color-picker.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-auxiliary-z-index-context-reference.json",
+            "tests/browser/auxiliary-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Палитра использует уровень владельца плюс 100 и передаёт рассчитанный контекст триггеру и содержимому. CSS styles.popup.root задаёт слой самой палитры. Обновление и удаление явного important сохраняют портал, фокус, черновик и каретку."
+        },
         {
           "id": "color-model",
           "title": "Исходные Color, форматы, точность, cleared и интерполяция",
@@ -18024,6 +18049,23 @@
       ],
       "features": [
         {
+          "id": "z-index-context",
+          "title": "Унаследованный слой просмотра",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/ImagePreview.svelte",
+            "src/lib/ImagePreviewGroup.svelte",
+            "docs/reference/components/image.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-auxiliary-z-index-context-reference.json",
+            "tests/browser/auxiliary-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Одиночный viewer и PreviewGroup прибавляют 1 к уровню владельца. При заданном preview.zIndex действует это число. Явный 0 сохранён как контракт Svelte. React 6.6.8 при 0 берёт CSS-токен Image. Подсказка внутри actionsRender читает контекст владельца."
+        },
+        {
           "id": "core-v1",
           "title": "Native img, загрузка/fallback/placeholder и управляемый одиночный preview",
           "state": "supported",
@@ -18082,7 +18124,7 @@
             "tests/browser/image-theme.spec.ts",
             "tests/browser/fixtures/ant-design-image-theme-reference.json"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: исходная подготовка zIndexPopup, previewOperationSize, трёх operation colors и progressAnimationDuration через общий token engine. Цвета получают абсолютную alpha 0.65/0.85/0.25; zIndexPopup без px. Component variables применяются отдельно к thumbnail и viewer Image/ImagePreviewGroup, до styles.root/preview.zIndex. Проверяются aliases/algorithms/dark/compact, zero/undefined, именованные cssVar, single/group/RTL/nested/reset/sibling scopes и реактивная смена без потери DOM/transforms/current/focus/refs. Native dialog stack поверх Modal сохранён, React z-index context не добавлен. ProgressAnimationDuration проверен только как CSS variable: placeholder.progress/render и фактическая progress-анимация остаются в extended-api."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: исходная подготовка zIndexPopup, previewOperationSize, трёх operation colors и progressAnimationDuration через общий token engine. Цвета получают абсолютную alpha 0.65/0.85/0.25; zIndexPopup без px. Component variables применяются отдельно к thumbnail и viewer Image/ImagePreviewGroup, до styles.root/preview.zIndex. Проверяются aliases/algorithms/dark/compact, zero/undefined, именованные cssVar, single/group/RTL/nested/reset/sibling scopes и реактивная смена без потери DOM/transforms/current/focus/refs. Native dialog stack поверх Modal сохранён. ProgressAnimationDuration проверен только как CSS variable: placeholder.progress/render и фактическая progress-анимация остаются в extended-api."
         },
         {
           "id": "extended-api",
@@ -19835,6 +19877,23 @@
         "tools/ant-design-css-recipes.json"
       ],
       "features": [
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели фильтра",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TableFilter.svelte",
+            "src/lib/Dropdown.svelte",
+            "docs/reference/components/table.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-auxiliary-z-index-context-reference.json",
+            "tests/browser/auxiliary-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Встроенный popover и фильтр через Dropdown прибавляют 50 к базе владельца. Корневая панель использует zIndexPopup из темы Dropdown, включая ноль. Ненулевой явный или унаследованный слой передаётся потомкам. Настроенная ветка вычисляет его в Dropdown."
+        },
         {
           "id": "core-v1",
           "title": "Подробный аудит согласованного API v1",
@@ -21938,11 +21997,19 @@
         },
         {
           "id": "advanced-source-api",
-          "title": "Общий zIndex context",
-          "state": "missing",
+          "title": "Унаследованный слой маски, панели и потомков Tour",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Tour использует собственный zIndex и default1001. Подключение наследуемого слоя и передача его потомкам остаются отдельным этапом. Local/shared prefix CSS и component CSS tokens/aliases/algorithms перенесены отдельно. React dev diagnostics/private PurePanel не воспроизводятся."
+          "evidence": [
+            "src/lib/Tour.svelte",
+            "docs/reference/components/tour.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-auxiliary-z-index-context-reference.json",
+            "tests/browser/auxiliary-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Вложенный Tour прибавляет 100 к базе владельца. Панель и маска получают одинаковый уровень. Явный zIndex, включая 0, передаётся потомкам. Корневая панель использует 1001, а её потомки получают базу zIndexPopupBase + 100."
         },
         {
           "id": "component-theme",
@@ -21971,7 +22038,7 @@
         {
           "id": "theme-z-index-runtime",
           "title": "Исходный приоритет runtime zIndex над CSS token zIndexPopup",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/Tour.svelte",
@@ -21979,7 +22046,7 @@
             "tests/browser/tour-theme.spec.ts",
             "docs/reference/components/tour.md"
           ],
-          "note": "В обычном Tour 6.6.8 CSS token zIndexPopup=1750 и global zIndexPopupBase=2000 не меняют runtime layer 1001: rc-tour использует documented default prop zIndex=1001. Явный zIndex=1900 работает и имеет приоритет. Native сохраняет это operational behavior; Девять CSS declarations и их conformance не означают применения token zIndexPopup к обычному runtime слою. Raw measurements оставлены для отдельного обсуждения; это ограничение эталона, не объявленное автоматически дефектом."
+          "note": "В корневом Tour 6.6.8 значения zIndexPopup=1750 и zIndexPopupBase=2000 оставляют runtime слой 1001. Явный zIndex=1900 применяется к маске и панели. Наследование вложенного Tour отражено в advanced-source-api."
         },
         {
           "id": "prefix-scopes",

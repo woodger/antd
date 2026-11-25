@@ -5,6 +5,7 @@
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectComponentTheme } from './theme-component.dom';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { useForm, useFormField } from './form-context';
   import { useCompact } from './space-compact-context';
@@ -28,6 +29,8 @@
   const designTheme = useDesignTokenContext();
   const componentTheme = useComponentTheme('ColorPicker');
   const popoverTheme = useComponentTheme('Popover');
+  const layer = useZIndex('container');
+  provideZIndex(() => layer.contextZIndex);
   const field = useFormField();
   const form = useForm();
   const compact = useCompact();
@@ -90,10 +93,12 @@
     ? props.styles({ props: mergedProps }) : props.styles);
   let styles = $derived(mergeSlots(contextStyles, { root: config.colorPicker?.style },
     localStyles, { root: props.style }, ';'));
-  let popupThemeStyle = $derived(
-    [popoverTheme.style, componentTheme.style, styles.popup?.root].filter(Boolean).join(';')
-      || undefined
-  );
+  let popupThemeStyle = $derived([
+    popoverTheme.style,
+    componentTheme.style,
+    layer.style,
+    styles.popup?.root
+  ].filter(Boolean).join(';') || undefined);
   const initialPopupStyle = untrack(() => popupThemeStyle);
   const owned = new Set([
     'value', 'defaultValue', 'mode', 'open', 'disabled', 'format', 'defaultFormat',
@@ -414,7 +419,7 @@
       componentTheme.className, designTheme.enabled && 'color-picker-source-theme',
       `${popoverPrefix}-placement-${actualPlacement}`, config.direction === 'rtl' && `${prefixCls}-rtl`,
       props.rootClassName, classes.popup?.root]} style={initialPopupStyle}
-    {@attach node => connectComponentTheme(node, popupThemeStyle)}
+    {@attach node => connectComponentTheme(node, popupThemeStyle, ['z-index'])}
     data-ant-color-theme={config.theme.mode} data-ant-color-primary={config.theme.primary}
     onpointerenter={() => {
       if (timer) clearTimeout(timer);

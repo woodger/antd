@@ -6,6 +6,7 @@
   import { buttonHasContent, buttonText } from './button.engine';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import { useFloatButton } from './float-button-context';
   import { getFloatButtonPrefixCss } from './float-button-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -31,6 +32,10 @@
   }: FloatButtonProps = $props();
   const config = useConfig();
   const componentTheme = useComponentTheme('FloatButton');
+  const layer = useZIndex('container');
+  const buttonThemeStyle = $derived(
+    [componentTheme.style, layer.style].filter(Boolean).join(';') || undefined
+  );
   const group = useFloatButton();
   let prefixCls = $derived(customizePrefixCls === undefined && group?.prefixCls
     ? group.prefixCls : config.getPrefixCls('float-btn', customizePrefixCls));
@@ -136,7 +141,7 @@
     data-ant-float-root
     data-ant-float-prefix={prefixCss ? prefixCls : undefined}
     data-ant-float-global={prefixCss ? rootPrefixCls : undefined}
-    _themeStyle={componentTheme.style}
+    _themeStyle={buttonThemeStyle}
     class={[
         `${prefixCls} ant-float-btn-css-var`,
         componentTheme.className,

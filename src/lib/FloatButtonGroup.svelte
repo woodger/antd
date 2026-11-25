@@ -7,6 +7,7 @@
   import SpaceCompact from './SpaceCompact.svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import { getFloatButtonPrefixCss } from './float-button-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useForm } from './form-context';
@@ -40,6 +41,7 @@
   }: FloatButtonGroupProps = $props();
   const config = useConfig();
   const componentTheme = useComponentTheme('FloatButton');
+  const layer = useZIndex('container');
   const form = useForm();
   let prefixCls = $derived(config.getPrefixCls('float-btn', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
@@ -230,6 +232,7 @@
     ]}
   style={[
       componentTheme.style,
+      layer.style,
       contextStyles.root,
       config.floatButtonGroup?.style,
       slots.root,

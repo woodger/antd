@@ -5,6 +5,7 @@ import { getInlineStyleDeclarations, type InlineStyleLayer } from './inline-styl
 import { useDesignTokenContext } from './theme-context.svelte';
 
 type ReadZIndex = () => number | undefined;
+type LayerKind = 'container' | 'popup' | 'preview';
 const key = Symbol('ant-z-index');
 
 export interface ZIndexLayer {
@@ -15,7 +16,7 @@ export interface ZIndexLayer {
 }
 
 /** Разрешает слой поверхности и уровень для потомков с исходными смещениями Ant Design. */
-export function useZIndex(kind: 'container' | 'popup', readLocal?: ReadZIndex): ZIndexLayer {
+export function useZIndex(kind: LayerKind, readLocal?: ReadZIndex): ZIndexLayer {
   const readParent = getContext<ReadZIndex | undefined>(key);
   const theme = useDesignTokenContext();
   const parentZIndex = $derived(readParent?.());
@@ -25,12 +26,13 @@ export function useZIndex(kind: 'container' | 'popup', readLocal?: ReadZIndex): 
       return localZIndex;
     }
 
-    if (kind === 'popup') {
-      return (parentZIndex ?? 0) + 50;
+    if (kind === 'container') {
+      // Исходный контейнер с нулевым родителем начинает от базового токена.
+      return (parentZIndex || theme.state.token.zIndexPopupBase) + 100;
     }
 
-    // Исходный контейнер с нулевым родителем начинает от базового токена.
-    return (parentZIndex || theme.state.token.zIndexPopupBase) + 100;
+    const offset = kind === 'preview' ? 1 : 50;
+    return (parentZIndex ?? 0) + offset;
   });
   const zIndex = $derived(localZIndex ?? (parentZIndex === undefined ? undefined : contextZIndex));
 

@@ -19,6 +19,7 @@
   import { checkImageSource } from './image-status.dom';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ImagePreviewIcon from './ImagePreviewIcon.svelte';
 
@@ -56,6 +57,7 @@
   const context = useConfig();
   let previewPrefix = $derived(customizePreviewPrefix ?? `${imagePrefix}-preview`);
   const componentTheme = useComponentTheme('Image');
+  const layer = useZIndex('preview', () => preview.zIndex);
   let dialog = $state<HTMLDialogElement>();
   let element = $state<HTMLImageElement>();
   let mounted = $state(false);
@@ -377,10 +379,7 @@
         moving && `${previewPrefix}-moving`
       ]}
       dir={context.direction} aria-label={image.alt || context.locale.image?.preview || 'Image preview'} aria-modal={focusTrap ? 'true' : undefined}
-      style={[
-          componentTheme.style,
-          preview.zIndex !== undefined && `z-index:${preview.zIndex}`
-        ].filter(Boolean).join(';')} oncancel={event => {
+      style={[componentTheme.style, layer.style].filter(Boolean).join(';')} oncancel={event => {
               event.preventDefault();
               onClose();
             }}>

@@ -31,6 +31,9 @@
 - Select, AutoComplete, TreeSelect, Cascader, Mentions и пикеры используют
   унаследованный слой для всплывающих панелей.
 
+- Tour, ColorPicker, FloatButton, просмотр изображений и фильтры Table используют
+  общий контекст `z-index`.
+
 - Table принимает статическое содержимое в `filterIcon` и `filterDropdown`.
 
 - Table принимает составные заголовки колонок, подпись таблицы и подписи команд выбора.

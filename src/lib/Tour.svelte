@@ -4,6 +4,7 @@
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { getTourPrefixCss } from './tour-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getTourClosable, getTourSemantics, type TourHighlight } from './tour.engine';
@@ -24,6 +25,8 @@
   let props: TourProps = $props();
   const config = useConfig();
   const componentTheme = useComponentTheme('Tour');
+  const layer = useZIndex('container', () => props.zIndex);
+  provideZIndex(() => layer.contextZIndex);
   let prefixCls = $derived(config.getPrefixCls('tour', props.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefixCss = $derived(getTourPrefixCss(prefixCls, rootPrefix));
@@ -79,7 +82,7 @@
   );
   let locale = $derived({ ...tourRuRU, ...config.locale.tour });
   let closeLabel = $derived(config.locale.global?.close ?? 'Закрыть');
-  let zIndex = $derived(props.zIndex ?? 1001);
+  let zIndex = $derived(layer.zIndex ?? 1001);
   let mounted = $state(false);
   let host = $state<HTMLDivElement>();
   let popup = $state<HTMLDivElement>();

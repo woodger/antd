@@ -60,6 +60,10 @@ public component tokens у ColorPicker 6.6.8 нет. Trigger и popup получ
 тему; Popover, Collapse пресетов и поля сохраняют независимые темы и исходные
 приоритеты CSS. Bright-state пресетов использует глобальный colorBgElevated.
 
+Палитра наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей)
+и передаёт рассчитанный контекст триггеру и содержимому. Локальный `z-index`
+в `styles.popup.root` задаёт слой самой палитры.
+
 Обновление темы сохраняет popup DOM/position, цвет, незавершённый HEX input,
 caret/focus и раскрытие пресетов. Локальные и semantic styles сохраняют приоритет;
 popup.root.color меняет внешний popup, содержимое сохраняет исходный colorText

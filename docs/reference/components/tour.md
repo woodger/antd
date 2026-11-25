@@ -89,12 +89,13 @@ CSS Tour подключён перед Button, как в исходном runtim
 Обновления темы сохраняют шаг, portal DOM, focus/caret и пользовательский input.
 Проверки и 15 UMD-тем — [tour-theme](../../../tests/browser/tour-theme.spec.ts), `?fixture=tour-theme`.
 
-Runtime `zIndex` имеет приоритет над CSS token `zIndexPopup`: обычное окно без prop
-сохраняет слой 1001, даже при другом token/base. Это ограничение Ant Design 6.6.8,
-подтверждённое [raw observation](../../../tests/browser/fixtures/ant-design-tour-z-index-observation.json).
-Для изменения фактического слоя используйте prop `zIndex`; его default сохранён.
+Панель и маска используют слой Tour. В корне без явного `zIndex` это 1001,
+даже при другом CSS-токене `zIndexPopup` или `zIndexPopupBase`.
+[Замер React 6.6.8](../../../tests/browser/fixtures/ant-design-tour-z-index-observation.json)
 
-Общий zIndex context всех popup пока не поддерживается.
+Вложенный Tour прибавляет 100 к уровню владельца. `zIndex` задаёт слой явно,
+включая 0. Потомки получают рассчитанный уровень из
+[общего контекста](../theme-context.md#уровни-вложенных-панелей).
 
 Проверки: [engine](../../../src/lib/tour.engine.test.ts),
 [public package SSR](../../../tests/package/tour.ssr.test.ts),

@@ -1,0 +1,1116 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "root"
+      },
+      "initial": {
+        "tour": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourMask": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "color": {
+          "computed": "1030",
+          "inline": null
+        },
+        "colorTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "float": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "floatSemantic": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatGroup": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatItem": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatTrigger": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatBackTop": {
+          "computed": "1000",
+          "inline": null
+        },
+        "image": {
+          "computed": "1080",
+          "inline": null
+        },
+        "imageTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "imageGroup": {
+          "computed": "1080",
+          "inline": null
+        },
+        "table": {
+          "computed": "1050",
+          "inline": null
+        },
+        "tableTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "tableDefault": {
+          "computed": "1050",
+          "inline": null
+        },
+        "tableTriggerTip": {
+          "computed": "1070",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-token",
+        "base": 1450
+      },
+      "initial": {
+        "tour": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourMask": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourTooltip": {
+          "computed": "1650",
+          "inline": "1650"
+        },
+        "color": {
+          "computed": "1480",
+          "inline": null
+        },
+        "colorTooltip": {
+          "computed": "1650",
+          "inline": "1650"
+        },
+        "float": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatTooltip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "floatSemantic": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatGroup": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatItem": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatTrigger": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatBackTop": {
+          "computed": "1450",
+          "inline": null
+        },
+        "image": {
+          "computed": "1530",
+          "inline": null
+        },
+        "imageTooltip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "imageGroup": {
+          "computed": "1530",
+          "inline": null
+        },
+        "table": {
+          "computed": "1500",
+          "inline": null
+        },
+        "tableTooltip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "tableDefault": {
+          "computed": "1500",
+          "inline": null
+        },
+        "tableTriggerTip": {
+          "computed": "1520",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-dropdown-token",
+        "base": 1450,
+        "dropdownZIndex": 0
+      },
+      "initial": {
+        "tour": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourMask": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourTooltip": {
+          "computed": "1650",
+          "inline": "1650"
+        },
+        "color": {
+          "computed": "1480",
+          "inline": null
+        },
+        "colorTooltip": {
+          "computed": "1650",
+          "inline": "1650"
+        },
+        "float": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatTooltip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "floatSemantic": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatGroup": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatItem": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatTrigger": {
+          "computed": "1450",
+          "inline": null
+        },
+        "floatBackTop": {
+          "computed": "1450",
+          "inline": null
+        },
+        "image": {
+          "computed": "1530",
+          "inline": null
+        },
+        "imageTooltip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "imageGroup": {
+          "computed": "1530",
+          "inline": null
+        },
+        "table": {
+          "computed": "0",
+          "inline": null
+        },
+        "tableTooltip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "tableDefault": {
+          "computed": "0",
+          "inline": null
+        },
+        "tableTriggerTip": {
+          "computed": "1520",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-image-token",
+        "imageZIndex": 2100
+      },
+      "initial": {
+        "tour": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourMask": {
+          "computed": "1001",
+          "inline": "1001"
+        },
+        "tourTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "color": {
+          "computed": "1030",
+          "inline": null
+        },
+        "colorTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "float": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "floatSemantic": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatGroup": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatItem": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatTrigger": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatBackTop": {
+          "computed": "1000",
+          "inline": null
+        },
+        "image": {
+          "computed": "2100",
+          "inline": null
+        },
+        "imageTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "imageGroup": {
+          "computed": "2100",
+          "inline": null
+        },
+        "table": {
+          "computed": "1050",
+          "inline": null
+        },
+        "tableTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "tableDefault": {
+          "computed": "1050",
+          "inline": null
+        },
+        "tableTriggerTip": {
+          "computed": "1070",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-local",
+        "child": 1670
+      },
+      "initial": {
+        "tour": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "tourMask": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "tourTooltip": {
+          "computed": "1770",
+          "inline": "1770"
+        },
+        "color": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "colorTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "float": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "floatTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "floatSemantic": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "floatGroup": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "floatItem": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatTrigger": {
+          "computed": "1000",
+          "inline": null
+        },
+        "floatBackTop": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "image": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "imageTooltip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "imageGroup": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "table": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "tableTooltip": {
+          "computed": "1770",
+          "inline": "1770"
+        },
+        "tableDefault": {
+          "computed": "1050",
+          "inline": null
+        },
+        "tableTriggerTip": {
+          "computed": "1070",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal",
+        "owner": "modal"
+      },
+      "initial": {
+        "tour": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "tourMask": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "tourTooltip": {
+          "computed": "1300",
+          "inline": "1300"
+        },
+        "color": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "colorTooltip": {
+          "computed": "1300",
+          "inline": "1300"
+        },
+        "float": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatSemantic": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatGroup": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatItem": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatTrigger": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatBackTop": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "image": {
+          "computed": "1101",
+          "inline": "1101"
+        },
+        "imageTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "imageGroup": {
+          "computed": "1101",
+          "inline": "1101"
+        },
+        "table": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "tableTooltip": {
+          "computed": "1250",
+          "inline": "1250"
+        },
+        "tableDefault": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "tableTriggerTip": {
+          "computed": "1250",
+          "inline": "1250"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-image-token",
+        "owner": "modal",
+        "imageZIndex": 2100
+      },
+      "initial": {
+        "tour": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "tourMask": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "tourTooltip": {
+          "computed": "1300",
+          "inline": "1300"
+        },
+        "color": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "colorTooltip": {
+          "computed": "1300",
+          "inline": "1300"
+        },
+        "float": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatSemantic": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatGroup": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatItem": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatTrigger": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "floatBackTop": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "image": {
+          "computed": "1101",
+          "inline": "1101"
+        },
+        "imageTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "imageGroup": {
+          "computed": "1101",
+          "inline": "1101"
+        },
+        "table": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "tableTooltip": {
+          "computed": "1250",
+          "inline": "1250"
+        },
+        "tableDefault": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "tableTriggerTip": {
+          "computed": "1250",
+          "inline": "1250"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-zero",
+        "owner": "modal",
+        "initial": 0
+      },
+      "initial": {
+        "tour": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "tourMask": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "tourTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "color": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "colorTooltip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "float": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "floatTooltip": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "floatSemantic": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "floatGroup": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "floatItem": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "floatTrigger": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "floatBackTop": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "image": {
+          "computed": "1",
+          "inline": "1"
+        },
+        "imageTooltip": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "imageGroup": {
+          "computed": "1",
+          "inline": "1"
+        },
+        "table": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "tableTooltip": {
+          "computed": "150",
+          "inline": "150"
+        },
+        "tableDefault": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "tableTriggerTip": {
+          "computed": "150",
+          "inline": "150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-local-zero",
+        "owner": "modal",
+        "initial": 1530,
+        "child": 0
+      },
+      "initial": {
+        "tour": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "tourMask": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "tourTooltip": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "color": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "colorTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "float": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "floatTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatSemantic": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "floatGroup": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "floatItem": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTrigger": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatBackTop": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "image": {
+          "computed": "1080",
+          "inline": null
+        },
+        "imageTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "imageGroup": {
+          "computed": "1080",
+          "inline": null
+        },
+        "table": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "tableTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tableDefault": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTriggerTip": {
+          "computed": "1680",
+          "inline": "1680"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-update",
+        "owner": "modal",
+        "initial": 1530,
+        "update": 1730
+      },
+      "initial": {
+        "tour": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tourMask": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tourTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "color": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "colorTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "float": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatSemantic": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatGroup": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatItem": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTrigger": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatBackTop": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "image": {
+          "computed": "1531",
+          "inline": "1531"
+        },
+        "imageTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "imageGroup": {
+          "computed": "1531",
+          "inline": "1531"
+        },
+        "table": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTooltip": {
+          "computed": "1680",
+          "inline": "1680"
+        },
+        "tableDefault": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTriggerTip": {
+          "computed": "1680",
+          "inline": "1680"
+        }
+      },
+      "updated": {
+        "tour": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "tourMask": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "tourTooltip": {
+          "computed": "1930",
+          "inline": "1930"
+        },
+        "color": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "colorTooltip": {
+          "computed": "1930",
+          "inline": "1930"
+        },
+        "float": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "floatTooltip": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "floatSemantic": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "floatGroup": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "floatItem": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "floatTrigger": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "floatBackTop": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "image": {
+          "computed": "1731",
+          "inline": "1731"
+        },
+        "imageTooltip": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "imageGroup": {
+          "computed": "1731",
+          "inline": "1731"
+        },
+        "table": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "tableTooltip": {
+          "computed": "1880",
+          "inline": "1880"
+        },
+        "tableDefault": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "tableTriggerTip": {
+          "computed": "1880",
+          "inline": "1880"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "drawer",
+        "owner": "drawer",
+        "initial": 1530
+      },
+      "initial": {
+        "tour": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tourMask": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tourTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "color": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "colorTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "float": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatSemantic": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatGroup": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatItem": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTrigger": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatBackTop": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "image": {
+          "computed": "1531",
+          "inline": "1531"
+        },
+        "imageTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "imageGroup": {
+          "computed": "1531",
+          "inline": "1531"
+        },
+        "table": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTooltip": {
+          "computed": "1680",
+          "inline": "1680"
+        },
+        "tableDefault": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTriggerTip": {
+          "computed": "1680",
+          "inline": "1680"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "dropdown",
+        "owner": "dropdown",
+        "initial": 1530
+      },
+      "initial": {
+        "tour": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tourMask": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "tourTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "color": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "colorTooltip": {
+          "computed": "1730",
+          "inline": "1730"
+        },
+        "float": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatSemantic": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatGroup": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatItem": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatTrigger": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "floatBackTop": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "image": {
+          "computed": "1531",
+          "inline": "1531"
+        },
+        "imageTooltip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "imageGroup": {
+          "computed": "1531",
+          "inline": "1531"
+        },
+        "table": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTooltip": {
+          "computed": "1680",
+          "inline": "1680"
+        },
+        "tableDefault": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "tableTriggerTip": {
+          "computed": "1680",
+          "inline": "1680"
+        }
+      },
+      "updated": null
+    }
+  ]
+}

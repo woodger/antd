@@ -79,11 +79,16 @@ ConfigProvider.theme.components.Image задаёт zIndexPopup, previewOperation
 previewOperationColor, previewOperationHoverColor, previewOperationColorDisabled
 и progressAnimationDuration. Общая тема применяется к миниатюре и viewer, включая
 ImagePreviewGroup; aliases, algorithms, cssVar prefix/key и вложенные providers
-поддержаны. Preview.zIndex имеет приоритет над токеном, styles.root — над
-переменными миниатюры. Смена темы сохраняет viewer, transforms, current и фокус.
+поддержаны. `styles.root` имеет приоритет над переменными миниатюры.
+Смена темы сохраняет viewer, transforms, current и фокус.
 ProgressAnimationDuration пока доступен только как CSS variable: placeholder.progress
-и его анимация ещё не перенесены. Native dialog stack поверх Modal сохранён;
-числовой React z-index context не добавляется.
+и его анимация ещё не перенесены.
+
+Просмотрщик добавляет 1 к [слою владельца](../theme-context.md#уровни-вложенных-панелей).
+Собственный `preview.zIndex` задаёт слой явно, включая 0. Корневой просмотрщик
+без явного значения использует `zIndexPopup`. Нативные диалоги браузер
+упорядочивает в top layer.
+При `preview.zIndex=0` React 6.6.8 использует CSS-токен Image. Svelte применяет 0.
 
 Из semantic API пока перенесены styles.root у Image и classNames.popup.root у
 Image/ImagePreviewGroup. Остальные slots, placeholder progress/render,
