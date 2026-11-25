@@ -1,11 +1,12 @@
 // Расчёты ширины колонок и оценки строки виртуальной Table до появления DOM.
 // Ant Design 6.6.8 и rc-table 1.11.1/useWidthColumns. MIT, vendor/LICENSE.ant-design.
 import type { AliasToken } from './theme-token.types';
+import type { TableScrollOptions } from './table.types';
 import type { ComponentSize } from './types';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 
-/** Виртуальный body использует числовой размер. CSS-значение выбирает запасной размер. */
-export function tableVirtualDimension(value: string | number | undefined, fallback: number) {
+/** Виртуальное окно использует числовые размеры, остальные значения дают fallback. */
+export function tableVirtualDimension(value: TableScrollOptions['x'], fallback: number) {
   return typeof value === 'number' && Number.isFinite(value) ? Math.max(0, value) : fallback;
 }
 

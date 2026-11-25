@@ -12,7 +12,9 @@ export interface TableRow<Row extends object> {
 
 /** Проверяет уникальность ключей во всём дереве, включая свёрнутые ветки. */
 export function indexTableRows<Row extends object>(
-  data: readonly Row[], rowKey: TableRowKey<Row> | undefined, childrenColumnName: string
+  data: readonly Row[],
+  rowKey: TableRowKey<Row> | PropertyKey | undefined,
+  childrenColumnName: string
 ) {
   const keys = new Set<TableKey>();
   const allRows: TableRow<Row>[] = [];

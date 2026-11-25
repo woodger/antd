@@ -3,6 +3,7 @@ import TableVirtualFixture from './TableVirtualFixture.svelte';
 import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
 import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
 import TableLoadingFixture from './TableLoadingFixture.svelte';
+import TableConfigFixture from './TableConfigFixture.svelte';
 
 /** Рендерит то же начальное окно, с которым клиент начинает гидратацию. */
 export function renderVirtualTableFixture() {
@@ -26,4 +27,9 @@ export function renderLoadingTableFixture() {
   return render(TableLoadingFixture, {
     props: { profileId: 'object-editor', initiallyIdle: true }
   });
+}
+
+/** Рендерит Table с унаследованными ключами и размерами до первого resize. */
+export function renderTableConfigFixture() {
+  return render(TableConfigFixture, { props: { profileId: 'inherit', editor: true } });
 }

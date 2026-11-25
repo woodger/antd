@@ -1843,6 +1843,11 @@
     "root": "table-loading-fixture"
   },
   {
+    "id": "table-config",
+    "module": "./TableConfigFixture.svelte",
+    "root": "table-config-fixture"
+  },
+  {
     "id": "table-sorter",
     "module": "./TableSorterFixture.svelte",
     "root": "table-sorter-fixture"

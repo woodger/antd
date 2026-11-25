@@ -96,7 +96,7 @@
     dataSource: suppliedData,
     columns,
     column,
-    rowKey,
+    rowKey: localRowKey,
     rowClassName,
     onRow,
     onHeaderRow,
@@ -128,7 +128,7 @@
     locale,
     empty,
     components,
-    scroll,
+    scroll: localScroll,
     tableLayout,
     sticky,
     virtual = false,
@@ -147,6 +147,12 @@
   const passiveSpin = { role: 'presentation' as const, 'aria-label': '' };
 
   const config = useConfig();
+  const rowKey = $derived(localRowKey ?? config.table?.rowKey);
+  const scroll = $derived(localScroll ?? config.table?.scroll);
+  const horizontalWidth = $derived.by(() => {
+    const width = scroll?.x;
+    return width === true ? 'auto' : width;
+  });
   let prefix = $derived(config.getPrefixCls('table', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let dropdownPrefix = $derived(config.getPrefixCls('dropdown', dropdownPrefixCls));
@@ -431,7 +437,7 @@
   const bodyElements = $derived(typeof components?.body === 'object'
     && (!virtual || scrollport.active) ? components.body : undefined);
   const bandWidths = $derived(bodyRenderer ? customWidths : bodyLayout?.widths);
-  const bandWidth = $derived(bodyRenderer || !bodyLayout ? scroll?.x
+  const bandWidth = $derived(bodyRenderer || !bodyLayout ? horizontalWidth
     : bodyLayout.width + customGutter);
   const contentStyle = $derived.by(getContentStyle);
   const resolvedLayout = $derived.by(() => {
@@ -440,7 +446,7 @@
       return 'fixed';
     }
 
-    const x = scroll?.x;
+    const x = horizontalWidth;
     const pinned = fixedColumns.some(Boolean);
     if (virtual && scroll?.y === undefined && pinned && tableLayout === undefined) {
       // Без окна строк фиксированная раскладка сохраняет ширины закреплённых колонок.
@@ -1883,8 +1889,9 @@
     'aria-busy': loadingRequested || undefined,
     'aria-rowcount': virtualRowIndices ? visibleRows.length + inlineHeaderCount : undefined
   }}
-  {@const minWidth = virtual ? '100%' : cssSize(scroll?.x)}
-  {@const width = scrollport.tableWidth}
+  {@const autoWidth = scroll?.x === true}
+  {@const minWidth = virtual || autoWidth ? '100%' : cssSize(horizontalWidth)}
+  {@const width = !virtual && autoWidth ? 'auto' : scrollport.tableWidth}
   {#snippet parts()}
     {#if caption}<caption>{caption}</caption>{/if}
     {@render columnGroup(undefined, 0)}

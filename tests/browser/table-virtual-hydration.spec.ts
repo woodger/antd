@@ -154,6 +154,55 @@ test('Table restores the editor from its SSR markup after changing loading', asy
   }
 });
 
+test('Table hydrates the provider key and scroll around its existing editor', async ({ page }) => {
+  const artifacts = new URL('../../.upstream/artifacts/table-config-hydration-', import.meta.url);
+  const cacheDir = await mkdtemp(fileURLToPath(artifacts));
+  let server: ViteDevServer | undefined;
+  try {
+    server = await createServer({
+      configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+      server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+      appType: 'custom', cacheDir
+    });
+    const entry = new URL('./fixtures/table-virtual-hydration.server.ts', import.meta.url);
+    const { renderTableConfigFixture } = await server.ssrLoadModule(fileURLToPath(entry));
+    const { body, head } = renderTableConfigFixture();
+    await page.goto('/select-components-hydration.html?table-config');
+    await page.addScriptTag({ type: 'module', url: '/table-virtual-hydration.client.ts' });
+    const root = page.locator('#root');
+    await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+    await root.evaluate((node, html) => {
+      document.head.insertAdjacentHTML('beforeend', html.head);
+      node.innerHTML = html.body;
+    }, { body, head });
+    const viewport = root.locator('[data-ant-table-part="content"]');
+    const row = viewport.locator('tr[data-row-key="provider-0"]');
+    const editor = row.getByRole('textbox', { name: 'Editor 0', exact: true });
+    const initial = await editor.elementHandle();
+    await expect(viewport).toHaveCSS('max-height', '110px');
+    await editor.fill('SSR provider draft');
+    await editor.evaluate((input: HTMLInputElement) => input.setSelectionRange(3, 8));
+
+    await root.dispatchEvent('hydrate-table-virtual');
+    await expect(root).toHaveAttribute('data-hydrated', 'true');
+    await expect(viewport).toHaveCSS('max-height', '110px');
+    await expect(editor).toBeFocused();
+    await root.getByRole('button', { name: 'Resize from provider' }).dispatchEvent('click');
+
+    await expect(viewport).toHaveCSS('max-height', '150px');
+    await expect(editor).toBeFocused();
+    await expect(editor).toHaveValue('SSR provider draft');
+    expect(await editor.evaluate((node, before) => node === before, initial)).toBe(true);
+    expect(await editor.evaluate((input: HTMLInputElement) => [
+      input.selectionStart, input.selectionEnd
+    ])).toEqual([3, 8]);
+  }
+  finally {
+    await server?.close();
+    await rm(cacheDir, { recursive: true, force: true });
+  }
+});
+
 test('virtual Table hydrates the focused editor before changing the visible window', async ({ page }) => {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-table-virtual-'));
   let server: ViteDevServer | undefined;

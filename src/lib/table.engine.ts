@@ -25,7 +25,7 @@ import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from '.
 export function getTableData<Row extends object>(
   dataSource: readonly Row[],
   columns: TableColumnsType<Row>,
-  rowKey?: TableRowKey<Row>,
+  rowKey?: TableRowKey<Row> | PropertyKey,
   sorting?: TableSorter | readonly TableSortState[] | null,
   filters?: Readonly<Record<string, readonly TableFilterValue[]>>,
   mode: TableMode = 'client',

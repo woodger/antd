@@ -329,8 +329,12 @@ export type TableSemantic<Row extends object, Slots extends TableClassNameSlots 
 export type TableConfigSemantic<Slots extends TableClassNameSlots = TableSemanticSlots>
   = Slots | (<Row extends object>(info: { props: TableProps<Row>; }) => Slots | undefined);
 
-/** Общие настройки оформления и переключателя раскрытия дочерних таблиц. */
+/** Общие настройки ключей, прокрутки и оформления таблиц провайдера. */
 export interface TableConfig {
+  /** Поле или функция для записей таблиц, которые наследуют этот ключ. */
+  rowKey?: PropertyKey | { resolve(record: object): TableKey; }['resolve'];
+  /** Значение целиком используется при отсутствии локального Table.scroll. */
+  scroll?: TableScrollOptions;
   expandable?: Pick<TableExpandable<object>, 'expandIcon'>;
   class?: string;
   style?: string;
@@ -350,7 +354,8 @@ export interface TablePaginationConfig extends PaginationProps {
 
 /** Размеры области прокрутки и сброс после пользовательского изменения данных. */
 export interface TableScrollOptions {
-  x?: number | string;
+  /** true задаёт автоматическую ширину по содержимому с минимумом 100%. */
+  x?: number | string | true;
   y?: number | string;
   /** Сбрасывает вертикальную прокрутку после сортировки, фильтра и пагинации. */
   scrollToFirstRowOnChange?: boolean;

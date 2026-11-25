@@ -24,6 +24,8 @@
 
 ### Added
 
+- Table наследует `rowKey` и `scroll` из ConfigProvider. `scroll.x` принимает `true`.
+
 - Table принимает параметры Spin в `loading`, включая задержку, описание и прогресс.
 
 - Table поддерживает замену элементов таблицы, шапки и тела через `components`.

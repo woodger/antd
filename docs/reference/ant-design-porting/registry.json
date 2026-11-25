@@ -19699,6 +19699,24 @@
           "note": "Два одинаковых UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 10 профилей дают 34 состояния и 10 SSR-снимков. Отдельный профиль видимой полосы даёт два состояния с gutter 15 px. Snippet получает корневые записи текущей страницы. Проверены scroll.y, sticky, showHeader, пустое тело, приоритет встроенного virtual, DOM scrollTo по позиции и ключу, offset и index, прямая передача запроса proxy handle, LTR/RTL, синхронизация колёсика, закреплённых итогов и положения владельца. Применение сортировки и страницы следует scrollToFirstRowOnChange. Svelte читает фактический DOM gutter и сохраняет caption в видимой шапке. Строгая гидратация подтверждает DOM identity, ввод и фокус."
         },
         {
+          "id": "provider-row-key-scroll",
+          "title": "Ключи строк и прокрутка из ConfigProvider.table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-tree.engine.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-config-reference.json",
+            "tests/browser/table-config.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-config.ssr.test.ts",
+            "tests/package/table-config.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 дали 31 состояние и 17 SSR-снимков. Проверены поле и функция rowKey, локальное переопределение, замена scroll целиком, вложенный ConfigProvider, CSS-размеры, RTL и scrollTo по эффективному ключу. true в scroll.x включает автоматическую ширину с минимумом 100%. Нативная обычная таблица сохраняет позицию до явного scrollToFirstRowOnChange; проверены значения true и false. Изменения размеров и строгая гидратация сохраняют редактор и фокус."
+        },
+        {
           "id": "loading-spin",
           "title": "Настройки Spin и пустое состояние при загрузке Table",
           "state": "supported",

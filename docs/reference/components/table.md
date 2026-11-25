@@ -59,6 +59,21 @@ Fixture `?fixture=table-column-classes`.
 пустой список колонок вызывают явную ошибку. Позиции строк не используются как
 идентификаторы выбора.
 
+`ConfigProvider.table` задаёт общие `rowKey` и `scroll`. Локальный `rowKey`
+имеет приоритет. Локальный `scroll` заменяет объект провайдера целиком,
+включая пустой объект `{}`. Вложенный провайдер использует родительский
+объект `table`, пока не получит собственный.
+
+```svelte
+<ConfigProvider table={{ rowKey: 'id', scroll: { x: true, y: 320 } }}>
+  <Table {dataSource} {columns} />
+</ConfigProvider>
+```
+
+[Эталон](../../../tests/browser/fixtures/ant-design-table-config-reference.json)
+· [Chromium](../../../tests/browser/table-config.spec.ts)
+· [SSR](../../../tests/package/table-config.ssr.test.ts)
+
 Скалярная сортировка задаётся через `sorter: { columnKey, order } | null` и
 поддерживает привязку. Нажатие заголовка по умолчанию переключает
 `ascend → descend → null`. Плоские данные фильтруются перед сортировкой,
@@ -100,8 +115,10 @@ disabled-строки при расчёте checked/indeterminate и отклю�
 `disabled` наследуется из ConfigProvider и может быть явно переопределён.
 `empty` заменяет текст пустого состояния snippet.
 Размер наследуется из `componentSize`; доступны `bordered`, `caption`,
-`aria-label`, `class` и `style`. `scroll.x` задаёт минимальную ширину таблицы:
-горизонтальная прокрутка остаётся внутри фокусируемого контейнера.
+`aria-label`, `class` и `style`. Число или CSS-строка в `scroll.x` задаёт
+минимальную ширину таблицы. При `scroll.x: true` ширина автоматическая с
+минимумом 100% ширины контейнера. Горизонтальная прокрутка остаётся внутри
+фокусируемой области.
 
 ## Загрузка
 
