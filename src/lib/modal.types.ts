@@ -1,16 +1,19 @@
 import type { Snippet } from 'svelte';
 import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
+import type { GridResponsive } from './grid.types';
 import type { GetContainer } from './types';
 
 export type ModalContent = string | number | boolean | null | Snippet;
 export type ModalMask = DrawerMask;
 export type ModalMaskConfig = DrawerMaskConfig;
 export type ModalFocusableConfig = DrawerFocusableConfig;
+export type ModalWidth = number | string | GridResponsive<number | string>;
 
-/** Унаследованные настройки маски и фокуса из ConfigProvider.modal. */
+/** Унаследованные настройки маски, фокуса и размещения из ConfigProvider.modal. */
 export interface ModalConfig {
   mask?: ModalMask;
   focusable?: ModalFocusableConfig;
+  centered?: boolean;
 }
 
 /** Модальный native dialog с управлением open и snippets содержимого/footer. */
@@ -27,8 +30,12 @@ export interface ModalProps {
   /** Явный id перекрывает автоматически связанный title. */
   'aria-labelledby'?: string;
   footer?: Snippet | null;
-  /** @defaultValue 520 */
-  width?: number;
+  /** Пиксели, CSS-длина или значения по breakpoint Grid. @defaultValue 520 */
+  width?: ModalWidth;
+  /** Высота панели в пикселях или CSS-длина. */
+  height?: number | string;
+  /** False размещает панель сверху, true центрирует. Наследуется из ConfigProvider.modal. */
+  centered?: boolean;
   /** Числовой слой диалога и база для вложенных popup. */
   zIndex?: number;
   /** @defaultValue true */

@@ -23727,6 +23727,7 @@
       ],
       "dependencies": [
         "config-provider",
+        "grid",
         "space"
       ],
       "upstreamPackages": [
@@ -23808,7 +23809,12 @@
         "tests/browser/fixtures/ant-design-modal-lifecycle-reference.json",
         "tests/browser/modal-lifecycle.spec.ts",
         "tests/browser/modal-lifecycle-hydration.spec.ts",
-        "tests/package/modal-lifecycle.ssr.test.ts"
+        "tests/package/modal-lifecycle.ssr.test.ts",
+        "src/lib/modal-layout.engine.ts",
+        "tests/browser/fixtures/ant-design-modal-layout-reference.json",
+        "tests/browser/modal-layout.spec.ts",
+        "tests/browser/modal-layout-hydration.spec.ts",
+        "tests/package/modal-layout.ssr.test.ts"
       ],
       "features": [
         {
@@ -23967,6 +23973,25 @@
           "note": "Два совпавших прогона UMD Ant Design 6.6.8 для 20 профилей и двух update autoFocusButton. Булева и объектная маска, blur, closable, локальные и provider поля, trap, focusTriggerAfterClose и scrollLock. Без видимой маски сохраняются область клика и блокировка прокрутки по умолчанию. Подтверждение наследует enabled/blur, closable по умолчанию false и включает autofocus кнопки OK или Cancel. Native сохраняет прежнюю модальность и scroll lock в explicit host, а свободный фокус корректно отражается в aria-modal. Проверены живые переходы без потери DOM, клавиатура в стеке, SSR и гидратация."
         },
         {
+          "id": "modal-layout",
+          "title": "Размеры, ширина по брейкпоинтам Grid и положение панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/Modal.svelte",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/modal.types.ts",
+            "src/lib/modal-confirm.types.ts",
+            "src/lib/modal-layout.engine.ts",
+            "tests/browser/fixtures/ant-design-modal-layout-reference.json",
+            "tests/browser/modal-layout.spec.ts",
+            "tests/browser/modal-layout-hydration.spec.ts",
+            "tests/package/modal-layout.ssr.test.ts"
+          ],
+          "note": "Два прогона официального UMD по двенадцати профилям проверили числовую и CSS-ширину и высоту, ноль, диапазон xs–xxxl, разреженные карты, пользовательские пороги темы, локальный prefix и override центрирования. Подтверждение поддерживает CSS-длины и сохраняет fallback 416 px при нуле. Svelte сохраняет нативное центрирование и прежний горизонтальный отступ обычного числового Modal без centered. Явный centered=false повторяет верхний отступ эталона и ограничивает высоту панели видимой областью. Живые изменения и гидратация сохраняют DOM, фокус и выделение."
+        },
+        {
           "id": "modal-visibility-lifecycle",
           "title": "Монтаж, штатное движение и завершение показа Modal",
           "state": "supported",
@@ -24003,7 +24028,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender ещё не перенесены. Source centering/position, mousePosition, transitionName и maskTransitionName требуют отдельного аудита относительно согласованной native реализации."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender, оформление wrapper и root ещё не перенесены. MousePosition, transitionName и maskTransitionName требуют отдельного аудита."
         },
         {
           "id": "native-zero-title",

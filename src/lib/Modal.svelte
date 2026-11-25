@@ -9,6 +9,8 @@
   import { isolateFormItemStyle } from './form-item-status';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { getModalLayout } from './modal-layout.engine';
+  import { serializeInlineStyleLayers } from './inline-style.engine';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
@@ -32,6 +34,8 @@
     'aria-labelledby': ariaLabelledBy,
     footer,
     width = 520,
+    height,
+    centered,
     zIndex,
     closable = true,
     keyboard = true,
@@ -72,6 +76,11 @@
   let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Modal');
   const designTheme = useDesignTokenContext();
+  const placement = $derived(centered ?? config.modal?.centered);
+  const layout = $derived(getModalLayout(
+    width, height, placement, componentPrefix, designTheme.state.token
+  ));
+  const style = $derived(serializeInlineStyleLayers([componentTheme.style, layout.variables]));
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
   const watermarkPanel = useWatermarkPanel();
@@ -95,7 +104,7 @@
     getPopupContainer: config.getPopupContainer,
     resolveWhenClosed: renderDialog,
     portalByDefault: !interaction.native && (open || presented),
-    style: componentTheme.style,
+    style,
     onPointerDown: event => {
       backdropPointer = event.button === 0 && isBackdrop(event) ? event.pointerId : undefined;
     },
@@ -283,15 +292,29 @@
     overflow: hidden;
   }
   .ant-svelte-dialog { max-width: calc(100vw - 32px); max-height: calc(100dvh - 48px); padding: 0; border: 0; overflow: visible; background: transparent; color: var(--ant-color-text); }
-  .ant-svelte-dialog { z-index: var(--ant-z-index-popup-base, 1000); }
+  .ant-svelte-dialog {
+    --ant-svelte-modal-offset: 24px;
+    z-index: var(--ant-z-index-popup-base, 1000);
+  }
+  .ant-svelte-dialog[data-ant-modal-managed] { position: fixed; inset: 0; margin: auto; }
+  .ant-svelte-dialog[data-ant-modal-layout] { max-width: var(--ant-svelte-modal-max-width); }
+  .ant-svelte-dialog[data-ant-modal-top] {
+    --ant-svelte-modal-offset: min(var(--ant-svelte-modal-top, 100px), max(0px, 100dvh - 96px));
+    inset-block-start: var(--ant-svelte-modal-offset);
+    inset-block-end: auto;
+    margin-block: 0;
+    max-height: calc(100dvh - var(--ant-svelte-modal-offset) - 24px);
+  }
   .ant-svelte-dialog::backdrop { background: var(--ant-color-bg-mask); }
   .ant-svelte-dialog[data-ant-modal-mask-blur]::backdrop,
   [data-ant-modal-mask][data-ant-modal-mask-blur] { backdrop-filter: blur(4px); }
-  .ant-svelte-dialog[data-ant-modal-managed] { position: fixed; inset: 0; margin: auto; }
   [data-ant-modal-backdrop] { position: fixed; inset: 0; z-index: -1; }
   [data-ant-modal-mask] { background: var(--ant-color-bg-mask); }
   [data-ant-modal-panel] { top: auto; max-width: none; width: 100%; margin: 0; padding: 0; }
-  [data-ant-modal-container] { max-height: calc(100dvh - 48px); overflow: auto; }
+  [data-ant-modal-container] {
+    max-height: calc(100dvh - var(--ant-svelte-modal-offset, 24px) - 24px);
+    overflow: auto;
+  }
   [data-ant-modal-title] { padding-inline-end: 32px; }
   [data-ant-modal-close] { display: flex; align-items: center; justify-content: center; }
 </style>
@@ -303,16 +326,24 @@
 
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if renderDialog}{#key container.key}<dialog
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if layout.css && layout.scope}<ThemeScopeStyle css={layout.css} scope={layout.scope} />{/if}{#if renderDialog}{#key container.key}<dialog
   data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix}
+  data-ant-modal-layout={layout.scope}
+  data-ant-modal-top={placement === false || undefined}
   data-ant-modal-managed={!interaction.native || undefined}
   data-ant-modal-mask-blur={interaction.mask.enabled && interaction.mask.blur || undefined}
   data-ant-dialog-unlocked={scrollUnlocked || undefined}
   bind:this={dialog}
   tabindex={interaction.native ? undefined : -1}
-  class={['ant-svelte-dialog ant-modal-css-var', componentTheme.className, className]}
-  style={componentTheme.style}
-  style:width={`${width}px`}
+  class={[
+    'ant-svelte-dialog ant-modal-css-var',
+    componentTheme.className,
+    placement && `${componentPrefix}-centered`,
+    className
+  ]}
+  {style}
+  style:width={layout.width}
+  style:height={layout.height}
   style:z-index={layer.zIndex}
   dir={config.direction}
   aria-label={ariaLabel}
@@ -327,7 +358,9 @@
     data-ant-modal-mask={interaction.mask.enabled || undefined}
     data-ant-modal-mask-blur={interaction.mask.blur || undefined}
     aria-hidden="true" bind:this={backdrop}></div>{/if}
-  <div data-ant-modal-panel data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix} class={componentPrefix}>
+  <div data-ant-modal-panel data-ant-modal-prefix={componentPrefix}
+    data-ant-modal-root-prefix={rootPrefix} class={componentPrefix}
+    style:height={layout.height === undefined ? undefined : '100%'}>
     <div data-ant-modal-container class={`${componentPrefix}-container`} {@attach watermarkPanel}>
       {#if closable}
         <button type="button" data-ant-modal-close class={`${componentPrefix}-close`} disabled={confirmLoading} aria-label={config.locale.closeText} onclick={cancel}>

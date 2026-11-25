@@ -103,6 +103,8 @@
   prefixCls={componentPrefix}
   open={confirmation.open}
   width={options.width || 416}
+  height={options.height}
+  centered={options.centered}
   {zIndex}
   closable={options.closable ?? false}
   keyboard={options.keyboard}
