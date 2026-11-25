@@ -240,6 +240,43 @@ Escape и фон управляются через `keyboard` и `mask.closable`
 · [SSR и типы](../../../tests/package/modal-actions.ssr.test.ts)
 · [Гидратация](../../../tests/browser/modal-actions-hydration.spec.ts).
 
+## Семантические части и оболочка
+
+`classNames` и `styles` задают оформление слотов `root`, `wrapper`, `mask`,
+`container`, `close`, `header`, `title`, `body` и `footer`. Можно передать карту
+или функцию `({ props }) => карта`. Функция получает текущие параметры Modal,
+в том числе ширину, состояние маски, настройки фокуса и zIndex. Классы
+`ConfigProvider.modal` и экземпляра складываются. Строки CSS-деклараций
+экземпляра идут после строк провайдера. `ConfigProvider.modal.class` оформляет
+внутреннюю панель, а `style` экземпляра дополняет `ConfigProvider.modal.style`.
+
+Слоты `root` и `wrapper` оформляют общий нативный `<dialog>`. На него
+попадают также `class`, `rootClassName` и `wrapClassName`.
+`styles.root` дополняет `rootStyle`, затем применяется оформление `wrapper`.
+В React 6.6.8 стиль корня берётся из `styles.root`. Svelte применяет и напрямую
+переданный `rootStyle`. Ширина и высота принадлежат нативной оболочке.
+
+`wrapProps`, `maskProps` и `bodyProps` принимают нативные атрибуты и
+обработчики соответствующих элементов. Явные `class` и `style` этих props
+заменяют оформление соответствующего слота. Управление `open`, модальностью
+и lifecycle остаётся у Modal. `wrapProps.onclick` и `wrapProps.onmousedown`
+передают обработку закрытия по фону владельцу. Настройка слота маски создаёт
+DOM-элемент под панелью. По умолчанию маска рисует фон, а клики принимает оболочка.
+Модальность остаётся у нативного dialog.
+
+`modalRender` получает штатный контейнер как snippet. Он может обернуть его
+или отрисовать собственное содержимое. `bind:panelRef` получает
+`HTMLDialogElement` на время жизни панели. В контекстном подтверждении
+`panelRef` принимает callback и передаёт ему `undefined` при снятии ссылки.
+У подтверждения слот `body` оформляет видимое содержимое, а `bodyProps`
+относятся к его структурному контейнеру. Подтверждение сохраняет единственный
+заголовок. Слоты `header` и `title` оформляют заголовок обычного Modal.
+
+[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-semantics-reference.json)
+· [Chromium](../../../tests/browser/modal-semantics.spec.ts)
+· [SSR и типы](../../../tests/package/modal-semantics.ssr.test.ts)
+· [Гидратация](../../../tests/browser/modal-semantics-hydration.spec.ts).
+
 ## Контекстные подтверждения Modal
 
 `createModal()` и единственный `ModalHolder` заменяют React `Modal.useModal()`.
@@ -301,7 +338,7 @@ Destroy и удаление holder завершают ожидающие handles
 исключение записано и не воспроизводится. Асинхронный rejection использует
 поведение исходного await-режима, без unhandled rejection. Прежние Native
 подписи кнопок из locale.okText/cancelText сохранены. Реестр отслеживает
-глобальные static methods, semantic slots и modalRender.
+глобальные static methods.
 [модель](../../../src/lib/modal.model.test.ts),
 [браузер](../../../tests/browser/modal-controller.spec.ts),
 [SSR и декларации](../../../tests/package/modal-controller.ssr.test.ts).

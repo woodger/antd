@@ -43,11 +43,12 @@ function getDurationMs(value: string, fallback: number): number {
   return Number.isFinite(milliseconds) ? milliseconds : fallback;
 }
 
-/** Штатные эффекты без transitionName сохраняют нативный ::backdrop и разворот WAAPI. */
+/** Штатные эффекты используют WAAPI для панели и текущей поверхности маски. */
 function createModalStockMotion(
   dialog: HTMLDialogElement,
   view: Window & typeof globalThis,
-  callbacks: ModalMotionCallbacks
+  callbacks: ModalMotionCallbacks,
+  getMask: () => HTMLElement | undefined
 ) {
   const panel = dialog.querySelector<HTMLElement>(':scope > [data-ant-modal-panel]');
   if (!panel) {
@@ -97,8 +98,10 @@ function createModalStockMotion(
       return undefined;
     }
 
-    const native = dialog.matches(':modal');
-    const node = native ? dialog : dialog.querySelector(':scope > [data-ant-modal-mask]');
+    const mask = getMask();
+    const surface = mask?.hasAttribute('data-ant-modal-mask') ? mask : undefined;
+    const native = !surface && dialog.matches(':modal');
+    const node = native ? dialog : surface;
     if (!node || native && !('pseudoElement' in view.KeyframeEffect.prototype)) {
       return undefined;
     }
@@ -197,13 +200,19 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
   let driver: Driver | undefined;
   let requested: boolean | undefined;
 
+  /** Маска с пользовательским z-index остаётся внутри своего слоя. */
+  function getMask() {
+    const selector = ':scope > [data-ant-modal-backdrop], :scope > [data-ant-modal-mask-layer] > [data-ant-modal-backdrop]';
+    return dialog.querySelector<HTMLElement>(selector) ?? undefined;
+  }
+
   /** Новый набор имён в открытом Modal применяется к следующей смене видимости. */
   function sync(open: boolean, options: ModalMotionSettings) {
     if (!driver || (requested !== open && driver.named !== options.named)) {
       driver?.connection.destroy();
       driver = options.named
-        ? { named: true, connection: createModalNamedMotion(dialog, view, requested, callbacks) }
-        : { named: false, connection: createModalStockMotion(dialog, view, callbacks) };
+        ? { named: true, connection: createModalNamedMotion(dialog, view, requested, callbacks, getMask) }
+        : { named: false, connection: createModalStockMotion(dialog, view, callbacks, getMask) };
     }
     requested = open;
     driver.connection.sync(open, options);

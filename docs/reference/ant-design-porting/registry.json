@@ -23837,7 +23837,12 @@
         "tests/browser/fixtures/ant-design-modal-actions-reference.json",
         "tests/browser/modal-actions.spec.ts",
         "tests/browser/modal-actions-hydration.spec.ts",
-        "tests/package/modal-actions.ssr.test.ts"
+        "tests/package/modal-actions.ssr.test.ts",
+        "src/lib/modal-semantic.engine.ts",
+        "tests/browser/fixtures/ant-design-modal-semantics-reference.json",
+        "tests/browser/modal-semantics.spec.ts",
+        "tests/browser/modal-semantics-hydration.spec.ts",
+        "tests/package/modal-semantics.ssr.test.ts"
       ],
       "features": [
         {
@@ -24097,12 +24102,31 @@
           "note": "Два независимых прогона 41 профиля UMD 6.6.8 проверяют okType, подписи, button props, порядок действий, футер, aria и disabled закрытия, настройки иконок и локальные close callbacks. Svelte использует snippets для штатной группы и отдельных кнопок, сохраняет вызовы onOk/onCancel без аргумента у обычного Modal и разрешает handle при запросе закрытия. Сохранены нативный disabled при loading и прежнее наследование componentDisabled у OK обычного Modal. Проверены update действий и фокуса, ссылка с нативным событием, повторное нажатие при Promise, SSR и гидратация."
         },
         {
+          "id": "modal-semantic-dom",
+          "title": "Семантические слоты, атрибуты оболочки, modalRender и panelRef",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/Modal.svelte",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/modal-semantic.engine.ts",
+            "src/lib/modal.types.ts",
+            "src/lib/modal-confirm.types.ts",
+            "tests/browser/fixtures/ant-design-modal-semantics-reference.json",
+            "tests/browser/modal-semantics.spec.ts",
+            "tests/browser/modal-semantics-hydration.spec.ts",
+            "tests/package/modal-semantics.ssr.test.ts"
+          ],
+          "note": "10 профилей в двух прогонах UMD 6.6.8 и два замера физического клика по фону. Семантические classNames/styles объединяют слои провайдера и экземпляра, поддерживают функции и update. wrapProps, maskProps и bodyProps задают нативные атрибуты с приоритетом class/style. В Svelte root и wrapper оформляют HTMLDialogElement, а ConfigProvider.modal.class/style и style экземпляра оформляют внутреннюю панель. Прямой rootStyle применяется до styles.root. panelRef смотрит на элемент диалога и очищается с панелью. modalRender получает snippet штатного контейнера. Слот body подтверждения оформляет видимое содержимое. Svelte сохраняет один заголовок, React выводит скрытые header/title в оболочке. Проверены SSR, hydration, фокус, удаление и повторное открытие, кнопки при физической маске и клики по фону."
+        },
+        {
           "id": "extended-modal-api",
-          "title": "Global static API, semantic slots и настройка DOM-оболочки",
+          "title": "Глобальные статические методы Modal",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Остаются global static methods без holder, semantic classNames/styles, class/style из ConfigProvider.modal, modalRender, panelRef и параметры отдельных DOM-частей."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Остаются глобальные вызовы без holder и destroyAll, а также аудит специальных параметров контроллера."
         },
         {
           "id": "native-zero-title",

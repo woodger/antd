@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { AriaAttributes, AriaRole } from 'svelte/elements';
+import type { AriaAttributes, AriaRole, HTMLAttributes } from 'svelte/elements';
 import type { ButtonElementProps, ButtonType } from './button.types';
 import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
 import type { GridResponsive } from './grid.types';
@@ -12,6 +12,36 @@ export type ModalFocusableConfig = DrawerFocusableConfig;
 export type ModalWidth = number | string | GridResponsive<number | string>;
 export type ModalButtonProps = Omit<ButtonElementProps<string | undefined>, 'nativeElement'>;
 export type ModalOkType = ButtonType | 'danger';
+
+export type ModalSemanticName =
+  'root' | 'wrapper' | 'mask' | 'container' | 'close' | 'header' | 'title' | 'body' | 'footer';
+export type ModalSemanticSlots = Partial<Record<ModalSemanticName, string>>;
+
+/** Карта классов или CSS-деклараций и вариант с актуальными props. */
+export type ModalSemantic = ModalSemanticSlots
+  | ((info: { props: ModalProps; }) => ModalSemanticSlots | undefined);
+
+/** Атрибуты нативной оболочки. Состояние модальности и lifecycle принадлежат Modal. */
+export type ModalWrapProps = Omit<HTMLAttributes<HTMLDialogElement>,
+  'children' | 'inert' | 'aria-hidden' | 'aria-modal' | 'oncancel' | 'onclose'>;
+export type ModalPartProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+
+/** Оформление и расширение DOM обычного Modal и подтверждений. */
+export interface ModalSurfaceProps {
+  rootClassName?: string;
+  rootStyle?: string;
+  wrapClassName?: string;
+  /** Inline CSS панели внутри нативной оболочки. */
+  style?: string;
+  classNames?: ModalSemantic;
+  /** CSS-декларации каждого слота задаются строкой. */
+  styles?: ModalSemantic;
+  wrapProps?: ModalWrapProps;
+  bodyProps?: ModalPartProps;
+  maskProps?: ModalPartProps;
+  /** Получает штатный контейнер для обёртки или полной замены. */
+  modalRender?: Snippet<[content: Snippet]>;
+}
 
 /** Настроенные кнопки футера с теми же действиями, что и при стандартной отрисовке. */
 export interface ModalFooterButtons {
@@ -54,10 +84,14 @@ export interface ModalConfig {
   successIcon?: ModalContent;
   errorIcon?: ModalContent;
   warningIcon?: ModalContent;
+  class?: string;
+  style?: string;
+  classNames?: ModalSemantic;
+  styles?: ModalSemantic;
 }
 
 /** Модальный native dialog с управлением open и snippets содержимого/footer. */
-export interface ModalProps {
+export interface ModalProps extends ModalSurfaceProps {
   /** Локальный префикс Modal и частей; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
   /** Поддерживает bind:open. */
@@ -120,5 +154,7 @@ export interface ModalProps {
    * Global getter вызывается без trigger.
    */
   getContainer?: GetContainer;
+  /** Bind:panelRef получает нативный dialog на время жизни панели. */
+  panelRef?: HTMLDialogElement;
   class?: string;
 }

@@ -1007,7 +1007,8 @@ export type {
 export type {
   ModalProps, ModalContent, ModalConfig, ModalMask, ModalMaskConfig, ModalFocusableConfig, ModalWidth,
   ModalMousePosition, ModalButtonProps, ModalOkType, ModalFooterButtons, ModalFooter,
-  ModalClosableConfig, ModalClosable
+  ModalClosableConfig, ModalClosable, ModalSemanticName, ModalSemanticSlots, ModalSemantic,
+  ModalWrapProps, ModalPartProps, ModalSurfaceProps
 } from './modal.types';
 export type { ConfigProviderProps } from './ConfigProvider.svelte';
 export type {

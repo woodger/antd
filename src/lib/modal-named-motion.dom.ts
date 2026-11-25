@@ -56,7 +56,8 @@ export function createModalNamedMotion(
   dialog: HTMLDialogElement,
   view: Window,
   initial: boolean | undefined,
-  callbacks: ModalMotionCallbacks
+  callbacks: ModalMotionCallbacks,
+  getMask: () => HTMLElement | undefined
 ) {
   const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   const panel = createModalCssSurface(view, getPanel, (state, commit) =>
@@ -70,11 +71,6 @@ export function createModalNamedMotion(
   /** Панель может размонтироваться раньше маски при destroyOnHidden. */
   function getPanel() {
     return dialog.querySelector<HTMLElement>(':scope > [data-ant-modal-panel]') ?? undefined;
-  }
-
-  /** Для именованной маски вместо ::backdrop используется реальный DOM-узел. */
-  function getMask() {
-    return dialog.querySelector<HTMLElement>(':scope > [data-ant-modal-backdrop]') ?? undefined;
   }
 
   /** Измеряет неанимированный кадр, используя точку, сохранённую при запросе открытия. */

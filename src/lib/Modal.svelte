@@ -1,7 +1,7 @@
 <script lang="ts">
   // Удерживает native dialog до завершения панели. Именованная маска может доиграть после
   // освобождения модальности. Содержимое при loading заменяется независимо от видимости.
-  import { flushSync, tick, untrack } from 'svelte';
+  import { flushSync, tick, untrack, type Snippet } from 'svelte';
   import { on } from 'svelte/events';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -12,6 +12,8 @@
   import { useDesignTokenContext } from './theme-context.svelte';
   import { resolveModalClose } from './modal-close.engine';
   import { getModalLayout } from './modal-layout.engine';
+  import { resolveModalPart, resolveModalSemantics, type ModalSemanticBody }
+    from './modal-semantic.engine';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
@@ -31,8 +33,16 @@
   export type ModalProps = ModalComponentProps;
 
   let {
-    prefixCls: customizePrefixCls,
     open = $bindable(false),
+    panelRef = $bindable(),
+    _renderSemanticContent,
+    ...props
+  }: ModalProps & {
+    /** @internal Подтверждение применяет body slot к собственному содержимому. */
+    _renderSemanticContent?: Snippet<[body: ModalSemanticBody]>;
+  } = $props();
+  let {
+    prefixCls: customizePrefixCls,
     title,
     children,
     'aria-label': ariaLabel,
@@ -65,8 +75,16 @@
     afterClose,
     afterOpenChange,
     getContainer,
-    class: className = ''
-  }: ModalProps = $props();
+    class: className = '',
+    rootClassName,
+    rootStyle,
+    wrapClassName,
+    wrapProps,
+    bodyProps,
+    maskProps,
+    modalRender,
+    style: contentStyle
+  } = $derived(props);
 
   const config = useConfig();
   isolateFormItemStyle();
@@ -81,6 +99,7 @@
       mask: mergedMask,
       trap: focus.trap,
       restoreFocus,
+      focusTriggerAfterClose: focus.restoreFocus,
       native: focus.trap && restoreFocus,
       autoFocus: true
     };
@@ -94,13 +113,44 @@
   const layout = $derived(getModalLayout(
     width, height, placement, componentPrefix, designTheme.state.token
   ));
-  const style = $derived(serializeInlineStyleLayers([componentTheme.style, layout.variables]));
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
+  const { classes, styles }: ReturnType<typeof resolveModalSemantics> = $derived.by(() => {
+    const provider = config.modal;
+    if (!provider?.classNames && !provider?.styles && !props.classNames && !props.styles) {
+      return { classes: {}, styles: {} };
+    }
+
+    return resolveModalSemantics({
+      ...props,
+      open,
+      width,
+      mask: interaction.mask.enabled,
+      focusable: {
+        ...provider?.focusable, ...focusable,
+        trap: interaction.trap, focusTriggerAfterClose: interaction.focusTriggerAfterClose
+      },
+      zIndex: layer.zIndex
+    }, provider);
+  });
+  const wrapper = $derived(resolveModalPart<HTMLDialogElement>(
+    wrapProps, [wrapClassName, classes.wrapper], serializeInlineStyleLayers([layer.style, styles.wrapper])
+  ));
+  const dialogStyle = $derived(serializeInlineStyleLayers([
+    componentTheme.style, rootStyle, styles.root, wrapper.style, layout.variables
+  ]));
+  const dialogLabel = $derived(ariaLabel ?? wrapper.attributes['aria-label']);
+  const dialogLabelledBy = $derived(ariaLabelledBy ?? wrapper.attributes['aria-labelledby']);
+  const semanticBody = $derived({ className: classes.body, style: styles.body });
+  const body = $derived(resolveModalPart<HTMLDivElement>(
+    bodyProps, [`${componentPrefix}-body`, !_renderSemanticContent && classes.body],
+    _renderSemanticContent ? undefined : styles.body
+  ));
   const watermarkPanel = useWatermarkPanel();
   const generatedId = $props.id();
   const titleId = `ant-modal-${generatedId}`;
-  let hasTitle = $derived(title !== undefined && title !== null && title !== false && title !== '');
+  let hasTitle = $derived(!_renderSemanticContent
+    && title !== undefined && title !== null && title !== false && title !== '');
   let dialog = $state<HTMLDialogElement>();
   let backdrop = $state<HTMLDivElement>();
   let backdropPointer: number | undefined;
@@ -126,11 +176,27 @@
     maskTransitionName,
     mousePosition
   });
-  const namedBackdrop = $derived((namedMotion || Boolean(maskMotion.phase))
+  const cssMask = $derived(namedMotion || Boolean(maskMotion.phase));
+  const customMask = $derived(Boolean(classes.mask || styles.mask || maskProps));
+  const elementBackdrop = $derived((cssMask || customMask)
     && (open || presented || maskLeaving));
-  const backdropVisible = $derived(namedBackdrop
+  const backdropVisible = $derived(cssMask && elementBackdrop
     ? (open && interaction.mask.enabled) || maskLeaving
     : interaction.mask.enabled);
+  const semanticMaskStyle = $derived(serializeInlineStyleLayers([
+    customMask ? layer.style : undefined, styles.mask
+  ]));
+  const maskPart = $derived(resolveModalPart<HTMLDivElement>(
+    maskProps, [elementBackdrop && `${componentPrefix}-mask`, classes.mask], semanticMaskStyle
+  ));
+  const maskStyle = $derived(serializeInlineStyleLayers([
+    maskMotion.style, backdropVisible ? maskPart.style : undefined
+  ]));
+  const panelStyle = $derived(serializeInlineStyleLayers([
+    panelMotion.style, config.modal?.style, contentStyle,
+    transformOrigin ? `transform-origin:${transformOrigin}` : undefined,
+    layout.height === undefined ? undefined : 'height:100%'
+  ]));
   const stockZoom = $derived(transitionName === undefined || transitionName === `${rootPrefix}-zoom`);
   const stockFade = $derived(maskTransitionName === undefined || maskTransitionName === `${rootPrefix}-fade`);
   const zoomFrame = $derived(stockZoom ? stockFrame(panelMotion) : undefined);
@@ -147,9 +213,10 @@
     getPopupContainer: config.getPopupContainer,
     resolveWhenClosed: renderDialog,
     portalByDefault: !interaction.native && (open || presented || maskLeaving),
-    style,
+    style: dialogStyle,
     onPointerDown: event => {
-      backdropPointer = event.button === 0 && isBackdrop(event) ? event.pointerId : undefined;
+      backdropPointer = event.button === 0 && isBackdrop(event)
+        && !(event.defaultPrevented && (wrapProps || maskProps)) ? event.pointerId : undefined;
     },
     onPointerUp: handlePointerUp,
     onPointerCancel: () => { backdropPointer = undefined; }
@@ -342,6 +409,18 @@
     }
   }
 
+  function bindPanel(node: HTMLDivElement) {
+    const owner = node.closest('dialog');
+    if (!owner) {
+      return;
+    }
+
+    panelRef = owner;
+    return () => {
+      if (panelRef === owner) panelRef = undefined;
+    };
+  }
+
   function stockFrame(motion: CssMotionState) {
     if (!motion.phase) {
       return undefined;
@@ -357,13 +436,16 @@
     runtime?.end('panel', event);
   }
 
-  function endMaskMotion(event: CssMotionEvent) {
-    runtime?.end('mask', event);
+  function listenForAnimationCancel(node: HTMLElement) {
+    return on(node, 'animationcancel', event => runtime?.end('panel', event));
   }
 
-  function listenForAnimationCancel(node: HTMLElement) {
-    const part = node.hasAttribute('data-ant-modal-panel') ? 'panel' : 'mask';
-    return on(node, 'animationcancel', event => runtime?.end(part, event));
+  function listenForMaskMotion(node: HTMLDivElement) {
+    const events = ['animationend', 'animationcancel', 'transitionend', 'transitioncancel'] as const;
+    const listeners = events.map(type => on(node, type, event => runtime?.end('mask', event)));
+    return () => {
+      for (const remove of listeners) remove();
+    };
   }
 
   function handleClose(event: Event) {
@@ -390,7 +472,9 @@
   }
 
   function isBackdrop(event: PointerEvent) {
-    if (event.target === backdrop) {
+    const maskLayer = backdrop?.parentElement;
+    if (event.target === backdrop
+      || (event.target === maskLayer && maskLayer?.hasAttribute('data-ant-modal-mask-layer'))) {
       return true;
     }
     if (!dialog || event.target !== dialog || !dialog.matches(':modal')) {
@@ -406,6 +490,12 @@
   function handlePointerUp(event: PointerEvent) {
     const start = backdropPointer;
     backdropPointer = undefined;
+    // В исходной оболочке подстановка этих обработчиков заменяет закрытие по фону.
+    if ((wrapProps && ('onclick' in wrapProps || 'onmousedown' in wrapProps))
+      || (event.defaultPrevented && (wrapProps || maskProps))) {
+      return;
+    }
+
     if (start === event.pointerId && interaction.mask.closable && isBackdrop(event)) {
       cancel();
     }
@@ -455,6 +545,9 @@
   }
   .ant-svelte-dialog[data-ant-modal-mask-tail]:not([open]) > [data-ant-modal-panel] { display: none; }
   [data-ant-modal-backdrop] { position: fixed; inset: 0; z-index: -1; }
+  [data-ant-modal-mask-layer] { position: fixed; inset: 0; z-index: -1; }
+  .ant-svelte-dialog:not([data-ant-modal-managed]) > [data-ant-modal-mask-layer],
+  [data-ant-modal-mask-layer] > [data-ant-modal-backdrop] { pointer-events: none; }
   [data-ant-modal-mask] { background: var(--ant-color-bg-mask); }
   [data-ant-modal-zoom='before'] { opacity: 0; }
   [data-ant-modal-zoom='enter'] { animation: antZoomIn var(--ant-svelte-modal-zoom-in) both; }
@@ -515,88 +608,132 @@
   {@render CancelBtn()}{@render OkBtn()}
 {/snippet}
 
+{#snippet backdropSurface()}
+  <div
+    data-ant-modal-backdrop
+    aria-hidden="true"
+    {...backdropVisible ? maskPart.attributes : {}}
+    data-ant-modal-mask={backdropVisible || undefined}
+    data-ant-modal-mask-blur={interaction.mask.blur || undefined}
+    data-ant-modal-fade={fadeFrame}
+    class={[backdropVisible && maskPart.classes, maskMotion.className]}
+    style={maskStyle}
+    {@attach listenForMaskMotion}
+    bind:this={backdrop}
+  ></div>
+{/snippet}
+
+{#snippet modalContent()}
+  <div data-ant-modal-container
+    class={[`${componentPrefix}-container`, classes.container]} style={styles.container}
+    {@attach modalRender ? undefined : watermarkPanel}>
+    {#if closeControl}
+      <button type="button" data-ant-modal-close
+        class={[`${componentPrefix}-close`, classes.close]} style={styles.close}
+        aria-label={config.locale.closeText} {...closeControl.attributes}
+        disabled={confirmLoading || closeControl.disabled} onclick={cancel}>
+        {#if closeControl.icon !== null}
+          {#if designTheme.enabled}
+            <span data-ant-modal-close-x class={`${componentPrefix}-close-x`}>
+              {@render CloseIcon(closeControl.icon)}
+            </span>
+          {:else}
+            {@render CloseIcon(closeControl.icon)}
+          {/if}
+        {/if}
+      </button>
+    {/if}
+    {#if hasTitle}
+      <div data-ant-modal-header class={[`${componentPrefix}-header`, classes.header]}
+        style={styles.header}>
+        <h2 id={titleId} data-ant-modal-title class={[`${componentPrefix}-title`, classes.title]}
+          style={styles.title}>{@render content(title)}</h2>
+      </div>
+    {/if}
+    <div {...body.attributes} data-ant-modal-body class={body.classes} style={body.style}>
+      {#if loading}
+        <Skeleton active title={false} paragraph={{ rows: 4 }}
+          rootClassName={`${componentPrefix}-body-skeleton`} />
+      {:else if _renderSemanticContent}
+        {@render _renderSemanticContent(semanticBody)}
+      {:else}
+        {@render children?.()}
+      {/if}
+    </div>
+    {#if footer !== null && !loading}
+      <div data-ant-modal-footer class={[`${componentPrefix}-footer`, classes.footer]}
+        style={styles.footer}>
+        {#if footer}
+          {@render footer(defaultFooter, { OkBtn, CancelBtn })}
+        {:else}
+          {@render defaultFooter()}
+        {/if}
+      </div>
+    {/if}
+  </div>
+{/snippet}
+
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if layout.css && layout.scope}<ThemeScopeStyle css={layout.css} scope={layout.scope} />{/if}{#if renderDialog}{#key container.key}<dialog
+  {...wrapper.attributes}
   data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix}
   data-ant-modal-layout={layout.scope}
   data-ant-modal-top={placement === false || undefined}
   data-ant-modal-managed={!interaction.native || undefined}
-  data-ant-modal-element-mask={namedBackdrop || undefined}
+  data-ant-modal-element-mask={elementBackdrop || undefined}
   data-ant-modal-mask-tail={maskLeaving || undefined}
   data-ant-modal-mask-blur={interaction.mask.enabled && interaction.mask.blur || undefined}
   data-ant-dialog-unlocked={scrollUnlocked || undefined}
   bind:this={dialog}
-  tabindex={interaction.native ? undefined : -1}
+  tabindex={wrapper.attributes.tabindex ?? (interaction.native ? undefined : -1)}
   class={[
     'ant-svelte-dialog ant-modal-css-var',
     componentTheme.className,
     placement && `${componentPrefix}-centered`,
-    className
+    className,
+    rootClassName,
+    classes.root,
+    wrapper.classes
   ]}
-  {style}
+  style={dialogStyle}
   style:width={layout.width}
   style:height={layout.height}
-  style:z-index={layer.zIndex}
   style:--ant-svelte-modal-zoom-in={zoomFrame ? `${motionToken.motionDurationSlow} ${motionToken.motionEaseOutCirc}` : undefined}
   style:--ant-svelte-modal-zoom-out={zoomFrame ? `${motionToken.motionDurationMid} ${motionToken.motionEaseInOutCirc}` : undefined}
   style:--ant-svelte-modal-fade={fadeFrame ? motionToken.motionDurationMid : undefined}
-  dir={config.direction}
-  aria-label={ariaLabel}
-  aria-labelledby={ariaLabelledBy ?? (ariaLabel?.trim() ? undefined : hasTitle ? titleId : undefined)}
+  dir={wrapper.attributes.dir ?? config.direction}
+  aria-label={dialogLabel}
+  aria-labelledby={dialogLabelledBy ?? (dialogLabel?.trim() ? undefined : hasTitle ? titleId : undefined)}
   aria-modal={interaction.trap || undefined}
   oncancel={handleCancel}
   onclose={handleClose}
   {@attach container.attach}
   {@attach connectDialog}
 >
-  {#if !interaction.native || namedBackdrop}<div data-ant-modal-backdrop
-    data-ant-modal-mask={backdropVisible || undefined}
-    data-ant-modal-mask-blur={interaction.mask.blur || undefined}
-    data-ant-modal-fade={fadeFrame}
-    class={[namedBackdrop && backdropVisible && `${componentPrefix}-mask`, maskMotion.className]}
-    style={maskMotion.style}
-    {@attach listenForAnimationCancel}
-    onanimationend={endMaskMotion}
-    ontransitionend={endMaskMotion} ontransitioncancel={endMaskMotion}
-    aria-hidden="true" bind:this={backdrop}></div>{/if}
+  {#if !interaction.native || elementBackdrop}
+    {#if customMask && elementBackdrop}
+      <div data-ant-modal-mask-layer>{@render backdropSurface()}</div>
+    {:else}
+      {@render backdropSurface()}
+    {/if}
+  {/if}
   {#if renderPanel}<div data-ant-modal-panel data-ant-modal-prefix={componentPrefix}
-    data-ant-modal-root-prefix={rootPrefix} class={[componentPrefix, panelMotion.className]}
+    data-ant-modal-root-prefix={rootPrefix}
+    class={[componentPrefix, config.modal?.class, panelMotion.className]}
     data-ant-modal-zoom={zoomFrame}
-    style={panelMotion.style}
-    style:transform-origin={transformOrigin}
-    style:height={layout.height === undefined ? undefined : '100%'}
+    style={panelStyle}
+    {@attach bindPanel}
     {@attach listenForAnimationCancel}
     onanimationend={endPanelMotion}
     ontransitionend={endPanelMotion} ontransitioncancel={endPanelMotion}>
-    <div data-ant-modal-container class={`${componentPrefix}-container`} {@attach watermarkPanel}>
-      {#if closeControl}
-        <button type="button" data-ant-modal-close class={`${componentPrefix}-close`}
-          aria-label={config.locale.closeText} {...closeControl.attributes}
-          disabled={confirmLoading || closeControl.disabled} onclick={cancel}>
-          {#if closeControl.icon !== null}
-            {#if designTheme.enabled}
-              <span data-ant-modal-close-x class={`${componentPrefix}-close-x`}>
-                {@render CloseIcon(closeControl.icon)}
-              </span>
-            {:else}
-              {@render CloseIcon(closeControl.icon)}
-            {/if}
-          {/if}
-        </button>
-      {/if}
-      {#if hasTitle}<div data-ant-modal-header class={`${componentPrefix}-header`}><h2 id={titleId} data-ant-modal-title class={`${componentPrefix}-title`}>{@render content(title)}</h2></div>{/if}
-      <div data-ant-modal-body class={`${componentPrefix}-body`}>{#if loading}<Skeleton active title={false} paragraph={{ rows: 4 }} rootClassName={`${componentPrefix}-body-skeleton`} />{:else}{@render children?.()}{/if}</div>
-      {#if footer !== null && !loading}
-        <div data-ant-modal-footer class={`${componentPrefix}-footer`}>
-          {#if footer}
-            {@render footer(defaultFooter, { OkBtn, CancelBtn })}
-          {:else}
-            {@render defaultFooter()}
-          {/if}
-        </div>
-      {/if}
-    </div>
+    {#if modalRender}
+      <div data-ant-modal-render class={`${componentPrefix}-render`} {@attach watermarkPanel}>
+        {@render modalRender(modalContent)}
+      </div>
+    {:else}
+      {@render modalContent()}
+    {/if}
   </div>{/if}
 </dialog>
 {/key}{/if}

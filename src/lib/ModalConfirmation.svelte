@@ -9,6 +9,7 @@
   import { normalizeDialogMask } from './dialog-interaction.engine';
   import { modalHolderKey, type ModalConfirmation } from './modal.model.svelte.js';
   import type { ModalHolderProps } from './modal-confirm.types';
+  import type { ModalSemanticBody } from './modal-semantic.engine';
   import type { ModalContent } from './modal.types';
 
   let { confirmation, modal }: ModalHolderProps & { confirmation: ModalConfirmation; } = $props();
@@ -31,6 +32,9 @@
   let componentPrefix = $derived(config.getPrefixCls('modal', options.prefixCls));
   let hasTitle = $derived(options.title !== undefined
     && options.title !== null && typeof options.title !== 'boolean' && options.title !== '');
+  const panelRef = $derived(options.panelRef);
+  const labelledBy = $derived(options.wrapProps?.['aria-labelledby']
+    ?? (options.wrapProps?.['aria-label']?.trim() ? undefined : hasTitle ? titleId : contentId));
   const defaultIcon = $derived(icons[confirmation.type]);
   const icon = $derived(options.icon === undefined ? config.modal?.[defaultIcon.option] : options.icon);
   const hasIcon = $derived(icon !== null && typeof icon !== 'boolean');
@@ -44,6 +48,7 @@
   });
   const visible = $derived(confirmation.open);
   let body = $state<HTMLDivElement>();
+  let panel = $state<HTMLDialogElement>();
   let previousAutofocus = untrack(() => autofocusButton);
   let mask = $derived.by(() => {
     const own = normalizeDialogMask(options.mask);
@@ -89,9 +94,20 @@
     return () => view.clearTimeout(timer);
   });
 
-  function mounted() {
+  $effect(() => {
+    const node = panel;
+    const ref = panelRef;
+    if (!node) {
+      return;
+    }
+
+    // Отрисованная оболочка проходит lifecycle, даже если modalRender заменил всё тело.
     runtime.mounted(id);
-  }
+    if (ref) {
+      untrack(() => ref(node));
+      return () => ref(undefined);
+    }
+  });
 
   function afterOpenChange(open: boolean) {
     if (open) {
@@ -142,9 +158,39 @@
   </div>
 {/snippet}
 
+{#snippet confirmBody({ className, style }: ModalSemanticBody)}
+  <div class={`${componentPrefix}-confirm-body-wrapper`} bind:this={body}>
+    <div class={[
+      `${componentPrefix}-confirm-body`,
+      hasTitle && `${componentPrefix}-confirm-body-has-title`,
+      !hasIcon && `${componentPrefix}-confirm-body-no-icon`
+    ]}>
+      {#if hasIcon}
+        {#if icon === undefined}
+          <span class="anticon" aria-hidden="true"><Icon name={defaultIcon.name} /></span>
+        {:else}
+          {@render content(icon)}
+        {/if}
+      {/if}
+      <div class={`${componentPrefix}-confirm-paragraph`}>
+        {#if hasTitle}<span id={titleId} class={`${componentPrefix}-confirm-title`}>{@render content(options.title)}</span>{/if}
+        <div id={contentId} class={[`${componentPrefix}-confirm-content`, className]} {style}>
+          {@render content(options.content)}
+        </div>
+      </div>
+    </div>
+    {#if options.footer === undefined}
+      {@render defaultFooter()}
+    {:else if options.footer}
+      {@render options.footer(defaultFooter, { OkBtn, CancelBtn })}
+    {/if}
+  </div>
+{/snippet}
+
 <Modal
   prefixCls={componentPrefix}
   open={confirmation.open}
+  title={options.title}
   width={options.width || 416}
   height={options.height}
   centered={options.centered}
@@ -161,36 +207,25 @@
   maskTransitionName={options.maskTransitionName}
   mousePosition={options.mousePosition}
   getContainer={options.getContainer}
-  class={['modal-confirm-dialog', `${componentPrefix}-confirm`, `${componentPrefix}-confirm-${confirmation.type}`, options.class]
-    .filter(Boolean).join(' ')}
-  aria-labelledby={hasTitle ? titleId : contentId}
+  class={[
+    'modal-confirm-dialog', `${componentPrefix}-confirm`,
+    `${componentPrefix}-confirm-${confirmation.type}`, options.class
+  ].filter(Boolean).join(' ')}
+  style={options.style}
+  rootClassName={options.rootClassName}
+  rootStyle={options.rootStyle}
+  wrapClassName={options.wrapClassName}
+  classNames={options.classNames}
+  styles={options.styles}
+  wrapProps={options.wrapProps}
+  bodyProps={options.bodyProps}
+  maskProps={options.maskProps}
+  modalRender={options.modalRender}
+  bind:panelRef={panel}
+  aria-labelledby={labelledBy}
   onCancel={() => runtime.dismiss(id)}
   afterClose={() => runtime.complete(id, true)}
   {afterOpenChange}
   footer={null}
->
-  <div class={`${componentPrefix}-confirm-body-wrapper`} bind:this={body} {@attach mounted}>
-    <div class={[
-      `${componentPrefix}-confirm-body`,
-      hasTitle && `${componentPrefix}-confirm-body-has-title`,
-      !hasIcon && `${componentPrefix}-confirm-body-no-icon`
-    ]}>
-      {#if hasIcon}
-        {#if icon === undefined}
-          <span class="anticon" aria-hidden="true"><Icon name={defaultIcon.name} /></span>
-        {:else}
-          {@render content(icon)}
-        {/if}
-      {/if}
-      <div class={`${componentPrefix}-confirm-paragraph`}>
-        {#if hasTitle}<span id={titleId} class={`${componentPrefix}-confirm-title`}>{@render content(options.title)}</span>{/if}
-        <div id={contentId} class={`${componentPrefix}-confirm-content`}>{@render content(options.content)}</div>
-      </div>
-    </div>
-    {#if options.footer === undefined}
-      {@render defaultFooter()}
-    {:else if options.footer}
-      {@render options.footer(defaultFooter, { OkBtn, CancelBtn })}
-    {/if}
-  </div>
-</Modal>
+  _renderSemanticContent={confirmBody}
+/>

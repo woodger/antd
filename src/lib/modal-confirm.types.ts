@@ -1,5 +1,5 @@
 import type { createModal } from './modal.model.svelte.js';
-import type { ModalContent, ModalFocusableConfig, ModalProps } from './modal.types';
+import type { ModalContent, ModalFocusableConfig, ModalProps, ModalSurfaceProps } from './modal.types';
 
 export type ModalConfirmType = 'info' | 'success' | 'error' | 'warning' | 'confirm';
 /** Callback с аргументом close управляет закрытием вручную; Promise включает loading. */
@@ -12,7 +12,7 @@ export interface ModalConfirmFocusableConfig extends ModalFocusableConfig {
 }
 
 /** Контекстное подтверждение createModal, отображаемое единственным ModalHolder. */
-export interface ModalConfirmConfig {
+export interface ModalConfirmConfig extends ModalSurfaceProps {
   /** Локальный namespace подтверждения; пустая строка наследует ConfigProvider держателя. */
   prefixCls?: string;
   title?: ModalContent;
@@ -47,6 +47,8 @@ export interface ModalConfirmConfig {
   maskTransitionName?: ModalProps['maskTransitionName'];
   mousePosition?: ModalProps['mousePosition'];
   getContainer?: ModalProps['getContainer'];
+  /** Получает нативный dialog. Undefined освобождает ссылку и предыдущий обработчик. */
+  panelRef?: (node: HTMLDialogElement | undefined) => void;
   class?: string;
   footer?: ModalProps['footer'];
   onOk?: ModalConfirmAction;
