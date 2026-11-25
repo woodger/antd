@@ -20129,6 +20129,26 @@
           "note": "Два одинаковых прогона Ant Design 6.6.8 и rc-table 1.11.1 дают 27 состояний и шесть SSR-снимков. Заголовки групп и листьев получают применённые фильтры и sortColumns в порядке состояния, включая order=null. Проверены начальное и управляемое состояние, запросы владельцу, несколько сортировок, число 0, пустой заголовок и нативный title. Для snippet Svelte использует onHeaderCell.title. Нативная кнопка сортировки находится рядом с контролами заголовка, а подсказка учитывает выбранную область. Имена фильтра и сортировки меняются вместе с текстом. Строгая гидратация сохраняет сортировку, состояние редактора и фокус."
         },
         {
+          "id": "heading-content",
+          "title": "Составные заголовки, caption и подписи команд выбора Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/TableSelectionMenu.svelte",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-heading-content-reference.json",
+            "tests/browser/table-heading-content.spec.ts",
+            "tests/browser/table-sorter-hydration.spec.ts",
+            "tests/package/table-heading-content.ssr.test.ts",
+            "tests/package/table-column-title.types.ts",
+            "tests/package/table-dom-attributes.types.ts",
+            "tests/package/table-selection.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 16 профилей дали 16 SSR-снимков, два переключения сортировки и одно выполнение команды. Проверены вложенные массивы в caption, заголовках групп, листьев и служебных колонок. Заголовок выбора с 0 или false сохраняет штатный флажок, а с пустым массивом убирает его. Renderer получает исходный checkbox при hideSelectAll и undefined у Radio. Меню выводит составную подпись команды и передаёт ключи страницы. Svelte создаёт неявный title только для числа или строки при ellipsis и сохраняет закрытое меню в SSR. Строгая гидратация сохраняет узлы, фокус и доступные имена при обновлении текста. Пустой массив сохраняет названия по умолчанию."
+        },
+        {
           "id": "semantic-styles",
           "title": "Семантическое оформление таблицы и пагинации",
           "state": "supported",

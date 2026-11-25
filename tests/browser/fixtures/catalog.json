@@ -1843,6 +1843,11 @@
     "root": "table-column-title-fixture"
   },
   {
+    "id": "table-heading-content",
+    "module": "./TableHeadingContentFixture.svelte",
+    "root": "table-heading-content-fixture"
+  },
+  {
     "id": "table-semantic",
     "module": "./TableSemanticFixture.svelte",
     "root": "table-semantic-fixture"

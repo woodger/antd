@@ -135,3 +135,57 @@ test('Table hydrates a title snippet with its own controls and a focused sort bu
   expect(await sort.evaluate((node, original) => node === original, before)).toBe(true);
   expect(await note.evaluate((node, original) => node === original, beforeNote)).toBe(true);
 });
+
+test('Table hydrates array headings and keeps their live names and separate actions', async ({
+  page
+}) => {
+  const entry = new URL('./fixtures/table-sorter.server.ts', import.meta.url);
+  const { renderTableHeadingContent } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableHeadingContent();
+  await page.goto('/select-components-hydration.html?heading-content');
+  await page.addScriptTag({ type: 'module', url: '/table-sorter.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((node, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    node.innerHTML = html.body;
+  }, { body, head });
+  const region = root.locator('[data-ant-table-part="content"]');
+  const caption = root.locator('caption');
+  const button = root.getByRole('button', { name: 'Data 0 Inspect', exact: true });
+  const sortCell = button.locator('xpath=ancestor::th');
+  const before = await button.elementHandle();
+  const beforeCaption = await caption.elementHandle();
+  await button.focus();
+
+  await root.dispatchEvent('hydrate-table-sorter');
+
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  await expect(button).toBeFocused();
+  await expect(region).toHaveAccessibleName('Caption 0');
+  await root.getByRole('button', { name: 'Inspect', exact: true }).click();
+  await expect(root.locator('[data-inspections]')).toHaveText('1');
+  await expect(sortCell).not.toHaveAttribute('aria-sort');
+
+  await button.focus();
+  await root.getByRole('button', { name: 'Rename headings', exact: true }).dispatchEvent('click');
+
+  const renamed = root.getByRole('button', { name: 'Updated title 0 Inspect', exact: true });
+  await expect(renamed).toBeFocused();
+  await expect(root.getByRole('button', {
+    name: 'Filter: Updated title 0 Inspect', exact: true
+  })).toBeVisible();
+  await expect(region).toHaveAccessibleName('Updated caption 0');
+  expect(await renamed.evaluate((node, original) => node === original, before)).toBe(true);
+  expect(await caption.evaluate((node, original) => node === original, beforeCaption)).toBe(true);
+
+  await renamed.press('Space');
+
+  const heading = renamed.locator('xpath=ancestor::th');
+  await expect(heading).toHaveAttribute('aria-sort', 'ascending');
+  await expect(renamed).toBeFocused();
+  await root.getByRole('button', { name: 'Empty headings', exact: true }).dispatchEvent('click');
+  await expect(region).toHaveAccessibleName('Report');
+  await expect(root.getByRole('button', { name: 'Filter: data', exact: true })).toBeVisible();
+  await expect(root.getByRole('button', { name: 'data', exact: true })).toBeFocused();
+});

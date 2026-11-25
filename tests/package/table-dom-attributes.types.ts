@@ -1,6 +1,6 @@
 import type { ComponentProps, Snippet } from 'svelte';
 import type { HTMLTableAttributes } from 'svelte/elements';
-import type { Table, TableProps } from '@woodger/antd';
+import type { RenderEmptyContent, Table, TableProps } from '@woodger/antd';
 
 interface Row { key: number; value: string; }
 type Props = ComponentProps<typeof Table<Row>>;
@@ -26,6 +26,6 @@ export type TableDomContracts = [
   Assert<Equal<Props['aria-labelledby'], HTMLTableAttributes['aria-labelledby']>>,
   Assert<Equal<Props['aria-rowcount'], HTMLTableAttributes['aria-rowcount']>>,
   Assert<Equal<Props['data-report'], string | number | boolean | undefined>>,
-  Assert<Equal<Props['caption'], string | number | boolean | Snippet | null | undefined>>,
+  Assert<Equal<Props['caption'], RenderEmptyContent>>,
   Assert<Equal<Props['nativeElement'], HTMLDivElement | undefined>>
 ];

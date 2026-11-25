@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type {
-  TableColumn, TableColumnDefaults, TableColumnTitle, TableColumnTitleProps,
+  RenderEmptyContent, TableColumn, TableColumnDefaults, TableColumnTitle, TableColumnTitleProps,
   TableFilterValue, TableSortOrder
 } from '@woodger/antd';
 
@@ -14,6 +14,8 @@ export type TableColumnTitleContracts = [
   Assert<Equal<TableColumnDefaults<Row>['title'], TableColumn<Row>['title']>>,
   Assert<Equal<Extract<TableColumnTitle<Row>, Snippet<[TableColumnTitleProps<Row>]>>,
     Snippet<[info: TableColumnTitleProps<Row>]>>>,
+  Assert<Equal<Exclude<TableColumnTitle<Row>, Snippet<[TableColumnTitleProps<Row>]>>,
+    Exclude<RenderEmptyContent, Snippet | undefined>>>,
   Assert<Equal<keyof TableColumnTitleProps<Row>, 'sortColumns' | 'filters'>>,
   Assert<Equal<TableColumnTitleProps<Row>['sortColumns'][number]['column'], TableColumn<Row>>>,
   Assert<Equal<TableColumnTitleProps<Row>['sortColumns'][number]['order'], TableSortOrder | null>>,

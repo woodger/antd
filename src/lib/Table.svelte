@@ -50,6 +50,7 @@
   } from './table.engine';
   import { flattenTableRows, type TableRow } from './table-tree.engine';
   import type { SpinSemanticInfo } from './spin.types';
+  import type { RenderEmptyContent } from './types';
   import type {
     TableChange,
     TableColumn,
@@ -76,6 +77,7 @@
   import TableStickyScrollbar from './TableStickyScrollbar.svelte';
   import Spin from './Spin.svelte';
   import Empty from './Empty.svelte';
+  import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import ListyScrollbar from './ListyScrollbar.svelte';
 
@@ -179,7 +181,11 @@
   const captionText = $derived(
     typeof caption === 'string' || typeof caption === 'number' ? String(caption) : undefined
   );
-  const hasNamedCaption = $derived(typeof caption === 'function' || Boolean(captionText));
+  const captionReference = $derived(
+    typeof caption === 'function' || (Array.isArray(caption) && hasHeadingLabel(caption))
+      ? captionId : undefined
+  );
+  const hasNamedCaption = $derived(Boolean(captionReference || captionText));
   const { data: ownerAttributes, aria: tableAttributes } = $derived(
     getTableDomAttributes(rawProps)
   );
@@ -345,8 +351,7 @@
     getTablePaginationSemantics(classes.pagination, slots.pagination, pagination)
   );
   const strings = $derived(resolveTableLocale(config.locale.table, locale));
-  const regionLabelledBy = $derived(ariaLabelledBy
-    ?? (typeof caption === 'function' ? captionId : undefined));
+  const regionLabelledBy = $derived(ariaLabelledBy ?? captionReference);
   const regionLabel = $derived(
     regionLabelledBy ? undefined : captionText ?? ariaLabel ?? strings.label
   );
@@ -1041,6 +1046,18 @@
     notifyChange('filter', { filters: requestedFilters, pagination: requestedPage, data });
   }
 
+  /** Находит источник имени в массиве, оставляя доступное имя snippet браузеру. */
+  function hasHeadingLabel(content: RenderEmptyContent): boolean {
+    if (typeof content === 'function' || typeof content === 'number') {
+      return true;
+    }
+    if (typeof content === 'string') {
+      return content.trim() !== '';
+    }
+
+    return Array.isArray(content) && content.some(hasHeadingLabel);
+  }
+
   function sortDescription(order: TableSortOrder | undefined): string {
     return order === 'ascend'
       ? strings.sortAscending
@@ -1401,9 +1418,11 @@
   {@const hasColumnFilter = Boolean(filterOptions || column.filterDropdown)}
   {@const title = column.title}
   {@const titleSnippet = typeof title === 'function' ? title : undefined}
+  {@const titleParts = Array.isArray(title) ? title : undefined}
+  {@const hasTitleContent = titleSnippet !== undefined || titleParts !== undefined}
   {@const titleText = typeof title === 'string' || typeof title === 'number'
     ? String(title) : undefined}
-  {@const titleId = titleSnippet
+  {@const titleId = titleSnippet || hasHeadingLabel(titleParts)
     ? `ant-table-column-title-${id}-${columnIndices.get(column.key)}` : undefined}
   {@const headingLabel = props.attributes['aria-label']}
   {@const titleLabel = titleText ?? headingLabel ?? column.key}
@@ -1411,7 +1430,8 @@
     ? props.attributes['aria-labelledby'] ?? (headingLabel === undefined ? titleId : undefined)
     : undefined}
   {#snippet renderTitle()}
-    {#if titleSnippet}{@render titleSnippet(columnTitleInfo)}{/if}
+    {#if titleSnippet}{@render titleSnippet(columnTitleInfo)}
+    {:else}<RenderContent value={titleParts} />{/if}
   {/snippet}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     {@const align = column.align ?? (props.colSpan > 1 ? 'center' : undefined)}
@@ -1447,7 +1467,7 @@
             accessibleLabel={titleText === undefined ? titleLabel : undefined}
             {titleId}
             labelledby={titleReference}
-            titleContent={titleSnippet ? renderTitle : undefined}
+            titleContent={hasTitleContent ? renderTitle : undefined}
             {order}
             {directions}
             sortIcon={column.sortIcon}
@@ -1457,7 +1477,7 @@
             disabled={resolvedDisabled}
             onSort={() => changeSort(column, nextSort)}
           />
-        {:else if titleSnippet}
+        {:else if hasTitleContent}
           <div id={titleId} class={`${prefix}-column-title`}>{@render renderTitle()}</div>
         {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{titleText ?? ''}</span>{/if}
         {#if hasColumnFilter}
@@ -1611,7 +1631,7 @@
   {#if typeof title === 'function'}
     {@render title(selection.radio ? undefined : selectPageControl)}
   {:else if title}
-    {title}
+    <RenderContent value={title} />
   {:else if !selection.hideHeader}
     {@const commands = selection.commands}
     {#if commands}
@@ -1629,13 +1649,16 @@
 {#snippet serviceHeading(cell: TableHeading<Row>, service: TableServiceColumn)}
   {@const fixed = fixedCells[cell.leaf]}
   {@const detailsTitle = expandable?.columnTitle}
+  {@const detailsLabel = typeof detailsTitle === 'string' || typeof detailsTitle === 'number'
+    ? String(detailsTitle) : strings.expandColumn}
+  {@const detailsOwnName = typeof detailsTitle === 'function'
+    || (Array.isArray(detailsTitle) && hasHeadingLabel(detailsTitle))}
   {@const attributes: TableElementAttributes<'th'> = {
     'data-ant-table-part': 'cell',
     scope: 'col',
     rowspan: cell.rowSpan > 1 ? cell.rowSpan : undefined,
     'data-ant-table-leaf': headerCount > 1 ? cell.leaf : undefined,
-    'aria-label': service === 'expand' && typeof detailsTitle !== 'function'
-      ? detailsTitle ?? strings.expandColumn : undefined,
+    'aria-label': service === 'expand' && !detailsOwnName ? detailsLabel : undefined,
     class: [
       `${prefix}-cell`, serviceCellClass(service),
       fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
@@ -1646,10 +1669,8 @@
   {#snippet contents()}
     {#if service === 'selection'}
       {@render selectionHeading()}
-    {:else if typeof detailsTitle === 'function'}
-      {@render detailsTitle()}
     {:else}
-      {detailsTitle ?? ''}
+      <RenderContent value={detailsTitle} />
     {/if}
   {/snippet}
   {@render headCell(attributes, contents)}
@@ -1762,9 +1783,9 @@
 {/snippet}
 
 {#snippet tableCaption()}
-  {#if typeof caption === 'function'}
-    <caption id={captionId} class={`${prefix}-caption`}
-      bind:this={captionElement}>{@render caption()}</caption>
+  {#if typeof caption === 'function' || Array.isArray(caption)}
+    <caption id={captionReference} class={`${prefix}-caption`}
+      bind:this={captionElement}><RenderContent value={caption} /></caption>
   {:else if hasCaption}
     <caption class={`${prefix}-caption`} bind:this={captionElement}>{captionText ?? ''}</caption>
   {/if}

@@ -84,7 +84,7 @@ export interface TableColumnSorter<Row extends object> {
 }
 
 export type TableColumnTitle<Row extends object> =
-  string | number | boolean | null | Snippet<[info: TableColumnTitleProps<Row>]>;
+  Exclude<RenderEmptyContent, Snippet | undefined> | Snippet<[info: TableColumnTitleProps<Row>]>;
 
 /** Значения, которые Table передаёт заголовкам листьев и групп. */
 export interface TableColumnTitleProps<Row extends object> {
@@ -115,7 +115,7 @@ export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'
 /** Колонка с разрешённым строковым ключом. Ключ уникален во всём дереве. */
 export interface TableColumn<Row extends object> {
   key: string;
-  /** Число или строка выводятся как текст. Snippet получает состояние Table. */
+  /** Принимает составное содержимое. Snippet верхнего уровня получает состояние Table. */
   title?: TableColumnTitle<Row>;
   /** Строка обозначает буквальный ключ. Массив задаёт путь, включая индексы массивов. */
   dataIndex?: TableDataIndex<Row>;
@@ -214,7 +214,8 @@ export type TableSelectionPreset = 'SELECT_ALL' | 'SELECT_INVERT' | 'SELECT_NONE
 /** Команда меню получает доступные ключи текущей страницы. */
 export interface TableSelectionItem {
   key: string;
-  text: string | Snippet;
+  /** Подпись команды, включая вложенные массивы и snippets. */
+  text: RenderEmptyContent;
   onSelect?: (changeableRowKeys: TableKey[]) => void;
 }
 
@@ -250,8 +251,8 @@ export interface TableRowSelection<Row extends object> {
   /** Скрывает checkbox и меню в заголовке колонки. */
   hideSelectAll?: boolean;
   getTitleCheckboxProps?: () => TableSelectionControlProps;
-  /** Заменяет шапку. Snippet получает исходный checkbox, у Radio он отсутствует. */
-  columnTitle?: string | Snippet<[checkbox: Snippet | undefined]>;
+  /** Заменяет шапку. Snippet верхнего уровня получает checkbox, у Radio он отсутствует. */
+  columnTitle?: Exclude<RenderEmptyContent, Snippet> | Snippet<[checkbox: Snippet | undefined]>;
   /** Snippet получает отметку, запись, индекс среди соседей и исходный контрол. */
   renderCell?: Snippet<[checked: boolean, record: Row, index: number, origin: Snippet]>;
   /** Атрибуты ячейки выбора. index относится ко всей раскрытой странице. */
@@ -302,7 +303,8 @@ export interface TableExpandable<Row extends object> {
   onExpand?: (expanded: boolean, record: Row) => void;
   onExpandedRowsChange?: (keys: TableKey[]) => void;
   rowExpandable?: (record: Row) => boolean;
-  columnTitle?: string | Snippet;
+  /** Содержимое заголовка колонки раскрытия. Число 0 выводится как текст. */
+  columnTitle?: RenderEmptyContent;
   columnWidth?: number | string;
   fixed?: TableFixed;
 }
@@ -593,8 +595,8 @@ export interface TableProps<Row extends object> extends AriaAttributes, TableDat
   footer?: Snippet<[data: readonly Row[]]>;
   /** Итоговые строки внутри таблицы; получают записи текущей страницы. */
   summary?: Snippet<[data: readonly Row[]]> | TableSummaryConfig<Row>;
-  /** Подпись таблицы. Число выводится текстом, null и undefined пропускают caption. */
-  caption?: string | number | boolean | Snippet | null;
+  /** Составная подпись таблицы. Null и undefined пропускают caption. */
+  caption?: RenderEmptyContent;
   /** Локальные подписи таблицы и содержимое пустой ячейки. */
   locale?: TableLocaleOverrides;
   empty?: Snippet;
