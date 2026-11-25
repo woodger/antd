@@ -1,3 +1,5 @@
+// Владеет очередью подтверждений и результатом действий. Holder монтирует DOM в своём контексте.
+import { tick } from 'svelte';
 import type {
   ModalConfirmConfig,
   ModalConfirmHandle,
@@ -33,14 +35,35 @@ export function createModal() {
     confirmations = [...entries.values()].map(entry => entry.view);
   }
 
-  function complete(id: number) {
+  function remove(entry: Entry) {
+    const id = entry.view.id;
+    if (entries.get(id) === entry) {
+      entries.delete(id);
+      publish();
+    }
+  }
+
+  function complete(id: number, notifyVisibility = false) {
     const entry = entries.get(id);
     if (!entry || entry.view.open) {
       return;
     }
-    entries.delete(id);
-    publish();
-    entry.view.config.afterClose?.();
+
+    const config = entry.view.config;
+    if (!notifyVisibility) {
+      remove(entry);
+      config.afterClose?.();
+      return;
+    }
+
+    try {
+      config.afterClose?.();
+      config.afterOpenChange?.(false);
+    }
+    finally {
+      // Cleanup дочерних компонентов должен видеть изменения, внесённые в этих callbacks.
+      void tick().then(() => remove(entry));
+    }
   }
 
   function close(entry: Entry, confirmed: boolean) {

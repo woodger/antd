@@ -23803,7 +23803,12 @@
         "tests/browser/fixtures/ant-design-modal-interaction-reference.json",
         "tests/browser/modal-interaction.spec.ts",
         "tests/browser/modal-interaction-hydration.spec.ts",
-        "tests/package/modal-interaction.ssr.test.ts"
+        "tests/package/modal-interaction.ssr.test.ts",
+        "src/lib/modal-motion.dom.ts",
+        "tests/browser/fixtures/ant-design-modal-lifecycle-reference.json",
+        "tests/browser/modal-lifecycle.spec.ts",
+        "tests/browser/modal-lifecycle-hydration.spec.ts",
+        "tests/package/modal-lifecycle.ssr.test.ts"
       ],
       "features": [
         {
@@ -23962,6 +23967,25 @@
           "note": "Два совпавших прогона UMD Ant Design 6.6.8 для 20 профилей и двух update autoFocusButton. Булева и объектная маска, blur, closable, локальные и provider поля, trap, focusTriggerAfterClose и scrollLock. Без видимой маски сохраняются область клика и блокировка прокрутки по умолчанию. Подтверждение наследует enabled/blur, closable по умолчанию false и включает autofocus кнопки OK или Cancel. Native сохраняет прежнюю модальность и scroll lock в explicit host, а свободный фокус корректно отражается в aria-modal. Проверены живые переходы без потери DOM, клавиатура в стеке, SSR и гидратация."
         },
         {
+          "id": "modal-visibility-lifecycle",
+          "title": "Монтаж, штатное движение и завершение показа Modal",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/Modal.svelte",
+            "src/lib/modal.types.ts",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/modal-confirm.types.ts",
+            "src/lib/modal-motion.dom.ts",
+            "tests/browser/fixtures/ant-design-modal-lifecycle-reference.json",
+            "tests/browser/modal-lifecycle.spec.ts",
+            "tests/browser/modal-lifecycle-hydration.spec.ts",
+            "tests/package/modal-lifecycle.ssr.test.ts"
+          ],
+          "note": "Восемь циклов и две смены forceRender повторены на UMD 6.6.8. forceRender, destroyOnHidden, штатные zoom и fade по токенам темы, afterClose перед afterOpenChange(false), прерывание закрытия с сохранением DOM и draft. Колбэки доступны и контекстным подтверждениям. Svelte сохраняет eager SSR и DOM закрытого Modal без явных настроек монтажа. Ленивый default из React доступен через forceRender=false. Положение нативной панели сохраняется. Поддержаны reduced motion и строгая гидратация. Пользовательские имена переходов и точка масштабирования входят в оставшийся объём."
+        },
+        {
           "id": "source-confirm-null-autofocus",
           "title": "Наблюдение upstream: autoFocusButton null выбирает OK",
           "state": "partial",
@@ -23979,7 +24003,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender ещё не перенесены. Source centering/position и lifecycle требуют отдельного аудита относительно согласованной native реализации."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender ещё не перенесены. Source centering/position, mousePosition, transitionName и maskTransitionName требуют отдельного аудита относительно согласованной native реализации."
         },
         {
           "id": "native-zero-title",

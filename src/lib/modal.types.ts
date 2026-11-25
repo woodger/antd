@@ -44,12 +44,18 @@ export interface ModalProps {
   confirmLoading?: boolean;
   /** Показывает Skeleton тела и скрывает footer. */
   loading?: boolean;
+  /** Задаёт предварительный монтаж. Без обоих параметров lifecycle он включён. */
+  forceRender?: boolean;
+  /** Удаляет содержимое после закрытия. При forceRender=true содержимое сохраняется. */
+  destroyOnHidden?: boolean;
   okText?: string;
   cancelText?: string;
   onOk?: () => void;
   onCancel?: () => void;
-  /** Вызывается после фактического закрытия native dialog. */
+  /** Вызывается после закрытия, перед afterOpenChange(false). */
   afterClose?: () => void;
+  /** Вызывается после завершения перехода к открытой или закрытой панели. */
+  afterOpenChange?: (open: boolean) => void;
   /**
    * Undefined наследует ConfigProvider; false оставляет DOM на месте.
    * Global getter вызывается без trigger.

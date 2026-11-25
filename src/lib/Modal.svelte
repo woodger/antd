@@ -1,7 +1,7 @@
 <script lang="ts">
-  // Соединяет native dialog с cancel и подтверждением. Отдельно обрабатывает запросы закрытия от
-  // маски и Escape.
-  import { tick, untrack } from 'svelte';
+  // Удерживает native dialog, модальность и содержимое до окончания закрытия.
+  // Заменяет содержимое при loading независимо от переходов видимости.
+  import { flushSync, tick, untrack } from 'svelte';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
@@ -14,6 +14,7 @@
   import { createDialogContainer } from './dialog-container.model.svelte.js';
   import { connectDialogFocus } from './dialog-focus.dom';
   import { resolveDialogFocusable, resolveDialogMask } from './dialog-interaction.engine';
+  import { createModalMotion } from './modal-motion.dom';
   import { getPopupActiveElement, isPopupFocusWithin } from './popup.dom';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
   import Button from './Button.svelte';
@@ -39,11 +40,14 @@
     scrollLock = true,
     confirmLoading = false,
     loading = false,
+    forceRender,
+    destroyOnHidden,
     okText,
     cancelText,
     onOk,
     onCancel,
     afterClose,
+    afterOpenChange,
     getContainer,
     class: className = ''
   }: ModalProps = $props();
@@ -77,13 +81,20 @@
   let dialog = $state<HTMLDialogElement>();
   let backdrop = $state<HTMLDivElement>();
   let backdropPointer: number | undefined;
-  let runtime = $state.raw<{ sync(open: boolean): void; closed(): void; }>();
+  let presented = $state(false);
+  let visited = $state(false);
+  // Без параметров lifecycle остаётся прежний eager SSR и монтаж закрытых snippets.
+  const preload = $derived(forceRender ?? (destroyOnHidden === undefined));
+  const renderDialog = $derived(open || presented || preload || (visited && !destroyOnHidden));
+  const motionToken = $derived(designTheme.state.token);
+  let runtime = $state.raw<{ sync(open: boolean, token: typeof motionToken): void; closed(): void }>();
   const container = createDialogContainer(() => ({
     component: 'modal',
     open,
     getContainer,
     getPopupContainer: config.getPopupContainer,
-    portalByDefault: !interaction.native && open,
+    resolveWhenClosed: renderDialog,
+    portalByDefault: !interaction.native && (open || presented),
     style: componentTheme.style,
     onPointerDown: event => {
       backdropPointer = event.button === 0 && isBackdrop(event) ? event.pointerId : undefined;
@@ -106,12 +117,19 @@
   $effect(() => {
     const current = runtime;
     const requested = open;
+    const token = motionToken;
     void interaction;
     if (!current || !container.connected || !dialog?.isConnected) {
       return;
     }
 
-    untrack(() => current.sync(requested));
+    untrack(() => current.sync(requested, token));
+  });
+
+  $effect(() => {
+    if (!open && !presented && destroyOnHidden && !preload) {
+      visited = false;
+    }
   });
 
   function connectDialog(node: HTMLDialogElement) {
@@ -119,17 +137,34 @@
       const autofocus = controls.find(control => control.hasAttribute('autofocus'));
       return autofocus ?? (interaction.trap ? controls[0] : undefined);
     });
+    const motion = createModalMotion(node, settled);
     let shown = false;
     let pendingRestore: (() => void) | undefined;
 
-    function sync(visible: boolean) {
+    function sync(visible: boolean, token: typeof motionToken) {
       if (visible) {
-        shown = true;
-        pendingRestore = undefined;
         if (node.open) focus.sync();
         else focus.open();
+
+        shown = node.open;
+        if (shown) {
+          pendingRestore = undefined;
+          presented = true;
+        }
       }
-      else if (node.open) {
+      if (node.open) {
+        motion.sync(visible, token, interaction.mask.enabled);
+      }
+    }
+
+    function settled(visible: boolean) {
+      if (!node.open || open !== visible) {
+        return;
+      }
+      if (visible) {
+        afterOpenChange?.(true);
+      }
+      else {
         pendingRestore = focus.close();
       }
     }
@@ -143,18 +178,25 @@
       shown = false;
       const restore = pendingRestore ?? focus.close();
       pendingRestore = undefined;
-      open = false;
+      motion.reset();
+      finishClose();
       restore?.();
       afterClose?.();
+      afterOpenChange?.(false);
     }
 
     const current = { sync, closed };
+    visited = true;
     runtime = current;
     return () => {
       const document = node.ownerDocument;
       const active = getPopupActiveElement(node);
       const restore = pendingRestore ?? focus.close();
-      if (runtime === current) runtime = undefined;
+      motion.destroy();
+      if (runtime === current) {
+        runtime = undefined;
+        presented = false;
+      }
 
       if (active && active !== document.body && !isPopupFocusWithin(node, active)) {
         return;
@@ -168,6 +210,21 @@
         });
       }
     };
+  }
+
+  function finishClose() {
+    if (destroyOnHidden && forceRender !== true) {
+      // afterClose наблюдает удалённые children и завершённый cleanup.
+      flushSync(() => {
+        open = false;
+        presented = false;
+        visited = false;
+      });
+    }
+    else {
+      open = false;
+      presented = false;
+    }
   }
 
   function handleClose(event: Event) {
@@ -246,7 +303,7 @@
 
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#key container.key}<dialog
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if renderDialog}{#key container.key}<dialog
   data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix}
   data-ant-modal-managed={!interaction.native || undefined}
   data-ant-modal-mask-blur={interaction.mask.enabled && interaction.mask.blur || undefined}
@@ -294,5 +351,5 @@
     </div>
   </div>
 </dialog>
-{/key}
+{/key}{/if}
 </NoCompactStyle>

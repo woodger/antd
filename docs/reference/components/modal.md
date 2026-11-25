@@ -82,8 +82,7 @@ Getter вызывается только после browser mount, в том ч�
 selector или пустой результат getter используют body. Для отключённого DOM-узла
 и DocumentFragment открытие ждёт вставки в document. Стили ShadowRoot подключает
 потребитель. В нативном режиме dialog сохраняет модальность, inert и возврат
-фокуса в любом контейнере. Прежний SSR shell и eagerly mounted
-children при loading=false сохранены; полное API Modal, semantic styles и render hooks ещё требуют переноса.
+фокуса в любом контейнере.
 
 Эталонные зависимости — @rc-component/dialog 1.10.0 и portal 2.1.3;
 лицензии сохранены в [LICENSE.rc-dialog](../../../src/lib/vendor/LICENSE.rc-dialog) и
@@ -114,6 +113,36 @@ children при loading=false сохранены; полное API Modal, semant
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-interaction-reference.json)
 · [Chromium](../../../tests/browser/modal-interaction.spec.ts)
 · [Гидратация](../../../tests/browser/modal-interaction-hydration.spec.ts).
+
+## Монтаж и завершение переходов
+
+Без настроек монтажа Modal по-прежнему рендерит закрытый dialog и его содержимое,
+включая SSR. В Ant Design 6.6.8 обычный Modal монтируется при первом открытии.
+В Svelte `forceRender={false}` включает тот же ленивый режим. `forceRender={true}`
+монтирует панель заранее. `destroyOnHidden` откладывает первый монтаж до открытия
+и удаляет панель после скрытия. Одновременный `forceRender={true}` сохраняет панель.
+При сохранении панели сохраняются DOM и черновик. После удаления следующий
+показ монтирует новую панель.
+
+Панель масштабируется от 0,2 до 1 при открытии и обратно при закрытии.
+Маска меняет прозрачность независимо. Длительности берутся из токенов темы.
+`theme.token.motion: false` и `prefers-reduced-motion: reduce` завершают переход
+без анимации. Правила фокуса и блокировки прокрутки действуют до закрытия dialog.
+После показа вызывается `afterOpenChange(true)`. При закрытии Modal сначала
+освобождает модальность, возвращает фокус по настройкам `focusable` и завершает
+удаление при `destroyOnHidden`. Затем вызовы идут в порядке `afterClose()`,
+`afterOpenChange(false)`. Повторное открытие во время скрытия сохраняет
+содержимое и отменяет уведомление о закрытии.
+
+Эти параметры доступны и в контекстных подтверждениях. Их владелец завершает
+`await` при принятии решения. После закрытия колбэки выполняются до удаления
+подтверждения, чтобы cleanup дочерних компонентов видел их обновления.
+SSR не запускает анимацию и не вызывает колбэки. Первое открытие при гидратации
+использует уже отрисованный DOM.
+[Снимки Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-lifecycle-reference.json)
+· [Chromium](../../../tests/browser/modal-lifecycle.spec.ts)
+· [SSR](../../../tests/package/modal-lifecycle.ssr.test.ts)
+· [Гидратация](../../../tests/browser/modal-lifecycle-hydration.spec.ts).
 
 ## Контекстные подтверждения Modal
 

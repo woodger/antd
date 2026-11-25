@@ -82,6 +82,12 @@
   function mounted() {
     runtime.mounted(id);
   }
+
+  function afterOpenChange(open: boolean) {
+    if (open) {
+      options.afterOpenChange?.(true);
+    }
+  }
 </script>
 
 <style>
@@ -103,12 +109,15 @@
   {mask}
   focusable={options.focusable}
   scrollLock={options.scrollLock}
+  forceRender={options.forceRender}
+  destroyOnHidden={options.destroyOnHidden}
   getContainer={options.getContainer}
   class={['modal-confirm-dialog', `${componentPrefix}-confirm`, `${componentPrefix}-confirm-${confirmation.type}`, options.class]
     .filter(Boolean).join(' ')}
   aria-labelledby={hasTitle ? titleId : contentId}
   onCancel={() => runtime.dismiss(id)}
-  afterClose={() => runtime.complete(id)}
+  afterClose={() => runtime.complete(id, true)}
+  {afterOpenChange}
   footer={null}
 >
   <div class={`${componentPrefix}-confirm-body-wrapper`} {@attach mounted}>

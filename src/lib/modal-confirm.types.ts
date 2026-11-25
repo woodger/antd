@@ -35,12 +35,15 @@ export interface ModalConfirmConfig {
   mask?: ModalProps['mask'];
   focusable?: ModalConfirmFocusableConfig;
   scrollLock?: ModalProps['scrollLock'];
+  forceRender?: ModalProps['forceRender'];
+  destroyOnHidden?: ModalProps['destroyOnHidden'];
   getContainer?: ModalProps['getContainer'];
   class?: string;
   footer?: Snippet | null;
   onOk?: ModalConfirmAction;
   onCancel?: ModalConfirmAction;
   afterClose?: () => void;
+  afterOpenChange?: ModalProps['afterOpenChange'];
 }
 
 export interface ModalConfirmHandle extends PromiseLike<boolean> {
