@@ -2,10 +2,10 @@
   // Владеет узлом строки, её фокусом и временем жизни закреплённой за ней подсказки.
   import { on } from 'svelte/events';
   import { menuItem, type MenuEntry } from './menu.engine';
-  import type { MenuContent } from './menu.types';
   import { useMenu } from './menu-context';
   import { getDropdownCommandAttributes, isDropdownMenuKey } from './dropdown.engine';
   import MenuItemTooltip from './MenuItemTooltip.svelte';
+  import RenderContent from './RenderContent.svelte';
 
   let { entry, overflowItem, overflowHidden, inactive }: {
     entry: MenuEntry;
@@ -184,7 +184,6 @@
   }
 </style>
 
-{#snippet content(value: MenuContent | undefined)}{#if typeof value === 'function'}{@render value()}{:else}{value ?? ''}{/if}{/snippet}
 {#snippet rowContents()}
   <!-- Source icon/label идут подряд; native-тема сохраняет межэлементный пробел. -->
   {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, classes.itemIcon]}
@@ -196,8 +195,9 @@
     {#if context.collapsed && !entry.parent && !item.icon && typeof item.label === 'string'}
       <span class={`${context.prefixCls}-inline-collapsed-noicon`}>{item.label.charAt(0)}</span>
     {:else if item.extra !== undefined}
-      <span class={`${context.prefixCls}-item-label`}>{@render content(item.label)}</span><span class={`${context.prefixCls}-item-extra`}>{@render content(item.extra)}</span>
-    {:else}{@render content(item.label)}{/if}
+      <span class={`${context.prefixCls}-item-label`}><RenderContent value={item.label} /></span><span
+        class={`${context.prefixCls}-item-extra`}><RenderContent value={item.extra} /></span>
+    {:else}<RenderContent value={item.label} />{/if}
   </span>{#if typeof trailingIcon === 'function'}{@render trailingIcon({
     ...item,
     eventKey: entry.key,

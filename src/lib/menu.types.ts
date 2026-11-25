@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'svelte/elements';
 import type { PopupSourceAlign } from './popup-position.engine';
 import type { TooltipProps } from './tooltip.types';
 import type { MenuMotion } from './menu-motion.types';
+import type { RenderEmptyContent } from './types';
 
 export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
@@ -60,7 +61,8 @@ export interface MenuConfig {
 
 interface MenuCommon {
   key?: string | number;
-  label?: MenuContent;
+  /** Подпись пункта, группы или подменю с вложенным содержимым. */
+  label?: RenderEmptyContent;
   class?: string;
   style?: string;
 }

@@ -39,7 +39,9 @@ Items принимает MenuItemType: обычный пункт, подменю
 `type='group'` с label/children, `type='divider'` с dashed либо null.
 У пунктов и подменю обязательны стабильные key. Числовой key нормализуется в
 строку для selection/open/events; исходное значение остаётся в itemData.
-Label и extra пункта — string/number/Snippet, icon — Snippet. Поддержаны
+Поле `label` пункта, группы и подменю принимает строки, числа, snippets и
+вложенные массивы. `null`, `undefined` и булево значение дают пустую подпись.
+`extra` принимает строку, число или snippet. `icon` принимает snippet. Поддержаны
 item.disabled/danger/title, class/style; у подменю также theme/popupClassName
 и onTitleClick. Группы не добавляют уровень отступа и не входят в keyPath.
 Пользовательские `data-*` пункта передаются его `li`. Служебные маркеры Menu

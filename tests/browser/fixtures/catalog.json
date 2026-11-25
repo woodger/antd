@@ -1708,6 +1708,11 @@
     "root": "table-column-keys-fixture"
   },
   {
+    "id": "table-filter-content",
+    "module": "./TableFilterContentFixture.svelte",
+    "root": "table-filter-content-fixture"
+  },
+  {
     "id": "table-header",
     "module": "./TableHeaderFixtures.svelte",
     "root": "table-header-fixture"

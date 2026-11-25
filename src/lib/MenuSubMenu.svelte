@@ -24,6 +24,7 @@
   import MenuInlineSubMenu from './MenuInlineSubMenu.svelte';
   import MenuPopupContent from './MenuPopupContent.svelte';
   import Icon from './Icon.svelte';
+  import RenderContent from './RenderContent.svelte';
 
   let {
     entry,
@@ -495,7 +496,7 @@
       style={context.semantics.styles.itemIcon}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}{#if context.collapsed && !entry.parent && !item.icon && typeof item.label === 'string'}
       <span class={`${context.prefixCls}-inline-collapsed-noicon`}>{item.label.charAt(0)}</span>
     {:else}<span data-ant-dropdown-title={dropdown ? true : undefined}
-      class={`${context.prefixCls}-title-content`}>{#if typeof item.label === 'function'}{@render item.label()}{:else}{item.label ?? ''}{/if}</span>{/if}
+      class={`${context.prefixCls}-title-content`}><RenderContent value={item.label} /></span>{/if}
     {#if hasArrow}
       {#if typeof expandIcon === 'function'}<span class={`${context.prefixCls}-submenu-expand-icon`}
         aria-hidden="true">{@render expandIcon(iconInfo)}</span>

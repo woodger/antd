@@ -4,7 +4,8 @@
   import { untrack } from 'svelte';
   import { takeDropdownMenu } from './dropdown-menu-context';
   import {
-    getTableFilterMenu, getTableFilterNodes, walkTableFilterNodes, type TableFilterNode
+    getTableFilterMenu, getTableFilterNodes, matchesTableFilterText, walkTableFilterNodes,
+    type TableFilterNode
   } from './table-filter-options.engine';
   import type {
     TableFilterMode, TableFilterOption, TableFilterSearch, TableFilterValue
@@ -84,14 +85,14 @@
 
     return typeof search === 'function'
       ? search(normalizedQuery, option)
-      : option.text.toLowerCase().includes(normalizedQuery);
+      : matchesTableFilterText(option.text, normalizedQuery);
   }
 
   /** Дерево сохраняет ветви, а пользовательский предикат получает исходный запрос. */
   function matchesTree(node: TreeEventNode<TableFilterNode>) {
     return typeof search === 'function'
       ? search(query, node.option)
-      : node.option.text.toLowerCase().includes(normalizedQuery);
+      : matchesTableFilterText(node.option.text, normalizedQuery);
   }
 
   /** Переводит ключи Menu и Tree в уникальные значения в порядке объявления вариантов. */
@@ -233,12 +234,13 @@
     {#each visibleOptions as { option, index } (index)}
       {#if multiple}
         <Checkbox checked={draftValues.has(option.value)} {disabled}
-          onCheckedChange={checked => choose(option.value, checked)}>{option.text}</Checkbox>
+          onCheckedChange={checked => choose(option.value, checked)}><RenderContent
+            value={option.text} /></Checkbox>
       {:else}
         <label class="radio-option">
           <input type="radio" name={`ant-filter-${id}`} value={index}
             checked={draftValues.has(option.value)} {disabled}
-            onchange={() => choose(option.value, true)} />{option.text}
+            onchange={() => choose(option.value, true)} /><RenderContent value={option.text} />
         </label>
       {/if}
     {:else}

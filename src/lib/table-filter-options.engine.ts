@@ -5,7 +5,7 @@ import type { TableFilterOption } from './table.types';
 
 export interface TableFilterNode {
   key: string;
-  title: string;
+  title: TableFilterOption['text'];
   option: TableFilterOption;
   children?: TableFilterNode[];
 }
@@ -22,13 +22,48 @@ export function* walkTableFilterOptions(
   }
 }
 
+/** Запоминает все позиции вложенных массивов и сохраняет ссылки на snippets. */
+function snapshotLabel(text: TableFilterOption['text']): TableFilterOption['text'] {
+  return Array.isArray(text) ? Array.from(text, snapshotLabel) : text;
+}
+
 /** Запоминает структуру, значения и подписи открытого списка, включая пустые ветви. */
 export function snapshotTableFilterOptions(options: readonly TableFilterOption[]) {
   return Array.from(walkTableFilterOptions(options), option => ({
     value: option.value,
-    text: option.text,
+    text: snapshotLabel(option.text),
     children: option.children?.length
   }));
+}
+
+/** Сравнивает содержимое массива подписи без вызова вложенных snippets. */
+function sameLabel(left: TableFilterOption['text'], right: TableFilterOption['text']): boolean {
+  if (!Array.isArray(left) || !Array.isArray(right)) {
+    return Object.is(left, right);
+  }
+
+  return left.length === right.length && left.every((child, index) => sameLabel(child, right[index]));
+}
+
+type OptionSnapshot = ReturnType<typeof snapshotTableFilterOptions>;
+
+/** Проверяет, подходят ли открытой панели текущие значения, подписи и глубина списка. */
+export function areTableFilterOptionsEqual(current: OptionSnapshot, opened: OptionSnapshot) {
+  return current.length === opened.length && current.every((item, index) => {
+    const previous = opened[index];
+    return Object.is(item.value, previous.value)
+      && sameLabel(item.text, previous.text)
+      && item.children === previous.children;
+  });
+}
+
+/** Встроенный поиск сравнивает только текстовые и числовые подписи Source. */
+export function matchesTableFilterText(text: TableFilterOption['text'], query: string) {
+  if (typeof text !== 'string' && typeof text !== 'number') {
+    return false;
+  }
+
+  return String(text).toLowerCase().includes(query);
 }
 
 /** Связывает узлы интерфейса с исходными вариантами. Ключи строятся по пути внутри колонки. */

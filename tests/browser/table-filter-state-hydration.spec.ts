@@ -25,6 +25,44 @@ test.afterAll(async () => {
   }
 });
 
+test('Table hydrates its filter trigger and chooses a snippet label by keyboard', async ({ page }) => {
+  const entry = new URL('./fixtures/table-filter-state.server.ts', import.meta.url);
+  const { renderTableFilterContent } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableFilterContent();
+  await page.goto('/select-components-hydration.html?filter-content');
+  await page.addScriptTag({ type: 'module', url: '/table-filter-state.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((target, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    target.innerHTML = html.body;
+  }, { body, head });
+  const name = 'Filter menu: Value';
+  const trigger = root.getByRole('button', { name, exact: true });
+  const original = await trigger.elementHandle();
+  await trigger.focus();
+
+  await root.dispatchEvent('hydrate-table-filter-state');
+
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  await expect(trigger).toBeFocused();
+  await trigger.press('Enter');
+  const panel = root.getByRole('dialog', { name, exact: true });
+  const option = panel.getByRole('radio', { name: 'Rich label', exact: true });
+  await option.press('Space');
+  await expect(option).toBeChecked();
+  await expect(root.locator('[data-row-key]')).toHaveCount(8);
+
+  await panel.getByRole('button', { name: 'OK', exact: true }).press('Enter');
+
+  await expect(panel).toBeHidden();
+  await expect(trigger).toBeFocused();
+  expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
+  const rows = root.locator('[data-row-key]');
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toHaveAttribute('data-row-key', 'rich');
+});
+
 test('Table hydrates the focused trigger and resolves its filter portal on opening', async ({
   page
 }) => {

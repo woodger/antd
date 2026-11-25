@@ -1,11 +1,12 @@
 <script lang="ts">
   // Рисует один уровень Menu с пунктами, разделителями, группами и подменю.
   import type { MenuEntry } from './menu.engine';
-  import type { MenuContent, MenuTheme } from './menu.types';
+  import type { MenuTheme } from './menu.types';
   import { useMenu } from './menu-context';
   import MenuList from './MenuList.svelte';
   import MenuSubMenu from './MenuSubMenu.svelte';
   import MenuItem from './MenuItem.svelte';
+  import RenderContent from './RenderContent.svelte';
 
   let {
     entries,
@@ -21,7 +22,6 @@
   const context = useMenu();
 </script>
 
-{#snippet content(value: MenuContent | undefined)}{#if typeof value === 'function'}{@render value()}{:else}{value ?? ''}{/if}{/snippet}
 {#each entries as entry, index (entry.key)}
   {@const semantic = context.semantics}
   {@const nested = entry.parent && !entry.parent.overflow}
@@ -44,7 +44,8 @@
       data-menu-overflow-hidden={overflowHidden || undefined}
       inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}>
       <div class={[`${context.prefixCls}-item-group-title`, classes.itemTitle]}
-        style={styles.itemTitle} role="presentation">{@render content('label' in entry.item ? entry.item.label : undefined)}</div>
+        style={styles.itemTitle} role="presentation"><RenderContent
+          value={'label' in entry.item ? entry.item.label : undefined} /></div>
       <ul class={[`${context.prefixCls}-item-group-list`, classes.list]} style={styles.list}
         role="group"><MenuList entries={entry.children} {theme} inactive={entryInactive} /></ul>
     </li>

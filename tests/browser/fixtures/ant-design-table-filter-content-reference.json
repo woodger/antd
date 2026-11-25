@@ -1,0 +1,1262 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "menu",
+        "mode": "menu"
+      },
+      "ssr": {
+        "rows": [
+          "plain",
+          "zero",
+          "number",
+          "rich",
+          "array",
+          "false",
+          "null",
+          "undefined"
+        ],
+        "expanded": null,
+        "containsRichLabel": false
+      },
+      "states": [
+        {
+          "action": "open",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " 0 ",
+          "state": {
+            "texts": [
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " Rich ",
+          "state": {
+            "texts": [],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": "",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        }
+      ],
+      "rows": [
+        "rich"
+      ],
+      "changes": [
+        {
+          "filters": {
+            "value": [
+              "rich"
+            ]
+          },
+          "action": "filter",
+          "rows": [
+            "rich"
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "id": "single-menu",
+        "mode": "menu",
+        "single": true
+      },
+      "ssr": {
+        "rows": [
+          "plain",
+          "zero",
+          "number",
+          "rich",
+          "array",
+          "false",
+          "null",
+          "undefined"
+        ],
+        "expanded": null,
+        "containsRichLabel": false
+      },
+      "states": [
+        {
+          "action": "open",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " 0 ",
+          "state": {
+            "texts": [
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " Rich ",
+          "state": {
+            "texts": [],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": "",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        }
+      ],
+      "rows": [
+        "rich"
+      ],
+      "changes": [
+        {
+          "filters": {
+            "value": [
+              "rich"
+            ]
+          },
+          "action": "filter",
+          "rows": [
+            "rich"
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "id": "tree",
+        "mode": "tree"
+      },
+      "ssr": {
+        "rows": [
+          "plain",
+          "zero",
+          "number",
+          "rich",
+          "array",
+          "false",
+          "null",
+          "undefined"
+        ],
+        "expanded": null,
+        "containsRichLabel": false
+      },
+      "states": [
+        {
+          "action": "open",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " 0 ",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [
+              "0",
+              "120"
+            ],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " Rich ",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": "",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        }
+      ],
+      "rows": [
+        "rich"
+      ],
+      "changes": [
+        {
+          "filters": {
+            "value": [
+              "rich"
+            ]
+          },
+          "action": "filter",
+          "rows": [
+            "rich"
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-menu",
+        "mode": "menu",
+        "customSearch": true
+      },
+      "ssr": {
+        "rows": [
+          "plain",
+          "zero",
+          "number",
+          "rich",
+          "array",
+          "false",
+          "null",
+          "undefined"
+        ],
+        "expanded": null,
+        "containsRichLabel": false
+      },
+      "states": [
+        {
+          "action": "open",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " 0 ",
+          "state": {
+            "texts": [
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": [
+              {
+                "query": "0",
+                "node": true,
+                "type": "strong"
+              }
+            ]
+          }
+        },
+        {
+          "action": " Rich ",
+          "state": {
+            "texts": [
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": [
+              {
+                "query": "0",
+                "node": true,
+                "type": "strong"
+              },
+              {
+                "query": "rich",
+                "node": true,
+                "type": "strong"
+              }
+            ]
+          }
+        },
+        {
+          "action": "",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": [
+              {
+                "query": "0",
+                "node": true,
+                "type": "strong"
+              },
+              {
+                "query": "rich",
+                "node": true,
+                "type": "strong"
+              }
+            ]
+          }
+        }
+      ],
+      "rows": [
+        "rich"
+      ],
+      "changes": [
+        {
+          "filters": {
+            "value": [
+              "rich"
+            ]
+          },
+          "action": "filter",
+          "rows": [
+            "rich"
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-tree",
+        "mode": "tree",
+        "customSearch": true
+      },
+      "ssr": {
+        "rows": [
+          "plain",
+          "zero",
+          "number",
+          "rich",
+          "array",
+          "false",
+          "null",
+          "undefined"
+        ],
+        "expanded": null,
+        "containsRichLabel": false
+      },
+      "states": [
+        {
+          "action": "open",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": " 0 ",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [
+              "0",
+              "120"
+            ],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": [
+              {
+                "query": " 0 ",
+                "node": true,
+                "type": "strong"
+              }
+            ]
+          }
+        },
+        {
+          "action": " Rich ",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [
+              "Rich label"
+            ],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": [
+              {
+                "query": " 0 ",
+                "node": true,
+                "type": "strong"
+              },
+              {
+                "query": " Rich ",
+                "node": true,
+                "type": "strong"
+              }
+            ]
+          }
+        },
+        {
+          "action": "",
+          "state": {
+            "texts": [
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "---",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": [
+              {
+                "query": " 0 ",
+                "node": true,
+                "type": "strong"
+              },
+              {
+                "query": " Rich ",
+                "node": true,
+                "type": "strong"
+              }
+            ]
+          }
+        }
+      ],
+      "rows": [
+        "rich"
+      ],
+      "changes": [
+        {
+          "filters": {
+            "value": [
+              "rich"
+            ]
+          },
+          "action": "filter",
+          "rows": [
+            "rich"
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "id": "nested-menu",
+        "mode": "menu",
+        "nested": true
+      },
+      "ssr": {
+        "rows": [
+          "plain",
+          "zero",
+          "number",
+          "rich",
+          "array",
+          "false",
+          "null",
+          "undefined"
+        ],
+        "expanded": null,
+        "containsRichLabel": false
+      },
+      "states": [
+        {
+          "action": "open",
+          "state": {
+            "texts": [
+              {
+                "text": "Group label",
+                "marker": "em"
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        },
+        {
+          "action": "open-branch",
+          "state": {
+            "texts": [
+              {
+                "text": "Group label",
+                "marker": "em"
+              },
+              {
+                "text": "Plain label",
+                "marker": null
+              },
+              {
+                "text": "0",
+                "marker": null
+              },
+              {
+                "text": "120",
+                "marker": null
+              },
+              {
+                "text": "Rich label",
+                "marker": "strong"
+              },
+              {
+                "text": "Array label",
+                "marker": "i"
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              },
+              {
+                "text": "",
+                "marker": null
+              }
+            ],
+            "matches": [],
+            "rows": [
+              "plain",
+              "zero",
+              "number",
+              "rich",
+              "array",
+              "false",
+              "null",
+              "undefined"
+            ],
+            "changes": [],
+            "searches": []
+          }
+        }
+      ],
+      "rows": [
+        "rich"
+      ],
+      "changes": [
+        {
+          "filters": {
+            "value": [
+              "rich"
+            ]
+          },
+          "action": "filter",
+          "rows": [
+            "rich"
+          ]
+        }
+      ]
+    }
+  ]
+}

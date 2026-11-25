@@ -6,7 +6,7 @@
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import type { DropdownProps } from './dropdown.types';
-  import { snapshotTableFilterOptions } from './table-filter-options.engine';
+  import { areTableFilterOptionsEqual, snapshotTableFilterOptions } from './table-filter-options.engine';
   import type { TableFilterLocale } from './table-locale.engine';
   import { normalizeTableFilter } from './table.engine';
   import type {
@@ -146,12 +146,7 @@
       return;
     }
 
-    const sameOptions = optionSnapshot.length === openedOptions.length
-      && optionSnapshot.every(
-        (item, index) => Object.is(item.value, openedOptions[index].value)
-          && item.text === openedOptions[index].text
-          && item.children === openedOptions[index].children
-      );
+    const sameOptions = areTableFilterOptionsEqual(optionSnapshot, openedOptions);
 
     if (blocked || !sameValues(value, openedValue) || !sameOptions || multiple !== openedMultiple
       || filterMode !== openedMode || filterSearch !== openedSearch) {

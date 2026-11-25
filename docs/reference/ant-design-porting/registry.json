@@ -3348,6 +3348,24 @@
           "note": "Single/multiple/selectable, selectedKeys/defaultSelectedKeys, item/parent/root onClick и onSelect/onDeselect. KeyPath идёт от листа к корню без групп; itemData сохраняет исходный numeric key. Повторный single click сохраняет выбранный key и вызывает onDeselect, как rc-menu 1.5.0. String/number/Snippet labels/extra, icons, danger и disabled. Native link Enter активирует callback один раз через native click; legacy React instance info.item не переносится."
         },
         {
+          "id": "label-content",
+          "title": "Составные подписи пунктов, групп и подменю Menu",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/MenuItem.svelte",
+            "src/lib/MenuList.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/menu.types.ts",
+            "docs/reference/components/menu.md",
+            "tests/browser/fixtures/ant-design-table-filter-content-reference.json",
+            "tests/browser/table-filter-content.spec.ts",
+            "tests/package/table-filter-content.ssr.test.ts",
+            "tests/package/table-filter-content.types.ts"
+          ],
+          "note": "Menu использует общий RenderContent для label пункта, группы и подменю. Вложенный массив выводит числа и snippets в порядке объявления, булевы и nullish элементы дают пустое содержимое. Подменю с составными подписями сверено в двух UMD-прогонах фильтра Table. SSR проверяет группу и лист напрямую."
+        },
+        {
           "id": "modes-popup",
           "title": "Horizontal/vertical/inline, openKeys, hover/click подменю и Sider collapse",
           "state": "supported",
@@ -20208,6 +20226,25 @@
             "tests/package/table-filter-state.types.ts"
           ],
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 29 состояний и девять SSR-снимков. Проверены filteredValue с null, переходы к управлению и обратно, начальный defaultFilteredValue, forced filtered и восстановление черновика при reset с подтверждением. Скрытые и responsive колонки сохраняют участие в обработке данных. При управлении только колонками учитываются заданные владельцем критерии. При сочетании с filters или defaultFilters карты Table задают остальные колонки, bind:filters передаёт запрос. onChange получает нормализованные активные критерии и запрошенные строки, включая server mode с переданной страницей. Строгая гидратация сохраняет кнопку и фокус, клавиатура подтверждает один запрос, обновление владельца закрывает устаревший черновик."
+        },
+        {
+          "id": "filter-option-content",
+          "title": "Числовые и составные подписи вариантов фильтра Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/table.types.ts",
+            "src/lib/TableFilterOptions.svelte",
+            "src/lib/table-filter-options.engine.ts",
+            "src/lib/TableFilter.svelte",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-filter-content-reference.json",
+            "tests/browser/table-filter-content.spec.ts",
+            "tests/browser/table-filter-state-hydration.spec.ts",
+            "tests/package/table-filter-content.ssr.test.ts",
+            "tests/package/table-filter-content.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 дали 22 состояния открытия и поиска, шесть применений критерия и шесть SSR-снимков. Плоский список с checkbox или radio, дерево и вложенное меню выводят 0, числа, snippet, массив и пустые подписи. Встроенный поиск сопоставляет только строки и числа, пользовательский предикат получает исходное содержимое и запрос по правилам режима. Изменение массива закрывает устаревший черновик, обновление внутри snippet сохраняет фокус. Строгая гидратация подтверждает выбор и возврат фокуса с клавиатуры."
         },
         {
           "id": "filter-options",

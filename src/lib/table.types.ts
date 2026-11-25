@@ -27,7 +27,8 @@ export type TableFilters = Record<string, TableFilterValue[]>;
 export type TableFilterMode = 'menu' | 'tree';
 
 export interface TableFilterOption {
-  text: string;
+  /** Содержимое подписи. Встроенный поиск сопоставляет строки и числа. */
+  text: RenderEmptyContent;
   value: TableFilterValue;
   children?: readonly TableFilterOption[];
 }
