@@ -55,6 +55,7 @@ import type { AlertConfig } from './alert.types';
 import type { CollapseConfig } from './collapse.types';
 import type { DrawerConfig } from './drawer.types';
 import type { ModalConfig } from './modal.types';
+import type { MessageAppearance } from './message.types';
 import type { SegmentedConfig } from './segmented.types';
 import type { SpaceConfig } from './space.types';
 import type { ColorPickerConfig } from './color-picker.types';
@@ -105,6 +106,7 @@ export interface ConfigContext {
   readonly popconfirm?: PopconfirmConfig;
   readonly drawer?: DrawerConfig;
   readonly modal?: ModalConfig;
+  readonly message?: MessageAppearance;
   readonly button?: ButtonConfig;
   readonly rate?: RateConfig;
   readonly watermark?: WatermarkConfig;

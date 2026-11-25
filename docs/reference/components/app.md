@@ -58,9 +58,12 @@ ConfigProvider.prefixCls + app. ConfigProvider.app
 
 В SSR App не открывает dialog/popover и не запускает таймеры. Удаление App
 закрывает поверхности, снимает inert/scroll lock и завершает ожидающие Modal
-handles с false. Поддерживаются текущие настройки Native Message/Notification;
-их полные React semantic/render/stack/container options, React custom root
-components остаются за пределами этого этапа.
+handles с false. `App.message` дополнительно принимает `rtl`, `getContainer`,
+`stack`, `transitionName`, `classNames` и `styles`. Эти настройки управляют
+поверхностью общего экземпляра. [Message](message.md)
+
+Полные React semantic/render/stack/container options для Notification и React
+custom root components остаются за пределами этого этапа.
 
 Основа сверки — [исходные снимки App](../../../tests/browser/fixtures/ant-design-app-reference.json).
 Все девять root-примеров, включая global-prefix, проверяются. Проверки:

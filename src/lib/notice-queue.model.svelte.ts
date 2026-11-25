@@ -82,6 +82,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
   const entries = new Map<number, Entry<Config>>();
   let notices = $state.raw<readonly QueueNotice<Config>[]>([]);
   let visible = $state(false);
+  let listHovered = false;
   let state: 'fresh' | 'mounted' | 'detached' = 'fresh';
   let clock: NoticeClock | undefined;
   let nextId = 0;
@@ -107,7 +108,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       || entry.cancel
       || entry.duration === 0
       || (entry.pauseOnHover
-        && entry.hovered)
+        && (entry.hovered || listHovered))
       || entry.focused) {
       return;
     }
@@ -283,6 +284,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
           connected = false;
           state = 'detached';
           visible = false;
+          listHovered = false;
           for (const entry of entries.values()) {
             stop(entry);
             entry.onClose = undefined;
@@ -327,6 +329,22 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         }
         else {
           arm(entry);
+        }
+      },
+      /** В раскрытом стеке пауза действует на все записи с pauseOnHover. */
+      hoverList(next: boolean) {
+        if (next === listHovered) {
+          return;
+        }
+
+        listHovered = next;
+        for (const entry of entries.values()) {
+          if (next && entry.pauseOnHover) {
+            stop(entry);
+          }
+          else {
+            arm(entry);
+          }
         }
       },
       focus(id: number, next: boolean) {

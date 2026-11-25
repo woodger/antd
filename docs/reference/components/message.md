@@ -28,13 +28,19 @@
 <Button onclick={save}>Сохранить</Button>
 ```
 
-Open принимает MessageConfig с обязательным content. Методы info/success/warning/
-error/loading принимают строку, пассивный Snippet или объект с content. После
-первого аргумента можно передать duration и onClose, либо сразу onClose.
-Типизированный метод задаёт свой type; open без type использует info.
-Icon принимает декоративный Snippet; по умолчанию используются filled-иконки
-статусов и вращающийся loading. Class/style относятся к отдельному сообщению.
-Snippet содержимого и иконки должен обходиться без ссылок, кнопок и полей ввода.
+`open` принимает `MessageConfig` с обязательным `content`. Методы
+`info`, `success`, `warning`, `error` и `loading` принимают скалярное значение,
+пассивный Snippet или объект с `content`. Числа, включая 0, выводятся текстом.
+Булевы значения и null дают пустое содержимое. После первого аргумента можно
+передать `duration` и `onClose` либо сразу `onClose`. Позиционные параметры
+имеют приоритет над полями объекта.
+
+Типизированный метод задаёт свой `type`. У `open` по умолчанию тип `info`.
+`type: null` даёт нейтральное сообщение. `icon` принимает декоративный Snippet
+или скалярное значение. Без своей иконки у статуса используется штатная
+иконка, а у `loading` она вращается. `onClick` получает нативное событие
+с корнем сообщения в `currentTarget`. В Snippet содержимого и иконки используйте
+пассивные элементы.
 
 Duration задаётся в секундах, по умолчанию 3; 0 отключает автоудаление.
 CreateMessage фиксирует defaults duration, pauseOnHover=true и maxCount;
@@ -69,8 +75,11 @@ handle завершается true после анимации и фактиче
 чтобы не продолжать сценарий после удаления holder.
 
 Holder наследует тему, compact и направление ближайшего ConfigProvider.
+`rtl` явно переопределяет направление. Настройки поверхности можно задать
+в `createMessage` либо отдельными props `MessageHolder`, у которых приоритет.
+При использовании App те же настройки задаются через `App.message`.
 `MessageHolder.prefixCls` меняет namespace списка и всех сообщений; пустая строка
-наследует ConfigProvider.prefixCls. В App тот же параметр задаётся через message.
+наследует ConfigProvider.prefixCls.
 Canonical tokens и native popover/viewport/motion не зависят от публичных классов;
 private Notification metrics используют общий namespace отдельно от local prefix.
 [Raw замеры](../../../tests/browser/fixtures/ant-design-message-prefix-reference.json)
@@ -91,7 +100,8 @@ legacy-оформление сохраняется. [Проверки и исх�
 это [отдельное наблюдение upstream](../../../tests/browser/fixtures/ant-design-message-wrap-observation.json).
 Raw CSS эталона не изменены; browser-сравнение явно учитывает только это отличие переноса.
 
-Нативный manual popover показывает обычный вертикальный список по центру сверху.
+Нативный manual popover показывает список по центру сверху. Свежие сообщения
+располагаются выше остальных.
 Top по умолчанию 8px: число задаёт px, строка — CSS-длину. Id/class/style
 относятся к поверхности списка. Фокус и клавиши Tab/Escape остаются у страницы;
 сообщение использует role=status, aria-atomic=true и декоративную иконку.
@@ -105,6 +115,50 @@ Top по умолчанию 8px: число задаёт px, строка — CS
 Фоновые holders также ждут закрытия верхнего dialog. Отдельный holder нужен
 для сообщений другого контекста.
 
-В первой версии нет глобального static API/config, getContainer, collapsing
-stack, других положений, интерактивных действий и semantic classNames/styles.
+## Размещение и стек
 
+`getContainer` переносит поверхность в заданный DOM-узел. Getter вызывается
+в браузере без аргументов. При пустом результате учитывается
+`ConfigProvider.getPopupContainer`, затем `document.body`. Когда оба getter
+отсутствуют, поверхность остаётся в DOM-контексте holder. Смена целевого узла
+пересоздаёт поверхность и сохраняет очередь, handles, сроки и фокус за её пределами.
+
+`stack: true` сворачивает список, когда активных сообщений больше трёх.
+`stack: { threshold: 2 }` задаёт свой порог. В свёрнутом стеке видна самая
+свежая карточка. Наведение мышью раскрывает список и приостанавливает отсчёт
+у записей с `pauseOnHover`. При уходе указателя продолжается оставшееся время.
+
+`transitionName` задаёт имя CSS-фаз `appear`, `enter` и `leave` у holder.
+Пустая строка отключает движение. Без настройки используется штатная анимация.
+Учитываются токен `motion` и системная настройка reduced motion.
+
+## Семантическое оформление
+
+`classNames` и `styles` принимают объект слотов либо функцию с аргументом
+`{ props }`. Стили задаются строками inline CSS. `list` и `listContent`
+оформляют список, а `root`, `wrapper`, `icon` и `title` относятся к записи.
+Настройки списка можно задать в `ConfigProvider.message`, при создании очереди
+или в `MessageHolder`. Оформление отдельной записи также можно передать в
+`open` или типизированный метод.
+
+Классы складываются. Стили применяются в порядке от `ConfigProvider.message`
+через настройки holder к записи. Явный `style` записи применяется последним.
+Для списка учитываются настройки поверхности, для записи функция получает
+поля `createMessage` и текущей записи.
+
+## Сверка с Ant Design 6.6.8
+
+`createMessage` с `MessageHolder` соответствует контекстному `message.useMessage`.
+В закреплённой документации Ant Design глобальные методы `message` обозначены
+как deprecated. Контекстный API доступен также через `App.useApp().message`.
+[Исходный справочник](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/message/index.en-US.md#examples)
+
+Эталон использует `role="alert"`, нейтральный вид по умолчанию у `open` и
+приоритет полей объекта в типизированных вызовах. Svelte сохраняет
+`role="status"`, тип `info` и приоритет позиционных параметров. В двух прогонах
+исходной сборки удаление по ключу, вызов handle и вытеснение по FIFO убирали
+сообщения без `onClose` и завершения `then`. При автозакрытии наблюдались оба
+события. Svelte сохраняет завершение handle и `onClose` для программного закрытия.
+[Исходные замеры](../../../tests/browser/fixtures/ant-design-message-api-reference.json) ·
+[Браузерная проверка](../../../tests/browser/message-api.spec.ts) ·
+[Проверка SSR и типов](../../../tests/package/message-api.ssr.test.ts)

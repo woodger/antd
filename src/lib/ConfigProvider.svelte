@@ -29,6 +29,7 @@
   import type { PopconfirmConfig } from './popconfirm.types';
   import type { DrawerConfig } from './drawer.types';
   import type { ModalConfig } from './modal.types';
+  import type { MessageAppearance } from './message.types';
   import type { RateConfig } from './rate.types';
   import type { WatermarkConfig } from './watermark.types';
   import type { AffixConfig } from './affix.types';
@@ -132,6 +133,8 @@
     drawer?: DrawerConfig;
     /** Настройки маски и фокуса Modal и контекстных подтверждений. */
     modal?: ModalConfig;
+    /** Оформление MessageHolder и его записей. */
+    message?: MessageAppearance;
     rate?: RateConfig;
     watermark?: WatermarkConfig;
     affix?: AffixConfig;
@@ -242,6 +245,7 @@
     popconfirm,
     drawer,
     modal,
+    message,
     rate,
     watermark,
     affix,
@@ -420,6 +424,9 @@
     },
     get modal() {
       return modal ?? parent.modal;
+    },
+    get message() {
+      return message ?? parent.message;
     },
     get button() {
       return button ?? parent.button;

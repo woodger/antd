@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="data:,">
+    <title>Message API</title>
+    <style>
+      .observed-appear-active, .observed-enter-active { animation: message-enter .12s both; }
+      .observed-leave-active { animation: message-leave .12s both; }
+      @keyframes message-enter { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes message-leave { from { opacity: 1; } to { opacity: 0; } }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="target-one"></div>
+    <div id="target-two"></div>
+    <script type="module" src="./message-api.client.ts"></script>
+  </body>
+</html>

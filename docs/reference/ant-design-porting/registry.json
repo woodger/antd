@@ -23563,7 +23563,7 @@
       "name": "Message",
       "category": "feedback",
       "scope": "target",
-      "scopeReason": "Ранее реализованный публичный API; проверяется текущее покрытие.",
+      "scopeReason": "Сверены контекстные вызовы, оформление и поверхность Message. Глобальные методы в справочнике 6.6.8 помечены deprecated.",
       "upstreamPath": "components/message",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -23619,16 +23619,74 @@
         "tests/browser/fixtures/ant-design-message-prefix-reference.json",
         "tests/browser/message-prefix-metrics.ts",
         "tests/browser/message-prefix.spec.ts",
-        "tests/package/message-prefix.ssr.test.ts"
+        "tests/package/message-prefix.ssr.test.ts",
+        "src/lib/message.model.svelte.ts",
+        "src/lib/message-semantic.engine.ts",
+        "tests/browser/fixtures/ant-design-message-api-reference.json",
+        "tests/browser/message-api.spec.ts",
+        "tests/package/message-api.ssr.test.ts"
       ],
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
-          "state": "unreviewed",
+          "title": "Контекстные методы и очередь Message",
+          "state": "supported",
           "requiredForV1": true,
-          "evidence": [],
-          "note": "Публичная реализация есть; детализация возможностей в реестре ещё не завершена."
+          "evidence": [
+            "docs/reference/components/message.md",
+            "src/lib/message.model.svelte.ts",
+            "src/lib/message.model.test.ts",
+            "src/lib/App.svelte",
+            "tests/browser/fixtures/ant-design-message-api-reference.json",
+            "tests/browser/message-api.spec.ts",
+            "tests/browser/message.spec.ts",
+            "tests/package/message-api.ssr.test.ts"
+          ],
+          "note": "11 профилей контекстной очереди повторены на UMD Ant Design 6.6.8 дважды. createMessage и MessageHolder соответствуют message.useMessage. App.message передаёт настройки той же очереди. Проверены пять типов, нейтральный open, скаляры, Snippet, два значения ключа, обновление, FIFO, таймер, явное закрытие и чистый SSR. Известные адаптации Svelte: type=info и role=status по умолчанию, нейтральный type=null, приоритет позиционных аргументов, callable PromiseLike handle с завершением после удаления DOM. Глобальные методы отмечены deprecated в components/message/index.en-US.md закреплённой ревизии и исключены из целевого объёма."
+        },
+        {
+          "id": "contextual-semantics",
+          "title": "Оформление ConfigProvider, списка и записи Message",
+          "state": "supported",
+          "requiredForV1": true,
+          "evidence": [
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/MessageHolder.svelte",
+            "src/lib/MessageNotice.svelte",
+            "src/lib/message-semantic.engine.ts",
+            "tests/browser/fixtures/ant-design-message-api-reference.json",
+            "tests/browser/message-api.spec.ts",
+            "tests/package/message-api.ssr.test.ts"
+          ],
+          "note": "Слоты list, listContent, root, wrapper, icon, title. Объекты и функции с props, слои провайдера, настроек holder и записи, явный inline style, class, иконка и нативный onClick. Исходный UMD и Svelte проверены по видимым классам, CSS values, составу DOM и currentTarget."
+        },
+        {
+          "id": "contextual-placement",
+          "title": "Контейнер, stack и CSS-переходы Message",
+          "state": "supported",
+          "requiredForV1": true,
+          "evidence": [
+            "src/lib/MessageHolder.svelte",
+            "src/lib/MessageNotice.svelte",
+            "src/lib/notice-queue.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-message-api-reference.json",
+            "tests/browser/message-api.spec.ts",
+            "tests/browser/message.spec.ts",
+            "tests/package/message-api.ssr.test.ts"
+          ],
+          "note": "Проверены RTL, top=0, порядок свежих сообщений, getContainer без аргументов и fallback к getPopupContainer, смена цели с сохранением очереди и внешнего фокуса, свёрнутый и раскрытый стек, именованное движение и отключение пустым transitionName. Без getter используется прежний inline-контекст holder и viewport нативного popover. Размеры и события измеряются после показа в браузере."
+        },
+        {
+          "id": "source-programmatic-completion",
+          "title": "Наблюдение upstream: программное удаление оставляет PromiseLike handle незавершённым",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/message.md",
+            "tests/browser/fixtures/ant-design-message-api-reference.json",
+            "tests/browser/message-api.spec.ts"
+          ],
+          "note": "В обоих прогонах официального UMD 6.6.8 закрытие handle, удаление по ключу, destroy всей очереди и вытеснение по maxCount удаляют DOM без onClose и then. На автоматическом таймере onClose идёт перед then(true). Svelte сохраняет onClose и then(true) при программном закрытии, then(false) при размонтировании holder."
         },
         {
           "id": "component-theme",
@@ -23651,7 +23709,7 @@
             "tests/package/message-theme.ssr.test.ts",
             "docs/reference/theme-context.md"
           ],
-          "note": "Три исходных defaults: zIndexPopup=zIndexPopupBase+1010, contentBg=colorBgElevated, contentPadding=(controlHeightLG-fontSize×lineHeight)/2 и paddingSM без округления. Финальные overrides, algorithms, aliases, дробные values/CSS lengths, нули/undefined и custom prefix. 16 UMD-тем / 240 raw CSS-состояний: пять statuses, custom icon/multiline, девять provider/style scopes, notice style и Holder styles.list priority. SSR начальный inline style и browser connectInlineStyle сохраняют viewport width/left/top; CSS variables другого prefix разрешаются на notice после наследования Holder. Source icon line box используется только в теме Ant Design; legacy сохранён. Theme updates/inherit reset сохраняют notice/surface DOM, очередь/handles/deadlines и внешний editor focus/selection/FormData; пустой Holder читает текущую тему при новом открытии, unmount удаляет surface. Native min-width:0/overflow-wrap:anywhere сохранены и явно отделены в browser matcher от raw source break-word; остальные raw CSS-метрики сравниваются без поправок. Полный semantic/config/static API и общий аудит семейства остаются отдельными задачами."
+          "note": "Три исходных defaults: zIndexPopup=zIndexPopupBase+1010, contentBg=colorBgElevated, contentPadding=(controlHeightLG-fontSize×lineHeight)/2 и paddingSM без округления. Финальные overrides, algorithms, aliases, дробные values/CSS lengths, нули/undefined и custom prefix. 16 UMD-тем / 240 raw CSS-состояний: пять statuses, custom icon/multiline, девять provider/style scopes, notice style и Holder styles.list priority. SSR начальный inline style и browser connectInlineStyle сохраняют viewport width/left/top; CSS variables другого prefix разрешаются на notice после наследования Holder. Source icon line box используется только в теме Ant Design; legacy сохранён. Theme updates/inherit reset сохраняют notice/surface DOM, очередь/handles/deadlines и внешний editor focus/selection/FormData; пустой Holder читает текущую тему при новом открытии, unmount удаляет surface. Native min-width:0/overflow-wrap:anywhere сохранены и явно отделены в browser matcher от raw source break-word; остальные raw CSS-метрики сравниваются без поправок. Слоты и приоритет оформления проверены в contextual-semantics."
         },
         {
           "id": "source-long-word-overflow",
@@ -23690,7 +23748,7 @@
             "tests/browser/message-prefix.spec.ts",
             "tests/package/message-prefix.ssr.test.ts"
           ],
-          "note": "23 raw UMD конфигурации в normal/nested/reset scopes, включая пять statuses, multiline/custom icon, top/styles, component aliases/cssVar и App.message.prefixCls. Local nonempty prefix wins; empty/undefined наследуют ConfigProvider. 21 CSS rule побайтно совпадает с прежним vendor body; canonical tokens сохранены, private Notification metrics используют отдельный общий namespace. Три raw live transitions сохраняют notice/list/editor DOM и показывают Source stale status classes; отдельные public same-key refresh counterparts возвращают цвет без изменения raw evidence. Native меняет все классы согласованно без reopening, сохраняет очередь, handles, deadlines, passive roles, popover/viewport/motion, focus/selection и callbacks. Полный semantic/config/static/stack/container API и общий аудит семейства остаются отдельно. Делегированная Notification/list логика изучена в @rc-component/notification 2.1.1, без установки зависимости."
+          "note": "23 raw UMD конфигурации в normal/nested/reset scopes, включая пять statuses, multiline/custom icon, top/styles, component aliases/cssVar и App.message.prefixCls. Local nonempty prefix wins; empty/undefined наследуют ConfigProvider. 21 CSS rule побайтно совпадает с прежним vendor body; canonical tokens сохранены, private Notification metrics используют отдельный общий namespace. Три raw live transitions сохраняют notice/list/editor DOM и показывают Source stale status classes; отдельные public same-key refresh counterparts возвращают цвет без изменения raw evidence. Native меняет все классы согласованно без reopening, сохраняет очередь, handles, deadlines, passive roles, popover/viewport/motion, focus/selection и callbacks. Контейнер и стек проверены в contextual-placement. Делегированная Notification/list логика изучена в @rc-component/notification 2.1.1, без установки зависимости."
         },
         {
           "id": "source-stale-prefix-status",

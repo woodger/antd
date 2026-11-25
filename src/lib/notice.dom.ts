@@ -59,6 +59,7 @@ export function connectNoticeSurface(
   let frame = 0;
   let disposed = false;
   let shown = false;
+  let connected = surface.isConnected;
 
   // Измеряет доступность anchor и уведомляет только об изменении видимости.
   function update() {
@@ -73,7 +74,9 @@ export function connectNoticeSurface(
       ? document.elementFromPoint(1, 1)?.closest('dialog:modal') ?? modals.at(-1)
       : undefined;
     const owner = anchor.closest('dialog');
+    connected = surface.isConnected;
     const visible = document.visibilityState !== 'hidden'
+      && connected
       && anchor.isConnected
       && !anchor.closest(
         '[inert]'
@@ -122,7 +125,7 @@ export function connectNoticeSurface(
   }
 
   const observer = new view.MutationObserver((records) => {
-    if (records.some(
+    if (connected !== surface.isConnected || records.some(
       ({ target }) => target instanceof Element
         && (target.matches('dialog')
           || target.contains(

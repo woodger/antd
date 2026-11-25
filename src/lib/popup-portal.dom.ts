@@ -53,6 +53,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
   origin: HTMLElement;
   marker: Comment;
   preserveVariables?: readonly string[];
+  preservePointerEvents?: boolean;
   restoreOnDestroy?: boolean;
 }) {
   const origin = options.origin;
@@ -127,7 +128,9 @@ export function connectPopupPortal(element: HTMLElement, options: {
   }
 
   // Native dialog делает body inert; стандартный portal остаётся в его top layer.
-  element.style.pointerEvents = !getter && modal ? 'auto' : '';
+  if (!options.preservePointerEvents) {
+    element.style.pointerEvents = !getter && modal ? 'auto' : '';
+  }
   if (inline) {
     origin.insertBefore(element, options.marker.nextSibling);
   }
