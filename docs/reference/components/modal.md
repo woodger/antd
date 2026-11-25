@@ -312,6 +312,9 @@ Title/content, icon и подписи кнопок принимают scalar и�
 `icon: null` и `icon: false` скрывают иконку. Опции okCancel, closable, keyboard,
 mask, focusable, scrollLock, getContainer и class применяются отдельно к каждому
 подтверждению.
+`direction` определяет направление конкретного окна. Вызванный метод задаёт
+начальный тип. Через `handle.update({ type })` можно сменить иконку, класс и
+состав штатных кнопок.
 Клик по фону закрывает подтверждение при локальном `mask.closable: true`.
 `focusable.autoFocusButton` выбирает OK или Cancel при открытии и в `handle.update()`.
 По умолчанию выбирается OK. При `null` ни одна кнопка не получает явный autofocus.
@@ -337,9 +340,44 @@ Destroy и удаление holder завершают ожидающие handles
 сняты с официального UMD. Source destroy оставляет await незавершённым; это
 исключение записано и не воспроизводится. Асинхронный rejection использует
 поведение исходного await-режима, без unhandled rejection. Прежние Native
-подписи кнопок из locale.okText/cancelText сохранены. Реестр отслеживает
-глобальные static methods.
+подписи кнопок из locale.okText/cancelText сохранены.
 [модель](../../../src/lib/modal.model.test.ts),
 [браузер](../../../tests/browser/modal-controller.spec.ts),
 [SSR и декларации](../../../tests/package/modal-controller.ssr.test.ts).
 
+## Глобальные подтверждения
+
+`Modal.confirm(config)`, `Modal.info(config)`, `Modal.success(config)`,
+`Modal.warning(config)` и `Modal.error(config)` открывают окно без `ModalHolder`.
+Каждый вызов создаёт отдельный браузерный корень. Диалог переносится в указанный
+контейнер или использует контейнер провайдера и `document.body`. В статическом
+вызове `getContainer: false` выбирает тот же путь, что и отсутствие настройки.
+
+Handle предоставляет `destroy()` и `update()`. Объект в `update` дополняет
+текущие настройки. Функция получает их снимок с `open` и `close` и возвращает
+новую конфигурацию целиком. `update({ open: false })` скрывает панель с
+возможностью повторного открытия. Несколько изменений до ближайшего рендера
+применяются одним обновлением. Закрытие до первого показа освобождает корень
+без callback видимости или закрытия.
+
+Кнопки используют актуальные `onOk` и `onCancel`. Если обработчик принимает
+`close`, он может завершить действие вручную. Ожидание Promise показывает
+loading, а отклонение оставляет окно доступным для повтора. Результат
+действия из предыдущего показа не меняет вновь открытое окно. При Escape,
+клике по маске или кнопке закрытия исходный `onCancel` вызывается после
+исходного `afterClose`. `destroy()` также вызывает исходный `afterClose` после
+закрытия показанной панели. `afterOpenChange` читается из текущих настроек.
+
+`Modal.destroyAll()` закрывает глобальные окна и снимает контекстные
+подтверждения, включая `App.useApp().modal`. Контекстные handles при снятии
+панели завершаются с `false`. В React такой handle остаётся в ожидании.
+При SSR глобальный вызов возвращает пассивный handle. Контекстные
+подтверждения принадлежат своему запросу.
+
+Отдельные корни получают глобальные параметры и `holderRender`. Смонтированные
+провайдеры `locale` участвуют в выборе подписей кнопок статического Modal.
+[ConfigProvider.config](../config-provider.md#глобальные-настройки-статических-вызовов)
+
+[21 профиль Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-static-reference.json)
+· [Chromium](../../../tests/browser/modal-static.spec.ts)
+· [SSR и типы](../../../tests/package/modal-static.ssr.test.ts).

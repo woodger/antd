@@ -4,16 +4,18 @@
   import Modal from './Modal.svelte';
   import ModalActionButton from './ModalActionButton.svelte';
   import Icon from './Icon.svelte';
-  import { useConfig } from './config-context';
+  import { provideConfig, useConfig, type ConfigContext } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { normalizeDialogMask } from './dialog-interaction.engine';
-  import { modalHolderKey, type ModalConfirmation } from './modal.model.svelte.js';
-  import type { ModalHolderProps } from './modal-confirm.types';
+  import type { ModalConfirmation, ModalConfirmationRuntime } from './modal-confirm.types';
   import type { ModalSemanticBody } from './modal-semantic.engine';
   import type { ModalContent } from './modal.types';
 
-  let { confirmation, modal }: ModalHolderProps & { confirmation: ModalConfirmation; } = $props();
-  const runtime = untrack(() => modal[modalHolderKey]);
+  let { confirmation, runtime }: {
+    confirmation: ModalConfirmation;
+    runtime: ModalConfirmationRuntime;
+  } = $props();
+  const owner = untrack(() => runtime);
   const id = untrack(() => confirmation.id);
   const generatedId = $props.id();
   const titleId = `ant-modal-confirm-title-${generatedId}`;
@@ -35,7 +37,12 @@
   const panelRef = $derived(options.panelRef);
   const labelledBy = $derived(options.wrapProps?.['aria-labelledby']
     ?? (options.wrapProps?.['aria-label']?.trim() ? undefined : hasTitle ? titleId : contentId));
-  const defaultIcon = $derived(icons[confirmation.type]);
+  const direction = $derived(options.direction ?? config.direction);
+  const panelConfig: ConfigContext = Object.create(config, {
+    direction: { get: () => direction }
+  });
+  provideConfig(panelConfig);
+  const defaultIcon = $derived(icons[confirmation.type ?? 'warning']);
   const icon = $derived(options.icon === undefined ? config.modal?.[defaultIcon.option] : options.icon);
   const hasIcon = $derived(icon !== null && typeof icon !== 'boolean');
   let okCancel = $derived(options.okCancel ?? confirmation.type === 'confirm');
@@ -102,7 +109,7 @@
     }
 
     // Отрисованная оболочка проходит lifecycle, даже если modalRender заменил всё тело.
-    runtime.mounted(id);
+    owner.mounted(id, node);
     if (ref) {
       untrack(() => ref(node));
       return () => ref(undefined);
@@ -134,7 +141,7 @@
     autofocus={autofocusButton === 'ok'}
     text={okText}
     part="ok"
-    action={() => runtime.act(id, true)}
+    action={() => owner.act(id, true)}
   />
 {/snippet}
 
@@ -147,7 +154,7 @@
       autofocus={autofocusButton === 'cancel'}
       text={cancelText}
       part="cancel"
-      action={() => runtime.act(id, false)}
+      action={() => owner.act(id, false)}
     />
   {/if}
 {/snippet}
@@ -167,7 +174,7 @@
     ]}>
       {#if hasIcon}
         {#if icon === undefined}
-          <span class="anticon" aria-hidden="true"><Icon name={defaultIcon.name} /></span>
+          <span class={config.iconPrefixCls} aria-hidden="true"><Icon name={defaultIcon.name} /></span>
         {:else}
           {@render content(icon)}
         {/if}
@@ -209,7 +216,8 @@
   getContainer={options.getContainer}
   class={[
     'modal-confirm-dialog', `${componentPrefix}-confirm`,
-    `${componentPrefix}-confirm-${confirmation.type}`, options.class
+    confirmation.type && `${componentPrefix}-confirm-${confirmation.type}`,
+    direction === 'rtl' && `${componentPrefix}-confirm-rtl`, options.class
   ].filter(Boolean).join(' ')}
   style={options.style}
   rootClassName={options.rootClassName}
@@ -223,8 +231,8 @@
   modalRender={options.modalRender}
   bind:panelRef={panel}
   aria-labelledby={labelledBy}
-  onCancel={() => runtime.dismiss(id)}
-  afterClose={() => runtime.complete(id, true)}
+  onCancel={() => owner.dismiss(id)}
+  afterClose={() => owner.complete(id, true)}
   {afterOpenChange}
   footer={null}
   _renderSemanticContent={confirmBody}

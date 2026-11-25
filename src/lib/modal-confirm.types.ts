@@ -15,6 +15,10 @@ export interface ModalConfirmFocusableConfig extends ModalFocusableConfig {
 export interface ModalConfirmConfig extends ModalSurfaceProps {
   /** Локальный namespace подтверждения; пустая строка наследует ConfigProvider держателя. */
   prefixCls?: string;
+  /** Локальное направление подтверждения. Undefined наследует провайдера. */
+  direction?: 'ltr' | 'rtl';
+  /** Начальный тип задаёт вызванный метод. Update может сменить вариант. */
+  type?: ModalConfirmType;
   title?: ModalContent;
   content?: ModalContent;
   /** Undefined выбирает иконку ConfigProvider по типу подтверждения. */
@@ -70,4 +74,36 @@ export type ModalInstance = ReturnType<typeof createModal>;
 
 export interface ModalHolderProps {
   modal: ModalInstance;
+}
+
+export interface ModalStaticConfig extends ModalConfirmConfig {
+  /** При вызове окно открывается. Update может скрыть и повторно показать его. */
+  open?: boolean;
+}
+
+export interface ModalStaticHandle {
+  /** Закрывает и освобождает отдельный корень окна. */
+  destroy(): void;
+  /** Объект дополняет конфигурацию, функция возвращает её новую версию целиком. */
+  update(
+    config: ModalStaticConfig
+      | ((previous: Readonly<ModalStaticConfig & { close: () => void; }>) => ModalStaticConfig)
+  ): void;
+}
+
+export interface ModalConfirmation {
+  readonly id: number;
+  readonly type?: ModalConfirmType;
+  readonly config: Readonly<ModalConfirmConfig>;
+  readonly open: boolean;
+  readonly pendingOk: boolean;
+  readonly pendingCancel: boolean;
+}
+
+/** Операции владельца, которые инициирует общая панель подтверждения. */
+export interface ModalConfirmationRuntime {
+  mounted(id: number, panel?: HTMLDialogElement): void;
+  act(id: number, confirmed: boolean): boolean;
+  dismiss(id: number): void;
+  complete(id: number, notifyVisibility?: boolean): void;
 }

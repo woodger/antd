@@ -23712,7 +23712,7 @@
       "name": "Modal",
       "category": "feedback",
       "scope": "target",
-      "scopeReason": "Ранее реализованный публичный API; проверяется текущее покрытие.",
+      "scopeReason": "Сверены обычный Modal, контекстные подтверждения и глобальные статические вызовы. Сохраняемые нативные контракты и наблюдения источника записаны отдельно.",
       "upstreamPath": "components/modal",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -23842,16 +23842,33 @@
         "tests/browser/fixtures/ant-design-modal-semantics-reference.json",
         "tests/browser/modal-semantics.spec.ts",
         "tests/browser/modal-semantics-hydration.spec.ts",
-        "tests/package/modal-semantics.ssr.test.ts"
+        "tests/package/modal-semantics.ssr.test.ts",
+        "src/lib/modal.component.ts",
+        "src/lib/modal-static.model.svelte.ts",
+        "src/lib/ModalStaticHolder.svelte",
+        "src/lib/modal-destroy.dom.ts",
+        "tests/browser/fixtures/ant-design-modal-static-reference.json",
+        "tests/browser/modal-static.spec.ts",
+        "tests/package/modal-static.ssr.test.ts"
       ],
       "features": [
         {
           "id": "core-v1",
           "title": "Подробный аудит согласованного API v1",
-          "state": "unreviewed",
+          "state": "supported",
           "requiredForV1": true,
-          "evidence": [],
-          "note": "Публичная реализация есть; детализация возможностей в реестре ещё не завершена. Закрытие по фону использует mask.closable (default true); deprecated maskClosable удалён, pointer origin и фокус сохранены."
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/modal.types.ts",
+            "src/lib/modal-confirm.types.ts",
+            "src/lib/modal.component.ts",
+            "tests/browser/modal-interaction.spec.ts",
+            "tests/browser/modal-semantics.spec.ts",
+            "tests/browser/modal-controller.spec.ts",
+            "tests/browser/modal-static.spec.ts",
+            "tests/package/modal-static.ssr.test.ts"
+          ],
+          "note": "Сверены публичные ModalProps и ModalFuncProps, включая используемые поля rc-dialog 1.10.0, ConfigProvider.modal и ConfigProvider.config для статических вызовов. Унаследованный visible замещён open, children подтверждения задаётся content. Deprecated свойства и методы исключены. Нативный bind:open, snippets, ref HTMLDialogElement и отдельные адаптации ARIA, lifecycle и await перечислены в возможностях семейства и документации."
         },
         {
           "id": "compact-isolation",
@@ -24123,10 +24140,21 @@
         {
           "id": "extended-modal-api",
           "title": "Глобальные статические методы Modal",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Остаются глобальные вызовы без holder и destroyAll, а также аудит специальных параметров контроллера."
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/modal.component.ts",
+            "src/lib/modal-static.model.svelte.ts",
+            "src/lib/modal-confirm-action.engine.ts",
+            "src/lib/modal-destroy.dom.ts",
+            "src/lib/modal-locale.dom.ts",
+            "src/lib/ModalStaticHolder.svelte",
+            "tests/browser/fixtures/ant-design-modal-static-reference.json",
+            "tests/browser/modal-static.spec.ts",
+            "tests/package/modal-static.ssr.test.ts"
+          ],
+          "note": "21 профиль UMD 6.6.8 в двух прогонах. Пять глобальных методов возвращают destroy/update, рендерятся с отложенным применением настроек и завершают отдельный корень. Покрыты ConfigProvider.config, holderRender, локаль, direction/type, контейнер, полная функциональная замена настроек, скрытие и повторный показ, loading, исходный afterClose и разный порядок отмены с кнопки и Escape. destroyAll снимает контекстные панели без событий закрытия, сохраняя Svelte-завершение await с false. При SSR глобальных корней и таймеров нет. После повторного открытия старое async-действие не закрывает актуальную панель."
         },
         {
           "id": "native-zero-title",
@@ -24174,9 +24202,11 @@
             "tests/browser/fixtures/ModalControllerFixtures.svelte",
             "tests/browser/fixtures/ant-design-modal-controller-reference.json",
             "tests/browser/modal-controller.spec.ts",
-            "tests/package/modal-controller.ssr.test.ts"
+            "tests/package/modal-controller.ssr.test.ts",
+            "tests/browser/fixtures/ant-design-modal-static-reference.json",
+            "tests/browser/modal-static.spec.ts"
           ],
-          "note": "Для отдельного разбора: официальный UMD 6.6.8 Modal.useModal удаляет dialog и вызывает afterClose после handle.destroy(), но PromiseLike result остаётся pending. Native destroy завершает handle с false без onCancel; holder removal также завершает ожидания без consumer callbacks. Late async fulfillment/rejection не меняет уже закрытое состояние."
+          "note": "Официальный UMD 6.6.8 Modal.useModal удаляет dialog и вызывает afterClose после handle.destroy(), но PromiseLike result остаётся pending. Глобальный destroyAll снимает контекстный dialog без afterClose и также оставляет ожидание. Native завершает handle с false в обоих случаях, без onCancel. Удаление holder также завершает ожидания. Late async fulfillment/rejection не меняет уже закрытое состояние."
         },
         {
           "id": "component-prefix",
@@ -26775,6 +26805,23 @@
             "docs/reference/themes.md"
           ],
           "note": "Два прогона закреплённого antd-with-locales.min.js дали одинаковые данные для 73 подмодулей locale/<код>. Пакет сохраняет общий объект Calendar/DatePicker и отдельные подписи Modal и Popconfirm. Deprecated поля формата из rc-picker исключены. AntDesignLocale использует английские defaults Ant Design для пропущенных разделов. Нативные ruRU/enUS и вложенные частичные переопределения сохранены. Два браузерных прогона эталона покрывают 12 языков для пикеров, Calendar, Pagination, Empty, Table, Modal и Popconfirm, включая живую смену французского на немецкий. При строгой гидратации немецкая локаль сохраняет исходное поле, формат 19.06.2024, фокус и выделение. Для календарной арифметики потребитель загружает нужную локаль Day.js."
+        },
+        {
+          "id": "global-modal-root",
+          "title": "ConfigProvider.config для статических подтверждений Modal",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/config-provider.md",
+            "src/lib/config-provider.component.ts",
+            "src/lib/config-provider-global.ts",
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/ModalStaticHolder.svelte",
+            "tests/browser/fixtures/ant-design-modal-static-reference.json",
+            "tests/browser/modal-static.spec.ts",
+            "tests/package/modal-static.ssr.test.ts"
+          ],
+          "note": "prefixCls, iconPrefixCls и theme применяются при отложенном рендере. Holder snippet захватывается в момент вызова, а его локальный провайдер управляет настройками собственных детей. Проверены общий префикс кнопок, пространство имён иконки, RTL, частичные локали с удалением провайдера и изоляция обычного App. На сервере глобальная конфигурация не меняется."
         },
         {
           "id": "core-v1",

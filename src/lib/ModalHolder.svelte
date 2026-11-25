@@ -14,6 +14,6 @@
 <span hidden aria-hidden="true" {@attach connect}></span>
 {#key modal}
   {#each runtime.confirmations as confirmation (confirmation.id)}
-    <ModalConfirmation {confirmation} {modal} />
+    <ModalConfirmation {confirmation} {runtime} />
   {/each}
 {/key}

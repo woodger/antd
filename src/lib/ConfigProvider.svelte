@@ -79,6 +79,7 @@
   import type { ComponentSize, Variant, Locale, ThemeConfig } from './types';
   import type { AntDesignLocale } from './locale.types';
   import { resolveProviderLocale } from './locale.engine';
+  import { registerModalLocale } from './modal-locale.dom';
   import './styles.css';
 
   /** Наследуемые настройки темы, локали и компонентов для дочернего дерева Svelte. */
@@ -86,6 +87,8 @@
     children: Snippet;
     /** Общий prefix классов; подключённые компоненты перечислены в README. */
     prefixCls?: string;
+    /** Пространство имён штатных иконок подтверждения Modal. */
+    iconPrefixCls?: string;
     /** Частично переопределяет родительскую тему; остальные поля наследуются. */
     theme?: ThemeConfig;
     /** Общее оформление полей и Card; локальные props, Form и component config имеют приоритет. */
@@ -207,6 +210,7 @@
   let {
     children,
     prefixCls,
+    iconPrefixCls,
     theme,
     variant,
     form,
@@ -320,8 +324,16 @@
   let gridMediaCss = $derived(gridMediaScope && gridMediaScope !== parentGridMediaScope
     ? getGridMediaCss(designTokens.state.token) : undefined);
   let providerLocale = $derived(resolveProviderLocale(locale));
+  $effect(() => {
+    if (locale) {
+      return registerModalLocale(locale);
+    }
+  });
   const config: ConfigContext = {
     getPrefixCls,
+    get iconPrefixCls() {
+      return iconPrefixCls || parent.iconPrefixCls;
+    },
     get variant() {
       return variant ?? parent.variant;
     },

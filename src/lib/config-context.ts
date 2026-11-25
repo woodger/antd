@@ -75,6 +75,7 @@ import { ruRU, type ComponentSize, type Variant, type Locale, type ResolvedTheme
 
 export interface ConfigContext {
   readonly getPrefixCls: (suffix?: string, custom?: string) => string;
+  readonly iconPrefixCls: string;
   readonly variant?: Variant;
   readonly form?: FormConfig;
   readonly app?: AppConfig;
@@ -169,6 +170,7 @@ export interface ConfigContext {
 const configKey = Symbol('ant-design-config');
 const defaultConfig: ConfigContext = {
   getPrefixCls: (suffix, custom) => custom || (suffix ? `ant-${suffix}` : 'ant'),
+  iconPrefixCls: 'anticon',
   componentSize: 'medium',
   componentDisabled: false,
   direction: 'ltr',

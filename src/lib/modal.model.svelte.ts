@@ -1,27 +1,22 @@
 // Владеет очередью подтверждений и результатом действий. Holder монтирует DOM в своём контексте.
 import { tick } from 'svelte';
+import { runModalAction } from './modal-confirm-action.engine';
+import { registerModalDestroy } from './modal-destroy.dom';
 import type {
   ModalConfirmConfig,
   ModalConfirmHandle,
-  ModalConfirmType
+  ModalConfirmType,
+  ModalConfirmation
 } from './modal-confirm.types';
 
 export const modalHolderKey = Symbol('ant-modal-holder');
-
-export interface ModalConfirmation {
-  readonly id: number;
-  readonly type: ModalConfirmType;
-  readonly config: Readonly<ModalConfirmConfig>;
-  readonly open: boolean;
-  readonly pendingOk: boolean;
-  readonly pendingCancel: boolean;
-}
 
 interface Entry {
   view: ModalConfirmation;
   rendered: boolean;
   running: Set<boolean>;
   resolve: (confirmed: boolean) => void;
+  unregister?: () => void;
 }
 
 /** Изолированные подтверждения; DOM, тема и локаль принадлежат ModalHolder. */
@@ -39,8 +34,17 @@ export function createModal() {
     const id = entry.view.id;
     if (entries.get(id) === entry) {
       entries.delete(id);
+      entry.unregister?.();
       publish();
     }
+  }
+
+  function register(entry: Entry) {
+    // Source destroyAll снимает контекстную панель сразу, как при удалении holder.
+    entry.unregister = registerModalDestroy(() => {
+      remove(entry);
+      entry.resolve(false);
+    });
   }
 
   function complete(id: number, notifyVisibility = false) {
@@ -89,57 +93,16 @@ export function createModal() {
     if (!entry?.view.open) {
       return false;
     }
-    if (entry.running.has(confirmed)) {
-      return false;
-    }
 
-    const config = entry.view.config;
     const field = confirmed ? 'pendingOk' : 'pendingCancel';
-    const callback = confirmed ? config.onOk : config.onCancel;
-    // Действие сохраняет onClose на момент нажатия. afterClose читается при закрытии окна.
-    const onClose = typeof config.closable === 'object' ? config.closable.onClose : undefined;
-    const finish = () => close(entry, confirmed, onClose);
-    if (!callback) {
-      finish();
-      return true;
-    }
-
-    entry.running.add(confirmed);
-    let result: unknown;
-    try {
-      result = callback.length ? callback(finish) : (callback as () => unknown)();
-    }
-    catch (error) {
-      entry.running.delete(confirmed);
-      throw error;
-    }
-    if (result !== null
-      && (typeof result === 'object' || typeof result === 'function')
-      && 'then' in result
-      && typeof result.then === 'function') {
-      if (!entry.view.open || entries.get(id) !== entry) {
-        void Promise.resolve(result).catch(() => {});
-        return true;
-      }
-      entry.view = { ...entry.view, [field]: true };
-      publish();
-      void Promise.resolve(result).then(finish, () => {
-        // Отклонённая async-проверка оставляет окно для повторного действия.
-        if (entries.get(id) !== entry || !entry.view.open) {
-          return;
-        }
-        entry.running.delete(confirmed);
-        entry.view = { ...entry.view, [field]: false };
+    return runModalAction(entry.view.config, confirmed, entry.running, {
+      isCurrent: () => entries.get(id) === entry && entry.view.open,
+      finish: onClose => close(entry, confirmed, onClose),
+      pending(value) {
+        entry.view = { ...entry.view, [field]: value };
         publish();
-      });
-    }
-    else if (callback.length === 0) {
-      finish();
-    }
-    else {
-      entry.running.delete(confirmed);
-    }
-    return true;
+      }
+    });
   }
 
   function dismiss(id: number) {
@@ -160,7 +123,7 @@ export function createModal() {
       view: {
         id: ++nextId,
         type,
-        config: { ...config },
+        config: { ...config, type },
         open: true,
         pendingOk: false,
         pendingCancel: false
@@ -174,6 +137,9 @@ export function createModal() {
     }
     else {
       entries.set(entry.view.id, entry);
+      if (state === 'mounted') {
+        register(entry);
+      }
       publish();
     }
 
@@ -189,7 +155,8 @@ export function createModal() {
         if (entries.get(entry.view.id) !== entry || !entry.view.open) {
           return;
         }
-        entry.view = { ...entry.view, config: { ...entry.view.config, ...changes } };
+        const config = { ...entry.view.config, ...changes };
+        entry.view = { ...entry.view, config, type: config.type };
         publish();
       },
       // oxlint-disable-next-line unicorn/no-thenable -- Hook Modal API возвращает PromiseLike handle.
@@ -202,6 +169,9 @@ export function createModal() {
       throw new Error('A modal instance supports one mounted ModalHolder.');
     }
     state = 'mounted';
+    for (const entry of entries.values()) {
+      register(entry);
+    }
     let connected = true;
     return () => {
       if (!connected) {
@@ -212,7 +182,10 @@ export function createModal() {
       const pending = [...entries.values()];
       entries.clear();
       publish();
-      for (const entry of pending) entry.resolve(false);
+      for (const entry of pending) {
+        entry.unregister?.();
+        entry.resolve(false);
+      }
     };
   }
 

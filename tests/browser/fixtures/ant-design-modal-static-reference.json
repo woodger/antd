@@ -1,0 +1,1322 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "confirm",
+        "method": "confirm"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "info",
+        "method": "info"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-info",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "success",
+        "method": "success"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-success",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "warning",
+        "method": "warning"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-warning",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "error",
+        "method": "error"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-error",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "global-prefix",
+        "method": "confirm",
+        "prefix": "global"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "global-modal",
+            "type": "global-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "global-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "global-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "global-holder",
+        "method": "confirm",
+        "prefix": "global",
+        "holder": true
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "holder-modal",
+            "type": "holder-modal-confirm-confirm",
+            "rtl": true,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "holder-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": "Holder OK",
+                "class": "holder-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "false-container",
+        "method": "confirm",
+        "inline": true
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "target-container",
+        "method": "confirm",
+        "container": "#static-target"
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": true,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "update",
+        "method": "confirm",
+        "update": true
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Applied function",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Applied object",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "update",
+          true,
+          "function"
+        ],
+        [
+          "Primary",
+          "onOk"
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "destroy",
+        "method": "confirm",
+        "destroy": true
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "destroy-all",
+        "method": "confirm",
+        "multiple": true
+      },
+      "before": {
+        "handle": [
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          },
+          {
+            "keys": [
+              "destroy",
+              "update"
+            ],
+            "then": "undefined"
+          },
+          {
+            "keys": [
+              "destroy",
+              "then",
+              "update"
+            ],
+            "then": "function"
+          }
+        ],
+        "dialogs": [
+          {
+            "prefix": "scope-modal",
+            "type": "scope-modal-confirm-confirm",
+            "rtl": true,
+            "title": "Context",
+            "content": "Context",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "scope-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "scope-btn"
+              }
+            ]
+          },
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-confirm",
+            "rtl": false,
+            "title": "Primary",
+            "content": "Primary",
+            "target": false,
+            "actions": [
+              {
+                "text": "Scoped Cancel",
+                "title": null,
+                "class": "ant-btn"
+              },
+              {
+                "text": "Scoped OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          },
+          {
+            "prefix": "ant-modal",
+            "type": "ant-modal-confirm-warning",
+            "rtl": false,
+            "title": "Second",
+            "content": "Second",
+            "target": false,
+            "actions": [
+              {
+                "text": "OK",
+                "title": null,
+                "class": "ant-btn"
+              }
+            ]
+          }
+        ]
+      },
+      "events": [
+        [
+          "Context",
+          "visible",
+          true
+        ],
+        [
+          "Primary",
+          "afterClose"
+        ],
+        [
+          "Primary",
+          "visible",
+          false
+        ],
+        [
+          "Primary",
+          "visible",
+          true
+        ],
+        [
+          "Second",
+          "afterClose"
+        ],
+        [
+          "Second",
+          "visible",
+          false
+        ],
+        [
+          "Second",
+          "visible",
+          true
+        ]
+      ]
+    }
+  ],
+  "lifecycle": [
+    {
+      "id": "coalesced",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Final",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "abandon",
+      "immediate": 0,
+      "frames": [
+        null
+      ],
+      "events": []
+    },
+    {
+      "id": "escape-updated",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "ant-modal-confirm-info",
+          "title": "Updated",
+          "body": "User body",
+          "rtl": true,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-cancel",
+          "function"
+        ],
+        [
+          "new-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "cancel-updated",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "ant-modal-confirm-info",
+          "title": "Updated",
+          "body": "User body",
+          "rtl": true,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "new-cancel"
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "new-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "async",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn",
+                "ant-btn-loading"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "ok"
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "replace",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "ant-modal-confirm-info",
+          "title": "Replacement",
+          "body": "",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "hide-reopen",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        },
+        null,
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Reopened",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ],
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "provider-timing",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "late-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": true,
+          "icon": "late-icons",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "late-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": "First holder",
+              "classes": [
+                "late-btn"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "new-modal-confirm-confirm",
+          "title": "Refreshed",
+          "body": "User body",
+          "rtl": true,
+          "icon": "new-icons",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "new-btn"
+              ]
+            },
+            {
+              "label": "OK",
+              "title": "First holder",
+              "classes": [
+                "new-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "locale-stack",
+      "immediate": 0,
+      "frames": [
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Initial",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Second Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "First OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "ant-modal-confirm-confirm",
+          "title": "Refreshed",
+          "body": "User body",
+          "rtl": false,
+          "icon": "anticon",
+          "buttons": [
+            {
+              "label": "Cancel",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            },
+            {
+              "label": "First OK",
+              "title": null,
+              "classes": [
+                "ant-btn"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        [
+          "initial-visible",
+          true
+        ],
+        [
+          "initial-close"
+        ],
+        [
+          "initial-visible",
+          false
+        ]
+      ]
+    }
+  ]
+}

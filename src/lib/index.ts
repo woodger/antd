@@ -16,6 +16,8 @@ export type {
   ModalConfirmAction,
   ModalConfirmFocusableConfig,
   ModalConfirmConfig,
+  ModalStaticConfig,
+  ModalStaticHandle,
   ModalConfirmHandle,
   ModalInstance,
   ModalHolderProps
@@ -357,7 +359,7 @@ export type {
   DescriptionsConfig,
   DescriptionsSemantic
 } from './descriptions.types';
-export { default as ConfigProvider } from './ConfigProvider.svelte';
+export { default as ConfigProvider } from './config-provider.component';
 export { default as Button } from './Button.svelte';
 export type {
   ButtonLinkProps,
@@ -511,7 +513,7 @@ export { default as Switch } from './Switch.svelte';
 export { default as Pagination } from './Pagination.svelte';
 export { default as Table } from './table.component';
 export { default as Select } from './Select.svelte';
-export { default as Modal } from './Modal.svelte';
+export { default as Modal } from './modal.component';
 export { default as Form } from './Form.svelte';
 export { default as FormItem } from './FormItem.svelte';
 export { default as FormList } from './FormList.svelte';
@@ -1011,6 +1013,7 @@ export type {
   ModalWrapProps, ModalPartProps, ModalSurfaceProps
 } from './modal.types';
 export type { ConfigProviderProps } from './ConfigProvider.svelte';
+export type { GlobalConfigProps } from './config-provider-global';
 export type {
   WaveConfig,
   WaveTriggerType,

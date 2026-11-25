@@ -106,7 +106,12 @@
   });
   let componentPrefix = $derived(config.getPrefixCls('modal', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix));
+  const iconPrefix = $derived(config.iconPrefixCls);
+  const customIconPrefix = $derived(iconPrefix === 'anticon' ? undefined : iconPrefix);
+  let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix, iconPrefix));
+  const prefixScope = $derived(customIconPrefix
+    ? `modal-prefix:${componentPrefix}:${rootPrefix}:${customIconPrefix}`
+    : `modal-prefix:${componentPrefix}:${rootPrefix}`);
   const componentTheme = useComponentTheme('Modal');
   const designTheme = useDesignTokenContext();
   const placement = $derived(centered ?? config.modal?.centered);
@@ -675,9 +680,10 @@
 
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if layout.css && layout.scope}<ThemeScopeStyle css={layout.css} scope={layout.scope} />{/if}{#if renderDialog}{#key container.key}<dialog
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={prefixScope} />{/if}{#if layout.css && layout.scope}<ThemeScopeStyle css={layout.css} scope={layout.scope} />{/if}{#if renderDialog}{#key container.key}<dialog
   {...wrapper.attributes}
   data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix}
+  data-ant-modal-icon-prefix={customIconPrefix}
   data-ant-modal-layout={layout.scope}
   data-ant-modal-top={placement === false || undefined}
   data-ant-modal-managed={!interaction.native || undefined}
@@ -720,6 +726,7 @@
   {/if}
   {#if renderPanel}<div data-ant-modal-panel data-ant-modal-prefix={componentPrefix}
     data-ant-modal-root-prefix={rootPrefix}
+    data-ant-modal-icon-prefix={customIconPrefix}
     class={[componentPrefix, config.modal?.class, panelMotion.className]}
     data-ant-modal-zoom={zoomFrame}
     style={panelStyle}
