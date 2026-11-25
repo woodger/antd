@@ -19699,6 +19699,25 @@
           "note": "Два одинаковых UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 10 профилей дают 34 состояния и 10 SSR-снимков. Отдельный профиль видимой полосы даёт два состояния с gutter 15 px. Snippet получает корневые записи текущей страницы. Проверены scroll.y, sticky, showHeader, пустое тело, приоритет встроенного virtual, DOM scrollTo по позиции и ключу, offset и index, прямая передача запроса proxy handle, LTR/RTL, синхронизация колёсика, закреплённых итогов и положения владельца. Применение сортировки и страницы следует scrollToFirstRowOnChange. Svelte читает фактический DOM gutter и сохраняет caption в видимой шапке. Строгая гидратация подтверждает DOM identity, ввод и фокус."
         },
         {
+          "id": "dom-attributes-caption",
+          "title": "DOM-атрибуты и подпись Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-semantic.engine.ts",
+            "src/lib/table-virtual.model.svelte.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-dom-attributes-reference.json",
+            "tests/browser/table-dom-attributes.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-dom-attributes.ssr.test.ts",
+            "tests/package/table-dom-attributes.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 дали 30 браузерных состояний и 15 SSR-снимков. Проверены id и data-* на внутреннем контейнере, role и aria-* на семантических таблицах, нулевые и пустые значения, обновление и снятие атрибутов, префикс caption и строка, число, snippet, boolean, null. В Source непустое виртуальное окно и пользовательское тело теряют caption. Svelte сохраняет подпись в штатном table или отдельной видимой шапке. Проверены доступное имя и описание, измерение сменённого caption, DOM редактора, фокус и выделение при строгой гидратации."
+        },
+        {
           "id": "conditional-cell-update",
           "title": "Условное обновление содержимого Table через shouldCellUpdate",
           "state": "supported",

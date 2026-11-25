@@ -6,6 +6,68 @@ import { fileURLToPath } from 'node:url';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
+test('virtual Table hydrates the caption and accessibility attributes around a focused draft',
+  async ({ page }) => {
+    const artifacts = new URL(
+      '../../.upstream/artifacts/table-dom-attributes-hydration-',
+      import.meta.url
+    );
+    const cacheDir = await mkdtemp(fileURLToPath(artifacts));
+    let server: ViteDevServer | undefined;
+    try {
+      server = await createServer({
+        configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+        server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+        appType: 'custom', cacheDir
+      });
+      const entry = new URL('./fixtures/table-virtual-hydration.server.ts', import.meta.url);
+      const { renderTableDomAttributesFixture } = await server.ssrLoadModule(fileURLToPath(entry));
+      const { body, head } = renderTableDomAttributesFixture();
+      await page.goto('/select-components-hydration.html?table-dom-attributes');
+      await page.addScriptTag({ type: 'module', url: '/table-virtual-hydration.client.ts' });
+      const root = page.locator('#root');
+      await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+      await root.evaluate((node, html) => {
+        document.head.insertAdjacentHTML('beforeend', html.head);
+        node.innerHTML = html.body;
+      }, { body, head });
+      const caption = root.locator('caption');
+      const captionId = await caption.getAttribute('id');
+      const originalCaption = await caption.elementHandle();
+      const editor = root.getByRole('textbox', { name: 'Row draft', exact: true });
+      const originalEditor = await editor.elementHandle();
+      await editor.fill('Edited before hydration');
+      await editor.evaluate((input: HTMLInputElement) => input.setSelectionRange(2, 8));
+
+      await root.dispatchEvent('hydrate-table-virtual');
+
+      await expect(root).toHaveAttribute('data-hydrated', 'true');
+      await expect(root.getByRole('grid', { name: 'Report heading' }))
+        .toHaveAccessibleDescription('Detailed report');
+      await expect(editor).toHaveValue('Edited before hydration');
+
+      await root.getByRole('button', { name: 'Update attributes' }).dispatchEvent('click');
+
+      const region = root.getByRole('region', { name: 'Updated caption' });
+      expect(captionId).toBeTruthy();
+      await expect(region).toHaveAttribute('aria-labelledby', captionId ?? '');
+      await expect(root.getByRole('table', { name: 'Updated table' }))
+        .toHaveAccessibleDescription('Replacement details');
+      expect(await caption.evaluate((node, before) => node === before, originalCaption)).toBe(true);
+      await expect(editor).toBeFocused();
+      await expect(editor).toHaveValue('Edited before hydration');
+      expect(await editor.evaluate((node, before) => node === before, originalEditor)).toBe(true);
+      expect(await editor.evaluate((input: HTMLInputElement) => [
+        input.selectionStart, input.selectionEnd
+      ])).toEqual([2, 8]);
+    }
+    finally {
+      await server?.close();
+      await rm(cacheDir, { recursive: true, force: true });
+    }
+  }
+);
+
 test('virtual Table preserves the hydrated editor when a cell update is rejected', async ({
   page
 }) => {

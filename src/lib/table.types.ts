@@ -1,7 +1,8 @@
 import type { Snippet } from 'svelte';
 import type { Attachment } from 'svelte/attachments';
 import type {
-  HTMLAttributes, HTMLInputAttributes, HTMLTableAttributes, HTMLTdAttributes, HTMLThAttributes
+  AriaAttributes, HTMLAttributes, HTMLInputAttributes, HTMLTableAttributes, HTMLTdAttributes,
+  HTMLThAttributes
 } from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
@@ -441,8 +442,12 @@ interface TableElementAttributeMap {
   th: Omit<HTMLThAttributes, 'children'>;
 }
 
+type TableDataAttributes = {
+  [name: `data-${string}`]: string | number | boolean | undefined;
+};
+
 export type TableElementAttributes<Tag extends TableElementTag> = TableElementAttributeMap[Tag]
-  & { [name: `data-${string}`]: string | number | boolean | undefined; };
+  & TableDataAttributes;
 
 /** Передайте attributes, children и ref реальному элементу с семантикой этого места. */
 export interface TableElementRenderInfo<Tag extends TableElementTag = TableElementTag> {
@@ -509,7 +514,11 @@ export type TableLocaleOverrides =
   };
 
 /** Типизированная таблица с columns, row identity, фильтрами, сортировкой и пагинацией. */
-export interface TableProps<Row extends object> {
+export interface TableProps<Row extends object> extends AriaAttributes, TableDataAttributes {
+  /** ID внутреннего контейнера таблицы, принадлежащего текущему prefixCls. */
+  id?: string;
+  /** Передаётся семантическим таблицам вместе с aria-атрибутами. */
+  role?: HTMLTableAttributes['role'];
   /** Локальный Table owner перекрывает ConfigProvider.prefixCls. */
   prefixCls?: string;
   /** Локальный префикс списка фильтров; shell и controls наследуют общий prefix. */
@@ -576,7 +585,8 @@ export interface TableProps<Row extends object> {
   footer?: Snippet<[data: readonly Row[]]>;
   /** Итоговые строки внутри таблицы; получают записи текущей страницы. */
   summary?: Snippet<[data: readonly Row[]]> | TableSummaryConfig<Row>;
-  caption?: string;
+  /** Подпись таблицы. Число выводится текстом, null и undefined пропускают caption. */
+  caption?: string | number | boolean | Snippet | null;
   /** Локальные подписи таблицы и содержимое пустой ячейки. */
   locale?: TableLocaleOverrides;
   empty?: Snippet;

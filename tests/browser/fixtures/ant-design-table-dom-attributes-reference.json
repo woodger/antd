@@ -1,0 +1,2983 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "ordinary",
+        "caption": "rich"
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Updated caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "horizontal",
+        "caption": "text",
+        "scrollX": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Plain report",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Plain report",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Plain report",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "fixed",
+        "caption": "rich",
+        "scrollY": true,
+        "summary": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Updated caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "sticky-override",
+        "caption": "rich",
+        "sticky": true,
+        "summary": true,
+        "header": true,
+        "prefix": "study-table"
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": true,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "study-table-caption",
+              "rich": "strong"
+            }
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": true,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": true,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "study-table-caption",
+              "rich": "strong"
+            }
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": true,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": true,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Updated caption",
+              "class": "study-table-caption",
+              "rich": "strong"
+            }
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": true,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "headerless",
+        "caption": "rich",
+        "scrollY": true,
+        "headerless": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Updated caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "virtual",
+        "caption": "rich",
+        "scrollY": true,
+        "virtual": true,
+        "summary": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "summary",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "virtual-headerless",
+        "caption": "rich",
+        "scrollY": true,
+        "virtual": true,
+        "headerless": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "virtual-empty",
+        "caption": "rich",
+        "scrollY": true,
+        "virtual": true,
+        "empty": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Report caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          },
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Updated caption",
+              "class": "ant-table-caption",
+              "rich": "strong"
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "custom-body",
+        "caption": "rich",
+        "scrollY": true,
+        "customBody": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": true
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Report table",
+              "aria-labelledby": "report-heading",
+              "aria-describedby": "report-description",
+              "aria-rowcount": "77",
+              "aria-colcount": "1",
+              "aria-busy": "false",
+              "aria-live": "polite",
+              "role": "grid"
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": true
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "header",
+            "aria": {
+              "aria-label": "Updated table",
+              "aria-labelledby": null,
+              "aria-describedby": "replacement-description",
+              "aria-rowcount": "14",
+              "aria-colcount": null,
+              "aria-busy": "true",
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": true
+      }
+    },
+    {
+      "profile": {
+        "id": "custom-body-headerless",
+        "caption": "rich",
+        "scrollY": true,
+        "customBody": true,
+        "headerless": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [],
+        "customBody": true
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [],
+        "customBody": true
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [],
+        "customBody": true
+      }
+    },
+    {
+      "profile": {
+        "id": "caption-only",
+        "caption": "text",
+        "noAria": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Plain report",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Plain report",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "Plain report",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "zero-caption",
+        "caption": "zero",
+        "noAria": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "0",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "0",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "0",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "empty-caption",
+        "caption": "empty",
+        "noAria": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "false-caption",
+        "caption": "false",
+        "noAria": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": {
+              "text": "",
+              "class": "ant-table-caption",
+              "rich": null
+            }
+          }
+        ],
+        "customBody": false
+      }
+    },
+    {
+      "profile": {
+        "id": "null-caption",
+        "caption": "null",
+        "noAria": true
+      },
+      "ssr": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "initial": {
+        "owner": {
+          "id": "report-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": "owner",
+            "data-probe-count": "0",
+            "data-probe-flag": "false",
+            "data-probe-empty": ""
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      },
+      "updated": {
+        "owner": {
+          "id": "updated-owner",
+          "aria": {
+            "aria-label": null,
+            "aria-labelledby": null,
+            "aria-describedby": null,
+            "aria-rowcount": null,
+            "aria-colcount": null,
+            "aria-busy": null,
+            "aria-live": null,
+            "role": null
+          },
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": "1",
+            "data-probe-flag": "true",
+            "data-probe-empty": null
+          }
+        },
+        "outer": {
+          "id": null,
+          "data": {
+            "data-probe-owner": null,
+            "data-probe-count": null,
+            "data-probe-flag": null,
+            "data-probe-empty": null
+          }
+        },
+        "tables": [
+          {
+            "band": "main",
+            "aria": {
+              "aria-label": null,
+              "aria-labelledby": null,
+              "aria-describedby": null,
+              "aria-rowcount": null,
+              "aria-colcount": null,
+              "aria-busy": null,
+              "aria-live": null,
+              "role": null
+            },
+            "data": {
+              "data-probe-owner": null,
+              "data-probe-count": null,
+              "data-probe-flag": null,
+              "data-probe-empty": null
+            },
+            "id": null,
+            "customHeader": false,
+            "caption": null
+          }
+        ],
+        "customBody": false
+      }
+    }
+  ]
+}

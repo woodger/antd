@@ -26,7 +26,9 @@
     getTablePageRows, getTablePagerPlacements, getTablePagerSize, getTablePagingTotal,
     type TablePagerAlignment
   } from './table-pagination.engine';
-  import { getTablePaginationSemantics, getTableSemantics } from './table-semantic.engine';
+  import {
+    getTableDomAttributes, getTablePaginationSemantics, getTableSemantics
+  } from './table-semantic.engine';
   import {
     changeTableSorts, getControlledTableSorts, getInitialTableSorts, getTableColumnTitleSorts,
     isTableMultipleSorter, isTableSortable, tableSortDirections, type TableSortState
@@ -91,6 +93,7 @@
   }: TableProps<Row> = $props();
 
   let {
+    id: ownerId,
     mode = 'client',
     total,
     dataSource: suppliedData,
@@ -134,6 +137,9 @@
     virtual = false,
     onScroll,
     'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-busy': ariaBusy,
+    'aria-rowcount': ariaRowCount,
     class: className = '',
     rootClassName
   } = $derived(rawProps);
@@ -168,6 +174,15 @@
     ? getGridMediaQueries(designTheme.state.token) : undefined);
   untrack(() => mediaQueries);
   const id = $props.id();
+  const captionId = `ant-table-caption-${id}`;
+  const hasCaption = $derived(caption !== null && caption !== undefined);
+  const captionText = $derived(
+    typeof caption === 'string' || typeof caption === 'number' ? String(caption) : undefined
+  );
+  const hasNamedCaption = $derived(typeof caption === 'function' || Boolean(captionText));
+  const { data: ownerAttributes, aria: tableAttributes } = $derived(
+    getTableDomAttributes(rawProps)
+  );
   const dataColumns = $derived(getTableColumnOrder(resolvedColumns));
   const columnIndices = $derived(new Map(dataColumns.map((entry, index) => [entry.key, index])));
   let localSorts = $state.raw(untrack(() => getInitialTableSorts(dataColumns, defaultSorter)));
@@ -330,6 +345,12 @@
     getTablePaginationSemantics(classes.pagination, slots.pagination, pagination)
   );
   const strings = $derived(resolveTableLocale(config.locale.table, locale));
+  const regionLabelledBy = $derived(ariaLabelledBy
+    ?? (typeof caption === 'function' ? captionId : undefined));
+  const regionLabel = $derived(
+    regionLabelledBy ? undefined : captionText ?? ariaLabel ?? strings.label
+  );
+  let captionElement = $state<HTMLTableCaptionElement>();
   let content = $state<HTMLDivElement>();
   let table = $state<HTMLTableElement>();
   let bodyElement = $state<HTMLElement>();
@@ -437,7 +458,7 @@
     element: () => content,
     customElement: () => bodyRenderer ? customBody.element ?? null : undefined,
     header: () => showHeader && !splitBands,
-    caption: () => Boolean(caption),
+    caption: () => captionElement,
     summary: () => splitBands && summaryPlacement !== 'inline' ? undefined : summaryPlacement,
     rtl: () => config.direction === 'rtl'
   });
@@ -1237,6 +1258,7 @@
   .table-source-theme:not(.table-hover-disabled) :global([data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:is(:hover, [data-ant-table-span-hovered]) > :is(th, td).table-fixed-cell) { background: linear-gradient(var(--ant-table-row-selected-hover-bg), var(--ant-table-row-selected-hover-bg)) var(--ant-color-bg-container); }
   [data-ant-table-part="content"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
   caption { padding: var(--ant-padding-sm); color: var(--ant-color-text-heading); text-align: start; font-weight: 600; }
+  caption:empty { padding: 0; }
   .column-heading { display: flex; align-items: center; gap: var(--ant-margin-xxs); }
   .column-heading > :global(:first-child) { flex: 1; }
   .column-heading-ellipsis > :global(:first-child) { min-width: 0; }
@@ -1739,16 +1761,27 @@
   {/if}
 {/snippet}
 
+{#snippet tableCaption()}
+  {#if typeof caption === 'function'}
+    <caption id={captionId} class={`${prefix}-caption`}
+      bind:this={captionElement}>{@render caption()}</caption>
+  {:else if hasCaption}
+    <caption class={`${prefix}-caption`} bind:this={captionElement}>{captionText ?? ''}</caption>
+  {/if}
+{/snippet}
+
 {#snippet fixedBand(kind: Band)}
   {@const heading = kind === 'header'}
+  {@const captionNamesHeader = bodyRenderer && hasNamedCaption}
+  {@const label = heading && !ariaLabelledBy && !captionNamesHeader ? strings.label : undefined}
   {@const attributes: TableElementAttributes<'table'> = {
-    'aria-label': heading ? ariaLabel ?? (caption && bodyRenderer ? undefined : strings.label)
-      : undefined,
-    'aria-busy': heading && loadingRequested || undefined
+    ...tableAttributes,
+    'aria-label': ariaLabel ?? label,
+    'aria-busy': ariaBusy ?? (heading && loadingRequested || undefined)
   }}
   {@const ref = (node: HTMLElement) => registerBandTable(kind, node)}
   {#snippet bandContent()}
-    {#if heading && bodyRenderer && caption}<caption>{caption}</caption>{/if}
+    {#if heading && bodyRenderer}{@render tableCaption()}{/if}
     {@render columnGroup(bandWidths, customGutter)}
     {#if heading}
       {@render tableHeader(customGutter)}
@@ -1937,15 +1970,17 @@
 
 {#snippet mainTable()}
   {@const attributes: TableElementAttributes<'table'> = {
-    'aria-label': ariaLabel ?? (caption ? undefined : strings.label),
-    'aria-busy': loadingRequested || undefined,
-    'aria-rowcount': virtualRowIndices ? visibleRows.length + inlineHeaderCount : undefined
+    ...tableAttributes,
+    'aria-label': ariaLabel ?? (ariaLabelledBy || hasNamedCaption ? undefined : strings.label),
+    'aria-busy': ariaBusy ?? (loadingRequested || undefined),
+    'aria-rowcount': ariaRowCount ?? (virtualRowIndices
+      ? visibleRows.length + inlineHeaderCount : undefined)
   }}
   {@const autoWidth = scroll?.x === true}
   {@const minWidth = virtual || autoWidth ? '100%' : cssSize(horizontalWidth)}
   {@const width = !virtual && autoWidth ? 'auto' : scrollport.tableWidth}
   {#snippet parts()}
-    {#if caption}<caption>{caption}</caption>{/if}
+    {@render tableCaption()}
     {@render columnGroup(undefined, 0)}
     {#if !splitBands}
       {@render tableHeader(0)}
@@ -1968,7 +2003,8 @@
 
 {#snippet tableContent()}
   {#if pagerPlacements.top}{@render tablePager(pagerPlacements.top)}{/if}
-  <div data-ant-table-part="table" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} data-ant-table-size={resolvedSize} class={[
+  <div {...ownerAttributes} id={ownerId} data-ant-table-part="table" data-ant-table-prefix={prefix}
+    data-ant-table-root-prefix={rootPrefix} data-ant-table-size={resolvedSize} class={[
       `${prefix}`,
       `${prefix}-${resolvedSize}`,
       bordered && `${prefix}-bordered`,
@@ -2005,7 +2041,8 @@
           ]}
           style={contentStyle}
           role="region"
-          aria-label={caption ?? ariaLabel ?? strings.label}
+          aria-label={regionLabel}
+          aria-labelledby={regionLabelledBy}
           tabindex="0"
           onscroll={handleScroll}
         >

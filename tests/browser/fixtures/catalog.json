@@ -1698,6 +1698,11 @@
     "root": "table-cell-update-fixture"
   },
   {
+    "id": "table-dom-attributes",
+    "module": "./TableDomAttributesFixture.svelte",
+    "root": "table-dom-attributes-fixture"
+  },
+  {
     "id": "table-header",
     "module": "./TableHeaderFixtures.svelte",
     "root": "table-header-fixture"

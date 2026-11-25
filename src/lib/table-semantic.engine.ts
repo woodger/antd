@@ -1,5 +1,6 @@
-// Объединяет классы и CSS слотов. Pagination разрешает свои callbacks уже
-// с параметрами конкретного пейджера и с отдельным приоритетом локальных стилей.
+// Раскладывает DOM-атрибуты по узлам Table и объединяет классы и CSS слотов.
+// Pagination разрешает callbacks с параметрами конкретного пейджера
+// и с отдельным приоритетом локальных стилей.
 import type { PaginationProps, PaginationSemantic } from './pagination.types';
 import { mergeComponentSemantics } from './semantic-style.engine';
 import type {
@@ -10,6 +11,26 @@ import type {
 const outerSlots = ['root', 'section', 'title', 'footer', 'content'] as const;
 const groupSlots = ['wrapper', 'row', 'cell'] as const;
 const paginationSlots = ['root', 'item'] as const;
+
+/** Выбирает атрибуты контейнера и семантических таблиц с сохранением 0, false и ''. */
+export function getTableDomAttributes<Row extends object>(props: TableProps<Row>) {
+  const data: Record<string, string> = {};
+  const aria: Record<string, unknown> = {};
+
+  for (const name of Object.keys(props)) {
+    if (name === 'role' || name.startsWith('aria-')) {
+      aria[name] = Reflect.get(props, name);
+    }
+    else if (name.startsWith('data-')) {
+      const value: unknown = Reflect.get(props, name);
+      if (value !== null && value !== undefined) {
+        data[name] = String(value);
+      }
+    }
+  }
+
+  return { data, aria };
+}
 
 /** Вызывает настройки провайдера и экземпляра с одними и теми же параметрами таблицы. */
 function resolve<Row extends object, Slots extends TableClassNameSlots>(

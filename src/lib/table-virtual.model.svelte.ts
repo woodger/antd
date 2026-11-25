@@ -35,7 +35,8 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   /** null означает собственное тело без зарегистрированного DOM-контейнера. */
   customElement: () => HTMLElement | null | undefined;
   header: () => boolean;
-  caption: () => boolean;
+  /** Измеряет текущий DOM-узел после замены текстовой подписи на snippet. */
+  caption: () => HTMLTableCaptionElement | undefined;
   summary: () => 'top' | 'bottom' | 'inline' | undefined;
   rtl: () => boolean;
 }) {
@@ -111,7 +112,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
 
     const body = active ? options.body() : undefined;
     const head = options.header() ? table.tHead : null;
-    const caption = options.caption() ? table.caption : null;
+    const caption = options.caption() ?? null;
     const foot = summary ? table.tFoot : null;
     return untrack(() => connect(element, body, head, caption, foot));
   });

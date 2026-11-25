@@ -24,6 +24,8 @@
 
 ### Added
 
+- Table принимает DOM-атрибуты и подпись `caption` в виде snippet.
+
 - Table поддерживает условное обновление содержимого через `column.shouldCellUpdate`.
 
 - Table наследует `rowKey` и `scroll` из ConfigProvider. `scroll.x` принимает `true`.

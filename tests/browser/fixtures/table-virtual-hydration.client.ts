@@ -6,6 +6,7 @@ import TableElementComponentsFixture from './TableElementComponentsFixture.svelt
 import TableLoadingFixture from './TableLoadingFixture.svelte';
 import TableConfigFixture from './TableConfigFixture.svelte';
 import TableCellUpdateFixture from './TableCellUpdateFixture.svelte';
+import TableDomAttributesFixture from './TableDomAttributesFixture.svelte';
 
 const target = document.getElementById('root');
 if (!target) {
@@ -37,6 +38,11 @@ target.addEventListener('hydrate-table-virtual', () => {
   else if (query.has('table-cell-update')) {
     hydrate(TableCellUpdateFixture, {
       target, props: { profile: 'virtual', editor: true }, recover: false
+    });
+  }
+  else if (query.has('table-dom-attributes')) {
+    hydrate(TableDomAttributesFixture, {
+      target, props: { profileId: 'virtual', editor: true }, recover: false
     });
   }
   else {
