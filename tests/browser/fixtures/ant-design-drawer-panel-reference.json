@@ -1,0 +1,2006 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "name": "default",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "close-only",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": true,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "header-absent",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": false,
+          "closeOnly": false,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "icon-false",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": null,
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "icon-null",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": null,
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "icon-zero",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "0",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "icon-empty",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "explicit-close",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "nested-icon-false",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "nested-icon-null",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": true,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "local-icon",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "custom",
+            "fallbackIcon": false,
+            "customIcon": true,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "nested-icon",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "nested",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "provider",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": true,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "click-close",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": true,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "provider-boolean",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": true,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "provider-local",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": false,
+            "label": "Local close",
+            "data": null,
+            "text": "local",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "click-close",
+          "visible": false,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": false,
+            "label": "Local close",
+            "data": null,
+            "text": "local",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": [
+            "click"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "provider-placement",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "provider-false-with-icon",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": true,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "provider-replaced",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "semantic",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": false,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": true,
+          "providerPanelStyle": "yes",
+          "semantic": {
+            "root": {
+              "provider": "outer-right-ready-end",
+              "local": "outer-right-ready-end",
+              "shared": "root-style",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "mask": {
+              "provider": "outer-right-ready-end",
+              "local": "outer-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "wrapper": {
+              "provider": "outer-right-ready-end",
+              "local": "outer-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "section": {
+              "provider": "outer-right-ready-end",
+              "local": "outer-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "header": {
+              "provider": "inner-right-ready-end",
+              "local": "inner-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "title": {
+              "provider": "inner-right-ready-end",
+              "local": "inner-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "extra": {
+              "provider": "inner-right-ready-end",
+              "local": "inner-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "body": {
+              "provider": "inner-right-ready-end",
+              "local": "inner-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "footer": {
+              "provider": "inner-right-ready-end",
+              "local": "inner-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "dragger": {
+              "provider": "outer-right-ready-end",
+              "local": "outer-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "close": {
+              "provider": "inner-right-ready-end",
+              "local": "inner-right-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            }
+          },
+          "requests": []
+        },
+        {
+          "step": "bottom",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": false,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": true,
+          "providerPanelStyle": "yes",
+          "semantic": {
+            "root": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "root-style",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "mask": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "wrapper": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "section": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "header": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "title": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "extra": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "body": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "footer": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "dragger": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "close": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            }
+          },
+          "requests": []
+        },
+        {
+          "step": "busy",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": false,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": null,
+          "skeleton": {
+            "active": true,
+            "rows": 5,
+            "display": "flex"
+          },
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": true,
+          "providerPanelStyle": "yes",
+          "semantic": {
+            "root": {
+              "provider": "outer-bottom-busy-end",
+              "local": "outer-bottom-busy-end",
+              "shared": "root-style",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "mask": {
+              "provider": "outer-bottom-busy-end",
+              "local": "outer-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "wrapper": {
+              "provider": "outer-bottom-busy-end",
+              "local": "outer-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "section": {
+              "provider": "outer-bottom-busy-end",
+              "local": "outer-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "header": {
+              "provider": "inner-bottom-busy-end",
+              "local": "inner-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "title": {
+              "provider": "inner-bottom-busy-end",
+              "local": "inner-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "extra": {
+              "provider": "inner-bottom-busy-end",
+              "local": "inner-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "body": {
+              "provider": "inner-bottom-busy-end",
+              "local": "inner-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "footer": {
+              "provider": "inner-bottom-busy-end",
+              "local": "inner-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "dragger": {
+              "provider": "outer-bottom-busy-end",
+              "local": "outer-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "close": {
+              "provider": "inner-bottom-busy-end",
+              "local": "inner-bottom-busy-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            }
+          },
+          "requests": []
+        },
+        {
+          "step": "ready",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "end",
+            "disabled": false,
+            "label": "Provider close",
+            "data": null,
+            "text": "provider icon",
+            "fallbackIcon": false,
+            "customIcon": false,
+            "marginStart": 8,
+            "marginEnd": 0
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 2,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": true,
+          "providerPanelStyle": "yes",
+          "semantic": {
+            "root": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "root-style",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "mask": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "wrapper": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "section": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "header": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "title": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "extra": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "body": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "footer": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "dragger": {
+              "provider": "outer-bottom-ready-end",
+              "local": "outer-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            },
+            "close": {
+              "provider": "inner-bottom-ready-end",
+              "local": "inner-bottom-ready-end",
+              "shared": "local",
+              "classNames": [
+                true,
+                true
+              ]
+            }
+          },
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "loading",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": null,
+          "skeleton": {
+            "active": true,
+            "rows": 5,
+            "display": "flex"
+          },
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "ready",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "busy",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": null,
+          "skeleton": {
+            "active": true,
+            "rows": 5,
+            "display": "flex"
+          },
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "ready",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 2,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "wrapping",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "edit",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "hide",
+          "visible": false,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "open",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "busy",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": null,
+          "skeleton": {
+            "active": true,
+            "rows": 5,
+            "display": "flex"
+          },
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "ready",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 2,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "replacing",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": false,
+          "closeOnly": false,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": null,
+          "skeleton": null,
+          "wrap": {
+            "containsSection": false,
+            "replacement": true
+          },
+          "ref": "empty",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "hide",
+          "visible": false,
+          "header": false,
+          "closeOnly": false,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": null,
+          "skeleton": null,
+          "wrap": {
+            "containsSection": false,
+            "replacement": true
+          },
+          "ref": "empty",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "open",
+          "visible": true,
+          "header": false,
+          "closeOnly": false,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": null,
+          "skeleton": null,
+          "wrap": {
+            "containsSection": false,
+            "replacement": true
+          },
+          "ref": "empty",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "remove-renderer",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": null,
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "destroyed",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "edit",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "hide",
+          "visible": false,
+          "header": false,
+          "closeOnly": false,
+          "button": null,
+          "title": null,
+          "extra": false,
+          "footer": false,
+          "input": null,
+          "skeleton": null,
+          "wrap": null,
+          "ref": "empty",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "open",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 2,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    },
+    {
+      "name": "forced",
+      "frames": [
+        {
+          "step": "initial",
+          "visible": false,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": null,
+          "skeleton": {
+            "active": true,
+            "rows": 5,
+            "display": "flex"
+          },
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "ready",
+          "visible": false,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "open",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "initial"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "edit",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "hide",
+          "visible": false,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        },
+        {
+          "step": "open",
+          "visible": true,
+          "header": true,
+          "closeOnly": false,
+          "button": {
+            "placement": "start",
+            "disabled": false,
+            "label": "Close",
+            "data": null,
+            "text": "",
+            "fallbackIcon": true,
+            "customIcon": false,
+            "marginStart": 0,
+            "marginEnd": 8
+          },
+          "title": "Drawer study",
+          "extra": true,
+          "footer": true,
+          "input": {
+            "node": 1,
+            "value": "edited"
+          },
+          "skeleton": null,
+          "wrap": {
+            "containsSection": true,
+            "replacement": false
+          },
+          "ref": "section",
+          "providerPanel": false,
+          "providerPanelStyle": "",
+          "semantic": {},
+          "requests": []
+        }
+      ]
+    }
+  ],
+  "motionStyles": {
+    "opening": {
+      "transform": "matrix(0.9, 0, 0, 0.9, 0, 0)",
+      "opacity": "0.35",
+      "events": []
+    },
+    "open": {
+      "transform": "matrix(0.9, 0, 0, 0.9, 0, 0)",
+      "opacity": "0.35",
+      "events": [
+        true
+      ]
+    },
+    "closing": {
+      "transform": "matrix(0.9, 0, 0, 0.9, 0, 0)",
+      "opacity": "0.35",
+      "events": [
+        true
+      ]
+    },
+    "closed": {
+      "events": [
+        true,
+        false
+      ]
+    }
+  }
+}

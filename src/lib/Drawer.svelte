@@ -2,10 +2,10 @@
   // Координирует native dialog, маску и показ содержимого Drawer. Запрос закрытия проходит через
   // callbacks владельца.
   import NoCompactStyle from './NoCompactStyle.svelte';
+  import DrawerPanel from './DrawerPanel.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getDrawerPrefixCss } from './drawer-prefix.engine';
   import { onDestroy, untrack } from 'svelte';
-  import Icon from './Icon.svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
@@ -13,29 +13,32 @@
   import { useWatermarkPanel } from './watermark-context';
   import { createDrawerDialog } from './drawer.dom';
   import {
+    DEFAULT_DRAWER_PUSH_DISTANCE, DEFAULT_DRAWER_SIZE,
     getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal,
     resolveDrawerInteraction
   } from './drawer.engine';
+  import { resolveDrawerSemantics } from './drawer-panel.engine';
   import { provideDrawerPush, useDrawerPush } from './drawer-push-context';
   import { connectDrawerResize } from './drawer-resize.dom';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
   import type { DrawerProps } from './drawer.types';
 
   let {
-    prefixCls: customizePrefixCls,
     open = $bindable(false),
+    panelRef = $bindable(),
+    ...props
+  }: DrawerProps = $props();
+  let {
+    prefixCls: customizePrefixCls,
     title,
-    children,
-    extra,
-    footer,
+    drawerRender,
     placement = 'right',
     size,
-    defaultSize = 'default',
+    defaultSize = DEFAULT_DRAWER_SIZE,
     maxSize,
     resizable = false,
     push,
     zIndex,
-    closable = true,
     keyboard = true,
     mask,
     focusable,
@@ -50,8 +53,10 @@
     'aria-labelledby': ariaLabelledby,
     'aria-describedby': ariaDescribedby,
     class: className = '',
-    style
-  }: DrawerProps = $props();
+    style,
+    rootClassName,
+    rootStyle
+  } = $derived(props);
 
   const config = useConfig();
   const interaction = $derived(resolveDrawerInteraction(mask, focusable, autoFocus, config.drawer));
@@ -61,6 +66,17 @@
   const designTheme = useDesignTokenContext();
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
+  const semanticProps = $derived<DrawerProps>({
+    ...props,
+    open,
+    zIndex: layer.zIndex,
+    defaultSize,
+    push: push ?? { distance: DEFAULT_DRAWER_PUSH_DISTANCE },
+    mask: interaction.mask.enabled,
+    focusable: { trap: interaction.trap, focusTriggerAfterClose: interaction.restoreFocus }
+  });
+  const { classes, styles } = $derived(resolveDrawerSemantics(semanticProps, config.drawer, 'shell'));
+
   const parentDrawer = useDrawerPush();
   let pushedChildren = $state(0);
   const pushDistance = $derived(getDrawerPushDistance(push, parentDrawer?.distance));
@@ -74,6 +90,10 @@
   const pushOffset = $derived(
     pushedChildren > 0 ? getDrawerPushOffset(placement, pushDistance) : undefined
   );
+  const wrapperStyle = $derived([
+    pushOffset && `translate:${pushOffset}`,
+    styles.wrapper
+  ].filter(Boolean).join(';') || undefined);
   const watermarkPanel = useWatermarkPanel();
   const generatedId = $props.id();
   let dialog = $state<HTMLDialogElement>();
@@ -93,10 +113,12 @@
   let rootId = $derived(id ?? `ant-drawer-${generatedId}`);
   let titleId = $derived(`${rootId}-title`);
   let renderContent = $derived(open || closing || forceRender || mounted && !destroyOnHidden);
-  let rootStyle = $derived([
+  const dialogStyle = $derived([
     componentTheme.style,
     layer.style,
-    style
+    styles.root,
+    style,
+    rootStyle
   ].filter(Boolean).join(';') || undefined);
   const container = createDialogContainer(() => ({
     component: 'drawer',
@@ -104,7 +126,7 @@
     getPopupContainer: config.getPopupContainer,
     enabled: !destroyOnHidden || open || closing || forceRender,
     portalByDefault: !interaction.native && (open || closing),
-    style: rootStyle,
+    style: dialogStyle,
     onPointerDown: event => {
       backdropPointer = interaction.mask.enabled && event.button === 0 && isBackdrop(event)
         ? event.pointerId : undefined;
@@ -186,6 +208,14 @@
   });
 
   $effect(() => {
+    // Markup уже обновил inline CSS, активная анимация уступает явно заданным свойствам.
+    void styles.wrapper;
+    void styles.mask;
+    const current = runtime;
+    if (current) untrack(current.syncStyles);
+  });
+
+  $effect(() => {
     if (parentDrawer && open && dialog && container.connected) {
       // Одновременно открытые дети освобождают только свою регистрацию.
       return untrack(() => parentDrawer.registerChild());
@@ -201,6 +231,13 @@
     return () => {
       mounted = false;
       resizedSize = undefined;
+    };
+  }
+
+  function bindPanel(node: HTMLDivElement) {
+    panelRef = node;
+    return () => {
+      if (panelRef === node) panelRef = undefined;
     };
   }
 
@@ -265,11 +302,6 @@
   }
   [data-ant-drawer-placement="left"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="right"] > [data-ant-drawer-content-wrapper] { width: min(var(--ant-svelte-drawer-size), 100%); height: 100%; }
   [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] { width: 100%; height: min(var(--ant-svelte-drawer-size), 100%); }
-  [data-ant-drawer-header] { gap: var(--ant-margin-xs); }
-  [data-ant-drawer-title], [data-ant-drawer-extra], [data-ant-drawer-body], [data-ant-drawer-footer] { min-width: 0; overflow-wrap: anywhere; }
-  [data-ant-drawer-title] { color: var(--ant-color-text-heading); }
-  .drawer-source-theme [data-ant-drawer-title] { color: inherit; }
-  [data-ant-drawer-extra] { max-width: 50%; }
   [data-ant-drawer-section] { min-height: 0; }
   [data-ant-drawer-dragging] > [data-ant-drawer-section] { pointer-events: none; }
   [data-ant-drawer-dragger] {
@@ -302,8 +334,7 @@
   [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] { bottom: 0; }
   [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] { top: 0; }
   @media (prefers-reduced-motion: reduce) {
-    .ant-svelte-drawer > [data-ant-drawer-content-wrapper],
-    [data-ant-drawer-close] { transition: none; }
+    .ant-svelte-drawer > [data-ant-drawer-content-wrapper] { transition: none; }
   }
 </style>
 
@@ -322,8 +353,10 @@
     `${componentPrefix}-${placement}`,
     !interaction.mask.enabled && 'no-mask',
     config.direction === 'rtl' && `${componentPrefix}-rtl`,
+    rootClassName,
+    classes.root,
     className
-  ]} style={rootStyle} style:--ant-svelte-drawer-size={sizeInCss} dir={config.direction}
+  ]} style={dialogStyle} style:--ant-svelte-drawer-size={sizeInCss} dir={config.direction}
     aria-modal={interaction.mask.enabled && interaction.trap || undefined}
     aria-label={ariaLabel} aria-labelledby={ariaLabelledby
       ?? (ariaLabel === undefined && title !== undefined
@@ -331,32 +364,30 @@
         : undefined)} aria-describedby={ariaDescribedby} oncancel={handleCancel} onclose={handleClose}
     {@attach container.attach} {@attach connectRuntime}>
   {#if interaction.mask.enabled}<div data-ant-drawer-mask class={[
-    `${componentPrefix}-mask`, interaction.mask.blur && `${componentPrefix}-mask-blur`
-  ]} aria-hidden="true"></div>{/if}
+    `${componentPrefix}-mask`, interaction.mask.blur && `${componentPrefix}-mask-blur`, classes.mask
+  ]} style={styles.mask} aria-hidden="true"></div>{/if}
   <div data-ant-drawer-content-wrapper data-ant-drawer-dragging={resizing || undefined} class={[
     `${componentPrefix}-content-wrapper`,
-    resizing && `${componentPrefix}-content-wrapper-dragging`
-  ]} style:translate={pushOffset}>
+    resizing && `${componentPrefix}-content-wrapper-dragging`,
+    classes.wrapper
+  ]} style={wrapperStyle} {@attach renderContent ? rememberContent : undefined}>
     {#if renderContent}
       {#if resizable}<div data-ant-drawer-dragger aria-hidden="true" class={[
         `${componentPrefix}-resizable-dragger`,
         `${componentPrefix}-resizable-dragger-${placement}`,
         `${componentPrefix}-resizable-dragger-${horizontal ? 'horizontal' : 'vertical'}`,
-        resizing && `${componentPrefix}-resizable-dragger-dragging`
-      ]} {@attach connectResizeHandle}></div>{/if}
-      <div data-ant-drawer-section class={`${componentPrefix}-section`} {@attach rememberContent} {@attach watermarkPanel}>
-        {#if title !== undefined || closable || extra}
-          <div data-ant-drawer-header class={`${componentPrefix}-header`}>
-            <div data-ant-drawer-header-title class={`${componentPrefix}-header-title`}>
-              {#if closable}<button type="button" data-ant-drawer-close class={`${componentPrefix}-close`} aria-label={config.locale.closeText} onclick={requestClose}><Icon name="close" /></button>{/if}
-              {#if title !== undefined}<h2 id={titleId} data-ant-drawer-title class={`${componentPrefix}-title`}>{#if typeof title === 'function'}{@render title()}{:else}{title}{/if}</h2>{/if}
-            </div>
-            {#if extra}<div data-ant-drawer-extra class={`${componentPrefix}-extra`}>{@render extra()}</div>{/if}
-          </div>
-        {/if}
-        <div data-ant-drawer-body class={`${componentPrefix}-body`}>{@render children?.()}</div>
-        {#if footer}<div data-ant-drawer-footer class={`${componentPrefix}-footer`}>{@render footer()}</div>{/if}
-      </div>
+        resizing && `${componentPrefix}-resizable-dragger-dragging`,
+        classes.dragger
+      ]} style={styles.dragger} {@attach connectResizeHandle}></div>{/if}
+      {#snippet section()}
+        <div data-ant-drawer-section
+          class={[`${componentPrefix}-section`, config.drawer?.class, classes.section]}
+          style={styles.section} {@attach bindPanel} {@attach watermarkPanel}>
+          <DrawerPanel {props} prefix={componentPrefix} {titleId} {requestClose} />
+        </div>
+      {/snippet}
+      {#if drawerRender}{@render drawerRender(section)}
+      {:else}{@render section()}{/if}
     {/if}
   </div>
 </dialog>

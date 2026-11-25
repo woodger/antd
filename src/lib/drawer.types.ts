@@ -1,5 +1,6 @@
 import type { Snippet } from 'svelte';
-import type { GetContainer } from './types';
+import type { AriaAttributes, HTMLAttributes } from 'svelte/elements';
+import type { GetContainer, RenderEmptyContent } from './types';
 
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left';
 export type DrawerSize = 'default' | 'large' | number | (string & {});
@@ -19,10 +20,43 @@ export interface DrawerFocusableConfig {
   focusTriggerAfterClose?: boolean;
 }
 
-/** Настройки маски и фокуса, передаваемые Drawer через ConfigProvider. */
-export interface DrawerConfig {
-  mask?: DrawerMask;
-  focusable?: DrawerFocusableConfig;
+export type DrawerCloseIcon = Exclude<RenderEmptyContent, undefined>;
+
+/** Кнопка закрытия и её доступное имя. Сторона учитывает направление текста. */
+export interface DrawerClosableConfig extends AriaAttributes {
+  closeIcon?: DrawerCloseIcon;
+  disabled?: boolean;
+  placement?: 'start' | 'end';
+  role?: HTMLAttributes<HTMLButtonElement>['role'];
+}
+
+export type DrawerClosable = boolean | DrawerClosableConfig;
+
+export interface DrawerSemanticSlots {
+  root?: string;
+  mask?: string;
+  wrapper?: string;
+  section?: string;
+  header?: string;
+  title?: string;
+  extra?: string;
+  body?: string;
+  footer?: string;
+  dragger?: string;
+  close?: string;
+}
+
+export type DrawerSemantic = DrawerSemanticSlots
+  | ((info: { props: DrawerProps; }) => DrawerSemanticSlots | undefined);
+
+/** Настройки панели, маски и фокуса, передаваемые Drawer через ConfigProvider. */
+export interface DrawerConfig extends Pick<
+  DrawerProps, 'classNames' | 'styles' | 'closable' | 'closeIcon' | 'mask' | 'focusable'
+> {
+  /** Дополнительный класс секции внутри оболочки Drawer. */
+  class?: string;
+  /** Inline CSS секции, переопределяемый через styles.section. */
+  style?: string;
 }
 
 export interface DrawerResizableConfig {
@@ -49,6 +83,12 @@ export interface DrawerProps {
   children?: Snippet;
   extra?: Snippet;
   footer?: Snippet;
+  /** Подменяет тело панели анимированным Skeleton до готовности children. */
+  loading?: boolean;
+  /** Получает секцию с заголовком, телом и подвалом для обёртки или замены. */
+  drawerRender?: Snippet<[section: Snippet]>;
+  /** Bind:panelRef получает секцию после mount и очищается при её удалении. */
+  panelRef?: HTMLDivElement;
   /** @defaultValue 'right' */
   placement?: DrawerPlacement;
   /** @defaultValue 'default' */
@@ -64,7 +104,9 @@ export interface DrawerProps {
   /** Числовой слой панели и база для вложенных popup. */
   zIndex?: number;
   /** @defaultValue true */
-  closable?: boolean;
+  closable?: DrawerClosable;
+  /** False и null скрывают кнопку без явного closable. */
+  closeIcon?: DrawerCloseIcon;
   /** @defaultValue true */
   keyboard?: boolean;
   /** Маска, размытие и закрытие при полном нажатии на фон. @defaultValue true */
@@ -88,6 +130,14 @@ export interface DrawerProps {
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
+  /** Класс корневого dialog. Для секции используйте classNames.section. */
   class?: string;
+  /** Inline CSS корневого dialog. Для секции используйте styles.section. */
   style?: string;
+  rootClassName?: string;
+  /** Дополнительный слой inline CSS поверх styles.root и style. */
+  rootStyle?: string;
+  classNames?: DrawerSemantic;
+  /** Каждый слот принимает строку CSS declarations. */
+  styles?: DrawerSemantic;
 }

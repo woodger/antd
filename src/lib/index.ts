@@ -669,7 +669,8 @@ export type {
 } from './collapse.types';
 export type {
   DrawerProps, DrawerPlacement, DrawerSize, DrawerResizableConfig, DrawerPushConfig,
-  DrawerConfig, DrawerMask, DrawerMaskConfig, DrawerFocusableConfig
+  DrawerConfig, DrawerMask, DrawerMaskConfig, DrawerFocusableConfig,
+  DrawerCloseIcon, DrawerClosable, DrawerClosableConfig, DrawerSemantic, DrawerSemanticSlots
 } from './drawer.types';
 export type {
   AlertProps,

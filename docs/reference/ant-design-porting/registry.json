@@ -23190,7 +23190,8 @@
       ],
       "dependencies": [
         "config-provider",
-        "space"
+        "space",
+        "skeleton"
       ],
       "upstreamPackages": [
         {
@@ -23255,7 +23256,14 @@
         "tests/browser/fixtures/ant-design-drawer-focus-reference.json",
         "tests/browser/drawer-focus.spec.ts",
         "tests/browser/drawer-focus-hydration.spec.ts",
-        "tests/package/drawer-focus.ssr.test.ts"
+        "tests/package/drawer-focus.ssr.test.ts",
+        "src/lib/DrawerPanel.svelte",
+        "src/lib/drawer-panel.engine.ts",
+        "tests/browser/fixtures/DrawerPanelFixtures.svelte",
+        "tests/browser/fixtures/ant-design-drawer-panel-reference.json",
+        "tests/browser/drawer-panel.spec.ts",
+        "tests/browser/drawer-panel-hydration.spec.ts",
+        "tests/package/drawer-panel.ssr.test.ts"
       ],
       "features": [
         {
@@ -23268,11 +23276,21 @@
         },
         {
           "id": "gap-1",
-          "title": "Дополнительный API содержимого и оформления панели",
-          "state": "missing",
+          "title": "Содержимое, закрытие и оформление панели",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Открыты loading/Skeleton, closable с placement/closeIcon, semantic slots, дополнительные поля ConfigProvider.drawer и drawerRender. Депрекейтнутые поля исключены."
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/DrawerPanel.svelte",
+            "src/lib/drawer-panel.engine.ts",
+            "src/lib/drawer.types.ts",
+            "tests/browser/fixtures/DrawerPanelFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-panel-reference.json",
+            "tests/browser/drawer-panel.spec.ts",
+            "tests/browser/drawer-panel-hydration.spec.ts",
+            "tests/package/drawer-panel.ssr.test.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 покрывают 24 профиля и 48 кадров. Отдельные два прогона подтверждают приоритет transform и opacity в четырёх состояниях перехода и порядок afterOpenChange. Кнопка учитывает logical placement, disabled, locale/ARIA и приоритет иконок. Loading заменяет тело активным Skeleton из пяти строк. drawerRender переиспользует или заменяет секцию, bind:panelRef следует её lifecycle. Semantic callbacks получают props оболочки и содержимого раздельно. CSS declarations, snippets и bindable ref следуют публичным контрактам Svelte. Прежние class/style остаются на нативном dialog; ConfigProvider.drawer.class/style оформляют секцию. Проверены RTL, custom prefix, forceRender, destroyOnHidden и строгая гидратация."
         },
         {
           "id": "compact-isolation",

@@ -25,8 +25,8 @@ Title принимает строку или пассивный Snippet, childre
 Без footer нижняя область отсутствует. Без title именуйте dialog через
 aria-label или aria-labelledby. Внешнее aria-labelledby имеет приоритет;
 aria-label заменяет автоматически созданную связь с визуальным title.
-Aria-describedby связывает внешнее описание. Id/class/style относятся к
-корневому dialog; дополнительные semantic classNames/styles не поддерживаются.
+Aria-describedby связывает внешнее описание. `id`, `class` и `style` относятся
+к корневому dialog.
 
 PrefixCls задаёт локальный namespace Drawer, его mask/panel/header/body/footer.
 Пустая строка наследует ConfigProvider.prefixCls. 32 исходных CSS-правила без
@@ -56,16 +56,30 @@ top/bottom. Начальный `defaultSize` применяется, пока в
 размер сохраняется до удаления содержимого. Закрытие, отключение resize и
 смена стороны отменяют текущий жест.
 
-`closable={false}` убирает кнопку, а `keyboard={false}` отключает закрытие
-верхней панели по Escape. `mask` принимает boolean или объект с `enabled`,
+`closable` управляет кнопкой закрытия. Значение `false` скрывает кнопку.
+Объект принимает `placement: 'start' | 'end'`, `disabled`, `closeIcon`
+и ARIA-атрибуты. По умолчанию кнопка находится перед заголовком.
+`placement: 'end'` ставит её после `extra` с учётом RTL. Локальный
+`closable` определяет положение целиком. Иконка, `disabled` и ARIA-атрибуты
+могут наследоваться по отдельности. Кнопка по умолчанию получает имя из locale.
+
+Иконку можно задать строкой, числом или snippet. Верхнеуровневый
+`closeIcon={false}` или `closeIcon={null}` скрывает кнопку при опущенном
+`closable`. В объекте `closable` значение `closeIcon: false` оставляет
+кнопку без иконки, а `closeIcon: null` убирает кнопку и сохраняет область
+заголовка.
+
+`keyboard={false}` отключает закрытие верхней панели по Escape.
+`mask` принимает boolean или объект с `enabled`,
 `closable` и `blur`. По умолчанию маска включена, закрывается по нажатию
 и отображается без размытия. Для закрытия указатель должен начать и закончить
 нажатие на фоне. При `mask={false}` или `mask={{ enabled: false }}` доступны
 клики и прокрутка страницы. Drawer продолжает передавать детям исходные
 контексты Form и ConfigProvider.
 
-`ConfigProvider.drawer` задаёт `mask` и `focusable`. Локальные поля имеют
-приоритет. Boolean `mask` переопределяет только `enabled`, поэтому
+`ConfigProvider.drawer` задаёт `mask`, `focusable`, `closable`, `closeIcon`
+и оформление. Локальные поля имеют приоритет. Boolean `mask`
+переопределяет только `enabled`, поэтому
 `mask={true}` сохраняет заданные провайдером `blur` и `closable`.
 Явный объект `drawer` во вложенном провайдере заменяет родительский объект.
 
@@ -108,7 +122,49 @@ DOM-черновики в закрытом dialog. ForceRender монтируе�
 их таймеры и подписки продолжают работать. Для фокуса ошибки закрытую панель
 сначала должен открыть владелец формы.
 
+## Содержимое и оформление
+
+`loading` заменяет `children` анимированным Skeleton из пяти строк.
+Заголовок, действия и подвал остаются на месте. При возвращении к содержимому
+поля монтируются заново, поэтому локальный черновик сбрасывается.
+
+`drawerRender` получает snippet секции и позволяет обернуть или заменить её.
+Маска, выдвижная оболочка и граница resize остаются под управлением Drawer.
+Если замена убирает заголовок, задайте имя диалога через `aria-label` или
+`aria-labelledby`. `bind:panelRef` получает `HTMLDivElement` секции при
+монтировании. При удалении секции binding получает `undefined`.
+
+```svelte
+{#snippet decorate(section)}
+  <div class="drawer-frame">{@render section()}</div>
+{/snippet}
+
+<Drawer open drawerRender={decorate} title="Карточка участника">
+  <p>Здесь находится содержимое панели.</p>
+</Drawer>
+```
+
+`classNames` и `styles` принимают объект слотов или функцию с аргументом
+`{ props }`. Для `root`, `mask`, `wrapper`, `section` и `dragger` функция
+получает пропсы оболочки с разрешёнными настройками маски и фокуса.
+Для `header`, `title`, `extra`, `body`, `footer` и `close` она получает
+пропсы секции с `closable`, унаследованным при отсутствии локального значения.
+`styles` принимает строки CSS.
+
+Классы слотов провайдера и экземпляра накапливаются. `ConfigProvider.drawer.class`
+добавляет класс секции, а его `style` применяется между стилями слота провайдера
+и экземпляра. `rootClassName` дополняет класс dialog. `rootStyle` применяется
+после `styles.root` и `style`.
+[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-drawer-panel-reference.json)
+· [Chromium](../../../tests/browser/drawer-panel.spec.ts)
+· [SSR](../../../tests/package/drawer-panel.ssr.test.ts)
+· [Гидратация](../../../tests/browser/drawer-panel-hydration.spec.ts)
+
+## Анимация и тема
+
 Панель выдвигается от выбранной стороны, а включённая маска меняет прозрачность.
+Явные `styles.wrapper` с `transform` и `styles.mask` с `opacity` действуют
+и во время перехода. Вызов `afterOpenChange` сохраняет время завершения.
 При запросе закрытия dialog сохраняет текущий режим до завершения анимации.
 Изменение `mask` и `focusable` применяется к тому же открытому dialog.
 Повторное открытие прерывает уход без уничтожения черновика. Reduced motion
@@ -128,9 +184,6 @@ Button и Input внутри сохраняют собственные tokens. �
 сохраняется. [Сверка с UMD и проверки](../theme-context.md#проверки-диалогов-и-уведомлений)
 учитывают типографику внешнего ConfigProvider: в React она задана на статическом
 host через публичный theme.useToken(), в Svelte — на DOM-контейнере provider.
-
-В реестре остаются открытыми loading/Skeleton, расширенные настройки
-заголовка и закрытия, semantic slots и пользовательский рендеринг панели.
 
 Размеры, смещение и события проверены по [100 кадрам Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-drawer-geometry-reference.json).
 В UMD закрытие одного из двух открытых дочерних Drawer сбрасывает смещение

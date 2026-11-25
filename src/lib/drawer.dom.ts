@@ -6,6 +6,12 @@ import {
 import { connectDrawerFocus } from './drawer-focus.dom';
 import type { DrawerPlacement } from './drawer.types';
 
+interface DrawerMotion {
+  animation: Animation;
+  element: HTMLElement;
+  property: 'transform' | 'opacity';
+}
+
 // Создаёт DOM-контроллер для шаблона с panel и mask.
 export function createDrawerDialog(
   dialog: HTMLDialogElement,
@@ -17,7 +23,7 @@ export function createDrawerDialog(
   const focus = connectDrawerFocus(dialog, getInteraction);
   const view = dialog.ownerDocument.defaultView!;
   const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
-  let animations: Animation[] = [];
+  let animations: DrawerMotion[] = [];
   let revision = 0;
   let phase: 'closed' | 'opening' | 'open' | 'closing' = 'closed';
   let side: DrawerPlacement = 'right';
@@ -26,7 +32,7 @@ export function createDrawerDialog(
   // Повышает ревизию и отменяет текущую пару анимаций.
   function cancelMotion() {
     revision++;
-    for (const animation of animations)
+    for (const { animation } of animations)
       animation.cancel();
     animations = [];
   }
@@ -76,6 +82,17 @@ export function createDrawerDialog(
     queueMicrotask(() => finish(current, open));
   }
 
+  // Inline CSS владельца имеет приоритет, но тайминг visibility продолжает идти.
+  function syncStyles() {
+    for (const { animation, element, property } of animations) {
+      const effect = animation.effect;
+      if (effect instanceof view.KeyframeEffect) {
+        const target = element.style.getPropertyValue(property) ? null : element;
+        if (effect.target !== target) effect.target = target;
+      }
+    }
+  }
+
   // Запускает анимации panel и mask либо сразу применяет итог при reduced motion.
   function animate(from: string, to: string, opacity: string, opening: boolean) {
     const duration = reducedMotion.matches
@@ -95,11 +112,14 @@ export function createDrawerDialog(
       fill: 'both'
     };
     const motion = panel.animate([{ transform: from }, { transform: to }], options);
-    animations = [motion];
+    animations = [{ animation: motion, element: panel, property: 'transform' }];
     const mask = getMask();
     if (mask) {
-      animations.push(mask.animate([{ opacity }, { opacity: opening ? '1' : '0' }], options));
+      const fade = mask.animate([{ opacity }, { opacity: opening ? '1' : '0' }], options);
+      animations.push({ animation: fade, element: mask, property: 'opacity' });
     }
+
+    syncStyles();
     void motion.finished.then(() => finish(current, opening), () => {});
   }
 
@@ -145,7 +165,7 @@ export function createDrawerDialog(
   // Завершает текущие анимации при включении reduced motion.
   function handleReducedMotion() {
     if (reducedMotion.matches) {
-      for (const animation of animations)
+      for (const { animation } of animations)
         animation.finish();
     }
   }
@@ -154,6 +174,7 @@ export function createDrawerDialog(
 
   return {
     sync,
+    syncStyles,
     // Синхронизирует lifecycle после закрытия dialog браузером.
     nativeClosed() {
       cancelMotion();

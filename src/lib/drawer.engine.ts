@@ -4,6 +4,10 @@ import type {
   DrawerPlacement, DrawerPushConfig, DrawerSize
 } from './drawer.types';
 
+export const DEFAULT_DRAWER_SIZE = 378;
+export const DEFAULT_DRAWER_PUSH_DISTANCE = 180;
+const defaultSizeInCss = `${DEFAULT_DRAWER_SIZE}px`;
+
 /** Boolean меняет только видимость маски; остальные поля могут прийти из ConfigProvider. */
 function maskOptions(value: DrawerMask | undefined): DrawerMaskConfig {
   return typeof value === 'boolean' ? { enabled: value } : value ?? {};
@@ -41,18 +45,18 @@ export type DrawerInteraction = ReturnType<typeof resolveDrawerInteraction>;
 /** Сохраняет CSS-длины. Ноль допустим как результат изменения размера панели. */
 export function getDrawerSize(size: DrawerSize = 'default', allowZero = false): string {
   if (size === 'default') {
-    return '378px';
+    return defaultSizeInCss;
   }
   if (size === 'large') {
     return '736px';
   }
   if (typeof size === 'number') {
     const valid = size > 0 || size === 0 && allowZero;
-    return Number.isFinite(size) && valid ? `${size}px` : '378px';
+    return Number.isFinite(size) && valid ? `${size}px` : defaultSizeInCss;
   }
 
   const text = size.trim();
-  return /^\d+(\.\d+)?$/.test(text) ? `${text}px` : text || '378px';
+  return /^\d+(\.\d+)?$/.test(text) ? `${text}px` : text || defaultSizeInCss;
 }
 
 /** Только абсолютный размер в пикселях может заменить измерение в начале drag. */
@@ -88,12 +92,12 @@ export function getDrawerPushDistance(
     return 0;
   }
   if (push === undefined) {
-    return 180;
+    return DEFAULT_DRAWER_PUSH_DISTANCE;
   }
 
   const distance = push === true ? parentDistance : push.distance ?? parentDistance;
   if (distance === undefined) {
-    return 180;
+    return DEFAULT_DRAWER_PUSH_DISTANCE;
   }
 
   const pixels = Number(distance);

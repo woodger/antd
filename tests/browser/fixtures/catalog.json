@@ -480,6 +480,11 @@
     "root": "drawer-focus-fixture"
   },
   {
+    "id": "drawer-panel",
+    "module": "./DrawerPanelFixtures.svelte",
+    "root": "drawer-panel-fixture"
+  },
+  {
     "id": "alert",
     "module": "./AlertFixtures.svelte",
     "root": "alert-fixture"
