@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
-test('Tooltip.UniqueProvider hydrates the default owner without replacing its focused trigger',
+for (const family of ['Tooltip', 'Popover'] as const) {
+  test(`Tooltip.UniqueProvider hydrates a default-open ${family} and preserves trigger focus`,
   async ({ page }) => {
     const cache = new URL('../../.upstream/artifacts/tooltip-unique-hydration-', import.meta.url);
     const cacheDir = await mkdtemp(fileURLToPath(cache));
@@ -18,8 +19,10 @@ test('Tooltip.UniqueProvider hydrates the default owner without replacing its fo
       });
       const entry = new URL('./fixtures/tooltip-unique-hydration.server.ts', import.meta.url);
       const { renderTooltipUnique } = await server.ssrLoadModule(fileURLToPath(entry));
-      const { body, head } = renderTooltipUnique();
-      await page.goto('/select-components-hydration.html?tooltip-unique');
+      const delegates = family === 'Popover';
+      const { body, head } = renderTooltipUnique(delegates);
+      const query = delegates ? 'tooltip-unique&delegates' : 'tooltip-unique';
+      await page.goto(`/select-components-hydration.html?${query}`);
       await page.addScriptTag({ type: 'module', url: '/tooltip-unique-hydration.client.ts' });
       const root = page.locator('#root');
       await expect(root).toHaveAttribute('data-hydration-ready', 'true');
@@ -37,10 +40,12 @@ test('Tooltip.UniqueProvider hydrates the default owner without replacing its fo
 
       await expect(root).toHaveAttribute('data-hydrated', 'true');
       await expect(trigger).toBeFocused();
-      await expect(trigger).toHaveAttribute('aria-describedby', 'external-id-a');
+      const link = delegates ? 'aria-controls' : 'aria-describedby';
+      await expect(trigger).toHaveAttribute(link, 'external-id-a');
       expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
       await expect(shell).toBeVisible();
-      await expect(shell).toHaveText('Payload a');
+      await expect(shell).toContainText('Payload a');
+      if (delegates) await expect(shell).toHaveAccessibleName('Dialog a');
 
       await page.keyboard.press('Escape');
 
@@ -52,3 +57,4 @@ test('Tooltip.UniqueProvider hydrates the default owner without replacing its fo
       await rm(cacheDir, { recursive: true, force: true });
     }
   });
+}

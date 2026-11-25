@@ -9,6 +9,7 @@
   let mode = $state(untrack(() => initialMode));
   let target = $state('none');
   let removed = $state(false);
+  let emptyTitle = $state(false);
   let alternateTheme = $state(false);
   let refA = $state<TooltipRef>();
   let refB = $state<TooltipRef>();
@@ -18,7 +19,7 @@
   const controlled = $derived(mode === 'controlled' || mode === 'nested-providers');
   const motion = $derived(mode === 'animated-switch' || mode === 'animated-cancel');
   const enter = $derived(mode === 'delays' ? 0.12 : 0);
-  const leave = $derived(mode === 'delays' ? 0.07 : 0);
+  const leave = $derived(mode === 'empty-content' ? 60 : mode === 'delays' ? 0.07 : 0);
 
   function record(id: string, type: string, open: boolean) {
     events.push({ id, type, open });
@@ -38,6 +39,7 @@
     mode = next;
     target = 'none';
     removed = false;
+    emptyTitle = false;
     alternateTheme = false;
     getterCalls = 0;
     events = [];
@@ -47,7 +49,7 @@
 {#snippet item(id: 'a' | 'b')}
   {#if !removed || id !== 'a'}
     {#snippet title()}<span data-study-content={id}>Payload {id}</span>{/snippet}
-    <Tooltip {title}
+    <Tooltip title={mode === 'empty-content' && emptyTitle ? '' : title}
       bind:ref={() => id === 'a' ? refA : refB, value => { if (id === 'a') refA = value; else refB = value; }}
       id={`external-id-${id}`}
       rootClassName="study-unique-popup"
@@ -88,6 +90,7 @@
     <option value="theme">theme</option>
     <option value="consumers">consumers</option>
     <option value="consumers-opt-out">consumers-opt-out</option>
+    <option value="empty-content">empty-content</option>
   </select></label>
   <button type="button" onclick={() => { target = 'a'; }}>Open A</button>
   <button type="button" onclick={() => { target = 'b'; }}>Open B</button>
@@ -95,6 +98,9 @@
   <button type="button" onclick={() => { target = 'none'; }}>Close both</button>
   <button type="button" onclick={() => { removed = true; }}>Remove A</button>
   <button type="button" onclick={() => { alternateTheme = true; }}>Retheme A</button>
+  {#if mode === 'empty-content'}
+    <button type="button" onclick={() => { emptyTitle = true; }}>Clear title</button>
+  {/if}
   <button type="button" id="unique-outside">Outside</button>
   <output data-testid="unique-events" hidden>{JSON.stringify(events)}</output>
   <output data-testid="unique-getters" hidden>{getterCalls}</output>

@@ -234,6 +234,7 @@
   align={props.align} builtinPlacements={props.builtinPlacements} onPopupAlign={props.onPopupAlign}
   id={props.id} forceRender={props.forceRender} fresh={props.fresh} zIndex={props.zIndex}
   {destroyOnHidden}
+  unique={props.unique}
   {placement} {arrow} {color} {openClassName} {autoAdjustOverflow} {getPopupContainer}
   {rootClassName} classNames={{
     root: [config.popconfirm?.class, semantics.classNames.root].filter(Boolean).join(' '),

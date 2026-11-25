@@ -1,0 +1,774 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "mode": "popover-default",
+        "family": "Popover",
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "hover:outside"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-top"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-popover-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 8,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            },
+            {
+              "id": "a",
+              "type": "settled",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-top"
+              ],
+              "arrows": 1
+            },
+            {
+              "node": 2,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-bottom"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-popover-open"
+            }
+          ],
+          "containerCalls": 19,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "a",
+              "type": "settled",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            },
+            {
+              "id": "b",
+              "type": "settled",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-top"
+              ],
+              "arrows": 1
+            },
+            {
+              "node": 2,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-bottom"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 22,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "settled",
+              "open": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "popover-opt-in",
+        "family": "Popover",
+        "unique": true,
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "hover:outside"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-top",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-css-var",
+                "ant-popover-placement-top",
+                "ant-popover-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-popover-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-css-var",
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-popover-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-unique-container-hidden",
+                "ant-popover-css-var",
+                "ant-popover-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "popconfirm-opt-in",
+        "family": "Popconfirm",
+        "unique": true,
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "escape"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-top",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-css-var",
+                "ant-popover-placement-top",
+                "ant-popover-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-popover-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-css-var",
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-popover-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-unique-container-hidden",
+                "ant-popover-css-var",
+                "ant-popover-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "mixed-opt-in",
+        "family": "Popover",
+        "unique": true,
+        "mixed": true,
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "hover:outside",
+          "hover:a"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-css-var",
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-popover-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-bottom",
+                "ant-popover-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-popover-unique-container",
+                "ant-popover-unique-container-hidden",
+                "ant-popover-css-var",
+                "ant-popover-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ]
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

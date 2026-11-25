@@ -22,6 +22,12 @@ DestroyOnHidden передаётся Popover, включая явный false. �
 При включённом удалении SSR-содержимое остаётся ленивым даже при начальном open/defaultOpen;
 native shell, focus и ARIA следуют прежним правилам Popover.
 
+`unique={true}` передаётся [Popover](./popover.md) и включает подтверждение в
+ближайшую группу Tooltip.UniqueProvider. Каждое подтверждение хранит свой
+Promise и состояние ожидания. Если группа передала панель другому триггеру,
+завершение прошлого действия обновляет его владельца. Текущая карточка
+сохраняет своё состояние.
+
 ```svelte
 <script lang="ts">
   import { Button, Popconfirm } from '@woodger/antd';

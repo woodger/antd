@@ -3,8 +3,6 @@
   // использует текущий popup.
   import { getAllContexts, onDestroy, onMount, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
-  import TooltipUniqueContent from './TooltipUniqueContent.svelte';
-  import { connectTooltipUniqueBackground } from './tooltip-unique-background.dom';
   import {
     hasTooltipPopupAncestor, isolateTooltipUnique, useTooltipUnique, type TooltipUniqueOwner
   } from './tooltip-unique.model.svelte';
@@ -23,7 +21,9 @@
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { provideZIndex, useZIndex, type ZIndexLayer } from './z-index-context.svelte';
-  import { connectTooltipDescription, connectTooltipOpenClass } from './tooltip.dom';
+  import {
+    connectTooltipDescription, connectTooltipOpenClass, defaultTooltipContainer
+  } from './tooltip.dom';
   import {
     getTooltipArrow,
     getTooltipDelay,
@@ -65,56 +65,52 @@
     ownerClassName,
     sourceAnchor = false,
     unique,
-    presentation,
     outsideEvents,
     onDismiss,
     onHoverChange
   } = $derived(props);
 
-  const localConfig = useConfig();
-  const localTheme = useComponentTheme('Tooltip');
-  const localTokens = useDesignTokenContext();
+  const config = useConfig();
+  const componentTheme = useComponentTheme('Tooltip');
+  const designTokens = useDesignTokenContext();
   const group = useTooltipUnique();
   if (group) isolateTooltipUnique();
   const context = group ? getAllContexts() : undefined;
-  const grouped = $derived(Boolean(group && !presentation
+  const grouped = $derived(Boolean(group
     && (unique ?? semanticProps?.unique) !== false && !hasTooltipPopupAncestor(anchor)));
-  const config = $derived(presentation?.owner?.config ?? localConfig);
-  const componentTheme = $derived(presentation?.owner?.theme ?? localTheme);
-  const designTokens = $derived(presentation?.owner?.tokens ?? localTokens);
   let prefix = $derived(config.getPrefixCls('tooltip', prefixCls));
   let prefixCss = $derived(getOverlayPrefixCss('tooltip', prefix, prefixTemplate));
   let resolvedOpenClassName = $derived(openClassName || semanticProps?.openClassName || `${prefix}-open`);
   const generatedId = $props.id();
   let resolvedId = $derived((providedId ?? semanticProps?.id) || `ant-tooltip-${generatedId}`);
-  let resolvedDisabled = $derived(!presentation && (disabled ?? semanticProps?.disabled ?? false));
+  let resolvedDisabled = $derived(disabled ?? semanticProps?.disabled ?? false);
   let open = $derived(rawOpen && !resolvedDisabled);
-  let force = $derived(!presentation && (forceRender ?? semanticProps?.forceRender ?? false));
+  let force = $derived(forceRender ?? semanticProps?.forceRender ?? false);
   const localLayer = useZIndex('container', () => zIndex ?? semanticProps?.zIndex);
   const layer = $derived(zIndexLayer ?? localLayer);
   provideZIndex(() => layer.contextZIndex);
   let popup = $state<HTMLSpanElement>();
   let connection: PopupConnection | undefined;
-  let backgroundLayout: ReturnType<typeof connectTooltipUniqueBackground> | undefined;
   let actualPlacement = $state(untrack(() => placement));
   let actualPosition = $state.raw<TooltipPosition>();
   let resolvedAlign = $derived(align ?? semanticProps?.align);
   let configuredPlacements = $derived(builtinPlacements ?? semanticProps?.builtinPlacements);
   let configuredContainer = $derived(getPopupContainer || config.getPopupContainer);
   // Fallback встроенной подсказки принадлежит порталу, semantic props отражают конфигурацию.
-  let container = $derived(presentation ? defaultTooltipContainer : configuredContainer
+  let container = $derived(configuredContainer
     || (sourceAnchor ? defaultTooltipContainer : undefined));
-  let alignCallback = $derived(presentation ? undefined : onPopupAlign ?? semanticProps?.onPopupAlign);
-  let customPosition = $derived(Boolean(resolvedAlign || configuredPlacements || alignCallback));
-  let placementArrow = $derived(getTooltipArrow(arrow, config.tooltip?.arrow));
-  let arrowConfig = $derived(presentation ? { ...placementArrow, show: false } : placementArrow);
-  let sourcePlacement = $derived(sourceAnchor || Boolean(config.tooltip) || typeof arrow === 'object'
-    || typeof autoAdjustOverflow === 'object' || customPosition);
-  let destroy = $derived(!presentation && (destroyOnHidden ?? semanticProps?.destroyOnHidden ?? false));
+  let alignCallback = $derived(onPopupAlign ?? semanticProps?.onPopupAlign);
+  let explicitGeometry = $derived(Boolean(resolvedAlign || configuredPlacements));
+  let customPosition = $derived(explicitGeometry || Boolean(alignCallback));
+  let arrowConfig = $derived(getTooltipArrow(arrow, config.tooltip?.arrow));
+  let sourceGeometry = $derived(sourceAnchor || Boolean(config.tooltip) || typeof arrow === 'object'
+    || typeof autoAdjustOverflow === 'object' || explicitGeometry);
+  let sourcePlacement = $derived(sourceGeometry || Boolean(alignCallback));
+  let destroy = $derived(destroyOnHidden ?? semanticProps?.destroyOnHidden ?? false);
   let localClassNames = $derived(ownerClassName
     ? { root: ownerClassName } : semanticProps?.classNames);
   let callbackProps = $derived.by<TooltipSemanticProps>(() => {
-    const source = getTooltipPlacementConfig(placementArrow, designTokens.state.token);
+    const source = getTooltipPlacementConfig(arrowConfig, designTokens.state.token);
     const placements = getPopupPlacements(
       source.pointAtCenter ?? false,
       source.arrowWidth,
@@ -170,8 +166,17 @@
     callbackProps
   ));
   let colorInfo = $derived(getTooltipColor(color, prefix));
+  let rootClasses = $derived([
+    prefix,
+    'ant-tooltip-css-var',
+    componentTheme.className,
+    colorInfo.className,
+    config.direction === 'rtl' && `${prefix}-rtl`,
+    semanticProps?.rootClassName,
+    config.tooltip?.class,
+    semantics.classNames.root
+  ]);
   let rootLayers = $derived([
-    presentation ? designTokens.style : undefined,
     componentTheme.style,
     layer.style,
     colorInfo.arrowStyle,
@@ -181,7 +186,7 @@
   let containerLayers = $derived([
     semantics.styles.container, colorInfo.overlayStyle
   ]);
-  let refresh = $derived(Boolean(presentation) || (fresh ?? semanticProps?.fresh ?? false));
+  let refresh = $derived(fresh ?? semanticProps?.fresh ?? false);
   let payload = $derived({
     id: resolvedId,
     title,
@@ -198,11 +203,43 @@
   let available = $derived(contentAvailable ?? hasTooltipContent(title));
   const visible = $derived(open && available);
   const owner: TooltipUniqueOwner | undefined = context && {
-    get props() { return { ...props, id: resolvedId, zIndexLayer: layer }; },
-    config: localConfig,
-    tokens: localTokens,
-    theme: localTheme,
-    get layer() { return layer; },
+    view: {
+      kind: 'tooltip',
+      get id() { return resolvedId; },
+      get prefix() { return prefix; },
+      get direction() { return config.direction; },
+      get content() { return title; },
+      get available() { return available; },
+      get rootClasses() { return rootClasses; },
+      get containerClasses() { return payload.classes; },
+      get backgroundClasses() {
+        return [`${prefix}-css-var`, componentTheme.className, semantics.classNames.container];
+      },
+      get rootLayers() { return [designTokens.style, ...rootLayers]; },
+      get containerLayers() { return containerLayers; },
+      get presetBackground() { return colorInfo.presetBackground; },
+      get customColor() { return payload.customColor; },
+      get anchor() { return anchor; },
+      get trigger() { return trigger; },
+      get placement() { return placement; },
+      get autoAdjustOverflow() { return autoAdjustOverflow; },
+      get sourcePlacement() {
+        return sourceGeometry
+          ? getTooltipPlacementConfig(arrowConfig, designTokens.state.token) : undefined;
+      },
+      get sourceAlign() { return explicitGeometry ? resolvedAlign ?? {} : undefined; },
+      get placements() { return callbackProps.builtinPlacements; },
+      get gap() {
+        return designTokens.enabled || isTooltipCorner(placement) || sourceGeometry
+          ? designTokens.state.token.marginXXS : undefined;
+      },
+      get motion() { return designTokens.state.token.motion; },
+      get defaultMotionName() { return `${config.getPrefixCls()}-zoom-big-fast`; },
+      get motionName() { return semanticProps?.motion?.motionName; },
+      get outsideEvents() { return outsideEvents; },
+      onDismiss: reason => onDismiss(reason),
+      onHoverChange: next => onHoverChange?.(next)
+    },
     context,
     isOpen: () => Boolean(grouped && visible && anchor?.isConnected)
   };
@@ -210,7 +247,7 @@
     visible,
     forceRender: force,
     enabled: designTokens.state.token.motion,
-    defaultName: semanticProps || presentation ? `${config.getPrefixCls()}-zoom-big-fast` : undefined,
+    defaultName: semanticProps ? `${config.getPrefixCls()}-zoom-big-fast` : undefined,
     customName: semanticProps?.motion?.motionName,
     afterOpenChange: settleVisibility
   }));
@@ -229,7 +266,7 @@
   onDestroy(() => { if (owner) group?.release(owner); });
 
   $effect(() => {
-    if (!group || !owner || presentation) return;
+    if (!group || !owner) return;
     if (!grouped) {
       untrack(() => group.release(owner));
       return;
@@ -237,16 +274,11 @@
 
     const next = owner.isOpen();
     untrack(() => {
-      const delay = next ? semanticProps?.mouseEnterDelay ?? localConfig.tooltip?.mouseEnterDelay
-        : semanticProps?.mouseLeaveDelay ?? localConfig.tooltip?.mouseLeaveDelay;
+      const delay = next ? semanticProps?.mouseEnterDelay ?? config.tooltip?.mouseEnterDelay
+        : semanticProps?.mouseLeaveDelay ?? config.tooltip?.mouseLeaveDelay;
       group.request(owner, next, getTooltipDelay(delay));
     });
   });
-
-  // Встроенная подсказка внутри нативного модального окна остаётся в его top layer.
-  function defaultTooltipContainer(element: HTMLElement) {
-    return element.closest<HTMLDialogElement>('dialog:modal') ?? element.ownerDocument.body;
-  }
 
   $effect.pre(() => {
     // Первый force render получает текущий payload; последующие скрытые updates используют fresh.
@@ -269,20 +301,6 @@
     $effect(() => update(rendered.layers));
   }
 
-  function attachBackground(node: HTMLElement) {
-    const update = connectInlineStyle(node);
-    const current = connectTooltipUniqueBackground(node,
-      () => Boolean(presentation?.ready && designTokens.state.token.motion));
-    backgroundLayout = current;
-    $effect(() => update(rendered.layers));
-    $effect(current.syncMotion);
-
-    return () => {
-      current.destroy();
-      backgroundLayout = undefined;
-    };
-  }
-
   export function getPopupElement() {
     return grouped && owner ? group?.surfaceFor(owner)?.getPopupElement() : popup;
   }
@@ -296,24 +314,18 @@
 
   function settleVisibility(next: boolean) {
     if (next) connection?.align();
-    else backgroundLayout?.stop();
-    if (presentation) {
-      presentation.settled(next);
-      return;
-    }
-
     semanticProps?.afterOpenChange?.(next);
   }
 
   $effect(() => {
-    if (presentation || grouped && !(visible && group?.owner === owner && group?.open)) return;
+    if (grouped && !(visible && group?.owner === owner && group?.open)) return;
     if (describe && available && !resolvedDisabled) {
       return typeof describe === 'function' ? describe(id) : connectTooltipDescription(describe, id);
     }
   });
 
   $effect(() => {
-    if (!presentation && anchor && open && available) {
+    if (anchor && open && available) {
       return connectTooltipOpenClass(anchor, resolvedOpenClassName);
     }
   });
@@ -327,8 +339,6 @@
       return;
     }
 
-    let bounds: DOMRect | undefined;
-    const shared = presentation;
     const disconnect = untrack(() => connectPopup(surface, reference, {
       trigger: source,
       get interactive() { return visible; },
@@ -337,10 +347,10 @@
       get autoAdjustOverflow() { return autoAdjustOverflow; },
       get sourcePlacement() {
         return sourcePlacement
-          ? getTooltipPlacementConfig(placementArrow, designTokens.state.token) : undefined;
+          ? getTooltipPlacementConfig(arrowConfig, designTokens.state.token) : undefined;
       },
       get sourceAlign() { return customPosition ? resolvedAlign ?? {} : undefined; },
-      get builtinPlacements() { return shared ? sharedPlacements : configuredPlacements; },
+      get builtinPlacements() { return configuredPlacements; },
       get onAlign() {
         return customPosition ? (position: TooltipPosition) => {
           actualPosition = position;
@@ -359,11 +369,7 @@
           + designTokens.state.token.marginXXS : undefined),
       get outsideEvents() { return outsideEvents; },
       onDismiss: reason => onDismiss(reason),
-      measurePopup: shared ? () => (bounds = surface.getBoundingClientRect()) : undefined,
-      applyPosition: next => {
-        if (bounds && backgroundLayout) backgroundLayout.position(next, bounds, popupStyle.position);
-        else popupStyle.position(next);
-      },
+      applyPosition: popupStyle.position,
       onPlacement: (next) => {
         actualPlacement = next;
       }
@@ -372,46 +378,15 @@
 
     return () => {
       connection = undefined;
-      disconnect(Boolean(shared));
+      disconnect();
     };
   });
-
-  // Аргументы align не мутируются при отключении динамического правого/нижнего inset.
-  const sharedPlacements = $derived.by(() => Object.fromEntries(
-    Object.entries(callbackProps.builtinPlacements).map(([name, value]) => [
-      name, { ...value, dynamicInset: false }
-    ])
-  ));
 </script>
 
 <style>
   [data-ant-tooltip] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; }
   [data-ant-tooltip][hidden], [data-ant-tooltip]:not(:popover-open) { display: none; }
   [data-ant-tooltip-container] { display: block; max-height: calc(100dvh - 16px); overflow: auto; overflow-wrap: anywhere; }
-  [data-ant-tooltip-unique-background] {
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    border-radius: var(--ant-border-radius);
-    background: var(--ant-tooltip-unique-color, var(--ant-color-bg-spotlight));
-    pointer-events: none;
-    z-index: -1;
-  }
-  [data-ant-tooltip-unique] > [data-ant-tooltip-container] {
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    [data-ant-tooltip-unique-fade] {
-      animation: tooltip-unique-fade var(--ant-motion-duration-mid, 0.2s) linear both;
-    }
-  }
-  @keyframes tooltip-unique-fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
   [data-ant-placement="top"] > [data-ant-tooltip-arrow], [data-ant-placement="bottom"] > [data-ant-tooltip-arrow] { left: var(--arrow-x, 50%); }
   [data-ant-placement="left"] > [data-ant-tooltip-arrow], [data-ant-placement="right"] > [data-ant-tooltip-arrow] { top: var(--arrow-y, 50%); }
   /* Без getter source portal изолирует private contrast родительского popup. */
@@ -419,30 +394,13 @@
   @media (prefers-reduced-motion: reduce) { [data-ant-tooltip], [data-ant-tooltip-container] { animation: none; transition: none; } }
 </style>
 
-{#snippet popupBody()}
-  <span data-ant-tooltip-container="" class={rendered.classes}
-    data-ant-tooltip-unique-fade={presentation && designTokens.state.token.motion || undefined}
-    data-ant-overlay-color={rendered.customColor || undefined}
-    style={initialContainerStyle} {@attach containerStyle}
-    tabindex="-1">{#if renderContent}{#if presentation?.owner}<TooltipUniqueContent
-      context={presentation.owner?.context} content={rendered.title} />
-    {:else}<RenderContent value={rendered.title} />{/if}{/if}</span>
-{/snippet}
-
-{#if !grouped}{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`tooltip-prefix:${prefix}`} />{/if}<span bind:this={popup} {id} role="tooltip" popover="manual" hidden dir={config.direction}
+{#if prefixCss && (!grouped || group?.owner === owner)}<ThemeScopeStyle css={prefixCss}
+  scope={`tooltip-prefix:${prefix}`} />{/if}{#if !grouped}<span bind:this={popup} {id} role="tooltip" popover="manual" hidden dir={config.direction}
   inert={motion.leaving || undefined}
   data-ant-tooltip="" data-ant-placement={classPlacement} data-ant-overlay-motion={motion.zoom}
-  data-ant-tooltip-unique={Boolean(presentation) || undefined}
   data-ant-tooltip-inline={!container || undefined} class={[
-    prefix,
-    'ant-tooltip-css-var',
-    componentTheme.className,
-    colorInfo.className,
+    rootClasses,
     classPlacement && `${prefix}-placement-${classPlacement}`,
-    config.direction === 'rtl' && `${prefix}-rtl`,
-    semanticProps?.rootClassName,
-    config.tooltip?.class, semantics.classNames.root,
-    presentation && `${prefix}-unique-controlled`,
     motion.className
   ]} style={initialStyle}
   {@attach popupStyle.attach} {@attach portal}
@@ -451,17 +409,12 @@
         onHoverChange?.(true);
     }} onpointerleave={() => onHoverChange?.(false)}
   onanimationend={motion.end} ontransitionend={motion.end}>
-  {#if presentation}<span data-ant-tooltip-unique-background="" aria-hidden="true"
-    class={[`${prefix}-unique-container`, `${prefix}-css-var`, componentTheme.className,
-      semantics.classNames.container, classPlacement && `${prefix}-placement-${classPlacement}`,
-      presentation.ready && `${prefix}-unique-container-visible`,
-      !presented && `${prefix}-unique-container-hidden`]}
-    style:--ant-tooltip-unique-color={colorInfo.className && color && !color.endsWith('-inverse')
-      ? `var(--ant-${color}-6)` : undefined}
-    {@attach attachBackground}></span>{/if}
   {#if arrowConfig.show}<span data-ant-tooltip-arrow="" class={[`${prefix}-arrow`, semantics.classNames.arrow]}
     style={arrowPositionStyle
       ? `${arrowPositionStyle};${semantics.styles.arrow ?? ''}` : semantics.styles.arrow}
     aria-hidden="true"></span>{/if}
-  {#key presentation?.owner}{@render popupBody()}{/key}
+  <span data-ant-tooltip-container="" class={rendered.classes}
+    data-ant-overlay-color={rendered.customColor || undefined}
+    style={initialContainerStyle} {@attach containerStyle}
+    tabindex="-1">{#if renderContent}<RenderContent value={rendered.title} />{/if}</span>
 </span>{/if}

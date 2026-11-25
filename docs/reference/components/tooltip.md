@@ -192,7 +192,9 @@ React UMD, каждый снят дважды. [Эталон](../../../tests/bro
 При запросе во время анимации открытия группа применяет последнюю цель после
 завершения этой фазы. Если указатель успевает уйти с обеих целей, группа
 отменяет перенос и закрывает панель. Группа использует тему и префиксы
-активного Tooltip.
+активного владельца. Popover и Popconfirm присоединяются при явном
+`unique={true}`. При переходе между Tooltip и карточкой тот же `div` меняет
+роль с `tooltip` на `dialog` и получает имя и ID нового владельца.
 `unique={false}` оставляет Tooltip самостоятельным. Настройка доступна также
 в `Slider.tooltip` и в объекте `Typography.ellipsis.tooltip`.
 
@@ -216,6 +218,8 @@ React UMD, каждый снят дважды. [Эталон](../../../tests/bro
 Сравнение выполняется в [Chromium](../../../tests/browser/tooltip-unique.spec.ts),
 с отдельными проверками [гидратации](../../../tests/browser/tooltip-unique-hydration.spec.ts)
 и [публичного API](../../../tests/package/tooltip-unique.ssr.test.ts).
+Сценарии с карточками сверяются с [отдельными снимками React UMD](../../../tests/browser/fixtures/ant-design-tooltip-unique-delegates-reference.json)
+в [Chromium](../../../tests/browser/tooltip-unique-delegates.spec.ts).
 
 Placement принимает top/bottom/left/right, topLeft/topRight/bottomLeft/bottomRight
 и leftTop/leftBottom/rightTop/rightBottom. Направления физические и не меняются

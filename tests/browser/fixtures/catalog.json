@@ -395,6 +395,11 @@
     "root": "tooltip-unique-fixture"
   },
   {
+    "id": "tooltip-unique-delegates",
+    "module": "./TooltipUniqueDelegateFixtures.svelte",
+    "root": "tooltip-unique-delegate-fixture"
+  },
+  {
     "id": "popover-ref",
     "module": "./PopoverRefFixtures.svelte",
     "root": "popover-ref-fixture"

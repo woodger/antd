@@ -1,3 +1,8 @@
+/** Оставляет встроенную подсказку в top layer открытого нативного диалога. */
+export function defaultTooltipContainer(anchor: HTMLElement) {
+  return anchor.closest<HTMLDialogElement>('dialog:modal') ?? anchor.ownerDocument.body;
+}
+
 /** Добавляет open classes без замены caller class; cleanup удаляет только собственные tokens. */
 export function connectTooltipOpenClass(element: Element, className: string): () => void {
   const hadClass = element.hasAttribute('class');

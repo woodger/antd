@@ -19113,10 +19113,20 @@
         {
           "id": "unique-provider-opt-in",
           "title": "Явное участие в Tooltip.UniqueProvider",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "В закреплённом React 6.6.8 явный unique=true переопределяет default false и использует общую Tooltip.UniqueProvider surface, включая смешанные цели Tooltip и Popover. В текущем Svelte этапе общую панель используют Tooltip и его встроенные потребители."
+          "evidence": [
+            "docs/reference/components/popover.md",
+            "src/lib/popover.types.ts",
+            "src/lib/Popover.svelte",
+            "src/lib/TooltipUniquePopup.svelte",
+            "tests/browser/fixtures/ant-design-tooltip-unique-delegates-reference.json",
+            "tests/browser/fixtures/TooltipUniqueDelegateFixtures.svelte",
+            "tests/browser/tooltip-unique-delegates.spec.ts",
+            "tests/package/tooltip-unique.ssr.test.ts",
+            "tests/browser/tooltip-unique-hydration.spec.ts"
+          ],
+          "note": "По умолчанию собственная поверхность. Явный unique=true использует общий div и фон без стрелки, в том числе при смене Tooltip на Popover. Четыре профиля и 17 кадров официального UMD 6.6.8 проверяют DOM identity, placements, пользовательские callbacks и обращение к portal getter. Svelte связывает фактический ID с aria-controls, возвращает общий PopoverRef только владельцу и применяет preset color к фону. Проверены click и клавиатурный фокус, Escape и гидратация defaultOpen."
         }
       ]
     },
@@ -21385,6 +21395,7 @@
         "tests/package/overlay-motion.ssr.test.ts",
         "src/lib/tooltip.component.ts",
         "src/lib/TooltipUniqueProvider.svelte",
+        "src/lib/TooltipUniquePopup.svelte",
         "src/lib/TooltipUniqueContent.svelte",
         "src/lib/tooltip-unique.model.svelte.ts",
         "src/lib/tooltip-unique-background.dom.ts",
@@ -21899,6 +21910,7 @@
             "docs/reference/components/tooltip.md",
             "src/lib/tooltip.component.ts",
             "src/lib/TooltipUniqueProvider.svelte",
+            "src/lib/TooltipUniquePopup.svelte",
             "src/lib/TooltipUniqueContent.svelte",
             "src/lib/tooltip-unique.model.svelte.ts",
             "src/lib/tooltip-unique-background.dom.ts",
@@ -24593,10 +24605,20 @@
         {
           "id": "unique-provider-opt-in",
           "title": "Явное участие в Tooltip.UniqueProvider",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "В закреплённом React 6.6.8 явный unique=true переопределяет default false и использует общую Tooltip.UniqueProvider surface, включая смешанные цели Tooltip и Popover. В текущем Svelte этапе общую панель используют Tooltip и его встроенные потребители."
+          "evidence": [
+            "docs/reference/components/popconfirm.md",
+            "src/lib/Popconfirm.svelte",
+            "src/lib/popconfirm.types.ts",
+            "src/lib/Popover.svelte",
+            "src/lib/TooltipUniquePopup.svelte",
+            "tests/browser/fixtures/ant-design-tooltip-unique-delegates-reference.json",
+            "tests/browser/fixtures/TooltipUniqueDelegateFixtures.svelte",
+            "tests/browser/tooltip-unique-delegates.spec.ts",
+            "tests/package/tooltip-unique.ssr.test.ts"
+          ],
+          "note": "Параметр передаётся наружному Popover. В UMD 6.6.8 подтверждения делят поверхность и фон без стрелки, получают onOpenChange и используют общий portal. Native сохраняет имя и описание диалога, aria-busy, припаркованный фокус и контроллер Promise по владельцу. Поздний результат после смены карточки обновляет прежнее подтверждение, а текущий диалог остаётся открыт."
         }
       ]
     },

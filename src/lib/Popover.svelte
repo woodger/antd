@@ -2,7 +2,7 @@
   // Управляет trigger и содержимым Popover. Фокус, hover и закрытие проходят через текущее
   // состояние открытости.
   import NoCompactStyle from './NoCompactStyle.svelte';
-  import { onDestroy, onMount, untrack } from 'svelte';
+  import { getAllContexts, onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
@@ -22,6 +22,9 @@
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { connectPopoverTrigger, focusPopover } from './popover.dom';
   import { connectTooltipOpenClass } from './tooltip.dom';
+  import {
+    hasTooltipPopupAncestor, useTooltipUnique, type TooltipUniqueOwner
+  } from './tooltip-unique.model.svelte';
   import {
     getTooltipActions,
     getTooltipArrow,
@@ -84,6 +87,8 @@
   const designTokens = useDesignTokenContext();
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
+  const group = useTooltipUnique();
+  const context = group ? getAllContexts() : undefined;
   const tooltipTheme = useComponentTheme('Tooltip');
   const componentTheme = useComponentTheme('Popover');
   const isPopconfirm = consumePopconfirmTheme();
@@ -146,6 +151,9 @@
   let host = $state<HTMLSpanElement>();
   let anchor = $state<Element>();
   let popup = $state<HTMLDivElement>();
+  const grouped = $derived(Boolean(
+    group && props.unique === true && !hasTooltipPopupAncestor(anchor)
+  ));
   let shown = $state(false);
   let actualPlacement = $state(untrack(() => placement));
   let actualPosition = $state.raw<TooltipPosition>();
@@ -163,10 +171,12 @@
   let resumeFocus: HTMLElement | undefined;
   let active = true;
   let mounted = $state(false);
-  let customPosition = $derived(Boolean(props.align || props.builtinPlacements || props.onPopupAlign));
-  let sourcePlacement = $derived(typeof arrow === 'object'
+  let explicitGeometry = $derived(Boolean(props.align || props.builtinPlacements));
+  let customPosition = $derived(explicitGeometry || Boolean(props.onPopupAlign));
+  let sourceGeometry = $derived(typeof arrow === 'object'
     || Boolean(config.popover) || isPopconfirm && Boolean(config.popconfirm)
-    || typeof autoAdjustOverflow === 'object' || customPosition);
+    || typeof autoAdjustOverflow === 'object' || explicitGeometry);
+  let sourcePlacement = $derived(sourceGeometry || Boolean(props.onPopupAlign));
   let positionPlacements = $derived.by(() => {
     if (props.builtinPlacements) {
       return props.builtinPlacements;
@@ -200,14 +210,14 @@
   let available = $derived(hasTitle || hasBody);
   let visible = $derived(!props.disabled && available && rawOpen);
   const motion = useOverlayMotion(() => popup, () => ({
-    visible,
-    forceRender,
+    visible: !grouped && visible,
+    forceRender: !grouped && forceRender,
     enabled: designTokens.state.token.motion,
     defaultName: `${config.getPrefixCls()}-zoom-big`,
     customName: props.motion?.motionName,
     afterOpenChange: settleVisibility
   }));
-  const presented = $derived(visible || motion.leaving);
+  const presented = $derived(!grouped && (visible || motion.leaving));
   let destroy = $derived(destroyOnHidden ?? false);
   let payload = $derived({
     id: providedId || fallbackId,
@@ -225,12 +235,77 @@
   let rendered = $derived(visible || fresh ? payload : cached);
   let id = $derived(rendered.id);
   let renderedTitle = $derived(hasContent(rendered.title));
-  let renderedBody = $derived(hasContent(rendered.content));
   let renderContent = $derived(!destroy || mounted && (forceRender || visible || motion.retained));
+  let rootClasses = $derived([
+    prefix,
+    designTokens.enabled && 'ant-popover-css-var',
+    designTokens.enabled && designTokens.state.key,
+    designTokens.enabled && designTokens.state.hashId,
+    popupClass,
+    colorInfo.className,
+    config.direction === 'rtl' && `${prefix}-rtl`,
+    rootClassName,
+    config.popover?.class,
+    semantics.classNames.root
+  ]);
+  const owner: TooltipUniqueOwner | undefined = context && {
+    view: {
+      kind: 'dialog',
+      get id() { return payload.id; },
+      get prefix() { return prefix; },
+      get direction() { return config.direction; },
+      get content() { return sharedBody; },
+      get available() { return available; },
+      get rootClasses() { return rootClasses; },
+      get containerClasses() { return payload.containerClasses; },
+      get backgroundClasses() {
+        return [`${prefix}-css-var`, designTokens.state.key, semantics.classNames.container];
+      },
+      get rootLayers() { return [designTokens.style, ...rootLayers]; },
+      get containerLayers() { return containerLayers; },
+      get presetBackground() { return colorInfo.presetBackground; },
+      get customColor() { return payload.customColor; },
+      get anchor() { return anchor; },
+      get trigger() { return host; },
+      get placement() { return placement; },
+      get autoAdjustOverflow() { return autoAdjustOverflow; },
+      get sourcePlacement() {
+        return sourceGeometry
+          ? getTooltipPlacementConfig(arrowConfig, designTokens.state.token) : undefined;
+      },
+      get sourceAlign() { return explicitGeometry ? props.align ?? {} : undefined; },
+      get placements() { return positionPlacements; },
+      get gap() {
+        return designTokens.enabled || isTooltipCorner(placement) || sourceGeometry
+          ? designTokens.state.token.marginXXS : undefined;
+      },
+      get motion() { return designTokens.state.token.motion; },
+      get defaultMotionName() { return `${config.getPrefixCls()}-zoom-big`; },
+      get motionName() { return props.motion?.motionName; },
+      get ariaLabel() { return ariaLabel; },
+      get ariaLabelledby() {
+        return ariaLabel ? undefined : ariaLabelledby ?? (hasTitle ? titleId : undefined);
+      },
+      get ariaDescribedby() { return ariaDescribedby; },
+      get ariaBusy() { return ariaBusy; },
+      get outsideEvents() { return actionOverrides ? 'mouse' : undefined; },
+      onDismiss: dismiss,
+      onHoverChange: handlePopupHover,
+      onFocusIn: handlePopupFocus,
+      onFocusOut: handlePopupBlur,
+      onHidden: clearPopupIntent,
+      onTransfer: transferPopup
+    },
+    context,
+    isOpen: () => Boolean(grouped && visible && anchor?.isConnected)
+  };
+  const shared = $derived(grouped && owner ? group?.surfaceFor(owner) : undefined);
+  const activePopup = $derived(grouped ? shared?.getPopupElement() : popup);
+  const displayed = $derived(grouped ? Boolean(group?.open && shared?.isShowing()) : shown);
   let initialized = false;
   const initialContainerStyle = untrack(() => serializeInlineStyleLayers(rendered.layers));
   const portal = createPopupContainer(() => ({
-    open: forceRender || presented,
+    open: !grouped && (forceRender || presented),
     reference: anchor,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
     themeStyle: rootStyle
@@ -262,16 +337,19 @@
 
   function settleVisibility(next: boolean) {
     if (next) connection?.align();
-    props.afterOpenChange?.(next);
+    if (!grouped) props.afterOpenChange?.(next);
   }
 
   onMount(() => {
     mounted = true;
     ref = {
       get nativeElement() { return active ? anchor : undefined; },
-      get popupElement() { return active ? popup : undefined; },
+      get popupElement() { return active ? activePopup : undefined; },
       forceAlign: () => untrack(() => {
-        if (active && visible) connection?.forceAlign();
+        if (active && visible) {
+          if (grouped) shared?.forceAlign();
+          else connection?.forceAlign();
+        }
       })
     };
 
@@ -297,8 +375,20 @@
   });
 
   $effect(() => {
+    if (!group || !owner) return;
+    if (!grouped) {
+      untrack(() => group.release(owner));
+      return;
+    }
+
+    const next = owner.isOpen();
+    untrack(() => group.request(owner, next, getTooltipDelay(next ? enterDelay : leaveDelay)));
+  });
+
+  $effect(() => {
     if (anchor && available) {
-      return connectPopoverTrigger(anchor, id, visible && shown);
+      const controls = grouped ? (group?.owner === owner ? payload.id : '') : id;
+      return connectPopoverTrigger(anchor, controls, visible && displayed);
     }
   });
 
@@ -309,15 +399,16 @@
   });
 
   $effect(() => {
-    if (visible && shown && popup && !popup.inert && focusOnShow) {
+    const surface = activePopup;
+    if (visible && displayed && surface && !surface.inert && focusOnShow) {
       focusOnShow = false;
-      focusPopover(popup);
+      focusPopover(surface);
     }
   });
 
   $effect.pre(() => {
     const source = anchor;
-    const surface = popup;
+    const surface = activePopup;
 
     if (visible) {
       return;
@@ -326,16 +417,27 @@
     clicked = false;
     focusOnShow = false;
     // Возвращаем фокус до удаления условного snippet и скрытия поверхности.
-    if (surface?.contains(getPopupActiveElement(surface))
-      && source instanceof HTMLElement
-      && source.isConnected) {
-      untrack(() => {
-        closing = true;
-        source.focus({ preventScroll: true });
-        closing = false;
-      });
-    }
+    untrack(() => restoreTriggerFocus(surface, source));
   });
+
+  function restoreTriggerFocus(surface: HTMLDivElement | undefined, source: Element | undefined) {
+    if (surface?.contains(getPopupActiveElement(surface)) && source instanceof HTMLElement
+      && source.isConnected) {
+      closing = true;
+      source.focus({ preventScroll: true });
+      closing = false;
+    }
+  }
+
+  function clearPopupIntent() {
+    popupFocused = false;
+    popupHovered = false;
+  }
+
+  function transferPopup(surface: HTMLDivElement) {
+    clearPopupIntent();
+    if (active) restoreTriggerFocus(surface, anchor);
+  }
 
   $effect(() => {
     const surface = popup;
@@ -387,8 +489,7 @@
           });
         }
         if (!next) {
-          popupFocused = false;
-          popupHovered = false;
+          clearPopupIntent();
         }
         else if (resumeFocus?.isConnected) {
           resumeFocus.focus({ preventScroll: true });
@@ -417,6 +518,7 @@
   onDestroy(() => {
     active = false;
     cancelPending();
+    if (owner) group?.release(owner);
   });
 
   function cancelPending() {
@@ -476,9 +578,10 @@
         clicked = false;
         focusOnShow = false;
       }
-      if (next && visible && shown && focusOnShow && popup && !popup.inert) {
+      const surface = activePopup;
+      if (next && visible && displayed && focusOnShow && surface && !surface.inert) {
         focusOnShow = false;
-        focusPopover(popup);
+        focusPopover(surface);
       }
     }
 
@@ -515,9 +618,9 @@
     focused = true;
     if (!active
       || closing
-      || !shown
+      || !displayed
       && event.relatedTarget instanceof Node
-      && popup?.contains(
+      && activePopup?.contains(
         event.relatedTarget
       )) {
       return;
@@ -540,7 +643,7 @@
 
       focused = false;
       if (!actionOverrides && event.relatedTarget instanceof Node
-        && popup?.contains(event.relatedTarget)) {
+        && activePopup?.contains(event.relatedTarget)) {
         return;
       }
 
@@ -620,7 +723,7 @@
   }
 
   function handlePopupHover(next: boolean) {
-    if (!active || !popup?.isConnected) {
+    if (!active || !activePopup?.isConnected) {
       return;
     }
 
@@ -644,7 +747,7 @@
   }
 
   function handlePopupFocus() {
-    if (!active || !popup?.isConnected || actionOverrides) {
+    if (!active || !activePopup?.isConnected || actionOverrides) {
       return;
     }
 
@@ -653,7 +756,7 @@
   }
 
   function handlePopupBlur(event: FocusEvent) {
-    if (event.relatedTarget instanceof Node && popup?.contains(event.relatedTarget)) {
+    if (event.relatedTarget instanceof Node && activePopup?.contains(event.relatedTarget)) {
       return;
     }
 
@@ -661,9 +764,9 @@
     function closeIfOutside() {
       if (!active
         || !host?.isConnected
-        || !popup?.isConnected
+        || !activePopup?.isConnected
         || closing
-        || !shown
+        || !displayed
         || event.relatedTarget instanceof Node
         && host?.contains(
           event.relatedTarget
@@ -703,13 +806,7 @@
       ({ clicked, dismissed, focusOnShow } = previous);
       return;
     }
-    if (reason === 'escape'
-      && popup?.contains(getPopupActiveElement(popup))
-      && anchor instanceof HTMLElement) {
-      closing = true;
-      anchor.focus({ preventScroll: true });
-      closing = false;
-    }
+    if (reason === 'escape') restoreTriggerFocus(activePopup, anchor);
   }
 </script>
 
@@ -725,8 +822,17 @@
   @media (prefers-reduced-motion: reduce) { [data-ant-popover], [data-ant-popover-container] { animation: none; transition: none; } }
 </style>
 
+{#snippet popupSections(sections: typeof payload)}
+  {#if hasContent(sections.title)}<div data-ant-popover-title="" id={titleId} class={sections.titleClasses}
+    style={sections.titleStyle}>{#if typeof sections.title === 'function'}{@render sections.title()}{:else if typeof sections.title !== 'boolean'}{sections.title}{/if}</div>{/if}
+  {#if hasContent(sections.content)}<div class={sections.contentClasses}
+    style={sections.contentStyle}>{#if typeof sections.content === 'function'}{@render sections.content()}{:else if typeof sections.content !== 'boolean'}{sections.content}{/if}</div>{/if}
+{/snippet}
+
+{#snippet sharedBody()}{@render popupSections(payload)}{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`popover-prefix:${prefix}`} />{/if}<span bind:this={host} role="presentation" class={['ant-popover-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>
-<NoCompactStyle>
+{#if !grouped}<NoCompactStyle>
 <div bind:this={popup} {id} role="dialog" popover="manual" hidden tabindex="-1" dir={config.direction}
   inert={motion.leaving || undefined}
   data-ant-popover="" data-ant-custom-prefix={prefix !== 'ant-popover' || undefined}
@@ -734,15 +840,8 @@
   aria-label={ariaLabel} aria-labelledby={!ariaLabel
     ? ariaLabelledby ?? (renderedTitle ? titleId : undefined)
     : undefined} aria-describedby={ariaDescribedby} aria-busy={ariaBusy} class={[
-        prefix,
-        designTokens.enabled && 'ant-popover-css-var',
-        designTokens.enabled && designTokens.state.key,
-        designTokens.enabled && designTokens.state.hashId,
-        popupClass,
-        colorInfo.className,
+        rootClasses,
         classPlacement && `${prefix}-placement-${classPlacement}`,
-        config.direction === 'rtl' && `${prefix}-rtl`,
-        rootClassName, config.popover?.class, semantics.classNames.root,
         motion.className
       ]} style={initialStyle}
     {@attach popupStyle.attach} {@attach portal}
@@ -757,12 +856,7 @@
   <div data-ant-popover-container="" class={rendered.containerClasses}
     data-ant-overlay-color={rendered.customColor || undefined}
     style={initialContainerStyle} {@attach containerStyle}>
-    {#if renderContent}
-      {#if renderedTitle}<div data-ant-popover-title="" id={titleId} class={rendered.titleClasses}
-        style={rendered.titleStyle}>{#if typeof rendered.title === 'function'}{@render rendered.title()}{:else if typeof rendered.title !== 'boolean'}{rendered.title}{/if}</div>{/if}
-      {#if renderedBody}<div class={rendered.contentClasses}
-        style={rendered.contentStyle}>{#if typeof rendered.content === 'function'}{@render rendered.content()}{:else if typeof rendered.content !== 'boolean'}{rendered.content}{/if}</div>{/if}
-    {/if}
+    {#if renderContent}{@render popupSections(rendered)}{/if}
   </div>
 </div>
-</NoCompactStyle>
+</NoCompactStyle>{/if}

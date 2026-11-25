@@ -106,6 +106,8 @@ export interface PopconfirmProps {
   afterOpenChange?: TooltipProps['afterOpenChange'];
   /** Имя CSSMotion наружного Popover. */
   motion?: TooltipProps['motion'];
+  /** Явное true включает подтверждение в ближайшую группу Tooltip.UniqueProvider. @defaultValue false */
+  unique?: TooltipProps['unique'];
   /** Promise удерживает loading; rejection сохраняет возможность повтора. */
   onConfirm?: (event: MouseEvent) => void | PromiseLike<unknown>;
   onCancel?: (event: MouseEvent) => void;

@@ -18,7 +18,7 @@ export type PopoverContent = string | number | boolean | Snippet;
 export interface PopoverRef {
   /** Основной DOM trigger, включая SVG; до разрешения anchor может быть undefined. */
   readonly nativeElement: Element | undefined;
-  /** Native div shell сохраняется также до первого открытия и при destroyOnHidden. */
+  /** Самостоятельный div сохраняется скрытым; в группе доступен только её владельцу. */
   readonly popupElement: HTMLDivElement | undefined;
   /** Объединяет вызовы в microtask; закрытый или уничтоженный popup не открывает. */
   forceAlign: () => void;
@@ -79,6 +79,8 @@ export interface PopoverProps {
   afterOpenChange?: TooltipProps['afterOpenChange'];
   /** Имя CSSMotion; пустая строка отключает анимацию. По умолчанию zoom-big. */
   motion?: TooltipProps['motion'];
+  /** Явное true использует общую панель ближайшего Tooltip.UniqueProvider. @defaultValue false */
+  unique?: TooltipProps['unique'];
   /** Удаляет title/content после afterOpenChange(false); native shell сохраняется. */
   destroyOnHidden?: boolean;
   /** Монтирует скрытое содержимое и portal после hydration, включая destroyOnHidden. */

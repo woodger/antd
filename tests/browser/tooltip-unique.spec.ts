@@ -131,6 +131,19 @@ test('Tooltip.UniqueProvider transfers the same shell and background with the ac
       originalBackground)).toBe(true);
   });
 
+test('Tooltip.UniqueProvider hides unavailable content before its leave delay', async ({ page }) => {
+  await select(page, 'empty-content');
+  const trigger = page.locator('#unique-trigger-a');
+  await trigger.hover();
+  const shell = page.locator(`${popup}[data-ant-tooltip-unique]`);
+  await expect(shell).toBeVisible();
+
+  await ownerAction(page, 'Clear title');
+
+  await expect(shell).toBeHidden();
+  await expect(trigger).not.toHaveAttribute('aria-describedby');
+});
+
 test('Tooltip inside a Popover keeps its own popup and closes before the parent', async ({ page }) => {
   await select(page, 'nested-popup');
   await page.locator('#unique-parent').click();

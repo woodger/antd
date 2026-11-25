@@ -1,23 +1,59 @@
 // Группа владеет одной поверхностью и запросом на её показ. Смена цели во время enter
 // ждёт окончания текущего движения, а удалённый участник освобождает свою запись сразу.
 import { getContext, onDestroy, setContext } from 'svelte';
-import type { TooltipPopupProps } from './tooltip-popup.types';
-import type { ConfigContext } from './config-context';
-import type { DesignTokenContext } from './theme-context.types';
-import type { ZIndexLayer } from './z-index-context.svelte';
+import type { ClassValue } from 'svelte/elements';
+import type { InlineStyleLayer } from './inline-style.engine';
+import type { PopupSourceAlign } from './popup-position.engine';
+import type { TooltipSourcePlacement } from './tooltip.engine';
+import type { AdjustOverflow, TooltipContent, TooltipPlacement } from './tooltip.types';
+
+export interface TooltipUniqueView {
+  readonly kind: 'tooltip' | 'dialog';
+  readonly id: string;
+  readonly prefix: string;
+  readonly direction?: 'ltr' | 'rtl';
+  readonly content: TooltipContent;
+  readonly available: boolean;
+  readonly rootClasses: ClassValue;
+  readonly containerClasses: ClassValue;
+  readonly backgroundClasses: ClassValue;
+  readonly rootLayers: readonly InlineStyleLayer[];
+  readonly containerLayers: readonly InlineStyleLayer[];
+  readonly presetBackground?: string;
+  readonly customColor: boolean;
+  readonly anchor?: Element;
+  readonly trigger?: Element;
+  readonly placement: TooltipPlacement;
+  readonly autoAdjustOverflow: boolean | AdjustOverflow;
+  readonly sourcePlacement?: TooltipSourcePlacement;
+  readonly sourceAlign?: PopupSourceAlign;
+  readonly placements: Readonly<Record<string, PopupSourceAlign>>;
+  readonly gap?: number;
+  readonly motion: boolean;
+  readonly defaultMotionName: string;
+  readonly motionName?: string;
+  readonly ariaLabel?: string;
+  readonly ariaLabelledby?: string;
+  readonly ariaDescribedby?: string;
+  readonly ariaBusy?: boolean;
+  readonly outsideEvents?: 'pointer' | 'mouse';
+  onDismiss: (reason: 'escape' | 'outside') => void;
+  onHoverChange?: (next: boolean) => void;
+  onFocusIn?: (event: FocusEvent) => void;
+  onFocusOut?: (event: FocusEvent) => void;
+  onHidden?: () => void;
+  onTransfer?: (element: HTMLDivElement) => void;
+}
 
 export interface TooltipUniqueOwner {
-  readonly props: TooltipPopupProps;
-  readonly config: ConfigContext;
-  readonly tokens: DesignTokenContext;
-  readonly theme: { readonly style?: string; readonly className?: string; };
-  readonly layer: ZIndexLayer;
+  readonly view: TooltipUniqueView;
   readonly context: Map<unknown, unknown>;
   isOpen: () => boolean;
 }
 
 export interface TooltipUniqueSurface {
-  getPopupElement: () => HTMLSpanElement | undefined;
+  getPopupElement: () => HTMLDivElement | undefined;
+  isShowing: () => boolean;
   forceAlign: () => void;
 }
 

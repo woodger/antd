@@ -1,10 +1,15 @@
 import { render } from 'svelte/server';
 import type { ComponentProps, Snippet } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import { Tooltip, type SliderTooltipConfig, type TooltipProps } from '@woodger/antd';
+import {
+  Popconfirm, Popover, Tooltip, type PopconfirmProps, type PopoverProps,
+  type SliderTooltipConfig, type TooltipProps
+} from '@woodger/antd';
 import registry from '@woodger/antd/porting/registry.json';
 import Fixture from '../browser/fixtures/TooltipUniqueFixtures.svelte';
+import Delegates from '../browser/fixtures/TooltipUniqueDelegateFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-tooltip-unique-reference.json';
+import delegateReference from '../browser/fixtures/ant-design-tooltip-unique-delegates-reference.json';
 
 describe('Compound Tooltip.UniqueProvider package API', () => {
   it('exports the shared-provider constructor and supports Tooltip and Slider opt-out', () => {
@@ -19,6 +24,21 @@ describe('Compound Tooltip.UniqueProvider package API', () => {
       .toEqualTypeOf<{ children: Snippet; }>();
     expectTypeOf<TooltipProps['unique']>().toEqualTypeOf<boolean | undefined>();
     expectTypeOf<SliderTooltipConfig['unique']>().toEqualTypeOf<TooltipProps['unique']>();
+  });
+
+  it('exports the opt-in on Popover and Popconfirm and keeps their default-open shared DOM lazy', () => {
+    expect(delegateReference.reference).toEqual(reference.reference);
+    expectTypeOf<ComponentProps<typeof Popover>['unique']>().toEqualTypeOf<PopoverProps['unique']>();
+    expectTypeOf<ComponentProps<typeof Popconfirm>['unique']>().toEqualTypeOf<PopconfirmProps['unique']>();
+    expectTypeOf<PopoverProps['unique']>().toEqualTypeOf<boolean | undefined>();
+    expectTypeOf<PopconfirmProps['unique']>().toEqualTypeOf<boolean | undefined>();
+
+    const { body } = render(Delegates, { props: { initialMode: 'default-open' } });
+    expect(body).toContain('id="unique-delegate-a"');
+    expect(body).toContain('id="unique-delegate-b"');
+    expect(body).not.toContain('data-ant-tooltip-unique=');
+    expect(body).not.toContain('data-ant-popover=""');
+    expect(body).not.toContain('data-study-content=');
   });
 
   for (const initialMode of ['switch', 'default-open', 'nested-providers']) {

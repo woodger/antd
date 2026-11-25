@@ -1,10 +1,9 @@
-import type { TooltipUnique } from './tooltip-unique.model.svelte';
 import type { ZIndexLayer } from './z-index-context.svelte';
 import type {
   AdjustOverflow, TooltipArrow, TooltipColor, TooltipContent, TooltipPlacement, TooltipProps
 } from './tooltip.types';
 
-/** Входы одной поверхности. Группа повторно использует их при передаче панели между целями. */
+/** Входы Tooltip и его встраиваемых вариантов. */
 export interface TooltipPopupProps {
   title: TooltipContent;
   contentAvailable?: boolean;
@@ -33,7 +32,6 @@ export interface TooltipPopupProps {
   ownerClassName?: string;
   sourceAnchor?: boolean;
   unique?: boolean;
-  presentation?: TooltipUnique;
   outsideEvents?: 'pointer' | 'mouse';
   onDismiss: (reason: 'escape' | 'outside') => void;
   onHoverChange?: (hovered: boolean) => void;

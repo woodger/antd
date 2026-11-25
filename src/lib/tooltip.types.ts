@@ -10,7 +10,7 @@ export type TooltipContent = RenderEmptyContent;
 export interface TooltipRef {
   /** Основной DOM trigger, включая SVG; до разрешения anchor может быть undefined. */
   readonly nativeElement: Element | undefined;
-  /** Существующий native span shell сохраняется также при закрытии и destroyOnHidden. */
+  /** Самостоятельный span сохраняется скрытым; в группе доступна общая панель владельца. */
   readonly popupElement: HTMLSpanElement | undefined;
   /** Объединяет вызовы в microtask; закрытый или уничтоженный popup не открывает. */
   forceAlign: () => void;

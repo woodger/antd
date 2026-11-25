@@ -21,6 +21,7 @@ export function getTooltipColor(color: TooltipColor | undefined, prefix: string)
 
   return {
     className: color && internal ? `${prefix}-${color}` : undefined,
+    presetBackground: preset ? `var(--ant-${preset}-6)` : undefined,
     arrowStyle,
     overlayStyle
   };
