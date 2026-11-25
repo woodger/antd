@@ -490,6 +490,11 @@
     "root": "drawer-dom-fixture"
   },
   {
+    "id": "drawer-motion-api",
+    "module": "./DrawerMotionFixtures.svelte",
+    "root": "drawer-motion-api-fixture"
+  },
+  {
     "id": "alert",
     "module": "./AlertFixtures.svelte",
     "root": "alert-fixture"

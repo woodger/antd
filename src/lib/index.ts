@@ -671,7 +671,8 @@ export type {
   DrawerProps, DrawerPlacement, DrawerSize, DrawerResizableConfig, DrawerPushConfig,
   DrawerConfig, DrawerMask, DrawerMaskConfig, DrawerFocusableConfig,
   DrawerContent, DrawerCloseIcon, DrawerClosable, DrawerClosableConfig,
-  DrawerSemantic, DrawerSemanticSlots
+  DrawerSemantic, DrawerSemanticSlots,
+  DrawerMotionConfig, DrawerMotionName, DrawerMotionEvent, DrawerMotionStyle
 } from './drawer.types';
 export type {
   AlertProps,

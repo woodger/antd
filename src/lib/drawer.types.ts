@@ -1,9 +1,25 @@
 import type { Snippet } from 'svelte';
 import type { AriaAttributes, HTMLAttributes } from 'svelte/elements';
 import type { GetContainer, RenderEmptyContent } from './types';
+import type { CssMotionName } from './css-motion.engine';
+import type { CssMotionConfig, CssMotionEvent, CssMotionStyle } from './css-motion.types';
 
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left';
 export type DrawerSize = 'default' | 'large' | number | (string & {});
+
+export type DrawerMotionName = CssMotionName;
+export type DrawerMotionEvent = CssMotionEvent;
+export type DrawerMotionStyle = CssMotionStyle;
+
+/** CSS-фазы Drawer. Обработчики получают секцию панели или саму маску. */
+export interface DrawerMotionConfig extends CssMotionConfig<HTMLDivElement> {
+  /** Для maskMotion готовит скрытый узел при смонтированном Drawer. */
+  forceRender?: boolean;
+  /** Для maskMotion определяет удаление узла после скрытия. @defaultValue true */
+  removeOnLeave?: boolean;
+  /** Для maskMotion оформляет оставшийся узел после скрытия. */
+  leavedClassName?: string;
+}
 
 export interface DrawerMaskConfig {
   enabled?: boolean;
@@ -134,6 +150,10 @@ export interface DrawerProps extends AriaAttributes, DrawerPanelEvents {
   onClose?: (event: Event) => void;
   /** После завершения анимации видимости, перед удалением скрытого содержимого. */
   afterOpenChange?: (open: boolean) => void;
+  /** Заменяет штатный переход панели. Фабрика получает текущее placement. */
+  motion?: DrawerMotionConfig | ((placement: DrawerPlacement) => DrawerMotionConfig);
+  /** Независимый CSS-переход маски. */
+  maskMotion?: DrawerMotionConfig;
   id?: string;
   /** Краткое доступное описание диалога. */
   'aria-description'?: string | null;

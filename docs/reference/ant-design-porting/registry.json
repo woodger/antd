@@ -23203,6 +23203,11 @@
           "name": "@rc-component/portal",
           "range": "^2.1.3",
           "referenceVersion": "2.1.3"
+        },
+        {
+          "name": "@rc-component/motion",
+          "range": "^1.3.3",
+          "referenceVersion": "1.3.3"
         }
       ],
       "priority": "unassigned",
@@ -23268,7 +23273,15 @@
         "tests/browser/fixtures/ant-design-drawer-dom-reference.json",
         "tests/browser/drawer-dom.spec.ts",
         "tests/browser/drawer-dom-hydration.spec.ts",
-        "tests/package/drawer-dom.ssr.test.ts"
+        "tests/package/drawer-dom.ssr.test.ts",
+        "src/lib/drawer-motion.dom.ts",
+        "src/lib/css-motion.dom.ts",
+        "src/lib/css-motion.types.ts",
+        "tests/browser/fixtures/DrawerMotionFixtures.svelte",
+        "tests/browser/fixtures/ant-design-drawer-motion-api-reference.json",
+        "tests/browser/drawer-motion-api.spec.ts",
+        "tests/browser/drawer-motion-api-hydration.spec.ts",
+        "tests/package/drawer-motion-api.ssr.test.ts"
       ],
       "features": [
         {
@@ -23462,10 +23475,23 @@
         {
           "id": "custom-motion",
           "title": "Пользовательская конфигурация переходов Drawer и маски",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Типы Ant Design 6.6.8 наследуют motion и maskMotion из @rc-component/drawer 1.4.2. Drawer передаёт их через rest поверх штатных CSSMotion-настроек. Публичная настройка этих переходов пока остаётся открытой."
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/drawer.types.ts",
+            "src/lib/Drawer.svelte",
+            "src/lib/drawer.dom.ts",
+            "src/lib/drawer-motion.dom.ts",
+            "src/lib/css-motion.dom.ts",
+            "src/lib/css-motion.types.ts",
+            "tests/browser/fixtures/DrawerMotionFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-motion-api-reference.json",
+            "tests/browser/drawer-motion-api.spec.ts",
+            "tests/browser/drawer-motion-api-hydration.spec.ts",
+            "tests/package/drawer-motion-api.ssr.test.ts"
+          ],
+          "note": "Два совпавших прогона UMD Ant Design 6.6.8 и rc-motion 1.3.3 для девяти профилей переходов и четырёх вариантов сохранения маски. Фабрика получает placement, prepare принимает Promise, start и active читают DOM секции и возвращают стили wrapper. Проверены motionName string/map, flags, начальный leave, собственные CSS end events, deadline, отклонение end и прохождение видимости без CSS. MaskMotion использует свой узел, onVisibleChanged, forceRender, removeOnLeave и leavedClassName. Штатное закрытие панели может опередить mask leave. Native сохраняет скрытый dialog при исходном leave, модальность до конца панели, старые WAAPI defaults, приоритет semantic CSS, reduced motion, отмену ожиданий при повторном показе или unmount и статичный SSR."
         },
         {
           "id": "mask-focusability",

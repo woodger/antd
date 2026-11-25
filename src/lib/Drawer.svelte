@@ -5,13 +5,15 @@
   import DrawerPanel from './DrawerPanel.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getDrawerPrefixCss } from './drawer-prefix.engine';
-  import { onDestroy, untrack } from 'svelte';
+  import { flushSync, onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
-  import { createDrawerDialog } from './drawer.dom';
+  import { createDrawerDialog, type DrawerTransitionOptions } from './drawer.dom';
+  import type { CssMotionState } from './css-motion.dom';
+  import { serializeInlineStyleLayers } from './inline-style.engine';
   import {
     DEFAULT_DRAWER_PUSH_DISTANCE, DEFAULT_DRAWER_SIZE,
     getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal,
@@ -41,6 +43,8 @@
     zIndex,
     keyboard = true,
     mask,
+    motion,
+    maskMotion,
     maskClassName,
     focusable,
     autoFocus = true,
@@ -65,6 +69,13 @@
   let prefixCss = $derived(getDrawerPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Drawer');
   const designTheme = useDesignTokenContext();
+  const transitionOptions = $derived({
+    motion: motion && typeof motion !== 'function' ? { ...motion } : motion,
+    maskMotion: maskMotion && { ...maskMotion },
+    enabled: designTheme.state.token.motion,
+    forceRender,
+    destroyOnHidden
+  });
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
   const semanticProps = $derived<DrawerProps>({
@@ -91,13 +102,19 @@
   const pushOffset = $derived(
     pushedChildren > 0 ? getDrawerPushOffset(placement, pushDistance) : undefined
   );
-  const wrapperStyle = $derived([
+  let panelCss = $state.raw<CssMotionState>({});
+  let maskCss = $state.raw<CssMotionState>({});
+  let maskRequested = $state(false);
+  let maskSeen = $state(false);
+  const wrapperStyle = $derived(serializeInlineStyleLayers([
+    panelCss.style,
     pushOffset && `translate:${pushOffset}`,
     styles.wrapper
-  ].filter(Boolean).join(';') || undefined);
+  ]));
   const watermarkPanel = useWatermarkPanel();
   const generatedId = $props.id();
   let dialog = $state<HTMLDialogElement>();
+  let sectionNode: HTMLDivElement | undefined;
   let mounted = $state(false);
   let resizedSize = $state<number>();
   let resizing = $state(false);
@@ -130,6 +147,22 @@
     onfocusin: props.onfocusin
   });
   let renderContent = $derived(open || closing || forceRender || mounted && !destroyOnHidden);
+  const movingOrVisibleMask = $derived(
+    open && interaction.mask.enabled || maskRequested || Boolean(maskCss.phase)
+  );
+  const maskAfterLeave = $derived(
+    !movingOrVisibleMask && maskMotion?.removeOnLeave === false && maskSeen
+      ? maskMotion.leavedClassName : undefined
+  );
+  const renderMask = $derived(maskMotion ? renderContent && (
+    movingOrVisibleMask || maskMotion.forceRender
+    || maskMotion.removeOnLeave === false && (!maskMotion.leavedClassName || maskSeen)
+  ) : interaction.mask.enabled);
+  const maskStyle = $derived(serializeInlineStyleLayers([
+    maskCss.style,
+    maskMotion && !movingOrVisibleMask && !maskAfterLeave ? 'display:none' : undefined,
+    styles.mask
+  ]));
   const dialogStyle = $derived([
     componentTheme.style,
     layer.style,
@@ -161,17 +194,53 @@
 
   function connectRuntime(node: HTMLDialogElement) {
     closing = false;
+    panelCss = {};
+    maskCss = {};
+    maskRequested = false;
+    maskSeen = false;
     const current = createDrawerDialog(
       node,
       value => { closing = value; },
       next => afterOpenChange?.(next),
-      () => interaction
+      () => interaction,
+      {
+        getSection: () => sectionNode,
+        getOptions: getTransitionOptions,
+        paint: paintMotion,
+        maskVisibility: syncMaskVisibility
+      }
     );
     runtime = current;
     return () => {
       current.destroy();
       if (runtime === current) runtime = undefined;
     };
+  }
+
+  function getTransitionOptions(): DrawerTransitionOptions {
+    const { motion, ...options } = transitionOptions;
+    return { ...options, motion: typeof motion === 'function' ? motion(placement) : motion };
+  }
+
+  function paintMotion(surface: 'panel' | 'mask', state: CssMotionState, commit?: boolean) {
+    // Измерения пользовательского prepare выполняются после записи класса в DOM.
+    function update() {
+      if (surface === 'panel') {
+        panelCss = state;
+      }
+      else {
+        maskCss = state;
+      }
+    }
+
+    if (commit) flushSync(update);
+    else update();
+  }
+
+  function syncMaskVisibility(visible: boolean, present: boolean) {
+    maskRequested = visible;
+    if (visible) maskSeen = true;
+    else if (!present) maskSeen = false;
   }
 
   function resizePanel(nextSize: number) {
@@ -215,6 +284,7 @@
     const current = runtime;
     // Смена mask или focusable должна обновить режим открытого dialog.
     void interaction;
+    void transitionOptions;
     if (!node || !current || !container.connected || !node.isConnected) {
       return;
     }
@@ -252,8 +322,10 @@
   }
 
   function bindPanel(node: HTMLDivElement) {
+    sectionNode = node;
     panelRef = node;
     return () => {
+      if (sectionNode === node) sectionNode = undefined;
       if (panelRef === node) panelRef = undefined;
     };
   }
@@ -304,6 +376,7 @@
   }
   .ant-svelte-drawer { width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent; pointer-events: auto; outline: none; }
   .ant-svelte-drawer[data-ant-drawer-maskless] { pointer-events: none; }
+  .ant-svelte-drawer > [data-ant-drawer-mask-passive] { pointer-events: none; }
   .ant-svelte-drawer[data-ant-drawer-inline] { position: absolute; height: 100%; }
   .ant-svelte-drawer:not([open]) { display: none; }
   .ant-svelte-drawer::backdrop { background: transparent; }
@@ -380,15 +453,19 @@
     aria-modal={dialogModal} aria-labelledby={dialogLabelId}
     oncancel={handleCancel} onclose={handleClose}
     {@attach container.attach} {@attach connectRuntime}>
-  {#if interaction.mask.enabled}<div data-ant-drawer-mask class={[
+  {#if renderMask}<div data-ant-drawer-mask
+    data-ant-drawer-mask-passive={maskMotion && !interaction.mask.enabled || undefined} class={[
     `${componentPrefix}-mask`, interaction.mask.blur && `${componentPrefix}-mask-blur`,
-    classes.mask, maskClassName
-  ]} style={styles.mask} aria-hidden="true"></div>{/if}
+    maskCss.className, maskAfterLeave, classes.mask, maskClassName
+  ]} style={maskStyle} aria-hidden="true"
+    ontransitionend={event => runtime?.end('mask', event)}
+    onanimationend={event => runtime?.end('mask', event)}></div>{/if}
   <div {...attributes.wrapper} data-ant-drawer-content-wrapper
     data-ant-drawer-dragging={resizing || undefined} class={[
     `${componentPrefix}-content-wrapper`,
     resizing && `${componentPrefix}-content-wrapper-dragging`,
-    classes.wrapper
+    classes.wrapper,
+    !resizing && panelCss.className
   ]} style={wrapperStyle} {@attach renderContent ? rememberContent : undefined}>
     {#if renderContent}
       {#if resizable}<div data-ant-drawer-dragger aria-hidden="true" class={[
@@ -401,7 +478,9 @@
       {#snippet section()}
         <div {...sectionEvents} data-ant-drawer-section
           class={[`${componentPrefix}-section`, config.drawer?.class, classes.section]}
-          style={styles.section} {@attach bindPanel} {@attach watermarkPanel}>
+          style={styles.section} {@attach bindPanel} {@attach watermarkPanel}
+          ontransitionend={event => runtime?.end('panel', event)}
+          onanimationend={event => runtime?.end('panel', event)}>
           <DrawerPanel {props} prefix={componentPrefix} {titleId} {requestClose} />
         </div>
       {/snippet}

@@ -190,6 +190,43 @@ DOM-черновики в закрытом dialog. ForceRender монтируе�
 следующего обновления Svelte. Прерванный уход не вызывает уведомление о
 скрытии. После гидратации начального `open={true}` приходит одно уведомление
 о завершении показа.
+
+### Пользовательские переходы
+
+`motion` принимает `DrawerMotionConfig` или функцию от `placement`.
+`maskMotion` отдельно настраивает маску. Без этих настроек соответствующая
+поверхность использует штатную анимацию, а пустой объект отключает её.
+Строковый `motionName` задаёт базу CSS-классов, карта позволяет задать имена
+для отдельных фаз. `motionAppear`, `motionEnter` и `motionLeave` разрешают
+свою фазу. `motionLeaveImmediately` запускает leave заранее смонтированного
+закрытого Drawer, который остаётся скрыт.
+
+`on*Prepare` может вернуть Promise. Подготовка работает и при выключенном
+CSS-переходе, если разрешена соответствующая фаза. `on*Start` и `on*Active`
+получают `null` как второй аргумент и возвращают CSS-строку или объект свойств.
+Обработчики панели получают секцию из `bind:panelRef`. Классы и стили перехода
+применяются к её обёртке, а `styles.wrapper` имеют приоритет.
+Обработчики маски получают саму маску, для её оформления действует `styles.mask`.
+
+`on*End` получает `transitionend` или `animationend` от секции или маски.
+Положительный `motionDeadline` задаёт срок в миллисекундах после начала активной
+фазы и передаёт `{ deadline: true }`. Возврат `false` оставляет переход
+активным до следующего события. Для перехода, который анимирует только
+обёртку, срок задаётся через `motionDeadline`.
+
+`afterOpenChange` следует завершению панели. Маска сообщает о своей видимости
+через `maskMotion.onVisibleChanged` и может закончить позже, если содержимое
+Drawer остаётся смонтированным. `maskMotion.forceRender` и
+`removeOnLeave: false` внутри `maskMotion` позволяют оставить скрытую маску. Для
+сохранённой после показа маски `leavedClassName` задаёт класс скрытого состояния.
+Жизненный цикл всей панели задают `forceRender` и `destroyOnHidden` самого Drawer.
+[Эталон переходов](../../../tests/browser/fixtures/ant-design-drawer-motion-api-reference.json)
+· [Chromium](../../../tests/browser/drawer-motion-api.spec.ts)
+· [SSR](../../../tests/package/drawer-motion-api.ssr.test.ts)
+· [Гидратация](../../../tests/browser/drawer-motion-api-hydration.spec.ts)
+
+### Тема
+
 `theme.components.Drawer` настраивает zIndexPopup, footerPaddingBlock и
 footerPaddingInline, aliases и component algorithms. Пользовательский style
 корневого dialog сохраняет приоритет. Title наследует цвет панели, как 6.6.8;
