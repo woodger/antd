@@ -149,7 +149,7 @@ Title/overlay и fresh дополнительно сверяются с
 [24 UMD-сценариями содержимого и 80 кадрами кэша](../../../tests/browser/fixtures/ant-design-tooltip-content-reference.json),
 [SSR](../../../tests/package/tooltip-content.ssr.test.ts) и
 [browser](../../../tests/browser/tooltip-content.spec.ts), `?fixture=tooltip-content`.
-UniqueProvider и оставшиеся delegated props ещё требуют переноса.
+Остальные delegated props учтены в реестре миграции.
 
 ## Завершение открытия и закрытия
 
@@ -176,6 +176,46 @@ appear, enter и leave. Пустое имя, `theme.token.motion=false` и
 React UMD, каждый снят дважды. [Эталон](../../../tests/browser/fixtures/ant-design-overlay-motion-reference.json),
 [браузерные сценарии](../../../tests/browser/overlay-motion.spec.ts) и
 [SSR-проверка](../../../tests/package/overlay-motion.ssr.test.ts).
+
+## Общая подсказка для нескольких триггеров
+
+```svelte
+<Tooltip.UniqueProvider>
+  <Tooltip title="Скопировать ссылку"><button type="button">Скопировать</button></Tooltip>
+  <Tooltip title="Открыть в новом окне"><button type="button">Открыть</button></Tooltip>
+</Tooltip.UniqueProvider>
+```
+
+Ближайший провайдер показывает одну общую панель без стрелки. При смене
+триггера панель сохраняет DOM-узел, а её фон плавно меняет позицию и размер.
+Фон и содержимое находятся в одной нативной popover-поверхности.
+При запросе во время анимации открытия группа применяет последнюю цель после
+завершения этой фазы. Если указатель успевает уйти с обеих целей, группа
+отменяет перенос и закрывает панель. Группа использует тему и префиксы
+активного Tooltip.
+`unique={false}` оставляет Tooltip самостоятельным. Настройка доступна также
+в `Slider.tooltip` и в объекте `Typography.ellipsis.tooltip`.
+
+Участник получает `onOpenChange` на обычном этапе обработки триггера. Группа
+затем применяет свои `mouseEnterDelay` и `mouseLeaveDelay`, как в Ant Design
+6.6.8. У общей панели собственные lifecycle и выравнивание. Пользовательские
+`afterOpenChange` и `onPopupAlign` относятся к самостоятельной панели.
+Группа сохраняет скрытую оболочку после первого открытия и выбирает контейнер
+в `body` или открытом нативном диалоге. `getPopupContainer`, `forceRender`
+и `destroyOnHidden` управляют самостоятельной панелью через `unique={false}`.
+
+В Svelte `popupElement` возвращает общую панель текущего владельца, а
+`aria-describedby` ссылается на её фактический ID. У Tooltip внутри Popover
+своя панель и свой Escape. При удалении активного триггера общая панель
+освобождается. Фон переносит preset color выбранного Tooltip.
+В закреплённом React UMD это три отдельных расхождения. Вложенный Tooltip
+пропускает показ, удалённый триггер оставляет прежнюю панель, а `color="blue"`
+оставляет на общем фоне цвет `colorBgSpotlight`.
+
+Переходы, задержки и отличия зафиксированы в [снимках React UMD](../../../tests/browser/fixtures/ant-design-tooltip-unique-reference.json).
+Сравнение выполняется в [Chromium](../../../tests/browser/tooltip-unique.spec.ts),
+с отдельными проверками [гидратации](../../../tests/browser/tooltip-unique-hydration.spec.ts)
+и [публичного API](../../../tests/package/tooltip-unique.ssr.test.ts).
 
 Placement принимает top/bottom/left/right, topLeft/topRight/bottomLeft/bottomRight
 и leftTop/leftBottom/rightTop/rightBottom. Направления физические и не меняются
@@ -245,7 +285,7 @@ Portal переносит наследуемые variables и сохраняет
 Вложенные popup сохраняют собственные координаты и цвет стрелки.
 
 Поддерживаются строки, числа и rich snippets.
-UniqueProvider и оставшиеся delegated props ещё не перенесены.
+Общая панель настраивается через [Tooltip.UniqueProvider](#общая-подсказка-для-нескольких-триггеров).
 AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0 | 1 }`.
 Числовой 0 тоже разрешает flip, как в rc-trigger; отключение обеих коррекций
 задаётся boolean false.
@@ -330,9 +370,7 @@ Root styles имеют приоритет над вычисленными коо
 Tooltip Typography. У Typography без config сохраняется исходный hover trigger;
 его Tooltip создаётся лениво после DOM-измерения и не вызывает semantic callbacks при SSR.
 
-Tooltip.unique и остальные delegated rc-trigger props
-пока не поддерживаются. Границы fresh cache для Snippet и CSS-transform/clipping
-описаны выше.
+Границы fresh cache для Snippet и CSS-transform/clipping описаны выше.
 
 ## Цвет Tooltip, Popover и Popconfirm
 

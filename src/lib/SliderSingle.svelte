@@ -644,6 +644,7 @@
     fresh={tooltip === false ? undefined : tooltip?.fresh}
     id={tooltip === false ? undefined : tooltip?.id}
     disabled={tooltip === false ? undefined : tooltip?.disabled}
+    unique={tooltip === false ? undefined : tooltip?.unique}
     forceRender={tooltip === false ? undefined : tooltip?.forceRender}
     zIndex={tooltip === false ? undefined : tooltip?.zIndex}
     align={tooltip === false ? undefined : tooltip?.align}

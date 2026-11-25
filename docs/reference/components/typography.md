@@ -102,9 +102,11 @@ Tooltip использует общий native popover внутри корня �
 Доступны общие 12 placement, container getters, color, локальные popup prefixCls и
 openClassName и semantic styles. Callbacks получают разрешённые trigger/delays
 и входной open владельца. Изменение config сохраняет popup DOM, ввод, выделение
-и фокус. Остальные delegated Tooltip props, включая UniqueProvider/motion
-и полную геометрию CSS-transform/scroll-container,
-ещё требуют переноса. Граница fresh для opaque Snippet описана в Tooltip.
+и фокус. Ellipsis Tooltip участвует в ближайшем `Tooltip.UniqueProvider`.
+`ellipsis.tooltip.unique=false` сохраняет отдельную панель. Анимации и lifecycle
+следуют [контракту Tooltip](tooltip.md#общая-подсказка-для-нескольких-триггеров).
+Границы fresh для opaque Snippet и геометрии CSS-transform/scroll-container
+описаны в Tooltip.
 В исходном Ellipsis memoization не учитывает смену prefix: во вложенном provider
 кнопки copy/edit могут сохранить старые классы и потерять оформление. Raw live
 замеры и fresh mount с теми же public props сохранены в

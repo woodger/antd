@@ -96,6 +96,8 @@ export interface TooltipProps {
   disabled?: boolean;
   /** Поддерживает bind:open. */
   open?: boolean | undefined;
+  /** Участвует в ближайшем Tooltip.UniqueProvider. false оставляет собственную панель. */
+  unique?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -157,6 +159,8 @@ export interface TooltipProps {
 /** Параметры Tooltip ручки Slider; formatter=null отключает содержимое подсказки. */
 export interface SliderTooltipConfig {
   open?: boolean;
+  /** Отключает участие подсказок ручек в Tooltip.UniqueProvider. */
+  unique?: TooltipProps['unique'];
   /** Передаётся каждой подсказке Slider; скрытый ID следует fresh. */
   id?: TooltipProps['id'];
   /** Скрывает подсказки, не отключая Slider и не меняя его значение. */

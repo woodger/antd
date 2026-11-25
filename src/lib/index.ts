@@ -406,7 +406,7 @@ export type {
   ColorPickerContent, ColorPickerPlacement, ColorPickerSlots, ColorPickerStyles,
   ColorPickerSemantic
 } from './color-picker.types';
-export { default as Tooltip } from './Tooltip.svelte';
+export { default as Tooltip } from './tooltip.component';
 export { default as Popover } from './Popover.svelte';
 export { default as Popconfirm } from './Popconfirm.svelte';
 export { default as Dropdown } from './Dropdown.svelte';

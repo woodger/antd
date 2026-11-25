@@ -1,0 +1,2274 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "mode": "switch",
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "hover:outside",
+          "hover:a",
+          "escape"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ]
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "controlled",
+        "actions": [
+          "open:a",
+          "open:b",
+          "open:none",
+          "open:a",
+          "remove:a"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:none",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "remove:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            null,
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "default-open",
+        "actions": [
+          "idle",
+          "hover:b",
+          "hover:outside"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "opt-out",
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "hover:outside",
+          "hover:a"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 3,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom"
+              ],
+              "arrows": 1
+            },
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 8,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            },
+            {
+              "id": "b",
+              "type": "settled",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 3,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom"
+              ],
+              "arrows": 1
+            },
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 11,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "settled",
+              "open": false
+            }
+          ]
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 3,
+              "id": "",
+              "parent": "requested-container",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom"
+              ],
+              "arrows": 1
+            },
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 11,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "nested-providers",
+        "actions": [
+          "open:both",
+          "open:a",
+          "open:both",
+          "open:none"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:both",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            },
+            {
+              "node": 2,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 3,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            },
+            {
+              "node": 4,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            },
+            {
+              "node": 2,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 3,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            },
+            {
+              "node": 4,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:both",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            },
+            {
+              "node": 2,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 3,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            },
+            {
+              "node": 4,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "open:none",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            },
+            {
+              "node": 2,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 3,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            },
+            {
+              "node": 4,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "prefix",
+        "actions": [
+          "hover:a",
+          "hover:b",
+          "hover:outside"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "owner-tip-placement-top",
+                "owner-tip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "owner-tip-unique-container",
+                "owner-tip-css-var",
+                "owner-tip-placement-top",
+                "owner-tip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "owner-tip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "suite-tooltip-placement-bottom",
+                "suite-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "suite-tooltip-unique-container",
+                "suite-tooltip-css-var",
+                "suite-tooltip-placement-bottom",
+                "suite-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "suite-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "suite-tooltip-placement-bottom",
+                "suite-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "suite-tooltip-unique-container",
+                "suite-tooltip-unique-container-hidden",
+                "suite-tooltip-css-var",
+                "suite-tooltip-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "nested-popup",
+        "actions": [
+          "click:parent",
+          "hover:a",
+          "escape",
+          "hover:outside"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            null,
+            null
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "click:parent",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": null,
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-bottom"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            null
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "hover:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": null,
+              "visible": true,
+              "classes": [
+                "ant-popover-placement-bottom"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            null
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "escape",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": null,
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-bottom"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            null
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            }
+          ]
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": null,
+              "visible": false,
+              "classes": [
+                "ant-popover-placement-bottom"
+              ],
+              "arrows": 1
+            }
+          ],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            null
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "animated-switch",
+        "motion": true,
+        "actions": [
+          "during-enter:b",
+          "hover:outside"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "during-enter:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            }
+          ],
+          "atStart": {
+            "panels": [
+              {
+                "node": 1,
+                "id": "",
+                "parent": "div",
+                "contents": "a",
+                "visible": true,
+                "classes": [
+                  "ant-tooltip-placement-top",
+                  "ant-tooltip-unique-controlled"
+                ],
+                "arrows": 0
+              }
+            ],
+            "backgrounds": [
+              {
+                "node": 2,
+                "background": "rgba(0, 0, 0, 0.85)",
+                "className": [
+                  "ant-tooltip-unique-container",
+                  "ant-zoom-big-fast-appear",
+                  "ant-zoom-big-fast-appear-active",
+                  "ant-zoom-big-fast",
+                  "ant-tooltip-css-var",
+                  "ant-tooltip-placement-top"
+                ]
+              }
+            ],
+            "anchors": [
+              {
+                "description": "external-id-a",
+                "className": "ant-tooltip-open"
+              },
+              {
+                "description": null,
+                "className": ""
+              }
+            ],
+            "containerCalls": 0,
+            "callbacks": [
+              {
+                "id": "a",
+                "type": "request",
+                "open": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "hover:outside",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": "external-id-b",
+              "className": "ant-tooltip-open"
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "animated-cancel",
+        "motion": true,
+        "actions": [
+          "during-enter:b",
+          "idle"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "during-enter:b",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": true
+            },
+            {
+              "id": "b",
+              "type": "request",
+              "open": false
+            }
+          ],
+          "atStart": {
+            "panels": [
+              {
+                "node": 1,
+                "id": "",
+                "parent": "div",
+                "contents": "a",
+                "visible": true,
+                "classes": [
+                  "ant-tooltip-placement-top",
+                  "ant-tooltip-unique-controlled"
+                ],
+                "arrows": 0
+              }
+            ],
+            "backgrounds": [
+              {
+                "node": 2,
+                "background": "rgba(0, 0, 0, 0.85)",
+                "className": [
+                  "ant-tooltip-unique-container",
+                  "ant-zoom-big-fast-appear",
+                  "ant-zoom-big-fast-appear-active",
+                  "ant-zoom-big-fast",
+                  "ant-tooltip-css-var",
+                  "ant-tooltip-placement-top"
+                ]
+              }
+            ],
+            "anchors": [
+              {
+                "description": "external-id-a",
+                "className": "ant-tooltip-open"
+              },
+              {
+                "description": null,
+                "className": ""
+              }
+            ],
+            "containerCalls": 0,
+            "callbacks": [
+              {
+                "id": "a",
+                "type": "request",
+                "open": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "b",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-bottom",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgb(128, 48, 160)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-bottom"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "mode": "delays",
+        "actions": [
+          "point:a",
+          "advance:119",
+          "advance:1",
+          "advance:119",
+          "advance:41",
+          "leave:a",
+          "advance:69",
+          "advance:1",
+          "advance:69",
+          "advance:41"
+        ]
+      },
+      "snapshots": [
+        {
+          "action": "idle",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "point:a",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "advance:119",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "advance:1",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": true
+            }
+          ]
+        },
+        {
+          "action": "advance:119",
+          "panels": [],
+          "backgrounds": [],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "advance:41",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "leave:a",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "advance:69",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": "external-id-a",
+              "className": "ant-tooltip-open"
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "advance:1",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": [
+            {
+              "id": "a",
+              "type": "request",
+              "open": false
+            }
+          ]
+        },
+        {
+          "action": "advance:69",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": true,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-container-visible"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        },
+        {
+          "action": "advance:41",
+          "panels": [
+            {
+              "node": 1,
+              "id": "",
+              "parent": "div",
+              "contents": "a",
+              "visible": false,
+              "classes": [
+                "ant-tooltip-placement-top",
+                "ant-tooltip-unique-controlled"
+              ],
+              "arrows": 0
+            }
+          ],
+          "backgrounds": [
+            {
+              "node": 2,
+              "background": "rgba(0, 0, 0, 0.85)",
+              "className": [
+                "ant-tooltip-unique-container",
+                "ant-tooltip-unique-container-hidden",
+                "ant-tooltip-css-var",
+                "ant-tooltip-placement-top"
+              ]
+            }
+          ],
+          "anchors": [
+            {
+              "description": null,
+              "className": ""
+            },
+            {
+              "description": null,
+              "className": ""
+            }
+          ],
+          "containerCalls": 0,
+          "callbacks": []
+        }
+      ]
+    }
+  ]
+}

@@ -390,6 +390,11 @@
     "root": "overlay-motion-fixture"
   },
   {
+    "id": "tooltip-unique",
+    "module": "./TooltipUniqueFixtures.svelte",
+    "root": "tooltip-unique-fixture"
+  },
+  {
     "id": "popover-ref",
     "module": "./PopoverRefFixtures.svelte",
     "root": "popover-ref-fixture"
