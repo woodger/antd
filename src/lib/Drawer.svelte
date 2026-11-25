@@ -170,20 +170,25 @@
     style,
     rootStyle
   ].filter(Boolean).join(';') || undefined);
-  const container = createDialogContainer(() => ({
-    component: 'drawer',
-    getContainer,
-    getPopupContainer: config.getPopupContainer,
-    enabled: !destroyOnHidden || open || closing || forceRender,
-    portalByDefault: !interaction.native && (open || closing),
-    style: dialogStyle,
-    onPointerDown: event => {
-      backdropPointer = interaction.mask.enabled && event.button === 0 && isBackdrop(event)
-        ? event.pointerId : undefined;
-    },
-    onPointerUp: handlePointerUp,
-    onPointerCancel: () => { backdropPointer = undefined; }
-  }));
+  const container = createDialogContainer(() => {
+    // Селектор или getter может найти другой узел к следующему открытию.
+    const requestedOpen = open;
+
+    return {
+      component: 'drawer',
+      getContainer,
+      getPopupContainer: config.getPopupContainer,
+      enabled: !destroyOnHidden || requestedOpen || closing || forceRender,
+      portalByDefault: !interaction.native && (requestedOpen || closing),
+      style: dialogStyle,
+      onPointerDown: event => {
+        backdropPointer = interaction.mask.enabled && event.button === 0 && isBackdrop(event)
+          ? event.pointerId : undefined;
+      },
+      onPointerUp: handlePointerUp,
+      onPointerCancel: () => { backdropPointer = undefined; }
+    };
+  });
   const scrollUnlocked = $derived.by(() => {
     if (!interaction.mask.enabled) return true;
     if (interaction.native) return false;

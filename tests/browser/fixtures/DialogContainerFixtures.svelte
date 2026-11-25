@@ -3,8 +3,13 @@
   import DialogContainerCase from './DialogContainerCase.svelte';
   import type { DialogContainerCase as ContainerCase } from './dialog-container-presets';
 
+  const lateCases: ContainerCase[] = [
+    { name: 'drawer-late-getter', component: 'drawer', local: 'late-target' },
+    { name: 'drawer-late-provider', component: 'drawer', parent: 'late-target' }
+  ];
+  const samples = [...reference.cases, ...lateCases];
   let name = $state(reference.cases[0].name);
-  let sample = $derived(reference.cases.find(item => item.name === name)! as ContainerCase);
+  let sample = $derived(samples.find(item => item.name === name)! as ContainerCase);
   let mounted = $state(true);
   let tree = $state(true);
   let revision = $state(0);
@@ -20,7 +25,7 @@
 <section id="dialog-container-fixture">
   <h2>Modal and Drawer containers</h2>
   <label>Dialog reference <select aria-label="Dialog reference" bind:value={name}>
-    {#each reference.cases as item}<option value={item.name}>{item.name}</option>{/each}
+    {#each samples as item}<option value={item.name}>{item.name}</option>{/each}
   </select></label>
   <label><input type="checkbox" bind:checked={mounted} /> Mount container panel</label>
   <label><input type="checkbox" bind:checked={tree} /> Mount panel tree</label>
