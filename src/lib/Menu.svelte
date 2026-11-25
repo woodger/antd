@@ -538,6 +538,7 @@
 
   provideMenu({
     dropdown,
+    registerPopup: dropdownScope?.registerPopup,
     get prefixCls() { return componentPrefix; },
     get rootPrefixCls() { return rootPrefix; },
     get rootClassName() { return rootClassName; },

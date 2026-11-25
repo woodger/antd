@@ -1,6 +1,7 @@
 <script lang="ts">
   // Представляет черновик в списке, вложенном Menu или Tree. Обрабатываемые
   // таблицей значения и момент подтверждения принадлежат TableFilter.
+  import { untrack } from 'svelte';
   import { takeDropdownMenu } from './dropdown-menu-context';
   import {
     getTableFilterMenu, getTableFilterNodes, walkTableFilterNodes, type TableFilterNode
@@ -8,7 +9,7 @@
   import type {
     TableFilterMode, TableFilterOption, TableFilterSearch, TableFilterValue
   } from './table.types';
-  import type { MenuItemIconInfo, MenuSelectInfo } from './menu.types';
+  import type { MenuItemIconInfo, MenuProps, MenuSelectInfo } from './menu.types';
   import type { TreeCheckedKeys, TreeCheckInfo, TreeEventNode, TreeKey } from './tree.types';
   import type { TableFilterLocale } from './table-locale.engine';
   import Checkbox from './Checkbox.svelte';
@@ -24,7 +25,7 @@
   let {
     prefixCls, dropdownPrefix, label, labelledby, id, options, mode, search, multiple, disabled, open,
     strings,
-    draft = $bindable(), query = $bindable(), getPopupContainer
+    draft = $bindable(), query = $bindable(), getPopupContainer, retainDropdownPopup
   }: {
     prefixCls: string;
     dropdownPrefix: string;
@@ -40,11 +41,13 @@
     strings: Pick<TableFilterLocale, 'filterSearchPlaceholder' | 'filterCheckAll' | 'filterEmptyText'>;
     draft: TableFilterValue[];
     query: string;
-    getPopupContainer: (trigger: HTMLElement) => HTMLElement;
+    getPopupContainer: NonNullable<MenuProps['getPopupContainer']>;
+    retainDropdownPopup: boolean;
   } = $props();
 
-  // Выбор в Menu подтверждает TableFilter, даже если вся таблица внутри Dropdown.
-  takeDropdownMenu();
+  // Внешний портал остаётся внутри области взаимодействия панели фильтра.
+  // Выбор пунктов применяет сам TableFilter, когда пользователь подтвердит черновик.
+  takeDropdownMenu(untrack(() => retainDropdownPopup));
   const placeholder = $derived(strings.filterSearchPlaceholder);
   const emptyText = $derived(strings.filterEmptyText);
   const description = $derived(

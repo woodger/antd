@@ -1788,6 +1788,11 @@
     "root": "table-filter-dropdown-fixture"
   },
   {
+    "id": "table-popup-container",
+    "module": "./TablePopupContainerFixture.svelte",
+    "root": "table-popup-container-fixture"
+  },
+  {
     "id": "table-filter-state",
     "module": "./TableFilterStateFixture.svelte",
     "root": "table-filter-state-fixture"

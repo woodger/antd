@@ -5,6 +5,7 @@
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import type { DropdownProps } from './dropdown.types';
   import { snapshotTableFilterOptions } from './table-filter-options.engine';
   import type { TableFilterLocale } from './table-locale.engine';
   import { normalizeTableFilter } from './table.engine';
@@ -23,7 +24,7 @@
     prefixCls, dropdownPrefix, rootClassName, title, titleReference, options, value, filtered, resetValues,
     multiple, disabled, strings,
     filterMode = 'menu', filterSearch = false, filterDropdown, filterDropdownProps,
-    filterOnClose = false, filterIcon, onApply
+    filterOnClose = false, filterIcon, getPopupContainer, onApply
   }: {
     prefixCls: string;
     dropdownPrefix: string;
@@ -43,6 +44,7 @@
     filterDropdownProps?: TableFilterDropdownOptions;
     filterOnClose?: boolean;
     filterIcon?: Snippet<[filtered: boolean]>;
+    getPopupContainer?: DropdownProps['getPopupContainer'];
     onApply: (values: TableFilterValue[]) => void;
   } = $props();
 
@@ -54,7 +56,10 @@
   let content = $state<HTMLDivElement>();
   let nativeOpen = $state(false);
   let requestedOpen = $state(false);
-  const usesDropdown = $derived(Boolean(filterDropdown || filterDropdownProps || filterOnClose));
+  const tableContainer = $derived(getPopupContainer ?? config.getPopupContainer);
+  const hasPanelOptions = $derived(Boolean(filterDropdown || filterDropdownProps || filterOnClose));
+  let retainedDropdown = $state(untrack(() => Boolean(tableContainer)));
+  const usesDropdown = $derived(hasPanelOptions || Boolean(tableContainer) || retainedDropdown);
   const blocked = $derived(disabled || Boolean(filterDropdownProps?.disabled));
   const open = $derived(
     usesDropdown ? !blocked && (filterDropdownProps?.open ?? requestedOpen) : nativeOpen
@@ -103,6 +108,15 @@
 
   // После подтверждения без закрытия значения владельца остаются источником черновика.
   $effect.pre(() => {
+    if (tableContainer && !retainedDropdown) {
+      // После выбора портала сохраняем триггер и черновик при смене или удалении resolver.
+      retainedDropdown = true;
+      if (nativeOpen) {
+        requestedOpen = true;
+        dropdownApplied = openedValue;
+      }
+    }
+
     if (usesDropdown) {
       nativeOpen = false;
       if (blocked) {
@@ -128,7 +142,7 @@
   });
 
   $effect(() => {
-    if (!nativeOpen || !panel) {
+    if (!open || hasPanelOptions || (!usesDropdown && !panel)) {
       return;
     }
 
@@ -141,7 +155,12 @@
 
     if (blocked || !sameValues(value, openedValue) || !sameOptions || multiple !== openedMultiple
       || filterMode !== openedMode || filterSearch !== openedSearch) {
-      panel.hidePopover();
+      if (usesDropdown) {
+        requestedOpen = false;
+      }
+      else {
+        panel?.hidePopover();
+      }
     }
   });
 
@@ -223,6 +242,15 @@
       ?? anchor.ownerDocument.body;
   }
 
+  /** Фиксирует применённые критерии и варианты на момент открытия штатной панели. */
+  function snapshotOpenState() {
+    openedValue = [...value];
+    openedOptions = optionSnapshot;
+    openedMultiple = multiple;
+    openedMode = filterMode;
+    openedSearch = filterSearch;
+  }
+
   function beforeToggle(event: ToggleEvent) {
     if (event.newState === 'open') {
       if (blocked) {
@@ -230,11 +258,7 @@
         return;
       }
 
-      openedValue = [...value];
-      openedOptions = optionSnapshot;
-      openedMultiple = multiple;
-      openedMode = filterMode;
-      openedSearch = filterSearch;
+      snapshotOpenState();
       draft = [...value];
       panel?.style.setProperty('opacity', '0');
       panel?.style.setProperty('pointer-events', 'none');
@@ -253,6 +277,10 @@
   }
 
   function handleDropdownOpenChange(nextOpen: boolean) {
+    if (nextOpen && !hasPanelOptions) {
+      snapshotOpenState();
+    }
+
     if (!nextOpen && filterOnClose && !filterDropdown) {
       confirm();
       return;
@@ -330,14 +358,17 @@
     }
   }
 
-  /** Отдаёт Dropdown программный фокус через tabindex=-1 при autoFocus. */
+  /** Передаёт фокус Dropdown редактору или штатным вариантам фильтра. */
   function connectDropdownContent(element: HTMLDivElement) {
-    if (filterDropdownProps?.autoFocus) {
+    if (!hasPanelOptions || filterDropdownProps?.autoFocus) {
       element.tabIndex = -1;
     }
+    const disconnectFocus = hasPanelOptions ? undefined
+      : on(element, 'focus', () => focusOptions());
     const disconnectInput = filterDropdown ? undefined : on(element, 'keydown', handleInputKeydown);
 
     return () => {
+      disconnectFocus?.();
       disconnectInput?.();
       element.removeAttribute('tabindex');
     };
@@ -417,7 +448,8 @@
         <TableFilterOptions {prefixCls} {dropdownPrefix} {label} labelledby={labelReference}
           {id} {strings} options={optionList}
           {multiple} disabled={blocked} {open} mode={filterMode} search={filterSearch}
-          bind:draft bind:query getPopupContainer={submenuContainer} />
+          bind:draft bind:query getPopupContainer={tableContainer ?? submenuContainer}
+          retainDropdownPopup={usesDropdown} />
       {/if}
       <div data-ant-table-filter-part="buttons" class={`${prefixCls}-filter-dropdown-btns`}>
         <Button type="text" size="small" disabled={blocked || !canReset}
@@ -443,6 +475,8 @@
 {#if usesDropdown}
   <Dropdown
     {...filterDropdownProps}
+    getPopupContainer={filterDropdownProps?.getPopupContainer ?? getPopupContainer}
+    autoFocus={hasPanelOptions ? filterDropdownProps?.autoFocus : true}
     rootClassName={dropdownRootClass}
     {open}
     disabled={blocked}

@@ -10,7 +10,7 @@
   } = $props();
 
   const scope = takeDropdownMenu();
-  if (scope) {
+  if (scope?.context) {
     provideDropdownMenu(scope.context, true);
   }
 </script>

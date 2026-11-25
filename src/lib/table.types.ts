@@ -430,6 +430,8 @@ export interface TableProps<Row extends object> {
   prefixCls?: string;
   /** Локальный префикс списка фильтров; shell и controls наследуют общий prefix. */
   dropdownPrefixCls?: string;
+  /** Задаёт контейнер панелей фильтра и меню команд выбора по их DOM-триггеру. */
+  getPopupContainer?: DropdownProps['getPopupContainer'];
   /** @defaultValue 'client' */
   mode?: TableMode;
   total?: number;

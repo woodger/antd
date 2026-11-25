@@ -118,6 +118,7 @@
     caption,
     prefixCls,
     dropdownPrefixCls,
+    getPopupContainer,
     locale,
     empty,
     scroll,
@@ -1105,6 +1106,7 @@
             {dropdownPrefix}
             {rootClassName}
             {strings}
+            {getPopupContainer}
             title={titleLabel}
             titleReference={titleReference}
             options={filterOptions}
@@ -1247,7 +1249,7 @@
     {#if commands}
       <div class={`${prefix}-selection`}>
         {@render selectPageControl()}
-        <TableSelectionMenu {prefix} {commands} {strings}
+        <TableSelectionMenu {prefix} {commands} {strings} {getPopupContainer}
           disabled={resolvedDisabled} onCommand={selection.runCommand} />
       </div>
     {:else}

@@ -11,6 +11,7 @@ export interface MenuBranchHover {
 
 export interface MenuContext {
   readonly dropdown?: DropdownMenuContext;
+  readonly registerPopup?: DropdownMenuContext['registerPopup'];
   readonly prefixCls: string;
   readonly rootPrefixCls: string;
   readonly rootClassName: string;

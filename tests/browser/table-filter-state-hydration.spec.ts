@@ -25,6 +25,44 @@ test.afterAll(async () => {
   }
 });
 
+test('Table hydrates the focused trigger and resolves its filter portal on opening', async ({
+  page
+}) => {
+  const entry = new URL('./fixtures/table-filter-state.server.ts', import.meta.url);
+  const { renderTablePopupContainer } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTablePopupContainer();
+  await page.goto('/select-components-hydration.html?popup-container');
+  await page.addScriptTag({ type: 'module', url: '/table-filter-state.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((target, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    target.innerHTML = html.body;
+  }, { body, head });
+  const trigger = root.getByRole('button', { name: 'Filter menu: Name', exact: true });
+  const host = root.locator('[data-popup-host="table"]');
+  const panel = host.getByRole('dialog', { name: 'Filter menu: Name', exact: true });
+  const resolvers = root.locator('[data-popup-resolvers]');
+  const original = await trigger.elementHandle();
+  await trigger.focus();
+
+  await root.dispatchEvent('hydrate-table-filter-state');
+
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  await expect(trigger).toBeFocused();
+  await expect(resolvers).toHaveAttribute('data-popup-resolvers', '[]');
+  await expect(panel).toHaveCount(0);
+
+  await trigger.press('Enter');
+  const red = panel.getByRole('checkbox', { name: 'Red', exact: true });
+  await expect(red).toBeFocused();
+  await expect(resolvers).toHaveAttribute('data-popup-resolvers', '["table:filter"]');
+  await red.press('Escape');
+  await expect(panel).toBeHidden();
+  await expect(trigger).toBeFocused();
+  expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
+});
+
 test('Table hydrates the focused filter trigger and keeps the owner in control', async ({ page }) => {
   const entry = new URL('./fixtures/table-filter-state.server.ts', import.meta.url);
   const { renderTableFilterState } = await server.ssrLoadModule(fileURLToPath(entry));

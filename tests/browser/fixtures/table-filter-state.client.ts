@@ -3,6 +3,7 @@ import { hydrate } from 'svelte';
 import Fixture from './TableFilterStateFixture.svelte';
 import DropdownFixture from './TableFilterDropdownFixture.svelte';
 import OptionsFixture from './TableFilterOptionsFixture.svelte';
+import PopupContainerFixture from './TablePopupContainerFixture.svelte';
 
 const target = document.getElementById('root');
 if (!target) {
@@ -17,6 +18,9 @@ target.addEventListener('hydrate-table-filter-state', () => {
   }
   else if (query.has('filter-options')) {
     hydrate(OptionsFixture, { target, props: { profileId: 'tree-cascade' }, recover: false });
+  }
+  else if (query.has('popup-container')) {
+    hydrate(PopupContainerFixture, { target, props: { profileId: 'table' }, recover: false });
   }
   else {
     hydrate(Fixture, { target, props: { profileId: 'controlled' }, recover: false });

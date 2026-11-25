@@ -1139,6 +1139,27 @@ Dropdown. `popupRender` получает snippet исходного содерж
 · [Chromium](../../../tests/browser/table-filter-dropdown.spec.ts)
 · [SSR](../../../tests/package/table-filter-dropdown.ssr.test.ts)
 
+### Контейнеры выпадающих панелей
+
+`Table.getPopupContainer(trigger)` получает DOM-элемент, который открывает
+панель фильтра, её подменю или меню команд выбора строк. Функция возвращает
+контейнер, в который подключается соответствующая панель. При отсутствии
+функции в таблице используется `ConfigProvider.getPopupContainer`. Встроенный
+фильтр без настройки контейнера остаётся в шапке таблицы.
+
+`column.filterDropdownProps.getPopupContainer` имеет приоритет для внешней
+панели данной колонки. Вложенное меню использует настройку таблицы или
+провайдера. Контейнер подсказки сортировки задаётся через
+`showSorterTooltip.getPopupContainer` и `ConfigProvider`.
+
+Контейнер рассчитывается в браузере. Смена контейнера открытой панели
+сохраняет черновик фильтра.
+
+[Эталон контейнеров](../../../tests/browser/fixtures/ant-design-table-popup-container-reference.json)
+· [Chromium](../../../tests/browser/table-popup-container.spec.ts)
+· [SSR](../../../tests/package/table-popup-container.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-filter-state-hydration.spec.ts)
+
 ## Направления и приоритеты сортировки
 
 `column.sorter` принимает компаратор `(left, right, order) => number` или объект

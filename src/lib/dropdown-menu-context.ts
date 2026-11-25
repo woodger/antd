@@ -25,8 +25,9 @@ export interface DropdownMenuContext {
 }
 
 interface DropdownMenuScope {
-  context: DropdownMenuContext;
+  context?: DropdownMenuContext;
   defaultSelectable?: boolean;
+  registerPopup?: DropdownMenuContext['registerPopup'];
 }
 
 const key = Symbol('ant-dropdown-menu');
@@ -36,9 +37,12 @@ export function provideDropdownMenu(context: DropdownMenuContext, defaultSelecta
   setContext<DropdownMenuScope>(key, { context, defaultSelectable });
 }
 
-/** Изолирует вложенные Menu. Соседние списки получают контекст общей панели. */
-export function takeDropdownMenu() {
+/** Изолирует Menu. Регистрацию внешних подменю можно передать без управления выбором. */
+export function takeDropdownMenu(retainPopupRegistration = false) {
   const scope = getContext<DropdownMenuScope | undefined>(key);
-  if (scope) setContext(key, undefined);
+  if (scope) {
+    const registerPopup = retainPopupRegistration ? scope.context?.registerPopup : undefined;
+    setContext<DropdownMenuScope | undefined>(key, registerPopup ? { registerPopup } : undefined);
+  }
   return scope;
 }

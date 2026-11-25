@@ -4,7 +4,7 @@
   import Dropdown from './Dropdown.svelte';
   import Icon from './Icon.svelte';
   import RenderContent from './RenderContent.svelte';
-  import type { DropdownMenuEntry } from './dropdown.types';
+  import type { DropdownMenuEntry, DropdownProps } from './dropdown.types';
   import type { MenuContent } from './menu.types';
   import type { ResolvedTableLocale } from './table-locale.engine';
   import { SELECTION_ALL, SELECTION_INVERT, SELECTION_NONE } from './table-selection.constants';
@@ -12,10 +12,11 @@
   import type { RenderEmptyContent } from './types';
 
   type Command = TableSelectionPreset | TableSelectionItem;
-  let { prefix, commands, strings, disabled, onCommand }: {
+  let { prefix, commands, strings, getPopupContainer, disabled, onCommand }: {
     prefix: string;
     commands: readonly Command[];
     strings: Pick<ResolvedTableLocale, 'selectionMenu' | 'selectionAll' | 'selectInvert' | 'selectNone'>;
+    getPopupContainer?: DropdownProps['getPopupContainer'];
     disabled: boolean;
     onCommand: (command: Command) => void;
   } = $props();
@@ -52,7 +53,8 @@
 {#snippet noneLabel()}<RenderContent value={strings.selectNone} />{/snippet}
 
 <div class={`${prefix}-selection-extra`}>
-  <Dropdown {disabled} menu={{ items }} trigger={['hover', 'click']} aria-label={label}>
+  <Dropdown {disabled} {getPopupContainer} menu={{ items }} trigger={['hover', 'click']}
+    aria-label={label}>
     <button type="button" {disabled} aria-label={label}>
       <span aria-hidden="true"><Icon name="down" /></span>
     </button>

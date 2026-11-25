@@ -2,6 +2,7 @@ import { render } from 'svelte/server';
 import Fixture from './TableFilterStateFixture.svelte';
 import DropdownFixture from './TableFilterDropdownFixture.svelte';
 import OptionsFixture from './TableFilterOptionsFixture.svelte';
+import PopupContainerFixture from './TablePopupContainerFixture.svelte';
 
 /** Формирует отфильтрованные строки и кнопку до подключения обработчиков. */
 export function renderTableFilterState() {
@@ -16,4 +17,9 @@ export function renderTableFilterOptions() {
 /** Выводит заданную колонкой иконку до монтирования пользовательской панели. */
 export function renderTableFilterDropdown() {
   return render(DropdownFixture, { props: { profileId: 'custom' } });
+}
+
+/** Выводит триггер и пустой контейнер до первого открытия портала. */
+export function renderTablePopupContainer() {
+  return render(PopupContainerFixture, { props: { profileId: 'table' } });
 }

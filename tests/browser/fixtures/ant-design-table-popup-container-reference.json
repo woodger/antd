@@ -1,0 +1,695 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "repeat": 2,
+    "viewport": {
+      "width": 1000,
+      "height": 650
+    }
+  },
+  "cases": [
+    {
+      "spec": {
+        "id": "default"
+      },
+      "states": [
+        {
+          "outer": "body",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "provider",
+        "provider": true
+      },
+      "states": [
+        {
+          "outer": "provider",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "provider:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "table",
+        "provider": true,
+        "table": "table"
+      },
+      "states": [
+        {
+          "outer": "table",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "table:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "header",
+        "table": "header"
+      },
+      "states": [
+        {
+          "outer": "header",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "header:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "undefined-column",
+        "provider": true,
+        "table": "table",
+        "column": "undefined"
+      },
+      "states": [
+        {
+          "outer": "table",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "table:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "group-provider",
+        "provider": true,
+        "column": "column",
+        "grouped": true
+      },
+      "states": [
+        {
+          "outer": "column",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        },
+        {
+          "outer": "column",
+          "submenu": "provider",
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter",
+            "provider:submenu"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        },
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter",
+            "provider:submenu"
+          ],
+          "rows": [
+            "2"
+          ],
+          "filters": [
+            [
+              2
+            ]
+          ],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "group-table",
+        "provider": true,
+        "table": "table",
+        "column": "column",
+        "grouped": true
+      },
+      "states": [
+        {
+          "outer": "column",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        },
+        {
+          "outer": "column",
+          "submenu": "table",
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter",
+            "table:submenu"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        },
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter",
+            "table:submenu"
+          ],
+          "rows": [
+            "2"
+          ],
+          "filters": [
+            [
+              2
+            ]
+          ],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "custom",
+        "provider": true,
+        "table": "table",
+        "column": "column",
+        "custom": true
+      },
+      "states": [
+        {
+          "outer": "column",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": "Seed",
+          "choice": false
+        },
+        {
+          "outer": "column",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": "Draft",
+          "choice": false
+        },
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "column:filter"
+          ],
+          "rows": [
+            "2"
+          ],
+          "filters": [
+            [
+              2
+            ]
+          ],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "selection-provider",
+        "provider": true,
+        "kind": "selection"
+      },
+      "states": [
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": "provider",
+          "tooltip": null,
+          "calls": [
+            "provider:selection"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        },
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "provider:selection"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [
+            [
+              1,
+              2
+            ]
+          ],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "selection-table",
+        "provider": true,
+        "table": "table",
+        "kind": "selection"
+      },
+      "states": [
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": "table",
+          "tooltip": null,
+          "calls": [
+            "table:selection"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        },
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "table:selection"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [
+            [
+              1,
+              2
+            ]
+          ],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "sorter-provider",
+        "provider": true,
+        "table": "table",
+        "kind": "sorter"
+      },
+      "states": [
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": "provider",
+          "calls": [
+            "provider:sorter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "sorter-local",
+        "provider": true,
+        "table": "table",
+        "kind": "sorter",
+        "sorter": true
+      },
+      "states": [
+        {
+          "outer": null,
+          "submenu": null,
+          "selection": null,
+          "tooltip": "tooltip",
+          "calls": [
+            "tooltip:sorter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": null
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "update",
+        "provider": true,
+        "table": "table",
+        "update": true
+      },
+      "states": [
+        {
+          "outer": "table",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "table:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        },
+        {
+          "outer": "updated",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "table:filter",
+            "updated:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": true
+        },
+        {
+          "outer": "provider",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "provider:filter",
+            "table:filter",
+            "updated:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": true
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    },
+    {
+      "spec": {
+        "id": "enable-and-remove",
+        "update": true
+      },
+      "states": [
+        {
+          "outer": "body",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": false
+        },
+        {
+          "outer": "updated",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "updated:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": true
+        },
+        {
+          "outer": "body",
+          "submenu": null,
+          "selection": null,
+          "tooltip": null,
+          "calls": [
+            "updated:filter"
+          ],
+          "rows": [
+            "1",
+            "2"
+          ],
+          "filters": [],
+          "keys": [],
+          "editor": null,
+          "choice": true
+        }
+      ],
+      "ssr": {
+        "calls": [],
+        "rows": 2,
+        "outer": false,
+        "custom": false
+      }
+    }
+  ]
+}

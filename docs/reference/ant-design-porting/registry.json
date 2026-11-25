@@ -20040,6 +20040,27 @@
           "note": "Два одинаковых прогона Ant Design 6.6.8 и rc-table 1.11.1 дают 52 состояния и 27 SSR-снимков. Локальный словарь наследует пропущенные поля. Проверены фильтр, поиск, раскрытие, сортировка, команды выбора с rich content, emptyText со строкой, 0, null, false, пустой строкой, массивом, undefined и snippet. Native сохраняет приоритет empty snippet, строковые доступные имена и ключ строки в имени раскрытия. Table использует truthy renderer fallback, Table.filter использует nullish fallback перед своим Empty. React показывает содержимое пустой ячейки при loading и явно переданном пустом массиве. Native выполняет согласованный loading-контракт и скрывает содержимое пустой ячейки. Проверены изоляция словаря, гидратация и сохранение активного редактора."
         },
         {
+          "id": "popup-container",
+          "title": "Контейнеры фильтров и меню выбора Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/TableFilter.svelte",
+            "src/lib/TableFilterOptions.svelte",
+            "src/lib/TableSelectionMenu.svelte",
+            "src/lib/dropdown-menu-context.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-popup-container-reference.json",
+            "tests/browser/table-popup-container.spec.ts",
+            "tests/browser/table-filter-state-hydration.spec.ts",
+            "tests/package/table-popup-container.ssr.test.ts",
+            "tests/package/table-popup-container.types.ts"
+          ],
+          "note": "Два одинаковых прогона Ant Design 6.6.8 дают 26 состояний и 14 SSR-снимков. Проверены триггер, приоритет колонки, таблицы и провайдера, контейнер внутри th, вложенное меню с отдельным контейнером, пользовательская панель, команды выбора и собственный контейнер Tooltip. При смене и снятии настройки открытая панель сохраняет черновик. React без resolver подключает фильтр к body. Native сохраняет штатное размещение в шапке таблицы и закрывает устаревший черновик при изменении применённого фильтра. Проверены Escape, возврат фокуса, изоляция двух таблиц и строгая гидратация."
+        },
+        {
           "id": "filter-state",
           "title": "Начальные и управляемые фильтры колонок",
           "state": "supported",

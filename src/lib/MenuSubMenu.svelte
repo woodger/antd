@@ -307,7 +307,7 @@
   }
 
   function connectEvents(element: HTMLElement) {
-    const disconnectOwner = dropdown?.registerPopup(element);
+    const disconnectOwner = dropdown?.registerPopup(element) ?? context.registerPopup?.(element);
     const keyboard = on(element, 'keydown', event => {
       const root = context.nativeElement;
       if (!root || root.contains(element) || element.inert) {
