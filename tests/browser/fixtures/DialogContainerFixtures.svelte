@@ -5,7 +5,9 @@
 
   const lateCases: ContainerCase[] = [
     { name: 'drawer-late-getter', component: 'drawer', local: 'late-target' },
-    { name: 'drawer-late-provider', component: 'drawer', parent: 'late-target' }
+    { name: 'drawer-late-provider', component: 'drawer', parent: 'late-target' },
+    { name: 'modal-late-getter', component: 'modal', local: 'late-target' },
+    { name: 'modal-late-provider', component: 'modal', parent: 'late-target' }
   ];
   const samples = [...reference.cases, ...lateCases];
   let name = $state(reference.cases[0].name);
@@ -19,6 +21,7 @@
   let motion = $state(false);
   let customPrefix = $state(false);
   let staging = $state<'none' | 'element' | 'fragment'>('none');
+  let readyAtOpen = $state<'none' | 'before' | 'after'>('none');
   let calls = $state(0);
 </script>
 
@@ -26,6 +29,11 @@
   <h2>Modal and Drawer containers</h2>
   <label>Dialog reference <select aria-label="Dialog reference" bind:value={name}>
     {#each samples as item}<option value={item.name}>{item.name}</option>{/each}
+  </select></label>
+  <label>Destination with open <select bind:value={readyAtOpen}>
+    <option value="none">None</option>
+    <option value="before">Before dialog</option>
+    <option value="after">After dialog</option>
   </select></label>
   <label><input type="checkbox" bind:checked={mounted} /> Mount container panel</label>
   <label><input type="checkbox" bind:checked={tree} /> Mount panel tree</label>
@@ -43,7 +51,8 @@
   <output aria-label="Panel owner calls">{calls}</output>
   {#if tree}
     {#key `${name}-${staging}`}
-      <DialogContainerCase {sample} {mounted} {revision} {alternate} {dark} {nested} {motion} {staging} {customPrefix}
+      <DialogContainerCase {sample} {mounted} {revision} {alternate} {dark} {nested} {motion}
+        {staging} {customPrefix} {readyAtOpen}
         onCall={() => calls++} />
     {/key}
   {/if}

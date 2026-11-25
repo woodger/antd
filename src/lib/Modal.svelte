@@ -61,6 +61,7 @@
   let focusTrigger: HTMLElement | undefined;
   const container = createDialogContainer(() => ({
     component: 'modal',
+    open,
     getContainer,
     getPopupContainer: config.getPopupContainer,
     style: componentTheme.style,

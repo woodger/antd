@@ -56,6 +56,9 @@ GetContainer принимает DOM-узел, DocumentFragment (включая S
 функцию без аргументов либо false. Локальное undefined использует
 ConfigProvider.getPopupContainer; Modal вызывает глобальный getter без trigger,
 как Ant Design 6.6.8. False оставляет DOM на месте и отключает global fallback.
+При смене `open` контейнер разрешается после обновления DOM. Селектор и getter
+видят узел, который монтируется вместе с открытием окна.
+[Сверка с Ant Design 6.6.8](../../../tests/browser/drawer-container-timing.spec.ts).
 Без обеих настроек сохраняется прежнее native-размещение.
 
 ```svelte

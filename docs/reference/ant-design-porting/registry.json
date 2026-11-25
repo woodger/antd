@@ -23288,7 +23288,8 @@
         "tests/browser/drawer-motion-api-hydration.spec.ts",
         "tests/package/drawer-motion-api.ssr.test.ts",
         "tests/browser/fixtures/ant-design-drawer-container-timing-reference.json",
-        "tests/browser/drawer-container-timing.spec.ts"
+        "tests/browser/drawer-container-timing.spec.ts",
+        "tests/browser/fixtures/ant-design-dialog-container-commit-reference.json"
       ],
       "features": [
         {
@@ -23374,9 +23375,10 @@
             "tests/browser/dialog-container-interaction.spec.ts",
             "tests/package/dialog-container.ssr.test.ts",
             "tests/browser/fixtures/ant-design-drawer-container-timing-reference.json",
-            "tests/browser/drawer-container-timing.spec.ts"
+            "tests/browser/drawer-container-timing.spec.ts",
+            "tests/browser/fixtures/ant-design-dialog-container-commit-reference.json"
           ],
-          "note": "GetContainer: false, Element, DocumentFragment/ShadowRoot, selector и функция без аргументов. Undefined наследует global getter; Drawer передаёт document.body; destroyOnHidden без forceRender не вызывает getter, пока panel не нужен. При смене open повторно разрешаются неизменный selector, local getter и ConfigProvider fallback. Два совпавших прогона UMD для семи сценариев подтверждают поздний target при первом и повторном открытии, payload и сохранение черновика при том же target. Первый перенос готового контейнера сохраняет SSR DOM; новая функция с тем же target сохраняет state/draft/selection/focus, смена target пересоздаёт содержимое. Detached nodes/DocumentFragment ожидают подключения; стили ShadowRoot принадлежат потребителю. Native modal/inert/fullscreen/scroll lock, возврат фокуса, прежний SSR shell и lifecycle сохранены. 36 UMD-эталонов покрывают priorities, payload, undefined/false, selectors, retention и remount. Остальной API и подробный аудит остаются в работе. Head-style condition расположен вне keyed dialog range: перенос не удаляет исходный insertion anchor и не создаёт self-observer loop. Default/custom shared prefix сохраняют target remount; Drawer во время leave отменяет motion/старое destruction state и остаётся закрытым до следующего открытия. В управляемых режимах getContainer=false размещает панель абсолютно внутри исходного host. Совместимый модальный inline использует полноэкранный нативный dialog."
+          "note": "GetContainer: false, Element, DocumentFragment/ShadowRoot, selector и функция без аргументов. Undefined наследует global getter; Drawer передаёт document.body; destroyOnHidden без forceRender не вызывает getter, пока panel не нужен. При смене open повторно разрешаются неизменный selector, local getter и ConfigProvider fallback. Два совпавших прогона UMD для семи сценариев подтверждают поздний target при первом и повторном открытии, payload и сохранение черновика при том же target. Первый перенос готового контейнера сохраняет SSR DOM; новая функция с тем же target сохраняет state/draft/selection/focus, смена target пересоздаёт содержимое. Detached nodes/DocumentFragment ожидают подключения; стили ShadowRoot принадлежат потребителю. Native modal/inert/fullscreen/scroll lock, возврат фокуса, прежний SSR shell и lifecycle сохранены. 36 UMD-эталонов покрывают priorities, payload, undefined/false, selectors, retention и remount. Остальной API и подробный аудит остаются в работе. Head-style condition расположен вне keyed dialog range: перенос не удаляет исходный insertion anchor и не создаёт self-observer loop. Default/custom shared prefix сохраняют target remount; Drawer во время leave отменяет motion/старое destruction state и остаётся закрытым до следующего открытия. В управляемых режимах getContainer=false размещает панель абсолютно внутри исходного host. Совместимый модальный inline использует полноэкранный нативный dialog. Два прогона UMD для 12 сочетаний selector, getContainer, ConfigProvider и положения host в шаблоне подтверждают итоговый узел, когда он появляется при открытии. Native разрешает контейнер после обновления DOM, сохраняет модальность и возвращает фокус, если владелец удаляет target при закрытии. В UMD afterOpenChange(true) приходит сначала на fallback и затем на target во всех шести профилях. Native один раз сообщает об открытии в готовом target."
         },
         {
           "id": "component-theme",
@@ -23775,7 +23777,9 @@
         "tests/browser/fixtures/ant-design-modal-prefix-reference.json",
         "tests/browser/modal-prefix-metrics.ts",
         "tests/browser/modal-prefix.spec.ts",
-        "tests/package/modal-prefix.ssr.test.ts"
+        "tests/package/modal-prefix.ssr.test.ts",
+        "tests/browser/fixtures/ant-design-dialog-container-commit-reference.json",
+        "tests/browser/drawer-container-timing.spec.ts"
       ],
       "features": [
         {
@@ -23822,9 +23826,11 @@
             "tests/browser/fixtures/ant-design-dialog-container-reference.json",
             "tests/browser/dialog-container.spec.ts",
             "tests/browser/dialog-container-interaction.spec.ts",
-            "tests/package/dialog-container.ssr.test.ts"
+            "tests/package/dialog-container.ssr.test.ts",
+            "tests/browser/fixtures/ant-design-dialog-container-commit-reference.json",
+            "tests/browser/drawer-container-timing.spec.ts"
           ],
-          "note": "GetContainer: false, Element, DocumentFragment/ShadowRoot, selector и функция без аргументов. Undefined наследует global getter; Modal вызывает его без trigger. Первый перенос готового контейнера сохраняет SSR DOM; новая функция с тем же target сохраняет state/draft/selection/focus, смена target пересоздаёт содержимое. Detached nodes/DocumentFragment ожидают подключения; стили ShadowRoot принадлежат потребителю. Native modal/inert/fullscreen/scroll lock, возврат фокуса, прежний SSR shell и lifecycle сохранены. 36 UMD-эталонов покрывают priorities, payload, undefined/false, selectors, retention и remount. Полный аудит семейства и остальной Modal API ещё не завершены. Head-style condition расположен вне keyed dialog range: перенос не удаляет исходный insertion anchor и не создаёт self-observer loop. Default/custom shared prefix сохраняют target remount; Drawer во время leave отменяет motion/старое destruction state и остаётся закрытым до следующего открытия."
+          "note": "GetContainer: false, Element, DocumentFragment/ShadowRoot, selector и функция без аргументов. Undefined наследует global getter; Modal вызывает его без trigger. Первый перенос готового контейнера сохраняет SSR DOM; новая функция с тем же target сохраняет state/draft/selection/focus, смена target пересоздаёт содержимое. Detached nodes/DocumentFragment ожидают подключения; стили ShadowRoot принадлежат потребителю. Native modal/inert/fullscreen/scroll lock, возврат фокуса, прежний SSR shell и lifecycle сохранены. 36 UMD-эталонов покрывают priorities, payload, undefined/false, selectors, retention и remount. Полный аудит семейства и остальной Modal API ещё не завершены. Head-style condition расположен вне keyed dialog range: перенос не удаляет исходный insertion anchor и не создаёт self-observer loop. Default/custom shared prefix сохраняют target remount; Drawer во время leave отменяет motion/старое destruction state и остаётся закрытым до следующего открытия. Два прогона UMD для 12 сочетаний selector, getContainer, ConfigProvider и положения host в шаблоне подтверждают итоговый узел, когда он появляется при открытии. Native разрешает контейнер после обновления DOM, сохраняет модальность и возвращает фокус, если владелец удаляет target при закрытии."
         },
         {
           "id": "component-theme",

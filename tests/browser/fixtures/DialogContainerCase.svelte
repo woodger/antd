@@ -20,6 +20,7 @@
     motion = false,
     customPrefix = false,
     staging = 'none',
+    readyAtOpen = 'none',
     onCall
   }: {
     sample: DialogContainerCase;
@@ -31,12 +32,15 @@
     motion?: boolean;
     customPrefix?: boolean;
     staging?: 'none' | 'element' | 'fragment';
+    readyAtOpen?: 'none' | 'before' | 'after';
     onCall?: () => void;
   } = $props();
   let opened = $state(untrack(() => Boolean(sample.initial)));
   let shadow = $state<ShadowRoot>();
   let calls = $state<{ getter: string; args: number; tag: string; body: boolean; }[]>([]);
   let closes = $state(0);
+  let openedAt = $state<string[]>([]);
+  const lateTargetId = $derived(sample.local === 'missing-selector' ? 'panel-never' : 'panel-late-target');
   const stagingNode = untrack(() => typeof document === 'undefined' ? undefined
     : staging === 'fragment' ? document.createDocumentFragment()
       : staging === 'element' ? document.createElement('div') : undefined);
@@ -95,6 +99,15 @@
   });
   let localElement = $state<HTMLDivElement>();
   let childElement = $state<HTMLDivElement>();
+
+  /** Измеряет, куда переместили Drawer к уведомлению о показе. */
+  function recordOpen(visible: boolean) {
+    if (!visible) {
+      return;
+    }
+    const root = document.querySelector<HTMLDialogElement>('dialog.ant-svelte-drawer');
+    openedAt.push(root?.parentElement?.dataset.panelContainer ?? 'default');
+  }
 
   function getter(name: string, target: string) {
     return (...args: [HTMLElement?]) => get(name, target, args)!;
@@ -156,6 +169,7 @@
     style={`--panel-origin:${dark ? 'dark' : 'light'}`}
     theme={{ mode: dark ? 'dark' : 'light', token: { motion } }}>
     <ConfigProvider {...childOptions}>
+      {#if opened && readyAtOpen === 'before'}<div id={lateTargetId} data-panel-container="late"></div>{/if}
       {#if mounted}
         {#if sample.component === 'modal'}
           <Modal {...localOptions} bind:open={opened} title="Container panel"
@@ -164,11 +178,13 @@
           </Modal>
         {:else}
           <Drawer {...localOptions} bind:open={opened} title="Container panel"
-            forceRender={sample.force} destroyOnHidden={sample.destroy} onClose={() => closes++}>
+            forceRender={sample.force} destroyOnHidden={sample.destroy} onClose={() => closes++}
+            afterOpenChange={readyAtOpen === 'none' ? undefined : recordOpen}>
             <DialogContainerContents {nested} />
           </Drawer>
         {/if}
       {/if}
+      {#if opened && readyAtOpen === 'after'}<div id={lateTargetId} data-panel-container="late"></div>{/if}
     </ConfigProvider>
   </ConfigProvider>
 </div>
@@ -176,3 +192,4 @@
 <output aria-label="Panel container calls">{JSON.stringify(calls)}</output>
 <output aria-label="Panel container closes">{closes}</output>
 <output aria-label="Panel container open">{String(opened)}</output>
+<output aria-label="Panel opening destinations">{JSON.stringify(openedAt)}</output>

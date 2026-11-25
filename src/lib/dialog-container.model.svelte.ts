@@ -5,9 +5,10 @@ import { connectPopupPortal } from './popup-portal.dom';
 
 interface DialogContainerOptions {
   component: 'modal' | 'drawer';
+  open: boolean;
   getContainer?: GetContainer;
   getPopupContainer?: GetPopupContainer;
-  enabled?: boolean;
+  resolveWhenClosed?: boolean;
   portalByDefault?: boolean;
   style?: string;
   onPointerDown?: (event: PointerEvent) => void;
@@ -26,18 +27,18 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
   let activeNode: HTMLDialogElement | undefined;
   let mounted = $state(false);
   const portalByDefault = $derived(getOptions().portalByDefault === true);
-  // Контейнер/selector разрешается после DOM commit, как повторная проверка Portal в effect.
   onMount(() => { mounted = true; });
 
-  $effect.pre(() => {
+  $effect(() => {
     if (!mounted) {
       return;
     }
     const options = getOptions();
-    if (options.enabled === false) {
+    if (!options.open && options.resolveWhenClosed === false) {
       return;
     }
 
+    // Цель может монтироваться в том же DOM-обновлении, что и open.
     const choice = options.getContainer;
     let next: Element | DocumentFragment | false | undefined;
     if (choice === undefined) {

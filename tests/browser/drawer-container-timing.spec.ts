@@ -1,5 +1,6 @@
 import type { ElementHandle, Locator, Page } from '@playwright/test';
 import { test, expect } from './test';
+import commitReference from './fixtures/ant-design-dialog-container-commit-reference.json' with { type: 'json' };
 import reference from './fixtures/ant-design-drawer-container-timing-reference.json' with { type: 'json' };
 
 const fixture = {
@@ -76,5 +77,41 @@ for (const sample of reference.cases) {
     await expect.poll(() => measure(draft, previous)).toEqual(sample.after);
     await expect.poll(() => getterPayloads(page)).toEqual(sample.calls);
     await expect(page.locator('dialog.ant-svelte-drawer')).toHaveCount(1);
+  });
+}
+
+for (const sample of commitReference.cases) {
+  const { component, selection, order } = sample;
+  test(`${component} finds a same-update ${selection} container mounted ${order} it`, async ({ page }) => {
+    await page.goto('/?fixture=dialog-container');
+    const preset = selection === 'selector' ? 'missing-selector' : `late-${selection}`;
+    await page.getByLabel('Dialog reference', { exact: true }).selectOption(`${component}-${preset}`);
+    await page.getByRole('combobox', { name: 'Destination with open', exact: true }).selectOption(order);
+    await expect(page.locator('body > dialog')).toHaveCount(1);
+    await expect(page.locator('[data-panel-container="late"]')).toHaveCount(0);
+
+    const opener = page.getByRole('button', { name: 'Open container panel', exact: true });
+    await opener.click();
+
+    const dialog = page.getByRole('dialog', { name: 'Container panel', exact: true });
+    await expect(dialog).toBeVisible();
+    const destination = page.locator(`[data-panel-container="${sample.destination}"] > dialog`);
+    await expect(destination).toHaveCount(1);
+    await expect.poll(() => getterPayloads(page)).toEqual(sample.calls);
+    await expect.poll(() => dialog.evaluate(node => node.contains(document.activeElement))).toBe(true);
+    if (component === 'drawer') {
+      await expect(page.getByLabel('Panel opening destinations', { exact: true }))
+        .toHaveText(JSON.stringify([sample.destination]));
+    }
+
+    await page.getByRole('button', { name: 'Close container panel', exact: true })
+      .evaluate(button => {
+        if (button instanceof HTMLButtonElement) button.click();
+      });
+
+    await expect(dialog).toBeHidden();
+    await expect(destination).toHaveCount(0);
+    await expect(opener).toBeFocused();
+    await expect(page.locator('html')).not.toHaveCSS('overflow', 'hidden');
   });
 }
