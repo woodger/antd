@@ -618,6 +618,7 @@ export type {
   DropdownDivider,
   DropdownClickInfo,
   DropdownMenuClickInfo,
+  DropdownOpenChangeInfo,
   DropdownPlacement,
   DropdownTrigger,
   DropdownArrowOptions,

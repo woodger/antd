@@ -94,7 +94,7 @@ test('theme colors retain popup position, focused links and native navigation ca
   await expect(page).toHaveURL(/#dropdown-theme-destination$/);
   await expect(popup).toBeHidden();
   await expect(page.getByLabel('Dropdown theme events', { exact: true })).toHaveText('["link"]');
-  await expect(page.getByLabel('Dropdown theme changes', { exact: true })).toHaveText('[]');
+  await expect(page.getByLabel('Dropdown theme changes', { exact: true })).toHaveText('[false]');
   await expect(page.getByLabel('Dropdown theme clicks', { exact: true })).toHaveText('0');
 });
 
@@ -121,7 +121,7 @@ test('component algorithms retain focused commands and keyboard navigation', asy
   await danger.press('Enter');
 
   await expect(page.getByLabel('Dropdown theme events', { exact: true })).toHaveText('["danger"]');
-  await expect(page.getByLabel('Dropdown theme changes', { exact: true })).toHaveText('[]');
+  await expect(page.getByLabel('Dropdown theme changes', { exact: true })).toHaveText('[false]');
 });
 
 test('native compact returns on the same focused command after source removal', async ({ page }) => {

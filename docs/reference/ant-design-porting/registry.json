@@ -3110,7 +3110,7 @@
             "tests/package/dropdown-placement.ssr.test.ts",
             "docs/reference/components/dropdown.md"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-dropdown 1.0.3 и rc-trigger 3.10.1. 43 профиля и 225 состояний официального UMD повторены, включая шесть боковых placements, corner flip, проценты и точки align, arrow.pointAtCenter, коррекцию по осям, RTL/portal и controlled hold/accept. ContextMenu сохраняет координату, повторное открытие перемещает тот же popup, hover leave сохраняет pending show. Click, resize и scroll родительских контейнеров запрашивают закрытие; прокрутка menu сохраняет наблюдаемую видимость и scrollTop. Fit-content и динамические insets сохраняют ширину у правого края и узкого позиционированного контейнера. Native fixed top layer, принятый click bubble, onOpenChange(boolean), keyboard focus recovery, SSR-оболочка и обычные шесть placements сохранены. Изменение trigger при открытом popup сохраняет DOM и активный пункт. Поведение произвольных CSS-трансформаций portal и фазы popup motion в эту сверку не входят."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-dropdown 1.0.3 и rc-trigger 3.10.1. 43 профиля и 225 состояний официального UMD повторены, включая шесть боковых placements, corner flip, проценты и точки align, arrow.pointAtCenter, коррекцию по осям, RTL/portal и controlled hold/accept. ContextMenu сохраняет координату, повторное открытие перемещает тот же popup, hover leave сохраняет pending show. Click, resize и scroll родительских контейнеров запрашивают закрытие; прокрутка menu сохраняет наблюдаемую видимость и scrollTop. Fit-content и динамические insets сохраняют ширину у правого края и узкого позиционированного контейнера. Native fixed top layer, принятый click bubble, keyboard focus recovery, SSR-оболочка и обычные шесть placements сохранены. Журналы включают оба источника onOpenChange. Изменение trigger при открытом popup сохраняет DOM и активный пункт. Поведение произвольных CSS-трансформаций portal и фазы popup motion в эту сверку не входят."
         },
         {
           "id": "source-theme-tokens",
@@ -3134,16 +3134,25 @@
         },
         {
           "id": "open-event-info",
-          "title": "Полный onOpenChange info и callback при выборе команды",
-          "state": "partial",
+          "title": "Источник onOpenChange и закрытие через команду",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
+            "src/lib/Dropdown.svelte",
             "src/lib/dropdown.types.ts",
+            "src/lib/TableFilter.svelte",
             "tests/browser/dropdown.spec.ts",
+            "tests/browser/dropdown-menu.spec.ts",
+            "tests/browser/dropdown-placement.spec.ts",
+            "tests/browser/dropdown-lifecycle.spec.ts",
             "tests/browser/fixtures/ant-design-dropdown-appearance-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-menu-reference.json",
+            "tests/browser/table-filter-dropdown.spec.ts",
+            "tests/package/dropdown-menu.ssr.test.ts",
+            "tests/package/table-filter-dropdown.types.ts",
             "docs/reference/components/dropdown.md"
           ],
-          "note": "Сохранён принятый Svelte onOpenChange(boolean) и bind:open. Выбор команды закрывает binding без onOpenChange(false). Исходный Ant Design 6.6.8 передаёт второй аргумент с source и вызывает callback при выборе команды. Это различие остаётся для отдельного совместимого расширения API. В двух исходных замерах Escape отправляет два trigger-запроса false при отказе владельца закрыть панель. Svelte сохраняет один запрос на нажатие."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d. Публичный DropdownOpenChangeInfo передаёт trigger или menu. Порядок команды сверяется с UMD: item, подменю, menu.onClick, onOpenChange(false, { source: 'menu' }), затем события выбора. Selectable multiple сохраняет панель открытой. Владельцы могут отклонить запрос, аргумент open и bind:open сохраняют прежнюю модель. Table передаёт только boolean от триггера и API фильтра. Source закрывает панель при preventDefault в item callback и дважды просит закрытие при Escape с отклонённым open. Svelte сохраняет отмену нативной команды и один запрос Escape. Обе особенности сняты в исходных журналах."
         },
         {
           "id": "extended-api",

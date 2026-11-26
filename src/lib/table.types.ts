@@ -62,9 +62,10 @@ export interface TableFilterDropdownProps {
 
 /** Параметры Dropdown. Table предоставляет кнопку и содержимое панели. */
 export interface TableFilterDropdownOptions extends Omit<
-  DropdownProps, 'children' | 'ref' | 'defaultOpen' | 'popupRender'
+  DropdownProps, 'children' | 'ref' | 'defaultOpen' | 'popupRender' | 'onOpenChange'
 > {
   popupRender?: Snippet<[origin: Snippet]>;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export interface TableSorter {

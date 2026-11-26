@@ -7,7 +7,7 @@
   import { useDesignTokenContext } from './theme-context.svelte';
   import { componentThemeVariables } from './theme-component-style.engine';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
-  import type { DropdownProps } from './dropdown.types';
+  import type { DropdownOpenChangeInfo, DropdownProps } from './dropdown.types';
   import {
     areTableFilterOptionsEqual, snapshotTableFilterOptions
   } from './table-filter-options.engine';
@@ -282,7 +282,12 @@
     filterDropdownProps?.onOpenChange?.(nextOpen);
   }
 
-  function handleDropdownOpenChange(nextOpen: boolean) {
+  function handleDropdownOpenChange(nextOpen: boolean, { source }: DropdownOpenChangeInfo) {
+    // Пункты Menu внутри фильтра могут менять черновик до отдельного confirm или close.
+    if (source === 'menu') {
+      return;
+    }
+
     if (nextOpen && !hasPanelOptions) {
       snapshotOpenState();
     }

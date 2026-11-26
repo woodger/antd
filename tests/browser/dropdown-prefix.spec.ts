@@ -80,7 +80,7 @@ test('Dropdown prefix changes retain popup/menu/command and trigger identity, fo
   await expect(popup).toBeHidden();
   await expect(trigger).toBeFocused();
   await expect(page.getByLabel('Dropdown prefix events', { exact: true })).toHaveText('["link"]');
-  await expect(page.getByLabel('Dropdown prefix changes', { exact: true })).toHaveText('[]');
+  await expect(page.getByLabel('Dropdown prefix changes', { exact: true })).toHaveText('[false]');
 });
 
 test('Dropdown custom prefix keeps native reduced motion rules above Source item transitions', async ({ page }) => {

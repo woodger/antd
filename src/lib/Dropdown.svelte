@@ -27,6 +27,7 @@
   import type { DropdownMenuContext, DropdownMenuView } from './dropdown-menu-context';
   import { useMenuMotion } from './menu-motion.svelte';
   import type {
+    DropdownOpenChangeInfo,
     DropdownProps,
     DropdownTrigger
   } from './dropdown.types';
@@ -449,9 +450,13 @@
       || hovered && supports('hover'));
   }
 
-  function request(next: boolean, delay = 0, notify = true) {
+  function request(
+    next: boolean,
+    delay = 0,
+    source: DropdownOpenChangeInfo['source'] = 'trigger'
+  ) {
     cancelPending();
-    const source = anchor;
+    const requestAnchor = anchor;
     const ownerValue = isOpen;
     // У hover+contextMenu нет hideAction=hover. Уход указателя не отменяет задержку открытия.
     const retainedHover = next && delay > 0 && alignPoint;
@@ -461,8 +466,8 @@
       if (!active
         || next && (resolvedDisabled
           || !(wanted() || retainedHover && alignPoint && supports('hover')))
-        || !source?.isConnected
-        || source !== anchor
+        || !requestAnchor?.isConnected
+        || requestAnchor !== anchor
         || !Object.is(isOpen, ownerValue)) {
         return;
       }
@@ -470,8 +475,7 @@
       if (next !== isOpen) {
         internalOpen = next;
         open = next;
-        if (notify)
-          onOpenChange?.(next);
+        onOpenChange?.(next, { source });
       }
       if (next && visible && shown && focusPending) {
         focusRequestedEdge();
@@ -572,7 +576,7 @@
     clicked = false;
     dismissed = true;
     focusPending = null;
-    request(false, 0, reason !== 'menu');
+    request(false, 0, reason === 'menu' ? 'menu' : 'trigger');
     if (visible) {
       ({ clicked, dismissed, focusPending } = previous);
       return;

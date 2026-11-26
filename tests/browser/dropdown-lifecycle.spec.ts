@@ -12,11 +12,9 @@ async function updateFixture(page: Page, action: string) {
   await page.locator('#' + action).evaluate((button: HTMLButtonElement) => button.click());
 }
 
-// Сравнивает события видимости и lifecycle. Snippet имеет собственную реактивность,
-// а выбор команды закрывает Native Dropdown через прежний binding.
+// Сравнивает события видимости и lifecycle. Svelte snippet обновляется самостоятельно.
 function nativeEvents(events: unknown[][]) {
-  return events.filter(([kind, , source]) => kind !== 'render'
-    && !(kind === 'open' && source === 'menu'));
+  return events.filter(([kind]) => kind !== 'render');
 }
 
 // Вызывает публичный редактируемый элемент, команду или обновление владельца.

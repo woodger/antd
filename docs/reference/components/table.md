@@ -1361,9 +1361,11 @@ Snippet верхнего уровня получает операции пане
 при изменениях применённых значений владельца.
 
 `filterDropdownProps` передаёт параметры в Dropdown. `open` управляет
-видимостью, а `onOpenChange` сообщает о запросе. `placement`, `trigger`,
-`getPopupContainer`, `destroyOnHidden` и `forceRender` используют правила
-Dropdown. `popupRender` получает snippet исходного содержимого.
+видимостью, а `onOpenChange(open)` сообщает о запросе от триггера или API
+фильтра. Выбор в Menu внутри фильтра сохраняет панель открытой до отдельного
+запроса закрытия. `placement`, `trigger`, `getPopupContainer`,
+`destroyOnHidden` и `forceRender` используют правила Dropdown.
+`popupRender` получает snippet исходного содержимого.
 
 Встроенная панель и пользовательская панель фильтра наследуют
 [слой Dropdown](../theme-context.md#уровни-вложенных-панелей).

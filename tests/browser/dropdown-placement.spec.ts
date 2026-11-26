@@ -55,10 +55,9 @@ function clickFixtureButton(page: Page, id: string) {
   return page.locator('#' + id).evaluate((node: HTMLButtonElement) => node.click());
 }
 
-// Корневой callback Native сообщает только trigger. Нативный click кнопки идёт до обёртки.
+// Нативный click кнопки идёт до обёртки. Контейнеры сверяются отдельным журналом.
 function expectedEvents(events: PlacementFrame['state']['events']) {
-  const projected = events.filter(([kind, , source]) => kind !== 'container'
-    && !(kind === 'open' && source === 'menu'));
+  const projected = events.filter(([kind]) => kind !== 'container');
   for (let i = 1; i < projected.length; i++) {
     const before = projected[i - 1];
     const current = projected[i];

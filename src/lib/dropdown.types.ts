@@ -8,6 +8,11 @@ import type { AdjustOverflow, TooltipAlignConfig, TooltipPlacement } from './too
 export type DropdownPlacement = TooltipPlacement;
 export type DropdownTrigger = 'hover' | 'click' | 'contextMenu';
 
+/** Источник запроса видимости. Команда меню запрашивает закрытие. */
+export interface DropdownOpenChangeInfo {
+  source: 'trigger' | 'menu';
+}
+
 /** Объект включает стрелку. pointAtCenter привязывает её к центру trigger. */
 export interface DropdownArrowOptions {
   pointAtCenter?: boolean;
@@ -96,7 +101,7 @@ export interface DropdownProps {
   open?: boolean | undefined;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: (open: boolean, info: DropdownOpenChangeInfo) => void;
   trigger?: DropdownTrigger | readonly DropdownTrigger[];
   /** Фокусирует меню также при открытии наведением или внешним владельцем. */
   autoFocus?: boolean;

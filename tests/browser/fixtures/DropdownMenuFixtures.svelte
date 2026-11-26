@@ -193,7 +193,8 @@
         defaultOpen={startOpen}
         prefixCls={profile.semantics ? 'custom-dropdown' : undefined}
         classNames={classes} styles={profile.semantics ? { item: `font-size:${fontSize}px` } : undefined}
-        onOpenChange={next => events.push(['trigger', next])} bind:open={getOpen, setOpen}>
+        onOpenChange={(next, info) => events.push(['dropdown', next, info])}
+        bind:open={getOpen, setOpen}>
         <button type="button" onclick={() => { holdClose = false; }}>Commands</button>
       </Dropdown>
     </ConfigProvider>{/if}

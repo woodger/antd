@@ -60,7 +60,7 @@
       getPopupContainer={profile.portal ? getContainer : undefined}
       classNames={{ root: 'context-popup' }}
       styles={profile.minWidth === undefined ? undefined : { root: `min-width:${profile.minWidth}px` }}
-      onOpenChange={next => events.push(['open', next, 'trigger'])}>
+      onOpenChange={(next, info) => events.push(['open', next, info.source])}>
       <button type="button" id="trigger" disabled={profile.disabled}
         class:corner={profile.corner} class:centered={profile.centered}
         oncontextmenu={onContext} onclick={onClick}>Commands</button>

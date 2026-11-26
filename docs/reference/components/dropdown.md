@@ -57,17 +57,19 @@ Open поддерживает bind:open; defaultOpen читается при с�
 spread-объекта сохраняет открытое/закрытое меню, DOM команд и focus, без callbacks.
 Изменение defaultOpen после mount не сбрасывает состояние. При снятии внешнего
 open сохраняется прежний fallback к начальному defaultOpen.
-`onOpenChange(boolean)` сообщает запросы видимости от trigger, hover, Escape,
-Tab и клика снаружи. Изменение open владельцем и закрытие из-за disabled
-не вызывают callback. В существующем Svelte API выбор команды закрывает меню и обновляет
-binding **без onOpenChange(false)**; для команды используйте menu.onClick.
-Исходный Ant Design 6.6.8 вызывает callback и при выборе команды, передавая
-второй аргумент с source; это расширение текущего Svelte API ещё не перенесено.
+`onOpenChange(open, { source })` сообщает запросы видимости. Кнопка, hover,
+Escape, Tab и клик снаружи передают `source: 'trigger'`. При выборе команды
+Dropdown передаёт `false` и `source: 'menu'` после `menu.onClick` и до
+событий выбора Menu. Сочетание `menu.selectable` и `menu.multiple` сохраняет
+панель открытой. Изменение open владельцем и закрытие из-за disabled
+не вызывают callback. Одно нажатие Escape даёт один запрос закрытия и при
+отказе владельца изменить open.
 Обработчики идут от пункта к родительским подменю, затем к `menu.onClick`.
 `DropdownMenuClickInfo` добавляет `keyPath` от пункта к корню и `itemData` к
 `key` и нативному `MouseEvent`. Все обработчики команды получают один объект.
 `preventDefault` отменяет оставшиеся обработчики команды, изменение выбора и
 закрытие. Асинхронные операции и их ошибки обрабатывает владелец.
+[Порядок событий Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-dropdown-menu-reference.json).
 
 `trigger` принимает `'hover'`, `'click'`, `'contextMenu'` или массив этих действий.
 По умолчанию действует `['hover']`. Пустой массив оставляет открытие владельцу.

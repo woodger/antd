@@ -144,7 +144,7 @@
     prefixCls={replacement ? 'owner-dropdown' : undefined}
     getPopupContainer={content?.portal ? getContainer : undefined}
     classNames={{ root: 'subject-popup', item: replacement ? 'dropdown-item' : undefined }}
-    onOpenChange={open => recordEvent('open', open, 'trigger')}>
+    onOpenChange={(open, info) => recordEvent('open', open, info.source)}>
     <button id="trigger" type="button" class:near-bottom={motion?.nearBottom}>Commands</button>
   </Dropdown>
 {/snippet}

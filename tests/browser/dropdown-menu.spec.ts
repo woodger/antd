@@ -15,10 +15,10 @@ async function readEvents(page: Page): Promise<unknown[][]> {
   return JSON.parse(json ?? '[]');
 }
 
-// Сверяет события Menu и trigger. Закрытие командой в Svelte обновляет binding без callback.
+// Приводит журнал React к форме событий Menu и Dropdown в браузерной фикстуре.
 function expectedEvents(events: readonly (readonly unknown[])[]) {
   return events.flatMap(([type, value, source]) => {
-    if (type === 'dropdown') return source === 'trigger' ? [['trigger', value]] : [];
+    if (type === 'dropdown') return [[type, value, { source }]];
     if (type === 'branches') return [[type, value]];
     if (type === 'title-click') {
       const { key, type: domType } = value as { key: string; type: string; };
@@ -120,7 +120,8 @@ test('keeps the existing cancellation of a Dropdown item click', async ({ page }
   await expect(page.locator('.source-dropdown')).toBeVisible();
   await expect(page.getByRole('menuitem', { name: 'Alpha' })).toBeFocused();
   await expect.poll(() => readEvents(page)).toEqual([
-    ['trigger', true], ['item-click', 'alpha', ['alpha'], 'click', false, null]
+    ['dropdown', true, { source: 'trigger' }],
+    ['item-click', 'alpha', ['alpha'], 'click', false, null]
   ]);
 });
 
@@ -137,8 +138,9 @@ test('keeps nested popovers in open Shadow DOM inside the Dropdown focus boundar
   await expect(page.locator('.source-dropdown')).toBeHidden();
   await expect(page.getByRole('button', { name: 'Commands' })).toBeFocused();
   await expect.poll(async () => (await readEvents(page)).map(event => event[0])).toEqual([
-    'trigger', 'branches', 'item-click', 'branch-click', 'menu-click', 'branches'
+    'dropdown', 'branches', 'item-click', 'branch-click', 'menu-click', 'dropdown', 'branches'
   ]);
+  expect(await readEvents(page)).toContainEqual(['dropdown', false, { source: 'menu' }]);
 });
 
 test('navigates a nested native Dropdown link through Space', async ({ page }) => {
@@ -171,7 +173,7 @@ test('focuses the active Menu command during external or trigger opening with au
 
   await perform(page, 'trigger');
   await expect(active).toBeFocused();
-  await expect.poll(() => readEvents(page)).toEqual([['trigger', true]]);
+  await expect.poll(() => readEvents(page)).toEqual([['dropdown', true, { source: 'trigger' }]]);
 });
 
 test('leaves browser key combinations to the focused Dropdown command', async ({ page }) => {

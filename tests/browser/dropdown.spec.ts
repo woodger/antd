@@ -159,7 +159,7 @@ test(
 
 for (const key of ['Enter', 'Space']) {
   test(
-    `Dropdown activates through ${key}, emits item before menu and never submits the form`,
+    `Dropdown activates through ${key}, closes the menu and never submits the form`,
     async ({ page }) => {
       await trigger(page).press(key);
 
@@ -172,7 +172,7 @@ for (const key of ['Enter', 'Space']) {
       await expect(trigger(page)).toBeFocused();
       await expect(status(page, 'open')).toHaveText('false');
       await expect(status(page, 'events')).toHaveText('["item:rename","menu:rename"]');
-      await expect(status(page, 'changes')).toHaveText('[true]');
+      await expect(status(page, 'changes')).toHaveText('[true,false]');
       await expect(status(page, 'submissions')).toHaveText('0');
     }
   );
