@@ -23,10 +23,10 @@
 - реальная сеть и внешняя infrastructure не используются.
 
 `npm run check` проверяет типы и Svelte-шаблоны без SvelteKit.
-`npm run check:tests` собирает пакет и отдельно проверяет типы тестов и браузерных фикстур.
+`npm run cli -- check tests` собирает пакет и проверяет типы тестов и браузерных фикстур.
 
-`npm run test:package` собирает пакет и запускает Vitest для `tests/package`.
-`npm run test:browser` собирает пакет и запускает Playwright Chromium для
+`npm run cli -- test package` собирает пакет и запускает Vitest для `tests/package`.
+`npm run cli -- test browser` собирает пакет и запускает Playwright Chromium для
 `tests/browser`. Стенд Vite использует публичные exports собранного пакета;
 fixture modules и данные принадлежат библиотеке. DOM, фокус, клавиатура,
 события, темы, RTL и lifecycle компонентов проверяются здесь без исходников сайта.

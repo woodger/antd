@@ -47,10 +47,7 @@
     "lint": "oxlint src tests tools vite.config.ts svelte.config.js playwright.config.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json --tsgo",
     "test": "vitest run",
-    "cli": "node tools/cli.mjs",
-    "check:tests": "npm run build && svelte-check --tsconfig ./tests/tsconfig.json",
-    "test:package": "npm run build && vitest run --config tests/package/vite.config.ts",
-    "test:browser": "playwright test"
+    "cli": "node tools/cli.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",

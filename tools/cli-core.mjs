@@ -4,6 +4,7 @@ import { createCommand, CliUsageError } from 'icore';
 import { projectRoot } from './ant-design-common.mjs';
 import { runRegistry } from './ant-design-registry.mjs';
 import { runCss } from './ant-design-css.mjs';
+import { runCheck } from './cli-checks.mjs';
 
 const command = createCommand();
 const helpOption = { type: 'boolean', alias: 'h', syntax: 'flag' };
@@ -28,6 +29,19 @@ function writeHelp(context, prefix = []) {
   }
   lines.push('', '  -h, --help                     Show command help', '');
   context.stdout.write(lines.join('\n'));
+}
+
+// Регистрирует справку по командному разделу.
+function sectionHelp(section, description) {
+  return command.define({
+    path: [section],
+    options: { help: helpOption },
+    metadata: { description },
+    // Показывает команды раздела из общих определений CLI.
+    handle({ context }) {
+      writeHelp(context, [section]);
+    }
+  });
 }
 
 // Регистрирует команду реестра с общими флагами и отдельным аргументом для show.
@@ -56,6 +70,25 @@ function registryCommand(action, description) {
   });
 }
 
+// Выводит справку проверки или передаёт позиционные аргументы её инструменту.
+function checkCommand(path, kind, description) {
+  return command.define({
+    path,
+    options: { help: helpOption },
+    allowExtraPositionals: true,
+    metadata: { description, argument: '[-- <args...>]' },
+    // Передаёт аргументы после -- инструменту без повторного разбора.
+    handle({ options, positionals, context }) {
+      if (options.help) {
+        writeHelp(context, path);
+        return;
+      }
+
+      return runCheck(kind, positionals, context);
+    }
+  });
+}
+
 const commands = command.registry([
   command.define({
     path: ['help'],
@@ -66,18 +99,15 @@ const commands = command.registry([
       writeHelp(context);
     }
   }),
-  command.define({
-    path: ['registry'],
-    options: { help: helpOption },
-    metadata: { description: 'Show registry commands' },
-    // Ограничивает справку командами реестра.
-    handle({ context }) {
-      writeHelp(context, ['registry']);
-    }
-  }),
+  sectionHelp('registry', 'Show registry commands'),
   registryCommand('check', 'Validate local coverage and the generated report'),
   registryCommand('report', 'Regenerate the coverage report'),
   registryCommand('show', 'Print a component record as JSON'),
+  sectionHelp('check', 'Show type checks'),
+  checkCommand(['check', 'tests'], 'types', 'Build the package and type-check its tests'),
+  sectionHelp('test', 'Show package and browser tests'),
+  checkCommand(['test', 'package'], 'package', 'Build the package and run its SSR and API tests'),
+  checkCommand(['test', 'browser'], 'browser', 'Run browser scenarios against the package'),
   command.define({
     path: ['css'],
     options: {

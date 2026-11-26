@@ -11,10 +11,14 @@
 - `npm run dev` — watch-сборка пакета;
 - `npm run lint` — Oxlint для исходников, инструментов и конфигурации;
 - `npm run check` — Svelte/TypeScript check;
-- `npm run check:tests` — Svelte/TypeScript check тестов и фикстур;
 - `npm test` — Vitest для компонентов и инструментов;
-- `npm run test:package` — сборка и SSR-проверки публичного пакета;
-- `npm run test:browser` — Playwright для компонентов на собственном Vite-стенде.
+- `npm run cli -- ...` — служебный CLI через `icore`.
+
+В CLI собраны проверки собранного пакета и инструменты переноса.
+
+- `npm run cli -- check tests` — Svelte/TypeScript check тестов и фикстур;
+- `npm run cli -- test package` — сборка и SSR-проверки публичного пакета;
+- `npm run cli -- test browser` — Playwright на Vite-стенде.
 
 Типизация фикстур, package-тесты и браузерный стенд читают текущий `dist`.
 Их команды собирают пакет
@@ -22,8 +26,8 @@
 homepage и не входит в npm-архив. Playwright, его lifecycle и browser artifacts
 настраиваются в `playwright.config.ts`.
 
-`npm run cli -- ...` запускает служебный CLI этого репозитория через `icore`:
-`registry check`, `registry report`, `registry show <component>` и `css`.
+`registry check`, `registry report`, `registry show <component>` и `css`
+обслуживают реестр и vendor CSS.
 `npm run cli -- --help` выводит команды и параметры. Их формат описан в
 [справочнике переноса](../reference/ant-design-porting/readme.md).
 Для этих команд не нужны исходники приложения-потребителя.

@@ -20,25 +20,25 @@
 npm ci
 npm run lint
 npm run check
-npm run check:tests
+npm run cli -- check tests
 npm test
 npm run build
-npm run test:package
+npm run cli -- test package
 ```
 
 - `npm ci` устанавливает зависимости из lockfile.
 - `npm run lint` проверяет исходники, тесты и инструменты линтером.
 - `npm run check` проверяет типы и Svelte-компоненты.
-- `npm run check:tests` собирает пакет и проверяет типы тестов и браузерных фикстур.
+- `npm run cli -- check tests` собирает пакет и проверяет типы тестов и браузерных фикстур.
 - `npm test` запускает тесты исходников и инструментов.
 - `npm run build` собирает пакет в `dist`.
-- `npm run test:package` собирает пакет и запускает его SSR-тесты.
+- `npm run cli -- test package` собирает пакет и запускает его SSR-тесты.
 
 `npm run build` использует официальный `@sveltejs/package` и создаёт `dist`:
 Svelte-компоненты, JavaScript-модули, декларации `.d.ts`, CSS и лицензии vendor.
 `npm run dev` обновляет этот каталог в watch-режиме. Тесты исключены из npm-архива.
 
-Для `check:tests` используется стандартный TypeScript-движок `svelte-check`.
+Для `cli -- check tests` используется стандартный TypeScript-движок `svelte-check`.
 Опциональный `--tsgo` в этой схеме неверно разрешает часть модулей self-reference
 пакета; обычная проверка сохраняет строгие настройки и проверяет тот же набор файлов.
 
@@ -50,10 +50,16 @@ Svelte-компоненты, JavaScript-модули, декларации `.d.t
 
 ```sh
 npm exec -- playwright install chromium
-npm run test:browser
+npm run cli -- test browser
 ```
 
 Playwright собирает текущий пакет и запускает Vite-стенд на `127.0.0.1:4175`.
+Параметры тестового инструмента передаются после разделителя `--` в команде CLI.
+
+```sh
+npm run cli -- test package -- --maxWorkers=1
+npm run cli -- test browser -- --workers=1 tests/browser/typography.spec.ts
+```
 
 ### Упаковка
 
@@ -69,9 +75,8 @@ npm pack --ignore-scripts
 
 ### Служебный CLI
 
-CLI нужен для работы с реестром покрытия и извлечёнными стилями Ant Design.
-Эти команды используются при изменении реестра или CSS; они не заменяют
-сборку и тесты выше:
+Помимо проверок пакета, служебный CLI работает с реестром покрытия и
+извлечёнными стилями Ant Design.
 
 ```sh
 npm run cli -- --help

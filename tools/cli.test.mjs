@@ -141,6 +141,11 @@ describe('Developer CLI', () => {
         ['-h'],
         ['registry', '--help'],
         ['registry', 'show', '--help'],
+        ['check', '--help'],
+        ['check', 'tests', '--help'],
+        ['test', '--help'],
+        ['test', 'package', '--help'],
+        ['test', 'browser', '--help'],
         ['css', '--help']
       ]) {
         const capture = output('/missing-cli-project');
@@ -151,6 +156,18 @@ describe('Developer CLI', () => {
       }
     }
   );
+
+  it('forwards arguments after -- to the browser test runner', () => {
+    const entry = fileURLToPath(new URL('./cli.mjs', import.meta.url));
+    const help = execFileSync(
+      process.execPath,
+      [entry, 'test', 'browser', '--', '--help'],
+      { cwd: tmpdir(), encoding: 'utf8' }
+    );
+
+    expect(help).toContain('playwright test');
+    expect(help).toContain('--workers');
+  });
 
   it(
     'generates a deterministic report, checks staleness and prints a record as clean JSON',
