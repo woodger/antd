@@ -67,6 +67,14 @@ export interface MentionsProps extends Omit<
   notFoundContent?: string | number | Snippet | null;
   /** @defaultValue 'bottom' */
   placement?: 'top' | 'bottom';
+  /** Выбирает сторону привязки popup к префиксу. Направление textarea задаёт dir. */
+  direction?: 'ltr' | 'rtl';
+  /** Имя CSSMotion для появления подсказок. Пустая строка отключает движение. */
+  transitionName?: string;
+  /** При открытом списке блокирует выбор клавишей Enter. По умолчанию следует loading. */
+  silent?: boolean;
+  /** Автофокус при появлении редактора. Нативный autofocus имеет приоритет. */
+  autoFocus?: boolean;
   /** @defaultValue false */
   autoSize?: boolean | { minRows?: number; maxRows?: number; };
   /** @defaultValue false */

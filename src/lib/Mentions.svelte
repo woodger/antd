@@ -23,12 +23,13 @@
   import { mergeComponentSemantics } from './semantic-style.engine';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
   import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { useMenuMotion } from './menu-motion.svelte';
   import { useForm, useFormField } from './form-context';
   import { useFormItemStatusContext } from './form-item-status';
   import { useFormFeedback } from './form-feedback-context';
   import FormFeedbackIcon from './FormFeedbackIcon.svelte';
   import { useCompact } from './space-compact-context';
-  import { connectPopup } from './popup.dom';
+  import { connectPopup, type PopupConnection } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import MentionsPopupContent from './MentionsPopupContent.svelte';
   import Icon from './Icon.svelte';
@@ -45,6 +46,10 @@
     loading = false,
     notFoundContent,
     placement = 'bottom',
+    direction,
+    transitionName,
+    silent,
+    autoFocus,
     autoSize = false,
     allowClear,
     size,
@@ -124,6 +129,10 @@
     loading,
     notFoundContent,
     placement,
+    direction,
+    transitionName,
+    silent,
+    autoFocus,
     autoSize,
     allowClear,
     size,
@@ -165,8 +174,6 @@
   ]));
   let textareaStyle = $derived(resolveTextareaStyle(semantics.styles.root, semantics.styles.textarea));
   const layer = useZIndex('popup', () => getInlineZIndex(semantics.styles.popup));
-  let popupLayers = $derived([componentTheme.style, semantics.styles.popup, layer.style]);
-  const popupStyle = createOverlayStyle(() => popupLayers);
   let controlId = $derived(id ?? field?.id ?? `ant-mentions-${generated}`);
   let prefixes = $derived(typeof prefix === 'string' ? [prefix] : prefix);
   let measuring = $state(false);
@@ -190,6 +197,25 @@
   let anchor = $state<HTMLSpanElement>();
   let popup = $state<HTMLDivElement>();
   let popupContainer = $state<HTMLElement | ShadowRoot>();
+  let popupConnection: PopupConnection | undefined;
+  const popupShown = $derived(visible && shown);
+  // KeywordTrigger создаётся на каждое появление. Пустая скрытая оболочка без motion
+  // сохраняется для текущих нативных потребителей.
+  const renderPopup = $derived(mounted && (visible || !transitionName));
+  const popupMotion = useMenuMotion(() => root, () => popup, () => ({
+    motion: {
+      motionName: transitionName,
+      onAppearPrepare: transitionName ? alignPopupBeforeAppear : undefined
+    },
+    present: popupShown,
+    visible: popupShown,
+    inactive: !popupShown,
+    enabled: designTheme.state.token.motion
+  }));
+  const popupLayers = $derived([
+    componentTheme.style, popupMotion.state.style, semantics.styles.popup, layer.style
+  ]);
+  const popupStyle = createOverlayStyle(() => popupLayers);
   let containerOpen = false;
   function resolvePopupContainer(trigger?: HTMLElement) {
     const getter: (trigger?: HTMLElement) => HTMLElement | ShadowRoot = getPopupContainer!;
@@ -209,6 +235,7 @@
   });
   const portal = createPopupContainer(() => ({
     open: visible,
+    rendered: renderPopup,
     reference: prefixElement,
     getPopupContainer: visible && getPopupContainer ? resolvePopupContainer : undefined,
     get themeStyle() { return serializeInlineStyleLayers(popupLayers); }
@@ -301,18 +328,24 @@
       active = enabled(0);
   });
   $effect(() => {
-    if (!visible || !popup || !anchor || !root) {
+    const surface = popup;
+    const source = anchor;
+    const owner = root;
+    if (!visible || !surface || !source || !owner) {
       return;
     }
-    return connectPopup(popup, anchor, {
-      trigger: root,
-      placement,
-      align: config.direction === 'rtl' ? 'right' : 'left',
+
+    const connection = untrack(() => connectPopup(surface, source, {
+      trigger: owner,
+      get placement() { return placement; },
+      get align() { return (direction ?? config.direction) === 'rtl' ? 'right' : 'left'; },
       gap: 4,
       allowZeroSize: () => untrack(() => designTheme.enabled),
       autoAdjustOverflow: true,
       maxWidth: '100vw',
-      preserveFocus: !popupRender,
+      get preserveFocus() { return !popupRender; },
+      pauseAlignment: () => popupMotion.state.step === 'start' || popupMotion.state.step === 'active',
+      getAnchorRect: resolvePopupAnchor,
       applyPosition: popupStyle.position,
       onPlacement: () => { },
       onVisibilityChange: next => {
@@ -321,15 +354,40 @@
       onDismiss: () => {
         measuring = false;
       }
-    });
+    }));
+    popupConnection = connection;
+
+    return () => {
+      if (popupConnection === connection) popupConnection = undefined;
+      connection();
+    };
   });
   $effect(() => {
     const index = active;
-    if (visible && index >= 0)
-      popup?.querySelector(`#${CSS.escape(`${controlId}-option-${index}`)}`)?.scrollIntoView(
-        { block: 'nearest' }
-      );
+    if (!visible || index < 0 || transitionName && (!shown || popupMotion.state.phase)) {
+      return;
+    }
+
+    const optionId = CSS.escape(`${controlId}-option-${index}`);
+    const option = popup?.querySelector(`#${optionId}`);
+    option?.scrollIntoView({ block: 'nearest' });
   });
+
+  /** Обновляет координаты до применения пользовательского transform. */
+  function alignPopupBeforeAppear() {
+    popupConnection?.forceAlign();
+  }
+
+  /** Явное direction выбирает край измеренного префикса независимо от направления текста. */
+  function resolvePopupAnchor(rect: DOMRect) {
+    if (!direction || !prefixElement) {
+      return rect;
+    }
+
+    const keyword = prefixElement.getBoundingClientRect();
+    const left = direction === 'rtl' ? keyword.left : keyword.right;
+    return new DOMRect(left, rect.top, 0, rect.height);
+  }
 
   /** RcMentions передаёт resize обёртки редактору, пока слот textarea его не задал. */
   function resolveTextareaStyle(wrapper: string | undefined, leaf: string | undefined) {
@@ -432,7 +490,7 @@
     }
     else if (event.key === 'Enter') {
       event.preventDefault();
-      if (loading) {
+      if (silent ?? loading) {
         return;
       }
       const index = filtered[active] && !filtered[active].disabled ? active : enabled(0);
@@ -607,6 +665,8 @@
         semantics.classes.textarea
       ]} style={textareaStyle} dir={attributes.dir ?? config.direction}
     value={text} {readonly} disabled={blocked} required={attributes.required ?? field?.required} role="combobox" aria-expanded={visible}
+    {...(attributes.autofocus !== undefined || autoFocus !== undefined
+      ? { autofocus: attributes.autofocus ?? autoFocus } : {})}
     aria-autocomplete="list" aria-haspopup="listbox" aria-controls={visible ? `${controlId}-list` : undefined}
     aria-activedescendant={visible && active >= 0 ? `${controlId}-option-${active}` : undefined}
     aria-label={attributes['aria-label'] ?? field?.label} aria-invalid={field?.invalid || resolvedStatus === 'error'
@@ -625,13 +685,15 @@
     class={[`${componentPrefix}-suffix`, semantics.classes.suffix]}
     style={semantics.styles.suffix}>{@render clearControl()}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}
   {#key popupContainer}
-    {#if mounted}
+    {#if renderPopup}
       {@const initialPopupStyle = untrack(popupStyle.initialStyle)}
-      <div {...prefixAttributes} bind:this={popup} popover="manual" hidden={!visible || !shown}
+      <div {...prefixAttributes} bind:this={popup} popover="manual" hidden={!popupShown}
         class={['popup', `${componentPrefix}-dropdown ant-mentions-css-var`,
-          componentTheme.className, semantics.classes.popup, popupClassName, rootClassName]}
+          componentTheme.className, semantics.classes.popup, popupClassName, rootClassName,
+          popupMotion.state.className]}
         style={initialPopupStyle} {@attach popupStyle.attach}
-        dir={config.direction} {@attach portal}>
+        dir={config.direction} {@attach portal}
+        onanimationend={popupMotion.end} ontransitionend={popupMotion.end}>
         {#if popupRender}
           {#if visible}<MentionsPopupContent {popupRender} {menu} />{/if}
         {:else}{@render menu()}{/if}

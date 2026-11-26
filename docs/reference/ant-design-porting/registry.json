@@ -9998,14 +9998,29 @@
         },
         {
           "id": "extended-api",
-          "title": "Расширенный API меню и rc-trigger motion",
+          "title": "Унаследованный count и расширенный API меню",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
             "src/lib/Mentions.svelte",
             "tests/browser/mentions-popup.spec.ts"
           ],
-          "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Deprecated Mentions.Option children исключены из переноса. Расширенный React Menu/ref API и rc-trigger motion остаются в работе. Semantic slots и ConfigProvider.mentions покрыты отдельной feature."
+          "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Deprecated Mentions.Option children и textarea ref исключены из переноса. В типах RcInput 1.3.1 через TextAreaProps доступен count. Count и оставшиеся границы расширенного React Menu API требуют отдельной сверки. Семантика и жизненный цикл popup описаны отдельно."
+        },
+        {
+          "id": "popup-appearance",
+          "title": "Именованное появление и унаследованные параметры редактора",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Mentions.svelte",
+            "src/lib/mentions.types.ts",
+            "tests/browser/mentions-lifecycle.spec.ts",
+            "tests/browser/fixtures/ant-design-mentions-lifecycle-reference.json",
+            "tests/package/mentions-lifecycle.ssr.test.ts",
+            "docs/reference/components/mentions.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-mentions 1.12.0. Девять двухкратно снятых UMD-профилей проверяют пустое имя, prepare/start/active, CSSAnimation, тему без движения, пользовательский CSS при prefers-reduced-motion, отмену Escape, повторное открытие и смену имени. KeywordTrigger размонтирует именованную панель без leave. Svelte сохраняет native textarea и caret, Portal и popupRender, фазу до CSS-события, silent с переопределением loading, явное направление привязки и native autofocus. SSR и строгая hydration проверены через пакет."
         },
         {
           "id": "semantic-config",

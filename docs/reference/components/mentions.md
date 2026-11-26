@@ -39,7 +39,9 @@ Empty записан отдельно от nativeEmpty — измерения pu
 Поиск запускается по keyup, как rc-mentions. Программная смена value сама его не
 запускает. OnSearch(text,prefix) позволяет владельцу обновить options/loading;
 сетевых запросов внутри нет. Loading показывает disabled spinner вместо выдачи
-и блокирует выбор Enter. NotFoundContent заменяет локализованное пустое состояние.
+и по умолчанию блокирует Enter. `silent` управляет блокировкой Enter при открытом
+списке. При `silent={false}` Enter закрывает список из недоступных вариантов.
+NotFoundContent заменяет локализованное пустое состояние.
 
 Выбор вставляет prefix+value+split у каретки, добавляет split перед токеном при
 необходимости, убирает совпадающий хвост без учёта регистра и сохраняет остальной
@@ -56,10 +58,21 @@ Up/Down обходят доступные options, Enter выбирает, Escap
 
 Popup выравнивается после префикса и следует переносам/прокрутке textarea.
 Placement top/bottom, RTL и viewport adjustment поддержаны; source gap=4 px.
+`direction` задаёт край привязки списка к префиксу и имеет приоритет над
+направлением провайдера при размещении. Нативный `dir` задаёт направление текста.
 Native popover сохраняет фокус textarea; textarea/listbox/option и
 aria-activedescendant заменяют React DropdownMenu на rc-menu. Mirror скрыт от
 accessibility tree. Общий popup-механизм сохраняет прежний default gap для остальных
 компонентов; AutoComplete использует исходные 4 px, как SelectTrigger.
+
+`transitionName` подключает пользовательский CSS к фазам `appear-prepare`,
+`appear-start` и `appear-active` при каждом новом открытии. Без имени или с
+пустой строкой действует обычное открытие. `theme.token.motion=false` оставляет
+только подготовку позиции. Именованное появление заканчивается по событию
+анимации или перехода CSS. Правила `prefers-reduced-motion` для этого CSS
+задаёт потребитель. Закрытие сразу удаляет именованную панель и отменяет
+ожидающие кадры. После завершения появления новое имя применяется при
+следующем открытии. [Браузерная сверка](../../../tests/browser/mentions-lifecycle.spec.ts).
 
 Локальный getPopupContainer выбирает HTMLElement или ShadowRoot. Как Ant Design,
 Mentions не наследует ConfigProvider.getPopupContainer. Тип getter не требует
@@ -98,6 +111,7 @@ onClear. Size/status/variant, native name/required/maxlength, FormItem/validatio
 reset, Form/ConfigProvider disabled, locale/themes/compact density/RTL поддержаны.
 Focus/blur и bind:nativeElement предоставляют текущий ref API. Текстовое поле
 доступно через nativeElement.querySelector('textarea'); deprecated textarea ref удалён.
+`autoFocus` использует нативный автофокус. Явный `autofocus` имеет приоритет.
 CSS-рецепт mentions извлекает 102 правила. Фикстура `?fixture=mentions`; SSR не измеряет DOM и не ставит таймеры.
 24 эталона официального UMD для контейнеров и popupRender —
 [mentions-popup](../../../tests/browser/mentions-popup.spec.ts), `?fixture=mentions-popup`.
@@ -131,5 +145,5 @@ native текст формы без popup, измеряющего textarea и ti
 В Ant Design 6.6.8 с RcMentions 1.12.0 обёртка с суффиксом теряет стиль корня,
 а суффикс получает классы без переданного `styles.suffix`. Svelte применяет
 декларации к обоим слотам. [Замеры и проверки](../../../tests/browser/mentions-semantics.spec.ts).
-Открытые части переноса — исходный rc-trigger motion и расширенный API меню.
+Открытые части переноса — унаследованный `count` и расширенный API меню.
 
