@@ -10004,14 +10004,18 @@
         {
           "id": "extended-api",
           "title": "Расширенный API меню",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/Mentions.svelte",
+            "src/lib/MentionsListbox.svelte",
             "tests/browser/mentions-popup.spec.ts",
-            "tests/browser/mentions-menu.spec.ts"
+            "tests/browser/mentions-menu.spec.ts",
+            "tests/browser/mentions-menu-focus.spec.ts",
+            "tests/browser/fixtures/ant-design-mentions-menu-focus-reference.json",
+            "tests/package/mentions-popup.ssr.test.ts"
           ],
-          "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Настройка props штатного меню через popupRender описана в popup-render-container. Навигация при фокусе непосредственно в меню и несколько штатных списков в одном popup требуют отдельной сверки. Deprecated Mentions.Option children и textarea ref исключены из переноса."
+          "note": "Шесть профилей UMD 6.6.8 с двумя одинаковыми прогонами проверяют несколько штатных списков, выбор указателем, общий active index, клавиши при фокусе на списке и пункте. Native listbox сохраняет нативные refs и исходные option data, а каждый вызов menu имеет отдельные ID. Связи textarea следуют подключённым спискам и реальному активному пункту. Покрыты удаление первой копии, смена ID владельца, закрытие из ShadowRoot и SSR. Нативные кнопки активируются Enter и Space, без лишнего перевода строки Source при Enter. Escape из списка возвращает фокус и выделение, outside click оставляет фокус на внешней цели. Точка входа Tab остаётся на textarea; ID-ссылки ограничены границей дерева DOM. Deprecated Mentions.Option children и textarea ref исключены из переноса."
         },
         {
           "id": "option-data",

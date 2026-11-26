@@ -175,6 +175,23 @@ for (const name of [
 }
 
 test(
+  'Escape from a Mentions option in ShadowRoot restores its editor',
+  async ({ page }) => {
+    await open(page, 'custom-shadow');
+    const editor = input(page);
+    const option = page.getByRole('option', { name: 'Alpha', exact: true });
+    await option.focus();
+    await expect(option).toBeFocused();
+
+    await page.keyboard.press('Escape');
+
+    await expect(editor).toBeFocused();
+    await expect(editor).toHaveValue('@');
+    await expect(editor).toHaveAttribute('aria-expanded', 'false');
+  }
+);
+
+test(
   'loading and empty custom menus preserve the original search and native selection',
   async ({ page }) => {
     await open(page, 'custom-shadow');

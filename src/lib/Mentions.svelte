@@ -12,8 +12,7 @@
     getMentionMeasure,
     validateMentionSearch,
     filterMentionOption,
-    replaceMention,
-    type MentionMenuRow
+    replaceMention
   } from './mentions.engine';
   import { captureMentionsHydrationSelection, connectMentionsMeasure } from './mentions.dom';
   import { useConfig } from './config-context';
@@ -33,8 +32,11 @@
   import { useFormFeedback } from './form-feedback-context';
   import FormFeedbackIcon from './FormFeedbackIcon.svelte';
   import { useCompact } from './space-compact-context';
-  import { connectPopup, type PopupConnection } from './popup.dom';
+  import { connectPopup, getPopupActiveElement, type PopupConnection } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
+  import MentionsListbox, {
+    type MentionsListboxOwner, type MentionsListboxRef
+  } from './MentionsListbox.svelte';
   import MentionsPopupContent from './MentionsPopupContent.svelte';
   import Icon from './Icon.svelte';
 
@@ -221,8 +223,8 @@
   let prefixElement = $state<HTMLSpanElement>();
   let anchor = $state<HTMLSpanElement>();
   let popup = $state<HTMLDivElement>();
-  let listbox = $state<HTMLDivElement>();
-  let activeMenuOption = $state<HTMLButtonElement>();
+  let listboxes = $state.raw<readonly MentionsListboxRef[]>([]);
+  let baseMenuIdClaimed = false;
   let popupContainer = $state<HTMLElement | ShadowRoot>();
   let popupConnection: PopupConnection | undefined;
   const popupShown = $derived(visible && shown);
@@ -244,6 +246,26 @@
     options: filtered,
     opened: popupShown && !popupMotion.state.phase
   });
+  const controlledMenus = $derived(visible && listboxes.length
+    ? listboxes.map(menu => menu.id).join(' ') : undefined);
+  const activeMenuOptionId = $derived.by(() => {
+    if (!visible) return;
+
+    for (const menu of listboxes) {
+      const optionId = menu.activeId;
+      if (optionId !== undefined) return optionId;
+    }
+  });
+  const menuOwner: MentionsListboxOwner = {
+    get id() { return controlId; },
+    get active() { return active; },
+    claimBaseId: claimBaseMenuId,
+    register: registerListbox,
+    choose,
+    activate(index) { active = index; },
+    focus: handleMenuFocus,
+    blur: handleBlur
+  };
   const popupLayers = $derived([
     componentTheme.style, popupMotion.state.style, semantics.styles.popup, layer.style
   ]);
@@ -389,8 +411,11 @@
       onVisibilityChange: next => {
         shown = next;
       },
-      onDismiss: () => {
+      onDismiss: reason => {
         measuring = false;
+        if (reason === 'escape' && surface.contains(getPopupActiveElement(surface))) {
+          editor?.focus({ preventScroll: true });
+        }
       }
     }));
     popupConnection = connection;
@@ -527,12 +552,6 @@
       editor.setSelectionRange(result.selection, result.selection);
     }
   }
-  function chooseByMenuKey(rows: readonly MentionMenuRow[], key: string) {
-    // Меню выбирает первое совпадение по ключу. Enter в textarea использует индекс.
-    const row = rows.find(candidate => candidate.menuKey === key);
-    if (row) void choose(row.option);
-  }
-
   function handleKeydown(event: EditorEvent<KeyboardEvent>) {
     const { key, isComposing } = event;
     // RcInput вызывает onPressEnter перед onKeyDown, когда список закрыт.
@@ -636,26 +655,23 @@
     if (blurTimer !== undefined) clearTimeout(blurTimer);
     focused = true;
   }
-  function connectListbox(node: HTMLDivElement) {
-    listbox = node;
-    // Переходы внутри одного ShadowRoot не доходят до delegated listeners документа.
-    node.addEventListener('focusin', handleMenuFocus);
-    node.addEventListener('focusout', handleBlur);
+  /** Первый список сохраняет прежние ID. Живые копии сохраняют назначенный им суффикс. */
+  function claimBaseMenuId() {
+    if (baseMenuIdClaimed) {
+      return;
+    }
 
+    baseMenuIdClaimed = true;
     return () => {
-      node.removeEventListener('focusin', handleMenuFocus);
-      node.removeEventListener('focusout', handleBlur);
-      if (listbox === node) listbox = undefined;
+      baseMenuIdClaimed = false;
     };
   }
 
-  /** Связывает textarea только с отрисованным пунктом и следует opened при прокрутке. */
-  function connectActiveMenuOption(node: HTMLButtonElement, opened: boolean) {
-    activeMenuOption = node;
-    if (opened) node.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-
+  /** ARIA получает списки в порядке подключения, включая поздно отрисованные копии. */
+  function registerListbox(menu: MentionsListboxRef) {
+    listboxes = [...listboxes, menu];
     return () => {
-      if (activeMenuOption === node) activeMenuOption = undefined;
+      listboxes = listboxes.filter(registered => registered !== menu);
     };
   }
   function clear() {
@@ -685,7 +701,6 @@
   [data-ant-mentions-measure] { position: absolute; inset: 0 auto auto 0; overflow: hidden; visibility: hidden; pointer-events: none; white-space: pre-wrap; }
   .caret-anchor { display: inline-block; width: 1px; height: 1em; vertical-align: text-bottom; }
   .popup { position: fixed; margin: 0; border: 0; overflow: auto; }
-  :where([data-ant-mentions-option]) { border: 0; width: 100%; background: transparent; font: inherit; text-align: start; }
   [data-ant-mentions-clear] { position: absolute; inset-inline-end: var(--ant-padding-xs); top: 50%; transform: translateY(-50%); display: flex; padding: 0; border: 0; color: var(--ant-color-text-quaternary); background: transparent; cursor: pointer; }
   [data-ant-mentions-clear]:focus-visible { outline: 2px solid var(--ant-color-primary); }
   [data-ant-mentions-feedback-suffix] > [data-ant-mentions-clear] { position: static; transform: none; }
@@ -705,35 +720,21 @@
 {#snippet menu(overrides: Partial<MentionsPopupRenderInfo> = {})}
   {@const menuPrefix = overrides.prefixCls ?? menuInfo.prefixCls}
   {@const rows = overrides.options === undefined ? menuRows : buildMentionMenuRows(overrides.options)}
-  {@const opened = overrides.opened ?? menuInfo.opened}
-  {@const activeKey = rows[active]?.menuKey}
-  <div id={`${controlId}-list`} role="listbox" class={`${menuPrefix}-menu`}
-    aria-label={attributes['aria-label'] ?? config.locale.searchText} onscroll={onPopupScroll}
-    aria-busy={loading || undefined} {@attach connectListbox}>
-    {#each rows as { option, menuKey, domKey }, index (domKey)}
-      <button data-ant-mentions-option type="button" role="option" tabindex="-1"
-        id={`${controlId}-option-${index}`}
-        disabled={option.disabled} aria-selected={active === index}
-        aria-disabled={option.disabled || undefined}
-        aria-label={option.label == null || option.label === searching ? option.value : undefined}
-        class={[
-          `${menuPrefix}-menu-item`,
-          activeKey === menuKey && `${menuPrefix}-menu-item-active`,
-          option.disabled && `${menuPrefix}-menu-item-disabled`,
-          option.class
-        ]} style={option.style} onpointermove={() => {
-          if (!option.disabled) active = index;
-        }} onclick={() => chooseByMenuKey(rows, menuKey)}
-        {@attach active === index ? node => connectActiveMenuOption(node, opened) : undefined}>
-        <RenderContent value={option.label} />
-      </button>
-    {:else}
-      <div class={`${menuPrefix}-menu-item ${menuPrefix}-menu-item-disabled`}>
-        {#snippet nativeEmpty()}{config.locale.emptyText}{/snippet}
-        <RenderEmpty componentName="Mentions" local={notFoundContent} fallback={nativeEmpty} />
-      </div>
-    {/each}
-  </div>
+  <MentionsListbox
+    owner={menuOwner}
+    {rows}
+    prefix={menuPrefix}
+    label={attributes['aria-label'] ?? config.locale.searchText}
+    {loading}
+    opened={overrides.opened ?? menuInfo.opened}
+    onScroll={onPopupScroll}
+    loadingIndicator={searching}
+  >
+    {#snippet empty()}
+      {#snippet nativeEmpty()}{config.locale.emptyText}{/snippet}
+      <RenderEmpty componentName="Mentions" local={notFoundContent} fallback={nativeEmpty} />
+    {/snippet}
+  </MentionsListbox>
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`mentions-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div {...prefixAttributes} data-ant-mentions-root bind:this={root} style={rootStyle}
@@ -784,9 +785,8 @@
         ? { autofocus: attributes.autofocus ?? autoFocus } : {})}
       aria-autocomplete="list"
       aria-haspopup="listbox"
-      aria-controls={visible && listbox ? `${controlId}-list` : undefined}
-      aria-activedescendant={visible && listbox?.contains(activeMenuOption ?? null)
-        ? `${controlId}-option-${active}` : undefined}
+      aria-controls={controlledMenus}
+      aria-activedescendant={activeMenuOptionId}
       aria-label={attributes['aria-label'] ?? field?.label}
       aria-invalid={field?.invalid || resolvedStatus === 'error'
         || attributes['aria-invalid']

@@ -8,6 +8,7 @@ import {
 import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-mentions-popup-reference.json';
 import menuReference from '../browser/fixtures/ant-design-mentions-menu-reference.json';
+import focusReference from '../browser/fixtures/ant-design-mentions-menu-focus-reference.json';
 import MentionsPopupCase from '../browser/fixtures/MentionsPopupCase.svelte';
 import MentionsMenuFixture from '../browser/fixtures/MentionsMenuFixture.svelte';
 import type { MentionsPopupCase as PopupCase } from '../browser/fixtures/mentions-popup-presets';
@@ -60,17 +61,19 @@ describe('Mentions popup source contract SSR', () => {
     expectTypeOf<Parameters<MentionsPopupMenu>>()
       .toEqualTypeOf<[overrides?: Partial<MentionsPopupRenderInfo>]>();
 
-    expect(menuReference.reference).toMatchObject({
-      version: registry.upstream.version,
-      revision: registry.upstream.revision,
-      archiveSha256: registry.upstream.archiveSha256,
-      source: 'package/dist/antd.min.js',
-      repeat: 2
-    });
+    for (const measured of [menuReference, focusReference]) {
+      expect(measured.reference).toMatchObject({
+        version: registry.upstream.version,
+        revision: registry.upstream.revision,
+        archiveSha256: registry.upstream.archiveSha256,
+        source: 'package/dist/antd.min.js',
+        repeat: 2
+      });
+    }
   });
 
-  it('defers the configurable menu and its context until the first client opening', () => {
-    const { body } = render(MentionsMenuFixture, { props: { profile: 'motion' } });
+  it.each(['motion', 'copies-live'])('defers the configurable menu until client opening for %s', profile => {
+    const { body } = render(MentionsMenuFixture, { props: { profile } });
 
     expect(body).toContain('aria-label="Menu editor"');
     expect(body).toContain('aria-expanded="false"');
