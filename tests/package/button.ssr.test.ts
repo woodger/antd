@@ -64,6 +64,8 @@ describe('Button SSR', () => {
         expect(immediate).toContain('ant-btn-loading');
         expect(immediate).toContain('disabled');
         expect(immediate).toContain('aria-busy="true"');
+        expect(immediate).not.toContain('ant-btn-loading-icon-motion');
+        expect(vi.getTimerCount()).toBe(0);
       } finally { vi.useRealTimers(); }
     }
   );

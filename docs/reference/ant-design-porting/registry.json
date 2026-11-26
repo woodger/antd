@@ -60,6 +60,9 @@
         "tests/browser/button.spec.ts",
         "tests/browser/button-hydration.spec.ts",
         "tests/browser/fixtures/ant-design-button-hydration-reference.json",
+        "src/lib/ButtonLoadingIcon.svelte",
+        "tests/browser/button-loading-motion.spec.ts",
+        "tests/browser/fixtures/ant-design-button-loading-motion-reference.json",
         "integration:button",
         "src/lib/theme-control-tokens.engine.ts",
         "src/lib/theme-component-style.engine.ts",
@@ -150,8 +153,8 @@
         },
         {
           "id": "motion-global",
-          "title": "Source Wave и loading icon enter/leave",
-          "state": "partial",
+          "title": "Source Wave и переходы штатной иконки загрузки",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/theme-control-tokens.engine.ts",
@@ -162,9 +165,13 @@
             "tools/fixtures/ant-design-control-tokens-reference.json",
             "tests/package/control-theme.ssr.test.ts",
             "tests/browser/control-theme.spec.ts",
-            "docs/reference/theme-context.md"
+            "docs/reference/theme-context.md",
+            "src/lib/ButtonLoadingIcon.svelte",
+            "src/lib/css-motion.dom.ts",
+            "tests/browser/button-loading-motion.spec.ts",
+            "tests/browser/fixtures/ant-design-button-loading-motion-reference.json"
           ],
-          "note": "Компонентные tokens Button подключены через source preparation и CSS variables; Wave повторяет source targets/triggers/effect. Loading icon enter/leave остаётся в работе; native-only spinner/темы сохраняются. Local/shared prefixCls покрыт отдельной feature."
+          "note": "Компонентные tokens Button подключены через source preparation и CSS variables. Wave повторяет исходные targets/triggers/effect. Штатная иконка повторяет appear/enter/leave React 6.6.8 с шириной своего SVG и сохраняет SSR DOM. React продолжает переходы при reduced motion и при выключении loading с пользовательской иконкой показывает штатный индикатор в leave. Svelte сохраняет сокращённое движение и синхронное снятие пользовательской иконки. Local/shared prefixCls покрыт отдельной feature."
         },
         {
           "id": "control-theme-tokens",

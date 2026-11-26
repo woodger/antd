@@ -27,6 +27,13 @@ outlined, как в коде Ant Design 6.6.8. Color включает default/pr
 Loading принимает boolean или {delay,icon}. Положительный delay откладывает
 spinner; смена delay/отмена/удаление очищают deadline. Loading.icon имеет приоритет
 над button.loadingIcon. SSR не создаёт timer и не показывает отложенный spinner.
+Штатная иконка без обычного или пользовательского значка меняет ширину,
+прозрачность и отступ при включении и выключении loading. При первом рендере и
+гидратации уже видимый индикатор остаётся на месте. Завершение ухода удаляет
+иконку, а состояние загрузки и доступность кнопки меняются сразу.
+Токен theme.token.motion=false и prefers-reduced-motion отключают переход.
+[Сверка с React 6.6.8](../../../tests/browser/button-loading-motion.spec.ts).
+
 Согласованный v1 native button во время loading остаётся disabled и aria-busy;
 это сохраняет существующее отличие от React click guard. Для ссылки loading
 отменяет переход через preventDefault; disabled дополнительно убирает href,
@@ -64,7 +71,6 @@ Button поддерживает local/shared prefixCls для root, icon/loading
 component tokens и legacy themes сохраняют прежний namespace и приоритет стилей.
 Смена prefix сохраняет DOM/ref, focus, draft/selection и native submit.
 
-Enter/leave анимация loading icon пока отсутствует; прежний spinner сохранён.
 Source component tokens и [Wave](../wave.md) подключены.
 Общий механизм тем,
 RTL, Form disabled и Compact остаётся прежним. Фикстура — ?fixture=button. Unit/SSR/Chromium проверяют приоритеты,

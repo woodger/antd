@@ -13,6 +13,7 @@
   import { buttonAppearance, buttonHasContent, buttonLoading, buttonText } from './button.engine';
   import { connectButtonText } from './button.dom';
   import { getButtonPrefixCss } from './button-prefix.engine';
+  import ButtonLoadingIcon from './ButtonLoadingIcon.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import Icon from './Icon.svelte';
   import type { ButtonColor, ButtonContent, ButtonElementProps } from './button.types';
@@ -87,6 +88,7 @@
   let content = $state<HTMLSpanElement>();
   let twoCN = $state(false);
   let textRuntime = $state.raw<ReturnType<typeof connectButtonText>>();
+  let mounted = $state(false);
   let info = $derived({
     props: {
       ...attributes,
@@ -140,6 +142,8 @@
     typeof classNames === 'function' ? classNames(info) ?? {} : classNames ?? {}
   );
   let slots = $derived(typeof styles === 'function' ? styles(info) ?? {} : styles ?? {});
+  let iconClassNames = $derived([contextClasses.icon, classes.icon]);
+  let iconStyle = $derived([contextStyles.icon, slots.icon].filter(Boolean).join(';'));
   let rootClasses = $derived(
     [
       prefixCls,
@@ -220,6 +224,7 @@
     textRuntime?.refresh();
   });
   onMount(() => {
+    mounted = true;
     if (autoFocus)
       nativeElement?.focus();
   });
@@ -238,15 +243,23 @@
   {#if typeof node === 'function'}{@render node()}{:else if node !== true && node !== false}{typeof node === 'string' ? buttonText(node, spacing) : node ?? ''}{/if}
 {/snippet}
 {#snippet body()}
-  {#if innerLoading || icon}
+  {#if icon || innerLoading && loadingIcon}
     <span class={[
         `${prefixCls}-icon`,
         innerLoading && !loadingIcon && `${prefixCls}-loading-icon`,
-        contextClasses.icon,
-        classes.icon
-      ]} style={[contextStyles.icon, slots.icon].filter(Boolean).join(';')}>
+        iconClassNames
+      ]} style={iconStyle}>
       {#if innerLoading}{#if loadingIcon}{@render value(loadingIcon)}{:else}<Icon name="loading" />{/if}{:else}{@render value(icon)}{/if}
     </span>
+  {:else}
+    <ButtonLoadingIcon
+      owner={nativeElement}
+      {prefixCls}
+      visible={innerLoading}
+      appear={mounted}
+      classNames={iconClassNames}
+      style={iconStyle}
+    />
   {/if}
   {#if _skipContentWrapper && typeof children === 'function'}{@render children()}{:else if buttonHasContent(children)}<span bind:this={content} class={[contextClasses.content, classes.content]} style={[contextStyles.content, slots.content].filter(Boolean).join(';')}>{@render value(children, insert)}</span>{/if}
 {/snippet}
