@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
+import { readReferenceBytes } from './reference-bytes';
 import { autocompleteRenderSamples, autocompleteRenderActions, autocompleteRenderSSRStates,
   type AutocompleteRenderAction } from './autocomplete-render-cases.mjs';
 import type { AutocompleteRenderDOM } from './autocomplete-render-metrics.mjs';
@@ -54,10 +55,7 @@ assert.equal(hash(compressed), '78333e2cd394d73aad39acc4a94b055e0f37aff53947ae55
 const csr = gunzipSync(compressed);
 assert.equal(csr.length, 39379489);
 assert.equal(hash(csr), 'c8e31ad89fb4fc0a1bcf94548c99eb211e560e64fd9123792c50101666eaaa8d');
-const ssr = readFileSync(new URL(
-  './fixtures/ant-design-autocomplete-render-ssr-reference.json',
-  import.meta.url
-));
+const ssr = readReferenceBytes('ant-design-autocomplete-render-ssr-reference.json.gz');
 assert.equal(ssr.length, 1750313);
 assert.equal(hash(ssr), 'c23ec4ca70e497a1d7564e1e1b107a7e785d16ba8af9439db18ab1ab136afb0f');
 export const autocompleteRenderReference = JSON.parse(csr.toString('utf8')) as {

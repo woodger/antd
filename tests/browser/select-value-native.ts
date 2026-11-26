@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { readReferenceBytes } from './reference-bytes';
 import type { SelectValueView } from './select-value-reference';
 import type { SelectValueSample } from './fixtures/select-value-cases';
 
@@ -17,10 +18,7 @@ if (closedQuery.query !== 'Kept query' || closedQuery.editor.value !== '' || clo
   throw Error('Historical Native closed editor contract changed');
 }
 
-const mixedBytes = readFileSync(new URL(
-  './fixtures/select-value-native-mixed-baseline.json',
-  import.meta.url
-));
+const mixedBytes = readReferenceBytes('select-value-native-mixed-baseline.json.gz');
 if (createHash('sha256').update(mixedBytes).digest('hex') !== '4d212cd96aa18bb6babd5c0e516180d251539c570e1ba1788ff73d488cfdc391') {
   throw Error('Historical Native mixed-value baseline SHA256 changed');
 }

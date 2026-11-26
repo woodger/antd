@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { readReferenceBytes } from './reference-bytes';
 import { test, expect } from './test';
 import { selectDataDiagnosticSamples, selectDataActions } from './fixtures/select-data-cases';
 import { actSelectData, prepareSelectData } from './select-data-driver';
@@ -7,10 +7,7 @@ import { settleSelectData, verifySelectData } from './select-data-assertions';
 import { readSelectDataAriaIntegrity } from './select-data-native';
 import type { SelectDataSourceCase } from './select-data-reference';
 
-const bytes = readFileSync(new URL(
-  './fixtures/ant-design-select-data-diagnostic-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-data-diagnostic-reference.json.gz');
 expect(createHash('sha256').update(bytes).digest('hex'))
   .toBe('ff98cfb57e40d5fd5938d3c24ffdfeb056e604f2e121f586fbf29ca92f8473d6');
 const source = JSON.parse(bytes.toString('utf8')) as {

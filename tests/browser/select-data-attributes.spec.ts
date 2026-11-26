@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { readReferenceBytes } from './reference-bytes';
 import { test, expect } from './test';
 import { actSelectData, prepareSelectData } from './select-data-driver';
 import { settleSelectData } from './select-data-assertions';
@@ -10,10 +10,7 @@ import { selectDataSourceDiagnostic } from './select-data-reference';
 
 type Snapshot = ReturnType<typeof readSelectDataAttributes>;
 type Row = Snapshot['raw']['popups'][number]['physicalRows'][number];
-const bytes = readFileSync(new URL(
-  './fixtures/ant-design-select-data-attributes-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-data-attributes-reference.json.gz');
 expect(createHash('sha256').update(bytes).digest('hex'))
   .toBe('95c56926369a18bb7f3b10ec13e8a697789b74e387a94f5ff5f87e4555162030');
 const source = JSON.parse(bytes.toString('utf8')) as {

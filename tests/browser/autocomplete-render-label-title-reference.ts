@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { readReferenceBytes } from './reference-bytes';
 import { labelTitleSamples, labelTitleActions, labelTitleSSRStates, type LabelTitleAction } from './autocomplete-render-label-title-cases.mjs';
 import type { LabelTitleDOM } from './autocomplete-render-label-title-metrics.mjs';
 import type { AutocompleteRenderOwner } from './autocomplete-render-reference';
@@ -47,13 +48,13 @@ interface Header { mode: string; version: string; react: string; revision: strin
 // Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (b: Uint8Array) => createHash('sha256').update(b).digest('hex');
 function load<Value>(path: string, bytes: number, sha: string): Value {
-  const data = readFileSync(new URL('./fixtures/' + path, import.meta.url));
+  const data = readReferenceBytes(path);
   assert.equal(data.length, bytes);
   assert.equal(hash(data), sha);
   return JSON.parse(data.toString('utf8')) as Value;
 }
 export const autocompleteLabelTitleReference = load<{ reference: Header; cases: LabelTitleCase[] }>(
-  'ant-design-autocomplete-render-label-title-reference.json', 1378306, 'b6003c7b9daba3bc2d8a7dfe23a4335404ce70cc43d552117028e206b2d8d2f1');
+  'ant-design-autocomplete-render-label-title-reference.json.gz', 1378306, 'b6003c7b9daba3bc2d8a7dfe23a4335404ce70cc43d552117028e206b2d8d2f1');
 export const autocompleteLabelTitleSSRReference = load<{
   reference: Header;
   cases: LabelTitleSSRCase[]

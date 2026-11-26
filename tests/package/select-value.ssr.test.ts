@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { readReferenceBytes } from '../browser/reference-bytes';
 import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { expect, it, vi } from 'vitest';
@@ -22,10 +22,7 @@ interface SourceCase {
   producerCalls: unknown[];
   rawHtml: string;
 }
-const bytes = readFileSync(new URL(
-  '../browser/fixtures/ant-design-select-value-ssr-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-value-ssr-reference.json.gz');
 const source = JSON.parse(bytes.toString('utf8')) as {
   reference: { version: string; revision: string; domAvailableDuringRender: boolean;
     umdArchiveByteEqual: boolean; diagnostics: string[] };

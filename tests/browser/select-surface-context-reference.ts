@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { isDeepStrictEqual } from 'node:util';
+import { readReferenceBytes } from './reference-bytes';
 import type { SelectSurfaceProducerCall } from './select-surface-producers.mjs';
 import type { SelectSurfaceContextDOM } from './select-surface-context-metrics.mjs';
 import { selectSurfaceContextSamples, type SelectSurfaceContextAction } from './select-surface-context-cases';
@@ -50,13 +51,13 @@ function guard(condition: unknown, message: string): asserts condition {
   }
 }
 function reference<Value>(filename: string, sha256: string): Value {
-  const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+  const bytes = readReferenceBytes(filename);
   guard(hash(bytes) === sha256, filename);
   return JSON.parse(bytes.toString('utf8')) as Value;
 }
 export const selectSurfaceContextReference = reference<{
   reference: SourceHeader; cases: SelectSurfaceContextSourceCase[];
-}>('ant-design-select-surface-context-reference.json',
+}>('ant-design-select-surface-context-reference.json.gz',
   '7916eb6af8dc39e3e1866a1aeb2bfef034f302a59fecbd32765a15777433314d');
 export const selectSurfaceContextSSRReference = reference<{
   reference: SourceHeader; cases: SelectSurfaceContextSSRCase[];

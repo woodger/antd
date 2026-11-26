@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 import { isDeepStrictEqual } from 'node:util';
+import { readReferenceBytes } from './reference-bytes';
 import { selectSurfaceSamples, selectSurfaceActions } from './fixtures/select-surface-cases';
 import type { SelectSurfaceAction } from './fixtures/select-surface-cases';
 import type { readSelectSurface } from './select-surface-metrics';
@@ -74,10 +75,7 @@ guard(primaryBytes.length === 37006189
 export const selectSurfaceReference = JSON.parse(primaryBytes.toString('utf8')) as {
   reference: SourceHeader; cases: SelectSurfaceSourceCase[];
 };
-const ssrBytes = readFileSync(new URL(
-  './fixtures/ant-design-select-surface-ssr-reference.json',
-  import.meta.url
-));
+const ssrBytes = readReferenceBytes('ant-design-select-surface-ssr-reference.json.gz');
 guard(ssrBytes.length === 3183815
   && sha256(ssrBytes) === '53400dff120a7bb4caf01a242ced30c5522096255ab97cb7f08ac5b2e4ee7375', 'original SSR bytes');
 export const selectSurfaceSSRReference = JSON.parse(ssrBytes.toString('utf8')) as {

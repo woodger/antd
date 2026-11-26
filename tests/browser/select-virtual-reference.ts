@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
+import { readReferenceBytes } from './reference-bytes';
 import { selectVirtualSamples, selectVirtualActions, type SelectVirtualAction } from './fixtures/select-virtual-cases';
 import type { readSelectVirtual } from './select-virtual-metrics';
 
@@ -57,9 +58,8 @@ function load(
   ids: readonly string[],
   diagnostics: SourceReference['reference']['diagnostics']
 ) {
-  const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+  const bytes = readReferenceBytes(filename);
   assert(createHash('sha256').update(bytes).digest('hex') === sha256, `${filename} SHA256`);
-  // The complete 41 MB raw capture stays intact; TypeScript need not infer its JSON literal tree.
   const data = JSON.parse(bytes.toString('utf8')) as SourceReference;
   assert(
     data.reference?.version === '6.6.8' && data.reference.react === '18.3.1',
@@ -113,10 +113,10 @@ function load(
   return data;
 }
 
-export const selectVirtualReference = load('ant-design-select-virtual-reference.json',
+export const selectVirtualReference = load('ant-design-select-virtual-reference.json.gz',
   '52dfac8270e633900801776743a11be8869d8e9ef18bb43ff23526cb1b416392',
   selectVirtualSamples.map(sample => sample.id), [selectVirtualTagsDiagnostic]);
-export const selectVirtualNativeReference = load('ant-design-select-virtual-native-reference.json',
+export const selectVirtualNativeReference = load('ant-design-select-virtual-native-reference.json.gz',
   '3bc8b88b919942a97d8339cc5607696126613aab7ef2eef702182265721faff9',
   ['select-ref-closed', 'auto-complete-ref-closed'], []);
 export const selectVirtualEmptyNativeReference = load('ant-design-select-virtual-empty-native-reference.json',
@@ -125,7 +125,7 @@ export const selectVirtualEmptyNativeReference = load('ant-design-select-virtual
 export const selectVirtualHoverReference = load('ant-design-select-virtual-hover-reference.json',
   '8c4bfff041e1529bc8bfd44c1ed9202dc86d6a5340084a3fe226a00e2d69a513',
   ['select-selected-open', 'auto-complete-selected-open'], []);
-export const selectVirtualQueryNativeReference = load('ant-design-select-virtual-query-native-reference.json',
+export const selectVirtualQueryNativeReference = load('ant-design-select-virtual-query-native-reference.json.gz',
   'b19ec834c7bfc7f9f1c977f591144ee39787680d8ffeca748e2917d403f185bb', ['select-live-props'], []);
 
 for (const entry of selectVirtualNativeReference.cases) {

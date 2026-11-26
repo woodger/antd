@@ -66,17 +66,17 @@ Select запоминает подпись и исходные данные до
 [Замеры React](../../../tests/browser/fixtures/ant-design-select-immediate-cache-reference.json)
 
 Исходные [40 сценариев](../../../tests/browser/fixtures/ant-design-select-data-reference.json.gz),
-[40 SSR](../../../tests/browser/fixtures/ant-design-select-data-ssr-reference.json),
-[атрибуты](../../../tests/browser/fixtures/ant-design-select-data-attributes-reference.json) и
-[диагностика](../../../tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json)
+[40 SSR](../../../tests/browser/fixtures/ant-design-select-data-ssr-reference.json.gz),
+[атрибуты](../../../tests/browser/fixtures/ant-design-select-data-attributes-reference.json.gz) и
+[диагностика](../../../tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json.gz)
 сохранены независимо от реализации. Большой основной эталон хранится в gzip; загрузчик
 распаковывает его стандартным Node.js zlib и проверяет прежний SHA-256 исходных байтов.
 Native label/NFKD search и disabled cache проверяются
 с отдельными public Source owners
-([search](../../../tests/browser/fixtures/ant-design-select-data-label-native-reference.json),
+([search](../../../tests/browser/fixtures/ant-design-select-data-label-native-reference.json.gz),
 [cache](../../../tests/browser/fixtures/ant-design-select-data-cache-native-reference.json));
 исходные ledgers не фильтруются. Virtual Source ошибочно
-теряет mapped aria-selected: [парное наблюдение](../../../tests/browser/fixtures/ant-design-select-data-aria-reference.json)
+теряет mapped aria-selected: [парное наблюдение](../../../tests/browser/fixtures/ant-design-select-data-aria-reference.json.gz)
 сохраняет этот результат, Native использует корректное mapped состояние. Multiple token
 lookup использует mapped value; Source при том же вводе читает literal value и теряет выбор.
 Полные [браузерные проверки](../../../tests/browser/select-data.spec.ts),
@@ -126,8 +126,8 @@ owner с raw value заново читает options. Single className/style/tit
 maxTagTextLength усекает только строку/число. FormData по-прежнему содержит raw values.
 
 [48 исходных сценариев / 278 действий](../../../tests/browser/fixtures/ant-design-select-value-reference.json.gz),
-[атомарные смены режима](../../../tests/browser/fixtures/ant-design-select-value-live-reference.json),
-[SSR](../../../tests/browser/fixtures/ant-design-select-value-ssr-reference.json) и
+[атомарные смены режима](../../../tests/browser/fixtures/ant-design-select-value-live-reference.json.gz),
+[SSR](../../../tests/browser/fixtures/ant-design-select-value-ssr-reference.json.gz) и
 [public owner disabled cache](../../../tests/browser/fixtures/ant-design-select-value-cache-native-reference.json)
 сохраняют независимые наблюдения оригинала. Проверки:
 [browser](../../../tests/browser/select-value.spec.ts), [hydration](../../../tests/browser/select-value-hydration.spec.ts),

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { gunzipSync } from 'node:zlib';
+import { readReferenceBytes } from './reference-bytes';
 import { selectValueActions, selectValueSamples } from './fixtures/select-value-cases';
 import type { readSelectValue } from './select-value-metrics';
 import { selectValueLiveActions, selectValueLiveSamples, type SelectValueLiveAction } from './fixtures/select-value-live-cases';
@@ -93,7 +94,7 @@ for (const entry of selectValueReference.cases) {
 }
 
 function additional(filename: string, sha256: string) {
-  const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+  const bytes = readReferenceBytes(filename);
   guard(createHash('sha256').update(bytes).digest('hex') === sha256, `${filename} SHA256`);
   const reference = JSON.parse(bytes.toString('utf8')) as SourceReference;
   guard(reference.reference.revision === selectValueReference.reference.revision
@@ -108,7 +109,7 @@ function additional(filename: string, sha256: string) {
   return reference;
 }
 
-export const selectValueLiveReference = additional('ant-design-select-value-live-reference.json',
+export const selectValueLiveReference = additional('ant-design-select-value-live-reference.json.gz',
   'ab2c4f600296233201ccc712ece548319cde73b548eb99532f4a86fdf4a3b99a');
 guard(
   isDeepStrictEqual(

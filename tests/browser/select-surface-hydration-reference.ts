@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { isDeepStrictEqual } from 'node:util';
+import { readReferenceBytes } from './reference-bytes';
 import { selectSurfaceHydrationActions, selectSurfaceHydrationSamples } from './fixtures/select-surface-hydration-cases';
 import type { SelectSurfaceStyleHistoryPoint, SelectSurfaceStyleHistorySourceCase,
   SelectSurfaceStyleHistorySSRCase } from './select-surface-style-history-native-reference';
@@ -41,10 +42,7 @@ function guard(condition: unknown, message: string): asserts condition {
     throw Error(`Invalid original surface hydration evidence: ${message}`);
   }
 }
-const bytes = readFileSync(new URL(
-  './fixtures/ant-design-select-surface-style-history-hydration-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-surface-style-history-hydration-reference.json.gz');
 guard(
   bytes.length === 7553192 && hash(bytes) === '750ed241a637dbca3d5e20415b23641eba19ab251de22796c19c81a51470fda8',
   'complete original bytes'

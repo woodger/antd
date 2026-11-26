@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { readReferenceBytes } from './reference-bytes';
 import type { Page } from '@playwright/test';
 import { test, expect } from './test';
 import type { SelectVirtualAction } from './fixtures/select-virtual-cases';
@@ -33,10 +33,7 @@ declare global {
     };
   }
 }
-const bytes = readFileSync(new URL(
-  './fixtures/ant-design-select-virtual-initialization-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-virtual-initialization-reference.json.gz');
 if (createHash('sha256').update(bytes).digest('hex') !== 'c98e17f2203792f37c0bb175c3c78f5ab04cb9f6f94e9e778e9875da4a803bfc') {
   throw Error('Frozen actual Source initialization capture changed');
 }

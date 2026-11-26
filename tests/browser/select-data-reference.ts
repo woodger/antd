@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
-import { gunzipSync } from 'node:zlib';
+import { readReferenceBytes } from './reference-bytes';
 import { selectDataSamples, selectDataActions, type SelectDataAction } from './fixtures/select-data-cases';
 import type { readSelectData } from './select-data-metrics';
 
@@ -48,8 +48,7 @@ function guard(condition: unknown, message: string): asserts condition {
   }
 }
 function load(filename: string, sha256: string, ids: string[], diagnostics: unknown[]) {
-  const stored = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
-  const bytes = filename.endsWith('.gz') ? gunzipSync(stored) : stored;
+  const bytes = readReferenceBytes(filename);
   guard(createHash('sha256').update(bytes).digest('hex') === sha256, `${filename} SHA256`);
   // Полный raw57MB читается без вывода TypeScript-типа огромного JSON literal.
   const reference = JSON.parse(bytes.toString('utf8')) as SourceReference;
@@ -97,13 +96,13 @@ function load(filename: string, sha256: string, ids: string[], diagnostics: unkn
 export const selectDataReference = load('ant-design-select-data-reference.json.gz',
   '16297e548d98b8b239332f9de061b8938833a39e6f9c6fdf29b83f8dec2661cb',
   selectDataSamples.map(sample => sample.id), [selectDataSourceDiagnostic]);
-export const selectDataAriaReference = load('ant-design-select-data-aria-reference.json',
+export const selectDataAriaReference = load('ant-design-select-data-aria-reference.json.gz',
   '2f11b06e680da750bcfe675020ddb331c2bcce02cdcda2bd65775e3204b322f8',
   ['select-duplicate-value-unique-key', 'auto-complete-duplicate-value-unique-key'], []);
 export const selectDataCacheNativeReference = load('ant-design-select-data-cache-native-reference.json',
   'bb2db7a51a85fcd54281e664077ba568737c2cc3d59c6bfba92f81219a3db870',
   ['select-selected-cache'], []);
-export const selectDataLabelNativeReference = load('ant-design-select-data-label-native-reference.json',
+export const selectDataLabelNativeReference = load('ant-design-select-data-label-native-reference.json.gz',
   '6302c9c9724aaad0126b18e7cf8049883f86a520154da3b882f0009f7561ec70',
   ['select-filter-child-match'], []);
 const labelCounterpart = selectDataLabelNativeReference.cases[0];

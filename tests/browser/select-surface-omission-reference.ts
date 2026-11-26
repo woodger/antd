@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { readReferenceBytes } from './reference-bytes';
 import { omissionSamples, omissionActions, widthActions, omissionSSRStates, widthSSRStates,
   type SelectSurfaceOmissionAction } from './select-surface-omission-cases.mjs';
 import { defaultOmissionSamples, defaultOmissionActions } from './select-surface-omission-default-cases.mjs';
@@ -86,13 +87,13 @@ function reference<Case>(
   sha256: string,
   byteLength: number
 ): SourceReference<Case> {
-  const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+  const bytes = readReferenceBytes(filename);
   assert.equal(bytes.length, byteLength, filename);
   assert.equal(hash(bytes), sha256, filename);
   return JSON.parse(bytes.toString('utf8')) as SourceReference<Case>;
 }
 export const selectSurfaceOmissionReference = reference<SelectSurfaceOmissionSourceCase>(
-  'ant-design-select-surface-omission-reference.json',
+  'ant-design-select-surface-omission-reference.json.gz',
   '7c92067411c25f5515a9b4e389127879c861fa90b5d9b335fed7fd8724421010', 4639913);
 export const selectSurfaceOmissionSSRReference = reference<SSRCase>(
   'ant-design-select-surface-omission-ssr-reference.json',
@@ -104,7 +105,7 @@ export const selectSurfaceOmissionWidthSSRReference = reference<SSRCase>(
   'ant-design-select-surface-omission-width-ssr-reference.json',
   'f28e83c44a6bc68501e1fdc0f781d10938f53c6ef243255d759b4b2413e4cd5a', 179645);
 export const selectSurfaceOmissionDefaultReference = reference<SelectSurfaceOmissionSourceCase>(
-  'ant-design-select-surface-omission-default-reference.json',
+  'ant-design-select-surface-omission-default-reference.json.gz',
   'ee333b6be254c9f264f8e897a18146cf5ef2c94c189b46b3a675ae4f16c4fdde', 3164603);
 for (const [source, protocol, owners] of [
   [selectSurfaceOmissionReference, '4e210470cbdef5ebd111174f8fb4cc93d999fd03380ff144413f9f69b045b494', omissionSamples.map(sample => sample.id)],

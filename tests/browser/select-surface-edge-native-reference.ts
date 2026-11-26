@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { readReferenceBytes } from './reference-bytes';
 import { selectSurfaceEdgeActions, selectSurfaceEdgeSamples, type SelectSurfaceEdgeAction } from './fixtures/select-surface-edge-cases';
 import type { readSelectSurface } from './select-surface-metrics';
 import type { SelectSurfaceEdgePaint } from './select-surface-edge-metrics.mjs';
@@ -46,10 +47,7 @@ interface Header {
 }
 // Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-const bytes = readFileSync(new URL(
-  './fixtures/ant-design-select-surface-edge-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-surface-edge-reference.json.gz');
 assert.equal(
   hash(bytes),
   '06795b3a7ec0185ab9b5929e25ccc42bd5eff100bba87bb56c836b40a3f24f39',

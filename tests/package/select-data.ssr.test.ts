@@ -1,5 +1,5 @@
+import { readReferenceBytes } from '../browser/reference-bytes';
 import { render } from 'svelte/server';
-import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, it, vi } from 'vitest';
 import SelectDataCase from '../browser/fixtures/SelectDataCase.svelte';
@@ -17,10 +17,7 @@ interface SourceCase {
   producers: Record<'filter' | 'sort' | 'render', unknown[]>;
   producerCalls: Record<'filter' | 'sort' | 'render', unknown[]>;
 }
-const bytes = readFileSync(new URL(
-  '../browser/fixtures/ant-design-select-data-ssr-reference.json',
-  import.meta.url
-));
+const bytes = readReferenceBytes('ant-design-select-data-ssr-reference.json.gz');
 const reference = JSON.parse(bytes.toString('utf8')) as {
   reference: { version: string; revision: string; domAvailableDuringRender: boolean;
     umdArchiveByteEqual: boolean; diagnostics: string[] };
