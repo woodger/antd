@@ -175,6 +175,21 @@
     [componentTheme.style, _themeStyle, contextStyles.root, config.button?.style, slots.root, style]
       .filter(Boolean).join(';')
   );
+  // У нативных ветвей общие атрибуты. Динамический тег Svelte при гидратации
+  // повторно вставляет существующий узел и сбрасывает фокус.
+  let rootAttributes = $derived({
+    'data-ant-button-root': true,
+    'data-ant-button-prefix': prefixCss ? prefixCls : undefined,
+    'data-ant-button-global': prefixCss ? rootPrefixCls : undefined,
+    target,
+    rel,
+    download,
+    hreflang,
+    referrerpolicy
+  });
+  // ButtonProps описывает дополнительные DOM-события через HTMLButtonElement.
+  // Ссылка передаёт эти атрибуты как есть и сохраняет исходный API.
+  let linkAttributes: Record<string, unknown> = $derived(attributes);
 
   $effect(() => {
     if (delay > 0) {
@@ -222,15 +237,7 @@
 {#snippet value(node: ButtonContent, spacing = false)}
   {#if typeof node === 'function'}{@render node()}{:else if node !== true && node !== false}{typeof node === 'string' ? buttonText(node, spacing) : node ?? ''}{/if}
 {/snippet}
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`button-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}<svelte:element this={href !== undefined ? 'a' : 'button'} {...attributes} bind:this={nativeElement}
-  data-ant-button-root
-  data-ant-button-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-button-global={prefixCss ? rootPrefixCls : undefined}
-  {@attach href === undefined && appearance.variant !== 'text' && appearance.variant !== 'link'
-    ? wave : undefined}
-  type={href === undefined ? htmlType : undefined} href={href !== undefined && !blocked ? href : undefined} {target} {rel} {download} {hreflang} {referrerpolicy}
-  disabled={href === undefined ? innerLoading || blocked : undefined} aria-disabled={href !== undefined ? blocked : undefined} aria-busy={innerLoading || undefined}
-  tabindex={href !== undefined ? blocked ? -1 : 0 : attributes.tabindex} class={rootClasses} style={rootStyle} onclick={click}>
+{#snippet body()}
   {#if innerLoading || icon}
     <span class={[
         `${prefixCls}-icon`,
@@ -242,4 +249,27 @@
     </span>
   {/if}
   {#if _skipContentWrapper && typeof children === 'function'}{@render children()}{:else if buttonHasContent(children)}<span bind:this={content} class={[contextClasses.content, classes.content]} style={[contextStyles.content, slots.content].filter(Boolean).join(';')}>{@render value(children, insert)}</span>{/if}
-</svelte:element>
+{/snippet}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`button-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}{#if href === undefined}<button
+  {...attributes}
+  {...rootAttributes}
+  bind:this={nativeElement}
+  {@attach appearance.variant !== 'text' && appearance.variant !== 'link' ? wave : undefined}
+  type={htmlType}
+  disabled={innerLoading || blocked}
+  aria-disabled={undefined}
+  aria-busy={innerLoading || undefined}
+  tabindex={attributes.tabindex}
+  class={rootClasses}
+  style={rootStyle}
+  onclick={click}>{@render body()}</button>{:else}<a
+  {...linkAttributes}
+  {...rootAttributes}
+  bind:this={nativeElement}
+  href={blocked ? undefined : href}
+  aria-disabled={blocked}
+  aria-busy={innerLoading || undefined}
+  tabindex={blocked ? -1 : 0}
+  class={rootClasses}
+  style={rootStyle}
+  onclick={click}>{@render body()}</a>{/if}

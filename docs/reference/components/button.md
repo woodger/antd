@@ -34,6 +34,10 @@ spinner; смена delay/отмена/удаление очищают deadline.
 Native button сохраняет htmlType/button/submit/reset и form-атрибуты; href не
 превращает type=link в навигацию автоматически. AutoFocus фокусирует при mount.
 
+При гидратации сфокусированная кнопка или ссылка сохраняет DOM-узел и фокус.
+Enter вызывает обработчик на том же нативном элементе.
+[Сверка с React 6.6.8](../../../tests/browser/button-hydration.spec.ts).
+
 ClassNames/styles — объект или функция от {props}; слоты root/icon/content.
 Классы объединяются. Стилевые слои: context.styles → context.style(root) →
 local styles → local style(root). ConfigProvider.button задаёт autoInsertSpace,

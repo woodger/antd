@@ -58,6 +58,8 @@
         "src/lib/button.engine.test.ts",
         "tests/package/button.ssr.test.ts",
         "tests/browser/button.spec.ts",
+        "tests/browser/button-hydration.spec.ts",
+        "tests/browser/fixtures/ant-design-button-hydration-reference.json",
         "integration:button",
         "src/lib/theme-control-tokens.engine.ts",
         "src/lib/theme-component-style.engine.ts",
@@ -105,9 +107,11 @@
           "evidence": [
             "src/lib/button.engine.test.ts",
             "tests/package/button.ssr.test.ts",
-            "tests/browser/button.spec.ts"
+            "tests/browser/button.spec.ts",
+            "tests/browser/button-hydration.spec.ts",
+            "tests/browser/fixtures/ant-design-button-hydration-reference.json"
           ],
-          "note": "Сохранён type=link как action без href и native disabled loading v1; href создаёт a с guard и исходными disabled tabIndex/href. Href выводит anchor-тип callback, прежний ButtonProps остаётся native."
+          "note": "Сохранён type=link как action без href и native disabled loading v1; href создаёт a с guard и исходными disabled tabIndex/href. Href выводит anchor-тип callback, прежний ButtonProps остаётся native. Нативные теги сохраняют SSR DOM и фокус при гидратации обеих форм, как React 6.6.8. В 18ed1f6f динамический тег вызывал focusout."
         },
         {
           "id": "source-api",
