@@ -1,12 +1,14 @@
 import type { Snippet } from 'svelte';
 import type { HTMLTextareaAttributes, HTMLAttributes } from 'svelte/elements';
-import type { ComponentSize } from './types';
+import type { ComponentSize, RenderEmptyContent } from './types';
 import type { InputAllowClear, InputCountConfig } from './input-count.types';
 import type { FormValidateStatus } from './form-error-list.types';
 
 export interface MentionsOption {
-  value: string;
-  label?: string | number | Snippet;
+  /** Текст для поиска и вставки. При отсутствии используется пустая строка. */
+  value?: string;
+  /** Содержимое пункта подсказок. */
+  label?: RenderEmptyContent;
   key?: string | number;
   disabled?: boolean;
   class?: string;

@@ -5,7 +5,7 @@
   let { profile }: { profile: string; } = $props();
   const mode = untrack(() => profile);
   const options = [{ value: 'alice', label: 'Alice option' }];
-  let events = $state<(string | boolean)[][]>([]);
+  let events = $state<(string | boolean | undefined)[][]>([]);
 
   function captureCancelledEnter(node: HTMLElement) {
     if (mode !== 'pre-cancelled') {

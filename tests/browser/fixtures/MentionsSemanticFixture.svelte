@@ -10,7 +10,7 @@
   let revised = $state(false);
   let autoSize = $state(untrack(() => profile === 'autosize'));
   const form = createForm({ initialValues: {} });
-  let events = $state<string[][]>([]);
+  let events = $state<(string | undefined)[][]>([]);
   const options = [{ value: 'alice', label: 'Alice' }, { value: 'alina', label: 'Alina' }];
 
   /** Даёт различимые классы каждого источника во всех четырёх слотах. */

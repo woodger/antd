@@ -10011,6 +10011,22 @@
           "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Deprecated Mentions.Option children и textarea ref исключены из переноса. Оставшиеся границы расширенного React Menu API требуют отдельной сверки. Семантика и жизненный цикл popup описаны отдельно."
         },
         {
+          "id": "option-data",
+          "title": "Необязательное значение, подпись и совпадающие ключи вариантов",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Mentions.svelte",
+            "src/lib/mentions.engine.ts",
+            "src/lib/mentions.types.ts",
+            "tests/browser/fixtures/ant-design-mentions-option-reference.json",
+            "tests/browser/mentions-option.spec.ts",
+            "tests/package/mentions.ssr.test.ts",
+            "docs/reference/components/mentions.md"
+          ],
+          "note": "18 сценариев официального UMD 6.6.8 повторены дважды. Отсутствующий и undefined value обрабатываются как пустая строка при фильтрации и вставке, а onSelect сохраняет исходные поля, включая отсутствие value или key. Нативный ключ callback остаётся переданным потребителем, включая число 0. Скалярные и составные label повторяют видимое содержимое Source. Native listbox сохраняет доступное имя из value для отсутствующего или null label. При одинаковом ключе указатель выбирает первый вариант в отфильтрованном списке, а Enter выбирает по индексу. Отключённый первый вариант сохраняет открытый список без выбора. В Svelte штатный popover также сохраняет фокус textarea при таком клике. Визуальная подсветка следует ключу, активный пункт ARIA остаётся один. Отдельно проверена передача исходного варианта в пользовательский filterOption."
+        },
+        {
           "id": "textarea-count",
           "title": "Счётчик, нативный maxLength, форматирование и IME",
           "state": "supported",

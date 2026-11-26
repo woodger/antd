@@ -9,7 +9,7 @@
   let renamed = $state(false);
   let popupMounts = $state(0);
   let popupUnmounts = $state(0);
-  let events = $state<string[][]>([]);
+  let events = $state<(string | undefined)[][]>([]);
   const options = [{ value: 'alice', label: 'Alice' }, { value: 'alina', label: 'Alina' }];
   const theme = $derived({ token: { motion: profile.motion !== false } });
 

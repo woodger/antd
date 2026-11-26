@@ -18,9 +18,16 @@ Value/defaultValue — полная строка textarea. Prefix по умол�
 строку/массив; split по умолчанию один пробел. При поиске выбирается последнее
 вхождение префикса перед selectionStart; при равных позициях сохраняется порядок
 массива prefix. Default validateSearch проверяет только literal split, без
-дополнительной обработки переносов строк. FilterOption ищет по option.value без
-учёта регистра; false отключает фильтрацию, predicate получает исходный option.
-Options содержит value, label string/number/Snippet, key/disabled/class/style.
+дополнительной обработки переносов строк. Стандартный `filterOption` ищет
+по `option.value` без учёта регистра. `false` отключает фильтрацию.
+Пользовательская функция получает исходный объект варианта.
+
+`value` необязателен. Отсутствующее значение и `undefined` при поиске и
+вставке обрабатываются как пустая строка. `onSelect` сохраняет различие
+между отсутствующим полем, явным `undefined` и пустой строкой.
+`label` принимает текст, число, Snippet, массив и пустые значения. При
+отсутствующем или `null` label видимая подпись пуста. Доступное имя в
+нативном списке сохраняется из `value`, если оно задано.
 
 CSS prefixCls не меняет текстовые triggers prefix. Непустое локальное значение
 имеет приоритет; empty/undefined наследуют ConfigProvider. Editor, mirror,
@@ -50,6 +57,15 @@ update восстанавливаются focus/selection. Native selection offs
 Callback получает исходный option data без React key suffix. Отдельный экспорт
 getMentions(value,{prefix,split}) соответствует Mentions.getMentions: извлекает
 непустые токены в начале разделённых split частей, без собственной разметки.
+
+Ключ пункта берётся из `key` или `value` и сравнивается как строка.
+Клик выбирает первый пункт с этим ключом в отфильтрованном списке. Если он
+отключён, список остаётся открытым без вставки. Штатный список при этом
+сохраняет фокус в textarea. Enter в textarea выбирает активный пункт по
+индексу. Повторяющиеся ключи сохраняют отдельные DOM-узлы.
+Подсветка применяется ко всем совпавшим ключам, а `aria-activedescendant`
+указывает на один пункт. [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-option-reference.json)
+· [Браузерные проверки](../../../tests/browser/mentions-option.spec.ts).
 
 Up/Down обходят доступные options, Enter выбирает, Escape закрывает. При закрытых
 подсказках Enter вызывает `onPressEnter`, затем `onKeyDown` и нативный

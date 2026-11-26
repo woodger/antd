@@ -6,6 +6,7 @@
   import RenderEmpty from './RenderEmpty.svelte';
   import type { MentionsProps, MentionsOption, MentionsSemanticProps } from './mentions.types';
   import {
+    buildMentionMenuRows,
     getMentionMeasure,
     validateMentionSearch,
     filterMentionOption,
@@ -204,6 +205,8 @@
       ? [{ value: 'ANTD_SEARCHING', disabled: true }]
       : filterOption === false ? options : options.filter(option => filterOption(query, option))
   );
+  let menuRows = $derived(buildMentionMenuRows(filtered));
+  let activeMenuKey = $derived(menuRows[active]?.menuKey);
   let visible = $derived(measuring && !blocked && !readonly);
   let focused = $state(false);
   let editorFocused = $state(false);
@@ -507,7 +510,7 @@
       {
         location,
         prefix: token,
-        target: option.value,
+        target: option.value ?? '',
         selectionStart: editor.selectionStart,
         split
       }
@@ -524,6 +527,12 @@
       editor.setSelectionRange(result.selection, result.selection);
     }
   }
+  function chooseByMenuKey(key: string) {
+    // Меню выбирает первое совпадение по ключу. Enter в textarea использует индекс.
+    const row = menuRows.find(candidate => candidate.menuKey === key);
+    if (row) void choose(row.option);
+  }
+
   function handleKeydown(event: EditorEvent<KeyboardEvent>) {
     const { key, isComposing } = event;
     // RcInput вызывает onPressEnter перед onKeyDown, когда список закрыт.
@@ -683,20 +692,20 @@
   <div id={`${controlId}-list`} role="listbox" class={`${componentPrefix}-dropdown-menu`}
     aria-label={attributes['aria-label'] ?? config.locale.searchText} onscroll={onPopupScroll}
     aria-busy={loading || undefined} {@attach connectMenuFocus}>
-    {#each filtered as option, index (option.key ?? option.value)}
+    {#each menuRows as { option, menuKey, domKey }, index (domKey)}
       <button data-ant-mentions-option type="button" role="option" tabindex="-1" id={`${controlId}-option-${index}`}
         disabled={option.disabled} aria-selected={active === index}
-        aria-disabled={option.disabled || undefined} class={[
+        aria-disabled={option.disabled || undefined}
+        aria-label={option.label == null ? option.value : undefined} class={[
           `${componentPrefix}-dropdown-menu-item`,
-          active === index && `${componentPrefix}-dropdown-menu-item-active`,
+          activeMenuKey === menuKey && `${componentPrefix}-dropdown-menu-item-active`,
           option.disabled && `${componentPrefix}-dropdown-menu-item-disabled`,
-          'class' in option && option.class
-        ]} style={'style' in option ? option.style : undefined} onpointermove={() => {
+          option.class
+        ]} style={option.style} onpointermove={() => {
           if (!option.disabled) active = index;
-        }} onclick={() => void choose(option)}>
+        }} onclick={() => chooseByMenuKey(menuKey)}>
         {#if loading}<Icon name="loading" />
-        {:else if 'label' in option && typeof option.label === 'function'}{@render option.label()}
-        {:else}{'label' in option ? option.label ?? option.value : option.value}{/if}
+        {:else}<RenderContent value={option.label} />{/if}
       </button>
     {:else}
       <div class={`${componentPrefix}-dropdown-menu-item ${componentPrefix}-dropdown-menu-item-disabled`}>

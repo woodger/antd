@@ -12,7 +12,7 @@
   const initial = controlled || mode === 'hidden' ? 'abcd' : mode === 'snippet' ? 'ab' : '';
   let value = $state(initial);
   let showCounter = $state(mode !== 'switch' && mode !== 'hidden');
-  let events = $state<(string | number)[][]>([]);
+  let events = $state<(string | number | undefined)[][]>([]);
   const count = $derived(createCount());
 
   function trimText(text: string, { max }: { max: number; }) {

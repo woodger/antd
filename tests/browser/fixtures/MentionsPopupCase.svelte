@@ -46,7 +46,7 @@
   }[]>([]);
   let searches = $state<string[]>([]);
   let values = $state<string[]>([]);
-  let selected = $state<string[]>([]);
+  let selected = $state<(string | undefined)[]>([]);
   let scrolls = $state(0);
   let blurred = $state(0);
   let parentOptions = $derived.by(() => {

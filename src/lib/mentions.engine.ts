@@ -1,3 +1,4 @@
+// Упорядочивает варианты Mentions и вычисляет текстовые изменения вокруг каретки.
 import type { MentionsConfig, MentionsEntity, MentionsOption } from './mentions.types';
 
 export function getMentionMeasure(text: string, prefixes: readonly string[]) {
@@ -9,8 +10,29 @@ export function getMentionMeasure(text: string, prefixes: readonly string[]) {
 export function validateMentionSearch(text: string, split = ' ') {
   return !split || !text.includes(split);
 }
+/** Пустое значение участвует в поиске так же, как отсутствующее. */
 export function filterMentionOption(text: string, option: MentionsOption) {
-  return option.value.toLowerCase().includes(text.toLowerCase());
+  const value = option.value ?? '';
+  return value.toLowerCase().includes(text.toLowerCase());
+}
+
+interface MentionMenuRow {
+  option: MentionsOption;
+  menuKey: string;
+  domKey: string;
+}
+
+/** Сохраняет исходный ключ выбора и даёт каждому повтору собственный ключ Svelte. */
+export function buildMentionMenuRows(options: readonly MentionsOption[]): MentionMenuRow[] {
+  const occurrences = new Map<string, number>();
+  const rows: MentionMenuRow[] = [];
+  for (const option of options) {
+    const menuKey = String(option.key ?? option.value);
+    const occurrence = occurrences.get(menuKey) ?? 0;
+    occurrences.set(menuKey, occurrence + 1);
+    rows.push({ option, menuKey, domKey: `${menuKey}:${occurrence}` });
+  }
+  return rows;
 }
 
 export function replaceMention(

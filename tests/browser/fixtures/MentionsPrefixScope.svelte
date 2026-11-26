@@ -26,7 +26,7 @@
     local?: boolean;
   } = $props();
   let nativeElement = $state<HTMLDivElement>();
-  let events = $state<string[]>([]);
+  let events = $state<(string | undefined)[]>([]);
 </script>
 
 <form data-mentions-prefix-scope={scope} style="width:480px;padding:12px"

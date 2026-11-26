@@ -1,6 +1,12 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, expectTypeOf, vi } from 'vitest';
-import { Mentions, type InputCountConfig, type MentionsProps } from '@woodger/antd';
+import {
+  Mentions,
+  type InputCountConfig,
+  type MentionsOption,
+  type MentionsProps,
+  type RenderEmptyContent
+} from '@woodger/antd';
 import MentionsFixtures from '../browser/fixtures/MentionsFixtures.svelte';
 
 describe('Mentions SSR', () => {
@@ -49,6 +55,24 @@ describe('Mentions SSR', () => {
     expect(body).toContain('class="rc-textarea-data-count">');
     expect(body).not.toContain('defaultvalue=');
     expect(body).not.toContain('count="[object Object]"');
+  });
+
+  it('accepts options without a value and keeps their label data out of the closed SSR field', () => {
+    expectTypeOf<MentionsOption['value']>().toEqualTypeOf<string | undefined>();
+    expectTypeOf<MentionsOption['label']>().toEqualTypeOf<RenderEmptyContent>();
+    expectTypeOf<Parameters<NonNullable<MentionsProps['onSelect']>>[0]>()
+      .toEqualTypeOf<MentionsOption>();
+    const options: readonly MentionsOption[] = [
+      { key: 0, label: 'Only a label' },
+      { value: undefined, label: [0, null, false] },
+      { value: '', label: null }
+    ];
+
+    const { body } = render(Mentions, { props: { options, defaultValue: 'seed' } });
+
+    expect(body).toContain('seed</textarea>');
+    expect(body).not.toContain('Only a label');
+    expect(body).not.toContain('role="listbox"');
   });
 
   it('renders autosize fixtures without browser measurements or timers on the server', () => {

@@ -1,0 +1,1371 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "source": "package/dist/antd.min.js",
+  "react": "18.3.1",
+  "rcMentions": "1.12.0",
+  "repeat": 2,
+  "cases": [
+    {
+      "profile": "absent",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "Name only",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@ ",
+        "focused": true,
+        "selection": [
+          2,
+          2
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@ "
+          ],
+          [
+            "select",
+            [
+              [
+                "label",
+                "Name only"
+              ],
+              [
+                "key",
+                "none-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "explicit-undefined",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "Name only",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@ ",
+        "focused": true,
+        "selection": [
+          2,
+          2
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@ "
+          ],
+          [
+            "select",
+            [
+              [
+                "label",
+                "Name only"
+              ],
+              [
+                "key",
+                "none-:r0:"
+              ],
+              [
+                "value",
+                null
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "empty-value",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "Name only",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@ ",
+        "focused": true,
+        "selection": [
+          2,
+          2
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@ "
+          ],
+          [
+            "select",
+            [
+              [
+                "label",
+                "Name only"
+              ],
+              [
+                "key",
+                "none-:r0:"
+              ],
+              [
+                "value",
+                ""
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "zero-label",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "0",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                0
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "empty-label",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                ""
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "absent-label",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "key",
+                "alice-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "null-label",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                null
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "false-label",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                false
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "disabled-missing",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "Name only",
+            "disabled": "true",
+            "selected": false
+          },
+          {
+            "label": "Alice",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                "Alice"
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "filtered-empty",
+      "before": {
+        "value": "@a",
+        "focused": true,
+        "selection": [
+          2,
+          2
+        ],
+        "menu": [
+          {
+            "label": "Alice",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@a"
+          ],
+          [
+            "search",
+            "a",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@a"
+          ],
+          [
+            "search",
+            "a",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                "Alice"
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "twins-pointer",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "First",
+            "disabled": null,
+            "selected": true
+          },
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@ ",
+        "focused": true,
+        "selection": [
+          2,
+          2
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@ "
+          ],
+          [
+            "select",
+            [
+              [
+                "label",
+                "First"
+              ],
+              [
+                "key",
+                "undefined-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "twins-keyboard",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "First",
+            "disabled": null,
+            "selected": true
+          },
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@ ",
+        "focused": true,
+        "selection": [
+          2,
+          2
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@ "
+          ],
+          [
+            "select",
+            [
+              [
+                "label",
+                "Second"
+              ],
+              [
+                "key",
+                "undefined-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "array-label",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "[0]",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                [
+                  "[",
+                  0,
+                  true,
+                  [
+                    "]"
+                  ]
+                ]
+              ],
+              [
+                "key",
+                "real-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "explicit-pointer",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "First",
+            "disabled": null,
+            "selected": true
+          },
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@first ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@first "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "first"
+              ],
+              [
+                "label",
+                "First"
+              ],
+              [
+                "key",
+                "shared-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "explicit-keyboard",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "First",
+            "disabled": null,
+            "selected": true
+          },
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@second ",
+        "focused": true,
+        "selection": [
+          8,
+          8
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@second "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "second"
+              ],
+              [
+                "label",
+                "Second"
+              ],
+              [
+                "key",
+                "shared-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "explicit-filtered",
+      "before": {
+        "value": "@sec",
+        "focused": true,
+        "selection": [
+          4,
+          4
+        ],
+        "menu": [
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@s"
+          ],
+          [
+            "search",
+            "s",
+            "@"
+          ],
+          [
+            "change",
+            "@se"
+          ],
+          [
+            "search",
+            "se",
+            "@"
+          ],
+          [
+            "change",
+            "@sec"
+          ],
+          [
+            "search",
+            "sec",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@second ",
+        "focused": true,
+        "selection": [
+          8,
+          8
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@s"
+          ],
+          [
+            "search",
+            "s",
+            "@"
+          ],
+          [
+            "change",
+            "@se"
+          ],
+          [
+            "search",
+            "se",
+            "@"
+          ],
+          [
+            "change",
+            "@sec"
+          ],
+          [
+            "search",
+            "sec",
+            "@"
+          ],
+          [
+            "change",
+            "@second "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "second"
+              ],
+              [
+                "label",
+                "Second"
+              ],
+              [
+                "key",
+                "shared-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "explicit-disabled",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "First",
+            "disabled": "true",
+            "selected": true
+          },
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@",
+        "focused": false,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "First",
+            "disabled": "true",
+            "selected": true
+          },
+          {
+            "label": "Second",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      }
+    },
+    {
+      "profile": "numeric-key",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": [
+          {
+            "label": "Alice",
+            "disabled": null,
+            "selected": true
+          }
+        ],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ]
+        ]
+      },
+      "after": {
+        "value": "@alice ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": [],
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "search",
+            "",
+            "@"
+          ],
+          [
+            "change",
+            "@alice "
+          ],
+          [
+            "select",
+            [
+              [
+                "value",
+                "alice"
+              ],
+              [
+                "label",
+                "Alice"
+              ],
+              [
+                "key",
+                "0-:r0:"
+              ]
+            ],
+            "@"
+          ]
+        ]
+      }
+    }
+  ]
+}
