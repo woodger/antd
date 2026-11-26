@@ -35,7 +35,7 @@
         ],
         onClick: info => { events = [...events, `menu:${info.key}`]; }
       },
-      dropdownProps: { trigger: 'click', open: true, 'aria-label': 'Themed Breadcrumb sections' }
+      dropdownProps: { trigger: 'click', defaultOpen: true, 'aria-label': 'Themed Breadcrumb sections' }
     },
     ...menuAtEnd ? [] : [{ key: 'current', title: 'Current' }]
   ]);
