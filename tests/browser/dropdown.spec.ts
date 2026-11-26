@@ -600,28 +600,34 @@ for (const placement of ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', '
 
       await expect(popup).toHaveClass(new RegExp(`ant-dropdown-placement-${placement}(?: |$)`));
 
-      const anchor = (await trigger(page).boundingBox())!;
-      const bounds = (await popup.boundingBox())!;
+      // Измеряем размещение после стартового scale(0) из CSSMotion.
+      await expect(async () => {
+        const anchor = await trigger(page).boundingBox();
+        const bounds = await popup.boundingBox();
+        if (!anchor || !bounds) {
+          throw new Error('Missing Dropdown trigger or popup bounds');
+        }
 
-      expect(bounds.width).toBeGreaterThanOrEqual(anchor.width - 1);
+        expect(bounds.width).toBeGreaterThanOrEqual(anchor.width - 1);
 
-      if (placement.startsWith('top')) {
-        expect(bounds.y + bounds.height).toBeLessThanOrEqual(anchor.y - 7);
-      }
-      else {
-        expect(bounds.y).toBeGreaterThanOrEqual(anchor.y + anchor.height + 7);
-      }
-      if (placement.endsWith('Left')) {
-        expect(Math.abs(bounds.x - anchor.x)).toBeLessThan(1);
-      }
-      else if (placement.endsWith('Right')) {
-        expect(Math.abs(bounds.x + bounds.width - anchor.x - anchor.width))
-          .toBeLessThan(1);
-      }
-      else {
-        expect(Math.abs(bounds.x + bounds.width / 2 - anchor.x - anchor.width / 2))
-          .toBeLessThan(1);
-      }
+        if (placement.startsWith('top')) {
+          expect(bounds.y + bounds.height).toBeLessThanOrEqual(anchor.y - 7);
+        }
+        else {
+          expect(bounds.y).toBeGreaterThanOrEqual(anchor.y + anchor.height + 7);
+        }
+        if (placement.endsWith('Left')) {
+          expect(Math.abs(bounds.x - anchor.x)).toBeLessThan(1);
+        }
+        else if (placement.endsWith('Right')) {
+          expect(Math.abs(bounds.x + bounds.width - anchor.x - anchor.width))
+            .toBeLessThan(1);
+        }
+        else {
+          expect(Math.abs(bounds.x + bounds.width / 2 - anchor.x - anchor.width / 2))
+            .toBeLessThan(1);
+        }
+      }).toPass({ timeout: 5000 });
 
       await expect(popup.locator('.ant-dropdown-arrow')).toBeVisible();
     }
