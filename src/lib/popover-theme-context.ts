@@ -1,14 +1,18 @@
+// Передаёт непосредственному Popover тему подтверждения и обработчик корня панели.
 import { getContext, setContext } from 'svelte';
+import type { PopconfirmProps } from './popconfirm.types';
 
 const popconfirmThemeKey = Symbol('ant-popconfirm-theme');
+type PopconfirmPopupContext = Readonly<Pick<PopconfirmProps, 'onPopupClick'>>;
 
-export function providePopconfirmTheme() {
-  setContext(popconfirmThemeKey, true);
+/** Передаёт обработчик через getter, чтобы панель видела текущий prop владельца. */
+export function providePopconfirmTheme(popup: PopconfirmPopupContext) {
+  setContext(popconfirmThemeKey, popup);
 }
 
-/** Только непосредственный Popover получает Popconfirm tokens; вложенные панели независимы. */
+/** Отделяет вложенные панели от темы и событий внешнего подтверждения. */
 export function consumePopconfirmTheme() {
-  const isPopconfirm = getContext<boolean | undefined>(popconfirmThemeKey) ?? false;
-  setContext(popconfirmThemeKey, false);
-  return isPopconfirm;
+  const popup = getContext<PopconfirmPopupContext | undefined>(popconfirmThemeKey);
+  setContext(popconfirmThemeKey, undefined);
+  return popup;
 }

@@ -78,7 +78,9 @@
     styles,
     callbackProps
   ));
-  providePopconfirmTheme();
+  providePopconfirmTheme({
+    get onPopupClick() { return props.onPopupClick; }
+  });
   const form = useForm();
   const generatedId = $props.id();
   const titleId = `ant-popconfirm-${generatedId}-title`;

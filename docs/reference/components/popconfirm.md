@@ -109,6 +109,14 @@ HtmlType всегда button, loading управляется Popconfirm. Disable
 Disabled скрывает карточку и блокирует её действия, сохраняя open владельца;
 исходный trigger не заменяется и сам по себе не отключается этим prop.
 
+`onPopupClick(event)` получает нативный `MouseEvent` при всплытии до корня панели.
+Обработчики содержимого, в том числе действий подтверждения и отмены,
+вызываются раньше. `preventDefault()` сохраняет всплытие, `stopPropagation()`
+останавливает его. В общей панели `Tooltip.UniqueProvider` событие получает
+текущий владелец. В Ant Design React 6.6.8 callback общей панели теряется.
+[Замеры React](../../../tests/browser/fixtures/ant-design-popconfirm-popup-click-reference.json)
+· [Проверки Svelte](../../../tests/browser/popconfirm-popup-click.spec.ts).
+
 Карточка получает role=dialog, имя от title и описание от description.
 Trigger сохраняет существующий aria-describedby и связан с карточкой через
 aria-controls/aria-expanded. Во время ожидания выставляется aria-busy;

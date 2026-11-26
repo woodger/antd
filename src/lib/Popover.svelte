@@ -91,7 +91,8 @@
   const context = group ? getAllContexts() : undefined;
   const tooltipTheme = useComponentTheme('Tooltip');
   const componentTheme = useComponentTheme('Popover');
-  const isPopconfirm = consumePopconfirmTheme();
+  const popconfirm = consumePopconfirmTheme();
+  const isPopconfirm = Boolean(popconfirm);
   const confirmTheme = isPopconfirm ? useComponentTheme('Popconfirm') : undefined;
   let resolvedTrigger = $derived<PopoverTrigger | readonly PopoverTrigger[]>(
     trigger || config.popover?.trigger || (config.popover ? 'hover' : ['hover', 'focus'])
@@ -290,6 +291,7 @@
       get ariaBusy() { return ariaBusy; },
       get outsideEvents() { return actionOverrides ? 'mouse' : undefined; },
       onDismiss: dismiss,
+      get onPopupClick() { return popconfirm?.onPopupClick; },
       onHoverChange: handlePopupHover,
       onFocusIn: handlePopupFocus,
       onFocusOut: handlePopupBlur,
@@ -833,6 +835,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`popover-prefix:${prefix}`} />{/if}<span bind:this={host} role="presentation" class={['ant-popover-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>
 {#if !grouped}<NoCompactStyle>
+<!-- svelte-ignore a11y_click_events_have_key_events (Корень получает всплытие click от доступных контролов.) -->
 <div bind:this={popup} {id} role="dialog" popover="manual" hidden tabindex="-1" dir={config.direction}
   inert={motion.leaving || undefined}
   data-ant-popover="" data-ant-custom-prefix={prefix !== 'ant-popover' || undefined}
@@ -849,7 +852,8 @@
       if (event.pointerType !== 'touch')
         handlePopupHover(true);
     }} onpointerleave={() => handlePopupHover(false)} onfocusin={handlePopupFocus}
-    onfocusout={handlePopupBlur} onanimationend={motion.end} ontransitionend={motion.end}>
+    onfocusout={handlePopupBlur} onclick={popconfirm?.onPopupClick}
+    onanimationend={motion.end} ontransitionend={motion.end}>
   {#if arrowConfig.show}<div data-ant-popover-arrow="" class={[`${prefix}-arrow`, semantics.classNames.arrow]}
     style={[arrowPositionStyle, semantics.styles.arrow].filter(Boolean).join(';') || undefined}
     aria-hidden="true"></div>{/if}

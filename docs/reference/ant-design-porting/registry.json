@@ -25167,6 +25167,25 @@
             "tests/package/tooltip-unique.ssr.test.ts"
           ],
           "note": "Параметр передаётся наружному Popover. В UMD 6.6.8 подтверждения делят поверхность и фон без стрелки, получают onOpenChange и используют общий portal. Native сохраняет имя и описание диалога, aria-busy, припаркованный фокус и контроллер Promise по владельцу. Поздний результат после смены карточки обновляет прежнее подтверждение, а текущий диалог остаётся открыт."
+        },
+        {
+          "id": "popup-click",
+          "title": "Всплывающий onPopupClick",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/popconfirm.md",
+            "src/lib/popconfirm.types.ts",
+            "src/lib/Popconfirm.svelte",
+            "src/lib/popover-theme-context.ts",
+            "src/lib/Popover.svelte",
+            "src/lib/TooltipUniquePopup.svelte",
+            "tests/browser/fixtures/ant-design-popconfirm-popup-click-reference.json",
+            "tests/browser/fixtures/PopconfirmPopupClickFixture.svelte",
+            "tests/browser/popconfirm-popup-click.spec.ts",
+            "tests/package/popconfirm-popup-click.ssr.test.ts"
+          ],
+          "note": "Порядок click, currentTarget корня, preventDefault и stopPropagation совпадают с UMD 6.6.8 при стандартном и явном контейнере. В Source UniqueProvider теряет onPopupClick, хотя title и кнопки карточки остаются интерактивными. Svelte сохраняет тот же контракт всплытия для текущего владельца общего корня."
         }
       ]
     },

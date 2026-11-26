@@ -37,6 +37,7 @@ export interface TooltipUniqueView {
   readonly ariaDescribedby?: string;
   readonly ariaBusy?: boolean;
   readonly outsideEvents?: 'pointer' | 'mouse';
+  readonly onPopupClick?: (event: MouseEvent) => void;
   onDismiss: (reason: 'escape' | 'outside') => void;
   onHoverChange?: (next: boolean) => void;
   onFocusIn?: (event: FocusEvent) => void;

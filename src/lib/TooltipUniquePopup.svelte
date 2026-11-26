@@ -256,6 +256,7 @@
   onpointerleave={() => view?.onHoverChange?.(false)}
   onfocusin={event => view?.onFocusIn?.(event)}
   onfocusout={event => view?.onFocusOut?.(event)}
+  onclick={view?.onPopupClick}
   onanimationend={motion.end} ontransitionend={motion.end}>
   <span data-ant-tooltip-unique-background="" aria-hidden="true"
     class={[

@@ -430,6 +430,11 @@
     "root": "popconfirm-fixture"
   },
   {
+    "id": "popconfirm-popup-click",
+    "module": "./PopconfirmPopupClickFixture.svelte",
+    "root": "popconfirm-popup-click-fixture"
+  },
+  {
     "id": "dropdown",
     "module": "./DropdownFixtures.svelte",
     "root": "dropdown-fixture"

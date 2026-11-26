@@ -111,6 +111,8 @@ export interface PopconfirmProps {
   /** Promise удерживает loading; rejection сохраняет возможность повтора. */
   onConfirm?: (event: MouseEvent) => void | PromiseLike<unknown>;
   onCancel?: (event: MouseEvent) => void;
+  /** Вызывается при всплытии click до корня панели после обработчиков её содержимого. */
+  onPopupClick?: (event: MouseEvent) => void;
   onError?: (error: unknown) => void;
   class?: string;
   style?: string;
