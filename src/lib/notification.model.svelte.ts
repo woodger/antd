@@ -1,12 +1,19 @@
+// Владеет независимой очередью и фиксирует defaults на момент open. Настройки
+// размещения и оформления поверхности могут обновляться отдельно от таймеров.
+import { untrack } from 'svelte';
 import {
   createNoticeQueue,
   noticeQueueKey,
   type QueueNotice
 } from './notice-queue.model.svelte.js';
+import { resolveNoticeSemantic } from './notice-semantic.engine';
 import type {
   NotificationConfig,
   NotificationOptions,
   NotificationPlacement,
+  NotificationSemanticName,
+  NotificationSemanticProps,
+  NotificationSemanticSlots,
   NotificationType
 } from './notification.types';
 
@@ -22,38 +29,62 @@ export const notificationOptionsKey = Symbol('ant-notification-options');
 export {
   noticeQueueKey as notificationHolderKey
 } from './notice-queue.model.svelte.js';
-type ResolvedNotification = Omit<NotificationConfig, 'duration'> & {
+type ResolvedNotification = Omit<NotificationConfig, 'duration' | 'classNames' | 'styles'> & {
   duration?: number;
+  onDismiss?: () => void;
   placement: NotificationPlacement;
   role: 'alert' | 'status';
+  classNames?: NotificationSemanticSlots;
+  styles?: NotificationSemanticSlots;
 };
 export type NotificationNotice = QueueNotice<ResolvedNotification>;
+
+function resolvePlacement(
+  value: NotificationPlacement | undefined, fallback: NotificationPlacement = 'topRight'
+) {
+  return value !== undefined && notificationPlacements.includes(value) ? value : fallback;
+}
 
 /**
  * Создаёт независимый экземпляр для одного NotificationHolder. Без подключённого
  * holder таймеры не запускаются; отсоединение очищает очередь без onClose.
  */
-export function createNotification(options: NotificationOptions = {}) {
-  let placement = notificationPlacements.includes(options.placement!)
-    ? options.placement!
-    : 'topRight';
+export function createNotification(initial: NotificationOptions = {}) {
+  let options = $state.raw(initial);
+  let placement = resolvePlacement(initial.placement);
   const queue = createNoticeQueue<ResolvedNotification>(
-    { ...options, duration: options.duration === false ? 0 : options.duration },
+    { ...initial, duration: initial.duration === false ? 0 : initial.duration },
     'A notification instance supports one mounted NotificationHolder.',
-    4.5
+    4.5,
+    notice => notice.placement
   );
+  const runtime = queue[noticeQueueKey];
+  // Getter сохраняет живые настройки при стабильном экземпляре App.
+  const holder = Object.defineProperty(runtime, 'options', {
+    get: () => options
+  }) as typeof runtime & { readonly options: NotificationOptions; };
+
   function open(config: NotificationConfig): void {
-    queue.open(
-      {
-        ...config,
-        duration: config.duration === false ? 0 : config.duration,
-        placement: notificationPlacements.includes(config.placement!)
-          ? config.placement!
-          : placement,
-        role: config.role ?? 'alert'
-      }
-    );
+    const { classNames, styles, ...notice } = config;
+    const defaults = untrack(() => options);
+    const close = typeof notice.closable === 'object' ? notice.closable : undefined;
+    const closeIcon = close?.closeIcon !== undefined ? close.closeIcon : notice.closeIcon;
+    queue.open({
+      ...notice,
+      duration: notice.duration === false ? 0 : notice.duration,
+      placement: resolvePlacement(notice.placement, placement),
+      role: notice.role ?? 'alert',
+      showProgress: notice.showProgress ?? defaults.showProgress,
+      onDismiss: closeIcon === false || closeIcon === null ? undefined : close?.onClose,
+      classNames: resolveNoticeSemantic<NotificationSemanticName, NotificationSemanticProps>(
+        classNames, config
+      ),
+      styles: resolveNoticeSemantic<NotificationSemanticName, NotificationSemanticProps>(
+        styles, config
+      )
+    });
   }
+
   function typed(type: NotificationType) {
     return (config: Omit<NotificationConfig, 'type'>) => open({ ...config, type });
   }
@@ -65,12 +96,13 @@ export function createNotification(options: NotificationOptions = {}) {
     error: typed('error'),
     destroy: queue.destroy,
     [notificationOptionsKey](next: NotificationOptions) {
-      placement = notificationPlacements.includes(next.placement!) ? next.placement! : 'topRight';
-      queue[noticeQueueKey].configure({
+      options = next;
+      placement = resolvePlacement(next.placement);
+      runtime.configure({
         ...next,
         duration: next.duration === false ? 0 : next.duration
       });
     },
-    [noticeQueueKey]: queue[noticeQueueKey]
+    [noticeQueueKey]: holder
   };
 }

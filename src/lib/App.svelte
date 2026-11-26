@@ -53,8 +53,7 @@
 {#snippet content()}
   <ModalHolder modal={api.modal} />
   <MessageHolder message={api.message} />
-  <NotificationHolder notification={api.notification} prefixCls={notificationOptions.prefixCls}
-    top={notificationOptions.top} bottom={notificationOptions.bottom} />
+  <NotificationHolder notification={api.notification} />
   {@render children?.()}
 {/snippet}
 

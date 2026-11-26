@@ -30,6 +30,7 @@
   import type { DrawerConfig } from './drawer.types';
   import type { ModalConfig } from './modal.types';
   import type { MessageAppearance } from './message.types';
+  import type { NotificationProviderConfig } from './notification.types';
   import type { RateConfig } from './rate.types';
   import type { WatermarkConfig } from './watermark.types';
   import type { AffixConfig } from './affix.types';
@@ -135,6 +136,7 @@
     modal?: ModalConfig;
     /** Оформление MessageHolder и его записей. */
     message?: MessageAppearance;
+    notification?: NotificationProviderConfig;
     rate?: RateConfig;
     watermark?: WatermarkConfig;
     affix?: AffixConfig;
@@ -246,6 +248,7 @@
     drawer,
     modal,
     message,
+    notification,
     rate,
     watermark,
     affix,
@@ -427,6 +430,9 @@
     },
     get message() {
       return message ?? parent.message;
+    },
+    get notification() {
+      return notification ?? parent.notification;
     },
     get button() {
       return button ?? parent.button;

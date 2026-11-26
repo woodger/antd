@@ -9,13 +9,10 @@
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectInlineStyle } from './inline-style.dom';
-  import {
-    getInlineStyleDeclarations, serializeInlineStyleLayers, type InlineStyleLayer
-  } from './inline-style.engine';
+  import { serializeInlineStyleLayers, type InlineStyleLayer } from './inline-style.engine';
   import { messageHolderKey } from './message.model.svelte.js';
   import { resolveMessageHolder } from './message-semantic.engine';
-  import { connectMessageSurface } from './message.dom';
-  import { connectPopupPortal } from './popup-portal.dom';
+  import { createNoticeContainer } from './notice-container.model.svelte';
   import type { MessageHolderProps } from './message.types';
 
   let {
@@ -34,10 +31,6 @@
   const componentTheme = useComponentTheme('Message');
   let anchor = $state<HTMLSpanElement>();
   let surface = $state<HTMLDivElement>();
-  let target = $state.raw<HTMLElement | ShadowRoot>();
-  let containerKey = $state(0);
-  let containerResolved = false;
-  let portal = $state.raw<ReturnType<typeof connectPopupPortal>>();
   let notices = $derived(runtime.notices);
   let top = $derived(options.top ?? 8);
   let rtl = $derived(options.rtl ?? config.direction === 'rtl');
@@ -70,12 +63,18 @@
     [['--notification-top', resolvedTop]]
   ]);
   let rootStyle = $derived(serializeInlineStyleLayers(rootLayers));
+  const container = createNoticeContainer(
+    () => anchor,
+    () => ({ getContainer: options.getContainer, getPopupContainer: config.getPopupContainer }),
+    () => ({ node: surface, onVisible: runtime.setVisible }),
+    () => rootLayers
+  );
 
   function connectRootStyle(node: HTMLDivElement) {
     const update = connectInlineStyle(node);
     $effect(() => {
       update(rootLayers);
-      portal?.syncTheme();
+      container.syncTheme();
     });
   }
 
@@ -89,71 +88,6 @@
       }
     });
   }
-
-  /** Только смена уже разрешённой цели меняет DOM identity. */
-  function setContainer(destination: HTMLElement | ShadowRoot | undefined) {
-    if (containerResolved && target !== destination) {
-      containerKey++;
-    }
-    containerResolved = true;
-    target = destination;
-  }
-
-  $effect(() => {
-    const origin = anchor;
-    if (!origin) {
-      return;
-    }
-
-    const explicit = options.getContainer;
-    const inherited = config.getPopupContainer;
-    const destination = explicit?.() ?? inherited?.()
-      ?? (explicit || inherited ? origin.ownerDocument.body : undefined);
-    untrack(() => setContainer(destination));
-  });
-
-  /** Сохраняет тему исходного контекста и DOM scope нативного диалога, если он есть. */
-  function connectSurface(node: HTMLDivElement, origin: HTMLSpanElement) {
-    const current = runtime;
-    const destination = target;
-    if (!destination) {
-      return connectMessageSurface(node, origin, current.setVisible);
-    }
-
-    const revision = containerKey;
-    const marker = node.ownerDocument.createComment('message-container');
-    node.before(marker);
-    const connection = connectPopupPortal(node, {
-      getPopupContainer: () => destination,
-      origin,
-      marker,
-      autoLock: false,
-      preservePointerEvents: true,
-      get restoreOnDestroy() { return node.isConnected && revision === containerKey; },
-      get preserveVariables() {
-        const properties = Array.from(getInlineStyleDeclarations(rootLayers), item => item.property);
-        return [...properties, '--ant-svelte-notice-viewport-top', '--ant-svelte-notice-viewport-height'];
-      }
-    });
-    portal = connection;
-    const disconnect = connectMessageSurface(node, origin, current.setVisible);
-
-    return () => {
-      disconnect();
-      connection();
-      marker.remove();
-      if (portal === connection) portal = undefined;
-    };
-  }
-
-  $effect(() => {
-    const node = surface;
-    const origin = anchor;
-    void target;
-    if (node && origin) {
-      return untrack(() => connectSurface(node, origin));
-    }
-  });
 
   function setListHover(next: boolean) {
     hovering = next && stack;
@@ -246,7 +180,7 @@
 {#key message}
   {#if notices.length}
     {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`message-prefix:${componentPrefix}:${rootPrefix}`} />{/if}
-    {#key containerKey}
+    {#key container.key}
     <div bind:this={surface}
       data-ant-message-root data-ant-message-list data-ant-message-top
       data-ant-message-prefix={componentPrefix} data-ant-message-root-prefix={rootPrefix}

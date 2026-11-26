@@ -25,13 +25,16 @@
 ```
 
 Open/success/info/warning/error принимают объект NotificationConfig и возвращают
-void. Open без type не добавляет статусную иконку; типизированные методы задают
-свой type. Title/description принимают строку или Snippet; пустые строки не
-создают соответствующую область. Actions — интерактивный Snippet, действия не
-закрывают уведомление автоматически. Icon и closeIcon декоративные; используйте
-actions/description для кнопок, ссылок и полей ввода. Class/style относятся к
-карточке. Корень поддерживает aria-label/aria-labelledby/aria-describedby;
-по умолчанию доступное имя связано с title, описание — с description.
+void. Open без type показывает карточку без статусной иконки. Типизированные
+методы задают свой type. Title/description принимают текст, число или Snippet.
+Ноль отображается как число, пустая строка убирает соответствующую область.
+Icon и closeIcon декоративные. Действия могут находиться в actions или
+description. Class/style относятся к карточке. `props` добавляет нативные
+атрибуты корневого div, включая `data-*` и ARIA. Напрямую заданные
+`aria-label`, `aria-labelledby` и `aria-describedby` имеют приоритет.
+По умолчанию имя берётся из title, а описание — из description.
+`onClick` получает нативное событие с карточкой в `currentTarget`.
+Кнопка закрытия останавливает его всплытие.
 
 Duration задаётся в секундах, по умолчанию 4.5. Значения 0 и false отключают
 автоудаление; отрицательные и неконечные значения используют default.
@@ -41,6 +44,10 @@ maxCount. Конфигурация карточки переопределяет
 наведении. Фокус внутри всегда приостанавливает таймер, включая переходы Tab
 между действиями и обновление ключа. Отсчёт продолжается после ухода фокуса и,
 если включена hover-пауза, указателя. Touch не включает hover-паузу.
+
+`showProgress` выводит нативный `progress` для положительной длительности.
+Его значение показывает оставшееся время и следует тем же паузам, что таймер.
+Индивидуальное `showProgress: false` переопределяет настройки очереди.
 
 Key — string или number, включая 0 и пустую строку. Повтор активного ключа
 обновляет содержимое на прежнем месте, перезапускает duration и заменяет onClose.
@@ -58,6 +65,9 @@ closeIcon и aria-label/aria-labelledby/aria-describedby кнопки. CloseIcon
 из locale.closeText либо closable.aria-label. Disabled запрещает только кнопку;
 destroy и таймер продолжают действовать. ConfigProvider.disabled не отключает
 закрытие уведомления, а вложенные компоненты действий наследуют свой контекст.
+Иконка закрытия наследуется от `ConfigProvider.notification.closeIcon`. Приоритет
+имеют настройки держателя и карточки. `closable.onClose` вызывается перед
+`onClose` карточки при закрытии кнопкой или по таймеру.
 
 OnClose вызывается один раз при запросе закрытия: кнопкой, destroy, таймером или
 FIFO. Уходящая карточка получает inert/aria-hidden и остаётся в DOM до конца
@@ -91,8 +101,8 @@ status-классов уже открытой карточки в React запи
 refresh. Native обновляет классы без reopening, сохраняя DOM/ARIA IDs, draft,
 selection/focus, очередь, deadlines и callbacks, в том числе внутри App.
 
-ProgressBg подготавливается, но showProgress пока отсутствует. Локальные CSS variables
-другого prefix разрешаются на notice; пользовательские variables Holder имеют приоритет.
+`progressBg` задаёт заливку индикатора времени. Локальные CSS variables
+другого prefix разрешаются на notice. Пользовательские variables Holder имеют приоритет.
 Обновления сохраняют viewport styles, очередь, deadlines, actions DOM, draft/focus/selection.
 Actions находятся на уровне корня, как в эталоне; wrapper выводится только с иконкой,
 section — только для пары title/description. Legacy grid сохраняет прежние отступы
@@ -118,7 +128,46 @@ Raw замер [width:undefined](../../../tests/browser/fixtures/ant-design-noti
 пустую очередь. Общая модель очереди находится в notice-queue.model.svelte.ts,
 DOM-видимость и фокус — в notice.dom.ts; ими также пользуются Message и Alert.
 
-Первая версия не поддерживает collapsing stack, showProgress, getContainer,
-глобальный static API/config, onClick на карточке и semantic classNames/styles.
-Устаревшие message/btn заменены title/actions.
+## Стек и контейнер
+
+Стек по умолчанию сворачивается, когда в одном placement больше трёх активных
+карточек. `stack: { threshold: 2 }` задаёт свой порог, `stack: false`
+держит список раскрытым. В свёрнутом виде видны до трёх свежих карточек.
+Наведение или фокус внутри раскрывают список. Наведение приостанавливает
+таймеры с `pauseOnHover` в текущем placement. При явно заданном `stack`
+или при превышении порога самые свежие карточки ближе к краю viewport.
+Обычный список в пределах порога сохраняет порядок вставки.
+
+`getContainer` выбирает узел для popover. Метод вызывается в браузере без
+аргументов. При пустом результате используется `ConfigProvider.getPopupContainer`,
+затем `document.body`. Без обоих getter элемент остаётся в DOM-контексте
+держателя. Смена контейнера пересоздаёт списки и сохраняет очередь и таймеры.
+`rtl` переопределяет направление провайдера. `onAllRemoved` срабатывает,
+когда последняя карточка завершила уход и очередь пуста.
+
+## Семантическое оформление
+
+`classNames` и `styles` принимают объект слотов либо функцию с аргументом
+`{ props }`. Для списка props содержат настройки держателя. Для отдельной
+карточки они содержат конфигурацию вызова. `list` и `listContent` относятся
+к placement. `root`, `wrapper`, `icon`, `section`, `title`,
+`description`, `actions`, `close` и `progress` относятся к карточке.
+Стили задаются строками inline CSS. Слои провайдера, держателя и карточки
+объединяются в этом порядке. Явный style карточки применяется последним.
+
+## Сверка с Ant Design 6.6.8
+
+`createNotification` и `NotificationHolder` соответствуют контекстному
+`notification.useNotification`. В App тот же экземпляр доступен через
+`App.useApp().notification`. В закреплённом справочнике глобальные методы
+помечены deprecated. Устаревшим полям message и btn соответствуют title и actions.
+[Исходный справочник](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/notification/index.en-US.md#examples)
+
+В двух прогонах эталона FIFO убирал карточку без вызова `onClose`. Svelte
+вызывает `onClose` при вытеснении. Измерения включают оформление, иконки и
+callbacks закрытия, несколько placements, смену контейнера и App defaults,
+раскладку стека и ход индикатора времени.
+[Исходные замеры](../../../tests/browser/fixtures/ant-design-notification-api-reference.json) ·
+[Браузерная проверка](../../../tests/browser/notification-api.spec.ts) ·
+[SSR и типы](../../../tests/package/notification-api.ssr.test.ts)
 

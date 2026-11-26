@@ -1,36 +1,55 @@
 <script lang="ts">
+  // Одна поверхность и один владелец таймеров для всех placements. Смена цели
+  // portal пересоздаёт списки, сохраняя внешний экземпляр и его очередь.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getNotificationPrefixCss } from './notification-prefix.engine';
-  import NotificationNotice from './NotificationNotice.svelte';
+  import NotificationList from './NotificationList.svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers, type InlineStyleLayer } from './inline-style.engine';
   import { notificationHolderKey, notificationPlacements } from './notification.model.svelte.js';
-  import { connectNoticeSurface } from './notice.dom';
-  import type { NotificationHolderProps } from './notification.types';
+  import { createNoticeContainer } from './notice-container.model.svelte';
+  import { resolveNoticeAppearance } from './notice-semantic.engine';
+  import type {
+    NotificationHolderProps, NotificationSemanticName, NotificationSemanticProps
+  } from './notification.types';
 
   let {
     notification,
-    prefixCls: customizePrefixCls,
-    top = 24,
-    bottom = 24,
     id,
     class: className = '',
-    style
+    style,
+    ...overrides
   }: NotificationHolderProps = $props();
   const config = useConfig();
-  let componentPrefix = $derived(config.getPrefixCls('notification', customizePrefixCls));
+  let runtime = $derived(notification[notificationHolderKey]);
+  let options = $derived({ ...runtime.options, ...overrides });
+  let componentPrefix = $derived(config.getPrefixCls('notification', options.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefixCss = $derived(getNotificationPrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Notification');
   let anchor = $state<HTMLSpanElement>();
   let surface = $state<HTMLDivElement>();
-  let runtime = $derived(notification[notificationHolderKey]);
   let notices = $derived(runtime.notices);
-  let resolvedTop = $derived(Number.isFinite(top) && top >= 0 ? top : 24);
-  let resolvedBottom = $derived(Number.isFinite(bottom) && bottom >= 0 ? bottom : 24);
+  const slots: readonly NotificationSemanticName[] = [
+    'list', 'listContent', 'root', 'wrapper', 'icon', 'section', 'title',
+    'description', 'actions', 'close', 'progress'
+  ];
+  let appearance = $derived(resolveNoticeAppearance<NotificationSemanticName, NotificationSemanticProps>(
+    slots, options, options, config.notification
+  ));
+  let rtl = $derived(options.rtl ?? config.direction === 'rtl');
+  let resolvedTop = $derived(resolveOffset(options.top));
+  let resolvedBottom = $derived(resolveOffset(options.bottom));
+  let placementStyle = $derived(serializeInlineStyleLayers([
+    appearance.styles.list,
+    [
+      ['--notification-top', options.top === undefined ? '' : `${resolvedTop}px`],
+      ['--notification-bottom', options.bottom === undefined ? '' : `${resolvedBottom}px`]
+    ]
+  ]));
   let rootLayers = $derived<readonly InlineStyleLayer[]>([
     componentTheme.style,
     style,
@@ -40,10 +59,25 @@
     ]
   ]);
   let rootStyle = $derived(serializeInlineStyleLayers(rootLayers));
+  const container = createNoticeContainer(
+    () => anchor,
+    () => ({ getContainer: options.getContainer, getPopupContainer: config.getPopupContainer }),
+    () => ({ node: surface, onVisible: runtime.setVisible }),
+    () => rootLayers
+  );
+  let observedRuntime: typeof runtime | undefined;
+  let hadNotices = false;
+
+  function resolveOffset(value: number | undefined) {
+    return value !== undefined && Number.isFinite(value) && value >= 0 ? value : 24;
+  }
 
   function connectRootStyle(node: HTMLDivElement) {
     const update = connectInlineStyle(node);
-    $effect(() => update(rootLayers));
+    $effect(() => {
+      update(rootLayers);
+      container.syncTheme();
+    });
   }
 
   function connectHost(node: HTMLSpanElement) {
@@ -58,12 +92,18 @@
   }
 
   $effect(() => {
-    const node = surface;
-    const origin = anchor;
     const current = runtime;
-    if (node
-      && origin) {
-      return untrack(() => connectNoticeSurface(node, origin, current.setVisible));
+    if (observedRuntime !== current) {
+      observedRuntime = current;
+      hadNotices = false;
+    }
+
+    if (notices.length) {
+      hadNotices = true;
+    }
+    else if (hadNotices) {
+      hadNotices = false;
+      untrack(() => options.onAllRemoved?.());
     }
   });
 </script>
@@ -73,32 +113,31 @@
   .ant-notification-surface { position: fixed; inset: auto; top: var(--ant-svelte-notice-viewport-top, 0px); left: 0; width: 100%; height: var(--ant-svelte-notice-viewport-height, 100dvh); max-width: 100vw; max-height: none; margin: 0; border: 0; padding: 0; overflow: hidden; background: transparent; pointer-events: none; outline: none; }
   .ant-notification-surface:not(:popover-open) { display: none; }
   .ant-notification-surface::backdrop { pointer-events: none; background: transparent; }
-  .ant-notification-surface > [data-ant-notification-root][data-ant-notification-list] { position: absolute; height: auto; max-width: 100%; max-height: calc(100% - max(0px, var(--notification-top) - var(--ant-margin-lg))); }
-  .ant-notification-surface > [data-ant-notification-root][data-ant-notification-list][data-placement^='bottom'] { max-height: calc(100% - max(0px, var(--notification-bottom) - var(--ant-margin-lg))); }
-  .ant-notification-surface [data-ant-notification-content] { pointer-events: none; }
-  [data-placement^='bottom'] > [data-ant-notification-content] { flex-direction: column-reverse; }
+  .ant-notification-surface > :global([data-ant-notification-root][data-ant-notification-list]) { position: absolute; height: auto; max-width: 100%; max-height: calc(100% - max(0px, var(--notification-top) - var(--ant-margin-lg))); }
+  .ant-notification-surface > :global([data-ant-notification-root][data-ant-notification-list][data-placement^='bottom']) { max-height: calc(100% - max(0px, var(--notification-bottom) - var(--ant-margin-lg))); }
+  .ant-notification-surface :global([data-ant-notification-content]) { pointer-events: none; }
 </style>
 
 <span bind:this={anchor} class="ant-notification-anchor" aria-hidden="true" {@attach connectHost}></span>
 {#key notification}
   {#if notices.length}
-    {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`notification-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div bind:this={surface}
-      data-ant-notification-prefix={componentPrefix} data-ant-notification-root-prefix={rootPrefix} popover="manual" {id} dir={config.direction}
-      class={['ant-notification-surface ant-notification-css-var', componentTheme.className, className]}
-      style={untrack(() => rootStyle)} {@attach connectRootStyle}>
-      {#each notificationPlacements as placement}
-        {@const items = notices.filter((notice) => notice.placement === placement)}
-        {#if items.length}
-          <div data-ant-notification-root data-ant-notification-list
-            data-ant-notification-prefix={componentPrefix} data-ant-notification-root-prefix={rootPrefix} class={[
-              `${componentPrefix} ${componentPrefix}-list`,
-              `${componentPrefix}-${placement}`,
-              config.direction === 'rtl' && `${componentPrefix}-rtl`
-            ]} data-placement={placement}>
-            <div data-ant-notification-content class={`${componentPrefix}-list-content`}>{#each items as notice (notice.id)}<NotificationNotice {notice} {notification} prefixCls={componentPrefix} />{/each}</div>
-          </div>
-        {/if}
-      {/each}
-    </div>
+    {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`notification-prefix:${componentPrefix}:${rootPrefix}`} />{/if}
+    {#key container.key}
+      <div bind:this={surface}
+        data-ant-notification-prefix={componentPrefix} data-ant-notification-root-prefix={rootPrefix}
+        popover="manual" {id} dir={rtl ? 'rtl' : 'ltr'}
+        class={['ant-notification-surface ant-notification-css-var', componentTheme.className, className]}
+        style={untrack(() => rootStyle)} {@attach connectRootStyle}>
+        {#each notificationPlacements as placement}
+          {@const items = notices.filter(notice => notice.placement === placement)}
+          {#if items.length}
+            <NotificationList {notification} notices={items} {placement} prefixCls={componentPrefix}
+              {rootPrefix} {rtl} {options} provider={config.notification} {appearance}
+              listStyle={placementStyle}
+            />
+          {/if}
+        {/each}
+      </div>
+    {/key}
   {/if}
 {/key}

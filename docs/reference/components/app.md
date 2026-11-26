@@ -62,8 +62,10 @@ handles с false. `App.message` дополнительно принимает `r
 `stack`, `transitionName`, `classNames` и `styles`. Эти настройки управляют
 поверхностью общего экземпляра. [Message](message.md)
 
-Полные React semantic/render/stack/container options для Notification и React
-custom root components остаются за пределами этого этапа.
+`App.notification` принимает `getContainer`, `rtl`, `stack`, `showProgress`,
+`closeIcon`, `classNames`, `styles` и `onAllRemoved`. [Notification](notification.md)
+
+React custom root components остаются за пределами этого этапа.
 
 Основа сверки — [исходные снимки App](../../../tests/browser/fixtures/ant-design-app-reference.json).
 Все девять root-примеров, включая global-prefix, проверяются. Проверки:

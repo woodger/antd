@@ -1,0 +1,1825 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "kind": "semantics",
+      "frames": [
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "Decorated",
+                "description": "Description",
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "warning",
+                "native": [
+                  "semantic-notice",
+                  "Native title",
+                  "Native name"
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [
+                      "holder-root",
+                      "notice-extra",
+                      "notice-root",
+                      "provider-extra",
+                      "provider-root"
+                    ],
+                    "styles": {
+                      "--winner": "inline",
+                      "--provider": "root",
+                      "--inline-provider": "root",
+                      "--holder": "root",
+                      "--notice": "root",
+                      "--inline-local": "root"
+                    }
+                  },
+                  "title": {
+                    "classes": [
+                      "holder-title",
+                      "notice-title",
+                      "provider-title"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "title",
+                      "--holder": "title",
+                      "--notice": "title"
+                    }
+                  },
+                  "description": {
+                    "classes": [
+                      "holder-description",
+                      "notice-description",
+                      "provider-description"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "description",
+                      "--holder": "description",
+                      "--notice": "description"
+                    }
+                  },
+                  "wrapper": {
+                    "classes": [
+                      "holder-wrapper",
+                      "notice-wrapper",
+                      "provider-wrapper"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "wrapper",
+                      "--holder": "wrapper",
+                      "--notice": "wrapper"
+                    }
+                  },
+                  "section": {
+                    "classes": [
+                      "holder-section",
+                      "notice-section",
+                      "provider-section"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "section",
+                      "--holder": "section",
+                      "--notice": "section"
+                    }
+                  },
+                  "icon": {
+                    "classes": [
+                      "holder-icon",
+                      "notice-icon",
+                      "provider-icon"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "icon",
+                      "--holder": "icon",
+                      "--notice": "icon"
+                    }
+                  },
+                  "actions": {
+                    "classes": [
+                      "holder-actions",
+                      "notice-actions",
+                      "provider-actions"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "actions",
+                      "--holder": "actions",
+                      "--notice": "actions"
+                    }
+                  },
+                  "close": {
+                    "classes": [
+                      "holder-close",
+                      "notice-close",
+                      "provider-close"
+                    ],
+                    "styles": {
+                      "--winner": "notice",
+                      "--provider": "close",
+                      "--holder": "close",
+                      "--notice": "close"
+                    }
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [
+                "holder-list",
+                "provider-list"
+              ],
+              "styles": {
+                "--winner": "holder",
+                "--provider": "list",
+                "--holder": "list"
+              }
+            },
+            "listContent": {
+              "classes": [
+                "holder-listContent",
+                "provider-listContent"
+              ],
+              "styles": {
+                "--winner": "holder",
+                "--provider": "listContent",
+                "--holder": "listContent"
+              }
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ]
+      ],
+      "sameNode": null,
+      "timing": null,
+      "containers": [],
+      "events": [
+        "action",
+        [
+          "click",
+          "DIV"
+        ],
+        "notice-close"
+      ],
+      "args": {
+        "providerClasses": {
+          "title": null,
+          "key": null,
+          "duration": false,
+          "placement": null,
+          "top": null,
+          "showProgress": null
+        },
+        "holderClasses": {
+          "title": null,
+          "key": null,
+          "duration": false,
+          "placement": null,
+          "top": null,
+          "showProgress": null
+        },
+        "providerStyles": {
+          "title": null,
+          "key": null,
+          "duration": false,
+          "placement": null,
+          "top": null,
+          "showProgress": null
+        },
+        "holderStyles": {
+          "title": null,
+          "key": null,
+          "duration": false,
+          "placement": null,
+          "top": null,
+          "showProgress": null
+        },
+        "noticeClasses": {
+          "title": "Decorated",
+          "key": 0,
+          "duration": null,
+          "placement": null,
+          "top": null,
+          "showProgress": null
+        },
+        "noticeStyles": {
+          "title": "Decorated",
+          "key": 0,
+          "duration": null,
+          "placement": null,
+          "top": null,
+          "showProgress": null
+        }
+      }
+    },
+    {
+      "kind": "closable",
+      "frames": [
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "Inherited",
+                "description": null,
+                "role": "alert",
+                "rect": 184,
+                "offset": "160px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "Provider",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Without close",
+                "description": null,
+                "role": "alert",
+                "rect": 104,
+                "offset": "80px",
+                "opacity": "1",
+                "type": null,
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": null,
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": null,
+                  "section": null,
+                  "icon": null,
+                  "actions": null,
+                  "close": null,
+                  "progress": null
+                }
+              },
+              {
+                "title": "Local close",
+                "description": null,
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": null,
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "Local",
+                  "Local close button"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": null,
+                  "section": null,
+                  "icon": null,
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ]
+      ],
+      "sameNode": null,
+      "timing": null,
+      "containers": [],
+      "events": [
+        "button-close",
+        "notice-close"
+      ],
+      "args": {}
+    },
+    {
+      "kind": "placement",
+      "frames": [
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "bottomLeft",
+            "notices": [
+              {
+                "title": "Three",
+                "description": null,
+                "role": "status",
+                "rect": 612,
+                "offset": "0px",
+                "opacity": "1",
+                "type": null,
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": null,
+                  "section": null,
+                  "icon": null,
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          },
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "Two",
+                "description": null,
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ]
+      ],
+      "sameNode": null,
+      "timing": null,
+      "containers": [],
+      "events": [],
+      "args": {}
+    },
+    {
+      "kind": "stack-default",
+      "frames": [
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "One",
+                "description": null,
+                "role": "alert",
+                "rect": 56,
+                "offset": "24px",
+                "opacity": "0",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Two",
+                "description": null,
+                "role": "alert",
+                "rect": 48,
+                "offset": "16px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Three",
+                "description": null,
+                "role": "alert",
+                "rect": 36,
+                "offset": "8px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Four",
+                "description": null,
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": false,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ],
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "One",
+                "description": null,
+                "role": "alert",
+                "rect": 264,
+                "offset": "240px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Two",
+                "description": null,
+                "role": "alert",
+                "rect": 184,
+                "offset": "160px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Three",
+                "description": null,
+                "role": "alert",
+                "rect": 104,
+                "offset": "80px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Four",
+                "description": null,
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ]
+      ],
+      "sameNode": null,
+      "timing": null,
+      "containers": [],
+      "events": [],
+      "args": {}
+    },
+    {
+      "kind": "stack-disabled",
+      "frames": [
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "One",
+                "description": null,
+                "role": "alert",
+                "rect": 264,
+                "offset": "240px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Two",
+                "description": null,
+                "role": "alert",
+                "rect": 184,
+                "offset": "160px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Three",
+                "description": null,
+                "role": "alert",
+                "rect": 104,
+                "offset": "80px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "Four",
+                "description": null,
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": false,
+            "expanded": false,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ]
+      ],
+      "sameNode": null,
+      "timing": null,
+      "containers": [],
+      "events": [],
+      "args": {}
+    },
+    {
+      "kind": "portal",
+      "frames": [
+        [
+          {
+            "prefix": "portal-notification",
+            "placement": "bottomRight",
+            "notices": [
+              {
+                "title": "Bottom",
+                "description": null,
+                "role": "alert",
+                "rect": 636,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": true,
+            "top": "43px",
+            "bottom": "0px",
+            "target": "target-one"
+          },
+          {
+            "prefix": "portal-notification",
+            "placement": "topLeft",
+            "notices": [
+              {
+                "title": "Top",
+                "description": null,
+                "role": "alert",
+                "rect": 43,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": true,
+            "top": "43px",
+            "bottom": "0px",
+            "target": "target-one"
+          }
+        ],
+        [
+          {
+            "prefix": "portal-notification",
+            "placement": "bottomRight",
+            "notices": [
+              {
+                "title": "Bottom",
+                "description": null,
+                "role": "alert",
+                "rect": 636,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "43px",
+            "bottom": "0px",
+            "target": "target-two"
+          },
+          {
+            "prefix": "portal-notification",
+            "placement": "topLeft",
+            "notices": [
+              {
+                "title": "Top",
+                "description": null,
+                "role": "alert",
+                "rect": 43,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "43px",
+            "bottom": "0px",
+            "target": "target-two"
+          }
+        ]
+      ],
+      "sameNode": false,
+      "timing": null,
+      "containers": [
+        [
+          "target-one",
+          0
+        ],
+        [
+          "target-two",
+          0
+        ]
+      ],
+      "events": [],
+      "args": {}
+    },
+    {
+      "kind": "app",
+      "frames": [
+        [
+          {
+            "prefix": "app-notification",
+            "placement": "topLeft",
+            "notices": [
+              {
+                "title": "Old default",
+                "description": null,
+                "role": "alert",
+                "rect": 0,
+                "offset": "0px",
+                "opacity": "1",
+                "type": null,
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "Shared",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": null,
+                  "section": null,
+                  "icon": null,
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": false,
+            "expanded": false,
+            "rtl": true,
+            "top": "0px",
+            "bottom": "52px",
+            "target": "target-one"
+          }
+        ],
+        [
+          {
+            "prefix": "app-notification",
+            "placement": "bottomRight",
+            "notices": [
+              {
+                "title": "New default",
+                "description": null,
+                "role": "alert",
+                "rect": 584,
+                "offset": "0px",
+                "opacity": "1",
+                "type": null,
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "Shared",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": null,
+                  "section": null,
+                  "icon": null,
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": false,
+            "expanded": false,
+            "rtl": false,
+            "top": "0px",
+            "bottom": "52px",
+            "target": "target-two"
+          },
+          {
+            "prefix": "app-notification",
+            "placement": "topLeft",
+            "notices": [
+              {
+                "title": "Old default",
+                "description": null,
+                "role": "alert",
+                "rect": 0,
+                "offset": "0px",
+                "opacity": "1",
+                "type": null,
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "Shared",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": null,
+                  "section": null,
+                  "icon": null,
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": false,
+            "expanded": false,
+            "rtl": false,
+            "top": "0px",
+            "bottom": "52px",
+            "target": "target-two"
+          }
+        ]
+      ],
+      "sameNode": false,
+      "timing": null,
+      "containers": [
+        [
+          "target-one",
+          0
+        ],
+        [
+          "target-two",
+          0
+        ]
+      ],
+      "events": [
+        "all-removed"
+      ],
+      "args": {}
+    },
+    {
+      "kind": "progress",
+      "frames": [
+        [
+          {
+            "prefix": "ant-notification",
+            "placement": "topRight",
+            "notices": [
+              {
+                "title": "Timed",
+                "description": null,
+                "role": "alert",
+                "rect": 184,
+                "offset": "160px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": [
+                  "PROGRESS",
+                  100
+                ],
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": {
+                    "classes": [
+                      "notice-progress"
+                    ],
+                    "styles": {
+                      "--winner": "bar"
+                    }
+                  }
+                }
+              },
+              {
+                "title": "No timeout",
+                "description": null,
+                "role": "alert",
+                "rect": 104,
+                "offset": "80px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              },
+              {
+                "title": "No progress",
+                "description": null,
+                "role": "alert",
+                "rect": 24,
+                "offset": "0px",
+                "opacity": "1",
+                "type": "info",
+                "native": [
+                  "",
+                  "",
+                  null
+                ],
+                "close": [
+                  "",
+                  "Close"
+                ],
+                "progress": null,
+                "styles": {
+                  "root": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "title": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "description": null,
+                  "wrapper": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "section": null,
+                  "icon": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "actions": null,
+                  "close": {
+                    "classes": [],
+                    "styles": {}
+                  },
+                  "progress": null
+                }
+              }
+            ],
+            "list": {
+              "classes": [],
+              "styles": {}
+            },
+            "listContent": {
+              "classes": [],
+              "styles": {}
+            },
+            "stack": true,
+            "expanded": true,
+            "rtl": false,
+            "top": "",
+            "bottom": "",
+            "target": "body"
+          }
+        ]
+      ],
+      "sameNode": null,
+      "timing": {
+        "moved": true,
+        "stableWhileHovered": true,
+        "resumed": true
+      },
+      "containers": [],
+      "events": [
+        "timer-close"
+      ],
+      "args": {}
+    }
+  ]
+}

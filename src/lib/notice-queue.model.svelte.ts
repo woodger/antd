@@ -9,6 +9,7 @@ export interface NoticeConfig {
   duration?: number;
   pauseOnHover?: boolean;
   onClose?: () => void;
+  onDismiss?: () => void;
 }
 export interface NoticeOptions {
   duration?: number;
@@ -20,6 +21,7 @@ export type QueueNotice<Config> = Omit<
   'onClose'
   | 'duration'
   | 'pauseOnHover'
+  | 'onDismiss'
 > & {
   readonly id: number;
   readonly version: number;
@@ -46,6 +48,7 @@ interface Entry<Config> {
   timerVersion: number;
   cancel?: () => void;
   onClose?: () => void;
+  onDismiss?: () => void;
   completion: Promise<boolean>;
   resolve: (closed: boolean) => void;
 }
@@ -65,7 +68,8 @@ function noticeHandle(close: () => void, completion: Promise<boolean>): NoticeHa
 export function createNoticeQueue<Config extends NoticeConfig>(
   options: NoticeOptions,
   connectionError: string,
-  defaultDuration = 3
+  defaultDuration = 3,
+  getList?: (notice: QueueNotice<Config>) => string
 ) {
   function resolveDefaults(config: NoticeOptions) {
     return {
@@ -82,7 +86,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
   const entries = new Map<number, Entry<Config>>();
   let notices = $state.raw<readonly QueueNotice<Config>[]>([]);
   let visible = $state(false);
-  let listHovered = false;
+  const hoveredLists = new Set<string | undefined>();
+  let timerRevision = $state(0);
+  let nextTimerRevision = 0;
   let state: 'fresh' | 'mounted' | 'detached' = 'fresh';
   let clock: NoticeClock | undefined;
   let nextId = 0;
@@ -97,6 +103,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       entry.cancel();
       entry.cancel = undefined;
       entry.remaining = Math.max(0, entry.remaining - Math.max(0, clock!.now() - entry.started));
+      timerRevision = ++nextTimerRevision;
     }
   }
 
@@ -108,7 +115,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       || entry.cancel
       || entry.duration === 0
       || (entry.pauseOnHover
-        && (entry.hovered || listHovered))
+        && (entry.hovered || hoveredLists.has(getList?.(entry.notice))))
       || entry.focused) {
       return;
     }
@@ -136,9 +143,10 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         arm(entry);
       }
       else {
-        closeEntries([entry]);
+        closeEntries([entry], true);
       }
     }, Math.min(entry.remaining, 2_147_483_647));
+    timerRevision = ++nextTimerRevision;
   }
 
   function complete(id: number, version: number) {
@@ -153,7 +161,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
     entry.resolve(true);
   }
 
-  function closeEntries(requested: readonly Entry<Config>[]) {
+  function closeEntries(requested: readonly Entry<Config>[], dismissed = false) {
     const closing = requested.filter(
       (entry) => entries.get(entry.notice.id) === entry && !entry.notice.closing
     );
@@ -169,8 +177,11 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       if (entries.get(entry.notice.id) !== entry)
         continue;
       const callback = entry.onClose;
+      const dismiss = dismissed ? entry.onDismiss : undefined;
       entry.onClose = undefined;
+      entry.onDismiss = undefined;
       try {
+        dismiss?.();
         callback?.();
       }
       catch (error) {
@@ -206,7 +217,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         (item) => !item.notice.closing && item.notice.key === config.key
       )
       : undefined;
-    const { duration: configuredDuration, pauseOnHover, onClose, ...content } = config;
+    const { duration: configuredDuration, pauseOnHover, onClose, onDismiss, ...content } = config;
     const duration = durationOf(configuredDuration, defaults.duration);
     if (entry) {
       stop(entry);
@@ -242,6 +253,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
     entry.remaining = duration;
     entry.pauseOnHover = pauseOnHover ?? defaults.pauseOnHover;
     entry.onClose = onClose;
+    entry.onDismiss = onDismiss;
     publish();
     arm(entry);
 
@@ -284,10 +296,11 @@ export function createNoticeQueue<Config extends NoticeConfig>(
           connected = false;
           state = 'detached';
           visible = false;
-          listHovered = false;
+          hoveredLists.clear();
           for (const entry of entries.values()) {
             stop(entry);
             entry.onClose = undefined;
+            entry.onDismiss = undefined;
             entry.resolve(false);
           }
           entries.clear();
@@ -331,14 +344,17 @@ export function createNoticeQueue<Config extends NoticeConfig>(
           arm(entry);
         }
       },
-      /** В раскрытом стеке пауза действует на все записи с pauseOnHover. */
-      hoverList(next: boolean) {
-        if (next === listHovered) {
+      /** В раскрытом стеке пауза распространяется на записи его placement. */
+      hoverList(next: boolean, list?: string) {
+        if (next === hoveredLists.has(list)) {
           return;
         }
 
-        listHovered = next;
+        if (next) hoveredLists.add(list);
+        else hoveredLists.delete(list);
+
         for (const entry of entries.values()) {
+          if (getList?.(entry.notice) !== list) continue;
           if (next && entry.pauseOnHover) {
             stop(entry);
           }
@@ -346,6 +362,18 @@ export function createNoticeQueue<Config extends NoticeConfig>(
             arm(entry);
           }
         }
+      },
+      /** Прогресс читает часы очереди, включая паузу и текущее состояние таймера. */
+      timer(id: number) {
+        void timerRevision;
+        const entry = entries.get(id);
+        if (!entry || entry.duration === 0) {
+          return undefined;
+        }
+
+        const running = Boolean(clock && entry.cancel);
+        const elapsed = clock && entry.cancel ? Math.max(0, clock.now() - entry.started) : 0;
+        return { remaining: Math.max(0, entry.remaining - elapsed) / entry.duration, running };
       },
       focus(id: number, next: boolean) {
         const entry = entries.get(id);
@@ -364,7 +392,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       close(id: number) {
         const entry = entries.get(id);
         if (entry)
-          closeEntries([entry]);
+          closeEntries([entry], true);
       },
       complete
     }

@@ -24344,7 +24344,7 @@
       "name": "Notification",
       "category": "feedback",
       "scope": "target",
-      "scopeReason": "Ранее реализованный публичный API; проверяется текущее покрытие.",
+      "scopeReason": "Сверены контекстные вызовы и настройки Notification. Глобальные методы в справочнике 6.6.8 помечены deprecated.",
       "upstreamPath": "components/notification",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -24402,16 +24402,30 @@
         "tests/browser/fixtures/ant-design-notification-prefix-reference.json",
         "tests/browser/notification-prefix-metrics.ts",
         "tests/browser/notification-prefix.spec.ts",
-        "tests/package/notification-prefix.ssr.test.ts"
+        "tests/package/notification-prefix.ssr.test.ts",
+        "src/lib/NotificationList.svelte",
+        "src/lib/notification.model.svelte.ts",
+        "tests/browser/fixtures/ant-design-notification-api-reference.json",
+        "tests/browser/notification-api.spec.ts",
+        "tests/package/notification-api.ssr.test.ts"
       ],
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
-          "state": "unreviewed",
+          "title": "Контекстная очередь Notification и интеграция с App",
+          "state": "supported",
           "requiredForV1": true,
-          "evidence": [],
-          "note": "Публичная реализация есть; детализация возможностей в реестре ещё не завершена."
+          "evidence": [
+            "docs/reference/components/notification.md",
+            "src/lib/notification.model.svelte.ts",
+            "src/lib/notification.model.test.ts",
+            "src/lib/App.svelte",
+            "tests/browser/fixtures/ant-design-notification-api-reference.json",
+            "tests/browser/notification-api.spec.ts",
+            "tests/browser/notification.spec.ts",
+            "tests/package/notification-api.ssr.test.ts"
+          ],
+          "note": "createNotification и NotificationHolder соответствуют notification.useNotification; четыре типизированных метода и open возвращают void. Ключи, FIFO по нескольким placements, explicit 0/false, focus/hover и скрытие, сроки, закрытие, нативный возврат фокуса, App defaults и SSR сверены. Пустые строки title/description, простая раскладка до порога и inline-контекст без getter сохраняют договорённости Svelte. Устаревшие message/btn и глобальные методы, обозначенные deprecated в components/notification/index.en-US.md, исключены из объёма."
         },
         {
           "id": "component-theme",
@@ -24436,7 +24450,7 @@
             "tests/package/notification-theme.ssr.test.ts",
             "docs/reference/theme-context.md"
           ],
-          "note": "Семь defaults: zIndexPopup=zIndexPopupBase+1050, width384, progressBg и четыре undefined status backgrounds; последние fallback на colorBgElevated. ProgressBg готовится без отсутствующего showProgress API. Финальные overrides, algorithms, aliases, дробные values/CSS lengths, нули/undefined и custom prefix. 17 UMD-тем / 340 raw CSS-состояний: status/plain, slots, custom icon/hover, bottomLeft, девять scopes и notice/Holder variables priority. Source comparison получает native close min24/padding0, root/actions max-width100% и text min-width0/anywhere через public semantic styles. Wrapper существует только с icon, section только с обоими title/description; actions вынесены из text section в source sibling position; stable DOM, source flow-root BFC и legacy grid сохраняют controls, геометрию legacy, draft/selection/focus и callbacks. Source icon line box и отсутствие type tint у custom icon включены только в source theme. Theme updates/reset сохраняют viewport styles, очередь/deadlines; SSR не запускает timers, пустой Holder читает текущую тему. Явные status values, совпадающие с global alias, сохраняются отдельно от algorithm-derived aliases; native canonical bridge исправляет source prefix background. Raw uppercase matrix избегает source equality bug; в custom-prefix matcher только background-color берётся из эквивалентного ant-prefix профиля. Полный semantic/config/static/stack/showProgress API и общий аудит ещё не завершены."
+          "note": "Семь defaults: zIndexPopup=zIndexPopupBase+1050, width384, progressBg и четыре undefined status backgrounds; последние fallback на colorBgElevated. ProgressBg используется в нативном индикаторе времени. Финальные overrides, algorithms, aliases, дробные values/CSS lengths, нули/undefined и custom prefix. 17 UMD-тем / 340 raw CSS-состояний: status/plain, slots, custom icon/hover, bottomLeft, девять scopes и notice/Holder variables priority. Source comparison получает native close min24/padding0, root/actions max-width100% и text min-width0/anywhere через public semantic styles. Wrapper существует только с icon, section только с обоими title/description; actions вынесены из text section в source sibling position; stable DOM, source flow-root BFC и legacy grid сохраняют controls, геометрию legacy, draft/selection/focus и callbacks. Source icon line box и отсутствие type tint у custom icon включены только в source theme. Theme updates/reset сохраняют viewport styles, очередь/deadlines; SSR не запускает timers, пустой Holder читает текущую тему. Явные status values, совпадающие с global alias, сохраняются отдельно от algorithm-derived aliases; native canonical bridge исправляет source prefix background. Raw uppercase matrix избегает source equality bug; в custom-prefix matcher только background-color берётся из эквивалентного ant-prefix профиля. Семантическое оформление и progress покрывает extended-notification-api."
         },
         {
           "id": "source-status-background-observation",
@@ -24466,11 +24480,32 @@
         },
         {
           "id": "extended-notification-api",
-          "title": "Полный static/config/semantic API, stack и встроенный progress",
-          "state": "missing",
+          "title": "Контекстные оформление, контейнер, стек и индикатор времени",
+          "state": "supported",
+          "requiredForV1": true,
+          "evidence": [
+            "src/lib/NotificationList.svelte",
+            "src/lib/NotificationHolder.svelte",
+            "src/lib/NotificationNotice.svelte",
+            "src/lib/notice-container.model.svelte.ts",
+            "src/lib/ConfigProvider.svelte",
+            "tests/browser/fixtures/ant-design-notification-api-reference.json",
+            "tests/browser/notification-api.spec.ts",
+            "tests/package/notification-api.ssr.test.ts"
+          ],
+          "note": "Восемь профилей официального UMD 6.6.8 повторены дважды. Одиннадцать семантических слотов, callbacks props, приоритет ConfigProvider.notification, holder и записи, root props и native onClick. CloseIcon, aria-label и порядок closable.onClose/onClose. Portal и fallback без аргументов, смена контейнера без потери внешнего focus/selection, top/bottom=0, RTL, новые App defaults и onAllRemoved. Стек по умолчанию включён с порогом три, свёрнутая и раскрытая раскладки сверены по исходным координатам. Клавиатурный фокус раскрывает стек Svelte; hover-пауза ограничена placement. Нативный progress читает оставшееся время той же очереди, следует паузам, поддерживает progressBg и индивидуальный showProgress=false."
+        },
+        {
+          "id": "source-notification-fifo-close",
+          "title": "Наблюдение upstream: FIFO удаляет запись без onClose",
+          "state": "partial",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Public createNotification/NotificationHolder сохраняет native surface/queue API. Глобальные static API/config, ConfigProvider.notification, getContainer, semantic classNames/styles, collapsing stack, showProgress и card onClick ещё не перенесены. ProgressBg declaration не означает поддержку progress UI; полный аудит семейства и exact delegated referenceVersion остаются отдельной работой."
+          "evidence": [
+            "tests/browser/fixtures/ant-design-notification-api-reference.json",
+            "tests/browser/notification-api.spec.ts",
+            "docs/reference/components/notification.md"
+          ],
+          "note": "Оба замера Ant Design 6.6.8 с maxCount=2 и тремя placements показали вытеснение самой старой карточки без её onClose. Svelte сохраняет вызов onClose при FIFO, в том числе при вытеснении до первого рендера."
         },
         {
           "id": "component-prefix",
@@ -24497,7 +24532,7 @@
             "tests/browser/notification-prefix.spec.ts",
             "tests/package/notification-prefix.ssr.test.ts"
           ],
-          "note": "30 raw UMD конфигураций в normal/nested/reset scopes, включая шесть placements, statuses, icon/title/close/actions, style, component aliases/cssVar и App.notification.prefixCls. Local nonempty prefix wins; empty/undefined наследуют ConfigProvider. 45 CSS rules побайтно совпадают с прежним vendor body; canonical component tokens и status background bridge сохранены, private icon/title metrics используют отдельный общий namespace. Все raw cases/live observations предшествуют nativeStyle counterparts с public close24/padding0 и wrapping guards. Три raw live transitions сохраняют notice/editor DOM и показывают Source stale status classes; public same-key refresh counterparts отделены при duration=0, без заявления о совпадении timers. Native обновляет все классы без reopening, сохраняет queue, native popover/viewport/motion, ARIA IDs, draft/focus/selection и callbacks; отдельные holder/App scenarios защищают исходные deadlines. Notification methods по-прежнему возвращают void. Делегированная Notification/list логика изучена в @rc-component/notification 2.1.1; новый runtime dependency не установлен. Полный config/semantic/static/stack/progress API и общий аудит остаются отдельно."
+          "note": "30 raw UMD конфигураций в normal/nested/reset scopes, включая шесть placements, statuses, icon/title/close/actions, style, component aliases/cssVar и App.notification.prefixCls. Local nonempty prefix wins; empty/undefined наследуют ConfigProvider. 45 CSS rules побайтно совпадают с прежним vendor body; canonical component tokens и status background bridge сохранены, private icon/title metrics используют отдельный общий namespace. Все raw cases/live observations предшествуют nativeStyle counterparts с public close24/padding0 и wrapping guards. Три raw live transitions сохраняют notice/editor DOM и показывают Source stale status classes; public same-key refresh counterparts отделены при duration=0, без заявления о совпадении timers. Native обновляет все классы без reopening, сохраняет queue, native popover/viewport/motion, ARIA IDs, draft/focus/selection и callbacks; отдельные holder/App scenarios защищают исходные deadlines. Notification methods по-прежнему возвращают void. Делегированная Notification/list логика изучена в @rc-component/notification 2.1.1; новый runtime dependency не установлен. Scope и совместное поведение со стеком зафиксированы в extended-notification-api."
         },
         {
           "id": "source-stale-prefix-status",
