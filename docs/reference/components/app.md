@@ -47,14 +47,21 @@ notification.placement применяются к следующим вызова
 изменения config; это отличие механизма контекста записано в реестре.
 
 По умолчанию root — div с исходной типографикой Ant Design. Component принимает
-HTML-тег либо false; false оставляет children/holders без дополнительного root,
-не применяет его class/style/attrs и не создаёт nativeElement. Смена тега или
-fragment-режима пересоздаёт дочернее DOM-дерево и очищает holders; те же API
+HTML-тег, Svelte-компонент или false. False выводит children и holders фрагментом,
+в этом режиме `nativeElement` равен `undefined`. Смена корня пересоздаёт дочернее
+DOM-дерево и очищает holders. Те же API
 работают после повторного подключения. Bind:nativeElement даёт текущий HTML-root
 и очищается при его удалении. Local prefixCls задаёт root-классы, иначе используется
 ConfigProvider.prefixCls + app. ConfigProvider.app
 наследует record class/style целиком; локальные class/rootClassName/style дополняют
 его, style имеет приоритет. Обычные HTML attrs передаются корню.
+
+Пользовательский корень получает children со всеми holders, строковые class и
+style, dir, HTML-атрибуты и собственные типизированные props. `AppRootProps`
+описывает общие параметры. Для передачи DOM-ref объявите `nativeElement` через
+`$bindable()` и используйте `bind:this` на элементе корня. Корень может вызывать
+`App.useApp()`. Гидратация и обновление префикса сохраняют узлы, фокус и черновик.
+[Сверка с Ant Design 6.6.8](../../../tests/browser/app-custom-root.spec.ts).
 
 В SSR App не открывает dialog/popover и не запускает таймеры. Удаление App
 закрывает поверхности, снимает inert/scroll lock и завершает ожидающие Modal
@@ -64,8 +71,6 @@ handles с false. `App.message` дополнительно принимает `r
 
 `App.notification` принимает `getContainer`, `rtl`, `stack`, `showProgress`,
 `closeIcon`, `classNames`, `styles` и `onAllRemoved`. [Notification](notification.md)
-
-React custom root components остаются за пределами этого этапа.
 
 Основа сверки — [исходные снимки App](../../../tests/browser/fixtures/ant-design-app-reference.json).
 Все девять root-примеров, включая global-prefix, проверяются. Проверки:

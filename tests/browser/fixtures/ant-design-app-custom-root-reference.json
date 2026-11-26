@@ -1,0 +1,83 @@
+{
+  "source": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "reactVersion": "18.3.1"
+  },
+  "data": {
+    "initial": {
+      "tag": "main",
+      "classes": [
+        "local-prefix-app",
+        "local-prefix-app-rtl",
+        "context-app",
+        "local-app",
+        "root-class"
+      ],
+      "color": "rgb(171, 205, 239)",
+      "paddingTop": "7px",
+      "fontSize": "20px",
+      "fontFamily": "monospace",
+      "lineHeight": "40px",
+      "direction": "rtl",
+      "rootApi": "message,modal,notification",
+      "childApi": "message,modal,notification",
+      "refMatches": true
+    },
+    "hydrated": {
+      "sameRoot": true,
+      "sameInput": true,
+      "focused": true,
+      "draft": "before hydration"
+    },
+    "revised": {
+      "tag": "main",
+      "classes": [
+        "revised-app",
+        "context-app",
+        "local-app",
+        "root-class"
+      ],
+      "color": "rgb(171, 205, 239)",
+      "paddingTop": "11px",
+      "fontSize": "20px",
+      "fontFamily": "monospace",
+      "lineHeight": "40px",
+      "direction": "ltr",
+      "rootApi": "message,modal,notification",
+      "childApi": "message,modal,notification",
+      "refMatches": true
+    },
+    "updated": {
+      "sameRoot": true,
+      "sameInput": true,
+      "focused": true,
+      "draft": "before hydration"
+    },
+    "replacement": {
+      "tag": "aside",
+      "classes": [
+        "revised-app",
+        "context-app",
+        "local-app",
+        "root-class"
+      ],
+      "color": "rgb(171, 205, 239)",
+      "paddingTop": "11px",
+      "fontSize": "20px",
+      "fontFamily": "monospace",
+      "lineHeight": "40px",
+      "direction": "ltr",
+      "rootApi": "message,modal,notification",
+      "childApi": "message,modal,notification",
+      "refMatches": false
+    },
+    "replaced": {
+      "sameRoot": false,
+      "sameInput": false,
+      "focused": false,
+      "draft": ""
+    }
+  }
+}

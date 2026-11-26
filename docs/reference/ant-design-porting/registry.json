@@ -26209,6 +26209,9 @@
         "tests/browser/fixtures/ant-design-app-reference.json",
         "tests/browser/app.spec.ts",
         "tests/package/app.ssr.test.ts",
+        "tests/browser/fixtures/ant-design-app-custom-root-reference.json",
+        "tests/browser/app-custom-root.spec.ts",
+        "tests/package/app-custom-root.ssr.test.ts",
         "docs/reference/components/app.md",
         "src/lib/ConfigProvider.svelte",
         "src/lib/config-context.ts",
@@ -26326,11 +26329,21 @@
         },
         {
           "id": "extended-app-options",
-          "title": "Полные message/notification options и custom component root",
-          "state": "missing",
+          "title": "Настройки Message и Notification и пользовательский корень App",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Текущий App принимает уже перенесённые Native MessageOptions/NotificationOptions и holder offsets. Полные React semantic/render/stack/container/progress options зависят от расширения соответствующих семейств. Root принимает HTML tag/false; custom Svelte component root ещё не перенесён. Общий prefix подключён к App; React diagnostics остаются отдельным gap."
+          "evidence": [
+            "src/lib/App.svelte",
+            "src/lib/app.types.ts",
+            "src/lib/message.types.ts",
+            "src/lib/notification.types.ts",
+            "tests/browser/message-api.spec.ts",
+            "tests/browser/notification-api.spec.ts",
+            "tests/browser/app-custom-root.spec.ts",
+            "tests/browser/fixtures/ant-design-app-custom-root-reference.json",
+            "tests/package/app-custom-root.ssr.test.ts"
+          ],
+          "note": "App наследует и передаёт контекстные настройки Message и Notification. Пользовательский Svelte component получает children с holders, class/style, dir, атрибуты и собственные props. DOM-ref передаётся по желанию корня. React 6.6.8 и Svelte сохраняют DOM, фокус, черновик и типографику при гидратации и смене параметров. При замене корня Svelte переподключает holders с теми же API, включая пользовательский контейнер. Development warnings React при component=false остаются отдельной границей."
         },
         {
           "id": "native-context-lifecycle",

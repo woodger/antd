@@ -1,4 +1,5 @@
-<script lang="ts">
+<script lang="ts" generics="Props extends object = {}">
+  // Владеет контекстом и очередями App. Смена корня переподключает holders к тем же API.
   import { untrack } from 'svelte';
   import MessageHolder from './MessageHolder.svelte';
   import NotificationHolder from './NotificationHolder.svelte';
@@ -9,7 +10,7 @@
   import { provideApp, useAppOptions } from './app-context';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
-  import type { AppOptions, AppProps } from './app.types';
+  import type { AppComponentProps, AppOptions, AppRootProps } from './app.types';
 
   let {
     children,
@@ -22,7 +23,7 @@
     style,
     nativeElement = $bindable(),
     ...rest
-  }: AppProps = $props();
+  }: AppComponentProps<Props> = $props();
   const config = useConfig();
   const parent = useAppOptions();
   const componentTheme = useComponentTheme('App');
@@ -40,6 +41,34 @@
   };
   provideApp(api, options);
 
+  let rootClasses = $derived([
+    componentPrefix,
+    'ant-app-css-var',
+    componentTheme.className,
+    config.direction === 'rtl' && `${componentPrefix}-rtl`,
+    config.app?.class,
+    className,
+    rootClassName
+  ]);
+  let rootProps = $derived({
+    ...rest,
+    dir: config.direction,
+    style: [componentTheme.style, config.app?.style, style].filter(Boolean).join(';')
+  });
+  let Root = $derived(typeof component === 'function' ? component : undefined);
+  // Необязательный ref не попадает в DOM spread. Тип rest теряет связь с Props после
+  // исключения настроек App и полей, которые задаёт сам компонент.
+  let customProps = $derived(Object.defineProperty({
+    ...rootProps,
+    'data-ant-app-root': '',
+    class: rootClasses.filter(Boolean).join(' '),
+    children: content
+  }, 'nativeElement', {
+    get: () => nativeElement,
+    set: (node: HTMLElement | undefined) => { nativeElement = node; },
+    configurable: true
+  }) as unknown as Props & AppRootProps);
+
   $effect.pre(() => {
     api.message[messageHolderKey].configure(messageOptions);
     api.notification[notificationOptionsKey](notificationOptions);
@@ -47,7 +76,13 @@
 </script>
 
 <style>
-  [data-ant-app-root] { color: var(--ant-color-text); font-size: var(--ant-font-size); line-height: var(--ant-line-height); font-family: var(--ant-font-family); }
+  [data-ant-app-root],
+  :global(.ant-app-css-var) {
+    color: var(--ant-color-text);
+    font-size: var(--ant-font-size);
+    line-height: var(--ant-line-height);
+    font-family: var(--ant-font-family);
+  }
 </style>
 
 {#snippet content()}
@@ -59,17 +94,11 @@
 
 {#if component === false}
   {@render content()}
-{:else}
-  <svelte:element this={component} {...rest} bind:this={nativeElement} data-ant-app-root=""
-    dir={config.direction} class={[
-      componentPrefix,
-      'ant-app-css-var',
-      componentTheme.className,
-      config.direction === 'rtl' && `${componentPrefix}-rtl`,
-      config.app?.class,
-      className,
-      rootClassName
-    ]} style={[componentTheme.style, config.app?.style, style].filter(Boolean).join(';')}>
+{:else if typeof component === 'string'}
+  <svelte:element this={component} {...rootProps} bind:this={nativeElement}
+    data-ant-app-root="" class={rootClasses}>
     {@render content()}
   </svelte:element>
+{:else if Root}
+  <Root {...customProps} />
 {/if}

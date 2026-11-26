@@ -3,6 +3,8 @@ export { default as App } from './app.component';
 export { useApp } from './app-context';
 export type {
   AppProps,
+  AppRootProps,
+  AppComponentProps,
   AppOptions,
   AppConfig,
   AppMessageConfig,
