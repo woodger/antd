@@ -517,34 +517,31 @@
       editor.setSelectionRange(result.selection, result.selection);
     }
   }
-  function handleKeydown(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement; }
-  ) {
+  function handleKeydown(event: EditorEvent<KeyboardEvent>) {
+    const { key, isComposing } = event;
+    // RcInput вызывает onPressEnter перед onKeyDown, когда список закрыт.
+    if (key === 'Enter' && !isComposing && !visible && !blocked) {
+      onPressEnter?.(event);
+    }
     onKeyDown?.(event);
     onkeydown?.(event);
-    if (event.defaultPrevented || event.isComposing || blocked || readonly) {
+
+    if (!visible || event.defaultPrevented || isComposing) {
       return;
     }
-    if (!visible) {
-      if (event.key === 'Enter')
-        onPressEnter?.(event);
-      return;
-    }
-    if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && filtered.length) {
-      const next = enabled(
-        active + (event.key === 'ArrowDown' ? 1 : -1),
-        event.key === 'ArrowDown' ? 1 : -1
-      );
-      if (next >= 0)
-        active = next;
+
+    if ((key === 'ArrowDown' || key === 'ArrowUp') && filtered.length) {
+      const offset = key === 'ArrowDown' ? 1 : -1;
+      const next = enabled(active + offset, offset);
+      if (next >= 0) active = next;
       event.preventDefault();
     }
-    else if (event.key === 'Escape') {
+    else if (key === 'Escape') {
       event.preventDefault();
       event.stopPropagation();
       measuring = false;
     }
-    else if (event.key === 'Enter') {
+    else if (key === 'Enter') {
       event.preventDefault();
       if (silent ?? loading) {
         return;
@@ -558,31 +555,32 @@
       }
     }
   }
-  function handleKeyup(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement; }
-  ) {
+  function handleKeyup(event: EditorEvent<KeyboardEvent>) {
+    const { currentTarget, key } = event;
+    // Поиск использует каретку на момент keyup, даже если обработчик пользователя её меняет.
+    const beforeCaret = currentTarget.value.slice(0, currentTarget.selectionStart);
+    const found = getMentionMeasure(beforeCaret, prefixes);
+
     onKeyUp?.(event);
     onkeyup?.(event);
-    if (blocked
-      || readonly
-      || ['Escape', 'ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) {
+
+    if (blocked || readonly || ['Escape', 'ArrowUp', 'ArrowDown', 'Enter'].includes(key)) {
       return;
     }
-    const before = event.currentTarget.value.slice(0, event.currentTarget.selectionStart);
-    const found = getMentionMeasure(before, prefixes);
     if (found.location < 0) {
       measuring = false;
       return;
     }
-    const next = before.slice(found.location + found.prefix.length);
+
+    const next = beforeCaret.slice(found.location + found.prefix.length);
     const valid = validateSearch(next, split);
     const matches = loading
       || options.some(
         option => filterOption === false || filterOption(next, option)
       );
     if (valid) {
-      if (event.key === found.prefix
-        || ['Shift', 'Alt', 'AltGraph'].includes(event.key)
+      if (key === found.prefix
+        || ['Shift', 'Alt', 'AltGraph'].includes(key)
         || measuring
         || next !== query
         && matches) {

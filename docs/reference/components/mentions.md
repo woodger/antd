@@ -51,10 +51,21 @@ Callback получает исходный option data без React key suffix. 
 getMentions(value,{prefix,split}) соответствует Mentions.getMentions: извлекает
 непустые токены в начале разделённых split частей, без собственной разметки.
 
-Up/Down обходят доступные options, Enter выбирает, Escape закрывает. IME Enter
-не выбирает. OnPressEnter работает при закрытых подсказках; onKeyDown/onKeyUp и
-нативные onkeydown/onkeyup доступны. OnFocus/onBlur учитывают переход в popup;
-отложенный blur очищается при unmount. Readonly/disabled сохраняют native поведение.
+Up/Down обходят доступные options, Enter выбирает, Escape закрывает. При закрытых
+подсказках Enter вызывает `onPressEnter`, затем `onKeyDown` и нативный
+`onkeydown`. Этот порядок действует и в поле `readonly`, и при отмене клавиши
+на фазе capture. Обработчики получают тот же KeyboardEvent с актуальным
+`defaultPrevented`. Для поиска берутся текст и каретка на момент `keyup`,
+до вызовов `onKeyUp` и `onkeyup`.
+
+Если Enter отменён обработчиком или нажат во время IME, Svelte оставляет
+открытый список без выбора. В этих сценариях Ant Design 6.6.8 выбирает вариант.
+При закрытых подсказках во время IME вызывается обычный обработчик клавиши.
+[Замеры React](../../../tests/browser/fixtures/ant-design-mentions-keyboard-reference.json)
+· [Проверки клавиатуры](../../../tests/browser/mentions-keyboard.spec.ts).
+
+`onFocus` и `onBlur` учитывают переход в popup. Отложенный blur очищается
+при unmount. `readonly` и `disabled` сохраняют нативное поведение поля.
 
 Popup выравнивается после префикса и следует переносам/прокрутке textarea.
 Placement top/bottom, RTL и viewport adjustment поддержаны; source gap=4 px.

@@ -9943,9 +9943,12 @@
           "requiredForV1": true,
           "evidence": [
             "src/lib/mentions.engine.test.ts",
-            "tests/browser/mentions.spec.ts"
+            "tests/browser/mentions.spec.ts",
+            "tests/browser/fixtures/ant-design-mentions-keyboard-reference.json",
+            "tests/browser/mentions-keyboard.spec.ts",
+            "docs/reference/components/mentions.md"
           ],
-          "note": "Up/Down пропускают disabled, Enter выбирает, Escape закрывает, IME Enter не выбирает. Popup следует позиции префикса при wrap/scroll, top/bottom/RTL и source gap=4; общий popup gap по умолчанию сохранён. AutoSize/minRows/maxRows по rc-input, ResizeObserver/onResize и cleanup shadow/frames/blur timer. Фокус остаётся в textarea; listbox/option — native Svelte-адаптация исходного DropdownMenu на rc-menu."
+          "note": "Up/Down пропускают disabled, Enter выбирает, Escape закрывает, IME Enter не выбирает. 11 эталонов UMD 6.6.8 с двумя одинаковыми прогонами фиксируют порядок onPressEnter перед onKeyDown при закрытом списке, включая readonly и capture, и измерение каретки до вызовов keyup. При открытом списке Svelte сохраняет отмену выбора и guard IME, тогда как исходный компонент выбирает option. Popup следует позиции префикса при wrap/scroll, top/bottom/RTL и source gap=4; общий popup gap по умолчанию сохранён. AutoSize/minRows/maxRows по rc-input, ResizeObserver/onResize и cleanup shadow/frames/blur timer. Фокус остаётся в textarea; listbox/option — native Svelte-адаптация исходного DropdownMenu на rc-menu."
         },
         {
           "id": "contexts-async",
