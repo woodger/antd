@@ -1,6 +1,8 @@
 import type { Snippet } from 'svelte';
 import type { HTMLTextareaAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
+import type { InputAllowClear } from './input-count.types';
+import type { FormValidateStatus } from './form-error-list.types';
 
 export interface MentionsOption {
   value: string;
@@ -15,9 +17,24 @@ export interface MentionsConfig {
   prefix?: string | readonly string[];
   split?: string;
 }
-/** Настройки ConfigProvider.mentions; пока перенесён только variant, отдельно от getMentions. */
+/** Слоты обёртки, поля, панели подсказок и суффикса Mentions. */
+export type MentionsSlots = Partial<Record<'root' | 'textarea' | 'popup' | 'suffix', string>>;
+/** Пустой status обозначает pristine FormItem; вне FormItem возможен undefined. */
+export interface MentionsSemanticProps extends Omit<MentionsProps, 'status'> {
+  status?: FormValidateStatus;
+}
+/** Callback получает параметры экземпляра с разрешёнными disabled и status. */
+export type MentionsSemantic = MentionsSlots
+  | ((info: { props: MentionsSemanticProps; }) => MentionsSlots | undefined);
+
+/** Настройки ConfigProvider.mentions, отдельно от параметров getMentions. */
 export interface MentionsComponentConfig {
   variant?: MentionsProps['variant'];
+  allowClear?: MentionsProps['allowClear'];
+  class?: string;
+  style?: string;
+  classNames?: MentionsSemantic;
+  styles?: MentionsSemantic;
 }
 export interface MentionsEntity {
   prefix: string;
@@ -53,7 +70,7 @@ export interface MentionsProps extends Omit<
   /** @defaultValue false */
   autoSize?: boolean | { minRows?: number; maxRows?: number; };
   /** @defaultValue false */
-  allowClear?: boolean | { clearIcon?: Snippet; disabled?: boolean; };
+  allowClear?: boolean | InputAllowClear;
   size?: ComponentSize;
   status?: 'error' | 'warning' | 'success' | 'validating';
   /** @defaultValue 'outlined' */
@@ -74,6 +91,9 @@ export interface MentionsProps extends Omit<
   getPopupContainer?: () => HTMLElement | ShadowRoot;
   /** Получает стандартный menu Snippet; содержимое создаётся заново при каждом открытии. */
   popupRender?: Snippet<[Snippet]>;
+  classNames?: MentionsSemantic;
+  /** CSS-декларации по слотам. */
+  styles?: MentionsSemantic;
   class?: string;
   rootClassName?: string;
   /** @defaultValue '' */

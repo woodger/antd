@@ -2,8 +2,9 @@
   // Связывает выделение слова у caret с предложениями и вставкой mention. Клавиатура сохраняет
   // управление текущим редактором.
   import { onDestroy, tick, untrack } from 'svelte';
+  import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
-  import type { MentionsProps, MentionsOption } from './mentions.types';
+  import type { MentionsProps, MentionsOption, MentionsSemanticProps } from './mentions.types';
   import {
     getMentionMeasure,
     validateMentionSearch,
@@ -17,8 +18,11 @@
   import { useVariant } from './variant.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
-  import { useZIndex } from './z-index-context.svelte';
-  import { connectComponentTheme } from './theme-component.dom';
+  import { getInlineZIndex, useZIndex } from './z-index-context.svelte';
+  import { resolveInputClear } from './input-count.engine';
+  import { mergeComponentSemantics } from './semantic-style.engine';
+  import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
+  import { createOverlayStyle } from './overlay-style.model.svelte';
   import { useForm, useFormField } from './form-context';
   import { useFormItemStatusContext } from './form-item-status';
   import { useFormFeedback } from './form-feedback-context';
@@ -42,7 +46,7 @@
     notFoundContent,
     placement = 'bottom',
     autoSize = false,
-    allowClear = false,
+    allowClear,
     size,
     status,
     variant,
@@ -59,6 +63,8 @@
     onPopupScroll,
     getPopupContainer,
     popupRender,
+    classNames,
+    styles,
     class: className = '',
     rootClassName = '',
     popupClassName = '',
@@ -83,7 +89,6 @@
   const variantContext = useVariant('mentions', () => ({ variant }));
   let appearance = $derived(variantContext.variant);
   const componentTheme = useComponentTheme('Mentions');
-  const layer = useZIndex('popup');
   const designTheme = useDesignTokenContext();
   const form = useForm();
   const controlRef = {
@@ -104,7 +109,64 @@
   );
   let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
-  let hasAffix = $derived(Boolean(allowClear || feedback.hasFeedback));
+  let clearConfig = $derived(resolveInputClear(allowClear, config.mentions?.allowClear));
+  let hasAffix = $derived(Boolean(clearConfig || feedback.hasFeedback));
+  let semanticProps = $derived<MentionsSemanticProps>({
+    ...attributes,
+    prefixCls: customizePrefixCls,
+    value,
+    defaultValue,
+    options,
+    prefix,
+    split,
+    filterOption,
+    validateSearch,
+    loading,
+    notFoundContent,
+    placement,
+    autoSize,
+    allowClear,
+    size,
+    status: resolvedStatus,
+    variant,
+    onChange,
+    onSearch,
+    onSelect,
+    onClear,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    onKeyUp,
+    onPressEnter,
+    onResize,
+    onPopupScroll,
+    getPopupContainer,
+    popupRender,
+    classNames,
+    styles,
+    class: className,
+    rootClassName,
+    popupClassName,
+    style,
+    id,
+    name,
+    disabled: blocked,
+    readonly,
+    nativeElement,
+    oninput,
+    onkeydown,
+    onkeyup
+  });
+  let semantics = $derived(mergeComponentSemantics(
+    config.mentions, semanticProps, ['root', 'textarea', 'popup', 'suffix']
+  ));
+  let rootStyle = $derived(serializeInlineStyleLayers([
+    componentTheme.style, semantics.styles.root
+  ]));
+  let textareaStyle = $derived(resolveTextareaStyle(semantics.styles.root, semantics.styles.textarea));
+  const layer = useZIndex('popup', () => getInlineZIndex(semantics.styles.popup));
+  let popupLayers = $derived([componentTheme.style, semantics.styles.popup, layer.style]);
+  const popupStyle = createOverlayStyle(() => popupLayers);
   let controlId = $derived(id ?? field?.id ?? `ant-mentions-${generated}`);
   let prefixes = $derived(typeof prefix === 'string' ? [prefix] : prefix);
   let measuring = $state(false);
@@ -149,7 +211,7 @@
     open: visible,
     reference: prefixElement,
     getPopupContainer: visible && getPopupContainer ? resolvePopupContainer : undefined,
-    themeStyle: componentTheme.style
+    get themeStyle() { return serializeInlineStyleLayers(popupLayers); }
   }));
   let measure: ReturnType<typeof connectMentionsMeasure> | undefined;
   let blurTimer: ReturnType<typeof setTimeout> | undefined;
@@ -208,7 +270,9 @@
     const target = mirror;
     const resize = onResize;
     const sizing = autoSize;
-    const connection = untrack(() => connectMentionsMeasure(element, target, sizing, resize));
+    const connection = untrack(() => connectMentionsMeasure(
+      element, target, sizing, resize, () => textareaStyle
+    ));
     measure = connection;
     return () => {
       connection.destroy();
@@ -220,6 +284,9 @@
     void text;
     void location;
     void token;
+    void semantics;
+    void config.mentions?.class;
+    void componentTheme.style;
     void tick().then(() => {
       if (alive)
         measure?.sync();
@@ -246,6 +313,7 @@
       autoAdjustOverflow: true,
       maxWidth: '100vw',
       preserveFocus: !popupRender,
+      applyPosition: popupStyle.position,
       onPlacement: () => { },
       onVisibilityChange: next => {
         shown = next;
@@ -262,6 +330,26 @@
         { block: 'nearest' }
       );
   });
+
+  /** RcMentions передаёт resize обёртки редактору, пока слот textarea его не задал. */
+  function resolveTextareaStyle(wrapper: string | undefined, leaf: string | undefined) {
+    if (!wrapper) {
+      return leaf;
+    }
+    for (const { property } of getInlineStyleDeclarations([leaf])) {
+      if (property === 'resize') return leaf;
+    }
+
+    let resize: { value: string; priority: '' | 'important'; } | undefined;
+    for (const { property, value, priority } of getInlineStyleDeclarations([wrapper])) {
+      if (property === 'resize' && (!resize?.priority || priority)) {
+        resize = { value, priority: priority ? 'important' : '' };
+      }
+    }
+
+    return resize ? serializeInlineStyleLayers([leaf, [['resize', resize.value, resize.priority]]])
+      : leaf;
+  }
 
   function enabled(start: number, offset = 1) {
     for (let step = 0; step < filtered.length; step++) {
@@ -429,7 +517,7 @@
     };
   }
   function clear() {
-    if (blocked || readonly || typeof allowClear === 'object' && allowClear.disabled) {
+    if (!clearConfig || blocked || readonly || clearConfig.disabled) {
       return;
     }
     change('');
@@ -458,11 +546,11 @@
 </style>
 
 {#snippet clearControl()}
-  {#if allowClear && text && !blocked && !readonly}<button data-ant-mentions-clear type="button" class={[
+  {#if clearConfig && text && !blocked && !readonly}<button data-ant-mentions-clear type="button" class={[
     `${componentPrefix}-clear ${componentPrefix}-clear-icon`, feedback.hasFeedback && `${componentPrefix}-clear-icon-has-suffix`
   ]} aria-label={config.locale.clearText}
-    disabled={typeof allowClear === 'object' && allowClear.disabled} onpointerdown={event => event.preventDefault()} onclick={clear}>
-    {#if typeof allowClear === 'object' && allowClear.clearIcon}{@render allowClear.clearIcon()}{:else}<Icon name="close" />{/if}
+    disabled={clearConfig.disabled} onpointerdown={event => event.preventDefault()} onclick={clear}>
+    {#if clearConfig.clearIcon === undefined}<Icon name="close" />{:else}<RenderContent value={clearConfig.clearIcon} />{/if}
   </button>{/if}
 {/snippet}
 
@@ -494,7 +582,7 @@
   </div>
 {/snippet}
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`mentions-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div {...prefixAttributes} data-ant-mentions-root bind:this={root} style={[componentTheme.style, style].filter(Boolean).join(';') || undefined}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`mentions-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div {...prefixAttributes} data-ant-mentions-root bind:this={root} style={rootStyle}
   dir={config.direction}
   class={[
       `${componentPrefix} ant-mentions-css-var`,
@@ -507,14 +595,17 @@
       resolvedSize === 'large' && `${componentPrefix}-lg`,
       resolvedSize === 'small' && `${componentPrefix}-sm`,
       resolvedStatus && `${componentPrefix}-status-${resolvedStatus}`,
+      config.mentions?.class,
       className,
-      rootClassName
+      rootClassName,
+      semantics.classes.root
     ]}>
   {#key editorGeneration}<textarea {...attributes} data-ant-mentions-textarea bind:this={editor} id={controlId} name={name ?? field?.name} rows={attributes.rows ?? 1}
     class={[
         `${componentPrefix}-textarea`,
-        config.direction === 'rtl' && `${componentPrefix}-textarea-rtl`
-      ]} dir={attributes.dir ?? config.direction}
+        config.direction === 'rtl' && `${componentPrefix}-textarea-rtl`,
+        semantics.classes.textarea
+      ]} style={textareaStyle} dir={attributes.dir ?? config.direction}
     value={text} {readonly} disabled={blocked} required={attributes.required ?? field?.required} role="combobox" aria-expanded={visible}
     aria-autocomplete="list" aria-haspopup="listbox" aria-controls={visible ? `${controlId}-list` : undefined}
     aria-activedescendant={visible && active >= 0 ? `${controlId}-option-${active}` : undefined}
@@ -530,14 +621,16 @@
         || undefined}
     oninput={handleInput} onkeydown={handleKeydown} onkeyup={handleKeyup} onfocus={handleFocus} onblur={handleBlur}></textarea>
   <div data-ant-mentions-measure bind:this={mirror} class={`${componentPrefix}-measure`} aria-hidden="true">{text.slice(0, location)}{#if visible}<span bind:this={prefixElement}>{token}</span>{:else}{token}{/if}<span bind:this={anchor} class="caret-anchor"></span>{text.slice(location + token.length)}</div>{/key}
-  {#if hasAffix}<span data-ant-mentions-feedback-suffix class={`${componentPrefix}-suffix`}>{@render clearControl()}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}
+  {#if hasAffix}<span data-ant-mentions-feedback-suffix
+    class={[`${componentPrefix}-suffix`, semantics.classes.suffix]}
+    style={semantics.styles.suffix}>{@render clearControl()}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}
   {#key popupContainer}
     {#if mounted}
+      {@const initialPopupStyle = untrack(popupStyle.initialStyle)}
       <div {...prefixAttributes} bind:this={popup} popover="manual" hidden={!visible || !shown}
         class={['popup', `${componentPrefix}-dropdown ant-mentions-css-var`,
-          componentTheme.className, popupClassName]}
-        style:z-index={layer.zIndex}
-        {@attach node => connectComponentTheme(node, componentTheme.style)}
+          componentTheme.className, semantics.classes.popup, popupClassName, rootClassName]}
+        style={initialPopupStyle} {@attach popupStyle.attach}
         dir={config.direction} {@attach portal}>
         {#if popupRender}
           {#if visible}<MentionsPopupContent {popupRender} {menu} />{/if}

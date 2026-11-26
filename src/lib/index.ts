@@ -45,6 +45,9 @@ export { default as Mentions } from './Mentions.svelte';
 export { getMentions } from './mentions.engine';
 export type {
   MentionsProps,
+  MentionsSemantic,
+  MentionsSemanticProps,
+  MentionsSlots,
   MentionsOption,
   MentionsConfig,
   MentionsEntity

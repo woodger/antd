@@ -25,22 +25,26 @@ const sizing = [
   'text-align',
   'direction'
 ];
+const autoSizeProperties = ['height', 'min-height', 'max-height', 'overflow-y', 'resize'];
+
+/** Сохраняет значения и CSS-приоритет до передачи размеров autoSize. */
+function readAutoSizeProperties(style: CSSStyleDeclaration) {
+  return autoSizeProperties.map(name => ({
+    name, value: style.getPropertyValue(name), priority: style.getPropertyPriority(name)
+  }));
+}
 
 export function connectMentionsMeasure(
   textarea: HTMLTextAreaElement,
   mirror: HTMLElement,
   autoSize: MentionsProps['autoSize'],
-  onResize?: MentionsProps['onResize']
+  onResize: MentionsProps['onResize'],
+  getEditorStyle: () => string | undefined
 ) {
   const document = textarea.ownerDocument;
   const view = document.defaultView!;
-  const previous = {
-    height: textarea.style.height,
-    minHeight: textarea.style.minHeight,
-    maxHeight: textarea.style.maxHeight,
-    overflowY: textarea.style.overflowY,
-    resize: textarea.style.resize
-  };
+  const initialStyle = getEditorStyle();
+  const previous = readAutoSizeProperties(textarea.style);
   const shadow = autoSize ? document.createElement('textarea') : undefined;
   if (shadow) {
     shadow.tabIndex = -1;
@@ -52,6 +56,21 @@ export function connectMentionsMeasure(
   let disposed = false;
   let width = -1;
   let height = -1;
+  /** Возвращает размеры актуального textarea-слота после выключения autoSize. */
+  function restoreStyle() {
+    const style = getEditorStyle();
+    let declarations = previous;
+    if (style !== initialStyle) {
+      const authored = document.createElement('span').style;
+      authored.cssText = style ?? '';
+      declarations = readAutoSizeProperties(authored);
+    }
+
+    for (const { name, value, priority } of declarations) {
+      textarea.style.setProperty(name, value, priority);
+    }
+  }
+
   function sync() {
     if (disposed || !textarea.isConnected) {
       return;
@@ -127,8 +146,7 @@ export function connectMentionsMeasure(
       view.cancelAnimationFrame(frame);
       textarea.removeEventListener('scroll', sync);
       shadow?.remove();
-      if (autoSize)
-        Object.assign(textarea.style, previous);
+      if (autoSize) restoreStyle();
     }
   };
 }

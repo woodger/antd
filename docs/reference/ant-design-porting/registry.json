@@ -9860,6 +9860,9 @@
         "tests/browser/fixtures/MentionsPopupCase.svelte",
         "tests/browser/fixtures/MentionsPopupFixtures.svelte",
         "tests/browser/mentions-popup.spec.ts",
+        "tests/browser/mentions-semantics.spec.ts",
+        "tests/browser/fixtures/ant-design-mentions-semantics-reference.json",
+        "tests/package/mentions-semantics.ssr.test.ts",
         "tests/package/mentions-popup.ssr.test.ts",
         "src/lib/theme-mentions-tokens-reference.test.ts",
         "tools/fixtures/ant-design-mentions-tokens-reference.json",
@@ -9982,15 +9985,33 @@
             "tests/package/mentions-theme.ssr.test.ts",
             "docs/reference/theme-context.md"
           ],
-          "note": "22 CSS defaults по Mentions 6.6.8: shared Input tokens, dropdownHeight/controlItemWidth/zIndexPopup и внутренний itemPaddingVertical. Исходный публичный token type сохранён; внутренние CSS defaults не объявляются новыми public props. 16 официальных UMD-тем, восемь scopes, все размеры и variants, disabled/error/popup, dark/compact, algorithms, cssVar prefix и нули/undefined. Собственная тема Mentions не заменяется Input/Select; local style сохраняет приоритет. Theme updates/reset сохраняют textarea/popup DOM, active option, draft, caret/focus и FormData; unmount очищает popup/autoSize node. Native button reset имеет меньшую specificity, чем исходные active/hover правила. Semantic/config API и общий prefix/motion остаются отдельными пробелами."
+          "note": "22 CSS defaults по Mentions 6.6.8: shared Input tokens, dropdownHeight/controlItemWidth/zIndexPopup и внутренний itemPaddingVertical. Исходный публичный token type сохранён; внутренние CSS defaults не объявляются новыми public props. 16 официальных UMD-тем, восемь scopes, все размеры и variants, disabled/error/popup, dark/compact, algorithms, cssVar prefix и нули/undefined. Собственная тема Mentions не заменяется Input/Select; local style сохраняет приоритет. Theme updates/reset сохраняют textarea/popup DOM, active option, draft, caret/focus и FormData; unmount очищает popup/autoSize node. Native button reset имеет меньшую specificity, чем исходные active/hover правила. Semantic/config API, общий prefix и rc-trigger motion учтены в других feature."
         },
         {
           "id": "extended-api",
-          "title": "Полный semantic/config API и motion",
-          "state": "missing",
+          "title": "Расширенный API меню и rc-trigger motion",
+          "state": "partial",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Нет semantic classNames/styles/feedback suffix, полного ConfigProvider.mentions API; deprecated Mentions.Option children исключены из переноса. Native listbox не предоставляет расширенный React Menu/ref API; callbacks получают исходные option data без React-generated key suffix. Rc-trigger motion не переносится этим этапом. Local/shared prefixCls подключён отдельной feature."
+          "evidence": [
+            "src/lib/Mentions.svelte",
+            "tests/browser/mentions-popup.spec.ts"
+          ],
+          "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Deprecated Mentions.Option children исключены из переноса. Расширенный React Menu/ref API и rc-trigger motion остаются в работе. Semantic slots и ConfigProvider.mentions покрыты отдельной feature."
+        },
+        {
+          "id": "semantic-config",
+          "title": "Слоты root, textarea, popup, suffix и ConfigProvider.mentions",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Mentions.svelte",
+            "src/lib/mentions.types.ts",
+            "src/lib/mentions.dom.ts",
+            "tests/browser/mentions-semantics.spec.ts",
+            "tests/browser/fixtures/ant-design-mentions-semantics-reference.json",
+            "tests/package/mentions-semantics.ssr.test.ts"
+          ],
+          "note": "Слоты принимают карты и callbacks, классы объединяются, стили получают исходные приоритеты. Локальный false выключает наследуемый allowClear, пустой объект провайдера заменяет родительский record. Live стили сохраняют редактор, выделение и popup в portal с z-index=0, включая обновление измерения каретки. В Ant Design 6.6.8 / RcMentions 1.12.0 при allowClear BaseInput не получает корневой style, а suffix получает классы без styles.suffix. Svelte применяет оба объявленных стиля."
         },
         {
           "id": "render-empty",
@@ -10028,7 +10049,7 @@
             "tests/browser/config-variants.spec.ts",
             "tests/package/config-variants.ssr.test.ts"
           ],
-          "note": "Local variant перекрывает Form, mentions.variant и global. MentionsComponentConfig содержит только variant и не изменяет прежний MentionsConfig для getMentions. Textarea, measuring popup и native callbacks сохраняют существующий контракт."
+          "note": "Local variant перекрывает Form, mentions.variant и global. MentionsComponentConfig задаёт оформление экземпляра. MentionsConfig описывает текстовые параметры getMentions. Textarea, measuring popup и native callbacks сохраняют существующий контракт."
         },
         {
           "id": "prefix-scopes",

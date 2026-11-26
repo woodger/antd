@@ -1,0 +1,259 @@
+{
+  "source": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "reactVersion": "18.3.1"
+  },
+  "cases": [
+    {
+      "profile": "live",
+      "initial": {
+        "root": {
+          "classes": [
+            "compose-borderless",
+            "context-root",
+            "local-root",
+            "local-wrapper",
+            "outer-identity",
+            "provider-wrapper"
+          ],
+          "css": {
+            "marginTop": "0px",
+            "paddingBottom": "5px"
+          }
+        },
+        "textarea": {
+          "classes": [
+            "context-textarea",
+            "local-textarea",
+            "seen-warning-borderless-false"
+          ],
+          "css": {
+            "fontFamily": "monospace",
+            "fontSize": "16px",
+            "letterSpacing": "1px"
+          }
+        },
+        "popup": {
+          "classes": [
+            "context-popup",
+            "local-popup",
+            "local-popup-name",
+            "outer-identity"
+          ],
+          "css": {
+            "backgroundColor": "rgb(170, 187, 204)",
+            "paddingTop": "9px",
+            "zIndex": "0"
+          }
+        },
+        "suffix": {
+          "classes": [
+            "context-suffix",
+            "local-suffix"
+          ],
+          "css": {
+            "opacity": "1"
+          }
+        },
+        "clear": "context",
+        "state": {
+          "focused": true,
+          "value": "@a",
+          "selection": [
+            2,
+            2
+          ]
+        }
+      },
+      "updated": {
+        "root": {
+          "classes": [
+            "compose-outlined",
+            "local-root",
+            "local-wrapper",
+            "new-wrapper",
+            "outer-identity",
+            "revised-root"
+          ],
+          "css": {
+            "marginTop": "0px",
+            "paddingBottom": "0px"
+          }
+        },
+        "textarea": {
+          "classes": [
+            "local-textarea",
+            "revised-textarea",
+            "seen-error-none-false"
+          ],
+          "css": {
+            "fontFamily": "monospace",
+            "fontSize": "16px",
+            "letterSpacing": "3px"
+          }
+        },
+        "popup": {
+          "classes": [
+            "local-popup",
+            "local-popup-name",
+            "outer-identity",
+            "revised-popup"
+          ],
+          "css": {
+            "backgroundColor": "rgb(170, 187, 204)",
+            "paddingTop": "9px",
+            "zIndex": "0"
+          }
+        },
+        "suffix": {
+          "classes": [
+            "local-suffix",
+            "revised-suffix"
+          ],
+          "css": {
+            "opacity": "1"
+          }
+        },
+        "clear": "context",
+        "state": {
+          "focused": true,
+          "value": "@a",
+          "selection": [
+            2,
+            2
+          ]
+        }
+      },
+      "identity": {
+        "editor": true,
+        "popup": true
+      },
+      "inserted": "@alice ",
+      "events": [
+        [
+          "change",
+          "@"
+        ],
+        [
+          "change",
+          "@a"
+        ],
+        [
+          "change",
+          "@alice "
+        ],
+        [
+          "select",
+          "alice",
+          "@"
+        ]
+      ]
+    },
+    {
+      "profile": "local-off",
+      "initial": {
+        "root": {
+          "classes": [
+            "compose-borderless",
+            "context-root",
+            "local-root",
+            "local-wrapper",
+            "outer-identity",
+            "provider-wrapper"
+          ],
+          "css": {
+            "marginTop": "9px",
+            "paddingBottom": "7px"
+          }
+        },
+        "textarea": {
+          "classes": [
+            "context-textarea",
+            "local-textarea",
+            "seen-warning-borderless-false"
+          ],
+          "css": {
+            "fontFamily": "monospace",
+            "fontSize": "16px",
+            "letterSpacing": "1px"
+          }
+        },
+        "popup": {
+          "classes": [
+            "context-popup",
+            "local-popup",
+            "local-popup-name",
+            "outer-identity"
+          ],
+          "css": {
+            "backgroundColor": "rgb(170, 187, 204)",
+            "paddingTop": "9px",
+            "zIndex": "0"
+          }
+        },
+        "suffix": null,
+        "clear": null,
+        "state": {
+          "focused": true,
+          "value": "@a",
+          "selection": [
+            2,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "profile": "record-reset",
+      "initial": {
+        "root": {
+          "classes": [
+            "compose-borderless",
+            "local-root",
+            "local-wrapper",
+            "outer-identity"
+          ],
+          "css": {
+            "marginTop": "9px",
+            "paddingBottom": "7px"
+          }
+        },
+        "textarea": {
+          "classes": [
+            "local-textarea",
+            "seen-warning-borderless-false"
+          ],
+          "css": {
+            "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fontSize": "14px",
+            "letterSpacing": "normal"
+          }
+        },
+        "popup": {
+          "classes": [
+            "local-popup",
+            "local-popup-name",
+            "outer-identity"
+          ],
+          "css": {
+            "backgroundColor": "rgb(255, 255, 255)",
+            "paddingTop": "9px",
+            "zIndex": "0"
+          }
+        },
+        "suffix": null,
+        "clear": null,
+        "state": {
+          "focused": true,
+          "value": "@a",
+          "selection": [
+            2,
+            2
+          ]
+        }
+      }
+    }
+  ]
+}

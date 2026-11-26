@@ -115,7 +115,21 @@ hover/active цвета пунктов.
 `?fixture=mentions-theme`; [SSR](../../../tests/package/mentions-theme.ssr.test.ts) сохраняет
 native текст формы без popup, измеряющего textarea и timers.
 
-Semantic classNames/styles, feedback suffix,
-полный ConfigProvider.mentions API и
-исходные rc-trigger motion пока отсутствуют.
+`classNames` и `styles` принимают карту слотов `root`, `textarea`, `popup` и
+`suffix` или функцию от `{ props }` с разрешёнными `disabled` и `status`.
+Классы провайдера и экземпляра складываются. Для корня сначала применяется
+`ConfigProvider.mentions.styles.root`, затем `ConfigProvider.mentions.style`,
+`styles.root` и `style` экземпляра. `rootClassName` оформляет корень и список.
+Слот `popup` сохраняет свои стили в пользовательском контейнере, включая
+`z-index:0`. Слот `textarea` обновляет измерение каретки и autoSize.
+
+`ConfigProvider.mentions` задаёт `class`, `style`, `classNames`, `styles`,
+`variant` и `allowClear`. Вложенный объект заменяет родительский целиком.
+Локальное `allowClear={false}` выключает очистку, а локальная настройка иконки
+имеет приоритет над иконкой провайдера.
+
+В Ant Design 6.6.8 с RcMentions 1.12.0 обёртка с суффиксом теряет стиль корня,
+а суффикс получает классы без переданного `styles.suffix`. Svelte применяет
+декларации к обоим слотам. [Замеры и проверки](../../../tests/browser/mentions-semantics.spec.ts).
+Открытые части переноса — исходный rc-trigger motion и расширенный API меню.
 
