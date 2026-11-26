@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import PopupOverflowCase from '../browser/fixtures/PopupOverflowCase.svelte';
 import { popupOverflowSamples } from '../browser/fixtures/popup-overflow-cases';
 import { popupOverflowAllSamples, popupOverflowPlacementSamples } from '../browser/fixtures/popup-overflow-placement-cases';

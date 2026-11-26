@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
 import { TreeSelect } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TreeSelectTriggerCase from '../browser/fixtures/TreeSelectTriggerCase.svelte';
 import { treeSelectTriggerSamples } from '../browser/fixtures/tree-select-trigger-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-trigger-reference.json';

@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { Tooltip, type TooltipRef } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TooltipRefCase from '../browser/fixtures/TooltipRefCase.svelte';
 import reference from '../browser/fixtures/ant-design-tooltip-ref-reference.json';
 

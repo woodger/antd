@@ -5,7 +5,7 @@ import {
   Space, SpaceCompact, SpaceAddon,
   type SpaceProps, type SpaceCompactProps, type SpaceAddonProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-space-prefix-reference.json';
 import isolated from '../browser/fixtures/ant-design-space-prefix-isolated.json';
 import SpacePrefixSSRFixtures from '../browser/fixtures/SpacePrefixSSRFixtures.svelte';

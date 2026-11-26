@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { Image, type ImageProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-image-prefix-reference.json';
 import ImagePrefixSSRFixtures from '../browser/fixtures/ImagePrefixSSRFixtures.svelte';
 

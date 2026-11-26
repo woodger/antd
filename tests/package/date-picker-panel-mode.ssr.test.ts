@@ -3,7 +3,7 @@ import {
   DatePicker, RangePicker, type DatePickerMode, type DatePickerProps,
   type DatePickerMultipleProps, type RangePickerMode, type RangePickerProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { readPickerModeServer } from '../browser/date-picker-panel-mode-reference';

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import CheckableTagApiCase from '../browser/fixtures/CheckableTagApiCase.svelte';
 import reference from '../browser/fixtures/ant-design-checkable-tag-api-reference.json';
 import type { CheckableTagApiCase as Sample } from '../browser/fixtures/checkable-tag-api-presets';

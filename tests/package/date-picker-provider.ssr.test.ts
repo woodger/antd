@@ -1,4 +1,4 @@
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import {

@@ -2,7 +2,7 @@ import { createRawSnippet, type ComponentProps } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';
 import { Modal, type ModalConfirmConfig, type ModalMousePosition } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-modal-motion-reference.json';
 
 it('exports the transition options and explicit page coordinates', () => {

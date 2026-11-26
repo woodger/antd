@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import PickerConfirmationFixtures from '../browser/fixtures/PickerConfirmationFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-picker-confirmation-reference.json';
 import controlled from '../browser/fixtures/ant-design-picker-controlled-confirmation-reference.json';

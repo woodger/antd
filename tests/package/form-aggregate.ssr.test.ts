@@ -1,6 +1,6 @@
 import { createForm } from '@woodger/antd';
 import { describe, expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import touchedReference from '../browser/fixtures/ant-design-form-aggregate-touched-observation.json';
 import validatingReference from '../browser/fixtures/ant-design-form-aggregate-validating-observation.json';
 

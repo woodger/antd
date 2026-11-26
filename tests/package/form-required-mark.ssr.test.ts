@@ -2,7 +2,7 @@ import type {
   ConfigProviderProps, FormConfig, FormLocale, FormProps, FormRequiredMark, FormRequiredMarkInfo
 } from '@woodger/antd';
 import { enUS, ruRU } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-required-mark-reference.json';

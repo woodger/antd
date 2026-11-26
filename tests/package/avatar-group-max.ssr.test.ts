@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import AvatarGroupMaxCase from '../browser/fixtures/AvatarGroupMaxCase.svelte';
 import reference from '../browser/fixtures/ant-design-avatar-group-max-reference.json';
 import type { AvatarGroupMaxCase as Sample } from '../browser/fixtures/avatar-group-max-presets';

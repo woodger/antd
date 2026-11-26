@@ -1,5 +1,5 @@
 import { createForm, type FormFieldMeta, type FormGetFieldsValueConfig } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-get-fields-value-observation.json';

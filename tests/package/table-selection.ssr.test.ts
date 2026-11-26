@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
 import { Table } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TableSelectionFixture from '../browser/fixtures/TableSelectionFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-selection-reference.json';
 

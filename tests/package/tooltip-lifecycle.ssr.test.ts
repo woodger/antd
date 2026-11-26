@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { SliderTooltipConfig, TooltipProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tooltip-lifecycle-reference.json';
 import TooltipLifecycleCaseComponent from '../browser/fixtures/TooltipLifecycleCase.svelte';
 import type { TooltipLifecycleCase } from '../browser/fixtures/tooltip-lifecycle.types';

@@ -2,7 +2,7 @@ import type { ComponentProps } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it } from 'vitest';
 import { Drawer, type DrawerContent } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/DrawerDomFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-drawer-dom-reference.json';
 

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import AvatarApiCase from '../browser/fixtures/AvatarApiCase.svelte';
 import reference from '../browser/fixtures/ant-design-avatar-api-reference.json';
 import type { AvatarApiCase as Sample } from '../browser/fixtures/avatar-api-presets';

@@ -4,7 +4,7 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 import {
   ConfigProvider, Drawer, type DrawerConfig, type DrawerFocusableConfig, type DrawerMask
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/DrawerFocusFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-drawer-focus-reference.json';
 

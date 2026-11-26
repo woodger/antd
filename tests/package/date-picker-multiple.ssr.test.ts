@@ -1,6 +1,6 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { DatePicker, type DatePickerMultipleProps, type DatePickerProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import {

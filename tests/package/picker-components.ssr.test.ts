@@ -2,7 +2,7 @@ import {
   type DatePickerComponents, type DatePickerProps, type RangePickerProps, type TimePickerProps,
   type TimeRangePickerProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import PickerComponentsFixtures from '../browser/fixtures/PickerComponentsFixtures.svelte';

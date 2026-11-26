@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { Popconfirm, Popover, Tooltip } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import OverlayMotionFixtures from '../browser/fixtures/OverlayMotionFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-overlay-motion-reference.json';
 

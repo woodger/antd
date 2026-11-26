@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { Drawer, type DrawerProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-drawer-prefix-reference.json';
 import DrawerPrefixSSRFixtures from '../browser/fixtures/DrawerPrefixSSRFixtures.svelte';
 

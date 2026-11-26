@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import PopupWidthCase from '../browser/fixtures/PopupWidthCase.svelte';
 import PopupWidthNestedCase from '../browser/fixtures/PopupWidthNestedCase.svelte';
 import { popupWidthSamples, popupWidthHistorySamples, popupWidthNestedSamples } from '../browser/fixtures/popup-width-cases';

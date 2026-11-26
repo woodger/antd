@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import PickerAlignmentFixtures from '../browser/fixtures/PickerAlignmentFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-picker-alignment-reference.json';
 

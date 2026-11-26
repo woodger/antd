@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { Table } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-table-prefix-reference.json';
 import TablePrefixSSRFixtures from '../browser/fixtures/TablePrefixSSRFixtures.svelte';
 

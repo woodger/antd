@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tree-fields-reference.json';
 import TreeFieldsScope from '../browser/fixtures/TreeFieldsScope.svelte';
 import TreeGenericFields from '../browser/fixtures/TreeGenericFields.svelte';

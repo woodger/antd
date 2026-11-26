@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { Popover, Popconfirm, type PopoverRef } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import PopoverRefCase from '../browser/fixtures/PopoverRefCase.svelte';
 import reference from '../browser/fixtures/ant-design-popover-ref-reference.json';
 

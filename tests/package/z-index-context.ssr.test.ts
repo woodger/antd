@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import AuxiliaryFixture from '../browser/fixtures/AuxiliaryZIndexContextFixture.svelte';
 import InputFixture from '../browser/fixtures/InputZIndexContextFixture.svelte';
 import Fixture from '../browser/fixtures/ZIndexContextFixture.svelte';

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import OverlayCornerCase from '../browser/fixtures/OverlayCornerCase.svelte';
 import reference from '../browser/fixtures/ant-design-overlay-corner-reference.json';
 import type { OverlayCornerCase as Sample } from '../browser/fixtures/overlay-corner-presets';

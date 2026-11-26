@@ -2,7 +2,7 @@ import { createRawSnippet, type ComponentProps } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it } from 'vitest';
 import { Popconfirm, type PopconfirmProps, type PopconfirmSemanticProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-popconfirm-action-links-reference.json';
 
 it('renders href in the hidden SSR shell and infers click targets from the public props', () => {

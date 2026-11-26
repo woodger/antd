@@ -5,7 +5,7 @@ import {
   Mentions, type MentionsOption, type MentionsPopupMenu, type MentionsPopupRender,
   type MentionsPopupRenderInfo, type MentionsProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-mentions-popup-reference.json';
 import menuReference from '../browser/fixtures/ant-design-mentions-menu-reference.json';
 import focusReference from '../browser/fixtures/ant-design-mentions-menu-focus-reference.json';

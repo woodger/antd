@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import MenuPopupAlignmentFixtures from '../browser/fixtures/MenuPopupAlignmentFixtures.svelte';
 import source from '../browser/fixtures/ant-design-menu-popup-alignment-reference.json';
 

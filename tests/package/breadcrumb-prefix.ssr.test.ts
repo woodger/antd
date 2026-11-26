@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import { Breadcrumb, type BreadcrumbProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-breadcrumb-prefix-reference.json';
 import BreadcrumbPrefixSSRFixtures from '../browser/fixtures/BreadcrumbPrefixSSRFixtures.svelte';
 

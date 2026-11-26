@@ -4,7 +4,7 @@ import { expect, expectTypeOf, it, vi } from 'vitest';
 import {
   Dropdown, type DropdownMenuProps, type DropdownOpenChangeInfo, type DropdownProps, type MenuItemType
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import browser from '../browser/fixtures/ant-design-dropdown-menu-reference.json';
 import server from '../browser/fixtures/ant-design-dropdown-menu-ssr-reference.json';
 

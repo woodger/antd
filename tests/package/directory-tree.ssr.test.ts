@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-directory-tree-reference.json';
 import release from '../browser/fixtures/ant-design-directory-tree-control-release-observation.json';
 import DirectoryTreeScope from '../browser/fixtures/DirectoryTreeScope.svelte';

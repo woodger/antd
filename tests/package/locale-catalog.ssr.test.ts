@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { enUS, ruRU, type AntDesignLocale } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { renderLocaleFixture } from '../browser/fixtures/locale-catalog.server';
 import catalog from './fixtures/ant-design-locales-reference.json';
 

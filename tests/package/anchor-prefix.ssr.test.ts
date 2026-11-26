@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import { Anchor, type AnchorProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-anchor-prefix-reference.json';
 import AnchorPrefixSSRFixtures from '../browser/fixtures/AnchorPrefixSSRFixtures.svelte';
 

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TreeSelectVirtualFixtures from '../browser/fixtures/TreeSelectVirtualFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-tree-select-virtual-reference.json';
 

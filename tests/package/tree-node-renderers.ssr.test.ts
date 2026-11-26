@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tree-node-renderers-reference.json';
 import TreeNodeRendererScope from '../browser/fixtures/TreeNodeRendererScope.svelte';
 

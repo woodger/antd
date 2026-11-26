@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { InputPassword, type InputPasswordProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-input-password-prefix-reference.json';
 import InputPasswordPrefixSSRFixtures from '../browser/fixtures/InputPasswordPrefixSSRFixtures.svelte';
 

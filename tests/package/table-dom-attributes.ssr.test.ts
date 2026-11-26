@@ -2,7 +2,7 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
 import { Table } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableDomAttributesFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-dom-attributes-reference.json';
 import {

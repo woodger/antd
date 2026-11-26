@@ -5,7 +5,7 @@ import {
   Drawer, type DrawerProps, type DrawerPushConfig, type DrawerResizableConfig
 } from '@woodger/antd';
 import reference from '../browser/fixtures/ant-design-drawer-geometry-reference.json';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 
 describe('Drawer size, push and visibility in the public package', () => {
   it('exports the current options and keeps the independent UMD provenance', () => {

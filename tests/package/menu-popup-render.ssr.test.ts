@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import MenuPopupRenderFixtures from '../browser/fixtures/MenuPopupRenderFixtures.svelte';
 import source from '../browser/fixtures/ant-design-menu-popup-render-reference.json';
 

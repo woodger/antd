@@ -3,7 +3,7 @@ import { readReferenceBytes } from '../browser/reference-bytes';
 import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import SelectValueCase from '../browser/fixtures/SelectValueCase.svelte';
 import immediateCache from '../browser/fixtures/ant-design-select-immediate-cache-reference.json';
 import { selectValueSamples } from '../browser/fixtures/select-value-cases';

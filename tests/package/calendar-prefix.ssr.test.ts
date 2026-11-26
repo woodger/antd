@@ -3,7 +3,7 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { Calendar, type CalendarCellRenderInfo } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-calendar-prefix-reference.json';
 import CalendarPrefixSSRFixtures from '../browser/fixtures/CalendarPrefixSSRFixtures.svelte';
 

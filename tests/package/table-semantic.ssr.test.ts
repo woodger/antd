@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableSemanticFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-semantic-reference.json';
 import { expectedTableSemantics } from '../browser/fixtures/table-semantic-reference';

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-dialog-container-reference.json';
 import DialogContainerCase from '../browser/fixtures/DialogContainerCase.svelte';
 import type { DialogContainerCase as ContainerCase } from '../browser/fixtures/dialog-container-presets';

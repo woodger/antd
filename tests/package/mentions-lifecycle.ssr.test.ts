@@ -1,5 +1,5 @@
 import { Mentions, type MentionsProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';
 import reference from '../browser/fixtures/ant-design-mentions-lifecycle-reference.json';

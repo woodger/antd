@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TreeSelectInertApiCase from '../browser/fixtures/TreeSelectInertApiCase.svelte';
 import { treeSelectInertApiSamples } from '../browser/fixtures/tree-select-inert-api-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-inert-api-ssr-reference.json';

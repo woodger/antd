@@ -15,8 +15,8 @@ dist/          результат svelte-package; не хранится в Git
 .upstream/     локальный эталон Ant Design и npm-архивы; не хранится в Git
 ```
 
-Публичные входы определены в `package.json`: компоненты и типы, `styles.css`
-и `porting/registry.json`. Метаданные реестра не импортируются в runtime UI.
+В `package.json` объявлены корневой вход компонентов и типов, словари `locale/*`
+и `styles.css`. Реестр переноса хранится в репозитории для CLI и проверок.
 Компоненты не используют API SvelteKit, маршруты или прикладные модели.
 
 В Tabs разделение соответствует исходным Tabs/TabNavList: `Tabs.svelte` владеет

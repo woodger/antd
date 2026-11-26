@@ -3,7 +3,7 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { DatePicker, TimePicker, type TimePickerCellRenderInfo } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-picker-prefix-reference.json';
 import PickerPrefixSSRFixtures from '../browser/fixtures/PickerPrefixSSRFixtures.svelte';
 

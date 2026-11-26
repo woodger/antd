@@ -6,9 +6,12 @@ import { fileURLToPath } from 'node:url';
 import { parse } from 'svelte/compiler';
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
+import { registryFile } from './ant-design-common.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const testsRoot = join(root, 'tests');
+const registryReader = join(testsRoot, 'porting-registry.ts');
+const registrySource = join(root, registryFile);
 const metadata = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 const dependencies = new Set(Object.keys({
   ...metadata.peerDependencies,
@@ -76,8 +79,11 @@ describe('Package test import boundaries', () => {
       for (const dependency of imports(file)) {
         let allowed;
         if (dependency.startsWith('.')) {
-          const target = relative(testsRoot, resolve(dirname(file), dependency));
-          allowed = target !== '..' && !target.startsWith('..' + sep) && !isAbsolute(target);
+          const destination = resolve(dirname(file), dependency);
+          const target = relative(testsRoot, destination);
+          const localTestFile = target !== '..' && !target.startsWith('..' + sep) && !isAbsolute(target);
+          const registryInput = file === registryReader && destination === registrySource;
+          allowed = localTestFile || registryInput;
         }
         else if (dependency === metadata.name || dependency.startsWith(metadata.name + '/')) {
           allowed = publicEntries.has(dependency);

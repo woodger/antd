@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import MenuHoverFixtures from '../browser/fixtures/MenuHoverFixtures.svelte';
 import hover from '../browser/fixtures/ant-design-menu-hover-reference.json';
 import portals from '../browser/fixtures/ant-design-menu-hover-portal-reference.json';

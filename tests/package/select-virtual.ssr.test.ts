@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import SelectVirtualCase from '../browser/fixtures/SelectVirtualCase.svelte';
 import { selectVirtualSamples } from '../browser/fixtures/select-virtual-cases';
 import reference from '../browser/fixtures/ant-design-select-virtual-ssr-reference.json';

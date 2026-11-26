@@ -2,7 +2,7 @@ import {
   MessageHolder, createMessage, type AppMessageConfig, type MessageConfig,
   type MessageHandle, type MessageHolderProps, type MessageOptions
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';
 import reference from '../browser/fixtures/ant-design-message-api-reference.json';

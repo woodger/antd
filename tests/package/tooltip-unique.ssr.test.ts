@@ -5,7 +5,7 @@ import {
   Popconfirm, Popover, Tooltip, type PopconfirmProps, type PopoverProps,
   type SliderTooltipConfig, type TooltipProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TooltipUniqueFixtures.svelte';
 import Delegates from '../browser/fixtures/TooltipUniqueDelegateFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-tooltip-unique-reference.json';

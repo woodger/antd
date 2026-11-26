@@ -5,7 +5,7 @@ import {
   Modal, type ConfigProviderProps, type ModalButtonProps, type ModalConfirmConfig,
   type ModalFooter, type ModalFooterButtons
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-modal-actions-reference.json';
 import { renderModalActions } from '../browser/fixtures/modal-actions.server';
 

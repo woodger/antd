@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { TooltipAlignConfig, TooltipProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TooltipAlignCase from '../browser/fixtures/TooltipAlignCase.svelte';
 import reference from '../browser/fixtures/ant-design-tooltip-align-reference.json';
 import type { TooltipAlignmentCase } from '../browser/fixtures/tooltip-align.types';

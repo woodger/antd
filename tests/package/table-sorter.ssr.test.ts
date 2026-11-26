@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
 import { Table, type TableColumn } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableSorterFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-sorter-reference.json';
 

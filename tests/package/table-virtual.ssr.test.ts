@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TableVirtualFixture from '../browser/fixtures/TableVirtualFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-virtual-reference.json';
 

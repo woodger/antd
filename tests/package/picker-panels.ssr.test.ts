@@ -3,7 +3,7 @@ import { TimePicker, TimeRangePicker } from '@woodger/antd';
 import type {
   DatePickerComponents, DatePickerMode, DatePickerPanel, TimePickerProps, TimeRangePickerProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';

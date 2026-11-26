@@ -4,7 +4,7 @@ import { expect, it, vi } from 'vitest';
 import {
   Dropdown, type DropdownArrowOptions, type DropdownPlacement, type DropdownTrigger
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import context from '../browser/fixtures/ant-design-dropdown-context-reference.json';
 import interactions from '../browser/fixtures/ant-design-dropdown-interactions-reference.json';
 import placement from '../browser/fixtures/ant-design-dropdown-placement-reference.json';

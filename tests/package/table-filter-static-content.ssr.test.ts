@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableFilterStaticContentFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-filter-static-content-reference.json';
 

@@ -3,7 +3,7 @@ import {
   type DatePickerMode, type DatePickerPanelContext,
   type DatePickerTimeProps, type TimePickerMultipleProps, type TimeRangePickerProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';

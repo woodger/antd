@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import source from '../browser/fixtures/ant-design-tree-select-max-count-reference.json';
 import reference from '../browser/fixtures/ant-design-tree-select-max-count-ssr-reference.json';
 import TreeSelectMaxCountScope from '../browser/fixtures/TreeSelectMaxCountScope.svelte';

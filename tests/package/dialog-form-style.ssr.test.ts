@@ -1,4 +1,4 @@
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-dialog-form-style-reference.json';

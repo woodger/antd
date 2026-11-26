@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { TooltipContent, TooltipProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TooltipContentCase from '../browser/fixtures/TooltipContentCase.svelte';
 import TooltipCacheCase from '../browser/fixtures/TooltipCacheCase.svelte';
 import { contentCases } from '../browser/fixtures/tooltip-content-presets';

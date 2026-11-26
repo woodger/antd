@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   Cascader, CascaderPanel, type CascaderFieldNames, type CascaderOption, type CascaderProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-cascader-prefix-reference.json';
 import CascaderPrefixSSRFixtures from '../browser/fixtures/CascaderPrefixSSRFixtures.svelte';
 

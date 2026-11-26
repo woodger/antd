@@ -2,7 +2,7 @@ import { createRawSnippet, type ComponentProps } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it } from 'vitest';
 import { Popconfirm, type ButtonContent, type ButtonType, type PopconfirmProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-popconfirm-action-content-reference.json';
 
 it('exports the action types and renders them in the hidden SSR panel', () => {

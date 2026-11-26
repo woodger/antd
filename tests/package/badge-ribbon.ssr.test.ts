@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-badge-ribbon-reference.json';
 import BadgeRibbonCase from '../browser/fixtures/BadgeRibbonCase.svelte';
 import type { BadgeRibbonCase as Sample } from '../browser/fixtures/badge-ribbon-presets';

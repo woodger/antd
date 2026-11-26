@@ -1,6 +1,6 @@
 import { createForm, type NamePath } from '@woodger/antd';
 import { describe, expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-form-touched-paths-observation.json';
 
 describe('Form touched paths public package', () => {

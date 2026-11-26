@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
 import { Table, type TableColumn } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import TableTreeFixture from '../browser/fixtures/TableTreeFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-tree-reference.json';
 

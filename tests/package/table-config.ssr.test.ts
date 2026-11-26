@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
 import { Table, type TableProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableConfigFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-config-reference.json';
 import { expectedTableConfig } from '../browser/fixtures/table-config-reference';

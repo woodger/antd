@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import { createRawSnippet } from 'svelte';
 import type { FormItemProps, FormRequiredMark, FormRequiredMarkInfo, RenderEmptyContent } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-rich-labels-reference.json';

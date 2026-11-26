@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import hoverReference from '../browser/fixtures/ant-design-table-hover-reference.json';
 import classReference from '../browser/fixtures/ant-design-table-row-classes-reference.json';
 import observation from '../browser/fixtures/ant-design-table-hover-observation.json';

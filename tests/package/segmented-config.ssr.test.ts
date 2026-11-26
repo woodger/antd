@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { ConfigProviderProps, SegmentedConfig } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-segmented-config-reference.json';
 import SegmentedConfigCase from '../browser/fixtures/SegmentedConfigCase.svelte';
 import SegmentedConfigMetadataCase from '../browser/fixtures/SegmentedConfigMetadataCase.svelte';

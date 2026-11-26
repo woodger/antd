@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { Tabs, type TabsMoreProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tabs-more-runtime-reference.json';
 import TabsMoreRuntimeCase from '../browser/fixtures/TabsMoreRuntimeCase.svelte';
 import type { TabsMoreRuntimeCase as RuntimeCase } from '../browser/fixtures/tabs-more-runtime-presets';

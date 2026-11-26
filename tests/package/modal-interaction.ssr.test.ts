@@ -5,7 +5,7 @@ import {
   Modal, type ConfigProviderProps, type ModalConfirmConfig, type ModalConfirmFocusableConfig,
   type ModalConfig, type ModalFocusableConfig, type ModalMask, type ModalMaskConfig
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-modal-interaction-reference.json';
 import ModalInteractionFixtures from '../browser/fixtures/ModalInteractionFixtures.svelte';
 

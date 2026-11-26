@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import structure from '../browser/fixtures/ant-design-upload-trigger-structure-reference.json';
 import motion from '../browser/fixtures/ant-design-upload-trigger-motion-reference.json';
 import UploadTriggerScope from '../browser/fixtures/UploadTriggerScope.svelte';

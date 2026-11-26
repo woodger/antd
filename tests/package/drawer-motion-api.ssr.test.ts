@@ -2,7 +2,7 @@ import type { ComponentProps } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';
 import { Drawer, type DrawerMotionConfig, type DrawerMotionEvent } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-drawer-motion-api-reference.json';
 
 it('exports typed Drawer motion inputs and native phase events', () => {

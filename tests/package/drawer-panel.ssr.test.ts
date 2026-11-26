@@ -4,7 +4,7 @@ import { expect, expectTypeOf, it } from 'vitest';
 import {
   ConfigProvider, Drawer, type DrawerClosable, type DrawerConfig, type DrawerSemantic
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/DrawerPanelFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-drawer-panel-reference.json';
 

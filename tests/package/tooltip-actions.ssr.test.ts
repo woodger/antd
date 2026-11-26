@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { TooltipProps, TooltipTrigger } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tooltip-actions-reference.json';
 import TooltipLifecycleCase from '../browser/fixtures/TooltipLifecycleCase.svelte';
 import type { TooltipActionCase } from '../browser/fixtures/tooltip-actions.types';

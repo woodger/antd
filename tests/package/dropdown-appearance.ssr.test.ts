@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import DropdownAppearanceFixtures from '../browser/fixtures/DropdownAppearanceFixtures.svelte';
 import appearance from '../browser/fixtures/ant-design-dropdown-appearance-reference.json';
 import providers from '../browser/fixtures/ant-design-dropdown-provider-reference.json';

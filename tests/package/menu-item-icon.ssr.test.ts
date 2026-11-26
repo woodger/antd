@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import MenuItemIconFixtures from '../browser/fixtures/MenuItemIconFixtures.svelte';
 import source from '../browser/fixtures/ant-design-menu-item-icon-reference.json';
 

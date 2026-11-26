@@ -1,5 +1,5 @@
 import { Menu, type MenuItemType, type MenuProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import source from '../browser/fixtures/ant-design-menu-motion-ssr-reference.json';

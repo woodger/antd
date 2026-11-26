@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tree-motion-ssr-reference.json';
 import source from '../browser/fixtures/ant-design-tree-motion-reference.json';
 import { treeMotionSamples } from '../browser/fixtures/tree-motion-cases';

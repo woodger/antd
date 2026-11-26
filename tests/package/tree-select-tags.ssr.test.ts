@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import type { Snippet } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { TreeSelectProps, TreeSelectTagInfo, TreeSelectTagPlaceholder } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tree-select-tags-ssr-reference.json';
 import source from '../browser/fixtures/ant-design-tree-select-tags-reference.json';
 import { treeTagSamples, treeTagObservations } from '../browser/fixtures/tree-select-tag-cases';

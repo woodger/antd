@@ -4,7 +4,7 @@ import { expect, expectTypeOf, it } from 'vitest';
 import {
   Modal, type GridResponsive, type ModalConfig, type ModalConfirmConfig, type ModalWidth
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-modal-layout-reference.json';
 
 it('emits responsive sizes and placement CSS before any browser APIs', () => {

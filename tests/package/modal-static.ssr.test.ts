@@ -2,7 +2,7 @@ import {
   ConfigProvider, Modal, ModalHolder, createModal,
   type GlobalConfigProps, type ModalStaticConfig, type ModalStaticHandle
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import type { ComponentProps } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';

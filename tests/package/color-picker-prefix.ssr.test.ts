@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import { ColorPicker } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-color-picker-prefix-reference.json';
 import ColorPickerPrefixSSRFixtures from '../browser/fixtures/ColorPickerPrefixSSRFixtures.svelte';
 

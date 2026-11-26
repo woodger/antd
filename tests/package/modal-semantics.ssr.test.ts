@@ -4,7 +4,7 @@ import {
   Modal, type ConfigProviderProps, type ModalConfig, type ModalConfirmConfig, type ModalProps,
   type ModalSurfaceProps, type ModalWrapProps
 } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-modal-semantics-reference.json';
 import { renderModalSemantics } from '../browser/fixtures/modal-semantics.server';
 

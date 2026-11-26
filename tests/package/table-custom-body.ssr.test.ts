@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableCustomBodyFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-custom-body-reference.json';
 import wideGutter from '../browser/fixtures/ant-design-table-custom-body-gutter-reference.json';

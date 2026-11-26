@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
 import { getTabsItemId, Tabs } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-tabs-render-reference.json';
 import TabsRenderCase from '../browser/fixtures/TabsRenderCase.svelte';
 import type { TabsRenderCase as RenderCase } from '../browser/fixtures/tabs-render-presets';

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import type { PopoverProps, PopconfirmProps, PopoverTrigger } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import reference from '../browser/fixtures/ant-design-popover-actions-reference.json';
 import PopoverActionsCase from '../browser/fixtures/PopoverActionsCase.svelte';
 import type { PopoverActionCase } from '../browser/fixtures/popover-actions.types';

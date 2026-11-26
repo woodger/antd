@@ -2,7 +2,7 @@ import { createRawSnippet, type Snippet } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
 import { Dropdown, type DropdownProps } from '@woodger/antd';
-import registry from '@woodger/antd/porting/registry.json';
+import registry from '../porting-registry';
 import lifecycle from '../browser/fixtures/ant-design-dropdown-lifecycle-reference.json';
 import replacement from '../browser/fixtures/ant-design-dropdown-replacement-reference.json';
 import motion from '../browser/fixtures/ant-design-dropdown-motion-reference.json';
