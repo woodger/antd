@@ -1,0 +1,1621 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": "plain",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Alpha",
+              "active": true
+            },
+            {
+              "label": "Beta",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@alpha ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@alpha "
+          ],
+          [
+            "select",
+            "alpha",
+            "Alpha",
+            "a-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "override-click",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Only in menu",
+              "active": true
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@visible ",
+        "focused": true,
+        "selection": [
+          9,
+          9
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@visible "
+          ],
+          [
+            "select",
+            "visible",
+            "Only in menu",
+            "b-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "override-enter",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Only in menu",
+              "active": true
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@alpha ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@alpha "
+          ],
+          [
+            "select",
+            "alpha",
+            "Alpha",
+            "a-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "override-arrow",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Only in menu",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@beta ",
+        "focused": true,
+        "selection": [
+          6,
+          6
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@beta "
+          ],
+          [
+            "select",
+            "beta",
+            "Beta",
+            "b-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "hover-enter",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "First in menu",
+              "active": false
+            },
+            {
+              "label": "Second in menu",
+              "active": true
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@beta ",
+        "focused": true,
+        "selection": [
+          6,
+          6
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@beta "
+          ],
+          [
+            "select",
+            "beta",
+            "Beta",
+            "b-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "prefix",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "caller-menu-menu",
+          "entries": [
+            {
+              "label": "Alpha",
+              "active": true
+            },
+            {
+              "label": "Beta",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@alpha ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@alpha "
+          ],
+          [
+            "select",
+            "alpha",
+            "Alpha",
+            "a-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "filtered",
+      "before": {
+        "value": "@be",
+        "focused": true,
+        "selection": [
+          3,
+          3
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Beta",
+              "active": true
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@b"
+          ],
+          [
+            "change",
+            "@be"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@beta ",
+        "focused": true,
+        "selection": [
+          6,
+          6
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@b"
+          ],
+          [
+            "change",
+            "@be"
+          ],
+          [
+            "change",
+            "@beta "
+          ],
+          [
+            "select",
+            "beta",
+            "Beta",
+            "b-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "empty-menu",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "No options",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@alpha ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@alpha "
+          ],
+          [
+            "select",
+            "alpha",
+            "Alpha",
+            "a-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "loading-click",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "From cache",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "ANTD_SEARCHING-:r1:",
+              "ANTD_SEARCHING",
+              "loading-node",
+              true
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@remote ",
+        "focused": true,
+        "selection": [
+          8,
+          8
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@remote "
+          ],
+          [
+            "select",
+            "remote",
+            "From cache",
+            "remote",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "ANTD_SEARCHING-:r1:",
+              "ANTD_SEARCHING",
+              "loading-node",
+              true
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "loading-enter",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "From cache",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "ANTD_SEARCHING-:r1:",
+              "ANTD_SEARCHING",
+              "loading-node",
+              true
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "From cache",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "ANTD_SEARCHING-:r1:",
+              "ANTD_SEARCHING",
+              "loading-node",
+              true
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "scroll-default",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "User 0",
+              "active": true
+            },
+            {
+              "label": "User 1",
+              "active": false
+            },
+            {
+              "label": "User 2",
+              "active": false
+            },
+            {
+              "label": "User 3",
+              "active": false
+            },
+            {
+              "label": "User 4",
+              "active": false
+            },
+            {
+              "label": "User 5",
+              "active": false
+            },
+            {
+              "label": "User 6",
+              "active": false
+            },
+            {
+              "label": "User 7",
+              "active": false
+            },
+            {
+              "label": "User 8",
+              "active": false
+            },
+            {
+              "label": "User 9",
+              "active": false
+            },
+            {
+              "label": "User 10",
+              "active": false
+            },
+            {
+              "label": "User 11",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "u0-:r1:",
+              "user0",
+              "User 0",
+              false
+            ],
+            [
+              "u1-:r1:",
+              "user1",
+              "User 1",
+              false
+            ],
+            [
+              "u2-:r1:",
+              "user2",
+              "User 2",
+              false
+            ],
+            [
+              "u3-:r1:",
+              "user3",
+              "User 3",
+              false
+            ],
+            [
+              "u4-:r1:",
+              "user4",
+              "User 4",
+              false
+            ],
+            [
+              "u5-:r1:",
+              "user5",
+              "User 5",
+              false
+            ],
+            [
+              "u6-:r1:",
+              "user6",
+              "User 6",
+              false
+            ],
+            [
+              "u7-:r1:",
+              "user7",
+              "User 7",
+              false
+            ],
+            [
+              "u8-:r1:",
+              "user8",
+              "User 8",
+              false
+            ],
+            [
+              "u9-:r1:",
+              "user9",
+              "User 9",
+              false
+            ],
+            [
+              "u10-:r1:",
+              "user10",
+              "User 10",
+              false
+            ],
+            [
+              "u11-:r1:",
+              "user11",
+              "User 11",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "User 0",
+              "active": false
+            },
+            {
+              "label": "User 1",
+              "active": false
+            },
+            {
+              "label": "User 2",
+              "active": false
+            },
+            {
+              "label": "User 3",
+              "active": false
+            },
+            {
+              "label": "User 4",
+              "active": false
+            },
+            {
+              "label": "User 5",
+              "active": false
+            },
+            {
+              "label": "User 6",
+              "active": false
+            },
+            {
+              "label": "User 7",
+              "active": false
+            },
+            {
+              "label": "User 8",
+              "active": false
+            },
+            {
+              "label": "User 9",
+              "active": false
+            },
+            {
+              "label": "User 10",
+              "active": false
+            },
+            {
+              "label": "User 11",
+              "active": true
+            }
+          ],
+          "scrolled": true
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "u0-:r1:",
+              "user0",
+              "User 0",
+              false
+            ],
+            [
+              "u1-:r1:",
+              "user1",
+              "User 1",
+              false
+            ],
+            [
+              "u2-:r1:",
+              "user2",
+              "User 2",
+              false
+            ],
+            [
+              "u3-:r1:",
+              "user3",
+              "User 3",
+              false
+            ],
+            [
+              "u4-:r1:",
+              "user4",
+              "User 4",
+              false
+            ],
+            [
+              "u5-:r1:",
+              "user5",
+              "User 5",
+              false
+            ],
+            [
+              "u6-:r1:",
+              "user6",
+              "User 6",
+              false
+            ],
+            [
+              "u7-:r1:",
+              "user7",
+              "User 7",
+              false
+            ],
+            [
+              "u8-:r1:",
+              "user8",
+              "User 8",
+              false
+            ],
+            [
+              "u9-:r1:",
+              "user9",
+              "User 9",
+              false
+            ],
+            [
+              "u10-:r1:",
+              "user10",
+              "User 10",
+              false
+            ],
+            [
+              "u11-:r1:",
+              "user11",
+              "User 11",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "scroll-suppressed",
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "User 0",
+              "active": true
+            },
+            {
+              "label": "User 1",
+              "active": false
+            },
+            {
+              "label": "User 2",
+              "active": false
+            },
+            {
+              "label": "User 3",
+              "active": false
+            },
+            {
+              "label": "User 4",
+              "active": false
+            },
+            {
+              "label": "User 5",
+              "active": false
+            },
+            {
+              "label": "User 6",
+              "active": false
+            },
+            {
+              "label": "User 7",
+              "active": false
+            },
+            {
+              "label": "User 8",
+              "active": false
+            },
+            {
+              "label": "User 9",
+              "active": false
+            },
+            {
+              "label": "User 10",
+              "active": false
+            },
+            {
+              "label": "User 11",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "u0-:r1:",
+              "user0",
+              "User 0",
+              false
+            ],
+            [
+              "u1-:r1:",
+              "user1",
+              "User 1",
+              false
+            ],
+            [
+              "u2-:r1:",
+              "user2",
+              "User 2",
+              false
+            ],
+            [
+              "u3-:r1:",
+              "user3",
+              "User 3",
+              false
+            ],
+            [
+              "u4-:r1:",
+              "user4",
+              "User 4",
+              false
+            ],
+            [
+              "u5-:r1:",
+              "user5",
+              "User 5",
+              false
+            ],
+            [
+              "u6-:r1:",
+              "user6",
+              "User 6",
+              false
+            ],
+            [
+              "u7-:r1:",
+              "user7",
+              "User 7",
+              false
+            ],
+            [
+              "u8-:r1:",
+              "user8",
+              "User 8",
+              false
+            ],
+            [
+              "u9-:r1:",
+              "user9",
+              "User 9",
+              false
+            ],
+            [
+              "u10-:r1:",
+              "user10",
+              "User 10",
+              false
+            ],
+            [
+              "u11-:r1:",
+              "user11",
+              "User 11",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "User 0",
+              "active": false
+            },
+            {
+              "label": "User 1",
+              "active": false
+            },
+            {
+              "label": "User 2",
+              "active": false
+            },
+            {
+              "label": "User 3",
+              "active": false
+            },
+            {
+              "label": "User 4",
+              "active": false
+            },
+            {
+              "label": "User 5",
+              "active": false
+            },
+            {
+              "label": "User 6",
+              "active": false
+            },
+            {
+              "label": "User 7",
+              "active": false
+            },
+            {
+              "label": "User 8",
+              "active": false
+            },
+            {
+              "label": "User 9",
+              "active": false
+            },
+            {
+              "label": "User 10",
+              "active": false
+            },
+            {
+              "label": "User 11",
+              "active": true
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "u0-:r1:",
+              "user0",
+              "User 0",
+              false
+            ],
+            [
+              "u1-:r1:",
+              "user1",
+              "User 1",
+              false
+            ],
+            [
+              "u2-:r1:",
+              "user2",
+              "User 2",
+              false
+            ],
+            [
+              "u3-:r1:",
+              "user3",
+              "User 3",
+              false
+            ],
+            [
+              "u4-:r1:",
+              "user4",
+              "User 4",
+              false
+            ],
+            [
+              "u5-:r1:",
+              "user5",
+              "User 5",
+              false
+            ],
+            [
+              "u6-:r1:",
+              "user6",
+              "User 6",
+              false
+            ],
+            [
+              "u7-:r1:",
+              "user7",
+              "User 7",
+              false
+            ],
+            [
+              "u8-:r1:",
+              "user8",
+              "User 8",
+              false
+            ],
+            [
+              "u9-:r1:",
+              "user9",
+              "User 9",
+              false
+            ],
+            [
+              "u10-:r1:",
+              "user10",
+              "User 10",
+              false
+            ],
+            [
+              "u11-:r1:",
+              "user11",
+              "User 11",
+              false
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "profile": "motion",
+      "opening": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Alpha",
+              "active": true
+            },
+            {
+              "label": "Beta",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": false,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "before": {
+        "value": "@",
+        "focused": true,
+        "selection": [
+          1,
+          1
+        ],
+        "menu": {
+          "className": "ant-mentions-dropdown-menu",
+          "entries": [
+            {
+              "label": "Alpha",
+              "active": true
+            },
+            {
+              "label": "Beta",
+              "active": false
+            }
+          ],
+          "scrolled": false
+        },
+        "events": [
+          [
+            "change",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      },
+      "after": {
+        "value": "@alpha ",
+        "focused": true,
+        "selection": [
+          7,
+          7
+        ],
+        "menu": null,
+        "events": [
+          [
+            "change",
+            "@"
+          ],
+          [
+            "change",
+            "@alpha "
+          ],
+          [
+            "select",
+            "alpha",
+            "Alpha",
+            "a-:r1:",
+            "@"
+          ]
+        ],
+        "args": {
+          "prefixCls": "ant-mentions-dropdown",
+          "opened": true,
+          "options": [
+            [
+              "a-:r1:",
+              "alpha",
+              "Alpha",
+              false
+            ],
+            [
+              "b-:r1:",
+              "beta",
+              "Beta",
+              false
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

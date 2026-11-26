@@ -50,7 +50,10 @@ export type {
   MentionsSlots,
   MentionsOption,
   MentionsConfig,
-  MentionsEntity
+  MentionsEntity,
+  MentionsPopupMenu,
+  MentionsPopupRender,
+  MentionsPopupRenderInfo
 } from './mentions.types';
 export { default as AutoComplete } from './AutoComplete.svelte';
 export type {

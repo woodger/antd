@@ -16,7 +16,7 @@ export function filterMentionOption(text: string, option: MentionsOption) {
   return value.toLowerCase().includes(text.toLowerCase());
 }
 
-interface MentionMenuRow {
+export interface MentionMenuRow {
   option: MentionsOption;
   menuKey: string;
   domKey: string;

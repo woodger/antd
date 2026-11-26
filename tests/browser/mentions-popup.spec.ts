@@ -153,6 +153,8 @@ for (const name of [
   test(`pointer and keyboard choices keep native text and caret for ${name}`, async ({ page }) => {
     const sample = await open(page, name);
     if ('replace' in sample && sample.replace) {
+      await expect(input(page)).not.toHaveAttribute('aria-controls');
+      await expect(input(page)).not.toHaveAttribute('aria-activedescendant');
       await input(page).press('Enter');
     }
     else {
@@ -179,6 +181,7 @@ test(
     await check(page, 'Loading mention popup', true);
 
     await expect(page.getByRole('listbox')).toHaveAttribute('aria-busy', 'true');
+    await expect(page.getByRole('option', { name: 'ANTD_SEARCHING', exact: true })).toBeDisabled();
     await input(page).press('Enter');
 
     await expect(input(page)).toHaveValue('@');

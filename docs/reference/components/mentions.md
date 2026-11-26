@@ -108,26 +108,43 @@ Mentions не наследует ConfigProvider.getPopupContainer. Тип getter
 DOM ref, как rc-trigger. Без getter сохраняется native размещение; на сервере
 getter не вызывается. Стили ShadowRoot размещает потребитель.
 
-PopupRender — Snippet со стандартным menu Snippet. Можно добавить обёртку или
-заменить меню; клавиатура textarea продолжает выбирать из options. Пользовательское
-содержимое сохраняет тему и локализацию, но не наследует status/feedback FormItem
-и SpaceCompact, как исходный ContextIsolator. Фокус в стандартном меню удерживает
-подсказки открытыми; переход в поле вне menu закрывает их по исходному blur.
-Закрытие и смена DOM-контейнера создают popupRender заново; смена getter с тем же
-контейнером сохраняет DOM/state, текст, фокус и выделение textarea.
+`popupRender` получает штатный snippet `menu` и данные
+`{ prefixCls, options, opened }`. В `options` передаются отфильтрованные
+варианты с исходными ключами. При загрузке это один отключённый вариант
+с индикатором. Прежний snippet с одним аргументом и вызовом `menu()`
+продолжает работать.
+
+Вызов `menu({ options, prefixCls, opened })` меняет переданные параметры
+штатного списка. `prefixCls` задаёт префикс классов списка и пунктов.
+`opened` становится `true` после размещения панели и завершения её появления.
+`opened: false` отключает автопрокрутку активного пункта и оставляет меню видимым.
+Клик выбирает пункт из отрисованных вариантов, в том числе во время загрузки.
+Клавиатура в textarea использует исходные варианты и сохраняет блокировку Enter
+по `silent`. При пустом списке показывается `notFoundContent`. Связи
+`aria-controls` и `aria-activedescendant` указывают на отрисованные элементы.
+
+Пользовательское содержимое сохраняет тему и локализацию. Контексты
+status/feedback FormItem и SpaceCompact изолированы, как в исходном
+ContextIsolator. Фокус внутри штатного списка удерживает подсказки открытыми.
+Переход в поле вне списка закрывает их через blur. Закрытие и смена
+DOM-контейнера создают `popupRender` заново. Смена getter с тем же контейнером
+сохраняет DOM, состояние, текст, фокус и выделение textarea.
 
 ```svelte
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-  import { Mentions } from '@woodger/antd';
+  import { Mentions, type MentionsPopupMenu, type MentionsPopupRenderInfo } from '@woodger/antd';
 </script>
-{#snippet popup(menu: Snippet)}
+{#snippet popup(menu: MentionsPopupMenu, info: MentionsPopupRenderInfo)}
   <strong>Участники</strong>
-  {@render menu()}
+  {@render menu({ options: info.options.filter(option => !option.disabled) })}
 {/snippet}
 <Mentions options={[{ value: 'alice', label: 'Alice' }]} popupRender={popup}
   getPopupContainer={() => document.body} aria-label="Комментарий" />
 ```
+
+[Замеры React](../../../tests/browser/fixtures/ant-design-mentions-menu-reference.json)
+· [Браузерные проверки](../../../tests/browser/mentions-menu.spec.ts)
+· [SSR и типы](../../../tests/package/mentions-popup.ssr.test.ts).
 
 AutoSize принимает boolean/{minRows,maxRows}, измеряет содержимое с теми же
 font/padding/box-sizing, что и textarea. Shadow node, ResizeObserver, frames и

@@ -9975,9 +9975,11 @@
             "tests/browser/fixtures/MentionsPopupCase.svelte",
             "tests/browser/fixtures/MentionsPopupFixtures.svelte",
             "tests/browser/mentions-popup.spec.ts",
+            "tests/browser/mentions-menu.spec.ts",
+            "tests/browser/fixtures/ant-design-mentions-menu-reference.json",
             "tests/package/mentions-popup.ssr.test.ts"
           ],
-          "note": "24 эталона официального UMD закрепляют local-only getter без ConfigProvider fallback, HTMLElement/ShadowRoot и span префикса. Getter нулевой арности сначала получает undefined; getter с параметром ждёт DOM ref. PopupRender получает стандартный menu Snippet, изолирует FormItem/SpaceCompact и сохраняет theme/locale. Закрытие и смена DOM-контейнера пересоздают custom content; новый callback с прежним контейнером сохраняет popup/editor DOM, state, focus/selection. Menu focus отменяет blur, footer вне menu закрывает подсказки; обработчики работают внутри ShadowRoot. SSR не вызывает getter. Native default inline shell и listbox/option сохраняются; выбор/клавиатура, FormData, loading/empty, native refs и cleanup покрыты отдельными browser/SSR-сценариями."
+          "note": "24 эталона официального UMD закрепляют local-only getter без ConfigProvider fallback, HTMLElement/ShadowRoot и span префикса. Getter нулевой арности сначала получает undefined; getter с параметром ждёт DOM ref. PopupRender изолирует FormItem/SpaceCompact и сохраняет theme/locale. Закрытие и смена DOM-контейнера пересоздают custom content; новый callback с прежним контейнером сохраняет popup/editor DOM, state, focus/selection. Menu focus отменяет blur, footer вне menu закрывает подсказки. Обработчики работают внутри ShadowRoot. 13 профилей 6.6.8 в двух прогонах сверяют menu Snippet и context prefixCls/options/opened, CSS-префикс, filtered/empty/loading, выбор указателем из меню и клавиатурой из textarea, active index, автопрокрутку и завершение именованного появления. Сохранены вызов menu() и одноаргументный popupRender. SSR не вызывает getter или рендер меню. Native default inline shell и listbox/option сохранены, ARIA ссылается на отрисованные элементы."
         },
         {
           "id": "component-theme",
@@ -10006,9 +10008,10 @@
           "requiredForV1": false,
           "evidence": [
             "src/lib/Mentions.svelte",
-            "tests/browser/mentions-popup.spec.ts"
+            "tests/browser/mentions-popup.spec.ts",
+            "tests/browser/mentions-menu.spec.ts"
           ],
-          "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Deprecated Mentions.Option children и textarea ref исключены из переноса. Оставшиеся границы расширенного React Menu API требуют отдельной сверки. Семантика и жизненный цикл popup описаны отдельно."
+          "note": "Native listbox и callbacks сохраняют исходные option data и нативные refs. Настройка props штатного меню через popupRender описана в popup-render-container. Навигация при фокусе непосредственно в меню и несколько штатных списков в одном popup требуют отдельной сверки. Deprecated Mentions.Option children и textarea ref исключены из переноса."
         },
         {
           "id": "option-data",

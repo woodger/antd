@@ -1,11 +1,16 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  // Пользовательская панель сохраняет тему и локаль, изолируя контексты FormItem и SpaceCompact.
+  import type { MentionsPopupMenu, MentionsPopupRender, MentionsPopupRenderInfo } from './mentions.types';
   import { provideFormField } from './form-context';
   import { provideFormItemStatus, useFormItemStatusContext } from './form-item-status';
   import { provideFormFeedback } from './form-feedback-context';
   import { provideCompact } from './space-compact-context';
 
-  let { popupRender, menu }: { popupRender: Snippet<[Snippet]>; menu: Snippet; } = $props();
+  let { popupRender, menu, info }: {
+    popupRender: MentionsPopupRender;
+    menu: MentionsPopupMenu;
+    info: MentionsPopupRenderInfo;
+  } = $props();
   provideFormField(undefined);
   provideFormFeedback({});
   provideFormItemStatus(Object.create(useFormItemStatusContext(), {
@@ -14,4 +19,4 @@
   provideCompact(null);
 </script>
 
-{@render popupRender(menu)}
+{@render popupRender(menu, info)}

@@ -4,13 +4,16 @@
   import { onDestroy, tick, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
-  import type { MentionsProps, MentionsOption, MentionsSemanticProps } from './mentions.types';
+  import type {
+    MentionsProps, MentionsOption, MentionsPopupRenderInfo, MentionsSemanticProps
+  } from './mentions.types';
   import {
     buildMentionMenuRows,
     getMentionMeasure,
     validateMentionSearch,
     filterMentionOption,
-    replaceMention
+    replaceMention,
+    type MentionMenuRow
   } from './mentions.engine';
   import { captureMentionsHydrationSelection, connectMentionsMeasure } from './mentions.dom';
   import { useConfig } from './config-context';
@@ -202,11 +205,10 @@
   let active = $state(0);
   let filtered = $derived<readonly MentionsOption[]>(
     loading
-      ? [{ value: 'ANTD_SEARCHING', disabled: true }]
+      ? [{ value: 'ANTD_SEARCHING', disabled: true, label: searching }]
       : filterOption === false ? options : options.filter(option => filterOption(query, option))
   );
   let menuRows = $derived(buildMentionMenuRows(filtered));
-  let activeMenuKey = $derived(menuRows[active]?.menuKey);
   let visible = $derived(measuring && !blocked && !readonly);
   let focused = $state(false);
   let editorFocused = $state(false);
@@ -219,6 +221,8 @@
   let prefixElement = $state<HTMLSpanElement>();
   let anchor = $state<HTMLSpanElement>();
   let popup = $state<HTMLDivElement>();
+  let listbox = $state<HTMLDivElement>();
+  let activeMenuOption = $state<HTMLButtonElement>();
   let popupContainer = $state<HTMLElement | ShadowRoot>();
   let popupConnection: PopupConnection | undefined;
   const popupShown = $derived(visible && shown);
@@ -235,6 +239,11 @@
     inactive: !popupShown,
     enabled: designTheme.state.token.motion
   }));
+  const menuInfo = $derived<MentionsPopupRenderInfo>({
+    prefixCls: `${componentPrefix}-dropdown`,
+    options: filtered,
+    opened: popupShown && !popupMotion.state.phase
+  });
   const popupLayers = $derived([
     componentTheme.style, popupMotion.state.style, semantics.styles.popup, layer.style
   ]);
@@ -391,16 +400,6 @@
       connection();
     };
   });
-  $effect(() => {
-    const index = active;
-    if (!visible || index < 0 || transitionName && (!shown || popupMotion.state.phase)) {
-      return;
-    }
-
-    const optionId = CSS.escape(`${controlId}-option-${index}`);
-    const option = popup?.querySelector(`#${optionId}`);
-    option?.scrollIntoView({ block: 'nearest' });
-  });
 
   /** Обновляет координаты до применения пользовательского transform. */
   function alignPopupBeforeAppear() {
@@ -501,7 +500,8 @@
   }
 
   async function choose(option: MentionsOption) {
-    if (blocked || readonly || loading || option.disabled || !editor) {
+    // Загрузка подменяет варианты редактора, но оставляет выбор из пользовательского меню.
+    if (blocked || readonly || option.disabled || !editor) {
       return;
     }
     const selectedEditor = editor;
@@ -527,9 +527,9 @@
       editor.setSelectionRange(result.selection, result.selection);
     }
   }
-  function chooseByMenuKey(key: string) {
+  function chooseByMenuKey(rows: readonly MentionMenuRow[], key: string) {
     // Меню выбирает первое совпадение по ключу. Enter в textarea использует индекс.
-    const row = menuRows.find(candidate => candidate.menuKey === key);
+    const row = rows.find(candidate => candidate.menuKey === key);
     if (row) void choose(row.option);
   }
 
@@ -636,7 +636,8 @@
     if (blurTimer !== undefined) clearTimeout(blurTimer);
     focused = true;
   }
-  function connectMenuFocus(node: HTMLDivElement) {
+  function connectListbox(node: HTMLDivElement) {
+    listbox = node;
     // Переходы внутри одного ShadowRoot не доходят до delegated listeners документа.
     node.addEventListener('focusin', handleMenuFocus);
     node.addEventListener('focusout', handleBlur);
@@ -644,6 +645,17 @@
     return () => {
       node.removeEventListener('focusin', handleMenuFocus);
       node.removeEventListener('focusout', handleBlur);
+      if (listbox === node) listbox = undefined;
+    };
+  }
+
+  /** Связывает textarea только с отрисованным пунктом и следует opened при прокрутке. */
+  function connectActiveMenuOption(node: HTMLButtonElement, opened: boolean) {
+    activeMenuOption = node;
+    if (opened) node.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+
+    return () => {
+      if (activeMenuOption === node) activeMenuOption = undefined;
     };
   }
   function clear() {
@@ -688,27 +700,35 @@
   </button>{/if}
 {/snippet}
 
-{#snippet menu()}
-  <div id={`${controlId}-list`} role="listbox" class={`${componentPrefix}-dropdown-menu`}
+{#snippet searching()}<Icon name="loading" />{/snippet}
+
+{#snippet menu(overrides: Partial<MentionsPopupRenderInfo> = {})}
+  {@const menuPrefix = overrides.prefixCls ?? menuInfo.prefixCls}
+  {@const rows = overrides.options === undefined ? menuRows : buildMentionMenuRows(overrides.options)}
+  {@const opened = overrides.opened ?? menuInfo.opened}
+  {@const activeKey = rows[active]?.menuKey}
+  <div id={`${controlId}-list`} role="listbox" class={`${menuPrefix}-menu`}
     aria-label={attributes['aria-label'] ?? config.locale.searchText} onscroll={onPopupScroll}
-    aria-busy={loading || undefined} {@attach connectMenuFocus}>
-    {#each menuRows as { option, menuKey, domKey }, index (domKey)}
-      <button data-ant-mentions-option type="button" role="option" tabindex="-1" id={`${controlId}-option-${index}`}
+    aria-busy={loading || undefined} {@attach connectListbox}>
+    {#each rows as { option, menuKey, domKey }, index (domKey)}
+      <button data-ant-mentions-option type="button" role="option" tabindex="-1"
+        id={`${controlId}-option-${index}`}
         disabled={option.disabled} aria-selected={active === index}
         aria-disabled={option.disabled || undefined}
-        aria-label={option.label == null ? option.value : undefined} class={[
-          `${componentPrefix}-dropdown-menu-item`,
-          activeMenuKey === menuKey && `${componentPrefix}-dropdown-menu-item-active`,
-          option.disabled && `${componentPrefix}-dropdown-menu-item-disabled`,
+        aria-label={option.label == null || option.label === searching ? option.value : undefined}
+        class={[
+          `${menuPrefix}-menu-item`,
+          activeKey === menuKey && `${menuPrefix}-menu-item-active`,
+          option.disabled && `${menuPrefix}-menu-item-disabled`,
           option.class
         ]} style={option.style} onpointermove={() => {
           if (!option.disabled) active = index;
-        }} onclick={() => chooseByMenuKey(menuKey)}>
-        {#if loading}<Icon name="loading" />
-        {:else}<RenderContent value={option.label} />{/if}
+        }} onclick={() => chooseByMenuKey(rows, menuKey)}
+        {@attach active === index ? node => connectActiveMenuOption(node, opened) : undefined}>
+        <RenderContent value={option.label} />
       </button>
     {:else}
-      <div class={`${componentPrefix}-dropdown-menu-item ${componentPrefix}-dropdown-menu-item-disabled`}>
+      <div class={`${menuPrefix}-menu-item ${menuPrefix}-menu-item-disabled`}>
         {#snippet nativeEmpty()}{config.locale.emptyText}{/snippet}
         <RenderEmpty componentName="Mentions" local={notFoundContent} fallback={nativeEmpty} />
       </div>
@@ -764,8 +784,9 @@
         ? { autofocus: attributes.autofocus ?? autoFocus } : {})}
       aria-autocomplete="list"
       aria-haspopup="listbox"
-      aria-controls={visible ? `${controlId}-list` : undefined}
-      aria-activedescendant={visible && active >= 0 ? `${controlId}-option-${active}` : undefined}
+      aria-controls={visible && listbox ? `${controlId}-list` : undefined}
+      aria-activedescendant={visible && listbox?.contains(activeMenuOption ?? null)
+        ? `${controlId}-option-${active}` : undefined}
       aria-label={attributes['aria-label'] ?? field?.label}
       aria-invalid={field?.invalid || resolvedStatus === 'error'
         || attributes['aria-invalid']
@@ -821,7 +842,7 @@
         dir={config.direction} {@attach portal}
         onanimationend={popupMotion.end} ontransitionend={popupMotion.end}>
         {#if popupRender}
-          {#if visible}<MentionsPopupContent {popupRender} {menu} />{/if}
+          {#if visible}<MentionsPopupContent {popupRender} {menu} info={menuInfo} />{/if}
         {:else}{@render menu()}{/if}
       </div>
     {/if}

@@ -14,6 +14,23 @@ export interface MentionsOption {
   class?: string;
   style?: string;
 }
+
+/** Данные штатного списка подсказок, доступные в popupRender. */
+export interface MentionsPopupRenderInfo {
+  /** CSS-префикс списка до суффикса `-menu`. */
+  readonly prefixCls: string;
+  /** Варианты после фильтрации, в порядке навигации из textarea. */
+  readonly options: readonly MentionsOption[];
+  /** Позиционирование и фаза открытия завершены. Управляет прокруткой активного пункта. */
+  readonly opened: boolean;
+}
+
+/** Выводит штатный список с возможностью изменить его параметры. */
+export type MentionsPopupMenu = Snippet<[overrides?: Partial<MentionsPopupRenderInfo>]>;
+
+/** Оборачивает, настраивает или заменяет содержимое всплывающей панели. */
+export type MentionsPopupRender = Snippet<[menu: MentionsPopupMenu, info: MentionsPopupRenderInfo]>;
+
 /** Извлечение упоминаний по prefix и буквальному разделителю split. */
 export interface MentionsConfig {
   prefix?: string | readonly string[];
@@ -105,8 +122,8 @@ export interface MentionsProps extends Omit<
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   /** Локальный контейнер; ConfigProvider.getPopupContainer не используется, как upstream. */
   getPopupContainer?: () => HTMLElement | ShadowRoot;
-  /** Получает стандартный menu Snippet; содержимое создаётся заново при каждом открытии. */
-  popupRender?: Snippet<[Snippet]>;
+  /** Получает штатный список и его параметры. Содержимое создаётся при каждом открытии. */
+  popupRender?: MentionsPopupRender;
   classNames?: MentionsSemantic;
   /** CSS-декларации по слотам. */
   styles?: MentionsSemantic;
