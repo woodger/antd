@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
-import { describe, it, expect, vi } from 'vitest';
-import { Mentions } from '@woodger/antd';
+import { describe, it, expect, expectTypeOf, vi } from 'vitest';
+import { Mentions, type InputCountConfig, type MentionsProps } from '@woodger/antd';
 import MentionsFixtures from '../browser/fixtures/MentionsFixtures.svelte';
 
 describe('Mentions SSR', () => {
@@ -23,6 +23,34 @@ describe('Mentions SSR', () => {
     expect(body).toContain('readonly');
     expect(body).toContain('aria-expanded="false"');
   });
+
+  it('renders an independent count limit without truncating server-provided text', () => {
+    expectTypeOf<MentionsProps['count']>().toEqualTypeOf<InputCountConfig | undefined>();
+    expectTypeOf<MentionsProps['onCompositionStart']>()
+      .toEqualTypeOf<MentionsProps['oncompositionstart']>();
+    expectTypeOf<MentionsProps['onCompositionEnd']>()
+      .toEqualTypeOf<MentionsProps['oncompositionend']>();
+    expectTypeOf<'showCount' extends keyof MentionsProps ? true : false>().toEqualTypeOf<false>();
+
+    const { body } = render(Mentions, {
+      props: {
+        defaultValue: 'a😀bc',
+        maxLength: 4,
+        maxlength: 6,
+        count: { max: 3, show: true },
+        readonly: true
+      }
+    });
+
+    expect(body).toContain('maxlength="4"');
+    expect(body).toContain('a😀bc</textarea>');
+    expect(body).toContain('rc-textarea-affix-wrapper-readonly rc-textarea-out-of-range');
+    expect(body).toContain('data-count="5 / 3"');
+    expect(body).toContain('class="rc-textarea-data-count">');
+    expect(body).not.toContain('defaultvalue=');
+    expect(body).not.toContain('count="[object Object]"');
+  });
+
   it('renders autosize fixtures without browser measurements or timers on the server', () => {
     vi.useFakeTimers();
     try {

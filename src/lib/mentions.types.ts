@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLTextareaAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
-import type { InputAllowClear } from './input-count.types';
+import type { InputAllowClear, InputCountConfig } from './input-count.types';
 import type { FormValidateStatus } from './form-error-list.types';
 
 export interface MentionsOption {
@@ -75,6 +75,10 @@ export interface MentionsProps extends Omit<
   silent?: boolean;
   /** Автофокус при появлении редактора. Нативный autofocus имеет приоритет. */
   autoFocus?: boolean;
+  /** Настраивает подсчёт, мягкий предел и преобразование сверхлимитного ввода. */
+  count?: InputCountConfig;
+  /** Нативный предел ввода. Перекрывает maxlength и действует независимо от count.max. */
+  maxLength?: number;
   /** @defaultValue false */
   autoSize?: boolean | { minRows?: number; maxRows?: number; };
   /** @defaultValue false */
@@ -92,6 +96,8 @@ export interface MentionsProps extends Omit<
   onBlur?: (event: FocusEvent) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   onKeyUp?: (event: KeyboardEvent) => void;
+  onCompositionStart?: HTMLTextareaAttributes['oncompositionstart'];
+  onCompositionEnd?: HTMLTextareaAttributes['oncompositionend'];
   onPressEnter?: (event: KeyboardEvent) => void;
   onResize?: (size: { width: number; height: number; }) => void;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];

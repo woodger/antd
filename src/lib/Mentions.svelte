@@ -19,7 +19,7 @@
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { getInlineZIndex, useZIndex } from './z-index-context.svelte';
-  import { resolveInputClear } from './input-count.engine';
+  import { inputCountInfo, inputExceedValue, resolveInputClear } from './input-count.engine';
   import { mergeComponentSemantics } from './semantic-style.engine';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
   import { createOverlayStyle } from './overlay-style.model.svelte';
@@ -33,6 +33,8 @@
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import MentionsPopupContent from './MentionsPopupContent.svelte';
   import Icon from './Icon.svelte';
+
+  type EditorEvent<T extends Event = Event> = T & { currentTarget: HTMLTextAreaElement; };
 
   let {
     prefixCls: customizePrefixCls,
@@ -50,6 +52,8 @@
     transitionName,
     silent,
     autoFocus,
+    count,
+    maxLength,
     autoSize = false,
     allowClear,
     size,
@@ -63,6 +67,8 @@
     onBlur,
     onKeyDown,
     onKeyUp,
+    onCompositionStart,
+    onCompositionEnd,
     onPressEnter,
     onResize,
     onPopupScroll,
@@ -82,6 +88,8 @@
     oninput,
     onkeydown,
     onkeyup,
+    oncompositionstart,
+    oncompositionend,
     ...attributes
   }: MentionsProps = $props();
   const config = useConfig();
@@ -109,6 +117,9 @@
   const generated = $props.id();
   let internalValue = $state(untrack(() => value ?? defaultValue));
   let text = $derived(value ?? internalValue);
+  let maximum = $derived(maxLength ?? attributes.maxlength ?? undefined);
+  let counterVisible = $derived(Boolean(count?.show));
+  let counter = $derived(inputCountInfo(text, count, undefined, maximum));
   let blocked = $derived(
     disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
   );
@@ -133,6 +144,8 @@
     transitionName,
     silent,
     autoFocus,
+    count,
+    maxLength,
     autoSize,
     allowClear,
     size,
@@ -146,6 +159,8 @@
     onBlur,
     onKeyDown,
     onKeyUp,
+    onCompositionStart,
+    onCompositionEnd,
     onPressEnter,
     onResize,
     onPopupScroll,
@@ -164,7 +179,9 @@
     nativeElement,
     oninput,
     onkeydown,
-    onkeyup
+    onkeyup,
+    oncompositionstart,
+    oncompositionend
   });
   let semantics = $derived(mergeComponentSemantics(
     config.mentions, semanticProps, ['root', 'textarea', 'popup', 'suffix']
@@ -188,6 +205,8 @@
   );
   let visible = $derived(measuring && !blocked && !readonly);
   let focused = $state(false);
+  let editorFocused = $state(false);
+  let composing = false;
   let shown = $state(false);
   let mounted = $state(false);
   let root = $state<HTMLDivElement>();
@@ -245,20 +264,26 @@
   let previousValue = untrack(() => value);
   let previousFeedback = untrack(() => Boolean(feedback.hasFeedback));
   let previousAffix = untrack(() => hasAffix);
+  let previousCounterVisible = untrack(() => counterVisible);
   let editorGeneration = $state(0);
   let alive = true;
   $effect.pre(() => {
     const current = Boolean(feedback.hasFeedback);
     const affix = hasAffix;
-    const replaceEditor = current !== previousFeedback && affix !== previousAffix;
+    const showCounter = counterVisible;
+    const feedbackReplacesEditor = current !== previousFeedback && affix !== previousAffix;
+    const counterReplacesEditor = showCounter !== previousCounterVisible;
     previousFeedback = current;
     previousAffix = affix;
-    if (replaceEditor) {
-      // RcMentions replaces its editor when feedback adds/removes the affix wrapper.
-      // A persistent allowClear wrapper keeps the editor; the native root stays a DIV.
+    previousCounterVisible = showCounter;
+    if (feedbackReplacesEditor || counterReplacesEditor) {
+      // При смене обёртки прежняя каретка больше не служит якорем списка.
+      // Постоянная обёртка allowClear сохраняет textarea при смене feedback.
       untrack(() => {
-        editorGeneration++;
+        if (feedbackReplacesEditor) editorGeneration++;
         focused = false;
+        editorFocused = false;
+        composing = false;
         measuring = false;
         query = '';
         token = '';
@@ -422,18 +447,49 @@
     internalValue = next;
     onChange?.(next);
   }
-  function handleInput(event: Event & { currentTarget: EventTarget & HTMLTextAreaElement; }) {
+  function publishEditorInput(event: EditorEvent) {
     if (blocked || readonly) {
       return;
     }
+
     const element = event.currentTarget;
-    change(element.value);
-    oninput?.(event);
+    const raw = element.value;
+    const isComposing = composing || 'isComposing' in event && event.isComposing === true;
+    const next = inputExceedValue(raw, count, isComposing);
+    const selection = raw !== next ? { start: element.selectionStart, end: element.selectionEnd }
+      : undefined;
+
+    change(next);
+    if (event.type === 'input') oninput?.(event);
+
     void tick().then(() => {
-      if (alive && element.isConnected && value !== undefined && element.value !== text)
+      if (!alive || editor !== element || !element.isConnected) {
+        return;
+      }
+      if ((selection || value !== undefined) && element.value !== text) {
         element.value = text;
+      }
+      if (selection) {
+        element.setSelectionRange(selection.start, selection.end);
+      }
     });
   }
+
+  function handleCompositionStart(event: EditorEvent<CompositionEvent>) {
+    composing = true;
+    onCompositionStart?.(event);
+    oncompositionstart?.(event);
+  }
+
+  function handleCompositionEnd(event: EditorEvent<CompositionEvent>) {
+    composing = false;
+    if (count) {
+      publishEditorInput(event);
+    }
+    onCompositionEnd?.(event);
+    oncompositionend?.(event);
+  }
+
   async function choose(option: MentionsOption) {
     if (blocked || readonly || loading || option.disabled || !editor) {
       return;
@@ -543,6 +599,7 @@
     }
   }
   function handleFocus(event: FocusEvent) {
+    editorFocused = true;
     if (blurTimer !== undefined)
       clearTimeout(blurTimer);
     if (!focused)
@@ -550,6 +607,7 @@
     focused = true;
   }
   function handleBlur(event: FocusEvent) {
+    if (event.target === editor) editorFocused = false;
     if (blurTimer !== undefined)
       clearTimeout(blurTimer);
     blurTimer = setTimeout(() => {
@@ -593,7 +651,11 @@
 
 <style>
   [data-ant-mentions-root] { max-width: 100%; }
-  [data-ant-mentions-textarea] { display: block; width: 100%; min-width: 0; }
+  :where([data-ant-mentions-root]) > [data-ant-mentions-textarea] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
   [data-ant-mentions-measure] { position: absolute; inset: 0 auto auto 0; overflow: hidden; visibility: hidden; pointer-events: none; white-space: pre-wrap; }
   .caret-anchor { display: inline-block; width: 1px; height: 1em; vertical-align: text-bottom; }
   .popup { position: fixed; margin: 0; border: 0; overflow: auto; }
@@ -658,29 +720,79 @@
       rootClassName,
       semantics.classes.root
     ]}>
-  {#key editorGeneration}<textarea {...attributes} data-ant-mentions-textarea bind:this={editor} id={controlId} name={name ?? field?.name} rows={attributes.rows ?? 1}
-    class={[
+  {#snippet editorControl()}
+    {@const hasNativeDefault = untrack(() => count !== undefined && typeof document !== 'undefined')}
+    <!-- RcInput задаёт DOM-свойство defaultValue перед value, сохраняя начальную позицию каретки. -->
+    <textarea
+      {...(hasNativeDefault ? { defaultValue: text } : {})}
+      {...attributes}
+      data-ant-mentions-textarea
+      bind:this={editor}
+      id={controlId}
+      name={name ?? field?.name}
+      rows={attributes.rows ?? 1}
+      maxlength={maximum}
+      class={[
         `${componentPrefix}-textarea`,
         config.direction === 'rtl' && `${componentPrefix}-textarea-rtl`,
+        !counterVisible && counter.exceeded && 'rc-textarea-out-of-range',
         semantics.classes.textarea
-      ]} style={textareaStyle} dir={attributes.dir ?? config.direction}
-    value={text} {readonly} disabled={blocked} required={attributes.required ?? field?.required} role="combobox" aria-expanded={visible}
-    {...(attributes.autofocus !== undefined || autoFocus !== undefined
-      ? { autofocus: attributes.autofocus ?? autoFocus } : {})}
-    aria-autocomplete="list" aria-haspopup="listbox" aria-controls={visible ? `${controlId}-list` : undefined}
-    aria-activedescendant={visible && active >= 0 ? `${controlId}-option-${active}` : undefined}
-    aria-label={attributes['aria-label'] ?? field?.label} aria-invalid={field?.invalid || resolvedStatus === 'error'
+      ]}
+      style={textareaStyle}
+      dir={attributes.dir ?? config.direction}
+      value={text}
+      {readonly}
+      disabled={blocked}
+      required={attributes.required ?? field?.required}
+      role="combobox"
+      aria-expanded={visible}
+      {...(attributes.autofocus !== undefined || autoFocus !== undefined
+        ? { autofocus: attributes.autofocus ?? autoFocus } : {})}
+      aria-autocomplete="list"
+      aria-haspopup="listbox"
+      aria-controls={visible ? `${controlId}-list` : undefined}
+      aria-activedescendant={visible && active >= 0 ? `${controlId}-option-${active}` : undefined}
+      aria-label={attributes['aria-label'] ?? field?.label}
+      aria-invalid={field?.invalid || resolvedStatus === 'error'
         || attributes['aria-invalid']
         || undefined}
-    aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(
-        Boolean
-      )
-        .join(
-          ' '
-        )
-        || undefined}
-    oninput={handleInput} onkeydown={handleKeydown} onkeyup={handleKeyup} onfocus={handleFocus} onblur={handleBlur}></textarea>
-  <div data-ant-mentions-measure bind:this={mirror} class={`${componentPrefix}-measure`} aria-hidden="true">{text.slice(0, location)}{#if visible}<span bind:this={prefixElement}>{token}</span>{:else}{token}{/if}<span bind:this={anchor} class="caret-anchor"></span>{text.slice(location + token.length)}</div>{/key}
+      aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(Boolean)
+        .join(' ') || undefined}
+      oninput={publishEditorInput}
+      onkeydown={handleKeydown}
+      onkeyup={handleKeyup}
+      oncompositionstart={handleCompositionStart}
+      oncompositionend={handleCompositionEnd}
+      onfocus={handleFocus}
+      onblur={handleBlur}
+    ></textarea>
+  {/snippet}
+  {#key editorGeneration}
+    {#if counterVisible}
+      {@const content = counter.content}
+      <span
+        class={[
+          'rc-textarea-affix-wrapper',
+          blocked && 'rc-textarea-disabled rc-textarea-affix-wrapper-disabled',
+          editorFocused && !blocked && 'rc-textarea-affix-wrapper-focused',
+          readonly && 'rc-textarea-affix-wrapper-readonly',
+          counter.exceeded && 'rc-textarea-out-of-range'
+        ]}
+        data-count={typeof content === 'string' ? content : undefined}
+      >{@render editorControl()}<span class="rc-textarea-suffix">
+        <span class="rc-textarea-data-count">
+          {#if typeof content === 'function'}
+            {@render content(counter.info)}
+          {:else if typeof content !== 'boolean'}
+            {content}
+          {/if}
+        </span>
+      </span></span>
+    {:else}
+      {@render editorControl()}
+    {/if}
+    <div data-ant-mentions-measure bind:this={mirror} class={`${componentPrefix}-measure`} aria-hidden="true">{text.slice(0, location)}{#if visible}<span bind:this={prefixElement}>{token}</span>{:else}{token}{/if}<span bind:this={anchor} class="caret-anchor"></span>{text.slice(location + token.length)}</div>
+  {/key}
   {#if hasAffix}<span data-ant-mentions-feedback-suffix
     class={[`${componentPrefix}-suffix`, semantics.classes.suffix]}
     style={semantics.styles.suffix}>{@render clearControl()}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}

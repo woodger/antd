@@ -106,6 +106,37 @@ AutoSize принимает boolean/{minRows,maxRows}, измеряет соде
 font/padding/box-sizing, что и textarea. Shadow node, ResizeObserver, frames и
 listeners удаляются при unmount. OnResize получает {width,height}. Rows по умолчанию 1.
 
+`count.max` задаёт мягкий предел, а `maxLength` ограничивает нативный ввод.
+`maxLength` имеет приоритет над `maxlength`. При отсутствии `count.max`
+счётчик использует нативный предел. `count.max: 0` отключает мягкий предел.
+По умолчанию счётчик измеряет длину в UTF-16. `count.strategy` позволяет
+заменить подсчёт, а `count.show` принимает флаг или функцию форматирования.
+Функция получает `{ value, count, maxLength }` и может вернуть Svelte snippet
+с теми же аргументами.
+
+`count.exceedFormatter` преобразует пользовательский ввод при превышении
+`count.max`. IME сохраняет промежуточный текст до `compositionend`. После
+обрезки восстанавливаются позиции выделения в итоговом значении. Вставка
+упоминания и очистка работают с полной строкой. `onCompositionStart` и
+`onCompositionEnd` получают нативные события, как `oncompositionstart` и
+`oncompositionend`. Без `count` завершение композиции сохраняет обычный
+порядок `onChange` по событиям ввода.
+
+При включённом `count.show` редактор и счётчик находятся внутри
+`rc-textarea-affix-wrapper`. Включение или выключение счётчика заменяет
+textarea, сохраняя её значение. При замене список подсказок закрывается
+вместе с привязкой к прежней каретке. В Ant Design 6.6.8 этот список
+остаётся открытым после замены textarea. Обёртка React с `allowClear` теряет
+направление провайдера. Для сравнения ширины счётчика в RTL React-стенд
+дополнительно задаёт `dir="rtl"` на внешнем контейнере.
+
+Строгая гидратация счётчика сохраняет textarea, начальный текст и фокус.
+Каретка, заданная в предзаполненном поле до гидратации, может сдвинуться.
+Это воспроизводится и в сборке `5fc7e251` без счётчика.
+[Замеры React](../../../tests/browser/fixtures/ant-design-mentions-count-reference.json)
+· [Браузер и hydration](../../../tests/browser/mentions-count.spec.ts)
+· [SSR и типы](../../../tests/package/mentions.ssr.test.ts).
+
 AllowClear — boolean/{clearIcon,disabled}; очистка вызывает change(''), затем
 onClear. Size/status/variant, native name/required/maxlength, FormItem/validation/
 reset, Form/ConfigProvider disabled, locale/themes/compact density/RTL поддержаны.
@@ -145,5 +176,5 @@ native текст формы без popup, измеряющего textarea и ti
 В Ant Design 6.6.8 с RcMentions 1.12.0 обёртка с суффиксом теряет стиль корня,
 а суффикс получает классы без переданного `styles.suffix`. Svelte применяет
 декларации к обоим слотам. [Замеры и проверки](../../../tests/browser/mentions-semantics.spec.ts).
-Открытые части переноса — унаследованный `count` и расширенный API меню.
+Расширенный API меню остаётся открытой частью переноса.
 
