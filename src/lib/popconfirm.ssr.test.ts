@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
-import Popconfirm from './Popconfirm.svelte';
+import Popconfirm from './popconfirm.component';
 import type { PopconfirmProps } from './popconfirm.types';
 
 const children = createRawSnippet(

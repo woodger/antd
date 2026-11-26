@@ -411,7 +411,7 @@ export type {
 } from './color-picker.types';
 export { default as Tooltip } from './tooltip.component';
 export { default as Popover } from './Popover.svelte';
-export { default as Popconfirm } from './Popconfirm.svelte';
+export { default as Popconfirm } from './popconfirm.component';
 export { default as Dropdown } from './Dropdown.svelte';
 export { default as Tabs } from './Tabs.svelte';
 export { default as Collapse } from './Collapse.svelte';

@@ -1,6 +1,7 @@
-<script lang="ts">
+<script lang="ts" generics="OkHref extends string | undefined = undefined, CancelHref extends string | undefined = undefined">
   // Передаёт показ Popover и управляет действиями текущего подтверждения.
   import { onDestroy, untrack } from 'svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
   import { useConfig } from './config-context';
   import { useForm } from './form-context';
   import { providePopconfirmTheme } from './popover-theme-context';
@@ -11,18 +12,22 @@
   import { getOverlayPrefixCss } from './overlay-prefix.engine';
   import prefixTemplate from './vendor/popconfirm-prefix.css.js';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import type { PopconfirmProps, PopconfirmSemanticProps } from './popconfirm.types';
+  import type { PopconfirmActionOptions, PopconfirmProps, PopconfirmSemanticProps } from './popconfirm.types';
   import type { PopoverRef } from './popover.types';
   import Popover from './Popover.svelte';
   import Button from './Button.svelte';
   import Icon from './Icon.svelte';
+
+  type ActionElement = HTMLButtonElement | HTMLAnchorElement;
+  type ActionClick<Target extends ActionElement = ActionElement> =
+    MouseEvent & { currentTarget: Target };
 
   let {
     ref = $bindable<PopoverRef | undefined>(),
     open = $bindable<boolean | undefined>(),
     open: providedOpen,
     ...props
-  }: PopconfirmProps & { ref?: PopoverRef } = $props();
+  }: PopconfirmProps<OkHref, CancelHref> & { ref?: PopoverRef } = $props();
   let {
     children,
     title,
@@ -64,7 +69,7 @@
   let resolvedTrigger = $derived(trigger || config.popconfirm?.trigger || 'click');
   let enterDelay = $derived(mouseEnterDelay ?? config.popconfirm?.mouseEnterDelay ?? 0.1);
   let leaveDelay = $derived(mouseLeaveDelay ?? config.popconfirm?.mouseLeaveDelay ?? 0.1);
-  let callbackProps = $derived<PopconfirmSemanticProps>({
+  let callbackProps = $derived<PopconfirmSemanticProps<OkHref, CancelHref>>({
     ...props,
     open: providedOpen,
     placement,
@@ -73,7 +78,7 @@
     mouseLeaveDelay: leaveDelay,
     okType
   });
-  let semantics = $derived(getOverlaySemantics(
+  let semantics = $derived(getOverlaySemantics<PopconfirmSemanticProps<OkHref, CancelHref>>(
     config.popconfirm,
     classNames,
     styles,
@@ -170,39 +175,67 @@
     onOpenChange?.(next);
   }
 
-  function confirm(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
+  /** Учитывает фактический тег Button, если href обновляется между кликами. */
+  function matchesClick<Tag extends 'a' | 'button'>(
+    event: ActionClick, tag: Tag
+  ): event is ActionClick<HTMLElementTagNameMap[Tag]> {
+    return event.currentTarget.localName === tag;
+  }
+
+  /** Вызывает нативный обработчик до действия либо возвращает совместимый вызов для конца. */
+  function applyClick<Target extends ActionElement>(
+    event: ActionClick<Target>,
+    options: { onclick?: MouseEventHandler<Target> | null; onClick?: MouseEventHandler<Target> }
+  ) {
+    const nativeClick = options.onclick;
+    if (nativeClick != null) {
+      nativeClick.call(options, event);
+      return;
+    }
+
+    const compatibleClick = options.onClick;
+    return compatibleClick && (() => compatibleClick.call(options, event));
+  }
+
+  /** Передаёт опциям событие именно той разновидности Button, которую показал DOM. */
+  function prepareClick(event: ActionClick, options: PopconfirmActionOptions | undefined) {
+    if (!options) {
+      return;
+    }
+
+    if (options.href !== undefined) {
+      return matchesClick(event, 'a') ? applyClick(event, options) : undefined;
+    }
+    return matchesClick(event, 'button') ? applyClick(event, options) : undefined;
+  }
+
+  function confirm(event: ActionClick) {
     if (!visible || action.loading || okButtonProps?.disabled) {
       return;
     }
 
-    const options = okButtonProps;
-    const nativeClick = options?.onclick;
-    const compatibleClick = nativeClick == null ? options?.onClick : undefined;
-    nativeClick?.call(options, event);
+    const afterAction = prepareClick(event, okButtonProps);
     if (event.defaultPrevented) {
       return;
     }
 
     errorSession = undefined;
-    void action.run(() => onConfirm?.(event), () => compatibleClick?.call(options, event));
+    void action.run(() => onConfirm?.(event), afterAction);
   }
 
-  function cancel(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
+  function cancel(event: ActionClick) {
     if (!visible || action.loading || cancelButtonProps?.disabled) {
       return;
     }
 
-    const options = cancelButtonProps;
-    const nativeClick = options?.onclick;
-    const compatibleClick = nativeClick == null ? options?.onClick : undefined;
-    nativeClick?.call(options, event);
+    const afterAction = prepareClick(event, cancelButtonProps);
     if (event.defaultPrevented) {
       return;
     }
 
     request(false);
     onCancel?.(event);
-    compatibleClick?.call(options, event);
+    afterAction?.();
   }
 </script>
 
@@ -233,12 +266,12 @@
     <div data-ant-popconfirm-buttons="" class={`${rendered.prefix}-buttons`}>
       {#if rendered.showCancel}<Button {...rendered.cancelButtonProps} size={rendered.cancelButtonProps?.size ?? 'small'} disabled={Boolean(
           action.loading || resolvedDisabled || rendered.cancelButtonProps?.disabled
-        )} htmlType="button" onclick={cancel}
+        )} htmlType="button" onclick={cancel} onClick={undefined}
           children={rendered.cancelText ?? config.locale.popconfirm?.cancelText
             ?? config.locale.cancelText} />{/if}
       <Button {danger} {...rendered.okButtonProps} type={confirmType} size={rendered.okButtonProps?.size ?? 'small'} disabled={Boolean(
           action.loading || resolvedDisabled || rendered.okButtonProps?.disabled
-        )} loading={action.loading} htmlType="button" onclick={confirm}
+        )} loading={action.loading} htmlType="button" onclick={confirm} onClick={undefined}
           children={rendered.okText ?? config.locale.popconfirm?.okText ?? config.locale.okText} />
     </div>
     {#if errorVisible}<p role="alert" data-ant-popconfirm-error="" class={`${rendered.prefix}-error`}>{config.locale.confirmErrorText ?? ruRU.confirmErrorText}</p>{/if}

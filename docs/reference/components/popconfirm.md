@@ -112,12 +112,31 @@ snippet. Для `null` и `undefined` используется `locale.popconfir
 `onclick` вызывается перед действием и может отменить его через `preventDefault()`.
 При отсутствии `onclick` совместимый `onClick` вызывается после действия.
 Он получает событие сразу после запуска Promise или после синхронного закрытия.
-HtmlType всегда button, loading управляется Popconfirm. Disabled наследуется
-из Form и ConfigProvider; disabled=false переопределяет наследование.
+Нативная кнопка получает `type="button"`, а состоянием loading управляет Popconfirm.
+`disabled` наследуется из Form и ConfigProvider. Явный `disabled={false}`
+переопределяет наследование.
 Disabled скрывает карточку и блокирует её действия, сохраняя open владельца;
 исходный trigger не заменяется и сам по себе не отключается этим prop.
 [Варианты и порядок вызовов в React](../../../tests/browser/fixtures/ant-design-popconfirm-action-content-reference.json)
 · [Проверки Svelte](../../../tests/browser/popconfirm-action-content.spec.ts).
+
+С параметром `href` действие рендерит ссылку Button и передаёт ей `target` и
+`rel`. В `onclick` и `onClick` значение `event.currentTarget` имеет тип
+`HTMLAnchorElement` у ссылки и `HTMLButtonElement` у кнопки. Условный `href`
+даёт объединение этих типов. В шаблоне типы выводятся из props. При отдельной
+типизации можно задать адрес подтверждения первым параметром
+`PopconfirmProps<string>`, а адрес отмены вторым. В программном SSR тип
+можно задать у самого компонента, например `render(Popconfirm<string>, { props })`.
+Локальные semantic callbacks получают типы действий своего экземпляра.
+Настройки `ConfigProvider.popconfirm` действуют на кнопки и ссылки, поэтому
+их callback видит оба варианта действий.
+
+Браузер переходит по ссылке после обработчиков исходного клика. Во время ожидания
+Popconfirm убирает `href` у обеих ссылок,
+исключает их из порядка Tab и переносит фокус в карточку. В React 6.6.8
+обе ссылки во время ожидания сохраняют `href` и `tabindex`.
+[Замеры React](../../../tests/browser/fixtures/ant-design-popconfirm-action-links-reference.json)
+· [Проверки Svelte](../../../tests/browser/popconfirm-action-links.spec.ts).
 
 `onPopupClick(event)` получает нативный `MouseEvent` при всплытии до корня панели.
 Обработчики содержимого, в том числе действий подтверждения и отмены,

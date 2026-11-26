@@ -440,6 +440,11 @@
     "root": "popconfirm-action-content-fixture"
   },
   {
+    "id": "popconfirm-action-links",
+    "module": "./PopconfirmActionLinksFixture.svelte",
+    "root": "popconfirm-action-links-fixture"
+  },
+  {
     "id": "dropdown",
     "module": "./DropdownFixtures.svelte",
     "root": "dropdown-fixture"

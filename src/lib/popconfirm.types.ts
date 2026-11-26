@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { ButtonContent, ButtonProps, ButtonType } from './button.types';
+import type { ButtonContent, ButtonElementProps, ButtonLinkProps, ButtonType } from './button.types';
 import type {
   PopoverContent,
   PopoverPlacement,
@@ -12,12 +12,18 @@ export interface PopconfirmSlots extends PopoverSlots {
   icon?: string;
 }
 
-/** Title/content относятся к тексту подтверждения и описанию, icon — к wrapper иконки. */
-export type PopconfirmSemantic = PopconfirmSlots | ((info: {
-  props: PopconfirmSemanticProps;
-}) => PopconfirmSlots);
+type Semantic<Props> = PopconfirmSlots | ((info: { props: Props }) => PopconfirmSlots);
 
-export interface PopconfirmSemanticProps extends PopconfirmProps {
+/** Title/content относятся к тексту подтверждения и описанию, icon — к wrapper иконки. */
+export type PopconfirmSemantic<
+  OkHref extends string | undefined = undefined,
+  CancelHref extends string | undefined = undefined
+> = Semantic<PopconfirmSemanticProps<OkHref, CancelHref>>;
+
+export interface PopconfirmSemanticProps<
+  OkHref extends string | undefined = undefined,
+  CancelHref extends string | undefined = undefined
+> extends PopconfirmProps<OkHref, CancelHref> {
   /** Входной prop владельца; внутреннее uncontrolled open не подменяет его. */
   open?: boolean;
   placement: PopoverPlacement;
@@ -27,20 +33,48 @@ export interface PopconfirmSemanticProps extends PopconfirmProps {
   okType: NonNullable<PopconfirmProps['okType']>;
 }
 
+interface PopconfirmContextProps extends Omit<
+  PopconfirmSemanticProps, 'okButtonProps' | 'cancelButtonProps' | 'classNames' | 'styles'
+> {
+  okButtonProps?: PopconfirmActionOptions;
+  cancelButtonProps?: PopconfirmActionOptions;
+  /** Локальные callbacks рассчитаны на конкретные props экземпляра. */
+  classNames?: Semantic<never>;
+  styles?: Semantic<never>;
+}
+
 /** Собственные defaults Popconfirm; локальные props приоритетнее контекста. */
 export interface PopconfirmConfig {
   class?: string;
   style?: string;
-  classNames?: PopconfirmSemantic;
-  styles?: PopconfirmSemantic;
+  classNames?: Semantic<PopconfirmContextProps>;
+  styles?: Semantic<PopconfirmContextProps>;
   arrow?: TooltipArrow;
   trigger?: PopoverTrigger | readonly PopoverTrigger[];
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
 }
 
+type ManagedButtonProp = 'children' | 'htmlType' | 'loading';
+type NativeButtonProps = Omit<ButtonElementProps, ManagedButtonProp>;
+type LinkButtonProps = Omit<ButtonLinkProps, ManagedButtonProp>;
+type DynamicButtonProps = Omit<ButtonElementProps<string | undefined>, ManagedButtonProp>;
+export type PopconfirmActionOptions = NativeButtonProps | LinkButtonProps | DynamicButtonProps;
+
+type ButtonVariantProps<Href extends string | undefined> = [Href] extends [undefined]
+  ? NativeButtonProps
+  : undefined extends Href ? DynamicButtonProps : LinkButtonProps;
+
+/** Явный href выводит тип ссылки. Условный href передаёт обработчику оба типа DOM. */
+type PopconfirmButtonProps<Href extends string | undefined> =
+  | ({ href: Href } & ButtonVariantProps<Href>)
+  | ([Href] extends [undefined] ? NativeButtonProps : never);
+
 /** Подтверждение действия с Promise, состоянием ожидания и защитой от позднего результата. */
-export interface PopconfirmProps {
+export interface PopconfirmProps<
+  OkHref extends string | undefined = undefined,
+  CancelHref extends string | undefined = undefined
+> {
   children: Snippet;
   /** Передаётся наружному Popover; скрытый ID следует fresh. */
   id?: string;
@@ -75,8 +109,8 @@ export interface PopconfirmProps {
   cancelText?: ButtonContent;
   /** danger задаёт палитру без обязательного варианта. @defaultValue 'primary' */
   okType?: ButtonType | 'danger';
-  okButtonProps?: Omit<ButtonProps, 'children' | 'htmlType' | 'loading'>;
-  cancelButtonProps?: Omit<ButtonProps, 'children' | 'htmlType' | 'loading'>;
+  okButtonProps?: PopconfirmButtonProps<OkHref>;
+  cancelButtonProps?: PopconfirmButtonProps<CancelHref>;
   /** @defaultValue 'top' */
   placement?: PopoverPlacement;
   /** Передаётся Popover поверх выбранной записи placements. */
@@ -120,6 +154,6 @@ export interface PopconfirmProps {
   class?: string;
   style?: string;
   rootClassName?: string;
-  classNames?: PopconfirmSemantic;
-  styles?: PopconfirmSemantic;
+  classNames?: PopconfirmSemantic<OkHref, CancelHref>;
+  styles?: PopconfirmSemantic<OkHref, CancelHref>;
 }

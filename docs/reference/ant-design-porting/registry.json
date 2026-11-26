@@ -25203,6 +25203,23 @@
             "tests/package/popconfirm-action-content.ssr.test.ts"
           ],
           "note": "Сверены оформление okType=danger, приоритеты type/danger/color/variant, локаль и разметка подписей/иконки по UMD 6.6.8. Совместимый onClick выполняется после отмены или вызова подтверждения, а для синхронного успеха после закрытия. Нативный onclick сохраняет приоритет и preventDefault до действия. Ошибки и Promise следуют защитам Svelte; fresh управляет выбором Snippet в закрытой панели. Nullish fallback сохраняет явную пустую подпись, false и 0. В UMD эти значения выбирают локаль, а числовая иконка 0 оказывается вне слота. Svelte выводит её в декоративном aria-hidden слоте."
+        },
+        {
+          "id": "action-links",
+          "title": "Ссылки в кнопках подтверждения и отмены",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/popconfirm.md",
+            "src/lib/popconfirm.types.ts",
+            "src/lib/popconfirm.component.ts",
+            "src/lib/Popconfirm.svelte",
+            "tests/browser/fixtures/ant-design-popconfirm-action-links-reference.json",
+            "tests/browser/fixtures/PopconfirmActionLinksFixture.svelte",
+            "tests/browser/popconfirm-action-links.spec.ts",
+            "tests/package/popconfirm-action-links.ssr.test.ts"
+          ],
+          "note": "Обе опции принимают ButtonLinkProps с href и выводят нативный currentTarget в обработчиках клика. Без href используется HTMLButtonElement. В UMD 6.6.8 проверены href, target, rel, пустой адрес, disabled и порядок навигации после событий мыши и клавиатуры. Обновление href в Svelte сохраняет открытую карточку. В UMD обе ссылки сохраняют href и tabindex во время Promise. Согласованная блокировка Popconfirm в Svelte отключает обе и удерживает фокус в карточке."
         }
       ]
     },
