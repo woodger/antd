@@ -1,4 +1,5 @@
 <script lang="ts">
+  // Передаёт показ Popover и управляет действиями текущего подтверждения.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useForm } from './form-context';
@@ -128,6 +129,13 @@
   let rendered = $derived(visible || refresh ? payload : cached);
   let renderedDescription = $derived(typeof rendered.description === 'function'
     || Boolean(String(rendered.description ?? '').trim()));
+  let showIcon = $derived(
+    rendered.icon !== null && rendered.icon !== false && rendered.icon !== ''
+  );
+  let danger = $derived(rendered.okType === 'danger');
+  let confirmType = $derived(
+    rendered.okButtonProps?.type ?? (rendered.okType === 'danger' ? undefined : rendered.okType)
+  );
   let initialized = false;
 
   $effect.pre(() => {
@@ -167,13 +175,16 @@
       return;
     }
 
-    okButtonProps?.onclick?.(event);
+    const options = okButtonProps;
+    const nativeClick = options?.onclick;
+    const compatibleClick = nativeClick == null ? options?.onClick : undefined;
+    nativeClick?.call(options, event);
     if (event.defaultPrevented) {
       return;
     }
 
     errorSession = undefined;
-    void action.run(() => onConfirm?.(event));
+    void action.run(() => onConfirm?.(event), () => compatibleClick?.call(options, event));
   }
 
   function cancel(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
@@ -181,13 +192,17 @@
       return;
     }
 
-    cancelButtonProps?.onclick?.(event);
+    const options = cancelButtonProps;
+    const nativeClick = options?.onclick;
+    const compatibleClick = nativeClick == null ? options?.onClick : undefined;
+    nativeClick?.call(options, event);
     if (event.defaultPrevented) {
       return;
     }
 
     request(false);
     onCancel?.(event);
+    compatibleClick?.call(options, event);
   }
 </script>
 
@@ -204,8 +219,10 @@
 {#snippet content()}
   <div bind:this={overlay} data-ant-popconfirm-content="" class={`${rendered.prefix}-inner-content`} tabindex="-1">
     <div class={`${rendered.prefix}-message`}>
-      {#if rendered.icon !== null}<span class={[`${rendered.prefix}-message-icon`, rendered.semantics.classNames.icon]}
-        style={rendered.semantics.styles.icon} aria-hidden="true"><span class="anticon">{#if rendered.icon}{@render rendered.icon()}{:else}<Icon name="warning" />{/if}</span></span>{/if}
+      {#if showIcon}<span class={[`${rendered.prefix}-message-icon`, rendered.semantics.classNames.icon]}
+        style={rendered.semantics.styles.icon} aria-hidden="true"><span class="anticon">{#if rendered.icon === undefined}<Icon name="warning" />
+        {:else if typeof rendered.icon === 'function'}{@render rendered.icon()}
+        {:else if typeof rendered.icon !== 'boolean'}{rendered.icon}{/if}</span></span>{/if}
       <div data-ant-popconfirm-message-text="" class={`${rendered.prefix}-message-text`}>
         <div id={titleId} class={[`${rendered.prefix}-title`, rendered.semantics.classNames.title]}
           style={rendered.semantics.styles.title}>{#if typeof rendered.title === 'function'}{@render rendered.title()}{:else}{rendered.title}{/if}</div>
@@ -219,7 +236,7 @@
         )} htmlType="button" onclick={cancel}
           children={rendered.cancelText ?? config.locale.popconfirm?.cancelText
             ?? config.locale.cancelText} />{/if}
-      <Button {...rendered.okButtonProps} type={rendered.okButtonProps?.type ?? rendered.okType} size={rendered.okButtonProps?.size ?? 'small'} disabled={Boolean(
+      <Button {danger} {...rendered.okButtonProps} type={confirmType} size={rendered.okButtonProps?.size ?? 'small'} disabled={Boolean(
           action.loading || resolvedDisabled || rendered.okButtonProps?.disabled
         )} loading={action.loading} htmlType="button" onclick={confirm}
           children={rendered.okText ?? config.locale.popconfirm?.okText ?? config.locale.okText} />

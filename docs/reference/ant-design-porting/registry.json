@@ -25186,6 +25186,23 @@
             "tests/package/popconfirm-popup-click.ssr.test.ts"
           ],
           "note": "Порядок click, currentTarget корня, preventDefault и stopPropagation совпадают с UMD 6.6.8 при стандартном и явном контейнере. В Source UniqueProvider теряет onPopupClick, хотя title и кнопки карточки остаются интерактивными. Svelte сохраняет тот же контракт всплытия для текущего владельца общего корня."
+        },
+        {
+          "id": "action-content",
+          "title": "Подписи, иконка и обработчики кнопок Popconfirm",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/popconfirm.md",
+            "src/lib/Popconfirm.svelte",
+            "src/lib/popconfirm.types.ts",
+            "src/lib/popconfirm.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-popconfirm-action-content-reference.json",
+            "tests/browser/fixtures/PopconfirmActionContentFixture.svelte",
+            "tests/browser/popconfirm-action-content.spec.ts",
+            "tests/package/popconfirm-action-content.ssr.test.ts"
+          ],
+          "note": "Сверены оформление okType=danger, приоритеты type/danger/color/variant, локаль и разметка подписей/иконки по UMD 6.6.8. Совместимый onClick выполняется после отмены или вызова подтверждения, а для синхронного успеха после закрытия. Нативный onclick сохраняет приоритет и preventDefault до действия. Ошибки и Promise следуют защитам Svelte; fresh управляет выбором Snippet в закрытой панели. Nullish fallback сохраняет явную пустую подпись, false и 0. В UMD эти значения выбирают локаль, а числовая иконка 0 оказывается вне слота. Svelte выводит её в декоративном aria-hidden слоте."
         }
       ]
     },

@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { ButtonProps } from './Button.svelte';
+import type { ButtonContent, ButtonProps, ButtonType } from './button.types';
 import type {
   PopoverContent,
   PopoverPlacement,
@@ -24,7 +24,7 @@ export interface PopconfirmSemanticProps extends PopconfirmProps {
   trigger: PopoverTrigger | readonly PopoverTrigger[];
   mouseEnterDelay: number;
   mouseLeaveDelay: number;
-  okType: ButtonProps['type'];
+  okType: NonNullable<PopconfirmProps['okType']>;
 }
 
 /** Собственные defaults Popconfirm; локальные props приоритетнее контекста. */
@@ -52,7 +52,8 @@ export interface PopconfirmProps {
   openClassName?: string;
   title: Exclude<PopoverContent, boolean>;
   description?: Exclude<PopoverContent, boolean> | null;
-  icon?: Snippet | null;
+  /** Декоративное содержимое. undefined оставляет стандартную иконку. */
+  icon?: ButtonContent;
   /** Поддерживает bind:open. */
   open?: boolean | undefined;
   /** @defaultValue false */
@@ -68,10 +69,12 @@ export interface PopconfirmProps {
   disabled?: boolean;
   /** @defaultValue true */
   showCancel?: boolean;
-  okText?: string;
-  cancelText?: string;
-  /** @defaultValue 'primary' */
-  okType?: ButtonProps['type'];
+  /** Подпись Button. null и undefined используют словарь. */
+  okText?: ButtonContent;
+  /** Подпись Button. null и undefined используют словарь. */
+  cancelText?: ButtonContent;
+  /** danger задаёт палитру без обязательного варианта. @defaultValue 'primary' */
+  okType?: ButtonType | 'danger';
   okButtonProps?: Omit<ButtonProps, 'children' | 'htmlType' | 'loading'>;
   cancelButtonProps?: Omit<ButtonProps, 'children' | 'htmlType' | 'loading'>;
   /** @defaultValue 'top' */

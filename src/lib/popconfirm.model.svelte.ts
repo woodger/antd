@@ -1,3 +1,4 @@
+// Привязывает выполнение подтверждения к конкретному открытию карточки.
 export function createPopconfirmAction(getSession: () => object | null, handlers: {
   onSuccess: () => void;
   onError: (error: unknown) => void;
@@ -27,7 +28,8 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
     get loading() {
       return active !== undefined && isCurrent(active);
     },
-    run(action: () => void | PromiseLike<unknown>): void | Promise<void> {
+    /** Возвращает управление кнопке после запуска действия или его синхронного завершения. */
+    run(action: () => void | PromiseLike<unknown>, afterAction?: () => void): void | Promise<void> {
       const session = getSession();
 
       if (disposed || !session || active && isCurrent(active)) {
@@ -48,13 +50,17 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
 
       if (result === undefined || result === null) {
         finish(task, true);
+        afterAction?.();
         return;
       }
 
-      return Promise.resolve(result).then(
+      const pending = Promise.resolve(result).then(
         () => finish(task, true),
         (error: unknown) => finish(task, false, error)
       );
+      // Завершение Promise уже связано с сессией, даже если обработчик кнопки выбросит ошибку.
+      afterAction?.();
+      return pending;
     },
     dispose() {
       disposed = true;

@@ -53,9 +53,10 @@ Promise и состояние ожидания. Если группа перед
 
 Title обязателен; title и description принимают строку, число или Svelte
 snippet. Число 0 отображается, строки экранируются. Пустая строка title отключает
-карточку; snippet должен содержать доступный заголовок. Icon — декоративный snippet;
-по умолчанию показан знак предупреждения,
-icon=null скрывает его. Children содержит один основной DOM-элемент, обычно
+карточку; snippet должен содержать доступный заголовок. `icon` принимает
+декоративное содержимое Button, включая строку, число и Svelte snippet.
+`undefined` оставляет знак предупреждения, `null`, `false` и пустая строка
+убирают слот. Children содержит один основной DOM-элемент, обычно
 Button. Его атрибуты и обработчики сохраняются.
 
 Popover обеспечивает открытие кликом, Enter/Space нативной кнопки, 12
@@ -97,17 +98,26 @@ loading и не вызывает onError. Эта защита относится
 Синхронный throw и отклонение Promise оставляют карточку открытой и показывают
 безопасное сообщение с role=alert. `onError(error)` получает исходную ошибку
 как unknown; её технический текст автоматически не выводится. Повторная
-попытка очищает сообщение. Кнопки используют okText/cancelText или
-locale.okText/cancelText; сообщение ошибки задаётся locale.confirmErrorText.
+попытка очищает сообщение. Сообщение ошибки задаёт `locale.confirmErrorText`.
+
+`okText` и `cancelText` принимают содержимое Button, в том числе число и Svelte
+snippet. Для `null` и `undefined` используется `locale.popconfirm`, затем общие
+подписи локали. Пустая строка и `false` оставляют подпись пустой, `0`
+отображается числом. В React 6.6.8 эти три значения дают подпись из локали.
 Поддерживаются ruRU и enUS, а частичная locale наследуется из ConfigProvider.
 
-OkType задаёт тип подтверждения; okButtonProps/cancelButtonProps настраивают
-размер, danger, disabled, атрибуты и события кнопок. Их onclick вызывается перед
-внутренним действием: preventDefault отменяет подтверждение или отмену.
+`okType="danger"` задаёт опасную палитру Button. `okButtonProps` задаёт
+окончательные `type`, `danger`, `color` и `variant` по правилам Button.
+Обе кнопки принимают размер, disabled, атрибуты и обработчики.
+`onclick` вызывается перед действием и может отменить его через `preventDefault()`.
+При отсутствии `onclick` совместимый `onClick` вызывается после действия.
+Он получает событие сразу после запуска Promise или после синхронного закрытия.
 HtmlType всегда button, loading управляется Popconfirm. Disabled наследуется
 из Form и ConfigProvider; disabled=false переопределяет наследование.
 Disabled скрывает карточку и блокирует её действия, сохраняя open владельца;
 исходный trigger не заменяется и сам по себе не отключается этим prop.
+[Варианты и порядок вызовов в React](../../../tests/browser/fixtures/ant-design-popconfirm-action-content-reference.json)
+· [Проверки Svelte](../../../tests/browser/popconfirm-action-content.spec.ts).
 
 `onPopupClick(event)` получает нативный `MouseEvent` при всплытии до корня панели.
 Обработчики содержимого, в том числе действий подтверждения и отмены,
