@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { readSelectComponentsOwnStyleInitSource, readSelectComponentsOwnStyleInitSSR,
-  verifySelectComponentsOwnStyleInitRepeatArchive, selectComponentsOwnStyleInitManifest } from '../browser/select-components-own-style-init-reference';
+  verifySelectComponentsOwnStyleInitRepeat, selectComponentsOwnStyleInitManifest } from '../browser/select-components-own-style-init-reference';
 import { selectOwnStyleInitSamples, selectOwnStyleInitEntryPaths, createSelectOwnStyleInitFrames,
   selectOwnStyleInitClientProfile, selectOwnStyleInitPrehydrateSetters } from '../browser/select-components-own-style-init-cases.mjs';
 import { ownStyleComputedProperties, verifyOwnStyleComputed, verifyNativeOwnStyleComputed, ownStyleNativeComputedBridge } from '../browser/select-components-own-style-init-assertions';
@@ -185,16 +185,23 @@ it('rejects a broad private-variable prefix exemption', () => {
     'missing private alias'
   )).toThrow(/exact existing Native base aliases count/);
 });
-it('keeps both complete independent Source repeat archives despite custom enumeration differences', async () => {
+it('reconstructs both independent Source repeat captures with their original digests', async () => {
+  const repeats = {
+    csr: { bytes: 107628300, sha256: 'e5ba8b195d0128fd6d5146b9b3011d8d5b14857fb90ece66ff267076b3da2d87' },
+    hydrate: { bytes: 367593608, sha256: '621a8db24097e23f6351b8ca7ba0a3a1cb6259ffb3fb0e006c89ec459176850a' }
+  };
   for (const mode of ['csr', 'hydrate'] as const) {
-    const proof = await verifySelectComponentsOwnStyleInitRepeatArchive(mode);
-    expect(proof.wholePairByteEqual).toBe(false);
-    expect(proof.decodedBytes).toBeGreaterThan(100_000_000);
-    const receipt = selectComponentsOwnStyleInitManifest.repeatProofs.find(value => value.mode === mode)!;
-    expect(receipt.otherRawDifferences).toBe(0);
-    expect(receipt.allStandardNamesValuesPrioritiesAndOrderEqual).toBe(true);
-    expect(receipt.allCustomNamesValuesAndPrioritiesEqual).toBe(true);
-    expect(receipt.customOrderPermutations).toBe(mode === 'csr' ? 203 : 42);
+    const reconstructed = await verifySelectComponentsOwnStyleInitRepeat(mode);
+    const receipt = selectComponentsOwnStyleInitManifest.repeatProofs.find(value => value.mode === mode);
+
+    expect(reconstructed).toEqual(repeats[mode]);
+    expect(receipt).toMatchObject({
+      wholePairByteEqual: false,
+      otherRawDifferences: 0,
+      allStandardNamesValuesPrioritiesAndOrderEqual: true,
+      allCustomNamesValuesAndPrioritiesEqual: true,
+      customOrderPermutations: mode === 'csr' ? 203 : 42
+    });
   }
 });
 it('retains both real DOM-free Source serializers for the same two initial states', () => {

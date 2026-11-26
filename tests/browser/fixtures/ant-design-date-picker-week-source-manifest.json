@@ -10140,12 +10140,6 @@
       "bytes": 5739,
       "sha256": "6e0ff21763187caa77f8f3771f84dc74fe51d5994bf705edba57251dc4ccc572"
     },
-    "semantic-review": {
-      "originalFile": ".upstream/artifacts/date-picker-week-source-review-v1/semantic-review.json",
-      "fixture": "ant-design-date-picker-week-semantic-review.json",
-      "bytes": 25707245,
-      "sha256": "cba99753dd56b9385fc4e123248606df70853a52d0f3ebeed333fa9e8dfcbd13"
-    },
     "selected-variances": {
       "originalFile": ".upstream/artifacts/date-picker-week-source-review-v1/selected-facts-variances.json",
       "fixture": "ant-design-date-picker-week-selected-variances.json",

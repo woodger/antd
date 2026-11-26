@@ -2292,36 +2292,6 @@
       "bytes": 2802,
       "sha256": "d4056c4841185c81b02d1715fb3fa1611a87276ae2bf8fb9a12e5dbb18c01d9e"
     },
-    "csr-first-audit": {
-      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/csr-first-audit.json",
-      "fixture": "ant-design-date-picker-date-week-prefix-csr-first-audit.json",
-      "bytes": 4191373,
-      "sha256": "4b6d3b3ca7780fe188080fc44bd747a889b8310a004871489f5e62175296533f"
-    },
-    "csr-repeat-audit": {
-      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/csr-repeat-audit.json",
-      "fixture": "ant-design-date-picker-date-week-prefix-csr-repeat-audit.json",
-      "bytes": 4191375,
-      "sha256": "9b3a174fc36a8066505055fcbfbc08b54c78b19ca9d8d89dbf432c83f5d207a1"
-    },
-    "ssr-first-audit": {
-      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/ssr-first-audit.json",
-      "fixture": "ant-design-date-picker-date-week-prefix-ssr-first-audit.json",
-      "bytes": 443267,
-      "sha256": "4f5c65ad1a4a90f6c5594789c25e8d8ff08cc6af096b3415fdef15b21ea40f1c"
-    },
-    "ssr-repeat-audit": {
-      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/ssr-repeat-audit.json",
-      "fixture": "ant-design-date-picker-date-week-prefix-ssr-repeat-audit.json",
-      "bytes": 443269,
-      "sha256": "70a50b9a67c96cdb74821ea679f9ee31b725aac91a682bb405b387cf4b0a9572"
-    },
-    "semantic-review": {
-      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/semantic-review.json",
-      "fixture": "ant-design-date-picker-date-week-prefix-semantic-review.json",
-      "bytes": 4637882,
-      "sha256": "97d8ab7f01951e43cbe7e01444cc5571fdf0acaff25b6b85eb2bee8ff49fed0a"
-    },
     "selected-variances": {
       "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/selected-facts-variances.json",
       "fixture": "ant-design-date-picker-date-week-prefix-selected-variances.json",

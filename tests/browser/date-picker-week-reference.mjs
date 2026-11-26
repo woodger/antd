@@ -15,7 +15,7 @@ const fixture = file => new URL('./fixtures/' + file, import.meta.url);
 // Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const metadataBytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
-assert.equal(sha(metadataBytes), 'e05e06fad4d024f3eafc24cb1c5b519bf53943fb6ec1d98fb065d29336b859e8');
+assert.equal(sha(metadataBytes), '3d1512d3b11badce73e4163d38a1165556b7f125c6e4a379489ff5a2768cef08');
 const metadata = JSON.parse(metadataBytes);
 assert.equal(metadata.format, 'ant-design-public-date-picker-week-source-v1');
 assert.equal(metadata.sourceOnly, true);

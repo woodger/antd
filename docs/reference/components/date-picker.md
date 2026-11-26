@@ -311,7 +311,8 @@ Today/Now показывается в режиме date; при needConfirm кн
 панели сохраняет ручную прокрутку колонки. Отдельные проверки
 [шаблона времени и контейнера](../../../tests/browser/date-picker-time-scroll.spec.ts)
 и [значения вне шага](../../../tests/browser/date-picker-offgrid-scroll.spec.ts) используют
-независимые React first/repeat captures; полные оригиналы сохранены в фикстурах.
+независимые замеры React. Для значения вне шага фикстура хранит наблюдения обоих
+прогонов и указывает ревизию с полным архивом.
 [Browser](../../../tests/browser/date-picker-presets.spec.ts) сравнивает состояния, аргументы,
 CSS и геометрию; [SSR](../../../tests/package/date-picker-presets.ssr.test.ts) проверяет
 закрытые input и отсутствие browser API.

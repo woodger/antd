@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createReadStream, readFileSync } from 'node:fs';
-import { Writable } from 'node:stream';
+import { basename } from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { createGunzip, gunzipSync } from 'node:zlib';
+import { readReferenceBytes } from './reference-bytes';
 import { selectOwnStyleInitSamples, selectOwnStyleInitEntryPaths, selectOwnStyleInitClientProfile, selectOwnStyleInitPrehydrateSetters,
   type SelectComponentsOwnStyleSample, type SelectComponentsOwnStyleAction, type SelectOwnStyleInitEntryPath } from './select-components-own-style-init-cases.mjs';
 import type { ComponentsPoint, ComponentsCase, ComponentsSSRState } from './select-components-reference';
@@ -43,10 +44,12 @@ interface Header { axis: string; mode: OwnStyleInitMode; status: string; version
   inputPins: Record<string, { bytes: number; sha256: string }>; errors: unknown[]; diagnostics: unknown[];
   archives: Array<{ byteEqual: boolean; sha256: string; archiveSha256: string }> }
 export interface OwnStyleInitSource<Value> { reference: Header; cases: Value[] }
-interface Copy { mode: OwnStyleInitMode; variant: 'first' | 'repeat'; path: string; source: string; storageBytes: number;
+interface Copy { mode: OwnStyleInitMode; variant: 'first'; path: string; source: string; storageBytes: number;
   storageSha256: string; decodedBytes: number; decodedSha256: string; losslessDecodedByteEqual: boolean }
+interface RepeatChanges { file: string; bytes: number; sha256: string }
 interface RepeatProof { mode: OwnStyleInitMode; path: string; bytes: number; sha256: string; wholePairByteEqual: boolean;
   first: { bytes: number; sha256: string }; repeat: { bytes: number; sha256: string };
+  changes?: RepeatChanges;
   totalComputedArrays: number; customOrderPermutations: number; otherRawDifferences: number;
   allStandardNamesValuesPrioritiesAndOrderEqual: boolean; allCustomNamesValuesAndPrioritiesEqual: boolean }
 // Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
@@ -56,10 +59,10 @@ const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('h
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const protocol = '345e89218b2c7a76172070d95cfa58d815db579997f65ded00596bf57b8b8351';
 const manifestBytes = readFileSync(fixture('ant-design-select-components-own-style-init-source-manifest.json'));
-assert.equal(manifestBytes.length, 8828);
+assert.equal(manifestBytes.length, 8270);
 assert.equal(
   hash(manifestBytes),
-  '887a79caeb01d8a246e417aa511a3e451aba5b567ba840caacfee35cf819deff'
+  'b1a118873129b9f771f202010efc2d65657fd771dee0b4bbb80c8b66857fe1fc'
 );
 export const selectComponentsOwnStyleInitManifest = JSON.parse(manifestBytes.toString('utf8')) as {
   status: string; sourceOnly: boolean; allRawSourcesUnchanged: boolean; protocolSha256: string;
@@ -74,7 +77,7 @@ assert.equal(manifest.allRawSourcesUnchanged, true);
 assert.equal(manifest.protocolSha256, protocol);
 assert.equal(manifest.frozenInputs, 10);
 assert.equal(manifest.preservedReferences, 848);
-assert.equal(manifest.copies.length, 5);
+assert.equal(manifest.copies.length, 3);
 assert.equal(manifest.repeatProofs.length, 3);
 assert.deepEqual(manifest.counts, { owners: 2, entryPaths: 4, clientTrajectories: 8, actionsPerTrajectory: 12,
   clientActions: 96, clientInitialAndActionPoints: 104, uniqueInitialSSRStates: 2, serializersPerSSRState: 2 });
@@ -84,12 +87,6 @@ const pins: Record<string, [number, string, number, string]> = {
     "5b7eb875ef6b9c9e19487e7da88359ef940f02aa6eae9f28470a9635a01ea9c2",
     107628300,
     "e1bf37981fe1c07bc6d3b462c480802ff007e0abfd8545e34a86e97009f3b250"
-  ],
-  "ant-design-select-components-own-style-init-csr-repeat-reference.json.gz": [
-    6468808,
-    "2ccd71fa894a4ed94325c221cd6a6bb2ad09d082e67f18063caf35cf58d3de77",
-    107628300,
-    "e5ba8b195d0128fd6d5146b9b3011d8d5b14857fb90ece66ff267076b3da2d87"
   ],
   "ant-design-select-components-own-style-init-ssr-reference.json.gz": [
     18918,
@@ -102,12 +99,6 @@ const pins: Record<string, [number, string, number, string]> = {
     "107ce7a86af25ae957fc59b82bc6645ec384cae751c6c15079da399c11405e0a",
     367593608,
     "b156fecf625b40c03b055f998ea1eec8527dcf1e5233c05db36b20dfdd661100"
-  ],
-  "ant-design-select-components-own-style-init-hydrate-repeat-reference.json.gz": [
-    22100782,
-    "e15a60b2427d554d410f3dc6042eb37447d6d360e303e5110eaea41b66df0b1f",
-    367593608,
-    "621a8db24097e23f6351b8ca7ba0a3a1cb6259ffb3fb0e006c89ec459176850a"
   ]
 };
 const proofPins = {
@@ -129,10 +120,11 @@ for (const [mode, expected] of Object.entries(proofPins)) {
   assert.equal(proof.allStandardNamesValuesPrioritiesAndOrderEqual, true);
   assert.equal(proof.allCustomNamesValuesAndPrioritiesEqual, true);
 }
-function portableCopy(mode: OwnStyleInitMode, variant: 'first' | 'repeat'): Copy {
-  const copy = manifest.copies.find(value => value.mode === mode && value.variant === variant);
+/** Сверяет первый захват с независимыми контрольными суммами файла и исходного JSON. */
+function canonicalCopy(mode: OwnStyleInitMode): Copy {
+  const copy = manifest.copies.find(value => value.mode === mode && value.variant === 'first');
   assert(copy);
-  const name = copy.path.slice(copy.path.lastIndexOf('/') + 1), pin = pins[name];
+  const pin = pins[basename(copy.path)];
   assert(pin);
   assert.deepEqual(
     [copy.storageBytes, copy.storageSha256, copy.decodedBytes, copy.decodedSha256],
@@ -143,13 +135,13 @@ function portableCopy(mode: OwnStyleInitMode, variant: 'first' | 'repeat'): Copy
   assert(proof);
   assert.deepEqual(
     [copy.decodedBytes, copy.decodedSha256],
-    [proof[variant].bytes, proof[variant].sha256]
+    [proof.first.bytes, proof.first.sha256]
   );
   return copy;
 }
 function readCanonical<Value>(mode: OwnStyleInitMode): OwnStyleInitSource<Value> {
-  const copy = portableCopy(mode, 'first'), name = copy.path.slice(copy.path.lastIndexOf('/') + 1);
-  const stored = readFileSync(fixture(name));
+  const copy = canonicalCopy(mode);
+  const stored = readFileSync(fixture(basename(copy.path)));
   assert.equal(stored.length, copy.storageBytes);
   assert.equal(hash(stored), copy.storageSha256);
   const raw = gunzipSync(stored);
@@ -261,36 +253,64 @@ export function readSelectComponentsOwnStyleInitCase(
   assert(result);
   return result;
 }
-/** Preserve both full repeat archives without parsing a second 367MB hydration graph
- * into each package/browser worker. Independent pinned Source proofs cover every
- * raw field; this verifies the complete compressed and decoded bytes by stream. */
-export async function verifySelectComponentsOwnStyleInitRepeatArchive(mode: 'csr' | 'hydrate') {
-  const copy = portableCopy(mode, 'repeat'), name = copy.path.slice(copy.path.lastIndexOf('/') + 1);
-  const storedHash = createHash('sha256');
-  let storedBytes = 0;
-  for await (const chunk of createReadStream(fixture(name))) {
-    storedBytes += chunk.length;
-    storedHash.update(chunk);
+/** Смещения и длины замен измерены в байтах исходного UTF-8, включая отступы и переводы строк. */
+function readRepeatChanges(record: RepeatChanges, captureBytes: number) {
+  const raw = readReferenceBytes(record.file);
+  assert.equal(raw.length, record.bytes);
+  assert.equal(hash(raw), record.sha256);
+
+  const rows: { offset: number; text: string }[] = JSON.parse(raw.toString('utf8'));
+  const changes: { offset: number; bytes: Buffer }[] = [];
+  let previousEnd = 0;
+  for (const { offset, text } of rows) {
+    const bytes = Buffer.from(text, 'utf8');
+    assert(Number.isSafeInteger(offset) && offset >= previousEnd);
+    previousEnd = offset + bytes.length;
+    assert(bytes.length > 0 && previousEnd <= captureBytes);
+    changes.push({ offset, bytes });
   }
-  assert.equal(storedBytes, copy.storageBytes);
-  assert.equal(storedHash.digest('hex'), copy.storageSha256);
-  const decodedHash = createHash('sha256');
-  let decodedBytes = 0;
-  await pipeline(createReadStream(fixture(name)), createGunzip(), new Writable({ write(
-    chunk,
-    _encoding,
-    callback
-  ) {
-    decodedBytes += chunk.length;
-    decodedHash.update(chunk);
-    callback();
-  } }));
-  assert.equal(decodedBytes, copy.decodedBytes);
-  assert.equal(decodedHash.digest('hex'), copy.decodedSha256);
-  return {
-    mode,
-    decodedBytes,
-    decodedSha256: copy.decodedSha256,
-    wholePairByteEqual: false as const
-  };
+  return changes;
+}
+
+/** Проверяет исходный SHA-256 повторного замера, не загружая второй граф гидратации в память. */
+export async function verifySelectComponentsOwnStyleInitRepeat(mode: 'csr' | 'hydrate') {
+  const copy = canonicalCopy(mode);
+  const proof = manifest.repeatProofs.find(value => value.mode === mode);
+  assert(proof?.changes);
+  const changes = readRepeatChanges(proof.changes, copy.decodedBytes);
+
+  const firstHash = createHash('sha256');
+  const repeatHash = createHash('sha256');
+  let position = 0;
+  let next = 0;
+  const file = fixture(basename(copy.path));
+  await pipeline(createReadStream(file), createGunzip(), async source => {
+    for await (const chunk of source) {
+      firstHash.update(chunk);
+      const end = position + chunk.length;
+
+      // Замена может пересекать границу чанка распаковщика.
+      while (next < changes.length && changes[next].offset < end) {
+        const { offset, bytes } = changes[next];
+        const start = Math.max(position, offset);
+        const stop = Math.min(end, offset + bytes.length);
+        bytes.copy(chunk, start - position, start - offset, stop - offset);
+        if (stop < offset + bytes.length) {
+          break;
+        }
+        next++;
+      }
+
+      repeatHash.update(chunk);
+      position = end;
+    }
+  });
+
+  assert.equal(next, changes.length);
+  assert.equal(position, copy.decodedBytes);
+  assert.equal(firstHash.digest('hex'), copy.decodedSha256);
+  const sha256 = repeatHash.digest('hex');
+  assert.equal(position, proof.repeat.bytes);
+  assert.equal(sha256, proof.repeat.sha256);
+  return { bytes: position, sha256 };
 }

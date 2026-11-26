@@ -44,17 +44,6 @@
       "losslessDecodedByteEqual": true
     },
     {
-      "mode": "csr",
-      "variant": "repeat",
-      "path": "tests/browser/fixtures/ant-design-select-components-own-style-init-csr-repeat-reference.json.gz",
-      "source": ".upstream/artifacts/select-components-own-style-init-v1/csr-source-repeat.json",
-      "storageBytes": 6468808,
-      "storageSha256": "2ccd71fa894a4ed94325c221cd6a6bb2ad09d082e67f18063caf35cf58d3de77",
-      "decodedBytes": 107628300,
-      "decodedSha256": "e5ba8b195d0128fd6d5146b9b3011d8d5b14857fb90ece66ff267076b3da2d87",
-      "losslessDecodedByteEqual": true
-    },
-    {
       "mode": "ssr",
       "variant": "first",
       "path": "tests/browser/fixtures/ant-design-select-components-own-style-init-ssr-reference.json.gz",
@@ -74,17 +63,6 @@
       "storageSha256": "107ce7a86af25ae957fc59b82bc6645ec384cae751c6c15079da399c11405e0a",
       "decodedBytes": 367593608,
       "decodedSha256": "b156fecf625b40c03b055f998ea1eec8527dcf1e5233c05db36b20dfdd661100",
-      "losslessDecodedByteEqual": true
-    },
-    {
-      "mode": "hydrate",
-      "variant": "repeat",
-      "path": "tests/browser/fixtures/ant-design-select-components-own-style-init-hydrate-repeat-reference.json.gz",
-      "source": ".upstream/artifacts/select-components-own-style-init-v1/hydrate-source-repeat.json",
-      "storageBytes": 22100782,
-      "storageSha256": "e15a60b2427d554d410f3dc6042eb37447d6d360e303e5110eaea41b66df0b1f",
-      "decodedBytes": 367593608,
-      "decodedSha256": "621a8db24097e23f6351b8ca7ba0a3a1cb6259ffb3fb0e006c89ec459176850a",
       "losslessDecodedByteEqual": true
     }
   ],
@@ -110,7 +88,12 @@
       "customOrderPermutations": 203,
       "otherRawDifferences": 0,
       "allStandardNamesValuesPrioritiesAndOrderEqual": true,
-      "allCustomNamesValuesAndPrioritiesEqual": true
+      "allCustomNamesValuesAndPrioritiesEqual": true,
+      "changes": {
+        "file": "ant-design-select-components-own-style-init-csr-repeat-changes.json.gz",
+        "bytes": 3811668,
+        "sha256": "af9e1836b596e00982b348438aeb34c5ce22212af2ea386ef7d197314c3b41c1"
+      }
     },
     {
       "path": ".upstream/artifacts/select-components-own-style-init-v1/ssr-source-repeat-fidelity-proof.json",
@@ -156,7 +139,12 @@
       "customOrderPermutations": 42,
       "otherRawDifferences": 0,
       "allStandardNamesValuesPrioritiesAndOrderEqual": true,
-      "allCustomNamesValuesAndPrioritiesEqual": true
+      "allCustomNamesValuesAndPrioritiesEqual": true,
+      "changes": {
+        "file": "ant-design-select-components-own-style-init-hydrate-repeat-changes.json.gz",
+        "bytes": 27228,
+        "sha256": "0a24364cc90a1866f8959d9832ac9bcd748d11a26c07ce7295f0be55f934ddd9"
+      }
     }
   ],
   "copiedInputs": [
@@ -187,5 +175,5 @@
     "bytes": 1642025,
     "sha256": "774b030c61cc1812933211831f6716b01bc639c44224b7914ca7bae23508ba08"
   },
-  "comparisonScope": "Canonical Source expectations use full first actual captures. Both complete first/repeat CSR and hydration archives remain separately portable. Their wholePairByteEqual is false; independent raw recursive proof found only getComputedStyle custom-property enumeration permutations, with exact unique names/values/priorities, exact standard enumeration, and zero other raw differences. Inline CSSOM declaration order, DOM attribute order and every actual CSS/box/context/event/ref field remain unchanged. SSR whole pair is byte equal and has one lossless portable copy."
+  "comparisonScope": "Canonical Source expectations use full first actual captures. CSR and hydration repeats are recovered from the first capture with equal-length UTF-8 replacements at the recorded byte offsets. Each reconstructed JSON matches its original repeat SHA-256. Their wholePairByteEqual is false; independent raw recursive proof found only getComputedStyle custom-property enumeration permutations, with exact unique names/values/priorities, exact standard enumeration, and zero other raw differences. Inline CSSOM declaration order, DOM attribute order and every actual CSS/box/context/event/ref field remain unchanged. SSR whole pair is byte equal and has one lossless portable copy."
 }
