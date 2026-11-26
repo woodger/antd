@@ -10024,7 +10024,21 @@
             "tests/package/mentions.ssr.test.ts",
             "docs/reference/components/mentions.md"
           ],
-          "note": "13 дважды снятых сценариев официального UMD Ant Design 6.6.8 с RcInput 1.3.1 проверяют мягкий count.max, нативный maxLength, нулевой предел, форматирование и восстановление каретки при принятии и отклонении значения. IME обрезает текст после compositionend. Вставка упоминания и clear работают целиком. Вложенная обёртка счётчика отдельно от суффикса Mentions сохраняет размеры textarea. Дополнительный замер с dir=rtl на внешнем контейнере сверяет геометрию сочетания autoSize и allowClear. Svelte закрывает список, когда меняется textarea при переключении count.show. Покрыты нативные composition callbacks, SSR и строгая гидратация snippet с сохранением DOM, текста и фокуса. Позиция каретки до гидратации предзаполненного поля остаётся отдельной границей."
+          "note": "13 дважды снятых сценариев официального UMD Ant Design 6.6.8 с RcInput 1.3.1 проверяют мягкий count.max, нативный maxLength, нулевой предел, форматирование и восстановление каретки при принятии и отклонении значения. IME обрезает текст после compositionend. Вставка упоминания и clear работают целиком. Вложенная обёртка счётчика отдельно от суффикса Mentions сохраняет размеры textarea. Дополнительный замер с dir=rtl на внешнем контейнере сверяет геометрию сочетания autoSize и allowClear. Svelte закрывает список, когда меняется textarea при переключении count.show. Покрыты нативные composition callbacks, SSR и строгая гидратация snippet с сохранением DOM, текста и фокуса."
+        },
+        {
+          "id": "editor-hydration",
+          "title": "Выделение и первый ввод при гидратации textarea",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Mentions.svelte",
+            "src/lib/mentions.dom.ts",
+            "tests/browser/mentions-hydration.spec.ts",
+            "tests/browser/fixtures/ant-design-mentions-hydration-reference.json",
+            "docs/reference/components/mentions.md"
+          ],
+          "note": "Восемь сценариев UMD 6.6.8 повторены с SSR React 18.3.1 в среде без DOM. При совпадающем тексте сравниваются границы и направление выделения, фокус, identity textarea и первый пользовательский ввод. Для изменённого до гидратации текста исходное значение восстановлено. Проверены defaultValue, controlled value, count, отсутствие фокуса и открытый ShadowRoot вдоль цепочки фокуса. Native также проверяет сгенерированный id, разные DOM-деревья с одинаковым id и независимость CSR от одноимённого поля. Границы отсоединённых деревьев и ShadowRoot вне цепочки фокуса остаются открыты."
         },
         {
           "id": "popup-appearance",

@@ -1,4 +1,66 @@
+// Связывает DOM редактора с измерением текста и восстановлением выделения при гидратации.
 import type { MentionsProps } from './mentions.types';
+
+/** Читает состояние только у нативного textarea Mentions. */
+function readEditorSelection(editor: Element | null) {
+  const Textarea = editor?.ownerDocument.defaultView?.HTMLTextAreaElement;
+  if (!Textarea
+    || !(editor instanceof Textarea)
+    || !editor.hasAttribute('data-ant-mentions-textarea')) {
+    return;
+  }
+
+  return {
+    editor,
+    value: editor.value,
+    start: editor.selectionStart,
+    end: editor.selectionEnd,
+    direction: editor.selectionDirection
+  };
+}
+
+/** Собирает кандидатов в документе и открытых деревьях вдоль цепочки фокуса. */
+function readHydrationSelections(id: string) {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  const snapshots = [];
+  let scope: Document | ShadowRoot | undefined = document;
+  while (scope) {
+    const focused: Element | null = scope.activeElement;
+    const candidate = focused?.id === id ? focused : scope.getElementById(id);
+    const snapshot = readEditorSelection(candidate);
+    if (snapshot) snapshots.push(snapshot);
+
+    scope = focused?.shadowRoot ?? undefined;
+  }
+  return snapshots;
+}
+
+/** Захватывает состояние до того, как Svelte очистит текстовый узел textarea при гидратации. */
+export function captureMentionsHydrationSelection(id: string) {
+  let pending = readHydrationSelections(id);
+  if (!pending?.length) {
+    return;
+  }
+
+  /** Применяет снимок однократно к тому же редактору, если его текст сохранился. */
+  return function restoreSelection(editor: HTMLTextAreaElement) {
+    const previous = pending?.find(snapshot => snapshot.editor === editor);
+    pending = undefined;
+    if (!previous || editor.value !== previous.value) {
+      return;
+    }
+
+    const { start, end, direction } = previous;
+    if (editor.selectionStart !== start
+      || editor.selectionEnd !== end
+      || editor.selectionDirection !== direction) {
+      editor.setSelectionRange(start, end, direction);
+    }
+  };
+}
 
 // Расчёт autoSize следует calculateNodeHeight из @rc-component/input 1.3.1 (MIT).
 const sizing = [

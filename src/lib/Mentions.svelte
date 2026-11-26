@@ -11,7 +11,7 @@
     filterMentionOption,
     replaceMention
   } from './mentions.engine';
-  import { connectMentionsMeasure } from './mentions.dom';
+  import { captureMentionsHydrationSelection, connectMentionsMeasure } from './mentions.dom';
   import { useConfig } from './config-context';
   import { getMentionsPrefixCss } from './mentions-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -192,6 +192,7 @@
   let textareaStyle = $derived(resolveTextareaStyle(semantics.styles.root, semantics.styles.textarea));
   const layer = useZIndex('popup', () => getInlineZIndex(semantics.styles.popup));
   let controlId = $derived(id ?? field?.id ?? `ant-mentions-${generated}`);
+  const restoreHydrationSelection = untrack(() => captureMentionsHydrationSelection(controlId));
   let prefixes = $derived(typeof prefix === 'string' ? [prefix] : prefix);
   let measuring = $state(false);
   let query = $state('');
@@ -447,6 +448,12 @@
     internalValue = next;
     onChange?.(next);
   }
+
+  function bindEditor(element: HTMLTextAreaElement | null | undefined) {
+    if (element) restoreHydrationSelection?.(element);
+    editor = element ?? undefined;
+  }
+
   function publishEditorInput(event: EditorEvent) {
     if (blocked || readonly) {
       return;
@@ -725,7 +732,7 @@
       {...(hasNativeDefault ? { defaultValue: text } : {})}
       {...attributes}
       data-ant-mentions-textarea
-      bind:this={editor}
+      bind:this={() => editor, bindEditor}
       id={controlId}
       name={name ?? field?.name}
       rows={attributes.rows ?? 1}
