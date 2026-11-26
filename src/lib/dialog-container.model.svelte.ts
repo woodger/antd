@@ -79,6 +79,12 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       const origin = node.parentElement ?? node;
       node.before(marker);
       let explicitPortal: (() => void) | undefined;
+      const staticHost = origin.closest<HTMLElement>('[data-ant-modal-static-host]');
+
+      /** Подключает CSS-контекст после переноса, чтобы ранний panelRef оставался отсоединённым. */
+      function connectStaticOrigin() {
+        if (staticHost && !staticHost.isConnected) document.body.append(staticHost);
+      }
 
       /** Переносит тот же DOM и оставляет владельцу его inline CSS variables. */
       function attachPortal(destination: Element | DocumentFragment) {
@@ -87,6 +93,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
           origin,
           marker,
           autoLock: false,
+          prepareOrigin: staticHost ? connectStaticOrigin : undefined,
           // Cleanup старого keyed panel не возвращает удаляемый DOM в исходную ветку.
           get restoreOnDestroy() { return node.isConnected && nodeRevision === currentRevision; },
           get preserveVariables() {
@@ -122,7 +129,8 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       let lock: HTMLStyleElement | undefined;
 
       function sync() {
-        connected = node.isConnected;
+        // Скрытый статический корень нужен для CSSOM. Показывать диалог можно после переноса.
+        connected = node.isConnected && !node.closest('[data-ant-modal-static-host]');
         // :has() в document не видит modal внутри ShadowRoot; модальность остаётся нативной.
         const shadowModal = node.isConnected && node.open
           && !node.hasAttribute('data-ant-dialog-unlocked')

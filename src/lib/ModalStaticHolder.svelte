@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Рисует подтверждение в отдельном корне. Контейнер диалога подключает в DOM только панель.
+  // Держит контекст темы в скрытом корне. Панель открывается в своём portal.
   import ConfigProvider from './ConfigProvider.svelte';
   import ModalConfirmation from './ModalConfirmation.svelte';
   import { provideConfig, useConfig, type ConfigContext } from './config-context';

@@ -39,6 +39,10 @@ function createStaticModal(
   page: Document, view: Window, type: ModalConfirmType, initial: ModalStaticConfig
 ): ModalStaticHandle {
   const target = page.createElement('div');
+  // Вычисленные переменные доступны portal только из подключённого CSS-контекста.
+  target.dataset.antModalStaticHost = '';
+  target.inert = true;
+  target.style.setProperty('display', 'none', 'important');
   let current: ModalStaticConfig & { close: () => void; } = {
     ...initial, type, open: true, close: destroy
   };
@@ -93,7 +97,10 @@ function createStaticModal(
     const instance = host;
     host = undefined;
     if (instance) {
-      void tick().then(() => unmount(instance));
+      void tick().then(() => unmount(instance)).finally(() => target.remove());
+    }
+    else {
+      target.remove();
     }
   }
 

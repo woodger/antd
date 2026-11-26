@@ -52,6 +52,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
   autoLock: boolean;
   origin: HTMLElement;
   marker: Comment;
+  /** Подключает отсоединённый CSS-контекст после переноса, до первого чтения CSSOM. */
+  prepareOrigin?: () => void;
   preserveVariables?: readonly string[];
   preservePointerEvents?: boolean;
   restoreOnDestroy?: boolean;
@@ -141,6 +143,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
     else {
       container.append(element);
     }
+    options.prepareOrigin?.();
   }
   syncTheme();
   const observer = new view.MutationObserver(scheduleTheme);

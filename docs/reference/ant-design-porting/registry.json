@@ -23907,6 +23907,7 @@
         "src/lib/modal-destroy.dom.ts",
         "tests/browser/fixtures/ant-design-modal-static-reference.json",
         "tests/browser/modal-static.spec.ts",
+        "tests/browser/modal-static-theme.spec.ts",
         "tests/package/modal-static.ssr.test.ts"
       ],
       "features": [
@@ -24210,9 +24211,10 @@
             "src/lib/ModalStaticHolder.svelte",
             "tests/browser/fixtures/ant-design-modal-static-reference.json",
             "tests/browser/modal-static.spec.ts",
+            "tests/browser/modal-static-theme.spec.ts",
             "tests/package/modal-static.ssr.test.ts"
           ],
-          "note": "21 профиль UMD 6.6.8 в двух прогонах. Пять глобальных методов возвращают destroy/update, рендерятся с отложенным применением настроек и завершают отдельный корень. Покрыты ConfigProvider.config, holderRender, локаль, direction/type, контейнер, полная функциональная замена настроек, скрытие и повторный показ, loading, исходный afterClose и разный порядок отмены с кнопки и Escape. destroyAll снимает контекстные панели без событий закрытия, сохраняя Svelte-завершение await с false. При SSR глобальных корней и таймеров нет. После повторного открытия старое async-действие не закрывает актуальную панель."
+          "note": "21 профиль UMD 6.6.8 в двух прогонах. Пять глобальных методов возвращают destroy/update, рендерятся с отложенным применением настроек и завершают отдельный корень. Покрыты ConfigProvider.config, holderRender, локаль, direction/type, контейнер, полная функциональная замена настроек, скрытие и повторный показ, loading, исходный afterClose и разный порядок отмены с кнопки и Escape. destroyAll снимает контекстные панели без событий закрытия, сохраняя Svelte-завершение await с false. При SSR глобальных корней и таймеров нет. После повторного открытия старое async-действие не закрывает актуальную панель. Диалог получает вычисленные CSS-переменные скрытого корня после переноса в body. Цвета панели, заголовка и кнопки сверены с обычным окном в legacy dark и dark с CSS variables, с holderRender и пользовательским контейнером. Проверены живая смена акцента, фокус и очистка корня."
         },
         {
           "id": "native-zero-title",
