@@ -78,7 +78,7 @@
   import { provideDesignTokens, useDesignTokenContext } from './theme-context.svelte';
   import { getGridMediaCss, getGridMediaScope } from './grid-style.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import type { ComponentSize, Variant, Locale, ThemeConfig } from './types';
+  import type { ComponentSize, CSPConfig, Variant, Locale, ThemeConfig } from './types';
   import type { AntDesignLocale } from './locale.types';
   import { resolveProviderLocale } from './locale.engine';
   import { registerModalLocale } from './modal-locale.dom';
@@ -91,6 +91,8 @@
     prefixCls?: string;
     /** Пространство имён штатных иконок подтверждения Modal. */
     iconPrefixCls?: string;
+    /** Nonce для стилей провайдера и компонентов. Объект заменяет родительский CSP. */
+    csp?: CSPConfig;
     /** Частично переопределяет родительскую тему; остальные поля наследуются. */
     theme?: ThemeConfig;
     /** Общее оформление полей и Card; локальные props, Form и component config имеют приоритет. */
@@ -216,6 +218,7 @@
     children,
     prefixCls,
     iconPrefixCls,
+    csp,
     theme,
     variant,
     form,
@@ -340,6 +343,9 @@
     getPrefixCls,
     get iconPrefixCls() {
       return iconPrefixCls || parent.iconPrefixCls;
+    },
+    get csp() {
+      return csp ?? parent.csp;
     },
     get variant() {
       return variant ?? parent.variant;

@@ -101,6 +101,21 @@ Tooltip, Popover, Popconfirm и single/range Slider сверяются по
 Raw textContent сохранён; сравниваются непустые текстовые узлы без пробелов между
 Svelte slots. В SSR остаются прежние hidden shells, без открытия popup и DOM containers.
 
+## Nonce для стилей
+
+Передайте `csp={{ nonce }}` в `ConfigProvider`, чтобы созданные библиотекой
+стили темы, префиксов и блокировки прокрутки в ShadowRoot получили nonce из
+политики документа. Вложенный провайдер с `csp={undefined}` наследует настройку,
+а явный объект заменяет её целиком. `csp={{}}` сбрасывает унаследованный nonce.
+Тип `CSPConfig` доступен из пакета.
+
+SSR передаёт nonce в разметке `<style>`. При смене nonce браузер получает
+новые style-элементы, а элементы управления сохраняют DOM и фокус.
+Ant Design React 6.6.8 сохраняет nonce у уже закэшированных стилей.
+Таблицы стилей сборщика и политика для атрибутов `style` настраиваются
+приложением. [Замеры React](../../tests/browser/fixtures/ant-design-config-provider-csp-reference.json)
+· [Проверки CSP и гидратации в Chromium](../../tests/browser/config-provider-csp.spec.ts).
+
 ## Глобальные настройки статических вызовов
 
 `ConfigProvider.config({ prefixCls, iconPrefixCls, theme, holderRender })`

@@ -20,6 +20,11 @@ import { qrCodeEnUS, qrCodeRuRU } from './qrcode.locale';
 export type ComponentSize = 'small' | 'medium' | 'large';
 export type Variant = 'outlined' | 'borderless' | 'filled' | 'underlined';
 
+/** Настройки Content Security Policy для стилей, которые создаёт библиотека. */
+export interface CSPConfig {
+  nonce?: string;
+}
+
 /** Контейнер popup из ConfigProvider; trigger отсутствует у некоторых потребителей upstream. */
 export type GetPopupContainer = (triggerNode?: HTMLElement) => HTMLElement | ShadowRoot;
 

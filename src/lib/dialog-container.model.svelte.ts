@@ -1,5 +1,6 @@
 import { onMount, untrack } from 'svelte';
 import { on } from 'svelte/events';
+import { useConfig } from './config-context';
 import type { GetContainer, GetPopupContainer } from './types';
 import { connectPopupPortal } from './popup-portal.dom';
 
@@ -18,6 +19,7 @@ interface DialogContainerOptions {
 
 /** Первый перенос сохраняет SSR DOM; последующая смена target пересоздаёт panel, как portal. */
 export function createDialogContainer(getOptions: () => DialogContainerOptions) {
+  const config = useConfig();
   let target = $state.raw<Element | DocumentFragment | false>();
   let revision = $state(0);
   let connected = $state(false);
@@ -127,19 +129,30 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       }
 
       let lock: HTMLStyleElement | undefined;
+      let lockNonce: string | undefined;
 
       function sync() {
+        const nonce = config.csp?.nonce;
         // Скрытый статический корень нужен для CSSOM. Показывать диалог можно после переноса.
         connected = node.isConnected && !node.closest('[data-ant-modal-static-host]');
         // :has() в document не видит modal внутри ShadowRoot; модальность остаётся нативной.
         const shadowModal = node.isConnected && node.open
           && !node.hasAttribute('data-ant-dialog-unlocked')
           && node.getRootNode() instanceof ShadowRoot;
-        if (shadowModal && !lock) {
-          lock = document.createElement('style');
-          lock.dataset.antDialogLock = '';
-          lock.textContent = 'html { overflow: hidden; }';
-          document.head.append(lock);
+        if (shadowModal && (!lock || lockNonce !== nonce)) {
+          const next = document.createElement('style');
+          if (nonce !== undefined) next.nonce = nonce;
+          next.dataset.antDialogLock = '';
+          next.textContent = 'html { overflow: hidden; }';
+          // Политика проверяется при вставке нового style с действующим nonce.
+          if (lock) {
+            lock.replaceWith(next);
+          }
+          else {
+            document.head.append(next);
+          }
+          lock = next;
+          lockNonce = nonce;
         }
         else if (!shadowModal && lock) {
           lock.remove();
@@ -154,6 +167,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       // Контейнер может быть временно отключён или быть DocumentFragment до вставки владельцем.
       if (container) observer.observe(document, { childList: true, subtree: true });
       sync();
+      $effect(sync);
       // Child handlers выполняются внутри shadow boundary с исходными native event targets.
       const listeners = [
         'click', 'keydown', 'keyup', 'focusin', 'focusout'

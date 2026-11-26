@@ -28376,6 +28376,24 @@
             "tests/browser/fixtures/ant-design-popup-overflow-nested-layout-reference.json"
           ],
           "note": "Точный public PopupOverflow=viewport|scroll; omitted/own undefined наследуют ближайшее заданное значение, явный viewport сбрасывает scroll. Source readers Select/TreeSelect/Cascader и AutoComplete через Select подключены без обязательного getPopupContainer. Default/viewport выбирает visible region, только scroll выбирает scroll document; shiftY всё ещё ограничен visible region. Обновление context меняет карту следующего Source alignment trigger (open/placement, actual target/popup size, window resize, ancestor scroll), не выравнивая немедленно. Truthy builtinPlacements заменяет defaults, popupAlign shallow перекрывает выбранную запись.61 raw direct UMD cases/212actions,61 closed SSR и14 smoke cases/40actions повторены независимо. Smoke подтверждает propagation для вложенных Select Pagination/Calendar/ColorPicker и inertness Tooltip/DatePicker/Mentions/CascaderPanel/containing ColorPicker overlay; полная numeric layout parity вложенных семейств этим набором не заявлена. Два реальных DEV readonly-current предупреждения Source Pagination сохранены в raw corpus. Native top layer, DOM parent, retained/conditional popup lifetime, refs/fields/focus и существующие controlled-search/connected-blur boundaries сохранены и проверяются отдельно; новые local align/motion API других семейств не добавляются. Original14 smoke raw сохранены отдельно; Native Pagination использует два дополнительных independently captured Source counterparts с одинаковым public style=width:max-content, сохраняя прежний Native wrapping без runtime patch. Три отдельных direct Select placement counterparts проверяют локальный приоритет; Source исходные61 direct и61 SSR не изменяются."
+        },
+        {
+          "id": "csp-nonce",
+          "title": "ConfigProvider.csp и nonce для создаваемых стилей",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/config-provider.md",
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/config-context.ts",
+            "src/lib/ThemeScopeStyle.svelte",
+            "src/lib/dialog-container.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-config-provider-csp-reference.json",
+            "tests/browser/fixtures/ConfigProviderCspFixture.svelte",
+            "tests/browser/config-provider-csp.spec.ts",
+            "tests/package/config-provider-csp.ssr.test.ts"
+          ],
+          "note": "Nonce наследуется, переопределяется локальным CSP record и сбрасывается при csp={}. Префиксные стили Button и CSSOM сверены с UMD 6.6.8 при действующей style-src-elem. Все стили общего ThemeScopeStyle получают nonce, в том числе до гидратации. Native пересоздаёт стили при обновлении nonce, а UMD оставляет значение у закэшированных стилей. Стиль блокировки прокрутки нативного диалога в ShadowRoot также получает nonce и удаляется при закрытии."
         }
       ]
     },

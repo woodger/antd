@@ -1070,6 +1070,7 @@ export {
   type RenderEmptyComponent,
   type RenderEmptyContent,
   type RenderEmptyHandler,
+  type CSPConfig,
   type GetPopupContainer,
   type PopupOverflow,
   type GetTargetContainer,

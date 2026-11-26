@@ -65,7 +65,9 @@ import type { RadioConfig } from './radio.types';
 import type { CheckboxConfig } from './checkbox.types';
 import type { SwitchConfig } from './switch.types';
 import type { WaveConfig } from './wave.types';
-import type { GetPopupContainer, GetTargetContainer, PopupOverflow, RenderEmptyHandler } from './types';
+import type {
+  CSPConfig, GetPopupContainer, GetTargetContainer, PopupOverflow, RenderEmptyHandler
+} from './types';
 import type { RangePickerConfig } from './range-picker.types';
 import type { InputConfig } from './input.types';
 import type { InputPasswordConfig } from './input-password.types';
@@ -78,6 +80,7 @@ import { ruRU, type ComponentSize, type Variant, type Locale, type ResolvedTheme
 export interface ConfigContext {
   readonly getPrefixCls: (suffix?: string, custom?: string) => string;
   readonly iconPrefixCls: string;
+  readonly csp?: CSPConfig;
   readonly variant?: Variant;
   readonly form?: FormConfig;
   readonly app?: AppConfig;
