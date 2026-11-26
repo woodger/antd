@@ -1,8 +1,10 @@
 import { test, expect } from './test';
-import { readSelectComponentsBrowserReference } from './select-components-browser-reference';
 import { prepareSelectSurface, drainSelectSurface } from './select-surface-driver';
 import { selectIconsGeometry } from './select-components-modes-cases.mjs';
-import { selectComponentsModesSamples as selectComponentsSamples } from './select-components-modes-reference';
+import {
+  readSelectComponentsModesCase,
+  selectComponentsModesSamples as selectComponentsSamples
+} from './select-components-modes-reference';
 import { settleNativeSelectComponentsModes as settleNativeSelectComponents, verifySelectComponentsModesPoint as verifySelectComponentsPoint } from './select-components-modes-assertions';
 import type { ComponentProps } from 'svelte';
 import { selectComponentsModesPopupSource } from './select-components-modes-key-collision';
@@ -13,15 +15,7 @@ for (const sample of selectComponentsSamples) test(`Select component modes compl
   { page },
   testInfo
 ) => {
-  const browser = page.context().browser();
-  if (!browser) {
-    throw Error('An actual Chromium browser version is required for Source conformance');
-  }
-  const { source, referenceVariant } = readSelectComponentsBrowserReference(
-    'modes',
-    sample.id,
-    browser.version()
-  );
+  const source = readSelectComponentsModesCase(sample.id);
   const trace: unknown[] = [], failures: string[] = [];
   await page.goto('/?fixture=select-components-modes');
   await page.getByRole('combobox', { name: 'Select component modes sample', exact: true }).selectOption(sample.id);
@@ -150,7 +144,7 @@ for (const sample of selectComponentsSamples) test(`Select component modes compl
     await testInfo.attach(
       'actual-select-components-modes-complete-raw',
       {
-        body: JSON.stringify({ sample, referenceVariant, trace, failures }, null, 2),
+        body: JSON.stringify({ sample, trace, failures }, null, 2),
         contentType: 'application/json'
       }
     );

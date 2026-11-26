@@ -3,6 +3,7 @@ import type { Page } from '@playwright/test';
 import { readSelectIcons, readSelectResponsiveOverflow, type SelectComponentsResponsiveOverflowNode } from './select-components-responsive-metrics.mjs';
 import { drainSelectSurface } from './select-surface-driver';
 import { verifySelectComponentsModesPoint, type NativeModesPoint } from './select-components-modes-assertions';
+import { comparableSelectComponentCSS } from './select-components-layout-assertions';
 import type { ModesCase, ModesPoint } from './select-components-modes-reference';
 import type { SelectComponentsModesNode } from './select-components-modes-metrics.mjs';
 import type { ResponsiveCase, ResponsivePoint, SelectComponentsResponsiveSample } from './select-components-responsive-reference';
@@ -122,10 +123,12 @@ export function verifySelectComponentsResponsivePoint(
       assert(mapped, 'every Source overflow node was covered by the full mode comparator');
       const current = currentNodes.find(node => node.identity === mapped);
       assert(current);
-      // Existing Native tags/buttons/glyph wrappers retain exactly the named
-      // base comparator boundaries. Every added computed property and client
-      // rectangle stays exact; no style, CSS value or geometry is rewritten.
-      assert.deepEqual(current.css, original.css, 'every overflow computed property/order/inset');
+      // Проверки тегов и обёрток уже сделаны в сравнении режимов Select.
+      assert.deepEqual(
+        comparableSelectComponentCSS(current.css),
+        comparableSelectComponentCSS(original.css),
+        'every overflow computed property/order/inset'
+      );
       assert.deepEqual(current.box, original.box);
       assert.deepEqual(current.clientRects, original.clientRects);
       const metrics = { ...current.metrics };

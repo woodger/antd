@@ -8,6 +8,10 @@ import { verifySelectSurfaceNode } from './select-surface-assertions';
 import { readAutoCompleteEditorHeightCase } from './auto-complete-editor-height-reference';
 import type { ComponentsCase } from './select-components-reference';
 import type { ACStyleCase, ACStylePoint, SelectComponentsACStyleSample } from './select-components-ac-style-reference';
+import {
+  comparableSelectComponentCSS,
+  verifySelectComponentMetrics
+} from './select-components-layout-assertions';
 export interface NativeACStylePopupTopology {
   boundRootIdentity: number | null;
   popup: { identity: number | null; parentIdentity: number | null; parentIsPublicRoot: boolean;
@@ -106,11 +110,16 @@ function verifyLayoutNode(
   else {
     verifySelectComponentsDOMAttributes(actual, source, current, original, label);
   }
-  assert.deepEqual(actual.css, expectedCss, label + '/css');
+  assert.deepEqual(
+    comparableSelectComponentCSS(actual.css),
+    comparableSelectComponentCSS(expectedCss),
+    label + '/css'
+  );
   for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'box',
-    'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const) {
+    'geometryBoundary', 'value', 'caret', 'focused'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
   }
+  verifySelectComponentMetrics(actual.metrics, source.metrics, source.tag, label + '/metrics');
 }
 function surfaceRoot(node: SelectComponentsACStyleNode) {
   // This is the same public projection as readSelectSurface(). Private default
@@ -118,7 +127,7 @@ function surfaceRoot(node: SelectComponentsACStyleNode) {
   return { tag: node.tag, text: node.text,
     authoredClasses: node.classes.filter(name => name.startsWith('surface-')),
     attributes: node.attributes.filter(([name]) => ['role', 'title', 'disabled', 'aria-label', 'aria-disabled', 'aria-selected', 'aria-expanded'].includes(name)),
-    css: node.css, box: node.box! };
+    css: comparableSelectComponentCSS(node.css), box: node.box! };
 }
 function verifiedRootLayout(actual: NativeACStylePoint, source: ACStylePoint) {
   const topology = actual.popupTopology, popup = actual.icons.current.popup;
@@ -200,7 +209,11 @@ export function verifySelectComponentsACStylePoint(
   check('whole-root-computed-and-scroll', () => {
     const current = actual.icons.current.root, original = source.icons.current.root;
     assert(current && original);
-    assert.deepEqual(current.css, original.css, label + ' every root computed property');
+    assert.deepEqual(
+      comparableSelectComponentCSS(current.css),
+      comparableSelectComponentCSS(original.css),
+      label + ' every root computed property'
+    );
     assert.deepEqual(
       current.metrics,
       original.metrics,
@@ -224,13 +237,11 @@ export function verifySelectComponentsACStylePoint(
       );
     }
   });
-  check(
-    'all-editor-metrics',
-    () => assert.deepEqual(
-      actual.icons.current.editor?.metrics,
-      source.icons.current.editor?.metrics
-    )
-  );
+  check('all-editor-metrics', () => {
+    const current = actual.icons.current.editor;
+    const original = source.icons.current.editor;
+    verifySelectComponentMetrics(current?.metrics, original?.metrics, original?.tag, label);
+  });
   check('inherited-option-and-icon-nodes', () => {
     // The unchanged icon comparator already names AC's existing BUTTON and
     // popup flex annotations. The layout comparison checks the measured

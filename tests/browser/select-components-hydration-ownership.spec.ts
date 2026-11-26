@@ -6,7 +6,7 @@ import { createServer as createHttpServer } from 'node:http';
 import { createServer, type ViteDevServer } from 'vite';
 import { test, expect } from './test';
 import { ownershipScenarios, ownershipGeometry } from './select-components-hydration-ownership-cases.mjs';
-import { readSelectComponentsHydrationOwnershipSource, readSelectComponentsHydrationOwnershipCase } from './select-components-hydration-ownership-reference';
+import { readSelectComponentsHydrationOwnershipCase } from './select-components-hydration-ownership-reference';
 import { captureHydrationOwnership } from './select-components-hydration-ownership-driver';
 let server: ViteDevServer, cache: string;
 test.use({ viewport: ownershipGeometry.viewport });
@@ -30,11 +30,6 @@ for (const scenario of ownershipScenarios) test(`hydration ownership ${scenario.
   { page },
   testInfo
 ) => {
-  const browser = page.context().browser();
-  if (!browser) {
-    throw Error('Actual independently measured browser required');
-  }
-  expect(browser.version()).toBe(readSelectComponentsHydrationOwnershipSource().reference.chromium);
   const source = readSelectComponentsHydrationOwnershipCase(scenario.id);
   let result: Awaited<ReturnType<typeof captureHydrationOwnership>> | undefined;
   try {

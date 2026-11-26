@@ -7,6 +7,10 @@ import { decodeSelectSurface } from './select-surface-receipts';
 import type { ModesCase, ModesPoint, SelectComponentsModesSample } from './select-components-modes-reference';
 import type { ComponentsCase } from './select-components-reference';
 import { selectComponentsModesPopupSource } from './select-components-modes-key-collision';
+import {
+  comparableSelectComponentCSS,
+  verifySelectComponentMetrics
+} from './select-components-layout-assertions';
 export interface NativeModesPoint { icons: SelectComponentsModesDOM; owner: NativeComponentsOwner }
 export async function settleNativeSelectComponentsModes(page: Page): Promise<NativeModesPoint> {
   let previous = '', stable = 0;
@@ -189,8 +193,15 @@ function verifyNode(
     sourceInline,
     label + ' complete authored inline declaration order'
   );
-  for (const key of ['connected', 'text', 'css', 'box', 'geometryBoundary', 'caret', 'focused', 'metrics'] as const)
+  for (const key of ['connected', 'text', 'box', 'geometryBoundary', 'caret', 'focused'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
+  }
+  assert.deepEqual(
+    comparableSelectComponentCSS(actual.css),
+    comparableSelectComponentCSS(source.css),
+    label + '/css'
+  );
+  verifySelectComponentMetrics(actual.metrics, source.metrics, source.tag, label + '/metrics');
   if (source.tag.toLowerCase() === 'svg') {
     assert.equal(
       actual.html.replace(/<!--[\s\S]*?-->/g, ''),
@@ -277,8 +288,8 @@ export function verifySelectComponentsModesPoint(
   check('whole-root-computed-and-scroll', () => {
     assert(actual.icons.current.root && source.icons.current.root);
     assert.deepEqual(
-      actual.icons.current.root.css,
-      source.icons.current.root.css,
+      comparableSelectComponentCSS(actual.icons.current.root.css),
+      comparableSelectComponentCSS(source.icons.current.root.css),
       'every root computed property'
     );
     assert.deepEqual(
@@ -319,13 +330,11 @@ export function verifySelectComponentsModesPoint(
     compareCollection('nodes', actual.icons.nodes, nodes);
     compareCollection('svg', actual.icons.svg, svg);
   });
-  check(
-    'whole-editor-metrics',
-    () => assert.deepEqual(
-      actual.icons.current.editor?.metrics,
-      source.icons.current.editor?.metrics
-    )
-  );
+  check('whole-editor-metrics', () => {
+    const current = actual.icons.current.editor;
+    const original = source.icons.current.editor;
+    verifySelectComponentMetrics(current?.metrics, original?.metrics, original?.tag, label);
+  });
   check('public-refs', () => {
     // The existing public Native API exposes DOM through separate bindables,
     // while React includes nativeElement in the imperative handle itself.

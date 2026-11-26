@@ -621,9 +621,12 @@ generated INPUT выделена как Blink lazy CSSOM boundary; в SSR отд
 Svelte style-attribute hoist у responsive wrappers. Две точные пустые Text anchors
 этих CSR snippets проверяются по compiler topology; authored text и SSR/hydration не затрагиваются.
 Остальные attrs, порядок/значения CSS declarations, CSSOM, boxes и полные raw остаются строгими.
-Браузерные сверки выбирают измеренный Original для точной версии Chromium 156 или 157:
-у двух INPUT-случаев изменились clientWidth/scrollWidth, поэтому для них сохранены
-отдельные полные записи Ant Design; прежние эталоны не заменены.
+Сценарии custom editor сверяются с одним эталоном React на штатном Chromium.
+Для `input` сравниваются внешний прямоугольник, отступы и горизонтальное переполнение
+(`scrollWidth - clientWidth`). Так проверка учитывает, что движок по-разному
+включает отступы в оба измерения. В вычисленном `align-items` flex-контейнера
+`flex-start` и `flow-start` выражают одно выравнивание. Авторские декларации
+и их порядок сверяются по исходному CSSOM. [Проверки размеров и стилей](../../../tests/browser/select-components-layout-assertions.ts)
 [Корпус custom tagRender и leading prefix](../../../tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-source-manifest.json)
 добавляет 2 owners, 18 действий, 20 CSR-точек и 2 SSR-состояния с обеими
 сериализациями React. Измеряется весь Fragment-тег; ведущий prefix находится

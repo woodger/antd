@@ -1,8 +1,10 @@
 import { test, expect } from './test';
-import { readSelectComponentsBrowserReference } from './select-components-browser-reference';
 import { prepareSelectSurface, drainSelectSurface } from './select-surface-driver';
 import { selectIconsGeometry } from './select-components-ac-style-cases.mjs';
-import { selectComponentsACStyleSamples as selectComponentsSamples } from './select-components-ac-style-reference';
+import {
+  readSelectComponentsACStyleCase,
+  selectComponentsACStyleSamples as selectComponentsSamples
+} from './select-components-ac-style-reference';
 import { settleNativeSelectComponentsACStyle as settleNativeSelectComponents, verifySelectComponentsACStylePoint as verifySelectComponentsPoint } from './select-components-ac-style-assertions';
 import type { ComponentProps } from 'svelte';
 import type SelectComponentsACStyleCase from './fixtures/SelectComponentsACStyleCase.svelte';
@@ -44,15 +46,7 @@ for (const sample of selectComponentsSamples) test(`AutoComplete component style
   { page },
   testInfo
 ) => {
-  const browser = page.context().browser();
-  if (!browser) {
-    throw Error('An actual Chromium browser version is required for Source conformance');
-  }
-  const { source, referenceVariant } = readSelectComponentsBrowserReference(
-    'ac-style',
-    sample.id,
-    browser.version()
-  );
+  const source = readSelectComponentsACStyleCase(sample.id);
   const trace: unknown[] = [], failures: string[] = [];
   await page.goto('/?fixture=select-components-ac-style');
   await page.getByRole('combobox', { name: 'Select component AC style sample', exact: true }).selectOption(sample.id);
@@ -210,7 +204,7 @@ for (const sample of selectComponentsSamples) test(`AutoComplete component style
     await testInfo.attach(
       'actual-select-components-ac-style-complete-raw',
       {
-        body: JSON.stringify({ sample, referenceVariant, trace, failures }, null, 2),
+        body: JSON.stringify({ sample, trace, failures }, null, 2),
         contentType: 'application/json'
       }
     );

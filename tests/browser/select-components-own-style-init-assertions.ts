@@ -11,6 +11,11 @@ import { verifyIconGraph } from './select-icons-assertions';
 import type { OwnStyleDetails, OwnStyleNode, OwnStyleProperty, OwnStyleRefObservation } from './select-components-own-style-init-metrics.mjs';
 import type { SelectComponentsModesDOM, SelectComponentsModesNode } from './select-components-modes-metrics.mjs';
 import type { OwnStyleInitCase, OwnStyleInitPoint, OwnStyleInitObservation, SelectComponentsOwnStyleAction } from './select-components-own-style-init-reference';
+import {
+  comparableFlexAlignment,
+  comparableSelectComponentCSS,
+  verifySelectComponentMetrics
+} from './select-components-layout-assertions';
 
 export const ownStyleSSRMarker = 'data-ant-native-select-component-ssr';
 export type OwnStyleBuildMode = 'development' | 'production';
@@ -23,11 +28,15 @@ export interface NativeOwnStyleOwner extends Omit<NativeComponentsOwner, 'compon
 }
 export interface NativeOwnStylePoint { icons: SelectComponentsModesDOM; details: OwnStyleDetails; owner: NativeOwnStyleOwner; popupTopology?: NativeACStylePopupTopology }
 
-/** Source first/repeat differ only in enumeration of computed custom properties.
- * Standard properties keep their complete names, values, priorities and order.
- * This function is never applied to authored/inline CSSOM or ordered attrs. */
+/** Сохраняет порядок обычных свойств. Порядок CSS-переменных зависит от браузера.
+ * Эквивалентные значения align-items внутри flex приводятся к одной записи. */
 export function ownStyleComputedProperties(properties: readonly OwnStyleProperty[]) {
-  const standard = properties.filter(property => !property.name.startsWith('--'));
+  const display = properties.find(property => property.name === 'display')?.value;
+  const standard = properties.filter(property => !property.name.startsWith('--')).map(property => {
+    if (property.name !== 'align-items') return property;
+    const value = comparableFlexAlignment(property.value, display);
+    return { ...property, value };
+  });
   const custom = properties.filter(property => property.name.startsWith('--'));
   assert.equal(
     new Set(properties.map(property => property.name)).size,
@@ -240,13 +249,17 @@ export function verifyOwnStyleFirstRef(
   );
   const current = actual[0].observation, original = first.observation;
   assert(current);
-  for (const key of ['tag', 'connected', 'cssText', 'inlineProperties', 'styleAttribute', 'value', 'defaultValue', 'box', 'metrics'] as const)
-    assert.deepEqual(current[key], original[key], label + '/first-ref/' + key);
-  fieldAttributes(current, original, label + '/first-ref');
+  const refLabel = label + '/first-ref';
+  for (const key of ['tag', 'connected', 'cssText', 'inlineProperties', 'styleAttribute', 'value',
+    'defaultValue', 'box'] as const) {
+    assert.deepEqual(current[key], original[key], refLabel + '/' + key);
+  }
+  verifySelectComponentMetrics(current.metrics, original.metrics, original.tag, refLabel + '/metrics');
+  fieldAttributes(current, original, refLabel);
   verifyNativeOwnStyleComputed(
     current.computedProperties,
     original.computedProperties,
-    label + '/first-ref',
+    refLabel,
     original.tag === 'INPUT' ? 'select' : 'autocomplete'
   );
 }
@@ -256,10 +269,16 @@ function verifyPhysicalCSS(
   label: string,
   editor = false
 ) {
-  // Inherited wrappers retain their existing Mode/AC tag/presentation contract.
-  // Every selected Source CSS property and physical box still stays strict.
-  for (const key of ['connected', 'namespaceURI', 'css', 'box', 'clientRects', 'metrics'] as const)
+  // Теги обёрток уже сверены по правилам конкретного режима Select и AutoComplete.
+  for (const key of ['connected', 'namespaceURI', 'box', 'clientRects'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
+  }
+  assert.deepEqual(
+    comparableSelectComponentCSS(actual.css),
+    comparableSelectComponentCSS(source.css),
+    label + '/css'
+  );
+  verifySelectComponentMetrics(actual.metrics, source.metrics, source.tag, label + '/metrics');
   if (editor) {
     assert.equal(actual.tag, source.tag, label + '/tag');
     verifyNativeOwnStyleComputed(

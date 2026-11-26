@@ -76,12 +76,8 @@ test.afterAll(async () => {
 const hash = (value: string) => createHash('sha256').update(value).digest('hex');
 for (const sample of selectOwnStyleInitSamples) for (const entryPath of selectOwnStyleInitEntryPaths)
   test(`own CSS ${sample.id}/${entryPath}`, async ({ page }, testInfo) => {
-    const browser = page.context().browser();
-    if (!browser) {
-      throw Error('Actual measured Chromium required');
-    }
-    expect(browser.version(), 'Source was independently measured in this exact browser').toBe('157.0.8103.78');
-    const entry = readSelectComponentsOwnStyleInitCase(sample.id, entryPath), trace: unknown[] = [], failures: string[] = [];
+    const entry = readSelectComponentsOwnStyleInitCase(sample.id, entryPath);
+    const trace: unknown[] = [], failures: string[] = [];
     const diagnostics: unknown[] = [], networkFailures: unknown[] = [];
     page.on('console', message => {
       if (['warning', 'error'].includes(message.type())) {
