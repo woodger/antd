@@ -19,15 +19,25 @@ export type NamePathValue<Values, Path extends NamePath> = Path extends keyof Va
         : unknown
       : unknown;
 
+type FormAtomicValue = Date | RegExp | Dayjs | Map<unknown, unknown> | Set<unknown>;
+
 /** Plain objects are combined recursively; arrays and instances of classes are replaced entirely. */
-export type PartialFormValues<Value> = Value extends
-  Date | RegExp | Dayjs | Map<unknown, unknown> | Set<unknown>
+export type PartialFormValues<Value> = Value extends FormAtomicValue
   ? Value
   : Value extends readonly unknown[]
     ? Value
     : Value extends object
       ? { [Key in keyof Value]?: PartialFormValues<Value[Key]> }
       : Value;
+
+type ProjectedField<Value> = Value extends FormAtomicValue | ((...args: never[]) => unknown)
+  ? Value
+  : Value extends object ? FormValueProjection<Value> : Value;
+
+/** A selection can omit object properties, array indices and fields within a selected row. */
+export type FormValueProjection<Values> = {
+  [Key in keyof Values]?: ProjectedField<Values[Key]>;
+};
 
 // Saves the string key in its entirety, including the points, and copies the transferred array.
 export function formNamePath(name: NamePath): (string | number)[] {

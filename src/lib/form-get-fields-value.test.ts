@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { describe, expect, it } from 'vitest';
+import { assert, describe, expect, it, vi } from 'vitest';
 import { createForm, type FormFieldMeta } from './form.model.svelte.js';
 import { getFormHooks } from './form-internal';
 
@@ -31,8 +31,24 @@ describe('createForm getFieldsValue', () => {
     expect(form.getFieldsValue(['missing'])).toEqual({ missing: undefined });
     expect(form.getFieldsValue([])).toEqual({});
     expect(form.getFieldsValue([[]])).toEqual(form.values);
+    expect(form.getFieldsValue([[]])).not.toBe(form.values);
+    expect(form.getFieldsValue([[]], () => false)).toEqual({});
     expect(form.getFieldsValue(true)).toBe(form.values);
     expect(form.getFieldsError()).toEqual(before);
+  });
+
+  it('returns an empty selection without reading registered names or invoking the filter', () => {
+    const form = createForm({ initialValues: { email: 'a@example.com' } });
+    const readName = vi.fn(() => 'email');
+    const filter = vi.fn(() => true);
+    getFormHooks(form)!.registerField({ get name() { return readName(); } });
+    readName.mockClear();
+
+    const selected = form.getFieldsValue([], filter);
+
+    expect(selected).toEqual({});
+    expect(readName).not.toHaveBeenCalled();
+    expect(filter).not.toHaveBeenCalled();
   });
 
   it('passes null to the filter for explicit unknown paths and includes model-owned rules', () => {
@@ -203,6 +219,7 @@ describe('createForm getFieldsValue', () => {
     } });
     getFormHooks(form)!.registerField({ name: ['user', 'name'] });
     const result = form.getFieldsValue([['user'], 'when']);
+    assert.isDefined(result.user);
     result.user.name = 'Modified';
     const filtered = form.getFieldsValue({ filter: (meta) => {
       if (meta) {

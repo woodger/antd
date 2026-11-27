@@ -16,6 +16,7 @@ import {
   sameFormPath,
   sameFormValue,
   setFormValue,
+  type FormValueProjection,
   type NamePath,
   type NamePathValue,
   type PartialFormValues
@@ -88,11 +89,16 @@ export interface FormInstance<Values extends FormValues> {
   readonly isSubmitting: boolean;
   readonly submissionError: unknown;
   getFieldValue<const Path extends NamePath>(name: Path): NamePathValue<Values, Path>;
-  /** Values of known bindings; the form of the result can be partial, as in upstream. */
-  getFieldsValue(): Values;
-  /** True without a filter returns the entire store; the paths are chosen binding and its descendants. */
-  getFieldsValue(names: readonly NamePath[] | true, filter?: FormFilterFunc): Values;
-  getFieldsValue(config: FormGetFieldsValueConfig): Values;
+  /** Returns the values of registered fields, including only the selected parts of nested records. */
+  getFieldsValue(): FormValueProjection<Values>;
+  /** Reads all values. Passing true returns the store itself, while the root path returns a copy. */
+  getFieldsValue(all: true | readonly [readonly []], filter?: undefined): Values;
+  /** Selects the requested paths and their registered descendants, subject to the optional filter. */
+  getFieldsValue(
+    names: readonly NamePath[] | true,
+    filter?: FormFilterFunc
+  ): FormValueProjection<Values>;
+  getFieldsValue(config: FormGetFieldsValueConfig): FormValueProjection<Values>;
   /** Brings back the errors of the fields of the model or the clearly listed paths. */
   getFieldsError(names?: readonly NamePath[]): FieldError[];
   getFieldError(name: NamePath): readonly string[];
@@ -315,16 +321,25 @@ export function createForm<Values extends FormValues>({
       && (!names || names.some((name) => sameFormPath(name, fieldPath(field)))));
   }
 
+  function getFieldsValue(all: true | readonly [readonly []], filter?: undefined): Values;
   function getFieldsValue(
     namesOrConfig?: readonly NamePath[] | true | FormGetFieldsValueConfig,
     filter?: FormFilterFunc
-  ): Values {
+  ): FormValueProjection<Values>;
+  function getFieldsValue(
+    namesOrConfig?: readonly NamePath[] | true | FormGetFieldsValueConfig,
+    filter?: FormFilterFunc
+  ): Values | FormValueProjection<Values> {
     void valuesRevision;
     if (namesOrConfig === true && !filter) {
       return values;
     }
 
     const names = Array.isArray(namesOrConfig) ? namesOrConfig as readonly NamePath[] : undefined;
+    if (names?.length === 0) {
+      return {};
+    }
+
     const select = names || namesOrConfig === true
       ? filter : (namesOrConfig as FormGetFieldsValueConfig | undefined)?.filter;
     // The order UI bindings does not depend on pre-created containers initialValues.
@@ -359,7 +374,7 @@ export function createForm<Values extends FormValues>({
       })
       : bindings.map((field) => ({ path: fieldPath(field), field }));
     const lists: NamePath[] = [];
-    let result = {} as Values;
+    let result: unknown = {};
 
     for (const { path, field } of selected) {
       if (field?.registration?.isList) {
@@ -373,15 +388,16 @@ export function createForm<Values extends FormValues>({
         name: [...path], validated: field.validated
       } : null;
       if (!select || select(meta)) {
-        result = setFormValue(result, path, getFormValue(values, path)) as Values;
+        result = setFormValue(result, path, getFormValue(values, path));
       }
     }
 
     for (const path of lists) {
-      if (!getFormValue(result, path)) result = setFormValue(result, path, []) as Values;
+      if (!getFormValue(result, path)) result = setFormValue(result, path, []);
     }
 
-    return result;
+    // The dynamic paths above copy only the selected parts of the store.
+    return result as FormValueProjection<Values>;
   }
 
   // Confirms that for the field there was and the expectation of debounce was canceled.
