@@ -1,25 +1,30 @@
-import type { AlertCloseAttributes, AlertConfig, AlertProps } from './alert.types';
+// Resolves the close button settings used by Alert during SSR and client rendering.
+import type { AlertConfig, AlertProps } from './alert.types';
+import { pickCloseButtonAttributes } from './close-button-attributes';
 
-/** Precedence for closable. The existing local closeIcon='' stays empty. */
+/** Uses local callbacks and resolves icon fallback independently of button attributes. */
 export function resolveAlertClose(props: AlertProps, config?: AlertConfig) {
   const { closable } = props;
-  const local = closable && typeof closable === 'object' ? closable : undefined;
-  const inherited = config?.closable && typeof config.closable === 'object'
-    ? config.closable : undefined;
-  const attributes = closable ?? config?.closable;
-  const enabled = typeof closable === 'boolean' ? closable : local ? true
-    : Boolean(config?.closable);
-  const icon = local?.closeIcon || inherited?.closeIcon || undefined;
+  const inheritedClosable = config?.closable;
+  const localOptions = typeof closable === 'object' ? closable : undefined;
+  const inheritedOptions = typeof inheritedClosable === 'object' ? inheritedClosable : undefined;
+
+  const enabled = typeof closable === 'boolean'
+    ? closable
+    : Boolean(localOptions ?? inheritedClosable);
+  const attributeOptions = closable == null ? inheritedOptions : localOptions;
+
+  const localIcon = localOptions?.closeIcon;
+  const iconWithFallback = localIcon || inheritedOptions?.closeIcon || undefined;
+  // An explicit empty string leaves the local icon slot empty.
+  const icon = localIcon === '' ? '' : iconWithFallback;
 
   return {
     enabled,
-    icon: local?.closeIcon === '' ? '' : icon,
-    disabled: local?.disabled,
-    onClose: local?.onClose,
-    afterClose: local?.afterClose,
-    attributes: attributes && typeof attributes === 'object'
-      ? Object.fromEntries(Object.entries(attributes).filter(([name]) =>
-        name === 'role' || name.startsWith('aria-') || name.startsWith('data-')
-      )) as AlertCloseAttributes : {}
+    icon,
+    disabled: localOptions?.disabled,
+    onClose: localOptions?.onClose,
+    afterClose: localOptions?.afterClose,
+    attributes: pickCloseButtonAttributes(attributeOptions)
   };
 }

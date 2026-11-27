@@ -14,7 +14,8 @@ describe('resolveAlertClose', () => {
       { closable: { closeIcon: 'Context' } }, true, 'Context'],
     ['false object icon fallback', { closable: { closeIcon: false } },
       { closable: { closeIcon: 'Context' } }, true, 'Context'],
-    ['native empty object icon', { closable: { closeIcon: '' } }, undefined, true, ''],
+    ['local empty icon overrides context', { closable: { closeIcon: '' } },
+      { closable: { closeIcon: 'Context' } }, true, ''],
     ['context object icon', {}, { closable: { closeIcon: 'Object' } }, true, 'Object'],
     ['context empty icon fallback', {}, { closable: { closeIcon: '' } }, true, undefined],
     ['context zero icon fallback', {}, { closable: { closeIcon: 0 } }, true, undefined]
@@ -31,22 +32,37 @@ describe('resolveAlertClose', () => {
     const localClose = () => {};
     const afterClose = () => {};
     const props: AlertProps = {
-      closable: { disabled: true, onClose: localClose, afterClose, 'data-owner': 'local' }
+      closable: {
+        disabled: true,
+        onClose: localClose,
+        afterClose,
+        role: 'button',
+        'aria-describedby': 'close-help',
+        'data-owner': 'local'
+      }
     };
     const result = resolveAlertClose(props, { closable: { 'aria-label': 'Context close' } });
 
     expect(result.onClose).toBe(localClose);
     expect(result.afterClose).toBe(afterClose);
     expect(result.disabled).toBe(true);
-    expect(result.attributes).toEqual({ 'data-owner': 'local' });
+    expect(result.attributes).toEqual({
+      role: 'button',
+      'aria-describedby': 'close-help',
+      'data-owner': 'local'
+    });
   });
 
-  it('inherits context ARIA only when the local closable value is nullish', () => {
-    const config: AlertConfig = { closable: { 'aria-label': 'Context close' } };
+  it('resets context ARIA and inherits the icon when the button is explicitly enabled', () => {
+    const config: AlertConfig = {
+      closable: { closeIcon: 'Context', 'aria-label': 'Context close' }
+    };
     const inherited = resolveAlertClose({}, config);
     const reset = resolveAlertClose({ closable: true }, config);
 
     expect(inherited.attributes).toEqual({ 'aria-label': 'Context close' });
+    expect(reset.enabled).toBe(true);
     expect(reset.attributes).toEqual({});
+    expect(reset.icon).toBe('Context');
   });
 });

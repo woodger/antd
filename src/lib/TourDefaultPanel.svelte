@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { TourPanelInfo } from './tour.types';
-  import { getTourCloseAttributes } from './tour.engine';
+  import { pickCloseButtonAttributes } from './close-button-attributes';
   import TourContent from './TourContent.svelte';
 
   let { info }: { info: TourPanelInfo; } = $props();
@@ -21,7 +21,7 @@
   <div class={[`${prefixCls}-section`, classNames.section]} style={styles.section}>
     {#if closable}
       <button type="button" onclick={() => info.onClose?.()} aria-label="Close"
-        {...getTourCloseAttributes(closable)} class={[`${prefixCls}-close`, classNames.close]}
+        {...pickCloseButtonAttributes(closable)} class={[`${prefixCls}-close`, classNames.close]}
         style={styles.close}>{#if closable.closeIcon !== null && closable.closeIcon !== undefined}<TourContent value={closable.closeIcon} />{:else}<span class={`${prefixCls}-close-x`}>×</span>{/if}</button>
     {/if}
     <div class={[`${prefixCls}-header`, classNames.header]} style={styles.header}>

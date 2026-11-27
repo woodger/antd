@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { pickCloseButtonAttributes } from './close-button-attributes';
 import {
   getTourClosable,
-  getTourCloseAttributes,
   getTourHighlight,
   getTourSemantics
 } from './tour.engine';
@@ -35,7 +35,7 @@ describe('Tour highlight and closable', () => {
     expect(getTourClosable({ closeIcon: false }, undefined, false, false))
       .toEqual({ closeIcon: false });
     expect(getTourClosable(undefined, undefined, { closeIcon: false }, false)).toBeNull();
-    expect(getTourCloseAttributes({
+    expect(pickCloseButtonAttributes({
       closeIcon: 'X',
       'aria-label': 'Dismiss',
       'data-action': 'exit',

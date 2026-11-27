@@ -61,11 +61,6 @@ export function hasTourContent(value: TourContent) {
   return value !== null && value !== undefined && value !== false && value !== '';
 }
 
-export function getTourCloseAttributes(value: Exclude<TourClosable, boolean> | null) {
-  return Object.fromEntries(Object.entries(value ?? {}).filter(([key]) =>
-    key === 'role' || key.startsWith('aria-') || key.startsWith('data-')));
-}
-
 export function getTourSemantics(context: TourConfig | undefined, props: TourProps) {
   const resolve = (value: TourProps['styles']) =>
     (typeof value === 'function' ? value({ props }) : value) ?? {};
