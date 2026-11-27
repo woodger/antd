@@ -47,14 +47,14 @@
     "cli": "node tools/cli.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.1",
+    "@playwright/test": "1.65.1",
     "@sveltejs/package": "2.5.8",
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
     "@types/node": "^25.9.9",
     "@typescript/native": "npm:typescript@^7.0.2",
     "dayjs": "1.11.23",
     "icore": "3.0.1",
-    "oxlint": "1.86.0",
+    "oxlint": "1.95.0",
     "svelte": "^5.57.1",
     "svelte-check": "^4.7.6",
     "typescript": "~6.0.3",
@@ -62,7 +62,6 @@
     "vitest": "^4.1.11"
   },
   "overrides": {
-    "devalue": "^5.9.1",
     "vitest": {
       "vite": "^7.3.6"
     },
