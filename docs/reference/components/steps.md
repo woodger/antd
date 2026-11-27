@@ -116,7 +116,7 @@ ant-steps-css-var сохраняются. Смена prefix не пересоз�
 Настройки самого ConfigProvider.timeline и локальные Timeline слои сохраняют приоритет.
 Сверка: [36 исходных случаев и 4 обновления](../../../tests/browser/fixtures/ant-design-steps-config-reference.json),
 [браузер](../../../tests/browser/steps-config.spec.ts),
-[публичные типы и SSR](../../../tests/package/steps-config.ssr.test.ts), `?fixture=steps-config`.
+[публичные типы и SSR](../../../tests/package/steps/steps-config.ssr.test.ts), `?fixture=steps-config`.
 
 IconRender — Snippet<[originalIcon, info]>, где info содержит index/active/item/
 components.Icon. Можно отрендерить исходный Snippet или использовать переданный

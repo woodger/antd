@@ -107,7 +107,7 @@ prefix; [raw](../../../tests/browser/fixtures/ant-design-space-prefix-reference.
 [fresh-page](../../../tests/browser/fixtures/ant-design-space-prefix-isolated.json)
 замеры сохранены для разбора. Prefix проверяют
 [browser](../../../tests/browser/space-prefix.spec.ts),
-[SSR](../../../tests/package/space-prefix.ssr.test.ts) и fixture `?fixture=space-prefix`.
+[SSR](../../../tests/package/space/space-prefix.ssr.test.ts) и fixture `?fixture=space-prefix`.
 
 Фикстура — `?fixture=space-compact`. Unit/SSR/
 Chromium проверяют размеры, границы/RTL, вложенность, фокус, Popup isolation,

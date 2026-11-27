@@ -85,7 +85,7 @@ lookup использует mapped value; Source при том же вводе �
 Полные [браузерные проверки](../../../tests/browser/select-data.spec.ts),
 [атрибуты](../../../tests/browser/select-data-attributes.spec.ts),
 [диагностические границы](../../../tests/browser/select-data-diagnostics.spec.ts),
-[SSR](../../../tests/package/select-data.ssr.test.ts) и
+[SSR](../../../tests/package/select/select-data.ssr.test.ts) и
 [строгая hydration](../../../tests/browser/select-data-hydration.spec.ts) проверяют эти контракты.
 
 ## Выбранные labels и labelInValue
@@ -134,7 +134,7 @@ maxTagTextLength усекает только строку/число. FormData �
 [public owner disabled cache](../../../tests/browser/fixtures/ant-design-select-value-cache-native-reference.json)
 сохраняют независимые наблюдения оригинала. Проверки:
 [browser](../../../tests/browser/select-value.spec.ts), [hydration](../../../tests/browser/select-value-hydration.spec.ts),
-[SSR/type contracts](../../../tests/package/select-value.ssr.test.ts) и
+[SSR/type contracts](../../../tests/package/select/select-value.ssr.test.ts) и
 [фактическая прозрачность label](../../../tests/browser/select-value-opacity.spec.ts).
 Native сохраняет скалярный текст закрытого input и его caret, текущий query владельца,
 различие 0/"0" и disabled cache удалённого option. Searchable required проверяет наличие raw выбора, независимо от rich/пустой
@@ -163,7 +163,7 @@ undefined наследует `ConfigProvider.prefixCls`. CSS scope раздел�
 в обычной, вложенной и reset областях сверяют single/multiple/tags, размеры,
 варианты, status, aliases и открытые options. Дополнительный native compact bridge
 сохраняет геометрию внешнего container. Проверки:
-[browser](../../../tests/browser/select-prefix.spec.ts), [SSR](../../../tests/package/select-prefix.ssr.test.ts).
+[browser](../../../tests/browser/select-prefix.spec.ts), [SSR](../../../tests/package/select/select-prefix.ssr.test.ts).
 
 ```svelte
 <script lang="ts">
@@ -321,7 +321,7 @@ SSR всегда выводит aria-expanded=false без popup и без вы�
 через MessageChannel; прежнее немедленное Native закрытие сохранено.
 Эталоны: [25 client/React SSR сценариев](../../../tests/browser/fixtures/ant-design-select-open-reference.json).
 Проверки: [браузер](../../../tests/browser/select-open.spec.ts),
-[SSR и публичные типы](../../../tests/package/select-open.ssr.test.ts).
+[SSR и публичные типы](../../../tests/package/select/select-open.ssr.test.ts).
 
 ## Содержимое пунктов Select
 
@@ -358,7 +358,7 @@ Native value keys и оформление пунктов сохранены. Gro
 подключены общим data pipeline; semantic slots описаны ниже.
 Основа — [16 исходных случаев](../../../tests/browser/fixtures/ant-design-select-option-render-reference.json),
 [браузерные проверки](../../../tests/browser/select-option-render.spec.ts) и
-[SSR/типизация](../../../tests/package/select-option-render.ssr.test.ts).
+[SSR/типизация](../../../tests/package/select/select-option-render.ssr.test.ts).
 
 ## Popup и семантическое оформление
 
@@ -488,7 +488,7 @@ OnInputKeyDown получает input event после исходного preven
 это также проверяется с обычными декларативными обработчиками Svelte.
 
 [Браузерная сверка](../../../tests/browser/select-icons.spec.ts) охватывает 15 React owners
-и 195 действий, [SSR](../../../tests/package/select-icons.ssr.test.ts) — 142 состояния.
+и 195 действий, [SSR](../../../tests/package/select/select-icons.ssr.test.ts) — 142 состояния.
 [Дополнительные проверки](../../../tests/browser/select-icons-edges.spec.ts) фиксируют
 closed tags submit, maxCount и keyboard hooks. Полные Original записи сохранены
 без потерь в gzip; [manifest](../../../tests/browser/fixtures/ant-design-select-icons-source-manifest.json)
@@ -596,7 +596,7 @@ DOM-строка `context.attributes.style` и CSS-string API сохранены
 Отдельные минифицированные клиентская и SSR-сборки публичного пакета проверены
 на тех же 8 путях и 96 действиях. Два SSR-состояния не обращаются к DOM;
 после удаления и через 1000 ms все учитываемые observers, timers, frames и ports
-освобождены. [Проверка режима сборки](../../../tests/package/select-components-own-style-popup-build-mode.test.ts)
+освобождены. [Проверка режима сборки](../../../tests/package/select/select-components-own-style-popup-build-mode.test.ts)
 явно различает фиксированные dev/prod hash-классы popup; остальные классы,
 их порядок, CSSOM и геометрия проверяются по прежнему эталону.
 [Отдельный корпус владения гидратацией](../../../tests/browser/fixtures/ant-design-select-components-hydration-ownership-source-manifest.json)
@@ -670,12 +670,12 @@ tagRender, но не монтирует его body/DOM. Неисполняем�
 эти вызовы; Source-only rest records сохранены с точной проверкой семи полей
 и отсутствия body/DOM.
 [Browser](../../../tests/browser/select-components-tag-close-handles.spec.ts) и
-[SSR](../../../tests/package/select-components-tag-close-handles.ssr.test.ts) закрепляют этот объём;
-[negative guards](../../../tests/package/select-components-tag-close-handles-boundaries.test.ts)
+[SSR](../../../tests/package/select/select-components-tag-close-handles.ssr.test.ts) закрепляют этот объём;
+[negative guards](../../../tests/package/select/select-components-tag-close-handles-boundaries.test.ts)
 отклоняют потерянные поля, изменённые aliases и поддельные rest-вызовы.
 Прочие сочетания callbacks и renderer API остаются partial.
 [Browser](../../../tests/browser/select-components.spec.ts) и
-[SSR](../../../tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
+[SSR](../../../tests/package/select/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete
 ещё не завершён: оставшиеся callback/search и motion возможности отмечены в реестре.
 

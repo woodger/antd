@@ -61,7 +61,7 @@ Raw UMD замеры сохранены; Native сохраняет expanded-row 
 на измеренные значения обычного Table context. Полный перенос prefix Table идёт отдельно.
 Сверка: [prefix-эталон](../../../tests/browser/fixtures/ant-design-descriptions-prefix-reference.json),
 [браузер](../../../tests/browser/descriptions-prefix.spec.ts) и
-[SSR](../../../tests/package/descriptions-prefix.ssr.test.ts), `?fixture=descriptions-prefix`.
+[SSR](../../../tests/package/descriptions/descriptions-prefix.ssr.test.ts), `?fixture=descriptions-prefix`.
 
 ConfigProvider.descriptions задаёт class/style и object/function classNames/styles
 для тех же semantic slots. Классы context/local объединяются; root style layers:
@@ -88,7 +88,7 @@ colorTextSecondary вместо labelColor, а размеры и рамка мо
 itemPaddingBottom/itemPaddingEnd собственными отступами.
 Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-descriptions-tokens-reference.json),
 [варианты и responsive spans](../../../tests/browser/fixtures/ant-design-descriptions-theme-reference.json),
-[SSR](../../../tests/package/descriptions-theme.ssr.test.ts) и
+[SSR](../../../tests/package/descriptions/descriptions-theme.ssr.test.ts) и
 [browser](../../../tests/browser/descriptions-theme.spec.ts), `?fixture=descriptions-theme`.
 
 Фикстура — `?fixture=descriptions`.
@@ -104,5 +104,5 @@ Table expanded-row. Responsive column/span используют глобальн
 Native сохраняет реактивное поведение, проверенное по свежей исходной раскладке.
 [Browser](../../../tests/browser/descriptions-breakpoints.spec.ts) проверяет column/span,
 editor/ref/focus/selection/FormData и cleanup подписок;
-[SSR](../../../tests/package/descriptions-breakpoints.ssr.test.ts) — fallback и validation.
+[SSR](../../../tests/package/descriptions/descriptions-breakpoints.ssr.test.ts) — fallback и validation.
 

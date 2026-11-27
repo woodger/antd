@@ -59,7 +59,7 @@ FlexComponentProps; FlexProps остаётся расширяемым интер
 добавляется. CSS-variable prefix настраивается независимо от BEM prefix.
 Сверка с 33 официальными UMD-сценариями:
 [browser](../../../tests/browser/flex-source.spec.ts),
-[SSR](../../../tests/package/flex-source.ssr.test.ts),
+[SSR](../../../tests/package/flex/flex-source.ssr.test.ts),
 [эталон](../../../tests/browser/fixtures/ant-design-flex-source-reference.json),
 фикстура `?fixture=flex-source`. Live updates сохраняют custom state, DOM/ref,
 фокус и selection; смена component заменяет корень, как в React.

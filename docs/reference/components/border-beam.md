@@ -73,7 +73,7 @@ SHA-256 архива. Слои видимы при поддержке mask-compo
 Общий prefix проверяется по
 [14 исходным примерам и трём переходам](../../../tests/browser/fixtures/ant-design-beam-global-reference.json):
 [browser](../../../tests/browser/beam-global.spec.ts),
-[SSR](../../../tests/package/beam-global.ssr.test.ts), `?fixture=beam-global`.
+[SSR](../../../tests/package/border-beam/beam-global.ssr.test.ts), `?fixture=beam-global`.
 CSS-кэш 6.6.8 при одинаковом local class и разных общих prefixes повторно использует
 namespace родителя: у вложенного луча теряются outset/параметры либо читается размер
 родителя. Четыре случая сохранены в raw данных; те же вложенные компоненты на

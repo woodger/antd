@@ -110,5 +110,5 @@ Fixture — `?fixture=masonry`. Engine, SSR, DOM lifecycle, package SSR и brows
 проверяют геометрию, breakpoints, fresh/load/error, данные/callbacks, motion,
 focus/selection, semantic/config, темы, RTL и cleanup. Prefix отдельно проверяют
 [browser](../../../tests/browser/masonry-prefix.spec.ts),
-[SSR](../../../tests/package/masonry-prefix.ssr.test.ts) и fixture `?fixture=masonry-prefix`.
+[SSR](../../../tests/package/masonry/masonry-prefix.ssr.test.ts) и fixture `?fixture=masonry-prefix`.
 

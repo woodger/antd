@@ -128,7 +128,7 @@ Source component tokens и runtime algorithms подключены; native-only 
 
 Новые сценарии: `?fixture=input-number-features`,
 [browser](../../../tests/browser/input-number-features.spec.ts) и
-[package SSR](../../../tests/package/input-number-features.ssr.test.ts).
+[package SSR](../../../tests/package/input-number/input-number-features.ssr.test.ts).
 
 
 InputNumber поддерживает local/shared prefixCls вместе с CSS обоих modes,
@@ -141,7 +141,7 @@ selection/focus, callbacks, keyboard и canonical FormData. Source measurements
 hidden field — каноническое decimal value, как прежде. Проверки —
 `?fixture=input-number-prefix`,
 [browser](../../../tests/browser/input-number-prefix.spec.ts),
-[SSR](../../../tests/package/input-number-prefix.ssr.test.ts),
+[SSR](../../../tests/package/input-number/input-number-prefix.ssr.test.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-input-number-prefix-reference.json).
 Рецепт input-number-prefix выводит 124 исходных CSS rules без deprecated addons.
 В rc-input-number 1.6.2 focus class не совпадает с классом, ожидаемым CSS стрелок.

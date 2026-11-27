@@ -64,7 +64,7 @@ canonical token marker/variables и rc-virtual-list scrollbar variable сохр�
 Смена prefix сохраняет DOM, refs, cache/scroll, редактор строки, draft/focus/selection.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-listy-prefix-reference.json),
 [browser](../../../tests/browser/listy-prefix.spec.ts),
-[SSR](../../../tests/package/listy-prefix.ssr.test.ts), `?fixture=listy-prefix`.
+[SSR](../../../tests/package/listy/listy-prefix.ssr.test.ts), `?fixture=listy-prefix`.
 
 OnScroll (либо native onscroll) получает native UIEvent: currentTarget — raw root
 либо virtual holder. Bind:ref и bind:nativeElement появляются после mount и
@@ -94,12 +94,12 @@ source fallback для оценки. LineHeight темы применяется 
 
 React development warnings остаются за пределами переноса.
 Проверки: [engine](../../../src/lib/listy/listy.engine.test.ts),
-[публичный пакет/SSR](../../../tests/package/listy.ssr.test.ts),
+[публичный пакет/SSR](../../../tests/package/listy/listy.ssr.test.ts),
 [браузер](../../../tests/browser/listy.spec.ts), `?fixture=listy`.
 Темы, видимое окно и высота виртуального содержимого сверяются с
 [официальным UMD](../../../tests/browser/fixtures/ant-design-listy-theme-reference.json)
 в [unit](../../../src/lib/theme/theme-listy-tokens-reference.test.ts),
-[SSR](../../../tests/package/listy-theme.ssr.test.ts) и
+[SSR](../../../tests/package/listy/listy-theme.ssr.test.ts) и
 [браузере](../../../tests/browser/listy-theme.spec.ts), `?fixture=listy-theme`.
 [CSS-рецепт](../../../tools/ant-design-css-recipes.json) воспроизводит
 [16 правил](../../../src/lib/vendor/listy.css) без keyframes;

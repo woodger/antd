@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import fixture from '../../../tests/package/qrcode-vectors.json';
+import fixture from '../../../tests/package/qr-code/qrcode-vectors.json';
 import { QrCode } from './qrcode-code.engine';
 import { QrSegment } from './qrcode-segment.engine';
 import { Ecc } from './qrcode-ecc.engine';

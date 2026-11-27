@@ -69,7 +69,7 @@ Responsive Pagination читает глобальный `theme.token.screenXSMax
 как в useBreakpoint исходника. Смена токенов заменяет queries, сохраняя текущую
 страницу и quick-jump draft/selection/focus. Наблюдение stale Source subscriptions
 и fresh public counterpart записаны отдельно. [Browser-проверки](../../../tests/browser/responsive-controls.spec.ts)
-охватывают также Masonry columns/gutter; [SSR](../../../tests/package/responsive-controls.ssr.test.ts)
+охватывают также Masonry columns/gutter; [SSR](../../../tests/package/config-provider/responsive-controls.ssr.test.ts)
 сохраняет исходные defaults и проверяет порядок порогов.
 
 `itemRender` — snippet с `(page, type, originalElement, info)`. OriginalElement

@@ -86,7 +86,7 @@ Input и TextArea поддерживают общий базовый prefixCls: 
 variables и markers сохраняются. Смена prefix не заменяет leaf/wrapper, сохраняет
 value, refs, selection/focus и FormData. Сверка с официальным UMD —
 `?fixture=input-prefix`, [browser](../../../tests/browser/input-prefix.spec.ts) и
-[SSR](../../../tests/package/input-prefix.ssr.test.ts). TextArea сохраняет vertical resize,
+[SSR](../../../tests/package/input/input-prefix.ssr.test.ts). TextArea сохраняет vertical resize,
 autoSize и прежний приоритет semantic styles.
 
 Input.Password, Input.Search и Input.OTP доступны как

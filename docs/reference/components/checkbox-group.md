@@ -115,6 +115,6 @@ Local/shared prefix CSS и Wave подключены; React diagnostics/statics 
 [checkbox.types.ts](../../../src/lib/checkbox/checkbox.types.ts) и
 [checkbox-group.types.ts](../../../src/lib/checkbox/checkbox-group.types.ts); проверки —
 [browser](../../../tests/browser/checkbox-features.spec.ts),
-[package SSR](../../../tests/package/checkbox-features.ssr.test.ts) и
+[package SSR](../../../tests/package/checkbox/checkbox-features.ssr.test.ts) и
 [engine](../../../src/lib/checkbox/checkbox-group.engine.test.ts).
 

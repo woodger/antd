@@ -77,7 +77,7 @@ uncontrolled open сохраняется при обновлении spread prop
 и ожидающие события. Изменение самого disabled не вызывает onOpenChange;
 повторное включение может показать уже открытую панель.
 Сверка: [67 UMD-сценариев / 389 кадров и шесть cleanup traces](../../../tests/browser/fixtures/ant-design-popover-actions-reference.json),
-[SSR](../../../tests/package/popover-actions.ssr.test.ts) и
+[SSR](../../../tests/package/popover/popover-actions.ssr.test.ts) и
 [browser](../../../tests/browser/popover-actions.spec.ts), `?fixture=popover-actions`.
 Эталоны включают Popconfirm и передачу настроек через AvatarGroup.max.popover.
 Controlled-сценарии используют getter/setter binding с отклонением записи;
@@ -103,7 +103,7 @@ Semantic root/arrow styles сохраняют приоритет. Эти нас�
 AvatarGroup.max.popover; прежние defaults без новых props сохраняются.
 
 Сверка: [84 UMD-сценария](../../../tests/browser/fixtures/ant-design-popover-align-reference.json),
-[SSR](../../../tests/package/popover-align.ssr.test.ts) и
+[SSR](../../../tests/package/popover/popover-align.ssr.test.ts) и
 [browser](../../../tests/browser/popover-align.spec.ts), `?fixture=popover-align`.
 В 6.6.8/rc-trigger 3.10.1 изменение align или существующей записи placements
 само по себе оставляет прежнюю геометрию до forceAlign либо другого события
@@ -128,7 +128,7 @@ ref возвращает этот же узел, а удаление относ�
 div; существующий Svelte lifecycle сохраняется. Nullable DOM types отражают
 эти состояния и поддерживают SVG без приведения к HTMLElement.
 Сверка: [восемь UMD-сценариев](../../../tests/browser/fixtures/ant-design-popover-ref-reference.json),
-[SSR](../../../tests/package/popover-ref.ssr.test.ts) и
+[SSR](../../../tests/package/popover/popover-ref.ssr.test.ts) и
 [browser](../../../tests/browser/popover-ref.spec.ts), `?fixture=popover-ref`.
 Bind:ref задаётся непосредственно компоненту; max.popover остаётся объектом PopoverProps.
 
@@ -149,7 +149,7 @@ disabled guards и локализация остаются текущими. В�
 сохраняется до его удаления, а opaque Snippet captures остаются реактивными по
 правилам Svelte: полная заморозка React.memo здесь не обещается.
 Сверка: [50 UMD-сценария / 399 кадров](../../../tests/browser/fixtures/ant-design-popover-lifecycle-reference.json),
-[SSR](../../../tests/package/popover-lifecycle.ssr.test.ts) и
+[SSR](../../../tests/package/popover/popover-lifecycle.ssr.test.ts) и
 [browser](../../../tests/browser/popover-lifecycle.spec.ts), `?fixture=popover-lifecycle`.
 
 Source-тема подготавливает Tooltip и Popover tokens в исходном порядке:

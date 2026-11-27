@@ -116,7 +116,7 @@ CSS-рецепт breadcrumb-prefix воспроизводит те же 21 пр�
 сохраняет raw classes/geometry и matchedSeparators: публичный classNames.separator
 добавляет Source нужный owner class, без изменения UMD. Проверки:
 [browser](../../../tests/browser/breadcrumb-prefix.spec.ts),
-[SSR](../../../tests/package/breadcrumb-prefix.ssr.test.ts), `?fixture=breadcrumb-prefix`.
+[SSR](../../../tests/package/breadcrumb/breadcrumb-prefix.ssr.test.ts), `?fixture=breadcrumb-prefix`.
 
 Raw reference сохраняет полный textContent исходника. Сверка текста использует
 видимые trigger/separator fragments: закрытый native Dropdown сохраняется в DOM,

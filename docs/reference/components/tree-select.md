@@ -170,7 +170,7 @@ values. Начальный или controlled набор не обрезаетс�
 проверяют правила wrapper/rc-tree-select и порядок callbacks в
 [browser](../../../tests/browser/tree-select-max-count.spec.ts).
 [35 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-max-count-ssr-reference.json)
-проверяются в [package SSR](../../../tests/package/tree-select-max-count.ssr.test.ts), без
+проверяются в [package SSR](../../../tests/package/tree-select/tree-select-max-count.ssr.test.ts), без
 callbacks, timers и обрезания начальных значений. Два дефекта Source записаны
 отдельно: maxCount блокирует смену single value, а disabled cache родителя не
 обновляется при новых детях с тем же remaining count. Native игнорирует limit в
@@ -202,7 +202,7 @@ popup, false откладывается MessageChannel до close/change callbac
 [55 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-tags-ssr-reference.json),
 [browser](../../../tests/browser/tree-select-tags.spec.ts),
 [native lifecycle](../../../tests/browser/tree-select-tags-native.spec.ts),
-[SSR](../../../tests/package/tree-select-tags.ssr.test.ts) и
+[SSR](../../../tests/package/tree-select/tree-select-tags.ssr.test.ts) и
 [hydration](../../../tests/browser/tree-select-tags-hydration.spec.ts) проверяют tag API.
 Source разрывает Unicode pair, скрывает весь список при NaN и резервирует oversized
 summary даже для помещающихся тегов. Native сохраняет принятые Select исправления;
@@ -227,7 +227,7 @@ Label связывает renderer и исходную запись. Его мо�
 [28 браузерных сценариев и два наблюдения](../../../tests/browser/fixtures/ant-design-tree-select-labels-reference.json),
 [30 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-labels-ssr-reference.json),
 [рендер возвращённых labels](../../../tests/browser/tree-select-labels.spec.ts),
-[SSR](../../../tests/package/tree-select-labels.ssr.test.ts) и
+[SSR](../../../tests/package/tree-select/tree-select-labels.ssr.test.ts) и
 [hydration](../../../tests/browser/tree-select-labels-hydration.spec.ts) проверяют этот API.
 В Source замена или снятие renderer оставляет старый renderer в summary и следующем
 onChange. Native обновляет новые labels сразу; сохранённые ранее snippets
@@ -265,7 +265,7 @@ Form.Item остаётся частью переноса Form.
 [UMD](../../../tests/browser/fixtures/ant-design-tree-select-surface-reference.json),
 [Source SSR](../../../tests/browser/fixtures/ant-design-tree-select-surface-ssr-reference.json),
 [browser](../../../tests/browser/tree-select-surface.spec.ts),
-[SSR](../../../tests/package/tree-select-surface.ssr.test.ts),
+[SSR](../../../tests/package/tree-select/tree-select-surface.ssr.test.ts),
 [hydration](../../../tests/browser/tree-select-surface-hydration.spec.ts).
 
 `classNames` и `styles` принимают объект слотов или функцию с
@@ -308,7 +308,7 @@ snippet задаёт его владелец.
 [UMD](../../../tests/browser/fixtures/ant-design-tree-select-semantic-reference.json),
 [Source SSR](../../../tests/browser/fixtures/ant-design-tree-select-semantic-ssr-reference.json),
 [browser](../../../tests/browser/tree-select-semantic.spec.ts),
-[SSR](../../../tests/package/tree-select-semantic.ssr.test.ts).
+[SSR](../../../tests/package/tree-select/tree-select-semantic.ssr.test.ts).
 
 ShowSearch по умолчанию false для single и true для multiple. Объект showSearch
 поддерживает searchValue/onSearch, autoClearSearchValue, filterTreeNode и
@@ -360,7 +360,7 @@ Switcher, checkbox и keyboard сохраняют свои действия. Con
 [browser](../../../tests/browser/tree-select-expand-action.spec.ts).
 Отдельное raw наблюдение фиксирует два вызова loadData для одного pending узла
 в React. Native сохраняет существующую защиту Tree: один Promise на узел и
-отсутствие callbacks после unmount. [SSR](../../../tests/package/tree-select-expand-action.ssr.test.ts)
+отсутствие callbacks после unmount. [SSR](../../../tests/package/tree-select/tree-select-expand-action.ssr.test.ts)
 не вызывает загрузку и не создаёт timers, включая первоначально открытый shell.
 
 Native combobox удерживает фокус при действиях в панели. Arrows перемещаются/
@@ -528,7 +528,7 @@ callback/style, текущий Overflow не использует choice transit
 HTML `dir` сохраняет Native контракт: provider задаёт dir стандартному root,
 явный native dir передаётся редактору; собственный dir custom slots сохраняется.
 [Browser](../../../tests/browser/tree-select-inert-api.spec.ts) и
-[SSR](../../../tests/package/tree-select-inert-api.ssr.test.ts) сравнивают независимый
+[SSR](../../../tests/package/tree-select/tree-select-inert-api.ssr.test.ts) сравнивают независимый
 React-эталон и явно учитывают прежнее различие владельца HTML dir.
 [Строгая гидратация](../../../tests/browser/tree-select-inert-api-hydration.spec.ts)
 сохраняет редактор, query/caret, popup и публичные refs при смене props.
@@ -561,7 +561,7 @@ props при открытой панели. Flip history сохраняется 
 а локальный `popupAlign.htmlRegion` имеет приоритет.
 [35 browser-сценариев](../../../tests/browser/tree-select-align.spec.ts),
 [два изменения CSS frame/root](../../../tests/browser/tree-select-align-frame.spec.ts),
-[DOM-free SSR](../../../tests/package/tree-select-align.ssr.test.ts) и
+[DOM-free SSR](../../../tests/package/tree-select/tree-select-align.ssr.test.ts) и
 [строгая гидратация](../../../tests/browser/tree-select-align-hydration.spec.ts)
 проверяют независимый React-эталон, geometry, query/caret, refs и cleanup.
 
@@ -610,7 +610,7 @@ clocks; для проецируемых transform transitions доступен �
 [замена root](../../../tests/browser/tree-select-motion-root-swap.spec.ts),
 [завершение leave до activated](../../../tests/browser/tree-select-motion-leave.spec.ts),
 [скрытие и повторное открытие](../../../tests/browser/tree-select-motion-visibility.spec.ts),
-[DOM-free SSR](../../../tests/package/tree-select-motion.ssr.test.ts) и
+[DOM-free SSR](../../../tests/package/tree-select/tree-select-motion.ssr.test.ts) и
 [строгая гидратация](../../../tests/browser/tree-select-motion-hydration.spec.ts)
 проверяют независимый React-эталон, фазы, geometry, callbacks, identity и cleanup.
 Ant Design исключает `treeMotion` из публичного TreeSelect API и передаёт
@@ -627,7 +627,7 @@ Deprecated React extras исключены.
 [26 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-tree-select-prefix-reference.json)
 в обычной, вложенной и reset областях проверяются в
 [browser](../../../tests/browser/tree-select-prefix.spec.ts) и
-[SSR](../../../tests/package/tree-select-prefix.ssr.test.ts).
+[SSR](../../../tests/package/tree-select/tree-select-prefix.ssr.test.ts).
 
 У Ant Design 6.6.8 локальный prefixCls выявил несогласованность style hook и
 вложенного дерева: при `prefixCls="choices"` стили адресуют `choices`, а rc-tree-select
@@ -644,7 +644,7 @@ strategies, literal labels и обновления data/schema/mode. Незав�
 [SSR-эталон](../../../tests/browser/fixtures/ant-design-tree-select-data-ssr-reference.json)
 получен без DOM и timers; [browser](../../../tests/browser/tree-select-data.spec.ts),
 [native lifecycle](../../../tests/browser/tree-select-data-native.spec.ts) и
-[SSR](../../../tests/package/tree-select-data.ssr.test.ts) проверяют соответствующие границы.
+[SSR](../../../tests/package/tree-select/tree-select-data.ssr.test.ts) проверяют соответствующие границы.
 Два дефекта Source записаны отдельно: simple mode дописывает детей во входной
 children array, а raw renderer сначала получает labeled value вместо data node.
 Native сохраняет входной массив и передаёт renderer полную запись с payload.

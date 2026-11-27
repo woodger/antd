@@ -38,7 +38,7 @@ canonical component tokens/markers остаются прежними. Смена
 Native clear/ARIA/IME и правила поиска/выбора не меняются.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-mentions-prefix-reference.json),
 [browser](../../../tests/browser/mentions-prefix.spec.ts),
-[SSR](../../../tests/package/mentions-prefix.ssr.test.ts), `?fixture=mentions-prefix`.
+[SSR](../../../tests/package/mentions/mentions-prefix.ssr.test.ts), `?fixture=mentions-prefix`.
 Прежний простой locale.emptyText без renderEmpty сохраняется: raw Source Small
 Empty записан отдельно от nativeEmpty — измерения public notFoundContent с тем
 же локализованным текстом. Source результаты не заменяются этим counterpart.
@@ -158,7 +158,7 @@ DOM-контейнера создают `popupRender` заново. Смена g
 
 [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-menu-reference.json)
 · [Браузерные проверки](../../../tests/browser/mentions-menu.spec.ts)
-· [SSR и типы](../../../tests/package/mentions-popup.ssr.test.ts).
+· [SSR и типы](../../../tests/package/mentions/mentions-popup.ssr.test.ts).
 
 AutoSize принимает boolean/{minRows,maxRows}, измеряет содержимое с теми же
 font/padding/box-sizing, что и textarea. Shadow node, ResizeObserver, frames и
@@ -200,7 +200,7 @@ ShadowRoot вне этой цепочки остаются границей пе
 
 [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-count-reference.json)
 · [Браузер и hydration](../../../tests/browser/mentions-count.spec.ts)
-· [SSR и типы](../../../tests/package/mentions.ssr.test.ts).
+· [SSR и типы](../../../tests/package/mentions/mentions.ssr.test.ts).
 
 AllowClear — boolean/{clearIcon,disabled}; очистка вызывает change(''), затем
 onClear. Size/status/variant, native name/required/maxlength, FormItem/validation/
@@ -222,7 +222,7 @@ hover/active цвета пунктов.
 При нулевом inputFontSize подсказки сохраняются у префикса нулевого размера,
 как в исходном компоненте.
 16 тем официального UMD — [mentions-theme](../../../tests/browser/mentions-theme.spec.ts),
-`?fixture=mentions-theme`; [SSR](../../../tests/package/mentions-theme.ssr.test.ts) сохраняет
+`?fixture=mentions-theme`; [SSR](../../../tests/package/mentions/mentions-theme.ssr.test.ts) сохраняет
 native текст формы без popup, измеряющего textarea и timers.
 
 `classNames` и `styles` принимают карту слотов `root`, `textarea`, `popup` и

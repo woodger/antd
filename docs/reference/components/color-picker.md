@@ -91,6 +91,6 @@ development/PurePanel API. Native DOM и Svelte snippets заменяют React 
 [rc-color-picker](../../../src/lib/vendor/LICENSE.rc-color-picker). Formatter/parser опираются
 на [rc-input-number 1.6.2](../../../src/lib/vendor/LICENSE.rc-input-number).
 Проверки: [engine](../../../src/lib/color-picker/color-picker.engine.test.ts),
-[package SSR](../../../tests/package/color-picker.ssr.test.ts),
+[package SSR](../../../tests/package/color-picker/color-picker.ssr.test.ts),
 [browser](../../../tests/browser/color-picker.spec.ts); fixture: `?fixture=color-picker`.
 

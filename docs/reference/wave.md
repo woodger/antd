@@ -88,7 +88,7 @@ pending RAF, timers, observers и holder DOM. Повторные эффекты 
 [vendor/wave.css](../../src/lib/vendor/wave.css), восемь правил без keyframes.
 
 - [Выбор цвета](../../src/lib/wave/wave.engine.test.ts).
-- [SSR публичного пакета](../../tests/package/wave.ssr.test.ts).
+- [SSR публичного пакета](../../tests/package/wave/wave.ssr.test.ts).
 - [События, геометрия и lifecycle в Chromium](../../tests/browser/wave.spec.ts),
   маршрут ?fixture=wave.
 - [Публичные ключи токенов](../../tests/browser/fixtures/ant-design-wave-token-keys-reference.json)

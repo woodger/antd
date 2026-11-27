@@ -113,7 +113,7 @@ openClassName и semantic styles. Callbacks получают разрешённ�
 [prefix-эталоне](../../../tests/browser/fixtures/ant-design-typography-prefix-reference.json).
 Native обновляет классы действий вместе с корнем; этот дефект не перенесён.
 Проверки prefix: [браузер](../../../tests/browser/typography-prefix.spec.ts) и
-[SSR](../../../tests/package/typography-prefix.ssr.test.ts), `?fixture=typography-prefix`.
+[SSR](../../../tests/package/typography/typography-prefix.ssr.test.ts), `?fixture=typography-prefix`.
 
 Ширина actions сверяется с
 [DOM/CSS-снимком Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-typography-actions-reference.json)
@@ -122,7 +122,7 @@ Native обновляет классы действий вместе с корн
 
 Ellipsis Tooltip defaults, semantic callbacks и события сверяются с
 [23 UMD-сценариями / 29 кадрами и 21 event trace](../../../tests/browser/fixtures/ant-design-typography-tooltip-reference.json):
-[SSR](../../../tests/package/typography-tooltip.ssr.test.ts),
+[SSR](../../../tests/package/typography/typography-tooltip.ssr.test.ts),
 [browser](../../../tests/browser/typography-tooltip.spec.ts), `?fixture=typography-tooltip`.
 Эталон использует runtime CSS официального UMD без статического antd.css;
 native overflow измеряется под trigger=[] до записи последовательностей событий.

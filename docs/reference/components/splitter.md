@@ -94,7 +94,7 @@ aliases и algorithms, cssVar.prefix, undefined, вложенные/reset/siblin
 Тематические переменные идут перед semantic/user styles. Реактивные изменения
 сохраняют размеры панелей, draft/selection/focus и текущий lazy drag/preview.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-splitter-theme-reference.json),
-[SSR](../../../tests/package/splitter-theme.ssr.test.ts),
+[SSR](../../../tests/package/splitter/splitter-theme.ssr.test.ts),
 [browser](../../../tests/browser/splitter-theme.spec.ts), `?fixture=splitter-theme`.
 RTL-метрики измерены с явным dir=rtl на host; отдельно записано source-наследование
 LTR без этого host. Существующий native direction провайдера сохранён.
@@ -113,7 +113,7 @@ local class и общему namespace; исходные
 [fresh-page](../../../tests/browser/fixtures/ant-design-splitter-prefix-isolated.json)
 замеры сохранены для разбора. Prefix проверяют
 [browser](../../../tests/browser/splitter-prefix.spec.ts),
-[SSR](../../../tests/package/splitter-prefix.ssr.test.ts) и fixture `?fixture=splitter-prefix`.
+[SSR](../../../tests/package/splitter/splitter-prefix.ssr.test.ts) и fixture `?fixture=splitter-prefix`.
 
 Fixture — `?fixture=splitter`. Engine, DOM lifecycle, SSR, package и browser
 проверяют размеры, ограничения, callbacks, controlled/lazy, collapse, native

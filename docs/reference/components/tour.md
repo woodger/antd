@@ -66,7 +66,7 @@ Scoped template повторяет 61 source CSS rule. Смена prefix сох�
 freshNested измерен с новым public local class. Svelte изолирует CSS по обоим
 prefixes. Сверка — [UMD](../../../tests/browser/fixtures/ant-design-tour-prefix-reference.json),
 [browser](../../../tests/browser/tour-prefix.spec.ts),
-[SSR](../../../tests/package/tour-prefix.ssr.test.ts), `?fixture=tour-prefix`.
+[SSR](../../../tests/package/tour/tour-prefix.ssr.test.ts), `?fixture=tour-prefix`.
 
 По умолчанию mask/placeholder/popup находятся в body. GetPopupContainer=false
 оставляет их inline без body lock; функция задаёт собственный контейнер. Как в
@@ -98,7 +98,7 @@ CSS Tour подключён перед Button, как в исходном runtim
 [общего контекста](../theme-context.md#уровни-вложенных-панелей).
 
 Проверки: [engine](../../../src/lib/tour/tour.engine.test.ts),
-[public package SSR](../../../tests/package/tour.ssr.test.ts),
+[public package SSR](../../../tests/package/tour/tour.ssr.test.ts),
 [browser](../../../tests/browser/tour.spec.ts) и `?fixture=tour`.
 [61 исходное CSS-правило](../../../src/lib/vendor/tour.css) воспроизводится
 [рецептом](../../../tools/ant-design-css-recipes.json). Перенесённая логика снабжена

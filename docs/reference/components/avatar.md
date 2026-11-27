@@ -67,7 +67,7 @@ SSR не обращается к window и оставляет карту без 
 Эталонные 20 вариантов и 274 набора измерений закреплены в
 [UMD-снимках](../../../tests/browser/fixtures/ant-design-avatar-responsive-reference.json),
 проверки — [browser](../../../tests/browser/avatar-responsive.spec.ts) и
-[SSR](../../../tests/package/avatar-responsive.ssr.test.ts), фикстура — `?fixture=avatar-responsive`.
+[SSR](../../../tests/package/avatar/avatar-responsive.ssr.test.ts), фикстура — `?fixture=avatar-responsive`.
 
 Source `theme.components.Avatar` подготавливает container/text/icon sizes по
 исходным правилам, включая отдельный algorithm и aliases. При стандартном
@@ -109,7 +109,7 @@ Bind:nativeElement даёт текущий span, сохраняется при �
 Эталонные 14 вариантов закреплены в
 [UMD-снимках](../../../tests/browser/fixtures/ant-design-avatar-source-reference.json),
 проверки — [browser](../../../tests/browser/avatar-source.spec.ts) и
-[SSR](../../../tests/package/avatar-source.ssr.test.ts), фикстура — `?fixture=avatar-source`.
+[SSR](../../../tests/package/avatar/avatar-source.ssr.test.ts), фикстура — `?fixture=avatar-source`.
 
 AvatarProps, AvatarShape, AvatarSize и AvatarConfig экспортируются через index.ts.
 Локальный prefixCls меняет root/modifier/string classes; отсутствие и пустая строка
@@ -121,9 +121,9 @@ focus и ref; stylesheet живёт вместе с экземпляром и в
 Semantic classNames/styles исходный Avatar 6.6.8 не объявляет. Config/DOM/ref проверяются по
 [UMD-эталонам](../../../tests/browser/fixtures/ant-design-avatar-api-reference.json),
 [browser](../../../tests/browser/avatar-api.spec.ts) и
-[SSR](../../../tests/package/avatar-api.ssr.test.ts); фикстура — `?fixture=avatar-api`.
+[SSR](../../../tests/package/avatar/avatar-api.ssr.test.ts); фикстура — `?fixture=avatar-api`.
 Префиксы закреплены в
 [UMD-эталонах](../../../tests/browser/fixtures/ant-design-avatar-prefix-reference.json),
 [browser](../../../tests/browser/avatar-prefix.spec.ts) и
-[SSR](../../../tests/package/avatar-prefix.ssr.test.ts); фикстура — `?fixture=avatar-prefix`.
+[SSR](../../../tests/package/avatar/avatar-prefix.ssr.test.ts); фикстура — `?fixture=avatar-prefix`.
 

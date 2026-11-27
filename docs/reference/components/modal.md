@@ -12,7 +12,7 @@ accessibility wrappers Skeleton, max-width containment и имена CSS keyfram
 [Независимые Source-повторы](../../../tests/browser/fixtures/ant-design-modal-loading-source-manifest.json)
 проверяют 2 owners, 10 действий, 12 состояний и lifecycle после удаления.
 [Browser](../../../tests/browser/modal-loading.spec.ts) проверяет переходы и cleanup,
-[SSR](../../../tests/package/modal-loading.ssr.test.ts) — закрытый Native shell без DOM и timers.
+[SSR](../../../tests/package/modal/modal-loading.ssr.test.ts) — закрытый Native shell без DOM и timers.
 Title и children необязательны. Title принимает scalar либо Snippet; пустой/null/false
 title убирает header, число 0 остаётся видимым. Без видимого заголовка задайте
 aria-label или aria-labelledby. Явные ARIA-имена применяются к самому dialog;
@@ -159,7 +159,7 @@ SSR не запускает анимацию и не вызывает колбэ
 использует уже отрисованный DOM.
 [Снимки Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-lifecycle-reference.json)
 · [Chromium](../../../tests/browser/modal-lifecycle.spec.ts)
-· [SSR](../../../tests/package/modal-lifecycle.ssr.test.ts)
+· [SSR](../../../tests/package/modal/modal-lifecycle.ssr.test.ts)
 · [Гидратация](../../../tests/browser/modal-lifecycle-hydration.spec.ts).
 
 ## Именованные переходы и точка начала движения
@@ -184,7 +184,7 @@ CSS-эффекта, Svelte завершает фазу после проверк
 не приходили.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-motion-reference.json)
 · [Chromium](../../../tests/browser/modal-motion.spec.ts)
-· [SSR](../../../tests/package/modal-motion.ssr.test.ts)
+· [SSR](../../../tests/package/modal/modal-motion.ssr.test.ts)
 · [Гидратация](../../../tests/browser/modal-motion-hydration.spec.ts).
 
 ## Кнопки, футер и закрытие
@@ -237,7 +237,7 @@ Escape и фон управляются через `keyboard` и `mask.closable`
 наследует `componentDisabled`, если в настройках кнопки не задано `disabled`.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-actions-reference.json)
 · [Chromium](../../../tests/browser/modal-actions.spec.ts)
-· [SSR и типы](../../../tests/package/modal-actions.ssr.test.ts)
+· [SSR и типы](../../../tests/package/modal/modal-actions.ssr.test.ts)
 · [Гидратация](../../../tests/browser/modal-actions-hydration.spec.ts).
 
 ## Семантические части и оболочка
@@ -274,7 +274,7 @@ DOM-элемент под панелью. По умолчанию маска р�
 
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-semantics-reference.json)
 · [Chromium](../../../tests/browser/modal-semantics.spec.ts)
-· [SSR и типы](../../../tests/package/modal-semantics.ssr.test.ts)
+· [SSR и типы](../../../tests/package/modal/modal-semantics.ssr.test.ts)
 · [Гидратация](../../../tests/browser/modal-semantics-hydration.spec.ts).
 
 ## Контекстные подтверждения Modal
@@ -343,7 +343,7 @@ Destroy и удаление holder завершают ожидающие handles
 подписи кнопок из locale.okText/cancelText сохранены.
 [модель](../../../src/lib/modal/modal.model.test.ts),
 [браузер](../../../tests/browser/modal-controller.spec.ts),
-[SSR и декларации](../../../tests/package/modal-controller.ssr.test.ts).
+[SSR и декларации](../../../tests/package/modal/modal-controller.ssr.test.ts).
 
 ## Глобальные подтверждения
 
@@ -384,4 +384,4 @@ CSS-переменные своего провайдера. При обновл�
 [21 профиль Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-static-reference.json)
 · [Chromium](../../../tests/browser/modal-static.spec.ts)
 · [Цвета портального окна](../../../tests/browser/modal-static-theme.spec.ts)
-· [SSR и типы](../../../tests/package/modal-static.ssr.test.ts).
+· [SSR и типы](../../../tests/package/modal/modal-static.ssr.test.ts).

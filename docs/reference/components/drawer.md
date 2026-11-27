@@ -107,7 +107,7 @@ pointerup для фона. Callback уведомляет о запросе и н
 событием. `preventDefault()` в `onkeydown` отменяет закрытие по Escape.
 [Эталон событий и атрибутов](../../../tests/browser/fixtures/ant-design-drawer-dom-reference.json)
 · [Chromium](../../../tests/browser/drawer-dom.spec.ts)
-· [SSR](../../../tests/package/drawer-dom.ssr.test.ts)
+· [SSR](../../../tests/package/drawer/drawer-dom.ssr.test.ts)
 · [Гидратация](../../../tests/browser/drawer-dom-hydration.spec.ts)
 
 По умолчанию Drawer с маской открывается через `showModal()`. Браузер
@@ -177,7 +177,7 @@ DOM-черновики в закрытом dialog. ForceRender монтируе�
 после `styles.root` и `style`.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-drawer-panel-reference.json)
 · [Chromium](../../../tests/browser/drawer-panel.spec.ts)
-· [SSR](../../../tests/package/drawer-panel.ssr.test.ts)
+· [SSR](../../../tests/package/drawer/drawer-panel.ssr.test.ts)
 · [Гидратация](../../../tests/browser/drawer-panel-hydration.spec.ts)
 
 ## Анимация и тема
@@ -226,7 +226,7 @@ Drawer остаётся смонтированным. `maskMotion.forceRender` �
 Жизненный цикл всей панели задают `forceRender` и `destroyOnHidden` самого Drawer.
 [Эталон переходов](../../../tests/browser/fixtures/ant-design-drawer-motion-api-reference.json)
 · [Chromium](../../../tests/browser/drawer-motion-api.spec.ts)
-· [SSR](../../../tests/package/drawer-motion-api.ssr.test.ts)
+· [SSR](../../../tests/package/drawer/drawer-motion-api.ssr.test.ts)
 · [Гидратация](../../../tests/browser/drawer-motion-api-hydration.spec.ts)
 
 ### Тема

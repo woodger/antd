@@ -106,7 +106,7 @@ outside. Дополнительные замеры сделаны при viewpor
 точные timestamps callbacks, открытые options и DOM input при theme update,
 inherit reset и возврате к оформлению по умолчанию. Декларации сверяются с UMD отдельным
 [unit-набором](../../../src/lib/theme/theme-calendar-tokens-reference.test.ts),
-[SSR](../../../tests/package/calendar-theme.ssr.test.ts) не создаёт browser resources.
+[SSR](../../../tests/package/calendar/calendar-theme.ssr.test.ts) не создаёт browser resources.
 
 Calendar принимает локальный `prefixCls` для Picker и добавляет `-calendar` к
 корневому классу; без override использует ConfigProvider.prefixCls. Ячейки,

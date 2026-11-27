@@ -74,7 +74,7 @@ keyframes; пустое значение наследует `ConfigProvider.pref
 сохраняет текущий слайд, DOM, ref, draft/selection/focus и управление стрелками.
 Сверка: [официальные замеры](../../../tests/browser/fixtures/ant-design-carousel-prefix-reference.json),
 [браузер](../../../tests/browser/carousel-prefix.spec.ts) и
-[SSR](../../../tests/package/carousel-prefix.ssr.test.ts), `?fixture=carousel-prefix`.
+[SSR](../../../tests/package/carousel/carousel-prefix.ssr.test.ts), `?fixture=carousel-prefix`.
 
 ConfigProvider.theme.components.Carousel применяет семь компонентных токенов:
 размеры и отступ стрелок, ширину/высоту/отступ/интервал точек и ширину активной
@@ -86,7 +86,7 @@ DotActiveWidth поддерживает явный 0; по умолчанию и
 ConfigProvider.carousel по-прежнему относятся к inner slider и сохраняют приоритет.
 Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-carousel-tokens-reference.json),
 [геометрия четырёх размещений](../../../tests/browser/fixtures/ant-design-carousel-theme-reference.json),
-[SSR](../../../tests/package/carousel-theme.ssr.test.ts) и
+[SSR](../../../tests/package/carousel/carousel-theme.ssr.test.ts) и
 [browser](../../../tests/browser/carousel-theme.spec.ts), `?fixture=carousel-theme`.
 
 SSR выводит исходную процентную либо variable-width геометрию и lazy placeholders

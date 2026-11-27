@@ -93,7 +93,7 @@ Popup наследует общий container API DatePicker, сохраняет
 
 Проверки: [engine](../../../src/lib/picker/time-range-picker.engine.test.ts),
 [SSR](../../../src/lib/picker/time-range-picker.ssr.test.ts),
-[public package](../../../tests/package/time-range-picker.ssr.test.ts),
+[public package](../../../tests/package/picker/time-range-picker.ssr.test.ts),
 [browser](../../../tests/browser/time-range-picker.spec.ts) и `?fixture=time-range-picker`.
 Для собственного типа даты используйте `RangePicker` из
 [фабрики DatePicker](./date-picker.md#свой-тип-даты) с `picker="time"`.

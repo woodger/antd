@@ -159,7 +159,7 @@ Source Radio tokens и отдельные theme algorithms применяютс�
 и Wave подключены; React diagnostics/statics и вложенные Form NamePath остаются неперенесёнными.
 Дополнительные сценарии — `?fixture=radio-features`,
 [browser](../../../tests/browser/radio-features.spec.ts) и
-[package SSR](../../../tests/package/radio-features.ssr.test.ts).
+[package SSR](../../../tests/package/radio/radio-features.ssr.test.ts).
 Сверка prefix с официальным UMD — `?fixture=radio-prefix` и
 [browser](../../../tests/browser/radio-prefix.spec.ts).
 

@@ -52,7 +52,7 @@ canonical component token marker/variables не переименовываютс
 сохраняет оценку, DOM/ref, focus и соседний draft/selection/FormData.
 Сверка с неизменённым UMD: [reference](../../../tests/browser/fixtures/ant-design-rate-prefix-reference.json),
 [browser](../../../tests/browser/rate-prefix.spec.ts),
-[SSR](../../../tests/package/rate-prefix.ssr.test.ts), `?fixture=rate-prefix`.
+[SSR](../../../tests/package/rate/rate-prefix.ssr.test.ts), `?fixture=rate-prefix`.
 
 Size принимает small/medium/large, наследует componentSize.
 Disabled наследует общий disabled-контекст, включая Form; явный false имеет
@@ -69,7 +69,7 @@ ConfigProvider.theme.components.Rate применяет все шесть ком
 disabled. Переменные темы идут перед ConfigProvider.rate.style и локальным style;
 смена темы сохраняет оценку, radio DOM, фокус, refs и callbacks.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-rate-theme-reference.json),
-[SSR](../../../tests/package/rate-theme.ssr.test.ts),
+[SSR](../../../tests/package/rate/rate-theme.ssr.test.ts),
 [browser](../../../tests/browser/rate-theme.spec.ts), `?fixture=rate-theme`.
 
 Массивы и CSSObject в starHoverScale пока не исполняются. Ant Design 6.6.8

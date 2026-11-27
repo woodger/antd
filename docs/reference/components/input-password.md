@@ -60,5 +60,5 @@ prefixes исчезают color/cursor. Здесь четыре исходных
 [эталоне](../../../tests/browser/fixtures/ant-design-input-password-prefix-reference.json).
 Проверки — `?fixture=input-password-prefix`,
 [browser](../../../tests/browser/input-password-prefix.spec.ts) и
-[SSR](../../../tests/package/input-password-prefix.ssr.test.ts).
+[SSR](../../../tests/package/input/input-password-prefix.ssr.test.ts).
 

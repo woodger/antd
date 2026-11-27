@@ -59,7 +59,7 @@ freshNested измеряет свежий Source Inner с той же темой
 его для nested scope. Native изолирует class и namespace.
 Сверка: [официальные prefix-замеры](../../../tests/browser/fixtures/ant-design-card-prefix-reference.json),
 [браузер](../../../tests/browser/card-prefix.spec.ts) и
-[SSR](../../../tests/package/card-prefix.ssr.test.ts), `?fixture=card-prefix`.
+[SSR](../../../tests/package/card/card-prefix.ssr.test.ts), `?fixture=card-prefix`.
 
 ConfigProvider.card задаёт variant, class/style и те же semantic classNames/styles;
 ConfigProvider.cardMeta независимо настраивает Meta через class/style и semantic

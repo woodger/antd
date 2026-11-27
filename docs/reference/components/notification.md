@@ -169,5 +169,5 @@ callbacks закрытия, несколько placements, смену конте
 раскладку стека и ход индикатора времени.
 [Исходные замеры](../../../tests/browser/fixtures/ant-design-notification-api-reference.json) ·
 [Браузерная проверка](../../../tests/browser/notification-api.spec.ts) ·
-[SSR и типы](../../../tests/package/notification-api.ssr.test.ts)
+[SSR и типы](../../../tests/package/notification/notification-api.ssr.test.ts)
 

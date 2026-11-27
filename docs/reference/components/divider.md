@@ -41,7 +41,7 @@ orientationMargin и verticalMarginInline, локальные alias-токены
 Токен orientationMargin задаёт долю ширины rail. Тема применяется уже при SSR,
 обновляется без замены DOM и предшествует semantic styles и пользовательскому style.
 Нули, CSS-единицы, явный undefined и собственный cssVar.prefix сохраняются.
-Проверки: [SSR](../../../tests/package/divider-theme.ssr.test.ts),
+Проверки: [SSR](../../../tests/package/divider/divider-theme.ssr.test.ts),
 [browser](../../../tests/browser/divider-theme.spec.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-divider-theme-reference.json),
 фикстура `?fixture=divider-theme`.
@@ -59,7 +59,7 @@ styles.root → local style. Без подписи merged styles.rail идёт �
 Callbacks получают прежние нормализованные props и могут вернуть undefined.
 Prefix/config updates сохраняют nativeElement, DOM, фокус и состояние соседних полей;
 строчный vertical Divider не добавляет пробелы. Проверки:
-[SSR](../../../tests/package/divider-config.ssr.test.ts),
+[SSR](../../../tests/package/divider/divider-config.ssr.test.ts),
 [browser](../../../tests/browser/divider-config.spec.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-divider-config-reference.json),
 фикстура `?fixture=divider-config`. Общий prefix ConfigProvider поддержан;

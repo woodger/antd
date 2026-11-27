@@ -54,7 +54,7 @@ fontSize/fontFamily, вложенные provider и custom cssVar prefix. Соб
 14 тем / 140 CSS-состояний UMD сверяются в
 [browser](../../../tests/browser/grid-theme.spec.ts), declarations —
 в [unit](../../../src/lib/theme/theme-grid-tokens-reference.test.ts), серверная граница —
-в [SSR](../../../tests/package/grid-theme.ssr.test.ts). Fixture `?fixture=grid-theme`.
+в [SSR](../../../tests/package/grid/grid-theme.ssr.test.ts). Fixture `?fixture=grid-theme`.
 
 Глобальные theme.token.screen* задают Row observer, а screen*Min — Col media CSS.
 Пороги могут различаться: между screenSMMin и screenSM меняется ширина Col,
@@ -76,7 +76,7 @@ Row.prefixCls задаёт корень и состояния wrap/align/justify
 сохраняет Row/children DOM, refs, draft/selection/focus и FormData.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-grid-row-prefix-reference.json),
 [browser](../../../tests/browser/grid-row-prefix.spec.ts),
-[SSR](../../../tests/package/grid-row-prefix.ssr.test.ts), `?fixture=grid-row-prefix`.
+[SSR](../../../tests/package/grid/grid-row-prefix.ssr.test.ts), `?fixture=grid-row-prefix`.
 Рецепт grid-row-prefix извлекает 16 Row rules без Col/media scopes.
 Col.prefixCls подключает полный scoped template из 1027 rules: base/xs и все
 responsive states, resets и flex. Empty/undefined наследуют ConfigProvider;
@@ -98,7 +98,7 @@ prefixes и media.
 Проверки: `?fixture=grid-col-prefix`,
 [UMD](../../../tests/browser/fixtures/ant-design-grid-col-prefix-reference.json),
 [browser](../../../tests/browser/grid-col-prefix.spec.ts),
-[SSR](../../../tests/package/grid-col-prefix.ssr.test.ts). Row reference по-прежнему
+[SSR](../../../tests/package/grid/grid-col-prefix.ssr.test.ts). Row reference по-прежнему
 использует официальный Col с public prefixCls=ant-col для своего сравнения.
 В CSS-variable режиме эталон записывает components.Grid.screen*Min в CSS variables,
 но Col media queries продолжают использовать глобальные thresholds. Это

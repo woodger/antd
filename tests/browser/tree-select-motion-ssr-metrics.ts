@@ -74,7 +74,7 @@ export function treeSelectMotionNativeSSRExpected<
     expected.root.role = 'presentation';
   }
   // Existing TreeSelect SSR emits its initially open panel hidden and keeps editor ARIA open.
-  // tests/package/tree-select.ssr.test.ts protects that Native server-rendering contract.
+  // tests/package/tree-select/tree-select.ssr.test.ts protects that Native server-rendering contract.
   if (sample.defaultOpen || sample.initialOpen) {
     expected.popupPresent = true;
     if (expected.editor && expected.editor.expanded !== null)

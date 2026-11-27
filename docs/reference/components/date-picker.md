@@ -314,7 +314,7 @@ Today/Now показывается в режиме date; при needConfirm кн
 независимые замеры React. Для значения вне шага фикстура хранит наблюдения обоих
 прогонов и указывает ревизию с полным архивом.
 [Browser](../../../tests/browser/date-picker-presets.spec.ts) сравнивает состояния, аргументы,
-CSS и геометрию; [SSR](../../../tests/package/date-picker-presets.ssr.test.ts) проверяет
+CSS и геометрию; [SSR](../../../tests/package/picker/date-picker-presets.ssr.test.ts) проверяет
 закрытые input и отсутствие browser API.
 
 Кнопки подтверждения DatePicker, RangePicker, TimePicker и TimeRangePicker используют
@@ -480,7 +480,7 @@ feedback; null/false/пустая строка скрывают suffix цели�
 Смена семантического оформления сохраняет DOM поля и открытой панели,
 фокус, выделение и черновик. Приоритеты и слоты сверены с React 6.6.8
 в [браузере](../../../tests/browser/date-picker-provider.spec.ts) и
-[SSR](../../../tests/package/date-picker-provider.ssr.test.ts).
+[SSR](../../../tests/package/picker/date-picker-provider.ssr.test.ts).
 
 Исходный offset до поля — 4 px; координаты при единичном масштабе округляются
 вниз, как rc-trigger. Минимальная ширина popup равна ширине selector.

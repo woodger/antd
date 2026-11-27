@@ -74,6 +74,6 @@ handles с false. `App.message` дополнительно принимает `r
 
 Основа сверки — [исходные снимки App](../../../tests/browser/fixtures/ant-design-app-reference.json).
 Все девять root-примеров, включая global-prefix, проверяются. Проверки:
-[браузер](../../../tests/browser/app.spec.ts), [SSR и типы](../../../tests/package/app.ssr.test.ts),
+[браузер](../../../tests/browser/app.spec.ts), [SSR и типы](../../../tests/package/app/app.ssr.test.ts),
 [обновление defaults](../../../src/lib/notice/notice-config.test.ts).
 

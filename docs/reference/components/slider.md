@@ -129,7 +129,7 @@ Escape скрывает подсказку, сохраняя фокус и чи�
 Фокус native input оформляет видимый handle по source-токенам. Native-only темы
 и интерактивные области input сохраняют прежнее поведение.
 Подробнее: [токены Slider](../theme-context.md#токены-slider),
-[SSR](../../../tests/package/slider-theme.ssr.test.ts),
+[SSR](../../../tests/package/slider/slider-theme.ssr.test.ts),
 [browser](../../../tests/browser/slider-theme.spec.ts), маршрут `?fixture=slider-theme`.
 
 ## Диапазон Slider
@@ -230,12 +230,12 @@ Native disabled по-прежнему скрывает подсказки даж
 случае оставляет принудительно открытую подсказку. При сверке RTL учитывается
 унаследованный DOM dir, который задаёт Svelte ConfigProvider.
 
-Prefix: [SSR](../../../tests/package/slider-prefix.ssr.test.ts),
+Prefix: [SSR](../../../tests/package/slider/slider-prefix.ssr.test.ts),
 [browser](../../../tests/browser/slider-prefix.spec.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-slider-prefix-reference.json),
 маршрут `?fixture=slider-prefix`.
 
-Scalar source API: [SSR](../../../tests/package/slider-scalar.ssr.test.ts),
+Scalar source API: [SSR](../../../tests/package/slider/slider-scalar.ssr.test.ts),
 [browser](../../../tests/browser/slider-scalar.spec.ts),
 [эталон официального UMD](../../../tests/browser/fixtures/ant-design-slider-scalar-reference.json),
 маршрут `?fixture=slider-scalar`. Проверяются также semantic config, ARIA, native

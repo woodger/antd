@@ -128,7 +128,7 @@ query, выделение текста, фокус, selection keys и текущ
 [UMD-эталон](../../../tests/browser/fixtures/ant-design-transfer-prefix-reference.json)
 содержит 20 конфигураций в обычном, вложенном и reset scopes и три live transitions;
 [browser](../../../tests/browser/transfer-prefix.spec.ts) и
-[SSR](../../../tests/package/transfer-prefix.ssr.test.ts) проверяют эти границы.
+[SSR](../../../tests/package/transfer/transfer-prefix.ssr.test.ts) проверяют эти границы.
 Существующий native remove font учитывается отдельно, без изменения raw measurements.
 
 `ConfigProvider.theme.components.Transfer` применяет шесть component tokens,
@@ -158,4 +158,4 @@ Native сохраняет поле и введённую строку. Для CS
 восстанавливает ту же строку и фокус через публичный Input.
 Декларации сверяются с UMD отдельным
 [unit-набором](../../../src/lib/theme/theme-transfer-tokens-reference.test.ts),
-[SSR](../../../tests/package/transfer-theme.ssr.test.ts) не создаёт браузерные ресурсы.
+[SSR](../../../tests/package/transfer/transfer-theme.ssr.test.ts) не создаёт браузерные ресурсы.

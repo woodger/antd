@@ -42,5 +42,5 @@ algorithm, compact/dark и custom cssVar.prefix.
 wrapper/indicator/content/corner selectors; локальный prefix отдельно эту связь не меняет.
 44 эталона — [официальный UMD](../../../tests/browser/fixtures/ant-design-badge-ribbon-reference.json),
 проверки — [browser](../../../tests/browser/badge-ribbon.spec.ts) и
-[SSR](../../../tests/package/badge-ribbon.ssr.test.ts), фикстура — `?fixture=badge-ribbon`.
+[SSR](../../../tests/package/badge/badge-ribbon.ssr.test.ts), фикстура — `?fixture=badge-ribbon`.
 
