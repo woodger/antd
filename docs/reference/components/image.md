@@ -94,7 +94,7 @@ ProgressAnimationDuration пока доступен только как CSS vari
 Image/ImagePreviewGroup. Остальные slots, placeholder progress/render,
 ConfigProvider.image, getContainer, icons/React info.icons wrappers и
 исходные fade/appear/leave/mousePosition motion пока отсутствуют. Deprecated aliases
-исключены из переноса. [Замер текущих полей оформления](../../../tools/fixtures/ant-design-image-current-styling-observation.json)
+исключены из переноса. [Замер текущих полей оформления](../../../tests/reference/ant-design-image-current-styling-observation.json)
 подтверждает styles.root и classNames.popup.root в закреплённом UMD; вложенный
 preview.classNames не входит в текущий тип preview и игнорируется upstream.
 

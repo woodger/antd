@@ -558,7 +558,7 @@ HTML вручную через `render` из `svelte/server`, включите `
 Наследование и результат `theme.useToken()` можно сверить с исходниками Ant Design и с тестами библиотеки.
 
 - Исходники Ant Design — [useTheme](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/hooks/useTheme.ts), [ConfigProvider](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/index.tsx), [useToken](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/theme/useToken.ts).
-- Расчёт темы — [эталон токенов](../../tools/fixtures/ant-design-theme-context-reference.json), [сопоставление с эталоном](../../src/lib/theme/theme-context-reference.test.ts), [наследование](../../src/lib/theme/theme-config.engine.test.ts).
+- Расчёт темы — [эталон токенов](../../tests/reference/ant-design-theme-context-reference.json), [сопоставление с эталоном](../../src/lib/theme/theme-context-reference.test.ts), [наследование](../../src/lib/theme/theme-config.engine.test.ts).
 - Чтение темы в компонентах — [SSR](../../tests/package/theme/theme-context.ssr.test.ts), [браузер](../../tests/browser/theme/theme-context.spec.ts).
 
 ### Проверки полей и элементов выбора

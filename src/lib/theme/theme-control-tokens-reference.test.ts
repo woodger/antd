@@ -18,7 +18,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: ReferenceCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-control-tokens-reference.json', import.meta.url), 'utf8'
+  new URL('../../../tests/reference/ant-design-control-tokens-reference.json', import.meta.url), 'utf8'
 ));
 
 function config(input: ReferenceCase['config']): ThemeConfig {

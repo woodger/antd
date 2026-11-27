@@ -41,7 +41,7 @@ ConfigProvider.theme.components.Segmented применяет все восемь
 изменение геометрии завершает существующий thumb через ResizeObserver.
 Переменные темы идут перед semantic/user styles; native light/dark/compact
 сохраняют прежние цвета и размеры.
-Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-segmented-tokens-reference.json),
+Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-segmented-tokens-reference.json),
 [размеры и pseudo states](../../../tests/browser/fixtures/ant-design-segmented-theme-reference.json),
 [SSR](../../../tests/package/segmented/segmented-theme.ssr.test.ts) и
 [browser](../../../tests/browser/segmented/segmented-theme.spec.ts), `?fixture=segmented-theme`.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import reference from '../../../tools/fixtures/ant-design-spin-percent-reference.json';
+import reference from '../../../tests/reference/ant-design-spin-percent-reference.json';
 import { advanceSpinPercent, spinProgress } from './spin-percent.engine';
 
 describe('Ant Design 6.6.8 Spin auto percentage', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getUploadMotionItems } from './upload-motion.engine';
-import reference from '../../../tools/fixtures/ant-design-upload-motion-keys-reference.json';
+import reference from '../../../tests/reference/ant-design-upload-motion-keys-reference.json';
 
 describe('getUploadMotionItems', () => {
   it.each(reference.cases.filter(entry => !('observation' in entry.sample)))(

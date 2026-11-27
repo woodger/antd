@@ -21,7 +21,7 @@
 
 ## Сравнение с прежними размерами
 
-[Raw замеры](../../tools/fixtures/ant-design-current-size-observation.json) получены
+[Raw замеры](../../tests/reference/ant-design-current-size-observation.json) получены
 из неизменённого официального UMD, без статического antd.css: 171 профиль,
 29 семейств, локальный размер и наследование от ConfigProvider,
 default/dark/compact algorithms. Измерены размеры, шрифт, отступы, gap,

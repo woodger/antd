@@ -20,7 +20,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: StatisticTokenCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-statistic-tokens-reference.json', import.meta.url),
+  new URL('../../../tests/reference/ant-design-statistic-tokens-reference.json', import.meta.url),
   'utf8'
 ));
 

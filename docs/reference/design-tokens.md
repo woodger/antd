@@ -83,7 +83,7 @@ algorithms и alias formatter Ant Design 6.6.8. Изучены @ant-design/color
 @ant-design/cssinjs 2.1.2 и @ant-design/fast-color 3.0.1. Их runtime dependencies
 не добавлены в пакет.
 
-[Эталонные данные](../../tools/fixtures/ant-design-theme-reference.json) получены
+[Эталонные данные](../../tests/reference/ant-design-theme-reference.json) получены
 из официального `package/dist/antd.min.js` после проверки SHA-256 npm-архива.
 Они содержат текущие map/alias поля для 24 настроек: цепочки алгоритмов,
 custom seed, все preset colors, прозрачность, размеры, motion/focus, overrides

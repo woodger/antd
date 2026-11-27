@@ -16,7 +16,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: ReferenceCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-cascader-tokens-reference.json', import.meta.url), 'utf8'
+  new URL('../../../tests/reference/ant-design-cascader-tokens-reference.json', import.meta.url), 'utf8'
 ));
 
 describe('Ant Design 6.6.8 official UMD Cascader CSS-token conformance', () => {

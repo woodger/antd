@@ -86,7 +86,7 @@ ConfigProvider.theme.components.Descriptions применяет все деся�
 Сохраняются исходные правила 6.6.8: bordered использует labelBg и общий
 colorTextSecondary вместо labelColor, а размеры и рамка могут перекрывать
 itemPaddingBottom/itemPaddingEnd собственными отступами.
-Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-descriptions-tokens-reference.json),
+Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-descriptions-tokens-reference.json),
 [варианты и responsive spans](../../../tests/browser/fixtures/ant-design-descriptions-theme-reference.json),
 [SSR](../../../tests/package/descriptions/descriptions-theme.ssr.test.ts) и
 [browser](../../../tests/browser/descriptions/descriptions-theme.spec.ts), `?fixture=descriptions-theme`.

@@ -20,7 +20,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; };
   cases: ReferenceCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-slider-tokens-reference.json', import.meta.url), 'utf8'
+  new URL('../../../tests/reference/ant-design-slider-tokens-reference.json', import.meta.url), 'utf8'
 ));
 
 describe('Ant Design 6.6.8 official UMD Slider token conformance', () => {

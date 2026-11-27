@@ -407,7 +407,7 @@ Snippet может объявить только нужные ему парам�
 Пользовательское переключение обновляет внутренние ключи и вызывает
 `expandable.onExpand(expanded, record)`, затем `expandable.onExpandedRowsChange(keys)`.
 Управляемые ключи обновляет владелец; callbacks сами не меняют его массив.
-[Замер официального UMD](../../../tools/fixtures/ant-design-current-table-expansion-observation.json)
+[Замер официального UMD](../../../tests/reference/ant-design-current-table-expansion-observation.json)
 фиксирует отказ владельца, принятие новых ключей и порядок callbacks.
 Keys содержит все раскрытые ключи, включая отсутствующие на текущей странице.
 Внешние изменения props не вызывают эти callbacks. Раскрытие не меняет выбор

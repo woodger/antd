@@ -20,7 +20,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: FormTokenCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-form-tokens-reference.json', import.meta.url),
+  new URL('../../../tests/reference/ant-design-form-tokens-reference.json', import.meta.url),
   'utf8'
 ));
 

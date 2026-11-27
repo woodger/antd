@@ -21,7 +21,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: NotificationTokenCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-notification-tokens-reference.json', import.meta.url),
+  new URL('../../../tests/reference/ant-design-notification-tokens-reference.json', import.meta.url),
   'utf8'
 ));
 

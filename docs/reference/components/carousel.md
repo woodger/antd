@@ -84,7 +84,7 @@ ConfigProvider.theme.components.Carousel применяет семь компо�
 DotActiveWidth поддерживает явный 0; по умолчанию используется 24.
 Тематические переменные задаются wrapper; пользовательские class/style и
 ConfigProvider.carousel по-прежнему относятся к inner slider и сохраняют приоритет.
-Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-carousel-tokens-reference.json),
+Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-carousel-tokens-reference.json),
 [геометрия четырёх размещений](../../../tests/browser/fixtures/ant-design-carousel-theme-reference.json),
 [SSR](../../../tests/package/carousel/carousel-theme.ssr.test.ts) и
 [browser](../../../tests/browser/carousel/carousel-theme.spec.ts), `?fixture=carousel-theme`.

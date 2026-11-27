@@ -69,7 +69,7 @@ ConfigProvider.theme.components.Statistic задаёт titleFontSize/contentFont
 component aliases/algorithm; Statistic.padding не перекрывает этот отступ.
 В эталоне 6.6.8 RTL class Statistic не задаёт direction в LTR-документе.
 Svelte сохраняет существующий dir=rtl и LTR value; наблюдение записано в реестре.
-Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-statistic-tokens-reference.json),
+Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-statistic-tokens-reference.json),
 [оформление normal/loading/Timer countup/countdown](../../../tests/browser/fixtures/ant-design-statistic-theme-reference.json),
 [SSR](../../../tests/package/statistic/statistic-theme.ssr.test.ts) и
 [browser](../../../tests/browser/statistic/statistic-theme.spec.ts), `?fixture=statistic-theme`.

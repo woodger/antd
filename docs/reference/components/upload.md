@@ -143,7 +143,7 @@ Card/circle trigger пропускает начальный appear, сохран
 
 В `diffKeys` @rc-component/motion 1.3.3 перестановка `[a, __proto__]` в
 `[__proto__, a]` возвращает дубликаты ключа; то же происходит с `constructor`.
-[Исходные результаты](../../../tools/fixtures/ant-design-upload-motion-keys-reference.json)
+[Исходные результаты](../../../tests/reference/ant-design-upload-motion-keys-reference.json)
 сохранены без исправлений. Svelte использует `Map` и сохраняет одну строку на uid.
 Лицензия зависимости уже включена в [vendor/LICENSE.rc-motion](../../../src/lib/vendor/LICENSE.rc-motion).
 

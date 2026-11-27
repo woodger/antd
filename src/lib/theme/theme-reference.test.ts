@@ -26,7 +26,7 @@ interface ThemeReference {
 }
 
 const reference: ThemeReference = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-theme-reference.json', import.meta.url),
+  new URL('../../../tests/reference/ant-design-theme-reference.json', import.meta.url),
   'utf8'
 ));
 

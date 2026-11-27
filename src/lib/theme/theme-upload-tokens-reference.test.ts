@@ -20,7 +20,7 @@ const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: UploadTokenCase[];
 } = JSON.parse(readFileSync(
-  new URL('../../../tools/fixtures/ant-design-upload-tokens-reference.json', import.meta.url),
+  new URL('../../../tests/reference/ant-design-upload-tokens-reference.json', import.meta.url),
   'utf8'
 ));
 
