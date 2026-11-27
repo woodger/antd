@@ -62,15 +62,15 @@ npm run cli -- test browser -- --workers=1 tests/browser/typography/typography.s
 
 ### Packaging
 
-After installing dependencies, run these commands from the repository root.
+After installing dependencies, run this command from the repository root.
 
 ```sh
-npm run build
-npm pack --ignore-scripts
+npm pack
 ```
 
-`npm pack` writes `woodger-antd-<version>.tgz` to the current directory and prints its
-filename. Install the archive in an application with `npm install`.
+The `prepack` hook runs `npm run build` before npm packages the library. `npm pack` writes
+`woodger-antd-<version>.tgz` to the current directory and prints its filename. Install the
+archive in an application with `npm install`.
 
 ### Development CLI
 

@@ -7,6 +7,15 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Changed
+
+- Translated the README, developer guides, component references, changelog,
+  and porting report into English.
+- Added a `prepack` hook to build the library when running `npm pack` or
+  `npm publish` from the repository.
+
 ## [0.1.0]
 
 First release of `@woodger/antd` for Svelte 5. The porting summary lists

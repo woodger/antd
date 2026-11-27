@@ -1,6 +1,6 @@
 {
   "name": "@woodger/antd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ant Design components for Svelte 5 with TypeScript and API compatibility",
   "keywords": [
     "antd",
@@ -38,6 +38,7 @@
   },
   "scripts": {
     "build": "svelte-package",
+    "prepack": "npm run build",
     "dev": "svelte-package --watch",
     "lint": "oxlint src tests tools vite.config.ts svelte.config.js playwright.config.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json --tsgo",
