@@ -111,7 +111,7 @@ export interface FormInstance<Values extends FormValues> {
   isFieldTouched(name: NamePath): boolean;
   /** No names: any touch-field; true requires all bindings, except the roots of FormList. */
   isFieldsTouched(allTouched?: boolean): boolean;
-  /** For allTouched=true, each selected prefix must contain at least one huge field. */
+  /** With allTouched, each requested path must be touched itself or have a touched descendant. */
   isFieldsTouched(names?: readonly NamePath[], allTouched?: boolean): boolean;
   isFieldValidating(name: NamePath): boolean;
   /** Is there visible validation; the names coincide exactly, without automatically turning on the offspring. */

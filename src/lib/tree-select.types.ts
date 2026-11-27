@@ -86,7 +86,7 @@ export interface TreeSelectTreeNodeProps<Data extends object = TreeSelectNode> e
   children?: Snippet;
 }
 export type TreeSelectStrategy = 'SHOW_ALL' | 'SHOW_PARENT' | 'SHOW_CHILD';
-/** Seeking and filtration of wood TreeSelect, including controlled searchValue. */
+/** Configures how TreeSelect searches and filters nodes, including a controlled searchValue. */
 export interface TreeSelectSearchConfig<Data extends object = TreeSelectNode> {
   searchValue?: string;
   onSearch?: (value: string) => void;
