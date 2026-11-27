@@ -2,6 +2,10 @@
   "name": "@woodger/antd",
   "version": "0.1.1",
   "description": "Ant Design components for Svelte 5 with TypeScript and API compatibility",
+  "author": {
+    "name": "Stanislav Potemkin",
+    "email": "woodger@ya.ru"
+  },
   "keywords": [
     "antd",
     "ant-design",
