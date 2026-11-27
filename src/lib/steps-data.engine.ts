@@ -42,6 +42,16 @@ export interface NormalizedStepsDataItem extends Omit<StepsDataItem, 'key'> {
   originalKey?: string | number;
 }
 
+/** Distinguishes explicit strings from numeric and generated keys. */
+function stepsDataKey(key: StepsDataItem['key'], index: number, namespace: string): string {
+  if (typeof key === 'string') {
+    return key;
+  }
+
+  return key === undefined ? `${namespace}index:${index}` : `${namespace}number:${key}`;
+}
+
+/** Keeps the first item for each key and counts indices before removing duplicates. */
 export function stepsDataItems(
   items: readonly (StepsDataItem | false | null | undefined)[]
 ): NormalizedStepsDataItem[] {
@@ -49,19 +59,24 @@ export function stepsDataItems(
     ? [item.key]
     : []);
   let namespace = '@steps:';
-  while (explicitKeys.some(key => key.startsWith(namespace)))
+  while (explicitKeys.some(key => key.startsWith(namespace))) {
     namespace = `@${namespace}`;
+  }
+
+  const present = items.filter((item): item is StepsDataItem => Boolean(item));
+  const normalized: NormalizedStepsDataItem[] = [];
   const seen = new Set<string>();
-  return items.filter((item): item is StepsDataItem => Boolean(item)).flatMap((item, index) => {
-    const key = typeof item.key === 'string'
-      ? item.key
-      : item.key === undefined ? `${namespace}index:${index}` : `${namespace}number:${item.key}`;
+  for (const [index, item] of present.entries()) {
+    const key = stepsDataKey(item.key, index, namespace);
     if (seen.has(key)) {
-      return [];
+      continue;
     }
+
     seen.add(key);
-    return [{ ...item, key, originalKey: item.key, content: item.content }];
-  });
+    normalized.push({ ...item, key, originalKey: item.key, content: item.content });
+  }
+
+  return normalized;
 }
 export function stepsDataHasContent(value: StepsDataContent): boolean {
   return value !== undefined && value !== null;
