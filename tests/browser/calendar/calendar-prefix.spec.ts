@@ -112,6 +112,25 @@ test('Calendar local prefixes keep focused cell keyboard behavior and independen
       .toHaveText('2024-09-16T12:34:56.789Z');
   });
 
+test('Calendar keeps scoped styles with special characters in the local prefix', async ({ page }) => {
+  await page.goto('/?fixture=calendar-prefix');
+  await page.getByRole('checkbox', { name: 'Live Calendar prefix', exact: true }).check();
+  const input = page.getByRole('textbox', { name: 'Local Calendar prefix value', exact: true });
+  const root = page.locator('.fixture-calendar-prefix');
+  const header = root.locator(':scope > div').first();
+  const selected = root.getByRole('gridcell', { name: '2024-09-15', exact: true });
+  const selectedInner = selected.locator(':scope > div');
+
+  for (const prefix of ['dates', 'dates+ui', '2dates', 'dates"&ui', 'dates\\ui']) {
+    await input.fill(prefix);
+
+    await expect(root).toHaveAttribute('data-ant-calendar-prefix', prefix);
+    await expect(header).toHaveCSS('display', 'flex');
+    await expect(selectedInner).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+    await expect(selected).toHaveAttribute('aria-selected', 'true');
+  }
+});
+
 test('Calendar prefix changes preserve default styling, selected date and open month options',
   async ({ page }) => {
     await page.goto('/?fixture=calendar-prefix');

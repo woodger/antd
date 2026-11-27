@@ -37,6 +37,18 @@ describe('Calendar local/shared prefixes', () => {
     expect(body).toContain('ant-picker-calendar-css-var');
   });
 
+  it('renders literal classes and escaped Calendar selectors during SSR', () => {
+    const { body, head } = render(Calendar, {
+      props: { prefixCls: 'dates+ui', value: dayjs('2024-09-15') }
+    });
+
+    expect(body).toContain('data-ant-calendar-prefix="dates+ui"');
+    expect(body).toContain('dates+ui-calendar-full');
+    expect(body).toContain('dates+ui-cell-selected');
+    expect(head).toContain(String.raw`.dates\2b ui-calendar:where([data-ant-calendar-prefix="dates+ui"])`);
+    expect(head).toContain(String.raw`.dates\2b ui-cell-selected`);
+  });
+
   it('keeps constrained Source header heights separate from the wider public counterpart', () => {
     const entry = reference.cases.find(entry => entry.sample.id === 'aliases')!;
 

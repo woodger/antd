@@ -7,7 +7,7 @@ describe('Calendar prefix stylesheet', () => {
   });
 
   it('isolates local Calendar roots while preserving tokens, marker and responsive rules', () => {
-    const css = getCalendarPrefixCss('dates')!;
+    const css = getCalendarPrefixCss('dates');
 
     expect(css).toContain('.dates-calendar:where([data-ant-calendar-prefix="dates"])');
     expect(css).toContain('.dates-calendar-mini:where(');
@@ -20,8 +20,23 @@ describe('Calendar prefix stylesheet', () => {
     expect(css).toMatch(/:where\(\.ant-picker-calendar-css-var[^\n]+\)\{--ant-calendar-/);
   });
 
-  it('keeps literal prefix text and escapes closing style tags', () => {
-    expect(getCalendarPrefixCss('dates-$&')).toContain('.dates-$&-cell');
+  it('escapes class identifiers while keeping the same prefix in quoted selectors', () => {
+    const css = getCalendarPrefixCss('dates+ui');
+
+    expect(css).toContain(String.raw`.dates\2b ui-calendar:where([data-ant-calendar-prefix="dates+ui"])`);
+    expect(css).toContain(String.raw`.dates\2b ui-cell-selected`);
+    expect(css).toContain('[class^="dates+ui"]');
+    expect(css).toContain('[class*=" dates+ui"]');
+  });
+
+  it('serializes quotes and backslashes inside quoted selectors', () => {
+    const css = getCalendarPrefixCss('dates"\\&ui');
+
+    expect(css).toContain(String.raw`[class^="dates\22 \5c \26 ui"]`);
+  });
+
+  it('keeps literal prefix characters and escapes closing style tags', () => {
+    expect(getCalendarPrefixCss('dates-$&')).toContain(String.raw`.dates-\24 \26 -cell`);
     expect(getCalendarPrefixCss('dates-</style><script>')).not.toContain('</style');
   });
 });

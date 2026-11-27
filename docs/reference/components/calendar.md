@@ -112,7 +112,9 @@ Calendar принимает локальный `prefixCls` для Picker и до
 корневому классу; без override использует ConfigProvider.prefixCls. Ячейки,
 originNode и `cellRender.info.prefixCls` следуют тому же Picker prefix, а Select/Radio
 шапки сохраняют независимые общие namespaces. Canonical tokens и theme marker
-не переименовываются. Смена префикса сохраняет DOM/ref/IDs, дату и её timestamp,
+не переименовываются. CSS-селекторы экранируют символы префикса вроде `+`.
+DOM-классы и `cellRender.info.prefixCls` используют исходное значение.
+Смена префикса сохраняет DOM/ref/IDs, дату и её timestamp,
 выделение текста/focus, открытые options и keyboard navigation.
 [Сверка с официальным UMD](../../../tests/browser/calendar/calendar-prefix.spec.ts),
 `?fixture=calendar-prefix`, включает full/mini, month/year, week, RTL,
