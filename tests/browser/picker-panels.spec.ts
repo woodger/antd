@@ -127,6 +127,21 @@ test('supports pointer and keyboard focus with live snippets and navigation icon
     await expect(arrow).toBeFocused();
     await expect(popup.locator('[data-origin-cell]')).toHaveText('Origin');
     await expect(popup.locator('[data-custom-nav]')).toHaveText('›');
+    await verifyPanelNavigation();
+
+    await start.click();
+    await page.locator('#toggle').evaluate((button: HTMLButtonElement) => button.click());
+    await expect(popup.getByRole('button', { name: 'Next month' })
+      .locator('[data-custom-nav]')).toHaveText('›');
+    const previous = popup.getByRole('button', { name: 'Previous month' });
+    await expect(previous.locator('span')).toHaveCount(0);
+    expect(await start.evaluate((node, original) => node === original, initial)).toBe(true);
+  }
+  finally {
+    await initial.dispose();
+  }
+
+  async function verifyPanelNavigation() {
     const panel = popup.locator('[data-custom-panel]');
     const dom = await panel.elementHandle();
     try {
@@ -140,17 +155,6 @@ test('supports pointer and keyboard focus with live snippets and navigation icon
     finally {
       await dom.dispose();
     }
-
-    await start.click();
-    await page.locator('#toggle').evaluate((button: HTMLButtonElement) => button.click());
-    await expect(popup.getByRole('button', { name: 'Next month' })
-      .locator('[data-custom-nav]')).toHaveText('›');
-    const previous = popup.getByRole('button', { name: 'Previous month' });
-    await expect(previous.locator('span')).toHaveCount(0);
-    expect(await start.evaluate((node, original) => node === original, initial)).toBe(true);
-  }
-  finally {
-    await initial.dispose();
   }
 });
 
