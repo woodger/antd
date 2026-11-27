@@ -90,13 +90,31 @@ export function validateRegistry(data) {
   const ids = new Set();
   const localNames = new Set(data.supportingExports);
 
-  // Checks one entry and updates the sets used to find duplicate names.
+  for (const item of data.components) {
+    validateComponent(item);
+  }
+  validateDependencyGraph();
+
+  return errors;
+
+  // Collects entry diagnostics before checking links between entries.
   function validateComponent(item) {
     if (!item || typeof item !== 'object' || Array.isArray(item)) {
       errors.push('Component must be an object');
       return;
     }
     const label = item?.id ?? '<missing id>';
+    validateComponentFields(item, label);
+    if (!Array.isArray(item.exports) || !Array.isArray(item.features)) {
+      return;
+    }
+
+    validateExportMappings(item.exports, label);
+    validateFeatures(item, label);
+  }
+
+  // Registers IDs in traversal order, including those with schema errors.
+  function validateComponentFields(item, label) {
     require(
       typeof item?.id === 'string' && /^[a-z][a-z0-9-]*$/.test(item.id),
       `Invalid component id: ${label}`
@@ -122,16 +140,19 @@ export function validateRegistry(data) {
       ['p1', 'p2', 'p3', 'unassigned'].includes(item.priority),
       `${label}: invalid priority`
     );
-    for (const field of ['exports', 'dependencies', 'features', 'evidence', 'upstreamPackages'])
+    for (const field of ['exports', 'dependencies', 'features', 'evidence', 'upstreamPackages']) {
       require(Array.isArray(item[field]), `${label}: ${field} must be an array`);
-    for (const field of ['dependencies', 'evidence'])
-      if (Array.isArray(item[field]))
+    }
+    for (const field of ['dependencies', 'evidence']) {
+      if (Array.isArray(item[field])) {
         require(
           item[field].every(value => typeof value === 'string' && value.length > 0),
           `${label}: ${field} must contain nonempty strings`
         );
-    if (Array.isArray(item.upstreamPackages))
-      for (const dependency of item.upstreamPackages)
+      }
+    }
+    if (Array.isArray(item.upstreamPackages)) {
+      for (const dependency of item.upstreamPackages) {
         require(
           typeof dependency?.name === 'string'
           && typeof dependency.range === 'string'
@@ -141,23 +162,28 @@ export function validateRegistry(data) {
             )),
           `${label}: invalid upstream package reference`
         );
+      }
+    }
+
     try {
       projectPath('/project', item.upstreamPath);
     }
     catch (error) {
       errors.push(`${label}: ${error.message}`);
     }
-    if (!Array.isArray(item.exports) || !Array.isArray(item.features)) {
-      return;
-    }
+  }
 
-    for (const entry of item.exports) {
+  // Shares the export name set across entries and supporting exports.
+  function validateExportMappings(mappings, label) {
+    for (const entry of mappings) {
       require(
         typeof entry?.upstream === 'string' && Array.isArray(entry.local) && entry.local.length > 0,
         `${label}: invalid export mapping`
       );
-      if (!Array.isArray(entry?.local))
+      if (!Array.isArray(entry?.local)) {
         continue;
+      }
+
       for (const name of entry.local) {
         require(
           typeof name === 'string' && !localNames.has(name),
@@ -166,6 +192,10 @@ export function validateRegistry(data) {
         localNames.add(name);
       }
     }
+  }
+
+  // Feature IDs are local to one component. Supported features require traceable evidence.
+  function validateFeatures(item, label) {
     const featureIds = new Set();
     for (const feature of item.features) {
       if (!feature || typeof feature !== 'object' || Array.isArray(feature)) {
@@ -193,63 +223,69 @@ export function validateRegistry(data) {
         Array.isArray(feature.evidence),
         `${label}/${feature.id}: evidence must be an array`
       );
-      if (Array.isArray(feature.evidence))
+      if (Array.isArray(feature.evidence)) {
         require(
           feature.evidence.every(value => typeof value === 'string' && value.length > 0),
           `${label}/${feature.id}: evidence must contain nonempty strings`
         );
+      }
       require(typeof feature.note === 'string', `${label}/${feature.id}: missing note`);
-      if (feature.state === 'supported')
+      if (feature.state === 'supported') {
         require(
           item.exports.length > 0 && feature.evidence?.length > 0 && item.reviewedRevision !== null,
           `${label}/${feature.id}: supported requires exports, review revision and evidence`
         );
+      }
     }
     require(
       item.features.some(feature => feature?.requiredForV1),
       `${label}: missing v1 criteria`
     );
   }
-  for (const item of data.components) {
-    validateComponent(item);
-  }
 
-  for (const item of data.components) {
-    if (!Array.isArray(item?.dependencies)) {
-      continue;
-    }
-    for (const dependency of item.dependencies) {
-      require(ids.has(dependency) && dependency !== item.id, `${item.id}: invalid dependency ${dependency}`);
-    }
-  }
-
-  const visiting = new Set();
-  const visited = new Set();
-  // Tracks the current recursion path separately from entries already checked.
-  function visit(componentId) {
-    if (visiting.has(componentId)) {
-      errors.push(`Dependency cycle: ${componentId}`);
-      return;
-    }
-    if (visited.has(componentId)) {
-      return;
-    }
-
-    visiting.add(componentId);
-    const record = data.components.find(item => item?.id === componentId);
-    const dependencies = record?.dependencies;
-    for (const dependency of Array.isArray(dependencies) ? dependencies : []) {
-      if (ids.has(dependency)) {
-        visit(dependency);
+  // Reports invalid edges before looking for cycles among known IDs.
+  function validateDependencyGraph() {
+    for (const item of data.components) {
+      if (!Array.isArray(item?.dependencies)) {
+        continue;
+      }
+      for (const dependency of item.dependencies) {
+        require(
+          ids.has(dependency) && dependency !== item.id,
+          `${item.id}: invalid dependency ${dependency}`
+        );
       }
     }
 
-    visiting.delete(componentId);
-    visited.add(componentId);
+    const visiting = new Set();
+    const visited = new Set();
+    for (const id of ids) {
+      visit(id);
+    }
+
+    // Tracks the current recursion path separately from entries already checked.
+    function visit(componentId) {
+      if (visiting.has(componentId)) {
+        errors.push(`Dependency cycle: ${componentId}`);
+        return;
+      }
+      if (visited.has(componentId)) {
+        return;
+      }
+
+      visiting.add(componentId);
+      const record = data.components.find(item => item?.id === componentId);
+      const dependencies = record?.dependencies;
+      for (const dependency of Array.isArray(dependencies) ? dependencies : []) {
+        if (ids.has(dependency)) {
+          visit(dependency);
+        }
+      }
+
+      visiting.delete(componentId);
+      visited.add(componentId);
+    }
   }
-  for (const id of ids)
-    visit(id);
-  return errors;
 }
 
 // Determines the scope required for v1 at a particular upstream revision.
