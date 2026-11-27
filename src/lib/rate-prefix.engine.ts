@@ -2,7 +2,7 @@ import template from './vendor/rate-prefix.css.js';
 
 const rootStates = new Set(['', '-small', '-large', '-rtl', '-disabled']);
 
-/** Canonical tokens и native button adapter не зависят от классов Rate. */
+/** Canonical tokens and native button adapter do not depend on Rate classes. */
 export function getRatePrefixCss(prefix: string) {
   if (prefix === 'ant-rate') {
     return undefined;

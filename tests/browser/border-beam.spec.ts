@@ -65,7 +65,7 @@ test(
     expect(await pseudo(beam, 'animation-name')).toBe('antBorderBeamMove');
     expect(await pseudo(beam, 'animation-duration')).toBe('6s');
     expect(await pseudo(beam, 'animation-iteration-count')).toBe('infinite');
-    // Chromium сериализует rect с auto-границами как эквивалентный inset.
+    // Chromium serializes rect with au-border as equivalent inset.
     expect(await pseudo(beam, 'offset-path')).toBe('inset(0px 0% 0% 0px round 100px)');
     expect(await pseudo(beam, 'background-image')).toContain('rgb(82, 196, 26)');
 

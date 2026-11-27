@@ -4,22 +4,22 @@ import TooltipFixture from './TableSorterTooltipFixture.svelte';
 import TitleFixture from './TableColumnTitleFixture.svelte';
 import HeadingFixture from './TableHeadingContentFixture.svelte';
 
-/** Формирует управляемую таблицу с активной сортировкой до hydration. */
+/** Forms a managed table with an active sorting to hydration. */
 export function renderTableSorter() {
   return render(Fixture, { props: { profileId: 'controlled' } });
 }
 
-/** Формирует кнопку и скрытый портал с выбранным владельцем open. */
+/** Forms a button and a hidden portal with the selected owner open. */
 export function renderTableSorterTooltip() {
   return render(TooltipFixture, { props: { profileId: 'controlled' } });
 }
 
-/** Формирует исходную кнопку сортировки и отдельные контролы заголовка. */
+/** Forms the original sorting button and individual header controls. */
 export function renderTableColumnTitle() {
   return render(TitleFixture, { props: { profileId: 'interactive' } });
 }
 
-/** Формирует заголовок и caption с общим составным содержимым для hydration. */
+/** Forms a header and caption with overall composite contents for hydration. */
 export function renderTableHeadingContent() {
   return render(HeadingFixture, { props: { profileId: 'live' } });
 }

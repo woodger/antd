@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Проверяет ручной ввод через публичную фабрику с собственным UTC Date adapter.
+  // Checks the manual input through the public factory with its own UTC Date adapter.
   import { ConfigProvider, DatePicker, type GenerateConfig, type RangePickerValue }
     from '@woodger/antd';
   import dayjs from 'dayjs';
@@ -16,7 +16,7 @@
     locale: {
       ...calendarDateAdapter.locale,
       format: (_locale, date, format) => dayjs.utc(date).format(format),
-      // Для формата без даты строгий парсер берёт её из часов браузера.
+      // For the format without a date, the strict parser takes it from the browser clock.
       parse(_locale, text, formats) {
         for (const format of formats) {
           const parsed = dayjs.utc(text, format, true);

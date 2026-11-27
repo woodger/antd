@@ -5,9 +5,9 @@ import type { AliasToken, MapToken } from './theme-token.types';
 import type { ThemeConfig } from './types';
 
 /**
- * Статический AliasToken Ant Design 6.6.8. Каждый вызов возвращает новый объект.
- * Копирует seed, выполняет алгоритмы по порядку и затем применяет alias overrides.
- * Пустой массив алгоритмов бросает TypeError, как закреплённый upstream.
+ * Static AliasToken Ant Design 6.6.8. Each call returns a new object. Copies seed, performs
+ * algorithms in order and then applies alias overrides. An empty array of algorithms throws
+ * TypeError as fixed upstream.
  */
 export function getDesignToken(config?: ThemeConfig): AliasToken {
   const algorithm = config?.algorithm;
@@ -18,7 +18,7 @@ export function getDesignToken(config?: ThemeConfig): AliasToken {
   const override = config?.token;
 
   if (algorithms.length === 0) {
-    // createTheme([]) в cssinjs 2.1.2 не возвращает тему; сохраняем исходную ошибку.
+    // createTheme([]) in cssinjs 2.1.2 does not return the topic; save the original error.
     throw new TypeError('Cannot read properties of undefined (reading \'getDerivativeToken\')');
   }
 
@@ -30,7 +30,7 @@ export function getDesignToken(config?: ThemeConfig): AliasToken {
   return formatAliasToken({ ...mapToken!, override });
 }
 
-/** Статическая часть theme API; context/useToken находятся в theme-context.svelte.ts. */
+/** Static part of theme API; context/useToken are located in theme-context.svelte.ts. */
 export const theme = {
   defaultSeed,
   defaultAlgorithm,

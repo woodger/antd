@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-modal-interaction-reference.json' with { type: 'json' };
 
-/** Именует активный control одинаково для декларативной панели и подтверждения. */
+/** Calls active control the same for declarative panel and confirmation. */
 function readFocus() {
   const active = document.activeElement;
   if (!active || active === document.body) {
@@ -21,7 +21,7 @@ function readFocus() {
   return active.closest('dialog.ant-svelte-dialog') ? 'dialog' : 'outside';
 }
 
-/** Читает состояние из фактического backdrop и нативной области прокрутки. */
+/** Reads the state from the actual backdrop and native scrolling area. */
 function appearance() {
   const dialog = document.querySelector<HTMLDialogElement>('dialog.ant-svelte-dialog[open]');
   if (!dialog) {
@@ -39,7 +39,7 @@ function appearance() {
   return { mask, blur: maskStyle?.backdropFilter ?? null, overflow };
 }
 
-/** Обновляет настройки владельца, даже когда native dialog держит фон inert. */
+/** Updating the owner’s settings, even when the native dialog holds the inert background. */
 async function activate(page: Page, control: string) {
   await page.locator(control).evaluate(node => {
     if (node instanceof HTMLButtonElement) node.click();
@@ -61,7 +61,7 @@ for (const sample of reference.cases) {
     await page.getByRole('button', { name: 'Open interaction panel', exact: true }).click();
     await expect(dialog).toBeVisible();
 
-    // Нативный старый режим блокирует прокрутку также в inline и custom host.
+    // Native old mode blocks scrolling also in inline and custom host.
     const nativeContainer = sample.profile.id === 'inline' || sample.profile.id === 'custom-host';
     const { mask, blur, overflow, initialFocus } = sample.appearance;
     await expect.poll(() => page.evaluate(appearance)).toEqual({
@@ -73,7 +73,7 @@ for (const sample of reference.cases) {
     const expectedFocus = sample.profile.id === 'confirm-null-focus' ? 'editor' : initialFocus;
     await expect.poll(() => page.evaluate(readFocus)).toBe(expectedFocus);
     if (sample.programmaticFocus === 'background') {
-      // Свободный фокус должен оставаться доступным и скринридеру за границей панели.
+      // Free focus should remain accessible and screenwriter abroad panels.
       await expect(dialog).not.toHaveAttribute('aria-modal', 'true');
     }
     else {

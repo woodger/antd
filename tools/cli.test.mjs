@@ -10,15 +10,15 @@ import { registryFile, reportFile } from './ant-design-common.mjs';
 import { runCommands } from './cli-core.mjs';
 
 const roots = [];
-// Убирает только каталоги, созданные для завершившегося сценария CLI.
+// Removes only directories created for the completed CLI test.
 afterEach(async () => {
   await Promise.all(roots.splice(0).map(root => rm(root, { recursive: true, force: true })));
 });
 
-// Записывает вывод отдельно по потокам и отклоняет непредусмотренный сетевой вызов.
+// Records output separately by stream and rejects unexpected network calls.
 function output(root) {
   let stdout = '', stderr = '';
-  // Базовый сценарий не разрешает скачивание. Сетевой тест подменяет эту функцию.
+  // The default test disallows downloads. The network test supplies a replacement.
   const fetch = vi.fn(async () => {
     throw new Error('Unexpected network request');
   });
@@ -26,24 +26,24 @@ function output(root) {
     context: {
       root,
       stdout: {
-        // Хранит порядок сообщений, переданных в stdout.
+        // Keeps stdout messages in the order they were received.
         write: chunk => {
           stdout += chunk;
         }
       },
       stderr: {
-        // Хранит диагностику отдельно от данных команды.
+        // Keeps diagnostics separate from command data.
         write: chunk => {
           stderr += chunk;
         }
       },
       fetch
     },
-    // Возвращает текст, записанный с момента создания экземпляра.
+    // Returns text written since this instance was created.
     get stdout() {
       return stdout;
     },
-    // Возвращает накопленную диагностику, включая запись после await.
+    // Returns accumulated diagnostics, including writes after await.
     get stderr() {
       return stderr;
     },
@@ -51,11 +51,11 @@ function output(root) {
   };
 }
 
-// Создаёт изолированный проект с проверяемым архивом и ожидаемым CSS.
+// Creates an isolated project with the archive to verify and the expected CSS.
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), 'antd-cli-'));
   roots.push(root);
-  // Пишет данные теста, сохраняя подготовленные байты архива без перекодирования.
+  // Writes test data while preserving the prepared archive bytes without re-encoding them.
   const put = async (path, content) => {
     const target = join(root, path);
     await mkdir(dirname(target), { recursive: true });
@@ -298,7 +298,7 @@ describe('Developer CLI', () => {
       bad.fetch.mockResolvedValue(
         {
           ok: true,
-          // Изменённые байты заставляют CLI отвергнуть архив после успешного HTTP-ответа.
+          // Modified bytes make the CLI reject the archive after a successful HTTP response.
           arrayBuffer: async () => Buffer.from('tampered archive')
         }
       );
@@ -314,7 +314,7 @@ describe('Developer CLI', () => {
       const good = output(root);
       good.fetch.mockResolvedValue({
         ok: true,
-        // Возвращает именно тот архив, хеш которого записан в provenance fixture.
+        // Returns the archive whose hash is recorded in the provenance fixture.
         arrayBuffer: async () => archive
       });
       await runCommands(['css', 'avatar', '--fetch', '--check'], good.context);

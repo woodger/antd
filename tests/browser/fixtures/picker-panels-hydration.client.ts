@@ -11,7 +11,7 @@ const picker = hydrate(PickerPanelFixtures, {
 });
 root.dataset.hydrated = 'true';
 
-/** Снимает владельца, чтобы проверить, что ни одна панель не осталась в portal. */
+/** Removes the owner to check that no panel is left in the portal. */
 function disposePanelFixture() {
   return unmount(picker);
 }

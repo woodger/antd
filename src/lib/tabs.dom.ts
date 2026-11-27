@@ -1,7 +1,7 @@
 import type { TabsIndicatorOffset } from './tabs-indicator.engine';
 import type { TabsScrollInfo } from './tabs.types';
 
-/** Публичный native onTabClick сохраняет MouseEvent и при вызове из custom tab bar. */
+/** Public native onTabClick preserves MouseEvent and when called from custom tab bar. */
 export function getTabsClickEvent(
   event: MouseEvent | KeyboardEvent,
   root: HTMLElement | undefined
@@ -30,7 +30,7 @@ export function getTabsClickEvent(
     currentTarget: { get: () => event.currentTarget }
   });
   click.getModifierState = event.getModifierState.bind(event);
-  // DOM-методам нужен собственный Event receiver; отмена затрагивает и исходную клавиатуру.
+  // DOM methods need the native Event receiver. Cancellation also affects the underlying keyboard event.
   for (const method of ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'] as const) {
     const original = click[method].bind(click);
     click[method] = () => {
@@ -145,7 +145,7 @@ export function connectTabsNav(
     resize.observe(tab);
 
   const attributes = new MutationObserver(records => {
-    // Svelte может повторно записать тот же class при переносе фокуса в More.
+    // Svelte can re-write the same class when transferring the focus to More.
     if (!records.some(record => record.oldValue !== root.getAttribute(record.attributeName!))) {
       return;
     }
@@ -165,7 +165,7 @@ export function connectTabsNav(
   };
 }
 
-/** Сохраняет native scroll; React transform имеет противоположный знак на той же физической оси. */
+/** Saves native scroll; React transform has the opposite sign on the same physical axis. */
 export function connectTabsScroll(
   viewport: HTMLElement,
   vertical: boolean,

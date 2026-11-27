@@ -58,7 +58,7 @@ for (const sample of reference.cases) {
     const { gap, ...source } = sample.snapshot;
 
     await expect.poll(() => snapshot(page)).toEqual(source);
-    // Source округляет координаты вниз; высоты React и native panel различаются.
+    // Source rounds the coordinates down; the heights of React and the native panel differ.
     const geometry = await page.locator(surface).evaluate((popup, placement) => {
       const bounds = document.querySelector('.ant-picker')!.getBoundingClientRect();
       const floating = popup.getBoundingClientRect();
@@ -237,7 +237,7 @@ for (const component of ['date', 'date-range', 'time', 'time-range']) {
       await entries(page).first().click();
 
       await expect(page.locator(surface)).toBeVisible();
-      // Native panel удаляется при закрытии; retained state rc-trigger остаётся отдельным пробелом.
+      // Native panel is removed when closed; retained state rc-trigger remains a separate space.
       await expect(page.locator('[data-picker-count]')).toHaveText('0');
       await expect(page.locator(surface)).toHaveCount(1);
     }

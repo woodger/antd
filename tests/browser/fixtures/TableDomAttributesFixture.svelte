@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Сопоставляет атрибуты контейнера, таблиц и их подписей до и после обновления.
+  // Compares the attributes of the container, tables and their labels before and after the update.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type TableBodyRenderInfo, type TableColumn, type TableElementRenderInfo,
@@ -36,7 +36,7 @@
   const caption = $derived(captionOverride === undefined
     ? readCaption(profile.caption) : captionOverride);
 
-  /** Повторяет смену переданных props, включая снятие части атрибутов. */
+  /** Repeats the change of transferred props, including the removal of part of the attributes. */
   function readAttributes(changed: boolean): Partial<TableProps<Row>> {
     const data = changed ? {
       id: 'updated-owner', 'data-probe-count': 1, 'data-probe-flag': true
@@ -59,7 +59,7 @@
     return { ...data, ...aria };
   }
 
-  /** Использует готовый snippet для вложенной разметки вместо строки HTML. */
+  /** Uses a ready-made snippet for nested markings instead of line HTML. */
   function readCaption(kind: string): TableProps<Row>['caption'] {
     switch (kind) {
       case 'rich': return richCaption;

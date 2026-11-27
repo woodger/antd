@@ -31,7 +31,7 @@ export async function snapshotWatermarkTheme() {
     const image = new Image();
     image.src = url;
     await image.decode();
-    // Читается копия PNG, режим production Canvas не меняется.
+    // Reading copy PNG, production Canvas mode does not change.
     const copy = document.createElement('canvas');
     copy.width = image.width;
     copy.height = image.height;

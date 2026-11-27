@@ -211,7 +211,7 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
       }
       expect(source.cleanup.callbacks).toEqual(source.steps.at(-1)!.view.events);
       if (sample.id === 'select-multiple-callbacks') {
-        // Дополнительная Native lifecycle boundary: mapped grouped multiple after hydration.
+        // Additional Native lifecycle boundary: mapped grouped multiple after hydration.
         await act(page, { type: 'props', set: { dataset: 'mapped', mapping: 'mapped' } });
         await act(page, { type: 'click' });
         await act(page, { type: 'choose', text: 'Beta' });

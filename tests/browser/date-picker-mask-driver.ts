@@ -1,5 +1,5 @@
-// Воспроизводит физические действия для маски DatePicker. Журнал различает
-// состояние сразу после каждого подшага и после стабилизации страницы.
+// Reproduces physical actions for mask DatePicker. The journal distinguishes the state immediately
+// after each step and after stabilizing the page.
 import assert from 'node:assert/strict';
 import type { Page } from '@playwright/test';
 import { expandAction } from './date-picker-mask-cases.mjs';
@@ -7,24 +7,24 @@ import type { MaskAction, MaskSample, MaskSubstepCommand } from './date-picker-m
 import { readNativeMask, readNativeMaskProducers } from './date-picker-mask-metrics.mjs';
 import { readNativeMaskPoint, type NativeMaskPoint } from './date-picker-mask-assertions';
 
-// Преобразует снимок browser realm после проверки его формы.
+// Converts the browser realm photo after checking its form.
 export const readMask = async (page: Page) => {
   const snapshot = await page.evaluate(readNativeMask);
   return readNativeMaskPoint(snapshot);
 };
 
-// Считывает события после cursor из глобального журнала fixture.
+// Reveals events after cursor from the global fixture magazine.
 export const readMaskProducers = (page: Page, cursor: number) => page.evaluate(
   readNativeMaskProducers,
   cursor
 );
-// Даёт выполниться двум кадрам и коротким таймерам обновления выделения.
+// Allows you to execute two frames and short selection update timers.
 async function drainMask(page: Page) {
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => {
     requestAnimationFrame(() => setTimeout(resolve, 25));
   })));
 }
-// Ждёт несколько последовательных повторов того же состояния.
+// There are several consecutive repetitions of the same state.
 export async function settleMask(page: Page) {
   let previous = '';
   let stable = 0;
@@ -40,7 +40,7 @@ export async function settleMask(page: Page) {
   }
   throw Error('Complete Native mask scoped observation did not settle');
 }
-// Фиксирует дату и viewport до загрузки каждой вариации ввода.
+// Fixes the date and viewport before downloading each input variation.
 export async function openMask(page: Page, sample: MaskSample) {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
@@ -59,7 +59,7 @@ export interface MaskSubstepRead {
   actual: NativeMaskPoint;
 }
 
-// Исполняет физические команды в порядке сценария и связывает итог с последним подшагом.
+// Performs physical commands in the order of the script and links the result with the last step.
 export async function actMask(
   page: Page,
   action: MaskAction,
@@ -174,7 +174,7 @@ export async function actMask(
   return { scope: 'macro' as const, index, action, before, substeps, afterCall, afterCallSource, actual };
 }
 
-// Снимает координаты и отступы прямо в browser realm для точного hit-test.
+// Removes the coordinates and indentations directly into browser realm for accurate hit-test.
 function readEditorGeometry(node: Element) {
   const box = node.getBoundingClientRect();
   const css = getComputedStyle(node);
@@ -198,7 +198,7 @@ function readEditorGeometry(node: Element) {
   };
 }
 
-// Фиксирует состояние до и после teardown, затем снимает наблюдение за событиями.
+// Fix the condition before and after teardown, then removes the observation of the events.
 export async function disposeMask(page: Page, hooks?: {
   beforeUnmount?: (point: NativeMaskPoint) => void | Promise<void>;
   afterCleanup?: (point: NativeMaskPoint) => void | Promise<void>;

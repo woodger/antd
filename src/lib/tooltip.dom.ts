@@ -1,9 +1,9 @@
-/** Оставляет встроенную подсказку в top layer открытого нативного диалога. */
+/** Leaves a built-in prompt in the top layer of an open native dialogue. */
 export function defaultTooltipContainer(anchor: HTMLElement) {
   return anchor.closest<HTMLDialogElement>('dialog:modal') ?? anchor.ownerDocument.body;
 }
 
-/** Добавляет open classes без замены caller class; cleanup удаляет только собственные tokens. */
+/** Adds open classes without replacing caller class; cleanup removes only its own tokens. */
 export function connectTooltipOpenClass(element: Element, className: string): () => void {
   const hadClass = element.hasAttribute('class');
   const requested = className.split(/\s+/).filter(Boolean);
@@ -30,7 +30,7 @@ export function connectTooltipOpenClass(element: Element, className: string): ()
 }
 
 export function connectTooltipDescription(element: Element, id: string): () => void {
-  // ARIA хранит IDREF tokens; пробелы в caller id не должны зациклить observer.
+  // ARIA stores IDREF tokens; gaps in caller id must not loop observer.
   const requested = id.split(/\s+/).filter(Boolean);
   const owned = new Set<string>();
 

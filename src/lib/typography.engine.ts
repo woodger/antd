@@ -28,7 +28,7 @@ export function typographyTooltip(
   return { title: value, options: {} };
 }
 
-/** Как rc-util toArray: вложенные массивы раскрываются, пустые и boolean nodes пропускаются. */
+/** As rc-util toArray: nested arrays are revealed, blank and boolean nodes are missed. */
 export function typographyNodes(value: TypographyContent): Exclude<
   TypographyContent, readonly TypographyContent[] | boolean | null | undefined
 >[] {
@@ -48,7 +48,7 @@ export function typographyNodeLength(value: TypographyContent): number {
   ), 0);
 }
 
-/** Slice использует UTF-16, как исходный String.slice; snippet и bigint считаются одним узлом. */
+/** Slice uses UTF-16 as the original String.slice; snippet and bigint are considered one node. */
 export function typographySlice(value: TypographyContent, length: number): TypographyContent[] {
   const output: TypographyContent[] = [];
   let remaining = length;

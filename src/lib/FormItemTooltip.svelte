@@ -14,7 +14,7 @@
   let { icon, children, ...settings } = $derived(options);
   let trigger = $derived(settings.trigger ?? config.tooltip?.trigger ?? 'hover');
   let actions = $derived<readonly TooltipTrigger[]>(typeof trigger === 'string' ? [trigger] : trigger);
-  // Общий getter может вернуть ShadowRoot; TooltipPopup получает его через config без сужения типа.
+  // The shared getter can return a ShadowRoot. TooltipPopup receives it through config without narrowing the type.
   let popupContainer = $derived(settings.getPopupContainer
     ?? (config.getPopupContainer ? undefined : defaultContainer));
 
@@ -31,7 +31,7 @@
 </script>
 
 <style>
-  /* Native Tooltip shell не меняет flex/inline геометрию исходного label. */
+  /* The native Tooltip wrapper preserves the original label's flex and inline geometry. */
   :global([data-ant-form-item] .ant-tooltip-trigger:has(> [data-ant-form-tooltip])) { display: contents; }
   .anticon {
     display: inline-flex;
@@ -55,7 +55,7 @@
     {#if icon}{@render icon()}
     {:else if children}<RenderContent value={children} />
     {:else}
-      <!-- QuestionCircleOutlined из UMD Ant Design 6.6.8; MIT, vendor/LICENSE.ant-design-icons. -->
+      <!-- QuestionCircleOutlined from the Ant Design 6.6.8 UMD bundle, under MIT. See vendor/LICENSE.ant-design-icons. -->
       <span class="anticon anticon-question-circle" aria-hidden="true">
         <svg viewBox="64 64 896 896" focusable="false" width="1em" height="1em"
           fill="currentColor" aria-hidden="true">

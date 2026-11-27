@@ -1,8 +1,8 @@
-// Согласует программное выравнивание колонок и ручную прокрутку. Таймер
-// выбора принадлежит колонке и отменяется при её удалении.
+// Coordinates programmatic column alignment with manual scrolling. The column owns its selection
+// timer and cancels it on removal.
 import type { TimePickerOption } from './time-picker.engine';
 
-/** Через 300 мс выбирает ближайшую доступную строку. При равенстве остаётся первая. */
+/** After 300 ms chooses the nearest available line. With equality remains the first one. */
 export function createTimeColumnScrollSelection(
   column: HTMLUListElement,
   disabled: (item: HTMLElement, index: number) => boolean,
@@ -10,13 +10,13 @@ export function createTimeColumnScrollSelection(
 ) {
   let timer: ReturnType<typeof setTimeout> | undefined;
 
-  /** Отбрасывает ожидающий выбор при переустановке позиции или удалении колонки. */
+  /** Discards the pending choice when reinstalling the position or removing the column. */
   function cancel() {
     clearTimeout(timer);
     timer = undefined;
   }
 
-  /** Перезапускает ожидание, пока продолжается ручная прокрутка. */
+  /** Restarts the wait while the manual scroll continues. */
   function schedule() {
     cancel();
     timer = setTimeout(() => {
@@ -50,7 +50,7 @@ export function createTimeColumnScrollSelection(
   return { cancel, schedule };
 }
 
-/** Scroll alignment и delayed selection TimeColumn; каждый вызов владеет listeners/raf/timer. */
+/** Scroll alignment and delayed selection TimeColumn; each call owns listeners/raf/timer. */
 export function connectTimePickerColumn(
   column: HTMLUListElement,
   selected: number | 'am' | 'pm' | null,
@@ -71,7 +71,7 @@ export function connectTimePickerColumn(
     (_, index) => onChange(options[index].value)
   );
 
-  /** Снимает кадр выравнивания при совпадении позиции или очистке. */
+  /** Removes the frame of alignment when the position coincides or clearing. */
   function stopScroll() {
     view.cancelAnimationFrame(frame);
     scrolling = false;
@@ -81,7 +81,7 @@ export function connectTimePickerColumn(
   const target = selected === null ? null
     : column.querySelector<HTMLElement>(`[data-value="${selected}"]`);
 
-  /** Подводит выбранную строку к верху колонки, пока её разметка доступна. */
+  /** Subdues the selected line to the top of the column while its markings are available. */
   function align() {
     stopScroll();
     if (disposed || !first || !target) {
@@ -117,7 +117,7 @@ export function connectTimePickerColumn(
     frame = view.requestAnimationFrame(align);
   }
 
-  /** Программное выравнивание не запускает выбор элемента. */
+  /** Software alignment does not start the selection of an element. */
   function handleScroll() {
     if (scrolling || !changeOnScroll()) {
       selection.cancel();
@@ -130,7 +130,7 @@ export function connectTimePickerColumn(
   column.addEventListener('scroll', handleScroll);
   align();
 
-  /** Убирает обработчик и отменяет отложенные операции при смене колонки. */
+  /** Removes the handler and cancels the delayed operations when the column is changed. */
   return () => {
     disposed = true;
     stopScroll();

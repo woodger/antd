@@ -46,7 +46,7 @@ for (const id of new Set(reference.cases.map(({ id }) => id))) {
         await page.clock.runFor(sample.phase === 'waiting' ? 80 : 600);
       }
       const { id: _id, phase: _phase, ...expected } = sample;
-      // В upstream validator запускается после unmount; здесь его таймер отменён.
+      // In upstream validator is launched after unmount; here its timer is canceled.
       if (id === 'unmount' && sample.phase === 'settled') expected.calls = [];
       await expect.poll(() => snapshot(page)).toEqual(expected);
     }

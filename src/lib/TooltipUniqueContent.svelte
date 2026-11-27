@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Новый владелец монтирует свой Snippet с его логическим контекстом. Поверхность остаётся общей.
+  // The new owner mounts its own Snippet with its logical context. The surface stays shared.
   import { setContext, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
   import { provideCompact } from './space-compact-context';
@@ -16,7 +16,7 @@
   if (ownerContext) {
     for (const [key, value] of ownerContext) setContext(key, value);
   }
-  // Карточка подавляет compact-контекст trigger так же, как отдельный Popover.
+  // The card suppresses the trigger's compact context, just like a standalone Popover.
   if (untrack(() => clearCompact)) provideCompact(null);
   isolateTooltipUnique();
 </script>

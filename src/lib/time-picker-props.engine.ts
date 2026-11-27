@@ -1,5 +1,5 @@
-// Отделяет настройки часов от атрибутов поля. Семантические callbacks получают
-// исходные props владельца до нормализации.
+// Separates the clock settings from the field attributes. Semantic callbacks receive the original
+// props owners before normalization.
 import type { DatePickerProps, DatePickerTimeConfig } from './date-picker.types';
 import type { TimePickerRuntimeProps } from './time-picker.types';
 
@@ -16,7 +16,7 @@ const timeOnly = new Set([
 type ClockColumns = Omit<DatePickerTimeConfig, 'format' | 'defaultOpenValue'
   | 'disabledTime' | 'showNow'>;
 
-/** Выделяет параметры колонок, общие для одиночного поля и обеих границ диапазона. */
+/** Distinguish the parameters of the columns, common for a single field and both boundaries of the range. */
 export function splitPickerClock<Props extends ClockColumns>(props: Props) {
   const {
     showHour, showMinute, showSecond, showMillisecond, use12Hours,
@@ -33,7 +33,7 @@ export function splitPickerClock<Props extends ClockColumns>(props: Props) {
   };
 }
 
-/** Объект showTime перекрывает параметры поля, в том числе собственным undefined. */
+/** Object showTime overlaps the field parameters, including its own undefined. */
 export function mergeShowTime<Config extends object>(clock: Config, showTime?: boolean | Config) {
   if (!showTime) {
     return false;
@@ -42,11 +42,11 @@ export function mergeShowTime<Config extends object>(clock: Config, showTime?: b
   return typeof showTime === 'object' ? { ...clock, ...showTime } : clock;
 }
 
-/** Общие native/input props без утечки time-only callbacks и renderers в DOM. */
+/** Shared native and input props. Time-only callbacks and renderers stay out of the DOM. */
 export function timePickerSharedProps<DateType extends object>(
   props: TimePickerRuntimeProps<DateType>
 ): Omit<DatePickerProps<DateType>, 'picker'> {
-  // После удаления time-only полей оставшаяся часть имеет общий контракт DatePickerProps.
+  // After removing time-only fields, the remaining props follow the shared DatePickerProps contract.
   const shared = Object.fromEntries(
     Object.entries(props).filter(([key]) => !timeOnly.has(key))
   ) as DatePickerProps<DateType>;

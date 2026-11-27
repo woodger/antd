@@ -113,8 +113,8 @@
         return;
       }
 
-      // Владелец function binding может отклонить выбор после native radio activation.
-      // Значения участников хранят тип: 0 и '0' имеют одинаковый DOM value.
+      // A function binding's owner can reject selection after native radio activation. Member
+      // values retain their types because 0 and '0' share the same DOM value.
       if (selected !== next) {
         for (const [input, optionValue] of members) input.checked = optionValue === selected;
       }

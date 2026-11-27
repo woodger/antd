@@ -7,7 +7,7 @@ if (!target) {
   throw new Error('Missing server-rendered Table selection fixture');
 }
 
-// Серверный input остаётся доступен до команды проверки гидратации.
+// Server input remains available before the hydration check command.
 target.addEventListener('hydrate-table-selection', () => {
   const profileId = new URLSearchParams(location.search).get('profile') ?? 'controlled';
   hydrate(TableSelectionFixture, { target, props: { profileId }, recover: false });

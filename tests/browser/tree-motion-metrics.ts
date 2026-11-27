@@ -1,4 +1,4 @@
-/** Независимая проекция реального Source/Native DOM; CSS heights читаются из inline phases. */
+/** Independent projection of real Source/Native DOM; CSS heights are read from inline phases. */
 export function readTreeMotion(prefix: string) {
   const root = document.querySelector(`.${prefix}`);
   const group = root?.querySelector<HTMLElement>(`.${prefix}-treenode-motion`);

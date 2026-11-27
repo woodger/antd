@@ -47,7 +47,7 @@
     Object.assign(window, { modalSemanticInputs: inputs });
   });
 
-  /** Проецирует вход в semantic callback на те же поля, что в измерениях UMD. */
+  /** Processes the entrance to the semantic callback to the same fields as in measurements UMD. */
   function storeInput(source: string, props: ModalProps) {
     const { open, width, prefixCls, centered, focusable, mask, zIndex, loading, closable } = props;
     inputs[source] = {
@@ -63,7 +63,7 @@
     };
   }
 
-  /** Сопоставляет строковые CSS-слои с объектами style в исходном замере. */
+  /** Matches string CSS-layers with style objects in the original measurement. */
   function styles(source: string, border: number): ModalSemanticSlots {
     return Object.fromEntries(slots.map(slot => [
       slot, `--winner:${source};`
@@ -72,7 +72,7 @@
     ]));
   }
 
-  /** Помечает владельца класса на каждой части DOM. */
+  /** Marks the owner of the class on each part of DOM. */
   function classes(source: string): ModalSemanticSlots {
     return Object.fromEntries(slots.map(slot => [slot, `${source}-${slot}`]));
   }
@@ -91,7 +91,7 @@
     }
   } : undefined;
 
-  /** Функциональный профиль меняет классы тела при обновлении width. */
+  /** The functional profile changes body classes when updating the width. */
   function localOptions(): ModalSurfaceProps {
     if (profile.local === 'object') {
       return { classNames: classes('local'), styles: styles('local', 3) };
@@ -156,7 +156,7 @@
     events.push(open);
   }
 
-  /** Открывает контекстную панель через её обычный контроллер. */
+  /** Opens the context panel through its normal controller. */
   function confirm() {
     handle = modal.confirm({
       ...shared,

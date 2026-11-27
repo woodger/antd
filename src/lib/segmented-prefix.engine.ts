@@ -4,7 +4,7 @@ const rootStates = new Set([
   '', '-rtl', '-vertical', '-block', '-sm', '-lg', '-shape-round', '-disabled'
 ]);
 
-/** Имена variables/marker сохраняются; defaults и root states ограничены своим control. */
+/** The names variables/marker are saved; defaults and root states are limited by their control. */
 export function getSegmentedPrefixCss(prefix: string) {
   if (prefix === 'ant-segmented') {
     return undefined;

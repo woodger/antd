@@ -1,10 +1,10 @@
-// Создаёт открытую панель с opaque adapter до появления браузерного DOM.
+// Creates an open panel with opaque adapter before the browser DOM.
 import { render } from 'svelte/server';
 import GeneratedPickerFixtures, {
   type GeneratedPickerHydrationProfile
 } from './GeneratedPickerFixtures.svelte';
 
-/** Рендерит ту же форму, которую клиент гидратирует без замены узлов. */
+/** Renders the same form the client hydrates without replacing nodes. */
 export function renderGeneratedPickerFixture(profile: GeneratedPickerHydrationProfile = 'open-range') {
   return render(GeneratedPickerFixtures, { props: { profile } });
 }

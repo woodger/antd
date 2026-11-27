@@ -47,7 +47,7 @@ for (const source of [false, true]) {
               && frame.props.zIndex == null;
             const buttons = expected.buttons.map(button => ({
               ...button,
-              // Native disabled блокирует также принудительно смонтированные кнопки.
+              // Native disabled also blocks forcibly mounted buttons.
               disabled: Boolean(frame.props.disabled || button.disabled)
             }));
 

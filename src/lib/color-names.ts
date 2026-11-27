@@ -1,4 +1,4 @@
-// Каталог FastColor 3.0.1 в base36; см. vendor/LICENSE.fast-color.
+// Base-36 FastColor 3.0.1 lookup table. See vendor/LICENSE.fast-color.
 export const colorNames: Readonly<Record<string, string>> = {
   aliceblue: '9ehhb',
   antiquewhite: '9sgk7',

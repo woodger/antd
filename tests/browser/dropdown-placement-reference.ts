@@ -1,4 +1,4 @@
-// Типизирует исходные настройки и браузерные наблюдения Dropdown 6.6.8.
+// Tipping the original settings and browser observations Dropdown 6.6.8.
 import type { DropdownProps } from '@woodger/antd';
 import context from './fixtures/ant-design-dropdown-context-reference.json' with { type: 'json' };
 import interactions from './fixtures/ant-design-dropdown-interactions-reference.json' with { type: 'json' };
@@ -63,7 +63,7 @@ export interface PlacementCase {
   frames: PlacementFrame[];
 }
 
-// JSON не сохраняет literal-типы tuple. Корпус закреплён package/SSR-проверкой.
+// JSON does not retain literal tuple types. The hull is fixed by package/SSR- verification.
 export const dropdownPlacementCases = [
   ...context.passes[0], ...placement.passes[0], ...interactions.passes[0]
 ] as unknown as readonly PlacementCase[];

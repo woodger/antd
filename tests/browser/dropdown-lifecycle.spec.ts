@@ -7,17 +7,17 @@ import formContext from './fixtures/ant-design-dropdown-form-context-reference.j
 
 const fixture = '/?fixture=dropdown-lifecycle&sample=';
 
-// Программное обновление props владельцем сохраняет текущий фокус.
+// Software update props by the owner retains the current focus.
 async function updateFixture(page: Page, action: string) {
   await page.locator('#' + action).evaluate((button: HTMLButtonElement) => button.click());
 }
 
-// Сравнивает события видимости и lifecycle. Svelte snippet обновляется самостоятельно.
+// Compares visibility events and lifecycle. Svelte snippet is updated on its own.
 function nativeEvents(events: unknown[][]) {
   return events.filter(([kind]) => kind !== 'render');
 }
 
-// Вызывает публичный редактируемый элемент, команду или обновление владельца.
+// Causes a public editable item, command, or owner upgrade.
 async function perform(page: Page, action: string) {
   if (action === 'initial') return;
 
@@ -34,7 +34,7 @@ async function perform(page: Page, action: string) {
   }
 }
 
-// Надёжно измеряет видимость и состояние native input без зависимости от role popup.
+// Reliably measures the visibility and state of native input without dependence on role popup.
 function readElement(locator: Locator) {
   return locator.evaluate(node => ({
     tag: node.tagName,
@@ -85,7 +85,7 @@ for (const { profile, frames } of dropdownContentCases) {
 
       if (state.popup) {
         expect(await popup.evaluate(node => node.closest('#portal')?.id ?? null)).toBe(state.target);
-        // Состояние внутри сохранённого Svelte Snippet продолжает обновляться в закрытой панели.
+        // The condition inside the stored Svelte Snippet continues to be updated in the closed panel.
         const text = state.text?.replace(/Revision \d+/, `Revision ${revision}`);
         await expect.poll(async () => (await popup.textContent())?.replace(/\s+/g, ''))
           .toBe(text?.replace(/\s+/g, ''));
@@ -189,7 +189,7 @@ test('Dropdown editor inherits Form.Item feedback and keeps its own value', asyn
   const parentChoice = page.locator('#parent-choice');
   const expected = formContext.passes[0];
 
-  // Сканирует оформление и привязку одного редактора, как исходная проба React.
+  // Scans the design and binding of one editor as the original sample of React.
   async function readField() {
     const state = await editor.evaluate((input: HTMLInputElement) => ({
       value: input.value,

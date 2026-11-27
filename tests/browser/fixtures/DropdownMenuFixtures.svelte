@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Проверяет публичные menu options и наблюдаемый порядок callback между Dropdown и Menu.
+  // Verifies public menu options and the observed callback order between Dropdown and Menu.
   import {
     ConfigProvider, Dropdown, type DropdownMenuClickInfo, type DropdownMenuEntry,
     type DropdownMenuProps, type DropdownSlots, type MenuSelectInfo
@@ -77,14 +77,14 @@
     } : {}
   });
 
-  // Дополняет журнал только публичными данными и типом нативного события.
+  // Complements the journal only with public data and the type of native event.
   function record(kind: string, info: DropdownMenuClickInfo | MenuSelectInfo) {
     const selected = 'selectedKeys' in info ? info.selectedKeys : undefined;
     events.push([kind, info.key, info.keyPath, info.domEvent.type,
       info.domEvent.defaultPrevented, selected ?? null]);
   }
 
-  // Две реализации получают одинаковые keys и наблюдаемые события команд.
+  // Two implementations receive the same keys and observed team events.
   function buildItems(sample: Profile): DropdownMenuEntry[] {
     function command(key: string | number, label: string, disabled = false): DropdownMenuEntry {
       return {
@@ -114,7 +114,7 @@
     return result;
   }
 
-  // Управляемый сценарий принимает trigger и отклоняет запрос закрытия из команды.
+  // A managed script accepts the trigger and rejects the closing request from the team.
   function getOpen() {
     return profile.controlled || profile.external ? ownerOpen : undefined;
   }
@@ -144,7 +144,7 @@
     return target;
   }
 
-  // Так же, как внешний потребитель, подключает стили в открытый ShadowRoot.
+  // Just like an external consumer, connects the styles into the open ShadowRoot.
   function connectShadow(element: HTMLDivElement) {
     const root = element.attachShadow({ mode: 'open' });
     shadowRoot = root;

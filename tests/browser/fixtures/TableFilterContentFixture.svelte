@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Наблюдает подписи отдельно от выбранных значений, запросов и событий Table.
+  // Observes labels separately from the selected values, queries and events Table.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type RenderEmptyContent, type TableChange, type TableColumn,
@@ -42,7 +42,7 @@
     filters: TableFilters; action: TableChange<Row>['action']; rows: string[];
   }[]>([]);
 
-  /** Публикует запрос после вычисления Table и сохраняет исходную ссылку на подпись. */
+  /** Publishes the query after computing Table and preserves the original label link. */
   function noteSearch(query: string, text: TableFilterOption['text']) {
     const node = text === richLabel;
     const entry = JSON.stringify({ query, node, type: node ? 'strong' : null });
@@ -56,7 +56,7 @@
     });
   }
 
-  /** Ищет по богатой подписи только через пользовательское правило. */
+  /** Looks for a rich label only through the user rule. */
   function searchLabels(query: string, option: TableFilterOption) {
     if (option.value === 'rich') {
       noteSearch(query, option.text);
@@ -71,7 +71,7 @@
       && String(text).toLowerCase().includes(needle);
   }
 
-  /** Записывает подтверждённый критерий и обработанные строки. */
+  /** Writes a confirmed criterion and processed strings. */
   function noteChange(change: TableChange<Row>) {
     changes = [...changes, {
       filters: change.filters ?? {}, action: change.action,

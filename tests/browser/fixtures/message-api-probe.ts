@@ -1,5 +1,5 @@
-// Хранит записи наблюдений отдельных сценариев, чтобы browser-тест мог вызвать
-// настоящий handle за пределами жизненного цикла fixture-компонента.
+// Stores the recordings of observations of individual scenarios, so that the browser-test can cause
+// a real handle beyond the fixture-component life cycle.
 import type { MessageHandle, MessageSemanticProps } from '@woodger/antd';
 
 type MessageProbeEvent = (string | boolean)[];

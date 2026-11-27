@@ -1,15 +1,15 @@
 import type { AlertContent } from './alert.types';
 
 /**
- * Ошибка дочернего render/sync effect заменяет содержимое Alert; сброс — remount/key.
- * SSR ошибки не ловит.
+ * A child render or synchronous effect error replaces Alert content. Remounting or changing the key
+ * resets it. SSR errors propagate.
  */
 export interface AlertErrorBoundaryProps {
-  /** По умолчанию Error.toString(); null/undefined выбирают текст ошибки. */
+  /** Defaults to Error.toString(). null and undefined select the error text. */
   title?: AlertContent;
-  /** По умолчанию Error.stack из Svelte вместо React componentStack; выводится внутри pre. */
+  /** Defaults to Svelte Error.stack in place of the React componentStack. Renders inside pre. */
   description?: AlertContent;
   children?: AlertContent;
-  /** Применяется только к Alert при ошибке; здоровые children не получают wrapper/id. */
+  /** Applies only to the error Alert. Healthy children receive no wrapper or id. */
   id?: string;
 }

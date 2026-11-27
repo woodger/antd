@@ -10,12 +10,11 @@ export function snapshotSpinSource(prefix = 'ant-spin') {
   const description = root.querySelector(`.${prefix}-description`);
   const container = root.querySelector(`.${prefix}-container`);
   const custom = root.querySelector('[data-spin-custom]');
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const css = (node: Element | null, keys: string[]) => node && Object.fromEntries(
     keys.map(key => [key, getComputedStyle(node).getPropertyValue(key)])
   );
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element | null) => node && [...node.classList]
     .filter(name => !/^svelte-|^s-[\w-]{12}$|^css-|^ant-spin-css-var$|^spin-source-scope$/.test(name)).sort();
 

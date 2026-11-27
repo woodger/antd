@@ -11,7 +11,7 @@ for (const sample of reference.cases) {
       await page.getByRole('combobox', { name: 'Breadcrumb config preset', exact: true })
         .selectOption(sample.name);
       await page.mouse.move(1300, 1100);
-      // Source textContent оставлен сырым; сравниваются видимые trigger/separator fragments.
+      // Source textContent is left raw; compared visible trigger/separator fragments.
       const expected: ReturnType<typeof snapshotBreadcrumbConfiguration> = {};
       for (const [key, nodes] of Object.entries(sample.expected)) {
         expected[key] = [];

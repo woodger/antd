@@ -5,9 +5,9 @@ import type { InputAllowClear, InputCountConfig } from './input-count.types';
 import type { FormValidateStatus } from './form-error-list.types';
 
 export interface MentionsOption {
-  /** Текст для поиска и вставки. При отсутствии используется пустая строка. */
+  /** Text to search and insert. In the absence, an empty line is used. */
   value?: string;
-  /** Содержимое пункта подсказок. */
+  /** Contents of the point of prompts. */
   label?: RenderEmptyContent;
   key?: string | number;
   disabled?: boolean;
@@ -15,38 +15,38 @@ export interface MentionsOption {
   style?: string;
 }
 
-/** Данные штатного списка подсказок, доступные в popupRender. */
+/** Default list data available in popupRender. */
 export interface MentionsPopupRenderInfo {
-  /** CSS-префикс списка до суффикса `-menu`. */
+  /** CSS-prefix of the list to suffix `-menu`. */
   readonly prefixCls: string;
-  /** Варианты после фильтрации, в порядке навигации из textarea. */
+  /** Options after filtering, in order of navigation from textarea. */
   readonly options: readonly MentionsOption[];
-  /** Позиционирование и фаза открытия завершены. Управляет прокруткой активного пункта. */
+  /** Positioning and opening phase completed. Manages scrolling an active item. */
   readonly opened: boolean;
 }
 
-/** Выводит штатный список с возможностью изменить его параметры. */
+/** Renders the built-in list and allows its options to be changed. */
 export type MentionsPopupMenu = Snippet<[overrides?: Partial<MentionsPopupRenderInfo>]>;
 
-/** Оборачивает, настраивает или заменяет содержимое всплывающей панели. */
+/** Wraps, configures or replaces the contents of the pop-up panel. */
 export type MentionsPopupRender = Snippet<[menu: MentionsPopupMenu, info: MentionsPopupRenderInfo]>;
 
-/** Извлечение упоминаний по prefix и буквальному разделителю split. */
+/** Extract mentions on prefix and literal divider split. */
 export interface MentionsConfig {
   prefix?: string | readonly string[];
   split?: string;
 }
-/** Слоты обёртки, поля, панели подсказок и суффикса Mentions. */
+/** Slots of wrappers, fields, prompt panels and suffix Mentions. */
 export type MentionsSlots = Partial<Record<'root' | 'textarea' | 'popup' | 'suffix', string>>;
-/** Пустой status обозначает pristine FormItem; вне FormItem возможен undefined. */
+/** Empty status denotes pristine FormItem; outside FormItem possible undefined. */
 export interface MentionsSemanticProps extends Omit<MentionsProps, 'status'> {
   status?: FormValidateStatus;
 }
-/** Callback получает параметры экземпляра с разрешёнными disabled и status. */
+/** Callback receives the parameters of an instance with disabled and status allowed. */
 export type MentionsSemantic = MentionsSlots
   | ((info: { props: MentionsSemanticProps; }) => MentionsSlots | undefined);
 
-/** Настройки ConfigProvider.mentions, отдельно от параметров getMentions. */
+/** Settings ConfigProvider.mentions, separate from parameters getMentions. */
 export interface MentionsComponentConfig {
   variant?: MentionsProps['variant'];
   allowClear?: MentionsProps['allowClear'];
@@ -59,7 +59,7 @@ export interface MentionsEntity {
   prefix: string;
   value: string;
 }
-/** Textarea с поиском упоминаний у каретки и вставкой выбранного option. */
+/** Textarea looking for mentions from the carriage and inserting the selected option. */
 export interface MentionsProps extends Omit<
   HTMLTextareaAttributes,
   'value'
@@ -72,9 +72,9 @@ export interface MentionsProps extends Omit<
   | 'onblur'
   | 'onresize'
 >, MentionsConfig {
-  /** CSS prefix; не меняет текстовые triggers prefix. Empty/undefined наследуют ConfigProvider. */
+  /** CSS prefix; does not change text triggers prefix. Empty/undefined inherit ConfigProvider. */
   prefixCls?: string;
-  /** Полная строка textarea; offsets выделения измеряются в UTF-16. */
+  /** The full textarea string; offset offsets are measured at UTF-16. */
   value?: string;
   /** @defaultValue '' */
   defaultValue?: string;
@@ -86,17 +86,17 @@ export interface MentionsProps extends Omit<
   notFoundContent?: string | number | Snippet | null;
   /** @defaultValue 'bottom' */
   placement?: 'top' | 'bottom';
-  /** Выбирает сторону привязки popup к префиксу. Направление textarea задаёт dir. */
+  /** Selects the popup binding side to the prefix. The textarea direction sets the dir. */
   direction?: 'ltr' | 'rtl';
-  /** Имя CSSMotion для появления подсказок. Пустая строка отключает движение. */
+  /** The name CSSMotion for the appearance of clues. An empty line disables the movement. */
   transitionName?: string;
-  /** При открытом списке блокирует выбор клавишей Enter. По умолчанию следует loading. */
+  /** With an open list, you block the selection with the Enter key. By default, loading is followed. */
   silent?: boolean;
-  /** Автофокус при появлении редактора. Нативный autofocus имеет приоритет. */
+  /** Autofocus when the editor appears. Native autofocus has priority. */
   autoFocus?: boolean;
-  /** Настраивает подсчёт, мягкий предел и преобразование сверхлимитного ввода. */
+  /** Configures the calculation, the soft limit and the conversion of the ultra-limit input. */
   count?: InputCountConfig;
-  /** Нативный предел ввода. Перекрывает maxlength и действует независимо от count.max. */
+  /** Native limit of input. Overlaps maxlength and operates independently of count.max. */
   maxLength?: number;
   /** @defaultValue false */
   autoSize?: boolean | { minRows?: number; maxRows?: number; };
@@ -107,7 +107,7 @@ export interface MentionsProps extends Omit<
   /** @defaultValue 'outlined' */
   variant?: 'outlined' | 'borderless' | 'filled' | 'underlined';
   onChange?: (text: string) => void;
-  /** Поисковый текст и найденный prefix; сетевые запросы остаются у потребителя. */
+  /** Search text and found prefix; network queries remain with the consumer. */
   onSearch?: (text: string, prefix: string) => void;
   onSelect?: (option: MentionsOption, prefix: string) => void;
   onClear?: () => void;
@@ -120,17 +120,17 @@ export interface MentionsProps extends Omit<
   onPressEnter?: (event: KeyboardEvent) => void;
   onResize?: (size: { width: number; height: number; }) => void;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
-  /** Локальный контейнер; ConfigProvider.getPopupContainer не используется, как upstream. */
+  /** Local Container; ConfigProvider.getPopupContainer is not used as upstream. */
   getPopupContainer?: () => HTMLElement | ShadowRoot;
-  /** Получает штатный список и его параметры. Содержимое создаётся при каждом открытии. */
+  /** Receives the default list and its options. Content is created each time the popup opens. */
   popupRender?: MentionsPopupRender;
   classNames?: MentionsSemantic;
-  /** CSS-декларации по слотам. */
+  /** CSS-declarations on slots. */
   styles?: MentionsSemantic;
   class?: string;
   rootClassName?: string;
   /** @defaultValue '' */
   popupClassName?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

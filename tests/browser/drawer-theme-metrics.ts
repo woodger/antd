@@ -1,10 +1,10 @@
-/** Сверяет панель Drawer при одинаковом фокусе в поле, сохраняя native dialog семантику. */
+/** Checks the panel Drawer with the same focus in the field, preserving native dialog semantics. */
 export function snapshotDrawerTheme() {
   const root = document.querySelector('.ant-drawer');
   if (!root) {
     throw new Error('Drawer root is missing');
   }
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;
@@ -46,7 +46,7 @@ export function snapshotDrawerTheme() {
   };
 }
 
-/** Все объявления из component registration rule, включая component aliases. */
+/** All ads are from component registration rule, including component aliases. */
 export function snapshotDrawerThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-drawer');
   if (!root) {

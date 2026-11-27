@@ -29,7 +29,7 @@ type SourceTableLocale = Pick<TableLocale,
   triggerDesc: string;
 };
 
-/** Словарь Ant Design в исходной форме. ConfigProvider подключает его к компонентам Svelte. */
+/** Dictionary Ant Design in its original form. ConfigProvider connects it to components Svelte. */
 export interface AntDesignLocale {
   locale: string;
   Pagination?: Partial<SourcePaginationLocale>;

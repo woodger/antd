@@ -2,7 +2,7 @@ import template from './vendor/empty-prefix.css.js';
 
 const rootStates = new Set(['', '-normal', '-small', '-rtl']);
 
-/** Variables/marker общие; reset и state rules ограничены своим Empty root. */
+/** Variables/marker general; reset and regulations state are limited to their Empty root. */
 export function getEmptyPrefixCss(prefix: string) {
   if (prefix === 'ant-empty') {
     return undefined;

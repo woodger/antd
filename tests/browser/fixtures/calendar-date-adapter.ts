@@ -37,7 +37,7 @@ function startOfWeek(locale: string, value: Date) {
   return addDate(value, -((value.getUTCDay() - first + 7) % 7));
 }
 
-/** Собственный UTC Date adapter потребителя проверяет независимость generateCalendar от Day.js. */
+/** The consumer’s own UTC Date adapter checks independence generateCalendar from Day.js. */
 export const calendarDateAdapter: CalendarGenerateConfig<Date> = {
   getNow: () => new Date('2024-02-29T12:34:56.789Z'),
   getFixedDate: value => new Date(`${value}T00:00:00Z`),

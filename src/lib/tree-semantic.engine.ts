@@ -1,7 +1,7 @@
 import { mergeComponentSemantics } from './semantic-style.engine';
 import type { TreeConfig, TreeProps, TreeSemanticName } from './tree.types';
 
-/** Tree slots следуют provider/local порядку; native style остаётся на внешнем корне. */
+/** Tree slots follow provider/local order; native style remains on the outer root. */
 export function treeSemantics<Data extends object>(
   context: TreeConfig | undefined,
   props: TreeProps<Data>

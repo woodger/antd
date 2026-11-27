@@ -3,7 +3,7 @@ import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
 import type { TextAreaProps } from './textarea.types';
 import type { TooltipProps } from './tooltip.types';
 
-/** Scalar/array content сохраняет границы текста для JS ellipsis; snippet — цельный узел. */
+/** Scalar/array content preserves text boundaries for JS ellipsis; snippet is a whole node. */
 export type TypographyContent = string | number | bigint | boolean | null | undefined
   | Snippet | readonly TypographyContent[];
 export type TypographyType = 'secondary' | 'success' | 'warning' | 'danger';
@@ -13,7 +13,7 @@ export type TypographySemantic = TypographySlots | ((info: {
   props: TypographySemanticProps;
 }) => TypographySlots);
 
-/** PrefixCls и direction разрешены до callback; остальные props сохраняют входные значения. */
+/** PrefixCls and direction are allowed before callback; the remaining props save input values. */
 export interface TypographySemanticProps {
   prefixCls: string;
   direction: 'ltr' | 'rtl';
@@ -22,7 +22,7 @@ export interface TypographySemanticProps {
   [name: string]: unknown;
 }
 
-/** Настройки всего семейства Typography; локальные semantic styles имеют приоритет. */
+/** The settings of the entire Typography family; local semantic styles take precedence. */
 export interface TypographyConfig {
   class?: string;
   style?: string;
@@ -38,27 +38,27 @@ export interface TypographyLocale {
   collapse: string;
 }
 
-/** Async text вызывается при клике; falsy text использует исходный children fallback. */
+/** A click invokes async text. Falsy text uses the original children fallback. */
 export interface TypographyCopyConfig {
   text?: string | (() => string | Promise<string>);
   onCopy?: (event?: MouseEvent) => void;
-  /** Scalar задаёт обычную иконку; массив — обычную и успешную. Falsy icon включает default. */
+  /** Scalar sets an ordinary icon; the array is ordinary and successful. Falsy icon includes default. */
   icon?: TypographyContent;
   /**
-   * False отключает обе подсказки; массив задаёт обычную и успешную отдельно.
-   * Trigger/delays наследуют ConfigProvider.tooltip.
+   * False disables both clues; the array sets ordinary and successful separately. Trigger/delays
+   * inherits ConfigProvider.tooltip.
    */
   tooltips?: TypographyContent;
   format?: 'text/plain' | 'text/html';
   tabIndex?: number;
 }
 
-/** Editing управляется владельцем при заданном editing; callbacks сами не меняют children. */
+/** Editing is managed by the owner at a given editing; callbacks themselves do not change children. */
 export interface TypographyEditConfig {
   text?: string;
   editing?: boolean;
   icon?: TypographyContent;
-  /** Заголовок edit Tooltip; false скрывает. Trigger/delays наследуют ConfigProvider.tooltip. */
+  /** Title edit Tooltip; false hides. Trigger/delays inherited ConfigProvider.tooltip. */
   tooltip?: TypographyContent;
   onStart?: () => void;
   onChange?: (value: string) => void;
@@ -69,35 +69,35 @@ export interface TypographyEditConfig {
   autoSize?: TextAreaProps['autoSize'];
   /** @defaultValue ['icon'] */
   triggerType?: readonly ('icon' | 'text')[];
-  /** Null скрывает default enter icon. */
+  /** Null hides the default enter icon. */
   enterIcon?: Exclude<TypographyContent, Snippet> | Snippet<[className: string]>;
   tabIndex?: number;
 }
 
-/** Callback symbol возвращает content; для snippet используйте () => snippet. */
+/** Callback symbol returns content; for snippet use () = > snippet. */
 export interface TypographyEllipsisConfig {
   /** @defaultValue 1 */
   rows?: number;
   expandable?: boolean | 'collapsible';
   suffix?: string;
   symbol?: Exclude<TypographyContent, Snippet> | ((expanded: boolean) => TypographyContent);
-  /** Читается один раз. @defaultValue false */
+  /** It's read once. @defaultValue false */
   defaultExpanded?: boolean;
   expanded?: boolean;
   onExpand?: (event: MouseEvent, info: { expanded: boolean; }) => void;
   onEllipsis?: (ellipsis: boolean) => void;
-  /** Tooltip усечённого текста; trigger/delays наследуют ConfigProvider.tooltip. */
+  /** Tooltip truncated text; trigger/delays inherit ConfigProvider.tooltip. */
   tooltip?: TypographyContent | Omit<TooltipProps, 'children'>;
 }
 
-/** Нативный typography container; по умолчанию article. Блочные операции — у вариантов ниже. */
+/** Native typography container; by default article. Block operations - the options are lower. */
 export interface TypographyProps extends Omit<
   HTMLAttributes<HTMLElement>, 'children' | 'class' | 'style'
 > {
   children?: TypographyContent;
   component?: keyof HTMLElementTagNameMap;
   direction?: 'ltr' | 'rtl';
-  /** Непустой локальный prefix имеет приоритет; иначе используется ConfigProvider.prefixCls. */
+  /** A nonempty local prefix takes precedence. Otherwise uses ConfigProvider.prefixCls. */
   prefixCls?: string;
   classNames?: TypographySemantic;
   styles?: TypographySemantic;
@@ -107,17 +107,17 @@ export interface TypographyProps extends Omit<
   onClick?: HTMLAttributes<HTMLElement>['onclick'];
   onMouseEnter?: HTMLAttributes<HTMLElement>['onmouseenter'];
   onMouseLeave?: HTMLAttributes<HTMLElement>['onmouseleave'];
-  /** Bind:nativeElement указывает на rendered element; во время editing отсутствует. */
+  /** Bind:nativeElement indicates the rendered element; there is not available during editing. */
   nativeElement?: HTMLElement;
 }
 
-/** Общие операции Text/Title/Paragraph/Link, включая исходный порядок decorations. */
+/** General operations Text/Title/Paragraph/Link, including the original order of decorations. */
 export interface TypographyBlockProps extends TypographyProps {
   actions?: { placement?: 'start' | 'end'; };
   editable?: boolean | TypographyEditConfig;
   copyable?: boolean | TypographyCopyConfig;
   type?: TypographyType;
-  /** Типографическое оформление; не отключает кнопки действий. */
+  /** Typographic design; does not disable action buttons. */
   disabled?: boolean;
   ellipsis?: boolean | TypographyEllipsisConfig;
   code?: boolean;
@@ -129,21 +129,21 @@ export interface TypographyBlockProps extends TypographyProps {
   italic?: boolean;
 }
 
-/** Inline span; ellipsis не поддерживает rows, expandable и onExpand. */
+/** Inline span; ellipsis does not support rows, expandable and onExpand. */
 export interface TypographyTextProps extends Omit<TypographyBlockProps, 'component' | 'ellipsis'> {
   ellipsis?: boolean | Omit<TypographyEllipsisConfig, 'rows' | 'expandable' | 'onExpand'>;
 }
 
-/** Heading h1–h5; недопустимый runtime level использует h1. */
+/** Heading h1–h5; the unacceptable runtime level uses h1. */
 export interface TypographyTitleProps extends Omit<TypographyBlockProps, 'component' | 'strong'> {
   /** @defaultValue 1 */
   level?: 1 | 2 | 3 | 4 | 5;
 }
 
-/** Div с нижним отступом параграфа. */
+/** Div with lower indentation of the paragraph. */
 export interface TypographyParagraphProps extends Omit<TypographyBlockProps, 'component'> {}
 
-/** Native anchor; target=_blank получает rel по умолчанию noopener noreferrer. */
+/** Native anchor; target=_blank receives rel by default noopener noreferrer. */
 export interface TypographyLinkProps extends Omit<TypographyBlockProps, 'component' | 'ellipsis'>,
   Pick<HTMLAnchorAttributes, 'href' | 'target' | 'rel' | 'download' | 'hreflang' | 'ping' | 'referrerpolicy'> {
   ellipsis?: boolean;

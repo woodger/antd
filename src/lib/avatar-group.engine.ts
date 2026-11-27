@@ -1,7 +1,7 @@
 import type { AvatarGroupItem, AvatarGroupKey } from './avatar-group.types';
 
-// Сохраняет первую запись каждого ключа. Валидный maxCount задаёт границу между аватарами и
-// списком переполнения.
+// Keeps the first entry for each key. A valid maxCount sets the boundary between avatars and the
+// overflow list.
 export function getAvatarGroupItems(items: readonly AvatarGroupItem[], maxCount?: number) {
   const seen = new Set<AvatarGroupKey>();
   const unique = items.filter(item => {

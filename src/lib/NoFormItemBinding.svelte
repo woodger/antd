@@ -7,7 +7,7 @@
   const config = useConfig();
   const form = useForm();
 
-  // Label/пояснения остаются в Form, но не являются controls текущего поля.
+  // Labels and help text stay in Form without registering as controls for the current field.
   provideFormField(undefined);
   if (form) {
     const context: ConfigContext = Object.create(config, {

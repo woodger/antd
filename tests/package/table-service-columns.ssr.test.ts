@@ -4,12 +4,12 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableServiceColumnsFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-service-columns-reference.json';
 
-/** Находит значение атрибута в серверной ячейке стенда. */
+/** Finds an attribute value in a fixture's server-rendered cell. */
 function readAttribute(markup: string, name: string) {
   return markup.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Читает порядок физических ячеек и атрибуты без запуска браузерных эффектов. */
+/** Reads physical cell order and attributes without running browser effects. */
 function readCells(row: string) {
   return Array.from(row.matchAll(/<(td|th)\b([^>]*)>([\s\S]*?)<\/\1>/g),
     ([, , attrs, content]) => {
@@ -25,7 +25,7 @@ function readCells(row: string) {
     }).filter(cell => !cell.attrs.includes('aria-hidden="true"'));
 }
 
-/** Сопоставляет структуру шапки и ячеек с отдельным renderToString Ant Design. */
+/** Compares header and cell structure against a separate Ant Design renderToString. */
 function readTable(markup: string) {
   const head = markup.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? '';
   const headers = Array.from(head.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/g), row =>
@@ -76,7 +76,7 @@ for (const { profile, server } of source.cases) {
       return;
     }
 
-    // Виртуальные div Source сохраняют скрытые копии. У Native в слое только сам span.
+    // Upstream virtual divs retain hidden copies. Native keeps only the span in the layer.
     const overlay = expected.find(row => row.overlay && row.key === '0');
     const selectionCell = overlay?.cells.find(cell => cell[0] === '$select');
     expect(snapshot.rows.find(row => row.overlay)).toEqual({

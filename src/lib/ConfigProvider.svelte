@@ -84,34 +84,34 @@
   import { registerModalLocale } from './modal-locale.dom';
   import './styles.css';
 
-  /** Наследуемые настройки темы, локали и компонентов для дочернего дерева Svelte. */
+  /** Provides inherited theme, locale, and component settings to the Svelte subtree. */
   export interface ConfigProviderProps {
     children: Snippet;
-    /** Общий prefix классов; подключённые компоненты перечислены в README. */
+    /** Shared class prefix. See the README for the components that use it. */
     prefixCls?: string;
-    /** Пространство имён штатных иконок подтверждения Modal. */
+    /** Namespace for the default Modal confirmation icons. */
     iconPrefixCls?: string;
-    /** Nonce для стилей провайдера и компонентов. Объект заменяет родительский CSP. */
+    /** Nonce for provider and component styles. An explicit object replaces the parent's CSP settings. */
     csp?: CSPConfig;
-    /** Частично переопределяет родительскую тему; остальные поля наследуются. */
+    /** Partially overrides the parent theme. Other fields are inherited. */
     theme?: ThemeConfig;
-    /** Общее оформление полей и Card; локальные props, Form и component config имеют приоритет. */
+    /** Shared appearance for fields and Card. Local props, Form, and component configuration take precedence. */
     variant?: Variant;
-    /** Defaults Form; undefined наследует record, любой объект заменяет его целиком. */
+    /** Form defaults. undefined inherits the record, while any object replaces it in full. */
     form?: FormConfig;
-    /** Общие class/style обёртки App; локальные props имеют приоритет. */
+    /** Shared class and style for the App wrapper. Local props take precedence. */
     app?: AppConfig;
-    /** Общие классы и стили Statistic/Timer; собственный record заменяет родительский целиком. */
+    /** Shared classes and styles for Statistic and Timer. An explicit record replaces the parent's record in full. */
     statistic?: StatisticConfig;
-    /** Общие классы и semantic styles Timeline; собственный record заменяет родительский. */
+    /** Shared classes and semantic styles for Timeline. An explicit record replaces the parent's record. */
     timeline?: TimelineConfig;
-    /** Общие классы/стили Steps; собственный record заменяет родительский целиком. */
+    /** Shared classes and styles for Steps. An explicit record replaces the parent's record in full. */
     steps?: StepsConfig;
-    /** Общие class/style контейнера Layout; собственный record заменяет родительский. */
+    /** Shared class and style for the Layout container. An explicit record replaces the parent's record. */
     layout?: LayoutConfig;
     select?: SelectConfig;
     treeSelect?: TreeSelectConfig;
-    /** Tree/DirectoryTree slots; собственный record заменяет родительский целиком. */
+    /** Slots for Tree and DirectoryTree. An explicit record replaces the parent's record in full. */
     tree?: TreeConfig;
     datePicker?: DatePickerConfig;
     card?: CardConfig;
@@ -119,9 +119,9 @@
     descriptions?: DescriptionsConfig;
     anchor?: AnchorConfig;
     breadcrumb?: BreadcrumbConfig;
-    /** Классы и стили Dropdown. Undefined наследует record, объект заменяет его целиком. */
+    /** Dropdown classes and styles. undefined inherits the record, while an object replaces it in full. */
     dropdown?: DropdownConfig;
-    /** Классы, стили и значок раскрытия Menu. Undefined наследует родительский record. */
+    /** Menu classes, styles, and expand icon. undefined inherits the parent's record. */
     menu?: MenuConfig;
     mentions?: MentionsComponentConfig;
     button?: ButtonConfig;
@@ -134,9 +134,9 @@
     popover?: PopoverConfig;
     popconfirm?: PopconfirmConfig;
     drawer?: DrawerConfig;
-    /** Настройки маски и фокуса Modal и контекстных подтверждений. */
+    /** Mask and focus settings for Modal and contextual confirmations. */
     modal?: ModalConfig;
-    /** Оформление MessageHolder и его записей. */
+    /** Styles for MessageHolder and its entries. */
     message?: MessageAppearance;
     notification?: NotificationProviderConfig;
     rate?: RateConfig;
@@ -151,7 +151,7 @@
     cascader?: CascaderConfig;
     transfer?: TransferConfig;
     pagination?: PaginationComponentConfig;
-    /** Настройки раскрытия Table. Собственный record заменяет родительский целиком. */
+    /** Table expansion settings. An explicit record replaces the parent's record in full. */
     table?: TableConfig;
     listy?: ListyConfig;
     typography?: TypographyConfig;
@@ -176,24 +176,25 @@
     checkbox?: CheckboxConfig;
     switch?: SwitchConfig;
     wave?: WaveConfig;
-    /** Наследуемый virtual для Tree, Listy и TreeSelect. */
+    /** Inherited virtual setting for Tree, Listy, and TreeSelect. */
     virtual?: boolean;
-    /** Наследуемая ширина панели Select, AutoComplete и TreeSelect. */
+    /** Inherited popup width for Select, AutoComplete, and TreeSelect. */
     popupMatchSelectWidth?: boolean | number;
-    /** Наследуемая область переполнения Select, TreeSelect, Cascader и AutoComplete.
+    /** Inherited overflow area for Select, TreeSelect, Cascader, and AutoComplete.
      * @defaultValue 'viewport'
      */
     popupOverflow?: PopupOverflow;
-    /** Producer callback пустых состояний контролов и Table. Наследуется от родителя. */
+    /** Callback that renders empty states for controls and Table. Inherits from the parent. */
     renderEmpty?: RenderEmptyHandler;
     /**
-     * Наследуемый контейнер popup. Undefined сохраняет родительскую функцию.
-     * Используется Tabs, ColorPicker и общими Tooltip/Popover/Dropdown с их потребителями.
-     * Tour читает только локальную настройку, как upstream; остальные families ещё переносятся.
-     * Функция вызывается только в браузере; ShadowRoot не получает стили из document автоматически.
+     * Inherited popup container. undefined retains the parent function. Tabs, ColorPicker, and the
+     * shared Tooltip, Popover, and Dropdown components and their callers use it. Tour reads its
+     * local setting as upstream does. Other component families are still being ported. The function
+     * runs only in the browser. A ShadowRoot does not automatically receive styles from the
+     * document.
      */
     getPopupContainer?: GetPopupContainer;
-    /** Общий scroll target Affix/Anchor; локальные параметры компонентов имеют приоритет. */
+    /** Shared scroll target for Affix and Anchor. Local component settings take precedence. */
     getTargetContainer?: GetTargetContainer;
     rangePicker?: RangePickerConfig;
     textArea?: TextAreaConfig;
@@ -203,12 +204,12 @@
     otp?: InputOTPConfig;
     floatButton?: FloatButtonConfig;
     floatButtonGroup?: FloatButtonGroupConfig;
-    /** Наследуемый размер controls; локальный size и Compact имеют приоритет. */
+    /** Inherited control size. Local size and Compact take precedence. */
     componentSize?: ComponentSize;
-    /** Наследуемое disabled для controls; явное локальное значение уточняет его. */
+    /** Inherited disabled state for controls. An explicit local value takes precedence. */
     componentDisabled?: boolean;
     direction?: 'ltr' | 'rtl';
-    /** Словарь Ant Design или частичные настройки Svelte, наследуемые от провайдера. */
+    /** Ant Design locale dictionary or partial Svelte locale settings inherited from the provider. */
     locale?: Partial<Locale> | AntDesignLocale;
     class?: string;
     style?: string;

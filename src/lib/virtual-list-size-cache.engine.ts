@@ -1,7 +1,8 @@
-// Кэширует накопленные высоты для текущего render. Уже пройденный префикс сохраняет прежние
-// измерения.
-// Расчёты @rc-component/virtual-list1.5.1/useGetSize; MIT, vendor/LICENSE.rc-virtual-list.
-// Возвращает запрос диапазона, лениво дополняющий индекс до найденных границ.
+// Caches cumulative heights for the current render. Entries already visited keep their previous
+// measurements.
+// Calculation follows @rc-component/virtual-list1.5.1/useGetSize; MIT,
+// vendor/LICENSE.rc-virtual-list.
+// Returns a range lookup that extends the index lazily until the requested bounds are found.
 export function createVirtualListSizeCache<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,
@@ -11,7 +12,7 @@ export function createVirtualListSizeCache<Row, Key>(
   const key2Index = new Map<Key, number>();
   const bottoms: number[] = [];
 
-  // Измерения дополняют только ещё не запрошенный префикс текущего render.
+  // The measurements are supplemented only by the not yet requested prefix of the current render.
   return (startKey: Key, endKey = startKey) => {
     let startIndex = key2Index.get(startKey);
     let endIndex = key2Index.get(endKey);

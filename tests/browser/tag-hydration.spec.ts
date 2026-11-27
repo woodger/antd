@@ -10,7 +10,7 @@ let server: ViteDevServer;
 let cache: string;
 
 test.beforeAll(async () => {
-  // HMR compile options должны совпадать с client; host без listen не открывает HTTP/WS порт.
+  // HMR compile options must coincide with client; host without listen does not open HTTP/WS port.
   const hmrHost = createHttpServer();
   cache = await mkdtemp(join(tmpdir(), 'antd-tag-hydration-'));
   server = await createServer({

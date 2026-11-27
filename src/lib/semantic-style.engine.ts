@@ -1,4 +1,4 @@
-/** Плоские semantic slots: классы накапливаются, CSS-строки сохраняют source порядок слоёв. */
+/** Flat semantic slots: classes accumulate, CSS lines keep the source order of layers. */
 type Semantic<Key extends string, Props> = Partial<Record<Key, string>>
   | ((info: { props: Props; }) => Partial<Record<Key, string>> | undefined);
 

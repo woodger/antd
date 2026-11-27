@@ -4,14 +4,14 @@ import source from './fixtures/ant-design-table-tree-reference.json' with { type
 
 test.use({ viewport: source.reference.viewport });
 
-/** Читает состояния ячеек и callbacks теми же полями, что независимый браузерный прогон. */
+/** Reads the states of the cells and callbacks in the same fields as an independent browser run. */
 function snapshot(prefix: string) {
   const table = document.querySelector<HTMLTableElement>('#table-tree-fixture table');
   if (!table) {
     throw new Error('Missing tree table');
   }
 
-  /** DOM property и класс фиксируют состояние полувыбранного флажка. */
+  /** DOM property and class fix the condition of the semi-selected checkbox. */
   function selection(parent: Element | null) {
     const cell = parent?.querySelector(`.${prefix}-selection-column`);
     const input = cell?.querySelector<HTMLInputElement>('input[type="checkbox"]');
@@ -58,7 +58,7 @@ function snapshot(prefix: string) {
   };
 }
 
-/** Выполняет одно действие профиля через публичные элементы интерфейса. */
+/** Performs a single profile action through public interface elements. */
 async function act(page: Page, action: string, prefix: string) {
   const [type, key] = action.split(':');
   const row = page.locator(`tbody tr[data-row-key="${key}"]`);
@@ -111,8 +111,9 @@ for (const { profile, states } of source.cases) {
 
       let events: unknown[] = values.data;
       if (action === 'row:leaf') {
-        // Source добавляет ключ листа по клику в строке, хотя отображать там нечего.
-        // Native сохраняет прежние ключи и callbacks у строки без поля потомков.
+        // Source adds the sheet key to the click in the line, although there's nothing to display
+        // there. Native preserves the previous keys and callbacks at the line without a field of
+        // descendants.
         expect(values.data.slice(-2)).toEqual([['expand', true, 'leaf'],
           ['keys', ['branch', 0, 'leaf']]]);
         events = states[index - 1].values.data;

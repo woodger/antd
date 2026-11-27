@@ -28,7 +28,7 @@
 </script>
 
 <script lang="ts">
-  // Воспроизводит публичные действия React на свежем пакете и проверяет контекст панели.
+  // Reproduces public actions of React on a fresh package and checks the context of the panel.
   import dayjs, { type Dayjs } from 'dayjs';
   import { untrack } from 'svelte';
   import {
@@ -37,7 +37,7 @@
     type RangePickerValue
   } from '@woodger/antd';
 
-  /** При SSR владелец передаёт профиль напрямую. */
+  /** At SSR the owner transmits the profile directly. */
   function readProfile(): PickerPanelProfile {
     const query = new URLSearchParams(globalThis.location?.search).get('profile');
     return query ? JSON.parse(query) : { id: 'date', slots: ['date'] };
@@ -72,7 +72,7 @@
   let timeRestrictions = $derived(profile.blockedYear ? { disabledDate: disabledYear } : {});
   let components = $derived(componentMap(slotsActive ? profile.slots : []));
 
-  /** Разные ключи моделируют отдельные идентичности React renderer. */
+  /** Different keys model individual identities React renderer. */
   function componentMap(kinds: DatePickerPanelMode[]) {
     const available: Record<DatePickerPanelMode, DatePickerPanel> = {
       date: dateSlot, datetime: datetimeSlot, decade: decadeSlot, year: yearSlot,
@@ -83,7 +83,7 @@
     return resolved;
   }
 
-  /** Сохраняет дату, локальные часы и offset переданного Dayjs. */
+  /** Saves the date, local clock and offset transmitted Dayjs. */
   function encode(value: Dayjs | readonly (Dayjs | null)[] | null | undefined) {
     if (Array.isArray(value)) {
       return value.map(item => item?.format('YYYY-MM-DDTHH:mm:ss.SSSZ') ?? null);
@@ -91,14 +91,14 @@
     return dayjs.isDayjs(value) ? value.format('YYYY-MM-DDTHH:mm:ss.SSSZ') : null;
   }
 
-  /** Использует публичный адаптер, чтобы менялись только показанные поля, без округления. */
+  /** Uses a public adapter so that only the fields shown are changed, without rounding. */
   function selected({ generateConfig, pickerValue }: DatePickerPanelContext) {
     const date = generateConfig.setDate(pickerValue, profile.rejected ? 20 : 21);
     const hour = generateConfig.setHour(date, 16);
     return generateConfig.setMinute(hour, 7);
   }
 
-  /** Снимает тот же контекст панели, который виден производителю в React. */
+  /** Removes the same context of the panel, which is visible to the manufacturer in React. */
   function observe(context: DatePickerPanelContext) {
     const { mode: kind, pickerValue, value, values, hoverValue, hoverRangeValue, showTime,
       minDate, maxDate, showWeek, locale, prefixCls: prefix, generateConfig } = context;
@@ -120,7 +120,7 @@
     };
   }
 
-  /** Прерывает SSR при неожиданной публикации события компонента. */
+  /** Interrupts SSR with the unexpected publication of a component event. */
   function report(...event: unknown[]) {
     if (server) {
       throw Error('Picker event during SSR');
@@ -128,48 +128,48 @@
     log.push(event);
   }
 
-  /** Активная граница ограничения наблюдается через from у RangePicker. */
+  /** The active boundary of the restriction is observed through from RangePicker. */
   function disabledDate(date: Dayjs, info: { type: string; from?: Dayjs; }) {
     restrictionTrace?.push(['restriction', encode(date), info.type, encode(info.from)]);
     return date.date() === 20;
   }
 
-  /** Даёт time fallback обычное ограничение даже после перехода в год. */
+  /** Gives time fallback the usual restriction even after the transition in a year. */
   function disabledYear(date: Dayjs) {
     return date.year() === profile.blockedYear;
   }
 
-  /** Дата отображаемого экземпляра может быть сдвинута относительно pickerValue владельца. */
+  /** The date of the displayed instance can be shifted relative to pickerValue of the owner. */
   function changePicker(date: Dayjs | RangePickerValue, info: object) {
     report('picker', encode(date), info);
   }
 
-  /** Публикует именно предложенный mode и дату. */
+  /** Publishes the proposed mode and date. */
   function changePanel(date: Dayjs | RangePickerValue, next: DatePickerMode | readonly DatePickerMode[]) {
     report('panel', encode(date), next);
   }
 
-  /** Публикует черновик и range metadata. */
+  /** Publishes a draft and range metadata. */
   function changeCalendar(date: Dayjs | Dayjs[] | RangePickerValue | null, text: unknown, info: object) {
     report('calendar', encode(date), text, info);
   }
 
-  /** Публикует итог выбора отдельно от черновика. */
+  /** Publishes the result of the choice separately from the draft. */
   function change(date: Dayjs | Dayjs[] | RangePickerValue | null, text: unknown) {
     report('change', encode(date), text);
   }
 
-  /** Время onOk позволяет проверить порядок подтверждения. */
+  /** Time onOk allows you to check the procedure for confirmation. */
   function confirm(date: Dayjs | Dayjs[] | RangePickerValue) {
     report('ok', encode(date));
   }
 
-  /** Открытие отслеживается независимо от текущей authored панели. */
+  /** The opening is tracked regardless of the current authorized panel. */
   function openChange(open: boolean) {
     report('open', open);
   }
 
-  /** Проекция пользовательского ограничения значения и minDate. */
+  /** Projection of the user limit of value and minDate. */
   function inspect(context: DatePickerPanelContext) {
     const { disabledDate, pickerValue } = context;
     const trace: unknown[][] = [];

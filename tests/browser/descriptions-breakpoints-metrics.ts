@@ -1,4 +1,4 @@
-/** Снимает раскладку responsive column/span, не привязываясь к Svelte wrappers. */
+/** Removes the layout of the responsive column/span, not tied to Svelte wrappers. */
 export function snapshotDescriptionsBreakpoints() {
   const root = document.querySelector('[data-descriptions-breakpoints-host] > div');
   if (!root) {

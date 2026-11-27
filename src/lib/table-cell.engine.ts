@@ -1,14 +1,14 @@
-// Читает значения и атрибуты ячеек и определяет строки, нужные для spans
-// вокруг виртуального окна. Невидимые начала объединённых ячеек измеряет viewport.
+// Reads the values and attributes of the cells and defines the strings needed for spans around the
+// virtual window. Invisible beginnings of the combined cells measure viewport.
 import type { TableCellProps, TableColumn, TableDataIndex } from './table.types';
 
-/** Распознаёт также readonly путь из определения колонки. */
+/** Recognizes also the readonly path from the definition of a column. */
 function isDataPath(index: PropertyKey | readonly (string | number)[]): index is
   readonly (string | number)[] {
   return Array.isArray(index);
 }
 
-/** Читает буквальный ключ или путь, оставляя значение для render до форматирования. */
+/** Readers a literal key or path, leaving a value for the render before formatting. */
 export function readTableCellValue<Row extends object>(
   record: Row, dataIndex: TableDataIndex<Row> | undefined
 ): unknown {
@@ -29,7 +29,7 @@ export function readTableCellValue<Row extends object>(
   return value;
 }
 
-/** Сохраняет текст и возможный title независимо от текущих настроек ellipsis. */
+/** Saves text and possible title regardless of current ellipsis settings. */
 export function resolveTableCellDisplay<Row extends object>(
   record: Row,
   dataIndex: TableDataIndex<Row> | undefined
@@ -48,9 +48,9 @@ export function resolveTableCellDisplay<Row extends object>(
   return { text, title };
 }
 
-/** Отделяет параметры размещения от DOM attributes и обработчиков владельца. */
+/** Separates the placement parameters from DOM attributes and owner handlers. */
 export function resolveTableCell(properties?: TableCellProps | void, col = 1, row = 1) {
-  // Scope определяется типом колонки и разметкой шапки.
+  // Scope is determined by the column type and the cap markings.
   const { colSpan, rowSpan, scope: _scope, class: className, style, ...attributes } = properties ?? {};
   return { colSpan: colSpan ?? col, rowSpan: rowSpan ?? row, className, style, attributes };
 }
@@ -68,7 +68,7 @@ export interface TableMergedRow {
   cells: TableMergedCell[];
 }
 
-/** Запрашивает onCell вокруг окна и собирает начала объединённых ячеек по порядку. */
+/** Requests onCell around the window and collects the beginnings of the combined cells in order. */
 export function resolveTableVirtualCells<Row extends object>(
   rows: readonly { row: { record: Row; }; }[],
   columns: readonly TableColumn<Row>[],
@@ -83,7 +83,7 @@ export function resolveTableVirtualCells<Row extends object>(
   }
 
   const activeColumns = columns.flatMap((column, index) => column.onCell ? [index] : []);
-  // В одном расчёте начало, конец и рендер строки используют один результат колбэка.
+  // In one calculation, the beginning, the end and the string render use a single colback result.
   function readCell(index: number, columnIndex: number) {
     let cached = cells.get(index);
     if (!cached) {
@@ -96,7 +96,7 @@ export function resolveTableVirtualCells<Row extends object>(
     return cached[columnIndex] ??= resolveTableCell(column.onCell?.(record, index));
   }
 
-  // Идёт к ближайшему началу, которым закрыты все нулевые spans верхней строки.
+  // Goes to the near beginning, which are closed all zero spans of the upper line.
   function findStart() {
     let pending = activeColumns;
     for (let index = start; index >= 0; index--) {
@@ -108,7 +108,7 @@ export function resolveTableVirtualCells<Row extends object>(
     return start;
   }
 
-  // Если spans продолжаются до конца данных, Source оставляет исходный конец окна.
+  // If spans continue to the end of the data, Source leaves the original end of the window.
   function findEnd() {
     let pending = activeColumns;
     for (let index = end; index < rows.length; index++) {
@@ -136,7 +136,7 @@ export function resolveTableVirtualCells<Row extends object>(
     }
   }
 
-  // Нулевая ячейка сохраняет своё место, если colspan слева его ещё не занял.
+  // The zero cell retains its place if the colspan on the left has not yet occupied it.
   for (let index = start; index <= end; index++) {
     const row: number[] = [];
     let nextColumn = 0;

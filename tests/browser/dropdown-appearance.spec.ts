@@ -5,18 +5,18 @@ import providers from './fixtures/ant-design-dropdown-provider-reference.json' w
 
 const fixture = '/?fixture=dropdown-appearance&sample=';
 
-// Обновление состояния владельцем не забирает фокус из Dropdown.
+// Extending the status of the owner does not take the focus from Dropdown.
 async function update(page: Page, id: string) {
   await page.locator('#' + id).evaluate((button: HTMLButtonElement) => button.click());
 }
 
-// Получает только классы, заданные публичными настройками этой фикстуры.
+// Receives only the classes specified by the public settings of this fixture.
 function providerClasses(node: Element) {
   return Array.from(node.classList).filter(token =>
     /^(?:outer-|inner-|local-(?:root|item)$|provider-study$)/.test(token));
 }
 
-// Снимает итоговые значения CSS, независимо от порядка сериализации деклараций.
+// Removes the final values of CSS, regardless of the order of serialization of declarations.
 async function readStyle(locator: Locator, properties: string[]) {
   return locator.evaluate((node, names) => {
     const style = getComputedStyle(node);
@@ -39,7 +39,7 @@ for (const { profile, frames } of appearance.passes[0]) {
 
       const events = state.events.map(([open]) => open);
       if (profile.controlled && (step === 'escape' || step === 'unmount')) {
-        // React отправляет два одинаковых запроса Escape, когда владелец оставляет панель открытой.
+        // React sends two identical Escape requests when the owner leaves the panel open.
         expect(events.slice(-2)).toEqual([false, false]);
         events.pop();
       }
@@ -58,7 +58,7 @@ for (const { profile, frames } of appearance.passes[0]) {
       const triggerClass = state.trigger.classes.find(token => token.endsWith('-trigger'));
       if (!triggerClass) throw new Error('Missing original Dropdown trigger class');
 
-      // Базовый класс относится к существующей Svelte-обёртке, направление берётся из provider.
+      // The basic class belongs to the existing Svelte-wraver, the direction is taken from the provider.
       const rtlClass = triggerClass.replace(/-trigger$/, '-rtl');
       const classes = state.trigger.classes.filter(token => token !== triggerClass && token !== rtlClass);
       await expect.poll(() => trigger.evaluate(node => Array.from(node.classList).sort()))
@@ -142,7 +142,7 @@ for (const { profile, frames } of providers.passes[0]) {
       const expected = Object.fromEntries(Object.entries(state.semanticInputs).map(([key, props]) => [
         key, key.startsWith('local:') ? { ...props, leaveDelay: null, overflow: null } : props
       ]));
-      // Локальные callbacks сохраняют входные props, включая отсутствие не заданных владельцем полей.
+      // Local callbacks retain the entrance props, including the absence of fields not specified by the owner.
       expect(actual).toEqual(expected);
       await expect(page.locator('#appearance-events')).toHaveText('[]');
     }

@@ -15,7 +15,7 @@ function isolatedAliasMetrics(metrics: typeof reference.cases[number]['metrics']
   const sharedAlias = sample.prefixCls === 'ant-layout-css-var'
     && sample.siderPrefixCls === 'ant-layout-css-var';
 
-  // Raw Source collisions сохранены; собственные root markers защищают роли и соседей.
+  // Raw Source collisions are saved; its own root markers protect roles and neighbors.
   if (rootAlias || siderAlias || sharedAlias) {
     const root = expected.sibling.slots.root;
     const sider = expected.sibling.slots.sider;

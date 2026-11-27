@@ -28,8 +28,9 @@ export interface NativeOwnStyleOwner extends Omit<NativeComponentsOwner, 'compon
 }
 export interface NativeOwnStylePoint { icons: SelectComponentsModesDOM; details: OwnStyleDetails; owner: NativeOwnStyleOwner; popupTopology?: NativeACStylePopupTopology }
 
-/** Сохраняет порядок обычных свойств. Порядок CSS-переменных зависит от браузера.
- * Эквивалентные значения align-items внутри flex приводятся к одной записи. */
+/** Retains the order of ordinary properties. The order of CSS-variables depends on the browser.
+ * Equivalent values of align-items inside the flex are given to one entry.
+ */
 export function ownStyleComputedProperties(properties: readonly OwnStyleProperty[]) {
   const display = properties.find(property => property.name === 'display')?.value;
   const standard = properties.filter(property => !property.name.startsWith('--')).map(property => {
@@ -269,7 +270,7 @@ function verifyPhysicalCSS(
   label: string,
   editor = false
 ) {
-  // Теги обёрток уже сверены по правилам конкретного режима Select и AutoComplete.
+  // Wrapper tags have already been checked against the rules for the specific Select or AutoComplete mode.
   for (const key of ['connected', 'namespaceURI', 'box', 'clientRects'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
   }

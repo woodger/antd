@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Регистрирует поле и собирает его метаданные, связанные label и help. Сигналы потомков
-  // привязаны к текущей регистрации.
+  // Registers the field and gathers its metadata, label, and help text. Descendant signals belong
+  // to the current registration.
   import { onDestroy, onMount, tick, untrack, type Snippet } from 'svelte';
   import type { FormFieldRegistration } from './form-internal';
   import type { FormFieldMeta } from './form.model.svelte';
@@ -36,62 +36,62 @@
   import { useFormItemMeta, type FormItemMetaContext } from './form-item-meta-context';
   import { mergeFormItemMessages, type FormItemMessages } from './form-no-style.engine';
 
-  /** Связывает поле модели Form с label, validation status и доступным описанием ошибок. */
+  /** Connects a Form model field to its label, validation status, and accessible error description. */
   export interface FormItemProps {
-    /** CSS prefix Item и его частей; empty/undefined наследуют ConfigProvider независимо от Form. */
+    /** CSS prefix for Item and its parts. Empty and undefined values inherit from ConfigProvider independently of Form. */
     prefixCls?: string;
-    /** Ключ/путь от FormList; без name остаётся layout без model binding, rules и native name. */
+    /** Key or path from FormList. Without name, this is layout only, with no model binding, rules, or native name. */
     name?: NamePath;
-    /** Заполняет undefined перед render control/SSR; изменение prop используется будущим reset. */
+    /** Fills an undefined value before the control renders, including during SSR. Changes to the prop apply on a future reset. */
     initialValue?: unknown;
-    /** Текст/число/массив/Snippet; false/null/undefined/'' скрывают label, null сохраняет offset. */
+    /** Text, number, array, or Snippet. false, null, undefined, and '' hide the label. null still preserves the offset. */
     label?: RenderEmptyContent;
-    /** Содержимое подсказки либо Tooltip options; defaults наследуются из Form. */
+    /** Help content or Tooltip options. Defaults are inherited from Form. */
     tooltip?: FormItemTooltipContent;
     children: Snippet;
-    /** Пояснение без errors/warnings; поддерживает rich content и сбрасывает state вместе с полем. */
+    /** Help text for fields without errors or warnings. Supports rich content and resets with the field. */
     help?: RenderEmptyContent;
-    /** Пояснение рядом с errors/warnings; reset пересоздаёт content, false/null/undefined/'' скрывают. */
+    /** Help text next to errors or warnings. Reset recreates the content. false, null, undefined, and '' hide it. */
     extra?: RenderEmptyContent;
     required?: boolean;
-    /** Скрывает блок без удаления control, значения и регистрации validation. @defaultValue false */
+    /** Hides the block while retaining the control, its value, and its validation registration. @defaultValue false */
     hidden?: boolean;
-    /** Убирает layout; ошибки передаются ближайшему styled Item, help=false отключает передачу. */
+    /** Removes layout. Errors go to the nearest styled Item unless help=false. */
     noStyle?: boolean;
-    /** Локальный layout поля; иначе наследуется ближайший Form, standalone остаётся vertical. */
+    /** Local field layout. Otherwise it inherits the nearest Form's layout, with vertical layout when standalone. */
     layout?: 'horizontal' | 'vertical';
-    /** Локальное выравнивание подписи имеет приоритет над ближайшим Form. */
+    /** Local label alignment overrides the nearest Form. */
     labelAlign?: 'left' | 'right';
-    /** Колонки label заменяют Form.labelCol целиком, включая явный {}. */
+    /** Label columns replace all of Form.labelCol, including when explicitly set to {}. */
     labelCol?: ColProps;
-    /** Колонки controls заменяют Form.wrapperCol; вложенные Item их не наследуют. */
+    /** Control columns replace Form.wrapperCol. Nested Items do not inherit them. */
     wrapperCol?: ColProps;
-    /** Управляет добавленным colon; true имеет приоритет и над Form.colon=false. */
+    /** Controls the added colon. true takes precedence even when Form.colon=false. */
     colon?: boolean;
-    /** Локальные правила поля; при отсутствии используются правила модели верхнего уровня. */
+    /** Local field rules. When omitted, uses the rules from the top-level model. */
     rules?: readonly FormRule[];
-    /** Перекрывает label/name и другие ${variables} сообщений текущего поля. */
+    /** Overrides label, name, and other ${variables} in messages for this field. */
     messageVariables?: Readonly<Record<string, string>>;
     /**
-     * False по умолчанию собирает все сообщения параллельно, true останавливает правила
-     * последовательно, 'parallel' выбирает первую завершившуюся ошибку.
-     * Предупреждение не обходит ожидающие блокирующие правила.
+     * The default false collects all messages in parallel. true runs rules in order and stops at
+     * the first error. 'parallel' uses the first error to finish. Warnings cannot bypass pending
+     * blocking rules.
      */
     validateFirst?: boolean | 'parallel';
-    /** Задержка автоматической validation в ms; validateFields/submit запускаются сразу. */
+    /** Automatic validation delay in ms. validateFields and submit run immediately. */
     validateDebounce?: number;
-    /** Визуальный статус поверх metadata; '' отключает автоматический, не очищая errors/ARIA. */
+    /** Visual status override for the metadata. '' disables automatic status and preserves errors and ARIA. */
     validateStatus?: FormValidateStatus;
     hasFeedback?: boolean | { icons?: FormFeedbackIcons; };
     htmlFor?: string;
     /**
-     * Native element, bind:this либо объект с focus/nativeElement пользовательского control.
-     * Имеет приоритет над встроенной регистрацией и возвращается getFieldInstance без обёртки.
+     * A native element, bind:this, or an object exposing focus or nativeElement for a custom
+     * control. Overrides built-in registration and is returned as-is by getFieldInstance.
      */
     controlRef?: unknown;
-    /** Дополнительный класс корня поля; не передаётся в FormContext. */
+    /** Additional class for the field root. It is kept out of FormContext. */
     rootClassName?: string;
-    /** Inline CSS корня после вычисленных компонентных токенов. */
+    /** Inline CSS for the root, applied after the computed component tokens. */
     style?: string;
     class?: string;
   }
@@ -236,7 +236,7 @@
       reportVersion = {};
 
       return () => {
-        // Canonical Set не читает прежние $state values во время teardown siblings.
+        // The canonical Set avoids reading old $state values while siblings tear down.
         if (reportedFields.delete(field)) reportVersion = {};
       };
     }
@@ -283,7 +283,7 @@
 
   untrack(() => {
     if (hasName) form?.initializeField(path, initialValue);
-    // SSR и поздний mount уже могут читать model-owned metadata до UI registration.
+    // SSR and late mounts can read model-owned metadata before UI registration.
     hasMetaEvent = !!(errors.length || warnings.length || meta?.touched || meta?.validating);
     syncReport();
   });
@@ -306,7 +306,7 @@
       return;
     }
 
-    // В списке metadata следует за key строки; обычное поле хранит её по имени модели.
+    // List metadata follows the row key. A regular field stores it under its model name.
     const registeredName = list ? undefined : path;
 
     registration = {
@@ -343,7 +343,7 @@
           return getControlElement();
         }
 
-        // Сначала свой binding: одинаковый htmlFor соседней формы не выбирает чужой control.
+        // Use the local binding first so a matching htmlFor in an adjacent form cannot select its control.
         return [...host.querySelectorAll<HTMLElement>('[id]')].find((node) => node.id === id)
           ?? host.ownerDocument.getElementById(id) ?? undefined;
       },

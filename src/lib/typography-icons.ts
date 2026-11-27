@@ -1,5 +1,5 @@
-// Ant Design Icons SVG 4.6.0 (MIT); см. vendor/LICENSE.ant-design-icons.
-// Источник: npm-архив @ant-design/icons-svg 4.6.0, es/asn/*Outlined.js.
+// Ant Design Icons SVG 4.6.0 (MIT); vendor/LICENSE.ant-design-icons. Source: npm-archive
+// @ant-design/icons-svg 4.6.0, es/asn/*Outlined.js.
 export const typographyIcons = {
   'edit': {
     'viewBox': '64 64 896 896',

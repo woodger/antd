@@ -18,7 +18,7 @@ for (const entry of reference.cases) {
 
       const expected = structuredClone(entry.result[scope]);
       if (scope !== 'sibling' && entry.nativeTreeStyles) {
-        // Source local prefix теряет tree CSS; raw control/popup остаются эталоном.
+        // Source local prefix loses tree CSS; raw control/popup remains the benchmark.
         expected.tree = entry.nativeTreeStyles[scope].tree;
         expected.nodes = entry.nativeTreeStyles[scope].nodes;
       }

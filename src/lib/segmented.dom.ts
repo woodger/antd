@@ -1,7 +1,6 @@
-// Создаёт временный aria-hidden thumb и возвращает функцию завершения. Без валидных измерений или
-// длительности DOM остаётся прежним.
-// Перемещает временный индикатор Segmented между измеренными пунктами. Изменение геометрии или
-// настройки движения завершает переход.
+// Creates a temporary aria-hidden thumb and returns the completion function. Without valid
+// measurements or the duration of DOM remains the same. Moves a temporary Segmented indicator
+// between measured points. Changing geometry or motion settings completes the transition.
 export function animateSegmentedThumb(
   group: HTMLElement,
   from: HTMLElement,
@@ -20,13 +19,13 @@ export function animateSegmentedThumb(
     || !from.getClientRects().length
     || !to.getClientRects().length
     || !(duration > 0)) {
-    // В этой ветке временный индикатор и подписки ещё не созданы.
+    // In this branch, a temporary indicator and subscriptions have not yet been created.
     return () => { };
   }
 
-  // Считывает локальные layout-координаты пункта, чтобы масштаб родителя не попадал в расчёт.
+  // Reads the local layout-coordinations of the item, so that the scale of the parent does not fall into account.
   function geometry(node: HTMLElement) {
-    // MotionThumb эталона измеряет layout, а не масштабированные экранные rect.
+    // The MotionThumb benchmark measures the layout, not scaled-up screen rects.
     return {
       x: node.offsetLeft,
       y: node.offsetTop,
@@ -36,7 +35,7 @@ export function animateSegmentedThumb(
   }
   const first = geometry(from);
   const last = geometry(to);
-  // Сравнивает группу и оба конца перехода одним ключом геометрии для ResizeObserver.
+  // Compares the group and both ends of the transition with a single geometry key for ResizeObserver.
   function signature() {
     return JSON.stringify([group.clientWidth, group.clientHeight, geometry(from), geometry(to)]);
   }
@@ -81,7 +80,7 @@ export function animateSegmentedThumb(
   observer.observe(to);
   reduced.addEventListener('change', stop);
 
-  // Освобождает индикатор и подписки один раз до вызова finish.
+  // Releases an indicator and subscriptions once prior to calling the finish.
   function stop() {
     if (!active) {
       return;

@@ -1,5 +1,5 @@
-// Выбирает позицию rc-menu для конкретного уровня и направления. Карта потребителя
-// заменяет позиции целиком, а смещение ветки меняет только offset.
+// Choosing position rc-menu for a specific level and direction. The consumer's map replaces the
+// entire position, and the displacement of the branch changes only offset.
 import type { MenuPopupAlign, MenuProps, MenuSubMenu } from './menu.types';
 
 const overflow = { adjustX: 1, adjustY: 1 };
@@ -13,7 +13,7 @@ const leftTop = { points: ['tr', 'tl'], overflow };
 const leftBottom = { points: ['br', 'bl'], overflow };
 const rightTop = { points: ['tl', 'tr'], overflow };
 const rightBottom = { points: ['bl', 'br'], overflow };
-// Порядок ключей существенен для класса при совпадении точек нескольких позиций.
+// The order of keys is essential for the class when the points of several positions coincide.
 const ltrPlacements = { ...aboveAndBelow, leftTop, leftBottom, rightTop, rightBottom };
 const rtlPlacements = {
   ...aboveAndBelow,
@@ -23,7 +23,7 @@ const rtlPlacements = {
   leftBottom: rightBottom
 };
 
-/** Сохраняет прежнее размещение Menu, пока пользователь не задал карту или смещение. */
+/** Retains the current Menu placement until the user supplies a map or offset. */
 export function getMenuPopupAlignment(
   horizontal: boolean,
   rtl: boolean,

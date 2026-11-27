@@ -18,13 +18,13 @@ type SelectWebkitStyleKey = Extract<SelectDOMStyleKey, `webkit${string}`> extend
   ? `Webkit${Tail}` : never;
 type SelectKnownCSSProperties = Readonly<Partial<Record<SelectDOMStyleKey | SelectWebkitStyleKey, SelectCSSValue>>>;
 type SelectCustomStyleKey = `--${string}` | `Webkit${string}` | `Moz${string}` | `ms${string}` | `O${string}`;
-/** Обычный interface с CSS-полями не требует index signature; custom-only interface требует свой pattern index. */
+/** A normal interface with CSS properties needs no index signature. A custom-property-only interface needs its own template literal index signature. */
 export type SelectCSSProperties = SelectKnownCSSProperties
   | (SelectKnownCSSProperties & Readonly<Partial<Record<SelectCustomStyleKey, SelectCSSValue>>>);
 export type SelectStyle = string | SelectCSSProperties | null;
 export type SelectPopupContent = string | number | boolean | null | undefined
   | Snippet<[origin: Snippet]> | readonly SelectPopupContent[];
-/** Pure producer вызывается и при закрытом popup; nullish result не заменяется меню. */
+/** Pure producer is also called when closed popup; nullish result does not replace the menu. */
 export type SelectPopupRender = (originMenu: Snippet) => SelectPopupContent;
 type SelectControlSlots<Content> = Partial<Record<
   'root' | 'prefix' | 'suffix' | 'input' | 'placeholder' | 'content'
@@ -53,63 +53,63 @@ export interface SelectSemanticInfo<
     keyof SelectSemanticState | 'nativeElement' | 'inputElement'> & SelectSemanticState
     & Readonly<Record<string, unknown>>;
 }
-/** Общий provider работает и с AutoComplete wrapper; его raw props остаются opaque. */
+/** The common provider works with AutoComplete wrapper; its raw props remains opaque. */
 export interface SelectConfigSemanticInfo {
   props: Readonly<Record<string, unknown>> & SelectSemanticState;
 }
 
-/** Исходный key строки; отличается от value и включает React.Key bigint. */
+/** The original key of the string; differs from the value and includes React.Key bigint. */
 export type SelectScrollKey = string | number | bigint;
 export type SelectScrollAlign = VirtualScrollAlign;
-/** Размеры берутся из измерений и оценки ещё не отрисованных строк. */
+/** The dimensions are taken from measurements and estimates of not yet drawn strings. */
 export type SelectScrollOffsetInfo = VirtualScrollOffsetInfo<SelectScrollKey>;
 export type SelectScrollOffset = VirtualScrollOffset<SelectScrollKey>;
-/** Число означает индекс строки; объект задаёт key/index либо позицию top/left. */
+/** A number means a string index; an object sets key/index or a position top/left. */
 export type SelectScrollConfig = VirtualScrollConfig<SelectScrollKey>;
-/** Методы bind:this; nativeElement/inputElement предоставляются отдельными bindable props. */
+/** Techniques bind:this; nativeElement/inputElement are provided separately bindable props. */
 export interface SelectRef {
   focus: (options?: FocusOptions) => void;
   blur: () => void;
-  /** Null/undefined показывают scrollbar, не меняя позицию. */
+  /** Null/undefined shows scrollbar without changing position. */
   scrollTo: (config?: SelectScrollConfig | null) => void;
 }
 
-/** Разделители multiple/tags либо пользовательский разбор всей строки. */
+/** Separators multiple/tags or custom parsing of the whole line. */
 export type SelectTokenSeparators = readonly string[]
   | ((input: string) => readonly string[]);
 
-/** Metadata пункта текущей выдачи; обычный raw option сохраняет identity владельца. */
+/** Metadata of the current issuance point; the usual raw option preserves the owner's identity. */
 export interface SelectFlattenOption<
   Value extends string | number = string,
   OptionType extends object = SelectOption<Value>
 > {
   key: string | number | bigint;
   value: Value;
-  /** Исходное значение mapped label; fieldNames может указывать на любое поле. */
+  /** The reference value of the mapped label; fieldNames can point to any field. */
   label: unknown;
   data: OptionType & Readonly<Record<string, unknown>>;
   groupOption?: boolean;
   group?: boolean;
 }
 
-/** Имена полей исходных options; пустые строки используют стандартные имена. */
+/** The names of the original options fields; empty strings use standard names. */
 export interface SelectFieldNames {
   value?: string;
   label?: string;
   options?: string;
-  /** По умолчанию совпадает с итоговым label field. */
+  /** The default coincides with the final label field. */
   groupLabel?: string;
 }
 
-/** Labeled payload сохраняет raw label, включая supplied/mapped пользовательские поля. */
+/** Labeled payload preserves raw label, including supplied/mapped custom fields. */
 export interface SelectLabelValue<Value extends string | number = string> {
   value: Value;
   label?: unknown;
-  /** Входной key не заменяет внутренний key=value. */
+  /** Entrance key does not replace internal key=value. */
   key?: SelectScrollKey;
 }
 
-/** Label renderer получает metadata до nullish fallback; raw option сюда не добавляется. */
+/** Label renderer gets metadata to nullish fallback; raw option is not added here. */
 export interface SelectLabelRenderInfo<Value extends string | number = string> {
   label: unknown;
   value: Value;
@@ -124,7 +124,7 @@ export type SelectValueModel<Value extends string | number, Mode extends 'multip
   LabelInValue extends boolean> = Mode extends 'tags' ? SelectValueElement<Value | string, LabelInValue>[]
     : Mode extends 'multiple' ? SelectValueElement<Value, LabelInValue>[] : SelectValueElement<Value, LabelInValue>;
 
-/** Скрытый tag после labelRender; label не усечён, key совпадает с typed value. */
+/** Hidden tag after labelRender; label is not crossed, key coincides with typed value. */
 export interface SelectOmittedTag<Value extends string | number = string, Label = unknown> {
   value: Value;
   label: Label;
@@ -133,11 +133,11 @@ export interface SelectOmittedTag<Value extends string | number = string, Label 
   key: Value;
 }
 
-/** Snippet получает скрытые selected values; null/undefined выбирают исходное + N ... . */
+/** Snippet receives hidden selected values; null/undefined choose the original + N... */
 export type SelectTagPlaceholder<Value extends string | number = string> = string | number
   | boolean | null | Snippet<[SelectOmittedTag<Value>[]]>;
 
-/** Label — Snippet с итоговым текстом; summary содержит value/index/onClose: undefined. */
+/** Label – Snippet with final text; contains value/index/onClose: undefined. */
 export type SelectTagInfo<Value extends string | number = string> = { label: Snippet } & ({
   isMaxTag: false;
   value: Value;
@@ -154,7 +154,7 @@ export type SelectTagInfo<Value extends string | number = string> = { label: Sni
   onClose?: undefined;
 });
 
-/** Общий record Select и AutoComplete; собственный record заменяет родительский. */
+/** General record Select and AutoComplete; its own record replaces parental. */
 export interface SelectConfig {
   class?: string;
   style?: SelectStyle;
@@ -169,29 +169,29 @@ export interface SelectConfig {
   removeIcon?: SelectRenderNode<undefined>;
 }
 
-/** Настройки controlled search и локальной фильтрации Select без сетевого транспорта. */
+/** Configurations controlled search and local filtration Select without network transport. */
 export interface SelectSearchConfig<
   Value extends string | number = string,
   OptionType extends object = SelectOption<Value>
 > {
   searchIcon?: RenderEmptyContent;
-  /** Управляемая строка поиска; undefined оставляет локальное состояние. */
+  /** Managed search string; undefined leaves a local state. */
   searchValue?: string;
   /**
-   * Уведомляет о пользовательском поиске; запросы и защиту от старых ответов делает потребитель.
+   * Notifies about user search; queries and protection against old answers is made by the consumer.
    */
   onSearch?: (value: string) => void;
-  /** false отключает фильтрацию; predicate получает поверхностную копию исходного option/group. */
+  /** false disables filtering; predicate obtains a surface copy of the original option/group. */
   filterOption?: boolean | ((search: string, option: OptionType) => boolean);
-  /** Явные поля Source search; несколько полей объединяются через OR. */
+  /** Explicit Source search fields; several fields are combined through OR. */
   optionFilterProp?: string | readonly string[];
-  /** Сортирует отфильтрованные options и synthetic tags; получает текущий searchValue. */
+  /** Sorts filtered options and synthetic tags; receives the current searchValue. */
   filterSort?: (optionA: OptionType, optionB: OptionType, info: { searchValue: string }) => number;
-  /** Очищает локальный search при выборе multiple/tags; controlled query меняет владелец. */
+  /** Purifies local search when choosing multiple/tags; controlled query changes the owner. */
   autoClearSearchValue?: boolean;
 }
 
-/** Single/multiple/tags с нативным FormData; свободные tags добавляют строковые значения. */
+/** Single/multiple/tags with native FormData; free tags add string values. */
 export interface SelectProps<
   Value extends string | number = string,
   Mode extends 'multiple' | 'tags' | undefined = undefined,
@@ -203,85 +203,85 @@ export interface SelectProps<
   HTMLInputAttributes,
   'value' | 'size' | 'class' | 'style' | 'prefix' | 'onchange' | 'oninput' | 'type' | keyof DOMAttributes<HTMLInputElement>
 >, Omit<DOMAttributes<EditorElement | HTMLInputElement>, 'children' | 'onchange' | 'oninput'> {
-  /** Root заменяет всё поле, input — редактор внутри стандартного поля. */
+  /** Root replaces the entire field, the input is an editor inside the standard field. */
   components?: SelectComponents<RootElement, EditorElement>;
-  /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
+  /** Local Select namespace. An empty string inherits ConfigProvider. */
   prefixCls?: string;
-  /** Содержимое affix; Source не создаёт его для falsy scalar, включая 0. */
+  /** Affix content; Source doesn't create it for a falsy scalar, including 0. */
   prefix?: RenderEmptyContent;
-  /** Статический template передаётся массивом; функция получает состояние Select. */
+  /** Static template is transmitted by an array; the function receives a state of Select. */
   suffix?: SelectRenderNode<SelectSuffixInfo>;
   suffixIcon?: RenderEmptyContent;
   loadingIcon?: RenderEmptyContent;
   menuItemSelectedIcon?: SelectRenderNode<SelectMenuItemIconInfo<Mode extends 'tags' ? Value | string : Value>>;
   removeIcon?: SelectRenderNode<undefined>;
-  /** Семантический root и popup; прежний class остаётся на Native outer container. */
+  /** Semantic root and popup; the previous class remains at Native outer container. */
   rootClassName?: string;
   classNames?: SelectSemanticValue<SelectClassNames, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>['props']>;
   styles?: SelectSemanticValue<SelectStyles, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>['props']>;
-  /** CSS object красит public control; прежняя CSS-строка остаётся на outer container. */
+  /** CSS object paints the public control; the previous CSS line remains on the outer container. */
   style?: SelectStyle;
   popupRender?: SelectPopupRender;
-  /** @internal Intrinsic ширина readonly single для составного владельца, без смены public default. */
+  /** @internal Intrinsic width for a readonly single selection in a composite owner, with the public default unchanged. */
   _autoWidth?: boolean;
-  /** Пустой список по умолчанию; tags может создавать значения без options. */
+  /** Blank list by default; tags can create values without options. */
   options?: readonly OptionType[];
-  /** Отображает исходные поля value/label/options/groupLabel; группы имеют один уровень. */
+  /** Displays the original fields value/label/options/groupLabel; the groups have one level. */
   fieldNames?: SelectFieldNames;
-  /** Выбранная подпись из raw option; пустая строка использует итоговый fieldNames.label. */
+  /** The selected label from the raw option; an empty line uses the final fieldNames.label. */
   optionLabelProp?: string;
-  /** Меняет value/defaultValue и исходящие selection callbacks на { label, value }. */
+  /** Changes the value/defaultValue and outgoing callbacks selection to { label, value }. */
   labelInValue?: LabelInValue;
-  /** Чистый display renderer; возвращаемый Snippet рендерится как Svelte content. */
+  /** Pure display renderer; returned Snippet render as Svelte content. */
   labelRender?: (info: SelectLabelRenderInfo<Mode extends 'tags' ? Value | string : Value>) => RenderEmptyContent;
-  /** Пассивное содержимое пункта; выбранный label и native option button сохраняются. */
+  /** Passive content of the item; the selected label and native option button are saved. */
   optionRender?: Snippet<[
     SelectFlattenOption<Mode extends 'tags' ? Value | string : Value, OptionType>,
     { index: number }
   ]>;
   mode?: Mode;
-  /** Управляемая видимость; onOpenChange сообщает запрос. Поддерживает bind:open. */
+  /** Manageable visibility; onOpenChange provides request. Maintained bind:open. */
   open?: boolean;
-  /** Начальная uncontrolled видимость; SSR остаётся закрытым. @defaultValue false */
+  /** Initial un controlled visibility; SSR remains closed. @defaultValue false */
   defaultOpen?: boolean;
-  /** Физический угол popup; по умолчанию bottomLeft, в RTL — bottomRight. */
+  /** The physical angle of the popup; by default bottomLeft, in RTL – bottomRight. */
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
-  /** Local ?? ConfigProvider ?? true; false и число сохраняют ширину поля как минимум. */
+  /** Local ?? ConfigProvider ?? true. false and numeric values keep the field width as the minimum. */
   popupMatchSelectWidth?: boolean | number;
-  /** Отсутствующий prop наследует ConfigProvider; собственный undefined включает Source default. */
+  /** An omitted prop inherits ConfigProvider. An explicit undefined enables the upstream default. */
   virtual?: boolean;
-  /** Высота внутреннего viewport; 0 снимает ограничение. @defaultValue 256 */
+  /** Height of internal viewport; 0 removes the restriction. @defaultValue 256 */
   listHeight?: number;
-  /** Оценка до измерения строки; по умолчанию token.controlHeight. */
+  /** Score prior to line measurement; default token.controlHeight. */
   listItemHeight?: number;
-  /** True/false задаются при создании scrollbar; optional скрывает его через 3 секунды. */
+  /** True/false is specified when creating a scrollbar; optional hides it after 3 seconds. */
   showScrollBar?: boolean | 'optional';
-  /** Последнее активное value за microtask; null означает отсутствие доступной строки. */
+  /** The last active value for microtask; null means the absence of an available string. */
   onActive?: (value: (Mode extends 'tags' ? Value | string : Value) | null) => void;
-  /** Начальная активная строка; выбранное single value может задать её при открытии. */
+  /** Initial active line; the selected single value can set it when opened. */
   defaultActiveFirstOption?: boolean;
-  /** Разбор строк в multiple/tags; function получает текущий ввод, включая восстановленный paste. */
+  /** Disassembly of lines in multiple/tags; the function receives the current input, including the restored paste. */
   tokenSeparators?: SelectTokenSeparators;
-  /** Максимум выбранных значений в multiple/tags; existing/default values не обрезаются. */
+  /** Maximum of selected values in multiple/tags; existing/default values are not circumcised. */
   maxCount?: number;
-  /** Ограничивает отображаемый текст multiple/tags; title и полный label сохраняются. */
+  /** Limits the displayed text to multiple/tags; the title and the full label are saved. */
   maxTagTextLength?: number;
-  /** Числовой предел либо responsive измерение видимых tags; hidden values сохраняются. */
+  /** Numerical limit or responsive measurement of visible tags; hidden values are saved. */
   maxTagCount?: number | 'responsive';
-  /** Содержимое сводного тега без remove button; omitted labels остаются полными. */
+  /** Content of the summary tag without the remove button; o addicted labels remain full. */
   maxTagPlaceholder?: SelectTagPlaceholder<Mode extends 'tags' ? Value | string : Value>;
-  /** Рендер обычных и сводного tags в multiple/tags; single игнорирует Snippet. */
+  /** Render of ordinary and consolidated tags in multiple/tags; single ignores Snippet. */
   tagRender?: Snippet<[SelectTagInfo<Mode extends 'tags' ? Value | string : Value>]>;
-  /** Bind:value; multiple сохраняет Value[], tags допускает также новые string values. */
+  /** Bind:value; multiple preserves Value[], tags also allows new string values. */
   value?: SelectValueModel<Value, Mode, LabelInValue> | null;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultValue?: (Mode extends 'tags' ? readonly SelectValueElement<Value | string, LabelInValue>[]
     : Mode extends 'multiple' ? readonly SelectValueElement<Value, LabelInValue>[]
       : SelectValueElement<Value, LabelInValue>) | null;
   size?: ComponentSize;
-  /** Приоритет: variant, Form, Select config, global variant, outlined. */
+  /** Priority: variant, Form, Select config, global variant, */
   variant?: 'outlined' | 'filled' | 'borderless' | 'underlined';
-  /** Объект задаёт настройки поиска; boolean включает или отключает его. */
+  /** The object specifies the search settings; the boolean turns it on or off. */
   showSearch?: boolean | SelectSearchConfig<
     Mode extends 'tags' ? Value | string : Value, OptionType
   >;
@@ -290,8 +290,8 @@ export interface SelectProps<
   notFoundContent?: RenderEmptyContent;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   /**
-   * Getter получает корень Select; undefined наследует ConfigProvider.
-   * Без getter сохраняется DOM parent, popup отображается как fixed manual popover.
+   * Getter gets root Select; undefined inherit ConfigProvider. Without getter saved DOM parent,
+   * popup is displayed as a fixed manual.
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   /** @defaultValue false */
@@ -299,22 +299,22 @@ export interface SelectProps<
   status?: 'error' | 'warning';
   onValueChange?: (value: SelectValueModel<Value, Mode, LabelInValue>
     | (Mode extends 'multiple' | 'tags' ? never : undefined)) => void;
-  /** Изменение последовательности values; второй аргумент сохраняет исходные поля options. */
+  /** Modifying value sequences; the second argument preserves the original fields of options. */
   onChange?: (
     value: SelectValueModel<Value, Mode, LabelInValue> | (Mode extends 'multiple' | 'tags' ? never : undefined),
     option: Mode extends 'multiple' | 'tags' ? OptionType[] : OptionType | undefined
   ) => void;
-  /** Выбор пункта, включая повторный single выбор; option — поверхностная копия raw record. */
+  /** Choosing an item, including repeated single selection; option is a superficial copy of the raw record. */
   onSelect?: (
     value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>,
     option: OptionType
   ) => void;
-  /** Снятие выбора в multiple/tags; очистка всех значений не вызывает callback. */
+  /** Removing a choice in multiple/tags; clearing all values does not cause a callback. */
   onDeselect?: (
     value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>,
     option: OptionType
   ) => void;
-  /** Пользовательская очистка; вызывается до onChange. */
+  /** Custom clearing; called up to onChange. */
   onClear?: () => void;
   onInputKeyDown?: (event: KeyboardEvent) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
@@ -325,8 +325,8 @@ export interface SelectProps<
   onMouseDown?: (event: MouseEvent) => void;
   onOpenChange?: (open: boolean) => void;
   class?: string;
-  /** Корень Select после mount; ref очищается при unmount. */
+  /** Root Select after mount; ref is purified at unmount. */
   nativeElement?: NoInfer<RootElement> | HTMLDivElement;
-  /** Нативный editor после mount; ref очищается при unmount. */
+  /** Native editor after mount; ref is cleared at unmount. */
   inputElement?: NoInfer<EditorElement> | HTMLInputElement;
 }

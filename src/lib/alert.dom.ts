@@ -1,9 +1,9 @@
-// Управляет завершением закрытия Alert. Синхронизирует WAAPI, reduced motion и удаление узла
-// вызывающим компонентом.
+// Manages completion of Alert dismissal. Coordinates WAAPI, reduced motion, and node removal by the
+// calling component.
 export { focusAfterNotice as focusAfterAlert } from './notice.dom';
 
-// Снимает геометрию и стили до изменения высоты. Возвращает отмену закрытия для lifecycle
-// компонента.
+// Captures geometry and styles before changing height. Returns a dismissal cancellation callback
+// for the component lifecycle.
 export function closeAlert(root: HTMLElement, onHidden: () => void) {
   const view = root.ownerDocument.defaultView!;
   const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
@@ -14,7 +14,7 @@ export function closeAlert(root: HTMLElement, onHidden: () => void) {
   let motion: Animation | undefined;
   let disposed = false;
 
-  // Отсоединяет media listener и отменяет текущую анимацию, включая удержание её конечных стилей.
+  // Detaches the media listener and cancels the current animation, including its retained end styles.
   function dispose() {
     disposed = true;
     reducedMotion.removeEventListener('change', handleReducedMotion);
@@ -22,7 +22,7 @@ export function closeAlert(root: HTMLElement, onHidden: () => void) {
     motion = undefined;
   }
 
-  // Уведомляет компонент о скрытии единожды и освобождает ресурсы перед уведомлением.
+  // Releases resources before notifying the component once that it is hidden.
   function finish() {
     if (disposed) {
       return;
@@ -32,7 +32,7 @@ export function closeAlert(root: HTMLElement, onHidden: () => void) {
     onHidden();
   }
 
-  // Доводит уже начатую анимацию до конца при включении reduced motion.
+  // Finishes a running animation when reduced motion is enabled.
   function handleReducedMotion() {
     if (reducedMotion.matches)
       motion?.finish();

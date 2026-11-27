@@ -3,7 +3,7 @@
 
   let { id }: { id: string; } = $props();
   const current = theme.useToken();
-  // Source GlobalToken объявляет ComponentToken; runtime record также содержит alias overrides.
+  // Source GlobalToken declares ComponentToken; the runtime record also contains alias overrides.
   const inputTokens = $derived(current.token.Input as Partial<AliasToken> | undefined);
 </script>
 

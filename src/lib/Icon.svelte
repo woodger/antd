@@ -20,7 +20,7 @@
   let statusPath = $derived(
     name in statusIcons ? statusIcons[name as keyof typeof statusIcons] : undefined
   );
-  // Пять filled status icons из icons-svg 4.6.0 используют fitted viewBox; legacy размер сохранён.
+  // Five filled status icons from icons-svg 4.6.0 use a fitted viewBox and retain the legacy size.
   const designTokens = useDesignTokenContext();
 </script>
 

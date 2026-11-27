@@ -15,22 +15,22 @@ export interface RateCharacterInfo {
   onClick: (event: MouseEvent | KeyboardEvent, index: number) => void;
 }
 
-/** Стили ConfigProvider.rate; class и style компонента дополняют настройки провайдера. */
+/** Styles ConfigProvider.rate; class and component style complement provider settings. */
 export interface RateConfig {
   class?: string;
   style?: string;
 }
 
-/** Оценка со звёздами, половинным выбором, hover и управляемым или локальным value. */
+/** Estimation with stars, halves of choice, hover and controlled or local value. */
 export interface RateProps extends Omit<
   HTMLAttributes<HTMLUListElement>,
   'children' | 'class' | 'style' | 'onchange'
 > {
-  /** Local CSS prefix; empty/undefined наследуют ConfigProvider. */
+  /** Local CSS prefix; empty/undefined inherited ConfigProvider. */
   prefixCls?: string;
-  /** Управляемое значение; владелец принимает новый выбор через onChange. */
+  /** Managed value; the owner accepts a new choice through onChange. */
   value?: number;
-  /** Начальная локальная оценка при отсутствии value; по умолчанию 0. */
+  /** Initial local assessment in the absence of value; default 0. */
   defaultValue?: number;
   /** @defaultValue 5 */
   count?: number;
@@ -43,14 +43,14 @@ export interface RateProps extends Omit<
   disabled?: boolean;
   size?: ComponentSize | 'medium';
   character?: string | number | Snippet<[RateCharacterInfo]>;
-  /** Snippet получает исходный character snippet и контекст текущей звезды. */
+  /** Snippet receives the original character snippet and the context of the current star. */
   characterRender?: Snippet<[Snippet, RateCharacterInfo]>;
   tooltips?: readonly (string | Omit<TooltipProps, 'children'>)[];
   /** @defaultValue false */
   autoFocus?: boolean;
   tabIndex?: number;
   onChange?: (value: number) => void;
-  /** Hover-оценка; undefined означает уход указателя с control. */
+  /** Hover-evaluation; undefined means the departure of the pointer with control. */
   onHoverChange?: (value: number | undefined) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -59,6 +59,6 @@ export interface RateProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLUListElement;
 }

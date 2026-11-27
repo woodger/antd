@@ -5,13 +5,13 @@ import Fixture from '../browser/fixtures/TableSemanticFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-semantic-reference.json';
 import { expectedTableSemantics } from '../browser/fixtures/table-semantic-reference';
 
-/** Берёт последнее объявление измеряемого CSS-свойства из inline стиля. */
+/** Reads the last declaration of the measured CSS property from the inline style. */
 function slotValue(style: string, name: '--observed-slot' | '--observed-provider-slot') {
   const values = Array.from(style.matchAll(new RegExp('(?:^|;)\\s*' + name + ':\\s*([^;]+)', 'g')));
   return values.at(-1)?.[1].trim() ?? '';
 }
 
-/** Читает только маркеры стилей в серверной разметке. */
+/** Reads only style markers in server markup. */
 function renderedSlots(body: string) {
   const slots: { tag: string; classes: string[]; value: string; providerValue: string; }[] = [];
   for (const [, tag, attributes] of body.matchAll(/<([a-z]+)\b([^>]*)>/g)) {

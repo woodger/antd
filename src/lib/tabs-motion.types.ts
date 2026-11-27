@@ -1,9 +1,9 @@
 import type { CssMotionName } from './css-motion.engine';
 
-/** Native событие окончания CSS motion либо исходный deadline без DOM event. */
+/** Native end event CSS motion or original deadline without DOM event. */
 export type TabsMotionEvent = Event | { deadline: true; };
 
-/** Имена фаз CSSMotion; string использует suffix appear/enter/leave и start/active. */
+/** Phase names CSSMotion; string uses suffix appear/enter/leave and start/active. */
 export type TabsMotionName = CssMotionName;
 
 type TabsMotionPrepare = (element: HTMLDivElement) => void | Promise<unknown>;
@@ -11,14 +11,14 @@ type TabsMotionStyle = (element: HTMLDivElement, event: null) => string | void;
 type TabsMotionEnd = (element: HTMLDivElement, event: TabsMotionEvent) => boolean | void;
 
 /**
- * Native CSSMotion для панели. Start/active возвращают CSS-строки и получают event=null.
- * Prepare работает и при выключенном motion; end=false откладывает завершение.
- * Prepare/start видят DOM с prepare classes; active читает start classes.
- * React children/internalRef не используются исходным TabPanelList.
+ * Native CSSMotion for panel. Start/active returns CSS lines and gets event=null. Prepare also
+ * works when the motion is switched off; end = false postpones completion. Prepare/start sees DOM
+ * with prepared classes; active reads start classes. React children/internalRef is not used
+ * baseline TabPanelList.
  */
 export interface TabsPaneMotion {
   motionName?: TabsMotionName;
-  /** Собственное поле перекрывает active панели; undefined означает исходное true. */
+  /** The proprietary field overlaps the active panels; undefined stands for the original true. */
   visible?: boolean;
   /** @defaultValue true */
   motionAppear?: boolean;
@@ -27,14 +27,14 @@ export interface TabsPaneMotion {
   /** @defaultValue true */
   motionLeave?: boolean;
   motionLeaveImmediately?: boolean;
-  /** Положительный timeout в ms после active; 0 не задаёт deadline. */
+  /** Positive timeout in ms after active; 0 doesn't set the deadline. */
   motionDeadline?: number;
-  /** Собственное поле перекрывает item.forceRender. */
+  /** Its own field overlaps item.forceRender. */
   forceRender?: boolean;
-  /** Собственное поле перекрывает native destroyOnHidden; undefined означает true. */
+  /** The proper field overlaps native destroyOnHidden; undefined means true. */
   removeOnLeave?: boolean;
   leavedClassName?: string;
-  /** CSSMotion eventProps: стабильные className/style; остальные поля не читает TabPanelList. */
+  /** CSSMotion eventProps: stable className/style; the remaining fields do not read TabPanelList. */
   eventProps?: { className?: string; style?: string; [key: string]: unknown; };
   onAppearPrepare?: TabsMotionPrepare;
   onEnterPrepare?: TabsMotionPrepare;
@@ -51,10 +51,10 @@ export interface TabsPaneMotion {
   onVisibleChanged?: (visible: boolean) => void;
 }
 
-/** Настройки Tabs.animated; при tabPane=true Ant Design заменяет custom motion исходным switch. */
+/** Settings Tabs.animated; at tabPane=true Ant Design replaces custom motion switch. */
 export interface TabsAnimatedConfig {
   inkBar?: boolean;
   tabPane?: boolean;
-  /** Без tabPane включает собственный CSSMotion; tabPane=false сохраняет motion без body class. */
+  /** Without tabPane includes its own CSSMotion; tabPane = false preserves without motion class. */
   tabPaneMotion?: TabsPaneMotion;
 }

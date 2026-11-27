@@ -27,13 +27,13 @@ export type TableFilters = Record<string, TableFilterValue[]>;
 export type TableFilterMode = 'menu' | 'tree';
 
 export interface TableFilterOption {
-  /** Содержимое подписи. Встроенный поиск сопоставляет строки и числа. */
+  /** The contents of the label. Built-in search composes strings and numbers. */
   text: RenderEmptyContent;
   value: TableFilterValue;
   children?: readonly TableFilterOption[];
 }
 
-/** Пользовательский поиск получает текущий запрос и исходный вариант. */
+/** Custom search gets the current query and the original option. */
 export type TableFilterSearch = boolean | ((input: string, option: TableFilterOption) => boolean);
 
 export interface TableFilterConfirmOptions {
@@ -45,22 +45,22 @@ export interface TableFilterResetOptions {
   closeDropdown?: boolean;
 }
 
-/** Аргумент snippet пользовательского фильтра. Изменения остаются в черновике до confirm. */
+/** Argument snip of the custom filter. The changes remain in the draft until confirm. */
 export interface TableFilterDropdownProps {
   prefixCls: string;
   selectedKeys: readonly TableFilterValue[];
   setSelectedKeys: (keys: readonly TableFilterValue[]) => void;
-  /** Подтверждает черновик. Вызов без аргумента закрывает панель. */
+  /** Confirms the draft. A call without an argument closes the panel. */
   confirm: (options?: TableFilterConfirmOptions) => void;
-  /** Восстанавливает начальный черновик. Опции управляют очисткой и закрытием. */
+  /** Restores the initial draft. Options manage clearing and closing. */
   clearFilters: (options?: TableFilterResetOptions) => void;
   filters?: readonly TableFilterOption[];
-  /** Закрывает панель без применения черновика. */
+  /** Closes the panel without the use of a draft. */
   close: () => void;
   visible: boolean;
 }
 
-/** Параметры Dropdown. Table предоставляет кнопку и содержимое панели. */
+/** Dropdown parameters. Table provides a button and panel content. */
 export interface TableFilterDropdownOptions extends Omit<
   DropdownProps, 'children' | 'ref' | 'defaultOpen' | 'popupRender' | 'onOpenChange'
 > {
@@ -73,136 +73,136 @@ export interface TableSorter {
   order: TableSortOrder;
 }
 
-/** Table передаёт активное направление до применения его знака к сравнению. */
+/** Table passes the active sort direction before applying its sign to the comparison. */
 export type TableSortCompare<Row extends object> = (
   left: Row, right: Row, order?: TableSortOrder | null
 ) => number;
 
 export interface TableColumnSorter<Row extends object> {
   compare?: TableSortCompare<Row>;
-  /** Большие числовые приоритеты сравниваются первыми. Ноль включает совмещение. */
+  /** Large numerical priorities are compared first. Zero includes a combination. */
   multiple?: number;
 }
 
 export type TableColumnTitle<Row extends object> =
   Exclude<RenderEmptyContent, Snippet | undefined> | Snippet<[info: TableColumnTitleProps<Row>]>;
 
-/** Значения, которые Table передаёт заголовкам листьев и групп. */
+/** Values Table passes to leaf and group headers. */
 export interface TableColumnTitleProps<Row extends object> {
-  /** Критерии в порядке состояния. order равен null для неактивного критерия. */
+  /** Criteria in the order of the order is null for an inactive criterion. */
   readonly sortColumns: readonly { column: TableColumn<Row>; order: TableSortOrder | null; }[];
-  /** Применённые фильтры, без черновика открытой панели и отклонённых запросов. */
+  /** Applied filters, without a draft open panel and rejected requests. */
   readonly filters: Readonly<Record<string, readonly TableFilterValue[]>>;
 }
 
 export type TableSorterTooltipTarget = 'full-header' | 'sorter-icon';
 
-/** Встроенный Tooltip использует кнопку сортировки или её декоративную иконку. */
+/** Built-in Tooltip uses a sorting button or its decorative icon. */
 export interface TableSorterTooltipProps
   extends Omit<TooltipProps, 'children' | 'overlay' | 'class' | 'style'> {
   /** @defaultValue 'full-header' */
   target?: TableSorterTooltipTarget;
 }
 
-/** Атрибуты и Svelte events отдельной ячейки. Нулевой span пропускает её. */
+/** Attributes and Svelte events of a separate cell. Zero span passes it. */
 export interface TableCellProps extends Omit<HTMLTdAttributes, 'children' | 'colspan' | 'rowspan'> {
   colSpan?: number;
   rowSpan?: number;
 }
 
-/** DOM-атрибуты и Svelte events строки. Ячейки остаются у Table. */
+/** DOM attributes and Svelte events lines. Cells remain at Table. */
 export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
 
-/** Колонка с разрешённым строковым ключом. Ключ уникален во всём дереве. */
+/** Column with permitted string key. The key is unique in the whole tree. */
 export interface TableColumn<Row extends object> {
   key: string;
-  /** Принимает составное содержимое. Snippet верхнего уровня получает состояние Table. */
+  /** Receives composite content. Snippet of the top level receives the status of Table. */
   title?: TableColumnTitle<Row>;
-  /** Строка обозначает буквальный ключ. Массив задаёт путь, включая индексы массивов. */
+  /** The string denotes a literal key. An array sets the way, including array indices. */
   dataIndex?: TableDataIndex<Row>;
   /**
-   * Index относится к соседним записям. Table передаёт исходное значение третьим
-   * аргументом. Snippet можно вызвать и с двумя аргументами.
+   * Index refers to adjacent rows. Table passes the original value as the third argument. The
+   * snippet also accepts two arguments.
    */
   render?: Snippet<[record: Row, index: number, value?: unknown]>;
-  /** Разрешает обновить содержимое ячейки относительно последней принятой записи. */
+  /** Allows you to update the contents of the cell relative to the last received entry. */
   shouldCellUpdate?: (record: Row, previousRecord: Row) => boolean;
   sorter?: boolean | TableSortCompare<Row> | TableColumnSorter<Row>;
-  /** Явное null оставляет колонку без направления под управлением владельца. */
+  /** Explicit null leaves a column without a direction under the control of the owner. */
   sortOrder?: TableSortOrder | null;
-  /** Читается при создании таблицы. */
+  /** Is read when creating a table. */
   defaultSortOrder?: TableSortOrder | null;
-  /** Заменяет цикл направлений таблицы для этой колонки. */
+  /** Replaces the direction cycle of the table for this column. */
   sortDirections?: readonly (TableSortOrder | null)[];
-  /** Заменяет декоративные стрелки. Snippet получает отображаемый порядок. */
+  /** Replacing decorative arrows. Snippet receives the displayed order. */
   sortIcon?: Snippet<[info: { sortOrder: TableSortOrder | null; }]>;
-  /** Перекрывает настройку таблицы для этой колонки, включая false. */
+  /** Overlaps the table setting for this column, including false. */
   showSorterTooltip?: boolean | TableSorterTooltipProps;
   filters?: readonly TableFilterOption[];
-  /** Заменяет панель содержимым. Snippet верхнего уровня получает черновик и операции. */
+  /** Replaces the panel with contents. Snippet of the top level receives a draft and operations. */
   filterDropdown?: Exclude<RenderEmptyContent, Snippet> | Snippet<[info: TableFilterDropdownProps]>;
-  /** Настраивает размещение, триггеры, открытие и обёртку панели. */
+  /** Configures placement, triggers, opening and panel wrapping. */
   filterDropdownProps?: TableFilterDropdownOptions;
-  /** Применяет встроенный фильтр при закрытии. @defaultValue false */
+  /** Applies a built-in filter when closed. @defaultValue false */
   filterOnClose?: boolean;
-  /** Заменяет декоративную иконку. Snippet верхнего уровня получает состояние фильтра. */
+  /** Replaces the decorative icon. Snippet of the top level receives the status of the filter. */
   filterIcon?: Exclude<RenderEmptyContent, Snippet> | Snippet<[filtered: boolean]>;
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
-  /** Выбирает представление фильтра. @defaultValue 'menu' */
+  /** Choosing a filter view. @defaultValue 'menu' */
   filterMode?: TableFilterMode;
-  /** Показывает поле поиска. В дереве поиск выделяет совпадения. */
+  /** Shows the search field. In the tree, the search highlights matches. */
   filterSearch?: TableFilterSearch;
-  /** Добавляет индикацию активного фильтра независимо от выбранных значений. */
+  /** Adds an indication of the active filter regardless of the selected values. */
   filtered?: boolean;
-  /** Управляет значениями колонки. Значения null и [] задают пустой фильтр. */
+  /** Manages column values. The values of null and [] set an empty filter. */
   filteredValue?: readonly TableFilterValue[] | null;
-  /** Начальные значения колонки. Читаются при создании таблицы. */
+  /** Initial column values. Read when creating a table. */
   defaultFilteredValue?: readonly TableFilterValue[] | null;
-  /** Кнопка сброса восстанавливает defaultFilteredValue в черновике меню. */
+  /** The reset button restores defaultFilteredValue in the draft menu. */
   filterResetToDefaultFilteredValue?: boolean;
   align?: TableAlign;
-  /** Обрезает строку. True включает нативный title для строк и чисел. */
+  /** Cuts the line. True includes a native title for strings and numbers. */
   ellipsis?: boolean | { showTitle?: boolean; };
-  /** Дополняет классы заголовка и каждой ячейки данных этой колонки. */
+  /** Complements the classes of the title and each data cell of this column. */
   className?: string;
-  /** Ячейки данных этой колонки становятся th с указанным scope. */
+  /** The data cells of this column become th with the specified scope. */
   rowScope?: 'row' | 'rowgroup';
-  /** Переопределяет ширину заголовка в колонках. Ноль скрывает ячейку. */
+  /** Overrides the width of the header in the columns. Zero hides the cell. */
   colSpan?: number;
-  /** Переопределяет высоту заголовка в строках. Ноль скрывает ячейку. */
+  /** Redefines the height of the header in strings. Zero hides the cell. */
   rowSpan?: number;
-  /** Атрибуты и spans ячейки данных. index — позиция в раскрытой странице. */
+  /** Attributes and spans of the data cell. index is the position in the disclosed page. */
   onCell?: (record: Row, index: number) => TableCellProps | void;
-  /** Атрибуты заголовка с приоритетом над spans колонки. */
+  /** Attributes of the header with priority over spans columns. */
   onHeaderCell?: (column: TableColumn<Row>) => TableCellProps | void;
-  /** Убирает колонку из DOM, сохраняя её сортировку и фильтры данных. @defaultValue false */
+  /** Removes the column from DOM, saving its sorting and data filters. @defaultValue false */
   hidden?: boolean;
-  /** Дочерние колонки образуют следующий уровень заголовка. */
+  /** Subsidiary columns form the next level of the title. */
   children?: TableColumnsType<Row>;
-  /** Ограничивает видимость колонки верхнего уровня активными breakpoint Grid. */
+  /** Limits the appearance of the top-level column to the active breakpoint Grid. */
   responsive?: readonly GridBreakpoint[];
   width?: number | string;
-  /** Минимальная ширина в px при auto или для ширины виртуальной ячейки. */
+  /** Minimal width in px for auto or for the width of a virtual cell. */
   minWidth?: number;
-  /** Лист наследует закрепление группы. False явно отключает наследование. */
+  /** Sheet inherits the consolidation of the group. False is clearly disabling inheritance. */
   fixed?: TableFixed;
 }
 
 export type TableColumnType<Row extends object> = TableColumn<Row>;
 export type TableColumnsType<Row extends object> = readonly TableColumn<Row>[];
 
-/** Входное определение. Table выводит отсутствующий ключ из dataIndex или позиции. */
+/** The entrance definition. Table displays missing key from dataIndex or position. */
 export interface TableColumnInput<Row extends object>
   extends Omit<TableColumn<Row>, 'key' | 'children'> {
   key?: TableKey;
   children?: readonly TableColumnInput<Row>[];
 }
 
-/** Общие свойства колонок. Дочернее дерево задаётся в columns. */
+/** Common properties of columns. Subsidiary Tree is set in columns. */
 export type TableColumnDefaults<Row extends object> = Partial<Omit<TableColumnInput<Row>, 'children'>>;
 
-/** У группы собственный заголовок, а поля данных находятся у её дочерних колонок. */
+/** The group has its own title, and the data fields are at its child columns. */
 export interface TableColumnGroupType<Row extends object>
   extends Omit<TableColumn<Row>, 'children' | 'dataIndex'> {
   children: TableColumnsType<Row>;
@@ -212,15 +212,15 @@ export type TableRowSelectMethod = 'all' | 'none' | 'invert' | 'single' | 'multi
 export type TableRowSelectionType = 'checkbox' | 'radio';
 export type TableSelectionPreset = 'SELECT_ALL' | 'SELECT_INVERT' | 'SELECT_NONE';
 
-/** Команда меню получает доступные ключи текущей страницы. */
+/** The menu command receives the available keys of the current page. */
 export interface TableSelectionItem {
   key: string;
-  /** Подпись команды, включая вложенные массивы и snippets. */
+  /** Command label, including nested arrays and snippets. */
   text: RenderEmptyContent;
   onSelect?: (changeableRowKeys: TableKey[]) => void;
 }
 
-/** Атрибуты контрола. Проверенное и начальное состояние задаёт Table. */
+/** Attributes of control. Proven and initial condition sets Table. */
 export interface TableSelectionControlProps extends Omit<
   HTMLInputAttributes,
   'type' | 'value' | 'checked' | 'defaultChecked' | 'children' | 'indeterminate' | 'size' | 'class'
@@ -236,37 +236,37 @@ export interface TableSelectionControlProps extends Omit<
 }
 
 export interface TableRowSelection<Row extends object> {
-  /** Режим одного или нескольких выбранных ключей. @defaultValue 'checkbox' */
+  /** Mode of one or more selected keys. @defaultValue 'checkbox' */
   type?: TableRowSelectionType;
-  /** Управляемые ключи внутри rowSelection. Новые значения принимает владелец. */
+  /** Managed keys inside rowSelection. New values are taken by the owner. */
   selectedRowKeys?: readonly TableKey[];
-  /** Начальная отметка до первого взаимодействия. */
+  /** Initial mark before the first interaction. */
   defaultSelectedRowKeys?: readonly TableKey[];
-  /** Сохраняет выбранные записи после их удаления из dataSource. */
+  /** Saves the selected records after they are deleted from dataSource. */
   preserveSelectedRowKeys?: boolean;
   onChange?: (keys: TableKey[], rows: Row[], info: { type: TableRowSelectMethod; }) => void;
-  /** Вызывается до onChange при взаимодействии с одной строкой. */
+  /** Is called up to onChange when interacting with one line. */
   onSelect?: (row: Row, checked: boolean, rows: Row[], nativeEvent: Event) => void;
-  /** True включает все штатные команды. Порядок массива задаёт порядок пунктов. */
+  /** true enables all built-in commands. The array determines item order. */
   selections?: boolean | readonly (TableSelectionItem | TableSelectionPreset)[];
-  /** Скрывает checkbox и меню в заголовке колонки. */
+  /** Hide checkbox and menu in the column title. */
   hideSelectAll?: boolean;
   getTitleCheckboxProps?: () => TableSelectionControlProps;
-  /** Заменяет шапку. Snippet верхнего уровня получает checkbox, у Radio он отсутствует. */
+  /** Replacing the hat. Snippet of the top level receives checkbox, Radio it is missing. */
   columnTitle?: Exclude<RenderEmptyContent, Snippet> | Snippet<[checkbox: Snippet | undefined]>;
-  /** Snippet получает отметку, запись, индекс среди соседей и исходный контрол. */
+  /** Snippet receives a mark, a record, an index among neighbors and initial control. */
   renderCell?: Snippet<[checked: boolean, record: Row, index: number, origin: Snippet]>;
-  /** Атрибуты ячейки выбора. index относится ко всей раскрытой странице. */
+  /** Attributes of the selection cell. The index refers to the entire opened page. */
   onCell?: TableColumn<Row>['onCell'];
   fixed?: TableFixed;
   columnWidth?: string | number;
   align?: TableColumn<Row>['align'];
   getCheckboxProps?: (record: Row) => TableSelectionControlProps;
-  /** False связывает отметки родителей и потомков. @defaultValue true */
+  /** False binds the marks of parents and descendants. @defaultValue true */
   checkStrictly?: boolean;
 }
 
-/** Состояние переключателя. onExpand привязан к этой строке. */
+/** The state of the switch. onExpand is tied to this line. */
 export interface TableExpandIconInfo<Row extends object = object> {
   prefixCls: string;
   record: Row;
@@ -274,37 +274,37 @@ export interface TableExpandIconInfo<Row extends object = object> {
   expandable: boolean;
   disabled: boolean;
   ariaControls?: string;
-  /** Переданное событие прекращает всплытие к строке. */
+  /** The supplied event stops bubbling to the row. */
   onExpand: (event?: Event) => void;
 }
 
 export interface TableExpandable<Row extends object> {
-  /** Snippet подробностей. Без него раскрываются вложенные строки. */
+  /** Snippet details. Without it, nested lines are revealed. */
   expandedRowRender?: Snippet<[record: Row, index: number, indent: number, expanded: boolean]>;
-  /** Сохраняет скрытые подробности строк, находящихся в DOM. @defaultValue false */
+  /** Saves the hidden details of the lines in DOM. @defaultValue false */
   forceRender?: boolean;
-  /** Классы строки подробностей и вложенных записей. */
+  /** Classes of details and nested entries. */
   expandedRowClassName?: string | ((record: Row, index: number, indent: number) => string);
-  /** Заменяет переключатель и получает штатную кнопку в origin. */
+  /** Replaces the toggle and receives the default button in origin. */
   expandIcon?: Snippet<[info: TableExpandIconInfo<Row>, origin: Snippet]>;
-  /** Управляемые ключи; новое значение принимает владелец через onExpandedRowsChange. */
+  /** Managed keys; the new value is taken by the owner through onExpandedRowsChange. */
   expandedRowKeys?: readonly TableKey[];
-  /** Начальные ключи; последующие изменения не переинициализируют состояние. */
+  /** Initial keys; subsequent changes do not reinitialize the state. */
   defaultExpandedRowKeys?: readonly TableKey[];
-  /** Раскрывает записи начальной страницы, если defaultExpandedRowKeys не задан. */
+  /** Reveals the entry of the initial page if defaultExpandedRowKeys is not specified. */
   defaultExpandAllRows?: boolean;
-  /** Поле вложенных записей. @defaultValue 'children' */
+  /** The field of nested records. @defaultValue 'children' */
   childrenColumnName?: string;
-  /** Отступ каждого уровня вложенности в пикселях. @defaultValue 15 */
+  /** Indentation of each level of nesting in pixels. @defaultValue 15 */
   indentSize?: number;
-  /** Переключает раскрытие нажатием на строку. */
+  /** Switches the opening by clicking on the line. */
   expandRowByClick?: boolean;
-  /** Добавляет колонку автоматически и показывает переключатель дерева. @defaultValue true */
+  /** Adds the column automatically and shows the tree switch. @defaultValue true */
   showExpandColumn?: boolean;
   onExpand?: (expanded: boolean, record: Row) => void;
   onExpandedRowsChange?: (keys: TableKey[]) => void;
   rowExpandable?: (record: Row) => boolean;
-  /** Содержимое заголовка колонки раскрытия. Число 0 выводится как текст. */
+  /** Expand column header content. The number 0 renders as text. */
   columnTitle?: RenderEmptyContent;
   columnWidth?: number | string;
   fixed?: TableFixed;
@@ -316,7 +316,7 @@ interface TableSemanticGroup {
   cell?: string;
 }
 
-/** Семантические области таблицы. Значения styles записываются строками CSS. */
+/** Semantic areas of the table. The values of styles are written in rows CSS. */
 export interface TableSemanticSlots {
   root?: string;
   section?: string;
@@ -328,7 +328,7 @@ export interface TableSemanticSlots {
   pagination?: PaginationSlots;
 }
 
-/** Строка группы оформляет wrapper шапки или тела либо корень пагинации. */
+/** The string of the group draws up a wrapper of the hats or body or the root of pagination. */
 export interface TableClassNameSlots
   extends Omit<TableSemanticSlots, 'header' | 'body' | 'pagination'> {
   header?: string | TableSemanticGroup;
@@ -339,15 +339,15 @@ export interface TableClassNameSlots
 export type TableSemantic<Row extends object, Slots extends TableClassNameSlots = TableSemanticSlots>
   = Slots | ((info: { props: TableProps<Row>; }) => Slots | undefined);
 
-/** Настройки провайдера подходят таблицам с разными типами записей. */
+/** Provider settings are suitable for tables with different types of records. */
 export type TableConfigSemantic<Slots extends TableClassNameSlots = TableSemanticSlots>
   = Slots | (<Row extends object>(info: { props: TableProps<Row>; }) => Slots | undefined);
 
-/** Общие настройки ключей, прокрутки и оформления таблиц провайдера. */
+/** General key settings, scrolling and registration of the provider's tables. */
 export interface TableConfig {
-  /** Поле или функция для записей таблиц, которые наследуют этот ключ. */
+  /** The field or function to record tables that inherit this key. */
   rowKey?: PropertyKey | { resolve(record: object): TableKey; }['resolve'];
-  /** Значение целиком используется при отсутствии локального Table.scroll. */
+  /** The value is used entirely in the absence of local Table.scroll. */
   scroll?: TableScrollOptions;
   expandable?: Pick<TableExpandable<object>, 'expandIcon'>;
   class?: string;
@@ -356,34 +356,34 @@ export interface TableConfig {
   styles?: TableConfigSemantic;
 }
 
-/** Сторона по вертикали и логическое выравнивание пейджера относительно таблицы. */
+/** Vertical side and logical alignment of the pager relative to the table. */
 export type TablePaginationPlacement = 'topStart' | 'topCenter' | 'topEnd'
   | 'bottomStart' | 'bottomCenter' | 'bottomEnd' | 'none';
 
-/** Настройки общего состояния страницы и обоих экземпляров Pagination. */
+/** Configure the general status of the page and both instances of Pagination. */
 export interface TablePaginationConfig extends PaginationProps {
-  /** Первый вариант для каждой стороны. Пустой массив и ['none'] скрывают оба пейджера. */
+  /** The first option for each side. An empty array and an ['none'] hide both pagers. */
   placement?: readonly TablePaginationPlacement[];
 }
 
-/** Размеры области прокрутки и сброс после пользовательского изменения данных. */
+/** Scroll area dimensions and reset after custom data changes. */
 export interface TableScrollOptions {
-  /** true задаёт автоматическую ширину по содержимому с минимумом 100%. */
+  /** true sets the automatic width by content with a minimum of 100%. */
   x?: number | string | true;
   y?: number | string;
-  /** Сбрасывает вертикальную прокрутку после сортировки, фильтра и пагинации. */
+  /** Resets vertical scrolling after sorting, filter and pagination. */
   scrollToFirstRowOnChange?: boolean;
 }
 
-/** Смещения закреплённых частей относительно окна или заданной области прокрутки. */
+/** Displacements of fixed parts relative to the window or a given scrolling area. */
 export interface TableSticky {
-  /** Верхний отступ шапки в пикселях. @defaultValue 0 */
+  /** Upper indentation of the cap in the pixels. @defaultValue 0 */
   offsetHeader?: number;
-  /** Нижний отступ закреплённого итога в пикселях. @defaultValue 0 */
+  /** Bottom indentation of the fixed result in pixels. @defaultValue 0 */
   offsetSummary?: number;
-  /** Нижний отступ дополнительной полосы в пикселях. @defaultValue 0 */
+  /** The lower indentation of an additional strip in the pixels. @defaultValue 0 */
   offsetScroll?: number;
-  /** Вызывается после появления DOM. По умолчанию используется окно таблицы. */
+  /** Is caused after the appearance of DOM. By default, the table window is used. */
   getContainer?: () => HTMLElement | Window | null | undefined;
 }
 
@@ -394,20 +394,20 @@ export interface TableSummaryProps {
 export type TableSummaryRowProps = HTMLAttributes<HTMLTableRowElement>;
 
 export interface TableSummaryCellProps extends Omit<TableCellProps, 'align'> {
-  /** Индекс видимой колонки с учётом колонок выделения и раскрытия. */
+  /** Visible column index, including selection and expansion columns. */
   index: number;
   align?: TableAlign;
   children?: Snippet;
 }
 
-/** Группа итоговых строк. Размещение известно таблице и при SSR. */
+/** Group of final lines. Placement is known table and at SSR. */
 export interface TableSummaryConfig<Row extends object> {
-  /** При scroll.y или sticky закрепляет итог. True равнозначно 'bottom'. */
+  /** At scroll.y or sticky fixes the outcome. True is equivalent to 'bottom'. */
   fixed?: boolean | 'top' | 'bottom';
   render: Snippet<[data: readonly Row[]]>;
 }
 
-/** Абсолютная позиция или адрес строки текущей страницы. top имеет приоритет. */
+/** The absolute position or address of the current page line. top has priority. */
 export interface TableScrollConfig {
   top?: number;
   index?: number;
@@ -416,32 +416,32 @@ export interface TableScrollConfig {
   offset?: number;
 }
 
-/** Интерфейс пользовательского виртуализатора с собственной системой координат. */
+/** The interface of a custom virtualizer with its own coordinate system. */
 export interface TableBodyScrollHandle {
-  /** Физическая горизонтальная позиция, отрицательная в RTL. */
+  /** Physical horizontal position, negative in RTL. */
   scrollLeft: number;
   scrollTo?: (config: TableScrollConfig) => void;
 }
 
-/** Нативный scroll event или координата, сообщённая виртуализатором. */
+/** Native scroll event or coordinate communicated by the virtualizer. */
 export interface TableBodyScrollEvent {
   currentTarget?: HTMLElement;
   scrollLeft?: number;
 }
 
-/** Связывает собственное тело с шапкой, итогами и TableRef.scrollTo. */
+/** Connects your own body with a cap, results and TableRef.scrollTo. */
 export interface TableBodyRenderInfo {
   readonly scrollbarSize: number;
-  /** Svelte attachment для DOM или регистрация handle с возвращаемым cleanup. */
+  /** Svelte attachment for DOM or check-in with returned cleanup. */
   ref: (target: HTMLElement | TableBodyScrollHandle) => () => void;
   onScroll: (event: TableBodyScrollEvent) => void;
 }
 
-/** Snippet получает корневые записи обработанной страницы и владеет разметкой тела. */
+/** Snippet receives the root records of the processed page and owns body markings. */
 export type TableBodyRender<Row extends object> =
   Snippet<[data: readonly Row[], info: TableBodyRenderInfo]>;
 
-/** Семантический тег штатного элемента, в том числе внутри виртуального окна. */
+/** Semantic tag of the default element, including within the virtual window. */
 export type TableElementTag = 'table' | 'thead' | 'tbody' | 'tr' | 'th' | 'td';
 
 interface TableElementAttributeMap {
@@ -460,7 +460,7 @@ type TableDataAttributes = {
 export type TableElementAttributes<Tag extends TableElementTag> = TableElementAttributeMap[Tag]
   & TableDataAttributes;
 
-/** Передайте attributes, children и ref реальному элементу с семантикой этого места. */
+/** Forward attributes, children, and ref to the actual element with the corresponding semantics. */
 export interface TableElementRenderInfo<Tag extends TableElementTag = TableElementTag> {
   tag: Tag;
   attributes: TableElementAttributes<Tag>;
@@ -468,12 +468,12 @@ export interface TableElementRenderInfo<Tag extends TableElementTag = TableEleme
   ref: Attachment<HTMLElement>;
 }
 
-/** Имя HTML-элемента либо snippet с готовыми атрибутами и штатными дочерними узлами. */
+/** HTML element name or a snippet with the supplied attributes and default child nodes. */
 export type TableElement<Tag extends TableElementTag> =
   string | Snippet<[info: TableElementRenderInfo<Tag>]>;
 
 export interface TableHeaderComponents {
-  /** Таблица отдельной шапки и закреплённых итогов при scroll.y или sticky. */
+  /** Table of a separate cap and fixed results at scroll.y or sticky. */
   table?: TableElement<'table'>;
   wrapper?: TableElement<'thead'>;
   row?: TableElement<'tr'>;
@@ -489,11 +489,11 @@ export interface TableBodyComponents {
 export interface TableComponents<Row extends object> {
   table?: TableElement<'table'>;
   header?: TableHeaderComponents;
-  /** Настраивает элементы тела или отдаёт прокрутку отдельному renderer. */
+  /** Configures the elements of the body or gives scroll to a separate renderer. */
   body?: TableBodyComponents | TableBodyRender<Row>;
 }
 
-/** Методы bind:this. Корневой DOM-узел доступен через bind:nativeElement. */
+/** Methods bind:this. Root DOM-knot is available via bind:nativeElement. */
 export interface TableRef {
   scrollTo(config: TableScrollConfig): void;
 }
@@ -502,7 +502,7 @@ export interface TableChange<Row extends object> {
   action: 'sort' | 'paginate' | 'filter';
   pagination: { current: number; pageSize: number; total: number; };
   sorter: TableSorter | null;
-  /** Полный список активных критериев при совмещении сортировок. */
+  /** A complete list of active criteria in the combination of sorts. */
   sorters?: TableSorter[];
   filters?: TableFilters;
   currentDataSource: Row[];
@@ -511,7 +511,7 @@ export interface TableChange<Row extends object> {
 type TableLocaleContentField = 'emptyText' | 'filterApply' | 'filterConfirm' | 'filterReset'
   | 'filterEmptyText' | 'filterCheckAll' | 'selectionAll' | 'selectInvert' | 'selectNone';
 
-/** Локальный словарь Table со строками доступности и содержимым на основе Svelte snippets. */
+/** Local dictionary Table with accessibility strings and content based on Svelte snippets. */
 export type TableLocaleOverrides =
   Partial<Omit<TableLocale, TableLocaleContentField>>
   & Partial<Record<TableLocaleContentField, RenderEmptyContent>>
@@ -520,101 +520,101 @@ export type TableLocaleOverrides =
     collapse?: string;
     triggerAsc?: string;
     triggerDesc?: string;
-    /** Поле исходного словаря. Текст действия сортировки задают triggerAsc, triggerDesc и cancelSort. */
+    /** The field of the original dictionary. The text of the sorting action is set triggerAsc, triggerDesc and cancelSort. */
     sortTitle?: string;
   };
 
-/** Типизированная таблица с columns, row identity, фильтрами, сортировкой и пагинацией. */
+/** Typical table with columns, row identity, filters, sorting and pagination. */
 export interface TableProps<Row extends object> extends AriaAttributes, TableDataAttributes {
-  /** ID внутреннего контейнера таблицы, принадлежащего текущему prefixCls. */
+  /** ID internal container of the table belonging to the current prefixCls. */
   id?: string;
-  /** Передаётся семантическим таблицам вместе с aria-атрибутами. */
+  /** Passed to semantic tables along with ARIA attributes. */
   role?: HTMLTableAttributes['role'];
-  /** Локальный Table owner перекрывает ConfigProvider.prefixCls. */
+  /** Local Table owner overrides ConfigProvider.prefixCls. */
   prefixCls?: string;
-  /** Локальный префикс списка фильтров; shell и controls наследуют общий prefix. */
+  /** Local prefix of the list of filters; shell and tanks inherit general prefix. */
   dropdownPrefixCls?: string;
-  /** Задаёт контейнер панелей фильтра и меню команд выбора по их DOM-триггеру. */
+  /** Specifies the container of the filter panels and the selection command menu according to their DOM-trigger. */
   getPopupContainer?: DropdownProps['getPopupContainer'];
   /** @defaultValue 'client' */
   mode?: TableMode;
   total?: number;
-  /** Пустой массив задаёт известный пустой результат. */
+  /** An empty array sets a well-known empty result. */
   dataSource?: readonly Row[] | null;
   columns: readonly TableColumnInput<Row>[];
-  /** Заполняет отсутствующие или равные undefined свойства групп и листьев. */
+  /** Fills missing or equal undefined properties of groups and leaves. */
   column?: TableColumnDefaults<Row>;
   rowKey?: TableRowKey<Row>;
-  /** Дополняет классы строки. index — позиция на странице, indent — глубина в дереве. */
+  /** Complements line classes. index — position on the page, indent — depth in the tree. */
   rowClassName?: string | ((record: Row, index: number, indent: number) => string);
-  /** Атрибуты строки данных. index — позиция во всей раскрытой странице. */
+  /** Attributes of the data line. index is the position in the entire opened page. */
   onRow?: (record: Row, index: number) => TableRowProps | void;
-  /** Атрибуты строки шапки. index — уровень видимых колонок после их размещения. */
+  /** Attributes of the hat line. index - the level of the visible columns after their placement. */
   onHeaderRow?: (columns: TableColumnsType<Row>, index: number) => TableRowProps | void;
-  /** Подсветка строк при наведении; изменение сразу обновляет оформление. @defaultValue true */
+  /** Illumination of strings when hovering; the change immediately updates the design. @defaultValue true */
   rowHoverable?: boolean;
-  /** Отображает заголовок колонок, сохраняя данные, caption и панели. @defaultValue true */
+  /** Displays column header, saving data, caption and panels. @defaultValue true */
   showHeader?: boolean;
-  /** Поддерживает bind:sorter. */
+  /** Maintenances bind:sorter. */
   sorter?: TableSorter | null;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultSorter?: TableSorter | null;
-  /** Цикл направления для колонок без собственного списка. */
+  /** Direction cycle for columns without its own list. */
   sortDirections?: readonly (TableSortOrder | null)[];
-  /** Штатная подсказка следующего направления для сортируемых колонок. */
+  /** Default tooltip for the next sort direction in sortable columns. */
   showSorterTooltip?: boolean | TableSorterTooltipProps;
-  /** Поддерживает bind:filters. */
+  /** Maintenances bind:filters. */
   filters?: TableFilters;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultFilters?: Readonly<Record<string, readonly TableFilterValue[]>>;
-  /** Поддерживает bind:current. */
+  /** Maintenances bind:current. */
   current?: number;
   /** @defaultValue 1 */
   defaultCurrent?: number;
-  /** Поддерживает bind:pageSize. */
+  /** Maintenances bind:pageSize. */
   pageSize?: number;
   /** @defaultValue 10 */
   defaultPageSize?: number;
   pagination?: false | TablePaginationConfig;
   /** @defaultValue false */
   rowSelection?: boolean | TableRowSelection<Row>;
-  /** Поддерживает bind:selectedRowKeys. */
+  /** Maintenances bind:selectedRowKeys. */
   selectedRowKeys?: TableKey[];
   defaultSelectedRowKeys?: readonly TableKey[];
   onChange?: (change: TableChange<Row>) => void;
   onSelectionChange?: (keys: TableKey[], rows: Row[], info: { type: 'single' | 'all'; }) => void;
   expandable?: TableExpandable<Row>;
-  /** Объект настраивает вложенный Spin. При отсутствии spinning он запрошен сразу. */
+  /** The object configures the nested Spin. If spinning is omitted, it is requested immediately. */
   loading?: boolean | SpinProps;
   disabled?: boolean;
   /** @defaultValue false */
   bordered?: boolean;
   size?: ComponentSize;
-  /** Панель перед таблицей; получает отсортированные/отфильтрованные записи текущей страницы. */
+  /** Panel in front of the table; receives sorted/filtered entries of the current page. */
   title?: Snippet<[data: readonly Row[]]>;
-  /** Панель после таблицы; получает те же записи страницы, включая пустой массив. */
+  /** Panel after the table; receives the same page entries, including an empty array. */
   footer?: Snippet<[data: readonly Row[]]>;
-  /** Итоговые строки внутри таблицы; получают записи текущей страницы. */
+  /** The final rows inside the table; get the records of the current page. */
   summary?: Snippet<[data: readonly Row[]]> | TableSummaryConfig<Row>;
-  /** Составная подпись таблицы. Null и undefined пропускают caption. */
+  /** Composite label of the table. Null and undefined skip caption. */
   caption?: RenderEmptyContent;
-  /** Локальные подписи таблицы и содержимое пустой ячейки. */
+  /** Local table labels and contents of an empty cell. */
   locale?: TableLocaleOverrides;
   empty?: Snippet;
   components?: TableComponents<Row>;
   scroll?: TableScrollOptions;
-  /** Задаёт алгоритм ширин обычной таблицы. Виртуальное окно использует общую сетку. */
+  /** Specifies the width algorithm of a regular table. The virtual window uses a common grid. */
   tableLayout?: TableLayout;
   sticky?: boolean | TableSticky;
-  /** Ограничивает число строк в DOM при заданном scroll.y. @defaultValue false */
+  /** Limits the number of rows in DOM at a given scroll.y. @defaultValue false */
   virtual?: boolean;
-  /** В виртуальном режиме уведомляет о вертикальной прокрутке. */
+  /** In virtual mode notifies about vertical scrolling. */
   onScroll?: (event: Event & { currentTarget: HTMLDivElement; }) => void;
   nativeElement?: HTMLDivElement;
   'aria-label'?: string;
   classNames?: TableSemantic<Row, TableClassNameSlots>;
   styles?: TableSemantic<Row>;
-  /** Дополняет класс корня и панелей фильтров. */
+  /** Complements the root class and filter panels. */
   rootClassName?: string;
   class?: string;
   style?: string;

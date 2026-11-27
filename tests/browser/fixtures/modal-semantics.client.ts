@@ -1,4 +1,4 @@
-// Подключает semantic fixture в режиме обычного монтажа и строгой гидратации.
+// Connects semantic fixture in the mode of normal mounting and strict hydration.
 import '@woodger/antd/styles.css';
 import { hydrate, mount } from 'svelte';
 import ModalSemanticFixtures from './ModalSemanticFixtures.svelte';

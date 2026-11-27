@@ -15,28 +15,28 @@ export interface SpinIndicatorInfo {
   class: string;
   style?: string;
 }
-/** Пассивный snippet; прежние snippets без аргументов также поддерживаются. */
+/** Passive snippet; previous snippets without arguments are also supported. */
 export type SpinIndicator = Snippet<[SpinIndicatorInfo]>;
 export interface SpinRef {
   nativeElement: HTMLDivElement;
 }
 
-/** Отдельный, вложенный или полноэкранный индикатор с сохранением busy children. */
+/** Separate, nested or full-screen indicator while saving busy children. */
 export interface SpinProps extends Omit<
   HTMLAttributes<HTMLDivElement>, 'children' | 'class' | 'style' | 'aria-hidden'
 > {
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   /** @defaultValue true */
   spinning?: boolean;
   /** @defaultValue 0 */
   delay?: number;
-  /** Medium сохраняет обычный размер. */
+  /** Medium keeps the usual size. */
   size?: SpinSize;
   description?: SpinContent;
   indicator?: SpinIndicator | null;
   children?: SpinContent;
-  /** Фиксированный слой в текущей DOM-ветке, без portal или focus trap. */
+  /** Fixed layer in the current DOM branch, without portal or focus trap. */
   fullscreen?: boolean;
   percent?: number | 'auto';
   'aria-hidden'?: boolean;
@@ -51,5 +51,5 @@ export interface SpinProps extends Omit<
   ref?: SpinRef;
 }
 
-/** Явный record заменяет родительский; undefined наследует его целиком. */
+/** An obvious record replaces the parent record; undefined inherits it entirely. */
 export type SpinConfig = Pick<SpinProps, 'class' | 'style' | 'indicator' | 'classNames' | 'styles'>;

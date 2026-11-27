@@ -1,5 +1,5 @@
-// Хранит выбор и Shift-опору независимо от смонтированных строк. Кэш обновляется
-// по ключам владельца и сохраняет только записи, необходимые событиям выбора.
+// Store the choice and Shift support regardless of the mounted lines. The cache is updated to the
+// owner's keys and preserves only the records required by the selection events.
 import { untrack } from 'svelte';
 import { changeTableSelection, getTableSelection } from './table.engine';
 import { SELECTION_ALL, SELECTION_INVERT, SELECTION_NONE } from './table-selection.constants';
@@ -25,7 +25,7 @@ interface SelectionInputs<Row extends object> {
 type Command = TableSelectionPreset | TableSelectionItem;
 const presets = [SELECTION_ALL, SELECTION_INVERT, SELECTION_NONE] as const;
 
-/** Восстанавливает выбранные записи с приоритетом актуальных данных. */
+/** Restores selected records with the priority of up-to-date data. */
 function keepRecords<Row extends object>(
   keys: readonly TableKey[],
   live: ReadonlyMap<TableKey, TableRow<Row>>,
@@ -39,7 +39,7 @@ function keepRecords<Row extends object>(
   return records;
 }
 
-/** Собирает payload в порядке ключей. Отсутствующий record не образует пустой элемент. */
+/** Collecting payload in the order of keys. The missing record does not form an empty element. */
 function selectionResult<Row extends object>(
   requested: readonly TableKey[],
   records: ReadonlyMap<TableKey, TableRow<Row>>,
@@ -55,7 +55,7 @@ function selectionResult<Row extends object>(
   return { keys, rows };
 }
 
-/** Shift выбирает весь диапазон, если хотя бы одна строка ещё свободна. */
+/** Shift chooses the entire range if at least one line is still free. */
 function toggleRange(
   keys: readonly TableKey[],
   page: readonly TableKey[],
@@ -70,7 +70,7 @@ function toggleRange(
   return changeTableSelection(keys, range, checked);
 }
 
-/** Добавляет сохранённые ветки к дереву отметок, отдавая приоритет текущим данным. */
+/** Adds saved branches to the mark tree, prioritizing current data. */
 function withRememberedBranches<Row extends object>(
   roots: readonly TableRow<Row>[], remembered: ReadonlyMap<TableKey, TableRow<Row>>
 ) {
@@ -86,7 +86,7 @@ function withRememberedBranches<Row extends object>(
 
   const descendants = new Set<TableKey>();
 
-  /** Сохранённая строка, у которой есть предок в кэше, остаётся в его ветке. */
+  /** The saved line, which has an ancestor in the cache, remains in its branch. */
   function markDescendants(row: TableRow<Row>) {
     for (const child of row.children ?? []) {
       if (live.has(child.key) || descendants.has(child.key)) continue;
@@ -96,7 +96,7 @@ function withRememberedBranches<Row extends object>(
   }
   candidates.forEach(markDescendants);
 
-  /** Пропускает пересечения веток и дубликаты из разных снимков данных. */
+  /** Passes the intersections of branches and duplicates from different data shots. */
   function collect(row: TableRow<Row>): TableRow<Row> | undefined {
     if (live.has(row.key)) {
       return undefined;
@@ -120,7 +120,7 @@ function withRememberedBranches<Row extends object>(
     const branch = collect(row);
     if (branch) restored.push(branch);
   }
-  // Снимки разных страниц могут содержать обратные связи после перемещения строки.
+  // Shots of different pages can contain feedback after moving the line.
   for (const row of candidates) {
     const branch = collect(row);
     if (branch) restored.push(branch);
@@ -128,7 +128,7 @@ function withRememberedBranches<Row extends object>(
   return restored;
 }
 
-/** Координирует выбор текущей страницы, контролируемое состояние и команды меню. */
+/** Coordinates the selection of the current page, controlled status, and menu commands. */
 export function createTableSelection<Row extends object>(input: SelectionInputs<Row>) {
   const options = $derived(input.options());
   const nested = $derived(
@@ -199,13 +199,13 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     }
   });
 
-  /** На странице использует те же props, что контролы, вне страницы читает исходную строку. */
+  /** The page uses the same props as the controls, off-page reads the original line. */
   function isDisabled(row: TableRow<Row>) {
     const props = pageProps.get(row.key) ?? options?.getCheckboxProps?.(row.record);
     return Boolean(props?.disabled);
   }
 
-  /** Публикует onSelect перед изменением ключей и onChange после него. */
+  /** Publishes onSelect before changing keys and onChange after it. */
   function announce(
     requested: readonly TableKey[],
     type: TableRowSelectMethod,
@@ -226,7 +226,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     }
 
     if (preserve) {
-      // Принятие ключа и замена страницы могут произойти в одном onChange.
+      // Accepting the key and replacing the page can occur in one onChange.
       remembered = keepRecords([...owned, ...result.keys], live, remembered);
     }
     internal = result.keys;
@@ -239,7 +239,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     rootChange?.([...result.keys], result.rows, { type: rootType });
   }
 
-  /** Применяет одно действие. Radio оставляет единственную отметку. */
+  /** Applies a single action. Radio retains one checked option. */
   function toggleRow(row: TableRow<Row>, event: Event) {
     if (input.disabled() || isDisabled(row)) {
       return;
@@ -268,7 +268,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     rangeAnchor = wasChecked || index < 0 ? undefined : index;
   }
 
-  /** Заголовочный checkbox изменяет доступные строки только текущей страницы. */
+  /** Title checkbox changes the available lines of only the current page. */
   function togglePage(next: boolean) {
     if (input.disabled() || header.disabled || radio) {
       return;
@@ -279,7 +279,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     rangeAnchor = undefined;
   }
 
-  /** Выбирает доступные строки обработанного набора и сохраняет уже отмеченные disabled. */
+  /** Selects the available lines of the processed set and preserves already marked disabled. */
   function selectAllData() {
     const selected = [];
     for (const { row } of flattenTableRows(input.data())) {
@@ -288,7 +288,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     announce(selected, 'all');
   }
 
-  /** Инвертирует доступные отметки страницы в её текущем порядке. */
+  /** Inverts the available page marks in its current order. */
   function invertPage() {
     const selected = new Set(keys);
     for (const key of available) {
@@ -298,7 +298,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     announce([...selected], 'invert');
   }
 
-  /** Ставит disabled-строки вне действия очистки, включая сохранённые записи. */
+  /** Puts disabled strings outside of the clearing, including saved records. */
   function clearSelection() {
     const selected = keys.filter(key => {
       const row = liveRecords.get(key)
@@ -308,7 +308,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     announce(selected, 'none');
   }
 
-  /** Выполняет команду и сбрасывает Shift-опору даже у пользовательского пункта. */
+  /** Performs the command and resets the Shift support even at the user point. */
   function runCommand(command: Command) {
     if (input.disabled() || hideHeader) {
       return;
@@ -322,12 +322,12 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
     rangeAnchor = undefined;
   }
 
-  /** Возвращает те же настройки контрола, из которых рассчитана доступность страницы. */
+  /** Returns the same control settings from which the availability of the page is calculated. */
   function control(key: TableKey): TableSelectionControlProps | undefined {
     return pageProps.get(key);
   }
 
-  /** У Checkbox дерева смешанное состояние определяется отметками потомков. */
+  /** Checkbox tree has a mixed state is determined by the marks of the descendants. */
   function indeterminate(key: TableKey, tree: boolean) {
     const half = linked?.half.has(key) ?? false;
     return tree ? half : control(key)?.indeterminate ?? half;

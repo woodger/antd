@@ -17,7 +17,7 @@ const Table: typeof TableRoot & {
 } = Object.assign(TableRoot, {
   Summary, SELECTION_COLUMN, EXPAND_COLUMN, SELECTION_ALL, SELECTION_INVERT, SELECTION_NONE
 } as const);
-// Имя компонента остаётся одновременно типом экземпляра, как у Table.svelte.
+// The component name remains simultaneously the type of the instance, as in Table.svelte.
 type Table<Row extends object> = TableRoot<Row>;
 
 export default Table;

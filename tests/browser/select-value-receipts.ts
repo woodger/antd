@@ -10,7 +10,7 @@ type Encoded = {
   items?: Encoded[];
 };
 
-// Различает отсутствующую запись и сохранённое значение поля квитанции.
+// Distinguishes between the missing entry and the saved value of the receipt field.
 function field(value: Encoded, name: string) {
   const encodedEntry = value.entries?.find(([key]) => key === name);
   return encodedEntry?.[1];

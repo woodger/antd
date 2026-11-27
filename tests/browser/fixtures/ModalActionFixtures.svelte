@@ -59,7 +59,7 @@
     };
   }
 
-  /** Соответствует профилям исходного провайдера и отдельной смене настроек handle. */
+  /** Complies with the profiles of the original provider and a separate change of handle settings. */
   function provider(): ModalConfig | undefined {
     if (family === 'confirmation' || family === 'live') {
       return {
@@ -93,7 +93,7 @@
     return { closable, infoIcon: null, successIcon, errorIcon, warningIcon };
   }
 
-  /** Наблюдаем только локальные обработчики и отдельно свойства кнопки закрытия. */
+  /** Observes only local handlers and separately the properties of the closing button. */
   function closeConfig(): ModalClosable | undefined {
     if (family === 'ordinary') {
       if (sample.hideIcon) return false;
@@ -150,7 +150,7 @@
     afterOpenChange: visible => record('afterOpenChange', visible)
   };
 
-  /** Открывает контекстный вариант тем же типом, который использует исходный профиль. */
+  /** Opens the context version with the same type that uses the original profile. */
   function showConfirmation() {
     const options: ModalConfirmConfig = {
       class: 'actions-probe',
@@ -192,7 +192,7 @@
     void handle.then(accepted => record('result', accepted));
   }
 
-  /** Поздний update меняет реальное действие и сохраняет внутреннее состояние диалога. */
+  /** Late update changes the real action and preserves the internal state of the dialogue. */
   function updateConfirmation() {
     handle?.update(family === 'live' ? {
       okButtonProps: {

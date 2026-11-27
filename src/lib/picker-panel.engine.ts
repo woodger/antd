@@ -1,16 +1,16 @@
-// Готовит данные пользовательской панели. Черновик и подтверждение остаются у поля.
+// Prepares the data of the user panel. The draft and the confirmation remain at the field.
 import type { Dayjs } from 'dayjs';
 import { createDatePickerEngine } from './date-picker.engine';
 import type { PickerDateOperations } from './picker-date-operations.engine';
 import type { DatePickerMode, DatePickerTimeConfig } from './date-picker.types';
 import type { DatePickerPanelMode, DatePickerPanelTimeConfig } from './picker-components.types';
 
-/** Для поля даты со временем используется единая панель datetime. */
+/** A single datetime panel is used for the date field over time. */
 export function pickerPanelSlot(mode: DatePickerMode, datetime: boolean): DatePickerPanelMode {
   return mode === 'date' && datetime ? 'datetime' : mode;
 }
 
-/** Оставляет настройки часов, формат и ограничения, нужные производителю панели. */
+/** Leaves the settings of the clock, the format and restrictions required by the panel manufacturer. */
 export function pickerPanelClock<DateType extends object = Dayjs>(
   clock: DatePickerTimeConfig<DateType>,
   extra: Pick<DatePickerPanelTimeConfig<DateType>,
@@ -22,7 +22,7 @@ export function pickerPanelClock<DateType extends object = Dayjs>(
     hourStep, minuteStep, secondStep, millisecondStep, hideDisabledOptions, ...extra };
 }
 
-/** Готовит границы и подсветку подменённой панели для текущего адаптера. */
+/** Prepares the boundaries and illumination of the replacement panel for the current adapter. */
 export function createPickerPanelEngine<DateType extends object>(
   dates: PickerDateOperations<DateType>,
   calendar = createDatePickerEngine(dates)
@@ -30,7 +30,7 @@ export function createPickerPanelEngine<DateType extends object>(
   const { fields } = dates;
   const { samePickerPanelValue } = calendar;
 
-  /** Сравнивает период ограничения либо единицы времени в режиме панели. */
+  /** Compares the limitation period or time units in panel mode. */
   function samePickerPanelPeriod(a: DateType, b: DateType, mode: DatePickerMode, locale: string) {
     if (mode === 'decade') {
       return Math.floor(fields.getYear(a) / 10) === Math.floor(fields.getYear(b) / 10);
@@ -41,7 +41,7 @@ export function createPickerPanelEngine<DateType extends object>(
     return samePickerPanelValue(a, b, false, mode, locale);
   }
 
-  /** Обе даты границы могут принадлежать одному разрешённому периоду. */
+  /** Both dates of the border may belong to the same permitted period. */
   function pickerPanelOutsideBounds(
     date: DateType,
     limits: { minDate?: DateType; maxDate?: DateType; },
@@ -55,7 +55,7 @@ export function createPickerPanelEngine<DateType extends object>(
     );
   }
 
-  /** В hoverRangeValue передаётся упорядоченная пара даже при одной границе. */
+  /** Passes an ordered pair to hoverRangeValue even when only one boundary is set. */
   function pickerPanelHoverRange(start: DateType | null, end: DateType | null) {
     const first = start ?? end;
     const last = end ?? start;

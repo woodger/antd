@@ -14,7 +14,7 @@ const tableDomAttributes = {
   'data-owner': 'report', 'data-status': false
 } satisfies Props;
 
-/** Использует caption в выведенном generic Table вместе с прежней схемой колонок. */
+/** Uses caption with an inferred generic Table and the existing column schema. */
 export function tableWithCaption(caption: Snippet): TableProps<Row> {
   return { ...tableDomAttributes, caption };
 }

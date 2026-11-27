@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Воспроизводит данные исходных замеров и записывает наблюдаемые motion callbacks.
+  // Reproduces the data of the initial measurements and records the observed motion callbacks.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Menu,
@@ -74,14 +74,14 @@
   const motion = $derived(profile.options ? optionMotion(profile.options)
     : profile.motion ? createMotion(profile.id, profile.motion) : undefined);
 
-  // Выбирает проверенный профиль при первом mount и при смене сценария.
+  // Choose a verified profile at the first mount and when you change the script.
   function resolveProfile(id: string) {
     const resolved = profiles.find(profile => profile.id === id);
     if (!resolved) throw new Error(`Unknown Menu motion profile ${id}`);
     return resolved;
   }
 
-  // Разрешает строковое значение режима из сырого JSON.
+  // Allows the string value of the mode from raw JSON.
   function readMode(value: string): MenuMode {
     if (value === 'inline' || value === 'horizontal' || value === 'vertical') {
       return value;
@@ -89,7 +89,7 @@
     throw new Error(`Unknown Menu mode ${value}`);
   }
 
-  // Замена сценария размонтирует предыдущий экземпляр слота.
+  // Replacing the script will unmount the previous instance of the slot.
   function select(event: Event & { currentTarget: HTMLSelectElement; }) {
     const next = resolveProfile(event.currentTarget.value);
     profileId = next.id;
@@ -101,30 +101,30 @@
     active = true;
   }
 
-  // Передаёт только те значения владельца, которые менял исходный замер.
+  // Transmits only those values of the owner that changed the original measurement.
   function apply(change: Change) {
     if (change.openKeys !== undefined) openKeys = change.openKeys;
     if (change.inlineCollapsed !== undefined) collapsed = change.inlineCollapsed;
     if (change.enabled !== undefined) enabled = change.enabled;
   }
 
-  // Записывает запросы Menu независимо от controlled openKeys владельца.
+  // Records Menu requests regardless of the owner’s controlled openKeys.
   function recordOpen(keys: string[]) {
     openRequests.push(keys);
   }
 
-  // Hook при отмене prepare разрешается только по отдельному действию владельца.
+  // Hook, when canceled, is allowed only for a separate action of the owner.
   function release() {
     for (const resolve of pending.splice(0)) resolve();
     pendingPreparations = 0;
   }
 
-  // Проверяет публичный ref на момент чтения, после передачи владения между списками.
+  // Verifies the public ref at the time of reading, after transferring ownership between lists.
   function readLeaf() {
     hasRegisteredLeaf = Boolean(menu?.findItem({ key: 'leaf' }));
   }
 
-  // Отличает отсутствие поля от собственных false и true в motion props.
+  // Distinguishes omitted motion props from explicit false and true values.
   function optionMotion(options: MotionOptions): MenuMotion {
     return {
       ...(options.visible === undefined ? {} : { visible: options.visible }),
@@ -136,7 +136,7 @@
     };
   }
 
-  // Возвращает motion props с теми же стилями и фазами, что и исходный fixture.
+  // Returns motion props with the same styles and phases as the original fixture.
   function createMotion(id: string, kind: string): MenuMotion {
     const appear = hooks('Appear', id);
     const enter = hooks('Enter', id);
@@ -161,7 +161,7 @@
     };
   }
 
-  // Хранит ledger локального экземпляра и реальные значения DOM событий.
+  // Stores local instance ledger and real values of DOM events.
   function hooks(phase: 'Appear' | 'Enter' | 'Leave', id: string) {
     return {
       prepare(element: HTMLElement) {

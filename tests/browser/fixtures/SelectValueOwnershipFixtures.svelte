@@ -29,7 +29,7 @@
     controlledChanges = [...controlledChanges, value];
     revision += 1;
   }
-  // Новый record моделирует обычный parent spread; value у default controls отсутствует.
+  // The new record simulates the usual parent spread; the default controls value is absent.
   let singleProps = $derived<SelectProps<string>>({ options, defaultValue: 'a', allowClear: true,
     name: 'default-single', 'aria-label': 'Default single', 'data-parent-revision': revision,
     onChange: singleChanged });

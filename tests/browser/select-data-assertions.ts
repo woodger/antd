@@ -35,7 +35,7 @@ function rawCopyReceipt(value: unknown) {
   expect(compatibility).toEqual({ key: 'props', enumerable: false, configurable: false,
     kind: 'accessor', get: true, set: false });
   expect(receipt.originalOwnProperties.some(property => property.key === 'props')).toBe(false);
-  // Только явно исключённый deprecated getter; данные и остальные descriptors проверяются целиком.
+  // Only the explicitly excluded deprecated getter; the data and the rest of the descriptors are verified in its entirety.
   return {
     ...receipt,
     ownProperties: receipt.ownProperties.filter(property => property.key !== 'props')

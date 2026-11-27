@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Применяет сохранённые профили UMD через публичный Svelte API и записывает события.
+  // Applies saved profiles of UMD through public Svelte API and records events.
   import {
     ConfigProvider, enUS, Table,
     type GridBreakpoint, type TableColumnGroupType, type TableColumnType, type TableColumnsType,
@@ -36,7 +36,7 @@
   let columns = $derived<TableColumnsType<Row>>(profile.columns.map(buildColumn));
   let filters = $derived(profile.id === 'responsive' ? { kind: ['even'] } : undefined);
 
-  /** Отклоняет неожиданный ключ поля в сохранённом профиле. */
+  /** Reflects an unexpected field key in the saved profile. */
   function readField(value: string | undefined): keyof Row | undefined {
     switch (value) {
       case undefined:
@@ -51,7 +51,7 @@
     }
   }
 
-  /** Проверяет строку из JSON перед передачей в типизированный responsive. */
+  /** Verifies a string of JSON before being transferred to a typed responsive. */
   function readBreakpoint(value: string): GridBreakpoint {
     switch (value) {
       case 'xs':
@@ -67,7 +67,7 @@
     }
   }
 
-  /** Разрешает только значения закрепления из публичного контракта. */
+  /** Allows only the values of consolidation from a public contract. */
   function readFixed(value: boolean | string | undefined): TableFixed | undefined {
     if (value === undefined || typeof value === 'boolean' || value === 'start' || value === 'end') {
       return value;
@@ -76,7 +76,7 @@
     throw new Error(`Unknown fixture position ${value}`);
   }
 
-  /** Сохраняет отличия групп и листьев при переводе входных параметров эталона. */
+  /** Retains the differences between groups and leaves when translating the input parameters of the standard. */
   function buildColumn(item: SourceColumn): TableColumnType<Row> {
     const { key, title, dataIndex, width, fixed, responsive, sort, filter, children } = item;
     const column: TableColumnType<Row> = {
@@ -99,12 +99,12 @@
       render: editor && key === 'name' ? nameEditor : undefined };
   }
 
-  /** Записывает события целиком, сохраняя порядок между действиями. */
+  /** Records events in its entirety, preserving the order between actions. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }
 
-  /** Публичный ref прокручивает к тому же ключу, что сценарий Source. */
+  /** The public ref scrolls to the same key as the Source scenario. */
   function scrollTo(key: TableKey) {
     const target: TableScrollConfig = { key, align: 'start' };
     table?.scrollTo(target);

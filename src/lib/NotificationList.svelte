@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Каждый placement владеет раскладкой и hover-паузой своего списка. CSS выравнивает
-  // края карточек с разной высотой по последней записи без измерений и перестановки DOM.
+  // Each placement owns its list layout and hover pause. CSS aligns cards of different heights to
+  // the last entry without measuring or reordering the DOM.
   import { on } from 'svelte/events';
   import NotificationNotice from './NotificationNotice.svelte';
   import { notificationHolderKey, type NotificationNotice as Notice } from './notification.model.svelte.js';

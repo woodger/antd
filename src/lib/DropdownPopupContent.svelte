@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Содержимое получает контекст меню и оформление Form.Item. Поля панели
-  // сохраняют свои значения и регистрацию независимо от родительского поля.
+  // Content gets the menu context and Form.Item styling. The panel fields keep their values and
+  // registration independently of the parent field.
   import { untrack, type Snippet } from 'svelte';
   import { provideDropdownMenu, type DropdownMenuContext } from './dropdown-menu-context';
   import { provideFormField } from './form-context';

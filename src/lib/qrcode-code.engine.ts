@@ -1,5 +1,5 @@
-// Алгоритм Project Nayuki из @rc-component/qrcode 2.0.0, MIT.
-// См. vendor/LICENSE.qrcodegen и vendor/LICENSE.rc-qrcode.
+// Algorithm Project Nayuki from @rc-component/qrcode 2.0.0, MIT. See vendor/LICENSE.qrcodegen and
+// vendor/LICENSE.rc-qrcode.
 import { Ecc } from './qrcode-ecc.engine';
 import { QrSegment } from './qrcode-segment.engine';
 import { appendBits, getBit, assert } from './qrcode-bits.engine';
@@ -30,7 +30,7 @@ export class QrCode {
       mask > 7) {
       throw new RangeError('Invalid value');
     }
-    // Версия выбирается по исходному уровню коррекции; boost не увеличивает размер символа.
+    // The version is selected according to the initial level of correction; boost does not increase the size of the symbol.
     let version: number;
     let dataUsedBits: number;
     for (version = minVersion;; version++) {
@@ -61,7 +61,7 @@ export class QrCode {
     }
     assert(bb.length == dataUsedBits);
 
-    // После terminator выравниваем до байта и заполняем capacity чередованием EC/11.
+    // After the terminator, we align to byte and fill the capacity with an alternation of EC/11.
     const dataCapacityBits = QrCode.getNumDataCodewords(version, ecl) * 8;
     assert(bb.length <= dataCapacityBits);
     appendBits(0, Math.min(4, dataCapacityBits - bb.length), bb);
@@ -482,7 +482,7 @@ export class QrCode {
   ) {
     const result = divisor.map<number>(() => 0);
     for (const b of data) {
-      // Степень divisor положительна; shift сразу компенсируется push, остаток не бывает пустым.
+      // Degree divisor is positive; the shift is immediately compensated by the push, the residue is not empty.
       const factor = b ^ result.shift()!;
       result.push(0);
       divisor.forEach((coef, i) => {

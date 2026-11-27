@@ -1,10 +1,10 @@
-// Формирует плоское окно Listy из элементов и заголовков групп. Ключ
-// логической строки используется при scroll, renderKey различает дубли в Svelte.
+// Forms a flat window Listy of elements and headers of groups. The key of the logical string is
+// used when the scroll, renderKey distinguishes the duplicates in Svelte.
 import type { ListyGroup, ListyKey, ListyProps, ListyScrollAlign } from './listy.types';
 import type { GlobalToken } from './theme-component-token.types';
 import { virtualListScrollStep, virtualListSizes, virtualListWindow } from './virtual-list.engine';
 
-/** Source estimate не включает границу; фактические высоты уточняются измерением строк. */
+/** Source estimate does not include the boundary; the actual heights are refined by measuring the lines. */
 export function listyItemHeight(token: GlobalToken): number {
   const component = { ...token, ...token.Listy };
   return component.fontHeight + (component.itemPaddingBlock ?? component.paddingSM) * 2;
@@ -30,12 +30,12 @@ export interface ListyHeader<T, K extends ListyKey> {
 export type ListyRow<T, K extends ListyKey> = ListyItem<T> | ListyHeader<T, K>;
 export type ListyHeights = ReadonlyMap<string, number>;
 
-// Группа и элемент с одинаковым key занимают разные позиции в таблице размеров.
+// A group and an element with the same key occupy different positions in the size table.
 export function listyTag(key: unknown, type: 'item' | 'group') {
   return `${type}:${String(key)}`;
 }
 
-// Сохраняет порядок первого появления групп и исходный индекс каждого элемента.
+// Keeps the order of the first appearance of groups and the original index of each element.
 export function listyRows<T, K extends ListyKey>(
   items: readonly T[],
   rowKey: ListyProps<T, K>['rowKey'],
@@ -45,14 +45,14 @@ export function listyRows<T, K extends ListyKey>(
   const rows: ListyRow<T, K>[] = [];
   const occurrences = new Map<string, number>();
 
-  // React сохраняет записи с одинаковыми ключами, Svelte требует разные renderKey.
+  // React preserves records with the same keys, Svelte requires different renderKey.
   function identity(taggedKey: string) {
     const occurrence = occurrences.get(taggedKey) ?? 0;
     occurrences.set(taggedKey, occurrence + 1);
     return JSON.stringify([taggedKey, occurrence]);
   }
 
-  // Заголовок хранит те же объекты строк, которые попадают в плоский список.
+  // The title stores the same line objects that fall into the flat list.
   function append(item: T, index: number) {
     const key = typeof rowKey === 'function' ? rowKey(item) : item[rowKey];
     const taggedKey = listyTag(key, 'item');
@@ -99,7 +99,7 @@ export function listyRows<T, K extends ListyKey>(
   return rows;
 }
 
-// Передаёт общему алгоритму виртуализации размеры по логическим ключам Listy.
+// Passes sizes to the shared virtualization algorithm by logical Listy key.
 export function listyWindow(
   rows: readonly { taggedKey: string; }[],
   heights: ListyHeights,
@@ -113,7 +113,7 @@ export function listyWindow(
   );
 }
 
-// Считает границы строк, используя estimate до реального измерения.
+// Considers line boundaries, using estimate to a real dimension.
 export function listySizes(
   rows: readonly { taggedKey: string; }[],
   heights: ListyHeights,
@@ -122,7 +122,7 @@ export function listySizes(
   return virtualListSizes(rows, row => row.taggedKey, heights, estimate);
 }
 
-// Бинарным поиском выбирает текущий заголовок. Следующая группа сдвигает его вверх.
+// The binary search chooses the current title. The next group moves it up.
 export function listySticky<T, K extends ListyKey>(
   headers: readonly ListyHeader<T, K>[],
   sizes: ReadonlyMap<string, { top: number; bottom: number; }>,
@@ -158,7 +158,7 @@ export function listySticky<T, K extends ListyKey>(
   return { row, top };
 }
 
-// Сохраняет контракт общего алгоритма scrollTo и передаёт ключи строк и групп.
+// Preserves the shared scrollTo contract and passes row and group keys.
 export function listyScrollStep(
   rows: readonly { taggedKey: string; }[],
   heights: ListyHeights,

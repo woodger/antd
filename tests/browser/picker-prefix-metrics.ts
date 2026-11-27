@@ -8,7 +8,7 @@ export function snapshotPickerPrefix() {
   const inputNames = ['font-size', 'line-height', 'font-family', 'color', 'height',
     'background-color', 'border-top-color', 'border-top-width', 'border-radius',
     'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'box-shadow'];
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null | undefined, names: string[]) {
     if (!node) {
       return null;

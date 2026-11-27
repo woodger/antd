@@ -1,4 +1,4 @@
-// Подключает строгое hydration к серверной форме, собранной из публичного пакета.
+// Connects strict hydration to the server form assembled from the public package.
 import '@woodger/antd/styles.css';
 import { hydrate } from 'svelte';
 import GeneratedPickerFixtures from './GeneratedPickerFixtures.svelte';

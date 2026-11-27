@@ -6,13 +6,13 @@ import Fixture from '../browser/fixtures/TableLocaleFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-locale-reference.json';
 import { expectedTableLocale } from '../browser/fixtures/table-locale-reference';
 
-/** Читает атрибут из тега. Сценарии используют простые строки и числовые ключи. */
+/** Reads an attribute from a tag. The scenarios use simple strings and numeric keys. */
 function attribute(tag: string, name: string) {
   const match = tag.match(new RegExp('\\s' + name + '="([^"]*)"'));
   return match?.[1] ?? null;
 }
 
-/** Сопоставляет пустую ячейку и кнопки раскрытия до появления клиентского DOM. */
+/** Compares the empty cell and expand buttons before the client DOM is created. */
 function renderState(body: string) {
   const rows = Array.from(body.matchAll(/<tr\b[^>]*\bdata-row-key="([^"]*)"[^>]*>([\s\S]*?)<\/tr>/g));
   const placeholder = body.match(/<tr\b[^>]*\bant-table-placeholder\b[^>]*>([\s\S]*?)<\/tr>/)?.[1];

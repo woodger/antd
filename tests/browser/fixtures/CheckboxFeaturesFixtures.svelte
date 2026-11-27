@@ -118,7 +118,7 @@
       }),
       styles: { root: 'color:blue', icon: 'outline:1px solid red', label: 'color:purple' }
     } : undefined}>
-    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (Фикстура считает всплытие, не добавляя интерактивность форме.) -->
+    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (The fixture counts bubbling events without making the form interactive.) -->
     <form id="source-checkbox-form" onsubmit={event => {
       event.preventDefault();
       submits++;

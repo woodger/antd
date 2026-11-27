@@ -7,7 +7,7 @@ if (!target) {
   throw new Error('Missing Modal interaction hydration target');
 }
 
-// Гидратация использует имеющийся DOM формы и click area.
+// Hydration uses the available DOM forms and click area.
 target.addEventListener('hydrate-modal-interaction', () => {
   hydrate(ModalInteractionFixtures, {
     target,

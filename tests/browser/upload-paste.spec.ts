@@ -40,7 +40,7 @@ for (const [index, entry] of reference.cases.entries()) {
     const blocked = entry.sample.disabled || entry.sample.providerDisabled;
     const expected = blocked ? { prevented: false, before: [], changes: [] } : entry.result;
 
-    // Raw Source не проверяет disabled у document paste handler; Native сохраняет запрет.
+    // Raw Source does not verify disabled at the document paste handler; Native keeps the ban.
     expect(await paste(page, entry.sample)).toBe(expected.prevented);
     await expect(page.getByLabel('Paste before', { exact: true }))
       .toHaveText(JSON.stringify(expected.before));

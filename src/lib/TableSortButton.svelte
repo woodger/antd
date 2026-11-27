@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Управляет нативной кнопкой и подсказкой сортировки. Интерактивный заголовок
-  // размещается рядом с кнопкой и получает область наведения вместе с ней.
+  // Manages the native button and sort tooltip. An interactive heading sits next to the button and
+  // shares its hover area.
   import type { Snippet } from 'svelte';
   import { on } from 'svelte/events';
   import { useDesignTokenContext } from './theme-context.svelte';
@@ -41,7 +41,7 @@
   let popupDescriptionId = $state<string>();
   let tooltipClick: ((event: MouseEvent) => void) | undefined;
 
-  /** Связывает один обработчик с текущим экземпляром Tooltip. */
+  /** Connects one handler to the current Tooltip instance. */
   function connectClick(handler: (event: MouseEvent) => void) {
     tooltipClick = handler;
     return () => {
@@ -51,7 +51,7 @@
     };
   }
 
-  /** Открытая подсказка временно заменяет описание самой кнопки. */
+  /** An open tooltip temporarily replaces the button's own description. */
   function connectDescription(popupId: string) {
     popupDescriptionId = popupId;
 
@@ -62,7 +62,7 @@
     };
   }
 
-  /** Для иконки учитывает путь события, сохраняя клавиатурный клик кнопки. */
+  /** Checks the event path for the icon while retaining keyboard clicks on the button. */
   function activate(event: MouseEvent) {
     if (disabled) {
       return;
@@ -74,7 +74,7 @@
     onSort();
   }
 
-  /** Поля, ссылки и другие controls сохраняют собственное действие внутри заголовка. */
+  /** Fields, links, and other controls keep their own actions inside the heading. */
   function handleHeadingClick(event: MouseEvent) {
     if (event.defaultPrevented) {
       return;
@@ -198,7 +198,7 @@
       {/if}
     </span>
     {#if description}
-      <!-- Описание доступно по ID и не добавляет текст к заголовку колонки. -->
+      <!-- The description is available by ID and adds no text to the column heading. -->
       <span id={descriptionId} role="note" aria-label={description} hidden></span>
     {/if}
   </button>

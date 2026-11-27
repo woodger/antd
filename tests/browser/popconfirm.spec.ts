@@ -515,7 +515,7 @@ test(
 );
 
 test.describe('mobile Popconfirm', () => {
-  // Сравниваем границы панели и кнопок в одной геометрии, вне zoom-анимации.
+  // Compare the boundaries of the panel and buttons in one geometry, outside the zoom animation.
   test.use({ viewport: { width: 375, height: 812 }, hasTouch: true, reducedMotion: 'reduce' });
 
   test('supports touch and wraps long labels within the viewport', async ({ page }, testInfo) => {

@@ -15,12 +15,12 @@ export interface StatisticSemanticInfo {
   };
 }
 
-/** Точное отображение числового или строкового значения с форматированием и единицами. */
+/** Accurate display of numerical or string value with formatting and units. */
 export interface StatisticProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'title' | 'class' | 'style' | 'children' | 'prefix'
 > {
-  /** Локальный CSS prefix; пустая строка наследует ConfigProvider prefix. */
+  /** Local CSS prefix; blank line inherits ConfigProvider prefix. */
   prefixCls?: string;
   /** @defaultValue 0 */
   value?: StatisticValue;
@@ -41,9 +41,9 @@ export interface StatisticProps extends Omit<
   style?: string;
   classNames?: StatisticSemanticSlots | ((info: StatisticSemanticInfo) => StatisticSemanticSlots);
   styles?: StatisticSemanticSlots | ((info: StatisticSemanticInfo) => StatisticSemanticSlots);
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 
-/** Классы и стили Statistic/StatisticTimer; локальные semantic slots и style приоритетнее. */
+/** Grades and styles Statistic/StatisticTimer; local semantic slots and style priority. */
 export type StatisticConfig = Pick<StatisticProps, 'class' | 'style' | 'classNames' | 'styles'>;

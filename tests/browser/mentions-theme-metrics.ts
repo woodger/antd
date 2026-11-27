@@ -1,11 +1,11 @@
-/** Сравнивает CSS control и popup, не привязываясь к React/Svelte DOM-обёрткам. */
+/** Compares CSS control and popup, not tied to React/Svelte DOM-inch. */
 export function snapshotMentionsTheme() {
   const root = document.querySelector<HTMLElement>('.ant-mentions');
   if (!root) {
     throw new Error('Mentions root is missing');
   }
 
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;
@@ -42,7 +42,7 @@ export function snapshotMentionsTheme() {
   };
 }
 
-/** Читает все переменные из исходного registration rule, включая alias overrides. */
+/** Reads all the variables from the original registration rule, including alias overrides. */
 export function snapshotMentionsThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-mentions');
   if (!root) {

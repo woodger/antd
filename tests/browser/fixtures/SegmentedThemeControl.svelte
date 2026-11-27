@@ -15,7 +15,7 @@
   ];
 </script>
 
-<!-- Одинаковый родительский color изолирует CSS inheritance от DOM-обёртки ConfigProvider. -->
+<!-- The same parental color insulates CSS healing from DOM-increas ConfigProvider. -->
 <div data-segmented-theme={id} style={'width:360px;'
   + 'color:rgb(31, 41, 51)'}>
   <Segmented aria-label="Segmented theme control" {options} name={`theme-${id}`}

@@ -20,21 +20,21 @@ export const tableDataNames = [
   'data-probe-owner', 'data-probe-count', 'data-probe-flag', 'data-probe-empty'
 ];
 
-/** Сопоставляет атрибуты Source с нативной сеткой и подписью пользовательского тела. */
+/** Compares the attributes of Source with the native grid and the label of the user body. */
 export function expectedTableDomAttributes(sample: Sample, phase: Phase) {
   const { profile } = sample;
   const state = sample[phase];
   const [ordinary] = source.cases[0][phase].tables;
   let tables: TableElementState[] = state.tables;
   if (profile.virtual && !profile.empty) {
-    // Source использует div для данных. Native сохраняет table и его caption.
+    // Source uses div for data. Native retains the table and its caption.
     tables = [ordinary];
   }
   else if (profile.customBody && !profile.headerless) {
     tables = tables.map(table => ({ ...table, caption: ordinary.caption }));
   }
   else if (!profile.header && !profile.customBody) {
-    // При штатной прокрутке шапка и итог остаются в одном table с данными.
+    // With a full-time scroll, the cap and the result remain in the same table with the data.
     tables = tables.filter(table => table.band === 'main');
   }
 

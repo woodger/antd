@@ -230,7 +230,7 @@ test(
 
     await expect.poll(() => notices(page).evaluate((node) => node.getAnimations().length)).toBe(0);
     await page.evaluate(() => {
-      // Скрытая вкладка не обязана выдавать следующий animation frame.
+      // The hidden tab is not required to issue the following animation frame.
       const request = window.requestAnimationFrame.bind(window);
       window.requestAnimationFrame = (callback) =>
         document.visibilityState === 'hidden'

@@ -30,7 +30,7 @@
   );
   let needConfirm = $derived(profile.datetime ? undefined : true);
 
-  /** Переключает независимый сценарий и очищает историю предыдущего поля. */
+  /** Switches an independent scenario and clears the history of the previous field. */
   function resetProfile() {
     events = [];
     acceptedSingle = undefined;
@@ -38,7 +38,7 @@
     controlledOpen = false;
   }
 
-  /** Переводит публичные аргументы Dayjs в читаемый журнал без изменения порядка. */
+  /** Translates the public arguments of Dayjs into a readable journal without changing the order. */
   function encode(value: Dayjs | RangePickerValue | null) {
     return Array.isArray(value)
       ? value.map(date => date?.toISOString() ?? null)

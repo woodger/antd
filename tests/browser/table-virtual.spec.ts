@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 type Action = NonNullable<(typeof source.cases)[number]['states'][number]['action']>;
 
-/** Читает положение строк от верхней границы body, как в отдельном holder Source. */
+/** Reads the position of the lines from the upper body boundary, as in a separate holder Source. */
 function snapshot({ rtl, previousScroll }: { rtl: boolean; previousScroll: number; }) {
   const root = document.getElementById('table-virtual-fixture');
   const viewport = root?.querySelector<HTMLDivElement>('[data-ant-table-virtual]');
@@ -24,7 +24,7 @@ function snapshot({ rtl, previousScroll }: { rtl: boolean; previousScroll: numbe
   const middle = first?.querySelector('.rank')?.getBoundingClientRect();
   const end = first?.querySelector('.end')?.getBoundingClientRect();
 
-  /** Сопоставляет физическую позицию CSS с направлением таблицы. */
+  /** Compares the physical position CSS with the direction of the table. */
   const axis = (column: DOMRect, box: DOMRect) => rtl
     ? box.right - column.right : column.left - box.left;
   const fixed = clip && lead && middle && end ? {
@@ -65,7 +65,7 @@ function snapshot({ rtl, previousScroll }: { rtl: boolean; previousScroll: numbe
   };
 }
 
-/** Кликает по видимой части sticky-заголовка без автоматической прокрутки Playwright. */
+/** Clicks on the visible part of the sticky header without automatic scrolling Playwright. */
 async function clickHeader(page: Page, control: Locator, text = false) {
   const point = await control.evaluate((node, textOnly) => {
     let rect = node.getBoundingClientRect();
@@ -86,7 +86,7 @@ async function clickHeader(page: Page, control: Locator, text = false) {
   await page.mouse.click(point.x, point.y);
 }
 
-/** Вызывает scrollTo через ref или взаимодействует с обычным DOM. */
+/** Causes scrollTo via ref or interacts with the usual DOM. */
 async function act(page: Page, action: Action, index: number) {
   if (action.scroll) {
     await page.getByTestId(`scroll-${index - 1}`).click();
@@ -132,8 +132,9 @@ for (const { profile, states } of source.cases) {
         const result = await page.evaluate(snapshot, { rtl: !!profile.rtl, previousScroll });
         const { top, ...observed } = result;
 
-        // У строк с переносами итоговая длина префикса зависит от уже измеренных строк.
-        // Для scrollTo по ключу сравниваем окно, высоты и положение каждой строки в viewport.
+        // In transfer strings, the final length of the prefix depends on the lines already
+        // measured. For scrollTo on the key we compare the window, heights and position of each
+        // line in viewport.
         return compareTarget ? observed : { ...observed, top };
       }, {
         message: `${profile.id} state ${index} ${JSON.stringify(action)}`

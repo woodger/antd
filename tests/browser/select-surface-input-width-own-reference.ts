@@ -66,7 +66,7 @@ interface Header {
   archives: Array<{ sha256: string; archiveSha256: string; byteEqual: boolean }>;
 }
 interface Reference<Case> { reference: Header; cases: Case[] }
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const csrStorage = readFileSync(new URL(
   './fixtures/ant-design-select-surface-input-width-own-reference.json.gz',

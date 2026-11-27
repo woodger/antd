@@ -7,7 +7,7 @@ export interface SliderDragInfo {
   deleteIndex?: number;
 }
 
-/** Private ColorPicker adapter: исходные drag identities до сортировки public values. */
+/** Private ColorPicker adapter. Retains original drag identities before sorting public values. */
 export interface SliderInternalContext {
   readonly controlled?: boolean;
   readonly direction?: 'ltr' | 'rtl';

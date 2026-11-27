@@ -32,15 +32,15 @@ export interface ProgressSemanticInfo {
   };
 }
 
-/** Общие параметры; значения, имена и finite normalization сохраняют native API. */
+/** General parameters; values, names and finite normalization save native API. */
 interface ProgressBaseProps extends Omit<
   HTMLAttributes<HTMLDivElement>, 'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   percent?: number;
   showInfo?: boolean;
-  /** Прежний formatter с одним аргументом вызывается один раз; второй — success percent. */
+  /** The former formatter with one argument is called once; the second is the percentage. */
   format?: (percent: number, successPercent?: number) => ProgressContent;
   railColor?: string;
   gapDegree?: number;
@@ -53,13 +53,13 @@ interface ProgressBaseProps extends Omit<
     | ((info: ProgressSemanticInfo) => ProgressSemanticSlots | undefined);
   styles?: ProgressSemanticSlots
     | ((info: ProgressSemanticInfo) => ProgressSemanticSlots | undefined);
-  /** Нативный root после mount; очищается при unmount. */
+  /** Native root after mount; cleared at unmount. */
   nativeElement?: HTMLDivElement;
-  /** Как upstream, Progress рисует свой indicator вместо children. */
+  /** As an upstream, Progress draws its indicator instead of children. */
   children?: ProgressContent;
 }
 
-/** Line/steps и исходные circle/dashboard с сохранённой finite normalization. */
+/** Line/steps and original circle/dashboard with saved finite normalization. */
 export type ProgressProps = ProgressBaseProps & (
   | {
     type?: 'line';
@@ -85,5 +85,5 @@ export type ProgressProps = ProgressBaseProps & (
   }
 );
 
-/** Undefined наследует record; явный объект заменяет его целиком. */
+/** Undefined inherits the record; the explicit object replaces it entirely. */
 export type ProgressConfig = Pick<ProgressBaseProps, 'class' | 'style' | 'classNames' | 'styles'>;

@@ -1,5 +1,5 @@
-// Выбирает штатное движение или CSS-фазы на границе перехода. Только панель определяет
-// окончание открытия и закрытия Modal. Маска может закончить свою фазу самостоятельно.
+// Choosing a full-time movement or CSS-phase at the boundary of the transition. The panel alone
+// determines the end of opening and closing Modal. The mask can finish its phase on its own.
 import type { CssMotionState } from './css-motion.dom';
 import type { CssMotionEvent } from './css-motion.types';
 import { createModalNamedMotion } from './modal-named-motion.dom';
@@ -32,7 +32,7 @@ export interface ModalMotionCallbacks {
 const hiddenPanel = { transform: 'scale(0.2)', opacity: '0' };
 const shownPanel = { transform: 'scale(1)', opacity: '1' };
 
-/** Преобразует канонические токены длительности в миллисекунды для Web Animations. */
+/** Converting canonical tokens into milliseconds for Web Animations. */
 function getDurationMs(value: string, fallback: number): number {
   const match = value.trim().match(/^(\d*\.?\d+)(ms|s)$/);
   if (!match) {
@@ -43,7 +43,7 @@ function getDurationMs(value: string, fallback: number): number {
   return Number.isFinite(milliseconds) ? milliseconds : fallback;
 }
 
-/** Штатные эффекты используют WAAPI для панели и текущей поверхности маски. */
+/** The built-in effects use WAAPI for the panel and the current mask surface. */
 function createModalStockMotion(
   dialog: HTMLDialogElement,
   view: Window & typeof globalThis,
@@ -62,7 +62,7 @@ function createModalStockMotion(
   let maskAnimation: Animation | undefined;
   let revision = 0;
 
-  /** Снимает эффекты и делает их ожидающие callbacks устаревшими. */
+  /** Removes the effects and makes their pending callbacks obsolete. */
   function cancel() {
     revision++;
     panelAnimation?.cancel();
@@ -71,18 +71,18 @@ function createModalStockMotion(
     maskAnimation = undefined;
   }
 
-  /** Отключение движения доводит текущую панель до запрошенной видимости. */
+  /** Disabling the movement brings the current panel to the requested visibility. */
   function finish() {
     panelAnimation?.finish();
     maskAnimation?.finish();
   }
 
-  /** При смене системной настройки сохраняет ожидающее уведомление панели. */
+  /** When you change the system setup, you save the pending panel notification. */
   function handleReducedMotion() {
     if (reducedMotion.matches) finish();
   }
 
-  /** Начальный кадр разворота считывается до отмены предыдущего эффекта. */
+  /** The initial reversal frame is counted until the previous effect is cancelled. */
   function panelStart(open: boolean): Keyframe {
     if (open && !panelAnimation) {
       return hiddenPanel;
@@ -92,7 +92,7 @@ function createModalStockMotion(
     return { transform, opacity };
   }
 
-  /** Выбирает физическую маску текущего режима и её начальную прозрачность. */
+  /** Chooses the physical mask of the current mode and its initial transparency. */
   function maskStart(open: boolean, masked: boolean) {
     if (!masked) {
       return undefined;
@@ -111,7 +111,7 @@ function createModalStockMotion(
     return { node, pseudoElement, opacity };
   }
 
-  /** Убирает fill маски после собственного перехода, даже если панель ещё движется. */
+  /** Removes fill masks after your own transition, even if the panel is still moving. */
   function animateMask(mask: NonNullable<ReturnType<typeof maskStart>>, duration: number, open: boolean) {
     const animation = mask.node.animate([{ opacity: mask.opacity }, { opacity: open ? 1 : 0 }], {
       duration,
@@ -120,7 +120,7 @@ function createModalStockMotion(
     });
     maskAnimation = animation;
 
-    /** Старый эффект не очищает маску нового перехода. */
+    /** The old effect does not clear the mask of the new transition. */
     function release() {
       if (maskAnimation === animation) {
         maskAnimation = undefined;
@@ -131,7 +131,7 @@ function createModalStockMotion(
     void animation.finished.then(release, release);
   }
 
-  /** Планирует только последний запрошенный переход. Маска не задерживает callback панели. */
+  /** Schedules only the most recently requested transition. The mask does not delay the panel callback. */
   function sync(open: boolean, options: ModalMotionSettings) {
     const { token, masked, mousePosition } = options;
     const enabled = token.motion && !reducedMotion.matches;
@@ -152,7 +152,7 @@ function createModalStockMotion(
     requested = open;
     const current = revision;
 
-    /** Завершает фазу после DOM update или окончания анимации текущей ревизии. */
+    /** Finishes the phase after DOM update or the end of the animation of the current revision. */
     function settle() {
       if (current === revision) {
         panelAnimation?.cancel();
@@ -173,14 +173,14 @@ function createModalStockMotion(
       fill: 'both'
     });
     panelAnimation = animation;
-    // Внешняя отмена эффекта завершает видимость. Разворот уже сменил ревизию.
+    // Exterior elimination of the effect completes visibility. The reversal has already changed the audit.
     void animation.finished.then(settle, settle);
   }
 
   reducedMotion.addEventListener('change', handleReducedMotion);
   return {
     sync,
-    /** Удаляет браузерный listener и отменяет ожидающие завершения. */
+    /** Removes the browser listener and cancels the pending completion. */
     destroy() {
       cancel();
       reducedMotion.removeEventListener('change', handleReducedMotion);
@@ -188,7 +188,7 @@ function createModalStockMotion(
   };
 }
 
-/** При смене режима отменяет старый движок до запуска новой фазы. */
+/** When changing the mode, it cancels the old engine to the launch of the new phase. */
 export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMotionCallbacks) {
   const documentView = dialog.ownerDocument.defaultView;
   if (!documentView) {
@@ -200,13 +200,13 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
   let driver: Driver | undefined;
   let requested: boolean | undefined;
 
-  /** Маска с пользовательским z-index остаётся внутри своего слоя. */
+  /** A mask with a custom z-index stays inside its layer. */
   function getMask() {
     const selector = ':scope > [data-ant-modal-backdrop], :scope > [data-ant-modal-mask-layer] > [data-ant-modal-backdrop]';
     return dialog.querySelector<HTMLElement>(selector) ?? undefined;
   }
 
-  /** Новый набор имён в открытом Modal применяется к следующей смене видимости. */
+  /** A new set of names in open Modal applies to the next change of visibility. */
   function sync(open: boolean, options: ModalMotionSettings) {
     if (!driver || (requested !== open && driver.named !== options.named)) {
       driver?.connection.destroy();
@@ -218,7 +218,7 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
     driver.connection.sync(open, options);
   }
 
-  /** Нативное закрытие отменяет панель. Именованная маска может оставаться в leave. */
+  /** Native closure cancels the panel. The named mask can stay in leave. */
   function closed() {
     if (!driver?.named || requested !== false) {
       driver?.connection.destroy();
@@ -227,7 +227,7 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
     requested = false;
   }
 
-  /** Размонтирование скрытой панели сбрасывает её историю appear/enter. */
+  /** Dismantling the hidden panel resets its history appear/enter. */
   function reset() {
     driver?.connection.destroy();
     driver = undefined;
@@ -238,7 +238,7 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
     sync,
     closed,
     reset,
-    /** События CSS обрабатывает только текущий именованный переход. */
+    /** Events CSS only processes the current named transition. */
     end(part: ModalMotionPart, event: CssMotionEvent) {
       if (driver?.named) driver.connection.end(part, event);
     }

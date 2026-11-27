@@ -19,7 +19,7 @@
 </script>
 
 <script lang="ts">
-  // Монтирует публичный DatePicker и сохраняет принятые данные отдельно от событий.
+  // Mounts public DatePicker and preserves received data separately from events.
   import dayjs, { type Dayjs } from 'dayjs';
   import { untrack } from 'svelte';
   import { ConfigProvider, DatePicker, enUS, type DatePickerTagContext } from '@woodger/antd';
@@ -47,12 +47,12 @@
   let width = $state(untrack(() => profile.maxTagCount === 'responsive' ? 230 : 520));
   let nativeElement = $state<HTMLDivElement>();
 
-  /** В событиях сохраняет дату с часовым поясом и ссылку на исходный Dayjs. */
+  /** In the events save the date with the time zone and the reference to the original Dayjs. */
   function encode(value: Dayjs) {
     return { date: value.format('YYYY-MM-DDTHH:mm:ss.SSSZ'), initialIndex: initial.indexOf(value) };
   }
 
-  /** На SSR исключает любые обращения к DOM и уведомления о выборе. */
+  /** At SSR excludes any referrals to DOM and notice of choice. */
   function report(...event: unknown[]) {
     if (server) {
       throw Error('Unexpected DatePicker SSR event');

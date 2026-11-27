@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import DropdownMenuFixtures from './DropdownMenuFixtures.svelte';
 
-/** Сериализует открытый Dropdown со скрытой веткой без DOM. */
+/** Serializes open Dropdown with a hidden branch without DOM. */
 export function renderDropdownMenu() {
   return render(DropdownMenuFixtures, {
     idPrefix: 'dropdown-menu-hydration',

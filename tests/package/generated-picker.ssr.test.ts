@@ -14,7 +14,7 @@ import {
 } from '../browser/fixtures/opaque-picker-date-adapter';
 import { readPickerGeneratorServer } from '../browser/date-picker-generator-reference';
 
-/** Читает значения одноимённых полей независимо от порядка HTML-атрибутов. */
+/** Reads values of same-named fields independently of HTML attribute order. */
 function submittedValues(html: string) {
   return [...html.matchAll(/<input\b[^>]*\bname="opaque"[^>]*>/g)]
     .map(match => /\bvalue="([^"]*)"/.exec(match[0])?.[1] ?? '');

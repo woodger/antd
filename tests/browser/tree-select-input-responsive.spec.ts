@@ -15,8 +15,8 @@ async function act(page: Page, action: TreeSelectInputResponsiveAction) {
   }
 }
 for (const entry of reference.cases) {
-  // Source absolute suffix может shrink-to-fit до136px у fragment; Native
-  // сохраняет normal flow173px. Проверяем responsive selection, не pixel parity.
+  // Source absolute shrink suffix can-to-fit up to 136px from fragment; Native stores normal
+  // flow173px. Check selection, not pixel parity.
   test(`TreeSelect reserves the entire responsive custom input suffix for ${entry.id}`, async ({ page }) => {
     await page.goto('/?fixture=tree-select-input-responsive');
     await page.getByRole('combobox', { name: 'Responsive custom input sample', exact: true }).selectOption(entry.id);

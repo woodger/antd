@@ -9,7 +9,7 @@ function structure(value: ReturnType<typeof snapshotTableColumnHidden>) {
     const { colspan: _colspan, textContent: _textContent, ...semantic } = entry;
     return semantic;
   };
-  // Native filter сохраняет закрытый popover в DOM; сравниваем видимый текст и selection.
+  // Native filter preserves closed popover in DOM; compare visible text and selection.
   const { checkboxes: _checkboxes, ...snapshot } = value;
   return {
     ...snapshot,

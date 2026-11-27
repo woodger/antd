@@ -4,7 +4,7 @@ import settled from './fixtures/ant-design-tree-expand-action-settled-reference.
 import { readTreeExpandAction } from './tree-expand-action-metrics';
 
 const cases = [...reference.cases, ...settled.cases];
-// Rapid Source double click меняет состояние без второго callback; отдельный Native case ниже.
+// Rapid Source double click changes the state without a second callback; a separate Native case below.
 for (const [index, entry] of cases.entries()) {
   if (entry.sample.id === 'click-double') continue;
   test(`Tree title expansion matches Source for ${entry.sample.id}`, async ({ page }) => {
@@ -21,7 +21,7 @@ for (const [index, entry] of cases.entries()) {
     const modifier = 'modifier' in sample ? sample.modifier : undefined;
     const modifiers: ('Control' | 'Meta' | 'Shift')[] =
       modifier === 'Control' || modifier === 'Meta' || modifier === 'Shift' ? [modifier] : [];
-    // Native ARIA disabled сохраняется; физический клик, как в Source, всё ещё раскрывает ветку.
+    // Native ARIA disabled is saved; the physical click, as in the Source, still opens the branch.
     const force = Boolean('disabled' in sample && sample.disabled
       || 'nodeDisabled' in sample && sample.nodeDisabled);
     const options = { modifiers, force };

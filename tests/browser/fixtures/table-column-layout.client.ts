@@ -13,7 +13,7 @@ if (!target) {
 
 const query = new URLSearchParams(location.search);
 const profileId = query.get('profile') ?? 'fixed-rtl';
-// Стенд оставляет серверные DOM-узлы доступными до начала строгой гидратации.
+// The stand leaves server DOM nodes available until strict hydration begins.
 target.addEventListener('hydrate-table-column-layout', () => {
   if (query.has('table-locale')) {
     hydrate(LocaleFixture, { target, props: { profileId: 'body-snippet' }, recover: false });

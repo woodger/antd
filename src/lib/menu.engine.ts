@@ -1,5 +1,5 @@
-// Индексирует пункты Menu и вычисляет команды навигации. Группы влияют на оформление, ключи
-// действий относятся к пунктам и подменю.
+// Indicates Menu points and computes navigation commands. Groups affect the design, the keys of
+// action belong to the items and the substitution.
 import type { MenuItemType, MenuItem, MenuSubMenu, MenuMode } from './menu.types';
 
 export interface MenuEntry {
@@ -13,15 +13,15 @@ export interface MenuEntry {
   children: MenuEntry[];
 }
 
-// Строит дерево и карту ключей действий для событий и поиска родителей.
+// Builds a tree and a map of action keys for events and finding parents.
 export function buildMenuEntries(items: readonly MenuItemType[]) {
   const entries = new Map<string, MenuEntry>();
 
-  // Разворачивает путь пункта, исключая группу из цепочки родителей её элементов.
+  // Deploys the path of the point, excluding the group from the chain of parents of its elements.
   function build(list: readonly MenuItemType[], parent?: MenuEntry): MenuEntry[] {
     return list.flatMap(createEntry);
 
-    // Записывает доступный для событий ключ до обхода потомков.
+    // Records the key available to events before traversing descendants.
     function createEntry(item: MenuItemType, index: number): MenuEntry[] {
       if (!item) {
         return [];
@@ -56,7 +56,7 @@ export function buildMenuEntries(items: readonly MenuItemType[]) {
   return { roots, entries };
 }
 
-// Собирает один уровень навигации, разворачивая группы и пропуская разделители.
+// Collects one level of navigation, deploying groups and skipping dividers.
 export function menuLevel(items: readonly MenuEntry[]): MenuEntry[] {
   return items.flatMap(
     entry => entry.kind === 'group'
@@ -65,7 +65,7 @@ export function menuLevel(items: readonly MenuEntry[]): MenuEntry[] {
   );
 }
 
-// Включает потомков открытых inline веток в порядок клавиатуры.
+// Includes descendants of open inline branches in the order of the keyboard.
 export function menuVisible(
   items: readonly MenuEntry[],
   open: readonly string[],
@@ -79,7 +79,7 @@ export function menuVisible(
   );
 }
 
-// Удаляет ключи дочерних popup при закрытии ветки вне inline.
+// Removes child popup keys when the branch is closed outside inline.
 export function menuOpenKeys(
   keys: readonly string[],
   entry: MenuEntry,
@@ -90,21 +90,21 @@ export function menuOpenKeys(
   if (open) {
     next.push(entry.key);
   }
-  // More входит в пути событий, а список его потомков закрывается своими trigger.
+  // More is included in the path of events, and the list of his descendants is closed by its trigger.
   else if (mode !== 'inline' && !entry.overflow) {
     return next.filter(key => !isMenuDescendant(key, entry));
   }
   return next;
 }
 
-// Проверяет принадлежность ключа одному из вложенных подменю.
+// Verifies the ownership of the key to one of the nested substitutions.
 function isMenuDescendant(key: string, entry: MenuEntry): boolean {
   return entry.children.some(
     child => (child.key === key && child.kind === 'submenu') || isMenuDescendant(key, child)
   );
 }
 
-// Выбирает новый набор ключей и отмечает повторное действие над выбранным пунктом.
+// Selects a new set of keys and notes the re-action above the selected item.
 export function menuSelection(keys: readonly string[], key: string, multiple: boolean) {
   const existing = keys.includes(key);
   return {
@@ -113,7 +113,7 @@ export function menuSelection(keys: readonly string[], key: string, multiple: bo
   };
 }
 
-// Сопоставляет клавишу с действием режима Menu с учётом направления RTL.
+// Matches the key with the action of the Menu mode taking into account the direction RTL.
 export function menuKeyboardAction(
   mode: MenuMode,
   root: boolean,
@@ -149,11 +149,11 @@ export function menuKeyboardAction(
   }
 }
 
-// Переводит индексированную запись kind=item в контракт элемента.
+// Translates the indexed kind=item record into the element contract.
 export function menuItem(entry: MenuEntry): MenuItem {
   return entry.item as MenuItem;
 }
-// Переводит индексированную запись kind=submenu в контракт подменю.
+// Translate the indexed kind=submenu entry into the submenu contract.
 export function menuSubMenu(entry: MenuEntry): MenuSubMenu {
   return entry.item as MenuSubMenu;
 }

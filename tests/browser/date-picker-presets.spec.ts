@@ -49,7 +49,7 @@ for (const sample of datePickerPresetSamples) {
       contentType: 'application/gzip', body: gzipSync(Buffer.from(JSON.stringify(value, null, 2)))
     });
     let disposed = false;
-    // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+    // Saves the result of spare removal and adds an error to the diagnosis of the test.
     async function attachFallbackDisposal() {
       try {
         const before = await settleDatePickerPresets(page);

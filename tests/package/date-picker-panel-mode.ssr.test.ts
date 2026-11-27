@@ -11,7 +11,7 @@ import DatePickerPanelModeFixtures from '../browser/fixtures/DatePickerPanelMode
 
 const reference = readPickerModeServer();
 
-/** Извлекает поля по id или по классу React multiple editor без id. */
+/** Extracts fields by id or the React multiple editor class when an id is absent. */
 function inputValues(html: string) {
   const inputs = html.matchAll(/<input\b[^>]*>/g);
   return Array.from(inputs, ([tag]) => tag)

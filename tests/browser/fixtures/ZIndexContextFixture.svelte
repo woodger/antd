@@ -52,7 +52,7 @@
     }
   });
 
-  /** Обновляет тот же диалог, через handle подтверждения или реактивный prop. */
+  /** Updates the same dialog, through handle confirmation or reactive prop. */
   function updateOwner() {
     const next = keyboard ? 1700 : profile.update;
     if (next === undefined) {

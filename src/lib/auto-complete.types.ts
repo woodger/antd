@@ -8,14 +8,14 @@ import type {
   SelectSemanticValue, SelectStyle, SelectStyles, SelectTagInfo
 } from './select.types';
 
-/** Общие методы Select; nativeElement/inputElement остаются отдельными bindable props. */
+/** Shared Select methods. nativeElement and inputElement remain separate bindable props. */
 export type AutoCompleteRef = SelectRef;
 
 export type AutoCompleteClassNames = Pick<SelectClassNames,
   'root' | 'prefix' | 'input' | 'placeholder' | 'content' | 'clear' | 'popup'>;
 export type AutoCompleteStyles = Pick<SelectStyles,
   'root' | 'prefix' | 'input' | 'placeholder' | 'content' | 'clear' | 'popup'>;
-/** Собственные raw props и три нормализованных поля wrapper; defaults/context не подставляются. */
+/** Own raw props and three normalized wrapper fields, without defaults or context applied. */
 export interface AutoCompleteSemanticInfo<
   OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement,
   EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement
@@ -42,10 +42,10 @@ export interface AutoCompleteGroup {
   options: readonly AutoCompleteOption[];
 }
 export type AutoCompleteItem = AutoCompleteOption | AutoCompleteGroup;
-/** Управление поисковой строкой и фильтрацией подсказок AutoComplete. */
+/** Controls the query and filtering of AutoComplete suggestions. */
 export interface AutoCompleteSearchConfig<OptionType extends object = AutoCompleteItem> {
   searchIcon?: RenderEmptyContent;
-  /** Predicate получает поверхностную копию исходного option/group. */
+  /** The predicate receives a shallow copy of the original option or group. */
   filterOption?: boolean | ((text: string, option: OptionType) => boolean);
   onSearch?: (text: string) => void;
 }
@@ -81,7 +81,7 @@ export interface AutoCompleteInput {
   };
   register: (element: HTMLInputElement | HTMLTextAreaElement) => { destroy: () => void; };
 }
-/** Свободный текст с options, выбором подсказки и собственным input snippet. */
+/** Free text with options, suggestion selection, and a custom input snippet. */
 export interface AutoCompleteProps<
   OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement,
   EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement
@@ -102,11 +102,11 @@ export interface AutoCompleteProps<
   | 'prefix'
   | 'style'
 > {
-  /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
+  /** Local Select namespace. An empty string inherits ConfigProvider. */
   prefixCls?: string;
-  /** Полная замена поля либо только редактора; children имеет приоритет над components.input. */
+  /** Replaces the entire field or just the editor. children takes precedence over components.input. */
   components?: SelectComponents<RootElement, EditorElement>;
-  /** Содержимое affix; falsy scalar, включая 0, не создаёт узел. */
+  /** Affix content. Falsy scalars, including 0, produce no node. */
   prefix?: RenderEmptyContent;
   suffix?: SelectRenderNode<SelectSuffixInfo>;
   suffixIcon?: RenderEmptyContent;
@@ -115,26 +115,26 @@ export interface AutoCompleteProps<
   removeIcon?: SelectRenderNode<undefined>;
   loading?: boolean;
   options?: readonly OptionType[];
-  /** Имена полей исходных options и одного уровня групп. */
+  /** Field names for original options and one level of groups. */
   fieldNames?: SelectFieldNames;
-  /** Пассивное содержимое leaf; metadata и абсолютный index соответствуют текущему flattened списку. */
+  /** Passive leaf content. Metadata and absolute index reflect the current flattened list. */
   optionRender?: Snippet<[SelectFlattenOption<string, OptionType>, { index: number }]>;
-  /** Чистый display producer; editor сохраняет исходное строковое value. */
+  /** Pure display producer. The editor retains the original string value. */
   labelRender?: (info: SelectLabelRenderInfo<string>) => RenderEmptyContent;
-  /** Передаётся в semantic metadata; combobox не вызывает renderer тегов. */
+  /** Passed to semantic metadata. Combobox mode does not call the tag renderer. */
   tagRender?: Snippet<[SelectTagInfo<string>]>;
-  /** Произвольная строка; соответствие options не требуется. */
+  /** Arbitrary string. It does not have to match an option. */
   value?: string;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultValue?: string;
   open?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  /** Наследует ConfigProvider.select; combobox остаётся редактируемым при false. */
+  /** Inherits ConfigProvider.select. The combobox stays editable when false. */
   showSearch?: boolean | AutoCompleteSearchConfig<OptionType>;
-  /** Свободный ввод и выбор; очистка может передать undefined, затем пустую строку. */
+  /** Free typing and selection. Clearing can emit undefined followed by an empty string. */
   onChange?: (value: string | undefined, option: Partial<OptionType> | undefined) => void;
-  /** Повторный выбор также уведомляет владельца; option сохраняет raw поля. */
+  /** Reselecting also notifies the owner. The option retains its raw fields. */
   onSelect?: (value: string, option: OptionType) => void;
   onDeselect?: (value: string, option: OptionType) => void;
   onOpenChange?: (open: boolean) => void;
@@ -148,8 +148,8 @@ export interface AutoCompleteProps<
   onBlur?: (event: FocusEvent) => void;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   /**
-   * Локальный getter получает корень Select и перекрывает ConfigProvider.
-   * Undefined наследует provider; без общей функции сохраняется native размещение.
+   * The local getter receives the Select root and overrides ConfigProvider. undefined inherits the
+   * provider. Without a shared getter, positioning stays native.
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   /** @defaultValue false */
@@ -163,34 +163,34 @@ export interface AutoCompleteProps<
   popupMatchSelectWidth?: boolean | number;
   /** @defaultValue 256 */
   listHeight?: number;
-  /** Отсутствующий prop наследует ConfigProvider; собственный undefined включает Source default. */
+  /** An omitted prop inherits ConfigProvider. An explicit undefined enables the upstream default. */
   virtual?: boolean;
-  /** Оценка высоты до измерения; по умолчанию token.controlHeight, 0 отключает windowing. */
+  /** Estimated height before measurement. Defaults to token.controlHeight, and 0 disables windowing. */
   listItemHeight?: number;
   showScrollBar?: boolean | 'optional';
-  /** Последнее активное value за microtask; null означает отсутствие активной строки. */
+  /** Most recent active value in a microtask. null means no active row. */
   onActive?: (value: string | null) => void;
   size?: ComponentSize;
   status?: 'error' | 'warning';
   /** @defaultValue 'outlined' */
-  /** Читает Select config; локальные variant перекрывают Form и provider. */
+  /** Reads Select config. A local variant overrides Form and the provider. */
   variant?: 'outlined' | 'borderless' | 'filled' | 'underlined';
-  /** Собственный control: примените attributes и register из контекста snippet. */
+  /** For a custom control, apply attributes and register from the snippet context. */
   children?: Snippet<[AutoCompleteInput]>;
   class?: string;
-  /** Root и popup получают общий класс. */
+  /** The root and popup receive the same class. */
   rootClassName?: string;
   classNames?: SelectSemanticValue<AutoCompleteClassNames, AutoCompleteSemanticInfo<OptionType, RootElement, EditorElement>['props']>;
   styles?: SelectSemanticValue<AutoCompleteStyles, AutoCompleteSemanticInfo<OptionType, RootElement, EditorElement>['props']>;
   /**
-   * CSS object и прежняя CSS-строка оформляют единственный public root.
-   * Class/CSS-строка сохраняют наследуемый цвет input; control semantics задают независимые цвета.
+   * A CSS object and the existing CSS string style the single public root. Class and CSS string
+   * preserve the input's inherited color. Control semantics set independent colors.
    */
   style?: SelectStyle | null;
-  /** Чистый producer вызывается также закрытым и при SSR; nullish result оставляет popup пустым. */
+  /** The pure producer also runs while closed and during SSR. A nullish result leaves the popup empty. */
   popupRender?: SelectPopupRender;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: NoInfer<RootElement> | HTMLDivElement;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   inputElement?: NoInfer<EditorElement> | HTMLInputElement | HTMLTextAreaElement;
 }

@@ -1,10 +1,10 @@
-/** Сверяет оформление Modal, сохраняя нативное центрирование и резерв места под close. */
+/** Checks the design of Modal, preserving native centering and a reserve of places under closer. */
 export function snapshotModalTheme() {
   const root = document.querySelector('.ant-modal');
   if (!root) {
     throw new Error('Modal root is missing');
   }
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;
@@ -45,7 +45,7 @@ export function snapshotModalTheme() {
   };
 }
 
-/** Все объявления component registration rule из официального UMD. */
+/** All announcements of registration component rule from the official UMD. */
 export function snapshotModalThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-modal-root');
   if (!root) {

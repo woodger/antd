@@ -7,12 +7,12 @@ const positionalProfiles = new Set([
   'numeric-field', 'empty-field', 'position', 'position-after-hidden'
 ]);
 
-/** Распознаёт профили с позиционным ключом листа внутри группы. */
+/** Recognizes profiles with the position key of the sheet inside the group. */
 export function usesPositionalKey(sample: TableColumnKeySample) {
   return positionalProfiles.has(sample.profile.id);
 }
 
-/** Читает ключ активного фильтра Source и учитывает два задокументированных конфликта. */
+/** Reads an active Source filter key and takes into account two documented conflicts. */
 export function expectedColumnKey(sample: TableColumnKeySample) {
   if (sample.profile.hiddenBefore) {
     return '2-0';
@@ -29,7 +29,7 @@ export function expectedColumnKey(sample: TableColumnKeySample) {
   return active[0];
 }
 
-/** Сохраняет буквальное чтение пустого свойства, принятое в Svelte Table. */
+/** Retains the literal reading of the empty property adopted in Svelte Table. */
 function cellText(sample: TableColumnKeySample, rowKey: string, text: string | null) {
   if (sample.profile.id !== 'empty-field') {
     return text;
@@ -39,7 +39,7 @@ function cellText(sample: TableColumnKeySample, rowKey: string, text: string | n
   return values[rowKey];
 }
 
-/** Переносит снимок Source в публичную форму состояния Svelte. */
+/** Translates the Source image into public status form Svelte. */
 export function expectedColumnState(sample: TableColumnKeySample, phase: Phase) {
   const snapshot = sample[phase];
   const columnKey = expectedColumnKey(sample);
@@ -47,7 +47,7 @@ export function expectedColumnState(sample: TableColumnKeySample, phase: Phase) 
   const hiddenSort = phase === 'sorted' && sample.profile.hiddenBefore;
   const positionalFilter = phase === 'filtered' && usesPositionalKey(sample);
   let ordered = snapshot.rows.map(([key]) => key);
-  // Source сообщает результат позиционного критерия в onChange, сохраняя старый DOM.
+  // Source reports the result of the positional criterion in onChange, saving the old DOM.
   if (hiddenSort || positionalFilter) {
     const latest = snapshot.changes.at(-1);
     if (!latest) {

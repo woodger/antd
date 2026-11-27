@@ -73,12 +73,12 @@ function record(value: unknown): Dictionary {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Dictionary;
 }
-// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
+// Confirms the shape of the array, leaving its elements unknown until a separate inspection.
 function array(value: unknown): unknown[] {
   assert(Array.isArray(value));
   return value;
 }
-// Находит поле в записи корня графа, сохраняя undefined для отсутствующего свойства.
+// Finds a field in a graph root record, saving undefined for a missing property.
 function rawProperty(graph: unknown, name: string) {
   const root = rawRoot(graph);
   const properties = array(root.properties).map(record);
@@ -86,7 +86,7 @@ function rawProperty(graph: unknown, name: string) {
   return property?.value;
 }
 
-// Считывает значение из уже закодированной записи, где поля хранятся по порядку.
+// Counts the value from an already encoded record, where the fields are stored in order.
 function encodedProperty(value: unknown, name: string) {
   const encoded = record(value);
   const properties = array(encoded.properties).map(record);
@@ -94,7 +94,7 @@ function encodedProperty(value: unknown, name: string) {
   return property?.value;
 }
 
-// Возвращает null, когда в измеренном DOM нет узла или атрибута.
+// Returns null, when there is no node or attribute in the measured DOM.
 function attr(node: Pick<AnyNode, 'attributes'> | null, name: string) {
   const matchingAttribute = node?.attributes.find(([key]) => key === name);
   return matchingAttribute?.[1] ?? null;

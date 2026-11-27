@@ -10,7 +10,7 @@ import type {
   SliderStyles
 } from './slider-range.types';
 
-/** Одиночное числовое значение с pointer/keyboard взаимодействием и bind:value. */
+/** A single numerical value with pointer/keyboard interaction and bind:value. */
 export interface SliderSingleProps extends Omit<
   HTMLInputAttributes,
   'value'
@@ -25,7 +25,7 @@ export interface SliderSingleProps extends Omit<
   | 'readonly'
   | 'disabled'
 > {
-  /** Поддерживает bind:value. */
+  /** Maintenances bind:value. */
   value?: number | undefined;
   range?: false;
   ref?: SliderRef;
@@ -34,7 +34,7 @@ export interface SliderSingleProps extends Omit<
   defaultValue?: number;
   min?: number;
   max?: number;
-  /** Null выбирает только marks/min/max. */
+  /** Null chooses only marks/min/max. */
   step?: number | null;
   marks?: SliderMarks;
   dots?: boolean;
@@ -50,10 +50,10 @@ export interface SliderSingleProps extends Omit<
   /** @defaultValue true */
   keyboard?: boolean;
   tooltip?: false | SliderTooltipConfig;
-  /** Исходный callback перед обновлением bind:value; onValueChange вызывается после. */
+  /** The original callback before update bind:value; onValueChange is called after. */
   onChange?: (value: number) => void;
   onValueChange?: (value: number) => void;
-  /** Один callback после завершённого изменения; отменённое взаимодействие не публикуется. */
+  /** One callback after the completed change; the cancelled interaction is not published. */
   onChangeComplete?: (value: number) => void;
   onFocus?: (event: FocusEvent) => void;
   onBlur?: (event: FocusEvent) => void;
@@ -64,7 +64,7 @@ export interface SliderSingleProps extends Omit<
   ariaValueTextFormatterForHandle?: ((value: number) => string)
     | readonly ((value: number) => string)[];
   rootClassName?: string;
-  /** Локальный BEM prefix; иначе ConfigProvider. CSS variables сохраняют пространство Slider. */
+  /** Local BEM prefix; otherwise ConfigProvider. CSS variables retain Slider space. */
   prefixCls?: string;
   classNames?: SliderSemanticValue<SliderClassNames, SliderSingleProps>;
   styles?: SliderSemanticValue<SliderStyles, SliderSingleProps>;
@@ -99,7 +99,7 @@ interface SliderValueProps<Range extends boolean | SliderRangeConfig> extends Sl
     Range extends false ? SliderSingleProps : SliderRangeProps>;
 }
 
-/** Range=true/config выбирает массив; default generic сохраняет прежние scalar callbacks. */
+/** Range=true/config selects the array; default generic preserves the previous scalar callbacks. */
 export type SliderProps<Range extends boolean | SliderRangeConfig = false> =
   SliderValueProps<Range> & SliderRangeExtras<Range>
     & (Range extends false ? { range?: false; } : { range: Range; });

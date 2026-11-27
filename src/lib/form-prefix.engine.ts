@@ -5,7 +5,7 @@ import type { AliasToken } from './theme-token.types';
 const mediaKeys = ['screenXSMax', 'screenSMMax', 'screenMDMax', 'screenLGMax'] as const;
 const defaults = [575, 767, 991, 1199] as const;
 
-/** Form и Item разрешают prefix независимо; media scope не зависит от cssVar.key/hashed. */
+/** Form and Item allow prefix independently; media scope does not depend on cssVar.key/hashed. */
 export function getFormPrefixScope(prefix: string, rootPrefix: string, token: AliasToken) {
   const sizes = mediaKeys.map(key => Number(token[key]));
   if (prefix === 'ant-form' && rootPrefix === 'ant'
@@ -16,7 +16,7 @@ export function getFormPrefixScope(prefix: string, rootPrefix: string, token: Al
   return `ant-form-scope-${hashTokenString([prefix, rootPrefix, ...sizes].join('\0'))}`;
 }
 
-/** Canonical token names сохранены; Col и private variables используют общий namespace. */
+/** Canonical token names are saved; Col and private variables use common namespace. */
 export function getFormPrefixCss(prefix: string, rootPrefix: string, token: AliasToken) {
   const scope = getFormPrefixScope(prefix, rootPrefix, token);
   if (!scope) {

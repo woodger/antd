@@ -1,6 +1,6 @@
 import type { FieldError, FieldErrors, FormValues } from './validation.engine';
 
-/** Ошибка validation со значениями и полевыми ошибками; outOfDate — устаревшая проверка. */
+/** Validation error with values and field errors. outOfDate indicates a stale validation run. */
 export class FormValidationError<Values extends FormValues = FormValues> extends Error {
   constructor(
     readonly values: Readonly<Values>,

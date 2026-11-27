@@ -1,5 +1,5 @@
-// Готовит индекс узлов, расчёт checked, фильтрацию и подписи TreeSelect.
-// Исходные узлы сохраняются отдельно от TreeDataNode для пользовательских callbacks.
+// Prepares node index, calculating checked, filtration and labels TreeSelect. The starting nodes
+// are saved separately from TreeDataNode for custom callbacks.
 import { buildTreeEntities, conductTreeCheck, treeCheckDisabled } from './tree.engine';
 import type { TreeBasicDataNode, TreeDataNode, TreeKey } from './tree.types';
 import { treeSelectChildren, treeSelectFields, treeSelectNodeLabel, treeSelectNodeValue } from './tree-select-data.engine';
@@ -18,7 +18,7 @@ export const TREE_SELECT_SHOW_ALL = 'SHOW_ALL';
 export const TREE_SELECT_SHOW_PARENT = 'SHOW_PARENT';
 export const TREE_SELECT_SHOW_CHILD = 'SHOW_CHILD';
 
-// Индексирует значения и адаптирует узлы к контракту Tree, сохраняя их порядок.
+// Indexes values and adapts nodes to contract Tree, maintaining their order.
 export function treeSelectIndex<Data extends object>(
   nodes: readonly Data[],
   fieldNames?: TreeSelectFieldNames,
@@ -30,7 +30,7 @@ export function treeSelectIndex<Data extends object>(
   const tree = buildTreeEntities(data);
   return { ...tree, data, values, fields };
 
-  // Регистрирует родителя раньше потомков, не меняя исходную запись.
+  // Registers the parent before the descendants, without changing the original entry.
   function indexNode(node: Data): TreeDataNode {
     const value = treeSelectNodeValue(node, fields);
     const children = treeSelectChildren(node, fields);
@@ -50,14 +50,14 @@ export function treeSelectIndex<Data extends object>(
 }
 export type TreeSelectIndex<Data extends object = TreeSelectNode> = ReturnType<typeof treeSelectIndex<Data>>;
 
-// Сохраняет переданный label и halfChecked при копировании объекта значения.
+// Preserves the supplied label and halfChecked when copying the value object.
 export function treeSelectLabeled(value: TreeSelectValue): TreeSelectLabeledValue[] {
   const values = value === undefined || value === null
     ? []
     : Array.isArray(value) ? value : [value];
   return values.map(item => typeof item === 'object' ? { ...item } : { value: item });
 }
-// Дополняет ручной выбор результатом conduction и сохраняет отсутствующие ключи.
+// Complements the manual selection with the result of conduction and preserves the missing keys.
 export function treeSelectChecks(
   items: readonly TreeSelectLabeledValue[],
   conduction: boolean,
@@ -77,7 +77,7 @@ export function treeSelectChecks(
     halfChecked: checked.halfChecked as TreeSelectRawValue[]
   };
 }
-// Скрывает теги по стратегии показа. Список checked остаётся прежним.
+// Hiding tags on the display strategy. The list of checked remains the same.
 export function treeSelectStrategy(
   values: readonly TreeSelectRawValue[],
   strategy: TreeSelectStrategy,
@@ -108,7 +108,7 @@ export function treeSelectStrategy(
     return true;
   });
 }
-// Дополняет подписи выбранных значений текущим узлом или предыдущим снимком.
+// Complements the labels of the selected values by the current node or the previous picture.
 export function treeSelectLabels<Data extends object>(
   items: readonly TreeSelectLabeledValue[],
   index: TreeSelectIndex<Data>,
@@ -118,7 +118,7 @@ export function treeSelectLabels<Data extends object>(
 ): TreeSelectLabeledValue[] {
   return items.map(createLabel);
 
-  // Приоритет переданного label сохраняется для пустой строки и числового 0.
+  // The supplied label retains precedence for an empty string or numeric 0.
   function createLabel(item: TreeSelectLabeledValue): TreeSelectLabeledValue {
     const node = index.values.get(item.value);
     let label = item.label;
@@ -141,7 +141,7 @@ export function treeSelectLabels<Data extends object>(
   }
 }
 
-// Сохраняет ветку целиком, если фильтр принимает её родителя.
+// Retains the whole branch if the filter accepts its parent.
 export function filterTreeSelect<Data extends object>(
   nodes: readonly Data[],
   search: string,
@@ -158,7 +158,7 @@ export function filterTreeSelect<Data extends object>(
         text.toUpperCase()
       );
   const fields = treeSelectFields(fieldNames);
-  // Копирует только отображаемые узлы и заменяет их список детей отфильтрованной версией.
+  // Copies only displayed nodes and replaces their list of children with a filtered version.
   function visit(list: readonly Data[], keepAll = false): Data[] {
     return list.flatMap(node => {
       const match = keepAll || filter(search, { ...node });
@@ -168,7 +168,7 @@ export function filterTreeSelect<Data extends object>(
   }
   return visit(nodes);
 }
-// Вычисляет новый набор checked, оставляя отсутствующие в дереве значения в начале.
+// Calculates a new set of checkers, leaving the values missing from the tree at the beginning.
 export function toggleTreeSelect(
   value: TreeSelectRawValue,
   selected: boolean,

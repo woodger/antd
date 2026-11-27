@@ -5,12 +5,12 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableSorterFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-sorter-reference.json';
 
-/** Читает порядок, заданный в начальной HTML-разметке. */
+/** Reads the order set in the initial HTML. */
 function rowKeys(body: string) {
   return Array.from(body.matchAll(/<tr\b[^>]* data-row-key="([^"]+)"/g), ([, key]) => Number(key));
 }
 
-/** Извлекает только наблюдаемые признаки сортировки в заголовках. */
+/** Extracts only observable sort indicators from the headers. */
 function headings(body: string) {
   return Array.from(body.matchAll(/<th\b([^>]*)>([\s\S]*?)<\/th>/g), ([, attrs, html]) => ({
     key: attrs.match(/fixture-col-([\w-]+)/)?.[1] ?? null,

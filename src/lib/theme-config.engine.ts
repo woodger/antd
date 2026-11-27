@@ -1,5 +1,5 @@
-// Объединяет настройки наследования темы и вычисляет токены из алгоритмов.
-// Компонентные токены получают собственный алгоритм или используют общий результат.
+// Combines theme inheritance settings and computes tokens from algorithms. Component tokens get
+// their own algorithm or use a common result.
 import defaultSeed from './theme-seed';
 import { defaultAlgorithm, darkAlgorithm, compactAlgorithm } from './theme-algorithms.engine';
 import { createDerivativeTheme } from './theme-cache';
@@ -16,16 +16,16 @@ import type { ResolvedThemeConfig, ThemeConfig } from './types';
 export const defaultThemeConfig: ResolvedThemeConfig = {
   mode: 'light', primary: 'blue', compact: false, hashed: true
 };
-// Правило 2: передаётся один алгоритм, пустая цепочка здесь невозможна.
+// Rule 2: Receives one algorithm. An empty chain is impossible here.
 const defaultTheme = createDerivativeTheme(defaultAlgorithm)!;
 const sourceConfigKeys = ['token', 'algorithm', 'components', 'inherit', 'hashed', 'cssVar', 'zeroRuntime'];
 
-// Отличает расширенную тему по наличию ключей, включая явно переданный undefined.
+// Identifies an extended theme by the presence of keys, including explicit undefined.
 export function hasSourceTheme(config?: ThemeConfig): boolean {
   return !!config && sourceConfigKeys.some(key => key in config);
 }
 
-/** Source useTheme merge: component records сливаются по одному уровню, cssVar.key локален. */
+/** Source useTheme merge: component records merge according to one level, cssVar.key local. */
 export function mergeThemeConfig(
   local: ThemeConfig | undefined,
   parent: ResolvedThemeConfig,
@@ -63,7 +63,7 @@ export function mergeThemeConfig(
 
 type ParsedComponent = Record<string, unknown> & { theme?: DerivativeTheme; };
 
-// Применяет общий алгоритм и вычисляет независимые токены компонентов поверх результата.
+// Applies a general algorithm and calculates independent tokens of the components on top of the result.
 function computeToken(
   seed: SeedToken,
   override: Partial<AliasToken>,
@@ -84,7 +84,7 @@ function computeToken(
   return merged;
 }
 
-// Выбирает цепочку алгоритмов. Пустой явный массив использует тему по умолчанию.
+// Choosing a chain of algorithms. An empty explicit array uses the default theme.
 function resolveDerivativeTheme(config: ResolvedThemeConfig): DerivativeTheme {
   let algorithm = config.algorithm;
   if (!algorithm) {
@@ -98,11 +98,11 @@ function resolveDerivativeTheme(config: ResolvedThemeConfig): DerivativeTheme {
     return defaultTheme;
   }
 
-  // Правило 2: после проверки передаётся один алгоритм или непустая цепочка.
+  // Rule 2: After validation, passes one algorithm or a nonempty chain.
   return createDerivativeTheme(algorithm)!;
 }
 
-// Отделяет algorithm от токенов компонента. Значение true наследует общий Theme.
+// Separates the algorithm from component tokens. The value of true inherits a common Theme.
 function parseComponentTokens(
   config: ResolvedThemeConfig,
   theme: DerivativeTheme
@@ -126,7 +126,7 @@ function parseComponentTokens(
   return components;
 }
 
-/** Runtime [] использует defaultTheme; component algorithm=true наследует общий Theme. */
+/** Runtime [] uses defaultTheme; component algorithm=true inherits a shared Theme. */
 export function createDesignTokenState(
   config: ResolvedThemeConfig,
   prefixCls = 'ant'
@@ -152,7 +152,7 @@ export function createDesignTokenState(
   const salt = `6.6.8-${config.hashed || ''}`;
   const mergedSalt = `${salt}_${prefix}`;
   const hash = hashTokenString(mergedSalt);
-  // _tokenKey не участвует в собственном хеше.
+  // _tokenKey does not participate in its own hash.
   const token = Object.assign(actualToken, { _tokenKey: tokenToKey(actualToken, mergedSalt) });
   const transformed = transformThemeToken(merged, prefix);
   const cssVar = { ...transformed.token, _hashId: hash } as CSSVariableToken;

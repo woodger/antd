@@ -2,8 +2,9 @@
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { resolveEmptyImageColors } from './empty-image.engine';
-  // Геометрия Ant Design 6.6.8, es/empty/{empty,simple}.js — MIT, vendor/LICENSE.ant-design.
-  // SHA-256 архива antd-6.6.8.tgz: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa.
+  // Geometry from Ant Design 6.6.8, es/empty/{empty,simple}.js, under MIT. See
+  // vendor/LICENSE.ant-design.
+  // SHA-256 of antd-6.6.8.tgz: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa.
   let { simple = false }: { simple?: boolean; } = $props();
   const id = $props.id();
   const config = useConfig();
@@ -31,7 +32,7 @@
 
 <svg width={simple ? 64 : 184} height={simple ? 41 : 152} viewBox={simple ? '0 0 64 41' : '0 0 184 152'} xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   {#if sourceColors}<title>{config.locale.empty?.description || 'Empty'}</title>{:else}<defs>
-    <!-- Наложение fill на фон заменяет getAsSolidColor без вычисления CSS-токенов в JavaScript. -->
+    <!-- Compositing the fill over the background replaces getAsSolidColor without computing CSS tokens in JavaScript. -->
     {#each colors as [name, token] (name)}<pattern id={`${id}-${name}`} width="1" height="1" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="var(--ant-color-bg-container)" /><rect width="1" height="1" fill={`var(${token})`} /></pattern>{/each}
   </defs>{/if}
   {#if simple}

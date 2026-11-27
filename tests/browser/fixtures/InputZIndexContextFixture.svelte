@@ -26,12 +26,12 @@
   let timeStyles = $derived(timeLayer
     ? { popup: { root: 'z-index:0 !important' } } : undefined);
 
-  /** Меняет слой владельца, сохраняя state всех открытых редакторов и списков. */
+  /** Changes the layer of the owner, saving state all open editors and lists. */
   function updateOwner() {
     layer = keyboard ? 1700 : profile.update ?? undefined;
   }
 
-  /** Помещает панель рядом с полем внутри native dialog. */
+  /** Places a panel next to the field inside the native dialog. */
   function getTimeContainer(trigger: HTMLElement) {
     return portal ?? trigger;
   }

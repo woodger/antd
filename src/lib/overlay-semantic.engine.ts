@@ -9,7 +9,7 @@ interface OverlaySlots {
 
 type Semantic<Props> = OverlaySlots | ((info: { props: Props }) => OverlaySlots);
 
-/** useMergeSemantic: классы накапливаются, стили сохраняют порядок source-слоёв. */
+/** useMergeSemantic: classes accumulate, styles preserve the order of source layers. */
 export function getOverlaySemantics<Props>(
   context: { classNames?: Semantic<Props>; styles?: Semantic<Props>; style?: string } | undefined,
   classNames: Semantic<Props> | undefined,

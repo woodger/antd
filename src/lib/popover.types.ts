@@ -11,16 +11,16 @@ import type {
 
 export type PopoverPlacement = TooltipPlacement;
 export type PopoverTrigger = TooltipTrigger;
-/** False опускает секцию; true оставляет пустую секцию без текста; 0 отображается. */
+/** False omits the section; true leaves an empty section without text; 0 is displayed. */
 export type PopoverContent = string | number | boolean | Snippet;
 
-/** bind:ref Popover/Popconfirm: доступен после mount и очищается при unmount. */
+/** bind:ref Popover/Popconfirm: is available after mount and cleaned at unmount. */
 export interface PopoverRef {
-  /** Основной DOM trigger, включая SVG; до разрешения anchor может быть undefined. */
+  /** Basic DOM trigger, including SVG; prior to permission anchor can be undefined. */
   readonly nativeElement: Element | undefined;
-  /** Самостоятельный div сохраняется скрытым; в группе доступен только её владельцу. */
+  /** Independent div is kept hidden; in the group is available only to its owner. */
   readonly popupElement: HTMLDivElement | undefined;
-  /** Объединяет вызовы в microtask; закрытый или уничтоженный popup не открывает. */
+  /** Combines calls into microtask; closed or destroyed popup does not open. */
   forceAlign: () => void;
 }
 
@@ -29,13 +29,13 @@ export interface PopoverSlots extends TooltipSlots {
   content?: string;
 }
 
-/** Callback получает props с разрешёнными placement, trigger и delays; CSS — строки. */
+/** Callback receives props with permitted placement, trigger and delays; CSS – lines. */
 export type PopoverSemantic = PopoverSlots | ((info: {
   props: PopoverSemanticProps;
 }) => PopoverSlots);
 
 export interface PopoverSemanticProps extends PopoverProps {
-  /** Входной prop владельца; внутреннее uncontrolled open не подменяет его. */
+  /** The owner's input prop; the internal uncontrolled open does not replace it. */
   open?: boolean;
   placement: PopoverPlacement;
   trigger: PopoverTrigger | readonly PopoverTrigger[];
@@ -43,7 +43,7 @@ export interface PopoverSemanticProps extends PopoverProps {
   mouseLeaveDelay: number;
 }
 
-/** Собственные настройки Popover; defaults Tooltip к нему не применяются. */
+/** Own settings Popover; defaults Tooltip do not apply. */
 export interface PopoverConfig {
   class?: string;
   style?: string;
@@ -55,67 +55,67 @@ export interface PopoverConfig {
   mouseLeaveDelay?: number;
 }
 
-/** Интерактивная поверхность у trigger snippet с bind:open и управлением фокусом. */
+/** Interactive Surface at trigger snippet with bind:open and focus control. */
 export interface PopoverProps {
   children: Snippet;
-  /** ID native popup; пустая строка использует стабильный fallback. Скрытый ID следует fresh. */
+  /** ID native popup; an empty string uses a stable fallback. Hidden ID follows fresh. */
   id?: string;
-  /** Цвет панели и стрелки; title/content сохраняют собственные semantic цвета. */
+  /** Panel color and arrows; title/content retain their own semantic colors. */
   color?: TooltipColor;
-  /** Локальный prefix панели; иначе ConfigProvider. CSS variables сохраняются. */
+  /** Local prefix panel; otherwise ConfigProvider. CSS variables are saved. */
   prefixCls?: string;
-  /** DOM-класс открытого trigger после hydration; по умолчанию `${prefixCls}-open`. */
+  /** DOM-class open trigger after hydration; by default `${prefixCls}-open`. */
   openClassName?: string;
   title?: PopoverContent | null;
   content?: PopoverContent | null;
-  /** Скрывает панель, сохраняя raw open и trigger-события. @defaultValue false */
+  /** Hide the panel by saving the raw open and open-event. @defaultValue false */
   disabled?: boolean;
-  /** Поддерживает bind:open. */
+  /** Maintenances bind:open. */
   open?: boolean | undefined;
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Вызывается после применения видимости и завершения её CSS motion. */
+  /** Is called after the application of visibility and the completion of its CSS motion. */
   afterOpenChange?: TooltipProps['afterOpenChange'];
-  /** Имя CSSMotion; пустая строка отключает анимацию. По умолчанию zoom-big. */
+  /** Name CSSMotion; an empty string disables animation. By default zoom-big. */
   motion?: TooltipProps['motion'];
-  /** Явное true использует общую панель ближайшего Tooltip.UniqueProvider. @defaultValue false */
+  /** The explicit true uses a shared panel of the nearest Tooltip.UniqueProvider. @defaultValue false */
   unique?: TooltipProps['unique'];
-  /** Удаляет title/content после afterOpenChange(false); native shell сохраняется. */
+  /** Removes title/content after afterOpenChange(false); shell native is saved. */
   destroyOnHidden?: boolean;
-  /** Монтирует скрытое содержимое и portal после hydration, включая destroyOnHidden. */
+  /** Installs hidden content and portal after hydration, including destroyOnHidden. */
   forceRender?: boolean;
-  /** Обновляет скрытые title/content и semantic styles; по умолчанию false. */
+  /** Updates hidden title/content and semantic styles; by default false. */
   fresh?: boolean;
-  /** Явный z-index; semantic root styles имеют приоритет. */
+  /** Clear z-index; semantic root styles take precedence. */
   zIndex?: number;
-  /** Базовые события; [] отключает их без отдельных showAction/hideAction. */
+  /** Basic events; [] disables them without separate showAction/hideAction. */
   trigger?: PopoverTrigger | readonly PopoverTrigger[];
-  /** Заменяет события открытия; undefined использует trigger, [] отключает их. */
+  /** Replacing opening events; undefined uses trigger, [] disables them. */
   showAction?: readonly PopoverTrigger[];
-  /** Заменяет события закрытия; [] сохраняет только Escape и действия содержимого. */
+  /** Replacing closing events; [] only preserves Escape and content actions. */
   hideAction?: readonly PopoverTrigger[];
-  /** Задержка focus в секундах; default 0 независимо от mouseEnterDelay. */
+  /** Delay focus in seconds; default 0 regardless of mouseEnterDelay. */
   focusDelay?: number;
-  /** Задержка blur в секундах; default 0 независимо от mouseLeaveDelay. */
+  /** Latency blur in seconds; default 0 regardless of mouseLeaveDelay. */
   blurDelay?: number;
   /** @defaultValue 'top' */
   placement?: PopoverPlacement;
-  /** Накладывается поверх выбранной записи placements; вложенный overflow заменяется целиком. */
+  /** Superimposed on top of the selected placements entry; nested overflow is replaced in its entirety. */
   align?: TooltipProps['align'];
-  /** Заменяет всю автоматически подготовленную карту, включая пустой объект. */
+  /** Replaces the entire automatically prepared map, including an empty object. */
   builtinPlacements?: TooltipProps['builtinPlacements'];
-  /** Получает DOM popup и итоговый align после flip, до применения новых координат. */
+  /** Receives DOM popup and final align after flip, before new coordinates are applied. */
   onPopupAlign?: TooltipProps['onPopupAlign'];
   /** @defaultValue true */
   arrow?: TooltipArrow;
   /** @defaultValue true */
   autoAdjustOverflow?: boolean | AdjustOverflow;
-  /** Задержка открытия в секундах. */
+  /** Delayed opening in seconds. */
   mouseEnterDelay?: number;
-  /** Задержка закрытия в секундах. */
+  /** Closure delay in seconds. */
   mouseLeaveDelay?: number;
-  /** Локальная функция → ConfigProvider. */
+  /** Local function → ConfigProvider. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   'aria-label'?: string;
   'aria-labelledby'?: string;

@@ -1,10 +1,10 @@
-/** Сверяет тему Notification с сохранением native close target и top-layer поверхности. */
+/** Verifies the Notification theme with the preservation of the native close target and top-layer surface. */
 export function snapshotNotificationTheme() {
   const root = document.querySelector('.ant-notification');
   if (!root) {
     throw new Error('Notification root is missing');
   }
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;
@@ -55,7 +55,7 @@ export function snapshotNotificationTheme() {
   };
 }
 
-/** Все объявления component registration rule из официального UMD. */
+/** All announcements of registration component rule from the official UMD. */
 export function snapshotNotificationThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-notification');
   if (!root) {

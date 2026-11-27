@@ -1,5 +1,5 @@
-// Объединяет оформление уведомлений по слотам. Inline style провайдера относится
-// к карточке, а настройки списка и карточки могут вычисляться отдельно.
+// Combines notifications on slots. Inline style of the provider refers to the card, and the list
+// and card settings can be calculated separately.
 import { serializeInlineStyleLayers } from './inline-style.engine';
 
 type Slots<Name extends string> = Partial<Record<Name, string>>;
@@ -12,14 +12,14 @@ interface Appearance<Name extends string, Props> {
   styles?: Semantic<Name, Props>;
 }
 
-/** Функция получает props той области, чьи слоты она оформляет. */
+/** The function receives props of the area whose slots it designs. */
 export function resolveNoticeSemantic<Name extends string, Props>(
   value: Semantic<Name, Props> | undefined, props: Props
 ) {
   return typeof value === 'function' ? value({ props }) : value;
 }
 
-/** Классы складываются, inline слой holder следует после оформления провайдера. */
+/** The classes are folded, the inline holder layer follows after the provider. */
 export function resolveNoticeAppearance<Name extends string, Props>(
   slots: readonly Name[],
   props: Props,

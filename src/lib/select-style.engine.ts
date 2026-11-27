@@ -13,7 +13,7 @@ export interface SelectStyleFrame {
   readonly text: string | undefined;
 }
 
-/** Подставляет унаследованный слой при собственном undefined в zIndex объекта. */
+/** Puts an inherited layer at its own undefined in zIndex objects. */
 export function resolveSelectPopupRootStyle(
   style: SelectStyle | undefined,
   inheritedZIndex: number | undefined
@@ -34,7 +34,7 @@ export function selectStyleName(property: string): string {
     .toLowerCase().replace(/^ms-/, '-ms-');
 }
 
-/** Использует тот же Source formatter, что raw option, без CSSOM-нормализации значения. */
+/** Uses the same Source formatter as the raw option, without CSSOM-normalizing the value. */
 export function selectStyleValue(property: string, value: SelectStyleValue): string {
   const serialized = serializeSelectDataStyle({ [property]: value });
   return serialized?.slice(selectStyleName(property).length + 1) ?? '';
@@ -62,7 +62,7 @@ export function snapshotSelectStyle(style: unknown): SelectStyleProperties {
   return result;
 }
 
-/** Source сначала удаляет исчезнувшие keys, затем записывает изменённые в порядке next props. */
+/** Source first removes the disappeared keys, then records the changed in order next props. */
 export function diffSelectStyle(
   previous: SelectStyleProperties,
   next: SelectStyleProperties
@@ -87,7 +87,7 @@ function logicalName(property: string): string {
   );
 }
 
-/** Framework layers объединяются с исходным object до setter diff, включая own undefined. */
+/** Framework layers are combined with the source object to setter diff, including its own undefined. */
 export function resolveSelectStyleFrame(
   style: SelectStyle | undefined,
   before: readonly InlineStyleLayer[] = [],

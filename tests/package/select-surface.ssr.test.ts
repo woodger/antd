@@ -41,8 +41,8 @@ it.each(selectSurfaceSSRReference.cases)('renders surface $id with the actual or
     expect(view.popupPresent).toBe(entry.view.popupPresent);
     expect(view.prefixPresent).toBe(entry.view.prefixPresent);
     expect(view.leakedAttributes).toEqual([]);
-    // Source AC повторяет эти tokens на одном root через wrapper и Select;
-    // Native сохраняет прежний class attribute с одним вхождением. CSS membership совпадает.
+    // Upstream AutoComplete repeats these tokens on one root via the wrapper and Select. Native
+    // keeps the existing class attribute with one occurrence. CSS membership matches.
     const legacyRootClasses = new Set(['surface-control', 'surface-own-class', 'surface-owner-root']);
     const sourceClasses = entry.view.authoredClasses.filter((name, index, all) =>
       sample.control !== 'autocomplete' || !legacyRootClasses.has(name) || all.indexOf(name) === index);

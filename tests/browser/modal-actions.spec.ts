@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import { expect, test } from './test';
 import reference from './fixtures/ant-design-modal-actions-reference.json' with { type: 'json' };
 
-/** Ждёт открытого диалога и первого уведомления его владельца. */
+/** Is waiting for an open dialogue and the first notification of its owner. */
 async function open(page: Page, kind: string, profile: string, confirmation = false) {
   await page.goto(`/modal-actions.html?kind=${kind}&profile=${profile}`);
   await expect(page.locator('#root')).toHaveAttribute('data-ready', 'true');
@@ -13,7 +13,7 @@ async function open(page: Page, kind: string, profile: string, confirmation = fa
   await expect(page.locator('#action-events')).toContainText('["afterOpenChange",true]');
 }
 
-/** Снимает кнопки, принадлежащие текущей панели, и их общие с эталоном DOM-свойства. */
+/** Removes the buttons belonging to the current panel, and their common with the reference DOM-properties. */
 async function readActions(page: Page) {
   return page.locator('dialog.actions-probe').evaluate(panel => {
     const nodes = [...panel.querySelectorAll<HTMLButtonElement>('button')];
@@ -53,13 +53,13 @@ async function readActions(page: Page) {
   });
 }
 
-/** Возвращает порядок пользовательских уведомлений из страницы. */
+/** Brings the order of user notifications from the page. */
 async function readEvents(page: Page) {
   const output = await page.locator('#action-events').textContent();
   return JSON.parse(output ?? '[]') as unknown[][];
 }
 
-/** Повторяет реальный пользовательский ввод и явные действия владельца. */
+/** Repeats the actual user input and explicit actions of the owner. */
 async function act(page: Page, action: string) {
   const dialog = page.locator('dialog.actions-probe');
   switch (action) {
@@ -84,7 +84,7 @@ async function act(page: Page, action: string) {
   }
 }
 
-/** У Svelte handle разрешается по запросу закрытия. Порядок остальных колбэков совпадает. */
+/** The Svelte handle resolves when closing is requested. The other callbacks run in the same order. */
 async function expectConfirmationEvents(page: Page, fromSource: unknown[][], destroyed = false) {
   const effects = fromSource.filter(event => event[0] !== 'result');
   const result = destroyed ? ['result', false] : fromSource.find(event => event[0] === 'result');
@@ -121,7 +121,7 @@ for (const row of reference.ordinary) {
 
     await act(page, row.profile.action);
 
-    // Публичные onOk и onCancel обычного Svelte Modal сохраняют вызов без аргументов.
+    // Public onOk and onCancel of the usual Svelte Modal keep the challenge without arguments.
     const events = row.events.map(event =>
       event[0] === 'ok' || event[0] === 'cancel' ? [event[0], 0] : event);
     await expect.poll(() => readEvents(page)).toEqual(events);

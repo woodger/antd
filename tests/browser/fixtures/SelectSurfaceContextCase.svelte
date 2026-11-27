@@ -111,7 +111,7 @@
     + 'font-size:16px;'
     + 'line-height:normal'}>
   <ConfigProvider {theme} locale={enUS} componentDisabled={false} variant="filled">
-    <!-- Восстанавливаем заданный родителю Source font поверх provider reset. -->
+    <!-- We restore the given parent Source font on top of the provider reset. -->
     <div style={'position:absolute;'
       + 'left:300px;'
       + 'top:200px;'

@@ -38,7 +38,7 @@ for (const kind of ['single', 'range'] as const) {
     test(`live ${kind} ${initialPicker} to date restores date and clock panels without replacing the owner`, async ({ page }) => {
       await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
       await page.goto('/date-picker-period-mode.html');
-      // Настоящие owner-кнопки меняют props без переноса фокуса в другой элемент.
+      // The real owner-buttons change props without transferring the focus to another element.
       if (initialPicker === 'year') {
         await page.locator('[data-period-mode-switch]')
           .evaluate(button => (button as HTMLButtonElement).click());

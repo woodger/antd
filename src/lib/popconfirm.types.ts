@@ -14,7 +14,7 @@ export interface PopconfirmSlots extends PopoverSlots {
 
 type Semantic<Props> = PopconfirmSlots | ((info: { props: Props }) => PopconfirmSlots);
 
-/** Title/content относятся к тексту подтверждения и описанию, icon — к wrapper иконки. */
+/** Title/content refers to the text of the confirmation and the description, the icon - to the wrapper of the icon. */
 export type PopconfirmSemantic<
   OkHref extends string | undefined = undefined,
   CancelHref extends string | undefined = undefined
@@ -24,7 +24,7 @@ export interface PopconfirmSemanticProps<
   OkHref extends string | undefined = undefined,
   CancelHref extends string | undefined = undefined
 > extends PopconfirmProps<OkHref, CancelHref> {
-  /** Входной prop владельца; внутреннее uncontrolled open не подменяет его. */
+  /** The owner's input prop; the internal uncontrolled open does not replace it. */
   open?: boolean;
   placement: PopoverPlacement;
   trigger: PopoverTrigger | readonly PopoverTrigger[];
@@ -38,12 +38,12 @@ interface PopconfirmContextProps extends Omit<
 > {
   okButtonProps?: PopconfirmActionOptions;
   cancelButtonProps?: PopconfirmActionOptions;
-  /** Локальные callbacks рассчитаны на конкретные props экземпляра. */
+  /** Local callbacks are designed for specific props copies. */
   classNames?: Semantic<never>;
   styles?: Semantic<never>;
 }
 
-/** Собственные defaults Popconfirm; локальные props приоритетнее контекста. */
+/** Popconfirm's own defaults. Local props take precedence over context. */
 export interface PopconfirmConfig {
   class?: string;
   style?: string;
@@ -65,90 +65,90 @@ type ButtonVariantProps<Href extends string | undefined> = [Href] extends [undef
   ? NativeButtonProps
   : undefined extends Href ? DynamicButtonProps : LinkButtonProps;
 
-/** Явный href выводит тип ссылки. Условный href передаёт обработчику оба типа DOM. */
+/** An explicit href infers the anchor type. A conditional href exposes both DOM types to the handler. */
 type PopconfirmButtonProps<Href extends string | undefined> =
   | ({ href: Href } & ButtonVariantProps<Href>)
   | ([Href] extends [undefined] ? NativeButtonProps : never);
 
-/** Подтверждение действия с Promise, состоянием ожидания и защитой от позднего результата. */
+/** Confirmation of action with Promise, state of expectation and protection from late result. */
 export interface PopconfirmProps<
   OkHref extends string | undefined = undefined,
   CancelHref extends string | undefined = undefined
 > {
   children: Snippet;
-  /** Передаётся наружному Popover; скрытый ID следует fresh. */
+  /** Forwarded to the outer Popover. The hidden ID follows fresh. */
   id?: string;
-  /** Передаётся наружному Popover; semantic цвета текста подтверждения приоритетнее. */
+  /** Forwarded to the outer Popover. Semantic colors of the confirmation text take precedence. */
   color?: TooltipColor;
-  /** Локальный prefix подтверждения; иначе ConfigProvider. Prefix Popover независим. */
+  /** Local prefix of confirmation; otherwise ConfigProvider. Prefix Popover is independent. */
   prefixCls?: string;
-  /** Передаётся наружному Popover; default — его prefix + -open. */
+  /** Forwarded to the outer Popover. Defaults to its prefix plus -open. */
   openClassName?: string;
   title: Exclude<PopoverContent, boolean>;
   description?: Exclude<PopoverContent, boolean> | null;
-  /** Декоративное содержимое. undefined оставляет стандартную иконку. */
+  /** Decorative content. undefined leaves a standard icon. */
   icon?: ButtonContent;
-  /** Поддерживает bind:open. */
+  /** Maintenances bind:open. */
   open?: boolean | undefined;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  /** Удаляет содержимое подтверждения при закрытии. @defaultValue false */
+  /** Removes confirmation content when closed. @defaultValue false */
   destroyOnHidden?: boolean;
-  /** Монтирует скрытое подтверждение и portal после hydration, включая destroyOnHidden. */
+  /** Mount hidden confirmation and portal after hydration, including destroyOnHidden. */
   forceRender?: boolean;
-  /** Обновляет скрытое содержимое и semantic styles; по умолчанию false. */
+  /** Updates hidden content and semantic styles; by default false. */
   fresh?: boolean;
-  /** Передаётся Popover перед semantic root styles. */
+  /** Forwarded to Popover before semantic root styles. */
   zIndex?: number;
   disabled?: boolean;
   /** @defaultValue true */
   showCancel?: boolean;
-  /** Подпись Button. null и undefined используют словарь. */
+  /** Button label. null and undefined use the locale dictionary. */
   okText?: ButtonContent;
-  /** Подпись Button. null и undefined используют словарь. */
+  /** Button label. null and undefined use the locale dictionary. */
   cancelText?: ButtonContent;
-  /** danger задаёт палитру без обязательного варианта. @defaultValue 'primary' */
+  /** danger sets the palette without a mandatory option. @defaultValue 'primary' */
   okType?: ButtonType | 'danger';
   okButtonProps?: PopconfirmButtonProps<OkHref>;
   cancelButtonProps?: PopconfirmButtonProps<CancelHref>;
   /** @defaultValue 'top' */
   placement?: PopoverPlacement;
-  /** Передаётся Popover поверх выбранной записи placements. */
+  /** Forwarded to Popover as an override for the selected placements entry. */
   align?: TooltipProps['align'];
-  /** Заменяет всю карту placements Popover, включая пустой объект. */
+  /** Replaces the entire placements Popover map, including an empty object. */
   builtinPlacements?: TooltipProps['builtinPlacements'];
-  /** Получает наружный Popover DOM и итоговый align до применения новых координат. */
+  /** Receives external Popover DOM and the final align to the application of new coordinates. */
   onPopupAlign?: TooltipProps['onPopupAlign'];
   /** @defaultValue true */
   arrow?: TooltipArrow;
-  /** Локальный trigger → ConfigProvider.popconfirm → click; [] оставляет программное управление. */
+  /** Local trigger → ConfigProvider.popconfirm → click; [] leaves the software control. */
   trigger?: PopoverTrigger | readonly PopoverTrigger[];
-  /** Заменяет только события открытия; undefined использует trigger, [] отключает их. */
+  /** Replacing only opening events; undefined uses trigger, [] disables them. */
   showAction?: readonly PopoverTrigger[];
-  /** Заменяет trigger/outside-закрытие; [] сохраняет Escape и кнопки подтверждения. */
+  /** Replacing trigger/outside- closure; [] preserves Escape and confirmation buttons. */
   hideAction?: readonly PopoverTrigger[];
-  /** Задержка focus в секундах; default 0 независимо от hover delays. */
+  /** Delay focus in seconds; default 0 regardless of hover delays. */
   focusDelay?: number;
-  /** Задержка blur в секундах; default 0 независимо от hover delays. */
+  /** Delay blur in seconds; default 0 regardless of hover delays. */
   blurDelay?: number;
-  /** Задержки hover в секундах, по умолчанию 0.1. */
+  /** Hover delays in seconds, by default 0.1. */
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   /** @defaultValue true */
   autoAdjustOverflow?: boolean | AdjustOverflow;
-  /** Передаётся Popover: локальная функция → ConfigProvider. */
+  /** Forwarded to Popover. The local function takes precedence over ConfigProvider. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   onOpenChange?: (open: boolean) => void;
-  /** Вызывается после завершения изменения видимости наружного Popover. */
+  /** Is called after the completion of the change in the visibility of external Popover. */
   afterOpenChange?: TooltipProps['afterOpenChange'];
-  /** Имя CSSMotion наружного Popover. */
+  /** Name CSSMotion external Popover. */
   motion?: TooltipProps['motion'];
-  /** Явное true включает подтверждение в ближайшую группу Tooltip.UniqueProvider. @defaultValue false */
+  /** Explicit true includes confirmation in the nearest group Tooltip.UniqueProvider. @defaultValue false */
   unique?: TooltipProps['unique'];
-  /** Promise удерживает loading; rejection сохраняет возможность повтора. */
+  /** Promise holds loading; keeps the possibility of a repeat. */
   onConfirm?: (event: MouseEvent) => void | PromiseLike<unknown>;
   onCancel?: (event: MouseEvent) => void;
-  /** Вызывается при всплытии click до корня панели после обработчиков её содержимого. */
+  /** Is called when the click surfaces to the root of the panel after the handlers of its contents. */
   onPopupClick?: (event: MouseEvent) => void;
   onError?: (error: unknown) => void;
   class?: string;

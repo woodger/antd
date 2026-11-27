@@ -11,7 +11,7 @@ const fixture = '/?fixture=table-row-attributes';
 const root = '#table-row-attributes-fixture';
 const events = '#table-row-attributes-events';
 
-/** Читает атрибуты реальных tr, отдельно от служебных строк подробностей и spacer. */
+/** Reads the attributes of real tr, separately from the service lines of details and spacer. */
 function snapshot() {
   const table = document.querySelector<HTMLTableElement>('#table-row-attributes-fixture table');
   if (!table) throw new Error('Missing row attributes fixture');
@@ -38,7 +38,7 @@ function snapshot() {
   return { heads, rows, details, events };
 }
 
-/** Применяет тот же шаг через нативный контрол, строку или ref Table. */
+/** Applies the same step through native control, string or ref Table. */
 async function act(page: Page, action: string) {
   const [kind, key] = action.split('-');
   const row = page.locator(`${root} tr[data-ant-table-part="row"][data-row-key="${key}"]`);
@@ -103,11 +103,11 @@ async function act(page: Page, action: string) {
   }
 }
 
-/** Учитывает принятый lifecycle подробностей и защиту идентичности нативных строк. */
+/** Takes into account the adopted lifecycle details and the protection of the identity of native lines. */
 function expectedState(state: Snapshot, spans: boolean) {
   const heads = state.heads.map(head => {
     const revision = String(head[1]).split(':')[1];
-    // HeaderRow React затирает возвращённые className и style семантическими defaults.
+    // HeaderRow React rubs the returned className and style semantic defaults.
     return [...head.slice(0, 4), `fixture-head-${revision}`, `head-${revision}`];
   });
   const rows = state.rows.map(row => {
@@ -125,7 +125,7 @@ function expectedState(state: Snapshot, spans: boolean) {
   return { heads, rows, events, details: state.details.filter(row => row[1]) };
 }
 
-/** Размер overscan различается, индексы общих записей совпадают. */
+/** The overscan size differs, the indexes of the general records coincide. */
 function observedKeys(profile: SourceCase['profile'], action: string | null) {
   if (action === 'scroll-20' || action === 'key-20') return [20];
   return profile.tree ? [0, 100, 101] : [0, 1, 2];

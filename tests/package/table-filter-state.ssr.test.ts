@@ -4,7 +4,7 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableFilterStateFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-filter-state-reference.json';
 
-/** Читает строки данных и состояние кнопок фильтра до выполнения клиентского кода. */
+/** Reads data rows and filter button state before client code runs. */
 function readTable(markup: string) {
   const thead = markup.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? '';
   const headings = Array.from(thead.matchAll(/<th\b[^>]*>([\s\S]*?)<\/th>/g), ([, html]) => {

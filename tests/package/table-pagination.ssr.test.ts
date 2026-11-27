@@ -4,13 +4,13 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TablePaginationFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-pagination-reference.json';
 
-/** Читает атрибут из открывающего тега без зависимости от порядка сериализации. */
+/** Reads an opening tag's attribute independently of serialization order. */
 function attribute(tag: string, name: string) {
   const match = tag.match(new RegExp('\\s' + name + '="([^"]*)"'));
   return match?.[1];
 }
 
-/** Сопоставляет пейджеры, их положение относительно таблицы и номер страницы. */
+/** Compares pagers, their positions relative to the table, and the page number. */
 function serverPagers(html: string) {
   const body = html.replaceAll(/<!--[\s\S]*?-->/g, '');
   const tableIndex = body.indexOf('data-ant-table-part="table"');

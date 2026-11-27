@@ -22,7 +22,7 @@
 </script>
 
 <script lang="ts">
-  // У обоих редакторов сохраняются настоящие поля формы и refs.
+  // Both editors retain the real shape fields and refs.
   import dayjs, { type Dayjs } from 'dayjs';
   import {
     ConfigProvider, DatePicker, RangePicker, TimePicker, TimeRangePicker, enUS,
@@ -30,7 +30,7 @@
     type RangePickerValue
   } from '@woodger/antd';
 
-  /** Использует параметры независимого замера либо заданный SSR-профиль. */
+  /** Uses the parameters of independent measurement or a given SSR profile. */
   function readProfile(): PickerComponentsProfile {
     const current = new URLSearchParams(globalThis.location?.search).get('profile');
     return current ? JSON.parse(current) : { id: 'input', input: true };
@@ -63,7 +63,7 @@
   });
   let classNames = $derived({ input: appearances ? 'edited-picker' : 'original-picker' });
 
-  /** Возвращает те же временные строки, которые записаны в React. */
+  /** Returns the same timelines that are recorded in React. */
   function encode(value: Dayjs | Dayjs[] | RangePickerValue | null) {
     if (Array.isArray(value)) {
       return value.map(item => item?.format('YYYY-MM-DDTHH:mm:ss.SSSZ') ?? null);
@@ -71,7 +71,7 @@
     return value?.format('YYYY-MM-DDTHH:mm:ss.SSSZ') ?? null;
   }
 
-  /** Ошибка публикации на SSR немедленно прерывает проверку. */
+  /** The publication error on SSR immediately interrupts verification. */
   function report(...event: unknown[]) {
     if (server) {
       throw Error('Unexpected picker component event during SSR');
@@ -79,12 +79,12 @@
     events.push(event);
   }
 
-  /** Общий listener сохраняет данные одиночного и множественного выбора. */
+  /** The general listener preserves the data of solitary and multiple choices. */
   function change(value: Dayjs | Dayjs[] | RangePickerValue | null, text: string | string[] | null) {
     report('change', encode(value), text);
   }
 
-  /** Сохраняет предложенное значение вместе с метаданными границы. */
+  /** Retains the proposed value together with the boundary metadata. */
   function calendar(
     value: Dayjs | Dayjs[] | RangePickerValue | null,
     text: string | string[],
@@ -93,17 +93,17 @@
     report('calendar', encode(value), text, info);
   }
 
-  /** Показывает переход видимости отдельно от публикации выбора. */
+  /** Shows the transition of visibility separately from the publication of the choice. */
   function openChange(open: boolean) {
     report('open', open);
   }
 
-  /** Кнопка подтверждения получает те же даты, что календарь. */
+  /** The confirmation button receives the same dates as the calendar. */
   function ok(value: Dayjs | Dayjs[] | RangePickerValue) {
     report('ok', encode(value));
   }
 
-  /** Отдельная native кнопка формы нужна только для проверки риска случайного submit. */
+  /** A separate native form button is only needed to check the risk of accidentally submitted. */
   function submit(event: SubmitEvent) {
     event.preventDefault();
     report('submit');

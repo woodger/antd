@@ -26,7 +26,7 @@ export interface TreeSelectInertApiPropSpec {
   choice: string | undefined;
   direction: TreeSelectInertApiDirection | undefined;
 }
-/** Только публичные входные данные; Source получает CSSProperties, Native — CSS string. */
+/** Only public inputs; Source receives CSSProperties, Native – CSS string. */
 export function treeSelectInertApiPropSpec(
   sample: TreeSelectInertApiSample,
   mode: TreeSelectInertApiMode

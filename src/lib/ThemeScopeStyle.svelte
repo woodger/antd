@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Соседние if/markup boundaries вызывающей стороны не разделяют whitespace: head не создаёт DOM root.
+  // Adjacent caller if and markup boundaries do not separate whitespace because head creates no DOM root.
   import { useConfig } from './config-context';
 
   let { css, scope }: { css: string; scope: string; } = $props();
@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-  <!-- Браузер проверяет nonce при вставке stylesheet, поэтому новый nonce получает новый style. -->
+  <!-- The browser checks nonce when inserting the stylesheet, so a new nonce requires a new style element. -->
   {#key nonce}
     <svelte:element this={'style'} data-ant-svelte-theme={scope} {nonce}>{css}</svelte:element>
   {/key}

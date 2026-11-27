@@ -1,9 +1,9 @@
 export function snapshotSplitterPrefix() {
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !name.startsWith('css-') && !/^s-[\w-]{12}$/.test(name)
       && !name.endsWith('-css-var') && !name.endsWith('-source-theme')).sort();
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   const style = (node: Element, properties: string[], pseudo?: string) => {
     const computed = getComputedStyle(node, pseudo);
     return Object.fromEntries(properties.map(property => [

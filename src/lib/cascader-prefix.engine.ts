@@ -1,6 +1,6 @@
 import template from './vendor/cascader-prefix.css.js';
 
-/** Cascader/Panel owner, Select popup и общий Row namespace изолированы друг от друга. */
+/** Cascader and Panel ownership, the Select popup, and the shared Row namespace are isolated. */
 export function getCascaderPrefixCss(prefix: string, selectPrefix: string, rootPrefix: string) {
   if (prefix === 'ant-cascader' && selectPrefix === 'ant-select' && rootPrefix === 'ant') {
     return undefined;
@@ -17,7 +17,7 @@ export function getCascaderPrefixCss(prefix: string, selectPrefix: string, rootP
       if (row !== undefined) {
         return `.${rootPrefix}-row${row}`;
       }
-      // Upstream пропускает local Select override; Native сохраняет прежний padding:0.
+      // Upstream skips the local Select override. Native retains the previous padding:0.
       if (match === '.ant-select-dropdown') {
         return `.${selectPrefix}-dropdown${scope}`;
       }

@@ -1,8 +1,8 @@
-// Рендерит ту же именованную маску, которую гидратирует browser fixture.
+// Renders the same named mask that the browser fixture hydrates.
 import { render } from 'svelte/server';
 import ModalMotionFixtures from './ModalMotionFixtures.svelte';
 
-/** Возвращает закрытый SSR dialog для подготовленного запроса открытия. */
+/** Returns the closed SSR dialog for the prepared opening query. */
 export function renderModalMotion() {
   return render(ModalMotionFixtures, {
     props: { profile: 'custom', initiallyOpen: true }

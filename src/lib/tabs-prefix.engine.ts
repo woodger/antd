@@ -5,7 +5,7 @@ const rootStates = new Set([
   '-editable-card', '-centered', '-rtl', '-mobile'
 ]);
 
-/** Local Tabs/switch и общий slide prefix независимы; token bridge и shared keyframes сохранены. */
+/** Local Tabs/switch and general slide prefix are independent; to bridge and shared keyframes are saved. */
 export function getTabsPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-tabs' && rootPrefix === 'ant') {
     return undefined;

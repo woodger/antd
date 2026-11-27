@@ -2,7 +2,7 @@ import type { MapToken, MappingAlgorithm, SeedToken } from './theme-token.types'
 
 let nextThemeId = 0;
 
-/** Исходный объект темы cssinjs; массив алгоритмов сохраняет переданную ссылку. */
+/** Original cssinjs theme object. The algorithm array retains its reference. */
 export class DerivativeTheme {
   private derivatives: readonly MappingAlgorithm[];
   readonly id: number;

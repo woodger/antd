@@ -7,7 +7,7 @@ export interface TreeSelectComponentOverflowLayout {
   offset: number | null;
 }
 
-/** Source Overflow сохраняет размер предыдущего rest и измеряет constrained suffix повторно. */
+/** Source Overflow retains the size of the previous rest and measures the Switched suffix again. */
 export function treeSelectComponentOverflow({
   containerWidth, dataCount, widths, prefixWidth = 0, suffixWidth, restWidth, previousRestWidth,
   previous
@@ -35,7 +35,7 @@ export function treeSelectComponentOverflow({
     visibleCount: Math.min(current.omittedStart, renderCount)
   };
   function update(omittedStart: number, offset: number | null | undefined, notReady = false) {
-    // Source updateDisplayCount не обновляет restReady при прежних count/offset.
+    // Source updateDisplayCount does not update restReady at the previous count/offset.
     const unchanged = previous && previous.omittedStart === omittedStart
       && (offset === undefined || previous.offset === offset);
     result = { ...result, visibleCount: Math.min(omittedStart, renderCount), omittedStart,

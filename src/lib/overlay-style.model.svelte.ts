@@ -3,7 +3,7 @@ import { getInlineStyleDeclarations, serializeInlineStyleLayers, type InlineStyl
 import type { TooltipPosition } from './tooltip.engine';
 import { createSelectOverlayStyle, type SelectOverlayStyleOptions } from './select-style.model.svelte';
 
-/** Root styles следуют после координат rc-trigger, не сбрасывая variables темы и portal. */
+/** Root styles are followed after coordinates of rc-trigger, without resending variables themes and portal. */
 export function createOverlayStyle(
   getLayers: () => readonly InlineStyleLayer[],
   sourceWidthVariable?: string,
@@ -39,8 +39,8 @@ export function createOverlayStyle(
         return;
       }
       visited = true;
-      // Скрытый Native measuring shell появляется раньше Source popup и не должен
-      // создавать историю принятой ширины до первого настоящего открытия.
+      // Hidden Native measurement shell appears before the Source popup and should not create a
+      // history of accepted width until the first present discovery.
       acceptedWidth = undefined;
       element?.style.removeProperty('width');
     }
@@ -63,14 +63,14 @@ export function createOverlayStyle(
       return;
     }
     if (css.supports('width', width.value)) {
-      // Source stretch записывает px; сохранённый Native var продолжал бы следовать resize.
+      // Source stretch records px; the stored Native var would continue to follow resize.
       const value = width.value === `var(${sourceWidthVariable})`
         ? targetWidth : width.value;
       if (value) acceptedWidth = { value, priority: width.priority };
       return;
     }
-    // Отклонённый React CSS setter оставляет последнее принятое значение.
-    // Сохраняем его и при прежнем условном удалении Native Select popup.
+    // Rejected React CSS setter leaves the last value taken. We save it and with the previous
+    // conditional removal of Native Select popup.
     return acceptedWidth ? [['width', acceptedWidth.value, acceptedWidth.priority]] : undefined;
   }
 
@@ -79,8 +79,8 @@ export function createOverlayStyle(
       const node = element;
       const layers = getLayers();
       getSourceOpen?.();
-      // Source обновляет стили закрытого popup. Native Select сохраняет условный DOM;
-      // между его узлами остаётся только принятое значение ширины.
+      // Source is updating closed popup styles. Native Select retains conditional DOM; between its
+      // nodes there is only the accepted width value.
       if (!node) widthHistory(layers);
     });
   }
@@ -95,7 +95,7 @@ export function createOverlayStyle(
   return {
     initialStyle() {
       const layers = getLayers();
-      // Первый align должен измерять уже принятую ширину, включая invalid prop при reopen.
+      // The first align should measure the already accepted width, including the prop invalid at reopen.
       return serializeInlineStyleLayers([...layers, widthHistory(layers)]);
     },
     attach(node: HTMLElement) {

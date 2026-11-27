@@ -1,9 +1,9 @@
-// Разбирает npm-архив и извлекает селекторы по CSS-рецепту. Декларации и
-// keyframes сохраняются исходными, кроме явно заданных замен.
+// Parses the npm archive and extracts selectors for a CSS recipe. Declarations and keyframes keep
+// their original form except for explicit replacements.
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 
-// Проверяет исходные байты до распаковки и записи производных файлов.
+// Verifies the original bytes before unpacking and writing derived files.
 export function verifyArchive(bytes, expected) {
   const actual = createHash('sha256').update(bytes).digest('hex');
   if (actual !== expected) {
@@ -11,7 +11,7 @@ export function verifyArchive(bytes, expected) {
   }
 }
 
-// Возвращает представление нужного обычного файла, не извлекая архив на диск.
+// Returns a view of the requested regular file without extracting the archive to disk.
 export function archiveEntry(bytes, wanted) {
   const tar = gunzipSync(bytes);
   for (let offset = 0; offset + 512 <= tar.length;) {
@@ -20,7 +20,7 @@ export function archiveEntry(bytes, wanted) {
       break;
     }
 
-    // Поля tar завершаются нулевым байтом внутри указанного диапазона.
+    // Tar fields end at a NUL byte within the specified range.
     const string = (start, end) => header.toString('utf8', start, end).split('\0')[0];
     const name = [string(345, 500), string(0, 100)].filter(Boolean).join('/');
     const rawSize = string(124, 136).trim();
@@ -42,7 +42,7 @@ export function archiveEntry(bytes, wanted) {
   throw new Error(`Missing npm archive entry: ${wanted}`);
 }
 
-// Пропускает весь комментарий и сообщает об обрыве входного CSS.
+// Skips the whole comment and reports a truncated CSS input.
 function commentEnd(css, start) {
   const end = css.indexOf('*/', start + 2);
   if (end < 0) {
@@ -51,7 +51,7 @@ function commentEnd(css, start) {
   return end + 2;
 }
 
-// Останавливается на первом разделителе вне строк, комментариев и селекторов.
+// Stops at the first delimiter outside strings, comments, and selectors.
 function preludeEnd(css, index) {
   let quote = '';
   let parentheses = 0;
@@ -89,7 +89,7 @@ function preludeEnd(css, index) {
   return index;
 }
 
-// Ищет конец тела со вложенными блоками, оставляя его содержимое неизменным.
+// Finds the end of a body with nested blocks, preserving its contents.
 function bodyEnd(css, index) {
   let depth = 1;
   let quote = '';
@@ -120,7 +120,7 @@ function bodyEnd(css, index) {
   return index;
 }
 
-// Делит CSS на верхнеуровневые блоки и правила без тела в исходном порядке.
+// Splits CSS into top-level blocks and rules without bodies in their original order.
 export function cssBlocks(css) {
   const blocks = [];
   let index = 0;
@@ -156,7 +156,7 @@ export function cssBlocks(css) {
   return blocks;
 }
 
-// Разделяет селекторы только по запятым верхнего уровня.
+// Splits selectors only at top-level commas.
 export function splitSelectors(value) {
   const selectors = [];
   let start = 0;
@@ -190,12 +190,12 @@ export function splitSelectors(value) {
   return selectors.filter(Boolean);
 }
 
-// Сохраняет порядок замен. Декларации и селекторы получают разные наборы правил.
+// Preserves replacement order. Declarations and selectors use separate rule sets.
 function applyReplacements(text, replacements) {
   return replacements.reduce((result, entry) => result.replace(entry.pattern, entry.replacement), text);
 }
 
-// Проверяет рецепт и возвращает CSS либо модуль с тем же CSS и счётчиками правил.
+// Validates a recipe and returns CSS or a module containing the same CSS, along with rule counts.
 export function extractCss(css, recipe) {
   if (recipe.format !== undefined && !['css', 'module'].includes(recipe.format)) {
     throw new Error('CSS recipe format must be css or module');
@@ -224,7 +224,7 @@ export function extractCss(css, recipe) {
   const appended = [];
   let count = 0;
 
-  // Обходит вложенные at-rules и считает только выбранные обычные правила.
+  // Traverses nested at-rules and counts only selected regular rules.
   function select(input, root = false) {
     const output = [];
     for (const block of cssBlocks(input)) {

@@ -626,7 +626,7 @@ for (const kind of ['gradient', 'pattern'] as const)
 test(
   'Watermark draws without mutation repair when MutationObserver is unavailable at mount',
   async ({ page }) => {
-    // Modal/Drawer требуют observer отдельно; здесь проверяется fallback самого Watermark.
+    // Modal/Drawer requires an observer separately; here the fallback of the Watermark itself is checked.
     await page.getByLabel('Mount Watermark panels', { exact: true }).uncheck();
     const toggle = page.getByLabel('Mount Watermark', { exact: true });
 

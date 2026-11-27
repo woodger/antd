@@ -9,7 +9,7 @@ test.use({ viewport: { width: 1200, height: 760 }, reducedMotion: 'reduce' });
 const fixture = '/?fixture=z-index-context&profile=';
 type Observation = (typeof source.cases)[number]['initial'];
 
-/** Снимает inline и computed z-index с указанных поверхностей после переноса в портал. */
+/** Removes inline and computed z-index from these surfaces after transfer to the portal. */
 function snapshot() {
   const selectors = {
     modal: 'dialog.zi-owner-modal',
@@ -35,7 +35,7 @@ function snapshot() {
   }));
 }
 
-/** Применяет локальное решение для Drawer, у которого Source теряет явный ноль. */
+/** Applies a local solution for Drawer, in which the Source loses clear zero. */
 function expectedLayers(id: string, observation: Observation) {
   if (id === 'drawer-zero') {
     return { ...observation, drawer: { inline: '0', computed: '0' } };

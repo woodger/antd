@@ -220,7 +220,7 @@ export function createCarouselModel(
     }
     slideHandler(index, dontAnimate);
     if (props.autoplay) autoPlay('update');
-    // Slick фокусирует прежний DOM .slick-current до commit нового слайда.
+    // Slick focuses the previous DOM .slick-current before the new slide commits.
     if (props.focusOnSelect) dom?.focusCurrent();
   }
 

@@ -1,4 +1,4 @@
-// Публичное семейство по умолчанию использует календарь Dayjs.
+// The default public family uses the Dayjs calendar.
 import type { Dayjs } from 'dayjs';
 import { createPickerFamily, generatePicker } from './date-picker';
 import { dayjsPickerDates } from './picker-date-operations.engine';

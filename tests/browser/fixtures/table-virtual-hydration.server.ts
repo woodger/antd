@@ -8,46 +8,46 @@ import TableCellUpdateFixture from './TableCellUpdateFixture.svelte';
 import TableDomAttributesFixture from './TableDomAttributesFixture.svelte';
 import TableColumnKeysFixture from './TableColumnKeysFixture.svelte';
 
-/** Рендерит то же начальное окно, с которым клиент начинает гидратацию. */
+/** Renders the same initial window the client starts hydrating. */
 export function renderVirtualTableFixture() {
   return render(TableVirtualFixture, { props: { profileId: 'fixed', editor: true, captioned: true } });
 }
 
-/** Создаёт пользовательское тело до подключения владельца прокрутки. */
+/** Creates a custom body before connecting the scrolling owner. */
 export function renderCustomTableBodyFixture() {
   return render(TableCustomBodyFixture, { props: { profileId: 'dom' } });
 }
 
-/** Формирует первое окно с заменёнными элементами и редактируемой ячейкой. */
+/** Forms the first window with replaced elements and an edited cell. */
 export function renderTableElementsFixture(stringTag: boolean) {
   return render(TableElementComponentsFixture, {
     props: { profileId: 'virtual', editor: true, stringTag }
   });
 }
 
-/** Оставляет поле редактируемым до клиентской смены режима loading. */
+/** Delivers the field editable before the loading mode's client shift. */
 export function renderLoadingTableFixture() {
   return render(TableLoadingFixture, {
     props: { profileId: 'object-editor', initiallyIdle: true }
   });
 }
 
-/** Рендерит Table с унаследованными ключами и размерами до первого resize. */
+/** Renders the Table with inherited keys and sizes before the first resize. */
 export function renderTableConfigFixture() {
   return render(TableConfigFixture, { props: { profileId: 'inherit', editor: true } });
 }
 
-/** Рендерит начальное содержимое виртуальных ячеек до любого сравнения записей. */
+/** Renders the initial virtual cell content before comparing any rows. */
 export function renderTableCellUpdateFixture() {
   return render(TableCellUpdateFixture, { props: { profile: 'virtual', editor: true } });
 }
 
-/** Рендерит caption, связи ARIA и редактор до подключения виртуального окна. */
+/** Renders the caption, ARIA relationships, and editor before attaching the virtual window. */
 export function renderTableDomAttributesFixture() {
   return render(TableDomAttributesFixture, { props: { profileId: 'virtual', editor: true } });
 }
 
-/** Готовит окно с разрешёнными ключами и редактором для строгой гидратации. */
+/** Prepares a window with allowed keys and an editor for strict hydration. */
 export function renderTableColumnKeysFixture() {
   return render(TableColumnKeysFixture, {
     props: { profileId: 'explicit-collision', virtual: true, editor: true }

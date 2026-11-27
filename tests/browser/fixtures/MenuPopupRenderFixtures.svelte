@@ -54,14 +54,14 @@
     { key: 'after', label: 'After', style: 'width:96px' }
   ]);
 
-  // Имитирует изменение управляемых props без перекрытия пользовательского focus.
+  // Simulates the change of the controlled props without overlapping the custom focus.
   function selectSample(event: Event & { currentTarget: HTMLSelectElement; }) {
     sampleId = event.currentTarget.value;
     open = [];
     events = [];
   }
 
-  // Регистрирует запрос раскрытия и по команде применяет его к props.
+  // Registers the disclosure request and on command applies it to props.
   function changeOpen(keys: string[]) {
     events.push(['open', keys]);
     if (acceptOpen) {
@@ -69,7 +69,7 @@
     }
   }
 
-  // Даёт portal стабильный элемент после mount, в том числе при рендере до открытия.
+  // Provides the portal stable element after mount, including when rendering before opening.
   function getContainer() {
     return host ?? document.body;
   }

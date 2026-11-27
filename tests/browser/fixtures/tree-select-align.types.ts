@@ -76,27 +76,27 @@ export const treeSelectAlignProvider: TreeSelectConfig = {
 };
 
 export function treeSelectAlignNegativeProps(map: NonNullable<TreeSelectProps['builtinPlacements']>) {
-  // @ts-expect-error Private experimental API не входит в публичный TreeSelect align.
+  // @ts-expect-error The private experimental API is outside the public TreeSelect align contract.
   const privateAlign: TreeSelectPopupAlign = { _experimental: { dynamicInset: true } };
-  // @ts-expect-error Private поля запрещены и во вложенной placement map.
+  // @ts-expect-error Private fields are also prohibited in the nested placement map.
   const privateMap: TreeSelectProps = { builtinPlacements: { bottomLeft: { _experimental: {} } } };
-  // @ts-expect-error Регион ограничен исходными visible/scroll/visibleFirst.
+  // @ts-expect-error The region is restricted to the upstream visible, scroll, and visibleFirst values.
   const region: TreeSelectPopupAlign = { htmlRegion: 'screen' };
-  // @ts-expect-error Points принимают строки, а не числовые координаты.
+  // @ts-expect-error Points accept strings, not numeric coordinates.
   const points: TreeSelectPopupAlign = { points: [0, 1] };
-  // @ts-expect-error Offsets принимают числа и строки, а не booleans.
+  // @ts-expect-error Offsets accept numbers and strings, not booleans.
   const offset: TreeSelectPopupAlign = { offset: [true] };
-  // @ts-expect-error Target offsets также не принимают объекты.
+  // @ts-expect-error Target offsets do not accept objects either.
   const target: TreeSelectPopupAlign = { targetOffset: [{}] };
-  // @ts-expect-error Overflow flags принимают boolean или number.
+  // @ts-expect-error Overflow flags accept booleans or numbers.
   const overflow: TreeSelectPopupAlign = { overflow: { adjustX: 'yes' } };
-  // @ts-expect-error Dynamic inset является boolean flag.
+  // @ts-expect-error Dynamic inset is a boolean flag.
   const dynamic: TreeSelectPopupAlign = { dynamicInset: 1 };
-  // @ts-expect-error Popup align является объектом, а не именем placement.
+  // @ts-expect-error Popup align is an object, not a placement name.
   const align: TreeSelectProps = { popupAlign: 'bottomLeft' };
-  // @ts-expect-error Placement map содержит align objects.
+  // @ts-expect-error The placement map contains align objects.
   const placements: TreeSelectProps = { builtinPlacements: { bottomLeft: 'bottomLeft' } };
-  // @ts-expect-error Публичная placement map доступна только для чтения.
+  // @ts-expect-error The public placement map is readonly.
   map.bottomLeft = treeSelectReadonlyAlign;
   const empty: TreeSelectProps = { popupAlign: {}, builtinPlacements: {} };
   const omitted: TreeSelectProps = { popupAlign: undefined, builtinPlacements: undefined };

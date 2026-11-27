@@ -5,14 +5,14 @@ import reference from './fixtures/ant-design-drawer-dom-reference.json' with { t
 type EventEntry = (typeof reference.events.events.key)[number];
 type AttributeFrame = (typeof reference.attributes)[number];
 
-/** Запускает действие владельца даже при нативной модальности. */
+/** Launches the action of the owner even with native modality. */
 async function owner(page: Page, name: string) {
   await page.locator(`#dom-${name}`).evaluate(node => {
     if (node instanceof HTMLButtonElement) node.click();
   });
 }
 
-/** Читает нужные типы событий отдельно от автоматического фокуса и перемещений указателя. */
+/** Reads the desired types of events separately from the automatic focus and movements of the pointer. */
 async function drain(page: Page, kinds: string[]): Promise<EventEntry[]> {
   const output = await page.locator('#dom-events').textContent();
   const events: EventEntry[] = JSON.parse(output ?? '[]');
@@ -20,7 +20,7 @@ async function drain(page: Page, kinds: string[]): Promise<EventEntry[]> {
   return events.filter(event => kinds.includes(event.kind));
 }
 
-/** Дожидается реального открытия dialog после выбора профиля. */
+/** Waiting for the real dialog to be opened after selecting a profile. */
 async function show(page: Page, profile: string) {
   await page.goto('/?fixture=drawer-dom');
   await page.getByRole('combobox', { name: 'Drawer DOM profile' }).selectOption(profile);
@@ -31,7 +31,7 @@ async function show(page: Page, profile: string) {
   return dialog;
 }
 
-/** Различает существование области, её текст и связь заголовка с доступным именем. */
+/** Distinguishes the existence of the domain, its text and the relationship of the title with the available name. */
 async function readContent(dialog: Locator) {
   return dialog.evaluate(node => {
     const title = node.querySelector('[data-ant-drawer-title]');
@@ -49,7 +49,7 @@ async function readContent(dialog: Locator) {
   });
 }
 
-/** Снимает ARIA, data и классы с фактических DOM-владельцев после портала. */
+/** Removes ARIA, data and classes from the actual DOM owners after the portal. */
 async function readAttributes(dialog: Locator, sample: AttributeFrame) {
   return dialog.evaluate((root, names) => {
     const wrapper = root.querySelector(':scope > [data-ant-drawer-content-wrapper]');
@@ -92,7 +92,7 @@ test('Drawer updates attributes on the native dialog and the same portaled wrapp
 
   for (const [index, expected] of reference.attributes.entries()) {
     if (index > 0) await owner(page, 'next');
-    // Нативный dialog отвечает за доступность. React ставит эти атрибуты на section.
+    // Native dialog is responsible for accessibility. React puts these attributes on the section.
     await expect.poll(() => readAttributes(dialog, expected)).toEqual({
       ...expected, idAt: [true, false, false], ariaAt: [true, false, false]
     });

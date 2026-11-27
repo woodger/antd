@@ -1,13 +1,13 @@
 import { FastColor } from './fast-color.engine';
 import type { ProgressGradient, ProgressLineSize, ProgressSuccess } from './progress.types';
 
-/** Source validProgress для нового success segment; legacy percent нормализуется отдельно. */
+/** Source validProgress for the new success segment; legacy is normalized separately. */
 export function progressSuccessPercent(success: ProgressSuccess | undefined) {
   const value = success?.percent;
   return !value || value < 0 ? 0 : value > 100 ? 100 : value;
 }
 
-/** Source sortGradient: допускает numeric prefixes, игнорирует нечисловые ключи. */
+/** Source sortGradient: Allows numeric prefixes, ignoring non-numerical keys. */
 export function progressGradient(color: ProgressGradient, rtl: boolean) {
   const { from = '#1677FF', to = '#1677FF', direction = rtl ? 'to left' : 'to right',
     ...stops } = color;
@@ -32,7 +32,7 @@ export function isProgressColorBright(color: string | string[] | ProgressGradien
   return (value.r * 299 + value.g * 587 + value.b * 114) / 1000 >= 128;
 }
 
-/** Source Steps/getSize: unit dimensions, count и rounding не заменяются line defaults. */
+/** Source Steps/getSize: unit items, count and rounding are not replaced by default lines. */
 export function progressLineSteps(
   count: number,
   percent: number,
@@ -51,7 +51,7 @@ export function progressLineSteps(
     height = Number(pair[1] ?? 8);
   }
   const current = rounding(count * percent / 100);
-  // Source multiplies и делит width на count, включая coercion CSS strings в NaN.
+  // Source multiplies and divides the width into count including coercion CSS strings in NaN.
   const unitWidth = Number(width) * count / count;
   const items: boolean[] = Array.from({ length: count });
   for (let index = 0; index < count; index++) items[index] = index <= current - 1;

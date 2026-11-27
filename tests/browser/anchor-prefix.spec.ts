@@ -8,7 +8,7 @@ for (const entry of reference.cases) {
     await page.goto('/?fixture=anchor-prefix');
     await page.getByRole('combobox', { name: 'Anchor prefix sample', exact: true })
       .selectOption(entry.sample.id);
-    // Source не передаёт local prefix в items; explicit item prefix даёт полную раскладку.
+    // Source does not transfer local prefix to explicit items; item prefix gives a full layout.
     const expected = 'matchedItems' in entry ? entry.matchedItems : entry.result;
 
     await expect.poll(() => page.evaluate(snapshotAnchorPrefix)).toEqual(expected);

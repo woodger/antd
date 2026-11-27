@@ -20,14 +20,14 @@ interface Action {
   accept?: boolean;
 }
 
-/** Снимает состояние публичных контролов и записанные callbacks. */
+/** Removes the state of public controllers and recorded callbacks. */
 function snapshot() {
   const table = document.querySelector<HTMLTableElement>('#table-selection-fixture table');
   if (!table) {
     throw new Error('Missing Table selection fixture');
   }
 
-  /** Mixed проверяется на самом input после реакции владельца. */
+  /** Mixed is checked on the input itself after the owner's reaction. */
   function control(cell: Element | null) {
     const input = cell?.querySelector('input');
     if (!input) return null;
@@ -54,7 +54,7 @@ function snapshot() {
   };
 }
 
-/** Выполняет действия через настоящие указатель, клавиши и controls владельца. */
+/** Performs actions through the real pointer, keys and controls of the owner. */
 async function act(page: Page, action: Action) {
   if (action.click !== undefined || action.key !== undefined) {
     const target = page.getByLabel(`Choose ${action.click ?? action.key}`, { exact: true });
@@ -86,13 +86,13 @@ async function act(page: Page, action: Action) {
   }
 }
 
-/** Оставляет исходные браузерные результаты пригодными для проверки двух Svelte контрактов. */
+/** Leaves the original browser results suitable for verification of two Svelte contracts. */
 function expectedEvents(events: readonly (readonly unknown[])[]) {
   return events.map(event => {
     const [kind, ...data] = event;
-    // Checkbox Svelte передаёт собственное native change. onSelect получает click.
+    // Checkbox Svelte transmits its own native change. onSelect gets click.
     if (kind === 'title') return [kind, data[0], 'change'];
-    // Контракты Table возвращают только известные записи, включая восстановленные из кэша.
+    // Contracts of Table return only known records, including those recovered from the cache.
     const index = kind === 'select' || kind === 'change' ? 2 : -1;
     const records = data[index];
     if (Array.isArray(records)) data[index] = records.filter(record => record !== null);

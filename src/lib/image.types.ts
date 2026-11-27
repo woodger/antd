@@ -31,7 +31,7 @@ export interface ImageInfo {
   width?: string | number;
   height?: string | number;
 }
-/** Действия viewer; onActive принимает относительное смещение индекса в группе. */
+/** Actions viewer; onActive adopts a relative offset of the index in the group. */
 export interface ImagePreviewActions {
   onActive: (offset: number) => void;
   onFlipY: () => void;
@@ -50,14 +50,14 @@ export interface ImagePreviewRenderInfo {
   image: ImageInfo;
   actions: ImagePreviewActions;
 }
-/** Настройки viewer: видимость, преобразования, focus trap и render snippets. */
+/** Viewer settings: visibility, conversions, focus trap and render snippets. */
 export interface ImagePreviewConfig {
   src?: string;
-  /** Управляемая видимость; onOpenChange запрашивает её изменение у владельца. */
+  /** Managed visibility; onOpenChange requests its change from the owner. */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   afterOpenChange?: (open: boolean) => void;
-  /** Сообщает transform и действие через очередь requestAnimationFrame. */
+  /** Reports transform and action through queue requestAnimationFrame. */
   onTransform?: (info: { transform: ImageTransform; action: ImageTransformAction; }) => void;
   scaleStep?: number;
   minScale?: number;
@@ -69,14 +69,14 @@ export interface ImagePreviewConfig {
   closeIcon?: Snippet | boolean | null;
   cover?: boolean | Snippet | { coverNode?: Snippet; placement?: 'top' | 'bottom' | 'center'; };
   zIndex?: number;
-  /** Snippet получает исходную панель действий и контекст viewer. */
+  /** Snippet receives the original action bar and viewer context. */
   actionsRender?: Snippet<[Snippet, ImagePreviewRenderInfo]>;
-  /** Snippet получает исходное изображение и текущий transform. */
+  /** Snippet receives the original image and current transform. */
   imageRender?: Snippet<
     [Snippet, { transform: ImageTransform; image: ImageInfo; current?: number; }]
   >;
 }
-/** Нативное изображение с fallback/placeholder и интерактивным preview. */
+/** Native image with fallback/placeholder and interactive preview. */
 export interface ImageProps extends Omit<
   HTMLImgAttributes,
   'width'
@@ -90,9 +90,9 @@ export interface ImageProps extends Omit<
   | 'placeholder'
   | 'children'
 > {
-  /** Локальный CSS-префикс Image; пустая строка наследует ConfigProvider, viewer по умолчанию добавляет -preview. */
+  /** Local CSS-prefix Image; blank string inherits ConfigProvider, the default viewer adds -preview. */
   prefixCls?: string;
-  /** Полный префикс viewer; undefined даёт prefixCls + -preview, пустая строка сохраняется. */
+  /** Full prefix viewer; undefined gives prefixCls + -preview, an empty line is saved. */
   previewPrefixCls?: string;
   width?: number | string;
   height?: number | string;
@@ -101,9 +101,9 @@ export interface ImageProps extends Omit<
   fallback?: string;
   placeholder?: boolean | Snippet;
   rootClassName?: string;
-  /** Класс корня preview; остальные semantic slots пока не перенесены. */
+  /** Preview root class; other semantic slots have not yet been moved. */
   classNames?: { popup?: { root?: string; }; };
-  /** CSS корневой обёртки; style по-прежнему относится к img. */
+  /** Root wrapper CSS. style still applies to the img. */
   styles?: { root?: string; };
   class?: string;
   style?: string;
@@ -111,9 +111,9 @@ export interface ImageProps extends Omit<
   onLoad?: (event: Event) => void;
   onClick?: (event: MouseEvent) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLElement;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   imageElement?: HTMLImageElement;
 }
 export type ImageElementData = Pick<

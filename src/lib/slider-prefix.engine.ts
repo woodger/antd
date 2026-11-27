@@ -1,6 +1,6 @@
 import template from './vendor/slider-prefix.css.js';
 
-// Prefix template следует native CSS; восстанавливаем aliases только у native-владельца.
+// Prefix template follows native CSS; restore aliases only from the native-owner.
 const native = `
 .ant-slider[data-ant-slider-native]{
   --ant-slider-control-size:calc(var(--ant-control-height-lg) / 4);
@@ -20,7 +20,7 @@ const native = `
 const rootStates = new Set(['', '-horizontal', '-vertical', '-rtl', '-disabled', '-lock',
   '-with-marks']);
 
-/** ComponentCls и потомки меняются, CSS variables/marker и собственный Tooltip prefix остаются. */
+/** ComponentCls and descendants change, CSS variables/marker and own Tooltip prefix remain. */
 export function getSliderPrefixCss(prefix: string) {
   if (prefix === 'ant-slider') {
     return undefined;

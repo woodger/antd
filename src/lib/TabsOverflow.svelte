@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Представляет скрытые вкладки в popup. Запросы фокуса и hover отменяются при смене состояния
-  // списка.
+  // Displays hidden tabs in a popup. A change in list state cancels pending focus and hover
+  // requests.
   import { flushSync, onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { connectPopup, getPopupActiveElement } from './popup.dom';
@@ -174,12 +174,12 @@
   $effect.pre(() => {
     const getter = containerGetter;
     const source = button;
-    // Callback identity может меняться вместе с align; тот же DOM-container не перемещает portal.
+    // The callback identity can change with align. The same DOM container keeps the portal in place.
     portalTarget = rendered && source ? getter?.(source) : undefined;
   });
 
   $effect.pre(() => {
-    // Trigger useControlledState сбрасывает внутреннее значение при смене controlled prop.
+    // Trigger useControlledState resets internal state when the controlled prop changes.
     triggerOpen = dropdownVisible ?? false;
   });
 
@@ -194,7 +194,7 @@
     }
     else if (!focusSession) {
       focusSession = true;
-      // Как useAccessibility: изменение autoFocus/align внутри открытого сеанса не фокусирует снова.
+      // As with useAccessibility, changing autoFocus or align during an open session does not refocus.
       if (untrack(() => more?.autoFocus)) untrack(scheduleFocus);
     }
   });
@@ -282,7 +282,7 @@
     }
 
     return untrack(() => {
-      // До первого открытия markup уже содержит начальные styles; props могли успеть измениться.
+      // Markup includes initial styles before first open, by which point props may have changed.
       if (initialStyleElement !== surface) {
         const initial = surface.ownerDocument.createElement('span').style;
         initial.cssText = initialStyle ?? '';
@@ -524,7 +524,7 @@
   });
 
   function destroyPopup() {
-    // Svelte удаляет conditional range после возврата portal в исходное место.
+    // Svelte removes the conditional range once the portal returns to its original position.
     detachPortal?.();
     rendered = false;
   }
@@ -618,7 +618,7 @@
       return;
     }
     const fromMore = event.currentTarget === button;
-    // Document-delegation Svelte видит ShadowRoot host в event.target.
+    // Svelte's document delegation sees the ShadowRoot host as event.target.
     const target = event.composedPath()[0] ?? event.target;
     if (fromMore && !open) {
       if (['ArrowDown', ' ', 'Enter'].includes(event.key)) {
@@ -671,7 +671,7 @@
       else if (selectedKey !== null) {
         const option = Array.from(list?.querySelectorAll<HTMLButtonElement>('[role="option"]') ?? [])
           .find(element => element.dataset.tabsOverflowKey === selectedKey);
-        // Публичный onTabClick остаётся MouseEvent, как у обычного native tab button.
+        // Public onTabClick still receives a MouseEvent, as with a normal native tab button.
         if (option) {
           keyboardClick = true;
           option.click();

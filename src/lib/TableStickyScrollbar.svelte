@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Дополнительная полоса передаёт указатель основному scrollport.
-  // Ширина бегунка пропорциональна видимой доле таблицы.
+  // The extra scrollbar forwards pointer input to the main scrollport. Its thumb width reflects the
+  // visible fraction of the table.
   import { tableStickyBarHeight, type TableStickyBarLayout } from './table-sticky.dom';
 
   let { prefix, layout, rtl, onScroll, onMoving }: {

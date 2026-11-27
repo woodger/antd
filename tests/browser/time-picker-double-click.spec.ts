@@ -35,7 +35,7 @@ async function doubleClickWhileScrolling(page: Page, selected: number, next: num
   await page.mouse.click(point.x, point.y);
   await page.clock.runFor(16);
   await page.mouse.down({ clickCount: 2 });
-  // Между down/up второго клика колонка подставляет разные ячейки под указатель.
+  // Between down/up of the second click, the column puts different cells under the pointer.
   await page.clock.runFor(64);
   await page.mouse.up({ clickCount: 2 });
   await page.clock.runFor(100);

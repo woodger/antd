@@ -7,7 +7,7 @@
   import { provideCompact } from './space-compact-context';
 
   let { value, origin, isolate }: { value: SelectPopupContent; origin: Snippet; isolate: boolean } = $props();
-  // Родитель меняет key при принятом переходе между origin и ContextIsolator.
+  // The parent changes the key when a transition between origin and ContextIsolator is accepted.
   if (untrack(() => isolate)) {
     provideFormField(undefined);
     provideFormFeedback({});

@@ -48,7 +48,7 @@ export function createStatisticTimerModel(
         const down = request.type === 'countdown';
         now = time;
         callbacks().onChange?.(down ? target - time : time - target);
-        // Callback может изменить цель или удалить компонент до onFinish.
+        // Callback can change the target or remove the component to onFinish.
         if (!run.active || read() !== request) {
           return;
         }

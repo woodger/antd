@@ -1,5 +1,5 @@
-// Измеряет части нативной таблицы отдельно от строк. Закреплённые полосы
-// уменьшают видимую область строк, обычные итоги удлиняют прокрутку после них.
+// Measures parts of a native table separately from rows. Fixed strips reduce the visible area of
+// the lines, the usual results lengthen the scroll after them.
 import { untrack } from 'svelte';
 import { scrollFrame } from './scroll.engine';
 import { alignTableRow } from './table-layout.dom';
@@ -8,7 +8,7 @@ import type { TableKey, TableScrollConfig, TableScrollOptions } from './table.ty
 import { measureVirtualListRow } from './virtual-list.dom';
 import { createVirtualList } from './virtual-list.model.svelte';
 
-/** Подробности идут сразу за строкой и входят в её размер для поиска по ключу. */
+/** The details go immediately behind the line and are included in its size to search for the key. */
 function measureTableRow(row: HTMLElement): number | undefined {
   const height = measureVirtualListRow(row);
   if (height === undefined) {
@@ -20,7 +20,7 @@ function measureTableRow(row: HTMLElement): number | undefined {
     ? height + (measureVirtualListRow(details) ?? 0) : height;
 }
 
-/** Удерживает DOM-окно, горизонтальную позицию и отменяемый сброс scrollTop. */
+/** Retains DOM-window, horizontal position and canceled reset scrollTop. */
 export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(options: {
   rows: () => readonly Entry[];
   widths: () => readonly (string | number | undefined)[];
@@ -32,10 +32,10 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   table: () => HTMLTableElement | undefined;
   body: () => HTMLElement | undefined;
   element: () => HTMLDivElement | undefined;
-  /** null означает собственное тело без зарегистрированного DOM-контейнера. */
+  /** null means its own body without a registered DOM-container. */
   customElement: () => HTMLElement | null | undefined;
   header: () => boolean;
-  /** Измеряет текущий DOM-узел после замены текстовой подписи на snippet. */
+  /** Measures the current DOM-knot after replacing the text label on snippet. */
   caption: () => HTMLTableCaptionElement | undefined;
   summary: () => 'top' | 'bottom' | 'inline' | undefined;
   rtl: () => boolean;
@@ -117,7 +117,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     return untrack(() => connect(element, body, head, caption, foot));
   });
 
-  /** Наблюдает размеры закреплённых частей отдельно от высот виртуальных строк. */
+  /** Observes the dimensions of the fixed parts separately from the heights of virtual lines. */
   function connect(
     element: HTMLDivElement,
     body: HTMLElement | undefined,
@@ -125,7 +125,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     caption: HTMLTableCaptionElement | null,
     foot: HTMLTableSectionElement | null
   ) {
-    /** Пересчитывает область строк при изменении обёртки, заголовков или итогов. */
+    /** Recalculates the line area when you change the wrapper, titles, or outcomes. */
     const resize = () => {
       headHeight = head?.offsetHeight ?? 0;
       captionHeight = caption?.offsetHeight ?? 0;
@@ -159,7 +159,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     return cancelReset;
   });
 
-  /** Следит за изменениями раскрытых деталей, в том числе после загрузки контента. */
+  /** Follows changes in the disclosed details, including after uploading the content. */
   function attachDetails(details: HTMLElement) {
     const Observer = details.ownerDocument.defaultView?.ResizeObserver;
     const observer = Observer && new Observer(list.collect);
@@ -172,7 +172,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     };
   }
 
-  /** В виртуальном режиме callback относится только к вертикальной оси. */
+  /** In virtual mode, callback refers only to the vertical axis. */
   function handleScroll(element: HTMLDivElement) {
     const top = element.scrollTop;
     const vertical = top !== lastTop;
@@ -187,18 +187,18 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     return vertical;
   }
 
-  /** Новое указание позиции и ввод пользователя прерывают сброс после onChange. */
+  /** The user's new position and input is interrupted by reset after onChange. */
   function cancelReset() {
     cancelAnimation?.();
     cancelAnimation = undefined;
   }
 
-  /** Прерывает сброс при захвате мышью любой из полос. */
+  /** Interrupts the reset when captured by the mouse of any of the stripes. */
   function dragScrollbar(moving: boolean) {
     if (moving) cancelReset();
   }
 
-  /** Положение полосы отсчитывается от логического начала, scrollLeft — от физического. */
+  /** The position of the strip is counted from the logical principle, scrollLeft - from the physical. */
   function scrollHorizontal(offset: number) {
     const element = options.element();
     if (!element) {
@@ -209,7 +209,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     element.scrollLeft = options.rtl() ? -offset : offset;
   }
 
-  /** Адресует строки на раскрытой странице. scrollTop имеет приоритет перед ключом и индексом. */
+  /** Addresses the lines on the opened page. scrollTop takes precedence over the key and index. */
   function scrollTo(target: TableScrollConfig) {
     const element = options.element();
     if (!element) {
@@ -255,7 +255,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     }
   }
 
-  /** Сохраняет позицию по запросу и придерживается длительности _util/scrollTo. */
+  /** Retains the position on request and adheres to the duration of _util/scrollTo. */
   function resetAfterChange() {
     const custom = options.customElement();
     const shouldReset = scroll?.scrollToFirstRowOnChange ?? (custom === undefined
@@ -281,7 +281,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     const started = view.performance.now();
     let frame: number;
 
-    // Обновляет одну позицию до завершения анимации или отмены ревизии.
+    // Updates one position before the completion of the animation or the cancellation of the audit.
     const step = (now: number) => {
       const elapsed = now - started;
       const top = scrollFrame(elapsed, from, 0);
@@ -339,7 +339,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     resetAfterChange,
     scrollHorizontal,
     scrollTo,
-    /** Перемещение полосы отменяет текущую анимацию. */
+    /** Moving the strip cancels the current animation. */
     scrollVertical(top: number) { scrollTo({ top }); }
   };
 }

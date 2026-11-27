@@ -1,4 +1,4 @@
-// Монтирует публичный пример статического вызова в пустой документ.
+// Installs a public example of a static call into an empty document.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import ModalStaticFixtures from './ModalStaticFixtures.svelte';

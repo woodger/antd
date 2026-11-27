@@ -1,5 +1,5 @@
-// Измеряет отрендеренную строку в координатах виртуального списка, включая вертикальные margins.
-/** Фактическая высота rc-virtual-list включает margins, но не скрытые строки. */
+// Measures the rendered string in the coordinates of the virtual list, including vertical margins.
+/** The actual height of rc-virtual-list includes margins but not hidden lines. */
 export function measureVirtualListRow(element: HTMLElement) {
   if (!element.offsetParent) {
     return undefined;

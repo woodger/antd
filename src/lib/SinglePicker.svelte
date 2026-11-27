@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType extends object">
-  // Согласует текст редактора, выбранную дату и текущую панель. Навигация, предварительный ввод и
-  // commit выполняются раздельно.
+  // Coordinates editor text, the selected date, and the current panel. Navigation, draft input, and
+  // commit are separate operations.
   import { tick, untrack } from 'svelte';
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import type {
@@ -179,7 +179,7 @@
     return multipleOptions.value === undefined ? initialDates : multipleOptions.value ?? emptyPickerDates;
   });
   let internalValue = $state.raw<DateType | null>(initialValue);
-  // Переключение multiple меняет представление общего списка, сохраняя принятые даты.
+  // Changing multiple changes how the shared list is displayed while preserving the accepted dates.
   let dateValues = $state.raw<readonly DateType[]>(initialDates);
   let mergedValue = $derived.by(() => {
     if (multipleOptions) return null;
@@ -331,7 +331,7 @@
       return undefined;
     }
 
-    // Исходные props приходят из публичной обёртки. Core сохраняет receiver своих callbacks.
+    // The public wrapper supplies the original props. The core preserves the receiver of its callbacks.
     const props = { ...dateProps, size: resolvedSize, disabled: blocked, status, variant };
     return datePickerSemantic(props, settings, classNames, styles, providerStyle);
   });
@@ -458,7 +458,7 @@
   const datePopupStyle = untrack(() =>
     time && !rootTimeProps ? undefined : createOverlayStyle(() => [popupThemeStyle]));
 
-  // Авторские декларации следуют после координат и обновляются на той же панели.
+  // Authored declarations follow the positioning declarations and update on the same panel.
   function attachPopupStyle(node: HTMLElement) {
     return datePopupStyle
       ? datePopupStyle.attach(node) : connectComponentTheme(node, popupThemeStyle, ['z-index']);
@@ -502,7 +502,7 @@
     const timeMode = Boolean(time);
     const switchedEditorMode = timeMode !== previousTimeMode;
     previousTimeMode = timeMode;
-    // Context repaint не сбрасывает draft, пока value и его отображение прежние.
+    // A context repaint retains the draft while value and its display stay the same.
     if (!switchedEditorMode && mergedValue === previousMergedValue
       && (time || formatted === previousDateText)) {
       return;
@@ -662,7 +662,7 @@
     onOpenChange?.(next);
   }
 
-  /** При отмене набора событие закрытия предшествует восстановлению тегов. */
+  /** When cancelling a selection set, the close event precedes restoring the tags. */
   function dismissTimePanel(escaped: boolean) {
     if (escaped && !multipleOptions) {
       timeInteraction.trigger(0, 'esc');
@@ -706,7 +706,7 @@
     if (!time) void tick().then(resetText);
     return true;
   }
-  /** Одиночное подтверждение заменяет принятый список одной датой. */
+  /** Single-value confirmation replaces the accepted list with one date. */
   function storeDate(next: DateType | null) {
     dateValues = next ? [next] : [];
   }
@@ -749,14 +749,14 @@
     requestOpen(false);
   }
 
-  /** Кнопка OK сообщает черновик перед отправкой значения и закрытием панели. */
+  /** OK reports the draft before submitting the value and closing the panel. */
   function confirmDate() {
     const selected = draft;
     if (!selected || !valid(selected)) {
       return;
     }
 
-    // Обработчик onOk может изменить value или open в той же операции.
+    // The onOk handler can change value or open in the same operation.
     const accepted = onOk && mergedValue;
     const opened = visible;
     const retained = retainedDateSelection;
@@ -774,7 +774,7 @@
 
     requestOpen(false, { opened });
     if (calendarDate && (!preserveInvalidOnBlur || !invalid)) {
-      // При отклонении controlled value закрытие возвращает календарь к принятой дате.
+      // If the owner rejects a controlled value, closing returns the calendar to the accepted date.
       if (value !== undefined && !visible && draft !== mergedValue) {
         setDraft(mergedValue, 'date');
       }
@@ -782,7 +782,7 @@
     }
   }
 
-  /** OK получает текущий выбор, включая исходный шаблон часов в пустом поле. */
+  /** OK receives the current selection, including the starting time template for an empty field. */
   function confirmTime() {
     const opened = visible;
     if (multipleOptions) {
@@ -810,7 +810,7 @@
       (_index, all) => submitTimeSelection(all, () => commit(draft, accepted), opened));
   }
 
-  /** Публикует выбор часов перед закрытием, включая отправку из конкретного действия. */
+  /** Emits the time selection before close, including commits from a specific action. */
   function submitTimeSelection(all: boolean, submit?: () => void, opened?: boolean) {
     if (!all) {
       return;
@@ -898,7 +898,7 @@
     date: DateType,
     event: { previous: DateType; mode: DatePickerMode }
   ) {
-    // PickerPanel.triggerModeChange(viewDate) повторно задаёт view до события mode.
+    // PickerPanel.triggerModeChange(viewDate) sets the view again before the mode event.
     setDatePanel(date, 'panel', event);
     publishMode(next, picker === 'date' && providedMode === undefined ? panel : date);
   }
@@ -914,7 +914,7 @@
     text = formatPicker(date, actualLocale.locale, formats);
     dirty = true;
 
-    // Два setter'а React используют один снимок предыдущей панели.
+    // Both React setters use one snapshot of the previous panel.
     setDatePanel(date, 'panel', event);
     if (nextMode) {
       selectPanelMode(nextMode, date, event);
@@ -964,7 +964,7 @@
     setDatePanel(candidate, 'panel', picker !== 'date' || providedMode !== undefined
       ? event : undefined);
   }
-  /** Переход между уровнями панели сохраняет текущий набор выбранных периодов. */
+  /** Navigating panel levels retains the current set of selected periods. */
   function selectMultipleDate(value: DateType) {
     const event = { previous: panel, mode };
     if (mode !== picker) {
@@ -1010,7 +1010,7 @@
     dirty = true;
   }
 
-  /** Меняет черновик часов через ту же сессию подтверждения для поля и набора. */
+  /** Changes the draft time through the same confirmation session for a field and a selection set. */
   function stageTimeSelection(value: DateType) {
     if (multipleOptions) {
       const selection = multiplePicker.toggle(value);
@@ -1022,7 +1022,7 @@
     timeInteraction.trigger(0, 'panel-intermediate', [value]);
   }
 
-  /** Сохраняет снимок даты просмотра для повторного setter при переходе режима. */
+  /** Saves the view date snapshot for the second setter when changing modes. */
   function setReplacementValue(next: DateType, event = { previous: panel, mode }) {
     if (time) {
       syncTimePickerValue(next, 'panel', event);
@@ -1054,7 +1054,7 @@
     (time?.onPanelChange ?? onPanelChange)?.(date, next);
   }
 
-  /** Панель уже построила целое значение, включая точное время и календарный день. */
+  /** The panel already built the complete value, including the precise time and calendar day. */
   function selectReplacement(date: DateType) {
     const event = { previous: panel, mode };
     const terminal = event.mode === terminalMode;
@@ -1274,7 +1274,7 @@
     blurWithin(event);
   }
 
-  /** Стандартный и пользовательский редакторы используют один набор событий. */
+  /** Standard and custom editors share the same events. */
   function editorAttributes(): DatePickerEditorAttributes {
     const nativeAttributes: object = attributes;
     const describedBy = [attributes['aria-describedby'], field?.describedBy].filter(Boolean);
@@ -1317,7 +1317,7 @@
       return;
     }
     queueMicrotask(() => {
-      // Удалённый компонент уже не владеет фокусом и derived ref редактора.
+      // A removed component no longer owns focus or the derived editor ref.
       const root = rootElement;
       if (!root?.isConnected) {
         return;
@@ -1421,7 +1421,7 @@
     text = formatPicker(next, actualLocale.locale, formats);
     if (submitDateSelection(next)) closeDateSelection();
   }
-  /** Отправляет черновик пресета или авторской панели при завершении взаимодействия. */
+  /** Commits the draft from a preset or custom panel when the interaction ends. */
   function submitDraftSelection(all: boolean, accepted?: DateType | null, opened?: boolean) {
     if (all) {
       if (draft) submitDateSelection(draft, accepted);
@@ -1429,7 +1429,7 @@
     }
   }
   function submitDateSelection(next: DateType, accepted?: DateType | null) {
-    // Выбор меняет calendar до validation; popupClose управляет сессией отдельно.
+    // Selection updates the calendar before validation. popupClose manages the session separately.
     if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
     if (!fields.isValidate(next) || disabledDate?.(next, { type: picker })
       || pickerDateDisabled(next, { minDate, maxDate }, picker, actualLocale.locale)
@@ -1450,7 +1450,7 @@
     requestOpen(true);
     if (time) (time.onclick ?? time.onClick)?.(event);
   }
-  /** Переводит фокус в авторскую панель или на первую доступную ячейку времени. */
+  /** Moves focus into the custom panel or to its first available time cell. */
   function focusTimePanel() {
     if (panelReplacement || mode !== 'time') {
       const dateKey = dates.formatKey(replacementValue, 'YYYY-MM-DD', actualLocale.locale);
@@ -1466,7 +1466,7 @@
     target?.focus();
   }
 
-  /** Сохраняет клавиатурное подтверждение и доступ к панели в поле с тегами. */
+  /** Preserves keyboard confirmation and panel access in a field with tags. */
   async function multipleKeyboard(
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
   ) {
@@ -1510,7 +1510,7 @@
       (focusedCell ?? firstCell)?.focus();
     }
   }
-  /** Удаление по клавиатуре возвращает фокус полю, если кнопка исчезает. */
+  /** Keyboard removal restores focus to the field if the button disappears. */
   function removeMultipleDate(date: DateType, event?: MouseEvent) {
     if (blocked) {
       return;
@@ -1527,7 +1527,7 @@
     }
     if (refocus) input?.focus();
   }
-  /** Передаёт события набора с метаданными публичного владельца. */
+  /** Forwards selection set events with metadata from the public owner. */
   function notifyMultipleCalendar(value: DateType[], text: string[]) {
     if (timeMultipleProps) {
       timeMultipleProps.onCalendarChange?.(value, text, {});

@@ -3,7 +3,7 @@ import type { DesignTokenState } from './theme-context.types';
 import { serializeThemeVariables, snapshotThemeVariables, tokenToCSSVariable }
   from './theme-css-variables.engine';
 
-/** Table owner и private nested border независимы от общих Checkbox/Pagination namespaces. */
+/** Table owner and private nested border are independent of total Checkbox/Pagination namespaces. */
 export function getTablePrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-table' && rootPrefix === 'ant') {
     return undefined;
@@ -36,7 +36,7 @@ export function getTablePrefixCss(prefix: string, rootPrefix: string) {
   ).replace(/<\/style/gi, '<\\/style');
 }
 
-/** Восстанавливает изменённые общие токены Table после собственного CSS scope вложенного Spin. */
+/** Restores the altered total tokens Table after its own CSS scope nested Spin. */
 export function getTableSpinTheme(state: DesignTokenState, rootStyle?: string | null) {
   const declarations = (rootStyle ?? '').matchAll(/(?:^|;)\s*(--[\w-]+)\s*:/g);
   const overrides = new Set(Array.from(declarations, match => match[1]));

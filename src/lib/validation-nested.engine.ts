@@ -1,5 +1,5 @@
-// Обходит поля вложенных object и array rules. Сравнение правила и исходного значения в цепочке
-// предков прерывает циклы.
+// Bypasses the fields of nested object and array rules. Comparison of the rule and the reference
+// value in the chain of ancestors interrupts cycles.
 import type { FormValues, ValidationRule } from './validation.engine';
 import {
   formatValidationMessages, resolveValidationMessage, type ValidationMessageContext
@@ -23,7 +23,7 @@ type ValidateChildren<Values extends FormValues> = (
   key: string
 ) => Promise<ValidationMessages>;
 
-// warningOnly переводит в предупреждения также ошибки дочерних правил.
+// warningOnly also translates into warnings the errors of child rules.
 export function collectValidationMessages<Values extends FormValues>(
   rule: ValidationRule<Values>,
   own: readonly string[],
@@ -40,7 +40,7 @@ export function collectValidationMessages<Values extends FormValues>(
   };
 }
 
-// Возвращает собственное поле контейнера, включая пустую строку и числовой ноль.
+// Returns the container's own field, including an empty string and a numerical zero.
 function ownValue(value: unknown, key: string): unknown {
   if (value == null) {
     return;
@@ -49,8 +49,8 @@ function ownValue(value: unknown, key: string): unknown {
   return Object.hasOwn(source, key) ? source[key] : undefined;
 }
 
-// Запускает explicit fields перед defaultField массива. Порядок сообщений explicit fields
-// определяется завершением проверок.
+// Starts explicit fields before defaultField array. The order of messages of explicit fields is
+// determined by the completion of checks.
 export async function validateNestedRule<Values extends FormValues>(
   value: unknown,
   original: unknown,
@@ -88,19 +88,19 @@ export async function validateNestedRule<Values extends FormValues>(
   }
   for (const [key, child] of Object.entries(rule.fields ?? {})) fields.set(key, child);
 
-  // Schema.fields source сообщает результаты по завершении child promises.
+  // Schema.fields source reports the results at the end of the child.
   const children: ValidationMessages[] = [];
   const checks = [...fields].map(validateField);
   await Promise.all(checks);
 
   if (rule.type === 'array' && rule.defaultField && Array.isArray(value)
     && !own.length && !children.some(child => child.errors.length)) {
-    // Rc-form defaultField обходит все элементы после explicit fields; sparse holes не являются данными.
+    // Rc-form defaultField bypasses all elements after fields; sparse holes are not data.
     const keys = Object.keys(value).filter(key => /^(?:0|[1-9]\d*)$/.test(key)
       && Number(key) < value.length);
     const checks = keys.map(key => {
       const item = ownValue(value, key);
-      // Правило 2: ветка проверяет defaultField. Значение читается заново для каждого элемента.
+      // Rule 2: The branch checks defaultField. The value is re-read for each element.
       return validate(item, [rule.defaultField!], current, key);
     });
     const defaults = await Promise.all(checks);
@@ -109,7 +109,7 @@ export async function validateNestedRule<Values extends FormValues>(
 
   return collectValidationMessages(rule, own, children);
 
-  // Записывает результат поля по завершении, сохраняя порядок готовности сообщений.
+  // Writes the result of the field upon completion, maintaining the order of readiness of messages.
   async function validateField(
     [key, child]: [string, ValidationRule<Values> | readonly ValidationRule<Values>[]]
   ) {

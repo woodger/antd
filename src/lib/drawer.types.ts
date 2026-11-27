@@ -11,13 +11,13 @@ export type DrawerMotionName = CssMotionName;
 export type DrawerMotionEvent = CssMotionEvent;
 export type DrawerMotionStyle = CssMotionStyle;
 
-/** CSS-фазы Drawer. Обработчики получают секцию панели или саму маску. */
+/** CSS-phases Drawer. The handlers get a panel section or a mask itself. */
 export interface DrawerMotionConfig extends CssMotionConfig<HTMLDivElement> {
-  /** Для maskMotion готовит скрытый узел при смонтированном Drawer. */
+  /** For maskMotion prepares a hidden node at the mounted Drawer. */
   forceRender?: boolean;
-  /** Для maskMotion определяет удаление узла после скрытия. @defaultValue true */
+  /** For maskMotion determines the removal of the node after hiding. @defaultValue true */
   removeOnLeave?: boolean;
-  /** Для maskMotion оформляет оставшийся узел после скрытия. */
+  /** For maskMotion makes the remaining node after hiding. */
   leavedClassName?: string;
 }
 
@@ -30,16 +30,16 @@ export interface DrawerMaskConfig {
 export type DrawerMask = boolean | DrawerMaskConfig;
 
 export interface DrawerFocusableConfig {
-  /** Удерживает фокус в открытой панели. По умолчанию действует при включённой маске. */
+  /** Keeps the focus in the open panel. By default it acts when the mask is included. */
   trap?: boolean;
-  /** Возвращает фокус к исходному элементу после закрытия. @defaultValue true */
+  /** Restores focus to the original element after closing. @defaultValue true */
   focusTriggerAfterClose?: boolean;
 }
 
 export type DrawerContent = Exclude<RenderEmptyContent, undefined>;
 export type DrawerCloseIcon = DrawerContent;
 
-/** Кнопка закрытия и её доступное имя. Сторона учитывает направление текста. */
+/** Closing button and its available name. The Party shall take into account the direction of the text. */
 export interface DrawerClosableConfig extends AriaAttributes {
   closeIcon?: DrawerCloseIcon;
   disabled?: boolean;
@@ -66,27 +66,27 @@ export interface DrawerSemanticSlots {
 export type DrawerSemantic = DrawerSemanticSlots
   | ((info: { props: DrawerProps; }) => DrawerSemanticSlots | undefined);
 
-/** Настройки панели, маски и фокуса, передаваемые Drawer через ConfigProvider. */
+/** Drawer panel, mask, and focus settings supplied through ConfigProvider. */
 export interface DrawerConfig extends Pick<
   DrawerProps, 'classNames' | 'styles' | 'closable' | 'closeIcon' | 'mask' | 'focusable'
 > {
-  /** Дополнительный класс секции внутри оболочки Drawer. */
+  /** Additional class of the section inside the shell Drawer. */
   class?: string;
-  /** Inline CSS секции, переопределяемый через styles.section. */
+  /** Inline CSS sections, redefined through styles.section. */
   style?: string;
 }
 
 export interface DrawerResizableConfig {
-  /** Текущий размер в пикселях при захвате границы панели. */
+  /** Current size in pixels when capturing the panel boundary. */
   onResizeStart?: (size: number) => void;
-  /** Предложенный размер. При заданном size его может принять владелец. */
+  /** Suggested size. With a given size, it can be accepted by the owner. */
   onResize?: (size: number) => void;
-  /** Фактический размер панели в пикселях при отпускании указателя. */
+  /** The actual size of the panel in the pixels when the pointer is released. */
   onResizeEnd?: (size: number) => void;
 }
 
 export interface DrawerPushConfig {
-  /** Смещение панели в пикселях. Без distance наследуется смещение родительского Drawer. */
+  /** Displacement of the panel in pixels. Disadvantage of the parent record Drawer is inherited. */
   distance?: number | string;
 }
 
@@ -95,80 +95,79 @@ type DrawerPanelEvents = Pick<
   'onclick' | 'onmouseenter' | 'onmouseover' | 'onmouseleave' | 'onkeydown' | 'onkeyup' | 'onfocusin'
 >;
 
-/** Выдвижная панель с управлением open, фокусом и жизненным циклом children. */
+/** Sliding drawer with controlled open state, focus, and child lifecycle. */
 export interface DrawerProps extends AriaAttributes, DrawerPanelEvents {
-  /** Локальный CSS-префикс Drawer и его частей; пустая строка наследует ConfigProvider. */
+  /** Local CSS-prefix Drawer and parts thereof; empty line inherits ConfigProvider. */
   prefixCls?: string;
-  /** Поддерживает bind:open. */
+  /** Maintenances bind:open. */
   open?: boolean;
   title?: DrawerContent;
   children?: Snippet;
   extra?: DrawerContent;
   footer?: DrawerContent;
-  /** Подменяет тело панели анимированным Skeleton до готовности children. */
+  /** Replacing the panel body with the animated Skeleton until the children are ready. */
   loading?: boolean;
-  /** Получает секцию с заголовком, телом и подвалом для обёртки или замены. */
+  /** Receives a section with a header, body and basement for wrapping or replacement. */
   drawerRender?: Snippet<[section: Snippet]>;
-  /** Bind:panelRef получает секцию после mount и очищается при её удалении. */
+  /** Bind:panelRef receives the section after mount and is cleaned when it is removed. */
   panelRef?: HTMLDivElement;
   /** @defaultValue 'right' */
   placement?: DrawerPlacement;
   /** @defaultValue 'default' */
   size?: DrawerSize;
-  /** Размер без заданного size и до первого изменения размера. @defaultValue 378 */
+  /** Size without a given size and until the first size change. @defaultValue 378 */
   defaultSize?: DrawerSize;
-  /** Максимальный предложенный размер при перетаскивании. */
+  /** The maximum size offered when dragging. */
   maxSize?: number;
-  /** Показывает границу для изменения размера по оси placement. */
+  /** Showing the boundary to change the size on the placement axis. */
   resizable?: boolean | DrawerResizableConfig;
-  /** Смещение при открытии вложенного Drawer. @defaultValue { distance: 180 } */
+  /** Displacement at the opening of the invested Drawer. @defaultValue { distance: 180 } */
   push?: boolean | DrawerPushConfig;
-  /** Числовой слой панели и база для вложенных popup. */
+  /** Numerical panel layer and base for nested popups. */
   zIndex?: number;
   /** @defaultValue true */
   closable?: DrawerClosable;
-  /** False и null скрывают кнопку без явного closable. */
+  /** False and null hide the button without explicit closable. */
   closeIcon?: DrawerCloseIcon;
   /** @defaultValue true */
   keyboard?: boolean;
-  /** Маска, размытие и закрытие при полном нажатии на фон. @defaultValue true */
+  /** Mask, blush and closing with a full press on the background. @defaultValue true */
   mask?: DrawerMask;
-  /** Дополнительный класс маски вместе с classNames.mask. */
+  /** Additional mask class together with classNames.mask. */
   maskClassName?: string;
   focusable?: DrawerFocusableConfig;
-  /** Передаёт фокус панели при открытии. @defaultValue true */
+  /** Moves focus into the panel when it opens. @defaultValue true */
   autoFocus?: boolean;
   /** @defaultValue false */
   forceRender?: boolean;
   /** @defaultValue false */
   destroyOnHidden?: boolean;
   /**
-   * Undefined наследует ConfigProvider; false оставляет DOM на месте.
-   * Global getter получает document.body.
+   * Undefined inherits ConfigProvider; false leaves DOM in place. Global getter gets document.body.
    */
   getContainer?: GetContainer;
   onClose?: (event: Event) => void;
-  /** После завершения анимации видимости, перед удалением скрытого содержимого. */
+  /** Upon completion of the visibility animation, before removing the hidden content. */
   afterOpenChange?: (open: boolean) => void;
-  /** Заменяет штатный переход панели. Фабрика получает текущее placement. */
+  /** Replaces the panel's built-in transition. The factory receives the current placement. */
   motion?: DrawerMotionConfig | ((placement: DrawerPlacement) => DrawerMotionConfig);
-  /** Независимый CSS-переход маски. */
+  /** Independent CSS-transition of the mask. */
   maskMotion?: DrawerMotionConfig;
   id?: string;
-  /** Краткое доступное описание диалога. */
+  /** Briefly available description of the dialogue. */
   'aria-description'?: string | null;
-  /** Роль нативного dialog. */
+  /** Role of native dialog. */
   role?: HTMLAttributes<HTMLDialogElement>['role'];
-  /** Атрибуты выдвижной оболочки панели. */
+  /** Attributes of the retractable shell of the panel. */
   [attribute: `data-${string}`]: string | number | boolean | null | undefined;
-  /** Класс корневого dialog. Для секции используйте classNames.section. */
+  /** Root dialog class. For the section, use classNames.section. */
   class?: string;
-  /** Inline CSS корневого dialog. Для секции используйте styles.section. */
+  /** Inline CSS root dialog. For the section, use styles.section. */
   style?: string;
   rootClassName?: string;
-  /** Дополнительный слой inline CSS поверх styles.root и style. */
+  /** Extra layer inline CSS on top of styles.root and style. */
   rootStyle?: string;
   classNames?: DrawerSemantic;
-  /** Каждый слот принимает строку CSS declarations. */
+  /** Each slot accepts string CSS declarations. */
   styles?: DrawerSemantic;
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Связывает выделение слова у caret с предложениями и вставкой mention. Клавиатура сохраняет
-  // управление текущим редактором.
+  // Connects the word at the caret to suggestions and mention insertion. The current editor keeps
+  // keyboard control.
   import { onDestroy, tick, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
@@ -228,8 +228,8 @@
   let popupContainer = $state<HTMLElement | ShadowRoot>();
   let popupConnection: PopupConnection | undefined;
   const popupShown = $derived(visible && shown);
-  // KeywordTrigger создаётся на каждое появление. Пустая скрытая оболочка без motion
-  // сохраняется для текущих нативных потребителей.
+  // A new KeywordTrigger is created each time it appears. Current native consumers retain the empty
+  // hidden wrapper when motion is off.
   const renderPopup = $derived(mounted && (visible || !transitionName));
   const popupMotion = useMenuMotion(() => root, () => popup, () => ({
     motion: {
@@ -280,7 +280,7 @@
   }
   $effect.pre(() => {
     const open = visible;
-    // Как rc-trigger: getter с параметром ждёт prefix ref; нулевая арность разрешает undefined.
+    // As in rc-trigger, a getter with a parameter waits for the prefix ref. A zero-arity getter can receive undefined.
     if (!getPopupContainer) {
       popupContainer = undefined;
     }
@@ -312,8 +312,8 @@
     previousAffix = affix;
     previousCounterVisible = showCounter;
     if (feedbackReplacesEditor || counterReplacesEditor) {
-      // При смене обёртки прежняя каретка больше не служит якорем списка.
-      // Постоянная обёртка allowClear сохраняет textarea при смене feedback.
+      // Changing the wrapper invalidates the old caret anchor. The persistent allowClear wrapper
+      // retains the textarea when feedback changes.
       untrack(() => {
         if (feedbackReplacesEditor) editorGeneration++;
         focused = false;
@@ -426,12 +426,12 @@
     };
   });
 
-  /** Обновляет координаты до применения пользовательского transform. */
+  /** Updates coordinates before applying the custom transform. */
   function alignPopupBeforeAppear() {
     popupConnection?.forceAlign();
   }
 
-  /** Явное direction выбирает край измеренного префикса независимо от направления текста. */
+  /** Explicit direction chooses the measured prefix edge independently of text direction. */
   function resolvePopupAnchor(rect: DOMRect) {
     if (!direction || !prefixElement) {
       return rect;
@@ -442,7 +442,7 @@
     return new DOMRect(left, rect.top, 0, rect.height);
   }
 
-  /** RcMentions передаёт resize обёртки редактору, пока слот textarea его не задал. */
+  /** RcMentions passes the wrapper's resize setting to the editor unless the textarea slot overrides it. */
   function resolveTextareaStyle(wrapper: string | undefined, leaf: string | undefined) {
     if (!wrapper) {
       return leaf;
@@ -525,7 +525,7 @@
   }
 
   async function choose(option: MentionsOption) {
-    // Загрузка подменяет варианты редактора, но оставляет выбор из пользовательского меню.
+    // Loading replaces the editor's options while leaving selection through the custom menu available.
     if (blocked || readonly || option.disabled || !editor) {
       return;
     }
@@ -554,7 +554,7 @@
   }
   function handleKeydown(event: EditorEvent<KeyboardEvent>) {
     const { key, isComposing } = event;
-    // RcInput вызывает onPressEnter перед onKeyDown, когда список закрыт.
+    // RcInput calls onPressEnter before onKeyDown when the list is closed.
     if (key === 'Enter' && !isComposing && !visible && !blocked) {
       onPressEnter?.(event);
     }
@@ -592,7 +592,7 @@
   }
   function handleKeyup(event: EditorEvent<KeyboardEvent>) {
     const { currentTarget, key } = event;
-    // Поиск использует каретку на момент keyup, даже если обработчик пользователя её меняет.
+    // Search uses the caret position at keyup even if the consumer handler moves it.
     const beforeCaret = currentTarget.value.slice(0, currentTarget.selectionStart);
     const found = getMentionMeasure(beforeCaret, prefixes);
 
@@ -655,7 +655,7 @@
     if (blurTimer !== undefined) clearTimeout(blurTimer);
     focused = true;
   }
-  /** Первый список сохраняет прежние ID. Живые копии сохраняют назначенный им суффикс. */
+  /** The first list keeps the previous IDs. Live copies retain their assigned suffixes. */
   function claimBaseMenuId() {
     if (baseMenuIdClaimed) {
       return;
@@ -667,7 +667,7 @@
     };
   }
 
-  /** ARIA получает списки в порядке подключения, включая поздно отрисованные копии. */
+  /** ARIA lists are ordered by attachment, including copies rendered later. */
   function registerListbox(menu: MentionsListboxRef) {
     listboxes = [...listboxes, menu];
     return () => {
@@ -788,7 +788,7 @@
     ]}>
   {#snippet editorControl()}
     {@const hasNativeDefault = untrack(() => count !== undefined && typeof document !== 'undefined')}
-    <!-- RcInput задаёт DOM-свойство defaultValue перед value, сохраняя начальную позицию каретки. -->
+    <!-- RcInput sets the DOM property defaultValue before value to preserve the initial caret position. -->
     <textarea
       {...(hasNativeDefault ? { defaultValue: text } : {})}
       {...attributes}

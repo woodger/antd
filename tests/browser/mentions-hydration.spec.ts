@@ -40,7 +40,7 @@ test.afterAll(async () => {
   }
 });
 
-/** Устанавливает SSR HTML до загрузки кода гидратации. */
+/** Sets SSR HTML until the hydration code is downloaded. */
 async function prepareFixture(page: Page, profile: string) {
   await page.goto(`/select-components-hydration.html?mentions-hydration=${profile}`);
   const host = page.locator('#root');
@@ -58,7 +58,7 @@ async function prepareFixture(page: Page, profile: string) {
   return host;
 }
 
-/** Запускает строгое подключение без восстановления разметки. */
+/** Starts a strict connection without restoring the markings. */
 async function activateFixture(page: Page, host: Locator) {
   await page.addScriptTag({ type: 'module', url: '/mentions-hydration.client.ts' });
   await expect(host).toHaveAttribute('data-hydration-ready', 'true');
@@ -66,7 +66,7 @@ async function activateFixture(page: Page, host: Locator) {
   await expect(host).toHaveAttribute('data-hydrated', 'true');
 }
 
-/** Сравнивает состояние textarea, включая направление выделения и порядок событий. */
+/** Compares the textarea state, including the direction of selection and the order of events. */
 async function expectSnapshot(editor: Locator, original: EditorHandle, expected: Sample) {
   const { errors, ...state } = expected;
   expect(errors).toEqual([]);
@@ -104,7 +104,7 @@ for (const { profile, before, hydrated, edited } of profiles) {
 
     await activateFixture(page, host);
     await expectSnapshot(editor, original, hydrated);
-    // press() сам фокусирует поле, в том числе в сценарии без фокуса при hydration.
+    // press() itself focuses the field, including in the scenario without focus at hydration.
     await editor.press('X');
 
     await expectSnapshot(editor, original, edited);

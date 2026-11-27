@@ -61,7 +61,7 @@ export function verifySelectSurfaceHydrationPoint(
   verifyBorder(actual.border.root, original.border.root, `${label}/root`);
   verifyBorder(actual.border.input, original.border.input, `${label}/input`);
   if (entry.control === 'select' && !entry.producers && !original.owner.open && original.border.popup) {
-    // Сохраняем прежний default-popup unmount, не меняя Source историю root/input или вновь открытого popup.
+    // We save the previous default-popup unmount without changing the Source history of root/input or the newly opened popup.
     assert.equal(actual.border.popup, null, `${label} existing Native default popup lifetime`);
   }
   else {

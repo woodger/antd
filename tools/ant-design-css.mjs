@@ -1,11 +1,11 @@
-// Извлекает CSS из закреплённого архива Ant Design. Сначала проверяет все
-// выбранные рецепты, затем печатает, сравнивает или записывает результаты.
+// Extracts CSS from the pinned Ant Design archive. Validates every selected recipe before printing,
+// comparing, or writing the results.
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { projectPath, readJson, writeAtomic, registryFile } from './ant-design-common.mjs';
 import { verifyArchive, archiveEntry, extractCss } from './ant-design-css-core.mjs';
 
-// Только отсутствие локального архива допускает загрузку. Другие ошибки сохраняются.
+// Downloads only when the local archive is missing. Other errors propagate.
 function readLocalArchive(path) {
   return readFile(path).catch(error => {
     if (error.code !== 'ENOENT') {
@@ -14,7 +14,7 @@ function readLocalArchive(path) {
   });
 }
 
-// Готовит результат одного рецепта, проверяя путь и признаки закреплённого архива.
+// Prepares one recipe result and verifies its path and pinned archive metadata.
 function prepareCssOutput(css, recipe, upstream, root) {
   const extension = recipe.format === 'module' ? '.css.js' : '.css';
   if (!recipe.output.startsWith('src/lib/vendor/') || !recipe.output.endsWith(extension)) {
@@ -31,7 +31,7 @@ function prepareCssOutput(css, recipe, upstream, root) {
   return { recipe, result, output };
 }
 
-// Описывает проверенный CSS отдельно от stdout, где может находиться сам CSS.
+// Reports verified CSS separately from stdout, which may carry the stylesheet.
 function writeCssStatus(stderr, recipe, result, check, write) {
   const ruleCount = result.rules;
   const keyframeCount = result.keyframes.length;
@@ -39,7 +39,7 @@ function writeCssStatus(stderr, recipe, result, check, write) {
   stderr.write(`${recipe.id}: ${ruleCount} rules, ${keyframeCount} keyframes; SHA-256 verified${status}\n`);
 }
 
-// Проверяет параметры до чтения архива, сохраняя режим --list без доступа к нему.
+// Checks arguments before reading the archive. --list can run without it.
 export async function runCss(
   { recipe: id, list, check, write, fetch: allowFetch, archive: supplied },
   { root, stdout, stderr, fetch: fetchArchive }

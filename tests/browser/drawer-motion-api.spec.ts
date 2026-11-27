@@ -8,27 +8,27 @@ interface Lifecycle {
   afterOpen: boolean[];
 }
 
-/** Открывает отдельный экземпляр для каждого набора настроек. */
+/** Opens a separate instance for each set of settings. */
 async function choose(page: Page, profile: string) {
   await page.goto('/?fixture=drawer-motion-api');
   await page.getByRole('combobox', { name: 'Drawer motion profile' }).selectOption(profile);
   return page.locator('#motion-root');
 }
 
-/** Передаёт open и другие props от владельца, включая управление при активной модальности. */
+/** Transmits open and other props from the owner, including management with active modality. */
 async function owner(page: Page, name: string) {
   await page.locator(`#motion-${name}`).evaluate(node => {
     if (node instanceof HTMLButtonElement) node.click();
   });
 }
 
-/** Получает снимок наблюдаемых фаз и уведомлений. */
+/** Receives a snapshot of observed phases and notifications. */
 async function lifecycle(page: Page): Promise<Lifecycle> {
   const output = await page.locator('#motion-events').textContent();
   return JSON.parse(output ?? '{}');
 }
 
-/** Измеряет DOM завершившейся маски и сопоставляет узел с первым показом. */
+/** Measures DOM of the completed mask and compares the knot with the first impression. */
 async function maskState(dialog: Locator, original?: ElementHandle<Element>) {
   return dialog.evaluate((node, before) => {
     const mask = node.querySelector<HTMLDivElement>(':scope > [data-ant-drawer-mask]');

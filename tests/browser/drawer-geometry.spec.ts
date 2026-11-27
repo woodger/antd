@@ -5,20 +5,20 @@ import reference from './fixtures/ant-design-drawer-geometry-reference.json' wit
 const handle = '#geometry-drawer-a > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger]';
 const wrapper = '#geometry-drawer-a > [data-ant-drawer-content-wrapper]';
 
-/** Выбирает профиль до открытия модального диалога. */
+/** Select a profile before opening the modal dialog. */
 async function select(page: Page, profile: string) {
   await page.goto('/?fixture=drawer-geometry');
   await page.getByRole('combobox', { name: 'Drawer profile' }).selectOption(profile);
 }
 
-/** Задаёт открытость владельца без взаимодействия с инертным фоном. */
+/** Specifies the openness of the owner without interaction with the inert background. */
 async function setOwner(page: Page, action: string) {
   await page.getByTestId(action).evaluate(button => {
     if (button instanceof HTMLButtonElement) button.click();
   });
 }
 
-/** Измеряет wrapper и handle через DOM. Пустой SSR shell проецируется в отсутствие панели. */
+/** Measures the wrapper and the handle through DOM. Empty SSR shell is projected in the absence of a panel. */
 async function panels(page: Page, phase = false) {
   return page.evaluate(phase => ['a', 'b', 'c'].map(id => {
     const dialog = document.getElementById(`geometry-drawer-${id}`);
@@ -50,7 +50,7 @@ async function panels(page: Page, phase = false) {
   }), phase);
 }
 
-/** Начинает реальный drag в середине видимого handle и сохраняет его pointerId. */
+/** Begins a real drag in the middle of the visible handle and retains it pointerId. */
 async function begin(page: Page) {
   const element = page.locator(handle);
   await expect(element).toBeVisible();
@@ -72,7 +72,7 @@ async function begin(page: Page) {
   return { x, y, pointerId };
 }
 
-/** Отправляет разовый выход указателя за viewport с идентичностью начатого жеста. */
+/** Sends a one-time pointer exit for viewport with the identity of the gesture started. */
 async function moveBeyondViewport(page: Page, point: { x: number; y: number; pointerId: number; }) {
   await page.evaluate(({ x, y, pointerId }) => {
     document.dispatchEvent(new PointerEvent('pointermove', {
@@ -81,7 +81,7 @@ async function moveBeyondViewport(page: Page, point: { x: number; y: number; poi
   }, point);
 }
 
-/** Останавливает текущую анимацию уровня Drawer для проверки прерванного leave. */
+/** Stops the current level Drawer animation to check the interrupted leave. */
 async function pauseLeave(page: Page) {
   await expect.poll(() => page.locator(wrapper).evaluate(node => {
     const animations = node.getAnimations();
@@ -137,7 +137,7 @@ for (const { profile, frames } of reference.cases) {
 
       const expected = [...frame.panels];
       if (profile.name === 'push-two-children' && action === 'close:b') {
-        // Source сбрасывает push при закрытии любого ребёнка. Панель c ещё открыта.
+        // Source resets the push when any child is closed. The panel c is still open.
         const twoOpen = frames.find(frame => frame.action === 'open:c');
         expect(twoOpen).toBeDefined();
         expected[0] = twoOpen?.panels[0] ?? null;

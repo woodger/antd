@@ -4,18 +4,18 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableColumnDefaultsFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-column-defaults-reference.json';
 
-/** Извлекает атрибут из одной открывающей метки стенда. */
+/** Extracts an attribute from a single fixture opening tag. */
 function attribute(markup: string, name: string) {
   return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Читает записанный сервером inline style до измерений браузером. */
+/** Reads server-written inline styles before browser measurements. */
 function styleValue(markup: string, name: string) {
   const style = attribute(markup, 'style');
   return style?.match(new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`))?.[1].trim() ?? null;
 }
 
-/** Сопоставляет SSR-ячейки с данными эталона и исключает закрытое меню фильтра. */
+/** Matches SSR cells to the reference data and excludes the closed filter menu. */
 function cells(markup: string) {
   return Array.from(markup.matchAll(/<(td|th)\b([^>]*)>([\s\S]*?)<\/\1>/g),
     ([, , attrs, html]) => {

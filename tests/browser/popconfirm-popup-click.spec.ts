@@ -5,7 +5,7 @@ import { expect, test } from './test';
 test.use({ reducedMotion: 'reduce' });
 const [defaultPortal] = reference.cases;
 
-/** Выбирает тот же способ размещения, который использован в исходном замере. */
+/** Choose the same method of placement that is used in the original measurement. */
 async function openProfile(page: Page, profile: string) {
   await page.goto('/?fixture=popconfirm-popup-click');
   await page.getByLabel('Popup click profile').selectOption(profile);
@@ -36,7 +36,7 @@ for (const sample of reference.cases) {
     await popup.getByRole('button', { name: 'Confirm action' }).press('Enter');
     await expect(popup).toBeHidden();
 
-    // В общей панели Source теряет onPopupClick; Native доставляет его текущему владельцу.
+    // In the general panel Source loses onPopupClick; Native delivers it to the current owner.
     const expected = sample.shared ? defaultPortal.events : sample.events;
     await expect(events).toHaveText(JSON.stringify(expected));
   });

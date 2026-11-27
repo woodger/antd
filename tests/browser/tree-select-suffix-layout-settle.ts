@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
 
-/** Как Source capture: несколько совпавших кадров после ResizeObserver/React layout очередей. */
+/** As a Source capture: a couple of successive shots after the ResizeObserver/React layout queues. */
 export async function settleTreeSelectSuffixLayout<View>(page: Page, read: () => Promise<View>) {
   let previous = '', stable = 0;
   for (let attempt = 0; attempt < 40; attempt++) {

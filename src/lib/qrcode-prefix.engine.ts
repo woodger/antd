@@ -1,6 +1,6 @@
 import template from './vendor/qrcode-prefix.css.js';
 
-/** Root/borderless и CSS-variable defaults изолированы от соседних QRCode. */
+/** Root/borderless and CSS-variable defaults are isolated from neighboring QRCode. */
 export function getQRCodePrefixCss(prefix: string) {
   if (prefix === 'ant-qrcode') {
     return undefined;
@@ -8,7 +8,7 @@ export function getQRCodePrefixCss(prefix: string) {
 
   return template
     .replace(/\.ant-qrcode([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'
-      // Legacy theme.css сохраняет адаптивный color-mix; fallback module не перекрывает его.
+      // Legacy theme.css preserves adaptive color-mix. The fallback module leaves it in place.
       ? ':where(.ant-qrcode-css-var[data-ant-qrcode-prefix])'
       : `.${prefix}${suffix}${!suffix || suffix === '-borderless'
         ? ':where([data-ant-qrcode-prefix])' : ''}`)

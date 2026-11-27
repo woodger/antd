@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts" generics="RecordType extends object = TransferItem">
-  // Управляет выбором, поиском и перемещением между двумя списками. Каждый список получает
-  // собственный вид текущих ключей.
+  // Manages selection, search, and transfer between two lists. Each list sees its own view of the
+  // current keys.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getTransferPrefixCss } from './transfer-prefix.engine';
@@ -34,7 +34,7 @@
   const field = useFormField(() => nativeElement);
   const itemStatus = useFormItemStatusContext();
   const feedback = useFormFeedback();
-  // Служебные checkbox/search не являются отдельными полями внешнего FormItem.
+  // Utility checkboxes and search controls do not register as separate fields in the outer FormItem.
   provideFormField(field ? {
     get disabled() {
       return field.disabled;

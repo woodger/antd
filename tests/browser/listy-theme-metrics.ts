@@ -1,5 +1,5 @@
 export function snapshotListyTheme() {
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function properties(node: Element | null, names: string[]) {
     if (!node) {
       return null;

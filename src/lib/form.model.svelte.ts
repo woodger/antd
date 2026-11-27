@@ -1,5 +1,5 @@
-// Владеет значениями, регистрацией полей, метаданными и submit одной Form.
-// Ревизия значений и номера проверок раздельно защищают от устаревших ответов.
+// Owns values, field registration, metadata submitted and one Form. The revision of values and
+// verification numbers separately protect against outdated responses.
 import { tick, untrack } from 'svelte';
 import { FormValidationError } from './FormValidationError';
 import { setFormHooks, type FormFieldRegistration } from './form-internal';
@@ -36,17 +36,17 @@ export type SubmissionResult<Values extends FormValues> =
   | { status: 'failed'; error: unknown; }
   | { status: 'busy'; };
 
-/** Все флаги по умолчанию false; возвращаемый snapshot сохраняет прежний полный объём values. */
+/** All flags by default false; the returned snapshot preserves the same full volume values. */
 export interface FormValidateOptions {
-  /** Не меняет errors/warnings/touched/validating и не помечает поле проверенным для dirty. */
+  /** Does not change errors/warnings/touched/validating and does not mark the field tested for dirty. */
   validateOnly?: boolean;
-  /** Проверяет также зарегистрированные поля, чей путь начинается с выбранного имени. */
+  /** Verifies also registered fields whose path begins with the chosen name. */
   recursive?: boolean;
-  /** Проверяет изменённые, touched, уже запущенные обычной validation поля и заданные defaults. */
+  /** Checks for changed or touched fields, fields already validated normally, and fields with supplied defaults. */
   dirty?: boolean;
 }
 
-/** Состояние конкретного binding; name сохраняет типы сегментов пути. */
+/** The binding state; the name retains the path segment types. */
 export interface FormFieldMeta {
   touched: boolean;
   validating: boolean;
@@ -54,21 +54,21 @@ export interface FormFieldMeta {
   warnings: readonly string[];
   name: readonly (string | number)[];
   /**
-   * Обычная validation завершена либо значение изменено через setFieldsValue;
-   * setFields.validating задаёт флаг вручную, validateOnly не влияет.
+   * Ordinary validation has been completed or the value has been changed through setFieldsValue;
+   * setFields.validating sets the flag manually, validateOnly does not affect.
    */
   validated: boolean;
 }
 
-/** Null передаётся для явно выбранного пути без известного binding. */
+/** Passes null for an explicitly selected path with no known binding. */
 export type FormFilterFunc = (meta: FormFieldMeta | null) => boolean;
 
-/** Фильтр полей для getFieldsValue; корни FormList заполняются отдельно от фильтра. */
+/** Filter fields for getFieldsValue; roots FormList are filled separately from the filter. */
 export interface FormGetFieldsValueConfig {
   filter?: FormFilterFunc;
 }
 
-/** Отсутствующие свойства сохраняются; metadata обновляет только известные bindings. */
+/** Missing properties are saved; metadata updates only known bindings. */
 export interface FormFieldData {
   name: NamePath;
   value?: unknown;
@@ -76,56 +76,56 @@ export interface FormFieldData {
   validating?: boolean;
   errors?: readonly string[];
   warnings?: readonly string[];
-  /** Принимается, как в upstream, но вычисляемый validated не заменяет. */
+  /** Accepted as in upstream, but computed validated does not replace. */
   validated?: boolean;
 }
 
-/** Реактивные значения, validation и submit одной формы; экземпляр не разделяется глобально. */
+/** Reactive values, validation and submit one form; the instance is not shared globally. */
 export interface FormInstance<Values extends FormValues> {
   readonly values: Readonly<Values>;
-  /** Прежняя проекция ошибок верхнего уровня; для вложенных полей используйте getFieldsError. */
+  /** The previous projection of top-level errors; for nested fields, use getFieldsError. */
   readonly errors: Readonly<FieldErrors<Values>>;
   readonly isSubmitting: boolean;
   readonly submissionError: unknown;
   getFieldValue<const Path extends NamePath>(name: Path): NamePathValue<Values, Path>;
-  /** Значения известных bindings; форма результата может быть частичной, как в upstream. */
+  /** Values of known bindings; the form of the result can be partial, as in upstream. */
   getFieldsValue(): Values;
-  /** True без фильтра возвращает весь store; пути выбирают binding и его потомков. */
+  /** True without a filter returns the entire store; the paths are chosen binding and its descendants. */
   getFieldsValue(names: readonly NamePath[] | true, filter?: FormFilterFunc): Values;
   getFieldsValue(config: FormGetFieldsValueConfig): Values;
-  /** Возвращает ошибки полей модели либо явно перечисленных путей. */
+  /** Brings back the errors of the fields of the model or the clearly listed paths. */
   getFieldsError(names?: readonly NamePath[]): FieldError[];
   getFieldError(name: NamePath): readonly string[];
-  /** Предупреждения warningOnly не входят в errors и не блокируют submit. */
+  /** Warnings warningOnly are not included in errors and do not block. */
   getFieldWarning(name: NamePath): readonly string[];
   /**
-   * Опубликованный ref, native element либо стабильный handle смонтированного control.
-   * Тип Instance задаётся вызывающей стороной; до mount и после удаления — undefined.
+   * Published ref, native element or a stable handle mounted control. The Instance type is
+   * specified by the defiant side; before mount and after removal - undefined.
    */
   getFieldInstance<Instance = unknown>(name: NamePath): Instance | undefined;
-  /** Делегирует focus ref компонента; без ref использует связанный native id. */
+  /** Delegates focus ref component; without ref uses associated native id. */
   focusField(name: NamePath): void;
-  /** Прокручивает корень ref либо control с native id; неизвестный путь ничего не делает. */
+  /** Scrolls to the ref root or the control with a native id. Unknown paths have no effect. */
   scrollToField(name: NamePath, options?: FormScrollOptions): void;
-  /** Учитывает само поле и известных модели потомков; пустой путь проверяет всю модель. */
+  /** Takes into account the field itself and the well-known models of the descendants; an empty path checks the whole model. */
   isFieldTouched(name: NamePath): boolean;
-  /** Без имён: любое touched-поле; true требует все bindings, кроме корней FormList. */
+  /** No names: any touch-field; true requires all bindings, except the roots of FormList. */
   isFieldsTouched(allTouched?: boolean): boolean;
-  /** Для allTouched=true каждый выбранный префикс должен содержать хотя бы одно touched-поле. */
+  /** For allTouched=true, each selected prefix must contain at least one huge field. */
   isFieldsTouched(names?: readonly NamePath[], allTouched?: boolean): boolean;
   isFieldValidating(name: NamePath): boolean;
-  /** Есть ли видимая validation; имена совпадают точно, без автоматического включения потомков. */
+  /** Is there visible validation; the names coincide exactly, without automatically turning on the offspring. */
   isFieldsValidating(names?: readonly NamePath[]): boolean;
   isFieldRequired(name: NamePath): boolean;
   setFieldValue<const Path extends NamePath>(name: Path, value: NamePathValue<Values, Path>): void;
-  /** Объединяет plain objects, заменяет массивы и очищает ошибки изменённых полей. */
+  /** Combines plain objects, replaces arrays and clears the errors of changed fields. */
   setFieldsValue(next: PartialFormValues<Values>): void;
-  /** Применяет записи по порядку, не запускает validation; value работает и без binding. */
+  /** Applies records in order, does not start validation; value works and without binding. */
   setFields(fields: readonly FormFieldData[]): void;
   touchField(name: NamePath): void;
   /**
-   * Без имён сбрасывает всю модель; [] ничего не меняет, metadata выбирается точными путями.
-   * Содержимое выбранных UI bindings пересоздаётся; соседи сохраняют DOM и metadata.
+   * Unnamed resets the whole model; [] doesn't change anything, metadata is chosen in exact ways.
+   * The contents of the selected UI bindings are recreated; the neighbors save DOM and metadata.
    */
   resetFields(names?: readonly NamePath[]): void;
   validateFields(options?: FormValidateOptions): Promise<Values>;
@@ -150,8 +150,8 @@ interface StoredField {
 }
 
 /**
- * Создаёт изолированную реактивную модель формы. Plain objects и массивы копируются;
- * устаревшая асинхронная validation не заменяет ошибки новой версии значений.
+ * Creates an isolated reactive form model. Plain objects and arrays are copied. Stale asynchronous
+ * validation cannot replace errors for newer values.
  */
 export function createForm<Values extends FormValues>({
   initialValues,
@@ -168,7 +168,7 @@ export function createForm<Values extends FormValues>({
   let initialValueOrder = 0;
   let values = $state<Values>(copyFormValue(defaults));
   let resetKey = $state.raw<object>({});
-  // При teardown Svelte читает прежний $state; реестр хранит актуальные регистрации.
+  // At teardown Svelte reads the previous $state; the registry stores up-to-date registrations.
   const fieldRegistry = new Set<StoredField>();
   const validationDelays = new Map<StoredField, () => void>();
   const messageProviders = new Set<() => ValidateMessages | undefined>();
@@ -176,17 +176,17 @@ export function createForm<Values extends FormValues>({
   let isSubmitting = $state(false);
   let submissionError = $state.raw<unknown>();
 
-  // Имя из регистрации может меняться при перестановке строк FormList.
+  // The name from the registration may change when rearranging the lines FormList.
   function fieldPath(field: StoredField): (string | number)[] {
     return formNamePath(field.registration?.name ?? field.path);
   }
 
-  // Сопоставляет полный путь, сохраняя различие строкового ключа и индекса.
+  // Compares the full path, keeping the difference of the string key and the index.
   function findField(name: NamePath): StoredField | undefined {
     return fields.find((field) => sameFormPath(fieldPath(field), name));
   }
 
-  // Копирует массивы, чтобы слушатель не менял метаданные в хранилище.
+  // Copies the arrays so that the listener does not change the metadata in the repository.
   function fieldMeta(field: StoredField): FormFieldMeta {
     return {
       name: [...fieldPath(field)], touched: field.touched, validating: field.validating,
@@ -195,9 +195,9 @@ export function createForm<Values extends FormValues>({
     };
   }
 
-  // Публикует только новое состояние или сигнал об удалении регистрации.
+  // Publishes only a new state or signal to remove registration.
   function notifyFieldMeta(field: StoredField, destroy = false) {
-    // UI callbacks не становятся dependencies эффекта, вызвавшего model setter.
+    // UI callbacks do not become dependencies of the effect that caused the model setter.
     untrack(() => {
       const callback = field.registration?.onMetaChange;
       if (destroy) {
@@ -217,7 +217,7 @@ export function createForm<Values extends FormValues>({
     });
   }
 
-  // При совпадении имён выбирает последнюю регистрацию control без учёта списков.
+  // If the names match, you choose the last registration control, no listing.
   function controlRegistration(name: NamePath): FormFieldRegistration | undefined {
     let found: StoredField | undefined;
     for (const field of fieldRegistry) {
@@ -231,7 +231,7 @@ export function createForm<Values extends FormValues>({
     return found?.registration;
   }
 
-  // Даёт модели место для значения и ошибок до регистрации DOM-поля.
+  // Gives the models space for value and errors before registration DOM-field.
   function ensureField(name: NamePath): StoredField {
     const existing = findField(name);
     if (existing) {
@@ -241,7 +241,7 @@ export function createForm<Values extends FormValues>({
     return addField(name);
   }
 
-  // Добавляет поле в живой реестр и публикует новый реактивный список.
+  // Adds the field to the living register and publishes a new reactive list.
   function addField(name: NamePath): StoredField {
     const field = $state<StoredField>({
       path: formNamePath(name), touched: false, dirty: false, validating: false,
@@ -300,7 +300,7 @@ export function createForm<Values extends FormValues>({
       return all ? names.every(isFieldTouched) : names.some(isFieldTouched);
     }
 
-    // Корни initialValues без binding — контейнеры store, а не дополнительные controls.
+    // Roots initialValues without binding — store containers, not additional controls.
     const bindings = fields.filter((field) =>
       field.registration || fieldRules(field).length || field.touched
     );
@@ -327,11 +327,11 @@ export function createForm<Values extends FormValues>({
     const names = Array.isArray(namesOrConfig) ? namesOrConfig as readonly NamePath[] : undefined;
     const select = names || namesOrConfig === true
       ? filter : (namesOrConfig as FormGetFieldsValueConfig | undefined)?.filter;
-    // Порядок UI bindings не зависит от заранее созданных контейнеров initialValues.
+    // The order UI bindings does not depend on pre-created containers initialValues.
     const bindings = fields.filter((field) => fieldPath(field).length > 0
       && (field.registration || fieldRules(field).length))
       .sort((first, second) => (first.registrationOrder ?? 0) - (second.registrationOrder ?? 0));
-    // Именованный запрос выбирает последний binding каждого пути, сохраняя порядок имён.
+    // The named query selects the last of each way, keeping the order of names.
     const unique: StoredField[] = [];
     if (names) {
       for (const field of bindings) {
@@ -384,7 +384,7 @@ export function createForm<Values extends FormValues>({
     return result;
   }
 
-  // Подтверждает, что для поля существовало и было отменено ожидание debounce.
+  // Confirms that for the field there was and the expectation of debounce was canceled.
   function cancelValidationDelay(field: StoredField): boolean {
     const cancel = validationDelays.get(field);
     if (!cancel) {
@@ -396,7 +396,7 @@ export function createForm<Values extends FormValues>({
     return true;
   }
 
-  // Завершает ожидание как после таймера, так и после явной отмены.
+  // Finishes waiting both after the timer and after an obvious cancellation.
   function delayValidation(field: StoredField, delay: number): Promise<boolean> {
     return new Promise((resolve) => {
       const timer = setTimeout(() => {
@@ -411,7 +411,7 @@ export function createForm<Values extends FormValues>({
     });
   }
 
-  // Запускает выбранные проверки одновременно и отвергает устаревший снимок.
+  // Runs selected checks at the same time and rejects an outdated shot.
   async function validate(
     selected: readonly StoredField[],
     validateOnly = false,
@@ -429,7 +429,7 @@ export function createForm<Values extends FormValues>({
     const snapshot = copyFormValue(values);
     const snapshotRevision = valuesRevision;
     const validationRun = ++validationSequence;
-    // Свежесть Promise общая; validateOnly не меняет field.run видимой проверки.
+    // Promises share freshness tracking. validateOnly leaves the visible validation's field.run unchanged.
     latestValidationRun = validationRun;
     const entries = selected.map((field) => ({
       field,
@@ -442,7 +442,7 @@ export function createForm<Values extends FormValues>({
     if (!validateOnly) {
       for (const { field, hasRules } of entries) {
         if (!hasRules) {
-          // Прежняя errors-проекция сохраняет пустые ключи; ручные metadata не очищаются.
+          // The previous error-projection preserves empty keys; manual metadata are not cleared.
           field.errors ??= [];
           field.warnings ??= [];
           continue;
@@ -474,8 +474,8 @@ export function createForm<Values extends FormValues>({
 
     return snapshot;
 
-    // Правила и сообщения читаются при запуске конкретного поля. После await
-    // только владелец текущей проверки может опубликовать её результат.
+    // Rules and messages are read when you start a specific field. After await, only the owner of
+    // the current inspection can publish its result.
     async function validateEntry({ field, path, hasRules, delay }: (typeof entries)[number]) {
       if (!hasRules) {
         return { name: path, errors: [], warnings: [] };
@@ -530,7 +530,7 @@ export function createForm<Values extends FormValues>({
     }
   }
 
-  // Выбирает зарегистрированные поля, потомков префикса или явные пути.
+  // Selects registered fields, descendants of the prefix or obvious paths.
   function validateFields(
     namesOrOptions?: readonly NamePath[] | FormValidateOptions,
     options?: FormValidateOptions
@@ -564,7 +564,7 @@ export function createForm<Values extends FormValues>({
     return validate(selected, settings?.validateOnly);
   }
 
-  // После изменения списка проверяет touched-поля, если не идёт submit.
+  // After changing the list, you check the touched fields if you do not submit.
   function revalidateTouched() {
     if (isSubmitting) {
       return;
@@ -581,9 +581,9 @@ export function createForm<Values extends FormValues>({
     }
   }
 
-  // Обновляет ключи текущего proxy, сохраняя ссылки читателей модели.
+  // Updates the current proxy keys by saving the model’s reader links.
   function updateValues(next: Values) {
-    // Svelte перечисляет inherited names лишь при наличии own property в исходном target.
+    // Svelte lists inherited names only in the presence of own property in the original target.
     if (Object.keys(next).some((name) => !Object.hasOwn(values, name)
       && Object.hasOwn(Object.prototype, name))) {
       values = copyFormValue(next);
@@ -600,7 +600,7 @@ export function createForm<Values extends FormValues>({
     }
   }
 
-  // Очищает результат поля и лишает прежнюю проверку права на публикацию.
+  // Purifies the result of the field and deprives the previous verification of the right to publish.
   function clearField(field: StoredField) {
     cancelValidationDelay(field);
     field.errors = [];
@@ -633,12 +633,12 @@ export function createForm<Values extends FormValues>({
     },
     getFieldsValue,
     getFieldsError,
-    // Неизвестный путь возвращает пустой список, как поле без ошибок.
+    // An unknown path returns an empty list, like a field without errors.
     getFieldError(name) {
       const field = findField(name);
       return field?.errors ?? [];
     },
-    // Предупреждения читаются отдельно от ошибок, блокирующих submit.
+    // Warnings are read separately from the errors that block submitted.
     getFieldWarning(name) {
       const field = findField(name);
       return field?.warnings ?? [];
@@ -786,8 +786,8 @@ export function createForm<Values extends FormValues>({
         }
       }
 
-      // Defaults следуют mount order, как React Field; registrationOrder сохраняет
-      // прежний порядок value projection, refs и reset callbacks.
+      // Defaults are followed by mount order as React Field; registrationOrder preserves the
+      // previous order value projection, refs and reset callbacks.
       const initialFields = [...selected].sort((first, second) =>
         (first.initialValueOrder ?? 0) - (second.initialValueOrder ?? 0)
       );
@@ -869,7 +869,7 @@ export function createForm<Values extends FormValues>({
     }
   };
 
-  // Применяет initialValue только к отсутствующему значению, без подписки на store.
+  // Applies initialValue only to the missing value, without subscribing to the store.
   function initializeFieldValue(name: NamePath, initialValue?: unknown) {
     untrack(() => {
       if (initialValue !== undefined && getFormValue(values, name) === undefined) {
@@ -916,7 +916,7 @@ export function createForm<Values extends FormValues>({
         }
       }
 
-      // Имена keyed rows обновятся при flush; metadata остаётся у прежнего экземпляра строки.
+      // The names of keyed rows will be updated with flush; the metadata remains with the previous line instance.
       void tick().then(revalidateTouched);
     },
     registerField(registration) {

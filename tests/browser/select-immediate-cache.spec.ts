@@ -5,26 +5,26 @@ import reference from './fixtures/ant-design-select-immediate-cache-reference.js
 
 const fixture = '/?fixture=select-immediate-cache&sample=';
 
-/** Действие владельца не меняет фокус редактора и работу клавиатуры. */
+/** The owner's action does not change the focus of the editor and the operation of the keyboard. */
 async function updateOwner(page: Page, action: string) {
   await page.locator('#' + action).evaluate((button: HTMLButtonElement) => button.click());
 }
 
-/** Сопоставляет публичные поля option с сырым React payload. */
+/** Compares public fields option with raw React payload. */
 function sourceOption(record: unknown): unknown {
   if (Array.isArray(record)) return record.map(sourceOption);
   if (record && typeof record === 'object' && 'data' in record) return record.data;
   return null;
 }
 
-/** В Svelte onValueChange предшествует onChange для запроса изменения. */
+/** In Svelte onValueChange precedes onChange to request a change. */
 function withValueChanges(events: readonly unknown[][]) {
   return events.flatMap(([name, value, option]) => name === 'change'
     ? [['value', value, null], [name, value, option]]
     : [[name, value, option]]);
 }
 
-/** Читает фактические поля формы, в том числе выбранный числовой ноль. */
+/** Reads the actual shape fields, including the selected numerical zero. */
 function formValues(page: Page) {
   return page.locator('[data-select-cache-form]').evaluate((form: HTMLFormElement) =>
     new FormData(form).getAll('fruit'));
@@ -86,7 +86,7 @@ for (const { profile, frames } of reference.passes[0]) {
     await expect.poll(() => formValues(page)).toEqual(profile.multiple ? [] : ['']);
     const expected = final.events.map(([name, value, option]) => {
       if (name === 'deselect' && !profile.rejected && !profile.reappears) {
-        // Сохраняем raw option из выбора, даже если в исходном замере кэш уже потерял запись.
+        // Save the raw option from the choice, even if in the original measurement the cache has already lost the recording.
         return [name, choice[1], sourceOption(choice[2])];
       }
       return [name, value, sourceOption(option)];

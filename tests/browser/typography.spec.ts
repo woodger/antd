@@ -465,7 +465,7 @@ test('Typography preserves source action widths and the exact two-line cut point
     element => element.getBoundingClientRect().width
   );
 
-  // Upstream snapshot использует шрифты текущего браузера, изолируя CSS библиотеки.
+  // Upstream snapshot uses current browser fonts by isolating CSS libraries.
   const sourceWidth = await page.evaluate(
     snapshot => {
       const host = document.createElement('div');
@@ -523,7 +523,7 @@ test('Typography clears native refs and does not save a removed editor', async (
   await expect(control(page, 'Typography ref')).toHaveText('none');
   await page.locator('.ant-typography-edit-content textarea').fill('Unsaved draft');
 
-  // Программный unmount сохраняет фокус в editor до удаления DOM.
+  // Software unmount preserves focus in the editor until DOM is removed.
   await control(page, 'Mount Typography').evaluate((element: HTMLInputElement) => element.click());
 
   await expect(page.locator('.ant-typography-edit-content')).toHaveCount(0);

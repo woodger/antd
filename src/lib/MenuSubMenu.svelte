@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Связывает trigger подменю с его содержимым и portal. Hover слушатели относятся к текущему
-  // контейнеру.
+  // Connects the submenu trigger to its content and portal. Hover listeners belong to the current
+  // container.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import type { MenuEntry } from './menu.engine';
@@ -48,7 +48,7 @@
   let overflowRest = $derived(entry.overflow === true);
   let popupPath = $derived(entry.path.map(context.id).join(' '));
   let item = $derived(menuSubMenu(entry));
-  // Значок ветки наследуют строки списка, включая их копии во всплывающем More.
+  // Rows inherit the branch icon, including their copies in the More popup.
   const itemContext: MenuContext = Object.create(context, {
     itemIcon: { get: () => item.itemIcon ?? context.itemIcon }
   });
@@ -78,7 +78,7 @@
     const style = dropdown?.themeStyle;
     const declarations = Array.from(getInlineStyleDeclarations([style]));
     const inherited = declarations.filter(entry => entry.property !== 'z-index');
-    // Подменю наследует тему Dropdown, а его слой вычисляется отдельно.
+    // The submenu inherits the Dropdown theme and computes its own layer.
     return inherited.length === declarations.length ? style
       : inherited.map(({ property, value, priority }) =>
         [property, value, priority === 'important' ? 'important' : ''] as const);
@@ -111,7 +111,7 @@
   let shown = $state(false);
   let popupPlacement = $state<TooltipPlacement>();
   let alignedPoints = $state.raw<PopupSourceAlign>();
-  // Контекст вложенного списка может читать объект родителя при разрешении режима.
+  // The nested list context can read the parent object when resolving its mode.
   const popupMode = $derived(context.mode);
   let lastPopupMode = $state<'horizontal' | 'vertical'>(untrack(() =>
     context.mode === 'horizontal' ? 'horizontal' : 'vertical'
@@ -129,7 +129,7 @@
   ));
   const placementClass = $derived.by(() => {
     if (alignment) {
-      // Карта меняет класс по последним точкам, даже пока координаты ждут нового замера.
+      // The map updates its class from the latest points even while coordinates await measurement.
       const name = getPopupPlacement(alignment.placements, alignedPoints ?? alignment.align);
       return name === undefined ? undefined : `${context.prefixCls}-submenu-placement-${name}`;
     }
@@ -184,11 +184,11 @@
       lastPopupMotion = context.motion;
     }
     if (popupRequested) popupVisited = true;
-    // Скрытые копии сохраняют состояние, если владелец снимает forceSubMenuRender.
+    // Hidden copies retain their state when the owner removes forceSubMenuRender.
     if (forcePopup && (popupMode !== 'inline' || context.getPopupContainer)) popupForced = true;
   });
 
-  // Измеряет popup в prepare, пока transform ещё позволяет читать полный размер.
+  // Measures the popup in prepare while the transform still allows reading its full size.
   function preparePopup() {
     positionConnection?.forceAlign();
   }
@@ -203,7 +203,7 @@
     if (!getter || inactive) {
       popupContainer = undefined;
     }
-    // Обычное Menu открывает Trigger после RAF; forceRender допускает первый undefined.
+    // A regular Menu opens Trigger after RAF. forceRender allows the first value to be undefined.
     else if (ownerVisible && context.forceRender && !title && !getter.length) {
       resolveContainer(undefined);
     }
@@ -218,7 +218,7 @@
 
   function connectPopupStyle(node: HTMLDivElement) {
     const update = connectInlineStyle(node);
-    // Diff семантических слоёв оставляет координаты и токены portal на поверхности.
+    // Diffing the semantic layers leaves positioning and portal tokens on the surface.
     $effect(() => update([
       ...popupBaseLayers, transitionStyle, item.popupStyle,
       context.semantics.styles.popup
@@ -227,7 +227,7 @@
 
   function positionPopup(surface: HTMLDivElement, position: TooltipPosition) {
     alignedPoints = position.sourceAlign;
-    // Явные координаты popupStyle и semantic root перекрывают расчёт trigger.
+    // Explicit coordinates in popupStyle and the semantic root override Trigger's calculations.
     const properties = untrack(() => new Set([
       ...popupProperties,
       ...Array.from(getInlineStyleDeclarations([transitionStyle]), entry => entry.property)
@@ -257,14 +257,14 @@
   }
 
   function containsPopupTarget(target: Node) {
-    // Portal отделяет поверхности в DOM, поэтому проверяем путь экземпляра Menu.
+    // The portal separates the surfaces in the DOM, so check the Menu instance path.
     const element = target instanceof Element ? target : target.parentElement;
     const owner = element?.closest('[data-menu-popup-path]');
     const path = owner?.getAttribute('data-menu-popup-path');
     return path?.split(' ').includes(context.id(entry.key)) ?? false;
   }
 
-  // У ветки одна граница на все её поверхности, даже при разных DOM-родителях.
+  // The branch has one boundary for all its surfaces, including those with different DOM parents.
   function notifyBranchHover(event: MouseEvent, entering: boolean, surface?: HTMLElement) {
     if ((!item.onMouseEnter && !item.onMouseLeave) || !row || inactive || context.locked
       || row.closest('[inert]') || surface && row.contains(surface)) {
@@ -281,7 +281,7 @@
     if (related && (row.contains(related) || containsPopupTarget(related))) {
       const root = surface?.getRootNode();
       if (!entering && root instanceof ShadowRoot) {
-        // У mouseenter того же движения relatedTarget будет host предыдущей поверхности.
+        // For the mouseenter from the same movement, relatedTarget is the previous surface's host.
         shadowTransfer = { host: root.host, timeStamp: event.timeStamp };
       }
       return;
@@ -327,11 +327,11 @@
         return;
       }
 
-      // Portal сохраняет currentTarget корневого callback и исходный target события.
-      // Enter может закрыть popup до всплытия того же события к этой поверхности.
+      // The portal preserves the root callback's currentTarget and the original event target. Enter
+      // can close the popup before that event bubbles to this surface.
       withMenuCurrentTarget(event, root, context.keydown);
     });
-    // Svelte сначала вызывает delegated child handlers внутри ShadowRoot, сохраняя domEvent.target.
+    // Svelte calls delegated child handlers inside the ShadowRoot first and preserves domEvent.target.
     const click = on(element, 'click', () => {});
     return () => {
       disconnectOwner?.();
@@ -354,7 +354,7 @@
     const anchor = title;
     const surface = popup;
     const getPosition = createMenuPopupPosition(anchor, () => alignment);
-    // Первый замер выполняется синхронно. Настройки меняются без переподключения popup.
+    // The first measurement is synchronous. Settings can change without reconnecting the popup.
     const connection = untrack(() => connectPopup(surface, anchor, {
       get placement() {
         return horizontal ? 'bottom' : rtl ? 'left' : 'right';
@@ -373,7 +373,7 @@
         return horizontal && !untrack(() => popupProperties.has('min-width'));
       },
       gap: () => untrack(() => context.componentTheme.className ? 0 : undefined),
-      // Исходное Menu оставляет controlled popup открытым даже при itemHeight=0.
+      // Upstream Menu keeps a controlled popup open even when itemHeight=0.
       allowZeroSize: () => untrack(() => Boolean(context.componentTheme.className)),
       pauseAlignment: () => popupLeaving
         || popupMotion.state.step === 'start' || popupMotion.state.step === 'active',
@@ -450,7 +450,7 @@
     background: transparent;
   }
   .menu-popup[data-ant-dropdown-prefix] { z-index: var(--ant-dropdown-z-index-popup, 1050); }
-  /* Horizontal vendor display не должен раскрывать forceSubMenuRender popup. */
+  /* The vendor display rule for horizontal menus must keep a forceSubMenuRender popup hidden. */
   .menu-popup[hidden] { display: none; }
   .menu-popup:global(.ant-menu-source-theme) { border-radius: var(--ant-border-radius-lg); }
   [data-ant-dropdown-branch] { position: relative; }

@@ -247,7 +247,7 @@ test(
     await draft(page).fill('Reopened draft');
     await page.keyboard.press('Control+Alt+o');
     await dialog(page).evaluate((element) => {
-      // Переходы фокуса дочерних полей продолжаются независимо от движения Drawer.
+      // Transitions of the focus of child fields continue regardless of the movement Drawer.
       for (const surface of element.querySelectorAll(
         ':scope > .ant-drawer-content-wrapper, :scope > .ant-drawer-mask'
       )) {

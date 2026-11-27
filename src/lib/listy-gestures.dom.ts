@@ -19,7 +19,7 @@ interface ListyGestureOptions {
   scrollByX?: (delta: number) => void;
 }
 
-/** Native wheel/touch нужны для passive:false и передачи жеста внешнему scroll container. */
+/** Native wheel/touch is needed for passive:false and the transmission of the gesture to an external scroll container. */
 export function connectListyGestures(holder: HTMLDivElement, options: ListyGestureOptions) {
   const view = holder.ownerDocument.defaultView;
   if (!view) {

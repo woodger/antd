@@ -18,12 +18,12 @@ export interface StepsItem {
   disabled?: boolean;
 }
 
-/** Управляемые этапы с current, items, статусами и вариантами размещения. */
+/** Managed steps with current items, statuses and accommodation options. */
 export interface StepsProps extends Omit<
   HTMLAttributes<HTMLOListElement>,
   'children' | 'class' | 'style' | 'onchange'
 > {
-  /** Локальный CSS prefix; иначе ConfigProvider. Ids и namespace токенов сохраняются. */
+  /** Local CSS prefix; otherwise ConfigProvider. Ids and namespace tokens are saved. */
   prefixCls?: string;
   items?: readonly (StepsItem | StepsDataItem | false | null | undefined)[];
   /** @defaultValue 0 */
@@ -41,7 +41,7 @@ export interface StepsProps extends Omit<
   classNames?: StepsSemanticSlots | ((info: { props: StepsProps; }) => StepsSemanticSlots);
   styles?: StepsSemanticSlots | ((info: { props: StepsProps; }) => StepsSemanticSlots);
   rootClassName?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLOListElement;
   /** @defaultValue 0 */
   current?: number;
@@ -61,5 +61,5 @@ export interface StepsProps extends Omit<
   style?: string;
 }
 
-/** Общие классы/стили; Timeline наследует только class/style, как internal Steps в source. */
+/** General classes/styles; Timeline inherits only class/style as internal Steps in source. */
 export type StepsConfig = Pick<StepsProps, 'class' | 'style' | 'classNames' | 'styles'>;

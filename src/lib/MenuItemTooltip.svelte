@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Разрешает содержимое и controlled-состояние Tooltip для отдельной строки Menu.
+  // Resolves the Tooltip content and controlled state for one Menu row.
   import { useMenu } from './menu-context';
   import type { MenuItem } from './menu.types';
   import RenderContent from './RenderContent.svelte';
@@ -45,7 +45,7 @@
     if (!collapsed) ownOpen = false;
   });
 
-  // В свёрнутом меню контролируемое open принадлежит владельцу общей настройки.
+  // In a collapsed menu, the owner of the shared settings controls open.
   function requestOpen(next: boolean) {
     if (!collapsed) {
       return;
@@ -55,7 +55,7 @@
     config?.onOpenChange?.(next);
   }
 
-  // Добавляет класс Menu к разрешённым пользовательским слотам Tooltip.
+  // Adds the Menu class to the resolved custom Tooltip slots.
   function tooltipClasses(info: { props: TooltipSemanticProps; }) {
     const value = config?.classNames;
     const slots = typeof value === 'function' ? value(info) : value;

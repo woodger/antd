@@ -5,7 +5,7 @@ import { expect, test } from './test';
 type Sample = typeof reference.cases[number];
 type Frame = Sample['frames'][number];
 
-/** Снимает видимую поверхность. Порядок карточек проверяется по их координатам. */
+/** Removes the visible surface. The order of the cards is checked according to their coordinates. */
 function readFrame(page: Page) {
   return page.evaluate(() => {
     const root = document.querySelector<HTMLElement>('[data-ant-message-root]:popover-open');
@@ -14,7 +14,7 @@ function readFrame(page: Page) {
       return null;
     }
 
-    /** Изолирует пользовательские классы и заданные в сценарии CSS-переменные. */
+    /** Isolates user classes and assigned in the CSS-valuation scenario. */
     function appearance(node: HTMLElement | null) {
       if (!node) {
         return null;
@@ -61,7 +61,7 @@ function readFrame(page: Page) {
   });
 }
 
-/** Контекстная очередь сохраняет собственные role=status и inline-контейнер. */
+/** Context queue preserves own role=status and inline-container. */
 function contextualFrame(frame: Frame) {
   return {
     ...frame,
@@ -70,7 +70,7 @@ function contextualFrame(frame: Frame) {
   };
 }
 
-/** Читает фактическую форму handle и результат разрешения настроек экземпляра. */
+/** Reads the actual handle form and the result of the permission of the instance settings. */
 function readBefore(page: Page) {
   return page.evaluate(() => {
     const probe = window.messageProbe;
@@ -86,7 +86,7 @@ function readBefore(page: Page) {
   });
 }
 
-/** Svelte вызывает onClose и завершает handle после программного закрытия и FIFO. */
+/** Svelte causes onClose and completes handle after software closure and FIFO. */
 const manualCloses: Record<string, readonly string[]> = {
   'context-family': ['Plain', 'Zero', 'Blank', 'info', 'success', 'warning', 'error', 'loading'],
   'context-queue': ['Removed', 'Updated'],
@@ -100,13 +100,13 @@ const manualCloses: Record<string, readonly string[]> = {
   'motion-disabled': ['Visible']
 };
 
-/** Соответствие имени handle и обновлённой видимой записи, включая общий ключ. */
+/** Correspondence of the handle name and the updated visible record, including the shared key. */
 const closeLabel: Record<string, string> = {
   plain: 'Plain', 'same-first': 'Updated', 'same-last': 'Updated', removed: 'Removed',
   priority: 'positional', semantic: 'Decorated', single: 'Visible', zero: 'Zero', blank: 'Blank'
 };
 
-/** Отдельно проверяет запланированное завершение Svelte handles после DOM. */
+/** Checks scheduled completion of Svelte handles separately after the DOM update. */
 async function assertCompletion(page: Page, sample: Sample) {
   const pending = Object.keys(sample.before.hooks);
   await expect.poll(() => page.evaluate(() =>

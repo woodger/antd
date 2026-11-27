@@ -34,7 +34,7 @@
     free ? { mask: false, focusable: { trap: false }, scrollLock: false } : profile.props ?? {}
   );
 
-  /** Оба владельца открываются от одной кнопки и регистрируют одинаковые наблюдения. */
+  /** Both owners open from the same button and register the same observations. */
   function launch() {
     mounted = true;
     if (nested !== 'none') {
@@ -54,7 +54,7 @@
     }
   }
 
-  /** Закрывает экземпляр от владельца без пользовательского onCancel. */
+  /** Closes the instance from the owner without the custom onCancel. */
   function close() {
     if (profile.confirm) confirmation?.destroy();
     else open = false;

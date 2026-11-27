@@ -1,4 +1,4 @@
-// Готовит входные данные и слоты Dropdown для Menu и выполняет поиск по тексту команд.
+// Prepares Dropdown inputs and slots for Menu and performs command text searches.
 import type {
   DropdownConfig, DropdownMenuClickInfo, DropdownMenuEntry, DropdownPlacement, DropdownProps,
   DropdownSemantic, DropdownSlots
@@ -8,7 +8,7 @@ import type { MenuClickInfo, MenuItem, MenuItemType } from './menu.types';
 
 const dropdownSlots = ['root', 'item', 'itemTitle', 'itemIcon', 'itemContent'] as const;
 
-// Первый пункт с данным ключом остаётся в списке рендеринга.
+// The first item with this key remains in the rendering list.
 export function normalizeDropdownItems<T extends DropdownMenuEntry>(items: readonly T[]): T[] {
   const seen = new Set<string>();
 
@@ -27,18 +27,18 @@ export function normalizeDropdownItems<T extends DropdownMenuEntry>(items: reado
   });
 }
 
-/** Команды Dropdown активируются через click даже при работе с клавиатурой. */
+/** Dropdown commands are activated via click even when working with a keyboard. */
 export function isDropdownClick(info: MenuClickInfo): info is DropdownMenuClickInfo {
   return 'button' in info.domEvent;
 }
 
-/** Оставляет системные сочетания клавиш и IME текущему владельцу фокуса. */
+/** Leaves system keyboard shortcuts and IME to the current focus holder. */
 export function isDropdownMenuKey(event: KeyboardEvent) {
   return !event.defaultPrevented && !event.isComposing
     && !event.ctrlKey && !event.altKey && !event.metaKey;
 }
 
-/** Имя фазы следует запрошенной стороне; CSS учитывает фактический flip. */
+/** The phase name follows the requested party; CSS takes into account the actual flip. */
 export function getDropdownMotionName(prefix: string, placement: DropdownPlacement) {
   if (placement.startsWith('top')) return `${prefix}-slide-down`;
   if (placement.startsWith('left')) return `${prefix}-slide-right`;
@@ -46,12 +46,12 @@ export function getDropdownMotionName(prefix: string, placement: DropdownPlaceme
   return `${prefix}-slide-up`;
 }
 
-/** Готовит параметры Menu, сохраняя ключи и исходные данные пунктов. */
+/** Prepares Menu parameters, saving the keys and the initial data of the items. */
 export function toDropdownMenuItems(items: readonly DropdownMenuEntry[]): MenuItemType[] {
   return normalizeDropdownItems(items).map(toMenuItem);
 }
 
-/** Сужает события команд и рекурсивно подключает их к общему дереву Menu. */
+/** Narrows the events of the teams and recursively connects them to the common Menu tree. */
 function toMenuItem(item: DropdownMenuEntry): MenuItemType {
   if (!item || item.type === 'divider') {
     return item;
@@ -70,7 +70,7 @@ function toMenuItem(item: DropdownMenuEntry): MenuItemType {
   return { ...item, onClick };
 }
 
-/** Нативные атрибуты команд принадлежат Dropdown и проходят через данные Menu. */
+/** The native attributes of the commands belong to Dropdown and pass through Menu data. */
 export function getDropdownCommandAttributes(item: MenuItem) {
   return {
     href: 'href' in item && typeof item.href === 'string' ? item.href : undefined,
@@ -80,7 +80,7 @@ export function getDropdownCommandAttributes(item: MenuItem) {
   };
 }
 
-/** Корневые слоты принадлежат панели, остальные применяются ко всем уровням Menu. */
+/** Root slots belong to the panels, the rest are applied to all Menu levels. */
 export function dropdownSemantics(
   config: DropdownConfig | undefined,
   props: DropdownProps,
@@ -104,12 +104,12 @@ export function dropdownSemantics(
   };
 }
 
-/** Передаёт callback props экземпляра, включая параметры вложенного Menu. */
+/** Transfers callback props instances, including the parameters of the nested Menu. */
 function resolveDropdownSlots(value: DropdownSemantic | undefined, props: DropdownProps) {
   return typeof value === 'function' ? value({ props }) : value;
 }
 
-/** Объединяет явные слоты, оставляя пропущенные ключи настройкам Menu. */
+/** Combines explicit slots, leaving missing keys to Menu settings. */
 function mergeDropdownSlots(
   inherited: DropdownSlots | undefined,
   local: DropdownSlots | undefined,
@@ -127,7 +127,7 @@ function mergeDropdownSlots(
   return merged;
 }
 
-// Одиночная буква ищет после текущего пункта, чтобы повторный ввод перебирал совпадения.
+// A single letter is looking after the current paragraph, so that the re-input will cross the matches.
 export function getDropdownMatch(
   commands: readonly { key: string; text: string; }[],
   current: string | null,

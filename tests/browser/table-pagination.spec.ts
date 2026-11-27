@@ -12,14 +12,14 @@ const table = '[data-ant-table-part="table"]';
 
 type Edge = 'top' | 'bottom';
 
-/** Выбирает видимый пейджер по месту относительно контейнера таблицы. */
+/** Choose a visible pager at the location relative to the table container. */
 function pager(page: Page, edge: Edge) {
   return page.locator(edge === 'top'
     ? spinContent + ' > nav:has(~ ' + table + ')'
     : spinContent + ' > ' + table + ' ~ nav');
 }
 
-/** Снимает состав и порядок пейджеров и их общее состояние с DOM пакета. */
+/** Removes the composition and order of the pagers and their total condition from DOM package. */
 function snapshot() {
   const root = document.getElementById('table-pagination-fixture');
   const table = root?.querySelector('[data-ant-table-part="table"]');
@@ -78,13 +78,13 @@ function snapshot() {
   };
 }
 
-/** Повторяет выбор размера в конкретном пейджере, включая портальный список. */
+/** Repeats the choice of size in a particular pager, including the portal list. */
 async function selectSize(page: Page, edge: Edge, size: string) {
   await pager(page, edge).getByRole('combobox').click();
   await page.getByRole('option', { name: size + ' / page', exact: true }).click();
 }
 
-/** Выполняет одно действие владельца или пейджера из журнала React. */
+/** Performs a single action of the owner or pager from the magazine React. */
 async function act(page: Page, action: string) {
   const labels: Record<string, string> = {
     trim: 'Trim rows',

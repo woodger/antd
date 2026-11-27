@@ -117,7 +117,7 @@
     const previous = previousValue;
     const element = group;
     const currentItems = items;
-    // Смена prefix, оси или RTL отменяет старую физическую геометрию.
+    // Changing the prefix, axis, or RTL state invalidates the old physical geometry.
     const currentPrefix = prefix;
     const axis = isVertical ? 'vertical' : config.direction;
     previousValue = next;
@@ -240,7 +240,7 @@
           ? item.title
           : undefined)} onchange={() => choose(item.value)} onkeydown={handleKey} />
     <div class={[`${prefix}-item-label`, classes.label]} title={item.title} style={slotStyles.label}>
-      <!-- Интервал icon/label задаёт CSS margin; текстовый пробел меняет исходную ширину. -->
+      <!-- CSS margin sets the icon-to-label spacing. A text space changes the original width. -->
       {#if item.icon}<span class={[`${prefix}-item-icon`, classes.icon]} style={slotStyles.icon} aria-hidden="true">{@render item.icon()}</span>{/if}{#if item.icon && item.label !== undefined && item.label !== ''}<span>{#if typeof item.label === 'function'}{@render item.label()}{:else}{item.label}{/if}</span>
       {:else if typeof item.label === 'function'}{@render item.label()}{:else}{item.label}{/if}
     </div>

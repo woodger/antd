@@ -1,6 +1,6 @@
 import template from './vendor/pagination-prefix.css.js';
 
-/** Native Select сохраняет собственный namespace; приватные actual metrics следуют общему prefix. */
+/** Native Select retains its own namespace; private metrics follow general prefix. */
 export function getPaginationPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-pagination' && rootPrefix === 'ant') {
     return undefined;

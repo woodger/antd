@@ -8,14 +8,14 @@ import { createServer, type ViteDevServer } from 'vite';
 import reference from './fixtures/ant-design-app-custom-root-reference.json' with { type: 'json' };
 import { expect, test } from './test';
 
-/** Открывает клиентский entry поверх пустой страницы того же происхождения. */
+/** Opens client entry on top of an empty page of the same background. */
 async function openFixture(page: Page, ssr = false) {
   const query = ssr ? 'app-custom&ssr' : 'app-custom';
   await page.goto(`/select-components-hydration.html?${query}`);
   await page.addScriptTag({ type: 'module', url: '/app-custom-root.client.ts' });
 }
 
-/** Считывает наблюдаемые стили и контекст двух потребителей. */
+/** Reads the observable styles and the context of the two consumers. */
 function readRoot(root: Locator, prefix: string) {
   return root.evaluate((node, prefix) => {
     const css = getComputedStyle(node);
@@ -63,7 +63,7 @@ test('App hydrates and updates a custom root before replacing it', async ({ page
     const before = { root: await root.elementHandle(), input: await input.elementHandle() };
     await input.fill('before hydration');
 
-    /** Проверяет сохранение исследуемых узлов и состояния ввода. */
+    /** Checks the preservation of the investigated nodes and the state of input. */
     async function identity() {
       const sameRoot = await root.evaluate((node, prior) => node === prior, before.root);
       return input.evaluate((node: HTMLInputElement, { sameRoot, prior }) => ({

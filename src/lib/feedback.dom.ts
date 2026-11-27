@@ -93,7 +93,7 @@ export function connectFeedbackFocus(
     const candidates = neighbors;
     target = undefined;
     neighbors = [];
-    // Владелец может выбрать новый control после обновления данных в том же tick.
+    // The owner can choose a new control after updating the data in the same tick.
     if (owned)
       void tick().then(() => recover(candidates));
   };

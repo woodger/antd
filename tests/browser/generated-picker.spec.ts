@@ -72,7 +72,7 @@ test.describe('generatePicker RangePicker manual time input', () => {
   }
 });
 
-/** Выполняет закрытие, набор текста и выбор через пользовательские и штатные кнопки. */
+/** Performs closing, typing and selection through custom and full-time buttons. */
 async function act(page: Page, popup: Locator, action: string, multiple: boolean) {
   switch (action) {
     case 'start':
@@ -124,7 +124,7 @@ async function act(page: Page, popup: Locator, action: string, multiple: boolean
   }
 }
 
-/** Сверяет события выбора, учитывая согласованные native info и обработку Enter. */
+/** Verifies selection events, taking into account agreed native info and Enter processing. */
 function projectEvents(events: unknown[][], local: boolean, profile: string) {
   const dateSource = ['editor', 'calendar', 'month', 'month-grid', 'multiple'].includes(profile);
   const timeSource = profile === 'root-time' || profile.startsWith('root-multiple-time');
@@ -297,7 +297,7 @@ for (const { profile, steps } of profiles) {
       if (action !== 'initial') {
         await act(page, popup, action, profile.id === 'multiple');
       }
-      // Native multiple сохраняет переданное имя для FormData. В React оно скрыто.
+      // Native multiple stores the transmitted name for FormData. In React it is hidden.
       const expectedFields: GeneratedPickerState['fields'] = state.fields.map(([value, same, name]) => {
         expect(name).toBe(profile.id === 'multiple' ? '' : 'opaque');
         return [value, same, 'opaque'];

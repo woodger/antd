@@ -1,11 +1,11 @@
-// Вычисляет число видимых пунктов горизонтального Menu и строит
-// навигационные пути пунктов в подменю переполнения.
+// Calculates the number of visible points of the horizontal Menu and builds the navigational paths
+// of the points in the substitution of overflow.
 import type { MenuEntry } from './menu.engine';
 import type { MenuSubMenu } from './menu.types';
 
 const moreKey = 'rc-menu-more';
 
-/** Резервирует индикатор только при фактической нехватке места. */
+/** Reserves an indicator only with an actual lack of space. */
 export function getMenuVisibleCount(widths: readonly number[], available: number, more: number) {
   const total = widths.reduce((sum, width) => sum + width, 0);
   if (total <= available) {
@@ -22,7 +22,7 @@ export function getMenuVisibleCount(widths: readonly number[], available: number
   return widths.length;
 }
 
-/** Сохраняет штатный ключ More и обходит занятый пользователем ключ. */
+/** Retains the built-in More key and avoids a key already used by the consumer. */
 export function getMenuMoreKey(entries: ReadonlyMap<string, MenuEntry>) {
   let key = moreKey;
   while (entries.has(key)) {
@@ -31,7 +31,7 @@ export function getMenuMoreKey(entries: ReadonlyMap<string, MenuEntry>) {
   return key;
 }
 
-/** Создаёт подменю и индекс видимых в нём записей с путями от More. */
+/** Creates a submenu and an index of visible entries in it with paths from More. */
 export function buildMenuMore(item: MenuSubMenu, omitted: readonly MenuEntry[]) {
   const key = String(item.key);
   const root: MenuEntry = {
@@ -48,7 +48,7 @@ export function buildMenuMore(item: MenuSubMenu, omitted: readonly MenuEntry[]) 
 
   return { root, entries };
 
-  // Группа сохраняет оформление, но её ключ не входит в пути действий.
+  // The group retains the registration, but its key is not included in the way of action.
   function reparent(entry: MenuEntry, parent: MenuEntry): MenuEntry {
     const nested = {
       ...entry,

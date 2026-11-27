@@ -110,7 +110,7 @@
       name: 'people', value: [{ name: 'Changed default' }, { name: 'Added' }],
       errors: ['List error'], touched: true
     }]);
-    // Новая строка должна смонтироваться до записи её локального черновика.
+    // The new line must be mounted before the recording of its local draft.
     await tick();
     seedLocals();
   }

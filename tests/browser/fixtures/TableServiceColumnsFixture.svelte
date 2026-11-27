@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Повторяет входы и журнал действий независимых профилей Ant Design.
+  // Repeats the inputs and action login of independent Ant Design profiles.
   import type { Snippet } from 'svelte';
   import {
     ConfigProvider, enUS, Table,
@@ -39,7 +39,7 @@
     onCell: selectionCell
   });
 
-  /** Дерево добавляет отдельный индекс среди соседей для renderCell. */
+  /** The tree adds a separate index among neighbors for renderCell. */
   function createData(count: number, tree: boolean): Row[] {
     const records: Row[] = Array.from({ length: count }, (_, key) => ({
       key, name: `Name ${key}`, team: `Team ${key}`, state: `State ${key}`
@@ -50,7 +50,7 @@
     return records;
   }
 
-  /** Передаёт служебные маркеры из реактивного контейнера вместе с колонками данных. */
+  /** Transmits service markers from a reactive container along with data columns. */
   function resolveColumn(id: string): TableColumn<Row> {
     switch (id) {
       case '$select':
@@ -84,7 +84,7 @@
     }
   }
 
-  /** Меняет spans только у первых трёх строк, сохраняя логический индекс таблицы. */
+  /** Changes spans only at the first three rows, saving the logical index of the table. */
   function selectionCell(row: Row, index: number) {
     return {
       'data-choice': `${row.key}:${index}`,
@@ -96,12 +96,12 @@
     };
   }
 
-  /** Добавляет принятые события в наблюдаемый журнал без привязки к Svelte internals. */
+  /** Adds the accepted events to the observed journal without reference to Svelte internals. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }
 
-  /** Прокручивает через публичный ref, включая возврат к строке со span. */
+  /** Scrolls through a public ref, including a return to a string with a span. */
   function scrollTo(key: TableKey) {
     table?.scrollTo({ key, align: 'start' });
   }

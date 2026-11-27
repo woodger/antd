@@ -1,26 +1,26 @@
-// Обходит перетаскиваемые каталоги для Upload. Чтение каталога продолжается
-// до пустой порции, а путь сохраняется у принятого файла.
-// Ant Design 6.6.8 / rc-upload 1.1.1 traverseFileTree; MIT, vendor/LICENSE.rc-upload.
+// Bypass the drag-and-drop directories for Upload. The directory read continues to an empty
+// portion, and the path is saved from the received file. Ant Design 6.6.8 / rc-upload 1.1.1
+// traverseFileTree; MIT, vendor/LICENSE.rc-upload.
 
-// Пропускает недоступный файл. Source оставляет Promise незавершённым при ошибке.
+// Skipping an unavailable file. Source leaves Promise unfinished in error.
 function readDirectoryFile(entry: FileSystemFileEntry): Promise<File | undefined> {
   return new Promise(resolve => {
-    // Сигнализирует обходу, что файл следует пропустить.
+    // Signals the circumvention that the file should be skipped.
     const skipFile = () => resolve(undefined);
     entry.file(resolve, skipFile);
   });
 }
 
-// Сбой чтения завершает текущий каталог так же, как последняя пустая порция.
+// The reading failure completes the current directory in the same way as the last blank portion.
 function readDirectoryEntries(reader: FileSystemDirectoryReader): Promise<FileSystemEntry[]> {
   return new Promise(resolve => {
-    // Пустая порция останавливает чтение этого каталога.
+    // An empty portion stops reading this directory.
     const finishDirectory = () => resolve([]);
     reader.readEntries(resolve, finishDirectory);
   });
 }
 
-/** Обходит FileSystemEntry в ширину, читая все порции directory reader. */
+/** Bypasses FileSystemEntry in width, reading all portions of directory reader. */
 export async function collectUploadDirectoryFiles(
   items: Iterable<Pick<DataTransferItem, 'webkitGetAsEntry'>>,
   isAccepted: (file: File) => boolean

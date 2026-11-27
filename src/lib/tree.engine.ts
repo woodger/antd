@@ -16,7 +16,7 @@ export function getTreeChildren<Data extends object>(
     throw new TypeError('Tree data children must be an array');
   }
 
-  // Один Data type применяется также к рекурсивному полю, заданному fieldNames.
+  // One Data type also applies to the recursive field given fieldNames.
   return (children || []) as readonly Data[];
 }
 
@@ -26,7 +26,7 @@ export function getTreeNodeTitle<Data extends object>(
   titleRender?: Snippet<[Data]>
 ): TreeTitleContent<Data> {
   const value: unknown = Reflect.get(node, fieldNames?.title || 'title');
-  // Source выбирает node renderer до общего; произвольный payload не рендерится как literal.
+  // Source selects node renderer to general; arbitrary payload does not render like literal.
   if (typeof value === 'function') {
     return value as Snippet<[Data]>;
   }
@@ -39,7 +39,7 @@ export function getTreeNodeTitle<Data extends object>(
       || typeof value === 'boolean') {
       return value;
     }
-    // Функциональное содержимое Native API — Svelte snippet с data-аргументом.
+    // Functional content Native API – Svelte snippet with data argument.
     if (typeof value === 'function') {
       return value as Snippet<[Data]>;
     }
@@ -95,7 +95,7 @@ export function buildTreeEntities<Data extends object = TreeDataNode>(
     });
   }
   const roots = walk(nodes);
-  // Entity index upstream — object: integer keys обходятся раньше строковых.
+  // Entity index upstream - object: integer keys are circumvented before string.
   const ordered = Object.keys(Object.fromEntries(entities)).map(key => entities.get(key)!);
   return { entities, ordered, roots };
 }
@@ -168,8 +168,8 @@ interface TreeCheckEntry<Key, Entry> {
   level: number;
 }
 
-// Проводит выбор по уровням. Table и Tree задают собственные правила ключей и disabled.
-// conductUtil из rc-tree 1.4.0; MIT, vendor/LICENSE.rc-tree.
+// Proceeds by levels. Table and Tree set their own key rules and disabled. conductUtil from rc-tree
+// 1.4.0; MIT, vendor/LICENSE.rc-tree.
 export function conductTreeCheckByKey<Key, Entry extends TreeCheckEntry<Key, Entry>>(
   keys: readonly Key[],
   entries: readonly Entry[],
@@ -232,7 +232,7 @@ export function conductTreeCheckByKey<Key, Entry extends TreeCheckEntry<Key, Ent
   return { checked: [...checked], halfChecked: [...half].filter(key => !checked.has(key)) };
 }
 
-// Tree ищет записи по строковому ключу и учитывает собственные флаги checkable.
+// Tree searches for line key records and takes into account its own checkable flags.
 export function conductTreeCheck<Data extends object>(
   keys: readonly TreeKey[],
   index: TreeIndex<Data>,
@@ -263,7 +263,7 @@ export function selectTreeKeys(
   multiple: boolean,
   wasSelected?: boolean
 ): TreeKey[] {
-  // Selector использует snapshot узла до onExpand/onClick, даже если callbacks обновили keys.
+  // Selector uses snapshot node before onExpand/onClick, even if callbacks have updated keys.
   if (wasSelected !== undefined) {
     if (!multiple) {
       return wasSelected ? [] : [key];

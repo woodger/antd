@@ -1,4 +1,4 @@
-/** Локальный componentCls не меняет CSS variables, marker и внешний Popover у Popconfirm. */
+/** A local componentCls leaves Popconfirm's CSS variables, marker, and outer Popover intact. */
 export function getOverlayPrefixCss(
   kind: 'tooltip' | 'popover' | 'popconfirm',
   prefix: string,

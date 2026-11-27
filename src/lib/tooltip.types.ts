@@ -3,35 +3,35 @@ import type { PopupSourceAlign } from './popup-position.engine';
 import type { PresetColorKey } from './theme-token.types';
 import type { RenderEmptyContent } from './types';
 
-/** ReactNode заменён текстом, boolean, вложенными массивами и Svelte Snippet. */
+/** ReactNode is replaced by text, boolean, nested arrays and Svelte Snippet. */
 export type TooltipContent = RenderEmptyContent;
 
-/** bind:ref доступен после mount и очищается при unmount; DOM getters отражают текущие узлы. */
+/** bind:ref is available after mount and is cleaned at unmount; DOM getters reflect current nodes. */
 export interface TooltipRef {
-  /** Основной DOM trigger, включая SVG; до разрешения anchor может быть undefined. */
+  /** Basic DOM trigger, including SVG; prior to permission anchor can be undefined. */
   readonly nativeElement: Element | undefined;
-  /** Самостоятельный span сохраняется скрытым; в группе доступна общая панель владельца. */
+  /** Independent span is kept hidden; a common owner panel is available in the group. */
   readonly popupElement: HTMLSpanElement | undefined;
-  /** Объединяет вызовы в microtask; закрытый или уничтоженный popup не открывает. */
+  /** Combines calls into microtask; closed or destroyed popup does not open. */
   forceAlign: () => void;
 }
 
-/** AlignType rc-trigger 3.10.1; offsets принимают числа, проценты и parseFloat strings. */
+/** AlignType rc-trigger 3.10.1; offsets accept numbers, percentages and parseFloat strings. */
 export type TooltipAlignConfig = PopupSourceAlign;
 
-/** Физические направления; Left/Right в имени не меняются при RTL. */
+/** Physical directions; Left/Right in the name does not change at RTL. */
 export type TooltipPlacement =
   | 'top' | 'bottom' | 'left' | 'right'
   | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
   | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 export type TooltipTrigger = 'hover' | 'focus' | 'click' | 'contextMenu';
-/** Preset имена чувствительны к регистру; остальные строки передаются CSS как одно value. */
+/** Preset names are scatter-sensitive; the remaining strings are transmitted CSS as one value. */
 export type TooltipColor = PresetColorKey | `${PresetColorKey}-inverse` | (string & {});
 
-/** Объект показывает стрелку; pointAtCenter по умолчанию false. */
+/** Object shows the arrow; pointAtCenter by default false. */
 export type TooltipArrow = boolean | { pointAtCenter?: boolean };
 
-/** Семантика rc-trigger: числовые 0 и 1 разрешают flip; boolean false отключает коррекцию. */
+/** Semantics rc-trigger: numerical 0 and 1 allow flip; boolean false disables correction. */
 export interface AdjustOverflow {
   adjustX?: 0 | 1;
   adjustY?: 0 | 1;
@@ -43,15 +43,15 @@ export interface TooltipSlots {
   arrow?: string;
 }
 
-/** CSS задаётся строками; callback получает props с разрешёнными trigger, delays и placements. */
+/** CSS is given by strings; callback receives props with allowed trigger, delays and placements. */
 export type TooltipSemantic = TooltipSlots | ((info: {
   props: TooltipSemanticProps;
 }) => TooltipSlots);
 
 export interface TooltipSemanticProps extends Omit<TooltipProps, 'children' | 'getPopupContainer'> {
-  /** Входной prop владельца; внутреннее uncontrolled open не подменяет его. */
+  /** The owner's input prop; the internal uncontrolled open does not replace it. */
   open?: boolean;
-  /** У внутренних Tooltip native consumers нет Svelte children snippet. */
+  /** Internal Tooltip native consumers do not have Svelte children snippet. */
   children?: Snippet;
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement | ShadowRoot;
   trigger: TooltipTrigger | readonly TooltipTrigger[];
@@ -61,7 +61,7 @@ export interface TooltipSemanticProps extends Omit<TooltipProps, 'children' | 'g
   builtinPlacements: Readonly<Record<string, PopupSourceAlign>>;
 }
 
-/** Настройки popup; вложенный provider заменяет объект целиком, undefined наследует родителя. */
+/** Popup settings; nested provider replaces the object entirely, undefined inherits the parent. */
 export interface TooltipConfig {
   class?: string;
   style?: string;
@@ -73,119 +73,120 @@ export interface TooltipConfig {
   mouseLeaveDelay?: number;
 }
 
-/** Подсказка с настраиваемыми событиями, bind:open и доступным описанием trigger. */
+/** Hint with configurable events, bind:open and an accessible description trigger. */
 export interface TooltipProps {
   title?: TooltipContent;
-  /** Legacy содержимое приоритетнее title, кроме title=0; falsy overlay использует title. */
+  /** Legacy content is more priority than title=0; falsy overlay uses the title. */
   overlay?: TooltipContent;
   /**
-   * Обновляет содержимое и semantic container при закрытом popup. @defaultValue false
-   * Кэш фиксирует выбранный Snippet, но не останавливает его захваченную Svelte-реактивность.
+   * Updates content and the semantic container while the popup is closed.
+   * @defaultValue false
+   * The cache retains the chosen Snippet while its captured Svelte state remains reactive.
    */
   fresh?: boolean;
-  /** Preset или CSS background; пользовательский цвет выбирает текст по source luminance. */
+  /** Preset or CSS background; the custom color selects the text by source luminance. */
   color?: TooltipColor;
-  /** Локальный prefix popup; иначе ConfigProvider. CSS variables и native wrapper сохраняются. */
+  /** Local prefix popup; otherwise ConfigProvider. CSS variables and native wrappers are saved. */
   prefixCls?: string;
-  /** DOM-класс открытого trigger после hydration; пустая строка использует `${prefixCls}-open`. */
+  /** DOM-class open after hydration; an empty string uses `${prefixCls}-open`. */
   openClassName?: string;
   children: Snippet;
-  /** ID native popup; пустая строка использует стабильный fallback. Скрытый ID следует fresh. */
+  /** ID native popup; an empty string uses a stable fallback. Hidden ID follows fresh. */
   id?: string;
-  /** Скрывает popup, сохраняя raw open и обработку trigger-событий. @defaultValue false */
+  /** Hide the popup by saving the raw open and the processing of trigger events. @defaultValue false */
   disabled?: boolean;
-  /** Поддерживает bind:open. */
+  /** Maintenances bind:open. */
   open?: boolean | undefined;
-  /** Участвует в ближайшем Tooltip.UniqueProvider. false оставляет собственную панель. */
+  /** Participates in the nearest Tooltip.UniqueProvider. false leaves its own panel. */
   unique?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Вызывается после применения видимости и завершения её CSS motion. */
+  /** Is called after the application of visibility and the completion of its CSS motion. */
   afterOpenChange?: (open: boolean) => void;
-  /** Имя CSSMotion; пустая строка отключает анимацию. По умолчанию zoom-big-fast. */
+  /** Name CSSMotion; an empty string disables animation. By default zoom-big-fast. */
   motion?: { motionName?: string };
-  /** Удаляет содержимое после afterOpenChange(false). @defaultValue false */
+  /** Removes content after afterOpenChange(false). @defaultValue false */
   destroyOnHidden?: boolean;
   /**
-   * Заранее монтирует скрытое содержимое и portal после hydration, включая destroyOnHidden.
+   * Mounts the hidden content and portal after hydration, including with destroyOnHidden.
    * @defaultValue false
    */
   forceRender?: boolean;
-  /** Явный z-index popup; semantic root styles имеют приоритет. */
+  /** Clear z-index popup; semantic root styles take precedence. */
   zIndex?: number;
   /** @defaultValue 'top' */
   placement?: TooltipPlacement;
-  /** Накладывается поверх выбранной записи placements; вложенный overflow заменяется целиком. */
+  /** Superimposed on top of the selected placements entry; nested overflow is replaced in its entirety. */
   align?: TooltipAlignConfig;
-  /** Заменяет всю автоматически подготовленную карту, включая пустой объект. */
+  /** Replaces the entire automatically prepared map, including an empty object. */
   builtinPlacements?: Readonly<Record<string, TooltipAlignConfig>>;
-  /** Получает DOM popup и итоговый align после flip, до применения новых координат. */
+  /** Receives DOM popup and final align after flip, before new coordinates are applied. */
   onPopupAlign?: (popup: HTMLElement, align: TooltipAlignConfig) => void;
   /** @defaultValue true */
   arrow?: TooltipArrow;
   /** @defaultValue true */
   autoAdjustOverflow?: boolean | AdjustOverflow;
-  /** Базовые события; [] отключает их, если showAction/hideAction не заданы отдельно. */
+  /** Basic events; [] disables them if showAction/hideAction is not specified separately. */
   trigger?: TooltipTrigger | readonly TooltipTrigger[];
   /**
-   * Заменяет только события открытия; undefined использует trigger, [] отключает их.
-   * Hover без click также включает touch.
+   * Replacing only opening events; undefined uses trigger, [] disables them. Hover without click
+   * also includes touch.
    */
   showAction?: readonly TooltipTrigger[];
   /**
-   * Заменяет только события закрытия; undefined использует trigger.
-   * [] отключает trigger и outside-закрытие, сохраняя Escape.
+   * Replaces only closing events; undefined uses trigger. [] disables trigger and outside-closing,
+   * saving Escape.
    */
   hideAction?: readonly TooltipTrigger[];
-  /** Задержка focus в секундах; по умолчанию 0, не наследует mouseEnterDelay. */
+  /** Focus delay in seconds; default 0, does not inherit mouseEnterDelay. */
   focusDelay?: number;
-  /** Задержка blur в секундах; по умолчанию 0, не наследует mouseLeaveDelay. */
+  /** Latency blur in seconds; default 0, does not inherit mouseLeaveDelay. */
   blurDelay?: number;
-  /** Задержка открытия в секундах. */
+  /** Delayed opening in seconds. */
   mouseEnterDelay?: number;
-  /** Задержка закрытия в секундах. */
+  /** Closure delay in seconds. */
   mouseLeaveDelay?: number;
-  /** Локальная функция → ConfigProvider; undefined наследует fallback. */
+  /** Local function → ConfigProvider; undefined inherits fallback. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   class?: string;
   style?: string;
-  /** Применяется к popup; class/style сохраняют native wrapper contract. */
+  /** Applied to popup; class/style save native wrapper contract. */
   rootClassName?: string;
   classNames?: TooltipSemantic;
   styles?: TooltipSemantic;
 }
 
-/** Параметры Tooltip ручки Slider; formatter=null отключает содержимое подсказки. */
+/** Parameters Tooltip Slider pens; formatter=null disables the contents of the hint. */
 export interface SliderTooltipConfig {
   open?: boolean;
-  /** Отключает участие подсказок ручек в Tooltip.UniqueProvider. */
+  /** Disables the participation of handle prompts in Tooltip.UniqueProvider. */
   unique?: TooltipProps['unique'];
-  /** Передаётся каждой подсказке Slider; скрытый ID следует fresh. */
+  /** Forwarded to each Slider tooltip. The hidden ID follows fresh. */
   id?: TooltipProps['id'];
-  /** Скрывает подсказки, не отключая Slider и не меняя его значение. */
+  /** Hides clues without disabling Slider or changing its meaning. */
   disabled?: TooltipProps['disabled'];
-  /** Монтирует скрытое содержимое после hydration, включая destroyOnHidden. */
+  /** Mounts hidden content after hydration, including destroyOnHidden. */
   forceRender?: TooltipProps['forceRender'];
-  /** Явный слой каждой подсказки. Без него используется уровень из контекста или темы. */
+  /** A clear layer of each clue. Without it, a level from a context or theme is used. */
   zIndex?: TooltipProps['zIndex'];
-  /** Обновляет содержимое скрытой подсказки; default cache сохраняет последний открытый кадр. */
+  /** Updates the contents of the hidden hint; default cache preserves the last open frame. */
   fresh?: boolean;
-  /** Удаляет содержимое каждой скрытой подсказки; по умолчанию сохраняет. */
+  /** Removes the contents of each hidden hint; by default preserves. */
   destroyOnHidden?: boolean;
   color?: TooltipColor;
-  /** Локальный prefix Tooltip; иначе ConfigProvider. Применяется ко всем single/range подсказкам. */
+  /** Local prefix Tooltip; otherwise ConfigProvider. Applied to all single/range hints. */
   prefixCls?: string;
-  /** DOM-класс открытой ручки после hydration; default — `${prefixCls}-open`. */
+  /** DOM-class open handle after hydration; default - `${prefixCls}-open`. */
   openClassName?: string;
   placement?: TooltipPlacement;
   align?: TooltipAlignConfig;
   builtinPlacements?: Readonly<Record<string, TooltipAlignConfig>>;
   onPopupAlign?: TooltipProps['onPopupAlign'];
   arrow?: TooltipArrow;
-  /** Как у Tooltip; boolean defaults сохраняют native viewport behavior. */
+  /** Matches Tooltip. Boolean defaults retain native viewport behavior. */
   autoAdjustOverflow?: boolean | AdjustOverflow;
   formatter?: ((value: number) => string | null) | null;
-  /** Имеет приоритет над ConfigProvider; у Slider нет корневого getPopupContainer. */
+  /** Has priority over ConfigProvider; Slider does not have root getPopupContainer. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
 }

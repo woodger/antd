@@ -1,5 +1,5 @@
-// Собирает сообщения Form из локали и настроек. Сначала подставляет позиционные аргументы, затем
-// переменные правила.
+// Collects Form messages from locales and settings. At first, the positional arguments, then the
+// variable rules.
 import type { FormValues, ValidationRule } from './validation.engine';
 import type { ValidateMessages } from './validation-messages.types';
 
@@ -9,7 +9,7 @@ export interface ValidationMessageContext {
   readonly messages?: ValidateMessages;
 }
 
-/** Locale и ConfigProvider объединяют группы; Form заменяет их top-level spread отдельно. */
+/** Locale and ConfigProvider unite groups; Form replaces their top-level spread separately. */
 export function mergeValidationMessages(
   ...layers: readonly (ValidateMessages | undefined)[]
 ): ValidateMessages {
@@ -27,7 +27,7 @@ export function mergeValidationMessages(
   return merged;
 }
 
-// Ограничивает fallback сериализацией %j. Ошибки всего шаблона обрабатываются вызывающим кодом.
+// Limits fallback serialization %j. Errors of the entire template are processed by the causing code.
 function serializeMessageValue(value: unknown): string {
   try {
     return JSON.stringify(value) ?? 'undefined';
@@ -37,7 +37,7 @@ function serializeMessageValue(value: unknown): string {
   }
 }
 
-/** Template formatting адаптирован из async-validator; MIT: vendor/LICENSE.rc-async-validator. */
+/** Template formatting is adapted from async-validator; MIT: vendor/LICENSE.rc-async-validator. */
 export function resolveValidationMessage<Values extends FormValues>(
   rule: ValidationRule<Values>,
   context: ValidationMessageContext | undefined,
@@ -64,7 +64,7 @@ export function resolveValidationMessage<Values extends FormValues>(
     }
 
     let index = 0;
-    // Только неэкранированный placeholder потребляет следующий аргумент.
+    // Only the unscrewed placeholder consumes the following argument.
     return template.replace(/%[sdj%]/g, placeholder => {
       if (placeholder === '%%') {
         return '%';
@@ -84,12 +84,12 @@ export function resolveValidationMessage<Values extends FormValues>(
     });
   }
   catch {
-    // Ошибка template не должна ломать validation или создавать source console/page errors.
+    // The template error should not break validation or create source console/page errors.
     return fallback;
   }
 }
 
-/** Однократная подстановка rc-form; backslash сохраняет буквальный ${variable}. */
+/** rc-form single-pass substitution. A backslash preserves the literal ${variable}. */
 export function formatValidationMessages<Values extends FormValues>(
   messages: readonly string[],
   rule: ValidationRule<Values>,
@@ -110,14 +110,14 @@ export function formatValidationMessages<Values extends FormValues>(
 
   return messages.map(message => message.replace(/\\?\$\{\w+\}/g, substituteVariable));
 
-  // Подставляет только собственные переменные контекста. Backslash сохраняет литерал.
+  // Substitutes only the context's own variables. A backslash preserves the literal.
   function substituteVariable(placeholder: string) {
     if (placeholder.startsWith('\\')) {
       return placeholder.slice(1);
     }
 
     const key = placeholder.slice(2, -1);
-    // Inherited constructor/toString не являются template variables.
+    // Inherited constructor/toString are not template variables.
     const value = Object.hasOwn(variables, key) ? variables[key] : undefined;
     try {
       return String(value);

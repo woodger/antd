@@ -78,7 +78,7 @@ for (const entry of reference.cases) {
           view: step.view,
           portal: step.portal
         });
-        // Native top-layer popup сохраняет fixed/null; Source absolute/case-host записан отдельно от общей геометрии.
+        // Native top-layer popup preserves fixed/null; Source absolute/case-host is recorded separately from the total geometry.
         expect(await page.locator('.ant-tree-select-dropdown').evaluate(node => {
           if (!(node instanceof HTMLElement)) {
             throw new TypeError('TreeSelect popup must be an HTML element');

@@ -41,7 +41,7 @@
   ];
   const calls: Record<string, unknown> = {};
 
-  // Запоминает аргументы semantic callback без изменений реактивного состояния из $derived.
+  // Captures semantic callback arguments without changing reactive state from $derived.
   function capture(name: string, props: MenuProps) {
     calls[name] = {
       mode: props.mode ?? null,
@@ -151,7 +151,7 @@
     };
   };
 
-  // Снимок читается из Playwright после окончания реактивного обновления.
+  // The picture is read from Playwright after the end of the reactive update.
   function connectCalls(node: HTMLElement) {
     Object.defineProperty(node, 'menuConfigCalls', { value: calls });
   }

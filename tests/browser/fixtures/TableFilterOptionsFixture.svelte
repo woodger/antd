@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Прогоняет эталонные меню и дерево через публичный Table, включая Server Render.
+  // Drives out reference menus and wood through the public Table, including Server Render.
   import {
     ConfigProvider, enUS, Table, type TableChange, type TableColumn, type TableFilterOption,
     type TableFilterValue
@@ -37,7 +37,7 @@
   const dataSource = $derived(profileId === 'tree-types' ? typedRecords : records);
   const columns: TableColumn<Row>[] = $derived(getColumns(profileId, changed));
 
-  /** Сохраняет варианты родителя при замене одного дочернего пункта. */
+  /** Retains the parent's options when replacing one child. */
   function getGroups(updated: boolean): TableFilterOption[] {
     return [
       { text: 'Produce', value: 'produce', children: updated ? [banana] : [apple, banana] },
@@ -46,7 +46,7 @@
     ];
   }
 
-  /** Настраивает интерфейс поиска и состояние выбора для одного прогона. */
+  /** Configures the search interface and selection state for a single run. */
   function getColumns(profile: string, updated: boolean): TableColumn<Row>[] {
     const column: TableColumn<Row> = {
       key: 'category',
@@ -80,12 +80,12 @@
     return [column, { key: 'name', title: 'Name', dataIndex: 'name' }];
   }
 
-  /** Фиксирует принятые фильтры и обработанные строки до пагинации. */
+  /** Fixes accepted filters and processed strings before pagination. */
   function noteChange(change: TableChange<Row>) {
     changes = [...changes, { filters: change.filters, rows: change.currentDataSource.map(row => row.key) }];
   }
 
-  /** Отличает отправку внешней формы от подтверждения фильтра. */
+  /** Distinguishes sending an external form from filter confirmation. */
   function submit(event: SubmitEvent) {
     event.preventDefault();
     submissions += 1;

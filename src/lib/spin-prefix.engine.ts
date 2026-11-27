@@ -2,7 +2,7 @@ import template from './vendor/spin-prefix.css.js';
 
 const rootStates = new Set(['', '-rtl', '-spinning', '-fullscreen', '-sm', '-lg']);
 
-/** Замена только BEM classes; section также бывает дочерним узлом, не root state. */
+/** Replacing only BEM classes; section is also a child node, not root state. */
 export function getSpinPrefixCss(prefix: string) {
   if (prefix === 'ant-spin') {
     return undefined;

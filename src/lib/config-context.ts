@@ -164,12 +164,12 @@ export interface ConfigContext {
   readonly floatButton?: FloatButtonConfig;
   readonly floatButtonGroup?: FloatButtonGroupConfig;
   readonly componentSize: ComponentSize;
-  // Divider отличает явно заданный размер от общего fallback medium.
+  // Divider distinguishes an explicit size from the shared medium fallback.
   readonly explicitComponentSize?: ComponentSize;
   readonly componentDisabled: boolean;
   readonly direction: 'ltr' | 'rtl';
   readonly theme: ResolvedThemeConfig;
-  /** Source token CSS для дополнительных theme boundaries и порталов. */
+  /** Upstream token CSS for additional theme boundaries and portals. */
   readonly themeStyle?: string;
   readonly locale: Locale;
 }

@@ -2,7 +2,7 @@ import type source from './ant-design-table-heading-content-reference.json';
 
 type HeadingCase = (typeof source.cases)[number];
 
-/** У Table только числа и строки создают неявный title на th с ellipsis. */
+/** In Table, only numbers and strings create an implicit title on th with ellipsis. */
 export function expectedTableHeadingContent(
   profile: HeadingCase['profile'],
   state: HeadingCase['initial']

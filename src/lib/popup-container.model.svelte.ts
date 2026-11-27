@@ -10,7 +10,7 @@ interface PopupContainerOptions {
   preserveVariables?: readonly string[];
 }
 
-/** Callback identity не меняет portal, пока функция возвращает тот же DOM-контейнер. */
+/** Callback identity doesn't change the portal until the function returns the same DOM-container. */
 export function createPopupContainer(getOptions: () => PopupContainerOptions) {
   let visited = false;
   let rendered = true;
@@ -20,9 +20,9 @@ export function createPopupContainer(getOptions: () => PopupContainerOptions) {
   $effect.pre(() => {
     const options = getOptions();
     visited ||= options.open;
-    // Cleanup Svelte читает прежние runes; DOM-флаг меняется до удаления условной ветки.
+    // Cleanup Svelte reads the previous runes; DOM-flag is changed until the conditional branch is removed.
     rendered = options.rendered !== false;
-    // rc-trigger передаёт фактический DOM trigger, включая SVG, при HTMLElement в исходном типе.
+    // rc-trigger passes the actual DOM trigger, including SVG, despite the upstream HTMLElement type.
     container = visited && options.reference && options.getPopupContainer
       ? options.getPopupContainer(options.reference as HTMLElement)
         ?? options.reference.ownerDocument.body
@@ -32,7 +32,7 @@ export function createPopupContainer(getOptions: () => PopupContainerOptions) {
   $effect(() => {
     void getOptions().themeStyle;
     const current = connection;
-    // Component-theme attachments должны закончить обновление собственных variables.
+    // Component-theme attachments must finish updating your own variables.
     if (current) queueMicrotask(() => current.syncTheme());
   });
 
@@ -57,7 +57,7 @@ export function createPopupContainer(getOptions: () => PopupContainerOptions) {
         get preserveVariables() {
           const style = node.ownerDocument.createElement('span').style;
           style.cssText = getOptions().themeStyle ?? '';
-          // Координаты и CSS-derived arrow variables принадлежат самой поверхности.
+          // The coordinates and CSS-derived arrow variables belong to the surface itself.
           return [
             '--arrow-x',
             '--arrow-y',

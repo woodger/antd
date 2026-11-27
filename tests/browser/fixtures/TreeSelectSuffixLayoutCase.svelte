@@ -104,7 +104,7 @@
       + 'box-sizing:border-box'}>{@render info.label()}</span>{/if}
 {/snippet}
 <div data-suffix-layout-case={sample.id} data-suffix-layout-bound={Boolean(root && editor && control)} style="margin:64px">
-  <!-- React Provider передаёт context без DOM: host сохраняет LTR и UA font 16px/normal. -->
+  <!-- React Provider transmits context without DOM: host preserves LTR and UA font 16px/normal. -->
   <ConfigProvider {direction} style={'direction:ltr;'
     + 'font-family:initial;'
     + 'font-size:16px;'

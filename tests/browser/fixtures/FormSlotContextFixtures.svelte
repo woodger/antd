@@ -17,7 +17,7 @@
   }
 
   let { initialCase = 'default' }: { initialCase?: string } = $props();
-  // Модель владеет metadata и до регистрации UI во время SSR.
+  // The model owns metadata and before registration UI during SSR.
   const model = createForm({ initialValues: { name: 'Main' }, rules: { name: [{}] } });
   let selected = $state(untrack(() => initialCase));
   let sample = $derived(readSample(selected));

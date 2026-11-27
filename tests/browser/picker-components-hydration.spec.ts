@@ -7,7 +7,7 @@ import type { ElementHandle, Page } from '@playwright/test';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
-/** Сверяет сохранение SSR элементов и клавиатурный переход между границами диапазона. */
+/** Verifies the preservation of SSR elements and the keyboard transition between the boundaries of the range. */
 async function verifyEditorHydration(page: Page, nativeSlot: boolean) {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-picker-editors-'));
   const originals: ElementHandle[] = [];

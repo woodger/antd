@@ -117,7 +117,7 @@ export async function actQuarter(page: Page, action: QuarterAction, index: numbe
         tag: hit?.tagName ?? null, targetContainsHit: hit != null && node.contains(hit),
         attributes: hit ? [...hit.attributes].map(item => [item.name, item.value]) : null };
     }, point);
-    // Настоящий mouse click допускает disabled target; force/снятие disabled не используются.
+    // This mouse click allows disabled target; force/removal disabled are not used.
     await page.mouse.click(point.x, point.y);
   }
   else {

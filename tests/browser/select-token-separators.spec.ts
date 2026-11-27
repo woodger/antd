@@ -50,7 +50,7 @@ for (const entry of reference.cases) {
     }
     if ('intermediate' in entry) {
       await expect.poll(() => readSelection(page)).toEqual(entry.intermediate);
-      // Enter во время IME не должен выбирать option до compositionend.
+      // Enter during IME does not have to choose the option to compositionend.
       await input.press('Enter');
       await expect.poll(() => readSelection(page)).toEqual(entry.intermediate);
       await input.dispatchEvent('compositionend', { data: entry.sample.text });
@@ -64,7 +64,7 @@ for (const entry of reference.cases) {
     } = structuredClone(entry.result);
     if (['multiple-disabled', 'multiple-explicit-value', 'whitespace-token']
       .includes(entry.sample.id)) {
-      // Source разрешает disabled в multiple и неявные blank tags; сохраняем native ограничения.
+      // Source authorizes disabled in multiple and implicit blank tags; save native restrictions.
       expected.values = expected.values.filter(value => value !== 'locked' && value !== '   ');
       expected.labels = expected.labels.filter(label => label !== 'Locked' && label !== '   ');
       expected.events = expected.events.map(event => event.type === 'change'

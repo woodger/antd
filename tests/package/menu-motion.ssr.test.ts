@@ -55,7 +55,7 @@ describe('Menu motion in the published SSR package', () => {
         if (props.inlineCollapsed || props.mode === 'vertical' || props.mode === 'horizontal') {
           expect(popupShells.length).toBeGreaterThan(0);
         }
-        // Существующие Svelte popup-контейнеры скрыты до клиентского позиционирования.
+        // Existing Svelte popup containers stay hidden until client positioning.
         for (const shell of popupShells) {
           expect(shell).toMatch(/\bhidden(?=[\s=>])/);
         }

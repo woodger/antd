@@ -1,4 +1,4 @@
-/* Как в runtime Ant Design: стили Button идут после Tour и выигрывают при равной specificity. */
+/* As in the Ant Design runtime, Button styles follow Tour styles and win when specificity ties. */
 @import './vendor/tour.css';
 @import './vendor/antd.css';
 @import './vendor/wave.css';

@@ -2,12 +2,11 @@ export function snapshotSkeletonElement(prefix = 'ant-skeleton') {
   const frame = document.querySelector('[data-skeleton-element-frame]')!;
   const root = frame.querySelector<HTMLElement>(`.${prefix}`)!;
   const content = root.firstElementChild!;
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-skeleton-css-var$|^skeleton-element-source-scope$/.test(name)
   ).sort();
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const css = (node: Element, keys: string[]) => Object.fromEntries(keys.map(key => {
     const value = getComputedStyle(node).getPropertyValue(key);
     return [key, key === 'animation-name' && value.endsWith('ant-skeleton-loading')

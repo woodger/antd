@@ -39,7 +39,7 @@ test('Descriptions token updates apply current queries while retaining the first
     for (const frame of reference.live.fresh) {
       await page.setViewportSize({ width: frame.width, height: 1200 });
 
-      // Raw Source update оставляет старые queries; public fresh mount даёт актуальную раскладку.
+      // Raw Source update leaves old queries; public fresh mount gives an up-to-date layout.
       await expect.poll(() => page.evaluate(snapshotDescriptionsBreakpoints)).toEqual(frame.layout);
       expect(await root.evaluate((node, old) => node === old, oldRoot)).toBe(true);
       expect(await input.evaluate((node, old) => node === old, oldInput)).toBe(true);

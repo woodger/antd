@@ -63,7 +63,7 @@ export function createWatermarkRuntime(
     if (mark.parentElement !== holder) {
       if (existing)
         getOnRemove()?.();
-      // OnRemove может синхронно удалить holder или весь компонент.
+      // OnRemove can synchronously remove the holder or the entire component.
       if (active && targets.has(holder))
         holder.append(mark);
     }
@@ -99,7 +99,7 @@ export function createWatermarkRuntime(
       if (!active) {
         return;
       }
-      // Как useSingletonCache: HTMLElement и top-level NaN исключаются из ключей.
+      // Like useSingletonCache: HTMLElement and top level NaN are excluded from the keys.
       const keys = [
         Array.isArray(content) ? content : '',
         rotate,

@@ -30,8 +30,8 @@ export type TextAreaChangeEvent = Event & {
   readonly nativeEvent: Event;
 };
 /**
- * Настройки ConfigProvider.textArea; локальные props имеют приоритет, nested config заменяется
- * целиком.
+ * Settings ConfigProvider.textArea; local props take precedence, nested config is replaced
+ * entirely.
  */
 export interface TextAreaConfig {
   allowClear?: boolean | TextAreaAllowClear;
@@ -43,24 +43,24 @@ export interface TextAreaConfig {
   styles?: TextAreaSemantic;
 }
 
-/** Многострочный native control с bind:value, autoSize, clear/count и FormItem. */
+/** Multi-string native control from bind:value, autoSize, clear/count and FormItem. */
 export interface TextAreaProps extends Omit<
   HTMLTextareaAttributes,
   'value' | 'defaultValue' | 'children' | 'class'
 > {
-  /** Поддерживает bind:value. */
+  /** Maintenances bind:value. */
   value?: string;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultValue?: string;
   size?: ComponentSize | 'medium';
   status?: 'error' | 'warning' | '';
-  /** Приоритет: variant, Form, textArea config, global variant, outlined. */
+  /** Priority: variant, Form, textArea config, global variant, */
   variant?: TextAreaVariant;
-  /** Измеряет содержимое или placeholder; minRows/maxRows ограничивают высоту. */
+  /** Measures the contents or placeholder; minRows/maxRows limits the height. */
   autoSize?: boolean | { minRows?: number; maxRows?: number; };
   allowClear?: boolean | TextAreaAllowClear;
   showCount?: boolean | { formatter: TextAreaCountFormatter; };
-  /** Общие с Input правила soft max, strategy и opt-in exceedFormatter. */
+  /** General with Input rules soft max, strategy and opt-in exceedFormatter. */
   count?: TextAreaCountConfig;
   maxLength?: number;
   readOnly?: boolean;
@@ -69,11 +69,11 @@ export interface TextAreaProps extends Omit<
   classNames?: TextAreaSemantic;
   styles?: TextAreaSemantic;
   rootClassName?: string;
-  /** Общий с Input базовый CSS prefix; empty/undefined наследуют ConfigProvider. */
+  /** Total from Input basic CSS prefix; empty/undefined inherits ConfigProvider. */
   prefixCls?: string;
-  /** Вызывается перед onChange и native oninput при вводе или очистке. */
+  /** Is called before onChange and native oninput when entering or clearing. */
   onValueChange?: (value: string) => void;
-  /** Стабильная копия target/currentTarget, nativeEvent содержит исходный DOM Event. */
+  /** A stable copy of target/currentTarget, nativeEvent contains the original DOM Event. */
   onChange?: (event: TextAreaChangeEvent) => void;
   onClear?: () => void;
   onResize?: (size: { width: number; height: number; }) => void;
@@ -84,9 +84,9 @@ export interface TextAreaProps extends Omit<
   onCompositionStart?: HTMLTextareaAttributes['oncompositionstart'];
   onCompositionEnd?: HTMLTextareaAttributes['oncompositionend'];
   onPressEnter?: HTMLTextareaAttributes['onkeydown'];
-  /** bind:nativeElement сохраняет реальный textarea, даже при наличии wrapper. */
+  /** bind:nativeElement preserves real textarea, even if there's a wrapper. */
   nativeElement?: HTMLTextAreaElement;
-  /** bind:rootElement даёт внешний textarea/span после mount. */
+  /** bind:rootElement gives an external textarea/span after mount. */
   rootElement?: HTMLElement;
   class?: string;
 }

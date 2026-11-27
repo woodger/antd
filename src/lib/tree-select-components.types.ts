@@ -26,12 +26,12 @@ export type TreeSelectInputRegistration<EditorElement extends TreeSelectEditorEl
   blur?(): void;
 };
 
-/** Примените merged attributes к корню и зарегистрируйте его DOM или composite ref. */
+/** Apply merged attributes to the root and register its DOM or composite ref. */
 export interface TreeSelectRootContext<RootElement extends HTMLElement = HTMLDivElement> {
   attributes: TreeSelectRootAttributes<RootElement>;
   register: (ref: TreeSelectRootRegistration<RootElement>) => () => void;
 }
-/** Примените merged attributes к редактору и зарегистрируйте его DOM или composite ref. */
+/** Apply merged attributes to the editor and register it with DOM or composite ref. */
 export interface TreeSelectInputContext<EditorElement extends TreeSelectEditorElement = HTMLInputElement> {
   attributes: TreeSelectInputAttributes<EditorElement>;
   register: (ref: TreeSelectInputRegistration<EditorElement>) => () => void;
@@ -40,20 +40,20 @@ export interface TreeSelectInputContext<EditorElement extends TreeSelectEditorEl
 export type TreeSelectRootComponent<RootElement extends HTMLElement = HTMLDivElement> =
   Snippet<[TreeSelectRootContext<RootElement>]> | {
     render: Snippet<[TreeSelectRootContext<RootElement>]>;
-    /** Собственные attrs; callbacks вызываются после внутренних обработчиков корня. */
+    /** Own attrs; callbacks are triggered after the root's internal handlers. */
     props?: TreeSelectRootAttributes<RootElement>;
   };
 export type TreeSelectInputComponent<EditorElement extends TreeSelectEditorElement = HTMLInputElement> =
   Snippet<[TreeSelectInputContext<EditorElement>]> | {
     render: Snippet<[TreeSelectInputContext<EditorElement>]>;
-    /** Собственные attrs; callbacks вызываются перед внутренними обработчиками редактора. */
+    /** Own attrs; callbacks are called before the editor 's internal handlers. */
     props?: TreeSelectInputAttributes<EditorElement>;
   };
 export interface TreeSelectComponents<
   RootElement extends HTMLElement = HTMLDivElement,
   EditorElement extends TreeSelectEditorElement = HTMLInputElement
 > {
-  /** Полная замена поля; стандартное содержимое и components.input не рендерятся. */
+  /** Complete field replacement; standard content and components.input are not rendered. */
   root?: TreeSelectRootComponent<RootElement>;
   input?: TreeSelectInputComponent<EditorElement>;
 }

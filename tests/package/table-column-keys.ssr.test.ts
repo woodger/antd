@@ -8,14 +8,14 @@ import {
   expectedColumnState, usesPositionalKey
 } from '../browser/fixtures/table-column-key-reference';
 
-/** Читает значение атрибута заголовка, включая пустой ключ. */
+/** Reads a header attribute value, including an empty key. */
 function headerKey(body: string, slot: 'column' | 'peer') {
   const pattern = new RegExp(`<th\\b([^>]*\\sdata-probe-title="${slot}"[^>]*)>`);
   const tag = body.match(pattern)?.[1];
   return tag?.match(/\sdata-probe-key="([^"]*)"/)?.[1] ?? null;
 }
 
-/** Считывает текст ячеек целевой колонки из первого серверного окна. */
+/** Reads cell text in the target column from the first server window. */
 function readRows(body: string) {
   const rows = /<tr\b[^>]*\sdata-row-key="([^"]+)"[^>]*>([\s\S]*?)<\/tr>/g;
   return Array.from(body.matchAll(rows), ([, key, row]) => {

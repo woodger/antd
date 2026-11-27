@@ -74,7 +74,7 @@
       previousInitial = initial;
       previousRtl = rtl;
       untrack(() => {
-        // Ant Design использует число исходных children до Slick rows/slidesPerRow.
+        // Ant Design counts the input children before applying Slick's rows and slidesPerRow.
         if (items.length > 0) slider.slickGoTo(rtl ? items.length - initial - 1 : initial, false);
       });
     }

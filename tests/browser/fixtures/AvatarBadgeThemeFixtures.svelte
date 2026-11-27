@@ -72,7 +72,7 @@
   <label><input type="checkbox" bind:checked={inherited} /> Inherit child Avatar Badge tokens</label>
   {#if mounted}
     <ConfigProvider theme={enabled ? config : undefined}>
-      <!-- Родитель повторяет body 16px в эталоне UMD для проверки наследуемых undefined. -->
+      <!-- The parent repeats body 16px at benchmark UMD to inherit undefined. -->
       <div style={'font-size:16px;'
         + 'line-height:normal'}>
         <Avatar id="themed-avatar" alt="Themed avatar">A</Avatar>

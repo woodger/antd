@@ -75,7 +75,7 @@
       if (event.target === column && event.detail < 2) firstClickEnabled = false;
     };
     const handleDoubleClick = (event: MouseEvent) => {
-      // Скролл между вторыми down/up переносит click/dblclick на общий ul.
+      // Scrolling between the second down and up moves click and dblclick to the common ul.
       if (event.target !== column || !firstClickEnabled) {
         return;
       }
@@ -150,7 +150,7 @@
       ]}
       {style}
       onclick={event => {
-        // Автопрокрутка после первого click может подставить другую ячейку под второй.
+        // Auto-scroll after the first click can put another cell under the second click.
         if (event.detail >= 2) return;
         firstClickEnabled = !option.disabled;
         if (firstClickEnabled) onChange(option.value);

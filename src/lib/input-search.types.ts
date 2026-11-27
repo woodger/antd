@@ -10,28 +10,28 @@ import type {
 } from './input.types';
 
 /**
- * Замена React cloneElement для enterButton snippet. Примените результат к Button или
- * native button: сохраняются собственные callbacks, disabled/loading и порядок обработчиков.
+ * Replacement React cloneElement for enterButton snippet. Apply the result to Button or native
+ * button: save your own callbacks, disabled/loading and the order of handlers.
  */
 export interface InputSearchButtonContext {
-  /** Добавляет search class/size/loading; собственные callbacks вызываются первыми. */
+  /** Adds search class/size/loading; own callbacks are called first. */
   getButtonProps: (props?: ButtonProps) => ButtonProps;
-  /** Сохраняет native class/type; loading дополнительно блокирует native button. */
+  /** Saves native class/type; loading additionally blocks the native button. */
   getNativeProps: (props?: HTMLButtonAttributes) => HTMLButtonAttributes;
 }
 
 export type InputSearchSemanticSlots = InputSemanticSlots & { button?: ButtonSlots | string; };
 
 /**
- * Callback получает исходные Props с default enterButton и variant настроек Search.
- * Как в upstream, disabled здесь не заменяется значением ConfigProvider.
- * String в button служит сокращением для button.root.
+ * The callback receives the original props with the default enterButton and Search variant. As in
+ * upstream, ConfigProvider does not override disabled here. A string in button is shorthand for
+ * button.root.
  */
 export type InputSearchSemantic =
   | InputSearchSemanticSlots
   | ((info: { props: InputSearchProps; }) => InputSearchSemanticSlots | undefined);
 
-/** Настройки ConfigProvider.inputSearch; вложенный объект заменяет родительский целиком. */
+/** Settings ConfigProvider.inputSearch; the nested object replaces the parent whole. */
 export interface InputSearchConfig {
   searchIcon?: InputContent;
   variant?: InputVariant;
@@ -42,33 +42,33 @@ export interface InputSearchConfig {
 }
 
 /**
- * Svelte-экспорт Input.Search с bind:value и событиями Input. Class/style/hidden и data-*
- * относятся к Compact root; inputElement/nativeElement и методы bind:this принадлежат Input.
+ * Svelte-export Input.Search from bind:value and events Input. Class/style/hidden and data-* refer
+ * to Compact root; inputElement/nativeElement and methods bind:this belong to Input.
  */
 export interface InputSearchProps extends Omit<InputProps, 'classNames' | 'styles'> {
-  /** CSS prefix корня Search и его button states; empty/undefined наследуют ConfigProvider. */
+  /** CSS prefix root Search and its button states; empty/undefined inherit ConfigProvider. */
   prefixCls?: string;
-  /** Независимый CSS prefix вложенного Input; по умолчанию общий input prefix. */
+  /** Independent CSS prefix nested Input; by default total prefix input. */
   inputPrefixCls?: string;
   /**
-   * false по умолчанию: обычная icon button; true — primary icon button;
-   * scalar — текст primary button. Snippet заменяет кнопку целиком и получает контекст props.
+   * false by default: ordinary icon button; true — primary icon button; scalar — the text button
+   * primary. Snippet replaces the whole button and receives context props.
    */
   enterButton?: string | number | boolean | null | Snippet<[InputSearchButtonContext]>;
   /**
-   * Локальное значение перекрывает context; null/false скрывают иконку.
-   * Применяется только для boolean enterButton.
+   * The local value overrides the context; null/false hide the icon. It is used only for boolean
+   * enterButton.
    */
   searchIcon?: InputContent;
-  /** Блокирует кнопку и поиск по Enter; очистка остаётся доступной, как в upstream. */
+  /** Blocks the button and search by Enter; the clearing stays available, as in upstream. */
   loading?: boolean;
-  /** Очистка вызывает source=clear перед onChange; Enter/кнопка вызывают source=input. */
+  /** Clearing causes source=clear before onChange; Enter/button cause source=input. */
   onSearch?: (
     value: string,
     event?: InputChangeEvent | MouseEvent | KeyboardEvent,
     info?: { source?: 'input' | 'clear'; }
   ) => void;
-  /** Блокируется при loading/IME и вызывается перед onSearch для Enter. */
+  /** Blocked at loading/IME and is called before onSearch for Enter. */
   onPressEnter?: InputProps['onPressEnter'];
   classNames?: InputSearchSemantic;
   styles?: InputSearchSemantic;

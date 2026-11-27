@@ -591,7 +591,7 @@ for (const placement of ['top', 'bottom', 'left', 'right', 'topLeft', 'topRight'
     const panel = (await popup(page).boundingBox())!;
     const target = (await button(page, 'Tour first target').boundingBox())!;
     const gap = 18;
-    // rc-trigger округляет inset вниз; bottom/right дают обратное округление координаты края.
+    // rc-trigger rounds the inset down; bottom/right gives reverse rounding of the edge coordinates.
     if (placement.startsWith('top')) {
       expect(panel.y + panel.height).toBeCloseTo(Math.ceil(target.y - gap), 3);
     }

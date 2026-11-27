@@ -1,5 +1,5 @@
-// Создаёт семейство DatePicker на одном адаптере. Пикеры используют общие Svelte-компоненты
-// и передают значения адаптера без промежуточной обёртки.
+// Creates a DatePicker family for one adapter. The pickers share Svelte components and pass adapter
+// values through without wrapping them.
 import type { Component, ComponentConstructorOptions, SvelteComponent } from 'svelte';
 import DatePickerRoot from './DatePicker.svelte';
 import RangePickerRoot from './RangePicker.svelte';
@@ -31,7 +31,7 @@ interface CustomTimeRangeModeProps<DateType extends object> extends
 type RangePickerFamilyProps<DateType extends object> = RangePickerProps<DateType>
   | TimeRangeModeProps<DateType> | CustomTimeRangeModeProps<DateType>;
 
-/** Тип props согласован у вызова компонента и у служебного $set для вывода в шаблоне. */
+/** The component call and internal $set use the same props type for template inference. */
 interface RangePickerComponent<DateType extends object> {
   (anchor: unknown, props: RangePickerFamilyProps<DateType>): RangePickerHandle & {
     $on?: ReturnType<Component>['$on'];
@@ -46,7 +46,7 @@ type PickerSelectionProps<
   ? Omit<DatePickerSelectionProps<Multiple, DateType>, 'picker'>
   : DatePickerSelectionProps<Multiple, DateType>;
 
-/** Сохраняет вывод multiple в шаблоне через изоморфную декларацию Svelte. */
+/** Retains inference of multiple in templates through Svelte's isomorphic declaration. */
 export interface PickerSelectionComponent<
   DateType extends object, DefaultPicker extends DatePickerPicker | undefined
 > {
@@ -60,14 +60,14 @@ export interface PickerSelectionComponent<
   z_$$bindings?: 'nativeElement';
 }
 
-/** Вяжет общее поле к адаптеру. Сигнатура mount по умолчанию выбирает одну дату. */
+/** Binds the shared field to the adapter. The default mount signature selects a single date. */
 function createDatePickerComponent<
   DateType extends object, DefaultPicker extends DatePickerPicker | undefined = undefined
 >(
   dateOperations: PickerDateOperations<DateType>,
   defaultPicker?: DefaultPicker
 ) {
-  /** Передаёт внутреннему полю исходные getter'ы, настройки режима и адаптер. */
+  /** Forwards the original getters, mode settings, and adapter to the internal field. */
   function render<Multiple extends boolean = false>(
     anchor: unknown, props: DatePickerSelectionProps<Multiple, DateType>
   ) {
@@ -76,15 +76,15 @@ function createDatePickerComponent<
     );
   }
 
-  // Вызов добавляет все внутренние props DatePickerRoot. Публичная декларация
-  // оставляет только props владельца и те же типы ref и binding.
+  // The call supplies all internal DatePickerRoot props. The public declaration retains the owner
+  // props and the same ref and binding types.
   const component = render as unknown as PickerSelectionComponent<DateType, DefaultPicker>;
   const scalar = component<false>;
   const picker: typeof component & typeof scalar = component;
   return picker;
 }
 
-/** Закрепляет конфигурацию для всех полей семейства и трёх календарных специализаций. */
+/** Fixes the configuration for the whole family and its three calendar variants. */
 export function createPickerFamily<DateType extends object>(
   dateOperations: PickerDateOperations<DateType>,
   parseTimeInput?: TimeRangeInputParser<DateType>
@@ -103,7 +103,7 @@ export function createPickerFamily<DateType extends object>(
   });
 }
 
-/** Создаёт DatePicker и его варианты для типа даты, который обслуживает generateConfig. */
+/** Creates DatePicker and its variants for the date type supported by generateConfig. */
 export function generatePicker<DateType extends object>(generateConfig: GenerateConfig<DateType>) {
   return createPickerFamily(createPickerDateOperations(generateConfig));
 }

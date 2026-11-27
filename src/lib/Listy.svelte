@@ -109,7 +109,7 @@
     outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
     outline-offset: 2px;
   }
-  /* Prefix stylesheet появляется в head позже bundle; native reduced motion остаётся приоритетным. */
+  /* The prefix stylesheet is added to the head after the bundle. Native reduced motion still takes precedence. */
   @media (prefers-reduced-motion: reduce) { :global([data-ant-listy][data-ant-listy-prefix] [data-ant-listy-item]) { transition: none; } }
 </style>
 

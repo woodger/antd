@@ -7,7 +7,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 const fixture = '/?fixture=table-locale&profile=';
 const root = '#table-locale-fixture';
 
-/** Читает видимые подписи и текущее состояние портальных элементов. */
+/** Reads the visible labels and the current state of the portal elements. */
 function snapshot(kind: string | null) {
   const root = document.getElementById('table-locale-fixture');
   const table = root?.querySelector('[data-ant-table-part="table"]');
@@ -19,7 +19,7 @@ function snapshot(kind: string | null) {
   const menu = document.querySelector('[data-ant-dropdown-popup]:popover-open [role="menu"]');
   const tooltip = document.querySelector('[data-ant-tooltip]:popover-open [data-ant-tooltip-container]');
 
-  /** Декоративный SVG содержит метаданные, которые не входят в видимую подпись. */
+  /** Decorative SVG contains metadata that are not included in the visible label. */
   function text(element: Element) {
     const copy = element.cloneNode(true);
     if (!(copy instanceof Element)) {
@@ -32,7 +32,7 @@ function snapshot(kind: string | null) {
     return copy.textContent.trim();
   }
 
-  /** Описывает один фрагмент вместе с типом пустого состояния. */
+  /** Describes one fragment together with a type of empty state. */
   function content(element: Element) {
     return {
       text: text(element),
@@ -77,7 +77,7 @@ function snapshot(kind: string | null) {
   };
 }
 
-/** Повторяет действия React на публичных элементах Svelte. */
+/** Repeats actions React on public elements Svelte. */
 async function act(page: Page, action: string) {
   switch (action) {
     case 'filter':

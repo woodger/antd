@@ -14,7 +14,7 @@ if (!target) {
   throw new Error('Missing server-rendered virtual table');
 }
 
-// Редактирование поля до запуска клиента позволяет проверить DOM identity и caret.
+// Editing the field to the start of the client allows you to check DOM identity and caret.
 target.addEventListener('hydrate-table-virtual', () => {
   const query = new URLSearchParams(location.search);
   if (query.has('custom-elements')) {

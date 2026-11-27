@@ -1,9 +1,9 @@
-// Преобразует значения Select для событий и отображения. Кэш сохраняет прежние
-// подписи и ссылки, когда исходные options исчезают или видимые поля не меняются.
+// Converts Select values for events and display. The cache preserves existing labels and references
+// when the original options disappear or their visible fields are unchanged.
 // @rc-component/select 1.10.1; MIT, vendor/LICENSE.rc-select.
 import type { SelectDataCache, SelectDataDisplay, SelectDataFields, SelectDataMaps, SelectDataValue } from './select-data.types';
 
-/** Внутренний labeled item Source; raw option хранится отдельно. */
+/** Internal labeled item Source; raw option is stored separately. */
 export interface SelectValueItem<Value extends SelectDataValue> {
   label: unknown;
   value: Value;
@@ -17,13 +17,13 @@ export interface SelectValueCache<Value extends SelectDataValue, Data extends ob
   values: readonly SelectValueItem<Value>[];
 }
 
-// Создаёт независимые карты для нового экземпляра Select.
+// Creates independent cards for a new instance of Select.
 export function emptySelectValueCache<Value extends SelectDataValue, Data extends object>():
   SelectValueCache<Value, Data> {
   return { labels: new Map(), options: new Map(), display: [], values: [] };
 }
 
-/** Запоминает новые options до публикации выбора. Следующий resolve оставит принятые ключи. */
+/** Memorizes new options prior to choosing. The next will leave the received keys. */
 export function rememberSelectOptions<Value extends SelectDataValue, Data extends object>(
   cache: SelectValueCache<Value, Data>,
   items: readonly SelectValueItem<Value>[],
@@ -45,13 +45,13 @@ export function rememberSelectOptions<Value extends SelectDataValue, Data extend
   return remembered ? { ...cache, ...remembered } : cache;
 }
 
-/** Объектный label читается независимо от labelInValue; флаг меняет только outgoing payload. */
+/** Object label reads regardless of labelInValue; the flag only changes outgoing payload. */
 export function selectValueRaw<Value extends SelectDataValue>(draft: unknown): Value | undefined {
   const value = draft && typeof draft === 'object' ? Reflect.get(draft, 'value') : draft;
   return typeof value === 'string' || typeof value === 'number' ? value as Value : undefined;
 }
 
-/** Raw-noop controlled reselect не заменяет supplied labeled record новым option label. */
+/** Raw-noop controlled reselect does not replace the provided labeled record with a new option label. */
 export function keepSelectSuppliedValue(
   current: unknown,
   provided: unknown,
@@ -61,7 +61,7 @@ export function keepSelectSuppliedValue(
     && selectValueRaw(provided) === next && selectValueRaw(current) === next;
 }
 
-/** Новый label API включает Source snapshot; обычные primitive labels сохраняют Native refresh. */
+/** The new label API includes Source snapshot; the usual primitive labels save the Native refresh. */
 export function hasSelectLabelFeatures(
   labelInValue: boolean | undefined,
   optionLabelProp: string | undefined,
@@ -74,7 +74,7 @@ export function hasSelectLabelFeatures(
     || Boolean(items?.some(item => typeof item.label === 'function' || Array.isArray(item.label)));
 }
 
-/** Сохраняем прежний Native distinct-values contract, включая различие number/string. */
+/** We save the previous Native effective-values contract, including the distinction number/string. */
 export function selectValueDrafts(draft: unknown, multiple: boolean): readonly unknown[] {
   const values = multiple ? Array.isArray(draft) ? draft : [] : draft === undefined || draft === null ? [] : [draft];
   const seen = new Set<SelectDataValue>();
@@ -88,7 +88,7 @@ export function selectValueDrafts(draft: unknown, multiple: boolean): readonly u
   });
 }
 
-/** Callback conversion не подставляет cached label: cache применяется к display отдельно. */
+/** Callback conversion doesn't outline cached label: cache is applied to display separately. */
 export function convertSelectValues<Value extends SelectDataValue, Data extends object>(
   drafts: readonly unknown[],
   maps: SelectDataMaps<Value, Data>,
@@ -97,9 +97,9 @@ export function convertSelectValues<Value extends SelectDataValue, Data extends 
 ): SelectValueItem<Value>[] {
   return drafts.map(convertItem);
 
-  // Использует подпись option только при строго отсутствующем label.
+  // Uses an option label only when the label is strictly missing.
   function convertItem(draft: unknown): SelectValueItem<Value> {
-    // Правило 2: вызовы из Select передают отобранные drafts или известный ключ выбора.
+    // Rule 2: calls from Select transmit selected drafts or a well-known selection key.
     const value = selectValueRaw<Value>(draft)!;
     const option = maps.valueOptions.get(value);
     let label: unknown = draft && typeof draft === 'object' ? Reflect.get(draft, 'label') : undefined;
@@ -118,7 +118,7 @@ export function convertSelectValues<Value extends SelectDataValue, Data extends 
   }
 }
 
-// Сравнивает порядок, ключи и значения, чтобы определить возможность переиспользования Map.
+// Compares the order, keys and values to determine the possibility of reusing Map.
 function sameMap<Key, Value>(before: ReadonlyMap<Key, Value>, next: ReadonlyMap<Key, Value>) {
   if (before.size !== next.size) {
     return false;
@@ -133,7 +133,7 @@ function sameMap<Key, Value>(before: ReadonlyMap<Key, Value>, next: ReadonlyMap<
   return true;
 }
 
-// Проверяет метаданные labelRender, сохраняя различие null, пустой строки и чисел.
+// Verifies metadata labelRender, keeping the difference null, blank string and numbers.
 function sameItem<Value extends SelectDataValue>(
   before: SelectValueItem<Value>,
   next: SelectValueItem<Value>
@@ -142,7 +142,7 @@ function sameItem<Value extends SelectDataValue>(
     && Object.is(before.disabled, next.disabled) && Object.is(before.title, next.title);
 }
 
-// Возвращает прежний снимок, пока данные текущего выбора совпадают.
+// Returns the previous snapshot as long as the current selection data matches.
 export function resolveSelectValueCache<Value extends SelectDataValue, Data extends object>(
   drafts: readonly unknown[],
   maps: SelectDataMaps<Value, Data>,
@@ -176,7 +176,7 @@ export function resolveSelectValueCache<Value extends SelectDataValue, Data exte
 
   return { labels: nextLabels, options: nextOptions, values: nextValues, display: nextDisplay };
 
-  // Создаёт запись labelRender и Native-строку, которая сохраняет disabled удалённого option.
+  // Creates an entry labelRender and an Native line that preserves a disabled remote option.
   function appendCachedItem(item: SelectValueItem<Value>) {
     const current = maps.valueOptions.get(item.value);
     const data = current ?? previous.options.get(item.value);
@@ -184,7 +184,7 @@ export function resolveSelectValueCache<Value extends SelectDataValue, Data exte
       ...item,
       label: item.label === undefined ? previous.labels.get(item.value) : item.label
     };
-    // Только Native display сохраняет disabled удалённого raw option; renderer metadata остаётся Source.
+    // Only Native display disabled save remote raw option; metadata remains Source.
     const disabled = current ? item.disabled : data ? Reflect.get(data, 'disabled') as boolean | undefined : undefined;
     labels.set(item.value, next.label);
     options.set(item.value, data);
@@ -202,7 +202,7 @@ export function resolveSelectValueCache<Value extends SelectDataValue, Data exte
   }
 }
 
-/** Метаданные dropdown select/deselect читают mapped label, а не optionLabelProp. */
+/** Metadata dropdown select/deselect reads mapped label, not optionLabelProp. */
 export function selectValueEvent<Value extends SelectDataValue>(
   value: Value,
   data: object | undefined,
@@ -212,7 +212,7 @@ export function selectValueEvent<Value extends SelectDataValue>(
   return labelInValue ? { label: data ? Reflect.get(data, fields.label) : undefined, value } : value;
 }
 
-// Сохраняет форму payload для single, multiple и labelInValue.
+// Retains a payload form for single, multiple and labelInValue.
 export function selectValueOutput<Value extends SelectDataValue>(
   values: readonly SelectValueItem<Value>[],
   multiple: boolean,
@@ -222,13 +222,13 @@ export function selectValueOutput<Value extends SelectDataValue>(
   return multiple ? result : result[0];
 }
 
-/** Plain editor/ARIA text не вызывает непрозрачный Svelte Snippet. */
+/** Plain editor/ARIA text does not cause opaque Svelte Snippet. */
 export function selectValueText(label: unknown): string {
   return Array.isArray(label) ? label.map(selectValueText).join('')
     : typeof label === 'string' || typeof label === 'number' ? String(label) : '';
 }
 
-// Выбирает title или label только из строковых и числовых значений.
+// Select title or label only from string and numerical values.
 export function selectValueTitle(item: { label: unknown; title?: unknown } | undefined) {
   const title = typeof item?.title === 'string' || typeof item?.title === 'number' ? item.title : item?.label;
   return typeof title === 'string' || typeof title === 'number' ? String(title) : undefined;

@@ -47,7 +47,7 @@ for (const sample of [...selectTagCloseHandleSamples, ...cachedOptionSamples]) t
   let ledger = null as Awaited<ReturnType<typeof readTagCloseHandleLedger>> | null, cleanup = null as Awaited<ReturnType<typeof readTagCloseHandleCleanup>> | null,
     late = null as Awaited<ReturnType<typeof readTagCloseHandleCleanup>> | null, disposed = false;
   const identities = createTagCloseIdentityProof();
-  // Читает журнал и удаляет оставшийся компонент при прерванном сценарии.
+  // Reads the journal and deletes the remaining component in an interrupted scenario.
   async function captureRemainingCleanup() {
     try {
       ledger = await readTagCloseHandleLedger(page);

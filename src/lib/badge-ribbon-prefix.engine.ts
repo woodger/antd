@@ -1,6 +1,6 @@
 import template from './vendor/badge-ribbon-prefix.css.js';
 
-/** Геометрия Ribbon в source следует общему prefix, независимо от локального prefixCls. */
+/** Upstream Ribbon geometry follows the shared prefix independently of local prefixCls. */
 export function getBadgeRibbonPrefixCss(rootPrefix: string) {
   if (rootPrefix === 'ant') {
     return undefined;

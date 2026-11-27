@@ -1,15 +1,15 @@
-// Следит за фактическим текстовым содержимым Button для режима autoInsertSpace. Наблюдение
-// принадлежит текущему DOM-узлу.
+// Tracks Button's actual text content for autoInsertSpace. Observation belongs to the current DOM
+// node.
 import { buttonTwoCN } from './button.engine';
 
-// Отслеживает текстовые изменения и сразу публикует состояние для первого рендера.
+// Observes text mutations and publishes the initial state immediately for the first render.
 export function connectButtonText(
   content: HTMLElement,
   getEnabled: () => boolean,
   notify: (twoCN: boolean) => void
 ) {
   let active = true;
-  // Проверяет режим вставки пробела, когда содержимое представлено одним значимым дочерним узлом.
+  // Checks whether spacing should be inserted when content has a single meaningful child node.
   const refresh = () => {
     if (!active) {
       return;
@@ -24,7 +24,7 @@ export function connectButtonText(
   refresh();
   return {
     refresh,
-    // Отключает наблюдение, блокируя публикацию уже поставленных в очередь обновлений.
+    // Disconnects observation and blocks publication of already queued updates.
     destroy() {
       active = false;
       observer.disconnect();

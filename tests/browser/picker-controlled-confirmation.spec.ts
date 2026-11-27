@@ -7,7 +7,7 @@ type RecordedState = Sample['steps'][number]['state'];
 const fixture = '#picker-controlled-confirmation-fixture';
 const dropdown = '.ant-picker-dropdown:not(.ant-picker-dropdown-hidden)';
 
-/** Выполняет выбор без hover и подтверждает выбор штатной кнопкой. */
+/** Performs the choice without hover and confirms the choice of a full-time button. */
 async function act(page: Page, profile: Sample['profile'], action: string) {
   const popup = page.locator(dropdown);
   if (action === 'start') {
@@ -32,7 +32,7 @@ async function act(page: Page, profile: Sample['profile'], action: string) {
   }
 }
 
-/** Читает отображаемое значение, состояние панели и хронологию callbacks. */
+/** Reads the displayed value, panel status and callbacks chronology. */
 async function readSelection(page: Page) {
   return page.evaluate(({ fixture, dropdown }) => {
     const root = document.querySelector(fixture);
@@ -49,7 +49,7 @@ async function readSelection(page: Page) {
   }, { fixture, dropdown });
 }
 
-/** Корневой DatePicker сообщает info.source в одиночном редакторе и у списка. */
+/** Root DatePicker reports info.source in a single editor and at the list. */
 function expectedState(profile: Sample['profile'], state: RecordedState) {
   const hasCalendarSource = profile.entry === 'root' || profile.entry === 'date';
   const events = state.events.map(event => hasCalendarSource && event[0] === 'calendar'

@@ -1,6 +1,6 @@
 import template from './vendor/input-prefix.css.js';
 
-/** Input/TextArea разделяют базовый prefix; token variables и semantic styles сохраняются. */
+/** Input/TextArea share basic prefix; token variables and semantic styles saved. */
 export function getInputPrefixCss(prefix: string) {
   if (prefix === 'ant-input') {
     return undefined;

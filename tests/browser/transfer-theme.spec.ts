@@ -11,7 +11,7 @@ for (const sample of reference.cases) {
       await page.getByLabel('Transfer theme preset', { exact: true }).selectOption(sample.name);
 
       const expected = structuredClone(sample.metrics);
-      // Native remove button сохраняет font:inherit; Source оставляет браузерный размер кнопки.
+      // Native remove button preserves font:inherit; Source leaves the browser-sized button.
       for (const id of ['normal', 'rtl', 'priority'] as const) {
         for (const section of expected[id]['one-way'].sections) {
           if (section.remove && section.item) {
@@ -19,7 +19,7 @@ for (const sample of reference.cases) {
           }
         }
         if (sample.name === 'undefined-metrics') {
-          // Прежний native fallback — обычный simple Empty без source ant-empty-small.
+          // The previous native fallback is the usual simple Empty without ant-empty-small.
           expected[id].empty = reference.nativeEmptyObservation.metrics[id];
         }
       }

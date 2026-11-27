@@ -1,5 +1,5 @@
-// Готовит строки и активные настройки Table. В режиме server проверяет ключи
-// и нормализует настройки, оставляя обработку данных вызывающему коду.
+// Prepares strings and active settings Table. In the server mode, check the keys and normalize the
+// settings, leaving the processing of data to the calling code.
 import type {
   TableColumn,
   TableColumnsType,
@@ -18,9 +18,9 @@ import { createTableSortPlan, tableSortDirections, type TableSortState } from '.
 import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from './table-tree.engine';
 
 /**
- * Фильтрует и стабильно сортирует данные без мутации исходных records. Row keys должны
- * быть уникальными строками или конечными числами; некорректные keys/columns вызывают Error.
- * В server mode обработка данных остаётся у потребителя.
+ * Filters and steadily sorts the data without the mutation of the original records. Row keys must
+ * be unique strings or end numbers; incorrect keys/columns cause Error. In server mode, data
+ * processing remains with the consumer.
  */
 export function getTableData<Row extends object>(
   dataSource: readonly Row[],
@@ -55,8 +55,8 @@ export function getTableData<Row extends object>(
   const filteredColumns = dataColumns.filter(column =>
     column.onFilter && Object.hasOwn(activeFilters, column.key));
   if (roots.some(row => row.children !== undefined)) {
-    // В дереве Ant Design сначала сортирует каждый уровень. Фильтр родителя видит
-    // отсортированные и отфильтрованные дочерние записи.
+    // In the Ant Design tree, each level is sorted first. The parent’s filter sees sorted and
+    // filtered children.
     const sorted = compare ? sortTableTree(roots, compare, childrenColumnName) : roots;
     const rows = filterTableTree(sorted, filteredColumns, activeFilters, childrenColumnName);
 
@@ -77,7 +77,7 @@ export function getTableData<Row extends object>(
   return { ...state, rows };
 }
 
-// Нормализует значения для всего дерева колонок, независимо от видимости заголовков.
+// Normalizes values for the entire column tree, regardless of the visibility of the headings.
 export function getTableFilters<Row extends object>(
   columns: TableColumnsType<Row>,
   filters: Readonly<Record<string, readonly TableFilterValue[]>> = {},
@@ -86,7 +86,7 @@ export function getTableFilters<Row extends object>(
   return getColumnFilters(getTableColumnOrder(columns), filters, mode);
 }
 
-/** Возвращает варианты фильтра, доступные в текущем режиме обработки данных. */
+/** Returns the filter options available in the current data processing mode. */
 export function getTableFilterOptions<Row extends object>(
   column: TableColumn<Row>, mode: TableMode
 ) {
@@ -94,7 +94,7 @@ export function getTableFilterOptions<Row extends object>(
     ? column.filters : undefined;
 }
 
-/** Запоминает начальные значения колонок. Явные ключи defaultFilters задаёт таблица. */
+/** Memories the initial values of the columns. Explicit keys defaultFilters set the table. */
 export function getInitialTableFilters<Row extends object>(
   columns: readonly TableColumn<Row>[],
   defaults: Readonly<Record<string, readonly TableFilterValue[]>> = {}
@@ -115,7 +115,7 @@ export function getInitialTableFilters<Row extends object>(
   return Object.fromEntries(entries);
 }
 
-/** Собирает значения владельца, включая пустые критерии управляемых колонок. */
+/** Collects the values of the owner, including the empty criteria of managed columns. */
 export function getControlledTableFilters<Row extends object>(
   columns: readonly TableColumn<Row>[], mode: TableMode
 ): TableFilters | undefined {
@@ -131,7 +131,7 @@ export function getControlledTableFilters<Row extends object>(
   return entries.length ? Object.fromEntries(entries) : undefined;
 }
 
-/** Убирает повторы и учитывает ограничения встроенной панели, если они заданы. */
+/** Removes repeats and takes into account the limitations of the built-in panel, if they are specified. */
 export function normalizeTableFilter(
   options: readonly TableFilterOption[] | undefined,
   values?: readonly TableFilterValue[] | null,
@@ -150,7 +150,7 @@ export function normalizeTableFilter(
   return multiple === false ? selected.slice(0, 1) : selected;
 }
 
-// Пользовательская панель сама задаёт допустимые значения и правила выбора.
+// The user panel itself sets the allowable values and selection rules.
 function getColumnFilters<Row extends object>(
   columns: readonly TableColumn<Row>[],
   filters: Readonly<Record<string, readonly TableFilterValue[]>> = {},
@@ -177,7 +177,7 @@ function getColumnFilters<Row extends object>(
   return Object.fromEntries(entries);
 }
 
-// Сравнивает наборы значений фильтра без учёта порядка и повторов.
+// Compares sets of filter values without taking into account order and repetitions.
 export function areTableFiltersEqual(left: TableFilters, right: TableFilters): boolean {
   const keys = Object.keys(left);
 
@@ -193,7 +193,7 @@ export function areTableFiltersEqual(left: TableFilters, right: TableFilters): b
   });
 }
 
-/** Следующий шаг берётся из цикла колонки, а конец списка очищает направление. */
+/** The next step is taken from the column cycle, and the end of the list clears the direction. */
 export function getNextTableSorter(
   columnKey: string,
   sorter: TableSorter | null,
@@ -204,7 +204,7 @@ export function getNextTableSorter(
   return order ? { columnKey, order } : null;
 }
 
-// Заголовок агрегирует выбор только для переданных строк страницы.
+// The title aggregates the selection only for the transferred page lines.
 export function getTableSelection(
   pageKeys: readonly TableKey[],
   selectedKeys: readonly TableKey[]
@@ -219,7 +219,7 @@ export function getTableSelection(
   };
 }
 
-// Обновляет переданные ключи, сохраняя выбор на остальных страницах.
+// Upgrades the transferred keys, keeping a selection on the rest of the pages.
 export function changeTableSelection(
   selectedKeys: readonly TableKey[],
   changedKeys: readonly TableKey[],

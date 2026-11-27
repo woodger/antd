@@ -412,7 +412,7 @@ test(
       (await row(page, 'Alpha').getAttribute('id'))!
     );
 
-    // Обновление данных владельцем не переводит фокус из открытого popup.
+    // Updating the data by the owner does not translate the focus from an open popup.
     await page.getByRole('button', { name: 'Replace tree select data', exact: true })
       .dispatchEvent('click');
 
@@ -449,7 +449,7 @@ for (const search of ['', 'Alpha']) {
 
       await expect(page.getByLabel('Tree select search', { exact: true })).toHaveText(search);
 
-      // Меняем owner policy без blur, который теперь запрашивает Source single cleanup.
+      // Change the owner policy without a blur that is now requesting Source single cleanup.
       await page.getByLabel('Accept tree select search', { exact: true })
         .evaluate(node => (node as HTMLInputElement).click());
 

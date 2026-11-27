@@ -145,7 +145,7 @@ export function stepInputNumber(
   const current = getDecimal(value ?? 0);
   const step = getDecimal(options.step);
   const scale = Math.max(current.scale, step.scale);
-  // Десятичный шаг складывается до преобразования в number, без хвостов вроде 0.30000000000000004.
+  // The decimal step is formed before the transformation into a number, without tails like 0.30000000000000004.
   const integer = current.integer * 10n ** BigInt(scale - current.scale)
     + BigInt(direction) * step.integer * 10n ** BigInt(scale - step.scale);
   const candidate = decimalToNumber(integer, scale);

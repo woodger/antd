@@ -1,6 +1,6 @@
 import template from './vendor/affix-prefix.css.js';
 
-/** Variables и marker сохраняют имена; default rules ограничены своим fixed-узлом. */
+/** Variables and the marker retain their names. Default rules apply only to their own fixed node. */
 export function getAffixPrefixCss(prefix: string) {
   if (prefix === 'ant-affix') {
     return undefined;

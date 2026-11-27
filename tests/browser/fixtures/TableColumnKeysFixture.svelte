@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Наблюдает разрешённый ключ в DOM, привязках и событиях сортировки и фильтра.
+  // Observes the allowed key in DOM, bindings and sorting events and filter.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type TableChange, type TableColumnDefaults, type TableColumnInput,
@@ -39,7 +39,7 @@
   }[]>([]);
   const columns = $derived(buildColumns(editor, hidePeer));
 
-  /** Читает поля закреплённого стенда, включая нулевое и пустое имя свойства. */
+  /** Readers the fields of the fixed stand, including the zero and empty property name. */
   function readIndex(
     index: string | number | (string | number)[] | undefined
   ): TableDataIndex<Row> | undefined {
@@ -52,7 +52,7 @@
     return index;
   }
 
-  /** Сравнивает записи по полю исходного профиля. */
+  /** Compares records on the field of the original profile. */
   function readValue(record: Row) {
     if (Array.isArray(effectiveIndex)) {
       return rendersRecord ? record.label : record.metrics.rank;
@@ -60,7 +60,7 @@
     return effectiveIndex === 0 || effectiveIndex === '' ? record[effectiveIndex] : record.label;
   }
 
-  /** Добавляет видимого соседа, группу или скрытое определение по данным Source. */
+  /** Adds an visible neighbor, group, or hidden definition according to Source data. */
   function buildColumns(editable: boolean, hidden: boolean): readonly TableColumnInput<Row>[] {
     const target: TableColumnInput<Row> = {
       key: profile.key, title: 'Probe column', dataIndex,
@@ -90,7 +90,7 @@
     return [target];
   }
 
-  /** Записывает публичное событие отдельно от текущей строки DOM. */
+  /** Records a public event separately from the current line DOM. */
   function recordChange(change: TableChange<Row>) {
     changes = [...changes, {
       action: change.action, filters: change.filters ?? {}, sorter: change.sorter,
@@ -98,7 +98,7 @@
     }];
   }
 
-  /** Применяет внешние настройки к выведенному ключу вложенного поля. */
+  /** Applies external settings to the deduced key of the nested field. */
   function applyOwnerState() {
     sorter = { columnKey: 'metrics.rank', order: 'descend' };
     filters = { 'metrics.rank': ['a'] };

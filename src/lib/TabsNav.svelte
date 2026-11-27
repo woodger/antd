@@ -1,6 +1,5 @@
 <script lang="ts">
-  // Распределяет фокус и действия вкладок по их ключам. Пользовательские ячейки регистрируются
-  // для той же клавиатурной навигации.
+  // Routes tab focus and actions by key. Custom cells register for the same keyboard navigation.
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import TabsOverflow from './TabsOverflow.svelte';
   import { connectTabsNav, connectTabsScroll, revealTab } from './tabs.dom';
@@ -139,7 +138,7 @@
       repairFocus = false;
       untrack(() => focusTab(key));
     }
-    // Перемещение keyed DOM сохраняет экземпляр панели, но браузер сбрасывает её фокус.
+    // Moving keyed DOM retains the panel instance, but the browser drops focus.
     else if (previous?.isConnected
       && previous.getClientRects().length
       && !previous.matches(
@@ -397,7 +396,7 @@
     scrollbar-width: none;
     scroll-behavior: auto;
   }
-  /* Operations не наследует inline gutter скрытого inner Add; исходный card gutter остаётся. */
+  /* Operations does not inherit the hidden inner Add's inline gutter. The upstream card gutter remains. */
   :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] :global([data-tabs-add-in-operations]) {
     margin-block: 0 !important;
     margin-right: 0 !important;
@@ -407,9 +406,9 @@
     flex: 0 0 auto;
     min-height: var(--ant-control-height);
   }
-  /* Source tokens могут задавать шапку ниже native минимума, включая zero/undefined. */
+  /* Upstream tokens can set header height below the native minimum, including zero or undefined. */
   :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"][data-tabs-source-theme] [data-ant-tabs-part="nav-list"] { min-height: 0; }
-  /* В исходном centered вертикальный список растягивается, заголовки остаются сверху. */
+  /* Upstream centered stretches a vertical list and keeps headings at the top. */
   :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-centered-vertical] [data-ant-tabs-part="nav-list"] { flex-grow: 1; }
   :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="left"], :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="right"] { max-width: 45%; }
   :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="left"] [data-ant-tabs-part="nav-wrap"], :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="right"] [data-ant-tabs-part="nav-wrap"] { max-height: min(400px, 60dvh); }

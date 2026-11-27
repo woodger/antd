@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Связывает переключатели страницы Transfer с текстом номера. Ввод и навигация не меняют выбор
-  // строк.
+  // Connects Transfer pagination controls to the draft page number. Typing and navigation do not
+  // change row selection.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getPaginationPrefixCss } from './pagination-prefix.engine';

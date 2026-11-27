@@ -152,7 +152,7 @@ for (const original of [...selectSurfaceOmissionReference.cases.filter(entry => 
           createSelectSurfaceRecorder().raw(['open', false]), 'existing focused Native width unmount close');
       }
       expect(disposed.owner.calls).toEqual(beforeDispose.calls);
-      // Добавляет отличие в журнале удаления к остальным результатам проверки.
+      // Adds the difference in the disposal log to the rest of the inspection results.
       function recordDisposalComparison() {
         try {
           verifyOmissionLifecycle(

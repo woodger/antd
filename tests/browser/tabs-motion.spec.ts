@@ -126,7 +126,7 @@ for (const sample of reference.cases) {
       ) => ['alpha', 'beta'].map(key =>
         trace.filter(event => event.phase === 'visible'
           ? event.visible === (key === 'beta') : event.key === key));
-      // В upstream два независимых deadline timers тоже не гарантируют межпанельный порядок.
+      // In the upstream, two independent deadline timers also do not guarantee an inter-panel order.
       await expect.poll(async () => {
         const actual = await capture();
         return { ...actual, trace: byPane(actual.trace) };

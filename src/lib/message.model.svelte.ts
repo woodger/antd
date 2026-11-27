@@ -1,5 +1,5 @@
-// Сохраняет один экземпляр очереди на holder. Оформление записи вычисляется при open,
-// тогда как настройки поверхности могут меняться вместе с App.
+// Retains one copy of the queue on holder. The registration of the record is calculated at open,
+// while the surface settings can change together with the App.
 import { untrack } from 'svelte';
 import {
   createNoticeQueue,
@@ -23,8 +23,8 @@ type ResolvedMessage = Omit<MessageConfig, 'classNames' | 'styles' | 'role'> & {
 export type MessageNotice = QueueNotice<ResolvedMessage>;
 
 /**
- * Создаёт изолированную очередь для одного MessageHolder. Таймеры включаются после
- * подключения holder; его отсоединение завершает handles с false без onClose.
+ * Creates an isolated queue for one MessageHolder. Timers are switched on after connecting the
+ * holder; its disconnection completes the handles with false without onClose.
  */
 export function createMessage(initial: MessageOptions = {}) {
   let options = $state.raw(initial);
@@ -70,7 +70,7 @@ export function createMessage(initial: MessageOptions = {}) {
     }
   });
 
-  // Getter нужен, чтобы holder и App читали обновлённые настройки того же экземпляра.
+  // Getter needs holder and App to read the updated settings of the same instance.
   const holder = Object.defineProperty(runtime, 'options', {
     get: () => options
   }) as typeof runtime & { readonly options: MessageOptions; };

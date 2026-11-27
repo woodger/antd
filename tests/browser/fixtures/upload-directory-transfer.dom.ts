@@ -8,7 +8,7 @@ export interface DirectoryFixtureNode {
   readError?: boolean;
 }
 
-/** Моделирует callback FileSystemEntry API; порядок обхода определяет сам Upload. */
+/** Models callback FileSystemEntry API; the bypass procedure is determined by Upload itself. */
 export function createDirectoryTransfer(nodes: DirectoryFixtureNode[]) {
   const transfer = new DataTransfer();
   const calls: { path: string; operation: string; errorHandler?: boolean }[] = [];

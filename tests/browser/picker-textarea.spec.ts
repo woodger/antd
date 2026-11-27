@@ -3,7 +3,7 @@ import { expect, test } from './test';
 
 test.use({ viewport: { width: 360, height: 720 } });
 
-/** Снимает ширину корней и вычисленные стили полей внутри каждой колонки. */
+/** Removes the width of the roots and the calculated styles of the fields inside each column. */
 async function readColumn(column: Locator) {
   return column.evaluate(node => {
     const controls = [...node.querySelectorAll(':scope > [data-ant-picker-prefix]')];

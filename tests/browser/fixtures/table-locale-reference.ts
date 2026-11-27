@@ -2,7 +2,7 @@ import type source from './ant-design-table-locale-reference.json';
 
 type State = (typeof source.cases)[number]['states'][number]['state'];
 
-/** Нативные кнопки раскрытия добавляют ключ строки. Native скрывает пустую ячейку при loading. */
+/** Native opening buttons add a string key. Native hides an empty cell when loading. */
 export function expectedTableLocale(profile: string, state: State) {
   const expand = state.expand.map(item => ({
     ...item,

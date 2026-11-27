@@ -29,7 +29,7 @@
     + `flex:none`}>Prefix</span>
 {/snippet}
 {#if kind === 'fragment'}
-  <!-- React Fragment передаёт соседние элементы без текстового пробела. -->
+  <!-- React Fragment transmits adjacent elements without a text space. -->
   {@render prefix()}<input {...context.attributes} {@attach context.register} data-input-responsive-editor />
 {:else if kind === 'wrapped-dom-ref' || kind === 'composite-ref'}
   <span data-input-responsive-wrapper bind:this={wrapper} style="display:inline-flex">

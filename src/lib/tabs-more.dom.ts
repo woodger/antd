@@ -1,7 +1,7 @@
 import { getPopupPosition, type PopupArea, type PopupFlipCache } from './popup-position.engine';
 import type { TabsMoreAlign, TabsMorePlacements, TabsMorePlacement } from './tabs.types';
 
-/** CSS motion меняет client rect; popup выравнивается по исходному border box. */
+/** CSS motion changes client rect; popup is aligned according to the original border box. */
 export function getTabsMoreSize(element: HTMLElement) {
   const style = element.ownerDocument.defaultView!.getComputedStyle(element);
   const number = (value: string) => Number.parseFloat(value) || 0;
@@ -61,7 +61,7 @@ function clipArea(initial: PopupArea, parents: readonly HTMLElement[]) {
   return area;
 }
 
-/** Размер не зависит от slide-анимации; clipping и scroll region повторяют useAlign. */
+/** Size does not depend on slide animations; clipping and scroll region repeat useAlign. */
 export function getTabsMoreArea(popup: HTMLElement) {
   const root = popup.ownerDocument.documentElement;
   const parents = scrollParents(popup);
@@ -135,7 +135,7 @@ export function getTabsMorePosition(
   });
 }
 
-/** Только ancestors/window, как useWatch; прокрутка самого popup не закрывает alignPoint. */
+/** Only ancestors/window, as useWatch; scrolling popup itself does not close alignPoint. */
 export function watchTabsMoreScroll(popup: HTMLElement, target: HTMLElement, callback: () => void) {
   const view = popup.ownerDocument.defaultView!;
   const parents = new Set<EventTarget>([view, ...scrollParents(target), ...scrollParents(popup)]);

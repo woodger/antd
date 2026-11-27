@@ -5,12 +5,11 @@ export function snapshotSkeletonMain(prefix = 'ant-skeleton') {
     return null;
   }
 
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-skeleton-css-var$|^skeleton-main-source-scope$/.test(name)
   ).sort();
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const style = (node: Element, keys: string[]) => Object.fromEntries(keys.map(key =>
     [key, getComputedStyle(node).getPropertyValue(key)]
   ));

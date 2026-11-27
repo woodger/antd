@@ -1,5 +1,5 @@
-// Управляет одной поверхностью Drawer. CSS-фазы получают узел callback отдельно от обёртки,
-// на которой появляется стиль. Штатное движение остаётся на Web Animations.
+// Manages one surface Drawer. Phase CSS receives the callback knot separately from the wrapper on
+// which the style appears. The full-time movement remains on Web Animations.
 import { createCssMotion, type CssMotionState } from './css-motion.dom';
 
 type AnimatedProperty = 'transform' | 'opacity';
@@ -10,7 +10,7 @@ interface NativeMotion {
   property: AnimatedProperty;
 }
 
-/** Связывает сроки и cleanup одной поверхности с её фактическим DOM. */
+/** Connects the timing and cleanup of one surface with its actual DOM. */
 export function createDrawerMotion(
   view: Window & typeof globalThis,
   getNode: () => HTMLDivElement | undefined,
@@ -20,14 +20,14 @@ export function createDrawerMotion(
   const css = createCssMotion(view, getCssTarget, publish);
   let native: NativeMotion | undefined;
 
-  /** Удаляет эффект и считает его ожидающее уведомление устаревшим. */
+  /** Removes the effect and considers its pending notification obsolete. */
   function cancelNative() {
     const current = native;
     native = undefined;
     current?.animation.cancel();
   }
 
-  /** Свойство из semantic style перекрывает эффект без изменения срока завершения. */
+  /** The property from semantic style overlaps the effect without changing the completion date. */
   function syncStyles() {
     if (!native) {
       return;
@@ -41,7 +41,7 @@ export function createDrawerMotion(
     }
   }
 
-  /** Запускает или прерывает штатный переход, оставляя callback только у текущего эффекта. */
+  /** Starts or interrupts the built-in transition. Only the current effect retains its callback. */
   function animate(
     property: AnimatedProperty,
     from: string,
@@ -69,18 +69,18 @@ export function createDrawerMotion(
     return true;
   }
 
-  /** Завершает штатный переход при включении reduced motion. */
+  /** Finishes the built-in transition when reduced motion becomes enabled. */
   function finishNative() {
     native?.animation.finish();
   }
 
-  /** Сбрасывает CSS-историю, когда владелец перестал удерживать содержимое. */
+  /** Resets the CSS-story when the owner stopped holding the contents. */
   function reset() {
     cancelNative();
     css.sync({ motion: {}, present: false, visible: false, enabled: false, inactive: true });
   }
 
-  /** Уничтожение поверхности инвалидирует обе очереди. */
+  /** Destroying the surface invalidates both queues. */
   function destroy() {
     cancelNative();
     css.destroy();

@@ -4,7 +4,7 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableFilterStaticContentFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-filter-static-content-reference.json';
 
-/** Снимает серверную иконку и ключи строк, пока Dropdown закрыт. */
+/** Captures the server icon and row keys while Dropdown is closed. */
 function snapshot(body: string) {
   const button = body.match(
     /<button\b([^>]*\sdata-ant-table-filter-part="trigger"[^>]*)>([\s\S]*?)<\/button>/

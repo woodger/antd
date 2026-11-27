@@ -1,4 +1,4 @@
-// Подключает Menu к серверным узлам и отдаёт тесту cleanup компонента.
+// Connects Menu to server nodes and gives the cleanup test of the component.
 import '@woodger/antd/styles.css';
 import { hydrate, unmount } from 'svelte';
 import MenuTooltipFixtures from './MenuTooltipFixtures.svelte';

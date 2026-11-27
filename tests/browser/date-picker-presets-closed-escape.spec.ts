@@ -1,7 +1,7 @@
 import { expect, test } from './test';
 import './date-picker-presets-metrics.mjs';
 
-// Отдельный public-method counter по Source onSelectorKeyDown; не часть 58 pointer actions.
+// Separate public-method counter by Source onSelectorKeyDown; not part 58 pointer actions.
 test('DatePicker public focus and closed Escape reset a retained rejected preset without reopening', async ({ page }) => {
   await page.goto('/date-picker-presets.html?sample=controlled-rejection');
   await page.waitForFunction(() => window.datePickerPresetsNative?.ready === true);

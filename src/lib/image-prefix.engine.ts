@@ -1,6 +1,6 @@
 import template from './vendor/image-prefix.css.js';
 
-/** Image и viewer сохраняют canonical tokens; независимые preview namespaces изолируются по корню. */
+/** Image and viewer save canonical tokens; independent preview namespaces are isolated to the root. */
 export function getImagePrefixCss(prefix: string, previewPrefix = `${prefix}-preview`) {
   if (prefix === 'ant-image' && previewPrefix === 'ant-image-preview') {
     return undefined;

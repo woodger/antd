@@ -5,7 +5,7 @@ export function snapshotDrawerPrefix() {
   const box = ['width', 'height', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
     'border-top-width', 'border-top-color', 'border-bottom-width', 'border-bottom-color',
     'border-radius', 'background-color', 'box-shadow'];
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null, keys: string[]) {
     if (!node) {
       return null;
@@ -14,7 +14,7 @@ export function snapshotDrawerPrefix() {
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   }
-  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
+  // He chooses a part of the complete CSS class of the current prefix, regardless of the neighboring classes.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
 
   return {

@@ -72,7 +72,7 @@ export async function actEmptyDatetime(page: Page, action: EmptyDatetimeAction, 
   else {
     await target.click();
   }
-  // Не перемещаем указатель: реальный scroll колонки меняет settled hover после hour12.
+  // Don't move the pointer: the real scroll column changes settled hover after hour12.
   return { action, before, evidence, afterCall: await readEmptyDatetime(page) };
 }
 

@@ -13,7 +13,7 @@ import DatePickerMultipleFixtures, {
 const reference = readMultipleServer();
 const customProfiles = ['render-tags', 'disabled-tags', 'same-label', 'renamed'];
 
-/** Находит readonly поле и его значение в серверном HTML обеих реализаций. */
+/** Finds the readonly field and its value in both implementations' server HTML. */
 function readEditor(body: string) {
   const input = Array.from(body.matchAll(/<input\s[^>]*>/g), ([tag]) => tag)
     .find(tag => tag.includes('-multiple-input'));
@@ -24,14 +24,14 @@ function readEditor(body: string) {
   return input;
 }
 
-/** Сохраняет исходный порядок подписей, включая счётчик нескольких дат. */
+/** Preserves the original label order, including the count for multiple dates. */
 function readLabels(body: string) {
   return Array.from(body.matchAll(
     /<span[^>]+class="[^"]*-selection-item-content[^"]*"[^>]*>([^<]*)<\/span>/g
   ), ([, label]) => label);
 }
 
-/** React временно измеряет счётчик даже при полном списке; SSR сравнивает теги дат. */
+/** React temporarily measures the count even with the complete list visible. The SSR check compares date tags. */
 function datesOnly(labels: string[]) {
   return labels.filter(label => !label.startsWith('+'));
 }

@@ -6,7 +6,7 @@ type ReferenceCase = (typeof reference.cases)[number];
 type SourceState = ReferenceCase['initial'];
 const surface = '[data-picker-popup]';
 
-/** Выбирает точку или процент высоты, которые изменяют вертикальную привязку панели. */
+/** Selects the point or percentage of height that changes the vertical binding of the panel. */
 function heightWeight(sample: ReferenceCase['sample'], source: SourceState) {
   if (sample.id === 'date-percent') {
     return 0.05;
@@ -20,7 +20,7 @@ function heightWeight(sample: ReferenceCase['sample'], source: SourceState) {
   return source.placement.some(name => name.includes('-placement-top')) ? -1 : 0;
 }
 
-/** Читает физическую привязку popup и его итоговый класс placement. */
+/** Reads the physical attachment of popup and its final placement class. */
 async function readFrame(page: Page, weight: number) {
   return page.locator(surface).evaluate((popup, ratio) => {
     const bounds = popup.getBoundingClientRect();
@@ -39,7 +39,7 @@ async function readFrame(page: Page, weight: number) {
   }, weight);
 }
 
-/** Сравнивает координаты привязки с учётом различия высоты календарных панелей. */
+/** Compares the binding coordinates, taking into account the difference in the height of the calendar panels. */
 function frameExpectation(sample: ReferenceCase['sample'], source: SourceState) {
   const [left, top, , height] = source.popup;
   const weight = heightWeight(sample, source);
@@ -54,7 +54,7 @@ function frameExpectation(sample: ReferenceCase['sample'], source: SourceState) 
   };
 }
 
-/** Ждёт несколько кадров, чтобы отличить отложенную замену props от задержки кадра. */
+/** Is waiting for several frames to distinguish the delayed replacement of props from the delay of the frame. */
 async function settle(page: Page) {
   await page.evaluate(async () => {
     for (let frame = 0; frame < 8; frame++) {
@@ -63,7 +63,7 @@ async function settle(page: Page) {
   });
 }
 
-/** Запускает отдельное измерение после изменения props открытой панели. */
+/** Starts a separate measurement after changing props the open panel. */
 async function remeasure(page: Page, sample: ReferenceCase['sample']) {
   if (sample.resizeAnchor) {
     await page.getByRole('button', { name: 'Resize picker trigger' })

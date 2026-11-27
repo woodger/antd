@@ -8,7 +8,7 @@ for (const entry of reference.cases) {
     await page.goto('/?fixture=breadcrumb-prefix');
     await page.getByRole('combobox', { name: 'Breadcrumb prefix sample', exact: true })
       .selectOption(entry.sample.id);
-    // Source separator игнорирует local owner prefix; semantic class восстанавливает его CSS.
+    // Source separator ignores local owner prefix; semantic class restores its CSS.
     const expected = 'matchedSeparators' in entry ? entry.matchedSeparators : entry.result;
 
     await expect.poll(() => page.evaluate(snapshotBreadcrumbPrefix)).toEqual(expected);

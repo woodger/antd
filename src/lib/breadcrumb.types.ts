@@ -8,7 +8,7 @@ export type BreadcrumbSemantic<
   Params extends Record<string, unknown> = Record<string, unknown>
 > = BreadcrumbSlots | ((info: { props: BreadcrumbProps<Params>; }) => BreadcrumbSlots);
 
-/** Общие defaults с теми же semantic callbacks, что у локальных Props. */
+/** Shared defaults with the same semantic callbacks as local Props. */
 export interface BreadcrumbConfig<
   Params extends Record<string, unknown> = Record<string, unknown>
 > {
@@ -43,14 +43,14 @@ export interface BreadcrumbItem extends AriaAttributes {
   separator?: BreadcrumbContent;
   [key: `data-${string}`]: string | undefined;
 }
-/** Навигационная цепочка с нативными ссылками, separators и меню пункта. */
+/** Breadcrumb navigation with native links, separators, and item menus. */
 export interface BreadcrumbProps<
   Params extends Record<string, unknown> = Record<string, unknown>
 > extends Omit<
   HTMLAttributes<HTMLElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local CSS prefix. Empty and undefined values inherit ConfigProvider.prefixCls. */
   prefixCls?: string;
   items?: readonly BreadcrumbItem[];
   params?: Params;
@@ -63,6 +63,6 @@ export interface BreadcrumbProps<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLElement;
 }

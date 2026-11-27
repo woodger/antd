@@ -8,9 +8,9 @@ const filterName = 'Filter menu: Name';
 const filterPanel = ':popover-open [data-ant-table-filter-part="dropdown"]';
 const submenuPanel = '[data-menu-popup-path]:popover-open';
 
-/** Читает видимые поверхности и контейнеры, куда они действительно подключены. */
+/** Reads visible surfaces and containers where they are really connected. */
 function snapshot() {
-  /** Встроенный popover без resolver сохраняет владельца в шапке таблицы. */
+  /** Built-in popover without resolver preserves the owner in the table cap. */
   function host(node: Element | null) {
     if (!node) {
       return null;
@@ -44,12 +44,12 @@ function snapshot() {
 
 type Sample = (typeof source.cases)[number];
 
-/** Ждёт совпадения отрисованных владельцев и событий с соответствующим кадром React. */
+/** Is waiting for the match of the drawn owners and events with the corresponding frame React. */
 async function expectFrame(page: Page, sample: Sample, index: number) {
   const state = sample.states[index];
   const expected = { ...state };
   if (state.outer === 'body' && sample.spec.kind === undefined) {
-    // Svelte держит фильтр в th без resolver. React по умолчанию использует body.
+    // Svelte holds the filter in th without resolver. React uses body by default.
     expected.outer = 'header';
   }
   await expect.poll(() => page.evaluate(snapshot), {

@@ -19,7 +19,7 @@ export function createTypographyCopy(options: {
     loading = true;
     try {
       const text = typeof config.text === 'function' ? await config.text() : config.text;
-      // False writer result также завершает действие; это намеренное поведение upstream.
+      // False writer result also completes the action; it 's intentional upstream behavior.
       await options.write(text || typographyCopyFallback(children), config.format);
       loading = false;
       if (active) {
@@ -27,7 +27,7 @@ export function createTypographyCopy(options: {
         clearTimeout(timer);
         timer = setTimeout(() => { copied = false; }, 3000);
       }
-      // Уже начатое копирование и его callback завершаются и после unmount, как в React.
+      // The already started copying and its callback are completed after unmount, as in React.
       config.onCopy?.(event);
     }
     catch (error) {

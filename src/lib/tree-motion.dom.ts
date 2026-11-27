@@ -1,5 +1,5 @@
-// Управляет CSSMotion группы Tree. DOM, callbacks и состояние видимости используют одну ревизию
-// текущего перехода.
+// Manages CSSMotion for a Tree group. DOM, callbacks, and visibility state share a revision for the
+// active transition.
 // CSSMotion @rc-component/motion 1.3.3; MIT, vendor/LICENSE.rc-motion.
 import { getTreeMotionClassName } from './tree-motion.engine';
 import type { TreeMotionConfig, TreeMotionEvent } from './tree-motion.types';
@@ -12,7 +12,7 @@ export interface TreeGroupMotionState {
   style?: string;
 }
 
-/** DOM phases группы с отменой RAF, prepare Promise, deadline и поздних end events. */
+/** DOM phases of the group with cancellation RAF, prepare Promise, deadline and late end events. */
 export function createTreeGroupMotion(
   node: HTMLDivElement,
   publish: (state: TreeGroupMotionState, commit?: boolean) => void,
@@ -34,12 +34,12 @@ export function createTreeGroupMotion(
   let revision = 0;
   let active = true;
 
-  // Проверяет наличие класса motion и разрешение движения для текущей группы.
+  // Verifies the presence of the motion class and motion resolution for the current group.
   const supported = () => !!config.motionName && enabled && !reduced.matches;
-  // Читает флаг выбранной фазы. Неявный флаг сохраняет возможность анимации.
+  // Reading the flag of the selected phase. An implicit flag retains the possibility of animation.
   const allowed = () => config[status === 'appear' ? 'motionAppear'
     : status === 'enter' ? 'motionEnter' : 'motionLeave'] !== false;
-  // Собирает callbacks текущего статуса из последней конфигурации дерева.
+  // Collects callbacks of current status from the latest tree configuration.
   const handlers = () => {
     const prefix = status === 'appear' ? 'Appear' : status === 'enter' ? 'Enter' : 'Leave';
     return {
@@ -47,7 +47,7 @@ export function createTreeGroupMotion(
       active: config[`on${prefix}Active`], end: config[`on${prefix}End`]
     };
   };
-  // Инвалидирует callbacks предыдущего перехода и снимает его кадр и таймеры.
+  // Disables callbacks of the previous transition and removes his frame and timers.
   function cancel() {
     revision++;
     if (frame !== undefined) view.cancelAnimationFrame(frame);
@@ -55,14 +55,14 @@ export function createTreeGroupMotion(
     if (notification !== undefined) view.clearTimeout(notification);
     frame = deadline = notification = undefined;
   }
-  // Публикует классы, inline style и running для текущей группы. Commit доступен перед layout
-  // hooks.
+  // Publishes classes, inline style and running for the current group. Commit is available before
+  // walking hooks.
   function update(commit = false) {
     publish({ running: status !== undefined,
       className: status && step ? getTreeMotionClassName(config.motionName, status, step) : undefined,
       style }, commit);
   }
-  // Очищает состояние фазы и публикует видимость после обновления DOM.
+  // Purifies the state of the phase and publishes the visibility after updating DOM.
   function finish(passive = false) {
     cancel();
     status = step = undefined;
@@ -70,7 +70,7 @@ export function createTreeGroupMotion(
     update();
     if (seen || visible) {
       const current = revision;
-      // Сообщает о видимости, только если завершённый переход остаётся актуальным.
+      // Provides visibility only if the completed transition remains relevant.
       const notify = () => {
         notification = undefined;
         if (active && current === revision) onVisible(visible);
@@ -84,7 +84,7 @@ export function createTreeGroupMotion(
     }
     seen = true;
   }
-  // Даёт DOM два кадра для смены CSS-перехода с проверкой текущей ревизии.
+  // Gives DOM two frames to change the CSS-transition with verification of the current audit.
   function nextFrame(callback: () => void) {
     const current = revision;
     frame = view.requestAnimationFrame(() => {
@@ -97,7 +97,7 @@ export function createTreeGroupMotion(
       });
     });
   }
-  // Фильтрует события потомков и даёт end hook право оставить переход активным.
+  // Filters the events of the descendants and gives end hook the right to leave the transition active.
   function end(event: TreeMotionEvent) {
     if (!active || !status || step !== 'active') {
       return;
@@ -109,7 +109,7 @@ export function createTreeGroupMotion(
     const result = handlers().end?.(node, event);
     if (active && current === revision && result !== false) finish(true);
   }
-  // Планирует commit prepare и start, затем активирует motion и его deadline.
+  // He plans to prepare commit and start, then activates the motion and its deadline.
   function start() {
     if (!supported()) {
       finish();
@@ -158,7 +158,7 @@ export function createTreeGroupMotion(
       });
     });
   }
-  // При включении reduced motion завершает начатый переход, если prepare уже пройден.
+  // When you enable reduced motion, completes the started transition if the prepare has already passed.
   function reduce() {
     if (reduced.matches && status && step !== 'prepare') finish();
   }
@@ -166,8 +166,8 @@ export function createTreeGroupMotion(
   node.addEventListener('animationend', end);
   reduced.addEventListener('change', reduce);
   return {
-    // Обновляет конфигурацию группы и запускает обработку новой видимости. Prepare Promise связан
-    // с ревизией.
+    // Updates the group configuration and starts processing of new visibility. Prepare Promise is
+    // associated with an audit.
     sync(next: boolean, options: TreeMotionConfig, motionEnabled: boolean) {
       if (!active) {
         return;
@@ -222,7 +222,7 @@ export function createTreeGroupMotion(
         });
       }
     },
-    // Снимает собственные end и media listeners и отменяет все ожидающие кадры и таймеры.
+    // Removes its own end and media listeners and cancels all waiting frames and timers.
     destroy() {
       active = false;
       cancel();

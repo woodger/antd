@@ -1,4 +1,4 @@
-// Каждый Drawer хранит собственное смещение и регистрации вложенных открытых панелей.
+// Each Drawer keeps its own displacement and registration of nested open panels.
 import { getContext, setContext } from 'svelte';
 
 interface DrawerPushContext {
@@ -8,12 +8,12 @@ interface DrawerPushContext {
 
 const key = Symbol('ant-drawer-push');
 
-/** Возвращает ближайший Drawer, включая содержимое после переноса в портал. */
+/** Return the nearest Drawer, including the contents after being transferred to the portal. */
 export function useDrawerPush() {
   return getContext<DrawerPushContext | undefined>(key);
 }
 
-/** Публикует смещение этой панели и регистрацию активного дочернего Drawer. */
+/** Publishes the offset of this panel and the registration of an active child Drawer. */
 export function provideDrawerPush(context: DrawerPushContext) {
   setContext(key, context);
 }

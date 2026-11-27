@@ -23,7 +23,7 @@ for (const entry of reference.cases) {
 
       const expected = structuredClone(entry.result[scope]);
       if (scope !== 'sibling' && entry.wideHeader) {
-        // Native сохраняет прежний nowrap; Source 320px растягивает controls до 48px.
+        // Native retains the former nowrap; Source 320px stretches to 48px.
         const source = entry.wideHeader[scope];
         expected.mode!['height'] = source.mode!['height'];
         expected.year!.style!['height'] = source.year!.style!['height'];
@@ -48,7 +48,7 @@ test('Calendar prefix updates retain year focus, selection, cells, ref and times
   const yearValue = await year.inputValue();
   await year.focus();
   await year.evaluate((node: HTMLInputElement) => node.setSelectionRange(0, 2, 'backward'));
-  // Source хранит подпись рядом с пустым search input; Native Select показывает её в input.
+  // Source stores the label next to the empty search input; Native Select shows it in input.
   const selection = await year.evaluate((node: HTMLInputElement) =>
     [node.selectionStart, node.selectionEnd, node.selectionDirection]);
 

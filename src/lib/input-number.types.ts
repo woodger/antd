@@ -9,7 +9,7 @@ export interface InputNumberFocusOptions extends FocusOptions {
   cursor?: 'start' | 'end' | 'all';
 }
 
-/** Proxy native input; nativeElement относится к корню control, включая prefix/suffix. */
+/** Proxy native input; nativeElement refers to the control root, including prefix/suffix. */
 export interface InputNumberRef extends HTMLInputElement {
   focus(options?: InputNumberFocusOptions): void;
   nativeElement: HTMLElement;
@@ -38,24 +38,24 @@ type InputNumberEvent<EventType extends Event> = EventType & {
   currentTarget: EventTarget & HTMLInputElement;
 };
 
-/** Число/null по умолчанию; stringMode сохраняет десятичные строки без Number conversion. */
+/** Number/null by default; stringMode preserves decimal strings without Number conversion. */
 export interface InputNumberProps<Value extends InputNumberValue = number> extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'min' | 'max' | 'step' | 'size' | 'class' | 'type'
   | 'children' | 'prefix' | 'style'
 > {
-  /** Поддерживает bind:value; function binding позволяет отклонять изменения владельцем. */
+  /** Maintains bind:value; function binding allows you to reject changes by the owner. */
   value?: Value | null;
-  /** Читается при создании; native reset восстанавливает это значение без callbacks. */
+  /** Read when created; native reset restores this value without callbacks. */
   defaultValue?: Value | null;
-  /** В stringMode callbacks возвращают string/null; используйте InputNumberProps<string>. */
+  /** In stringMode callbacks return string/null; use InputNumberProps<string>. */
   stringMode?: boolean;
   min?: InputNumberValue;
   max?: InputNumberValue;
   step?: InputNumberValue;
   precision?: number;
   decimalSeparator?: string;
-  /** Formatter получает строковое число и исходный ввод; precision не обрезает ввод при typing. */
+  /** Formatter receives string number and source input; precision does not trim input when typing. */
   formatter?: (
     value: InputNumberValue | undefined,
     info: { userTyping: boolean; input: string; }
@@ -63,9 +63,9 @@ export interface InputNumberProps<Value extends InputNumberValue = number> exten
   parser?: (value: string | undefined) => InputNumberValue;
   controls?: boolean | { upIcon?: InputNumberContent; downIcon?: InputNumberContent; };
   keyboard?: boolean;
-  /** Колесо изменяет значение только у поля с фокусом; по умолчанию false. */
+  /** The wheel changes the value only at the field with the focal point; by default false. */
   changeOnWheel?: boolean;
-  /** По умолчанию true; false сохраняет черновик при blur, Enter по-прежнему подтверждает его. */
+  /** By default true; false preserves a draft at blur, Enter still confirms it. */
   changeOnBlur?: boolean;
   mode?: 'input' | 'spinner';
   size?: ComponentSize | 'medium';
@@ -75,7 +75,7 @@ export interface InputNumberProps<Value extends InputNumberValue = number> exten
   prefix?: InputNumberContent;
   suffix?: InputNumberContent;
   rootClassName?: string;
-  /** CSS prefix control и его частей; empty/undefined наследуют ConfigProvider. */
+  /** CSS prefix control and its parts; empty/undefined inherited ConfigProvider. */
   prefixCls?: string;
   class?: string;
   style?: string;
@@ -88,7 +88,7 @@ export interface InputNumberProps<Value extends InputNumberValue = number> exten
   maxLength?: number;
   onValueChange?: (value: Value | null) => void;
   onChange?: (value: Value | null) => void;
-  /** Вызывается после onChange; аргумент — исходная строка поля. */
+  /** Called after onChange with the original input string. */
   onInput?: (text: string) => void;
   onStep?: (value: Value, info: InputNumberStepInfo) => void;
   onPressEnter?: (event: InputNumberEvent<KeyboardEvent>) => void;
@@ -103,13 +103,13 @@ export interface InputNumberProps<Value extends InputNumberValue = number> exten
   onMouseMove?: (event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) => void;
   onMouseEnter?: (event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) => void;
   onMouseOut?: (event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) => void;
-  /** Bindable native input, control root и proxy ref; SSR не создаёт DOM. */
+  /** Bindable native input, root control and proxy ref; SSR does not create DOM. */
   inputElement?: HTMLInputElement;
   nativeElement?: HTMLDivElement;
   ref?: InputNumberRef;
 }
 
-/** Локальные semantic styles перекрывают config; config variant наследуется без локального. */
+/** Local semantic styles overlap config; config variant is inherited without local. */
 export interface InputNumberConfig {
   class?: string;
   style?: string;

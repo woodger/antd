@@ -24,7 +24,7 @@ async function mount(page: Page, id: string) {
 
 async function perform(page: Page, sample: TreeSelectExpandActionSample) {
   const modifiers = sample.modifier ? [sample.modifier] as ('Control' | 'Meta' | 'Shift')[] : [];
-  // Native ARIA disabled сохраняется; физический клик Source всё ещё раскрывает ветку.
+  // Native ARIA disabled is saved; the source's physical click still opens the branch.
   const options = { modifiers, force: Boolean(sample.disabledNode) };
   if (sample.action === 'click') {
     await content(page).click(options);

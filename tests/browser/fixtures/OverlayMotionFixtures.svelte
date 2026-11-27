@@ -35,7 +35,7 @@
     ownerOpen = ['controlled', 'ignored', 'interrupted'].includes(profile.mode) ? false : undefined;
   }
 
-  // Getter/setter binding позволяет владельцу отклонить запросы на смену open.
+  // Getter/setter binding allows the owner to reject requests to change the open.
   function ignoreOpenRequest() {}
 
   function snapshot() {

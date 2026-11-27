@@ -1,5 +1,5 @@
-// Согласует decimal, stringMode и числовой контракт InputNumber. Нормализация текста и округление
-// происходят на разных этапах ввода.
+// Agrees decimal, stringMode and numerical contract InputNumber. The normalization of the text and
+// rounding occur at different stages of entry.
 import {
   commitInputNumber,
   normalizeInputNumber,
@@ -22,7 +22,7 @@ export interface InputNumberValueOptions {
   native: InputNumberOptions;
 }
 
-// Сохраняет точное decimal в stringMode и приводит числовой режим к диапазону native number.
+// Saves the exact decimal in stringMode and brings the numerical mode to the native number range.
 export function inputNumberDecimal(value: DecimalValue, stringMode: boolean) {
   const decimal = getMiniDecimal(value);
 
@@ -33,7 +33,7 @@ export function inputNumberDecimal(value: DecimalValue, stringMode: boolean) {
   return getMiniDecimal(decimal.isInvalidate() ? null : normalizeInputNumber(decimal.toNumber()));
 }
 
-// Преобразует внутреннее decimal в значение callback, сохраняя null для пустого ввода.
+// Converts an internal decimal into a callback value, saving null for empty input.
 export function inputNumberValue(
   decimal: MiniDecimal,
   stringMode: boolean
@@ -45,7 +45,7 @@ export function inputNumberValue(
   return stringMode ? decimal.toString() : normalizeInputNumber(decimal.toNumber());
 }
 
-// Использует переданный parser и выбирает путь преобразования согласно stringMode.
+// Uses the transferred parser and chooses the conversion path according to stringMode.
 export function parseInputNumberValue(
   text: string,
   options: Pick<InputNumberProps<InputNumberValue>,
@@ -67,7 +67,7 @@ export function parseInputNumberValue(
   return getMiniDecimal(native === undefined ? NaN : native);
 }
 
-// Нормализует bounds, step и precision отдельно для числового и строкового режимов.
+// Normalizes bounds, step and precision separately for numerical and string modes.
 export function resolveInputNumberValueOptions(options: Pick<InputNumberProps<InputNumberValue>,
   'stringMode' | 'min' | 'max' | 'step' | 'precision'>): InputNumberValueOptions {
   const stringMode = options.stringMode ?? false;
@@ -78,7 +78,7 @@ export function resolveInputNumberValueOptions(options: Pick<InputNumberProps<In
     precision: options.precision
   });
 
-  // Пустая или недопустимая граница не ограничивает введённое число.
+  // An empty or inadmissible boundary does not limit the injected number.
   function bound(value: DecimalValue) {
     const decimal = getMiniDecimal(value);
 
@@ -97,7 +97,7 @@ export function resolveInputNumberValueOptions(options: Pick<InputNumberProps<In
   };
 }
 
-// Возвращает нарушенную границу для последующего ограничения значения.
+// Returns the broken boundary for the subsequent limitation of the value.
 export function getInputNumberRangeValue(decimal: MiniDecimal, options: InputNumberValueOptions) {
   if (options.max && !decimal.lessEquals(options.max)) {
     return options.max;
@@ -109,12 +109,12 @@ export function getInputNumberRangeValue(decimal: MiniDecimal, options: InputNum
   return null;
 }
 
-// Проверяет, можно ли зафиксировать decimal без ограничения по min/max.
+// Verifies whether it is possible to fix decimal without restriction on min/max.
 export function isInputNumberValueInRange(decimal: MiniDecimal, options: InputNumberValueOptions) {
   return !getInputNumberRangeValue(decimal, options);
 }
 
-// Откладывает округление до commit. Без заданной precision учитывает точность текста и шага.
+// Postponing rounding to commit. Without a given precision takes into account the accuracy of the text and the step.
 export function inputNumberPrecision(
   text: string,
   options: Pick<InputNumberValueOptions, 'precision' | 'step'>,
@@ -130,7 +130,7 @@ export function inputNumberPrecision(
   return Math.max(getNumberPrecision(text), getNumberPrecision(options.step));
 }
 
-/** Numeric mode сохраняет прежний native commit; stringMode повторяет rc-input-number. */
+/** Numeric mode preserves the previous native commit; stringMode repeats rc-input-number. */
 export function commitInputNumberValue(
   decimal: MiniDecimal,
   options: InputNumberValueOptions,
@@ -164,7 +164,7 @@ export function commitInputNumberValue(
   return result;
 }
 
-// Применяет направление и увеличенный Shift-шаг, сохраняя ограничения выбранного режима.
+// Applies the direction and increased Shift step, maintaining the limitations of the selected mode.
 export function stepInputNumberValue(
   decimal: MiniDecimal,
   direction: 1 | -1,

@@ -5,7 +5,7 @@ import Fixture from './DrawerPanelFixtures.svelte';
 const target = document.getElementById('root');
 if (!target) throw new Error('Missing Drawer panel hydration target');
 
-// Подключает существующую серверную секцию и запрещает fallback к новому DOM.
+// Connects an existing server section and prohibits fallback to the new DOM.
 target.addEventListener('hydrate-drawer-panel', () => {
   hydrate(Fixture, { target, props: { initialProfile: 'forced' }, recover: false });
   target.dataset.hydrated = 'true';

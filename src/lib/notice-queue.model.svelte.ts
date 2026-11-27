@@ -1,9 +1,9 @@
 export type NoticeKey = string | number;
-/** Вызов закрывает запись; then ожидает завершения либо тихого отсоединения очереди. */
+/** Call the handle to close the entry. Await then for completion or silent queue detachment. */
 export interface NoticeHandle extends PromiseLike<boolean> {
   (): void;
 }
-/** Общие параметры записи внутренней очереди Message и Notification. */
+/** Shared options for entries in the Message and Notification queue. */
 export interface NoticeConfig {
   key?: NoticeKey;
   duration?: number;
@@ -30,7 +30,7 @@ export type QueueNotice<Config> = Omit<
 
 export const noticeQueueKey = Symbol('ant-notice-queue');
 
-/** Источник времени очереди: schedule принимает миллисекунды и возвращает отмену callback. */
+/** Queue clock. schedule takes milliseconds and returns a function that cancels the callback. */
 export interface NoticeClock {
   now: () => number;
   schedule: (callback: () => void, milliseconds: number) => () => void;
@@ -60,8 +60,8 @@ function durationOf(value: number | undefined, fallback: number): number {
 }
 
 function noticeHandle(close: () => void, completion: Promise<boolean>): NoticeHandle {
-  // bind сохраняет receiver Promise при вызове then через callable handle.
-  // oxlint-disable-next-line unicorn/no-thenable -- Публичный API намеренно совмещает close() и await завершения.
+  // bind preserves the Promise receiver when then is called through the callable handle.
+  // oxlint-disable-next-line unicorn/no-thenable -- The public API deliberately supports both close() and awaiting completion.
   return Object.assign(close, { then: completion.then.bind(completion) });
 }
 
@@ -125,7 +125,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
     const version = entry.notice.version;
     const timerVersion = ++entry.timerVersion;
     entry.started = currentClock.now();
-    // Длинные сроки разбиваются на интервалы, допустимые для browser setTimeout.
+    // Long delays are split into intervals supported by browser setTimeout.
     entry.cancel = currentClock.schedule(() => {
       if (entries.get(id) !== entry
         || entry.notice.version !== version
@@ -270,7 +270,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       );
     },
     [noticeQueueKey]: {
-      /** Новые defaults относятся к следующим open; существующие записи не перезапускаются. */
+      /** New defaults apply to future open calls. Existing entries do not restart. */
       configure(next: NoticeOptions) {
         defaults = resolveDefaults(next);
       },
@@ -344,7 +344,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
           arm(entry);
         }
       },
-      /** В раскрытом стеке пауза распространяется на записи его placement. */
+      /** In an expanded stack, pausing applies to entries in that placement. */
       hoverList(next: boolean, list?: string) {
         if (next === hoveredLists.has(list)) {
           return;
@@ -363,7 +363,7 @@ export function createNoticeQueue<Config extends NoticeConfig>(
           }
         }
       },
-      /** Прогресс читает часы очереди, включая паузу и текущее состояние таймера. */
+      /** Progress reads the queue clock, including pauses and the current timer state. */
       timer(id: number) {
         void timerRevision;
         const entry = entries.get(id);

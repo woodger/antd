@@ -11,7 +11,7 @@ export function snapshotSliderPrefix({ prefix, tip }: { prefix: string; tip: str
     context.fillRect(0, 0, 1, 1);
     return [...context.getImageData(0, 0, 1, 1).data];
   };
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   const css = (node: Element, fields: string[], pseudo?: string) => {
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(fields.map(field => {

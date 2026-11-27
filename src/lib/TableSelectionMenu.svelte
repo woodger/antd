@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Пункты заголовка используют Dropdown для меню, клавиатуры и возврата фокуса.
+  // Header items use Dropdown for menus, keyboard navigation, and focus restoration.
   import Dropdown from './Dropdown.svelte';
   import Icon from './Icon.svelte';
   import type { DropdownMenuEntry, DropdownProps } from './dropdown.types';
@@ -19,7 +19,7 @@
   const label = $derived(strings.selectionMenu);
   const items = $derived<DropdownMenuEntry[]>(commands.map(menuItem));
 
-  /** Сохраняет связь каждой подписи с командой, выполняемой над доступными ключами. */
+  /** Associates each label with the command that acts on available keys. */
   function menuItem(command: Command): DropdownMenuEntry {
     const onClick = () => onCommand(command);
     if (command === SELECTION_ALL) {

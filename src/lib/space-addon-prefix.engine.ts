@@ -1,6 +1,6 @@
 import template from './vendor/space-addon-prefix.css.js';
 
-/** Variant/status variables принадлежат global prefix, классы — local prefix. */
+/** Variant/status variables belong to global prefix, classes - local prefix. */
 export function getSpaceAddonPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-space-addon' && rootPrefix === 'ant') {
     return undefined;

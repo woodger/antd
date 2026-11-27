@@ -7,7 +7,7 @@ if (!target) {
   throw new Error('Missing server-rendered table columns');
 }
 
-// Откладывает гидратацию, чтобы тест ввёл текст и установил выделение на серверном узле.
+// Postpones the hydration so that the test enters the text and establishes the selection on the server node.
 target.addEventListener('hydrate-table-columns', () => {
   hydrate(TableColumnsFixture, {
     target, props: { profileId: 'responsive', editor: true }, recover: false

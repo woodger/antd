@@ -63,7 +63,7 @@ export function getDirectoryRangeKeys<Data extends object>(
   return keys;
 }
 
-/** selectedNodes идёт в порядке полного дерева, независимо от порядка keys. */
+/** selectedNodes follows the order of the full tree regardless of key order. */
 export function getDirectorySelectedNodes<Data extends object>(
   treeData: readonly Data[],
   keys: readonly TreeKey[],

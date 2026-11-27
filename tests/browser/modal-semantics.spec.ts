@@ -9,13 +9,13 @@ const interior = [
   'confirm-title', 'confirm-content', 'confirm-btns', 'render'
 ] as const;
 
-/** Читает оба слоя оболочки и оформляемые части внутри нативного dialog. */
+/** Reads both layers of the shell and the parts inside the native dialog. */
 function readFrame(page: Page) {
   return page.locator('dialog.explicit-root[open]').evaluate((dialog, names) => {
     const shell = dialog as HTMLDialogElement;
     const prefix = shell.dataset.antModalPrefix;
 
-    /** Выделяет изменения, сделанные публичными props в контрольном примере. */
+    /** Distinguishes the changes made by public props in the control example. */
     function read(node: HTMLElement | null) {
       if (!node) {
         return null;
@@ -53,7 +53,7 @@ function readFrame(page: Page) {
   }, interior);
 }
 
-/** Сравнивает с измерением Source с учётом объявленного отображения на native dialog. */
+/** Compares with the Source measurement, taking into account the advertised display on native dialog. */
 async function expectFrame(page: Page, source: SourceFrame, confirmation: boolean) {
   const frame = await readFrame(page);
 

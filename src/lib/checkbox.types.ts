@@ -14,7 +14,7 @@ export type CheckboxSemantic = CheckboxSemanticSlots | ((info: {
   props: CheckboxProps;
 }) => CheckboxSemanticSlots);
 
-/** Событие Ant Design; checked/value сохраняют тип, nativeEvent — DOM change. */
+/** Ant Design event. checked and value retain their types, and nativeEvent is the DOM change event. */
 export interface CheckboxChangeEvent {
   target: Omit<CheckboxProps, 'value'> & {
     value: CheckboxValue;
@@ -26,7 +26,7 @@ export interface CheckboxChangeEvent {
   preventDefault(): void;
 }
 
-/** Native refs очищаются при unmount; focus/blur используют настоящий input. */
+/** Native refs are cleared on unmount. focus and blur use the actual input. */
 export interface CheckboxRef {
   input: HTMLInputElement;
   nativeElement: HTMLSpanElement;
@@ -34,23 +34,23 @@ export interface CheckboxRef {
   blur(): void;
 }
 
-/** Нативный checkbox с bind:checked/indeterminate и участием в CheckboxGroup. */
+/** Native checkbox with bind:checked and indeterminate support and CheckboxGroup participation. */
 export interface CheckboxProps extends Omit<
   HTMLInputAttributes,
   'type' | 'checked' | 'indeterminate' | 'children' | 'class' | 'size' | 'value'
 > {
-  /** Поддерживает bind:checked вне CheckboxGroup. */
+  /** Supports bind:checked outside CheckboxGroup. */
   checked?: boolean;
-  /** Фиксируется при создании; default false и native reset без callbacks. */
+  /** Read at creation. Defaults to false and follows native reset without callbacks. */
   defaultChecked?: boolean;
-  /** Bindable mixed state; пользовательское переключение сбрасывает его, как в прежнем API. */
+  /** Bindable mixed state. User toggles reset it, matching the existing API. */
   indeterminate?: boolean;
   value?: CheckboxValue;
   children?: Snippet;
-  /** Исключает значение из группы; disabled внешнего fieldset продолжает действовать. */
+  /** Excludes the value from the group. An outer fieldset's disabled state still applies. */
   skipGroup?: boolean;
   onCheckedChange?: (checked: boolean) => void;
-  /** Вызывается до Group.onChange; нативный onchange получает отдельный DOM event. */
+  /** Invoked before Group.onChange. Native onchange receives a separate DOM event. */
   onChange?: (event: CheckboxChangeEvent) => void;
   onClick?: HTMLInputAttributes['onclick'];
   onFocus?: HTMLInputAttributes['onfocus'];
@@ -59,25 +59,25 @@ export interface CheckboxProps extends Omit<
   onKeyPress?: HTMLInputAttributes['onkeypress'];
   onMouseEnter?: (event: MouseEvent & { currentTarget: EventTarget & HTMLLabelElement; }) => void;
   onMouseLeave?: (event: MouseEvent & { currentTarget: EventTarget & HTMLLabelElement; }) => void;
-  /** Один раз вызывает focus при mount; lowercase autofocus сохраняет HTML-поведение. */
+  /** Focuses once on mount. Lowercase autofocus retains native HTML behavior. */
   autoFocus?: boolean;
   tabIndex?: number;
-  /** Локальный prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local prefix. An empty string or undefined inherits ConfigProvider.prefixCls. */
   prefixCls?: string;
   classNames?: CheckboxSemantic;
   styles?: CheckboxSemantic;
   class?: string;
   rootClassName?: string;
-  /** Bindable внутренний span; совпадает с ref.nativeElement. */
+  /** Bindable inner span, matching ref.nativeElement. */
   nativeElement?: HTMLSpanElement;
-  /** Bindable native input; совпадает с ref.input. */
+  /** Bindable native input, matching ref.input. */
   inputElement?: HTMLInputElement;
   ref?: CheckboxRef;
 }
 
 /**
- * Настройки отдельных Checkbox, включая варианты CheckboxGroup.
- * Root style: config.styles.root, config.style, local styles.root, local style.
+ * Settings for individual checkboxes, including CheckboxGroup options. Root style order:
+ * config.styles.root, config.style, local styles.root, local style.
  */
 export interface CheckboxConfig {
   class?: string;

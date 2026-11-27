@@ -1,7 +1,7 @@
 export function snapshotTourPrefix() {
   const section = document.querySelector('.fixture-tour-section')!;
   const root = section.closest('.fixture-tour-prefix')!;
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null, names: string[]) {
     if (!node) {
       return null;

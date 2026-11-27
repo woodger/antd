@@ -1,6 +1,6 @@
 import template from './vendor/tree-select-prefix.css.js';
 
-/** Owner dropdown scope отделён от сохранённого Native Tree adapter и общего Row namespace. */
+/** Owner dropdown scope is separated from the saved Native Tree adapter and the general Row namespace. */
 export function getTreeSelectPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-tree-select' && rootPrefix === 'ant') {
     return undefined;

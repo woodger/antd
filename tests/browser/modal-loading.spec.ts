@@ -52,13 +52,13 @@ for (const sample of modalLoadingSamples) test(`Modal loading follows full Sourc
     trace.push({ label, actual, appliedBoundaries: [...applied] });
     previous = actual;
   };
-  // Дочитывает состояние модального окна, если сценарий прервался до удаления.
+  // Readers the state of the modal window if the script was interrupted before removal.
   async function readBeforeUnmount() {
     try { if (!beforeUnmount) beforeUnmount = await page.evaluate(readModalLoading); }
     catch (error) { errors.push({ phase: 'finally-read', error: String(error) }); }
   }
 
-  // Удаляет оставшееся окно и читает состояние после очистки.
+  // Removes the remaining window and reads the condition after clearing.
   async function disposeAfterFailure() {
     try {
       if (!disposed) {
@@ -71,7 +71,7 @@ for (const sample of modalLoadingSamples) test(`Modal loading follows full Sourc
     catch (error) { errors.push({ phase: 'finally-dispose', error: String(error) }); }
   }
 
-  // Измеряет состояние через секунду после очистки, если основной замер не выполнен.
+  // Measures the state a second after clearing if the main measurement is not performed.
   async function readLateCleanup() {
     try {
       if (!late) {

@@ -9,7 +9,7 @@ export function readTreeVirtual(prefix: string) {
   const rect = holder.getBoundingClientRect();
   const active = tree.getAttribute('aria-activedescendant');
   const target = active ? document.getElementById(active) : null;
-  // Округляет дробное измерение до тысячных для сравнения снимков.
+  // Rounds the fractional dimension to the thousandth for comparing images.
   const round = (value: number) => Math.round(value * 1000) / 1000;
   return {
     viewport: {

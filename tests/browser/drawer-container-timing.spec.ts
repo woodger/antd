@@ -9,7 +9,7 @@ const fixture = {
   provider: ['drawer-late-provider', 'panel-late-target']
 } as const;
 
-/** Подключает контейнер снаружи, сохраняя ссылку на getter и строку селектора. */
+/** Connects the container from the outside, saving the link to the getter and the selector string. */
 async function appendTarget(page: Page, id: string) {
   await page.evaluate(targetId => {
     const target = document.createElement('div');
@@ -19,7 +19,7 @@ async function appendTarget(page: Page, id: string) {
   }, id);
 }
 
-/** Сверяет новый контейнер и состояние поля со снимком Ant Design. */
+/** Converts a new container and field state with an Ant Design shot. */
 async function measure(draft: Locator, previous?: ElementHandle) {
   return draft.evaluate((node, old) => {
     if (!(node instanceof HTMLInputElement)) {
@@ -35,7 +35,7 @@ async function measure(draft: Locator, previous?: ElementHandle) {
   }, previous);
 }
 
-/** Сравнивает форму вызова, поскольку React и Svelte обновляют Portal в разное время. */
+/** Compares the call form, as React and Svelte update Portal at different times. */
 async function getterPayloads(page: Page) {
   const text = await page.getByLabel('Panel container calls', { exact: true }).textContent();
   const calls: { getter: string; args: number; body: boolean; }[] = JSON.parse(text ?? '[]');

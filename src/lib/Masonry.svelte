@@ -46,7 +46,7 @@
   const tokens = useDesignTokenContext();
   const breakpoint = createBreakpoint();
   let mediaQueries = $derived(tokens.enabled ? getGridMediaQueries(tokens.state.token) : undefined);
-  // Source проверяет порядок порогов до подключения browser observer, включая SSR.
+  // Upstream checks breakpoint order before attaching the browser observer, including during SSR.
   untrack(() => mediaQueries);
   let motionEnabled = $derived(!tokens.enabled || tokens.state.token.motion !== false);
   let mergedItems = $state.raw<MasonryItemType<Data>[]>([]);
@@ -58,7 +58,7 @@
   let gutters = $derived(gridGutters(gutter, breakpoint.screens));
   let horizontalGutter = $derived(gutters[0] ?? 0);
   let verticalGutter = $derived(gutters[1] ?? horizontalGutter);
-  // Строковый gutter проходит через исходные `${value}px` и JS-сложение без нормализации.
+  // A string gutter uses the original `${value}px` interpolation and JavaScript addition without normalization.
   let layout = $derived(getMasonryPositions(heights, columnCount, verticalGutter as number));
   let positioned = $derived(mergedItems.map((item, index) => {
     const key = item.key ?? index;

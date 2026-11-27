@@ -11,7 +11,7 @@ for (const entry of reference.cases) {
       .selectOption(entry.sample.id);
 
     const expected = structuredClone(entry.result);
-    // Source кэширует shared local Space с первым root prefix; fresh source даёт inner Badge rule.
+    // Source caches shared local Space with the first root prefix; fresh source gives inner Badge rule.
     if (entry.sample.id === 'aliases') expected.nested = isolated.result;
 
     await expect.poll(() => page.evaluate(snapshotSpacePrefix)).toEqual(expected);

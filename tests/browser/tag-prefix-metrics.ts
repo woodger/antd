@@ -3,7 +3,7 @@ export function snapshotTagPrefix(host: HTMLElement, sample: {
 }) {
   const root = host.querySelector<HTMLElement>('[data-tag-prefix-root]')!;
   const prefix = sample.prefixCls || 'ant-tag';
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: HTMLElement, value = prefix, checkable = false) => [...node.classList]
     .filter(name => name === value || name.startsWith(`${value}-`))
     .filter(name => name !== 'ant-tag-css-var' && name !== 'ant-tag-dark'
@@ -40,7 +40,7 @@ export function snapshotTagPrefix(host: HTMLElement, sample: {
     prefixAttribute: root.getAttribute('prefixcls'),
     close: close ? {
       classes: classes(close), color: getComputedStyle(close).color,
-      // Native :disabled сохраняет not-allowed; React anticon[tabindex] использует pointer.
+      // Native :disabled preserves not-allowed; React anticon[tabindex] uses pointer.
       cursor: close.getAttribute('aria-disabled') === 'true'
         ? null : getComputedStyle(close).cursor
     } : null,

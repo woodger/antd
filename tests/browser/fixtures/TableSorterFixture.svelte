@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Сравнивает публичные настройки сортировки, видимые строки и запросы владельцу.
+  // Compares public sorting settings, visible strings, and queries to the owner.
   import {
     ConfigProvider, Table, enUS, type TableChange, type TableColumn, type TableSortCompare,
     type TableSortOrder
@@ -43,7 +43,7 @@
   const data: readonly Row[] = $derived(profile.tree
     ? [{ ...source.rows[0], items: source.children }, ...source.rows.slice(1)] : source.rows);
 
-  /** Проверяет направления из записи прогона перед передачей в типизированный Table. */
+  /** Validates directions from the recording before passing them to the typed Table. */
   function readOrder(value: string | null): TableSortOrder | null {
     if (value === null || value === 'ascend' || value === 'descend') {
       return value;
@@ -51,12 +51,12 @@
     throw new Error(`Unknown direction ${value}`);
   }
 
-  /** Серверная сортировка передаёт критерии владельцу даже при заданном compare. */
+  /** Server sorting transmits the criteria to the owner even at a given comparison. */
   function forbidComparison(): never {
     throw new Error('Table compared remote records');
   }
 
-  /** Собирает колонки в том же порядке, что исходный React-прогон. */
+  /** Collects columns in the same order as the original React run. */
   function buildColumns(settings: Partial<Record<ColumnKey, Setting>>): TableColumn<Row>[] {
     const definitions: [ColumnKey, string, keyof Row, TableSortCompare<Row>][] = [
       ['bucket', 'Bucket', 'bucket', (left, right) => left.bucket.localeCompare(right.bucket)],
@@ -88,12 +88,12 @@
     });
   }
 
-  /** Читает порядок вложенных записей в текущем наборе данных события. */
+  /** reads the order of nested entries in the current set of event data. */
   function keysOf(rows: readonly Row[]): number[] {
     return rows.flatMap(row => [row.key, ...keysOf(row.items ?? [])]);
   }
 
-  /** Проецирует скалярный контракт и список критериев на формат эталона. */
+  /** Proceeds the scalar contract and the list of criteria on the format of the standard. */
   function recordChange(change: TableChange<Row>) {
     const sorters = change.sorters ?? (change.sorter ? [change.sorter] : []);
     events = [...events, {

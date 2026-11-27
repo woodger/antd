@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Состояния владельца задаются входами независимых профилей Table.
+  // The owner's conditions are specified by the inputs of independent profiles Table.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, enUS, Table, type TableColumn, type TableExpandable, type TableKey
@@ -31,13 +31,13 @@
   let dataSource: readonly Row[] = $derived(profile.named
     ? renameChildren(reference.rows) : reference.rows);
 
-  // Формирует вход второго профиля с теми же ключами и другим полем потомков.
+  // Forms the entrance of the second profile with the same keys and other field of descendants.
   function renameChildren(rows: readonly Row[]): Row[] {
     return rows.map(({ children, ...row }) => children
       ? { ...row, items: renameChildren(children) } : row);
   }
 
-  // Сохраняет ветки в пользовательском callback, чтобы проверить обработку перед разбиением.
+  // Saves branches in a custom callback to check the processing before partitioning.
   function project(rows: readonly Row[]): Branch[] {
     return rows.map(row => {
       const children = row[childrenColumnName];
@@ -45,7 +45,7 @@
     });
   }
 
-  // Проверяет ссылки объектов в списке выбора после сортировки и фильтрования.
+  // Verifies object links in the selection list after sorting and filtering.
   function isOriginal(record: Row, rows = dataSource): boolean {
     return rows.some(row => {
       const children = row[childrenColumnName];
@@ -53,7 +53,7 @@
     });
   }
 
-  /** Запоминает порядок пользовательских событий без изменения входных записей. */
+  /** Remembers the order of user events without changing the input records. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }

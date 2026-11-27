@@ -31,7 +31,7 @@ export function getTreeDragChildren<Data extends object>(entry: TreeEntity<Data>
   return entry.children.flatMap(child => [child.key, ...getTreeDragChildren(child)]);
 }
 
-/** Геометрия Source использует event.target и весь flatten, а не только mounted window. */
+/** Geometry Source uses event.target and the entire flatten, not just the window mounted. */
 export function resolveTreeDrop<Data extends object>(options: TreeDropOptions<Data>): TreeDropState | null {
   const { index, visible, dragNode, targetKey, clientX, clientY, rect, startX, indent, rtl } = options;
   let target = index.entities.get(String(targetKey));
@@ -96,7 +96,7 @@ export function resolveTreeDrop<Data extends object>(options: TreeDropOptions<Da
     dropTargetKey: target.key,
     dropTargetPos: target.pos,
     dragOverNodeKey: over.key,
-    // Source теряет key=0 через || null; Native сохраняет canonical key.
+    // Source loses key=0 through || null; Native preserves canonical key.
     dropContainerKey: position === 0 ? null : target.parent?.key ?? null,
     dropAllowed: allowed
   };

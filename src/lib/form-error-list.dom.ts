@@ -1,12 +1,12 @@
-// Анимирует holder или отдельное сообщение Form. При смене направления новое движение берёт
-// начальные значения из текущего DOM.
+// Animates a holder or a separate Form message. When the direction changes, the new movement takes
+// the initial values from the current DOM.
 interface FormErrorMotion {
   visible: boolean;
   kind: 'holder' | 'message';
   onFinish(visible: boolean): void;
 }
 
-/** Web Animations сохраняет CSS easing и отменяет прежнюю motion при развороте или unmount. */
+/** Web Animations preserves CSS easing and cancels the previous motion when turning or unmount. */
 export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
   const view = node.ownerDocument.defaultView!;
   const reduced = view.matchMedia('(prefers-reduced-motion: reduce)');
@@ -16,7 +16,7 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
   let active = true;
   let generation = 0;
 
-  // Очищает animation и fallback timer прежнего перехода.
+  // Cleans the animation and fallback timer of the previous transition.
   function cancel() {
     view.clearTimeout(deadline);
     deadline = undefined;
@@ -24,8 +24,8 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
     animation = undefined;
   }
 
-  // Снимает начальную геометрию до отмены старого перехода. Holder использует только
-  // прозрачность.
+  // Removes the initial geometry until the cancellation of the old transition. Holder only uses
+  // transparency.
   function run(appearing: boolean) {
     const current = view.getComputedStyle(node);
     const fromOpacity = appearing ? 0 : current.opacity;
@@ -41,7 +41,7 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
     let finished = false;
     cancel();
 
-    // Освобождает ресурсы перед onFinish и подавляет повторное событие или устаревший deadline.
+    // Releases resources before onFinish and suppresses a repeat event or an outdated deadline.
     function finish() {
       if (!active || finished || tokenId !== generation) {
         return;
@@ -72,11 +72,11 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
 
     animation = node.animate(frames, { duration, easing, fill: 'both' });
     void animation.finished.then(finish, () => {});
-    // У CSSMotion upstream та же граница, если transitionend не пришёл.
+    // CSSMotion upstream has the same boundary if the transitionend did not come.
     deadline = view.setTimeout(finish, 500);
   }
 
-  // Доводит активную анимацию до конца при включении reduced motion.
+  // Bringing the active animation to the end when the reduced motion is enabled.
   function handleReducedMotion() {
     if (reduced.matches) animation?.finish();
   }
@@ -85,13 +85,13 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
   run(initial.visible);
 
   return {
-    // Сохраняет текущие callbacks. Запускает движение заново только при изменении видимости.
+    // Retains current callbacks. Starts the movement again only when the visibility changes.
     update(next: FormErrorMotion) {
       const changed = parameters.visible !== next.visible;
       parameters = next;
       if (changed) run(false);
     },
-    // Инвалидирует callbacks анимации и снимает подписку на настройки движения.
+    // Disables callbacks animations and removes the subscription to the traffic settings.
     destroy() {
       active = false;
       generation++;

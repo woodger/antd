@@ -7,7 +7,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 const fixture = '/?fixture=table-column-title';
 type SourceState = (typeof source.cases)[number]['states'][number]['state'];
 
-/** Снимает видимый заголовок и контекст snippet независимо от кнопок в ячейке. */
+/** Removes the visible header and context snippet regardless of the buttons in the cell. */
 function snapshot() {
   const root = document.getElementById('table-column-title-fixture');
   if (!root) {
@@ -32,7 +32,7 @@ function snapshot() {
   return { headings, rows, changes };
 }
 
-/** Учитывает нативный title через onHeaderCell и активные ключи TableChange. */
+/** Takes into account the native title through onHeaderCell and active keys TableChange. */
 function expectedState(state: SourceState) {
   const headings = state.headings.map(heading => heading.key === 'markup'
     ? { ...heading, title: null } : heading);
@@ -43,7 +43,7 @@ function expectedState(state: SourceState) {
   return { headings, rows: state.rows, changes };
 }
 
-/** Повторяет действия исходного прогона с заголовком, фильтром и владельцем. */
+/** Repeats the actions of the original run with the title, filter and owner. */
 async function act(page: Page, action: string) {
   if (action.startsWith('sort-')) {
     const key = action.slice(5);

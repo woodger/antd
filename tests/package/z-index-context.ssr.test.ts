@@ -8,7 +8,7 @@ import auxiliary from '../browser/fixtures/ant-design-auxiliary-z-index-context-
 import inputs from '../browser/fixtures/ant-design-input-z-index-context-reference.json';
 import source from '../browser/fixtures/ant-design-z-index-context-reference.json';
 
-/** Читает последнюю числовую декларацию в SSR-профилях без important. */
+/** Reads the last numeric declaration without important in the SSR profiles. */
 function inlineLayer(body: string, ...classNames: string[]) {
   for (const [tag, classes] of body.matchAll(/<[^>]+\sclass="([^"]*)"[^>]*>/g)) {
     const tokens = classes.split(/\s+/);

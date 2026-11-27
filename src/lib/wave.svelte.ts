@@ -3,7 +3,7 @@ import { useDesignTokenContext } from './theme-context.svelte';
 import { connectWave } from './wave.dom';
 import type { WaveColorSource, WaveComponent } from './wave.types';
 
-/** Attachment сохраняет DOM control и читает актуальные config/token в отложенном callback. */
+/** Attachment preserves DOM control and reads the current config/token in the delayed callback. */
 export function useWave(
   component: WaveComponent,
   getDisabled: () => boolean,

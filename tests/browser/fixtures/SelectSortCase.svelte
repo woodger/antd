@@ -32,7 +32,7 @@
     b: SelectOption<string | number>,
     info: { searchValue: string }
   ) {
-    // plain diagnostics не становятся зависимостями сортировки.
+    // plain diagnostics do not become dependents of sorting.
     untrack(() => {
       if (!callbackQueries.includes(info.searchValue)) callbackQueries.push(info.searchValue);
       if (sample.mode !== 'tags' && (!options.includes(a) || !options.includes(b))) {

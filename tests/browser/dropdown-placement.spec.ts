@@ -6,7 +6,7 @@ import {
 
 test.use({ viewport: { width: 1000, height: 700 } });
 
-// Передаёт реальные координаты pointer. Disabled-кнопка тоже получает contextmenu от браузера.
+// Transmits real pointer coordinates. The Disabled button also receives contextmenu from the browser.
 async function act(page: Page, action: PlacementAction) {
   const trigger = page.locator('#trigger');
   switch (action[0]) {
@@ -50,12 +50,12 @@ async function act(page: Page, action: PlacementAction) {
   }
 }
 
-// Меняет props владельца без перемещения указателя и передачи фокуса кнопке фикстуры.
+// Changes the props owner without moving the pointer and transmitting the focus to the fixture button.
 function clickFixtureButton(page: Page, id: string) {
   return page.locator('#' + id).evaluate((node: HTMLButtonElement) => node.click());
 }
 
-// Нативный click кнопки идёт до обёртки. Контейнеры сверяются отдельным журналом.
+// Native click buttons go to the wrapper. Containers are checked by a separate magazine.
 function expectedEvents(events: PlacementFrame['state']['events']) {
   const projected = events.filter(([kind]) => kind !== 'container');
   for (let i = 1; i < projected.length; i++) {
@@ -68,7 +68,7 @@ function expectedEvents(events: PlacementFrame['state']['events']) {
   return projected;
 }
 
-// Проверяет положение поверхности и стрелки по реальным границам в окне браузера.
+// Checks the position of the surface and arrow at the real boundaries in the browser window.
 function popupLayout(popup: Locator) {
   return popup.evaluate(panel => {
     function locate(element: Element | null) {
@@ -132,7 +132,7 @@ function testPlacement({ profile, frames }: PlacementCase) {
       else {
         await expect(panel, action[0]).toBeHidden();
         if (profile.autoFocus && action[0] === 'Escape') {
-          // Native возвращает фокус после открытия как мышью, так и клавиатурой.
+          // Native returns focus after opening with both the mouse and the keyboard.
           await expect(page.locator('#trigger')).toBeFocused();
         }
       }

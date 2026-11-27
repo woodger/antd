@@ -86,16 +86,16 @@ export const mappedAutoComplete: AutoCompleteProps<MappedOption> = {
 };
 
 export const invalidMapping: SelectFieldNames = {
-  // @ts-expect-error Имена полей — строки, а не индексы массива.
+  // @ts-expect-error Field names are strings, not array indices.
   value: 0
 };
 
 export const invalidSelectValue: SelectProps<string, undefined, MappedOption> = {
-  // @ts-expect-error Raw option generic не меняет primitive value domain.
+  // @ts-expect-error The raw option generic does not change the primitive value domain.
   value: { uid: 'a' }
 };
 
 export const invalidAutoCompleteValue: AutoCompleteProps<MappedOption> = {
-  // @ts-expect-error AutoComplete сохраняет строковое значение свободного ввода.
+  // @ts-expect-error AutoComplete keeps free-form input as a string.
   value: 1
 };

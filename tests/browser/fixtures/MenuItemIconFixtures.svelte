@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Меняет владельца значка и выбор через опубликованные props Menu.
+  // Changes the owner of the badge and the selection through the published props Menu.
   import { untrack, type Snippet } from 'svelte';
   import { ConfigProvider, Menu } from '@woodger/antd';
   import type { MenuItemIcon, MenuItemIconInfo, MenuItemType, MenuMode } from '@woodger/antd';
@@ -32,7 +32,7 @@
     { key: 'root-entry', label: 'Root', class: 'sample-root' }
   ]);
 
-  // Восстанавливает значение или snippet из настроек исходного сценария.
+  // Restores a value or snippet from the settings of the original scenario.
   function icon(
     value: MenuItemIcon | undefined,
     render: Snippet<[MenuItemIconInfo]>
@@ -40,7 +40,7 @@
     return value === 'snippet' ? render : value;
   }
 
-  // Начинает следующий замер с исходным набором selectedKeys.
+  // Begins the following measurement with the original set of selectedKeys.
   function selectSample(event: Event & { currentTarget: HTMLSelectElement; }) {
     sampleId = event.currentTarget.value;
     selected = ['leaf'];

@@ -6,32 +6,32 @@ import ContentFixture from './TableFilterContentFixture.svelte';
 import StaticContentFixture from './TableFilterStaticContentFixture.svelte';
 import PopupContainerFixture from './TablePopupContainerFixture.svelte';
 
-/** Формирует отфильтрованные строки и кнопку до подключения обработчиков. */
+/** Forms filtered lines and a button before connecting handlers. */
 export function renderTableFilterState() {
   return render(Fixture, { props: { profileId: 'controlled' } });
 }
 
-/** Выводит применённый дочерний критерий до первого открытия дерева. */
+/** Removes the used daughter criterion before the first discovery of the tree. */
 export function renderTableFilterOptions() {
   return render(OptionsFixture, { props: { profileId: 'tree-cascade' } });
 }
 
-/** Выводит строки и закрытый триггер фильтра с пользовательскими подписями. */
+/** Output strings and closed filter trigger with custom labels. */
 export function renderTableFilterContent() {
   return render(ContentFixture, { props: { profileId: 'single-menu' } });
 }
 
-/** Рендерит статический редактор в закрытой панели для проверки его hydration. */
+/** Renders a static editor in the closed panel to verify hydration. */
 export function renderTableFilterStaticContent() {
   return render(StaticContentFixture, { props: { profileId: 'live' } });
 }
 
-/** Выводит заданную колонкой иконку до монтирования пользовательской панели. */
+/** Output the icon specified by the column before mounting the custom panel. */
 export function renderTableFilterDropdown() {
   return render(DropdownFixture, { props: { profileId: 'custom' } });
 }
 
-/** Выводит триггер и пустой контейнер до первого открытия портала. */
+/** Remove the trigger and empty container before the first opening of the portal. */
 export function renderTablePopupContainer() {
   return render(PopupContainerFixture, { props: { profileId: 'table' } });
 }

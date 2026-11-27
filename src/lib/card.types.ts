@@ -4,7 +4,7 @@ import type { ComponentSize } from './types';
 import type { TabsContent, TabsExtraContent, TabsItem, TabsProps } from './tabs.types';
 
 export type CardContent = TabsContent;
-/** Настройки Card; явно заданный вложенный record заменяет родительский целиком. */
+/** Card settings. An explicit nested record replaces the parent's record in full. */
 export interface CardConfig {
   variant?: CardProps['variant'];
   class?: string;
@@ -12,7 +12,7 @@ export interface CardConfig {
   classNames?: CardSemantic;
   styles?: CardSemantic;
 }
-/** Независимые от Card настройки ConfigProvider.cardMeta с тем же record replacement. */
+/** ConfigProvider.cardMeta settings are independent of Card and follow the same record replacement rule. */
 export interface CardMetaConfig {
   class?: string;
   style?: string;
@@ -25,20 +25,20 @@ export type CardSlots = Partial<
 export type CardMetaSlots = Partial<
   Record<'root' | 'section' | 'avatar' | 'title' | 'description', string>
 >;
-/** Card callback получает разрешённые size/variant и прежние native defaults остальных Props. */
+/** The Card callback receives resolved size and variant and the existing native defaults for other Props. */
 export type CardSemantic = CardSlots | ((info: { props: CardProps; }) => CardSlots);
-/** Meta callback получает текущие Props; root — внешний div CardMeta. */
+/** The Meta callback receives current Props. root is the outer CardMeta div. */
 export type CardMetaSemantic = CardMetaSlots | ((info: { props: CardMetaProps; }) => CardMetaSlots);
 export interface CardTabItem extends Omit<TabsItem, 'label'> {
   label?: TabsContent;
 }
-/** Карточка с title/extra/actions, tabs и сохранением содержимого при loading. */
+/** Card with title, extra, actions, and tabs. Content is retained while loading. */
 export interface CardProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'title' | 'class' | 'style'
 > {
   children?: Snippet;
-  /** Непустой локальный prefix имеет приоритет; иначе используется ConfigProvider.prefixCls. */
+  /** A nonempty local prefix takes precedence. Otherwise uses ConfigProvider.prefixCls. */
   prefixCls?: string;
   title?: CardContent;
   extra?: CardContent;
@@ -50,13 +50,13 @@ export interface CardProps extends Omit<
   hoverable?: boolean;
   size?: ComponentSize;
   type?: 'inner';
-  /** Локальный вариант перекрывает Form и ConfigProvider. */
+  /** A local variant overrides Form and ConfigProvider. */
   variant?: 'outlined' | 'borderless';
   containGrid?: boolean;
   tabList?: readonly CardTabItem[];
-  /** Поддерживает bind:activeTabKey. */
+  /** Supports bind:activeTabKey. */
   activeTabKey?: string;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultActiveTabKey?: string;
   tabBarExtraContent?: TabsExtraContent;
   tabProps?: Partial<Omit<TabsProps, 'items'>>;
@@ -67,31 +67,31 @@ export interface CardProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
-/** Ячейка сетки Card с настраиваемым hover и нативными HTML-атрибутами. */
+/** Card grid cell with configurable hover and native HTML attributes. */
 export interface CardGridProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
   children?: Snippet;
-  /** Базовый Card prefix; undefined наследует owner Card, пустая строка — ConfigProvider. */
+  /** Base Card prefix. undefined inherits the owning Card's prefix. An empty string uses ConfigProvider. */
   prefixCls?: string;
   /** @defaultValue true */
   hoverable?: boolean;
   class?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
-/** Блок avatar/title/description внутри Card. */
+/** Avatar, title, and description section inside Card. */
 export interface CardMetaProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'title' | 'class' | 'style'
 > {
   avatar?: CardContent;
-  /** Базовый Card prefix; undefined наследует owner Card, пустая строка — ConfigProvider. */
+  /** Base Card prefix. undefined inherits the owning Card's prefix. An empty string uses ConfigProvider. */
   prefixCls?: string;
   title?: CardContent;
   description?: CardContent;
@@ -100,6 +100,6 @@ export interface CardMetaProps extends Omit<
   styles?: CardMetaSemantic;
   class?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

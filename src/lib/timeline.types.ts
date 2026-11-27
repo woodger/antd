@@ -17,12 +17,12 @@ export interface TimelineItem {
   classNames?: StepsItemSlots;
   styles?: StepsItemSlots;
 }
-/** Лента событий с loading items, reverse и размещением title/content. */
+/** Event tape with loading items, reverse and placement title/content. */
 export interface TimelineProps extends Omit<
   HTMLAttributes<HTMLOListElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; иначе ConfigProvider. Steps имеет независимый prefix. */
+  /** Local CSS prefix; otherwise ConfigProvider. Steps has an independent prefix. */
   prefixCls?: string;
   items?: readonly TimelineItem[];
   /** @defaultValue 'outlined' */
@@ -38,9 +38,9 @@ export interface TimelineProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLOListElement;
 }
 
-/** Общие классы/стили Timeline; локальные и item-specific настройки приоритетнее. */
+/** General Timeline classes/styles; local and item-specific settings are more priority. */
 export type TimelineConfig = Pick<TimelineProps, 'class' | 'style' | 'classNames' | 'styles'>;

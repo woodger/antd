@@ -1,9 +1,9 @@
-// Хранит геометрию и историю переворотов в пределах одного открытия подменю.
-// Как rc-trigger с именованной позицией, применяет изменения настроек при новом замере.
+// Stores the geometry and history of coups within a single opening of the substitution. As
+// rc-trigger with the named position, applies changes to the settings at a new measurement.
 import type { getMenuPopupAlignment } from './menu-popup-align.engine';
 import { getTooltipPosition, type TooltipPosition, type TooltipRect } from './tooltip.engine';
 
-/** Возвращает расчёт позиции для текущей пары trigger и popup. */
+/** Returns the position calculation for the current pair trigger and popup. */
 export function createMenuPopupPosition(
   anchor: Element,
   getAlignment: () => ReturnType<typeof getMenuPopupAlignment>
@@ -12,7 +12,7 @@ export function createMenuPopupPosition(
   let lastGeometry = '';
   let lastPosition: TooltipPosition | undefined;
 
-  // Изменение позиции самого popup не считается новым измерением его размера.
+  // Changing the position of the popup itself is not considered a new dimension of its size.
   return (target: DOMRect, popup: DOMRect, viewport: TooltipRect) => {
     const alignment = getAlignment();
     if (!alignment) {

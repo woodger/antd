@@ -1,6 +1,6 @@
 import template from './vendor/color-picker-prefix.css.js';
 
-/** ColorPicker owner и общие namespaces вложенных controls не меняют canonical variables. */
+/** The ColorPicker owner and shared nested control namespaces leave canonical variables intact. */
 export function getColorPickerPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-color-picker' && rootPrefix === 'ant') {
     return undefined;

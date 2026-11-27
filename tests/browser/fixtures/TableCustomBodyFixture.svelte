@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Использует один renderer для нативной прокрутки и handle внешнего виртуализатора.
+  // Uses one renderer for native scrolling and running an external virtualizer.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, enUS, Table, type TableBodyRenderInfo, type TableBodyScrollHandle,
@@ -42,7 +42,7 @@
   let changes = $state.raw<[TableChange<Row>['action'], number][]>([]);
   let notifyBodyScroll: TableBodyRenderInfo['onScroll'] | undefined;
 
-  /** Сохраняет receiver и исходный запрос Table, затем вычисляет позицию сам. */
+  /** Saves the receiver and the original request Table, then calculate the position itself. */
   function createHandle(node: HTMLElement, readPage: () => readonly Row[]): TableBodyScrollHandle {
     return {
       get scrollLeft() { return node.scrollLeft; },
@@ -62,7 +62,7 @@
     };
   }
 
-  /** Регистрирует владельца прокрутки на время работы DOM attachment. */
+  /** Registers scrolling owner during operation DOM attachment. */
   function connectBody(node: HTMLElement, info: TableBodyRenderInfo, readPage: () => readonly Row[]) {
     const target = owner === 'proxy' ? createHandle(node, readPage) : node;
     const disconnect = info.ref(target);
@@ -73,12 +73,12 @@
     };
   }
 
-  /** Сохраняет применённую страницу вместе с причиной изменения. */
+  /** Saves the applied page together with the reason for the change. */
   function noteChange({ action, pagination }: TableChange<Row>) {
     changes = [...changes, [action, pagination.current]];
   }
 
-  /** Записывает результат команды в шапке на всей странице данных. */
+  /** Writes the result of the command in the cap on the entire data page. */
   function noteSelection(keys: TableKey[]) {
     selections = [...selections, keys];
   }

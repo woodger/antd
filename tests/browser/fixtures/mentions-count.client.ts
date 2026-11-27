@@ -1,4 +1,4 @@
-// Подключает публичный пакет; строгая hydration начинается по сигналу сценария.
+// Connects a public package; strict hydration starts at the script signal.
 import '@woodger/antd/styles.css';
 import { hydrate, mount } from 'svelte';
 import Fixture from './MentionsCountFixture.svelte';

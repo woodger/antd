@@ -15,7 +15,7 @@ async function prepare(page: Page, controlled: boolean) {
   await page.goto('/?fixture=time-range-picker');
   if (!controlled) {
     await control(page, 'Controlled interval value').uncheck();
-    // Новый экземпляр проверяет defaultValue отдельно от удаления controlled value.
+    // The new instance checks defaultValue separately from deleting the controlled value.
     await control(page, 'Mount interval').uncheck();
     await control(page, 'Mount interval').check();
   }
@@ -86,7 +86,7 @@ for (const controlled of [true, false]) {
       const beforeEvents = await control(page, 'Interval events').textContent();
       const beforeFocus = await control(page, 'Interval focus').textContent();
       try {
-        // Кнопка меняет prop без pointerdown снаружи и переноса фокуса.
+        // The button changes the prop without pointerdown outside and transferring the focus.
         await button(page, 'Toggle interval prefix').evaluate((node: HTMLButtonElement) => node.click());
 
         await expect(root(page)).toHaveClass(/\bsuite-picker\b/);
@@ -120,7 +120,7 @@ test('TimeRangePicker resyncs a valid draft when the owner supplies a new array 
   try {
     await button(page, 'Replace interval array').evaluate((node: HTMLButtonElement) => node.click());
 
-    // Меняется ссылка на массив; оба исходных объекта Dayjs сохраняются.
+    // A reference to an array is changed; both Dayjs source objects are saved.
     await expect(control(page, 'Interval value refs')).toHaveText('false,true,true');
     await expect(start(page)).toHaveValue('10:23');
     await expect(end(page)).toHaveValue('17:45');

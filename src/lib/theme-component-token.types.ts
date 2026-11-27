@@ -1,9 +1,9 @@
 import type { AliasToken, MappingAlgorithm } from './theme-token.types';
 
-/** CSS lengths и font metrics без зависимости от React.CSSProperties. */
+/** CSS lengths and font metrics without dependence on React.CSSProperties. */
 type ThemeCSSValue = string | number | undefined;
 
-/** Исходный multi-value transform из CSSObject для Rate.starHoverScale. */
+/** The original multi-value transform from CSSObject for Rate.starHoverScale. */
 type ThemeTransform = string | readonly string[] | undefined | {
   _skip_check?: boolean;
   _multi_value?: boolean;
@@ -163,7 +163,7 @@ export interface CollapseComponentToken {
   borderlessContentBg: string;
 }
 
-/** Общая тема DatePicker/RangePicker и обоих TimePicker: input, панели, presets и popup. */
+/** Common theme DatePicker/RangePicker and both TimePicker: input, panels, presets and popup. */
 export interface DatePickerComponentToken {
   paddingInline: number;
   paddingInlineSM: number;
@@ -254,13 +254,13 @@ export interface FlexComponentToken {
 
 export type FloatButtonComponentToken = object;
 
-/** Токены оформления Form и FormItem; defaults рассчитываются из alias tokens. */
+/** Form and FormItem tokens; defaults are calculated from alias tokens. */
 export interface FormComponentToken {
   labelRequiredMarkColor: string;
   labelColor: string;
   labelFontSize: number;
   labelHeight: number | string;
-  /** @internal Явный labelHeight override или auto, если override не задан. */
+  /** @internal Explicit labelHeight override, or auto when it is omitted. */
   verticalLabelHeight: number | string;
   labelColonMarginInlineStart: number;
   labelColonMarginInlineEnd: number;
@@ -355,7 +355,7 @@ export interface LayoutComponentToken {
   lightTriggerColor: string;
 }
 
-/** Отступы Listy; itemPaddingBlock также участвует в source estimate виртуальных строк. */
+/** Listy indents; itemPaddingBlock is also involved in source estimate virtual strings. */
 export interface ListyComponentToken {
   itemPaddingBlock: number;
   itemPaddingInline: number;
@@ -433,7 +433,7 @@ export interface RateComponentToken {
   starSize: number;
   starSizeSM: number;
   starSizeLG: number;
-  /** Строковая transform; для CSSObject/arrays пока сохраняется native scale(1.1). */
+  /** String transform; for CSSObject/arrays still saved native scale(1.1). */
   starHoverScale: ThemeTransform;
   starBg: string;
 }
@@ -572,7 +572,7 @@ export interface TagComponentToken {
   solidTextColor: string;
 }
 
-/** Метрики и состояния Tree; DirectoryTree-only tokens пока не добавляют его отдельный API. */
+/** Tree metrics and states. DirectoryTree-only tokens do not add a separate API yet. */
 export interface TreeComponentToken {
   titleHeight: number;
   switcherSize?: number;
@@ -595,11 +595,11 @@ export interface TreeSelectComponentToken {
   nodeSelectedColor: string;
 }
 
-/** Отступы заголовков Typography; font/color aliases настраиваются общим theme API. */
+/** Typography Header Indentations; font/color aliases are configured by common theme API. */
 export interface TypographyComponentToken {
-  /** Отступ заголовка после предыдущего элемента; по умолчанию 1.2em. */
+  /** Indentation of the header after the previous element; by default 1.2em. */
   titleMarginTop: number | string;
-  /** Нижний отступ заголовка; по умолчанию 0.5em. */
+  /** Bottom indentation of the title; by default 0.5em. */
   titleMarginBottom: number | string;
 }
 
@@ -612,7 +612,7 @@ export interface TimelineComponentToken {
   itemPaddingBottom?: number;
 }
 
-/** Размеры списков, строк и заголовка Transfer; числа преобразуются в px, CSS strings сохраняются. */
+/** The sizes of lists, rows, and the Transfer header; the numbers are converted to px, CSS strings are saved. */
 export interface TransferComponentToken {
   listWidth: number | string;
   listWidthLG: number | string;
@@ -651,7 +651,7 @@ export interface TabsComponentToken {
   cardGutter: number;
 }
 
-/** Минимальная ширина controls шапки, высота mini и цвета Calendar; panel defaults внутренние. */
+/** The minimum width of the hats, the height of the mini and the colors of Calendar; the default panels are internal. */
 export interface CalendarComponentToken {
   yearControlWidth: number | string;
   monthControlWidth: number | string;
@@ -850,7 +850,7 @@ export interface AppComponentToken {
 export interface WaveComponentToken {
 }
 
-/** Поля ComponentToken из закреплённого Ant Design 6.6.8; defaults вычисляют стили компонентов. */
+/** Fields ComponentToken from fixed Ant Design 6.6.8; defaults compute component styles. */
 export interface ComponentTokenMap {
   Affix?: AffixComponentToken;
   Addon?: AddonComponentToken;
@@ -919,18 +919,18 @@ export interface ComponentTokenMap {
   Tour?: TourComponentToken;
   QRCode?: QRCodeComponentToken;
   App?: AppComponentToken;
-  /** @private Служебная запись Wave, как в исходном ComponentTokenMap. */
+  /** @private Internal Wave entry, matching the upstream ComponentTokenMap. */
   Wave?: WaveComponentToken;
 }
 
-/** AliasToken с переданными через ConfigProvider компонентными overrides. */
+/** AliasToken with ConfigProvider component overrides transferred. */
 export type GlobalToken = AliasToken & ComponentTokenMap;
 
 export type OverrideToken = {
   [Key in keyof ComponentTokenMap]: Partial<ComponentTokenMap[Key]> & Partial<AliasToken>;
 };
 
-/** algorithm=true использует общий алгоритм; false оставляет компонентные overrides без расчёта. */
+/** the algorithm=true uses an overall algorithm; false leaves component overrides without calculation. */
 export type ComponentsConfig = {
   [Key in keyof OverrideToken]?: OverrideToken[Key] & {
     algorithm?: boolean | MappingAlgorithm | readonly MappingAlgorithm[];

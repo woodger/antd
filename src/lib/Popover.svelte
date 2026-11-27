@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Управляет trigger и содержимым Popover. Фокус, hover и закрытие проходят через текущее
-  // состояние открытости.
+  // Manages the Popover trigger and content. Focus, hover, and dismissal use the current open
+  // state.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import { getAllContexts, onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
@@ -146,7 +146,7 @@
   const fallbackId = `ant-popover-${generatedId}`;
   const titleId = `${fallbackId}-title`;
   const initialDefault = untrack(() => defaultOpen);
-  // Raw open переживает обновление spread props без входного open.
+  // The raw open state survives updates to spread props when no open prop is supplied.
   let uncontrolledOpen = $state(initialDefault);
   let rawOpen = $derived(providedOpen === undefined ? uncontrolledOpen : open ?? initialDefault);
   let host = $state<HTMLSpanElement>();
@@ -319,7 +319,7 @@
   }
 
   $effect.pre(() => {
-    // Первый force render получает текущие props; opaque Snippet captures остаются Svelte-owned.
+    // The first forced render receives current props. Svelte still owns the captures of the opaque Snippet.
     if (visible || fresh || forceRender && !initialized) cached = payload;
     if (visible || forceRender) {
       initialized = true;
@@ -418,7 +418,7 @@
 
     clicked = false;
     focusOnShow = false;
-    // Возвращаем фокус до удаления условного snippet и скрытия поверхности.
+    // Restore focus before removing the conditional snippet and hiding the surface.
     untrack(() => restoreTriggerFocus(surface, source));
   });
 
@@ -449,7 +449,7 @@
       return;
     }
 
-    // Положение меняется без повторного hide/show, чтобы сохранить ввод и фокус.
+    // Updates position without hiding and showing the surface again, preserving input and focus.
     const disconnect = untrack(() => connectPopup(surface, source, {
       trigger: host,
       get interactive() { return visible; },
@@ -551,7 +551,7 @@
     cancelPending();
     const target = anchor;
     const ownerValue = providedOpen;
-    // Удаление overrides не отменяет уже запущенный source action.
+    // Removing overrides does not cancel an upstream action already in progress.
     const independentActions = actionOverrides;
 
     function apply() {
@@ -575,7 +575,7 @@
         open = next;
         onOpenChange?.(next);
       }
-      // Отклонённое открытие не должно превращать следующий click в закрытие.
+      // A rejected open request must leave the next click free to open the panel.
       if (next && !visible) {
         clicked = false;
         focusOnShow = false;
@@ -654,7 +654,7 @@
         request(false, (props.blurDelay ?? 0) * 1000);
       }
     }
-    // Native blur без relatedTarget также приходит во время удаления focused DOM.
+    // Native blur without a relatedTarget also fires when the focused DOM is removed.
     if (event.relatedTarget === null) {
       queueMicrotask(closeIfOutside);
     }
@@ -784,7 +784,7 @@
       if (!wanted())
         request(false);
     }
-    // При remove() браузер отправляет blur до отсоединения DOM и cleanup Svelte.
+    // On remove(), the browser fires blur before detaching the DOM and before Svelte cleanup.
     if (event.relatedTarget === null) {
       queueMicrotask(closeIfOutside);
     }
@@ -857,7 +857,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`popover-prefix:${prefix}`} />{/if}<span bind:this={host} role="presentation" class={['ant-popover-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>
 {#if !grouped}<NoCompactStyle>
-<!-- svelte-ignore a11y_click_events_have_key_events (Корень получает всплытие click от доступных контролов.) -->
+<!-- svelte-ignore a11y_click_events_have_key_events (The root receives bubbled clicks from accessible controls.) -->
 <div bind:this={popup} {id} role="dialog" popover="manual" hidden tabindex="-1" dir={config.direction}
   inert={motion.leaving || undefined}
   data-ant-popover="" data-ant-custom-prefix={prefix !== 'ant-popover' || undefined}

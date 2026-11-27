@@ -10,7 +10,7 @@ import source from './fixtures/ant-design-input-z-index-context-reference.json' 
 test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
 const fixture = '/?fixture=input-z-index-context&profile=';
 
-/** Читает слой каждой панели, включая Tooltip внутри Select. */
+/** Reads a layer of each panel including Tooltip inside Select. */
 function snapshot() {
   const surfaces = {
     select: '.zi-select',

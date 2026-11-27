@@ -1,4 +1,4 @@
-// Читает повторные замеры официальной сборки до сопоставления публичного API.
+// Reads the repeated measurements of the official assembly before the comparison of public API.
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
@@ -69,7 +69,7 @@ const hashes = {
   'panels-supplement': '87870fd015ca7859594ba2438bfa4edf122665a8c54ffaf6afcf09653205592c'
 };
 
-/** Проверяет байты замера перед чтением DOM и событий. */
+/** Checking measurement bytes before reading DOM and events. */
 function readReference<Pass>(kind: keyof typeof hashes): PickerComponentsReference<Pass> {
   const file = new URL(`./fixtures/ant-design-picker-components-${kind}.json.gz`, import.meta.url);
   const raw = gunzipSync(readFileSync(file));
@@ -80,17 +80,17 @@ function readReference<Pass>(kind: keyof typeof hashes): PickerComponentsReferen
   return JSON.parse(raw.toString('utf8'));
 }
 
-/** Возвращает оба независимых прогона для заданной группы браузерных сценариев. */
+/** Returns both independent runs for a given group of browser scenarios. */
 export function readPickerComponentsBrowser(kind: 'browser' | 'editors') {
   return readReference<PickerComponentsCapture[]>(kind);
 }
 
-/** Возвращает SSR с отключёнными DOM и таймерами. */
+/** Retrieves SSR with DOM and timers disabled. */
 export function readPickerComponentsServer() {
   return readReference<ServerCapture>('ssr');
 }
 
-/** Возвращает обе последовательности действий на публичных компонентах панелей. */
+/** Returns both action sequences on the public components of the panels. */
 export function readPickerPanelsReference(kind: 'panels' | 'panels-supplement' = 'panels') {
   return readReference<PanelCapture[]>(kind);
 }

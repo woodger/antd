@@ -56,7 +56,7 @@ for (const sample of datePickerPresetSamples) {
       expect(owner.callbackDates).toEqual([]);
       expect(owner.lifecycle).toEqual([]);
       expect(owner.bodyActivity).toEqual([]);
-      // disabledDate остаётся настоящим pure producer; его render multiplicity не подменяется.
+      // disabledDate remains a real pure producer. The test does not substitute its render multiplicity.
       expect(owner.calls.every(call => (call as { kind: string }).kind === 'disabledDate')).toBe(true);
       expect(capture.readRefs!()).toEqual({ control: null, root: null, owner: null });
       expect(resource).not.toHaveBeenCalled();

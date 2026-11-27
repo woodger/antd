@@ -12,7 +12,7 @@ type Capture = typeof reference.passes[number][number];
 export type AutoCompleteEditorState = Capture['before'] | Capture['first']['state']
   | Capture['closed'] | Capture['second']['state'];
 
-/** Читает реальные замеры React для одного варианта редактора. */
+/** Reads the real React measurements for a single editor option. */
 export function readAutoCompleteEditorHeightCase(id: string) {
   const match = reference.passes[0]?.find(entry => entry.profile.id === id);
   if (!match) throw new Error(`Missing React editor height case: ${id}`);

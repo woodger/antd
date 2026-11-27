@@ -14,7 +14,7 @@ type EditorHandle = Awaited<ReturnType<Locator['elementHandle']>>;
 
 test.use({ viewport: { width: 960, height: 640 } });
 
-/** Загружает публичный пакет или готовит страницу к вставке SSR-разметки. */
+/** Loads the public package or prepares the page for SSR markup. */
 async function openFixture(page: Page, profile: string, ssr = false) {
   const query = new URLSearchParams({ 'mentions-count': profile });
   if (ssr) {
@@ -25,14 +25,14 @@ async function openFixture(page: Page, profile: string, ssr = false) {
   return page.getByRole('combobox', { name: 'Count editor' });
 }
 
-/** Снимает результаты ввода, DOM счётчика и журнал вызовов публичного API. */
+/** Removes the results of the input, DOM meters and the magazine of calls public API. */
 function readSnapshot(editor: Locator, extended: boolean, original: EditorHandle | null) {
   return editor.evaluate((node: HTMLTextAreaElement, { extended, original }) => {
     const root = node.closest('[data-ant-mentions-root]');
     const wrapper = node.closest('.rc-textarea-affix-wrapper');
     const counter = wrapper?.querySelector('.rc-textarea-data-count');
     const scope = [...(root?.classList ?? [])].find(name => /^s-(?:\w|-)+$/.test(name));
-    // Сохраняем authored classes и снимаем только scope class Svelte.
+    // We save authored classes and shoot only scope class Svelte.
     function classes(element: Element | null | undefined) {
       return element ? [...element.classList].filter(name => name !== scope).join(' ') : null;
     }
@@ -83,7 +83,7 @@ function readSnapshot(editor: Locator, extended: boolean, original: EditorHandle
   }, { extended, original });
 }
 
-/** Сравнивает замер браузера целиком с соответствующим профилем Ant Design. */
+/** Compares the browser measurement in its entirety with the corresponding Ant Design profile. */
 async function expectSnapshot(
   editor: Locator, state: BasicSnapshot | ExtendedSnapshot, original: EditorHandle | null = null
 ) {
@@ -91,14 +91,14 @@ async function expectSnapshot(
   await expect.poll(() => readSnapshot(editor, extended, original)).toEqual(state);
 }
 
-/** Передаёт в браузере настоящий CompositionEvent с полезной нагрузкой IME. */
+/** Transmits in the browser real CompositionEvent with a payload of IME. */
 async function compose(editor: Locator, end = false) {
   await editor.evaluate((node, end) => node.dispatchEvent(new CompositionEvent(
     end ? 'compositionend' : 'compositionstart', { data: end ? 'c' : '', bubbles: true }
   )), end);
 }
 
-/** Ждёт появления меню и выбирает длинное упоминание клавиатурой. */
+/** Waiting for the menu to appear and chooses a long mention of the keyboard. */
 async function chooseMention(page: Page, editor: Locator) {
   await editor.press('@');
   await expect(page.getByRole('option', { name: 'Long mention' })).toBeVisible();
@@ -129,8 +129,8 @@ for (const { profile, states } of reference.basic) {
 }
 
 for (const { profile, samples: measured } of reference.extended) {
-  // Обёртка allowClear в React теряет direction провайдера. Сверяем RTL с замером
-  // того же публичного компонента внутри <main dir="rtl">.
+  // Wrapper allowClear in React loses the provider's direction. We check RTL with the measurement
+  // of the same public component inside <main dir="rtl">.
   const samples = profile === 'combined' ? reference.rtlHost.samples : measured;
   test(`Mentions matches extended count for ${profile}`, async ({ page }) => {
     const editor = await openFixture(page, profile);
@@ -155,7 +155,7 @@ for (const { profile, samples: measured } of reference.extended) {
       await editor.press('@');
       await expectSnapshot(editor, samples[1], original);
       await toggle.dispatchEvent('click');
-      // React держит меню при смене textarea. У Svelte привязка к прежней каретке сбрасывается.
+      // React keeps the menu when you change textarea. At Svelte the binding to the previous carriage is dropped.
       await expectSnapshot(editor, { ...samples[2], popup: false }, original);
       const counted = await editor.elementHandle();
       await toggle.dispatchEvent('click');

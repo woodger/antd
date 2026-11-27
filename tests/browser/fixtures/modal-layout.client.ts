@@ -1,4 +1,4 @@
-// Запускает fixture в viewport Playwright без промежуточного layout wrapper.
+// Launches fixture in viewport Playwright without an intermediate layout wrapper.
 import '@woodger/antd/styles.css';
 import { hydrate, mount } from 'svelte';
 import ModalLayoutFixtures from './ModalLayoutFixtures.svelte';

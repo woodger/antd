@@ -1,4 +1,4 @@
-// Запускает действие кнопки подтверждения. Владелец управляет видимостью и временем жизни окна.
+// Starts the action of the confirmation button. The owner controls the visibility and life of the window.
 import type { ModalConfirmConfig } from './modal-confirm.types';
 
 interface ActionRuntime {
@@ -7,7 +7,7 @@ interface ActionRuntime {
   pending(value: boolean): void;
 }
 
-/** Сохраняет ручное закрытие и независимо отслеживает ожидание для OK и Cancel. */
+/** Retains manual closure and independently monitors waiting for OK and Cancel. */
 export function runModalAction(
   config: Readonly<ModalConfirmConfig>,
   confirmed: boolean,
@@ -21,7 +21,7 @@ export function runModalAction(
   const callback = confirmed ? config.onOk : config.onCancel;
   const onClose = typeof config.closable === 'object' ? config.closable.onClose : undefined;
 
-  /** Действие сохраняет onClose на момент нажатия. */
+  /** The action preserves onClose at the time of pressing. */
   function finish() {
     runtime.finish(onClose);
   }

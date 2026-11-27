@@ -28,7 +28,7 @@ export type ButtonShape = 'default' | 'circle' | 'round' | 'square';
 export type ButtonContent = string | number | boolean | null | undefined | Snippet;
 export type ButtonSlots = Partial<Record<'root' | 'icon' | 'content', string>>;
 export type ButtonLoading = boolean | { delay?: number; icon?: ButtonContent; };
-/** Кнопка Ant Design с нативными атрибутами, вариантами оформления и loading. */
+/** Ant Design button with native attributes, visual variants, and loading. */
 export interface ButtonProps extends Omit<
   HTMLButtonAttributes,
   'type' | 'children' | 'class' | 'color' | 'style' | 'onclick'
@@ -36,12 +36,12 @@ export interface ButtonProps extends Omit<
   children?: ButtonContent;
   icon?: ButtonContent;
   type?: ButtonType;
-  /** Нативный type кнопки; prop type задаёт оформление Ant Design. */
+  /** Native button type. The type prop sets the Ant Design appearance. */
   htmlType?: 'button' | 'submit' | 'reset';
   color?: ButtonColor;
   variant?: ButtonVariant;
   size?: ComponentSize | 'medium';
-  /** true включает ожидание; delay задаётся в миллисекундах, icon заменяет индикатор. */
+  /** true enables loading. delay is in milliseconds, and icon replaces the indicator. */
   loading?: ButtonLoading;
   /** @defaultValue false */
   danger?: boolean;
@@ -50,38 +50,38 @@ export interface ButtonProps extends Omit<
   /** @defaultValue false */
   ghost?: boolean;
   shape?: ButtonShape;
-  /** Расположение иконки относительно текста. */
+  /** Icon position relative to the text. */
   iconPlacement?: 'start' | 'end';
   target?: HTMLAnchorAttributes['target'];
   rel?: HTMLAnchorAttributes['rel'];
   download?: HTMLAnchorAttributes['download'];
   hreflang?: string;
   referrerpolicy?: HTMLAnchorAttributes['referrerpolicy'];
-  /** Нативный обработчик; имеет приоритет над совместимым onClick. */
+  /** Native handler. It takes precedence over the compatibility onClick alias. */
   onclick?: MouseEventHandler<HTMLButtonElement> | null;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   autoFocus?: boolean;
   autoInsertSpace?: boolean;
-  /** Semantic slots или callback с параметрами оформления; без обработчиков клика. */
+  /** Semantic slots or a callback receiving styling parameters, with click handlers omitted. */
   classNames?: ButtonSlots | ((info: { props: ButtonSemanticProps; }) => ButtonSlots | undefined);
   styles?: ButtonSlots | ((info: { props: ButtonSemanticProps; }) => ButtonSlots | undefined);
   class?: string;
   rootClassName?: string;
-  /** Локальный префикс классов; по умолчанию наследует ConfigProvider.prefixCls. */
+  /** Local class prefix. Inherits ConfigProvider.prefixCls by default. */
   prefixCls?: string;
   style?: HTMLButtonAttributes['style'];
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLButtonElement | HTMLAnchorElement;
-  /** Внутренняя композиция FloatButton: отключает повторное применение semantic styles. */
+  /** Internal FloatButton composition disables reapplying semantic styles. */
   _skipSemantic?: boolean;
-  /** FloatButton передаёт оформленный content и Badge без дополнительного span. */
+  /** FloatButton provides styled content and Badge without another span. */
   _skipContentWrapper?: boolean;
-  /** @internal Тема составного компонента после Button tokens, до пользовательских стилей. */
+  /** @internal Theme for a composite component, applied after Button tokens and before consumer styles. */
   _themeStyle?: string;
 }
-/** Параметры оформления Button для semantic callbacks без обработчиков клика. */
+/** Button styling parameters for semantic callbacks, excluding click handlers. */
 export type ButtonSemanticProps = Omit<ButtonProps, 'onclick' | 'onClick'>;
-/** Параметры Button с типом события клика, зависящим от наличия href. */
+/** Button parameters with a click event type determined by the presence of href. */
 export type ButtonElementProps<Href extends
   string
   | undefined = undefined> = Omit<
@@ -92,14 +92,14 @@ export type ButtonElementProps<Href extends
     onclick?: MouseEventHandler<Href extends string ? HTMLAnchorElement : HTMLButtonElement> | null;
     onClick?: MouseEventHandler<Href extends string ? HTMLAnchorElement : HTMLButtonElement>;
   };
-/** Вариант Button с обязательным href и нативным событием ссылки. */
+/** Button variant with a required href and a native link event. */
 export interface ButtonLinkProps extends Omit<ButtonProps, 'onclick' | 'onClick'> {
   href: string;
   onclick?: MouseEventHandler<HTMLAnchorElement> | null;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-/** Настройки ConfigProvider.button; локальные props и стили Button имеют приоритет. */
+/** ConfigProvider.button settings. Local Button props and styles take precedence. */
 export interface ButtonConfig {
   autoInsertSpace?: boolean;
   color?: ButtonColor;

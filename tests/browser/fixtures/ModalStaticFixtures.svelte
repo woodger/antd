@@ -32,25 +32,25 @@
   let active: ModalStaticHandle | undefined;
   let finishAction: (() => void) | undefined;
 
-  /** Проверяет имя метода в исходном JSON перед индексированием Modal. */
+  /** Verifies the name of the method in the original JSON before indexing Modal. */
   function isMethod(value: string): value is Profile['method'] {
     return value === 'confirm' || value === 'info' || value === 'warning'
       || value === 'success' || value === 'error';
   }
 
-  /** Запоминает наблюдаемый порядок, в том числе момент уничтожения контекстного окна. */
+  /** Memories the observed order, including the moment of destruction of the context window. */
   function track(...event: (string | boolean)[]) {
     events.push(event);
   }
 
-  /** Описывает публичную форму обоих handles. */
+  /** Describes the public form of both handles. */
   function handleShape(handle: ModalStaticHandle | ModalConfirmHandle) {
     const thenType = 'then' in handle ? typeof handle.then : 'undefined';
-    // oxlint-disable-next-line unicorn/no-thenable -- Снимок хранит строковый результат typeof.
+    // oxlint-disable-next-line unicorn/no-thenable -- The snapshot stores the string result of typeof.
     return { keys: Object.keys(handle).sort(), then: thenType };
   }
 
-  /** Соответствует отдельному App и глобальному вызову из измерений UMD. */
+  /** Matches a separate App and the global challenge from measurements UMD. */
   function launch(modal: ModalInstance) {
     if (!profile) {
       return;
@@ -72,7 +72,7 @@
     handles = current;
   }
 
-  /** Именует события конкретного окна в сценарии с общей очередью. */
+  /** Calls the events of a particular window in a scenario with a common queue. */
   function referenceOptions(title: string, content: Snippet): ModalStaticConfig {
     return {
       title,
@@ -86,7 +86,7 @@
     };
   }
 
-  /** Ставит работу в очередь и измеряет DOM до выполнения отложенного рендера. */
+  /** Puts the work in the queue and measures DOM until the delayed render is performed. */
   function launchLifecycle() {
     const providerTiming = id === 'provider-timing';
     ConfigProvider.config({
@@ -134,7 +134,7 @@
     }
   }
 
-  /** Обновляет поля и локальный контекст в том же порядке, что в сценариях источника. */
+  /** Updates the fields and local context in the same order as in the source scenarios. */
   function updateLifecycle() {
     if (id === 'escape-updated' || id === 'cancel-updated') {
       active?.update({

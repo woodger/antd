@@ -56,7 +56,7 @@ function snapshot(
     path: getPath(queryKey(query)).map(entry)
   }));
 
-  // Raw UMD artifact сериализован JSON: отсутствующие optional поля не записаны.
+  // Raw UMD artifact serialized JSON: Missing optional fields are not recorded.
   return JSON.parse(JSON.stringify({
     stable: savedGetPath === model.getPath,
     paths: paths(model.getPath),

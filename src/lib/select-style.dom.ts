@@ -6,7 +6,7 @@ import {
 type SelectStyleTarget = Pick<CSSStyleDeclaration, 'setProperty' | 'getPropertyValue' | 'getPropertyPriority'>;
 type SelectStyleSnapshot = SelectStyleTarget & Pick<CSSStyleDeclaration, 'removeProperty'> & Iterable<string>;
 
-/** cssText склеивает shorthand и меняет порядок longhand; переносим принятые declarations напрямую. */
+/** cssText joins shorthand and changes the order longhand; transfer accepted declarations directly. */
 export function copySelectStyle(
   source: SelectStyleSnapshot,
   target: SelectStyleSnapshot,
@@ -27,7 +27,7 @@ export function copySelectStyle(
   }
 }
 
-/** История хранит logical props отдельно от принятого браузером CSSOM. */
+/** The story keeps logical props separately from the accepted browser CSSOM. */
 export function createSelectStyleWriter(
   initialTarget: SelectStyleTarget,
   initial: SelectStyleFrame,
@@ -45,8 +45,8 @@ export function createSelectStyleWriter(
     }
     parser ??= createParser();
     parser.cssText = frame.text ?? '';
-    // Прежний string API сохраняет parsing/canonicalization cssText; object keys
-    // через parser не проходят, включая invalid setter и shorthand history.
+    // The previous string API preserves parsing/canonicalization cssText; object keys through
+    // parser do not pass, including setter and shorthand history.
     stringFrame = { ...resolveSelectStyleFrame(parser.cssText), text: frame.text };
     return stringFrame;
   }
@@ -71,8 +71,8 @@ export function createSelectStyleWriter(
       if (initial.string || !initial.authored.size) {
         return;
       }
-      // Свежий CSR повторяет порядок CSS setters Source; parsed SSR остаётся как есть.
-      // Одного одинакового cssText недостаточно: порядок longhand/shorthand в CSSOM иной.
+      // Fresh CSR repeats the order of CSS setters Source; parsed SSR remains as it is. The same
+      // cssText is not enough: the order longhand/shorthand in CSSOM is different.
       for (const property of Object.keys(initial.properties)) set(property, '', '');
       for (const [property, value] of Object.entries(initial.properties))
         set(property, selectStyleValue(property, value), initial.priorities[property] ?? '');
@@ -94,8 +94,8 @@ export function createSelectStyleWriter(
         const priorityChanged = (previous.priorities[property] ?? '') !== priority;
         if (changed.has(property)) continue;
         const formatted = selectStyleValue(property, value);
-        // Align/controller может менять лишь framework layer. Не восстанавливаем
-        // owner shorthand по сравнению с текущим CSSOM: это уничтожило бы историю.
+        // Align/controller can only change the layer framework. Don't rebuild the owner shorthand
+        // compared to the current CSSOM: it would destroy history.
         if (priorityChanged || reconcileFramework && !next.authored.has(property)
           && (target.getPropertyValue(selectStyleName(property)) !== formatted
             || target.getPropertyPriority(selectStyleName(property)) !== priority)) {

@@ -36,7 +36,7 @@
   let builtinPlacements = $state.raw<DatePickerProps['builtinPlacements']>(initialPlacements);
   let placement = $state<DatePickerProps['placement']>(initialPlacement);
 
-  /** Восстанавливает тип области проверки из строки эталонного JSON. */
+  /** Restores the type of the verification area from the reference line JSON. */
   function capturedAlignment(align: typeof sample.align): DatePickerPopupAlign | undefined {
     if (!align) {
       return undefined;
@@ -51,19 +51,19 @@
     throw new Error(`Unknown picker alignment region ${htmlRegion}`);
   }
 
-  /** Возвращает заданный scroll-контейнер после привязки DOM. */
+  /** Reflects a given scroll container after binding DOM. */
   function resolveContainer(trigger: HTMLElement) {
     return clip ?? trigger.ownerDocument.body;
   }
 
-  /** Повторяет изменение настройки у открытого React popup. */
+  /** Repeats changing the setting at the open React popup. */
   function update() {
     if ('update' in sample) popupAlign = sample.update ?? undefined;
     if (sample.updateMap) builtinPlacements = sample.updateMap;
     if (sample.move === 'topRight') placement = sample.move;
   }
 
-  /** Изменяет ширину trigger без изменения viewport. */
+  /** Changes the width of the trigger without changing the viewport. */
   function resizeAnchor() {
     if (sample.resizeAnchor) width = sample.resizeAnchor;
   }

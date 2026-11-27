@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Передаёт один набор свойств через публичный column и фиксирует события таблицы.
+  // Transmits one set of properties through a public column and captures table events.
   import {
     ConfigProvider, enUS, Table, type TableChange, type TableColumn, type TableColumnDefaults,
     type TableColumnsType
@@ -35,7 +35,7 @@
     { key: 1, name: 'Beta', score: 1, nested: { value: 15 } }
   ];
 
-  /** Собирает входы из профиля React, включая явные переопределения и их отсутствие. */
+  /** Collects inputs from profile React, including clear overriding and lack thereof. */
   function getScenario(profile: string): Scenario {
     const name: TableColumn<Row> = { key: 'a', title: 'Name', dataIndex: 'name' };
     const score: TableColumn<Row> = { key: 'b', title: 'Score', dataIndex: 'score' };
@@ -124,12 +124,12 @@
     }
   }
 
-  /** Сравнивает записи по общему числовому полю. */
+  /** Compares the records by total numerical field. */
   function compareScore(left: Row, right: Row) {
     return left.score - right.score;
   }
 
-  /** Сопоставляет событие с активными критериями и порядком данных React. */
+  /** Compares the event with the active criteria and data order React. */
   function noteChange(change: TableChange<Row>) {
     changes = [...changes, {
       action: change.action,

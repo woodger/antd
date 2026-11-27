@@ -80,7 +80,7 @@
       props.getContainer = false;
     }
     else if (sample.local === 'element') {
-      // Не читается при SSR: исходные DOM-узлы доступны после mount fixture.
+      // Not read at SSR: original DOM nodes are available after mount fixture.
       props.getContainer = alternate ? childElement : localElement;
     }
     else if (sample.local === 'selector') {
@@ -100,7 +100,7 @@
   let localElement = $state<HTMLDivElement>();
   let childElement = $state<HTMLDivElement>();
 
-  /** Измеряет, куда переместили Drawer к уведомлению о показе. */
+  /** Measures where Drawer has been moved to the show notification. */
   function recordOpen(visible: boolean) {
     if (!visible) {
       return;

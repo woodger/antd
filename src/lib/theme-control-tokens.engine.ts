@@ -9,7 +9,7 @@ import type {
   InputNumberComponentToken
 } from './theme-component-token.types';
 
-/** Исходный Button prepareComponentToken, включая runtime preset shadow keys. */
+/** Initial Button prepareComponentToken, including runtime preset shadow keys. */
 export function prepareButtonTokens(token: AliasToken & Partial<ButtonComponentToken>) {
   const contentFontSize = token.contentFontSize ?? token.fontSize;
   const contentFontSizeSM = token.contentFontSizeSM ?? token.fontSize;
@@ -65,7 +65,7 @@ export function prepareButtonTokens(token: AliasToken & Partial<ButtonComponentT
   };
 }
 
-/** Shared Input/TextArea tokens: SM использует lineHeight, LG округляет padding вверх. */
+/** Shared Input/TextArea tokens: SM uses lineHeight, LG rounds padding up. */
 export function prepareInputTokens(token: AliasToken & Partial<InputComponentToken>) {
   const fontSize = token.inputFontSize || token.fontSize;
   const fontSizeSM = token.inputFontSizeSM || fontSize;
@@ -118,7 +118,7 @@ export function prepareInputNumberTokens(token: AliasToken & Partial<InputNumber
   };
 }
 
-/** Размер dot вычисляется из fontSizeLG и wireframe до final radioSize/dotSize overrides. */
+/** The dot size is calculated from fontSizeLG and wireframe to final radioSize/dotSize overrides. */
 export function prepareRadioTokens(token: AliasToken) {
   const radioSize = token.fontSizeLG;
   const dotSize = token.wireframe ? radioSize - 8 : radioSize - (4 + token.lineWidth) * 2;
@@ -143,7 +143,7 @@ export function prepareRadioTokens(token: AliasToken) {
   };
 }
 
-/** Source Switch metrics используют фиксированный padding=2, включая small-вариант. */
+/** Source Switch metrics use fixed padding=2, including a small option. */
 export function prepareSwitchTokens(token: AliasToken) {
   const height = token.fontSize * token.lineHeight;
   const heightSM = token.controlHeight / 2;

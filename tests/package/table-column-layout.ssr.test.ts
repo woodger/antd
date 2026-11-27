@@ -9,18 +9,18 @@ type SourceCell = Pick<
   'key' | 'title' | 'text' | 'ellipsis'
 >;
 
-/** Извлекает стиль или атрибут ячейки из HTML фиксированного стенда. */
+/** Extracts a cell style or attribute from the static fixture HTML. */
 function attribute(markup: string, name: string) {
   return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Читает inline CSS до того, как браузер измерит колонки. */
+/** Reads inline CSS before the browser measures columns. */
 function styleValue(markup: string, name: string) {
   const style = attribute(markup, 'style');
   return style?.match(new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`))?.[1].trim() ?? '';
 }
 
-/** Сопоставляет одно определение заголовка или текст ячейки без CSSOM. */
+/** Matches a single header definition or cell text without CSSOM. */
 function cells(markup: string) {
   return Array.from(markup.matchAll(/<(td|th)\b([^>]*)>([\s\S]*?)<\/\1>/g),
     ([, , attrs, html]) => {
@@ -32,7 +32,7 @@ function cells(markup: string) {
     });
 }
 
-/** Проецирует снимок React на свойства, существующие в server markup. */
+/** Projects the React snapshot onto properties present in server markup. */
 function readSourceCell(cell: SourceCell, profile: string, row?: number) {
   let text = cell.text;
   if (profile === 'paths' && cell.key === 'flag' && row === 0) text = 'false';

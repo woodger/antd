@@ -1,4 +1,4 @@
-// Подготавливает CSS Grid для изменённых breakpoint. Scope связан только с размерами экранов.
+// Produces an CSS Grid for modified breakpoint. Scope is only associated with screen sizes.
 import template from './vendor/grid-responsive.css.js';
 import { hashTokenString } from './theme-hash.engine';
 import type { AliasToken } from './theme-token.types';
@@ -9,7 +9,7 @@ const mediaTokens = [
 const defaults = [576, 768, 992, 1200, 1600, 1920] as const;
 type GridMediaTokens = Pick<AliasToken, typeof mediaTokens[number]>;
 
-/** Порог xs безусловен; отдельный scope не зависит от пользовательских cssVar.key/hashed. */
+/** Threshold xs is unconditional; separate scope does not depend on custom cssVar.key/hashed. */
 export function getGridMediaScope(token: GridMediaTokens): string | undefined {
   const sizes = mediaTokens.map(key => Number(token[key]));
   if (sizes.every((size, index) => size === defaults[index])) {
@@ -19,7 +19,7 @@ export function getGridMediaScope(token: GridMediaTokens): string | undefined {
   return `ant-grid-media-${hashTokenString(sizes.join(','))}`;
 }
 
-/** Полный source Col CSS заменяет default media, включая base/xs и нулевые reset-классы. */
+/** Full source Col CSS replaces the default media, including base/xs and zero reset classes. */
 export function getGridMediaCss(token: GridMediaTokens): string | undefined {
   const scope = getGridMediaScope(token);
   if (!scope) {

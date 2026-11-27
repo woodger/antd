@@ -3,7 +3,7 @@ export function formLabelsMetrics() {
   const box = host.querySelector('.ant-form-item-label')!;
   const label = box.querySelector('label')!;
 
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   function properties(node: Element, names: string[], pseudo?: string) {
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(names.map((key) => [key, style.getPropertyValue(key)]));

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Повторяет открытые настройки и действия Source; editor добавляет проверку hydration.
+  // Repeats open settings and Source actions; the editor adds a hydration check.
   import {
     ConfigProvider, enUS, Table, type TableCellProps, type TableColumn,
     type TableRef, type TableScrollConfig
@@ -56,7 +56,7 @@
     }
   ]);
 
-  /** Все профили используют записи с теми же ключами и порядком, что UMD. */
+  /** All profiles use records with the same keys and order as UMD. */
   function buildRows(count: number, tree: boolean) {
     const rows = Array.from({ length: count }, (_, key): Row => ({
       key, group: `Group ${key}`, name: `Row ${key}`, status: `Status ${key}`
@@ -69,7 +69,7 @@
     return rows;
   }
 
-  /** Проверяет span, пользовательский класс, индекс и всплытие события из renderer. */
+  /** Checks span, user class, index, and event pop-up from the renderer. */
   function groupProps(row: Row, index: number): TableCellProps {
     let rowSpan = 1;
     if (profile.virtual) {
@@ -85,12 +85,12 @@
     };
   }
 
-  /** Запоминает пользовательские события в порядке доставки. */
+  /** Remembrance of user events in order of delivery. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }
 
-  /** Передаёт сериализованную команду в публичный scrollTo. */
+  /** Transfers the serialized team to public scrollTo. */
   function scrollTo(target: { top?: number; key?: number; index?: number; align?: string; }) {
     const { top, key, index, align } = target;
     const position: TableScrollConfig = { top, key, index,

@@ -1,11 +1,11 @@
 import type { ComponentSize } from '@woodger/antd';
 
-/** Raw эталоны подписывают обычный размер middle; это метка замера, а не prop. */
+/** Raw benchmarks sign the usual middle size; it's a measurement tag, not a prop. */
 export function referenceSizeLabel(size: ComponentSize) {
   return size === 'medium' ? 'middle' : size;
 }
 
-/** Воспроизводит текущий размер по историческим входным данным Source. */
+/** Reproduces the current size according to historical Source input data. */
 export function currentReferenceSize(size: unknown): ComponentSize | undefined {
   if (size === 'small' || size === 'large') {
     return size;

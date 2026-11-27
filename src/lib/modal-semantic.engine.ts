@@ -1,4 +1,4 @@
-// Разрешает настройки оформления для тех же props у провайдера и владельца Modal.
+// Allows design settings for the same props from the provider and owner of Modal.
 import type { HTMLAttributes } from 'svelte/elements';
 import { serializeInlineStyleLayers } from './inline-style.engine';
 import type { ModalConfig, ModalProps, ModalSemantic, ModalSemanticName, ModalSemanticSlots }
@@ -13,12 +13,12 @@ export interface ModalSemanticBody {
   style?: string;
 }
 
-/** Вычисляет только переданный вариант семантической настройки. */
+/** Calculates only the transferred semantic setting option. */
 function readSlots(value: ModalSemantic | undefined, info: { props: ModalProps; }) {
   return typeof value === 'function' ? value(info) : value;
 }
 
-/** Классы складываются, inline CSS владельца располагается после настроек провайдера. */
+/** The classes are folded, inline CSS of the owner is located after the provider's settings. */
 export function resolveModalSemantics(props: ModalProps, config?: ModalConfig) {
   const info = { props };
   const providerClasses = readSlots(config?.classNames, info);
@@ -36,7 +36,7 @@ export function resolveModalSemantics(props: ModalProps, config?: ModalConfig) {
   return { classes, styles };
 }
 
-/** Явные class и style DOM-части заменяют одноимённое семантическое значение. */
+/** Explicit class and style DOM-parts replace the semantic value of the same name. */
 export function resolveModalPart<Node extends HTMLElement>(
   props: Omit<HTMLAttributes<Node>, 'children'> | undefined,
   fallbackClass: HTMLAttributes<Node>['class'],

@@ -6,7 +6,7 @@ import { copySelectStyle, createSelectStyleWriter } from './select-style.dom';
 import type { TooltipPosition } from './tooltip.engine';
 
 const ssrAttribute = 'data-ant-native-select-style-ssr';
-/** Только spread: отсутствующий client key сохраняет SSR marker до public attachment. */
+/** Only: missing client key preserves SSR marker to public attachment. */
 export function selectStyleAttributes(style: unknown) {
   return typeof document === 'undefined' && style != null && typeof style === 'object'
     && Object.keys(style).length ? { [ssrAttribute]: '' } : {};
@@ -17,7 +17,7 @@ function takeSSRStyle(node: HTMLElement | SVGElement) {
   return parsed;
 }
 
-/** Initial attr нужен SSR; последующие object updates не проходят через cssText Svelte. */
+/** Initial attr needs SSR; follow-up object updates do not pass through cssText Svelte. */
 export function createSelectStyle(
   getStyle: () => SelectStyle | undefined,
   getBefore?: () => readonly InlineStyleLayer[],
@@ -39,7 +39,7 @@ export function createSelectStyle(
   };
 }
 
-/** Каждый физический tag/row получает собственную историю, без общего mutable snapshot. */
+/** Each physical tag/row gets its own history, without a common mutable snapshot. */
 export function selectStyle(
   getStyle: () => SelectStyle | undefined,
   getBefore?: () => readonly InlineStyleLayer[],
@@ -53,7 +53,7 @@ export interface SelectOverlayStyleOptions {
   after?: () => readonly InlineStyleLayer[];
 }
 
-/** Один writer объединяет owner styles с координатами и projection контроллера. */
+/** One writer combines owner styles with the coordinates and projection of the controller. */
 export function createSelectOverlayStyle(
   getLayers: () => readonly InlineStyleLayer[],
   sourceWidthVariable: string | undefined,
@@ -88,7 +88,7 @@ export function createSelectOverlayStyle(
         changed = true;
       }
     }
-    // Stretch Source хранит измеренный px, а не живую ссылку на Native variable.
+    // Stretch Source stores the measured px, not the live link to the Native variable.
     return changed ? { ...frame, properties } : frame;
   }
 
@@ -100,8 +100,8 @@ export function createSelectOverlayStyle(
   $effect(() => {
     void element;
     getSourceOpen?.();
-    // После первого real node закрытые props продолжают обновлять detached CSSOM;
-    // SSR и ещё не открывавшийся control не создают DOM/parser resources.
+    // After the first real node closed props continue to update detached CSSOM; SSR and not yet
+    // opened control do not create DOM/parser resources.
     update();
   });
 

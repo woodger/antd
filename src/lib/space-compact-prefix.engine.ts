@@ -1,6 +1,6 @@
 import template from './vendor/space-compact-prefix.css.js';
 
-/** Layout Compact не меняет prefixes собственных controls. */
+/** Layout Compact doesn't change prefixes of its own controls. */
 export function getSpaceCompactPrefixCss(prefix: string) {
   if (prefix === 'ant-space-compact') {
     return undefined;

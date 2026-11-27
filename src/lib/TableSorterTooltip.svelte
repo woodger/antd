@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Подключает общий Tooltip к готовому элементу сортировки.
-  // Контекст якоря принадлежит только этой подсказке.
+  // Attaches the shared Tooltip to an existing sort control. The anchor context belongs to this
+  // tooltip alone.
   import { untrack } from 'svelte';
   import Tooltip, { provideTooltipAnchor } from './Tooltip.svelte';
   import type { TableSorterTooltipProps } from './table.types';
@@ -34,7 +34,7 @@
     }
   });
 
-  /** Владелец open получает запрос, а локальное состояние используется без open. */
+  /** An open prop sends requests to its owner. Without open, local state is used. */
   function changeOpen(next: boolean) {
     if (disabled) {
       return;

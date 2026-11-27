@@ -1,12 +1,11 @@
-// Инициализирует флаг наличия сетки и наблюдает изменения состава дочерних узлов.
-// Выявляет прямые Card.Grid внутри body для режима раскладки Card. Изменения глубже первого
-// уровня не наблюдаются.
+// Initializes the grid presence flag and observes changes to direct children. Detects direct
+// Card.Grid nodes in the body to select the Card layout. Observation is limited to the first level.
 export function connectCardGrid(
   body: HTMLElement,
   update: (containsGrid: boolean) => void
 ): () => void {
   let active = true;
-  // Поддерживает как data-маркер, так и исходный класс ant-card-grid.
+  // Supports the data marker and the upstream ant-card-grid class.
   const publish = () => {
     if (active) {
       update([...body.children].some(child => child.hasAttribute('data-ant-card-grid')
@@ -17,7 +16,7 @@ export function connectCardGrid(
   const observer = new Observer(publish);
   observer.observe(body, { childList: true });
   publish();
-  // Отключает наблюдение и последующие публикации при уничтожении Card.
+  // Stops observation and further updates on Card destruction.
   return () => {
     active = false;
     observer.disconnect();

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import TableSummaryFixture from './TableSummaryFixture.svelte';
 
-/** Рендерит редактор в том же итоговом слоте, который гидратируется в стенде. */
+/** Renders the editor in the same final slot the harness hydrates. */
 export function renderTableSummaryFixture(profileId: string) {
   return render(TableSummaryFixture, { props: { profileId, editor: true } });
 }

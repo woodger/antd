@@ -39,7 +39,7 @@
   const designTokens = useDesignTokenContext();
   let skeletonPadding = $derived(componentThemeVariables('Skeleton', designTokens.state.token)
     ['--ant-padding'] ?? `${designTokens.state.token.padding}px`);
-  // Source Skeleton имеет собственный CSS-variable root; native host сохраняет его отступ.
+  // Upstream Skeleton has its own CSS variable root. The native host keeps its spacing.
   let skeletonStyle = $derived(designTokens.enabled
     ? `--ant-padding:${skeletonPadding}`
     : undefined);

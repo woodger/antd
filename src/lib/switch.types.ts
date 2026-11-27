@@ -19,49 +19,49 @@ export type SwitchSemantic = SwitchSemanticSlots | ((info: {
   props: Omit<SwitchProps, 'size'> & { size?: SwitchSize | 'large'; };
 }) => SwitchSemanticSlots);
 
-/** Нативная кнопка Switch с Svelte bindings, source callbacks и прежними form/reset контрактами. */
+/** Native Switch button with Svelte bindings, source callbacks and previous form/reset contracts. */
 export interface SwitchProps extends Omit<
   HTMLButtonAttributes,
   'type' | 'value' | 'children' | 'class' | 'onchange'
 > {
-  /** Bindable; определённый checked имеет приоритет над value. */
+  /** Bindable; a certain checked takes precedence over value. */
   checked?: boolean | undefined;
-  /** Bindable alias checked; при совместной передаче используется checked. */
+  /** Bindable alias versed; checked is used in joint transmission. */
   value?: boolean | undefined;
-  /** Фиксируется при создании; имеет приоритет над defaultValue. По умолчанию false. */
+  /** Fixed when created; takes precedence over defaultValue. The default is false. */
   defaultChecked?: boolean;
   defaultValue?: boolean;
-  /** Блокирует кнопку и native FormData даже с disabled=false. */
+  /** Blocks the button and native FormData even with disabled = false. */
   loading?: boolean;
-  /** Medium — обычный размер; без prop наследуется componentSize. */
+  /** Medium is the usual size; without prop inherited componentSize. */
   size?: SwitchSize;
   checkedChildren?: SwitchContent;
   unCheckedChildren?: SwitchContent;
   onCheckedChange?: (checked: boolean) => void;
-  /** Click и ArrowLeft/Right; повторная стрелка также вызывает callback, как rc-switch. */
+  /** Click and ArrowLeft/Right; the repeated arrow also causes a callback as rc-switch. */
   onChange?: SwitchChangeEventHandler;
-  /** Получает следующее значение после onChange; стрелки его не вызывают. */
+  /** Receives the following value after onChange; the arrows do not cause it. */
   onClick?: SwitchClickEventHandler;
   onKeyDown?: HTMLButtonAttributes['onkeydown'];
   onFocus?: HTMLButtonAttributes['onfocus'];
   onBlur?: HTMLButtonAttributes['onblur'];
-  /** Один раз вызывает native focus при mount; lowercase autofocus сохраняется. */
+  /** One time causes native focus at mount;case lower autofocus is saved. */
   autoFocus?: boolean;
   tabIndex?: number;
-  /** Локальный prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local prefix. An empty string or undefined inherits ConfigProvider.prefixCls. */
   prefixCls?: string;
   rootClassName?: string;
   classNames?: SwitchSemantic;
   styles?: SwitchSemantic;
-  /** Bindable native button; focus/blur доступны также через bind:this. */
+  /** Bindable native button; focus/blur is also available via bind:this. */
   nativeElement?: HTMLButtonElement;
   ref?: HTMLButtonElement;
   class?: string;
 }
 
 /**
- * Наследуемое оформление Switch. Root style: config.styles.root, config.style,
- * local styles.root, local style; content применяется к обеим подписям состояния.
+ * Inherited Switch design. Root style: config.styles.root, config.style, local styles.root, local
+ * style; content applies to both status labels.
  */
 export interface SwitchConfig {
   class?: string;

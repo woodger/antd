@@ -1,6 +1,6 @@
 import template from './vendor/masonry-prefix.css.js';
 
-/** Root/RTL aliases ограничены владельцем; геометрия и motion остаются исходными. */
+/** Root/RTL aliases is limited by the owner; geometry and motion remain the original. */
 export function getMasonryPrefixCss(prefix: string) {
   if (prefix === 'ant-masonry') {
     return undefined;

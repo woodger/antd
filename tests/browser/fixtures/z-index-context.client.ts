@@ -7,7 +7,7 @@ if (!target) {
   throw new Error('Missing server-rendered z-index context');
 }
 
-// Серверный trigger сохраняет фокус до подключения событий Modal и Dropdown.
+// Server trigger preserves focus until Modal and Dropdown events are connected.
 target.addEventListener('hydrate-z-index-context', () => {
   hydrate(Fixture, { target, props: { profileId: 'keyboard' }, recover: false });
   target.dataset.hydrated = 'true';

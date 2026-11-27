@@ -9,12 +9,12 @@ const root = '#table-expansion-options-fixture';
 const events = '#table-expansion-options-events';
 const fixture = '/?fixture=table-expansion-options';
 
-/** Читает параметры переключателя и состояние смонтированных подробностей. */
+/** Reads the parameters of the switch and the state of the mounted details. */
 function snapshot() {
   const area = document.getElementById('table-expansion-options-fixture');
   if (!area) throw new Error('Missing Table expansion options fixture');
 
-  /** Дополнительный класс содержит исходный индекс и уровень дерева. */
+  /** An additional class contains the original index and the level of the tree. */
   function classOf(row: Element) {
     return [...row.classList].find(name => name.startsWith('fixture-expanded-')) ?? null;
   }
@@ -43,7 +43,7 @@ function snapshot() {
   return { rows, details, events };
 }
 
-/** Проводит действия пользователя через штатные DOM events и ref Table. */
+/** Carries out user actions through regular DOM events and ref Table. */
 async function act(page: Page, action: string) {
   const [kind, key] = action.split('-');
   const row = page.locator(`${root} tr[data-row-key="${key}"]`);
@@ -82,7 +82,7 @@ async function act(page: Page, action: string) {
   }
 }
 
-/** Выбирает общие строки двух виртуальных окон, где размеры overscan различаются. */
+/** Selects the total lines of two virtual windows where overscan sizes differ. */
 function compareWindow(profile: string, action: string | null) {
   if (action === 'scroll-20') return [20];
   if (profile === 'virtual-tree') return [0, 101, 102];
@@ -123,7 +123,7 @@ for (const { profile, states } of source.cases) {
 
       let details = state.details;
       if (profile.id === 'lazy-normal') {
-        // Без forceRender Native освобождает редактор при сворачивании.
+        // Without forceRender Native, the editor is released when folding.
         details = details.filter(row => row[1]);
         if (index === states.length - 1) {
           details = details.map(row => [...row.slice(0, 4), `Draft ${row[0]}`]);

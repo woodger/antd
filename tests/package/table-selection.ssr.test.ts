@@ -5,7 +5,7 @@ import registry from '../porting-registry';
 import TableSelectionFixture from '../browser/fixtures/TableSelectionFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-selection-reference.json';
 
-/** Читает SSR-состояние native input из служебной ячейки. */
+/** Reads the native input's SSR state from the utility cell. */
 function control(markup: string) {
   const attributes = markup.match(/<input\b([^>]*)>/)?.[1];
   if (!attributes) {
@@ -21,7 +21,7 @@ function control(markup: string) {
   };
 }
 
-/** Выделяет выбор каждой строки и заголовка, пропуская посторонние поля стенда. */
+/** Extracts row and header selection while skipping unrelated fixture fields. */
 function snapshot(markup: string) {
   const head = markup.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? '';
   const heading = head.match(

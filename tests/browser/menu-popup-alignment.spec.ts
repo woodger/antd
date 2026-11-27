@@ -13,7 +13,7 @@ type Measurement = {
   placement?: string | null;
 };
 
-// Обновляет openKeys через владельца, сохраняя фокус внутри текущего popup.
+// Upgrades openKeys through the owner, keeping the focus inside the current popup.
 async function setOpen(page: Page, keys: readonly string[]) {
   await page.getByRole('textbox', { name: 'Alignment open keys' }).evaluate(
     (input: HTMLInputElement, value) => {
@@ -24,14 +24,14 @@ async function setOpen(page: Page, keys: readonly string[]) {
   );
 }
 
-// Даёт открытому popup выполнить замер после обновления props.
+// Allows the open popup to perform the measurement after updating props.
 function afterFrame(page: Page) {
   return page.evaluate(() => new Promise<void>(resolve => {
     requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
   }));
 }
 
-// Читает размеры и текущее имя позиции с поверхности, открытой в top layer.
+// Reads the dimensions and current name of the position from the surface, opened in the top layer.
 async function position(anchor: Locator, popup: Locator) {
   const [target, surface, name] = await Promise.all([
     anchor.boundingBox(),
@@ -51,8 +51,8 @@ async function position(anchor: Locator, popup: Locator) {
   };
 }
 
-// Сверяет расстояние между заданными углами при разных размерах нативного
-// заголовка и списка. Trigger округляет итоговые координаты вниз до пикселя.
+// Checks the distance between the specified angles at different sizes of the native header and
+// list. Trigger rounds the final coordinates down to the pixel.
 function gap(
   measurement: Measurement | undefined,
   corner: 'topLeft' | 'bottomLeft' | 'topRight',
@@ -74,7 +74,7 @@ function gap(
   };
 }
 
-// У More этот профиль даёт ту же точку открытия, но список шире и выше.
+// More has the same opening point, but the list is wider and higher.
 function origin(measurement: Measurement | undefined) {
   return {
     anchor: measurement?.anchor,

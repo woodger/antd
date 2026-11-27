@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Размещает Ribbon поверх внешнего содержимого. Слоты центра, индикатора и угла получают
-  // собственные слои стилей.
+  // Places the ribbon over its content. The center, indicator, and corner slots receive their own
+  // style layers.
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -28,7 +28,7 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Badge');
   const token = useToken();
-  // Indicator наследует Badge aliases от wrapper без повторного сброса CSS-var scope.
+  // The indicator inherits Badge aliases from the wrapper without resetting the CSS variable scope again.
   let indicatorHash = $derived(componentTheme.className ? token.hashId : undefined);
   let prefix = $derived(config.getPrefixCls('ribbon', prefixCls));
   let prefixCss = $derived(getBadgeRibbonPrefixCss(config.getPrefixCls()));
@@ -84,7 +84,7 @@
 </script>
 
 <style>
-  /* Shared reset регистрируется upstream и при локальном prefixCls. */
+  /* Upstream registers the shared reset even with a local prefixCls. */
   .ant-ribbon-wrapper-css-var {
     font-family: var(--ant-font-family);
     font-size: var(--ant-font-size);

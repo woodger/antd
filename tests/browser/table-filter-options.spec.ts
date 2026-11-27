@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 const fixture = '/?fixture=table-filter-options';
 
-/** Снимает варианты, видимые даже при переносе подменю в дочерний popup. */
+/** Removes the options visible even when transferring the submenu to the child popup. */
 function snapshot() {
   const root = document.getElementById('table-filter-options-fixture');
   if (!root) {
@@ -17,7 +17,7 @@ function snapshot() {
   const search = popup?.querySelector<HTMLInputElement>('[data-ant-table-filter-search] input');
   const all = popup?.querySelector<HTMLInputElement>('.ant-table-filter-dropdown-checkall input');
 
-  /** Исключает скрытые пункты ранее посещённого меню. */
+  /** Excludes the hidden items of the previously visited menu. */
   function visible(node: Element) {
     return node.getClientRects().length > 0;
   }
@@ -53,7 +53,7 @@ function snapshot() {
   };
 }
 
-/** Повторяет действие из прогона Ant Design на элементах Svelte. */
+/** Repeats the action from the Ant Design run on elements Svelte. */
 async function act(page: Page, action: string) {
   const [kind, label] = action.split(':', 2);
   switch (kind) {

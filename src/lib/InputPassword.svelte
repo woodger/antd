@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-  // Управляет видимостью пароля и передаёт редактирование Input. Ref указывает на тот же
-  // текстовый редактор.
+  // Manages password visibility and delegates editing to Input. The ref points to the same text
+  // editor.
   import { onDestroy, untrack } from 'svelte';
   import Input from './Input.svelte';
   import { useConfig } from './config-context';
@@ -116,7 +116,7 @@
   });
 
   $effect(() => {
-    // React восстанавливает value attribute при показе; Svelte меняет только property.
+    // React restores the value attribute when showing the password. Svelte updates only the property.
     if (visible && inputElement)
       inputElement.setAttribute('value', value ?? inputElement.value);
   });
@@ -152,7 +152,7 @@
     if (!event.repeat) handleVisibleChange();
   }
 
-  /** Фокусирует input; cursor управляет выделением, как у Input. */
+  /** Focuses the input. cursor controls selection as in Input. */
   export function focus(options?: FocusOptions & { cursor?: 'start' | 'end' | 'all'; }) {
     input?.focus(options);
   }
@@ -194,7 +194,7 @@
 
 {#snippet passwordSuffix()}
   {#if visibilityToggle}
-    <!-- svelte-ignore a11y_mouse_events_have_key_events (Как в upstream, клавиатура переключает по Enter/Space, а не при фокусе.) -->
+    <!-- svelte-ignore a11y_mouse_events_have_key_events (Like upstream, Enter and Space toggle visibility. Focus alone leaves it unchanged.) -->
     <button
       type="button"
       class={`${componentPrefix}-icon`}

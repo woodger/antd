@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts" generics="DateType extends object">
-  // Рендерит колонки времени DatePicker. Память scroll связывает позицию с
-  // содержимым колонки, чтобы повторное открытие не применяло старое измерение.
+  // Renders DatePicker's time columns. Stores scroll position with the column contents so reopening
+  // cannot apply a stale measurement.
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import { untrack, type Snippet } from 'svelte';
   import type { PickerLocale } from './picker-locale.types';
@@ -91,7 +91,7 @@
     HTMLUListElement, ReturnType<typeof createTimeColumnScrollSelection>
   >();
 
-  /** Отложенный выбор использует текущий черновик, как нажатие на ячейку. */
+  /** A deferred selection uses the current draft, just like clicking a cell. */
   function watchColumnScroll(column: HTMLUListElement, unit: TimePickerColumnType) {
     const selection = createTimeColumnScrollSelection(
       column,
@@ -120,7 +120,7 @@
     };
   }
 
-  /** Снимает позицию, подавляя выбор при восстановлении или выравнивании. */
+  /** Records the position while suppressing selection during restore or alignment. */
   function handleColumnScroll(column: HTMLUListElement) {
     rememberColumn(column);
     const selection = scrollSelections.get(column);
@@ -133,14 +133,14 @@
     selection?.schedule();
   }
 
-  // Выбранное значение и подписи опций участвуют в ключе восстановления scroll.
+  // The scroll restore key includes the selected value and option labels.
   function readColumn(column: HTMLUListElement) {
     const unit = column.getAttribute('aria-label') as
       'hour' | 'minute' | 'second' | 'millisecond' | 'meridiem';
     const selected = selectedValue === null ? null : unit === 'meridiem'
       ? fields.getHour(selectedValue) < 12 ? 'am' : 'pm' : dates.getTimeUnit(selectedValue, unit);
-    // DatePicker дополняет время panel из defaultOpenValue или нулями.
-    // Числовой optionalValue остаётся зависимостью и при заданном selectedValue.
+    // DatePicker completes the panel time from defaultOpenValue or fills it with zeros. The numeric
+    // optionalValue remains a dependency even when selectedValue is set.
     const optional = unit === 'meridiem' ? undefined
       : config.defaultOpenValue ? dates.getTimeUnit(config.defaultOpenValue, unit) : 0;
     const rows = [...column.children].map(cell => ({
@@ -157,12 +157,12 @@
     return { signature, target: targetRow?.node };
   }
 
-  // Сохраняет позицию только для колонки, которую успели измерить с её текущими опциями.
+  // Saves the position only for a column already measured with its current options.
   function rememberColumn(column: HTMLUListElement) {
     if (!scrollMemory || !column.isConnected || column.clientHeight === 0) {
       return;
     }
-    // Правило 2: aria-label задаётся именем unit на всех ul, которые выбирает captureScroll.
+    // Rule 2: aria-label uses the unit name on every ul selected by captureScroll.
     const unit = column.getAttribute('aria-label')!;
     const signature = scrollValues.get(column);
     if (signature && signature === readColumn(column).signature) {
@@ -172,7 +172,7 @@
       scrollMemory.delete(unit);
     }
   }
-  // Родитель снимает scroll до удаления popup; память не сохраняет DOM.
+  // The parent records scroll position before removing the popup. The cache holds no DOM nodes.
   export function captureScroll() {
     for (const column of root?.querySelectorAll<HTMLUListElement>(':scope > div > ul') ?? [])
       rememberColumn(column);

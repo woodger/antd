@@ -2,12 +2,12 @@ import type { Component } from 'svelte';
 import CalendarCore from './CalendarCore.svelte';
 import type { CalendarGenerateConfig, CalendarProps } from './calendar.types';
 
-/** Фабрика Calendar.generateCalendar: Svelte component с фиксированным date adapter. */
+/** Calendar.generateCalendar factory. Returns a Svelte component with a fixed date adapter. */
 export function generateCalendar<DateType extends object>(
   generateConfig: CalendarGenerateConfig<DateType>
 ): Component<CalendarProps<DateType>, {}, 'nativeElement'> {
   return (anchor, props) => CalendarCore<DateType>(anchor, new Proxy(props, {
-    // Props и bind setters остаются реактивными; spread создал бы начальный снимок.
+    // Props and binding setters stay reactive. Spreading them would capture an initial snapshot.
     get(target, key, receiver) {
       return key === 'generateConfig' ? generateConfig : Reflect.get(target, key, receiver);
     }

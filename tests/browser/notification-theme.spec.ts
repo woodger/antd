@@ -21,7 +21,7 @@ for (const sample of reference.cases) {
         await expect(page.locator('.ant-notification-notice')).toBeVisible();
         await page.mouse.move(20, 1100);
 
-        // В 6.6.8 status backgrounds привязаны к ant prefix; native bridge учитывает другой prefix.
+        // In 6.6.8 statuses are tied to ant prefix; native bridge takes into account another prefix.
         const matched = sample.name === 'custom-css-prefix' ? {
           ...expected,
           notice: {

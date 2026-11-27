@@ -8,7 +8,7 @@ if (!target) {
 }
 
 const profileId = new URLSearchParams(window.location.search).get('profile') ?? 'placed';
-// Запускает строгую гидратацию после фокусировки server input.
+// Triggers strict hydration after focusing the server input.
 target.addEventListener('hydrate-table-service-columns', () => {
   hydrate(Fixture, { target, props: { profileId }, recover: false });
   target.dataset.hydrated = 'true';

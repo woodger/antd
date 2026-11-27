@@ -3,15 +3,15 @@ import type { AliasToken } from './theme-token.types';
 import type { GlobalToken } from './theme-component-token.types';
 import type { ResolvedThemeConfig } from './types';
 
-/** Source CSS-variable token: breakpoints сохраняются, остальные примитивы заменяются var(...). */
+/** Source CSS-variable token: breakpoints are saved, other primitives are replaced var(...). */
 export type CSSVariableToken = Partial<{
   [Key in keyof AliasToken]: string | AliasToken[Key];
 }> & { _hashId: string; };
 
 /**
- * Реактивный результат theme.useToken(). Вызывайте при инициализации компонента;
- * читайте поля объекта в $derived/markup, чтобы сохранить связь с ConfigProvider.
- * cssVar — исходный transformed token Ant Design 6.6.8, а не { prefix, key }.
+ * Reactive result of theme.useToken(). Call during component initialization. Read fields in
+ * $derived or markup to retain the link to ConfigProvider. cssVar holds Ant Design 6.6.8's
+ * transformed token rather than { prefix, key }.
  */
 export interface ThemeTokenResult {
   readonly theme: DerivativeTheme;
@@ -29,7 +29,7 @@ export interface DesignTokenState extends ThemeTokenResult {
 }
 
 export interface DesignTokenContext {
-  /** DOM boundary владельца для portal CSS overrides; на SSR отсутствует. */
+  /** DOM boundary owner for portal CSS overrides; at SSR missing. */
   readonly element?: HTMLElement;
   readonly config: ResolvedThemeConfig;
   readonly enabled: boolean;

@@ -4,8 +4,8 @@ export type GradientColor = { color: AggregationColor; percent: number; }[];
 export type ColorStops = readonly { color: ColorGenInput<AggregationColor>; percent: number; }[];
 
 /**
- * Цвет Ant Design: строковые форматы теряют точность HSV, объект сохраняет её.
- * Градиент хранит точки в исходном порядке; toHsb/toRgb относятся к первой точке.
+ * Ant Design color. String formats lose HSV precision, while objects retain it. Gradients keep stop
+ * order, and toHsb/toRgb use the first stop.
  */
 export class AggregationColor {
   private metaColor: ColorCore;

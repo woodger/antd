@@ -1,5 +1,5 @@
-// Измеряет строки и заголовки Listy, рассчитывает видимое окно и sticky header.
-// Отмена измерений и scrollTo привязана к текущему подключению viewport.
+// Measures Listy rows and headings to compute the visible window and sticky header. Cancellation of
+// measurements and scrollTo belongs to the current viewport attachment.
 import { tick, untrack } from 'svelte';
 import { measureListyRow } from './listy.dom';
 import {
@@ -90,7 +90,7 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     }
   }
 
-  // Объединяет ожидающие измерения в один проход после текущего обновления.
+  // Combines pending measurements into one pass after the current update.
   function collect() {
     const scheduledRevision = ++measurementRevision;
     void Promise.resolve().then(() => {
@@ -128,7 +128,7 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     };
   }
 
-  // Повторяет измерение после tick, пока высота и позиция цели стабилизируются.
+  // Repeats the measurement after tick until the height and position of the target are stabilized.
   async function alignTo(
     key: string,
     align: ListyScrollAlign | undefined,
@@ -185,7 +185,7 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
       return;
     }
 
-    // Listy выбирает groupKey раньше позиции; rc-virtual-list выбирает позицию раньше item key.
+    // Listy chooses groupKey before the position; rc-virtual-list selects the position before item key.
     if ('groupKey' in config) {
       void alignTo(listyTag(config.groupKey, 'group'), config.align, config.offset ?? 0);
     }
@@ -200,7 +200,7 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     }
   }
 
-  // Возвращает заголовок, который предшествует элементу и может его перекрыть сверху.
+  // Returns the header that precedes the element and can overlap it from above.
   function findGroupHeader(itemKey: string) {
     let headerKey: string | undefined;
     for (const row of options.rows()) {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Владелец меняет варианты редактора и записывает порядок публичных событий.
+  // The owner changes the editor's options and records the order of public events.
   import {
     AutoComplete, ConfigProvider, type AutoCompleteOption, type SelectInputContext
   } from '@woodger/antd';
@@ -34,20 +34,20 @@
     onOpenChange: (open: boolean) => record('open', open)
   });
 
-  /** Открывает независимое состояние для следующего сценария. */
+  /** Opens an independent state for the next scenario. */
   function choose(event: Event & { currentTarget: HTMLSelectElement }) {
     events = [];
     ownerValue = '';
     sample = event.currentTarget.value;
   }
 
-  /** В управляемом сценарии владелец принимает введённое значение. */
+  /** In the managed scenario, the owner takes the entered value. */
   function change(next: string | undefined) {
     ownerValue = next ?? '';
     record('change', ownerValue);
   }
 
-  /** Сохраняет порядок событий без привязки к внутренним состояниям редактора. */
+  /** Keeps the order of events without reference to the internal states of the editor. */
   function record(name: string, next: string | boolean) {
     events = [...events, [name, next]];
   }

@@ -1,5 +1,5 @@
-// Связывает календарные операции поля и панели с одной конфигурацией дат. Значения
-// принадлежат адаптеру и передаются наружу с исходным типом и ссылкой.
+// Uses one date configuration for calendar operations in the field and panel. The adapter owns
+// values, which pass through with their original type and identity.
 import type { Dayjs } from 'dayjs';
 import type { GenerateConfig } from './date-generate.types';
 import { dayjsGenerateConfig } from './date-picker-dayjs.engine';
@@ -41,12 +41,12 @@ const timeWriters = {
 } as const;
 const calendarOffsets = { day: 'addDate', month: 'addMonth', year: 'addYear' } as const;
 
-/** Собирает операции панели из GenerateConfig, сохраняя receiver его методов. */
+/** Collects panel operations from GenerateConfig, saving its methods. */
 export function createPickerDateOperations<DateType extends object>(
   generateConfig: GenerateConfig<DateType>,
   fields: PickerDateFields<DateType> = generateConfig
 ): PickerDateOperations<DateType> {
-  /** Устанавливает время границы календарного периода с точностью до миллисекунды. */
+  /** Sets the boundary time of the calendar period with an accuracy to a millisecond. */
   function setDayBoundary(value: DateType, end: boolean) {
     const hours = fields.setHour(value, end ? 23 : 0);
     const minutes = fields.setMinute(hours, end ? 59 : 0);
@@ -55,21 +55,21 @@ export function createPickerDateOperations<DateType extends object>(
     return fields.setMillisecond(seconds, end ? 999 : 0);
   }
 
-  /** Сравнивает поля до выбранного периода, начиная с календарного года. */
+  /** Compares the fields to the selected period, starting from the calendar year. */
   function samePeriod(value: DateType, reference: DateType, period: PickerDatePeriod) {
     return fields.getYear(value) === fields.getYear(reference)
       && (period === 'year' || fields.getMonth(value) === fields.getMonth(reference))
       && (period !== 'day' || fields.getDate(value) === fields.getDate(reference));
   }
 
-  /** Сравнивает время для режима time и границ, точных до секунды. */
+  /** Compares the time for the time mode and the boundaries, accurate to a second. */
   function sameTime(value: DateType, reference: DateType) {
     return fields.getHour(value) === fields.getHour(reference)
       && fields.getMinute(value) === fields.getMinute(reference)
       && fields.getSecond(value) === fields.getSecond(reference);
   }
 
-  /** Сравнивает все календарные поля, включая долю секунды, как isSameTimestamp rc-picker. */
+  /** Compares all calendar fields, including a fraction of a second, like isSameTimestamp rc-picker. */
   function sameWallValue(value: DateType | null, reference: DateType | null) {
     if (!value || !reference) {
       return value === reference;
@@ -82,118 +82,118 @@ export function createPickerDateOperations<DateType extends object>(
   return {
     generateConfig,
     fields,
-    // Выбирает getter колонки без преобразования значения даты.
+    // Select a deleter column without converting the date value.
     getTimeUnit: (value, unit) => fields[timeReaders[unit]](value),
-    // Передаёт новое значение колонки адаптеру и возвращает вычисленную им дату.
+    // Passes the new column value to the adapter and returns the date it computes.
     setTimeUnit: (value, unit, next) => fields[timeWriters[unit]](value, next),
-    // Календарный шаг зависит от выбранной единицы. Для доли секунды сохраняет перенос.
+    // Calendar step depends on the selected unit. For a fraction of a second, it keeps the transfer.
     add: (value, amount, unit) => unit === 'millisecond'
       ? fields.setMillisecond(value, fields.getMillisecond(value) + amount)
       : fields[calendarOffsets[unit]](value, amount),
-    // Обнуляет младшие поля выбранного календарного периода.
+    // Nullifies the younger fields of the selected calendar period.
     startOf(value, period) {
       const month = period === 'year' ? fields.setMonth(value, 0) : value;
       const day = period === 'day' ? month : fields.setDate(month, 1);
 
       return setDayBoundary(day, false);
     },
-    // Последний день определяет адаптер, включая разную длину месяцев.
+    // The last day determines the adapter, including the different length of the months.
     endOf(value, period) {
       const month = period === 'year' ? fields.setMonth(value, 11) : value;
       const day = period === 'day' ? month : generateConfig.getEndDate(month);
 
       return setDayBoundary(day, true);
     },
-    // Порядок в пределах одного календарного периода считается равным.
+    // The order within one calendar period is considered to be equal.
     isBefore: (value, reference, period) => (!period || !samePeriod(value, reference, period))
       && generateConfig.isAfter(reference, value),
-    // Проверяет превышение границы с указанной точностью, если она задана.
+    // Verifies exceeding the border with the specified accuracy, if specified.
     isAfter: (value, reference, period) => (!period || !samePeriod(value, reference, period))
       && generateConfig.isAfter(value, reference),
     samePeriod,
     sameTime,
     sameWallValue,
-    // Поле использует null и undefined как отсутствие выбранной даты.
+    // The field uses null and undefined as the absence of the selected date.
     sameValue: (value, reference) => value === reference
       || sameWallValue(value ?? null, reference ?? null),
-    // Порядок адаптера задаёт сортировку, совпадающие значения оставляют порядок входа.
+    // The order of the adapter specifies the sorting, matching values leave the order of entry.
     compare: (value, reference) => generateConfig.isAfter(value, reference) ? 1
       : generateConfig.isAfter(reference, value) ? -1 : 0,
-    // Ключ тегов сохраняется при замене даты равным экземпляром того же адаптера.
+    // The tag key is saved when the date is replaced with an equal instance of the same adapter.
     key: value => [
       fields.getYear(value), fields.getMonth(value), fields.getDate(value),
       fields.getHour(value), fields.getMinute(value), fields.getSecond(value),
       fields.getMillisecond(value)
     ].join(':'),
-    // Метки календаря и маркеры фокуса используют одинаковую локаль и формат.
+    // Calendar labels and focus markers use the same location and format.
     formatKey: (value, format = 'YYYY-MM-DD HH:mm:ss.SSS', locale = 'en_US') =>
       generateConfig.locale.format(locale, value, format)
   };
 }
 
 const dayjsFields: PickerDateFields<Dayjs> = {
-  // Панель использует календарный год в режиме самого экземпляра Dayjs.
+  // The panel uses the calendar year in the mode of the instance of Dayjs itself.
   getYear: value => value.year(),
-  // Индекс от нуля применяется для сетки и вычисления квартала.
+  // An index from zero is used for the grid and calculating the quarter.
   getMonth: value => value.month(),
-  // Сохраняет локальный день месяца при сравнении ячеек.
+  // Keeps the local day of the month when comparing the cells.
   getDate: value => value.date(),
-  // Временная шкала колонки часов начинается с нуля.
+  // The timeline of the clock column starts from scratch.
   getHour: value => value.hour(),
-  // Сохраняет минуты в исходной зоне значения.
+  // Saves minutes in the original value zone.
   getMinute: value => value.minute(),
-  // Возвращает секунду минуты для ограничений и колонки выбора.
+  // Brings back a second of minutes for restrictions and a selection column.
   getSecond: value => value.second(),
-  // Читает точность поля без преобразования к timestamp.
+  // Readers the accuracy of the field without conversion to timestamp.
   getMillisecond: value => value.millisecond(),
-  // Устанавливает год правилами исходного экземпляра Dayjs.
+  // Sets the year by the rules of the original instance of Dayjs.
   setYear: (value, year) => value.year(year),
-  // Переход к месяцу сохраняет правила Dayjs для коротких месяцев.
+  // Moving to the month keeps Dayjs rules for short months.
   setMonth: (value, month) => value.month(month),
-  // Установка дня сохраняет перенос на соседний месяц.
+  // The installation of the day keeps the transfer to the next month.
   setDate: (value, day) => value.date(day),
-  // Заменяет час, сохраняя режим UTC или локального времени у значения.
+  // Replacing an hour by saving UTC or local time mode at the value.
   setHour: (value, hour) => value.hour(hour),
-  // Заменяет минуту в том же календарном режиме.
+  // Replaces the minute in the same calendar mode.
   setMinute: (value, minute) => value.minute(minute),
-  // Заменяет секунду без округления до минуты.
+  // Replaces a second without rounding to a minute.
   setSecond: (value, second) => value.second(second),
-  // Сохраняет миллисекунды в Dayjs.
+  // Keeps milliseconds in Dayjs.
   setMillisecond: (value, millisecond) => value.millisecond(millisecond),
-  // Прокручивает год панели по календарю.
+  // Scrolls the year of the panel on the calendar.
   addYear: (value, amount) => value.add(amount, 'year'),
-  // Прокручивает месяц с коррекцией дня в целевом месяце.
+  // Scrolls the month with the correction of the day in the target month.
   addMonth: (value, amount) => value.add(amount, 'month'),
-  // Сохраняет календарный шаг при переходе через смену часового смещения.
+  // Keeps the calendar step when moving through the change of the clock shift.
   addDate: (value, amount) => value.add(amount, 'day'),
-  // Проверяет значение в его исходном экземпляре.
+  // Checks the value in its original copy.
   isValidate: value => value.isValid()
 };
 
 export const dayjsPickerDates: PickerDateOperations<Dayjs> = {
   ...createPickerDateOperations(dayjsGenerateConfig, dayjsFields),
-  // Сохраняет исходный Dayjs get, включая настройки подключённых plugins.
+  // Saves the original Dayjs get, including the settings connected plugins.
   getTimeUnit: (value, unit) => value.get(unit),
-  // Сохраняет Dayjs set для изменения одной колонки.
+  // Saves Dayjs set to change one column.
   setTimeUnit: (value, unit, next) => value.set(unit, next),
-  // Использует календарные и абсолютные шаги Dayjs с правилами текущей зоны.
+  // Uses Dayjs calendar and absolute steps with current zone rules.
   add: (value, amount, unit) => value.add(amount, unit),
-  // Вычисляет начало в исходной зоне значения с правилами timezone plugins.
+  // Calculates the beginning in the starting zone of the value with timezone plugins rules.
   startOf: (value, period) => value.startOf(period),
-  // Вычисляет конец периода средствами исходного Dayjs.
+  // Calculates the end of the period by means of the original Dayjs.
   endOf: (value, period) => value.endOf(period),
-  // Сохраняет сравнение Dayjs с приведением к периоду первого значения.
+  // Saves a comparison of Dayjs with bringing to the period of the first value.
   isBefore: (value, reference, period) => value.isBefore(reference, period),
-  // Сохраняет сравнение Dayjs по началу периода первого значения.
+  // Saves a comparison of Dayjs at the beginning of the period of the first value.
   isAfter: (value, reference, period) => value.isAfter(reference, period),
-  // Для навигации Dayjs сравнивает календарный интервал первого значения.
+  // For navigation, Dayjs compares the calendar interval of the first value.
   samePeriod: (value, reference, period) => value.isSame(reference, period),
-  // Выбор даты по умолчанию сравнивается как timestamp и учитывает смещение зоны.
+  // Choosing the default date is compared as timestamp and takes into account zone displacement.
   sameValue: (value, reference) => value?.valueOf() === reference?.valueOf(),
-  // Сортирует теги Dayjs по прежнему числовому timestamp.
+  // Sorts Dayjs tags at the same numerical timestamp.
   compare: (value, reference) => value.valueOf() - reference.valueOf(),
-  // Теги Dayjs используют исходный timestamp как часть ключа.
+  // Dayjs tags use the original timestamp as part of the key.
   key: value => value.valueOf(),
-  // Служебные подписи Dayjs сохраняют locale самого экземпляра.
+  // Dayjs service labels retain the locale of the instance itself.
   formatKey: (value, format) => value.format(format)
 };

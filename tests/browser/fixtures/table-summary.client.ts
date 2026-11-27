@@ -8,7 +8,7 @@ if (!target) {
 }
 
 if (new URLSearchParams(location.search).has('hydrate')) {
-  // Даёт тесту заполнить и сфокусировать серверный итог до старта Svelte.
+  // Gives the test to fill out and focus the server result before the start of Svelte.
   target.addEventListener('hydrate-table-summary', () => {
     hydrate(TableSummaryFixture, { target, props: { editor: true }, recover: false });
     target.dataset.hydrated = 'true';

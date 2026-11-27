@@ -1,7 +1,7 @@
 import type { datePickerEnUS } from './date-picker.locale';
 
-/** Язык rc-picker; загружать Day.js locale, кроме встроенных en/ru, должен потребитель. */
-// Legacy dayFormat сохраняется в default locale data, но не включает deprecated override API.
+/** Language rc-picker; download Day.js locale, except built en/ru, should the consumer. */
+// Legacy dayFormat is stored in default locale data, but does not include deprecated override API.
 export type PickerLocale = Omit<Partial<typeof datePickerEnUS.lang>, 'dayFormat'> & {
   locale: string;
   shortWeekDays?: string[];

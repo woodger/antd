@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import DrawerMotionFixtures from './DrawerMotionFixtures.svelte';
 
-/** Подготавливает начальное открытие с теми же callbacks, что получит клиент. */
+/** Prepares the initial opening with the same callbacks that the client will receive. */
 export function renderDrawerMotion() {
   return render(DrawerMotionFixtures, { props: { initialOpen: true } });
 }

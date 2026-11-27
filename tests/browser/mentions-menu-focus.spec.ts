@@ -6,7 +6,7 @@ type SourceState = (typeof reference.cases)[number]['steps'][number]['state'];
 
 test.use({ viewport: { width: 960, height: 640 } });
 
-/** Загружает один профиль собранного пакета и открывает popup штатной клавишей. */
+/** Uploads one profile of the assembled package and opens the popup with a full-time key. */
 async function openMenus(page: Page, profile: string) {
   await page.goto(`/select-components-hydration.html?mentions-menu=${profile}`);
   await page.addScriptTag({ type: 'module', url: '/mentions-menu.client.ts' });
@@ -16,7 +16,7 @@ async function openMenus(page: Page, profile: string) {
   return editor;
 }
 
-/** Сравнивает payload по исходным ключам вариантов, без суффикса rc-mentions. */
+/** Compares payload on the source keys of the options, without the suffix rc-mentions. */
 function sourceSample(state: SourceState) {
   const menus = state.menus.map(menu => menu.options.map(({ text, disabled, highlight }) =>
     ({ text, disabled, highlight })));
@@ -30,7 +30,7 @@ function sourceSample(state: SourceState) {
   };
 }
 
-/** Снимает наблюдаемое состояние закрытого или открытого popup и редактора. */
+/** Removes the observed state of a closed or open popup and editor. */
 function nativeSample(editor: Locator) {
   return editor.evaluate((node: HTMLTextAreaElement) => {
     const owner = node.closest('[data-ant-mentions-root]');

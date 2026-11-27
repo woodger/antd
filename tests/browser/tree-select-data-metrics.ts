@@ -1,4 +1,4 @@
-/** Source/Native DOM без чтения внутреннего store или вычисления ожидаемых значений. */
+/** Source/Native DOM without reading the internal store or calculating the expected values. */
 export function readTreeSelectData(options: { treePrefix: string; }) {
   const root = document.querySelector('[data-tree-select-data-control]')!;
   const input = root.querySelector<HTMLInputElement>('[role="combobox"]')!;

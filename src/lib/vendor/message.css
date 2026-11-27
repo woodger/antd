@@ -1,9 +1,10 @@
-/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.
- * Message top из официального dist/antd.css; React motion, stack и прочие положения исключены.
- * css-var-_R_0_.ant-message-css-var заменён на .ant-message-css-var;
- * корень .ant-message ограничен :where(.ant-message-css-var).
- * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
- * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
+/* Ant Design 6.6.8 under MIT. See LICENSE.ant-design.
+ * Top Message styles from the official dist/antd.css with React motion, stacking, and other
+ * placements omitted.
+ * css-var-_R_0_.ant-message-css-var is replaced with .ant-message-css-var.
+ * The .ant-message root is scoped with :where(.ant-message-css-var).
+ * Source: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
+ * Archive SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
  */
 .ant-message-css-var {
   font-family:var(--ant-font-family);

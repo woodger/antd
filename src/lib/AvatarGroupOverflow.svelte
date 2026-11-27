@@ -27,7 +27,7 @@
   $effect.pre(() => {
     const next = popover.open;
 
-    // Как useControlledState: удаление controlled open не возвращает defaultOpen.
+    // As in useControlledState, removing controlled open does not restore defaultOpen.
     if (!Object.is(next, previousOpen)) innerOpen = next;
     previousOpen = next;
 

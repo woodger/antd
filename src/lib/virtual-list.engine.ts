@@ -1,9 +1,9 @@
-// Вычисляет окно и положение строк виртуального списка. Неизмеренные высоты получают estimate, а
-// scrollTo учитывает незавершённые измерения.
-// Расчёты @rc-component/virtual-list1.5.1; MIT, vendor/LICENSE.rc-virtual-list.
+// Calculates the window and the position of the virtual list strings. Unmeasured heights are
+// obtained by estimates, and scrollTo takes into account unfinished measurements. Calculations
+// @rc-component/virtual-list1.5.1; MIT, vendor/LICENSE.rc-virtual-list.
 export type VirtualScrollAlign = 'top' | 'bottom' | 'auto';
 
-// Выбирает видимый интервал по суммарному префиксу высот и добавляет одну строку после конца.
+// Selects the visible interval for the total height prefix and adds one line after the end.
 export function virtualListWindow<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,
@@ -41,7 +41,7 @@ export function virtualListWindow<Row, Key>(
     total = next;
   });
   if (start === undefined && scrollTail > 0 && rows.length > 0) {
-    // Итоговая секция может целиком занять viewport после последней строки.
+    // The final section can occupy viewport after the last line.
     start = rows.length - 1;
     const lastHeight = heights.get(getKey(rows[start])) ?? estimate;
     offset = total - lastHeight;
@@ -57,7 +57,7 @@ export function virtualListWindow<Row, Key>(
     offset, scrollHeight: total };
 }
 
-// Собирает верхнюю и нижнюю границы по ключам в порядке строк.
+// Collects the upper and lower borders on the keys in the order of lines.
 export function virtualListSizes<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,
@@ -71,7 +71,7 @@ export function virtualListSizes<Row, Key>(
     const measured = heights.get(measurementKey);
     const bottom = top + (measured ?? estimate);
 
-    // getKey вызывается при чтении высоты и публикации границ в исходном порядке.
+    // getKey is called when reading the height and publishing the boundaries in the original order.
     const sizeKey = getKey(row);
     sizes.set(sizeKey, { top, bottom });
     top = bottom;
@@ -79,7 +79,7 @@ export function virtualListSizes<Row, Key>(
   return sizes;
 }
 
-// Рассчитывает один проход scrollTo. unknown запрашивает повторное измерение в вызывающей модели.
+// Calculates a single passage scrollTo. unknown requests a re-measurement in the calling model.
 export function virtualListScrollStep<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,

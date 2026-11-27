@@ -1,7 +1,7 @@
-// Связывает DOM редактора с измерением текста и восстановлением выделения при гидратации.
+// Connects DOM editors with text measurement and hydration selection recovery.
 import type { MentionsProps } from './mentions.types';
 
-/** Читает состояние только у нативного textarea Mentions. */
+/** Reads the state only at the native textarea Mentions. */
 function readEditorSelection(editor: Element | null) {
   const Textarea = editor?.ownerDocument.defaultView?.HTMLTextAreaElement;
   if (!Textarea
@@ -19,7 +19,7 @@ function readEditorSelection(editor: Element | null) {
   };
 }
 
-/** Собирает кандидатов в документе и открытых деревьях вдоль цепочки фокуса. */
+/** Gathers candidates in a document and open trees along the focus chain. */
 function readHydrationSelections(id: string) {
   if (typeof document === 'undefined') {
     return;
@@ -38,14 +38,14 @@ function readHydrationSelections(id: string) {
   return snapshots;
 }
 
-/** Захватывает состояние до того, как Svelte очистит текстовый узел textarea при гидратации. */
+/** Excites the state before Svelte clears the textarea node during hydration. */
 export function captureMentionsHydrationSelection(id: string) {
   let pending = readHydrationSelections(id);
   if (!pending?.length) {
     return;
   }
 
-  /** Применяет снимок однократно к тому же редактору, если его текст сохранился. */
+  /** Applies the picture once to the same editor if its text is preserved. */
   return function restoreSelection(editor: HTMLTextAreaElement) {
     const previous = pending?.find(snapshot => snapshot.editor === editor);
     pending = undefined;
@@ -62,7 +62,7 @@ export function captureMentionsHydrationSelection(id: string) {
   };
 }
 
-// Расчёт autoSize следует calculateNodeHeight из @rc-component/input 1.3.1 (MIT).
+// Calculation autoSize follows calculateNodeHeight from @rc-component/input 1.3.1 (MIT).
 const sizing = [
   'letter-spacing',
   'line-height',
@@ -89,7 +89,7 @@ const sizing = [
 ];
 const autoSizeProperties = ['height', 'min-height', 'max-height', 'overflow-y', 'resize'];
 
-/** Сохраняет значения и CSS-приоритет до передачи размеров autoSize. */
+/** Reserves values and CSS prioritization to the transfer of dimensions autoSize. */
 function readAutoSizeProperties(style: CSSStyleDeclaration) {
   return autoSizeProperties.map(name => ({
     name, value: style.getPropertyValue(name), priority: style.getPropertyPriority(name)
@@ -118,7 +118,7 @@ export function connectMentionsMeasure(
   let disposed = false;
   let width = -1;
   let height = -1;
-  /** Возвращает размеры актуального textarea-слота после выключения autoSize. */
+  /** Returns the dimensions of the current textarea slot after switching off autoSize. */
   function restoreStyle() {
     const style = getEditorStyle();
     let declarations = previous;

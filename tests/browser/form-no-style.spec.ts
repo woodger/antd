@@ -9,7 +9,7 @@ for (const { sample, metrics } of reference.cases) {
       .selectOption(sample.id);
     const expected = structuredClone(metrics);
     if (expected.input.status === 'error') expected.input.invalid = 'true';
-    // Source описывает отсутствующий собственный help; native связывает с реальным parent message.
+    // Source describes the absence of its own help; native connects with the real parent message.
     if (!expected.child) {
       const hasOwn = expected.contexts.first.errors.length || expected.contexts.first.warnings.length;
       const hasParent = expected.parent

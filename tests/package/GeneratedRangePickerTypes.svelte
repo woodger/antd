@@ -15,10 +15,10 @@
 <Picker.RangePicker picker="time" {value} onChange={next => next?.[1]?.getUTCHours()} />
 
 <Picker.RangePicker value={[
-  // @ts-expect-error Календарный диапазон принимает Date.
+  // @ts-expect-error The calendar range accepts Date values.
   123, null
 ]} />
 <Picker.RangePicker picker="time" value={[
-  // @ts-expect-error Диапазон времени принимает тот же тип даты адаптера.
+  // @ts-expect-error The time range accepts the same date type from the adapter.
   null, 456
 ]} />

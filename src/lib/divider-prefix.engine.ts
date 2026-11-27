@@ -3,7 +3,7 @@ import template from './vendor/divider-prefix.css.js';
 const rootStates = new Set(['', '-horizontal', '-vertical', '-with-text', '-with-text-start',
   '-with-text-end', '-dashed', '-dotted', '-plain', '-rtl', '-sm', '-md']);
 
-/** Меняет componentCls и descendant resets; marker и CSS variables остаются общими. */
+/** Changes componentCls and descendant resets while sharing the marker and CSS variables. */
 export function getDividerPrefixCss(prefix: string) {
   if (prefix === 'ant-divider') {
     return undefined;

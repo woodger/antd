@@ -14,7 +14,7 @@ export function formatStatisticValue(
 
   const integer = (cells[2] || '0').replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
   let decimal = cells[4] || '';
-  // Как Number.tsx эталона: precision дополняет/обрезает строку без округления.
+  // Matches upstream Number.tsx. precision pads or truncates the string without rounding.
   if (typeof precision === 'number' && !Number.isNaN(precision))
     decimal = decimal.padEnd(precision, '0').slice(0, precision > 0 ? precision : 0);
 

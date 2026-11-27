@@ -10,7 +10,7 @@ let server: ViteDevServer;
 let cache: string;
 
 test.beforeAll(async () => {
-  // Как в Tag hydration: HMR compile options совпадают с client, host не слушает порт.
+  // As in Tag hydration: HMR compile options coincide with client, host does not listen to port.
   const hmrHost = createHttpServer();
   cache = await mkdtemp(join(tmpdir(), 'antd-alert-boundary-hydration-'));
   server = await createServer({

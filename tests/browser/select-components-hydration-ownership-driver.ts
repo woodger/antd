@@ -83,7 +83,7 @@ export async function captureHydrationOwnership(
       statusText: response.statusText()
     })
   );
-  // Пытается прочитать состояние после ошибки, фиксируя сбой самого замера.
+  // Trying to read the condition after the error, fixing the failure of the measurement itself.
   async function observeFailedAction() {
     try {
       await snapshot('failure-observation');
@@ -93,7 +93,7 @@ export async function captureHydrationOwnership(
     }
   }
 
-  // Удаляет все оставшиеся экземпляры и сохраняет диагностику очистки.
+  // Removes all remaining instances and keeps clearing diagnostics.
   async function disposeLiveOwners() {
     try {
       await page.evaluate(async () => { for (const key of window.hydrationOwnershipProbe?.scenario.environment.owners ?? [])
@@ -114,7 +114,7 @@ export async function captureHydrationOwnership(
       const rendered = await renderOwner(key);
       servers[key] = rendered;
       for (const [method, state] of Object.entries(source.server.serializations)) {
-        // Добавляет расхождение конкретного SSR-сериализатора в журнал.
+        // Adds the discrepancy of a particular SSR-serializer in the magazine.
         function verifyServerSerialization() {
           try {
             verifyHydrationOwnershipSSR(
@@ -186,7 +186,7 @@ export async function captureHydrationOwnership(
       }
       else if (action.type === 'real-keyboard-replace') {
         const handle = await page.evaluateHandle(() => window.hydrationOwnershipProbe.roots.B!.raw.current!.readRefs().editor);
-        // Вводит текст через удержанный редактор и освобождает ссылку на него.
+        // Introduces the text through the retained editor and releases the link to it.
         const replaceThroughEditor = async () => {
           try {
             const editor = handle.asElement();
@@ -202,7 +202,7 @@ export async function captureHydrationOwnership(
       }
       else if (action.type === 'outside-focus') {
         const handle = await page.evaluateHandle(() => window.hydrationOwnershipProbe.roots.B!.raw.current!.readRefs().outside);
-        // Нажимает на внешнюю кнопку и освобождает её DOM handle.
+        // Presses the external button and releases it DOM handle.
         async function clickOutsideControl() {
           try {
             const button = handle.asElement();

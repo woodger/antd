@@ -1,19 +1,19 @@
 import type { RenderEmptyContent } from './types';
 
-/** Визуальный статус поля/help; '' отключает автоматический статус metadata FormItem. */
+/** Visual field/help status; '' disables metadata FormItem automatic status. */
 export type FormValidateStatus = 'success' | 'warning' | 'error' | 'validating' | '';
 
-/** Сообщения FormList; строки/числа и Svelte snippets заменяют ReactNode. */
+/** Messages FormList; strings/numbers and Svelte snippets replace ReactNode. */
 export interface FormErrorListProps {
-  /** Задаёт id контейнера `${fieldId}_help`; пустая строка не создаёт id. */
+  /** Specifies the container id `${fieldId}_help`; an empty string doesn't create an id. */
   fieldId?: string;
-  /** Любое значение, кроме null/undefined, заменяет errors и warnings, включая false/0/''. */
+  /** Any value other than null/undefined replaces errors and warnings including false/0/''. */
   help?: RenderEmptyContent;
-  /** Без status у help нет цветового класса; errors/warnings задают свой status сами. */
+  /** There is no color class without a help class; errors/warnings set their status themselves. */
   helpStatus?: FormValidateStatus;
   errors?: readonly RenderEmptyContent[];
   warnings?: readonly RenderEmptyContent[];
   class?: string;
-  /** После появления/скрытия; не вызывается для исходного пустого списка и после unmount. */
+  /** After the appearance/hidden; is not called for the original blank list and after unmount. */
   onVisibleChanged?: (visible: boolean) => void;
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Подключает локальные и общие настройки подсказки через публичный Table.
+  // Connects local and general prompt settings via public Table.
   import {
     ConfigProvider, Table, enUS, type TableChange, type TableColumn, type TableSorterTooltipProps
   } from '@woodger/antd';
@@ -70,7 +70,7 @@
     onFilter: profile.filter ? (value, row) => value === row.score : undefined
   }]);
 
-  /** Запрашиваемый портал принадлежит закреплённому контейнеру стенда. */
+  /** The requested portal belongs to the fixed container of the stand. */
   function getPopupContainer() {
     if (!popupOwner) {
       throw new Error('Missing sorter tooltip owner');
@@ -78,7 +78,7 @@
     return popupOwner;
   }
 
-  /** Переводит CSS и строковые значения исходного прогона в props Svelte. */
+  /** Translates CSS and the string values of the original run in props Svelte. */
   function tooltipSettings(
     value: boolean | SourceTooltip | undefined, owner = false
   ): boolean | TableSorterTooltipProps | undefined {
@@ -105,14 +105,14 @@
     };
   }
 
-  /** Сохраняет запросы Tooltip в том же журнале, что события сортировки. */
+  /** Saves queries Tooltip in the same journal as sorting events. */
   function recordOpen(open: boolean) {
     if (trace) {
       events = [...events, ['tooltip', open]];
     }
   }
 
-  /** Фиксирует направление после клика по сортируемому заголовку. */
+  /** Fixes the direction after the click on the sorted header. */
   function recordSort(change: TableChange<Row>) {
     if (trace) {
       events = [...events, ['sort', change.sorter?.order ?? null]];

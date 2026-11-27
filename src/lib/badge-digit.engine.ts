@@ -3,7 +3,7 @@ interface BadgeDigitState {
   transform: string | undefined;
 }
 
-/** План SingleNumber 6.6.8: целевые units и смещение контейнера в сотнях процентов. */
+/** SingleNumber 6.6.8 plan with target units and container offsets in hundreds of percent. */
 export function getBadgeDigitState(
   originValue: string,
   originCount: number,
@@ -36,7 +36,7 @@ export function getBadgeDigitState(
       key: candidate,
       value: candidate % 10,
       offset: direction < 0 ? index - previousIndex : index,
-      // Source current сравнивает индекс после slice с исходным previousIndex.
+      // Upstream current compares the index after slice with the original previousIndex.
       current: index === previousIndex
     })),
     transform: `translateY(${-offset}00%)`

@@ -171,7 +171,7 @@ for (const family of families) {
           return { root: refs.root, anchor: refs.anchor, editor: refs.editor,
             parent: refs.editor?.parentNode ?? null };
         });
-        // Записывает состояния после действий и освобождает ссылки на исходные узлы.
+        // Writes states after actions and releases references to the original nodes.
         async function readStatesAndVerifyBindings() {
           try {
             for (const action of popupOverflowActions(sample)) {

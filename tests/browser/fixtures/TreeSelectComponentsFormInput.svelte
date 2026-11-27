@@ -7,7 +7,7 @@
   let editor = $state<HTMLInputElement>();
   let wrapper = $state<HTMLElement>();
   let control = $state<{ focus(options?: FocusOptions): void; blur(): void; }>();
-  // Root хранит свой черновик; binding сохраняет его при обновлении spread attrs.
+  // Root stores its draft; preserves it when you update the appraisal attrs.
   let rootDraft = $state<string>();
   let registerInput = $derived(inputContext?.register);
   let registerRoot = $derived(rootContext?.register);

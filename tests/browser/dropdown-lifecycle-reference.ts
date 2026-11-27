@@ -1,4 +1,4 @@
-// Типизирует записи публичной панели Dropdown из неизменённого Ant Design 6.6.8.
+// Types the recordings of Dropdown’s public panel from the unchanged Ant Design 6.6.8.
 import lifecycle from './fixtures/ant-design-dropdown-lifecycle-reference.json' with { type: 'json' };
 import replacement from './fixtures/ant-design-dropdown-replacement-reference.json' with { type: 'json' };
 import motion from './fixtures/ant-design-dropdown-motion-reference.json' with { type: 'json' };
@@ -95,7 +95,7 @@ interface MotionFrame {
 
 interface MotionCase { profile: MotionProfile; frames: MotionFrame[]; }
 
-// JSON не сохраняет literal unions. Package test фиксирует одинаковые повторы и pin пакета.
+// JSON does not retain literal unions. Package test captures the same repetitions and pin of the package.
 export const dropdownContentCases = lifecycle.passes[0] as unknown as readonly ContentCase[];
 export const dropdownReplacementCases = replacement.passes[0] as unknown as readonly ReplacementCase[];
 export const dropdownMotionCases = motion.passes[0] as unknown as readonly MotionCase[];

@@ -1,13 +1,13 @@
-// Определяет правила типа для скалярной проверки Form. Нормализация даты предшествует проверке
-// валидности.
+// Defines type rules for scalar Form verification. The normalization of the date precedes
+// validation.
 import { matchesValidationFormat } from './validation-format.engine';
 
-/** Rule.type по async-validator 6.0.0; MIT: vendor/LICENSE.rc-async-validator. */
+/** Rule.type by async-validator 6.0.0; MIT: vendor/LICENSE.rc-async-validator. */
 export type ValidationRuleType = 'string' | 'number' | 'integer' | 'float' | 'boolean'
   | 'array' | 'object' | 'date' | 'regexp' | 'method' | 'any'
   | 'enum' | 'email' | 'url' | 'hex' | 'tel' | 'pattern';
 
-// Пустая строка для number считается отсутствующим значением. Прочие числа не преобразуются.
+// An empty string for a number is considered to be an absent value. Other numbers are not converted.
 export function normalizeValidationType(value: unknown, type: ValidationRuleType | undefined) {
   if (type === 'number' && value === '') {
     return undefined;
@@ -20,13 +20,13 @@ export function normalizeValidationType(value: unknown, type: ValidationRuleType
     return new Date(value as string);
   }
   catch {
-    // Source проглатывает исключение Date constructor и даёт success; сохраняем invalid date.
+    // Source swallows Date constructor exception and gives a success; save invalid date.
     return new Date(NaN);
   }
 }
 
-// Проверяет тип без преобразования строки в число. Для форматов передаёт строку профильной
-// проверке.
+// Checks the type without coercing a string to a number. Passes strings to the specific format
+// check.
 export function matchesValidationType(value: unknown, type: ValidationRuleType) {
   switch (type) {
     case 'string': return typeof value === 'string';

@@ -1,4 +1,4 @@
-// Одна fixture для обычного mount и строгой гидратации именованных переходов.
+// One fixture for regular mount and strict hydration of named transitions.
 import '@woodger/antd/styles.css';
 import { hydrate, mount } from 'svelte';
 import ModalMotionFixtures from './ModalMotionFixtures.svelte';

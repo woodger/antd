@@ -3,17 +3,17 @@ import type { HTMLAttributes } from 'svelte/elements';
 
 export type AffixTarget = Window | HTMLElement;
 export type AffixUpdatePosition = (() => void) & { cancel: () => void; };
-/** Общие стили внешнего узла; вложенный record заменяется целиком. */
+/** Shared styles for the outer node. A nested record is replaced in full. */
 export interface AffixConfig {
   class?: string;
   style?: string;
 }
-/** Закрепляет содержимое у края выбранного окна или прокручиваемого контейнера. */
+/** Pins content to an edge of the selected window or scroll container. */
 export interface AffixProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix fixed-узла; пустое значение наследует ConfigProvider. */
+  /** Local CSS prefix for the fixed node. An empty value inherits ConfigProvider. */
   prefixCls?: string;
   children?: Snippet;
   offsetTop?: number;
@@ -23,7 +23,7 @@ export interface AffixProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 export interface AffixPosition {

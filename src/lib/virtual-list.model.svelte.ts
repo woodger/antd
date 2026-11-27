@@ -1,5 +1,5 @@
-// Связывает окно виртуального списка с реальными размерами DOM и scrollTo.
-// Измерение и прокрутка отменяются раздельно, сохраняя высоты переиспользуемых строк.
+// Links the virtual list window to the actual dimensions of DOM and scrollTo. Measurement and
+// scroll are canceled separately, maintaining the heights of the overused strings.
 import { tick, untrack } from 'svelte';
 import { virtualListScrollStep, virtualListSizes, virtualListWindow } from './virtual-list.engine';
 import { createVirtualListSizeCache } from './virtual-list-size-cache.engine';
@@ -7,7 +7,7 @@ import { measureVirtualListRow } from './virtual-list.dom';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset } from './virtual-list.types';
 
-/** Общий viewport: retained heights, source window и до десяти проходов scrollTo. */
+/** General viewport: retained heights, source window and up to 10 passes scrollTo. */
 export function createVirtualList<Row, Key>(options: {
   rows: () => readonly Row[];
   getKey: (row: Row) => Key;
@@ -18,7 +18,7 @@ export function createVirtualList<Row, Key>(options: {
   renderSizeCache?: boolean;
   measureRow?: (row: HTMLElement) => number | undefined;
   viewportHeight?: (holder: HTMLDivElement) => number;
-  /** Высота содержимого после последней строки, вне индексов списка. */
+  /** The height of the contents after the last line, outside the indexes of the list. */
   scrollTail?: () => number;
 }) {
   let heights = $state.raw(new Map<Key, number>());
@@ -67,7 +67,7 @@ export function createVirtualList<Row, Key>(options: {
       const rows = options.rows();
       const estimate = options.estimate();
       void heights;
-      // Source сбрасывает ленивый кеш после render, а не внутри синхронного measure.
+      // Source resets lazy cache after the render and not inside the synchronous measure.
       renderedGetSize = createVirtualListSizeCache(rows, options.getKey, () => heights, estimate);
     });
 
@@ -136,7 +136,7 @@ export function createVirtualList<Row, Key>(options: {
     }
   }
 
-  // Учитывает прежнюю высоту для компенсации позиции при первом измерении строки.
+  // Takes into account the previous height to compensate for the position at the first measurement of the string.
   function measureRows() {
     const changes: { key: Key; previous: number | undefined; height: number; }[] = [];
     for (const [key, element] of nodes) {
@@ -154,7 +154,7 @@ export function createVirtualList<Row, Key>(options: {
     return changes;
   }
 
-  // Несколько DOM-изменений до одной микрозадачи требуют только последнего измерения.
+  // A few DOM changes to one microtask require only the last dimension.
   function collect() {
     const scheduledRevision = ++measurementRevision;
     void Promise.resolve().then(() => {
@@ -167,7 +167,7 @@ export function createVirtualList<Row, Key>(options: {
     observer?.observe(element);
     collect();
 
-    // При смене элемента с тем же ключом старый cleanup сохраняет новую регистрацию.
+    // When you change the element with the same key, the old cleanup preserves the new registration.
     return () => {
       observer?.unobserve(element);
       if (nodes.get(key) === element) nodes.delete(key);
@@ -187,7 +187,7 @@ export function createVirtualList<Row, Key>(options: {
     for (const node of nodes.values()) observer?.observe(node);
     measure();
 
-    // Отключение viewport лишает отложенные операции их DOM-цели.
+    // Disabling viewport deprives the delayed operations of their DOM goals.
     return () => {
       observer?.disconnect();
       observer = undefined;
@@ -214,7 +214,7 @@ export function createVirtualList<Row, Key>(options: {
     const rows = options.rows();
     const estimate = options.estimate();
     const size = renderedGetSize ?? getSize;
-    // Как useScrollTo layoutEffect: render-кеш уже опубликован, измерение меняет лишь heights.
+    // As useScrollTo layoutEffect: render-cache has already been published, the measurement only changes heights.
     measure();
     const index = pending.index >= 0 ? pending.index
       : rows.findIndex(row => options.getKey(row) === pending.key);

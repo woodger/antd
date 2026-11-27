@@ -1,6 +1,6 @@
 import template from './vendor/radio-prefix.css.js';
 
-/** Local Radio/Button/Group classes и общий Badge namespace независимы. */
+/** The local Radio/Button/Group classes and general Badge namespace are independent. */
 export function getRadioPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-radio' && rootPrefix === 'ant') {
     return undefined;

@@ -1,8 +1,8 @@
-// Использует тот же component fixture для проверки SSR и строгой гидратации.
+// Uses the same component fixture to test SSR and strict hydration.
 import { render } from 'svelte/server';
 import ModalSemanticFixtures from './ModalSemanticFixtures.svelte';
 
-/** Рендерит исходный HTML под выбранным семантическим профилем. */
+/** Renders the initial HTML under the selected semantic profile. */
 export function renderModalSemantics(id: string) {
   return render(ModalSemanticFixtures, { props: { id } });
 }

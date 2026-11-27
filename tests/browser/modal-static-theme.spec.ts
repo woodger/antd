@@ -8,7 +8,7 @@ const dark = {
 };
 const accent = { ...dark, primary: 'rgb(211, 32, 41)' };
 
-/** Снимает CSS панели, заголовка и кнопки. Все три зависят от темы провайдера. */
+/** Removes CSS panels, headers and buttons. All three are dependent on the provider’s theme. */
 function readColors(dialog: Locator, title: string) {
   return dialog.evaluate((node, title) => {
     const surface = node.querySelector('[data-ant-modal-container]');

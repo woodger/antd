@@ -45,7 +45,7 @@ async function expectMatchingModules(page: Page) {
       const count = reference.viewBox.baseVal.width;
       let mismatches = 0;
 
-      // Центры модулей не зависят от различий antialias между Canvas paths и crispEdges SVG.
+      // Module centers do not depend on the differences of antialias between Canvas paths and crispEdges SVG.
       for (let y = 0; y < count; y++) {
         for (let x = 0; x < count; x++) {
           const px = Math.floor((x + 0.5) * canvas.width / count);

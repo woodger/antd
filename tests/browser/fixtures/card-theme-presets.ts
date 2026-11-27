@@ -24,7 +24,7 @@ export function resolveCardTheme(input: CardReferenceTheme): ThemeConfig {
       return [name, fields];
     })
   );
-  // Записка использует JS boolean cssVar; ThemeConfig здесь и в 6.6.8 допускает только объект.
+  // The note uses JS boolean cssVar; ThemeConfig here and in 6.6.8 allows only an object.
   return {
     ...rest,
     token: { motion: false, ...input.token },

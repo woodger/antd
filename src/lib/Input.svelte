@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-  // Согласует DOM-редактор с value, clear, счётчиком и FormItem. Публичный ref делегирует
-  // операции тому же полю ввода.
+  // Coordinates the native editor with value, clearing, the counter, and FormItem. The public ref
+  // delegates to the same input.
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';
@@ -232,7 +232,7 @@
     }
 
     const next = inputExceedValue(raw, count, composing);
-    // Input, в отличие от TextArea, пропускает неизменённый compositionend.
+    // Input skips an unchanged compositionend. TextArea handles it.
     if (event.type === 'compositionend' && raw === next) {
       return;
     }
@@ -290,7 +290,7 @@
     };
   }
 
-  /** Фокусирует input; cursor управляет выделением у типов с поддержкой selection API. */
+  /** Focuses the input. cursor controls selection on input types that support the selection API. */
   export function focus(options?: FocusOptions & { cursor?: 'start' | 'end' | 'all'; }) {
     const element = inputElement;
     element?.focus(options);
@@ -312,7 +312,7 @@
     inputElement?.select();
   }
 
-  /** Делегирует нативному input; ограничения selection API зависят от его type. */
+  /** Delegates to the native input. Selection API limits depend on its type. */
   export function setSelectionRange(
     start: number,
     end: number,

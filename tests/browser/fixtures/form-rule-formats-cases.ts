@@ -30,7 +30,7 @@ export function formRuleFormatsRule(sample: FormRuleFormatsSample): ValidationRu
   };
 }
 
-/** Четыре source URL-ошибки: IPv6 brackets и допустимые TCP/UDP порты. */
+/** Four sources URL-errors: IPv6 brackets and allowable TCP/UDP ports. */
 export const formRuleFormatsCorrections: Readonly<Record<string, boolean>> = {
   'url-format-5': true,
   'url-format-6': false,

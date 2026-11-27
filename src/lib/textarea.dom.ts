@@ -1,5 +1,5 @@
-// Измеряет TextArea и обновляет autoSize. Один скрытый textarea на документ обслуживает
-// подключённые поля по очереди и удаляется после последнего владельца.
+// Measures TextArea and updates autoSize. One hidden textarea per document serves connected fields
+// in turn and is removed after the last owner.
 import type { TextAreaProps } from './textarea.types';
 
 const sizing = [
@@ -26,8 +26,8 @@ const shadows = new WeakMap<Document, { node: HTMLTextAreaElement; users: number
 
 export { inputChangeEvent as textAreaChangeEvent } from './input-event.dom';
 
-// Подключает измерение к текущему DOM-узлу и его окну. Возвращает операции синхронизации и
-// очистки.
+// Connects the measurement to the current DOM node and its window. Returns synchronization and
+// clearing operations.
 export function createTextAreaMeasure(
   element: HTMLTextAreaElement,
   notify: (size: { width: number; height: number; }) => void
@@ -41,7 +41,7 @@ export function createTextAreaMeasure(
   let previous = [-1, -1, -1, -1];
   let authored = '';
 
-  // Освобождает ссылку на общий измеритель. Последний владелец удаляет узел и запись документа.
+  // Releases the reference to the common measurer. The last owner removes the node and record the document.
   function release() {
     if (shadow && --shadow.users === 0) {
       shadow.node.remove();
@@ -50,8 +50,8 @@ export function createTextAreaMeasure(
     shadow = undefined;
   }
 
-  // Применяет размеры по вычисленным стилям и ограничениям rows. Уведомляет о фактическом
-  // изменении геометрии.
+  // Applies sizes according to the calculated styles and limitations of rows. Notifies the actual
+  // change in geometry.
   function sync() {
     if (!active || !element.isConnected) {
       return;
@@ -128,7 +128,7 @@ export function createTextAreaMeasure(
     }
   }
 
-  // Объединяет события ResizeObserver в один RAF, пока подключение активно.
+  // Combines events ResizeObserver into one RAF while the connection is active.
   function schedule() {
     if (active && !frame) {
       frame = view.requestAnimationFrame(() => {
@@ -141,13 +141,13 @@ export function createTextAreaMeasure(
   observer.observe(element);
 
   return {
-    // Переносит authored style и меняет подписку на общий измеритель при переключении режима
-    // autoSize.
+    // Reproduces the authored style and changes the subscription to the general meter when
+    // switching mode autoSize.
     configure(next: TextAreaProps['autoSize'], style: string) {
       if (!active) {
         return;
       }
-      // Сбрасываем только собственные autoSize-поля к authored styles перед новым измерением.
+      // Resetting only our own autoSize fields to authored styles before a new dimension.
       if (autoSize || next)
         element.style.cssText = style;
       authored = style;
@@ -171,7 +171,7 @@ export function createTextAreaMeasure(
       sync();
     },
     sync,
-    // Отменяет наблюдение и кадр, восстанавливает авторские стили и освобождает общий измеритель.
+    // Cancels the observation and the frame, restores the author's styles and releases the common meter.
     destroy() {
       active = false;
       observer.disconnect();

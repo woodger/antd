@@ -1,11 +1,11 @@
-// Подстраивает масштаб текста Avatar под размеры контейнера. Измерение привязано к окну и
-// lifecycle текущих DOM-узлов.
+// Scales Avatar text to fit its container. Measurement follows the window and lifecycle of the
+// current DOM nodes.
 import { getAvatarScale } from './avatar.engine';
 
-// Подписывается на изменения размеров текста и контейнера и задаёт начальный масштаб синхронно.
+// Subscribes to text and container size changes and sets the initial scale synchronously.
 export function connectAvatarText(host: HTMLElement, text: HTMLElement, gap: number) {
   let active = true;
-  // Обновляет transform только пока подключение активно.
+  // Updates transform only while the connection is active.
   const measure = () => {
     if (active)
       text.style.transform = `scale(${getAvatarScale(text.offsetWidth, host.offsetWidth, gap)})`;
@@ -14,7 +14,7 @@ export function connectAvatarText(host: HTMLElement, text: HTMLElement, gap: num
   resize.observe(host);
   resize.observe(text);
   measure();
-  // Отключает наблюдение и снимает transform, которым управляло это подключение.
+  // Disconnects observation and clears the transform owned by this connection.
   return () => {
     active = false;
     resize.disconnect();

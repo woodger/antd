@@ -1,4 +1,4 @@
-// Загружает собранный публичный пакет в страницу без других уведомлений.
+// Loads the built public package into a page with no other notifications.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import NotificationApiFixtures from './NotificationApiFixtures.svelte';

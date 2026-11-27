@@ -1,5 +1,5 @@
 export function snapshotColorPickerThemeTriggers() {
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function colorThemeCSS(node: Element | null, names: string[]) {
     if (!node) {
       return null;
@@ -27,7 +27,7 @@ export function snapshotColorPickerThemeTriggers() {
     )]));
 }
 export function snapshotColorPickerThemePopup() {
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function colorThemeCSS(node: Element | null, names: string[]) {
     if (!node) {
       return null;
@@ -54,7 +54,7 @@ export function snapshotColorPickerThemePopup() {
     sliders: [...popup.querySelectorAll('.ant-color-picker-slider')].map(node =>
       colorThemeCSS(node, ['height', 'margin-top', 'margin-bottom'])),
     fields: colorThemeCSS(popup.querySelector('.ant-color-picker-input-container'), both),
-    // Flex constraints принадлежат внешней Svelte-обёртке Select; здесь видимая часть.
+    // Flex belongs to the external Svelte-inforescÂ Select; here is the visible part.
     format: colorThemeCSS(
       format,
       both.filter(name => name !== 'min-width' && name !== 'min-height')

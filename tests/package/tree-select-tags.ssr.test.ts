@@ -13,7 +13,7 @@ const decode = (text: string) => text.replace(/&(?:amp|lt|gt|quot|#39);/g,
 const text = (html: string) => decode(html.replace(/<[^>]*>/g, ''));
 interface Span { start: number; end: number; attrs: string; body: string; parent?: Span; }
 
-/** Публичный SSR HTML: balanced spans сохраняют rich content и hidden measurement ancestors. */
+/** Public SSR HTML. Balanced spans keep rich content and hidden measurement ancestors. */
 function readHeader(html: string, prefix: string, single: boolean) {
   const spans: Span[] = [];
   const stack: Span[] = [];

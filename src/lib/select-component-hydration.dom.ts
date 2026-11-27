@@ -1,6 +1,6 @@
-// Подключает редактор Select к гидратированному DOM. Начальная синхронизация учитывает dirty value
-// и атрибуты SSR, последующие обновления применяют различия между наборами props.
-// React DOM 18.3.1 hydration semantics; MIT, vendor/LICENSE.react-dom.
+// Connects editor Select to hydrated DOM. Initial synchronization takes into account dirty values
+// and attributes of SSR, subsequent updates apply the differences between sets props. React DOM
+// 18.3.1 hydration semantics; MIT, vendor/LICENSE.react-dom.
 import { untrack } from 'svelte';
 
 type Editor = HTMLInputElement | HTMLTextAreaElement;
@@ -11,7 +11,7 @@ const booleanAttributes = new Set(['autofocus', 'disabled', 'formnovalidate', 'h
   'itemscope', 'multiple', 'readonly', 'required']);
 const controlled = new Set(['value', 'defaultvalue', 'checked', 'defaultchecked']);
 
-// Нормализует class для SSR-редактора из строки, списка или карты включённых классов.
+// Normalizes the class for SSR-editor from the line, list or map of the included classes.
 function classValue(value: unknown): unknown {
   if (typeof value !== 'object') {
     return value;
@@ -20,7 +20,7 @@ function classValue(value: unknown): unknown {
     return '';
   }
   const output: string[] = [];
-  // Добавляет непустые классы, сохраняя порядок вложенного массива и перечисляемых ключей.
+  // Adds non-empty classes, preserving the order of the nested array and listed keys.
   const append = (item: unknown) => {
     if (!item) {
       return;
@@ -41,8 +41,8 @@ function classValue(value: unknown): unknown {
   return output.join(' ');
 }
 
-// Выделяет DOM event и capture. Имена gotpointercapture и lostpointercapture уже содержат capture
-// в типе события.
+// Allocates DOM event and capture. The names gotpointercapture and lostpointercapture already
+// contain capture in the event type.
 function eventName(name: string) {
   if (!name.startsWith('on') || name.length < 3) {
     return;
@@ -53,17 +53,17 @@ function eventName(name: string) {
   return { type, capture };
 }
 
-// Даёт приоритет value перед defaultValue, сохраняя пустую строку и число 0.
+// Prioritizes value before defaultValue, saving an empty string and number 0.
 function initialValue(attributes: Attributes) {
   return attributes.value ?? attributes.defaultValue ?? attributes.defaultvalue ?? '';
 }
 
-/** Только hydration leaf: CSR attributes/events по-прежнему ведёт Svelte. */
+/** Hydration leaf only. Svelte still manages CSR attributes and events. */
 export function createSelectComponentHydration(element: Editor, attributes: Attributes) {
   const listeners = new Map<string, Listener>();
   let previous = { ...attributes };
 
-  // Синхронизирует DOM-подписку по имени атрибута. При замене функции переиспользует listener.
+  // Synchronizes DOM-subscription by attribute name. When replacing a function, the listener reuses.
   function event(name: string, value: unknown) {
     const descriptor = eventName(name);
     if (!descriptor) {
@@ -82,7 +82,7 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
     const record: Listener = {
       ...descriptor,
       handler: value as Handler,
-      // Вызывает актуальный обработчик с редактором как receiver и вне реактивного чтения.
+      // Quotes an up-to-date handler with a receive editor as and outside the reactive reading.
       listener(input) {
         untrack(() => record.handler.call(element, input));
       }
@@ -92,8 +92,8 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       passive: record.type === 'touchstart' || record.type === 'touchmove' });
   }
 
-  // Обновляет нативные атрибуты и делегирует события. Значение, checked и стиль обслуживаются
-  // отдельными владельцами.
+  // Updates native attributes and delegates events. Importance, checked and style are serviced by
+  // individual owners.
   function attribute(name: string, value: unknown) {
     const normalized = name.toLowerCase();
     if (normalized === 'style' || controlled.has(normalized)) {
@@ -129,7 +129,7 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
     }
   }
 
-  // CSS/обычные SSR attrs сохраняются; class сохраняет прежнюю Svelte-нормализацию.
+  // CSS/usual SSR attrs are preserved; class retains the previous Svelte-normalization.
   for (const [name, value] of Object.entries(attributes)) {
     if (eventName(name)) {
       event(name, value);
@@ -146,7 +146,7 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       )) {
         input.defaultValue = String(initialValue(attributes));
       }
-      // React postMountWrapper сохраняет dirty value; checked синхронизирует отдельно.
+      // React postMountWrapper preserves the dirty value; checked synchronizes separately.
       const name = input.name;
       if (name) input.name = '';
       input.defaultChecked = !input.defaultChecked;
@@ -157,12 +157,12 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
   else {
     const textarea = element as HTMLTextAreaElement;
     const text = textarea.textContent;
-    // React postMountWrapper textarea: непустое совпавшее SSR body становится value.
+    // React postMountWrapper textarea: non-empty matched SSR body becomes value.
     if (text !== '' && text !== null && text === String(initialValue(attributes))) textarea.value = text;
   }
 
-  // Применяет live и default свойства по контракту Web IDL. При удалении live сохраняет прежнее
-  // default.
+  // Applies live and default properties under the Web IDL contract. When deleted, live preserves
+  // the previous default.
   function controlledAttribute(name: string, value: unknown) {
     const normalized = name.toLowerCase();
     if (normalized === 'value') {
@@ -177,7 +177,7 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       }
     }
     else if (normalized === 'defaultvalue') {
-      // Web IDL setter сохраняет в том числе прежний synthetic null -> "null".
+      // Web IDL setter retains including the former synthetic null -> "null".
       Reflect.set(element, 'defaultValue', value);
     }
     else if (element.localName === 'input') {
@@ -200,13 +200,13 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
   }
 
   return {
-    /** Вызывается только после initial pass; первый reactive replay пропускает renderer. */
+    /** is called only after the initial pass; the first reactive replay skips the renderer. */
     update(next: Attributes, syncTextareaBody = next.value != null) {
       const changes = { ...next };
       for (const name of Object.keys(previous)) {
         if (!Object.hasOwn(next, name)) changes[name] = null;
       }
-      // Как DOM input spread, type меняется до value и остальных attrs.
+      // As DOM input spread, the type changes to value and the rest of the attrs.
       if (!Object.is(previous.type, changes.type)) attribute('type', changes.type);
       if (!Object.is(previous.class, changes.class)) attribute('class', changes.class);
       for (const [name, value] of Object.entries(changes)) {
@@ -220,14 +220,14 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
           attribute(name, value);
         }
       }
-      // Старый hydrated textarea обновляет body только от raw controlled value.
+      // Older hydrated textarea only updates the body from the raw recovered value.
       if (element.localName === 'textarea' && syncTextareaBody && next.value != null) {
         const text = String(next.value);
         if (element.defaultValue !== text) element.defaultValue = text;
       }
       previous = { ...changes };
     },
-    // Отсоединяет все listeners, принадлежащие этому проходу гидратации.
+    // Disconnects all listeners belonging to this hydration aisle.
     destroy() {
       for (const record of listeners.values()) {
         element.removeEventListener(

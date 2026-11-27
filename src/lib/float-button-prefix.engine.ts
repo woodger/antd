@@ -6,7 +6,7 @@ const rootStates = new Set([
   '-group-bottom', '-group-left', '-group-right'
 ]);
 
-/** Служебные переменные и Button selectors используют общий prefix, parts — local. */
+/** Service variables and Button selectors use common prefix, local parts. */
 export function getFloatButtonPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-float-btn' && rootPrefix === 'ant') {
     return undefined;
@@ -15,7 +15,7 @@ export function getFloatButtonPrefixCss(prefix: string, rootPrefix = 'ant') {
   const scope = `:where([data-ant-float-prefix=${JSON.stringify(prefix)}][data-ant-float-global=${JSON.stringify(rootPrefix)}])`;
   const namespace = rootPrefix.replace(/\./g, '');
 
-  // Повышаем приоритет геометрии над Button, сохраняя margin ниже Compact edge selectors.
+  // Raise the geometry priority over Button, saving margins below Compact edge selectors.
   const stylesheet = template.replace(
     /^(\.ant-float-btn:where\(\.ant-float-btn-css-var\))\{([^}]+)\}/gm,
     (rule, selector: string, declarations: string) =>

@@ -70,7 +70,7 @@
       return;
     }
     const controller = createTabsPaneMotion(element, (next, commit) => {
-      // Measurement hooks читают DOM после prepare commit, как layout effects CSSMotion.
+      // Measurement hooks read DOM after prepare commits, like CSSMotion layout effects.
       if (commit) {
         flushSync(() => { motionState = next; });
       }
@@ -94,8 +94,8 @@
     untrack(() => controller?.sync(next, config, enabled));
   });
 
-  // Запоминаем факт появления содержимого в DOM, а не копию active.
-  // После уничтожения панель снова ждёт активации, даже если destroyOnHidden отключат.
+  // Track whether content has appeared in the DOM independently of active. After destruction, the
+  // panel waits for activation again even if destroyOnHidden is disabled.
   function rememberContent() {
     mounted = true;
     return () => {

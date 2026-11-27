@@ -22,7 +22,7 @@ async function startMouse(page: Page, index = 0, vertical = false) {
   const bar = separator(page, index);
   await bar.scrollIntoViewIfNeeded();
   const box = (await bar.boundingBox())!;
-  // Кнопки сворачивания перекрывают середину; drag проверяется на свободном участке.
+  // Folding buttons overlap the middle; drag is inspected on a free stretch.
   const point = {
     x: box.x + box.width * (vertical ? 0.25 : 0.5),
     y: box.y + box.height * (vertical ? 0.5 : 0.25)
@@ -331,7 +331,7 @@ for (const sample of focusReference.cases) {
         .toBeFocused();
     }
     else {
-      // Сохраняем ограничение pinned upstream: clipping не исключает controls из Tab-порядка.
+      // Save restriction pinned upstream: clipping does not exclude controls from Tab order.
       await expect(root(page).getByRole('button', { name: 'Splitter content action', exact: true }))
         .toBeFocused();
       await page.keyboard.press('Shift+Tab');
@@ -533,7 +533,7 @@ test(
     await expectSizes(page, [300, 300]);
     await control(page, 'Hide Splitter root').uncheck();
     const point = await startMouse(page);
-    // Удаление выполняется без mouseup: поздние window-события не должны завершить старый drag.
+    // Removal is performed without mouseup: late window events should not complete the old drag.
     await control(page, 'Mount Splitter').evaluate((element: HTMLInputElement) => element.click());
 
     await expect(root(page)).toHaveCount(0);

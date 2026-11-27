@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Настраивает отдельные DOM-контейнеры, чтобы различить владельцев каждой панели.
+  // Configures individual DOM-containers to distinguish the owners of each panel.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type TableChange, type TableColumn, type TableFilterDropdownProps,
@@ -34,7 +34,7 @@
   let committedFilters = $state.raw<TableFilterValue[][]>([]);
   let selections = $state.raw<TableKey[][]>([]);
 
-  /** Добавляет только те column options, которые присутствуют в исходном профиле. */
+  /** Adds only those column options that are present in the original profile. */
   function createColumn(): TableColumn<Row> {
     const column: TableColumn<Row> = { key: 'name', title: 'Name', dataIndex: 'name' };
     if (profile.kind === 'sorter') {
@@ -64,7 +64,7 @@
     return column;
   }
 
-  /** Определяет роль переданного элемента без предположений о его HTML-теге. */
+  /** Defines the role of the transferred element without the assumptions about its HTML-tage. */
   function triggerRole(trigger: HTMLElement) {
     if (trigger.closest('[data-ant-table-filter-part="trigger"]')) return 'filter';
     if (trigger.closest('[data-ant-menu-submenu-title]')) return 'submenu';
@@ -73,7 +73,7 @@
     return 'unknown';
   }
 
-  /** Записывает роль триггера и ищет контейнер в его документе после mount. */
+  /** Writes down the role of a trigger and looking for a container in his document after mount. */
   function resolveIn(layer: string) {
     return function resolvePopup(trigger?: HTMLElement) {
       if (typeof window === 'undefined') {
@@ -99,14 +99,14 @@
     };
   }
 
-  /** Записывает применённый критерий, отбрасывая изменения сортировки и страницы. */
+  /** Records the applied criterion, discarding the changes of sorting and the page. */
   function noteFilter(change: TableChange<Row>) {
     if (change.action === 'filter') {
       committedFilters = [...committedFilters, change.filters?.name ?? []];
     }
   }
 
-  /** Сохраняет набор ключей после каждой команды выбора. */
+  /** Saves a set of keys after each selection command. */
   function noteSelection(keys: TableKey[]) {
     selections = [...selections, keys];
   }

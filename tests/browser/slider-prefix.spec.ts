@@ -17,7 +17,7 @@ for (const sample of reference.cases) {
         .selectOption(sample.name);
       await page.mouse.move(0, 0);
       const args = { prefix: sample.prefix || 'ant-slider', tip: sample.tip || 'ant-tooltip' };
-      // Native disabled сохраняет согласованное скрытие Tooltip даже при open=true.
+      // Native disabled preserves the agreed concealment Tooltip even at open=true.
       const base = sample.disabled ? { ...sample.base, popups: [] } : sample.base;
 
       await expect.poll(() => page.evaluate(snapshotSliderPrefix, args)).toEqual(base);

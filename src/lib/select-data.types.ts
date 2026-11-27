@@ -3,7 +3,7 @@ import type { SelectFieldNames, SelectScrollKey } from './select.types';
 export type SelectDataValue = string | number;
 export type SelectDataFields = Required<SelectFieldNames>;
 
-/** Raw metadata Source; индекс задаёт позиция в flattened массиве, включая headers. */
+/** Raw metadata Source; the index sets the position in the flattened array, including headers. */
 export interface SelectDataRow<Value extends SelectDataValue, Data extends object> {
   key: SelectScrollKey;
   data: Data & Readonly<Record<string, unknown>>;
@@ -16,14 +16,14 @@ export interface SelectDataRow<Value extends SelectDataValue, Data extends objec
 export interface SelectDataMaps<Value extends SelectDataValue, Data extends object> {
   valueOptions: ReadonlyMap<Value | undefined, Data>;
   labelOptions: ReadonlyMap<unknown, Data>;
-  /** Native token lookup сохраняет только собственные label/search поля. */
+  /** Native token lookup preserves only its own label/search fields. */
   nativeLabelOptions: ReadonlyMap<unknown, Data>;
 }
 
 export interface SelectDataFilter<Data extends object> {
   filterOption?: boolean | ((search: string, option: Data) => boolean);
   optionFilterProp?: string | readonly string[];
-  /** Только implicit default: сохраняет прежний Native label trim/NFKD matcher. */
+  /** Only implicit default: preserves the previous Native label trim/NFKD matcher. */
   defaultMatch?: (search: string, option: Data, fields: SelectDataFields, group: boolean) => boolean;
 }
 
@@ -35,7 +35,7 @@ export interface SelectDataDisplay<Value extends SelectDataValue, Data extends o
   title: unknown;
 }
 
-/** Display label и исходный callback option кешируются независимо. */
+/** Display label and the original callback option are cached independently. */
 export interface SelectDataCache<Value extends SelectDataValue, Data extends object> {
   labels: ReadonlyMap<Value, unknown>;
   options: ReadonlyMap<Value, Data | undefined>;

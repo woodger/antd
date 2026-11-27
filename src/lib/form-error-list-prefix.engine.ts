@@ -1,4 +1,4 @@
-/** Только explain styles Form; prefix списка не меняет оформление соседних FormItem. */
+/** Only explain styles Form; prefix list does not change the design of the neighboring FormItem. */
 export function getFormErrorListPrefixCss(prefix: string, scoped = false) {
   if (prefix === 'ant-form' && !scoped) {
     return undefined;

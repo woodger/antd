@@ -15,7 +15,7 @@ for (const sample of reference.cases) {
 
         await expect(page.locator('.ant-message-notice')).toBeVisible();
 
-        // Прежний native перенос сохраняется; остальные CSS-метрики берутся из raw UMD.
+        // The previous native transfer is saved; the remaining CSS metrics are taken from raw UMD.
         await expect.poll(() => page.evaluate(snapshotMessageTheme)).toEqual({
           ...expected,
           title: { ...expected.title, 'overflow-wrap': 'anywhere' }

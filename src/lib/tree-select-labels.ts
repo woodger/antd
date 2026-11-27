@@ -32,7 +32,7 @@ export function createTreeSelectLabelCache<Data extends object>() {
         return cached;
       }
 
-      // Только обработчик выбора: пустой компонент создаёт snippet без рендера label.
+      // Only the handler of the choice: an empty component creates a snippet without a render label.
       let label: Snippet | undefined;
       const binding = mount(TreeSelectLabelBinding<Data>, {
         target: document.createElement('div'),

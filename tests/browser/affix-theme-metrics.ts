@@ -34,7 +34,7 @@ export function snapshotAffixConfiguration(localPrefix?: string | void) {
         className: root.className,
         opacity: css.opacity,
         outlineOffset: css.outlineOffset,
-        // Общий native CSS marker может совпасть с custom prefix соседнего компонента.
+        // The total native CSS marker can match the custom prefix of the neighboring component.
         localPrefix: content.classList.contains(prefix) && (prefix === 'ant-affix' || !defaultPrefix),
         defaultPrefix,
         rootClass: content.classList.contains('theme-affix-fixed')

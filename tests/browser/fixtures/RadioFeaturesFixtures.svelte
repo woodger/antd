@@ -103,7 +103,7 @@
     }),
     styles: { root: 'color:blue', icon: 'outline:1px solid red', label: 'color:purple' }
   } : undefined}>
-    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (Фикстура считает всплывающие clicks, не добавляя интерактивность форме.) -->
+    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (The fixture counts bubbling clicks without making the form interactive.) -->
     <form id="source-radio-form" onchange={() => { changeEvents++; }}
       onclick={() => { clickEvents++; }} onsubmit={event => {
         event.preventDefault();

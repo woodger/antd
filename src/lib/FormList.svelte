@@ -34,7 +34,7 @@
   let keys = $state.raw(untrack(() => syncFormListKeys(
     { keys: [], nextKey: 0 }, readValues()
   )));
-  // React map пропускает holes; each получает плотный список реально существующих позиций.
+  // React map skips holes. each receives a dense list of positions that exist.
   let fields = $derived(values.flatMap((_, index) => ({ name: index, key: keys.keys[index] })));
   let meta = $derived({
     errors: form.getFieldError(prefixName), warnings: form.getFieldWarning(prefixName)

@@ -1,15 +1,15 @@
-// Нормализует ключи Tabs и задаёт клавиатурный порядок. DOM id одинаково
-// строится из ключа для заголовка и соответствующей панели.
+// Normalizes keys Tabs and sets the keyboard order. DOM id is equally constructed from the key for
+// the header and the corresponding panel.
 import type { TabsItem, TabsPlacement } from './tabs.types';
 
-/** ID native заголовка или панели для полностью пользовательской навигации Tabs. */
+/** ID native header or panel for fully custom navigation Tabs. */
 export function getTabsItemId(rootId: string, key: string, kind: 'tab' | 'panel'): string {
-  // Правило 2: Array.from передаёт каждый code point непустой строкой.
+  // Rule 2: Array.from supplies each code point as a nonempty string.
   const encoded = Array.from(key, character => character.codePointAt(0)!.toString(16)).join('-');
   return `${rootId}-${kind}-${encoded || 'empty'}`;
 }
 
-// Явный closable учитывается отдельно от пустой иконки и disabled.
+// Explicit closable is taken into account separately from the empty icon and disabled.
 export function isTabsItemRemovable(
   item: Pick<TabsItem, 'closable' | 'closeIcon' | 'disabled'>,
   editable: boolean
@@ -18,7 +18,7 @@ export function isTabsItemRemovable(
     && !(item.closable === undefined && (item.closeIcon === null || item.closeIcon === false));
 }
 
-// При совпадении ключей сохраняет первый заголовок и его содержимое.
+// When the keys match, you save the first title and its contents.
 export function normalizeTabsItems(items: readonly TabsItem[]): TabsItem[] {
   const seen = new Set<string>();
 
@@ -32,7 +32,7 @@ export function normalizeTabsItems(items: readonly TabsItem[]): TabsItem[] {
   });
 }
 
-// Выбирает доступную активную вкладку. Без совпадения начинает с первой доступной.
+// Selects an accorded active tab. Without a match starts with the first available.
 export function getTabsActiveKey(
   items: readonly TabsItem[],
   key: string | undefined
@@ -47,7 +47,7 @@ export function getTabsActiveKey(
   return first?.key;
 }
 
-// Стрелки цикличны и пропускают disabled. Home и End выбирают соответствующий край.
+// Arrows are cyclical and pass disabled. Home and End choose the appropriate edge.
 export function getTabsNavigationKey(
   items: readonly TabsItem[],
   current: string | undefined,
@@ -75,7 +75,7 @@ export function getTabsNavigationKey(
   return available[nextIndex].key;
 }
 
-// Переводит логические start/end с учётом RTL и мобильного расположения.
+// Translates logical start/end taking into account RTL and mobile location.
 export function getTabsPlacement(
   placement: TabsPlacement,
   direction: 'ltr' | 'rtl',

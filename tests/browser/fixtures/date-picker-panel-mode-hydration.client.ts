@@ -12,7 +12,7 @@ const component = hydrate(DatePickerPanelModeFixtures, {
 });
 root.dataset.hydrated = 'true';
 
-/** Завершает lifecycle, чтобы проверить удаление открытого portal. */
+/** Completes lifecycle to check the removal of the open portal. */
 function disposePanelModeFixture() {
   return unmount(component);
 }

@@ -6,10 +6,10 @@ export type ScrollAlign = 'top' | 'bottom' | 'auto';
 export type ListyScrollAlign = ScrollAlign;
 export type ListySemanticName = 'root' | 'item' | 'groupHeader';
 export type ListyClassNames = Partial<Record<ListySemanticName, string>>;
-/** Значения semantic styles записываются как CSS declaration strings. */
+/** Semantic styles values are recorded as CSS declaration strings. */
 export type ListyStyles = Partial<Record<ListySemanticName, string>>;
 
-/** Сырые props до применения defaults и ConfigProvider; generic callbacks остаются unknown. */
+/** RAW props prior to defaults and ConfigProvider; generic callbacks remain unknown. */
 export interface ListySemanticProps {
   items?: readonly unknown[];
   sticky?: boolean;
@@ -26,14 +26,14 @@ export type ListySemantic = ListyClassNames | ((info: {
   props: ListySemanticProps;
 }) => ListyClassNames);
 
-/** Группы собираются по всему items, сохраняя порядок первого появления ключа. */
+/** Groups gather all over items, keeping the order of the first appearance of the key. */
 export interface ListyGroup<T, K extends ListyKey = ListyKey> {
   key: (item: T) => K;
-  /** Snippet получает ключ и исходные объекты группы; index itemRender не меняется. */
+  /** Snippet receives the key and source objects of the group; index itemRender does not change. */
   title: Snippet<[groupKey: K, items: T[]]>;
 }
 
-/** Align по умолчанию auto; group target — section в raw mode, header row в virtual mode. */
+/** Align by default auto; group target - section in raw mode, header row in virtual mode. */
 export type ListyScrollToConfig = number | null | {
   key: ListyKey;
   align?: ListyScrollAlign;
@@ -47,13 +47,13 @@ export type ListyScrollToConfig = number | null | {
   left?: number;
 };
 
-/** Доступен через bind:ref после mount; при unmount binding очищается. */
+/** Available via bind:ref after mount; when unmount binding is cleaned. */
 export interface ListyRef {
-  /** Без аргумента: no-op в raw mode, показать scrollbar в virtual mode. */
+  /** No argument: no-op in raw mode, show scrollbar in virtual mode. */
   scrollTo: (config?: ListyScrollToConfig) => void;
 }
 
-/** Настройки Listy; локальные class/styles дополняют и перекрывают унаследованные. */
+/** Listy settings; local class/styles complement and overlap inherited. */
 export interface ListyConfig {
   class?: string;
   style?: string;
@@ -61,32 +61,32 @@ export interface ListyConfig {
   styles?: ListySemantic;
 }
 
-/** Список Ant Design с группировкой, sticky headers и измеряемыми виртуальными строками. */
+/** List of Ant Design with grouping, sticky headers and measured virtual lines. */
 export interface ListyProps<T = unknown, K extends ListyKey = ListyKey> {
   items?: readonly T[];
-  /** Обязательный стабильный ключ; fallback на index отсутствует. */
+  /** Required stable key; fallback on index is missing. */
   rowKey: keyof T | ((item: T) => ListyKey);
-  /** Прямой Svelte snippet вместо ReactNode callback; index — в исходном items. */
+  /** Straight Svelte snippet instead of ReactNode callback; index - in the original items. */
   itemRender: Snippet<[item: T, index: number]>;
   group?: ListyGroup<T, K>;
   /** @defaultValue false */
   sticky?: boolean;
   height?: number;
-  /** local ?? ConfigProvider.virtual ?? false; для окна также нужна ненулевая height. */
+  /** local ?? ConfigProvider.virtual ?? false. Virtualization also requires a nonzero height. */
   virtual?: boolean;
-  /** Native scroll event: currentTarget — root в raw mode, holder в virtual mode. */
+  /** Native scroll event: currentTarget – root in raw mode, holder in virtual mode. */
   onScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   onscroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   classNames?: ListySemantic;
   styles?: ListySemantic;
-  /** Local CSS prefix; empty/undefined наследуют ConfigProvider. */
+  /** Local CSS prefix; empty/undefined inherited ConfigProvider. */
   prefixCls?: string;
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Поддерживает bind:ref; объект содержит только scrollTo. */
+  /** Maintains bind:ref; the object contains only scrollTo. */
   ref?: ListyRef;
-  /** Корневой div; поддерживает bind:nativeElement и очищается при unmount. */
+  /** Root div; supports bind:nativeElement and is cleaned at unmount. */
   nativeElement?: HTMLDivElement;
   id?: string;
   role?: HTMLAttributes<HTMLDivElement>['role'];

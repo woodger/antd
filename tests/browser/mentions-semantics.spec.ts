@@ -10,7 +10,7 @@ import { expect, test } from './test';
 
 type Point = (typeof reference.cases)[number]['initial'];
 
-/** Снимает те же CSS-свойства и классы, что измерены в React. */
+/** Removes the same CSS-properties and classes as measured in React. */
 function readPoint(page: Page) {
   return page.locator('.local-wrapper').evaluate(root => {
     const editor = root.querySelector('textarea');
@@ -27,7 +27,7 @@ function readPoint(page: Page) {
       'seen-warning-borderless-false', 'seen-error-none-false'
     ];
 
-    /** Оставляет только классы и свойства, заданные сценарием. */
+    /** Leaves only classes and properties set by the script. */
     function slot(node: Element | null, properties: string[]) {
       if (!node) {
         return null;
@@ -53,7 +53,7 @@ function readPoint(page: Page) {
   });
 }
 
-/** Переводит CSS-имена эталона и учитывает явный контракт слотов при наличии clear. */
+/** Translates CSS-names of the reference and takes into account the explicit contract of slots in the presence of clear. */
 function expectedPoint(point: Point, affix: boolean) {
   const css = (point: { classes: string[]; css: Record<string, string>; } | null) =>
     point && { ...point, css: Object.fromEntries(Object.entries(point.css).map(([property, value]) =>
@@ -61,7 +61,7 @@ function expectedPoint(point: Point, affix: boolean) {
     )) };
   return {
     ...point,
-    // RcMentions 1.12.0 опускает style и styles при передаче в BaseInput.
+    // RcMentions 1.12.0 omits style and styles when transferred to BaseInput.
     root: css(affix ? { ...point.root, css: { marginTop: '9px', paddingBottom: '7px' } } : point.root),
     textarea: css(point.textarea),
     popup: css(point.popup),
@@ -70,7 +70,7 @@ function expectedPoint(point: Point, affix: boolean) {
   };
 }
 
-/** Монтирует один профиль из свежей публичной сборки. */
+/** Installs one profile from the fresh public assembly. */
 async function openFixture(page: Page, profile: string) {
   await page.goto(`/select-components-hydration.html?mentions-semantics=${profile}`);
   await page.addScriptTag({ type: 'module', url: '/mentions-semantics.client.ts' });

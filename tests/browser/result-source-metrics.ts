@@ -1,12 +1,11 @@
 export function snapshotResultSource(prefix = 'ant-result') {
   const frame = document.querySelector('[data-result-source-frame]')!;
   const root = frame.querySelector<HTMLElement>(`.${prefix}`);
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-result-css-var$|^result-source-scope$/.test(name)
   ).sort();
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const style = (node: Element, keys: string[]) => Object.fromEntries(keys.map(key =>
     [key, getComputedStyle(node).getPropertyValue(key)]
   ));
@@ -61,7 +60,7 @@ export function snapshotResultSource(prefix = 'ant-result') {
         attributes: Object.fromEntries([...node.attributes].filter(attribute =>
           !['class', 'aria-hidden', 'focusable'].includes(attribute.name)
         ).map(attribute => [attribute.name, attribute.name === 'd'
-          // CSSOM разбирает compact arc flags и сохраняет полную геометрию без своего SVG parser.
+          // CSSOM disassembles compact arc flag and retains full geometry without its SVG parser.
           ? getComputedStyle(node).getPropertyValue('d') : attribute.value]))
       }))
     } : null

@@ -1,5 +1,5 @@
-// Алгоритм Project Nayuki из @rc-component/qrcode 2.0.0, MIT.
-// См. vendor/LICENSE.qrcodegen и vendor/LICENSE.rc-qrcode.
+// Algorithm Project Nayuki from @rc-component/qrcode 2.0.0, MIT. See vendor/LICENSE.qrcodegen and
+// vendor/LICENSE.rc-qrcode.
 
 export function appendBits(val: number, len: number, bb: number[]): void {
   if (len < 0 || len > 31 || val >>> len != 0) {

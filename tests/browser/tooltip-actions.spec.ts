@@ -82,7 +82,7 @@ for (const source of [false, true]) {
               .evaluate(node => (node as HTMLButtonElement).click());
             if (frame.action.kind === 'event') {
               const immediate = await send(page, sample.mode, frame.action.event!);
-              // Без relatedTarget native blur ждёт microtask, чтобы исключить удаление DOM.
+              // Without relatedTarget native blur awaits microtask to exclude removal DOM.
               const expected = frame.action.event === 'blur'
                 ? sample.frames[index - 1].snapshot.events : frame.syncEvents;
               expect(immediate).toEqual(expected);

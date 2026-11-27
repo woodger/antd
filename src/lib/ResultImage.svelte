@@ -1,7 +1,8 @@
 <script lang="ts">
-  // Ant Design 6.6.8 — MIT; см. vendor/LICENSE.ant-design.
-  // Геометрия es/result/{unauthorized,noFound,serverError}.js без изменения цветов.
-  // Внутри Result — native viewBox/decorative mode; static images сохраняют source SVG/title.
+  // Ant Design 6.6.8 under MIT. See vendor/LICENSE.ant-design.
+  // Geometry from es/result/{unauthorized,noFound,serverError}.js with the original colors.
+  // Inside Result, use the native viewBox and decorative mode. Static images keep the source SVG
+  // and title.
   // https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
   // SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
   let { status, decorative = true }: {

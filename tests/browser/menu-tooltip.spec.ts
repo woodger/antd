@@ -11,21 +11,21 @@ const events = (page: Page) => page.getByLabel('Menu tooltip events');
 const selectSample = (page: Page, id: string) =>
   page.getByRole('combobox', { name: 'Menu tooltip sample' }).selectOption(id);
 
-// Выполняет внешнее обновление props без pointer-событий на открытой подсказке.
+// Performs an external update of props without pointer events on an open prompt.
 async function ownerAction(page: Page, label: string) {
   await page.getByRole('button', { name: label }).evaluate((button: HTMLButtonElement) => {
     button.click();
   });
 }
 
-// Даёт position и атрибутам описания завершить подключение к строке.
+// Gives the position and description attributes to complete the connection to the line.
 function afterPaint(page: Page) {
   return page.evaluate(() => new Promise<void>(resolve => {
     requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
   }));
 }
 
-// Считывает текст и принадлежность видимой поверхности для сопоставления с исходным Tooltip.
+// He reads the text and belonging of the visible surface for comparison with the original Tooltip.
 async function tooltip(page: Page) {
   const values = await surface(page).evaluateAll(elements => elements.map(element => ({
     text: element.querySelector('[data-ant-tooltip-container]')?.textContent ?? '',
@@ -37,7 +37,7 @@ async function tooltip(page: Page) {
   return values[0] ?? null;
 }
 
-// Измеряет именно нативный пункт, включая HTML title и временное описание Tooltip.
+// Is the native item, including HTML title and the temporary description Tooltip.
 async function itemMetrics(page: Page) {
   return row(page).evaluate(element => ({
     title: element.getAttribute('title'),
@@ -83,7 +83,7 @@ for (const { sample, initial, active, inactive } of reference.results) {
     await expect.poll(() => tooltip(page)).toEqual(inactive.tooltip);
     await expect.poll(() => itemMetrics(page)).toEqual(inactiveItem);
     if (sample.id === 'open-controlled') {
-      // rc-trigger вызывает обе ветки pointerleave и mouseleave при том же controlled open.
+      // rc-trigger causes both branches of pointerleave and mouseleave at the same controlled open.
       expect(inactive.changes).toEqual([false, false]);
       await expect(events(page)).toHaveText('[false]');
     }

@@ -1,6 +1,5 @@
 <script lang="ts" generics="T = unknown">
-  // Отображает состояние и действия одного файла Upload. Preview и download используют данные
-  // текущей строки.
+  // Displays one Upload file's state and actions. Preview and download use the current row's data.
   import { onMount, untrack } from 'svelte';
   import { createUploadMotion, type UploadItemMotionState } from './upload-motion.dom';
   import { useToken } from './theme-context.svelte';
@@ -61,7 +60,7 @@
     onMotionEnd?: () => void;
   } = $props();
   const tokens = useToken();
-  // Первые uid списка пропускают appear; новые экземпляры получают разрешение после mount списка.
+  // Initial list UIDs skip appear. New instances can animate after the list mounts.
   const appear = untrack(() => motionAppear);
   let root = $state<HTMLDivElement>();
   let motion = $state<ReturnType<typeof createUploadMotion>>();

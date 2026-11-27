@@ -163,7 +163,7 @@ test('centered overflowing Tabs retain native scrolling, focus and the active in
 
     await expect.poll(() => root(page).evaluate(async element => {
       const ink = element.querySelector<HTMLElement>('.ant-tabs-ink-bar')!;
-      // Новый замер может переназначить transition во время ожидания его завершения.
+      // The new measurement may reassemble the transition while waiting for its completion.
       await Promise.all(ink.getAnimations().map(animation => animation.finished.catch(error => {
         if (!(error instanceof DOMException) || error.name !== 'AbortError') {
           throw error;

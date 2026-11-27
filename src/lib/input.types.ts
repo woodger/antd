@@ -17,15 +17,15 @@ export type InputSemanticSlots = Partial<
   Record<'root' | 'input' | 'prefix' | 'suffix' | 'clear' | 'count', string>
 >;
 
-/** Callback получает Props с разрешёнными size и disabled; root — внешняя обёртка. */
+/** Callback receives Props with permitted size and disabled size; root is an external wrapper. */
 export type InputSemantic =
   | InputSemanticSlots
   | ((info: { props: InputProps; }) => InputSemanticSlots | undefined);
 
 /**
- * Адаптация DOM Event для onChange. target и currentTarget — копия input со значением
- * на момент вызова; nativeEvent — исходное событие. Для input type заменяется на
- * change; очистка сохраняет click. Методы события работают с исходным DOM Event.
+ * Adaptation DOM Event for onChange. target and currentTarget — a copy of input with the value at
+ * the time of the call; nativeEvent is the original event. For input type is replaced with change;
+ * clearing preserves click. The methods of the event work with the original DOM Event.
  */
 export type InputChangeEvent = Event & {
   target: HTMLInputElement;
@@ -34,8 +34,8 @@ export type InputChangeEvent = Event & {
 };
 
 /**
- * Общие настройки ConfigProvider.input. Локальные Props имеют приоритет;
- * вложенный ConfigProvider с input заменяет этот объект целиком.
+ * General settings ConfigProvider.input. Local Props take precedency; nested ConfigProvider with
+ * input replaces this object entirely.
  */
 export interface InputConfig {
   allowClear?: boolean | InputAllowClear;
@@ -47,32 +47,32 @@ export interface InputConfig {
   styles?: InputSemantic;
 }
 
-/** Input с bind:value, нативными HTML-атрибутами и совместимыми callbacks Ant Design. */
+/** Input with bind:value, native HTML attributes and compatible callbacks Ant Design. */
 export interface InputProps extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'children' | 'size' | 'class' | 'prefix'
 > {
-  /** Поддерживает bind:value. Внешнее значение не обрезается через count.exceedFormatter. */
+  /** Maintenances bind:value. The external value is not trimmed through count.exceedFormatter. */
   value?: string;
-  /** Начальное значение при отсутствующем value; последующие изменения не применяются. */
+  /** Initial value in missing value; subsequent changes do not apply. */
   defaultValue?: string;
-  /** Приоритет: локальный size, SpaceCompact, ConfigProvider.componentSize. */
+  /** Priority: local size, SpaceCompact, ConfigProvider.componentSize. */
   size?: ComponentSize | 'medium';
-  /** Нативный атрибут size; визуальный размер задаётся через size. */
+  /** Native attribute size; the visual size is set through size. */
   htmlSize?: number;
   status?: 'error' | 'warning' | '';
-  /** Приоритет: variant, Form, component config, global variant, outlined. */
+  /** Priority: variant, Form, component config, global variant, */
   variant?: InputVariant;
   prefix?: InputContent;
-  /** Базовый CSS prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Basic CSS prefix; empty/undefined inherited ConfigProvider.prefixCls. */
   prefixCls?: string;
   suffix?: InputContent;
-  /** false отключает очистку; иначе отсутствующие поля наследуются из ConfigProvider.input. */
+  /** false disables clearing; otherwise the missing fields are inherited from ConfigProvider.input. */
   allowClear?: boolean | InputAllowClear;
-  /** По умолчанию скрыт; count.show имеет приоритет. */
+  /** The default is hidden; count.show takes priority. */
   showCount?: InputShowCount;
   count?: InputCountConfig;
-  /** Жёсткий нативный maxlength; также максимум счётчика, если count.max не задан. */
+  /** Rigid native maxlength; also the maximum counter, if count.max is not specified. */
   maxLength?: number;
   readOnly?: boolean;
   autoComplete?: HTMLInputAttributes['autocomplete'];
@@ -80,19 +80,19 @@ export interface InputProps extends Omit<
   class?: string;
   rootClassName?: string;
   classNames?: InputSemantic;
-  /** Inline CSS по semantic slots; локальные стили идут после настроек ConfigProvider.input. */
+  /** Inline CSS on semantic slots; local styles go after settings ConfigProvider.input. */
   styles?: InputSemantic;
-  /** bind:inputElement возвращает нативный input. */
+  /** bind:inputElement returns native input. */
   inputElement?: HTMLInputElement;
-  /** bind:nativeElement возвращает внешний root: input или span при affixes. */
+  /** bind:nativeElement returns external root: input or span at affixes. */
   nativeElement?: HTMLElement;
-  /** Вызывается при вводе и очистке перед onChange; bind:value к этому моменту обновлён. */
+  /** Is called when entering and clearing before onChange; bind:value has been updated to this point. */
   onValueChange?: (value: string) => void;
-  /** Адаптированное событие ввода/очистки. Нативные oninput и onchange сохраняются отдельно. */
+  /** Adapted input/clearing event. Native oninput and onchange are saved separately. */
   onChange?: (event: InputChangeEvent) => void;
-  /** Вызывается после onValueChange и onChange при очистке кнопкой. */
+  /** Is called after onValueChange and onChange when clearing with a button. */
   onClear?: () => void;
-  /** Один вызов на Enter до keyup/blur/disabled; composing Enter пропускается. */
+  /** One call on Enter before keyup/blur/disabled; composing Enter is skipped. */
   onPressEnter?: HTMLInputAttributes['onkeydown'];
   onFocus?: HTMLInputAttributes['onfocus'];
   onBlur?: HTMLInputAttributes['onblur'];

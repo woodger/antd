@@ -1,4 +1,4 @@
-// Хранит последнее положение клика для первого кадра Modal, включая монтаж из onclick.
+// Stores the last click position for the first frame of Modal, including editing from onclick.
 import type { ModalMousePosition } from './modal.types';
 
 interface ModalClick {
@@ -8,7 +8,7 @@ interface ModalClick {
 
 const lastClicks = new WeakMap<Document, ModalClick>();
 
-/** Один capture listener на документ. Срок годности проверяется без таймера. */
+/** One captive listener per document. The shelf life is checked without a timer. */
 function trackClicks(document: Document): ModalClick | undefined {
   const previous = lastClicks.get(document);
   if (previous) {
@@ -22,7 +22,7 @@ function trackClicks(document: Document): ModalClick | undefined {
   const click: ModalClick = { time: -Infinity };
 
   document.addEventListener('click', event => {
-    // Синтетический клик без координат сбрасывает предыдущую точку, как клавиатурный.
+    // A synthetic click without coordinates resets the previous point like a keyboard.
     click.point = event instanceof view.MouseEvent ? { x: event.pageX, y: event.pageY } : undefined;
     click.time = view.performance.now();
   }, { capture: true, passive: true });
@@ -31,10 +31,10 @@ function trackClicks(document: Document): ModalClick | undefined {
   return click;
 }
 
-// Условно монтируемое окно должно увидеть клик, который вызвал сам монтаж.
+// The conditionally mounted window should see the click, which caused the installation itself.
 if (typeof document !== 'undefined') trackClicks(document);
 
-/** Явная точка имеет приоритет. Null и undefined используют клик за последние 100 мс. */
+/** An apparent point has priority. Null and undefined have been using a click in the last 100 ms. */
 export function getModalMousePoint(document: Document, position?: ModalMousePosition | null) {
   if (position) {
     return position;
@@ -45,7 +45,7 @@ export function getModalMousePoint(document: Document, position?: ModalMousePosi
   return click && now !== undefined && now - click.time < 100 ? click.point : undefined;
 }
 
-/** Переводит координаты страницы в систему панели до применения transform. */
+/** Translating page coordinates into the panel system prior to transform application. */
 export function getModalTransformOrigin(panel: HTMLElement, point?: ModalMousePosition) {
   if (!point || (!point.x && !point.y)) {
     return undefined;

@@ -54,7 +54,7 @@
       : typeof item === 'string'
         ? item
         : { text: item.text, font: item.font ? { ...item.font } : undefined };
-    // Чтение полей snapshots делает массивы и построчные font реактивными в Svelte.
+    // Reading snapshot fields keeps arrays and per-row fonts reactive in Svelte.
     return {
       zIndex,
       rotate,

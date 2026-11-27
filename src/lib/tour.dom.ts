@@ -71,7 +71,7 @@ function visibleArea(element: HTMLElement): TourArea {
   return result;
 }
 
-/** useTarget/useAlign: DOM measurement отделено от числового placement engine. */
+/** useTarget/useAlign: DOM measurements are separated from numerical placement engine. */
 export function connectTourLayout(
   popup: HTMLElement,
   placeholder: HTMLElement,
@@ -170,7 +170,7 @@ export function connectTourLayout(
       const inView = box.top >= 0 && box.left >= 0
         && box.right <= view.innerWidth && box.bottom <= view.innerHeight;
       if (!options.inline && !inView && options.open) {
-        // rc-tour передаёт даже false в native scrollIntoView; defaultOpen не заменяет raw open.
+        // rc-tour passes even false to native scrollIntoView. defaultOpen does not replace raw open.
         element.scrollIntoView(options.scrollIntoViewOptions);
         box = element.getBoundingClientRect();
       }

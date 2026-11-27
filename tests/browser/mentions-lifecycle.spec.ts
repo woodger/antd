@@ -27,7 +27,7 @@ const popupClass = '.mentions-probe-panel';
 
 test.use({ viewport: { width: 1000, height: 650 } });
 
-/** Снимает классы самой панели и начало реальной CSSAnimation. */
+/** Removes the classes of the panel itself and the beginning of the real CSSAnimation. */
 async function recordMotion(page: Page) {
   await page.evaluate(popupClass => {
     const frames: string[][] = [];
@@ -65,7 +65,7 @@ async function recordMotion(page: Page) {
   }, popupClass);
 }
 
-/** Сверяет видимость, фокус, каретку, портальный контейнер и порядок callback. */
+/** Checks visibility, focus, carriage, portal container and callback order. */
 async function expectSnapshot(page: Page, editor: Locator, state: Snapshot) {
   const open = page.locator(`${popupClass}:popover-open`);
   await expect(open).toHaveCount(Number(state.open));
@@ -88,7 +88,7 @@ async function expectSnapshot(page: Page, editor: Locator, state: Snapshot) {
   );
 }
 
-/** Новый кадр сравнивается с накопленным журналом Source. */
+/** The new frame is compared with the accumulated Source magazine. */
 async function expectMotion(page: Page, sample: MotionRecord) {
   await expect.poll(() => page.evaluate(() => window.mentionsMotion.read())).toEqual(sample);
   await page.evaluate(() => window.mentionsMotion.reset());
@@ -115,7 +115,7 @@ for (const { profile, state } of reference.cases) {
       await editor.press('Escape');
       await expectSnapshot(page, editor, state.interrupted);
       await expectMotion(page, state.firstMotion);
-      // Между двумя открытиями пользователь успевает нажать Escape во время появления.
+      // Between the two openings, the user manages to press Escape during the appearance.
       await page.evaluate(() => window.mentionsMotion.read());
       await editor.press('@');
     }

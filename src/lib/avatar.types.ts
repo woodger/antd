@@ -3,20 +3,20 @@ import type { HTMLAttributes } from 'svelte/elements';
 import type { GridResponsive } from './grid.types';
 
 export type AvatarShape = 'circle' | 'square';
-/** Карта использует наибольший совпавший breakpoint; отсутствие совпадений оставляет CSS defaults. */
+/** The map uses the largest matching breakpoint. With no match, CSS defaults apply. */
 export type AvatarSize = 'small' | 'medium' | 'large' | number | GridResponsive<number>;
 
-/** Общие class/style Avatar; явный record заменяет родительский целиком. */
+/** Shared Avatar class and style. An explicit record replaces the parent's record in full. */
 export interface AvatarConfig {
   class?: string;
   style?: string;
 }
 
-/** Аватар с приоритетом изображения, icon и текста и fallback при ошибке загрузки. */
+/** Avatar with image, icon, and text precedence and a fallback on image load failure. */
 export interface AvatarProps extends Omit<
   HTMLAttributes<HTMLSpanElement>, 'children' | 'class' | 'style'
 > {
-  /** Строкой управляет Avatar; готовый Snippet сохраняет собственные attrs/events и интерактивность. */
+  /** Avatar controls a string. A supplied Snippet keeps its attributes, events, and interactivity. */
   src?: string | Snippet;
   srcSet?: string;
   alt?: string;
@@ -24,21 +24,20 @@ export interface AvatarProps extends Omit<
   draggable?: boolean | 'true' | 'false';
   /** @defaultValue 'circle' */
   shape?: AvatarShape;
-  /** Локальный размер имеет приоритет над контекстом; responsive map применяется после mount. */
+  /** Local size takes precedence over context. The responsive map applies after mount. */
   size?: AvatarSize;
   /** @defaultValue 4 */
   gap?: number;
   icon?: Snippet;
   children?: Snippet;
-  /** Локальный component prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local component prefix. Omission and the empty string inherit ConfigProvider. */
   prefixCls?: string;
   onError?: () => boolean | void;
   /**
-   * Click корневого span; keyboard behavior принадлежит владельцу.
-   * Явный onclick имеет приоритет.
+   * Click on the root span. The owner handles keyboard behavior. Explicit onclick takes precedence.
    */
   onClick?: HTMLAttributes<HTMLSpanElement>['onclick'];
-  /** Bindable span; сохраняется при обновлениях содержимого и очищается при unmount. */
+  /** Bindable span. Retained across content changes and cleared on unmount. */
   nativeElement?: HTMLSpanElement;
   id?: string;
   title?: string;

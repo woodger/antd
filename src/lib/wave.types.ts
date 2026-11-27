@@ -4,7 +4,7 @@ export type WaveComponent = 'Tag' | 'Button' | 'Checkbox' | 'Radio' | 'Switch' |
 export type WaveTriggerType = 'click' | 'pointerdown' | 'pointerup' | 'mousedown' | 'mouseup';
 export type WaveColorSource = 'color' | 'backgroundColor' | 'borderColor' | null;
 
-/** Данные source Wave; event — нативное событие, token — полный текущий GlobalToken. */
+/** Source Wave; event data is a native event, token is the full current GlobalToken. */
 export interface WaveEffectInfo {
   className: string;
   token: GlobalToken;
@@ -14,14 +14,14 @@ export interface WaveEffectInfo {
   colorSource?: WaveColorSource;
 }
 
-/** Заменяет стандартный эффект; созданными ресурсами управляет callback. */
+/** Replaces the standard effect; the created resources are managed by callback. */
 export type ShowWaveEffect = (element: HTMLElement, info: WaveEffectInfo) => void;
 
-/** Настройки заменяют родительский wave record целиком; события control не подавляются. */
+/** Settings replace the parent wave record entirely; control events are not suppressed. */
 export interface WaveConfig {
-  /** Отключает только эффект. По умолчанию false. */
+  /** Disables only effect. The default is false. */
   disabled?: boolean;
   showEffect?: ShowWaveEffect;
-  /** Capture-событие; события одного animation frame объединяются. По умолчанию click. */
+  /** Capture Event; the events of a single framework are combined. The default click. */
   triggerType?: WaveTriggerType;
 }

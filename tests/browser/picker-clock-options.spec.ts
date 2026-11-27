@@ -7,7 +7,7 @@ type ClockState = Sample['steps'][number]['state'];
 const columns = '.ant-picker-time-panel-column';
 const events = 'Picker clock events';
 
-/** Снимает текст, состояние строк и историю публичных событий после действия. */
+/** Removes the text, the state of the lines and the history of public events after the action. */
 async function readClock(page: Page) {
   return page.evaluate(() => {
     const popup = document.querySelector('.ant-picker-dropdown:not(.ant-picker-dropdown-hidden)');
@@ -29,7 +29,7 @@ async function readClock(page: Page) {
   });
 }
 
-/** Прокручивает колонку на начало второго пункта после первоначального выравнивания. */
+/** Scroll the column at the beginning of the second point after the initial alignment. */
 async function scrollToSecond(page: Page) {
   await page.clock.runFor(500);
   await page.locator(columns).first().evaluate(column => {
@@ -39,7 +39,7 @@ async function scrollToSecond(page: Page) {
   });
 }
 
-/** Использует те же поля и пункты, что и независимый Source capture. */
+/** Uses the same fields and items as independent Source capture. */
 async function act(page: Page, action: string) {
   const popup = page.locator('.ant-picker-dropdown:not(.ant-picker-dropdown-hidden)');
   if (action === 'start') {
@@ -59,12 +59,12 @@ async function act(page: Page, action: string) {
   }
   else {
     const cell = popup.locator(columns).first().getByText(action, { exact: true });
-    // Фокус и hover остаются на поле, чтобы измерить именно выбор этой строки.
+    // Focus and hover remain on the field to measure exactly the choice of this line.
     await cell.evaluate(button => (button as HTMLButtonElement).click());
   }
 }
 
-/** Native сообщает источник одиночного черновика через публичное поле info.source. */
+/** Native reports the source of a single draft through the public field info.source. */
 function expectedEvents(sample: Sample, state: ClockState) {
   const source = sample.profile.actions.includes('choose-date') ? 'date' : 'time';
   return state.events.map(event => event[0] === 'calendar' && !sample.profile.range

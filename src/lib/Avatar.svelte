@@ -62,7 +62,7 @@
     ? gridResponsiveValue(resolvedSize, breakpoint.screens) : undefined);
   $effect(() => {
     const view = host?.ownerDocument.defaultView;
-    // useBreakpoint 6.6.8 обновляет подписку по refreshOnChange, а не при смене token object.
+    // In 6.6.8, useBreakpoint refreshes its subscription when refreshOnChange changes. A new token object alone has no effect.
     if (responsive && view) {
       return breakpoint.connect(view, untrack(() => getGridMediaQueries(theme.token)));
     }
@@ -153,7 +153,7 @@
   }
 </style>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`avatar-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions, a11y_no_noninteractive_element_interactions (Avatar.onClick сохраняет span; keyboard behavior принадлежит владельцу.) --><span {...attributes} bind:this={nativeElement} {id} {title}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`avatar-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions, a11y_no_noninteractive_element_interactions (Avatar.onClick keeps the span. The owner supplies keyboard behavior.) --><span {...attributes} bind:this={nativeElement} {id} {title}
   role={role ?? (!hidden && named ? imageSnippet ? 'group' : 'img' : undefined)}
   aria-label={ariaLabel ?? (ariaLabelledby ? undefined : alt || undefined)}
   aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}

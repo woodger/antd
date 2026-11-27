@@ -14,7 +14,7 @@
 
   $effect(() => {
     const nextValue = numericValue;
-    // Source effect зависит только от value и сохраняет count своего render.
+    // The upstream effect depends only on value and captures the count from its render.
     const nextCount = untrack(() => Math.abs(count));
     const timer = setTimeout(() => {
       previousValue = nextValue;

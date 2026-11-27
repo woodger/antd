@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Публикует изменения многострочного редактора, clear и FormItem. Фокус и ref принадлежат
-  // одному textarea.
+  // Emits changes from the multiline editor, clearing, and FormItem. Focus and ref belong to one
+  // textarea.
   import { onDestroy, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';
@@ -320,7 +320,7 @@
     onMouseDown?.(event);
     onmousedown?.(event);
   }
-  /** Фокусирует textarea; cursor задаёт начало, конец или полное выделение текста. */
+  /** Focuses the textarea. cursor selects the start, end, or all text. */
   export function focus(options?: FocusOptions & { cursor?: 'start' | 'end' | 'all'; }) {
     const element = nativeElement;
     element?.focus(options);

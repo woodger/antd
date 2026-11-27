@@ -6,7 +6,7 @@ const fixture = '/?fixture=table-filter-content&profile=';
 const filterName = 'Filter menu: Value';
 test.use({ viewport: { width: 880, height: 550 }, reducedMotion: 'reduce' });
 
-/** Считывает подписи из открытой панели, включая размещённое в popup подменю. */
+/** Reads labels from an open panel, including the submenu placed in the popup. */
 function snapshot({ mode, nested }: { mode: string; nested?: boolean; }) {
   const root = document.getElementById('table-filter-content-fixture');
   if (!root) {
@@ -31,7 +31,7 @@ function snapshot({ mode, nested }: { mode: string; nested?: boolean; }) {
   };
 }
 
-/** Открывает штатную панель через доступный триггер. */
+/** Opens a full-time panel through an accessible trigger. */
 async function openFilter(page: Page) {
   await page.getByRole('button', { name: filterName, exact: true }).click();
   const panel = page.getByRole('dialog', { name: filterName, exact: true });

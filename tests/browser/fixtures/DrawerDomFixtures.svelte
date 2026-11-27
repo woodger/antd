@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Наблюдает реальный DOM и порядок публичных callbacks без обращений к контроллерам Drawer.
+  // Observes the real DOM and the order of public callbacks without calls to controllers Drawer.
   import { untrack } from 'svelte';
   import { ConfigProvider, Drawer, enUS, type DrawerContent, type DrawerProps } from '@woodger/antd';
 
@@ -44,7 +44,7 @@
   const childHandlers = makeListeners('inner');
   const attributes = $derived<DrawerProps>(profile === 'attrs' ? getAttributes(next) : {});
 
-  /** Назначает событию читаемые DOM-имена, включая кнопку с вложенной svg. */
+  /** Appoints an event readable DOM names, including a button with nested svg. */
   function identify(node: EventTarget | null) {
     if (!(node instanceof Element)) return null;
     if (node.closest('[data-ant-drawer-close]')) return 'close';
@@ -53,7 +53,7 @@
     return node.id || node.localName;
   }
 
-  /** Сохраняет currentTarget синхронно, пока событие ещё распространяется. */
+  /** Saves currentTarget synchronously while the event is still spreading. */
   function record(scope: string, kind: string, event: Event) {
     entries.push({
       scope, kind, type: event.type, target: identify(event.target),
@@ -62,7 +62,7 @@
     });
   }
 
-  /** Обработчики различаются по scope и умеют отменить штатное действие Escape. */
+  /** Handlers differ in scope and are able to cancel the staff action of Escape. */
   function makeListeners(scope: string): DrawerProps {
     return {
       onmouseenter: event => record(scope, 'enter', event),
@@ -79,7 +79,7 @@
     };
   }
 
-  /** Передаёт ложные, пустые и удаляемые атрибуты в открытый и портальный Drawer. */
+  /** Transmits false, empty and deleted attributes to open and portal Drawer. */
   function getAttributes(updated: boolean): DrawerProps {
     return {
       id: 'product-dialog',
@@ -105,7 +105,7 @@
     };
   }
 
-  /** Место портала для контрольного профиля находится вне DOM внешней секции. */
+  /** The place of the portal for the control profile is located outside DOM of the external section. */
   function childHost() {
     return document.getElementById('drawer-child-host') ?? document.body;
   }

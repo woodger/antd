@@ -6,7 +6,7 @@ export function inputChangeEvent<T extends HTMLInputElement | HTMLTextAreaElemen
   const target = element.cloneNode(true) as T;
   target.value = value;
 
-  // Email и некоторые другие input types не поддерживают selection.
+  // Email and some other inputs do not support selection.
   if (typeof element.selectionStart === 'number' && typeof element.selectionEnd === 'number') {
     target.selectionStart = element.selectionStart;
     target.selectionEnd = element.selectionEnd;
@@ -15,7 +15,7 @@ export function inputChangeEvent<T extends HTMLInputElement | HTMLTextAreaElemen
   target.setSelectionRange = (start, end, direction) =>
     element.setSelectionRange(start, end, direction);
 
-  // Native Event getters требуют исходный receiver, в отличие от React SyntheticEvent.
+  // Native Event getters require the original receiver, as opposed to React SyntheticEvent.
   return new Proxy(event, {
     get(original, key) {
       if (key === 'target' || key === 'currentTarget') {

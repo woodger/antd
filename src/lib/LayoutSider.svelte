@@ -96,7 +96,7 @@
   });
   $effect(() => untrack(() => layout?.register(id)));
   $effect(() => {
-    // Внутренний DOM не зависит от обновления публичного ref родителем.
+    // The internal DOM does not depend on the parent updating the public ref.
     const node = body?.parentElement;
     if (node) {
       return connectFeedbackFocus(node);

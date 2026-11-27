@@ -179,8 +179,8 @@
     [componentTheme.style, _themeStyle, contextStyles.root, config.button?.style, slots.root, style]
       .filter(Boolean).join(';')
   );
-  // У нативных ветвей общие атрибуты. Динамический тег Svelte при гидратации
-  // повторно вставляет существующий узел и сбрасывает фокус.
+  // The native branches share attributes. During hydration, a dynamic Svelte tag reinserts the
+  // existing node and drops focus.
   let rootAttributes = $derived({
     'data-ant-button-root': true,
     'data-ant-button-prefix': prefixCss ? prefixCls : undefined,
@@ -191,8 +191,8 @@
     hreflang,
     referrerpolicy
   });
-  // ButtonProps описывает дополнительные DOM-события через HTMLButtonElement.
-  // Ссылка передаёт эти атрибуты как есть и сохраняет исходный API.
+  // ButtonProps describes additional DOM events via HTMLButtonElement. The link passes those
+  // attributes through and preserves the original API.
   let linkAttributes: Record<string, unknown> = $derived(attributes);
 
   $effect(() => {

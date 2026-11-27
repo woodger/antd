@@ -59,7 +59,7 @@ test(
     await expect(region).toHaveCSS('isolation', 'auto');
 
     await region.scrollIntoViewIfNeeded();
-    // Wheel использует compositor hit test после отрисовки нового положения.
+    // Wheel uses the compositor hit test after drawing a new position.
     await page.evaluate(
       () =>
         new Promise<void>(

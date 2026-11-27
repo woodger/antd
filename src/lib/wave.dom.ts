@@ -20,7 +20,7 @@ function isVisible(target: EventTarget | null): target is Element {
 }
 
 function createWaveEffect(target: HTMLElement, info: WaveEffectInfo, onEnd: () => void) {
-  // Custom showEffect вызывается и при uncheck; этот фильтр принадлежит только default effect.
+  // Custom showEffect is also called at uncheck; this filter belongs only to the default effect.
   if (info.component === 'Checkbox' && !target.querySelector('input')?.checked) {
     return;
   }
@@ -93,7 +93,7 @@ function createWaveEffect(target: HTMLElement, info: WaveEffectInfo, onEnd: () =
     syncPosition();
     wave.addEventListener('transitionend', handleEnd);
 
-    // rc-motion отделяет start от active двумя RAF; opacity завершает эффект, box-shadow — нет.
+    // rc-motion separates the start from the active two RAF; opacity completes the effect, box-shadow does not.
     frame = requestAnimationFrame(() => {
       frame = requestAnimationFrame(() => {
         if (!wave) {
@@ -111,7 +111,7 @@ function createWaveEffect(target: HTMLElement, info: WaveEffectInfo, onEnd: () =
   return destroy;
 }
 
-/** Capture listener и один отложенный эффект; destroy отменяет RAF, timers и observers. */
+/** Capture listener and one delayed effect; destroy cancels RAF, timers and. */
 export function connectWave(
   node: HTMLElement,
   getOptions: () => { config?: WaveConfig; info: Omit<WaveEffectInfo, 'event'>; }
@@ -176,7 +176,7 @@ export function connectWave(
   };
 }
 
-/** Opaque Tag snippet не раскрывает children.type; наблюдаем единственный прямой anchor. */
+/** An opaque Tag snippet does not expose children.type. The fixture observes the single direct anchor. */
 export function connectWaveLink(node: HTMLElement, onChange: (hasLink: boolean) => void) {
   const content = node.querySelector('.ant-tag-content');
   function sync() {

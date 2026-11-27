@@ -73,7 +73,7 @@ for (const original of selectSurfaceStyleHistoryNativeReference.cases) {
       for (const [index, step] of original.steps.entries()) {
         if (step.action.type === 'click') {
           const root = await retained.evaluateHandle(value => value.root!);
-          // Нажимает на удержанный корень и освобождает DOM handle при любом исходе.
+          // Presses on the held root and releases DOM handle at any exodus.
           async function clickAndReleaseRoot() {
             try { await root.asElement()!.click(); } finally { await root.dispose(); }
           }

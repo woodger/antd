@@ -44,11 +44,11 @@ function getPresetTokens(seed: SeedToken, dark = false): ColorPalettes {
     }
   }
 
-  // Preset pink остаётся цветом UI, но больше не является настраиваемым seed.
+  // Preset pink remains the color of UI, but is no longer a customizable seed.
   return palettes as ColorPalettes;
 }
 
-/** Исходный defaultAlgorithm: seed → MapToken, без alias overrides и UI side effects. */
+/** Initial defaultAlgorithm: seed → MapToken, without alias overrides and UI effects side. */
 export function defaultAlgorithm(seed: SeedToken): MapToken {
   return {
     ...seed,
@@ -64,7 +64,7 @@ export function defaultAlgorithm(seed: SeedToken): MapToken {
   };
 }
 
-/** При наличии mapToken продолжает цепочку; иначе сначала вызывает defaultAlgorithm. */
+/** In the presence of mapToken continues the chain; otherwise first causes defaultAlgorithm. */
 export function darkAlgorithm(seed: SeedToken, mapToken?: MapToken): MapToken {
   const colorPalettes = getPresetTokens(seed, true);
   const mergedMapToken = mapToken ?? defaultAlgorithm(seed);
@@ -93,7 +93,7 @@ export function darkAlgorithm(seed: SeedToken, mapToken?: MapToken): MapToken {
   };
 }
 
-/** Сохраняет цвета предыдущего шага и пересчитывает исходные compact размеры. */
+/** Retains the colors of the previous step and recalculates the original compact dimensions. */
 export function compactAlgorithm(seed: SeedToken, mapToken?: MapToken): MapToken {
   const mergedMapToken = mapToken ?? defaultAlgorithm(seed);
   const fontSize = mergedMapToken.fontSizeSM;

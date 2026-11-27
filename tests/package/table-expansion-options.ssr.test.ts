@@ -4,12 +4,12 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableExpansionOptionsFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-expansion-options-reference.json';
 
-/** Значения SSR-атрибутов стенда используются как входы в снимок. */
+/** The fixture's SSR attribute values are snapshot inputs. */
 function attribute(markup: string, name: string) {
   return markup.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Читает обычные и подробные tr до того, как начнутся эффекты клиента. */
+/** Reads ordinary and detail tr elements before client effects run. */
 function snapshot(body: string) {
   const rows = [];
   const details = [];
@@ -57,7 +57,7 @@ for (const { profile, server } of source.cases) {
       return;
     }
 
-    // SSR выводит своё начальное окно с теми же публичными параметрами записей.
+    // SSR renders its own initial window with the same public record parameters.
     const firstRows = profile.tree ? [0, 101, 102] : [0, 1, 2];
     expect(native.rows.slice(0, firstRows.length).map(row => row[0])).toEqual(firstRows);
     expect(native.rows.length).toBeLessThan(36);

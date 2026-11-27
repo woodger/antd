@@ -2,17 +2,17 @@ import type { Snippet } from 'svelte';
 import type { NamePath } from './form-store.engine';
 import type { ValidationRule } from './validation.engine';
 
-/** Индекс задаёт текущий путь, key сохраняет экземпляр строки при перестановках. */
+/** The index sets the current path, the key preserves an instance of the string when reshuffled. */
 export interface FormListFieldData {
   name: number;
   key: number;
 }
 
 export interface FormListOperation {
-  /** Без insertIndex добавляет в конец; отсутствующий defaultValue остаётся undefined. */
+  /** Without insertIndex adds at the end; the missing defaultValue remains undefined. */
   add(defaultValue?: unknown, insertIndex?: number): void;
   remove(index: number | readonly number[]): void;
-  /** Перемещает строку вместе с key; неверные индексы не меняют список. */
+  /** Moves the line with the key; the wrong indices do not change the list. */
   move(from: number, to: number): void;
 }
 
@@ -21,22 +21,22 @@ export interface FormListMeta {
   warnings: readonly string[];
 }
 
-/** Правило списка использует прежний Svelte validator(value, values), только custom validation. */
+/** The list rule uses the previous Svelte validator(value, values), only custom validation. */
 export interface FormListRule {
   validator: NonNullable<ValidationRule['validator']>;
   message?: string;
-  /** Предупреждение отображается в meta.warnings и не блокирует submit. */
+  /** Warning is displayed in meta.warnings and does not block submit. */
   warningOnly?: boolean;
 }
 
-/** Управляет массивом в ближайшем Form; вложенный name считается от родительского FormList. */
+/** Manages the array in the nearest Form; the nested name is counted from the parent record FormList. */
 export interface FormListProps {
-  /** Префикс FormErrorList внутри списка; empty/undefined наследуют ConfigProvider. */
+  /** Prefix FormErrorList inside the list; empty/undefined inherits ConfigProvider. */
   prefixCls?: string;
   name: NamePath;
-  /** Form initialValues имеет приоритет; значение копируется и участвует в reset. */
+  /** Form initialValues has priority; the value is copied and involved in reset. */
   initialValue?: readonly unknown[];
   rules?: readonly FormListRule[];
-  /** Ключуйте each по field.key. Bindings модели используют полный путь от корня Form. */
+  /** Like each on field.key. Bindings models take a full path from the root Form. */
   children: Snippet<[FormListFieldData[], FormListOperation, FormListMeta]>;
 }

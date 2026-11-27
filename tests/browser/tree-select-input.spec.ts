@@ -75,9 +75,9 @@ for (const entry of reference.cases) {
     const sample = treeSelectInputSamples.find(sample => sample.id === entry.id)!;
     const read = () => page.evaluate(readTreeSelectInput);
     async function verify(view: ReturnType<typeof readTreeSelectInput>) {
-      // Native связывает поле со своим Tree, включая его active descendant.
-      // UMD callbacks сравниваются с явной Native границей noncancelable events;
-      // own attrs и cancelable события остаются сырыми.
+      // Native connects the field with its Tree, including its active descendant. The UMD callbacks
+      // are compared to the explicit Native boundary of noncancelable events; own attrs and
+      // cancelable events remain raw.
       await expect(async () => {
         const actual = await read();
         const tree = page.locator('[role="tree"]');

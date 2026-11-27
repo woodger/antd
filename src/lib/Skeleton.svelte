@@ -156,7 +156,7 @@
   }
 </style>
 
-<!-- svelte-ignore a11y_no_noninteractive_tabindex (Отрицательный tabindex нужен для фокуса при замене children каркасом.) -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex (The negative tabindex allows focus while Skeleton replaces children.) -->
 <div bind:this={host} {id} role={ariaHidden ? undefined : 'group'} aria-label={label} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby} aria-hidden={ariaHidden || undefined} tabindex={children ? -1 : undefined} dir={config.direction} class={['ant-skeleton-host', className]} {style}>
   {#if loading && !ariaHidden}<span class="loading-status" role="status" aria-live="polite" aria-atomic="true">{strings.loadingText}</span>{/if}
   <div bind:this={content} class="ant-skeleton-content" aria-busy={loading}>

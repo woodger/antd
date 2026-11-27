@@ -13,7 +13,7 @@
   let events = $state<(string | undefined)[][]>([]);
   const options = [{ value: 'alice', label: 'Alice' }, { value: 'alina', label: 'Alina' }];
 
-  /** Даёт различимые классы каждого источника во всех четырёх слотах. */
+  /** Gives discernible classes of each source in all four slots. */
   function slots(scope: string): MentionsSlots {
     return {
       root: scope + '-root', textarea: scope + '-textarea',
@@ -58,7 +58,7 @@
       + 'z-index:0'
   });
 
-  /** Локальный portal запрашивается при первом открытии. */
+  /** The local portal is requested at the first opening. */
   function getContainer() {
     const container = document.getElementById('portal');
     if (!container) {
@@ -67,7 +67,7 @@
     return container;
   }
 
-  /** Сравнивает публикацию полного значения с callback выбора. */
+  /** Compares the publication of the full value with the callback choice. */
   function select(option: MentionsOption, prefix: string) {
     events.push(['select', option.value, prefix]);
   }

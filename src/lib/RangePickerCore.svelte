@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType extends object">
-  // Координирует два редактора, draft диапазона и панели календаря. Подтверждение публикует
-  // диапазон отдельно от навигации.
+  // Coordinates both editors, the draft range, and the calendar panels. Committing a range is
+  // separate from navigation.
   import { onMount, tick, untrack } from 'svelte';
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import type { RangePickerMode, RangePickerProps, RangePickerValue } from './range-picker.types';
@@ -357,7 +357,7 @@
       return undefined;
     }
 
-    // Семантика получает исходные props, не меняя вызовы callbacks внутри core.
+    // Semantic slots receive the original props without changing core callback calls.
     const props = { ...dateProps, size: resolvedSize, disabled: semanticDisabled, status, variant };
     return datePickerSemantic(props, settings, classNames, styles, providerStyle);
   });
@@ -437,7 +437,7 @@
         || current.active !== previousPeriodMode.active))) {
       untrack(() => setMode(terminalMode, current.active));
     }
-    // Закрытая смена picker применяется при открытии; обычный date reopen сохраняем.
+    // A picker change made while closed takes effect when opened. Ordinary reopening in date mode keeps the existing behavior.
     previousPeriodMode = {
       ...current, picker: current.open ? terminalMode : previousPeriodMode.picker
     };
@@ -450,7 +450,7 @@
   const datePopupStyle = untrack(() =>
     time ? undefined : createOverlayStyle(() => [popupThemeStyle]));
 
-  // Авторские декларации следуют после координат и обновляются на той же панели.
+  // Authored declarations follow the positioning declarations and update on the same panel.
   function attachPopupStyle(node: HTMLElement) {
     return datePopupStyle
       ? datePopupStyle.attach(node) : connectComponentTheme(node, popupThemeStyle, ['z-index']);
@@ -481,7 +481,7 @@
   $effect(() => {
     const start = dateStartText;
     const end = dateEndText;
-    // Изменение prefix/theme без нового value/отображения сохраняет обе draft-границы.
+    // A prefix or theme change retains both draft endpoints when the value and display are unchanged.
     const modelChanged = !time && value !== undefined
       ? value !== previousDateValue : committed !== previousCommitted;
     if (!modelChanged
@@ -578,7 +578,7 @@
       return;
     }
 
-    // React useFocusLock выполняет сильный переход после native focus внешнего клика.
+    // React useFocusLock forces the focus transition after native focus from an outside click.
     const frame = view.requestAnimationFrame(() => {
       if (interaction.currentIndex !== index || !interaction.forceFocus) {
         return;
@@ -786,7 +786,7 @@
     if (changed)
       onCalendarChange?.([...next], dateTexts(next), { range: part });
   }
-  /** Публикует диапазон, когда завершено подтверждение всех доступных полей. */
+  /** Emits the range once every available field has been confirmed. */
   function submitField(
     index: number, all: boolean, accepted?: RangePickerValue<DateType>, opened?: boolean
   ) {
@@ -1053,7 +1053,7 @@
       return;
     }
     queueMicrotask(() => {
-      // Blur при удалении поля может завершиться после уничтожения derived refs.
+      // Blur on field removal can finish after the derived refs have been disposed.
       const root = rootElement;
       if (!root?.isConnected) {
         return;
@@ -1081,7 +1081,7 @@
     send(index, 'panel-intermediate', date);
     setDatePanel(index, date, 'panel', event);
     if (nextMode) {
-      // Второй PickerPanel setter использует тот же снимок mode/pickerValue.
+      // The second PickerPanel setter uses the same mode and pickerValue snapshot.
       setDatePanel(index, date, 'panel', event);
       setMode(nextMode, index, date);
     }
@@ -1144,13 +1144,13 @@
     }
   }
 
-  /** Вторая панель передаёт свою дату, а владелец хранит общую дату просмотра. */
+  /** The second panel passes its own date while the owner holds the shared view date. */
   function replacementValue(offset: number) {
     const date = time ? view : datePanelValue;
     return offset ? offsetPickerPanel(date, picker, offset) : date;
   }
 
-  /** Снимок исходной границы нужен даже если выбор сразу переводит фокус. */
+  /** The original endpoint snapshot is needed even if the selection immediately moves focus. */
   function panelSnapshot() {
     return { index: active, previous: panelValues(), modes: panelModes() };
   }
@@ -1268,7 +1268,7 @@
       }
     };
   }
-  // Ввод, маска и подтверждение используют дату одной и той же редактируемой границы.
+  // Typing, masking, and confirmation use the date of the same edited endpoint.
   function parseFieldInput(text: string, boundary: DateType | null): DateType | null {
     if (time) {
       const parse = parseTimeInput ?? parseAdapterTimeRangeInput;
@@ -1377,7 +1377,7 @@
     blurInput(index, event);
   }
 
-  /** Сохраняет отдельную маску, доступность и указатель активной границы. */
+  /** Keeps a separate mask, accessibility state, and active-endpoint indicator. */
   function editorAttributes(index: 0 | 1): DatePickerEditorAttributes {
     const nativeAttributes: object = attributes;
     const describedBy = [attributes['aria-describedby'], field?.describedBy].filter(Boolean);
@@ -1563,10 +1563,10 @@
     }
     setTimePanel(index, next, 'reset');
   }
-  /** OK сообщает черновик диапазона до переключения поля или публикации значения. */
+  /** OK reports the draft range before switching fields or committing the value. */
   function confirmField() {
     const index = active;
-    // Обработчик onOk может изменить value или open в той же операции.
+    // The onOk handler can change value or open in the same operation.
     const accepted = onOk && committed;
     const opened = visible;
     if (time && !calendar[index] && clock.defaultOpenValue) {
@@ -1575,7 +1575,7 @@
     onOk?.([...calendar]);
     send(index, 'confirm', undefined, (field, all) => submitField(field, all, accepted, opened));
   }
-  /** Для OK нужна дата активного поля. allowEmpty учитывается при отправке диапазона. */
+  /** OK needs the active field's date. Range submission accounts for allowEmpty. */
   function canConfirmDate() {
     const selected = calendar[active];
     if (!selected) {

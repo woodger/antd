@@ -47,7 +47,7 @@
         record('submit');
       }}>
         <button type="button">Before close API Tag</button>
-        <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions (Счётчик всплывающих событий fixture.) -->
+        <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions (Counts bubbling events in the fixture.) -->
         <div onclick={() => record('parent')}>
           <Tag
             closeIcon={values.closeSnippet ? customClose : values.closeIcon}

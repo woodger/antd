@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import Fixture from './DrawerPanelFixtures.svelte';
 
-/** Рендерит закрытый Drawer с forceRender, обёрткой и Skeleton. */
+/** Renders a closed Drawer with forceRender, a wrapper, and Skeleton. */
 export function renderDrawerPanel() {
   return render(Fixture, { props: { initialProfile: 'forced' } });
 }

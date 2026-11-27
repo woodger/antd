@@ -1,5 +1,6 @@
-// Согласует позицию popup с измерениями anchor и scroll-контейнеров. Геометрия
-// обновляется по триггерам, а публикация позиции учитывает готовность кадра motion.
+// Agrees the popup position with anchor and scroll-container measurements. Geometry is updated by
+// triggers, and the publication of the position takes into account the readiness of the motion
+// frame.
 /** rc-trigger 3.10.1 useAlign/useWatch scheduling; MIT, vendor/LICENSE.rc-trigger. */
 import {
   getPopupPlacement, getPopupPosition, type PopupFlipCache, type PopupSourceAlign
@@ -40,7 +41,7 @@ export interface TreeSelectAlignSnapshot {
 
 const clipping = new WeakMap<HTMLElement, { parent: ParentNode | null; nodes: HTMLElement[] }>();
 
-/** Новые props влияют на числовую позицию после события, запускающего измерение. */
+/** The new props affects the numerical position after an event that triggers the measurement. */
 export function createTreeSelectAlign(
   anchor: Element,
   popup: HTMLElement,
@@ -49,7 +50,7 @@ export function createTreeSelectAlign(
   initial?: TreeSelectAlignSnapshot
 ) {
   const document = popup.ownerDocument;
-  // Правило 2: вызывающие компоненты подключают alignment только для browser popup.
+  // Rule 2: the calling components connect alignment only for browser popup.
   const view = document.defaultView!;
   let defaultOverflow = getOptions().popupOverflow;
   let defaults = treeSelectBuiltinPlacements(defaultOverflow);
@@ -80,7 +81,7 @@ export function createTreeSelectAlign(
   let scrollTargets = new Set<EventTarget>();
   const sizes = new Map<HTMLElement, string>();
 
-  // Последняя микрозадача определяет dirty/forced. Закрытие или motion могут её отменить.
+  // The last microtask defines dirty/forced. Closure or motion can cancel it.
   function schedule(force: boolean) {
     const options = getOptions();
     if (options.open === false || options.inMotion && !force) {
@@ -100,12 +101,12 @@ export function createTreeSelectAlign(
       notify?.();
     });
   }
-  // Scroll и resize ждут окончания motion, в отличие от forceAlign.
+  // Scroll and resize are waiting for the end of motion, unlike forceAlign.
   function invalidate() {
     schedule(false);
   }
 
-  // Переподключает слушатели после смены контейнера и обновляет его границы отсечения.
+  // Reconnects listeners after changing the container and updating its cut-off boundaries.
   function watchScrollTargets() {
     for (const node of scrollTargets) node.removeEventListener('scroll', invalidate);
     const container = getOptions().container;
@@ -124,7 +125,7 @@ export function createTreeSelectAlign(
   }
 
   watchScrollTargets();
-  // Сохраняет border box popup и планирует пересчёт только при изменении размера.
+  // Saves border box popup and plans to recalculate only when the size is changed.
   const resize = new view.ResizeObserver(entries => {
     let changed = false;
     for (const entry of entries) {
@@ -159,7 +160,7 @@ export function createTreeSelectAlign(
   resize.observe(popup);
   view.addEventListener('resize', invalidate, { passive: true });
 
-  // Хранит настройки последнего прохода и сбрасывает направления flip при закрытии.
+  // Stores the settings of the last passage and resets the flip directions when closed.
   function refreshPlacementOptions(options: TreeSelectAlignOptions) {
     if (options.open === false && cache) cache.flips = {};
     if (options.popupOverflow !== defaultOverflow) {
@@ -177,7 +178,7 @@ export function createTreeSelectAlign(
     return placements;
   }
 
-  // Обновляет кэш относительно текущего контейнера, когда измерение разрешено.
+  // Updates the cache relative to the current container when the measurement is allowed.
   function refreshGeometry(
     options: TreeSelectAlignOptions,
     placements: Readonly<Record<string, PopupSourceAlign>>
@@ -193,7 +194,7 @@ export function createTreeSelectAlign(
 
     dirty = false;
     forced = false;
-    // Правило 2: первый watchScrollTargets заполняет запись до вызова position.
+    // Rule 2: the first watchScrollTargets fills the record before calling the position.
     const clippingEntry = clipping.get(popup)!;
     const geometry = surface.geometry(anchor, clippingEntry.nodes);
     if (geometry.scaleX && geometry.scaleY) {
@@ -208,7 +209,7 @@ export function createTreeSelectAlign(
     }
   }
 
-  // Публикует координаты только после появления измеренной геометрии.
+  // Publishes coordinates only after the appearance of measured geometry.
   function position(_rect: DOMRect, _bounds: DOMRect, _viewport: TooltipRect): TooltipPosition {
     const options = getOptions();
     const placements = refreshPlacementOptions(options);
@@ -217,8 +218,8 @@ export function createTreeSelectAlign(
     if (!cache) {
       return { left: -1000000, top: -1000000, arrowX: 0, arrowY: 0, placement: options.placement };
     }
-    // CSSMotion может завершиться, пока popup ещё рисует кадр ACTIVE.
-    // Публикуем свежую геометрию, когда её сможет применить содержимое popup.
+    // CSSMotion can be completed while the popup still draws frame ACTIVE. Publish fresh geometry,
+    // when it can apply popup contents.
     if (options.renderReady !== false) presentationAlignment = cache;
     const signature = surface.signature();
     if (!presentation || presentationSignature !== signature) {
@@ -240,29 +241,29 @@ export function createTreeSelectAlign(
 
   return {
     position,
-    // Возвращает стиль последнего опубликованного кадра.
+    // Returns the style of the last published frame.
     get style() { return presentation?.style; },
     commitFrame: surface.commit,
-    // Читает направления, накопленные во время измерений текущего открытия.
+    // Reads the directions accumulated during the measurements of the current discovery.
     get flips() { return cache?.flips; },
-    // Передаёт и измеренную, и опубликованную позиции при смене DOM-контейнера.
+    // Passes both the measured and published positions when the DOM container changes.
     snapshot(): TreeSelectAlignSnapshot {
       return { alignment: cache, presentationAlignment, scaleX };
     },
-    // Переводит ширину anchor из DOM-координат в координаты popup.
+    // Translates the width of the anchor from the DOM-coordinate to the popup coordinates.
     get width() { return targetWidth / scaleX; },
-    // Сохраняет callback владельца, который применяет очередное измерение.
+    // Saves the owner's callback, which applies the next dimension.
     connect(forceAlign: () => void) { notify = forceAlign; },
-    // Запрашивает публикацию кадра без пометки dirty.
+    // Requests the publication of the frame without the tag dirty.
     refreshFrame() { notify?.(); },
-    // Явная команда может пересчитать положение во время motion.
+    // An obvious command can recalculate the position during motion.
     forceAlign() { schedule(true); },
-    // Сбрасывает исходные и накопленные направления flip.
+    // Resets the initial and accumulated directions of flip.
     resetFlips() {
       initialFlips = undefined;
       if (cache) cache.flips = {};
     },
-    // Отменяет микрозадачу и отключает наблюдение перед cleanup поверхности.
+    // Cancel the microtask and disables the observation before the cleanup of the surface.
     destroy() {
       active = false;
       alignmentRevision++;

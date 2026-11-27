@@ -2,9 +2,9 @@ import { getContext, setContext } from 'svelte';
 import type { FormValidateStatus } from './form-error-list.types';
 import { provideFormFeedback } from './form-feedback-context';
 
-/** Реактивное состояние ближайшего FormItem; ошибки и предупреждения доступны только для чтения. */
+/** Jet state of the nearest FormItem; errors and warnings are read-only. */
 export interface FormItemStatus {
-  /** '' внутри pristine FormItem; undefined вне Item и за границей вложенного Form. */
+  /** '' inside pristine FormItem; undefined outside Item and abroad invested Form. */
   readonly status: FormValidateStatus | undefined;
   readonly errors: readonly string[];
   readonly warnings: readonly string[];
@@ -21,7 +21,7 @@ export function provideFormItemStatus(status: Partial<FormItemStatus>) {
   setContext(statusKey, status);
 }
 
-/** Изолирует оформление внешнего FormItem и сохраняет его ошибки и предупреждения. */
+/** Isolates the design of the external FormItem and preserves its errors and warnings. */
 export function isolateFormItemStyle() {
   const parent = useFormItemStatusContext();
   provideFormItemStatus(Object.create(parent, { status: { value: undefined } }));
@@ -29,8 +29,8 @@ export function isolateFormItemStyle() {
 }
 
 /**
- * Аналог Form.Item.useStatus; вызывается при инициализации компонента.
- * Читайте getter-поля возвращённого объекта: destructuring фиксирует snapshot.
+ * Analogue Form.Item.useStatus; caused by the initialization of the component. Read the getter
+ * field of the returned object: destructuring fixes snapshot.
  */
 export function useFormItemStatus(): FormItemStatus {
   const context = useFormItemStatusContext();

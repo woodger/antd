@@ -41,7 +41,7 @@ for (const entry of reference.cases) {
 
       const expected = structuredClone(entry.result[scope]);
       if (entry.inheritedDropdown && scope !== 'sibling') {
-        // Source custom menu prefix теряет CSS; Native сохраняет оформление своего списка.
+        // Source custom menu prefix loses CSS; Native preserves the registration of its list.
         expected.filterMenu = entry.inheritedDropdown[scope].filterMenu;
       }
 

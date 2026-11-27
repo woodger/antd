@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Поверхность живёт отдельно от очереди. Смена контейнера может пересоздать DOM,
-  // не изменяя сроки и handles уже открытых сообщений.
+  // The surface lives independently of the queue. Changing the container can recreate DOM while
+  // preserving the deadlines and handles of open messages.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -94,7 +94,7 @@
     runtime.hoverList(hovering);
   }
 
-  /** Наведение раскрывает список и приостанавливает таймеры, пока курсор внутри стека. */
+  /** Hover expands the list and pauses timers while the pointer remains in the stack. */
   function connectListHover(node: HTMLDivElement) {
     const enter = on(node, 'pointerenter', event => {
       if (event.pointerType !== 'touch') setListHover(true);
@@ -113,7 +113,7 @@
     }
   });
 
-  /** Размер только последней активной карточки задаёт форму свёрнутого стека. */
+  /** Only the last active card's size determines the collapsed stack's shape. */
   function measureStack(node: HTMLDivElement) {
     const view = node.ownerDocument.defaultView;
     if (!view) {

@@ -44,7 +44,7 @@ export function rejectedHookContracts(
   time: Snippet<['time']>,
   timeCell: NonNullable<TimeProps['cellRender']>
 ) {
-  // @ts-expect-error Footer DatePicker должен принимать также календарные режимы.
+  // @ts-expect-error The DatePicker footer must also accept calendar modes.
   const wrongDate: DateProps['renderExtraFooter'] = time;
   // @ts-expect-error Single TimePicker keeps its existing noarg footer.
   const wrongSingleTime: TimeProps['renderExtraFooter'] = calendar;

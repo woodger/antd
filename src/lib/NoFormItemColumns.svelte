@@ -6,7 +6,7 @@
   const parent = useForm();
 
   if (parent) {
-    // Source очищает только колонки, сохраняя реактивный контекст модели и прочие defaults.
+    // Upstream clears only the columns and preserves the reactive model context and other defaults.
     const context: FormContext = Object.create(parent, {
       labelCol: { value: undefined },
       wrapperCol: { value: undefined }

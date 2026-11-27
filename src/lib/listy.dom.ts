@@ -62,7 +62,7 @@ export function scrollRawListy(
   if (config.top !== undefined) holder.scrollTop = config.top;
 }
 
-/** Перемещение keyed DOM может сбросить native focus; React восстанавливает его при commit. */
+/** Moving keyed DOM can reset native focus; React restores it at commit. */
 export function captureListyFocus(root: HTMLDivElement) {
   const document = root.ownerDocument;
   const view = document.defaultView;

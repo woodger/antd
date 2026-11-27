@@ -1,11 +1,11 @@
-// Управляет появлением и удалением одного пункта Upload. Finish снимает временные стили до
-// уведомления списка об уходе.
+// Manages the appearance and deletion of one Upload item. Finish removes temporary styles prior to
+// the list of care.
 export interface UploadItemMotionState {
   className?: string;
   style?: string;
 }
 
-/** CSSMotion Upload: измеряемая высота либо CSS keyframes, два RAF и отменяемый deadline. */
+/** CSSMotion Upload: measured height or CSS keyframes, two RAF and canceled deadline. */
 export function createUploadMotion(
   node: HTMLDivElement,
   publish: (state: UploadItemMotionState) => void,
@@ -25,7 +25,7 @@ export function createUploadMotion(
   let deadline: number | undefined;
   let revision = 0;
 
-  // Останавливает запланированный кадр и deadline, инвалидируя callbacks предыдущего движения.
+  // Stops the planned frame and deadline, disabling the callbacks of the previous movement.
   function cancel() {
     revision++;
     if (frame !== undefined) view.cancelAnimationFrame(frame);
@@ -34,7 +34,7 @@ export function createUploadMotion(
     deadline = undefined;
   }
 
-  // Публикует класс CSSMotion и измеренный inline style для текущей фазы.
+  // Publishes class CSSMotion and measured inline style for the current phase.
   function update() {
     publish({
       className: status ? `${name}-${status} ${name}-${status}-${step} ${name}` : undefined,
@@ -42,7 +42,7 @@ export function createUploadMotion(
     });
   }
 
-  // Сбрасывает фазу. При завершённом уходе отдаёт управление удалением строки вызывающему списку.
+  // Resets the phase. Upon completed care, the control of deletion of the string to the calling list is given.
   function finish() {
     cancel();
     status = undefined;
@@ -52,12 +52,12 @@ export function createUploadMotion(
     if (previous === false) onLeaveEnd();
   }
 
-  // Завершает активную фазу только по событию собственного узла.
+  // Finishes the active phase only on the event of its own node.
   function handleEnd(event: Event) {
     if (active && status && step === 'active' && event.target === node) finish();
   }
 
-  // Прерывает текущую анимацию при переключении на reduced motion.
+  // Interrupting the current animation when switching to reduced motion.
   function reduce() {
     if (reduced.matches && status) finish();
   }
@@ -67,7 +67,7 @@ export function createUploadMotion(
   reduced.addEventListener('change', reduce);
 
   return {
-    // Согласует классы с новой видимостью и измеряет высоты только для режима collapse.
+    // Aligns classes with new visibility and measures heights only for collapse mode.
     sync(options: {
       visible: boolean;
       motionName: string;
@@ -126,7 +126,7 @@ export function createUploadMotion(
         });
       });
     },
-    // Отменяет оставшуюся работу и снимает listeners без уведомления списка об уходе.
+    // Cancels the remaining work and removes listeners without notifying the list of care.
     destroy() {
       active = false;
       cancel();

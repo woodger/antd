@@ -1,4 +1,4 @@
-/** Оценка Ant Tree wrapper; фактические высоты списка уточняются DOM-измерением. */
+/** Estimation of Ant Tree wrapper; the actual heights of the list are specified by DOM-measurement. */
 export function treeItemHeight(token: {
   paddingXS: number;
   controlHeightSM: number;

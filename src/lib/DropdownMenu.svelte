@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Подключает параметры и видимость Dropdown к одному экземпляру Menu.
+  // Connects Dropdown settings and visibility to a single Menu instance.
   import Menu from './Menu.svelte';
   import { untrack } from 'svelte';
   import { provideDropdownMenu, type DropdownMenuContext } from './dropdown-menu-context';
@@ -18,7 +18,7 @@
     labelledby: string;
   } = $props();
 
-  // Объект-владелец живёт вместе с Dropdown, его значения доступны через getters.
+  // The owner object lives with Dropdown and exposes its values through getters.
   provideDropdownMenu(untrack(() => context));
   const { items, activeKey: _activeKey, ...menuProps } = $derived(menu);
   const entries = $derived(toDropdownMenuItems(items ?? []));

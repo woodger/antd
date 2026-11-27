@@ -1,6 +1,6 @@
 import template from './vendor/input-password-prefix.css.js';
 
-/** Password и вложенный Input имеют независимые namespaces; tokens остаются общими. */
+/** Password and nested Input have independent namespaces; tokens remain shared. */
 export function getInputPasswordPrefixCss(inputPrefix: string, passwordPrefix: string) {
   if (inputPrefix === 'ant-input' && passwordPrefix === 'ant-input-password') {
     return undefined;

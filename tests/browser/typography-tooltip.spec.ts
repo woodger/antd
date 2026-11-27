@@ -27,7 +27,7 @@ async function prepare(page: Page, name: string) {
   await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
   await page.clock.runFor(100);
 
-  // Native CSS ellipsis измеряется при mouseenter, отдельно от Tooltip trigger.
+  // Native CSS ellipsis is measured at mouseenter, separately from Tooltip trigger.
   await page.locator('[data-config-anchor]').hover();
   await page.clock.runFor(300);
   await page.mouse.move(0, 0);

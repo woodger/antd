@@ -8,7 +8,7 @@ if (!target) {
 }
 
 const profileId = new URLSearchParams(location.search).get('profile') ?? 'grouped';
-// Откладывает гидратацию до ввода текста в серверном редакторе.
+// Lays hydration before entering the text in the server editor.
 target.addEventListener('hydrate-table-row-attributes', () => {
   hydrate(Fixture, { target, props: { profileId, editor: true }, recover: false });
   target.dataset.hydrated = 'true';

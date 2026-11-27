@@ -1,6 +1,6 @@
-// Собирает индекс и выбор Cascader. Узел определяется полным путём, а
-// отсутствующие в текущих options значения хранятся отдельно от checked.
-// rc-cascader 1.22.0; MIT, vendor/LICENSE.rc-cascader.
+// Builds the Cascader index and selection. A full path identifies a node. Values missing from
+// current options are stored separately from checked. Based on rc-cascader 1.22.0 under MIT. See
+// vendor/LICENSE.rc-cascader.
 import type {
   CascaderContent,
   CascaderFieldNames,
@@ -17,7 +17,7 @@ import type { TreeDataNode } from './tree.types';
 export const CASCADER_SHOW_PARENT = 'SHOW_PARENT';
 export const CASCADER_SHOW_CHILD = 'SHOW_CHILD';
 
-/** undefined обозначает Ant icon; объект allowClear передаётся в rc-select без наследования. */
+/** undefined uses the Ant icon. An allowClear object is passed to rc-select without inheritance. */
 export function cascaderClearIcon(
   allowClear: boolean | { clearIcon?: CascaderContent; },
   context: CascaderContent | undefined
@@ -28,7 +28,7 @@ export function cascaderClearIcon(
   return context === undefined ? undefined : context || '×';
 }
 
-// Разрешает имена полей отдельно. Отсутствующее или пустое имя получает стандартное значение.
+// Resolves each field name independently. Missing or empty names use defaults.
 export function cascaderFields(fields?: CascaderFieldNames): Required<CascaderFieldNames> {
   return {
     label: fields?.label || 'label',
@@ -37,12 +37,12 @@ export function cascaderFields(fields?: CascaderFieldNames): Required<CascaderFi
   };
 }
 
-// Сериализует полный путь в ключ дерева проверки, используя разделитель rc-cascader.
+// Serializes a full path to a check tree key using the rc-cascader separator.
 export function cascaderPathKey(path: CascaderPath): string {
   return path.join('__RC_CASCADER_SPLIT__');
 }
 
-// Унифицирует один путь и список путей для обхода. Пустой выбор даёт пустой список.
+// Normalizes a single path and a list of paths for traversal. An empty selection yields an empty list.
 export function cascaderRawValues(
   value: CascaderPath | readonly CascaderPath[] | undefined
 ): CascaderPath[] {
@@ -52,7 +52,7 @@ export function cascaderRawValues(
   return Array.isArray(value[0]) ? [...value] as CascaderPath[] : [value as CascaderPath];
 }
 
-// Читает дочерние варианты из поля, которое настроил вызывающий компонент.
+// Reads children from the field configured by the caller.
 export function cascaderChildren<OptionType extends CascaderOption>(
   option: OptionType,
   fields: Required<CascaderFieldNames>
@@ -60,7 +60,7 @@ export function cascaderChildren<OptionType extends CascaderOption>(
   return option[fields.children] as readonly OptionType[] | undefined;
 }
 
-// Даёт явному isLeaf приоритет над наличием дочерних вариантов, включая отложенную загрузку.
+// Gives explicit isLeaf precedence over the presence of children, including lazy loading.
 export function cascaderLeaf(
   option: CascaderOption,
   fields: Required<CascaderFieldNames>
@@ -68,8 +68,7 @@ export function cascaderLeaf(
   return option.isLeaf ?? !cascaderChildren(option, fields)?.length;
 }
 
-// Разрешает узлы на каждом уровне пути. После отсутствующей ветви оставляет undefined на
-// следующих уровнях.
+// Resolves the node at each path level. After a missing branch, subsequent levels remain undefined.
 export function cascaderPathOptions<OptionType extends CascaderOption>(
   path: CascaderPath,
   options: readonly OptionType[],
@@ -83,14 +82,13 @@ export function cascaderPathOptions<OptionType extends CascaderOption>(
   });
 }
 
-// Строит индекс путей и дерево проверок из одного обхода, с одинаковыми ключами в обеих
-// структурах.
+// Builds the path index and check tree in one traversal using identical keys in both.
 export function cascaderIndex<OptionType extends CascaderOption>(
   options: readonly OptionType[],
   fields: Required<CascaderFieldNames>
 ) {
   const paths = new Map<string, { path: CascaderRawValue[]; options: OptionType[]; }>();
-  // Регистрирует путь перед обработкой потомков и переносит флаги выбора узла в дерево проверок.
+  // Registers the path before visiting descendants and copies node selection flags into the check tree.
   function walk(list: readonly OptionType[], parents: OptionType[]): TreeDataNode[] {
     return list.map(option => {
       const nodes = [...parents, option];
@@ -112,7 +110,7 @@ export function cascaderIndex<OptionType extends CascaderOption>(
 
 export type CascaderIndex = ReturnType<typeof cascaderIndex>;
 
-// Отделяет недоступные в options пути и запускает conduction только для множественного выбора.
+// Separates paths absent from options and runs conduction only for multiple selection.
 export function cascaderChecks(
   paths: readonly CascaderPath[],
   multiple: boolean,
@@ -136,7 +134,7 @@ export function cascaderChecks(
   return { checked: checks.checked.map(String), half: checks.halfChecked.map(String), missing };
 }
 
-// Фильтрует список checked по родству, учитывая режим SHOW_CHILD и границы disabled.
+// Filters checked by ancestry, honoring SHOW_CHILD and disabled boundaries.
 export function cascaderStrategy(
   checked: readonly string[],
   strategy: CascaderStrategy,
@@ -155,7 +153,7 @@ export function cascaderStrategy(
   });
 }
 
-// Переводит checked из дерева в пути, учитывая только выбранную стратегию отображения.
+// Converts tree checked state to paths using only the selected display strategy.
 export function cascaderCheckedPaths(
   checked: readonly string[],
   strategy: CascaderStrategy,
@@ -164,15 +162,15 @@ export function cascaderCheckedPaths(
   const visibleKeys = cascaderStrategy(checked, strategy, index);
   return visibleKeys.map(readPath);
 
-  // Правило 2: допустимые checked сформированы из того же индекса, что и paths.
-  // Для нарушения этого входного контракта сохраняется исходное обращение к записи.
+  // Rule 2: Valid checked values come from the same index as paths. Preserve the original entry
+  // access if this input contract is violated.
   function readPath(key: string): CascaderPath {
     const entry = index.paths.get(key);
     return entry!.path;
   }
 }
 
-// Пересчитывает conduction после выбора или убирает ранее исчезнувший путь.
+// Recalculates conduction after selection or removes a path that was already missing.
 export function toggleCascader(
   path: CascaderPath,
   checks: ReturnType<typeof cascaderChecks>,
@@ -194,8 +192,8 @@ export function toggleCascader(
   return [...checks.missing, ...cascaderCheckedPaths(checkedKeys, strategy, index)];
 }
 
-// Готовит подписи выбранных путей. Для отсутствующих узлов использует исходное значение, а
-// snippet сохраняет как есть.
+// Prepares selected path labels. Missing nodes use the original value, and snippets are retained
+// as-is.
 export function cascaderDisplay<OptionType extends CascaderOption>(
   paths: readonly CascaderPath[],
   options: readonly OptionType[],
@@ -232,7 +230,7 @@ export interface CascaderRow<OptionType extends CascaderOption = CascaderOption>
   leaf: boolean;
 }
 
-// Строит строки поиска исходным обходом options. При sort применяет ограничение после сортировки.
+// Builds search rows in option traversal order. With sort, applies the limit after sorting.
 export function searchCascader<OptionType extends CascaderOption>(
   search: string,
   options: readonly OptionType[],
@@ -245,17 +243,17 @@ export function searchCascader<OptionType extends CascaderOption>(
   }
   const limit = config.limit ?? 50;
   const rows: CascaderRow<OptionType>[] = [];
-  // Фильтр по умолчанию сопоставляет подписи без учёта регистра.
+  // The default filter matches labels case-insensitively.
   const filter = config.filter ?? ((text: string, path: OptionType[]) => path.some(
     option => {
       const label = option[fields.label];
-      // Snippet соответствует непрозрачному ReactNode, а не исходному коду render function.
+      // A Snippet corresponds to an opaque ReactNode, without inspecting the render function's source.
       const value = typeof label === 'function' ? '[object Object]' : String(label);
       return value.toLowerCase().includes(text.toLowerCase());
     }
   ));
-  // Обходит ветви с наследованным disabled. Без сортировки может остановиться на лимите ещё во
-  // время обхода.
+  // Traverses branches with inherited disabled state. Without sorting, traversal can stop as soon
+  // as it reaches the limit.
   function walk(list: readonly OptionType[], parents: OptionType[], parentDisabled: boolean) {
     for (const option of list) {
       if (!config.sort && limit !== false && limit > 0 && rows.length >= limit) {
@@ -281,13 +279,13 @@ export function searchCascader<OptionType extends CascaderOption>(
   }
   walk(options, [], false);
   if (config.sort) {
-    // Правило 2: при каждом сравнении сохраняется чтение sort из исходного config.
+    // Rule 2: Each comparison reads sort from the original config.
     rows.sort((first, second) => config.sort!(first.options, second.options, search, fields));
   }
   return limit !== false && limit > 0 ? rows.slice(0, limit) : rows;
 }
 
-// Строит очередные колонки вдоль активного пути до конца существующей ветви.
+// Builds successive columns along the active path through the end of the existing branch.
 export function cascaderColumns<OptionType extends CascaderOption>(
   options: readonly OptionType[],
   active: CascaderPath,
@@ -319,7 +317,7 @@ export function cascaderColumns<OptionType extends CascaderOption>(
   return columns;
 }
 
-/** Клавиатура rc-cascader: поиск использует одну колонку, стрелки пропускают disabled. */
+/** rc-cascader keyboard handling uses one search column. Arrow keys skip disabled items. */
 export function navigateCascader(
   columns: readonly (readonly CascaderRow[])[],
   active: CascaderPath,
@@ -370,7 +368,7 @@ export function navigateCascader(
   return {};
 }
 
-// Размечает непересекающиеся совпадения с сохранением регистра и текста исходной подписи.
+// Marks non-overlapping matches while preserving the original label text and case.
 export function cascaderHighlight(label: string | number, search: string) {
   const text = String(label);
   if (!search) {
@@ -391,15 +389,15 @@ export function cascaderHighlight(label: string | number, search: string) {
   return parts;
 }
 
-// Объединяет слои классов или стилей по отдельным частям контрола и popup.
+// Merges class or style layers separately for each control and popup part.
 export function mergeCascaderSlots(
   values: (CascaderSlots<string> | undefined)[],
   separator: string
 ) {
-  // Склеивает непустые слои в порядке передачи и опускает пустой результат.
+  // Joins nonempty layers in input order and omits an empty result.
   const join = (parts: (string | undefined)[]) =>
     parts.filter(Boolean).join(separator) || undefined;
-  // Нормализует короткую строковую запись popup в значение слота root.
+  // Normalizes the popup string shorthand to the root slot value.
   const popup = (value: CascaderSlots<string> | undefined) =>
     typeof value?.popup === 'string' ? { root: value.popup } : value?.popup;
   return {

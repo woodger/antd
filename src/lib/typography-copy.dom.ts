@@ -1,4 +1,4 @@
-/** Повторяет Ant Design copy: async Clipboard API, затем capture listener + execCommand. */
+/** Repeats Ant Design copy: async Clipboard API, then capture listener + execCommand. */
 export async function writeTypographyClipboard(
   text: string,
   format: 'text/plain' | 'text/html' | undefined,
@@ -23,7 +23,7 @@ export async function writeTypographyClipboard(
     }
   }
   catch {
-    // Отказ async API передаёт попытку исходному synchronous fallback.
+    // Async API's rebukes the original synchronous fallback.
   }
 
   let copied = false;

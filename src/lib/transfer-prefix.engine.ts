@@ -1,6 +1,6 @@
 import template from './vendor/transfer-prefix.css.js';
 
-/** Transfer owner classes и общие Button/Input/Pagination/Table namespaces независимы. */
+/** Transfer owner classes and general Button/Input/Pagination/Table namespaces are independent. */
 export function getTransferPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-transfer' && rootPrefix === 'ant') {
     return undefined;

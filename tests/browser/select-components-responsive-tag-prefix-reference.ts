@@ -166,10 +166,10 @@ export interface ResponsiveTagPrefixManifest {
 const prefix = 'ant-design-select-components-responsive-tag-prefix-';
 const sourceBase = '.upstream/artifacts/select-components-responsive-tagrender-prefix-source-v1/';
 const protocol = '85bf9833e79305571a7dcbb5d15679fd652d36f88f9a5a8b50142762cc97a45d';
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const sameLiteral = (actual: unknown, expected: unknown, label: string) => assert.equal(
   JSON.stringify(actual),
@@ -390,7 +390,7 @@ export function readSelectComponentsResponsiveTagPrefixPairProof() {
   }
   return proofCache = proof;
 }
-// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
+// Narrows an unknown value before the recording. null and arrays result in a verification error.
 function object(value: unknown, label: string): Record<string, unknown> {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value), label);
   return value as Record<string, unknown>;

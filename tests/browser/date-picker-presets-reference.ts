@@ -106,16 +106,16 @@ const counters = {
   timers: null,
   ports: null
 };
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const record = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
-// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
+// Confirms the shape of the array, leaving its elements unknown until a separate inspection.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;
@@ -172,7 +172,7 @@ function scope(mode: DatePickerPresetsSourceMode, variant: DatePickerPresetsSour
   assert(['first', 'repeat'].includes(variant), 'Unknown independent Source capture');
   return sourceBase + mode + '-source-' + variant + '.json';
 }
-/** Проверяет заголовок эталона без подмены исходных данных Svelte-формой. */
+/** Verifies the reference header without replacing the original data with Svelte form. */
 export function verifyDatePickerPresetsSourceHeader(
   header: DatePickerPresetsSourceHeader,
   mode: DatePickerPresetsSourceMode
@@ -194,7 +194,7 @@ export function verifyDatePickerPresetsSourceHeader(
     ? { owners: 6, actions: 58, closedTransitions: 14, closedSSRSerializations: 0 }
     : { owners: 6, actions: 0, closedTransitions: 0, closedSSRSerializations: 12 });
 }
-/** Mapping обязан указывать на тот же целый raw, который записан в Source manifest. */
+/** Mapping is required to indicate the same whole raw, which is recorded in Source manifest. */
 export function verifyDatePickerPresetsSourcePartBinding(
   reference: DatePickerPresetsSourcePart,
   mode: DatePickerPresetsSourceMode,
@@ -269,7 +269,7 @@ export function verifyDatePickerPresetsSourceManifest(
   assert.equal(actions, mode === 'csr' ? 58 : 0);
   assert.equal(closed, mode === 'csr' ? 14 : 0);
 }
-/** Загружает только небольшой manifest; snapshots никогда не кэшируются или склеиваются. */
+/** Loads only a small manifest; snapshots never cached or glued together. */
 export function readDatePickerPresetsManifest(
   mode: DatePickerPresetsSourceMode = 'csr',
   variant: DatePickerPresetsSourceVariant = 'first'
@@ -294,7 +294,7 @@ export function readDatePickerPresetsCaseMetadata(
   assert(value, 'Unknown measured DatePicker preset owner: ' + id);
   return value;
 }
-/** Читает полный raw одной части: все DOM/CSSOM, графы, descriptors и ledgers остаются исходными. */
+/** Reads the full raw one part: all DOM/CSSOM, graphs, descriptors and ledgers remain the original. */
 export function readDatePickerPresetsPart(
   reference: DatePickerPresetsSourcePart,
   mode: DatePickerPresetsSourceMode = 'csr',

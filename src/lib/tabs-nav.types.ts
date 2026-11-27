@@ -13,7 +13,7 @@ import type {
   TabsSlots
 } from './tabs.types';
 
-/** Настройки добавления и удаления в стандартной панели заголовков. */
+/** Adding and Deleting Settings in a Standard Header Panel. */
 export interface TabsEditableConfig {
   onEdit: (
     action: 'add' | 'remove',
@@ -26,12 +26,12 @@ export interface TabsEditableConfig {
 
 type TabsBarSlots = Omit<TabsSlots, 'popup'> & { popup?: string; };
 
-/** Атрибуты внешнего узла заголовка; нативная кнопка tab остаётся внутри. */
+/** Header node attributes; the native tab button stays inside. */
 export type TabsTabAttributes = HTMLAttributes<HTMLElement>;
 
 export type TabsTabNode = Snippet<[attributes?: TabsTabAttributes]>;
 
-/** Разрешённые настройки TabNavList; popup уже плоский, как в исходном rc-tabs. */
+/** Allowed settings TabNavList; popup is already flat, as in the original rc-tabs. */
 export interface TabsTabBarProps {
   id: string;
   activeKey: string | undefined;
@@ -41,33 +41,33 @@ export interface TabsTabBarProps {
   mobile: boolean;
   editable?: TabsEditableConfig;
   locale?: TabsLocale;
-  /** Замена целиком: отсутствие icon возвращает текст More исходного OperationNode. */
+  /** Replacement in its entirety: the absence of icon returns the text More of the original OperationNode. */
   more?: TabsMoreProps;
   tabBarGutter?: number;
-  /** Native выбор; KeyboardEvent сохраняет публичный MouseEvent contract и cancellation. */
+  /** Native choice; KeyboardEvent preserves public MouseEvent contract and contract. */
   onTabClick: (key: string, event: MouseEvent | KeyboardEvent) => void;
   onTabScroll?: (info: TabsScrollInfo) => void;
   extra?: TabsExtraContent;
   className?: string;
-  /** Callback-ref стандартной панели; null при замене ref/unmount, не вызывается при SSR. */
+  /** Callback-ref of the standard panel; null when replacing ref/unmount, is not called at SSR. */
   ref?: (element: HTMLDivElement | null) => void;
   style?: string;
-  /** Разрешённый container context; override undefined стандартной панели выключает его. */
+  /** Permitted container context; override undefined of the standard panel shuts it off. */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   popupClassName?: string;
   indicator?: TabsIndicator;
-  /** Разрешённые semantic slots; popup — плоская строка. */
+  /** Permitted semantic slots; popup is a flat line. */
   classNames?: TabsBarSlots;
-  /** CSS-строки; изменения body/content здесь не меняют панели Tabs. */
+  /** CSS lines; body/content changes do not change Tabs panels here. */
   styles?: TabsBarSlots;
-  /** Аналог renderWrapper/cloneElement: исходные attributes доступны для merge и attachments. */
+  /** Analogue renderWrapper/cloneElement: original attributes are available for merge and attachments. */
   children?: Snippet<[node: TabsTabNode, item: TabsItem, attributes: TabsTabAttributes]>;
 }
 
-/** Стандартная навигация с полным набором props; для замены используйте spread исходных props. */
+/** Standard Navigation with a Full Set of props; For replacement, use the original props. */
 export type TabsDefaultTabBar = Snippet<[props: TabsTabBarProps]>;
 
-/** Custom bar заменяет только навигацию; панели и их lifecycle остаются в Tabs. */
+/** Custom bar only replaces navigation; the panels and their lifecycle remain in Tabs. */
 export type TabsRenderTabBar = Snippet<[
   props: TabsTabBarProps,
   DefaultTabBar: TabsDefaultTabBar

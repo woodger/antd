@@ -1,5 +1,5 @@
-// Разрешает настройки содержимого, кнопки и semantic slots. Атрибуты и стили идут на узел,
-// который ими владеет, даже когда Drawer перенесён через портал.
+// Allows content settings, buttons and semantic slots. Attributes and styles go to the node that
+// owns them, even when Drawer is transferred through the portal.
 import type {
   DrawerClosable, DrawerClosableConfig, DrawerCloseIcon, DrawerConfig, DrawerContent, DrawerProps,
   DrawerSemantic, DrawerSemanticSlots
@@ -8,12 +8,12 @@ import type {
 const shellSlots = ['root', 'mask', 'wrapper', 'section', 'dragger'] as const;
 const panelSlots = ['header', 'title', 'extra', 'body', 'footer', 'close'] as const;
 
-/** Решает, нужна ли область Drawer. Числовой ноль сохраняет область и выводится как текст. */
+/** Decides whether the area of Drawer is needed. Numerical zero retains the area and is displayed as text. */
 export function hasDrawerContent(value: DrawerContent | undefined) {
   return value != null && value !== false && value !== '';
 }
 
-/** Разносит ARIA и data по их DOM-владельцам без передачи служебных props. */
+/** Spreads ARIA and data to their DOM-owners without the transfer of service props. */
 export function getDrawerAttributes(props: DrawerProps) {
   const dialog: Record<string, unknown> = {};
   const wrapper: Record<string, unknown> = {};
@@ -30,7 +30,7 @@ export function getDrawerAttributes(props: DrawerProps) {
   return { dialog, wrapper };
 }
 
-/** Отличает явное отключение кнопки от отсутствия слоя настроек. */
+/** Distinguished by the explicit disconnection of the button from the absence of a layer of settings. */
 function getCloseOptions(
   closable?: DrawerClosable,
   icon?: DrawerCloseIcon
@@ -46,7 +46,7 @@ function getCloseOptions(
   return { closeIcon, ...(typeof closable === 'object' ? closable : undefined) };
 }
 
-/** Кнопке принадлежат ARIA и role, параметры поведения остаются в Drawer. */
+/** The button belongs to ARIA and role, the behavior parameters remain in Drawer. */
 function getCloseAttributes(inherited?: DrawerClosableConfig, local?: DrawerClosableConfig) {
   const attributes: Record<string, unknown> = {};
 
@@ -64,7 +64,7 @@ function getCloseAttributes(inherited?: DrawerClosableConfig, local?: DrawerClos
   return attributes;
 }
 
-/** Положение берётся из ближайшего closable, остальные поля наследуются по отдельности. */
+/** Position is taken from the nearest closable, the other fields are inherited separately. */
 export function resolveDrawerClose(props: DrawerProps, config?: DrawerConfig) {
   const local = getCloseOptions(props.closable, props.closeIcon);
   const inherited = getCloseOptions(config?.closable, config?.closeIcon);
@@ -80,7 +80,7 @@ export function resolveDrawerClose(props: DrawerProps, config?: DrawerConfig) {
   }
 
   const fallback = inherited === false ? undefined : inherited;
-  // Null сохраняет header для включённого closable, но убирает саму кнопку.
+  // Null preserves the header for the included closable, but removes the button itself.
   const icon = local?.closeIcon === undefined ? fallback?.closeIcon : local.closeIcon;
   return {
     placement,
@@ -90,7 +90,7 @@ export function resolveDrawerClose(props: DrawerProps, config?: DrawerConfig) {
   };
 }
 
-/** Передаёт callback содержимого те props, которые принимает панель Ant Design. */
+/** Passes the content callback the same props accepted by the Ant Design panel. */
 export function getDrawerPanelSemanticProps(
   props: DrawerProps,
   prefix: string,
@@ -117,12 +117,12 @@ export function getDrawerPanelSemanticProps(
   return { ...panel, prefixCls: prefix, closable: panel.closable ?? config?.closable };
 }
 
-/** Вычисляет переданный object или callback с props соответствующей стадии. */
+/** Calculates the transferred object or callback from props of the corresponding stage. */
 function resolveSemantic(value: DrawerSemantic | undefined, props: DrawerProps) {
   return typeof value === 'function' ? value({ props }) : value;
 }
 
-/** Накапливает классы и применяет обычный CSS-порядок слоёв провайдера и владельца. */
+/** Accumulates classes and applies the usual CSS-order layers of the provider and the owner. */
 export function resolveDrawerSemantics(
   props: DrawerProps,
   config: DrawerConfig | undefined,

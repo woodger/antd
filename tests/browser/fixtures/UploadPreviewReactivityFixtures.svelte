@@ -28,8 +28,8 @@
   function generator(name: 'A' | 'B'): NonNullable<UploadProps['previewFile']> {
     return function previewFile(original) {
       actualCalls++;
-      // Лимит инкрементов позволяет проверить число вызовов без бесконечного цикла.
-      // Callback читает и меняет реактивное состояние без untrack у потребителя.
+      // Increment limit allows you to check the number of calls without an infinite cycle. Callback
+      // reads and changes the reactive state without untrack in the consumer.
       if (calls < 4) calls++;
       const fileName = original instanceof File ? original.name : 'blob';
       ledger.push({ callback: name, file: fileName, originalIdentity: identity(original) });

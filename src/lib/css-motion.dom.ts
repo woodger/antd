@@ -1,5 +1,5 @@
-// Управляет фазами CSSMotion для DOM-поверхности. Каждое переключение инвалидирует ожидающие кадры,
-// Promise подготовки, deadline и уведомление предыдущей ревизии.
+// Manages CSSMotion phases for a DOM surface. Each change invalidates scheduled frames, the
+// preparation Promise, the deadline, and notifications from the previous revision.
 import { createCssMotionFrame } from './css-motion-frame.dom';
 import { getCssMotionClassName, type CssMotionPhase, type CssMotionStep }
   from './css-motion.engine';
@@ -22,11 +22,11 @@ export interface CssMotionInput<Element extends HTMLElement = HTMLElement> {
   initialVisibility?: boolean;
   forced?: boolean;
   settleWithoutAnimation?: boolean;
-  /** Сообщает о конечном состоянии при отмене активной фазы настройками. */
+  /** Reports final visibility when settings cancel an active phase. */
   settleOnCutoff?: boolean;
 }
 
-/** Объект в Source использует те же единицы, что и inline style option. */
+/** The upstream object uses the same units as the inline style option. */
 export function getCssMotionStyle(value: CssMotionStyle | void) {
   if (typeof value === 'string') {
     return value;
@@ -35,7 +35,7 @@ export function getCssMotionStyle(value: CssMotionStyle | void) {
   return value ? serializeCssProperties(value) : undefined;
 }
 
-/** Фазы по rc-motion 1.3.3. MIT, vendor/LICENSE.rc-motion. */
+/** Phases follow rc-motion 1.3.3. MIT, vendor/LICENSE.rc-motion. */
 export function createCssMotion<Element extends HTMLElement>(
   view: Window,
   getElement: () => Element | undefined,
@@ -53,7 +53,7 @@ export function createCssMotion<Element extends HTMLElement>(
   let deadline: number | undefined;
   let painted: CssMotionState = {};
 
-  // Сохраняет обработчики отдельно для каждой фазы, читая текущую конфигурацию перед вызовом.
+  // Stores handlers separately for each phase and reads the current configuration before invoking them.
   function handlers(phase: CssMotionPhase) {
     const key = phase === 'appear' ? 'Appear' : phase === 'enter' ? 'Enter' : 'Leave';
     return {
@@ -64,7 +64,7 @@ export function createCssMotion<Element extends HTMLElement>(
     };
   }
 
-  // Удаляет ожидающую работу без уведомления: callback предыдущей фазы уже устарел.
+  // Clears pending work without notification because the previous phase's callback is stale.
   function cancel() {
     revision++;
     frames.cancel();
@@ -74,7 +74,7 @@ export function createCssMotion<Element extends HTMLElement>(
     }
   }
 
-  // Коммит синхронен только перед пользовательскими измерениями из browser callback.
+  // Commits synchronously only before user measurements in a browser callback.
   function paint(commit = false) {
     const className = phase && step
       ? getCssMotionClassName(input.motion.motionName, phase, step) : undefined;
@@ -87,7 +87,7 @@ export function createCssMotion<Element extends HTMLElement>(
     publish(painted, commit);
   }
 
-  // Снимает классы до уведомления о конечной видимости.
+  // Removes classes before reporting final visibility.
   function finish(notify: boolean) {
     cancel();
     phase = undefined;
@@ -104,7 +104,7 @@ export function createCssMotion<Element extends HTMLElement>(
     }
   }
 
-  // Отбрасывает анимации потомков и учитывает возможность отложить завершение.
+  // Ignores descendant animations and allows completion to be deferred.
   function end(event: CssMotionEvent) {
     if (!active || !phase || step !== 'active') {
       return;
@@ -119,7 +119,7 @@ export function createCssMotion<Element extends HTMLElement>(
     if (active && revision === current && result !== false) finish(true);
   }
 
-  // Измеряет кадр start перед применением конечного стиля и подключает deadline.
+  // Measures the start frame before applying the final style and starts the deadline timer.
   function enterActive(current: number) {
     if (!active || current !== revision || !phase) {
       return;
@@ -150,7 +150,7 @@ export function createCssMotion<Element extends HTMLElement>(
     }
   }
 
-  // Сохраняет предыдущие классы до вызова start hook и открывает переход после двух кадров.
+  // Retains previous classes until the start hook runs and enables the transition after two frames.
   function enterStart(current: number, prepared: boolean) {
     if (!active || current !== revision || !phase) {
       return;
@@ -169,7 +169,7 @@ export function createCssMotion<Element extends HTMLElement>(
     frames.next(() => enterActive(current));
   }
 
-  // Prepare остаётся доступен при выключенном движении и может вернуть Promise измерения.
+  // Preparation remains available with motion disabled and can return a measurement Promise.
   function prepare(current: number) {
     if (!active || current !== revision || !phase) {
       return;
@@ -201,7 +201,7 @@ export function createCssMotion<Element extends HTMLElement>(
     });
   }
 
-  // Выбирает appear/enter/leave по присутствию Motion до изменения видимости.
+  // Chooses appear, enter, or leave based on whether Motion was present before the visibility change.
   function sync(next: CssMotionInput<Element>) {
     if (!active) {
       return;
@@ -250,7 +250,7 @@ export function createCssMotion<Element extends HTMLElement>(
     queueMicrotask(() => prepare(current));
   }
 
-  // Каждый флаг разрешает свою фазу. Отсутствующее поле следует CSSMotion defaults.
+  // Each flag enables its own phase. Omitted fields follow CSSMotion defaults.
   function allows(phase: CssMotionPhase) {
     const key = phase === 'appear' ? 'motionAppear' : phase === 'enter' ? 'motionEnter'
       : 'motionLeave';
@@ -260,7 +260,7 @@ export function createCssMotion<Element extends HTMLElement>(
   return {
     sync,
     end,
-    // Уничтожение владельца исключает поздние DOM-измерения и callbacks.
+    // Destroying the owner prevents late DOM measurements and callbacks.
     destroy() {
       active = false;
       cancel();

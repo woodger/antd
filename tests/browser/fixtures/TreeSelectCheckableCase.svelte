@@ -43,7 +43,7 @@
         }
       });
       const pending = new Promise<null>(() => {});
-      // oxlint-disable-next-line unicorn/no-thenable -- Намеренный throwing getter проверяет отсутствие чтения then и await.
+      // oxlint-disable-next-line unicorn/no-thenable -- A throwing getter verifies that then is neither read nor awaited.
       Object.defineProperty(pending, 'then', { get() {
         ignored.thenReads++;
         throw Error('TreeSelect must not read treeCheckable.then');

@@ -1,5 +1,5 @@
 <script lang="ts" generics="Props extends object = {}">
-  // Владеет контекстом и очередями App. Смена корня переподключает holders к тем же API.
+  // Owns the App context and queues. Changing the root reconnects the holders to the same APIs.
   import { untrack } from 'svelte';
   import MessageHolder from './MessageHolder.svelte';
   import NotificationHolder from './NotificationHolder.svelte';
@@ -56,8 +56,8 @@
     style: [componentTheme.style, config.app?.style, style].filter(Boolean).join(';')
   });
   let Root = $derived(typeof component === 'function' ? component : undefined);
-  // Необязательный ref не попадает в DOM spread. Тип rest теряет связь с Props после
-  // исключения настроек App и полей, которые задаёт сам компонент.
+  // The optional ref stays out of the DOM spread. The rest type loses its link to Props once App
+  // settings and fields set by this component are omitted.
   let customProps = $derived(Object.defineProperty({
     ...rootProps,
     'data-ant-app-root': '',

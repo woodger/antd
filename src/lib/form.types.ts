@@ -15,27 +15,27 @@ export interface FormFeedbackInfo {
   errors: readonly string[];
   warnings: readonly string[];
 }
-/** False скрывает значок; остальные falsy values используют стандартный значок статуса. */
+/** False hides an icon; the other falsy values use a standard status icon. */
 export type FormFeedbackIcons = (info: FormFeedbackInfo) => Partial<Record<FormValidateStatus, RenderEmptyContent>>;
 
-/** Defaults подсказки label; icon заменяет React element Svelte snippet. */
+/** Defaults hints label; icon replaces React element Svelte snippet. */
 export interface FormTooltipProps extends Omit<TooltipProps, 'children'> {
   icon?: Snippet | null;
-  /** Fallback содержимого значка, если icon не задан. */
+  /** Fallback content of the icon if icon is not specified. */
   children?: RenderEmptyContent;
 }
 
-/** Content включает массивы; объект содержит Tooltip options и локальный icon. */
+/** Content includes arrays; the object contains Tooltip options and a local icon. */
 export type FormItemTooltip = FormTooltipProps | RenderEmptyContent;
 
 /**
- * Прокрутка Form: по умолчанию if-needed/nearest, без изменения фокуса.
- * CSS scroll-margin пока не участвует в расчёте.
+ * Scroll Form: by default if-needed/nearest, without changing the focus. CSS scroll-margin does not
+ * yet participate in the calculation.
  */
 export interface FormScrollOptions extends Options {
-  /** Нативное поведение прокрутки либо callback с рассчитанными actions. */
+  /** Native scrolling behavior or callback with calculated actions. */
   behavior?: ScrollBehavior | ((actions: ScrollAction[]) => unknown);
-  /** После прокрутки вызывает focusField; пользовательский behavior не ожидается. */
+  /** After scrolling causes focusField; no user behavior is expected. */
   focus?: boolean;
 }
 
@@ -44,20 +44,20 @@ export interface FormRequiredMarkInfo {
 }
 
 /**
- * Визуальная отметка label; content после обработки colon включает значок tooltip, если он задан.
- * Bivariant renderer сохраняет совместимость существующих строковых snippets.
+ * Visual label marker. The content includes the tooltip icon after colon processing when supplied.
+ * The bivariant renderer remains compatible with existing string snippets.
  */
 export type FormRequiredMark = boolean | 'optional'
   | { render(label: RenderEmptyContent, info: FormRequiredMarkInfo): ReturnType<Snippet> }['render'];
 
 export interface FormLocale {
-  /** Пустая строка использует исходный английский fallback. */
+  /** An empty line uses the original English fallback. */
   optional?: string;
-  /** Шаблоны локали; ConfigProvider.form и Form.validateMessages приоритетнее. */
+  /** Locale message templates. ConfigProvider.form and Form.validateMessages take precedence. */
   defaultValidateMessages?: ValidateMessages;
 }
 
-/** Плоские class/CSS slots Form; root относится к Form, остальные — к полям и ErrorList. */
+/** Flat class/CSS slots Form; root refers to Form, the rest to fields and ErrorList. */
 export interface FormSemanticSlots {
   root?: string;
   label?: string;
@@ -67,69 +67,69 @@ export interface FormSemanticSlots {
   extra?: string;
 }
 
-/** Callback получает native props с разрешёнными layout/disabled и defaults подписей. */
+/** Callback receives native props with allowed layout/disabled and default labels. */
 export type FormSemantic = FormSemanticSlots
   | (<Values extends FormValues>(info: { props: FormProps<Values> }) => FormSemanticSlots | undefined);
 
-/** Нативная форма для реактивной модели, validation и асинхронного onFinish. */
+/** Native form for reactive model, validation and asynchronous onFinish. */
 export interface FormProps<Values extends FormValues> extends Omit<
   HTMLFormAttributes,
   'children' | 'onsubmit' | 'onreset' | 'class'
 > {
-  /** Изолированная модель, созданная createForm. */
+  /** An insulated model created by createForm. */
   form: FormInstance<Values>;
-  /** CSS prefix корня Form; empty/undefined наследуют ConfigProvider независимо от FormItem. */
+  /** CSS prefix root Form; empty/undefined inherit ConfigProvider regardless of FormItem. */
   prefixCls?: string;
   children: Snippet;
   /** @defaultValue 'vertical' */
   layout?: 'vertical' | 'horizontal' | 'inline';
-  /** Добавляет colon к горизонтальной подписи; undefined наследует ConfigProvider.form, затем true. */
+  /** Adds colon to the horizontal label; undefined inherits ConfigProvider.form, then true. */
   colon?: boolean;
-  /** Выравнивание подписи; undefined наследует ConfigProvider.form, затем right. */
+  /** Label alignment; undefined inherits ConfigProvider.form, then right. */
   labelAlign?: 'left' | 'right';
-  /** Перенос текста подписи; undefined наследует ConfigProvider.form, затем false. */
+  /** Translation of the text of the label; undefined inherits ConfigProvider.form, then false. */
   labelWrap?: boolean;
-  /** Колонки label по ColProps; FormItem заменяет объект целиком, включая {}. */
+  /** Columns label on ColProps; FormItem replaces the whole object, including {}. */
   labelCol?: ColProps;
-  /** Колонки controls по ColProps; вложенный FormItem не наследует колонки внешнего. */
+  /** Columns according to ColProps; nested FormItem does not inherit external columns. */
   wrapperCol?: ColProps;
-  /** Только оформление label, без изменения required/validation; config, затем true. */
+  /** Only design label, unchanged required/validation; config, then true. */
   requiredMark?: FormRequiredMark;
-  /** Оформление дочерних полей; undefined сбрасывает внешний Form, сохраняя ConfigProvider. */
+  /** Decoration of daughter fields; undefined resembles external Form, saving ConfigProvider. */
   variant?: Variant;
-  /** Размер формы и дочерних компонентов; undefined наследует ближайший Form/ConfigProvider. */
+  /** Shape size and children; undefined inherits nearest Form/ConfigProvider. */
   size?: ComponentSize;
-  /** Defaults подсказок; не показывают значок без FormItem.tooltip. */
+  /** Defaults prompts; do not show an icon without FormItem.tooltip. */
   tooltip?: FormTooltipProps;
-  /** Defaults значков для FormItem.hasFeedback; локальный icons renderer имеет приоритет. */
+  /** Defaults icons for FormItem.hasFeedback; local icons renderer takes precedence. */
   feedbackIcons?: FormFeedbackIcons;
-  /** Локальные группы заменяют config целиком; message отдельного правила приоритетнее. */
+  /** Local groups replace config entirely; the message of a separate rule is more prioritized. */
   validateMessages?: ValidateMessages;
-  /** По умолчанию form; false оставляет контекст без native wrapper и DOM-атрибутов. */
+  /** By default, form; false leaves context without native wrapper and DOM attributes. */
   component?: 'form' | false;
-  /** Defaults disabled для дочерних controls; ближайший ConfigProvider и prop control приоритетнее. */
+  /** Defaults disabled for children; the nearest ConfigProvider and prop control priority. */
   disabled?: boolean;
-  /** Вызывается после успешной validation; Promise удерживает submitting до завершения. */
+  /** Is called after successful validation; Promise keeps submitting until completion. */
   onFinish?: (values: Values) => void | Promise<void>;
-  /** Ошибки validation; outOfDate отличает устаревший результат проверки. */
+  /** Errors validation; outOfDate is distinguished by an outdated verification result. */
   onFinishFailed?: (error: FormValidationError<Values>) => void;
   /**
-   * Прокрутка первой ошибки после onFinishFailed; local prop заменяет config целиком.
-   * True прокручивает без фокуса, false отключает действие. Без настройки сохранён native автофокус.
+   * Scrolling the first error after onFinishFailed; local prop replaces config in its entirety.
+   * True scrolls without focus, false disables action. Unconfigured, native autofocus is saved.
    */
   scrollToFirstError?: boolean | FormScrollOptions;
-  /** Ошибка выполнения onFinish; ошибки validation поступают в onFinishFailed. */
+  /** Error execution onFinish; validation errors are received in onFinishFailed. */
   onError?: (error: unknown) => void;
-  /** Классы semantic slots накапливаются после ConfigProvider.form.classNames. */
+  /** Semantic slots classes accumulate after ConfigProvider.form.classNames. */
   classNames?: FormSemantic;
-  /** CSS-строки semantic slots после config.styles; local style перекрывает root. */
+  /** CSS-line semantic slots after config.styles; local style overlaps root. */
   styles?: FormSemantic;
-  /** Дополнительный класс native wrapper; component=false не создаёт корень. */
+  /** Additional class native wrapper; component = false does not create root. */
   rootClassName?: string;
   class?: string;
 }
 
-/** Defaults Form; undefined наследует родительский record, {} заменяет его. */
+/** Defaults Form; undefined inherits parent record, {} replaces it. */
 export type FormConfig = Pick<
   FormProps<FormValues>, 'colon' | 'labelAlign' | 'labelWrap' | 'requiredMark'
     | 'class' | 'style' | 'classNames' | 'styles' | 'scrollToFirstError' | 'tooltip'

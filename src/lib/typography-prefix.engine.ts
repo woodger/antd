@@ -1,6 +1,6 @@
 import template from './vendor/typography-prefix.css.js';
 
-/** Общий marker сохраняется для aliases и Native compact; local classes охватывают editing/actions. */
+/** The total marker is stored for aliases and Native compact; local classes cover editing/actions. */
 export function getTypographyPrefixCss(prefix: string) {
   if (prefix === 'ant-typography') {
     return undefined;

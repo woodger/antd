@@ -105,7 +105,7 @@
     const host = nativeElement;
     const focused = retainedFocus;
     retainedFocus = undefined;
-    // Keyed DOM сохраняется, но перемещение input через before() сбрасывает фокус браузера.
+    // The keyed DOM stays mounted, but moving the input with before() drops browser focus.
     if (entries.length
       && host
       && focused?.isConnected

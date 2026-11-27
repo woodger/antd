@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType extends object">
-  // Разрешает настройки часов перед передачей в общий редактор диапазона.
-  // Оформление получает исходные props режима, включая вложенный showTime.
+  // Resolves clock settings before passing them to the shared range editor. Styling receives the
+  // original mode props, including nested showTime.
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import RangePickerCore from './RangePickerCore.svelte';
   import { mergeShowTime, splitPickerClock } from './time-picker-props.engine';
@@ -36,7 +36,7 @@
     blur(): void;
   }>();
 
-  /** Обе пустые границы datetime берут время из пары шаблонов, как в rc-picker. */
+  /** As in rc-picker, both empty datetime endpoints take their time from the pair of templates. */
   function calendarOptions(props: RangePickerProps<DateType>) {
     const { clock, field } = splitPickerClock(props);
     const { defaultOpenValue, disabledTime, showTime, ...calendar } = field;
@@ -52,7 +52,7 @@
     };
   }
 
-  /** Объединяет настройки часов. Формат панели разрешается отдельно от формата поля. */
+  /** Merges clock settings. The panel and field formats are resolved independently. */
   function timeOptions(props: TimeModeProps): TimeRangePickerRuntimeProps<DateType> {
     const { picker, showTime, ...options } = props;
     if (!showTime || typeof showTime !== 'object') {

@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 const fixture = '/?fixture=table-filter-state';
 
-/** Снимает видимые критерии, черновик открытого меню и события таблицы. */
+/** Removes the visible criteria, the draft of the open menu and the events of the table. */
 function snapshot() {
   const root = document.getElementById('table-filter-state-fixture');
   if (!root) {
@@ -32,7 +32,7 @@ function snapshot() {
   return { headings, rows, draft, changes };
 }
 
-/** Открывает именованный фильтр и подтверждает выбранный пункт. */
+/** Opens the named filter and confirms the selected item. */
 async function chooseFilter(page: Page, column: string, option: string) {
   await page.getByRole('button', { name: `Filter: ${column}`, exact: true }).click();
   const menu = page.getByRole('dialog', { name: `Filter: ${column}`, exact: true });
@@ -40,7 +40,7 @@ async function chooseFilter(page: Page, column: string, option: string) {
   await menu.getByRole('button', { name: 'Apply', exact: true }).click();
 }
 
-/** Повторяет пользовательское или внешнее действие эталонного сценария. */
+/** Repeats the user or external action of the reference scenario. */
 async function act(page: Page, action: string) {
   switch (action) {
     case 'update':
@@ -82,7 +82,7 @@ for (const { profile, states } of source.cases) {
         await act(page, action);
       }
 
-      // TableChange по-прежнему передаёт только активные фильтры.
+      // TableChange still transmits only active filters.
       const changes = state.changes.map(event => ({
         ...event,
         filters: Object.fromEntries(Object.entries(event.filters).filter(([, keys]) => keys?.length))

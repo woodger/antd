@@ -8,10 +8,10 @@ export type DescriptionsCellSlots = Partial<Record<'label' | 'content', string>>
 export type DescriptionsSlots = Partial<
   Record<'root' | 'header' | 'title' | 'extra' | 'label' | 'content', string>
 >;
-/** Callback получает resolved column/items/size и прежние native defaults остальных Props. */
+/** The callback receives resolved column, items, and size along with the existing native defaults for other props. */
 export type DescriptionsSemantic = DescriptionsSlots
   | ((info: { props: DescriptionsProps; }) => DescriptionsSlots);
-/** Общие стили Descriptions; явно заданный вложенный record заменяет родительский целиком. */
+/** Shared Descriptions styling. An explicit nested record replaces the whole parent record. */
 export interface DescriptionsConfig {
   class?: string;
   style?: string;
@@ -28,7 +28,7 @@ export interface DescriptionsItem {
   classNames?: DescriptionsCellSlots;
   styles?: DescriptionsCellSlots;
 }
-/** Таблица описаний с responsive columns, span и semantic styles ячеек. */
+/** Description table with responsive columns, spans, and semantic cell styles. */
 export interface DescriptionsProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'title' | 'class' | 'style'
@@ -44,7 +44,7 @@ export interface DescriptionsProps extends Omit<
   /** @defaultValue true */
   colon?: boolean;
   size?: ComponentSize;
-  /** Непустой локальный prefix имеет приоритет; иначе используется ConfigProvider.prefixCls. */
+  /** A nonempty local prefix takes precedence. Otherwise uses ConfigProvider.prefixCls. */
   prefixCls?: string;
   classNames?: DescriptionsSemantic;
   /** Root: context semantic → context style → local semantic → local style. */
@@ -52,6 +52,6 @@ export interface DescriptionsProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

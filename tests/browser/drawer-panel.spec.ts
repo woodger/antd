@@ -8,7 +8,7 @@ type ProbeWindow = Window & {
   drawerPanelInputs?: { nodes: WeakMap<Element, number>; sequence: number; };
 };
 
-/** Читает видимость, поведение кнопки и семантические слои независимо от тегов React. */
+/** Reads the visibility, behavior of the button and the semantic layers regardless of the tags React. */
 async function readPanel(page: Page, semantic: boolean) {
   return page.evaluate(readSemantic => {
     const root = document.getElementById('study-root');
@@ -83,14 +83,14 @@ async function readPanel(page: Page, semantic: boolean) {
   }, semantic);
 }
 
-/** Обновляет состояние настройки за маской, как это может делать родительский компонент. */
+/** Updates the setting state behind the mask, as the parent record component can do. */
 async function runOwnerAction(page: Page, action: string) {
   await page.locator(`[data-step="${action}"]`).evaluate(node => {
     if (node instanceof HTMLButtonElement) node.click();
   });
 }
 
-/** Выполняет операцию владельца или взаимодействие непосредственно с панелью. */
+/** Performs an operation of the owner or interacts directly with the panel. */
 async function perform(page: Page, step: string) {
   if (step === 'click-close') {
     await page.locator('[data-ant-drawer-close]').evaluate(node => {
@@ -105,13 +105,13 @@ async function perform(page: Page, step: string) {
   }
 }
 
-/** Дожидается DOM-обновления и проверяет состояние всех наблюдаемых частей. */
+/** Is waiting DOM-update and checks the state of all observed parts. */
 async function assertFrame(page: Page, frame: Frame, semantic: boolean) {
   const { step, ...expected } = frame;
   await expect.poll(() => readPanel(page, semantic), { message: step }).toEqual(expected);
 }
 
-/** Снимает выигравшие CSS-свойства в одной фазе с публичными уведомлениями. */
+/** Removes the winning CSS-properties in one phase with public notifications. */
 async function readMotion(page: Page) {
   return page.evaluate(() => {
     const wrapper = document.querySelector('[data-ant-drawer-content-wrapper]');

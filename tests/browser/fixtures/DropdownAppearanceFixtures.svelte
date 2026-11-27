@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Публичный стенд настроек Dropdown и передачи ref тому же DOM-узлу, что видит владелец.
+  // The public booth of Dropdown settings and the transfer of the ref to the same DOM-knot that the owner sees.
   import { untrack } from 'svelte';
   import { ConfigProvider, Dropdown, type DropdownConfig, type DropdownProps } from '@woodger/antd';
   import appearance from './ant-design-dropdown-appearance-reference.json' with { type: 'json' };
@@ -47,7 +47,7 @@
       + ' border-width: 0', item: 'color: #880011' };
   } : undefined;
 
-  // Считывает входы callback без влияния на реактивность провайдера или самого Dropdown.
+  // Records callback inputs without influencing the provider’s reactivity or Dropdown itself.
   function record(kind: string, { props }: { props: DropdownProps; }) {
     semanticInputs.set(kind, {
       open: props.open ?? null,
@@ -60,7 +60,7 @@
     });
   }
 
-  // Три слоя задают разные цвета и границы, чтобы конфликт проверялся по computed CSS.
+  // Three layers set different colors and boundaries so that the conflict is tested on computed CSS.
   function configuration(label: string): DropdownConfig {
     return {
       class: `${label}-config`,

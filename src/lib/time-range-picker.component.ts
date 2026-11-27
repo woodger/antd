@@ -1,4 +1,4 @@
-// Объединяет публичные сигнатуры TimeRangePicker без дополнительной обёртки в DOM.
+// Combines the public TimeRangePicker signatures without adding a DOM wrapper.
 import type { Component } from 'svelte';
 import TimeRangePickerControl from './TimeRangePicker.svelte';
 import type { DatePickerMode } from './date-picker.types';
@@ -8,7 +8,7 @@ import type { TimeRangePickerProps } from './time-range-picker.types';
 type TimeRangeHandle = ReturnType<typeof TimeRangePickerControl>;
 type TimeRangeBindings = 'nativeElement' | 'startInput' | 'endInput';
 
-/** Извлечение ComponentProps сохраняет прежний footer с режимом time. */
+/** Extraction ComponentProps retains the previous footer with time mode. */
 const TimeRangePicker: Component<
   TimeRangePickerProps<DatePickerMode> & TimePanelOptions, TimeRangeHandle, TimeRangeBindings
 > & Component<TimeRangePickerProps, TimeRangeHandle, TimeRangeBindings> = TimeRangePickerControl;

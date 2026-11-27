@@ -3,12 +3,11 @@ export function readNativeTimeScroll() {
   const api = window.nativeTimeScroll;
   const raw = window.nativeTimeScrollObservation;
   const recorder = api.getRecorder();
-  // Связывает повторный снимок с тем же объектом в recorder. Отсутствующее значение остаётся
-  // null.
+  // Links a re-shot with the same object in the recorder. The missing value remains null.
   const id = value => value == null ? null : recorder.identity(value);
-  // Сохраняет полный фактический список пар имя и значение в порядке DOM.
+  // Saves the full actual list of pairs name and value in order DOM.
   const attributes = node => [...node.attributes].map(attribute => [attribute.name, attribute.value]);
-  // Фиксирует экранную геометрию до сериализации снимка browser realm.
+  // Fixes screen geometry before serializing the browser realm shot.
   const box = node => {
     const value = node.getBoundingClientRect();
     return { x: value.x, y: value.y, top: value.top, right: value.right,
@@ -18,7 +17,7 @@ export function readNativeTimeScroll() {
     'width', 'height', 'min-height', 'max-height', 'overflow', 'overflow-y',
     'font-size', 'line-height', 'padding-top', 'padding-bottom',
     'border-top-width', 'border-bottom-width', 'scroll-behavior', 'overscroll-behavior-y'];
-  // Снимает геометрию, атрибуты и стиль. Ссылка остаётся в журнале для повторного чтения после
+  // Removes geometry, attributes and style. The link remains in the journal for re-reading after
   // unmount.
   const describe = node => {
     if (node == null) {

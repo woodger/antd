@@ -1,11 +1,11 @@
 import type { Snippet } from 'svelte';
 import type { RenderEmptyContent } from './types';
 
-/** Function — чистый producer; статический template передаётся внутри массива. */
+/** Function – pure producer; the static template is transmitted inside the array. */
 export type SelectRenderNode<Info> = Exclude<RenderEmptyContent, Snippet>
   | ((info: Info) => RenderEmptyContent);
 
-/** Пять собственных полей BaseSelect; loading сохраняет явный undefined. */
+/** Five own fields BaseSelect; loading keeps an apparent undefined. */
 export interface SelectSuffixInfo {
   searchValue: string;
   open: boolean;
@@ -14,7 +14,7 @@ export interface SelectSuffixInfo {
   loading: boolean | undefined;
 }
 
-/** Value соответствует flattened option и учитывает fieldNames. */
+/** Value corresponds to flattened option and takes into account fieldNames. */
 export interface SelectMenuItemIconInfo<Value extends string | number = string> {
   value: Value | undefined;
   disabled: boolean;
@@ -23,6 +23,6 @@ export interface SelectMenuItemIconInfo<Value extends string | number = string> 
 
 export interface SelectAllowClear {
   clearIcon?: RenderEmptyContent;
-  /** Пустая строка сохраняется; null/undefined используют доступное имя по умолчанию. */
+  /** Empty string is saved; null/undefined uses the available name by default. */
   label?: string | null;
 }

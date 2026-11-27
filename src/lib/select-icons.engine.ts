@@ -29,14 +29,14 @@ export interface SelectSuffixDefaults {
 export interface SelectSuffixResolution {
   content: RenderEmptyContent;
   appendFeedback: boolean;
-  /** Root show-arrow зависит от nullish, а Affix — от truthiness. */
+  /** Root show-arrow depends on nullish, and Affix depends on the truth. */
   hasSuffix: boolean;
   visible: boolean;
 }
 
 export interface SelectIconResolution {
   content: RenderEmptyContent;
-  /** Только undefined-результат TransBtn создаёт внутренний fallback span. */
+  /** Only undefined-result TransBtn creates an internal fallback span. */
   fallback: boolean;
 }
 
@@ -126,7 +126,7 @@ export function resolveSelectSuffix(
     content = firstDefined(input.context?.suffixIcon, defaults.down);
   }
 
-  // Source Fragment сохраняет Affix даже с false/0/пустым содержимым.
+  // Source Fragment preserves Affix even with false/0/empty content.
   return {
     content: local === null ? false : content,
     appendFeedback,

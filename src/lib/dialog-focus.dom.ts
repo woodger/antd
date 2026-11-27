@@ -1,5 +1,6 @@
-// Согласует нативную модальность с открытым dialog без нативного барьера. Стек определяет
-// владельца Escape и ловушки фокуса. Смена режима сохраняет тот же DOM и исходный opener.
+// Coordinates native modality with an open dialog that has no native barrier. The stack determines
+// who handles Escape and traps focus. Switching modes preserves the existing DOM and original
+// opener.
 import { isPopupFocusWithin } from './popup.dom';
 
 interface DialogFocusOptions {
@@ -17,7 +18,7 @@ const tabbableSelector = [
   '[tabindex]', '[contenteditable]', 'audio[controls]', 'video[controls]'
 ].join(',');
 
-/** Находит текущий фокус и внутри ShadowRoot, куда портал может вынести панель. */
+/** Finds the current focus even inside a ShadowRoot that hosts a portaled panel. */
 function activeElement(document: Document): Element | null {
   let element = document.activeElement;
   while (element?.shadowRoot?.activeElement) {
@@ -26,7 +27,7 @@ function activeElement(document: Document): Element | null {
   return element;
 }
 
-/** Сохраняет порядок Tab, включая положительный tabindex, и пропускает скрытые controls. */
+/** Preserves Tab order, including positive tabindex values, and skips hidden controls. */
 function tabStops(dialog: HTMLDialogElement): HTMLElement[] {
   const view = dialog.ownerDocument.defaultView;
   if (!view) return [];
@@ -46,7 +47,7 @@ function tabStops(dialog: HTMLDialogElement): HTMLElement[] {
   });
 }
 
-/** Управляет видимостью dialog, клавиатурой и возвратом фокуса независимо от анимации. */
+/** Manages dialog visibility, keyboard input, and focus restoration independently of animation. */
 export function connectDialogFocus(
   dialog: HTMLDialogElement,
   getInteraction: () => DialogFocusOptions,
@@ -65,7 +66,7 @@ export function connectDialogFocus(
   let opener: HTMLElement | undefined;
   let lastFocused: HTMLElement | undefined;
 
-  /** Учитывает последнюю открытую панель и приоритет вышестоящего нативного dialog. */
+  /** Accounts for the last opened panel and the priority of a higher native dialog. */
   function canManage(target: Element | null) {
     if (native !== false || !dialog.open || !dialog.isConnected) {
       return false;
@@ -79,7 +80,7 @@ export function connectDialogFocus(
     return !targetModal || targetModal === dialog.closest('dialog:modal');
   }
 
-  /** Возвращает фокус после фактического выхода, включая программное focus(). */
+  /** Restores focus after the dialog actually exits, including programmatic focus(). */
   function keepFocus() {
     const target = activeElement(document);
     if (!getInteraction().trap || !canManage(target)) {
@@ -96,7 +97,7 @@ export function connectDialogFocus(
     (previous ?? targets[0] ?? dialog).focus({ preventScroll: true });
   }
 
-  /** Оставляет обычный порядок Tab внутри панели и замыкает его на границе. */
+  /** Keeps normal Tab order within the panel and wraps it at either end. */
   function moveTab(event: KeyboardEvent, focused: Element | null) {
     const targets = tabStops(dialog);
     const first = targets[0] ?? dialog;
@@ -110,7 +111,7 @@ export function connectDialogFocus(
     }
   }
 
-  /** Даёт вложенному popup обработать Escape на document, затем обращается к верхнему dialog. */
+  /** Lets nested popups handle Escape on document before notifying the topmost dialog. */
   function handleKeydown(event: KeyboardEvent) {
     if (event.defaultPrevented || event.isComposing) return;
 
@@ -126,13 +127,13 @@ export function connectDialogFocus(
     }
   }
 
-  /** Снимает слушатели до закрытия и до смены способа открытия. */
+  /** Removes listeners before closing and before switching opening modes. */
   function stopListening() {
     view.removeEventListener('focusin', keepFocus);
     view.removeEventListener('keydown', handleKeydown);
   }
 
-  /** Обычный open оставляет фокус владельцу; showModal включает нативный барьер. */
+  /** Regular open leaves focus to the owner. showModal enables the native barrier. */
   function present(modal: boolean) {
     native = modal;
     if (modal) {
@@ -146,7 +147,7 @@ export function connectDialogFocus(
     }
   }
 
-  /** Запоминает внешний opener только при первом показе, до переброса фокуса. */
+  /** Remembers the external opener only on first show, before moving focus. */
   function open() {
     const current = activeElement(document);
     opener = current instanceof view.HTMLElement ? current : undefined;
@@ -160,7 +161,7 @@ export function connectDialogFocus(
     keepFocus();
   }
 
-  /** showModal при смене режима поднимает диалог, сохраняя логический стек фокуса. */
+  /** showModal raises the dialog when switching modes while preserving the logical focus stack. */
   function ownsNativeLayer() {
     const order = nativePresentationOrder.get(dialog);
     if (order === undefined || !dialog.matches(':modal')) {
@@ -174,7 +175,7 @@ export function connectDialogFocus(
     });
   }
 
-  /** Живое изменение mask/focusable переводит тот же открытый dialog в другой режим. */
+  /** A live mask or focusable change switches modes on the same open dialog. */
   function sync() {
     if (native === undefined) {
       dialog.close();
@@ -198,7 +199,7 @@ export function connectDialogFocus(
     keepFocus();
   }
 
-  /** Убирает панель из стека и откладывает возврат к opener до уведомления владельца. */
+  /** Removes the panel from the stack and defers focus restoration to the opener until after notifying the owner. */
   function close() {
     let restore: HTMLElement | undefined;
     if (native !== undefined) {
@@ -218,7 +219,7 @@ export function connectDialogFocus(
     if (dialog.open) dialog.close();
     const successor = stack.findLast(node => node.open && node.isConnected);
 
-    // Повторное открытие из afterOpenChange(false) владеет следующим фокусом.
+    // A panel reopened from afterOpenChange(false) owns the next focus target.
     return restore ? () => {
       const top = stack.findLast(node => node.open && node.isConnected);
       if (restore.isConnected && !dialog.open && successor === top) {

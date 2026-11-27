@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Сопоставляет нативные атрибуты строк и события с независимыми замерами UMD.
+  // Compares the native attributes of strings and events with independent measurements of UMD.
   import {
     ConfigProvider, enUS, Table, type TableColumn, type TableExpandable, type TableKey,
     type TableRef, type TableRowProps
@@ -34,7 +34,7 @@
       onExpandedRowsChange: keys => record('keys', keys)
     } : undefined);
 
-  /** Создаёт тот же набор или серверную страницу с исходными ключами. */
+  /** Creates the same set or server page with source keys. */
   function makeRows(): Row[] {
     if (profile.empty) return [];
 
@@ -52,7 +52,7 @@
     return rows;
   }
 
-  /** Готовит исходное дерево. Фильтрацию видимости выполняет Table. */
+  /** Preparing the original tree. Visibility filtration is performed by Table. */
   function makeColumns(): TableColumn<Row>[] {
     const name: TableColumn<Row> = {
       key: 'name', title: 'Name', dataIndex: 'name', className: 'fixture-name', width: 180,
@@ -75,7 +75,7 @@
     ];
   }
 
-  /** Обозначает группы с видимыми детьми и реальные позиции служебных колонок. */
+  /** Denotes groups with visible children and the real positions of the service columns. */
   function columnNames(columns: readonly TableColumn<Row>[]): string[] {
     return columns.map(column => {
       const className = column.className ?? '';
@@ -87,12 +87,12 @@
     });
   }
 
-  /** Сохраняет порядок событий и точный currentTarget на границе строки. */
+  /** Maintains the order of events and the exact currentTarget on the boundary of the line. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }
 
-  /** Привязывает каждый обработчик к полученному индексу и текущей ревизии. */
+  /** Ties each handler to the received index and current revision. */
   function configureRow(row: Row, index: number): TableRowProps {
     const current = revision;
     const recordEvent = (kind: string, event: Event & { currentTarget: HTMLTableRowElement; }) =>
@@ -120,7 +120,7 @@
     };
   }
 
-  /** Записывает список определений именно того уровня, к которому привязан tr. */
+  /** Records a list of definitions of exactly the level to which tr is attached. */
   function configureHeader(columns: readonly TableColumn<Row>[], index: number): TableRowProps {
     const signature = columnNames(columns).join('|');
     const current = revision;
@@ -133,7 +133,7 @@
     };
   }
 
-  /** Прокручивает текущую видимую страницу по ключу через публичный ref. */
+  /** Scrolls the current visible page on the key through public ref. */
   function scrollTo(key: TableKey) {
     table?.scrollTo({ key, align: 'start' });
   }

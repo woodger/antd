@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Управляет одной ручкой Slider и отслеживает активное взаимодействие. Публикация завершения
-  // относится к текущему жесту.
+  // Manages one Slider handle and tracks the active interaction. The completion event belongs to
+  // the current gesture.
   import { onDestroy, onMount, untrack } from 'svelte';
   import type { SliderSingleProps } from './slider.types';
   import { useConfig } from './config-context';
@@ -228,7 +228,7 @@
       return;
     }
 
-    // Нативный reset хранит defaults отдельно от текущего value; смена владельца отменяет захват.
+    // Native reset keeps defaults separate from the current value. Changing owners cancels capture.
     input.defaultValue = String(formatValue(initialDefault));
     input.value = String(next);
 
@@ -433,7 +433,7 @@
   }
 
   $effect.pre(() => {
-    // Blur от remove() не должен читать уже уничтоженные spread props родителя.
+    // Blur from remove() must avoid reading the parent's already disposed spread props.
     blurCallbacks = { onblur, onBlur };
   });
 
@@ -542,7 +542,7 @@
     outline: 6px solid var(--ant-slider-handle-active-outline-color);
     box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color);
   }
-  /* В source фокусируется div handle, в native adapter — input. */
+  /* Upstream focuses the handle div. The native adapter focuses the input. */
   [data-ant-slider-single].ant-slider-css-var:has(.slider-input:focus) [data-ant-slider-part="handle"]::before {
     inset-inline-start: calc(((var(--ant-slider-handle-size-hover) - var(--ant-slider-handle-size)) / 2 + var(--ant-slider-handle-line-width-hover)) * -1);
     inset-block-start: calc(((var(--ant-slider-handle-size-hover) - var(--ant-slider-handle-size)) / 2 + var(--ant-slider-handle-line-width-hover)) * -1);
@@ -617,7 +617,7 @@
           ? `left:${position}%`
           : `top:${position}%`, styles.handle
       ].filter(Boolean).join(';')}></div>
-  <!-- svelte-ignore a11y_role_supports_aria_props_implicit (AriaRequired сохраняет исходный Slider prop; native required передаётся отдельно.) -->
+  <!-- svelte-ignore a11y_role_supports_aria_props_implicit (AriaRequired preserves the upstream Slider prop. Native required is passed separately.) -->
   <input
     {...attributes}
     bind:this={control}

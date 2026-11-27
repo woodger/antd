@@ -10,7 +10,7 @@ if (!target) {
 const query = new URLSearchParams(location.search);
 const profile = query.get('button') === 'link' ? 'link' : 'button';
 
-// Тест устанавливает фокус до подключения обработчиков Svelte.
+// The test sets the focus to the connection of Svelte handlers.
 target.addEventListener('hydrate-button', () => {
   hydrate(Fixture, { target, props: { profile }, recover: false });
   target.dataset.hydrated = 'true';

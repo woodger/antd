@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-  // Координирует страницу, размер и редакторы быстрого перехода. Текст в редакторе может
-  // отличаться от текущей страницы до подтверждения.
+  // Coordinates the page, page size, and quick jump editors. Draft text may differ from the current
+  // page until committed.
   import { tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';
@@ -89,7 +89,7 @@
   const breakpoint = createBreakpoint();
   let mediaQueries = $derived(designToken.enabled
     ? getGridMediaQueries(designToken.state.token) : undefined);
-  // useBreakpoint проверяет порядок порогов и при SSR, даже с responsive=false.
+  // useBreakpoint checks breakpoint order during SSR as well, even with responsive=false.
   untrack(() => mediaQueries);
   const initialCurrent = untrack(() => defaultCurrent);
   const initialSize = untrack(() => defaultPageSize);
@@ -326,7 +326,7 @@
   }
   [data-ant-pagination] :global([data-ant-pagination-active] .page-button) { color: var(--ant-pagination-item-active-color); }
   [data-ant-pagination] :global([data-ant-pagination-active]:hover .page-button) { color: var(--ant-pagination-item-active-color-hover); }
-  /* Source button сохраняет normal и при неопределённой высоте item. */
+  /* The upstream button keeps normal even when item height is unset. */
   [data-ant-pagination-source-theme] :global([data-ant-pagination-prev] button), [data-ant-pagination-source-theme] :global([data-ant-pagination-next] button) { line-height: normal; }
   [data-ant-pagination][data-ant-pagination-disabled] :global([data-ant-pagination-item] .page-button) { color: var(--ant-color-text-disabled); }
   [data-ant-pagination-source-theme][data-ant-pagination-disabled] :global([data-ant-pagination-item] .page-button) {
@@ -335,7 +335,7 @@
     cursor: not-allowed;
   }
   [data-ant-pagination][data-ant-pagination-disabled] :global([data-ant-pagination-active] .page-button) { color: var(--ant-pagination-item-active-color-disabled); }
-  /* Ant Design 6.6.8 pagination/style/bordered.ts; этих правил нет в dist/antd.css. */
+  /* Rules from Ant Design 6.6.8 pagination/style/bordered.ts, absent from dist/antd.css. */
   [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev]:hover button), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next]:hover button) {
     border-color: var(--ant-color-primary-hover);
     background-color: var(--ant-pagination-item-bg);
@@ -514,7 +514,7 @@
               onblur={handleQuickBlur} />
             {strings.suffix}{#if goButton}
               {#if simple}
-                <!-- В upstream здесь вложенный li; span сохраняет валидную структуру списка. -->
+                <!-- Upstream uses a nested li here. A span keeps the list markup valid. -->
                 <span class={`${prefixCls}-simple-pager`}
                   title={showTitle ? `${strings.jumpTo}${pagination.current}/${count}` : undefined}>
                   {@render confirm(true)}

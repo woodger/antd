@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Воспроизводит открытие у каретки и считает только mount пользовательского содержимого.
+  // Reproduces the opening at the carriage and considers only mount user content.
   import { untrack, type Snippet } from 'svelte';
   import { ConfigProvider, Mentions } from '@woodger/antd';
   import type reference from './ant-design-mentions-lifecycle-reference.json';
@@ -13,7 +13,7 @@
   const options = [{ value: 'alice', label: 'Alice' }, { value: 'alina', label: 'Alina' }];
   const theme = $derived({ token: { motion: profile.motion !== false } });
 
-  /** Размещает список отдельно от редактора, как в профиле React. */
+  /** Places the list separately from the editor, as in profile React. */
   function container() {
     const target = document.getElementById('portal');
     if (!target) {
@@ -22,7 +22,7 @@
     return target;
   }
 
-  /** Считает экземпляры snippet через его DOM lifecycle. */
+  /** Considers snippet instances through its DOM lifecycle. */
   function countPopup() {
     untrack(() => { popupMounts++; });
     return () => { popupUnmounts++; };

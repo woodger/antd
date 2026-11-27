@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import Fixture from './ConfigProviderCspFixture.svelte';
 
-/** Готовит SSR-страницу для применения CSS до запуска клиента. */
+/** Prepares SSR-page for application CSS until the client is launched. */
 export function renderConfigProviderCsp() {
   return render(Fixture, { props: { profile: 'strict' } });
 }

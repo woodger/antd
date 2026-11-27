@@ -8,7 +8,7 @@ type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends
   (<T>() => T extends B ? 1 : 2) ? true : false;
 type Assert<T extends true> = T;
 
-/** Использует значение критерия отдельно от числового или составного содержимого. */
+/** Uses the criterion value independently of numeric or composite content. */
 export function tableContentColumn(label: Snippet): TableColumn<Row> {
   return {
     key: 'value', dataIndex: 'value',
@@ -17,7 +17,7 @@ export function tableContentColumn(label: Snippet): TableColumn<Row> {
   };
 }
 
-/** Позволяет передать ту же подпись группе и пункту Menu. */
+/** Allows the same label for a group and a Menu item. */
 export function menuContentItems(label: Snippet): MenuItemType[] {
   return [{ key: 'group', type: 'group', label: ['Group ', label],
     children: [{ key: 'item', label: [0, false, label] }] }];

@@ -2,8 +2,7 @@ export function snapshotPickerThemeInputs() {
   const names = ['font-size', 'line-height', 'font-family', 'color', 'height',
     'background-color', 'border-top-color', 'border-top-width', 'border-radius',
     'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'box-shadow'];
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   function css(node: Element, keys: string[]) {
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(name => [name, style.getPropertyValue(name)]));
@@ -24,7 +23,7 @@ export function snapshotPickerThemeInputs() {
 
 export function snapshotPickerThemePopup() {
   const popup = document.querySelector('.theme-picker-popup:not(.ant-picker-dropdown-hidden)')!;
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null, names: string[]) {
     if (!node) {
       return null;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Подаёт в публичный Menu те же disabled/portal props и записывает настоящие события мыши.
+  // Submits the same disabled/portal props to public Menu and records real mouse events.
   import { ConfigProvider, Menu, type MenuHoverEventHandler, type MenuItem,
     type MenuItemType, type MenuMode } from '@woodger/antd';
   import reference from './ant-design-menu-hover-reference.json';
@@ -52,7 +52,7 @@
   let events = $state<unknown[]>([]);
   let clicked = $state<unknown>(null);
 
-  // Связывает записи с версией пользовательского обработчика, не меняя ключи строк.
+  // Links recordings to a version of a custom handler without changing string keys.
   function record(name: string, version: number): MenuHoverEventHandler {
     return ({ key, domEvent }) => {
       const target = domEvent.currentTarget;
@@ -62,7 +62,7 @@
     };
   }
 
-  // Одна и та же запись проверяет проекцию data-* и форму itemData в callback.
+  // The same record checks the projection of data-* and form itemData in the callback.
   function buildItems(profile: HoverProfile, version: number): MenuItemType[] {
     const payload = { customPayload: { ord: 2 } };
     const leaf: MenuItem = {
@@ -96,7 +96,7 @@
     return [branch, { key: 'other', label: otherLabel }];
   }
 
-  // Меняет исходный сценарий и очищает журнал между независимыми прогонами.
+  // Changes the original scenario and clears the magazine between independent runs.
   function selectProfile(event: Event & { currentTarget: HTMLSelectElement; }) {
     sample = event.currentTarget.value;
     version = 0;
@@ -105,13 +105,13 @@
     mounted = true;
   }
 
-  // Передаёт CSS в изолированный ShadowRoot для настоящего hit testing.
+  // Transmits CSS to isolated ShadowRoot for this hit testing.
   function connectShadow(element: HTMLDivElement) {
     const root = element.attachShadow({ mode: 'open' });
     const style = element.ownerDocument.createElement('style');
     root.append(style);
 
-    // Копирует стили тестового стенда, включая поздние Svelte styles.
+    // Copies the styles of the test bench, including the late Svelte styles.
     function syncStyle() {
       const css = Array.from(element.ownerDocument.head.querySelectorAll('style'))
         .map(node => node.textContent).join('\n');
@@ -127,7 +127,7 @@
     return () => observer.disconnect();
   }
 
-  // Getter ждёт target, связанный с текущим fixture, и сохраняет тип ShadowRoot.
+  // Getter is waiting for the target associated with the current fixture and preserves type ShadowRoot.
   function getContainer(trigger: HTMLElement) {
     return (profile.destination === 'shadow' ? shadow : host) ?? trigger.ownerDocument.body;
   }

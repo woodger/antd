@@ -61,7 +61,7 @@ function getValue(hsv: ColorHsv, index: number, light = false) {
   return Math.round(value * 100) / 100;
 }
 
-/** Палитра @ant-design/colors 8.0.1 с исходными HSV-шагами и округлениями. */
+/** Palette @ant-design/colors 8.0.1 with starting HSV steps and rounding. */
 export function generatePalette(
   color: string,
   options: { theme?: 'dark' | 'default'; backgroundColor?: string; } = {}

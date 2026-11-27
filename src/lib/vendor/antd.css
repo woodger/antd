@@ -1,11 +1,14 @@
-/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.
- * Стили Button, Input, Select, Modal, Form, Checkbox, Pagination и Table из официального dist/antd.css.
- * Селекторы css-var-_R_0_ заменены на :root/.ant-svelte-theme и классы компонентов.
- * Два правила Table/Descriptions ограничены default owner; custom prefixes оформляются отдельно.
- * Form/Col selectors сохраняют specificity и принимают стабильные span/breakpoint attributes.
- * Canonical Form styles исключают части с отдельным prefix/media scope; defaults marker сохранён.
- * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
- * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
+/* Ant Design 6.6.8 under MIT. See LICENSE.ant-design.
+ * Button, Input, Select, Modal, Form, Checkbox, Pagination, and Table styles from the official
+ * dist/antd.css.
+ * The css-var-_R_0_ selectors are replaced with :root/.ant-svelte-theme and component classes.
+ * Two Table and Descriptions rules are scoped to the default owner. Custom prefixes have separate
+ * styles.
+ * Form and Col selectors keep their specificity and accept stable span and breakpoint attributes.
+ * Canonical Form styles omit rules with their own prefix or media scope. The defaults marker is
+ * retained.
+ * Source: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
+ * Archive SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
  */
 .ant-form-css-var {
   font-family:var(--ant-font-family);

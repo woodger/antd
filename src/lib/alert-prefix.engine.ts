@@ -5,7 +5,7 @@ const rootStates = new Set([
   '-no-icon', '-banner', '-rtl'
 ]);
 
-/** Variables/marker общие; reset и state rules принадлежат своему Alert. */
+/** Variables and the marker are shared. Reset and state rules belong to their own Alert. */
 export function getAlertPrefixCss(prefix: string) {
   if (prefix === 'ant-alert') {
     return undefined;

@@ -5,9 +5,9 @@ export type AnchorContainer = HTMLElement | Window;
 export type AnchorContent = string | number | boolean | null | undefined | Snippet;
 export type AnchorDirection = 'vertical' | 'horizontal';
 export type AnchorSlots = Partial<Record<'root' | 'item' | 'itemTitle' | 'indicator', string>>;
-/** Semantic callbacks получают текущие Props с resolved direction. */
+/** Semantic callbacks receive current Props with resolved direction. */
 export type AnchorSemantic = AnchorSlots | ((info: { props: AnchorProps; }) => AnchorSlots);
-/** Общие стили Anchor; явно заданный вложенный record заменяет родительский целиком. */
+/** Shared Anchor styles. An explicit nested record replaces the parent's record in full. */
 export interface AnchorConfig {
   class?: string;
   style?: string;
@@ -15,7 +15,7 @@ export interface AnchorConfig {
   styles?: AnchorSemantic;
 }
 export interface AnchorItem {
-  /** undefined наследует Anchor prefix; явная пустая строка — общий prefix провайдера. */
+  /** undefined inherits the Anchor prefix. An explicit empty string uses the provider's shared prefix. */
   prefixCls?: string;
   key: string | number;
   href: string;
@@ -26,12 +26,12 @@ export interface AnchorItem {
   targetOffset?: number;
   children?: readonly AnchorItem[];
 }
-/** Навигация по разделам с отслеживанием прокрутки, вложенными items и Affix. */
+/** Section navigation with scroll tracking, nested items, and Affix. */
 export interface AnchorProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style' | 'onchange' | 'onclick'
 > {
-  /** Локальный CSS prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local CSS prefix. Empty and undefined values inherit ConfigProvider.prefixCls. */
   prefixCls?: string;
   items?: readonly AnchorItem[];
   offsetTop?: number;
@@ -54,6 +54,6 @@ export interface AnchorProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

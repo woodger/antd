@@ -1,4 +1,4 @@
-/** Измеряет Table paint с независимыми owner/shared namespaces. */
+/** Measures Table paint with independent owner/shared namespaces. */
 export function snapshotTablePrefix() {
   const host = document.querySelector<HTMLElement>('[data-table-prefix-host]');
   const prefix = host?.dataset.tablePrefix;
@@ -9,7 +9,7 @@ export function snapshotTablePrefix() {
   if (!root) {
     throw new Error('Table prefix root is missing');
   }
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   const css = (node: Element | null, keys: readonly string[], pseudo?: string) => {
     if (!node) {
       return null;

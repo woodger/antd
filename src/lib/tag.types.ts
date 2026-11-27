@@ -20,7 +20,7 @@ export type TagColor = TagPresetColor | TagStatusColor | (string & {});
 export type TagVariant = 'filled' | 'outlined' | 'solid';
 export type TagCloseIcon = boolean | string | number | null | Snippet;
 
-/** ARIA-настройки close control; disabled/afterClose у Tag не используются, как upstream. */
+/** ARIA-configuration close control; disabled/afterClose at Tag is not used as upstream. */
 export interface TagCloseConfig extends AriaAttributes {
   closeIcon?: TagCloseIcon;
   disabled?: boolean;
@@ -31,7 +31,7 @@ export type TagClosable = boolean | TagCloseConfig | null;
 
 export type CheckableTagValue = string | number;
 
-/** Значение сохраняет тип; label может содержать декоративный Snippet. */
+/** The value retains the type; the label can contain decorative Snippet. */
 export interface CheckableTagOption<Value extends CheckableTagValue = CheckableTagValue> {
   value: Value;
   label: string | number | boolean | Snippet | null | undefined;
@@ -49,11 +49,11 @@ export type CheckableTagGroupSemantic<Value extends CheckableTagValue = Checkabl
   | ((info: { props: CheckableTagGroupProps<Value>; }) => CheckableTagGroupSlots);
 
 interface CheckableTagGroupBaseProps<Value extends CheckableTagValue> extends AriaAttributes {
-  /** Локальный prefix; иначе ConfigProvider. Дочерние CheckableTag получают prefix независимо. */
+  /** Local prefix, otherwise ConfigProvider. Daughters CheckableTag receive prefix independently. */
   prefixCls?: string;
-  /** Стабильные уникальные values; строка и число с одинаковым текстом различаются. */
+  /** Stable unique values; the string and number with the same text differ. */
   options?: readonly (Value | CheckableTagOption<Value>)[];
-  /** Отсутствие наследует componentDisabled у меток; group class отражает только этот prop. */
+  /** Lack inherits componentDisabled in tags; group class only reflects this prop. */
   disabled?: boolean;
   id?: string;
   role?: HTMLAttributes<HTMLDivElement>['role'];
@@ -62,12 +62,12 @@ interface CheckableTagGroupBaseProps<Value extends CheckableTagValue> extends Ar
   style?: string;
   classNames?: CheckableTagGroupSemantic<Value>;
   styles?: CheckableTagGroupSemantic<Value>;
-  /** Bindable div; доступен после mount и очищается при unmount. */
+  /** Bindable div; is available after mount and cleared at unmount. */
   nativeElement?: HTMLDivElement;
   [key: `data-${string}`]: unknown;
 }
 
-/** Выбор через CheckableTag: value управляется владельцем, defaultValue — только начальное. */
+/** Choices through CheckableTag: value is managed by the owner, defaultValue - only the initial. */
 export type CheckableTagGroupProps<Value extends CheckableTagValue = CheckableTagValue> =
   CheckableTagGroupBaseProps<Value> & ({
     multiple?: false;
@@ -83,21 +83,21 @@ export type CheckableTagGroupProps<Value extends CheckableTagValue = CheckableTa
 
 export interface TagSlots {
   root?: string;
-  /** Декоративная wrapper-граница icon Snippet. */
+  /** Decorative wrapper-border icon Snippet. */
   icon?: string;
-  /** Применяется при наличии icon, как исходный content slot. */
+  /** Applied in the presence of icon, as the original content slot. */
   content?: string;
-  /** Нативная кнопка закрытия с прежней геометрией и focus behavior. */
+  /** Native closure button with previous geometry and focus behavior. */
   close?: string;
 }
 
-/** Callback получает props с разрешёнными color, variant и disabled; CSS задаётся строками. */
+/** Callback receives props with allowed, color and disabled; CSS is specified lines. */
 export type TagSemantic = TagSlots | ((info: { props: TagProps; }) => TagSlots | undefined);
 
 /**
- * Наследуемый record; явный объект, включая {}, заменяет родительский.
- * CheckableTag использует только class/style. Root style: context styles.root,
- * context style, local styles.root, local style; рассчитанный цвет идёт перед ними.
+ * Inherited record; an explicit object, including {}, replaces the parent record. CheckableTag uses
+ * only class/style. Root style: context styles.root, context style, local styles.root, local style;
+ * the calculated color goes in front of them.
  */
 export interface TagConfig {
   class?: string;
@@ -109,37 +109,37 @@ export interface TagConfig {
   closeIcon?: TagCloseIcon;
 }
 
-/** Метка с цветом, icon и отменяемым закрытием. */
+/** Mark with color, icon and canceled closure. */
 export interface TagProps extends Omit<
   HTMLAttributes<HTMLSpanElement | HTMLAnchorElement>, 'children' | 'class' | 'style' | 'color'
 > {
   children: Snippet;
-  /** Локальный component prefix; пустая строка наследует ConfigProvider. */
+  /** Local component prefix; an empty line inherits ConfigProvider. */
   prefixCls?: string;
-  /** Preset, status или CSS-цвет; отсутствие сохраняет прежний default class. */
+  /** Preset, status or CSS-color; the absence preserves the previous default class. */
   color?: TagColor;
-  /** Локальный variant имеет приоритет над context variant, затем filled. */
+  /** Local variant takes precedence over the context variant, then filled. */
   variant?: TagVariant;
   rootClassName?: string;
   classNames?: TagSemantic;
   styles?: TagSemantic;
   icon?: Snippet;
-  /** Отсутствие наследует context; false/null скрывают control, если closable не задан. */
+  /** Absence inherits the context; false/null hide the control if the closable is not specified. */
   closeIcon?: TagCloseIcon;
-  /** Boolean или исходный close config; локальное false перекрывает context. */
+  /** Boolean or original close config; local false overrides context. */
   closable?: TagClosable;
-  /** Имеет приоритет над closable['aria-label'] и locale.closeText. */
+  /** Prioritize over closable['aria-label'] and locale.closeText. */
   closeLabel?: string;
-  /** Непустой href выбирает корневой anchor; disabled убирает href и добавляет aria-disabled. */
+  /** Non-empty href chooses root anchor disabled; removes href and adds aria-disabled. */
   href?: string;
   target?: string;
-  /** Bindable native span/anchor; меняется вместе с типом корня и очищается при unmount. */
+  /** Bindable native span/anchor; changes together with root type and is cleaned at unmount. */
   nativeElement?: HTMLSpanElement | HTMLAnchorElement;
   disabled?: boolean;
   onClose?: (event: MouseEvent) => void;
-  /** Click по метке; закрытие не всплывает сюда. Включает source Wave. */
+  /** Click by tag; closure doesn't pop up here. Includes source Wave. */
   onClick?: HTMLAttributes<HTMLSpanElement | HTMLAnchorElement>['onclick'];
-  /** Нативный alias; при совместной передаче имеет приоритет над onClick. */
+  /** Native alias; when transferring together takes precedence over onClick. */
   onclick?: HTMLAttributes<HTMLSpanElement | HTMLAnchorElement>['onclick'];
   id?: string;
   'aria-label'?: string;
@@ -149,12 +149,12 @@ export interface TagProps extends Omit<
   style?: string;
 }
 
-/** Управляемая метка-фильтр: новое checked передаётся через onChange. */
+/** Controlled filter tag. onChange receives the new checked value. */
 export interface CheckableTagProps extends Omit<
   HTMLAttributes<HTMLButtonElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный component prefix; пустая строка наследует ConfigProvider. */
+  /** Local component prefix; an empty line inherits ConfigProvider. */
   prefixCls?: string;
   children: Snippet;
   /** @defaultValue false */
@@ -162,11 +162,11 @@ export interface CheckableTagProps extends Omit<
   disabled?: boolean;
   icon?: Snippet;
   onChange?: (checked: boolean) => void;
-  /** После onChange для click; onclick имеет приоритет. Space не вызывает onClick. */
+  /** After onChange for click; onclick takes precedence. Space doesn't cause onClick. */
   onClick?: HTMLAttributes<HTMLButtonElement>['onclick'];
-  /** До обработки Space; preventDefault отменяет переключение. onkeydown имеет приоритет. */
+  /** Prior to Space processing; preventDefault cancels the switch. onkeydown takes priority. */
   onKeyDown?: HTMLAttributes<HTMLButtonElement>['onkeydown'];
-  /** Bindable ссылка на нативную кнопку; очищается при unmount. */
+  /** Bindable link to the native button; cleared at unmount. */
   nativeElement?: HTMLButtonElement;
   id?: string;
   'aria-label'?: string;

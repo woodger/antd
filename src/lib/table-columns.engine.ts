@@ -1,7 +1,7 @@
-// Готовит дерево колонок для обработки данных и для разметки. Скрытие и media
-// queries не меняют ключи сортировки и фильтров. Служебные колонки занимают
-// физический лист сетки только в режимах выбора и раскрытия подробностей.
-// Ant Design 6.6.8, rc-table 1.11.1. MIT, vendor/LICENSE.ant-design.
+// Prepares tree columns for data processing and for markup. Hiding and media queries do not change
+// sorting keys and filters. Service columns occupy a physical sheet of the mesh only in the modes
+// of selection and disclosure of details. Ant Design 6.6.8, rc-table 1.11.1. MIT,
+// vendor/LICENSE.ant-design.
 import type { GridScreenMap } from './grid.types';
 import type {
   TableColumn, TableColumnDefaults, TableColumnInput, TableColumnsType, TableFixed, TableKey
@@ -10,7 +10,7 @@ import type {
 const serviceRole = Symbol('Table column role');
 export type TableServiceColumn = 'selection' | 'expand';
 
-/** Маркер сохраняет роль при передаче колонки через state proxy Svelte. */
+/** The marker retains its role when transferring the column through state proxy Svelte. */
 function serviceMarker<Role extends TableServiceColumn>(role: Role) {
   return Object.freeze({ key: role, title: '', [serviceRole]: role });
 }
@@ -18,18 +18,18 @@ function serviceMarker<Role extends TableServiceColumn>(role: Role) {
 export const SELECTION_COLUMN = serviceMarker('selection');
 export const EXPAND_COLUMN = serviceMarker('expand');
 
-/** Отличает маркер от пользовательской колонки даже при совпадении key. */
+/** Distinguishes the marker from the custom column even when the key coincides. */
 function getServiceRole(column: object | undefined): TableServiceColumn | undefined {
   const role = column && serviceRole in column ? column[serviceRole] : undefined;
   return role === 'selection' || role === 'expand' ? role : undefined;
 }
 
-/** Копирует только заданные значения по правилам mergeProps в Source. */
+/** Copies only the specified values according to the rules mergeProps in Source. */
 function getDefinedColumnProps(column: object) {
   return Object.fromEntries(Object.entries(column).filter(([, value]) => value !== undefined));
 }
 
-/** Заполняет группы и листья одним набором props, сохраняя служебные маркеры. */
+/** Fills groups and leaves with one set of props, keeping service markers. */
 function fillColumnDefaults<Row extends object>(
   columns: readonly TableColumnInput<Row>[],
   defaults: Partial<TableColumnInput<Row>> | undefined
@@ -41,14 +41,14 @@ function fillColumnDefaults<Row extends object>(
   const { children: _children, ...defaultsWithoutChildren } = defaults;
   const shared = getDefinedColumnProps(defaultsWithoutChildren);
 
-  /** Переопределяет общие props локальными и обходит собственное дерево группы. */
+  /** Redefines the total props local and bypasses its own group tree. */
   function fillColumn(column: TableColumnInput<Row>): TableColumnInput<Row> {
     if (getServiceRole(column)) {
       return column;
     }
 
     const own = getDefinedColumnProps(column);
-    // Object.entries теряет типы ключа и свойств исходной колонки.
+    // Object.entries loses the key types and properties of the original column.
     const filled = { ...shared, ...own } as TableColumnInput<Row>;
     const children = column.children;
     if (Array.isArray(children)) {
@@ -61,14 +61,14 @@ function fillColumnDefaults<Row extends object>(
   return columns.map(fillColumn);
 }
 
-/** Сохраняет объект колонки, если её ключ и ключи потомков уже строковые. */
+/** Saves the object of the column if its key and descendants keys are already string. */
 function hasStringColumnKeys<Row extends object>(
   column: TableColumnInput<Row>
 ): column is TableColumn<Row> {
   return typeof column.key === 'string' && (column.children?.every(hasStringColumnKeys) ?? true);
 }
 
-/** Переводит явный числовой ключ в строковый ключ состояния, сохраняя 0 и ''. */
+/** Converts an explicit numeric key to a string state key, preserving 0 and ''. */
 function readExplicitKey(key: TableKey | null | undefined): string | undefined {
   if (key === null || key === undefined) {
     return undefined;
@@ -80,7 +80,7 @@ function readExplicitKey(key: TableKey | null | undefined): string | undefined {
   throw new Error('Table column key must be a string or finite number');
 }
 
-/** Проверяет глобальную уникальность ключа среди групп и листьев. */
+/** Verifies the global uniqueness of the key among groups and leaves. */
 function reserveColumnKey(keys: Set<string>, key: string) {
   if (keys.has(key)) {
     throw new Error(`Table column key "${key}" is not unique`);
@@ -88,7 +88,7 @@ function reserveColumnKey(keys: Set<string>, key: string) {
   keys.add(key);
 }
 
-/** Резервирует явные ключи до вычисления ключей из dataIndex и позиции. */
+/** Reserves explicit keys before calculating keys from dataIndex and positions. */
 function collectExplicitKeys<Row extends object>(
   columns: readonly TableColumnInput<Row>[],
   keys: Set<string>
@@ -108,7 +108,7 @@ function collectExplicitKeys<Row extends object>(
   }
 }
 
-/** Использует путь или поле для состояния. Для dataIndex 0 и '' Source берёт позицию. */
+/** Uses the path or field for the state. For dataIndex 0 and '' Source takes a position. */
 function getInferredColumnKey(
   dataIndex: PropertyKey | readonly (string | number)[] | undefined,
   position: string
@@ -123,7 +123,7 @@ function getInferredColumnKey(
   return position;
 }
 
-/** Сохраняет независимые состояния колонок, даже когда совпадают выведенные ключи. */
+/** Retains the independent states of the columns, even when the output keys coincide. */
 function reserveInferredColumnKey(
   keys: Set<string>,
   dataIndex: PropertyKey | readonly (string | number)[] | undefined,
@@ -137,7 +137,7 @@ function reserveInferredColumnKey(
   return key;
 }
 
-/** Разрешает ключи полного дерева до сортировки, скрытия и размещения служебных колонок. */
+/** Allows the keys of the full tree before sorting, hiding and placing service columns. */
 export function resolveTableColumns<Row extends object>(
   columns: readonly TableColumnInput<Row>[],
   defaults: TableColumnDefaults<Row> | undefined
@@ -150,7 +150,7 @@ export function resolveTableColumns<Row extends object>(
   const keys = new Set<string>();
   collectExplicitKeys(configured, keys);
 
-  /** Сохраняет позицию группы при рекурсивной обработке её потомков. */
+  /** Retains the position of the group during the recursive processing of its descendants. */
   function resolve(
     items: readonly TableColumnInput<Row>[],
     parent?: string
@@ -200,12 +200,12 @@ export interface TableHeading<Row extends object> {
   group: boolean;
 }
 
-/** Обходит и группы, и листья, включая скрытые определения. */
+/** Bypasses both groups and leaves, including hidden definitions. */
 export function getTableColumnOrder<Row extends object>(columns: TableColumnsType<Row>) {
   const ordered: TableColumn<Row>[] = [];
   const keys = new Set<string>();
 
-  // Ключ управляет sort/filter и DOM identity независимо от глубины.
+  // The key is governed by sort/filter and DOM identity regardless of depth.
   function visit(items: TableColumnsType<Row>) {
     for (const column of items) {
       if (getServiceRole(column)) {
@@ -224,7 +224,7 @@ export function getTableColumnOrder<Row extends object>(columns: TableColumnsTyp
   return ordered;
 }
 
-/** Подставляет колонку подробностей в marker или в её стандартную позицию. */
+/** Substitutes a column of details in the marker or in its standard position. */
 function placeExpansion<Row extends object>(
   columns: TableColumn<Row>[], options: NonNullable<TableColumnServices<Row>['expansion']>
 ) {
@@ -243,7 +243,7 @@ function placeExpansion<Row extends object>(
   columns.splice(index, slot === -1 ? 0 : 1, column);
 }
 
-/** Размещает выбор после начального expand и наследует fixed соседних колонок. */
+/** Places the choice after the initial update and inherits the neighboring columns. */
 function placeSelection<Row extends object>(
   columns: TableColumn<Row>[], options: NonNullable<TableColumnServices<Row>['selection']>
 ) {
@@ -261,7 +261,7 @@ function placeSelection<Row extends object>(
   columns.splice(index, slot === -1 ? 0 : 1, { ...SELECTION_COLUMN, ...options, fixed });
 }
 
-/** Обрабатывает верхний уровень по порядку Source, начиная с видимых определений. */
+/** Handles the upper level in order of Source, starting with visible definitions. */
 function prepareColumns<Row extends object>(
   columns: TableColumnsType<Row>, screens: GridScreenMap, services: TableColumnServices<Row>
 ) {
@@ -289,14 +289,14 @@ function prepareColumns<Row extends object>(
   return prepared;
 }
 
-/** Возвращает уровни шапки и порядок ячеек тела после скрытия колонок. */
+/** Returns the levels of the hat and the order of the cells of the body after hiding the columns. */
 export function getTableColumnLayout<Row extends object>(
   columns: TableColumnsType<Row>, screens: GridScreenMap, services: TableColumnServices<Row> = {}
 ) {
   const leaves: TableLeaf<Row>[] = [];
   const headings: TableHeading<Row>[][] = [];
 
-  // rc-table оставляет заголовок группы как отдельную колонку после скрытия всех детей.
+  // rc-table leaves the group title as a separate column after hiding all the children.
   function visit(
     column: TableColumn<Row>,
     depth: number,
@@ -332,7 +332,7 @@ export function getTableColumnLayout<Row extends object>(
           changed = true;
         }
       }
-      // onHeaderRow видит оставшихся потомков; onHeaderCell сохраняет исходную колонку.
+      // onHeaderRow sees the remaining descendants; onHeaderCell preserves the original column.
       if (changed) {
         heading.visibleColumn = { ...column, children: visibleChildren };
       }

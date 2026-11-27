@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Координирует native dialog, маску и показ содержимого Drawer. Запрос закрытия проходит через
-  // callbacks владельца.
+  // Coordinates Drawer's native dialog, mask, and content visibility. Close requests go through the
+  // owner's callbacks.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import DrawerPanel from './DrawerPanel.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -125,7 +125,7 @@
   const sizeInCss = $derived(getDrawerSize(panelSize, allowZero));
   const horizontal = $derived(isDrawerHorizontal(placement));
   const resizeCallbacks = $derived(typeof resizable === 'object' ? resizable : undefined);
-  // Это фаза фактической DOM-анимации, а не копия запрошенного open.
+  // Tracks the phase of the running DOM animation independently of the requested open value.
   let closing = $state(false);
   let runtime = $state.raw<ReturnType<typeof createDrawerDialog>>();
   let backdropPointer: number | undefined;
@@ -226,7 +226,7 @@
   }
 
   function paintMotion(surface: 'panel' | 'mask', state: CssMotionState, commit?: boolean) {
-    // Измерения пользовательского prepare выполняются после записи класса в DOM.
+    // Custom prepare measurements run after the class has been written to the DOM.
     function update() {
       if (surface === 'panel') {
         panelCss = state;
@@ -271,7 +271,7 @@
     return connection.destroy;
   }
 
-  // Содержимое остаётся смонтированным до завершения ухода панели.
+  // Content stays mounted until the panel finishes leaving.
   $effect.pre(() => {
     const node = dialog;
     const requested = open;
@@ -285,7 +285,7 @@
     const requested = open;
     const side = placement;
     const current = runtime;
-    // Смена mask или focusable должна обновить режим открытого dialog.
+    // Changing mask or focusable must update the mode of an open dialog.
     void interaction;
     void transitionOptions;
     if (!node || !current || !container.connected || !node.isConnected) {
@@ -298,7 +298,7 @@
   });
 
   $effect(() => {
-    // Markup уже обновил inline CSS, активная анимация уступает явно заданным свойствам.
+    // The markup has already updated inline CSS. Explicit properties take precedence over the active animation.
     void styles.wrapper;
     void styles.mask;
     const current = runtime;
@@ -307,7 +307,7 @@
 
   $effect(() => {
     if (parentDrawer && open && dialog && container.connected) {
-      // Одновременно открытые дети освобождают только свою регистрацию.
+      // Open children each release only their own registration.
       return untrack(() => parentDrawer.registerChild());
     }
   });
@@ -455,7 +455,7 @@
   }
 </style>
 
-<!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
+<!-- The keyed range contains only the dialog being moved. The head style anchors stay outside. -->
 <NoCompactStyle>
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`drawer-prefix:${componentPrefix}`} />{/if}{#key container.key}<dialog
   {...attributes.dialog}

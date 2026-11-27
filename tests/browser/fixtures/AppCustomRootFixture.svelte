@@ -23,12 +23,12 @@
     components: { App: { fontSize: 20, fontFamily: 'monospace', lineHeight: 2 } }
   };
 
-  /** Контейнер запрашивается holders после монтирования. */
+  /** Container is requested by holders after mounting. */
   function getNoticeContainer() {
     return document.getElementById('app-notice-container');
   }
 
-  /** Фиксирует API первого дерева и сравнивает его с API после пересоздания holders. */
+  /** Fixes API of the first tree and compares it to API after re-creating holders. */
   function connect(api: AppInstance) {
     firstApi ??= api;
     currentApi = api;

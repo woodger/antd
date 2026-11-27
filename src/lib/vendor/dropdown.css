@@ -1,9 +1,9 @@
-/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.
- * Базовые стили Dropdown и плоского меню из официального dist/antd.css.
- * Селекторы css-var-_R_0_.ant-dropdown заменены на .ant-dropdown.
- * Корень ограничен :where(.ant-dropdown-css-var), чтобы сохранить стили фильтров Table.
- * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
- * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
+/* Ant Design 6.6.8 under MIT. See LICENSE.ant-design.
+ * Base Dropdown and flat menu styles from the official dist/antd.css.
+ * The css-var-_R_0_.ant-dropdown selectors are replaced with .ant-dropdown.
+ * The root is scoped with :where(.ant-dropdown-css-var) to preserve Table filter styles.
+ * Source: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz
+ * Archive SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa
  */
 .ant-dropdown:where(.ant-dropdown-css-var) {
   position:absolute;

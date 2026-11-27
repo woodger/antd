@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Задаёт публичные позиции и контролируемое раскрытие для замеров Menu.
+  // Sets public positions and controlled disclosure for Menu measurements.
   import { untrack } from 'svelte';
   import {
     ConfigProvider,
@@ -59,7 +59,7 @@
     }
   ]);
 
-  // В карте замера присутствуют только переданные позиции.
+  // There are only transferred items in the measurement map.
   function readSample(options: typeof source.cases[number]['options']): AlignmentSample {
     const { builtinPlacements, ...sample } = options;
     if (!builtinPlacements) {
@@ -76,7 +76,7 @@
     return { ...sample, builtinPlacements: placements };
   }
 
-  // Переключает кейс, сбрасывая состояние предыдущего измерения.
+  // Switches the case, resetting the state of the previous measurement.
   function selectSample(event: Event & { currentTarget: HTMLSelectElement; }) {
     sampleId = event.currentTarget.value;
     changedOffset = false;

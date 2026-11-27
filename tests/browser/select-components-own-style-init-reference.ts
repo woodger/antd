@@ -52,10 +52,10 @@ interface RepeatProof { mode: OwnStyleInitMode; path: string; bytes: number; sha
   changes?: RepeatChanges;
   totalComputedArrays: number; customOrderPermutations: number; otherRawDifferences: number;
   allStandardNamesValuesPrioritiesAndOrderEqual: boolean; allCustomNamesValuesAndPrioritiesEqual: boolean }
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const protocol = '345e89218b2c7a76172070d95cfa58d815db579997f65ded00596bf57b8b8351';
 const manifestBytes = readFileSync(fixture('ant-design-select-components-own-style-init-source-manifest.json'));
@@ -120,7 +120,7 @@ for (const [mode, expected] of Object.entries(proofPins)) {
   assert.equal(proof.allStandardNamesValuesPrioritiesAndOrderEqual, true);
   assert.equal(proof.allCustomNamesValuesAndPrioritiesEqual, true);
 }
-/** Сверяет первый захват с независимыми контрольными суммами файла и исходного JSON. */
+/** Verifies the first capture with independent file control sums and the original JSON. */
 function canonicalCopy(mode: OwnStyleInitMode): Copy {
   const copy = manifest.copies.find(value => value.mode === mode && value.variant === 'first');
   assert(copy);
@@ -253,7 +253,7 @@ export function readSelectComponentsOwnStyleInitCase(
   assert(result);
   return result;
 }
-/** Смещения и длины замен измерены в байтах исходного UTF-8, включая отступы и переводы строк. */
+/** Displacements and replacement lengths are measured in bytes of the original UTF-8, including indents and line translations. */
 function readRepeatChanges(record: RepeatChanges, captureBytes: number) {
   const raw = readReferenceBytes(record.file);
   assert.equal(raw.length, record.bytes);
@@ -272,7 +272,7 @@ function readRepeatChanges(record: RepeatChanges, captureBytes: number) {
   return changes;
 }
 
-/** Проверяет исходный SHA-256 повторного замера, не загружая второй граф гидратации в память. */
+/** Verifies the original SHA-256 re-measuring without loading the second hydration graph into memory. */
 export async function verifySelectComponentsOwnStyleInitRepeat(mode: 'csr' | 'hydrate') {
   const copy = canonicalCopy(mode);
   const proof = manifest.repeatProofs.find(value => value.mode === mode);
@@ -289,7 +289,7 @@ export async function verifySelectComponentsOwnStyleInitRepeat(mode: 'csr' | 'hy
       firstHash.update(chunk);
       const end = position + chunk.length;
 
-      // Замена может пересекать границу чанка распаковщика.
+      // A replacement can cross a decompression chunk boundary.
       while (next < changes.length && changes[next].offset < end) {
         const { offset, bytes } = changes[next];
         const start = Math.max(position, offset);

@@ -1,5 +1,5 @@
-// Определяет счётчик, превышение лимита и локальный clear для Input. Во время IME-композиции
-// значение не обрезается.
+// Determines the meter, limit exceedance and local clear for Input. During the IME-composition, the
+// value is not circumcised.
 import type {
   InputAllowClear,
   InputCountConfig,
@@ -7,7 +7,7 @@ import type {
   InputShowCount
 } from './input-count.types';
 
-// Применяет настройки count после showCount и выбирает стратегию подсчёта.
+// Applies count settings after showCount and selects the calculation strategy.
 export function resolveInputCount(
   count: InputCountConfig | undefined,
   showCount: InputShowCount | undefined
@@ -28,7 +28,7 @@ export function resolveInputCount(
   };
 }
 
-// Передаёт formatter исходный текст, рассчитанное количество и действующий maxLength.
+// Passes the original text, computed count, and effective maxLength to the formatter.
 export function inputCountInfo(
   value: string,
   count: InputCountConfig | undefined,
@@ -62,7 +62,7 @@ export function inputCountInfo(
   };
 }
 
-// При превышении заданного count.max применяет пользовательский formatter после композиции.
+// When you exceed the specified count.max, apply a custom formatter after the composition.
 export function inputExceedValue(
   value: string,
   count: InputCountConfig | undefined,
@@ -80,8 +80,7 @@ export function inputExceedValue(
   return value;
 }
 
-// Локальный false отключает унаследованный clear. Включённый clear получает defaults из
-// контекста.
+// Local false disables inherited clear. Included clear gets defaults out of context.
 export function resolveInputClear(
   local: boolean | InputAllowClear | undefined,
   context: boolean | InputAllowClear | undefined

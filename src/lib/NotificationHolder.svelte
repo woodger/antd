@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Одна поверхность и один владелец таймеров для всех placements. Смена цели
-  // portal пересоздаёт списки, сохраняя внешний экземпляр и его очередь.
+  // One surface and one timer owner serve all placements. Changing the portal target recreates
+  // lists while retaining the outer instance and its queue.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getNotificationPrefixCss } from './notification-prefix.engine';

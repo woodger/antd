@@ -8,7 +8,7 @@ import { createServer, type ViteDevServer } from 'vite';
 import type { GeneratedPickerHydrationProfile } from './fixtures/GeneratedPickerFixtures.svelte';
 import { expect, test } from './test';
 
-/** Проверяет, что гидратация открытой панели сохраняет SSR узлы и состояние редактора. */
+/** Verifies that open panel hydration preserves SSR nodes and editor status. */
 async function verifyGeneratedPickerHydration(page: Page, profile: GeneratedPickerHydrationProfile) {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-generated-picker-'));
   const originals: ElementHandle[] = [];

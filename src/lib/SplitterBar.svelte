@@ -100,7 +100,7 @@
 </script>
 
 <style>
-  /* Native button сохраняет геометрию исходного div role=button. */
+  /* The native button preserves the geometry of the upstream div with role=button. */
   [data-ant-splitter-collapse] {
     border: 0;
     padding: 0;

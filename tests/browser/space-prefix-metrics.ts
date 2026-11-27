@@ -1,10 +1,9 @@
 export function snapshotSpacePrefix() {
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !name.startsWith('css-') && !/^s-[\w-]{12}$/.test(name)
       && !name.endsWith('-css-var') && !name.endsWith('-source-theme')).sort();
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const style = (node: Element, properties: string[]) => {
     const computed = getComputedStyle(node);
     return Object.fromEntries(properties.map(property => [

@@ -5,7 +5,7 @@
   type Context = { attributes: object; register: (registration: Element) => () => void };
   type Intrinsic = { element: string; ref?: (node: Element | null) => void };
   type Renderer = Snippet<[never]>;
-  // Own props уже объединены вызывающим полем; renderer использует только context.attributes.
+  // The calling field already merged its own props. The renderer uses only context.attributes.
   type Component = string | Renderer | (Intrinsic & { props?: object })
     | { render: Renderer; props?: object };
   let { component, context, root = false }: {
@@ -44,9 +44,9 @@
       defaultvalue?: string | number | string[] | null;
       [key: string]: unknown
     };
-    // Стили editor применяет контроллер до публичного ref.
+    // The controller applies editor styles before calling the public ref.
     if (!root && typeof document !== 'undefined') delete attributes.style;
-    // React сохраняет последний defaultValue на прежнем uncontrolled DOM input.
+    // React retains the last defaultValue on the existing uncontrolled DOM input.
     const initialValue = defaultValue ?? defaultvalue ?? retainedInputDefaultValue;
     const result = { ...attributes, ...(value != null ? { value,
       ...(!root && typeof document !== 'undefined' ? { defaultValue: value } : {}) }
@@ -54,7 +54,7 @@
     if (root || typeof document !== 'undefined') {
       return result;
     }
-    // Dynamic input не получает compiler input-flag для SSR defaults.
+    // A dynamic input lacks the compiler's input flag for SSR defaults.
     const entries = Object.entries(result);
     return Object.fromEntries(entries.flatMap(([name, value]) => {
       const lower = name.toLowerCase();
@@ -77,7 +77,7 @@
     const text = String(textarea.value ?? '');
     return typeof document === 'undefined' && text.startsWith('\n') ? '\n' + text : text;
   });
-  // Один renderer принимает совместимый root/input context на framework boundary.
+  // One renderer accepts a compatible root or input context at the framework boundary.
   let render = $derived((typeof component === 'function' ? component
     : typeof component === 'object' && 'render' in component ? component.render : undefined) as Snippet<[Context]> | undefined);
 
@@ -127,7 +127,7 @@
     : { ...textarea.attributes, value: textarea.value });
   function setupHydratedEditor(node: globalThis.Element) {
     if (renderedOnClient) {
-      // Пустой CSR placeholder не получает attrs/ref; новый DOM создаёт прежняя ветка.
+      // The empty CSR placeholder receives no attributes or ref. The existing branch creates the new DOM.
       constructorRequested = true;
       return;
     }
@@ -139,7 +139,7 @@
     const writer = untrack(() => createSelectComponentHydration(editor, initial));
     const current = { node: editor, attributes: initial, writer };
     hydration = current;
-    // Как attachment: register/CSS prepare/authored ref получают connected DOM.
+    // Like an attachment, registration, CSS preparation, and the authored ref receive connected DOM.
     $effect(() => attachElement(editor));
     return () => {
       writer.destroy();

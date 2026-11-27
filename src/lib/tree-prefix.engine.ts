@@ -1,6 +1,6 @@
 import template from './vendor/tree-prefix.css.js';
 
-/** Tree/checkbox classes локальны; общий Row selector и canonical tokens независимы. */
+/** Tree/checkbox classes are local; general Row selector and canonical tokens are independent. */
 export function getTreePrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-tree' && rootPrefix === 'ant') {
     return undefined;

@@ -17,61 +17,61 @@ export type ModalSemanticName =
   'root' | 'wrapper' | 'mask' | 'container' | 'close' | 'header' | 'title' | 'body' | 'footer';
 export type ModalSemanticSlots = Partial<Record<ModalSemanticName, string>>;
 
-/** Карта классов или CSS-деклараций и вариант с актуальными props. */
+/** Map of classes or CSS-declarations and version with current props. */
 export type ModalSemantic = ModalSemanticSlots
   | ((info: { props: ModalProps; }) => ModalSemanticSlots | undefined);
 
-/** Атрибуты нативной оболочки. Состояние модальности и lifecycle принадлежат Modal. */
+/** Attributes of the native shell. The state of modalities and lifecycle belongs to Modal. */
 export type ModalWrapProps = Omit<HTMLAttributes<HTMLDialogElement>,
   'children' | 'inert' | 'aria-hidden' | 'aria-modal' | 'oncancel' | 'onclose'>;
 export type ModalPartProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
-/** Оформление и расширение DOM обычного Modal и подтверждений. */
+/** Registration and expansion DOM of the usual Modal and confirmations. */
 export interface ModalSurfaceProps {
   rootClassName?: string;
   rootStyle?: string;
   wrapClassName?: string;
-  /** Inline CSS панели внутри нативной оболочки. */
+  /** Inline CSS panels inside the native shell. */
   style?: string;
   classNames?: ModalSemantic;
-  /** CSS-декларации каждого слота задаются строкой. */
+  /** CSS-declarations of each slot are given by the line. */
   styles?: ModalSemantic;
   wrapProps?: ModalWrapProps;
   bodyProps?: ModalPartProps;
   maskProps?: ModalPartProps;
-  /** Получает штатный контейнер для обёртки или полной замены. */
+  /** Receives the default container to wrap or replace it. */
   modalRender?: Snippet<[content: Snippet]>;
 }
 
-/** Настроенные кнопки футера с теми же действиями, что и при стандартной отрисовке. */
+/** Configured footer buttons with the same actions as with standard drawing. */
 export interface ModalFooterButtons {
   OkBtn: Snippet;
   CancelBtn: Snippet;
 }
 
-/** Футер может использовать штатную группу или разместить кнопки по отдельности. */
+/** The footer can use the built-in group or place buttons individually. */
 export type ModalFooter = Snippet<[defaultFooter: Snippet, buttons: ModalFooterButtons]>;
 
-/** Настройки кнопки закрытия. Колбэки берутся из локального closable. */
+/** Close button settings. Callbacks come from local closable. */
 export interface ModalClosableConfig extends AriaAttributes {
   closeIcon?: ModalContent;
   disabled?: boolean;
   role?: AriaRole | null;
-  /** Обычный Modal вызывает колбэк после onOk или onCancel. */
+  /** The usual Modal causes a colback after onOk or onCancel. */
   onClose?: () => void;
-  /** Вызывается после закрытия окна перед его afterClose. */
+  /** Is called after closing the window in front of its afterClose. */
   afterClose?: () => void;
 }
 
 export type ModalClosable = boolean | ModalClosableConfig;
 
-/** Координаты страницы для начала масштабирования панели. */
+/** Page coordinates to start scaling the panel. */
 export interface ModalMousePosition {
   x: number;
   y: number;
 }
 
-/** Унаследованные настройки Modal и контекстных подтверждений из ConfigProvider. */
+/** Inherited settings of Modal and contextual confirmations from ConfigProvider. */
 export interface ModalConfig {
   mask?: ModalMask;
   focusable?: ModalFocusableConfig;
@@ -90,52 +90,52 @@ export interface ModalConfig {
   styles?: ModalSemantic;
 }
 
-/** Модальный native dialog с управлением open и snippets содержимого/footer. */
+/** Modal native dialog with open and snippets of content/footer. */
 export interface ModalProps extends ModalSurfaceProps {
-  /** Локальный префикс Modal и частей; пустая строка наследует ConfigProvider. */
+  /** Local prefix Modal and parts; an empty line inherits ConfigProvider. */
   prefixCls?: string;
-  /** Поддерживает bind:open. */
+  /** Maintenances bind:open. */
   open?: boolean;
-  /** Необязательный заголовок; scalar или Snippet. Zero остаётся видимым. */
+  /** Obligatory title; scalar or Snippet. Zero remains visible. */
   title?: ModalContent;
   children?: Snippet;
-  /** Непустое явное имя перекрывает автоматически связанный title. */
+  /** The non-empty explicit name overlaps the automatically linked title. */
   'aria-label'?: string;
-  /** Явный id перекрывает автоматически связанный title. */
+  /** Explicit id overlaps the automatically linked title. */
   'aria-labelledby'?: string;
   footer?: ModalFooter | null;
-  /** Пиксели, CSS-длина или значения по breakpoint Grid. @defaultValue 520 */
+  /** Pixels, CSS-length or breakpoint Grid values. @defaultValue 520 */
   width?: ModalWidth;
-  /** Высота панели в пикселях или CSS-длина. */
+  /** Panel Height in pixels or CSS-Length. */
   height?: number | string;
-  /** False размещает панель сверху, true центрирует. Наследуется из ConfigProvider.modal. */
+  /** False places the panel from above, true centers. Inherited from ConfigProvider.modal. */
   centered?: boolean;
-  /** Числовой слой диалога и база для вложенных popup. */
+  /** Numerical layer of dialogue and base for nested popup. */
   zIndex?: number;
   /** @defaultValue true */
   closable?: ModalClosable;
-  /** Null и false скрывают кнопку, если closable явно не включён. */
+  /** Null and false hide the button if the closable is not explicitly turned on. */
   closeIcon?: ModalContent;
   /** @defaultValue true */
   keyboard?: boolean;
-  /** Управляет видимой маской, её размытием и закрытием по фону. */
+  /** Manages the visible mask, its blurring and closing on the background. */
   mask?: ModalMask;
   focusable?: ModalFocusableConfig;
-  /** Блокирует прокрутку страницы, пока открыт диалог. @defaultValue true */
+  /** Block the scrolling page while the dialog is open. @defaultValue true */
   scrollLock?: boolean;
   /** @defaultValue false */
   confirmLoading?: boolean;
-  /** Показывает Skeleton тела и скрывает footer. */
+  /** Shows Skeleton bodies and hides footer. */
   loading?: boolean;
-  /** Задаёт предварительный монтаж. Без обоих параметров lifecycle он включён. */
+  /** Specifies the preliminary installation. Without both parameters, lifecycle it is included. */
   forceRender?: boolean;
-  /** Удаляет содержимое после закрытия. При forceRender=true содержимое сохраняется. */
+  /** Removes content after closing. At forceRender = true the content is stored. */
   destroyOnHidden?: boolean;
-  /** Имя CSS-перехода панели. Пустая строка отключает движение панели. */
+  /** Name CSS-transition panel. An empty line disables panel movement. */
   transitionName?: string;
-  /** Имя независимого CSS-перехода маски. Пустая строка отключает движение маски. */
+  /** Name of independent CSS-transition of the mask. An empty string disables the movement of the mask. */
   maskTransitionName?: string;
-  /** Null и undefined используют положение недавнего клика. */
+  /** Null and undefined use the position of a recent click. */
   mousePosition?: ModalMousePosition | null;
   okText?: ModalContent;
   cancelText?: ModalContent;
@@ -145,16 +145,16 @@ export interface ModalProps extends ModalSurfaceProps {
   cancelButtonProps?: ModalButtonProps;
   onOk?: () => void;
   onCancel?: () => void;
-  /** Вызывается после закрытия, перед afterOpenChange(false). */
+  /** Called after closure, before afterOpenChange(false). */
   afterClose?: () => void;
-  /** Вызывается после завершения перехода к открытой или закрытой панели. */
+  /** Is called after completing the transition to an open or closed panel. */
   afterOpenChange?: (open: boolean) => void;
   /**
-   * Undefined наследует ConfigProvider; false оставляет DOM на месте.
-   * Global getter вызывается без trigger.
+   * Undefined inherits ConfigProvider; false leaves DOM in place. Global getter is called out
+   * without triggering.
    */
   getContainer?: GetContainer;
-  /** Bind:panelRef получает нативный dialog на время жизни панели. */
+  /** Bind:panelRef receives native dialog for the life of the panel. */
   panelRef?: HTMLDialogElement;
   class?: string;
 }

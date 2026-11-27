@@ -1,6 +1,6 @@
-// Вычисляет форматы и колонки времени Picker. Ограничения каждой следующей
-// колонки получают значения предыдущих единиц в порядке часы, минуты, секунды.
-// TimePanelBody/useTimeInfo из rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
+// Calculates Picker time formats and columns. Limitations of each next column are obtained by the
+// values of the previous units in the order of hours, minutes, seconds. TimePanelBody/useTimeInfo
+// from rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
 import type { Dayjs } from 'dayjs';
 import type { DatePickerFormat, DatePickerProps, DatePickerTimeConfig } from './date-picker.types';
 import type { TimePickerProps, TimePickerColumnType } from './time-picker.types';
@@ -16,7 +16,7 @@ export interface TimePickerOption<Value extends number | 'am' | 'pm' = number | 
   disabled: boolean;
 }
 
-// Заполняет неявные флаги показа, учитывая явные true и false в props.
+// Fills implicit display flags, taking into account the obvious true and false in props.
 function fillShow(
   config: Pick<DatePickerTimeConfig, 'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond'>
 ) {
@@ -36,7 +36,7 @@ function fillShow(
   };
 }
 
-// Строит формат времени из видимых единиц и режима 12 часов.
+// Builds the format of time from visible units and mode 12 hours.
 export function timeFormat(config: Pick<DatePickerTimeConfig,
   'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond' | 'use12Hours'>) {
   const show = fillShow(config);
@@ -50,7 +50,7 @@ export function timeFormat(config: Pick<DatePickerTimeConfig,
     + (config.use12Hours ? ' A' : '');
 }
 
-// Явный format имеет приоритет над форматом locale и настройками колонок.
+// The explicit format takes precedence over the locale format and column settings.
 export function timePickerFormats<DateType extends object = Dayjs>(
   props: Pick<TimePickerProps<'time', DateType>, 'format' | 'use12Hours' | 'showHour' | 'showMinute'
     | 'showSecond' | 'showMillisecond'>,
@@ -63,7 +63,7 @@ export function timePickerFormats<DateType extends object = Dayjs>(
   return [locale.fieldTimeFormat || timeFormat(props)];
 }
 
-// Добавляет недостающие форматы в locale для временного редактора.
+// Adds the missing formats to locale for a temporary editor.
 export function timePickerLang<DateType extends object = Dayjs>(
   props: Pick<TimePickerProps<'time', DateType>,
     'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond' | 'use12Hours' | 'format'>,
@@ -72,7 +72,7 @@ export function timePickerLang<DateType extends object = Dayjs>(
   return fillPickerLocale(locale, timeFormat(props));
 }
 
-// Определяет видимость колонок из формата, пока её не задают явные show-флаги.
+// Infers visible columns from the format unless explicit show flags specify them.
 export function timePickerClock<DateType extends object = Dayjs>(
   props: Pick<TimePickerProps<'time', DateType>, Exclude<keyof DatePickerTimeConfig, 'disabledTime'>>,
   locale: NonNullable<TimePickerProps['locale']>['lang'] = {}
@@ -93,7 +93,7 @@ export function timePickerClock<DateType extends object = Dayjs>(
     use12Hours: props.use12Hours ?? /[aA]|LT|LLL|LTS/.test(baseline)
   };
 
-  // При явных show flags rc-picker заполняет незаданные units общим fallback.
+  // With explicit show flags rc-picker fills unchartered units with common fallback.
   const show = fillShow(explicit ? props : config);
 
   if (!explicit && !show.showHour && !show.showMinute
@@ -106,7 +106,7 @@ export function timePickerClock<DateType extends object = Dayjs>(
   return { ...config, ...show };
 }
 
-// Читает настройки времени DatePicker отдельно от даты и литералов в формате.
+// Reads time settings DatePicker separately from the date and literals in the format.
 export function datePickerClock<DateType extends object = Dayjs>(
   props: Pick<DatePickerProps<DateType>, 'format' | 'showTime'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
@@ -116,14 +116,14 @@ export function datePickerClock<DateType extends object = Dayjs>(
     || normalizePickerFieldFormat<DateType>(props.format, '').formats[0];
   const format = typeof first === 'string' && first
     ? first : locale.fieldDateTimeFormat || `YYYY-MM-DD ${timeFormat(config)}`;
-  // Буквы в [literal] не включают units; исходная ошибка зафиксирована в реестре.
+  // The letters in [literal] do not include units; the original error is recorded in the registry.
   const baseline = format.replace(/\[[^\]]*\]/g, '');
   const filled = timePickerClock({ ...config, format: baseline });
 
   return { ...filled, format: config.format || timeFormat(filled) };
 }
 
-// Строит доступные единицы с заданным шагом. При hideDisabled убирает заблокированные.
+// Builds available units with a given pitch. At hideDisabled removes blocked.
 export function timePickerOptions(
   count: number,
   step = 1,
@@ -133,7 +133,7 @@ export function timePickerOptions(
 ): TimePickerOption<number>[] {
   const increment = step >= 1 ? step | 0 : 1;
 
-  // Переполнение битового шага в upstream зацикливает for; не запускаем бесконечный цикл.
+  // Overflow of the bit step in upstream loops for; do not run the endless cycle.
   if (increment <= 0) {
     throw new RangeError('TimePicker step overflows a positive 32-bit integer');
   }
@@ -150,7 +150,7 @@ export function timePickerOptions(
   return options;
 }
 
-// Сохраняет текущее значение, включая 0. До выбора берёт первую доступную строку.
+// Reserves the current value, including 0. Prior to the selection takes the first available line.
 function selectedTimeUnit(options: TimePickerOption<number>[], current: number | undefined) {
   if (current != null) {
     return current;
@@ -160,7 +160,7 @@ function selectedTimeUnit(options: TimePickerOption<number>[], current: number |
   return firstEnabled?.value;
 }
 
-/** Подготавливает список единиц и действия с датой для одного адаптера. */
+/** Prepares a list of units and actions with a date for a single adapter. */
 export function createTimePickerEngine<DateType extends object>(
   dates: PickerDateOperations<DateType>,
   calendar = createDatePickerEngine(dates)
@@ -168,7 +168,7 @@ export function createTimePickerEngine<DateType extends object>(
   const { generateConfig: adapter, fields } = dates;
   const { pickerCalendarValue, validPickerTime } = calendar;
 
-  // Собирает состояние колонок и шаблон времени для выбора новой единицы.
+  // Assembles the status of the columns and the time template to select a new unit.
   function timePickerPanel(
     value: DateType | null,
     pickerValue: DateType | null | undefined,
@@ -191,7 +191,7 @@ export function createTimePickerEngine<DateType extends object>(
           ? String(Number(option.value) % 12 || 12).padStart(2, '0') : option.label
       }));
     const hour = selectedTimeUnit(hours, (value ? fields.getHour(value) : undefined));
-    // При пустой колонке ограничения получают соответствующую единицу опорного времени.
+    // In the case of an empty column of restrictions, an appropriate unit of reference time is obtained.
     const hourForRestrictions = hour ?? fields.getHour(reference);
     const minutes = timePickerOptions(
       60,
@@ -233,7 +233,7 @@ export function createTimePickerEngine<DateType extends object>(
       template = pickerCalendarValue(template, source);
     }
     else if (hour !== undefined) {
-      // Пустая колонка сохраняет единицу времени шаблона.
+      // Empty column preserves the Template time unit.
       template = fields.setHour(template, hour);
       if (minute !== undefined) {
         template = fields.setMinute(template, minute);
@@ -248,8 +248,7 @@ export function createTimePickerEngine<DateType extends object>(
 
     return {
       template,
-      // Выравнивает новое значение тем же набором динамических ограничений, что использует этот
-      // снимок панели.
+      // Aligns the new value with the same set of dynamic limitations that uses this panel shot.
       align: (candidate: DateType) => validPickerTime(candidate, config, () => dynamic),
       columns: [
         { type: 'hour' as const, shown: config.showHour, options: config.use12Hours
@@ -262,7 +261,7 @@ export function createTimePickerEngine<DateType extends object>(
     };
   }
 
-  // Преобразует выбранное время в ключ колонки. Для meridiem он всегда am или pm.
+  // Converts the selected time into a column key. For meridiem it is always am or pm.
   function timePickerColumnValue(value: DateType | null | undefined, type: TimePickerColumnType) {
     if (!value) {
       return null;
@@ -270,7 +269,7 @@ export function createTimePickerEngine<DateType extends object>(
     return type === 'meridiem' ? fields.getHour(value) < 12 ? 'am' : 'pm' : dates.getTimeUnit(value, type);
   }
 
-  // Заменяет одну единицу шаблона. Изменение meridiem сохраняет час внутри половины дня.
+  // Replaces one unit of the template. The meridiem change preserves an hour inside the afternoon.
   function timePickerColumnDate(
     template: DateType,
     value: DateType | null,
@@ -281,7 +280,7 @@ export function createTimePickerEngine<DateType extends object>(
       return dates.setTimeUnit(template, type, Number(next));
     }
 
-    // Как getMeridiemTime: null hour участвует в JS-сравнении как 0.
+    // As getMeridiemTime: null hour participates in JS-comparison as 0.
     const hour = value ? fields.getHour(value) : 0;
 
     if (next === 'am' && hour >= 12) {
@@ -293,17 +292,17 @@ export function createTimePickerEngine<DateType extends object>(
     return template;
   }
 
-  // Проверяет disabledTime и шаги независимо от отображаемого формата.
+  // Verifies disabledTime and steps regardless of the format displayed.
   function timePickerValidTime(value: DateType, props: TimePickerProps<'time', DateType>) {
     return validPickerTime(value, { ...props, format: undefined }, props.disabledTime);
   }
 
-  /** Сравнивает все поля, включая миллисекунды, по isSameTimestamp rc-picker. */
+  /** Compares all fields, including milliseconds, to isSameTimestamp rc-picker. */
   function timePickerSameValue(a: DateType | null, b: DateType | null) {
     return dates.sameWallValue(a, b);
   }
 
-  // Применяет disabledDate и затем границы дат, разрешая совпадение времени в пределах секунды.
+  // Applies disabledDate and then date boundaries, allowing the match of time within a second.
   function timePickerDateDisabled(
     value: DateType,
     props: Pick<TimePickerProps<'time', DateType>, 'disabledDate' | 'minDate' | 'maxDate'>

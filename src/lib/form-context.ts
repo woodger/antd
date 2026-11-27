@@ -41,7 +41,7 @@ export interface FormContext {
 }
 
 export interface FormFieldContext {
-  // Status-only contexts передают состояние без native association дочерних controls.
+  // Status-only contexts pass state without creating native associations for child controls.
   readonly id?: string;
   readonly name?: string;
   readonly label?: string;
@@ -49,7 +49,7 @@ export interface FormFieldContext {
   readonly disabled: boolean | undefined;
   readonly required: boolean;
   readonly status: FormValidateStatus | undefined;
-  // Ошибки остаются доступны и при визуальном success/validating либо явном пустом status.
+  // Errors remain available with visual success/validating or explicit empty status.
   readonly invalid?: boolean;
   readonly describedBy: string | undefined;
   registerControl?(getInstance: () => unknown): () => void;
@@ -71,7 +71,7 @@ export function useForm(): FormContext | undefined {
 
   const config = useConfig();
   const form: FormContext = Object.create(parent, {
-    // Source DisabledContext следует ближайшему provider; native submitting остаётся отдельным.
+    // Source DisabledContext is followed by the nearest provider; native submitting remains separate.
     disabled: { get: () => config.componentDisabled || parent.submitting }
   });
 
@@ -90,7 +90,7 @@ export function useFormField(getInstance?: () => unknown): FormFieldContext | un
     disabled: { get: () => config.componentDisabled || form?.submitting }
   }) : undefined;
   if (field?.registerControl && getInstance) {
-    // Порядок определяется деревом компонентов, а не порядком mount дочерних controls.
+    // The order is determined by the tree of the components, and not by the order of the mount controls.
     let mounted = false;
     const remove = field.registerControl(() => mounted ? getInstance() : undefined);
     onMount(() => {

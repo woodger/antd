@@ -13,7 +13,7 @@ export function useAppOptions(): Readonly<AppOptions> | undefined {
   return getContext(optionsKey);
 }
 
-/** Вызывается при инициализации дочернего компонента под App, в том числе в SSR. */
+/** Called when a child under App initializes, including during SSR. */
 export function useApp(): AppInstance {
   const api = getContext<AppInstance | undefined>(appKey);
   if (!api) {

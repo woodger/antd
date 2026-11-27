@@ -38,9 +38,9 @@ function buildModelEntities<Data extends object>(
 }
 
 /**
- * Аналог Tree.useTree для Svelte. Getter data и getter config.fieldNames читаются
- * при каждом getPath; индекс обновляется при смене их ссылок. Не создаёт DOM,
- * effects или timers, поэтому работает также вне компонента и при SSR.
+ * Analogue Tree.useTree for Svelte. Getter data and getter config.fieldNames are read at every
+ * getPath; the index is updated when their links are changed. It does not create DOM, effects or
+ * timers, so it also works outside the component and at SSR.
  */
 export function createTree<Data extends object = TreeDataNode>(
   source: readonly Data[] | (() => readonly Data[]),

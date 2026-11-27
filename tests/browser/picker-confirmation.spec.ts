@@ -6,7 +6,7 @@ type Profile = (typeof reference.cases)[number]['profile'];
 type ConfirmationState = (typeof reference.cases)[number]['steps'][number]['state'];
 const popupSelector = '.ant-picker-dropdown:not(.ant-picker-dropdown-hidden)';
 
-/** Читает окно и полный журнал после одного пользовательского действия. */
+/** Reads the window and the full log after one user action. */
 async function readConfirmation(page: Page) {
   return page.evaluate(selector => {
     const popup = document.querySelector(selector);
@@ -24,7 +24,7 @@ async function readConfirmation(page: Page) {
   }, popupSelector);
 }
 
-/** Выбирает ячейки без hover, затем использует нативное подтверждение мышью или клавишей. */
+/** Chooses cells without hover, then uses native confirmation with a mouse or key. */
 async function performAction(page: Page, action: string) {
   const popup = page.locator(popupSelector);
   const ok = popup.locator('.ant-picker-ok button');
@@ -59,7 +59,7 @@ async function performAction(page: Page, action: string) {
   }
 }
 
-/** Native добавляет info.source к одиночным событиям календаря и возвращает фокус после OK. */
+/** Native adds info.source to single calendar events and returns focus after OK. */
 function expectedState(profile: Profile, state: ConfirmationState) {
   const firstCalendar = state.events.findIndex(row => row[0] === 'calendar');
   const events = state.events.map((row, index) => {

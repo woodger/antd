@@ -40,7 +40,7 @@ for (const kind of ['single', 'range'] as const) {
     await expect(popup.locator('td[aria-disabled="true"]')).toHaveCount(kind === 'range' ? 8 : 4);
     const opened = await read();
     if (kind === 'range') expect(opened.calls.some(call => call.hasFrom && call.from === null)).toBe(true);
-    // Та же строка квартала разбирается в новый Jan1: identity predicate должен отклонить реальный ввод.
+    // The same line of the Quarter understands the new Jan1: identity predicate should deflect real input.
     await input.press('Control+A');
     await page.keyboard.type('2024-Q1');
 

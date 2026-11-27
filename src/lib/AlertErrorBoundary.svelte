@@ -16,7 +16,7 @@
   }
 </script>
 
-<!-- Fallback снаружи boundary: его ошибка идёт к родителю, SSR children продолжают выбрасывать. -->
+<!-- The fallback sits outside the boundary. Its errors reach the parent, and SSR children still throw. -->
 <svelte:boundary onerror={handleError}>
   <RenderContent value={children} />
 </svelte:boundary>

@@ -1,13 +1,13 @@
-// Разрешает маску и фокус Drawer и Modal. Локальные поля следуют настройкам компонента,
-// переданным ConfigProvider, с отдельным fallback для closable.
+// Resolves Drawer and Modal masks and focus. Local fields inherit ConfigProvider component
+// settings, with a separate fallback for closable.
 import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
 
-/** Boolean меняет только видимость маски. */
+/** A boolean changes only mask visibility. */
 export function normalizeDialogMask(value: DrawerMask | undefined): DrawerMaskConfig {
   return typeof value === 'boolean' ? { enabled: value } : value ?? {};
 }
 
-/** Наследует свойства маски по отдельности и сохраняет явное closable=false. */
+/** Inherits mask properties individually and preserves explicit closable=false. */
 export function resolveDialogMask(mask: DrawerMask | undefined, provider: DrawerMask | undefined) {
   const own = normalizeDialogMask(mask);
   const inherited = normalizeDialogMask(provider);
@@ -20,7 +20,7 @@ export function resolveDialogMask(mask: DrawerMask | undefined, provider: Drawer
   };
 }
 
-/** Применяет настройки фокуса поверх начального режима, выбранного по маске. */
+/** Applies focus settings over the initial mode chosen from the mask. */
 export function resolveDialogFocusable(
   focusable: DrawerFocusableConfig | undefined,
   provider: DrawerFocusableConfig | undefined,

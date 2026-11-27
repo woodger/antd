@@ -2,7 +2,7 @@ import template from './vendor/timeline-prefix.css.js';
 
 const rootStates = new Set(['', '-horizontal', '-layout-alternate', '-rtl']);
 
-/** Root states изолированы; low-specificity fallback сохраняет прежние adaptive theme variables. */
+/** Root states are isolated; the low-specificity fallback preserves the previous adaptive theme variables. */
 export function getTimelinePrefixCss(prefix: string) {
   if (prefix === 'ant-timeline') {
     return undefined;

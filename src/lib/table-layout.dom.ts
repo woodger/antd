@@ -1,9 +1,9 @@
-// Читает фактические ширины листовых колонок и высоты строк шапки. Публикует
-// смещения только в текущем scrollport и удаляет CSS variables при переподключении.
+// Reads actual leaf column widths and header row heights. Publishes offsets only in the current
+// scrollport and removes CSS variables on reattachment.
 import { getTableFixedOffsets } from './table-layout.engine';
 import type { TableFixed } from './table.types';
 
-/** Выравнивает строку внутри владельца прокрутки с учётом закреплённых полос. */
+/** Aligns the line inside the scroll owner, taking into account the fixed strips. */
 export function alignTableRow(
   element: HTMLElement,
   row: HTMLElement,
@@ -33,7 +33,7 @@ export function alignTableRow(
   element.scrollTop += delta + offset;
 }
 
-/** Составные заголовки измеряются по листьям в порядке колонок данных. */
+/** Composite headings are measured by leaves in the order of data columns. */
 function measureCells(header: HTMLTableSectionElement) {
   if (header.rows.length < 2) {
     return Array.from(header.rows[0]?.cells ?? []);
@@ -46,14 +46,14 @@ function measureCells(header: HTMLTableSectionElement) {
     - Number(right.dataset.antTableLeaf));
 }
 
-/** Без thead измеряет обычные ячейки, пропуская virtual spacers и details. */
+/** Without thead measures ordinary cells, skipping virtual space and details. */
 function findBodyCells(table: HTMLTableElement) {
   const body = table.tBodies[0];
   const row = body?.querySelector<HTMLTableRowElement>(':scope > tr[data-ant-table-part="row"]');
   return Array.from(row?.cells ?? []);
 }
 
-/** Фиксирует каждую строку под предыдущей с учётом разной высоты заголовков. */
+/** Fixes each line under the previous one, taking into account the different height of the titles. */
 function placeHeaderRows(rows: readonly HTMLTableRowElement[]) {
   if (rows.length < 2) {
     return;
@@ -67,7 +67,7 @@ function placeHeaderRows(rows: readonly HTMLTableRowElement[]) {
   }
 }
 
-/** Считает горизонтальное смещение, которое открывает control между закреплёнными колонками. */
+/** Considers the horizontal displacement, which opens control between fixed columns. */
 export function getTableFocusOffset(
   viewport: HTMLDivElement,
   focused: Element,
@@ -86,7 +86,7 @@ export function getTableFocusOffset(
   return rect.left < left ? rect.left - left : Math.max(0, rect.right - right);
 }
 
-/** При измерении колонок оставляет уже сфокусированный итог видимым между ними. */
+/** When the columns are measured, it leaves an already focused outcome visible between them. */
 function revealSummaryFocus(
   table: HTMLTableElement,
   viewport: HTMLDivElement,
@@ -112,7 +112,7 @@ function revealSummaryFocus(
   }
 }
 
-/** Вычисляет размеры sticky областей и возвращает cleanup наблюдателя и стилей. */
+/** Calculates the dimensions of the sticky areas and returns the cleanup of the observer and styles. */
 export function observeTableLayout(options: {
   table: HTMLTableElement;
   viewport: HTMLDivElement;
@@ -127,7 +127,7 @@ export function observeTableLayout(options: {
     table, viewport, fixed, stickyHeader, hasBodyRows, measureColumns, endGutter = 0, onMeasure
   } = options;
   const head = table.tHead;
-  // При spans число ячеек и число физических колонок могут различаться.
+  // In spans, the number of cells and the number of physical columns may vary.
   const cells = measureColumns
     ? Array.from(table.querySelectorAll<HTMLElement>(
       ':scope > colgroup > col:not([data-ant-table-scrollbar])'
@@ -135,7 +135,7 @@ export function observeTableLayout(options: {
     : head ? measureCells(head) : hasBodyRows ? findBodyCells(table) : [];
   const rows = stickyHeader ? Array.from(head?.rows ?? []) : [];
 
-  /** Обновляет offsets после resize без переустановки разметки или обработчиков. */
+  /** Updates offsets after resize without reinstalling markings or handlers. */
   function measure() {
     const widths = cells.map(cell => cell.getBoundingClientRect().width);
     onMeasure?.(widths, table.getBoundingClientRect().width);
@@ -183,7 +183,7 @@ export function observeTableLayout(options: {
   for (const cell of cells) observer?.observe(cell);
   for (const row of rows) observer?.observe(row);
 
-  // Значения опираются на прежние строки и не переносятся на новую структуру колонок.
+  // The values are based on the previous strings and are not transferred to the new structure of the columns.
   return () => {
     observer?.disconnect();
     for (const row of rows) row.style.removeProperty('--ant-table-header-row-offset');

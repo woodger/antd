@@ -1,4 +1,4 @@
-// Владеет отдельным подтверждением, его отложенным рендером и освобождением корня.
+// He has a separate confirmation, his postponed render and the liberation of the root.
 import { mount, tick, unmount } from 'svelte';
 import ModalStaticHolder from './ModalStaticHolder.svelte';
 import { readGlobalConfig, type GlobalConfigProps } from './config-provider-global';
@@ -21,7 +21,7 @@ export interface ModalStaticOwner {
 
 type CloseReason = 'destroy' | 'dismiss';
 
-/** Создаёт браузерный корень по запросу и оставляет вызов без побочных эффектов при SSR. */
+/** Creates a browser root on request and leaves a call without side effects at SSR. */
 export function openStaticModal(
   type: ModalConfirmType, config: ModalStaticConfig
 ): ModalStaticHandle {
@@ -34,12 +34,12 @@ export function openStaticModal(
   return createStaticModal(page, view, type, config);
 }
 
-/** Разделяет запрошенные настройки и снимок, с которым уже работает панель. */
+/** Separates the requested settings and the shot with which the panel is already working. */
 function createStaticModal(
   page: Document, view: Window, type: ModalConfirmType, initial: ModalStaticConfig
 ): ModalStaticHandle {
   const target = page.createElement('div');
-  // Вычисленные переменные доступны portal только из подключённого CSS-контекста.
+  // Calculated variables are only available from connected CSS-context.
   target.dataset.antModalStaticHost = '';
   target.inert = true;
   target.style.setProperty('display', 'none', 'important');
@@ -76,13 +76,13 @@ function createStaticModal(
   let unregister = registerModalDestroy(closeFromRegistry);
   schedule();
 
-  /** Новый вызов или update в том же такте заменяют ещё не выполненный рендер. */
+  /** A new call or update in the same tick replaces a render that has not run yet. */
   function schedule() {
     view.clearTimeout(timer);
     timer = view.setTimeout(render);
   }
 
-  /** Снимает регистрацию сразу и даёт закрывающемуся компоненту завершить lifecycle. */
+  /** Removes the registration immediately and gives the closing component to complete the lifecycle. */
   function dispose() {
     if (disposed) {
       return;
@@ -104,7 +104,7 @@ function createStaticModal(
     }
   }
 
-  /** Любое завершение показа делает результаты прежних действий устаревшими. */
+  /** Any completion of the show makes the results of previous actions obsolete. */
   function invalidateActions() {
     actionRevision++;
     running.clear();
@@ -112,12 +112,12 @@ function createStaticModal(
     actionPending.pendingCancel = false;
   }
 
-  /** Регистрирует нативный dialog для закрытия до первого показа и при переносе. */
+  /** Registers a native dialog for closing before the first impression and when transferred. */
   function mounted(_id: number, element?: HTMLDialogElement) {
     panel = element;
   }
 
-  /** Настройки глобального провайдера читаются при рендере, holderRender закреплён при вызове. */
+  /** The settings of the global provider are recited at the render, holderRender is fixed when calling. */
   function render() {
     timer = undefined;
     const open = current.open === true;
@@ -157,7 +157,7 @@ function createStaticModal(
     }
   }
 
-  /** Запоминает причину до движения панели и закрывает ещё не показанный корень без колбэков. */
+  /** Remembers the cause before the panel moves and closes the root not yet shown without flasks. */
   function close(reason: CloseReason) {
     if (disposed || closing) {
       return;
@@ -173,23 +173,23 @@ function createStaticModal(
     schedule();
   }
 
-  /** Программное закрытие не вызывает обработчик отмены. */
+  /** The software closure does not cause a cancellation handler. */
   function destroy() {
     close('destroy');
   }
 
-  /** destroyAll уже убрал регистрацию из общего стека. */
+  /** destroyAll has already removed the registration from the general stack. */
   function closeFromRegistry() {
     unregister = undefined;
     destroy();
   }
 
-  /** Escape, фон и кнопка закрытия уведомят исходный onCancel после afterClose. */
+  /** Escape, background and closing button will notify the original onCancel after afterClose. */
   function dismiss() {
     close('dismiss');
   }
 
-  /** Вызывает close callbacks показанного снимка до освобождения отдельного корня. */
+  /** Causes close callbacks shown picture before the release of a separate root. */
   function complete() {
     if (disposed || current.open) {
       return;
@@ -216,11 +216,11 @@ function createStaticModal(
     }
   }
 
-  /** Использует текущее действие панели и защищает новую видимость от старого Promise. */
+  /** Uses the current action of the panel and protects the new visibility from the old Promise. */
   function act(_id: number, confirmed: boolean) {
     const revision = actionRevision;
     const field = confirmed ? 'pendingOk' : 'pendingCancel';
-    /** Проверяется после пользовательского callback и при завершении ожидания. */
+    /** Is checked after the custom callback and at the end of the wait. */
     function isCurrent() {
       return !disposed && current.open === true && revision === actionRevision;
     }
@@ -244,7 +244,7 @@ function createStaticModal(
     });
   }
 
-  /** Функция заменяет пользовательские поля целиком, внутренний close остаётся за владельцем. */
+  /** The function replaces the custom fields entirely, the internal close remains with the owner. */
   function update(patch: Parameters<ModalStaticHandle['update']>[0]) {
     if (disposed) {
       return;

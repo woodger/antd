@@ -1,11 +1,11 @@
-/** Наблюдения DOM; функция не читает implementation и переносится в page.evaluate. */
+/** Observations DOM; function does not read implementation and is transferred to page.evaluate. */
 export function readTreeSelectInertApi() {
   const host = document.querySelector<HTMLElement>('[data-inert-api-case]')!;
   const root = host.querySelector<HTMLElement>('[data-inert-api-root]') ?? host.querySelector<HTMLElement>('.ant-select')!;
   const editor = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('input[role="combobox"],textarea[role="combobox"]');
   const popup = document.querySelector<HTMLElement>('.ant-tree-select-dropdown');
   const visible = Boolean(popup && !popup.hidden && getComputedStyle(popup).display !== 'none' && popup.getClientRects().length);
-  // Читает сериализованное состояние fixture. Отсутствующий output остаётся null.
+  // Reads the serialized state fixture. Missing remains the output null.
   const output = (name: string) => {
     const node = host.querySelector(`[data-inert-api-${name}]`);
     return node ? JSON.parse(node.textContent || 'null') : null;
@@ -16,7 +16,7 @@ export function readTreeSelectInertApi() {
     ownProperties: names.filter(name => Object.hasOwn(node, name))
   } : null;
   const rootBox = root.getBoundingClientRect(), popupBox = visible ? popup!.getBoundingClientRect() : null;
-  // Округляет дробное измерение до тысячных для сравнения снимков.
+  // Rounds the fractional dimension to the thousandth for comparing images.
   const round = (value: number) => Math.round(value * 1000) / 1000;
   const style = getComputedStyle(root);
   return {
@@ -42,7 +42,7 @@ export function readTreeSelectInertApi() {
   };
 }
 
-/** DOM-free HTML projection: никакой геометрии или computed styles из SSR не выводится. */
+/** DOM-free HTML projection: no geometry or computed styles from SSR is displayed. */
 export function readTreeSelectInertApiSSR(html: string) {
   const decode = (value: string) => value.replace(/&(?:amp|lt|gt|quot|#39|#x27);/g, entity =>
     ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);

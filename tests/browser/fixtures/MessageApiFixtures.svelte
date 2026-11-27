@@ -43,7 +43,7 @@
     return () => document.removeEventListener('animationstart', recordMotion);
   });
 
-  /** Сохраняет только поля, измеренные в эталоне, включая отсутствие каждого из них. */
+  /** Retains only the fields measured in the standard, including the absence of each of them. */
   function record(name: string, props: MessageSemanticProps) {
     probe.arguments[name] = {
       content: props.content, duration: props.duration, top: props.top,
@@ -51,7 +51,7 @@
     };
   }
 
-  /** У каждого уровня свои классы и CSS-свойства для проверки итоговой комбинации. */
+  /** Each level has its own classes and CSS properties for checking the final combination. */
   function semantics(layer: string): Pick<MessageAppearance, 'classNames' | 'styles'> {
     return {
       classNames({ props }) {
@@ -66,7 +66,7 @@
     };
   }
 
-  /** Замеряет arity getContainer, пока фактическая цель меняется между вызовами. */
+  /** Measures arity getContainer while the actual goal changes between challenges. */
   function target(id: string, args: readonly unknown[]) {
     probe.containerCalls.push(args.length);
     const node = document.getElementById(id);
@@ -76,12 +76,12 @@
     return node;
   }
 
-  /** Нулевая длительность оставляет закрытие сценарию. */
+  /** Zero duration leaves the closing of the script. */
   function item(label: string, key: MessageKey = label): MessageConfig {
     return { content: label, key, duration: 0, onClose: () => probe.events.push([label, 'close']) };
   }
 
-  /** Сохраняет один и тот же handle для наблюдения Promise и явного закрытия. */
+  /** Retains the same handle to observe Promise and explicit closure. */
   function store(name: string, handle: MessageHandle) {
     probe.handles[name] = handle;
     void handle.then(result => probe.events.push([name, 'then', result]));
@@ -133,7 +133,7 @@
     }
   }
 
-  /** Смена App.message обновляет действующий экземпляр и его поверхность. */
+  /** Shifting App.message updates the current instance and its surface. */
   function launchApp({ message }: AppInstance) {
     untrack(() => {
       instance = message;
@@ -146,12 +146,12 @@
     });
   }
 
-  /** Наблюдает внешнюю CSS animation, чтобы тихий cleanup не прошёл за реальный motion. */
+  /** Observes an external CSS animation, so that the quiet cleanup does not pass for real motion. */
   function recordMotion(event: AnimationEvent) {
     if (event.animationName.startsWith('message-')) probe.motion.push(event.animationName);
   }
 
-  /** Часть сценариев закрывается по ключу, а сценарий таймера ждёт сам. */
+  /** Some of the scenarios are closed on the key, and the timer scenario awaits itself. */
   function closeScenario() {
     if (kind === 'context-queue') probe.handles['same-first']();
     else if (kind === 'context-typed') probe.handles.priority();

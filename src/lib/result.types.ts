@@ -30,36 +30,36 @@ export type ResultSemantic = ResultSemanticSlots
 export interface ResultRef {
   readonly nativeElement: HTMLDivElement;
 }
-/** Настройки оформления; локальные semantic styles и style приоритетнее. */
+/** Design settings; local semantic styles and style priority. */
 export type ResultConfig = Pick<ResultProps, 'class' | 'style' | 'classNames' | 'styles'>;
 
-/** Страница результата со статусом, иллюстрацией, title/subTitle и действиями. */
+/** Result page with status, illustration, title/subTitle and actions. */
 export interface ResultProps {
   /** @defaultValue 'info' */
   status?: ResultStatus;
   title?: ResultContent;
   subTitle?: ResultContent;
-  /** Null/false скрывают обычную иконку; иллюстрации исключений имеют приоритет. */
+  /** Null/false hides the usual icon; exception illustrations take precedence. */
   icon?: ResultContent;
   extra?: ResultContent;
   children?: ResultContent;
   /** @defaultValue 2 */
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   id?: string;
-  /** Явный role приоритетнее native group, создаваемой по aria-label/labelledby. */
+  /** A clear role is more priority than the native group created by aria-label/labelledby. */
   role?: HTMLAttributes<HTMLDivElement>['role'];
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
   class?: string;
   style?: string;
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   rootClassName?: string;
-  /** Object/function slots; callbacks получают входные props с разрешённым status. */
+  /** Object/function slots; callbacks receive input props with authorized status. */
   classNames?: ResultSemantic;
   styles?: ResultSemantic;
-  /** Присваивается после mount и очищается при unmount. */
+  /** Assigned after mount and cleaned at unmount. */
   nativeElement?: HTMLDivElement;
   ref?: ResultRef;
   [attribute: `aria-${string}`]: unknown;

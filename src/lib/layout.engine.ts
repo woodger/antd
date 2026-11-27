@@ -1,6 +1,6 @@
 import type { GridBreakpoint } from './grid.types';
 
-// Сохраняем dimensionMaxMap из Sider.tsx, включая отличие xxxl от Grid/docs.
+// We save dimensionMaxMap from Sider.tsx, including the difference xxxl from Grid/docs.
 export const siderMaxWidths: Record<GridBreakpoint, string> = {
   xs: '479.98px',
   sm: '575.98px',

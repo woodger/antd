@@ -5,12 +5,12 @@ import { dropdownMotionCases } from './dropdown-lifecycle-reference';
 const fixture = '/?fixture=dropdown-lifecycle&sample=motion-';
 test.use({ viewport: { width: 1000, height: 700 } });
 
-// Кнопки настройки фикстуры обновляют владельца без перевода фокуса.
+// Fixture settings buttons update the owner without translating the focus.
 function configure(page: Page, action: string) {
   return page.locator('#' + action).evaluate((button: HTMLButtonElement) => button.click());
 }
 
-// Реальные CSSAnimation проверяются по фазам, таймингу и ключевым кадрам.
+// Real CSSAnimation is tested by phases, timing and key frames.
 async function readMotion(page: Page) {
   const value = await page.waitForFunction(() => {
     const panel = document.querySelector('.subject-popup');
@@ -29,7 +29,7 @@ async function readMotion(page: Page) {
   return value.jsonValue();
 }
 
-// Возвращает отсутствие панели отдельно от удержанного DOM в скрытом состоянии.
+// Returns the absence of the panel separately from the held DOM in a hidden state.
 function visible(locator: Locator) {
   return locator.evaluateAll(nodes => nodes[0]?.checkVisibility() ?? null);
 }

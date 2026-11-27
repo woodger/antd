@@ -1,5 +1,5 @@
-// Определяет управляемые и локальные критерии. Порядок списка для событий
-// хранится отдельно от приоритетов сравнения записей.
+// Defines manageable and local criteria. The list order for events is stored separately from the
+// records comparison priorities.
 import type {
   TableColumn, TableColumnTitleProps, TableMode, TableSortCompare, TableSorter, TableSortOrder
 } from './table.types';
@@ -11,7 +11,7 @@ export interface TableSortState {
 
 export const tableSortDirections = ['ascend', 'descend'] as const;
 
-/** Старый boolean true оставляет обработку владельцу в server mode. */
+/** Older boolean true leaves processing to the owner in server mode. */
 export function isTableSortable<Row extends object>(column: TableColumn<Row>, mode: TableMode) {
   const sorter = column.sorter;
   return typeof sorter === 'function'
@@ -19,7 +19,7 @@ export function isTableSortable<Row extends object>(column: TableColumn<Row>, mo
     || (mode === 'server' && sorter === true);
 }
 
-/** Числовой multiple включает совмещение, включая нулевой приоритет. */
+/** Numerical multiple includes a combination, including a zero priority. */
 function sortPriority<Row extends object>(column: TableColumn<Row> | undefined) {
   const sorter = column?.sorter;
   if (!sorter || typeof sorter !== 'object') {
@@ -29,12 +29,12 @@ function sortPriority<Row extends object>(column: TableColumn<Row> | undefined) 
   return typeof sorter.multiple === 'number' ? sorter.multiple : undefined;
 }
 
-/** Отмечает колонки, для которых события передают полный список критериев. */
+/** Marks columns whose events carry the full list of criteria. */
 export function isTableMultipleSorter<Row extends object>(column: TableColumn<Row>) {
   return sortPriority(column) !== undefined;
 }
 
-/** Снимает начальные критерии со всех листьев, включая responsive. */
+/** Removes the initial criteria from all leaves, including responsive. */
 export function getInitialTableSorts<Row extends object>(
   columns: readonly TableColumn<Row>[], initial: TableSorter | null | undefined
 ): TableSortState[] {
@@ -57,7 +57,7 @@ export function getInitialTableSorts<Row extends object>(
   return sorts;
 }
 
-/** Управляемый список включает пустые состояния и применяет правила совместимости Source. */
+/** The managed list includes empty states and applies Source compatibility rules. */
 export function getControlledTableSorts<Row extends object>(
   columns: readonly TableColumn<Row>[], mode: TableMode
 ): TableSortState[] {
@@ -84,7 +84,7 @@ export function getControlledTableSorts<Row extends object>(
   return sorts;
 }
 
-/** Возвращает данные заголовка с неактивными критериями и живыми определениями колонок. */
+/** Returns header data with inactive criteria and live column definitions. */
 export function getTableColumnTitleSorts<Row extends object>(
   columns: readonly TableColumn<Row>[], states: readonly TableSortState[], mode: TableMode
 ): TableColumnTitleProps<Row>['sortColumns'] {
@@ -101,7 +101,7 @@ export function getTableColumnTitleSorts<Row extends object>(
   return sorts;
 }
 
-/** Одиночная колонка заменяет список, а совмещаемая перемещается в его конец. */
+/** The solitary column replaces the list, and the combination moves to its end. */
 export function changeTableSorts<Row extends object>(
   columns: readonly TableColumn<Row>[],
   current: readonly TableSortState[],
@@ -123,7 +123,7 @@ export function changeTableSorts<Row extends object>(
   return [...available.filter(state => state.columnKey !== column.key), next];
 }
 
-/** Берёт живые компараторы колонок и сохраняет порядок критериев для onChange. */
+/** Takes live column comparators and maintains the order of criteria for onChange. */
 export function createTableSortPlan<Row extends object>(
   columns: readonly TableColumn<Row>[], states: readonly TableSortState[], mode: TableMode
 ) {
@@ -155,7 +155,7 @@ export function createTableSortPlan<Row extends object>(
   }
   comparisons.sort((left, right) => right.priority - left.priority);
 
-  /** Проверяет следующий приоритет при равенстве по текущей колонке. */
+  /** Verifies the following priority when equalizing on the current column. */
   function compareRows(left: Row, right: Row): number {
     for (const { compare, order } of comparisons) {
       const compared = compare(left, right, order);

@@ -1,4 +1,4 @@
-/** CSS transition/animation event либо deadline исходного CSSMotion. */
+/** CSS transition/animation event or the CSSMotion deadline. */
 export type TreeMotionEvent = Event | { deadline: true; };
 export type TreeMotionName = string | Partial<Record<
   'appear' | 'enter' | 'leave'
@@ -12,12 +12,12 @@ type TreeMotionPrepare = (element: HTMLDivElement) => void | Promise<unknown>;
 type TreeMotionStyle = (element: HTMLDivElement, event: null) => string | void;
 type TreeMotionEnd = (element: HTMLDivElement, event: TreeMotionEvent) => boolean | void;
 
-/** Native CSSMotion группы: start/active возвращают CSS-строки; prepare можно ожидать. */
+/** Native CSSMotion groups: start/active return CSS-strings; prepare can be expected. */
 export interface TreeMotionConfig {
   motionName?: TreeMotionName;
-  /** Собственное значение перекрывает видимость группы, как исходный CSSMotion spread. */
+  /** Its own value overlaps the visibility of the group as the original CSSMotion spread. */
   visible?: boolean;
-  /** Tree принудительно включает appear при раскрытии и выключает при сворачивании. */
+  /** Tree forcibly turns on when opened and switches off when folding. */
   motionAppear?: boolean;
   motionEnter?: boolean;
   motionLeave?: boolean;

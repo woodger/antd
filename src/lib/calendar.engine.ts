@@ -1,27 +1,27 @@
-// Операции календарной сетки и списков года/месяца через GenerateConfig. Форматирование и
-// сравнение дат принадлежат адаптеру.
-// Calendar 6.6.8 / PickerPanel 1.12.2; MIT, vendor/LICENSE.ant-design и LICENSE.rc-picker.
+// Calendar grid and year and month list operations use GenerateConfig. The adapter owns date
+// formatting and comparison. Calendar 6.6.8 and PickerPanel 1.12.2, under MIT. See
+// vendor/LICENSE.ant-design and LICENSE.rc-picker.
 import type { GenerateConfig } from './date-generate.types';
 import type { CalendarLang, CalendarLocale, CalendarMode } from './calendar.types';
 import { datePickerEnUS } from './date-picker.locale';
 export { fillPickerLocale as calendarFilledLocale } from './picker-locale.engine';
 
-// Сравнивает годы двух заданных дат через адаптер.
+// Compares the years of two dates through the adapter.
 export function calendarSameYear<T>(a: T | undefined, b: T | undefined, date: GenerateConfig<T>) {
   return !!a && !!b && date.getYear(a) === date.getYear(b);
 }
 
-// Учитывает год при сравнении месяца.
+// Includes the year when comparing months.
 export function calendarSameMonth<T>(a: T | undefined, b: T | undefined, date: GenerateConfig<T>) {
   return calendarSameYear(a, b, date) && date.getMonth(a!) === date.getMonth(b!);
 }
 
-// Сравнивает календарный день независимо от времени.
+// Compares the calendar day independently of time.
 export function calendarSameDate<T>(a: T | undefined, b: T | undefined, date: GenerateConfig<T>) {
   return calendarSameMonth(a, b, date) && date.getDate(a!) === date.getDate(b!);
 }
 
-// Накладывает локальную настройку на контекст и общие английские defaults.
+// Applies local settings over context and the shared English defaults.
 export function calendarLocale(context?: CalendarLocale, local?: CalendarLocale) {
   return {
     ...datePickerEnUS,
@@ -36,7 +36,7 @@ export function calendarLocale(context?: CalendarLocale, local?: CalendarLocale)
   };
 }
 
-// Берёт годы из доступного диапазона или строит окно вокруг текущего года.
+// Uses years from the allowed range or builds a window around the current year.
 export function calendarYearOptions<T>(
   value: T,
   range: [T, T] | undefined,
@@ -54,7 +54,7 @@ export function calendarYearOptions<T>(
   return options;
 }
 
-// Ограничивает список месяцами текущего года в пределах validRange.
+// Limits the month list to the current year within validRange.
 export function calendarMonthOptions<T>(
   value: T,
   range: [T, T] | undefined,
@@ -73,7 +73,7 @@ export function calendarMonthOptions<T>(
   return options;
 }
 
-// Сохраняет месяц при смене года, ограничивая его первым и последним годом диапазона.
+// Preserves the month when changing years and clamps it in the first and last years of the range.
 export function calendarSetYear<T>(
   value: T,
   year: number,
@@ -97,7 +97,7 @@ export function calendarSetYear<T>(
   return next;
 }
 
-// Проверяет границы validRange раньше пользовательского disabledDate.
+// Checks validRange bounds before calling the consumer's disabledDate.
 export function calendarDateDisabled<T>(
   value: T,
   range: [T, T] | undefined,
@@ -108,7 +108,7 @@ export function calendarDateDisabled<T>(
     || !!disabledDate?.(value);
 }
 
-// Считает месяц недоступным при блокировке обоих его краёв.
+// Treats the month as unavailable when both endpoints are disabled.
 export function calendarMonthDisabled<T>(
   value: T,
   range: [T, T] | undefined,
@@ -123,7 +123,7 @@ export function calendarMonthDisabled<T>(
     && calendarDateDisabled(end, range, disabledDate, date);
 }
 
-// Строит годовую сетку месяцев или шесть недель, выровненных по локальному началу недели.
+// Builds a year grid of months or six weeks aligned to the locale's week start.
 export function calendarRows<T>(
   value: T,
   mode: CalendarMode,

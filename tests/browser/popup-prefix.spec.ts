@@ -3,7 +3,7 @@ import reference from './fixtures/ant-design-popup-prefix-reference.json' with {
 import { snapshotPopupPrefix } from './popup-prefix-metrics';
 
 function expectedSnapshot(result: typeof reference.cases[number]['result']) {
-  // Raw textContent хранит React output; Svelte whitespace между slots не сравнивается.
+  // Raw textContent stores React output; Svelte whitespace between slots is not compared.
   return Object.fromEntries(Object.entries(result).map(([scope, entry]) => [scope, {
     ...entry,
     popups: entry.popups.map(
@@ -31,7 +31,7 @@ for (const kind of ['tooltip', 'popover', 'popconfirm', 'single', 'range']) {
     await page.goto('/?fixture=popup-prefix');
     await page.getByRole('combobox', { name: 'Popup prefix sample', exact: true })
       .selectOption(`${kind}-global`);
-    // Как в UMD transitions: внешний pointerdown отдельно проверяется в lifecycle suites.
+    // As in UMD transitions: external pointerdown is separately checked in lifecycle suites.
     await page.getByRole('checkbox', { name: 'Live popup prefix', exact: true })
       .evaluate((node: HTMLInputElement) => {
         node.checked = true;

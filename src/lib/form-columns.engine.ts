@@ -1,12 +1,12 @@
-// Вычисляет раскладку FormItem. Отступ пустой подписи возникает при использовании общих labelCol
-// и wrapperCol.
+// Calculate layout FormItem. An indentation of an empty label arises when using the general
+// labelCol and wrapperCol.
 import type { ColProps, ColSize, GridBreakpoint } from './grid.types';
 import { gridBreakpoints } from './grid.engine';
 import type { RenderEmptyContent } from './types';
 
-// Нормализует числовой span в объект, пригодный для расчёта offset.
+// Normalizes the numerical span into an object suitable for calculating offset.
 function colSize(value: ColProps[GridBreakpoint]): ColSize {
-  // Source теряет numeric shorthand при выводе offset; сохраняем обычную семантику Col.
+  // Source loses numeric shorthand when you output an offset; save the usual Col semantics.
   if (typeof value === 'number') {
     return { span: value };
   }
@@ -14,7 +14,7 @@ function colSize(value: ColProps[GridBreakpoint]): ColSize {
   return typeof value === 'object' && value !== null ? value : {};
 }
 
-/** Null label выравнивает control по Form.labelCol; локальные col props отключают offset. */
+/** Null label aligns control to Form.labelCol; local col props disable offset. */
 export function resolveFormWrapperCol({
   label, labelCol, wrapperCol, formLabelCol, formWrapperCol
 }: {

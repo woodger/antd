@@ -4,7 +4,7 @@ import reference from './fixtures/ant-design-popconfirm-action-content-reference
 
 test.use({ reducedMotion: 'reduce' });
 
-/** Готовит один экземпляр, его панель и точки наблюдения за действиями. */
+/** Prepares one instance, its panel and the points of observation of the actions. */
 async function selectProfile(page: Page, profile: string) {
   await page.goto('/?fixture=popconfirm-action-content');
   await page.getByLabel('Action profile').selectOption(profile);
@@ -18,7 +18,7 @@ async function selectProfile(page: Page, profile: string) {
   };
 }
 
-/** Сравнивает видимое содержимое и публичные классы оформления Button. */
+/** Compares the visible content and public classes of registration Button. */
 function readPanel(popup: Locator) {
   return popup.evaluate(node => {
     const buttons = [...node.querySelectorAll('.ant-popconfirm-buttons > .ant-btn')].map(button => ({
@@ -51,7 +51,7 @@ for (const sample of reference.cases) {
     await expect(popup).toBeVisible();
     const { profile, buttons, icon } = sample;
 
-    // Svelte сохраняет явное пустое значение, число 0 и скрытый от ARIA декоративный icon.
+    // Svelte retains an apparent empty value, number 0 and hidden from ARIA decorative icon.
     let explicitText: string | undefined;
     if (profile === 'zero') {
       explicitText = '0';

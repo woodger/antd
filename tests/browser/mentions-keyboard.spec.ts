@@ -10,7 +10,7 @@ const preservedChoice = {
 
 test.use({ viewport: { width: 960, height: 640 } });
 
-/** Записывает результат реальных клавиатурных действий и порядок публичных вызовов. */
+/** Writs the result of real keyboard actions and the order of public calls. */
 function readSnapshot(editor: Locator) {
   return editor.evaluate((node: HTMLTextAreaElement) => {
     const root = node.closest('[data-ant-mentions-root]');
@@ -28,7 +28,7 @@ function readSnapshot(editor: Locator) {
   });
 }
 
-/** Открывает меню и отправляет одно завершающее действие из эталона. */
+/** Opens the menu and sends one final action from the benchmark. */
 async function performProfile(page: Page, profile: string) {
   await page.goto(`/select-components-hydration.html?mentions-keyboard=${profile}`);
   await page.addScriptTag({ type: 'module', url: '/mentions-keyboard.client.ts' });
@@ -67,7 +67,7 @@ for (const { profile, state } of reference.cases) {
   if (profile === 'open-prevent-down' || profile === 'open-composing') {
     test(`Mentions preserves its selection guard for ${profile}`, async ({ page }) => {
       const editor = await performProfile(page, profile);
-      // RcMentions выбирает option и здесь. Svelte сохраняет отмену выбора и guard IME.
+      // RcMentions selects option and here. Svelte retains cancellation of choice and guard IME.
       const events = profile === 'open-prevent-down' ? [['down', false], ['up', false]]
         : [['down', false]];
       await expect.poll(() => readSnapshot(editor)).toEqual({ ...preservedChoice, events });

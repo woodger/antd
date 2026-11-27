@@ -9,7 +9,7 @@ export type UploadFileStatus = 'error' | 'done' | 'uploading' | 'removed';
 export interface UploadFile<T = unknown> {
   uid: string;
   name: string;
-  /** Metadata upstream; подпись строки по-прежнему использует name. */
+  /** Metadata upstream; line label still uses the name. */
   fileName?: string;
   size?: number;
   type?: string;
@@ -19,18 +19,18 @@ export interface UploadFile<T = unknown> {
   percent?: number;
   originFileObj?: UploadRcFile;
   response?: T;
-  /** Контролируемые string metadata: statusText имеет приоритет над message. */
+  /** Controlled string metadata: statusText takes precedence over message. */
   error?: Error | ProgressEvent | { statusText?: string; message?: string; };
   xhr?: XMLHttpRequest;
   url?: string;
-  /** Пустая строка сохраняет fallback на url и запрещает генерацию через previewFile. */
+  /** An empty string preserves the fallback to url and prohibits generation via previewFile. */
   thumbUrl?: string;
-  /** Пользовательский preview cache; изображение строки использует thumbUrl или url. */
+  /** Custom preview cache; line image uses thumbUrl or url. */
   preview?: string;
   crossOrigin?: 'anonymous' | 'use-credentials' | '';
-  /** Атрибуты filename link или их JSON; class/onclick/style используют нативный Svelte API. */
+  /** Filename link attributes or their JSON; class/onclick/style use native Svelte API. */
   linkProps?: HTMLAnchorAttributes | string;
-  /** Доступное имя progress этого файла; progress props могут его перекрыть. */
+  /** The available name progress of this file; progress props can overlap it. */
   'aria-label'?: string;
   'aria-labelledby'?: string;
 }
@@ -64,20 +64,20 @@ export interface UploadChangeParam<T = unknown> {
   fileList: UploadFile<T>[];
   event?: { percent: number; };
 }
-/** Результат подготовки batch; null сохраняет файл в списке без статуса uploading. */
+/** The result of preparation of batch; null preserves the file in the list without uploading status. */
 export interface UploadBatchFileInfo {
   file: UploadRcFile;
   parsedFile: File | Blob | string | null;
 }
-/** Ref вложенного загрузчика с отменой запроса. */
+/** Ref nested bootloader with request cancellation. */
 export interface UploadUploaderRef<T = unknown> {
   abort: (file?: UploadFile<T> | string) => void;
 }
-/** Imperative API Upload/Dragger через bind:this; список и DOM refs читаются из текущего состояния. */
+/** Imperative API Upload/Dragger via bind:this; list and DOM refs read from current state. */
 export interface UploadRef<T = unknown> {
-  /** Публикует подготовленный batch без beforeUpload и без запуска транспорта. */
+  /** Publishes the prepared batch without beforeUpload and without the launch of transport. */
   onBatchStart: (batch: readonly UploadBatchFileInfo[]) => void;
-  /** Разбирает JSON-строку ответа; отсутствующий в текущем списке uid игнорируется. */
+  /** Parses the response JSON string. Ignores a uid missing from the current list. */
   onSuccess: (response: T | string, file: UploadRcFile, xhr?: XMLHttpRequest) => void;
   onProgress: (event: { percent: number; }, file: UploadRcFile) => void;
   onError: (
@@ -86,14 +86,14 @@ export interface UploadRef<T = unknown> {
     file: UploadRcFile
   ) => void;
   readonly fileList: readonly UploadFile<T>[];
-  /** Делегированный abort доступен после mount; сам по себе не удаляет строку. */
+  /** The delegated abort is available after mount; does not remove the line in itself. */
   readonly upload: UploadUploaderRef<T> | null;
   readonly nativeElement: HTMLSpanElement | undefined;
   readonly inputElement: HTMLInputElement | undefined;
-  /** Сохраняет прежний прямой abort Svelte-компонента. */
+  /** Retains the former direct abort Svelte-component. */
   abort: (file?: UploadFile<T> | string) => void;
 }
-/** Действия строки Upload; preview принимает DOM event для обычного onclick. */
+/** Upload string actions; preview accepts DOM event for regular onclick. */
 export interface UploadItemRenderActions {
   download: () => void;
   preview: (event?: MouseEvent) => void;
@@ -103,13 +103,13 @@ export interface UploadListOptions<T = unknown> {
   showRemoveIcon?: boolean | ((file: UploadFile<T>) => boolean);
   showDownloadIcon?: boolean | ((file: UploadFile<T>) => boolean);
   showPreviewIcon?: boolean | ((file: UploadFile<T>) => boolean);
-  /** Snippet получает текущий файл; отсутствующий prop сохраняет исходную иконку. */
+  /** Snippet receives the current file; the missing prop preserves the original icon. */
   removeIcon?: Snippet<[UploadFile<T>]>;
   downloadIcon?: Snippet<[UploadFile<T>]>;
   previewIcon?: Snippet<[UploadFile<T>]>;
   extra?: Snippet<[UploadFile<T>]>;
 }
-/** Line Progress без percent/type и deprecated strokeWidth; percent принадлежит файлу. */
+/** Line Progress without percent/type and deprecated strokeWidth; percentage belongs to the file. */
 export type UploadListProgressProps = Omit<
   Extract<ProgressProps, { type?: 'line'; }>,
   'percent' | 'type' | 'strokeWidth'
@@ -127,21 +127,21 @@ export interface UploadSemanticInfo<T = unknown> {
 }
 export type UploadSemanticValue<T = unknown> = UploadSemanticSlots
   | ((info: UploadSemanticInfo<T>) => UploadSemanticSlots | undefined);
-/** Общий record заменяется целиком во вложенном provider; local props имеют приоритет. */
+/** The general record is replaced entirely in the nested provider; local props has priority. */
 export type UploadConfig = Pick<
   UploadProps,
   'class' | 'style' | 'classNames' | 'styles' | 'accept' | 'customRequest' | 'progress'
 >;
-/** Выбор и загрузка файлов с controlled list, beforeUpload и настраиваемым транспортом. */
+/** Selection and uploading of files with controlled list, beforeUpload and configurable transport. */
 export interface UploadProps<T = unknown> extends Omit<
   HTMLAttributes<HTMLSpanElement>,
   'children' | 'onchange' | 'ondrop' | 'onerror' | 'onprogress'
 > {
-  /** Локальный namespace Upload/Dragger и списка; пустая строка наследует ConfigProvider. */
+  /** Local namespace Upload/Dragger and list; blank line inherits ConfigProvider. */
   prefixCls?: string;
-  /** Управляемый список; изменения публикуются через onChange и ожидают принятия владельцем. */
+  /** A managed list; changes are published through onChange and are pending acceptance by the owner. */
   fileList?: readonly UploadFile<T>[];
-  /** Начальный список при отсутствии fileList. */
+  /** Initial list in the absence of fileList. */
   defaultFileList?: readonly UploadFile<T>[];
   /** @defaultValue 'file' */
   name?: string;
@@ -159,30 +159,30 @@ export interface UploadProps<T = unknown> extends Omit<
   /** @defaultValue false */
   multiple?: boolean;
   /**
-   * Выбор папки и обход вложенных файлов при drop/paste; сохраняет webkitRelativePath.
+   * Folder selection and traversal of nested files on drop or paste. Preserves webkitRelativePath.
    * @defaultValue false
    */
   directory?: boolean;
   /**
-   * Вставка файлов из paste событий документа. Disabled блокирует вставку,
-   * в отличие от отсутствующего guard у rc-upload 1.1.1.
+   * Pastes files from document paste events. Disabled blocks pasting, unlike rc-upload 1.1.1, which
+   * has no guard.
    * @defaultValue false
    */
   pastable?: boolean;
   capture?: boolean | 'user' | 'environment';
   disabled?: boolean;
-  /** false останавливает отправку, UPLOAD_LIST_IGNORE исключает файл из списка. */
+  /** false stops sending, UPLOAD_LIST_IGNORE excludes the file from the list. */
   beforeUpload?: (
     file: UploadRcFile,
     fileList: UploadRcFile[]
   ) => void | boolean | string | Blob | PromiseLike<void | boolean | string | Blob>;
-  /** Собственный транспорт; info.defaultRequest предоставляет исходную XHR-реализацию. */
+  /** Our own transport; info.defaultRequest provides the original XHR implementation. */
   customRequest?: (
     options: UploadRequestOptions<T>,
     info: { defaultRequest: UploadRequestHandler<T>; }
   ) => UploadRequest | void;
   onChange?: (info: UploadChangeParam<T>) => void;
-  /** false или Promise с false запрещает удаление файла. */
+  /** false or Promise from false prohibits file deletion. */
   onRemove?: (file: UploadFile<T>) => void | boolean | PromiseLike<void | boolean>;
   onDrop?: (event: DragEvent) => void;
   onPreview?: (file: UploadFile<T>) => void;
@@ -196,34 +196,34 @@ export interface UploadProps<T = unknown> extends Omit<
   showUploadList?: boolean | UploadListOptions<T>;
   /** @defaultValue 'text' */
   listType?: 'text' | 'picture' | 'picture-card' | 'picture-circle';
-  /** Генератор thumbnail для picture-списков при originFileObj и thumbUrl === undefined. */
+  /** Generator thumbnail for picture lists at originFileObj and thumbUrl === undefined. */
   previewFile?: (file: File | Blob) => PromiseLike<string>;
   isImageUrl?: (file: UploadFile<T>) => boolean;
-  /** Иконка файла с контекстом file/listType; готовая thumbnail по-прежнему показывает изображение. */
+  /** File icon with context file/listType; finished thumbnail still shows the image. */
   iconRender?: Snippet<[file: UploadFile<T>, listType: NonNullable<UploadProps<T>['listType']>]>;
-  /** Оригинальная строка — Snippet с Tooltip ошибки; fileList сохраняет текущий порядок. */
+  /** The original line is Snippet with Tooltip errors; fileList keeps the current order. */
   itemRender?: Snippet<[
     originNode: Snippet,
     file: UploadFile<T>,
     fileList: readonly UploadFile<T>[],
     actions: UploadItemRenderActions
   ]>;
-  /** Отсутствие задаёт size=[-1,2]/showInfo=false; переданный объект заменяет defaults. */
+  /** Absence sets size=[-1,2]/showInfo=false; transferred object replaces defaults. */
   progress?: UploadListProgressProps;
-  /** Классы wrapper/list/item/trigger; callback получает raw props и resolved defaults. */
+  /** Classes wrapper/list/item/trigger; callback receives raw props and resolved defaults. */
   classNames?: UploadSemanticValue<T>;
-  /** CSS-строки тех же slots; обычный style перекрывает styles.trigger. */
+  /** CSS-lines of the same slots; the usual style overlaps styles.trigger. */
   styles?: UploadSemanticValue<T>;
   locale?: UploadLocale;
   type?: 'select' | 'drag';
   children?: Snippet;
   rootClassName?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLSpanElement;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   inputElement?: HTMLInputElement;
 }
-/** Upload с drag-and-drop поверхностью и дополнительной высотой контейнера. */
+/** Upload with drag-and-drop surface and additional container height. */
 export interface UploadDraggerProps<T = unknown> extends UploadProps<T> {
   height?: number;
 }

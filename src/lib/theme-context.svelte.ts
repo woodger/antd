@@ -23,7 +23,7 @@ export function useDesignTokenContext(): DesignTokenContext {
   return getContext<DesignTokenContext | undefined>(designTokenKey) ?? defaultContext;
 }
 
-/** Локальная theme создаёт scope, отсутствующая theme сохраняет родительский token/state. */
+/** Local theme creates scope, missing theme preserves parent token/state. */
 export function provideDesignTokens(
   getTheme: () => ThemeConfig | undefined,
   id: string,
@@ -48,7 +48,7 @@ export function provideDesignTokens(
   return context;
 }
 
-/** Вызывается при инициализации; getter-поля читаются реактивно без повторного getContext. */
+/** Caused by initialization; getter-fields are read reactively without repeated getContext. */
 export function useToken(): ThemeTokenResult {
   const context = useDesignTokenContext();
 

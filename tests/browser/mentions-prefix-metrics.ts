@@ -1,6 +1,6 @@
 export function snapshotMentionsPrefix() {
-  // page.evaluate переносит в браузер только эту функцию; helper должен оставаться внутри.
-  /** Сравнивает CSS control и popup, не привязываясь к React/Svelte DOM-обёрткам. */
+  // page.evaluate transfers only this function to the browser; the helper must remain inside.
+  /** Compares CSS control and popup, not tied to React/Svelte DOM-inch. */
   function snapshotMentionsPart(host: HTMLElement) {
     const root = host.querySelector<HTMLElement>('.fixture-mentions-prefix');
     if (!root) {
@@ -8,7 +8,7 @@ export function snapshotMentionsPrefix() {
     }
 
     const prefix = root.classList[0];
-    // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+    // Fixes computed declarations. The missing node remains null in the picture.
     const css = (node: Element | null, keys: readonly string[]) => {
       if (!node) {
         return null;

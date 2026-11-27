@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import reference from './fixtures/ant-design-modal-static-reference.json' with { type: 'json' };
 import { expect, test } from './test';
 
-/** Сопоставляет статические и контекстные окна по публичным стилям и содержимому. */
+/** Compares static and contextual windows by public styles and content. */
 function readDialogs(page: Page) {
   return page.evaluate(() => [...document.querySelectorAll<HTMLDialogElement>('dialog.static-probe[open]')]
     .map(dialog => ({
@@ -20,7 +20,7 @@ function readDialogs(page: Page) {
     })).sort((first, second) => first.title.localeCompare(second.title)));
 }
 
-/** Читает видимый снимок одного статического окна после вызова handle. */
+/** Reading a visible snapshot of one static window after calling a handle. */
 function readLifecycle(page: Page) {
   return page.evaluate(() => {
     const dialog = document.querySelector<HTMLDialogElement>('dialog.lifecycle-root[open]');
@@ -44,7 +44,7 @@ function readLifecycle(page: Page) {
   });
 }
 
-/** Даёт нативному close event и удалению корня завершить работу. */
+/** Gives the native close event and the removal of the root to complete the work. */
 function nextFrames(page: Page) {
   return page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() =>
     requestAnimationFrame(() => resolve()))));

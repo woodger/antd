@@ -3,7 +3,7 @@ export function snapshotTableHeader() {
   if (!root) {
     throw new Error('Table header fixture is missing');
   }
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null) => {
     if (!node) {
       return null;

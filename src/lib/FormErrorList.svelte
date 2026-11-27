@@ -32,7 +32,7 @@
   const config = useConfig();
   const designTokens = useDesignTokenContext();
   const componentTheme = useComponentTheme('Form');
-  // Прежний native contract отдаёт List prefix приоритет над промежуточным FormItem.
+  // The existing native contract gives the List prefix precedence over an intermediate FormItem.
   let prefix = $derived(list?.prefixCls ?? ownerPrefix?.prefixCls ?? config.getPrefixCls('form'));
   let prefixCss = $derived(getFormErrorListPrefixCss(prefix, Boolean(getFormPrefixScope(
     prefix, config.getPrefixCls(), designTokens.state.token

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Запускает те же данные и настройки колонок через публичный пакет Svelte.
+  // Starts the same data and column settings through the public package Svelte.
   import {
     ConfigProvider, enUS, Table, type TableColumn, type TableColumnsType, type TableDataIndex,
     type TableLayout
@@ -33,7 +33,7 @@
     ? pathColumns() : sizedColumns());
   const dataSource = $derived(makeRows());
 
-  /** Пустой контейнер посередине пути и ложные значения остаются различимы. */
+  /** An empty container in the middle of the path and the false values remain discernible. */
   function makeRows(): Row[] {
     if (profile.empty) return [];
 
@@ -51,7 +51,7 @@
     }));
   }
 
-  /** Передаёт типизированные ключи и readonly пути от владельца таблицы. */
+  /** Transmits typed keys and readonly paths from the table holder. */
   function pathColumns(): TableColumn<Row>[] {
     const entries: readonly (readonly [string, TableDataIndex<Row>])[] = [
       ['literal', 'person.name'],
@@ -71,7 +71,7 @@
     }));
   }
 
-  /** Сохраняет ключи при изменении ellipsis, layout и видимости. */
+  /** Saves the keys when changing ellipsis, layout and visibility. */
   function sizedColumns(): TableColumn<Row>[] {
     const clipAll = profile.clip && profile.id !== 'hidden-ellipsis';
     return [

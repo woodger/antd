@@ -1,12 +1,12 @@
-// Собирает semantic slots Menu. Общие стили дополняются по декларациям,
-// а локальный стиль вложенного slot заменяет стиль провайдера полностью.
+// Collects semantic slots Menu. General styles are supplemented by declarations, and the local
+// style of the nested slot replaces the style of the provider completely.
 import { mergeComponentSemantics } from './semantic-style.engine';
 import type { MenuClassNames, MenuConfig, MenuProps, MenuSemantic, MenuStyles } from './menu.types';
 
 const subMenuSlots = ['item', 'itemTitle', 'list', 'itemIcon', 'itemContent'] as const;
 const rootSlots = ['root', ...subMenuSlots] as const;
 
-/** Вычисляет callback с props текущего Menu и сохраняет пропущенный slot. */
+/** Callback with props current Menu and preserves missing slot. */
 function resolve<T extends MenuClassNames | MenuStyles>(
   value: MenuSemantic<T> | undefined,
   info: { props: MenuProps; }
@@ -14,17 +14,17 @@ function resolve<T extends MenuClassNames | MenuStyles>(
   return typeof value === 'function' ? value(info) : value;
 }
 
-/** Сокращённая строка popup задаёт класс его корня. */
+/** The abbreviated popup string sets its root class. */
 function popupClass(popup: MenuClassNames['popup']) {
   return typeof popup === 'string' ? popup : popup?.root;
 }
 
-/** Объединяет классы одного slot в порядке провайдер → экземпляр. */
+/** Combines the classes of one slot in the order provider → copies. */
 function joinClasses(inherited?: string, local?: string) {
   return [inherited, local].filter(Boolean).join(' ') || undefined;
 }
 
-/** Разрешает стили и классы корня, групп, пунктов и отдельных popup. */
+/** Solves styles and classes of root, groups, points and separate popups. */
 export function menuSemantics(config: MenuConfig | undefined, props: MenuProps) {
   const info = { props };
   const inheritedClasses = resolve(config?.classNames, info);

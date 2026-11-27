@@ -31,7 +31,7 @@ export function getPaginationState(total: number, current = 1, pageSize = 10): P
   };
 }
 
-/** rc-pagination 1.4.0, MIT (vendor/LICENSE.rc-pagination); исходные буферы и jump boundaries. */
+/** rc-pagination 1.4.0, MIT ( vendor/LICENSE.rc-pagination); source buffers and jump boundaries. */
 export function getPaginationItems(
   { current, pageCount }: Pick<PaginationState, 'current' | 'pageCount'>,
   showLessItems = false,

@@ -1,27 +1,27 @@
 import type { Snippet } from 'svelte';
 import type { ImageElementData, ImagePreviewConfig } from './image.types';
 export type ImagePreviewGroupItem = string | ImageElementData;
-/** Настройки общего viewer ImagePreviewGroup и управляемого индекса изображения. */
+/** Setting the total viewer ImagePreviewGroup and the managed image index. */
 export interface ImagePreviewGroupConfig extends Omit<
   ImagePreviewConfig,
   'onOpenChange' | 'src' | 'cover'
 > {
-  /** Управляемый zero-based индекс; default для локального состояния — 0. */
+  /** Managed zero-based index; default for local state — 0. */
   current?: number;
   onChange?: (current: number, previous: number) => void;
   onOpenChange?: (open: boolean, info: { current: number; }) => void;
-  /** Snippet получает one-based номер и полное число изображений. */
+  /** Snippet receives one-based number and full number of images. */
   countRender?: Snippet<[number, number]>;
 }
-/** Общий preview для явных items либо зарегистрированных дочерних Image. */
+/** General preview for explicit items or registered children Image. */
 export interface ImagePreviewGroupProps {
-  /** Базовый Image prefix группы, как в Ant Design; viewer добавляет -preview, children независимы. */
+  /** The group's Basic Image Prefix, as in Ant Design; the viewer adds -preview, children are independent. */
   previewPrefixCls?: string;
-  /** Явный список, включая пустой, имеет приоритет над регистрацией дочерних Image. */
+  /** An explicit list, including an empty one, takes precedence over registering child Image. */
   items?: readonly ImagePreviewGroupItem[];
   /** @defaultValue true */
   preview?: boolean | ImagePreviewGroupConfig;
-  /** Класс корня общего preview; остальные semantic slots пока не перенесены. */
+  /** General preview root class; other semantic slots have not yet been moved. */
   classNames?: { popup?: { root?: string; }; };
   fallback?: string;
   children?: Snippet;

@@ -16,22 +16,22 @@ export interface WatermarkText {
 
 export type WatermarkContent = string | WatermarkText;
 
-/** Стили ConfigProvider.watermark; локальный class/style добавляется после настроек провайдера. */
+/** Styles ConfigProvider.watermark; local class/style is added after the provider's settings. */
 export interface WatermarkConfig {
   class?: string;
   style?: string;
 }
 
-/** Повторяемая Canvas-подложка текста или изображения с наследованием в Modal/Drawer. */
+/** Repeated Canvas-substrate of text or image with inheritance in Modal/Drawer. */
 export interface WatermarkProps {
-  /** По умолчанию global token.zIndexPopupBase - 1; явный 0 сохраняется. */
+  /** By default global token.zIndexPopupBase - 1; explicit 0 is saved. */
   zIndex?: number;
   rotate?: number;
   width?: number;
   height?: number;
   image?: string;
   content?: WatermarkContent | readonly WatermarkContent[];
-  /** Color/fontSize используют global colorFill/fontSizeLG; построчный font имеет приоритет. */
+  /** Color/fontSize uses global colorFill/fontSizeLG; line font has priority. */
   font?: WatermarkFont;
   class?: string;
   rootClassName?: string;
@@ -39,11 +39,11 @@ export interface WatermarkProps {
   gap?: readonly [number, number];
   offset?: readonly [number, number];
   children?: Snippet;
-  /** Передаёт подложку в дочерние Modal/Drawer. */
+  /** Passes the backdrop to child Modal and Drawer components. */
   inherit?: boolean;
-  /** Удаление watermark DOM извне; штатный unmount callback не вызывает. */
+  /** External removal of the watermark DOM does not invoke the regular unmount callback. */
   onRemove?: () => void;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 

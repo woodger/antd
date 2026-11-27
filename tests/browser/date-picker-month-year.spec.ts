@@ -21,7 +21,7 @@ test.use({ locale: 'en-US', timezoneId: 'UTC', deviceScaleFactor: 1 });
 for (const sample of samples) {
   test(`DatePicker ${sample.id} preserves Source terminal selection and callbacks`,
     async ({ page }, testInfo) => {
-      // Actual Range counter занимает до 120 s; добавлены оба Source replay и полные raw attachments.
+      // The Actual Range counter can take up to 120 s. Includes both Source replays and the complete raw attachments.
       test.setTimeout(300000);
       const errors: unknown[] = [], semanticFailures: unknown[] = [];
       const diagnostics: Array<{ type: string; text: string }> = [];
@@ -89,7 +89,7 @@ for (const sample of samples) {
       };
       let disposed = false;
       let closedIndex = 0, actions = 0;
-      // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+      // Saves the result of spare removal and adds an error to the diagnosis of the test.
       async function attachFallbackDisposal() {
         try { await attach('finally-whole-actual-disposal', await disposeMonthYear(page)); }
         catch (error) { errors.push({ phase: 'finally-dispose', message: String(error) }); }
@@ -124,7 +124,7 @@ for (const sample of samples) {
               verifyPhase(afterFocus, original.actionEvidence.afterFocusPointer, variant,
                 'step-' + index + ':afterFocusPointer');
             }
-            // Записывает расхождение установившегося состояния с конкретным эталоном.
+            // Records the discrepancy of the established state with a specific standard.
             function recordSettledComparison() {
               try { verifyMonthYearPoint(actual, original.actual, proof, variant, 'step-' + index); }
               catch (error) {

@@ -5,27 +5,27 @@ import LocaleFixture from './TableLocaleFixture.svelte';
 import PaginationFixture from './TablePaginationFixture.svelte';
 import SemanticFixture from './TableSemanticFixture.svelte';
 
-/** Формирует исходную сетку и редактор до подключения измерений. */
+/** Forms the original grid and the editor before the measurements are connected. */
 export function renderColumnLayout(profileId: string) {
   return render(Fixture, { props: { profileId, editor: true } });
 }
 
-/** Готовит группу с редактором, унаследованным из column. */
+/** Preparing a team with an editor inherited from the column. */
 export function renderColumnDefaults() {
   return render(DefaultsFixture, { props: { profileId: 'groups', editor: true } });
 }
 
-/** Передаёт исходные semantic слои и редактор до запуска hydration. */
+/** Transmits the original semantic layers and the editor before the hydration starts. */
 export function renderTableSemantic() {
   return render(SemanticFixture, { props: { profileId: 'reactive' } });
 }
 
-/** Готовит верхний и нижний пейджеры вокруг одной страницы с редактором. */
+/** Prepares the top and bottom pagers around one page with the editor. */
 export function renderTablePagination() {
   return render(PaginationFixture, { props: { profileId: 'live' } });
 }
 
-/** Готовит пустую ячейку с редактором из локального словаря. */
+/** Prepares an empty cell with an editor from a local vocabulary. */
 export function renderTableLocale() {
   return render(LocaleFixture, { props: { profileId: 'body-snippet' } });
 }

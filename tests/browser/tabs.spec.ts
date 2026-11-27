@@ -538,7 +538,7 @@ for (const placement of ['top', 'bottom', 'start', 'end']) {
         await expect(tab(page, 'Beta')).toBeFocused();
 
         await page.keyboard.press('Enter');
-        // Card меняет padding через CSS transition; сравниваем завершённый layout.
+        // Card changes padding through CSS transition; we compare the completed layout.
         await expect(async () => {
           const nav = (await root(page).locator('.ant-tabs-nav').boundingBox())!;
           const content = (await panel(page, 'Beta').boundingBox())!;

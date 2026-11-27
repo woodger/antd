@@ -92,7 +92,7 @@ for (const sample of samples) {
       };
       let disposed = false;
       let closedIndex = 0, actions = 0;
-      // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+      // Saves the result of spare removal and adds an error to the diagnosis of the test.
       async function attachFallbackDisposal() {
         try { await attach('finally-whole-actual-disposal', await disposeDateWeekPrefix(page)); }
         catch (error) { errors.push({ phase: 'finally-dispose', message: String(error) }); }
@@ -130,7 +130,7 @@ for (const sample of samples) {
               verifyPhase(afterFocus, original.actionEvidence.afterFocusPointer, variant,
                 'step-' + index + ':afterFocusPointer');
             }
-            // Записывает расхождение установившегося состояния с конкретным эталоном.
+            // Records the discrepancy of the established state with a specific standard.
             function recordSettledComparison() {
               try {
                 verifyDateWeekPrefixPoint(actual, original.actual, proof, variant, 'step-' + index);

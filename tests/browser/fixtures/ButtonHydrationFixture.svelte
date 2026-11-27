@@ -5,7 +5,7 @@
   let nativeElement = $state<HTMLButtonElement | HTMLAnchorElement>();
   let activations = $state<{ tag: string; matchesRef: boolean; }[]>([]);
 
-  /** Записывает нативную активацию и сверяет её источник с bind:nativeElement. */
+  /** Records native activation and verifies its source from bind:nativeElement. */
   function activate(event: MouseEvent & {
     currentTarget: HTMLButtonElement | HTMLAnchorElement;
   }) {

@@ -5,24 +5,24 @@ import source from './fixtures/ant-design-menu-config-reference.json' with { typ
 
 test.use({ viewport: { width: 1440, height: 1000 } });
 
-/** Применяет существующие адаптации DOM к копии эталонного замера. */
+/** Applies existing adaptations of DOM to a copy of the reference measurement. */
 function expectedMenuConfig(snapshot: typeof source.cases[number]) {
   const { calls, nodes } = structuredClone(snapshot);
   nodes.parentTitle.tag = 'button';
   nodes.nestedTitle.tag = 'button';
   if (snapshot.name === 'horizontal') {
-    // Rc-overflow записывает opacity:1 на видимые пункты, вне семантических слоёв.
+    // Rc-overflow records opacity:1 to visible points, outside the semantic layers.
     delete nodes.leaf.styles.opacity;
     delete nodes.parent.styles.opacity;
     delete nodes.rootGroupItem.styles.opacity;
-    // Native button сбрасывает внутренний отступ первого horizontal trigger.
+    // Native button resets the internal indent of the first horizontal trigger.
     nodes.parentTitle.styles = { 'padding-inline-start': '0px' };
   }
 
   return { calls, nodes };
 }
 
-/** Меняет настройку без переноса клавиатурного фокуса из меню. */
+/** Changes the configuration without transferring the keyboard focus from the menu. */
 async function toggle(locator: Locator, checked: boolean) {
   await locator.evaluate((node: HTMLInputElement, checked) => {
     node.checked = checked;
@@ -45,7 +45,7 @@ for (const reference of source.cases) {
         return null;
       }
       for (const slot of ['parentList', 'nestedList']) {
-        // Svelte синхронизирует цвет и шрифт отдельного списка с темой.
+        // Svelte synchronizes the color and font of a separate list with the theme.
         const styles = sample.nodes[slot]?.styles;
         if (styles?.color === 'inherit') {
           delete styles.color;

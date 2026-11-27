@@ -7,7 +7,7 @@ import {
 const fixture = '/?fixture=table-dom-attributes&profile=';
 test.use({ viewport: { width: 880, height: 480 }, reducedMotion: 'reduce' });
 
-/** Читает DOM после Svelte-обновления, включая снятые и пустые атрибуты. */
+/** Reads DOM after Svelte-update, including removed and empty attributes. */
 function capture({ ariaNames, dataNames, prefix }: {
   ariaNames: string[]; dataNames: string[]; prefix: string;
 }) {
@@ -18,7 +18,7 @@ function capture({ ariaNames, dataNames, prefix }: {
     throw new Error('Missing Table DOM attributes fixture');
   }
 
-  /** Сохраняет различие между пустым значением и отсутствующим атрибутом. */
+  /** Saves the distinction between an empty value and the missing attribute. */
   function readAttrs(node: Element, names: string[]) {
     return Object.fromEntries(names.map(name => [name, node.getAttribute(name)]));
   }

@@ -1,8 +1,8 @@
-// Применяет слои inline CSS через DOM diff. Состояние соединения хранит
-// только предыдущие управляемые свойства, оставляя прочие стили узлу.
+// Applied layers inline CSS via DOM diff. The condition of the compound stores only the previous
+// controlled properties, leaving other styles to the node.
 import { getInlineStyleDeclarations, type InlineStyleLayer } from './inline-style.engine';
 
-/** React style diff по declaration keys; reconcile восстанавливает слой после DOM-controller. */
+/** React style diff by declaration declarations; restores layer after DOM-controller. */
 export function connectInlineStyle(node: HTMLElement | SVGElement, reconcile = false) {
   const parser = node.ownerDocument.createElement('span').style;
   let previous = new Map<string, { value: string; priority: string; }>();
@@ -10,12 +10,12 @@ export function connectInlineStyle(node: HTMLElement | SVGElement, reconcile = f
 
   return applyLayers;
 
-  // Заменяет декларации управляемого слоя с учётом каскада !important.
+  // Replaces the declarations of the managed layer, taking into account the cascade!important.
   function applyLayers(layers: readonly InlineStyleLayer[]) {
     if (!initialized) {
       initialized = true;
       const raw = layers.flatMap(layer => typeof layer === 'string' ? [] : layer ?? []);
-      // SSR может разобрать raw CSS-value как declarations; setter принимает одно value.
+      // SSR can disassemble raw CSS-value as declarations; setter accepts one value.
       for (const { property } of getInlineStyleDeclarations([
         raw.map(([name, value]) => `${name}:${value}`).join(';')
       ])) {

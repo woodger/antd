@@ -1,6 +1,6 @@
 <script lang="ts" generics="OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement">
-  // Связывает редактор с предложениями, активной строкой и backfill. Проверяет ввод и публикует
-  // выбор отдельно от поиска.
+  // Connects the editor to suggestions, the active row, and backfill. Validates input and emits
+  // selection separately from search.
   import { autoCompleteMatchesData, autoCompleteNext } from './auto-complete.engine';
   import { onMount, tick, untrack } from 'svelte';
   import type {
@@ -383,12 +383,12 @@
 
   $effect.pre(() => {
     const query = text;
-    // React синхронизирует combobox search отдельным effect. Уже ожидающий
-    // continuous pointer task выполняет его до close; иначе close приходит первым.
+    // React syncs combobox search in a separate effect. A queued continuous pointer task runs it
+    // before close. Otherwise, close arrives first.
     if (!pendingClearClose || searchBeforeClose) listSearch = query;
   });
 
-  // Без bind: обновление spread props может сбросить локальное значение ref prop.
+  // Without bind, a spread-prop update can reset the local ref prop.
   $effect(() => {
     nativeElement = root as RootElement | HTMLDivElement | undefined;
     return () => { nativeElement = undefined; };
@@ -619,12 +619,12 @@
     }
     cancelClearClose();
     searchBeforeClose = synchronizeSearch;
-    // Source закрывает следующим task; query имеет отдельную очередь обновления.
+    // Upstream closes on the next task. Query updates use a separate queue.
     const channel = new MessageChannel();
     pendingClearClose = channel;
     channel.port1.onmessage = () => {
-      // Blur при DOM removal может создать task уже во время cleanup.
-      // Даже устаревшее сообщение освобождает собственные порты.
+      // Blur during DOM removal can schedule a task during cleanup. A stale message still releases
+      // its ports.
       channel.port1.close();
       channel.port2.close();
       if (!componentDestroyed && pendingClearClose === channel) requestOpen(false);
@@ -689,7 +689,7 @@
       editor?.focus({ preventScroll: true });
     }
     change(undefined, before);
-    // Rc-select вызывает отдельный search-путь после очистки display values.
+    // Rc-select uses a separate search path after clearing the display values.
     if (beforeText) {
       change('', before);
       searchConfig.onSearch?.('');
@@ -913,7 +913,7 @@
     if (!state.blocked) state.onFocus?.(event);
   }
   function componentRootBlur(event: FocusEvent) {
-    // Default root получает тот же teardown guard, что merged custom callbacks.
+    // The default root uses the same teardown guard as merged custom callbacks.
     if ((event.currentTarget as Element | null)?.isConnected === false) {
       return;
     }
@@ -1238,7 +1238,7 @@
   }
   .auto-complete[data-ant-auto-complete-component-input] > [data-ant-auto-complete-content] {
     flex: 1 1 auto;
-    /* Заполненное поле скрывает ::before, а абсолютный редактор сам не задаёт высоту. */
+    /* A filled field hides ::before, and the absolutely positioned editor contributes no height. */
     min-height: 1lh;
   }
   .clear {
@@ -1280,7 +1280,7 @@
     font: inherit;
     text-align: start;
   }
-  /* Options повторяют flex column rc-select, пустая выдача остаётся обычным блоком. */
+  /* Options follow rc-select's flex column layout. An empty result stays a regular block. */
   .popup[data-ant-auto-complete-source-popup]:not([hidden]) {
     display: flex;
     flex-direction: column;
@@ -1401,7 +1401,7 @@
 {#snippet body(view: { mounted: boolean; content: PopupContent })}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}
 {#if rootSlot}<SelectComponent component={rootSlot} context={rootContext} root />{@render componentPopup(view)}{:else}
-<!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+<!-- svelte-ignore a11y_no_static_element_interactions (The root forwards mouse focus to the native input, which handles the keyboard.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-auto-complete-source-theme={Boolean(componentTheme.className) || undefined}
   title={attributes.title}
   {...{ loadingIcon: selectIconAttribute(loadingIcon) }}

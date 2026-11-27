@@ -4,7 +4,7 @@ export function snapshotStatusPrefix() {
     .map(scope => [scope.dataset.statusPrefixScope,
       Object.fromEntries([...scope.querySelectorAll<HTMLElement>('[data-prefix-widget]')]
         .map(host => {
-          // Основной Skeleton сохраняет native host/status вокруг декоративного каркаса.
+          // The main Skeleton preserves native host/status around the decorative frame.
           const root = host.querySelector('[data-ant-skeleton-main]') ?? host.firstElementChild!;
           const css = getComputedStyle(root);
           const indicator = host.dataset.prefixWidget === 'badge'

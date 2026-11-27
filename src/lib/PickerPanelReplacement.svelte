@@ -1,5 +1,5 @@
 <script lang="ts" generics="DateType extends object">
-  // Даёт пользовательской панели тот же renderer ячейки и состав значков навигации.
+  // Gives the custom panel the same cell renderer and navigation icons.
   import type { DatePickerPanel, DatePickerPanelContext } from './picker-components.types';
   import type { DatePickerProps } from './date-picker.types';
   import type { TimePickerProps } from './time-picker.types';

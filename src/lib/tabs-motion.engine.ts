@@ -1,7 +1,7 @@
 import type { TabsAnimatedConfig } from './tabs-motion.types';
 export { getCssMotionClassName as getTabsMotionClassName } from './css-motion.engine';
 
-/** Два исходных useAnimateConfig: Ant Design wrapper, затем rc-tabs 1.13.0. */
+/** Two original useAnimateConfig: Ant Design wrapper, then rc-tabs 1.13.0. */
 export function getTabsAnimation(
   animated: boolean | TabsAnimatedConfig | undefined,
   prefixCls = 'ant-tabs'

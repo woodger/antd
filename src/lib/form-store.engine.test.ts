@@ -39,7 +39,7 @@ describe('sameFormValue', () => {
   });
 });
 
-// Expected values описывают публичную семантику NamePath, независимо от устройства store.
+// Expected values describe public semantics NamePath, regardless of the store device.
 describe('Form NamePath store', () => {
   it('keeps dotted keys separate from array paths', () => {
     const initial = { 'user.name': 'Literal', user: { name: 'Anna', role: 'developer' } };

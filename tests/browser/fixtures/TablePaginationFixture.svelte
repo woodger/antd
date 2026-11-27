@@ -1,5 +1,5 @@
 <script module lang="ts">
-  // Профили воспроизводят публичные входы React и отдельный контракт bind:current/pageSize.
+  // Profiles reproduce public inputs React and separate contract bind:current/pageSize.
   import {
     ConfigProvider, Table, enUS, type ComponentSize, type TableChange, type TableColumn,
     type TablePaginationConfig, type TablePaginationPlacement, type TableProps
@@ -144,7 +144,7 @@
     onChange: readTableRequest
   });
 
-  /** Владелец управляемого профиля принимает запрос, только если включено подтверждение. */
+  /** The owner of the managed profile accepts the request only if the confirmation is enabled. */
   function readPagerRequest(page: number, size: number) {
     events = [...events, ['page', page, size]];
     if (profile.replaceOnPage) {
@@ -156,7 +156,7 @@
     }
   }
 
-  /** Пишет публичный payload вместе с данными до разбиения на страницы. */
+  /** Writes a public payload together with the data before partition into pages. */
   function readTableRequest(change: TableChange<Row>) {
     const { action, pagination, currentDataSource } = change;
     events = [...events, [

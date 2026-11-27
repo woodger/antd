@@ -160,7 +160,7 @@
   <button type="button" onclick={info.onClick} aria-label={`Custom dot ${index + 1}`}>{index + 1}</button>
 {/snippet}
 {#snippet append(original: Snippet, info: CarouselDotsProps)}
-  <!-- svelte-ignore a11y_mouse_events_have_key_events (Проверяет исходные pauseOnDotsHover callbacks.) -->
+  <!-- svelte-ignore a11y_mouse_events_have_key_events (Tests the upstream pauseOnDotsHover callbacks.) -->
   <ol class={info.class} onmouseenter={info.onMouseEnter} onmouseover={info.onMouseOver}
     onmouseleave={info.onMouseLeave} data-append="custom">{@render original()}</ol>
 {/snippet}

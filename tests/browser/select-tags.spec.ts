@@ -37,7 +37,7 @@ for (const entry of interactions.cases) {
       expect(settled.steps.at(-1)!.point.value).toEqual([entry.sample.text.trim()]);
     }
     if (entry.sample.id === 'blank-enter') {
-      // Source создаёт whitespace-only value через список, хотя submit отвергает пустой ввод.
+      // Upstream creates a whitespace-only value through the list even though submission rejects empty input.
       expected.values = [];
       expected.labels = [];
       expected.events = expected.events.filter(event => event.type !== 'change');

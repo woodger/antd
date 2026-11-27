@@ -1,10 +1,10 @@
-/** Сравнивает theme-owned CSS, сохраняя нативные controls и expanded-row viewport. */
+/** Compares theme-owned CSS, keeping native controls and expanded-row view. */
 export function snapshotTableTheme() {
   const root = document.querySelector('#table-theme-control .ant-table-wrapper');
   if (!root) {
     throw new Error('Table theme root is missing');
   }
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   const css = (node: Element | null, keys: readonly string[], pseudo?: string) => {
     if (!node) {
       return null;

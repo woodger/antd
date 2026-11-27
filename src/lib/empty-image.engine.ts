@@ -1,13 +1,13 @@
 import { FastColor } from './fast-color.engine';
 import type { AliasToken } from './theme-token.types';
 
-/** Source empty/utils.getAsSolidColor: CSS variables не композируются заранее. */
+/** Source empty/utils.getAsSolidColor: CSS variables are not composed in advance. */
 function solidColor(color: string, background: string) {
   return color?.startsWith('var(') || background?.startsWith('var(')
     ? color : new FastColor(color).onBackground(background).toHexString();
 }
 
-/** Built-in SVG использует глобальные tokens, независимо от component aliases Empty. */
+/** Built-in SVGs use global tokens regardless of Empty component aliases. */
 export function resolveEmptyImageColors(
   token: Pick<AliasToken,
     'colorBgContainer' | 'colorFill' | 'colorFillSecondary' | 'colorFillTertiary'

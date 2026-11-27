@@ -171,8 +171,8 @@ test(
     const input = page.getByLabel('Password', { exact: true });
     const toggle = page.locator('.password-field .ant-input-password-icon');
 
-    // Смена SVG под указателем порождает новые mouseover и в React-эталоне.
-    // Текстовая иконка изолирует здесь сам контракт hover/keyboard.
+    // The SVG change under the index generates a new mouseover and in the React-reference. The text
+    // icon insulates the contract hover/keyboard itself here.
     await page.getByRole('combobox', { name: 'Password icon', exact: true }).selectOption('local');
     await page
       .getByRole('combobox', { name: 'Password action', exact: true })

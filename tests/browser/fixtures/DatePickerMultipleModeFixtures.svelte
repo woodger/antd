@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Один владелец меняет режим без key и без записи нового defaultValue.
+  // One owner changes the mode without key and without recording the new defaultValue.
   import dayjs, { type Dayjs } from 'dayjs';
   import { ConfigProvider, DatePicker, enUS, type DatePickerMultipleProps, type DatePickerProps }
     from '@woodger/antd';
@@ -10,7 +10,7 @@
   let multiple = $state(false);
   let events = $state<unknown[][]>([]);
 
-  /** Сохраняет порядок дат и исходное время при переходах между режимами. */
+  /** Keeps the order of dates and the starting time during the transitions between modes. */
   function change(value: Dayjs | Dayjs[] | null, text: string | string[] | null) {
     const dates = Array.isArray(value) ? value : value ? [value] : null;
     events.push(['change', text, dates?.map(date => date.format('YYYY-MM-DD HH:mm:ss')) ?? null]);

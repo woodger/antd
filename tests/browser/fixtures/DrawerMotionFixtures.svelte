@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Записывает публичные callbacks на тех же DOM-узлах, которые измеряет React probe.
+  // Records public callbacks on the same DOM nodes, which measures React probe.
   import { untrack } from 'svelte';
   import { Drawer, type DrawerMotionConfig, type DrawerPlacement } from '@woodger/antd';
 
@@ -42,7 +42,7 @@
   const mask = $derived(profile === 'mixed' ? undefined : motionFor('mask', profile));
   const forced = $derived(profile === 'factory' || profile === 'immediate');
 
-  /** Различает конфигурацию панели и маски и записывает фактические аргументы фаз. */
+  /** Distinguishes the configuration of the panel and masks and records the actual arguments of the phases. */
   function motionFor(surface: Surface, name: string): DrawerMotionConfig {
     if (retention[name] || name === 'mixed') {
       return {
@@ -102,13 +102,13 @@
     return motion;
   }
 
-  /** Фабрика получает размещение непосредственно от Drawer. */
+  /** The factory receives accommodation directly from Drawer. */
   function motionAt(value: DrawerPlacement) {
     if (!positions.includes(value)) positions.push(value);
     return panel;
   }
 
-  /** Меняет профиль до открывающего действия и сбрасывает журнал старого экземпляра. */
+  /** Changes the profile to the opening action and resets the magazine of the old copy. */
   function selectProfile(next: string) {
     profile = next;
     open = false;
@@ -121,13 +121,13 @@
     positions.length = 0;
   }
 
-  /** Смена placement входит в обычное открытие фабричного профиля. */
+  /** Changing placement is included in the normal opening of the factory profile. */
   function show() {
     if (profile === 'factory') placement = 'left';
     open = true;
   }
 
-  /** Проверяет доступность DOM внутри уведомления о фактическом закрытии. */
+  /** Verifies the Availability of DOM inside the actual closure notice. */
   function settled(visible: boolean) {
     events.afterOpen.push(visible);
     if (!visible) {

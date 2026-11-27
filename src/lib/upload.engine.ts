@@ -1,11 +1,11 @@
-// Описывает список и представление файлов Upload. Подбор accept и распознавание изображений не
-// используют транспорт.
+// Describes an Upload file list and representation. The selection and recognition of images do not
+// use transport.
 import type { HTMLAnchorAttributes } from 'svelte/elements';
 import type { UploadFile, UploadProps, UploadRcFile } from './upload.types';
-// Ant Design 6.6.8 / rc-upload 1.1.1; MIT, vendor/LICENSE.ant-design и LICENSE.rc-upload.
+// Ant Design 6.6.8 / rc-upload 1.1.1; MIT, vendor/LICENSE.ant-design and LICENSE.rc-upload.
 export const UPLOAD_LIST_IGNORE = '__ANT_SVELTE_UPLOAD_LIST_IGNORE__';
 
-// Даёт строковому ответу сервера приоритет над statusText, message и общим fallback.
+// Gives the server string response a priority over statusText, message and general fallback.
 export function getUploadErrorMessage(response: unknown, error: unknown, fallback: string): string {
   if (typeof response === 'string' && response) {
     return response;
@@ -23,7 +23,7 @@ export function getUploadErrorMessage(response: unknown, error: unknown, fallbac
   return typeof message === 'string' && message ? message : fallback;
 }
 
-/** Невалидный JSON выбрасывает SyntaxError, как исходный filename renderer. */
+/** The unvalid JSON emits SyntaxError as the original filename render. */
 export function resolveUploadLinkProps(value: UploadFile['linkProps']): HTMLAnchorAttributes {
   const parsed: unknown = typeof value === 'string' ? JSON.parse(value) : value;
 
@@ -32,7 +32,7 @@ export function resolveUploadLinkProps(value: UploadFile['linkProps']): HTMLAnch
     : {};
 }
 
-// Копирует метаданные строки, сохраняя ссылку на исходный File.
+// Copies string metadata by saving a link to the original File.
 export function uploadFileObject<T = unknown>(file: UploadRcFile): UploadFile<T> {
   return {
     ...file,
@@ -46,7 +46,7 @@ export function uploadFileObject<T = unknown>(file: UploadRcFile): UploadFile<T>
     originFileObj: file
   };
 }
-// Обновляет запись по uid на прежней позиции или добавляет её в конец.
+// Updates the uid entry at the previous position or adds it to the end.
 export function updateUploadList<T = unknown>(
   file: UploadFile<T>,
   list: readonly UploadFile<T>[]
@@ -61,8 +61,8 @@ export function updateUploadList<T = unknown>(
   }
   return next;
 }
-// Раздельно вычисляет новый список и необходимость onChange. При maxCount=1 остаётся последний
-// файл.
+// Separately calculates the new list and the need for onChange. At maxCount = 1 the last file
+// remains.
 export function limitUploadList<T = unknown>(
   file: UploadFile<T> | UploadRcFile,
   list: readonly UploadFile<T>[],
@@ -81,7 +81,7 @@ export function limitUploadList<T = unknown>(
       )
   };
 }
-// Сопоставляет расширения, MIME и wildcard с именем и типом File.
+// Matches extensions, MIME, and wildcard with File name and type.
 export function uploadAccept(file: Pick<File, 'name' | 'type'>, accept?: string): boolean {
   if (!accept) {
     return true;
@@ -106,7 +106,7 @@ export function uploadAccept(file: Pick<File, 'name' | 'type'>, accept?: string)
     return file.type === valid || /^\w+$/.test(valid);
   });
 }
-// Соблюдает native и пользовательский filter до принудительной проверки accept.
+// Follows the native and user filter until the forced check accept.
 export function filterUploadFile(
   file: File,
   accept: UploadProps['accept'],
@@ -122,7 +122,7 @@ export function filterUploadFile(
   }
   return !force || uploadAccept(file, typeof accept === 'string' ? accept : accept?.format);
 }
-// Без thumbnail MIME имеет приоритет. Иначе классифицирует URL и расширение.
+// Without thumbnail MIME takes precedence. In other words, it classifies URL and expansion.
 export function uploadIsImage(file: UploadFile): boolean {
   if (file.type && !file.thumbUrl) {
     return file.type.startsWith('image/');

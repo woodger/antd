@@ -190,7 +190,7 @@ test('responsive Avatar releases media listeners after remounts and unmount', as
       if (!query.includes('width')) {
         return media;
       }
-      // Proxy сохраняет receiver нативного EventTarget.
+      // Proxy retains the receiver of the native EventTarget.
       media.addEventListener = new Proxy(media.addEventListener, {
         apply(target, receiver, args) {
           if (args[0] === 'change') active++;

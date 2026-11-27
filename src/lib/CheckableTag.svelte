@@ -57,7 +57,7 @@
       return;
     }
 
-    // Callback может синхронно удалить владельца вместе с его props.
+    // The callback can synchronously remove the owner and its props.
     const click = onclick ?? onClick;
     onChange?.(!checked);
     click?.(event);

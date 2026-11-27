@@ -1,13 +1,13 @@
-// Заполняет внутренние параметры фабрики. Публичные props остаются живыми getter'ами
-// владельца, в том числе при bind и последующей смене значения.
+// Fills the internal parameters of the factory. Public props remains the live getter of the owner,
+// including at bind and the subsequent change of value.
 
-/** Передаёт фиксированные параметры только внутреннему компоненту. */
+/** Passes fixed settings only to the internal component. */
 export function pickerAdapterProps<Props extends object, Options extends object>(
   props: Props,
   options: Options
 ): Props & Options {
   return new Proxy(props, {
-    // Перехватывает чтение параметров фабрики, сохраняя исходный receiver для остальных.
+    // Intercepts reading the parameters of the factory, saving the initial receiver for the rest.
     get(target, key, receiver) {
       return Object.hasOwn(options, key) ? Reflect.get(options, key)
         : Reflect.get(target, key, receiver);

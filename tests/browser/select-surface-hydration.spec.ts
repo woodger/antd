@@ -185,7 +185,7 @@ for (const entry of selectSurfaceHydrationReference.cases) {
       const owner = document.querySelector<HTMLElement>('[data-surface-case]')!;
       const root = owner.querySelector<HTMLElement>('.ant-select')!;
       const command = owner.querySelector<HTMLElement>('[data-surface-command]')!;
-      // До hydrate публичные refs ещё не привязаны; adapter только читает уже разобранные nodes.
+      // Before hydrate, public refs are not yet attached; the adapter only reads the already disassembled nodes.
       const refs = (event: Event) => Object.assign((event as CustomEvent).detail,
         { root, editor: root.querySelector('input[role="combobox"]') });
       command.addEventListener('surfacerefs', refs);
@@ -277,10 +277,10 @@ for (const entry of selectSurfaceHydrationReference.cases) {
         await verify(step, `${index}/${JSON.stringify(step.action)}`);
       }
 
-      // Полная Source последовательность закончена; ниже отдельная проверка Native connected-blur disposal.
+      // The full Source sequence is finished; below is a separate check of Native connected-blur disposal.
       await page.evaluate(() => window.selectSurfaceHydration!.refs().control!.focus({ preventScroll: true }));
       const root = await identity.evaluateHandle(before => before.root);
-      // Проверяет клик по исходному узлу и освобождает удержанный DOM handle.
+      // Checks the click on the original node and frees up the retained DOM handle.
       async function clickAndReleaseRoot() {
         try { await root.asElement()!.click(); } finally { await root.dispose(); }
       }

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Пользовательская панель сохраняет тему и локаль, изолируя контексты FormItem и SpaceCompact.
+  // A custom panel retains the theme and locale while isolating the FormItem and SpaceCompact contexts.
   import type { MentionsPopupMenu, MentionsPopupRender, MentionsPopupRenderInfo } from './mentions.types';
   import { provideFormField } from './form-context';
   import { provideFormItemStatus, useFormItemStatusContext } from './form-item-status';

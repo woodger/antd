@@ -1,6 +1,6 @@
 /**
- * rc-select считает UTF-16 units. Сохраняем его slice/ellipsis, но не разрываем
- * существующую surrogate pair: иначе корректный emoji превращается в invalid text.
+ * rc-select considers UTF-16 units. We save it slice/ellipsis, but we do not break the existing
+ * surrogate pair: otherwise, the correct emoji turns into invalid text.
  */
 export function getSelectTagText(text: string, maxLength?: number): string;
 export function getSelectTagText<Content>(text: Content, maxLength?: number): Content | string;

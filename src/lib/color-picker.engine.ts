@@ -1,5 +1,5 @@
-// Готовит значения одиночного цвета и градиента ColorPicker. Форматирование и расчёт палитры
-// выполняются без DOM.
+// Prepares single and gradient ColorPicker values. Formatting and palette calculations are
+// independent of the DOM.
 import { AggregationColor, type ColorStops } from './color';
 import { ColorCore, type ColorGenInput } from './color-core.engine';
 
@@ -10,19 +10,19 @@ export type ColorValue = AggregationColor | string | null | readonly {
   percent: number;
 }[];
 
-// Переиспользует Aggregate-значение, чтобы сохранить его identity для callbacks.
+// Reuses the Aggregate value to preserve its identity for callbacks.
 export function generateColor(
   input: ColorGenInput<AggregationColor> | ColorCore | ColorStops | null | undefined
 ): AggregationColor {
   return input instanceof AggregationColor ? input : new AggregationColor(input);
 }
 
-// Возвращает округлённую прозрачность в процентах.
+// Returns rounded opacity as a percentage.
 export function getColorAlpha(color: AggregationColor): number {
   return Math.round(Number(color.toHsb().a * 100 || 0));
 }
 
-// Меняет alpha, сохраняя HSB для полностью чёрного цвета.
+// Changes alpha while preserving HSB for pure black.
 export function genAlphaColor(color: AggregationColor, alpha?: number): AggregationColor {
   const rgba = color.toRgb();
   if (!rgba.r && !rgba.g && !rgba.b) {
@@ -31,7 +31,7 @@ export function genAlphaColor(color: AggregationColor, alpha?: number): Aggregat
   return generateColor({ ...rgba, a: alpha || 1 });
 }
 
-/** Интерполяция повторяет rc-color: RGB integer и alpha с двумя десятичными знаками. */
+/** Follows rc-color interpolation: integer RGB values and alpha rounded to two decimal places. */
 export function getGradientPercentColor(
   colors: readonly { percent: number; color: string; }[],
   percent: number
@@ -56,14 +56,14 @@ export function getGradientPercentColor(
   return '';
 }
 
-// Убирает дубли и сохраняет порядок single, gradient независимо от входного массива.
+// Removes duplicates and keeps single before gradient, regardless of input order.
 export function getColorModes(mode?: ColorMode | readonly ColorMode[]): ColorMode[] {
   const modes = new Set(Array.isArray(mode) ? mode : mode ? [mode] : ['single']);
   if (!modes.size) modes.add('single');
   return (['single', 'gradient'] as const).filter(value => modes.has(value));
 }
 
-// Создаёт нулевую и конечную точки для очищенного градиента.
+// Creates the starting and ending stops for a cleared gradient.
 export function getPickerColors(color: AggregationColor): GradientColorList {
   return color.cleared ? [{ percent: 0, color: generateColor('') },
     { percent: 100, color: generateColor('') }] : color.getColors();
@@ -71,8 +71,8 @@ export function getPickerColors(color: AggregationColor): GradientColorList {
 
 type GradientColorList = { percent: number; color: AggregationColor; }[];
 
-// Применяет цвет к активной точке либо заменяет одиночное значение. Пустое значение сначала
-// инициализируется.
+// Applies the color to the active stop or replaces the single value. Initializes an empty value
+// first.
 export function fillPickerColor(
   current: AggregationColor,
   mode: ColorMode,
@@ -104,7 +104,7 @@ export function fillPickerColor(
   return generateColor(colors);
 }
 
-// Преобразует координаты палитры в насыщенность и перевёрнутую по Y яркость.
+// Converts palette coordinates to saturation and brightness, with the Y axis inverted.
 export function calculatePickerColor(
   color: AggregationColor,
   x: number,
@@ -115,7 +115,7 @@ export function calculatePickerColor(
     b: 1 - Math.max(0, Math.min(1, y)), a: hsb.a });
 }
 
-// Форматирует подпись в выбранной цветовой модели. HEX показывает alpha в процентах.
+// Formats the label in the selected color model. HEX shows alpha as a percentage.
 export function getColorText(color: AggregationColor, format: ColorFormat | undefined): string {
   if (format === 'rgb') {
     return color.toRgbString();
@@ -128,7 +128,7 @@ export function getColorText(color: AggregationColor, format: ColorFormat | unde
   return alpha < 100 ? `${hex.slice(0, 7)},${alpha}%` : hex;
 }
 
-// Оценивает яркость поверх фона для полупрозрачного цвета.
+// Estimates the brightness of a translucent color composited over the background.
 export function isBrightColor(color: AggregationColor, background: string): boolean {
   const { r, g, b, a } = color.toRgb();
   if (a <= .5) {

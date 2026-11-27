@@ -1,4 +1,4 @@
-// Хранит браузерные настройки отдельных корней императивных вызовов.
+// Stores browser configuration for separate roots of imperative calls.
 import type { Snippet } from 'svelte';
 import type { ThemeConfig } from './types';
 
@@ -6,13 +6,13 @@ export interface GlobalConfigProps {
   prefixCls?: string;
   iconPrefixCls?: string;
   theme?: ThemeConfig;
-  /** Оборачивает содержимое отдельного корня статического вызова. */
+  /** Wraps content in the separate root of a static call. */
   holderRender?: Snippet<[content: Snippet]>;
 }
 
 let config: Readonly<GlobalConfigProps> = {};
 
-/** Применяет изменения для будущих рендеров без мутации серверного контекста. */
+/** Applies changes to future renders without mutating server context. */
 export function configureGlobal(options: GlobalConfigProps) {
   if (typeof document === 'undefined') {
     return;
@@ -26,7 +26,7 @@ export function configureGlobal(options: GlobalConfigProps) {
   };
 }
 
-/** Настройки читаются в момент отложенного рендера. */
+/** Reads configuration when the deferred render occurs. */
 export function readGlobalConfig() {
   return config;
 }

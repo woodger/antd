@@ -1,6 +1,6 @@
 /** rc-trigger 3.x useAlign/useWatch; MIT, vendor/LICENSE.rc-trigger. */
 
-/** Source выравнивает popup при resize/scroll/open, а не при одном перемещении inline root. */
+/** Source aligns popup at resize/scroll/open, and not with one inline root movement. */
 export function createTreeSelectComponentAnchor(
   anchor: HTMLElement,
   popup: HTMLElement,
@@ -50,7 +50,7 @@ export function createTreeSelectComponentAnchor(
       return;
     }
     signature = next;
-    // Overflow должен применить свой measured layout до нового чтения target rect.
+    // Overflow must apply your measured layout before reading the targeted rect.
     if (!frame) {
       frame = view.requestAnimationFrame(() => {
         frame = 0;
@@ -65,7 +65,7 @@ export function createTreeSelectComponentAnchor(
   view.addEventListener('resize', invalidate, { passive: true });
 
   function read(rect: DOMRect) {
-    // ShadowRoot остаётся на существующем Native viewport path.
+    // ShadowRoot remains on the existing Native viewport path.
     if (popup.parentNode instanceof view.ShadowRoot) {
       return rect;
     }

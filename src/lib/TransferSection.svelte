@@ -82,7 +82,7 @@
   });
 
   $effect(() => {
-    // Пустой результат/custom body размонтирует upstream ListBody вместе с page/pageSize.
+    // An empty result or custom body unmounts upstream ListBody together with page and pageSize.
     if (children || rows.length === 0) {
       page = 1;
       localSize = 10;
@@ -91,7 +91,7 @@
   });
 
   $effect(() => {
-    // React синхронизирует value attribute controlled input; native reset сохраняет query.
+    // React syncs the value attribute of a controlled input. Native reset retains the query.
     if (searchElement) searchElement.defaultValue = search;
   });
 

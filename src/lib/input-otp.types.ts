@@ -4,7 +4,7 @@ import type { ComponentSize } from './types';
 import type { InputVariant } from './input.types';
 
 export type InputOTPSemanticSlots = Partial<Record<'root' | 'input' | 'separator', string>>;
-/** Callback получает исходные Props с default length и разрешённым variant. */
+/** Callback receives the original Props with default length and authorized variant. */
 export type InputOTPSemantic =
   | InputOTPSemanticSlots
   | ((info: { props: InputOTPProps; }) => InputOTPSemanticSlots | undefined);
@@ -12,8 +12,7 @@ export type InputOTPSemantic =
 export type InputOTPSeparatorContent = string | number | boolean | null | Snippet<[number]>;
 
 /**
- * Настройки ConfigProvider.otp; локальные Props имеют приоритет,
- * nested config заменяется целиком.
+ * Settings ConfigProvider.otp; local Props take precedence, nested config is replaced entirely.
  */
 export interface InputOTPConfig {
   variant?: InputVariant;
@@ -24,55 +23,54 @@ export interface InputOTPConfig {
 }
 
 /**
- * Svelte-экспорт Input.OTP. Каждая ячейка хранит одну UTF-16 code unit; обычный ввод
- * принимает любой текст. Native атрибуты относятся к div role=group, кроме явных input Props.
+ * Svelte-export Input.OTP. Each cell stores one UTF-16 code unit; normal input accepts any text.
+ * Native attributes refer to div role=group, except for explicit input Props.
  */
 export interface InputOTPProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'> {
-  /** CSS prefix группы, ячеек, маски и separator; empty/undefined наследуют ConfigProvider. */
+  /** CSS prefix groups, cells, masks and separator; empty/undefined inherited ConfigProvider. */
   prefixCls?: string;
-  /** Число ячеек; по умолчанию 6. */
+  /** Number of cells; by default 6. */
   length?: number;
   /**
-   * Синхронизирует ячейки при изменении prop, без formatter. Как в upstream,
-   * неизменённый value не отклоняет локальный ввод; bind:value не предоставляется.
-   * На SSR используется defaultValue, value применяется после mount.
+   * Synchronizes the cells when modifying the prop, without formatter. As in the upstream, the
+   * unchanged value does not deflect local input; bind:value is not provided. At SSR used
+   * defaultValue, value is applied after mount.
    */
   value?: string;
-  /** Начальное значение; formatter применяется один раз, последующие изменения игнорируются. */
+  /** Initial value; formatter is applied once, subsequent changes are ignored. */
   defaultValue?: string;
-  /** Применяется ко всей строке с пробелами вместо пустых ячеек до ограничения length. */
+  /** Applied to the whole row with spaces instead of empty cells to the restriction of length. */
   formatter?: (value: string) => string;
-  /** Вызывается при каждом input перед onChange; массив сохраняет пустые промежуточные ячейки. */
+  /** Is called at each input before onChange; the array retains empty intermediate cells. */
   onInput?: (cells: string[]) => void;
   /**
-   * Только полностью заполненный изменившийся код;
-   * очистка и неполный ввод не вызывают callback.
+   * Only a fully filled changed code; clearing and incomplete input do not cause a callback.
    */
   onChange?: (value: string) => void;
-  /** Scalar или factory(index); для rich content возвращайте Snippet через () => snippet. */
+  /** Scalar or factory(index); for rich content return Snippet through () = > snippet. */
   separator?: string | number | boolean | null
     | ((index: number) => InputOTPSeparatorContent | undefined);
-  /** true показывает •, строка задаёт собственную маску. Исходное значение сохраняется. */
+  /** true shows •, the line sets its own mask. The initial value is maintained. */
   mask?: boolean | string;
-  /** Имеет приоритет над type=password при mask; без mask по умолчанию text. */
+  /** Has priority over type=password when using; without mask by default text. */
   type?: HTMLInputAttributes['type'];
   autoComplete?: HTMLInputAttributes['autocomplete'];
   inputMode?: HTMLInputAttributes['inputmode'];
-  /** Фокусирует только первую ячейку. */
+  /** Focuses only the first cell. */
   autoFocus?: boolean;
-  /** По умолчанию размер ConfigProvider; Compact продолжает действовать на внутренние Input. */
+  /** By default, size ConfigProvider; Compact continues to operate on internal Input. */
   size?: ComponentSize | 'medium';
   disabled?: boolean;
   status?: 'error' | 'warning' | '';
-  /** Приоритет: локальный variant, Form, otp, input, global variant, outlined. */
+  /** Priority: local variant, Form, otp, input, global variant, */
   variant?: InputVariant;
-  /** Вызывается для ячеек, включая фокус, перенаправленный к первой пустой ячейке. */
+  /** Is called for cells, including a focus redirected to the first empty cell. */
   onFocus?: HTMLInputAttributes['onfocus'];
   onBlur?: HTMLInputAttributes['onblur'];
   class?: string;
   rootClassName?: string;
   classNames?: InputOTPSemantic;
   styles?: InputOTPSemantic;
-  /** bind:nativeElement возвращает div группы; bind:this предоставляет focus() и blur(). */
+  /** bind:nativeElement returns div groups; bind:this provides focus() and blur(). */
   nativeElement?: HTMLDivElement;
 }

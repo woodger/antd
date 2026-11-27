@@ -8,7 +8,7 @@ if (!target) {
   throw new Error('Missing server-rendered Tooltip.UniqueProvider');
 }
 
-// Триггер существует до запуска гидратации, чтобы тест мог сохранить на нём фокус.
+// The trigger exists until the hydration is started, so that the test can keep the focus on it.
 target.addEventListener('hydrate-tooltip-unique', () => {
   const component = new URLSearchParams(location.search).has('delegates') ? Delegates : Fixture;
   hydrate(component, { target, props: { initialMode: 'default-open' }, recover: false });

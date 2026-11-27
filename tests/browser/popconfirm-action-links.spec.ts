@@ -4,7 +4,7 @@ import reference from './fixtures/ant-design-popconfirm-action-links-reference.j
 
 test.use({ reducedMotion: 'reduce' });
 
-/** Открывает видимую панель и сохраняет локаторы действий и журнала. */
+/** Opens the visible panel and preserves action locators and magazine. */
 async function openProfile(page: Page, profile: string) {
   await page.goto('/?fixture=popconfirm-action-links');
   await page.getByLabel('Link profile').selectOption(profile);
@@ -21,7 +21,7 @@ async function openProfile(page: Page, profile: string) {
   };
 }
 
-/** Считывает href и состояние ссылки без вывода о доступности по имени. */
+/** Records href and link state without inventing availability by name. */
 function readLinks(popup: Locator) {
   return popup.evaluate(panel =>
     [...panel.querySelectorAll<HTMLElement>('.ant-popconfirm-buttons .ant-btn')].map(button => ({
@@ -70,7 +70,7 @@ test('Popconfirm disables both links and parks focus during a pending confirmati
 
   await expect(popup).toHaveAttribute('aria-busy', 'true');
   await expect(popup.locator('[data-ant-popconfirm-content]')).toBeFocused();
-  // В React обе ссылки сохраняют href и tabindex. Svelte временно отключает обе.
+  // In React, both links save href and tabindex. Svelte temporarily disables both.
   expect(await readLinks(popup)).toEqual(sample.waiting.map(link => ({
     ...link, href: null, disabled: 'true', tabIndex: -1
   })));

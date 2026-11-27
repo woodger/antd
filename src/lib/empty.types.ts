@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 
 export type EmptyContent = string | number | boolean | null | Snippet;
-/** default/simple — прежние aliases встроенных изображений; прочие строки — URL. */
+/** default/simple – previous aliases of built-in images; other lines – URL. */
 export type EmptyImage = EmptyContent;
 export type EmptyDescription = EmptyContent;
 export interface EmptySemanticSlots {
@@ -20,7 +20,7 @@ export interface EmptyRef {
 }
 export type EmptyConfig = Pick<EmptyProps, 'image' | 'class' | 'style' | 'classNames' | 'styles'>;
 
-/** Пустое состояние с иллюстрацией, описанием и дополнительным действием. */
+/** Empty state with illustration, description and additional action. */
 export interface EmptyProps {
   /** @defaultValue 'default' */
   image?: EmptyImage;
@@ -32,12 +32,12 @@ export interface EmptyProps {
   'aria-describedby'?: string;
   class?: string;
   style?: string;
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   rootClassName?: string;
   classNames?: EmptySemantic;
   styles?: EmptySemantic;
-  /** Присваивается после mount и очищается при unmount. */
+  /** Assigned after mount and cleaned at unmount. */
   nativeElement?: HTMLDivElement;
   ref?: EmptyRef;
 }

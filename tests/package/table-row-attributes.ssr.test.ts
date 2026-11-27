@@ -4,18 +4,18 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableRowAttributesFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-row-attributes-reference.json';
 
-/** Извлекает SSR-атрибут строки, включая пустое значение. */
+/** Extracts an SSR row attribute, including an empty value. */
 function attribute(markup: string, name: string) {
   return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Читает значение пользовательской CSS-переменной строки. */
+/** Reads the row's custom CSS variable value. */
 function color(markup: string, part: 'head' | 'row') {
   const style = attribute(markup, 'style');
   return style?.match(new RegExp(`--fixture-${part}-color:\\s*([^;]+)`))?.[1].trim() ?? null;
 }
 
-/** Снимает только строки, оформленные публичными callbacks. */
+/** Captures only rows styled through public callbacks. */
 function snapshot(body: string) {
   const heads = [];
   const rows = [];

@@ -1,7 +1,7 @@
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-dialog-form-style-reference.json' with { type: 'json' };
 
-/** Измеряет видимый статус, feedback icon и контекст, доступный внутри диалога. */
+/** Measures the visible status, feedback icon, and the context available inside the dialog. */
 function measure() {
   const metrics: Record<string, { status: string; feedback: boolean; inFormItem: boolean; }> = {};
 

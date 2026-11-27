@@ -1,6 +1,6 @@
 <script lang="ts" generics="Item">
-  // Отображает строки списка Select и связывает их с активной записью. Виртуализация получает те
-  // же ключи строк.
+  // Renders Select list rows and connects them to the active item. Virtualization receives the same
+  // row keys.
   import { untrack } from 'svelte';
   import { connectListyGestures } from './listy-gestures.dom';
   import ListyScrollbar from './ListyScrollbar.svelte';
@@ -110,7 +110,7 @@
     {/each}
   </div>{/if}<div bind:this={listElement} class={[listPrefix, direction === 'rtl' && `${listPrefix}-rtl`, className]}
   dir={direction === 'rtl' ? 'rtl' : undefined} style={initialListStyle} {...selectStyleAttributes(style)} {@attach listStyle.attach}>
-  <!-- svelte-ignore a11y_no_static_element_interactions (Source holder лишь показывает scrollbar; listbox принадлежит srlist либо inner.) -->
+  <!-- svelte-ignore a11y_no_static_element_interactions (The upstream holder only shows the scrollbar. srlist or inner owns the listbox.) -->
   <div bind:this={holderElement} class={`${listPrefix}-holder`} onscroll={handleScroll}
     onmouseenter={handleMouseEnter}
     style={model.height ? `max-height:${model.height}px;`

@@ -1,6 +1,6 @@
 <script lang="ts" generics="Multiple extends boolean, DateType extends object">
-  // Передаёт SinglePicker сценарий календаря или часов. Настройки часов не заменяют
-  // семантические слоты и события владельца DatePicker.
+  // Passes the calendar or clock mode to SinglePicker. DatePicker still owns the semantic slots and
+  // events when clock settings are present.
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import SinglePicker from './SinglePicker.svelte';
   import { mergeShowTime, splitPickerClock, timePickerSharedProps } from './time-picker-props.engine';
@@ -16,7 +16,7 @@
     dateOperations: PickerDateOperations<DateType>;
     defaultPicker?: DatePickerPicker;
   } = $props();
-  // После вывода generic у владельца конкретный runtime режим задаёт multiple.
+  // Once the owner infers the generic type, multiple determines the runtime mode.
   let ownerProps = $derived(props as DatePickerProps<DateType> | DatePickerMultipleProps<DateType>);
   let multipleOptions = $derived(ownerProps.multiple ? ownerProps : undefined);
   let scalarProps = $derived(ownerProps.multiple ? undefined : ownerProps);
@@ -45,7 +45,7 @@
     blur(): void;
   }>();
 
-  /** Оставляет общие настройки редактора, перенося список и его события отдельно. */
+  /** Keeps the shared editor settings and handles the list and its events separately. */
   function multipleFieldProps(props: DatePickerMultipleProps<DateType>): DatePickerProps<DateType> {
     const {
       multiple, value, defaultValue, onChange, onCalendarChange, onOk,
@@ -55,7 +55,7 @@
     return field;
   }
 
-  /** Передаёт календарю общие настройки часов через showTime, оставляя атрибуты поля отдельно. */
+  /** Passes shared clock settings to the calendar through showTime and keeps field attributes separate. */
   function calendarOptions(props: DatePickerProps<DateType>) {
     const { clock, field } = splitPickerClock(props);
     const { picker, defaultOpenValue, disabledTime, showTime, ...calendar } = field;
@@ -70,7 +70,7 @@
     };
   }
 
-  /** Настройки часов берутся из props и showTime. Слоты и события принадлежат DatePicker. */
+  /** Clock settings come from props and showTime. DatePicker owns the slots and events. */
   function timeOptions(props: DatePickerProps<DateType>): TimePickerRuntimeProps<DateType> {
     const {
       picker, mode, classNames, styles, showTime, onChange, onCalendarChange, cellRender, onclick,

@@ -1,9 +1,9 @@
-// Паркует фокус на Spin, пока его содержимое заблокировано. Ревизия фокуса
-// отменяет отложенное восстановление после нового перехода или удаления Spin.
+// Parks the focus on Spin while its contents are locked. The focus revision cancels the delayed
+// recovery after a new transition or removal of Spin.
 import { tick } from 'svelte';
 import { focusAfterNotice } from './notice.dom';
 
-// Для восстановления выбирается только видимый и интерактивный DOM-узел.
+// For recovery, only the visible and interactive DOM node is selected.
 function available(node: HTMLElement | undefined): node is HTMLElement {
   if (!node?.isConnected
     || node.matches(':disabled')
@@ -12,12 +12,12 @@ function available(node: HTMLElement | undefined): node is HTMLElement {
     return false;
   }
 
-  // Правило 2: кандидаты поступают из mounted Spin и его текущего browser document.
+  // Rule 2: Candidates come from mounted Spin and its current browser document.
   const view = node.ownerDocument.defaultView!;
   return view.getComputedStyle(node).visibility === 'visible';
 }
 
-// Хранит исходный элемент и соседей только пока Spin владеет фокусом.
+// Keeps the original element and the neighbors only while Spin owns the focus.
 export function createSpinFocus() {
   let target: HTMLElement | undefined;
   let parked: HTMLElement | undefined;
@@ -26,7 +26,7 @@ export function createSpinFocus() {
   let focusRevision = 0;
   let active = true;
 
-  // Снимает слушатель до освобождения ссылок на элементы предыдущей парковки.
+  // Removes the listener before the release of references to the elements of the previous parking.
   function clearTarget() {
     removeListener?.();
     removeListener = undefined;
@@ -35,7 +35,7 @@ export function createSpinFocus() {
     neighbors = [];
   }
 
-  // Ждёт применения доступности после tick и восстанавливает только прежний фокус Spin.
+  // Waiting to apply the availability after tick and restores only the former Spin focus.
   function release(host: HTMLElement, content?: HTMLElement) {
     const releaseRevision = ++focusRevision;
     const previous = target;
@@ -68,7 +68,7 @@ export function createSpinFocus() {
   }
 
   return {
-    // Паркует фокус при блокировке содержимого и запоминает порядок соседей в scope.
+    // Parking the focus when blocking the content and memorizes the order of the neighbors in the scope.
     update(host: HTMLElement, content: HTMLElement | undefined, busy: boolean) {
       if (!active) {
         return;
@@ -101,7 +101,7 @@ export function createSpinFocus() {
         ].filter(
           (node) => node.tabIndex >= 0 && !host.contains(node)
         );
-        // Svelte может удалить DOM до cleanup; порядок соседей фиксируется при парковке фокуса.
+        // Svelte can remove DOM to cleanup; the order of the neighbors is fixed when parking the focus.
         neighbors = [
           ...candidates.filter(
             (node) => host.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING
@@ -111,7 +111,7 @@ export function createSpinFocus() {
           ).reverse(),
           ...(dialog ? [dialog] : [])
         ];
-        // Добровольный переход пользователя отменяет прежнюю парковку.
+        // Voluntary transition of the user cancels the previous parking.
         function handleFocus() {
           if (parked
             && document.activeElement !== parked
@@ -121,11 +121,11 @@ export function createSpinFocus() {
           }
         }
         document.addEventListener('focusin', handleFocus);
-        // Слушатель принадлежит document, в котором была создана парковка.
+        // The listener belongs to the document in which the parking was created.
         removeListener = () => document.removeEventListener('focusin', handleFocus);
       }
     },
-    // При teardown ищет доступного соседа, только если прежний фокус ещё принадлежит Spin.
+    // With teardown, he searches for an affordable neighbor only if the previous focus still belongs to Spin.
     destroy() {
       active = false;
       focusRevision++;

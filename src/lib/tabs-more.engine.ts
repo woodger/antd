@@ -1,6 +1,6 @@
 import type { TabsMorePlacements, TabsMoreProps, TabsMoreTrigger } from './tabs.types';
 
-// Таблица placements rc-dropdown 1.0.3; MIT, vendor/LICENSE.rc-dropdown.
+// Table placements rc-dropdown 1.0.3; MIT, vendor/LICENSE.rc-dropdown.
 const targetOffset = [0, 0] as const;
 const overflow = { adjustX: 1, adjustY: 1 };
 const placements: TabsMorePlacements = {
@@ -47,7 +47,7 @@ export function getTabsMorePlacements(more: TabsMoreProps | undefined) {
     ? more.builtinPlacements ?? {} : more?.placements ?? placements;
 }
 
-/** Dropdown/useAction: независимые действия, contextMenu hide fallback и touch для hover. */
+/** Dropdown/useAction: Independent actions, contextMenu hide fallback and touch for hover. */
 export function getTabsMoreActions(more: Pick<TabsMoreProps, 'trigger' | 'showAction' | 'hideAction'>) {
   const trigger = more.trigger ?? 'hover';
   const defaults = typeof trigger === 'string' ? [trigger] : trigger;

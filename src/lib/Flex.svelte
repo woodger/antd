@@ -61,8 +61,8 @@
     'data-ant-flex-prefix': prefixCss ? prefix : undefined
   });
   let Root = $derived(typeof component === 'string' ? undefined : component);
-  // Необязательный ref forwarding: accessor не попадает в DOM spread корня без $bindable.
-  // После удаления layout-полей TS теряет связь rest с generic Props.
+  // Optional ref forwarding keeps the accessor out of the root's DOM spread without $bindable. TS
+  // loses the link between rest and generic Props after removing layout fields.
   let componentProps = $derived(Object.defineProperty({ ...rootProps, children }, 'nativeElement', {
     get: () => nativeElement,
     set: (next: HTMLElement | undefined) => { nativeElement = next; },

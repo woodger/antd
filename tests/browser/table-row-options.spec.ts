@@ -33,7 +33,7 @@ for (const sample of hoverReference.cases) {
           await page.locator('#table-row-control tbody tr.ant-table-row').first()
             .locator('td').last().hover();
 
-          // HoverContext class — диагностика Source; native CSS :hover сравнивается по paint values.
+          // HoverContext class - diagnostics Source; native CSS :hover is compared by paint values.
           await expect.poll(() => page.evaluate(rowColors)).toEqual(expected.map(item => ({
             color: item.color, background: item.background
           })));

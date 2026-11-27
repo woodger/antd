@@ -2,10 +2,10 @@ import { gridMediaQueries } from './grid.engine';
 import type { GridBreakpoint, GridScreenMap } from './grid.types';
 
 /**
- * Создаёт SSR-safe карту breakpoints без обращения к window. В браузере connect(view)
- * подписывается на matchMedia и возвращает обязательный cleanup; повторное подключение
- * снимает предыдущие подписки. Необязательная mediaQueries задаёт полную карту запросов;
- * без неё сохраняются стандартные пороги Grid.
+ * Creates a SSR-safe card breakpoints without access to the window. The connect(view) browser
+ * subscribes to matchMedia and returns the mandatory cleanup; the reconnection removes previous
+ * subscriptions. The optional mediaQueries specifies a full query card; without it, standard Grid
+ * thresholds are saved.
  */
 export function createBreakpoint() {
   let screens = $state<GridScreenMap>({});

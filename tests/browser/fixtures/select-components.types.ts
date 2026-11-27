@@ -198,7 +198,7 @@ export function selectComponentNegativeTypes(
   input.attributes.style = { width: 83 };
   const invalidRootStyle: SelectRootComponent<HTMLButtonElement> = {
     element: 'button',
-    // @ts-expect-error Расширенный style для input не действует на корневой элемент.
+    // @ts-expect-error The input's extended style does not apply to the root element.
     props: { style: { width: 83 } }
   };
   // @ts-expect-error A textarea context cannot register a native input.
@@ -211,7 +211,7 @@ export function selectComponentNegativeTypes(
   const invalidSnippet: SelectInputComponent<HTMLTextAreaElement> = wrongInputSnippet;
   const invalidRef: SelectRootComponent<HTMLButtonElement> = {
     element: 'button',
-    // @ts-expect-error Тип ref соответствует объявленному корневому элементу.
+    // @ts-expect-error The ref type matches the declared root element.
     ref: (_node: HTMLInputElement | null) => {}
   };
   // @ts-expect-error Additional component generics do not widen primitive values.

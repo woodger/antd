@@ -2,7 +2,7 @@ import template from './vendor/result-prefix.css.js';
 
 const rootStates = new Set(['', '-rtl', '-success', '-error', '-info', '-warning']);
 
-/** Общие variables/marker; reset и status rules ограничены своим Result root. */
+/** General variables/marker; reset and status rules are limited to their Result root. */
 export function getResultPrefixCss(prefix: string) {
   if (prefix === 'ant-result') {
     return undefined;

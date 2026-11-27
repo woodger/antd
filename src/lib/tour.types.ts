@@ -15,13 +15,13 @@ export type TourSemanticName = 'root' | 'cover' | 'close' | 'mask' | 'section' |
 export type TourSlots = Partial<Record<TourSemanticName, string>>;
 export type TourSemantic = TourSlots | ((info: { props: TourProps; }) => TourSlots);
 
-/** Подсвеченная область: offset по X/Y, по умолчанию 6px; radius по умолчанию 2px. */
+/** Illuminated area: X/Y offset, default 6px; radius by default 2px. */
 export interface TourGap {
   offset?: number | readonly [number, number];
   radius?: number;
 }
 
-/** False скрывает закрытие и отключает Escape; aria/data атрибуты относятся к кнопке. */
+/** False hides the closure and disables Escape; aria/data attributes refer to the button. */
 export type TourClosable = boolean | {
   closeIcon?: TourContent;
   role?: HTMLAttributes<HTMLButtonElement>['role'];
@@ -29,7 +29,7 @@ export type TourClosable = boolean | {
   [name: `data-${string}`]: string | number | boolean | undefined;
 };
 
-/** Настройки штатной Previous/Next/Finish кнопки; callback идёт после перехода. */
+/** Settings Previous/Next/Finish button; callback goes after the transition. */
 export interface TourButtonProps {
   children?: TourContent;
   onClick?: (event: MouseEvent & { currentTarget: HTMLButtonElement; }) => void;
@@ -37,12 +37,12 @@ export interface TourButtonProps {
   style?: string;
 }
 
-/** Шаг тура; локальные arrow/mask/placement/type имеют приоритет над общими. */
+/** Tour step; local arrow/mask/placement/type take precedence over the overall. */
 export interface TourStepProps {
   title: TourContent;
   description?: TourContent;
   cover?: TourContent;
-  /** Getter вызывается только в браузере; null/undefined означает центр экрана. */
+  /** Getter is called only in the browser; null/undefined means the center of the screen. */
   target?: TourTarget;
   placement?: TourPlacement;
   arrow?: TourArrow;
@@ -57,7 +57,7 @@ export interface TourStepProps {
   style?: string;
   classNames?: TourSlots;
   styles?: TourSlots;
-  /** Унаследованные поля rc-tour заменяют штатные panel callbacks/metadata. */
+  /** Inherited fields rc-tour replace the regular panel callbacks/metadata. */
   current?: number;
   total?: number;
   prefixCls?: string;
@@ -68,7 +68,7 @@ export interface TourStepProps {
   renderPanel?: Snippet<[step: TourPanelInfo, current: number]>;
 }
 
-/** Данные panel snippet после объединения общих и локальных полей шага. */
+/** Panel snippet data after combining the general and local pitch fields. */
 export interface TourPanelInfo extends Omit<TourStepProps, 'closable'> {
   prefixCls: string;
   total: number;
@@ -80,7 +80,7 @@ export interface TourPanelInfo extends Omit<TourStepProps, 'closable'> {
   onFinish: () => void;
 }
 
-/** Результат исходного выравнивания; callback получает фактические points после flip. */
+/** Result of the original alignment; the callback receives the actual points after the flip. */
 export interface TourAlign {
   points?: readonly string[];
   offset?: readonly [number, number];
@@ -94,19 +94,19 @@ export interface TourAlign {
   };
 }
 
-/** Тур Ant Design: без open/defaultOpen открыт при непустом наборе шагов. */
+/** Ant Design tour: without open/defaultOpen is opened with a non-empty set of steps. */
 export interface TourProps {
   steps?: readonly TourStepProps[];
-  /** Заданное значение управляется владельцем; onClose сам его не меняет. */
+  /** The given value is managed by the owner; onClose itself does not change it. */
   open?: boolean;
   defaultOpen?: boolean;
-  /** Заданное значение управляется владельцем; onChange получает новый индекс. */
+  /** The given value is managed by the owner; onChange receives a new index. */
   current?: number;
-  /** Читается один раз. @defaultValue 0 */
+  /** It's read once. @defaultValue 0 */
   defaultCurrent?: number;
   onChange?: (current: number) => void;
   onClose?: (current: number) => void;
-  /** Вызывается после onClose при завершении штатной последней кнопкой. */
+  /** Called after onClose when finishing with the built-in final button. */
   onFinish?: () => void;
   /** @defaultValue true */
   keyboard?: boolean;
@@ -124,8 +124,8 @@ export interface TourProps {
   /** @defaultValue 1001 */
   zIndex?: number;
   /**
-   * False оставляет слои inline. Как rc-tour, mask/placeholder вызывают getter без аргумента,
-   * popup передаёт placeholder; getter должен учитывать оба вызова.
+   * false keeps layers inline. As in rc-tour, the mask and placeholder invoke the getter without an
+   * argument, and the popup passes the placeholder. The getter must handle both calls.
    */
   getPopupContainer?: false | ((target?: HTMLElement) => HTMLElement);
   onPopupAlign?: (popup: HTMLElement, align: TourAlign) => void;
@@ -136,17 +136,17 @@ export interface TourProps {
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Local CSS prefix; empty/undefined наследуют ConfigProvider. */
+  /** Local CSS prefix; empty/undefined inherited ConfigProvider. */
   prefixCls?: string;
-  /** Ant Design принудительно включает placeholder animation, как и в upstream. */
+  /** Ant Design forcibly includes placeholder animation, as in upstream. */
   animated?: boolean | { placeholder: boolean; };
-  /** Ant Design заменяет эту rc-tour настройку своими placements. */
+  /** Ant Design replaces this rc-tour setup with its placements. */
   builtinPlacements?: Record<string, TourAlign> | ((info?: {
     arrowPointAtCenter?: boolean;
   }) => Record<string, TourAlign>);
 }
 
-/** Наследуемое оформление Tour; локальные semantic/style слои имеют приоритет. */
+/** Inherited design of the Tour; local semantic/style layers take precedence. */
 export interface TourConfig {
   closeIcon?: TourContent;
   class?: string;

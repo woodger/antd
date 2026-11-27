@@ -62,17 +62,17 @@
     onChange: change
   });
 
-  /** Возвращает прочитанную версию каждой записи для сверки кэша предыдущих страниц. */
+  /** Returns the read version of each record to reconcile the cache of the previous pages. */
   function records(rows: Row[]) {
     return rows.map(row => [row.key, row.rev]);
   }
 
-  /** Публикует журнал в том же порядке, что обработчики исходного приложения. */
+  /** Publishes the magazine in the same order as the processors of the original application. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }
 
-  /** Меняет данные теми же наборами, что рендер исходного профиля. */
+  /** Changes the data with the same sets as the render of the original profile. */
   function createRows(rev: number): Row[] {
     const keys = rev === 1 ? [10, 11, 12] : [0, 1, 2, 3, 4, 5, 6, 7];
     return keys.map(key => ({
@@ -81,7 +81,7 @@
     }));
   }
 
-  /** Управляемый профиль может отклонить изменение, сохраняя прежний input. */
+  /** A controlled profile can reject the change by saving the previous input. */
   function change(keys: TableKey[], rows: Row[], { type }: { type: TableRowSelectMethod; }) {
     record('change', type, keys, records(rows));
     if (profile.controlled && accepts) {

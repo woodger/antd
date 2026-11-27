@@ -27,7 +27,7 @@ export interface MenuContext {
   readonly motionReady: boolean;
   readonly motionEnabled: boolean;
   readonly locked: boolean;
-  /** Уходящая поверхность отдаёт DOM-ID новой копии тех же строк. */
+  /** The outgoing surface gives DOM-ID a new copy of the same lines. */
   readonly exiting: boolean;
   readonly componentTheme: {
     readonly className: string | undefined;

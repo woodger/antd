@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-  // Управляет отдельными ячейками OTP и их фокусом. Полное значение публикуется после заполнения
-  // заданной длины.
+  // Manages the individual OTP cells and their focus. Emits the complete value once all cells are
+  // filled.
   import { untrack } from 'svelte';
   import InputOTPCell from './InputOTPCell.svelte';
   import { useConfig } from './config-context';
@@ -68,8 +68,8 @@
   provideFormItemStatus(Object.create(itemStatus, {
     status: { get: () => status || itemStatus.status }
   }));
-  // FormItem владеет группой: отдельные Input не получают одинаковые id/name/required.
-  // Ячейки наследуют visual status без id/name/ref и blur binding корневого OTP.
+  // FormItem owns the group, so individual inputs do not share id, name, or required. Cells inherit
+  // visual status but not the root OTP's id, name, ref, or blur binding.
   provideFormField({
     get status() {
       return resolvedStatus;
@@ -153,7 +153,7 @@
     onInput?.(next);
     if (isOTPCompleteChange(previous, next, length)) onChange?.(next.join(''));
 
-    // Focus guard должен видеть новые ячейки, даже до обновления DOM.
+    // The focus guard must see new cells before the DOM update.
     const nextIndex = Math.min(index + text.length, length - 1);
     if (nextIndex !== index && next[index] !== undefined) elements[nextIndex]?.focus();
 
@@ -184,18 +184,18 @@
     onfocus?.(event);
   };
 
-  /** Фокусирует первую ячейку, как OTPRef.focus в upstream. */
+  /** Focuses the first cell, like upstream OTPRef.focus. */
   export function focus() {
     elements[0]?.focus();
   }
 
-  /** Снимает фокус со всех ячеек. */
+  /** Blurs every cell. */
   export function blur() {
     for (let index = 0; index < length; index++) elements[index]?.blur();
   }
 </script>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-otp-prefix:${componentPrefix}`} />{/if}<!-- tabindex=-1 даёт FormItem возможность фокусировать группу; явный native tabindex сохраняется. --><div
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-otp-prefix:${componentPrefix}`} />{/if}<!-- tabindex=-1 lets FormItem focus the group. An explicit native tabindex takes precedence. --><div
   {...(field ? { tabindex: -1 } : {})}
   {...attributes}
   bind:this={nativeElement}

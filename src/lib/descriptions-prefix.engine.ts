@@ -1,6 +1,6 @@
 import template from './vendor/descriptions-prefix.css.js';
 
-/** Все cells наследуют owner prefix; canonical marker сохраняет component theme variables. */
+/** All cells inherit the owner prefix. The canonical marker retains component theme variables. */
 export function getDescriptionsPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-descriptions' && rootPrefix === 'ant') {
     return undefined;

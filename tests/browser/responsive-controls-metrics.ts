@@ -1,4 +1,4 @@
-/** Измеряет только зависящие от breakpoint геометрию Masonry и размер Pagination. */
+/** Measures only breakpoint-dependent Masonry geometry and Pagination size. */
 export function snapshotResponsiveControls() {
   const masonry = document.querySelector<HTMLElement>('[data-responsive-masonry] > div');
   const pagination = document.querySelector<HTMLElement>('.fixture-responsive-pagination');

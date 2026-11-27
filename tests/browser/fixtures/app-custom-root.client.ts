@@ -9,7 +9,7 @@ if (!target) {
 
 const query = new URLSearchParams(location.search);
 if (query.has('ssr')) {
-  // Сначала тест фокусирует серверный input и вводит черновик.
+  // At first, the test focuses the server input and introduces a draft.
   target.addEventListener('hydrate-app', () => {
     hydrate(Fixture, { target, recover: false });
     target.dataset.hydrated = 'true';

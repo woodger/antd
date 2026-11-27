@@ -1,5 +1,5 @@
-// Переводит смещения окна или контейнера в координаты scrollport.
-// Для отдельного тела считает полосу от секции, объединяющей тело и шапку.
+// Translate window or container offsets to scrollport coordinates. For a separate body considers a
+// strip from the section uniting the body and the cap.
 import type { TableSticky } from './table.types';
 
 export const tableStickyBarHeight = 8;
@@ -11,7 +11,7 @@ export interface TableStickyBarLayout {
   size: number;
 }
 
-/** Обновляет позицию шапки, итогов и дополнительной полосы в одном кадре. */
+/** Updates the position of the hat, the results and the additional stripe in one frame. */
 export function observeTableSticky(
   viewport: HTMLElement,
   table: HTMLTableElement | undefined,
@@ -30,7 +30,7 @@ export function observeTableSticky(
   const element = container && 'getBoundingClientRect' in container ? container : undefined;
   let frame = 0;
 
-  /** Отсчитывает позиции от видимой области владельца, включая его границу. */
+  /** Counting down the positions from the owner's visible area, including its boundary. */
   const measure = () => {
     const ownerTop = element ? element.getBoundingClientRect().top + element.clientTop : 0;
     const ownerBottom = ownerTop + (element?.clientHeight ?? view.innerHeight);
@@ -61,7 +61,7 @@ export function observeTableSticky(
     setBar({ top: barTop - origin, offset, range, size });
   };
 
-  /** Объединяет уведомления scroll и resize до следующей отрисовки. */
+  /** Combines scroll and resize notifications to the next drawing. */
   const schedule = () => {
     if (frame) {
       return;
@@ -84,7 +84,7 @@ export function observeTableSticky(
   element?.addEventListener('scroll', schedule, { passive: true });
   measure();
 
-  // При смене владельца он больше не влияет на смещения этой таблицы.
+  // When changing the owner, it no longer affects the displacement of this table.
   return () => {
     view.cancelAnimationFrame(frame);
     observer?.disconnect();

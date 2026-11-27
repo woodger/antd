@@ -8,7 +8,7 @@ for (const { sample, metrics } of reference.cases) {
     await page.goto('/?fixture=form-label-presence');
     await page.getByRole('combobox', { name: 'Form label presence sample', exact: true })
       .selectOption(sample.id);
-    // Числовой shorthand должен совпадать с объектом Col, а не терять span/offset как в source.
+    // The number of shorthands should match the Col object, not lose span/offset as in the source.
     const canonicalId = sample.id.replace(/^numeric-label-/, 'object-label-')
       .replace(/^numeric-wrapper-/, 'object-wrapper-');
     const expected = canonicalId === sample.id ? metrics

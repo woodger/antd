@@ -29,7 +29,7 @@ function sourceSnapshot(snapshot: typeof reference.cases[number]['snapshot']) {
   return {
     calls: snapshot.calls.map(call => ({
       ...call,
-      // Native button заголовка сохраняет согласованную адаптацию доступности Menu.
+      // Native button title retains a consistent adaptation of Menu's affordability.
       tag: call.tag === 'div' ? 'button' : call.tag
     })),
     popups: snapshot.popups

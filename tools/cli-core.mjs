@@ -1,5 +1,5 @@
-// Описывает параметры служебного CLI и связывает проверенный ввод с командами.
-// Справка строится из тех же определений и доступна без чтения файлов проекта.
+// Defines tooling CLI arguments and routes validated input to commands. Help uses the same
+// definitions and can be printed without reading project files.
 import { createCommand, CliUsageError } from 'icore';
 import { projectRoot } from './ant-design-common.mjs';
 import { runRegistry } from './ant-design-registry.mjs';
@@ -10,7 +10,7 @@ const command = createCommand();
 const helpOption = { type: 'boolean', alias: 'h', syntax: 'flag' };
 const flag = { type: 'boolean', syntax: 'flag' };
 
-// Выводит общую справку или поддерево команд с указанным префиксом.
+// Prints general help or the command subtree for a given prefix.
 function writeHelp(context, prefix = []) {
   const definitions = commands.definitions.filter(
     definition => prefix.every((part, index) => definition.path[index] === part)
@@ -31,27 +31,27 @@ function writeHelp(context, prefix = []) {
   context.stdout.write(lines.join('\n'));
 }
 
-// Регистрирует справку по командному разделу.
+// Registers help for a command section.
 function sectionHelp(section, description) {
   return command.define({
     path: [section],
     options: { help: helpOption },
     metadata: { description },
-    // Показывает команды раздела из общих определений CLI.
+    // Lists commands in the section from the shared CLI definitions.
     handle({ context }) {
       writeHelp(context, [section]);
     }
   });
 }
 
-// Регистрирует команду реестра с общими флагами и отдельным аргументом для show.
+// Registers a registry command with shared flags and a separate argument for show.
 function registryCommand(action, description) {
   return command.define({
     path: ['registry', action],
     options: { upstream: flag, help: helpOption },
     allowExtraPositionals: action === 'show',
     metadata: { description, argument: action === 'show' ? '<component>' : '' },
-    // Проверяет обязательный идентификатор до чтения реестра.
+    // Validates the required identifier before reading the registry.
     handle({ options, positionals, context }) {
       if (options.help) {
         writeHelp(context, ['registry', action]);
@@ -70,14 +70,14 @@ function registryCommand(action, description) {
   });
 }
 
-// Выводит справку проверки или передаёт позиционные аргументы её инструменту.
+// Prints help for a check or forwards positional arguments to its tool.
 function checkCommand(path, kind, description) {
   return command.define({
     path,
     options: { help: helpOption },
     allowExtraPositionals: true,
     metadata: { description, argument: '[-- <args...>]' },
-    // Передаёт аргументы после -- инструменту без повторного разбора.
+    // Forwards arguments after -- directly to the tool without parsing them again.
     handle({ options, positionals, context }) {
       if (options.help) {
         writeHelp(context, path);
@@ -94,7 +94,7 @@ const commands = command.registry([
     path: ['help'],
     options: {},
     metadata: { description: 'Show all commands' },
-    // Показывает справку по всем командам из единого реестра.
+    // Prints help for all commands from the shared registry.
     handle({ context }) {
       writeHelp(context);
     }
@@ -123,7 +123,7 @@ const commands = command.registry([
       description: 'Extract, compare or write pinned upstream CSS',
       argument: '[recipe|all]'
     },
-    // Разделяет режим списка и операции над выбранным CSS-рецептом.
+    // Separates listing recipes from acting on the selected CSS recipe.
     handle({ options, provided, positionals, context }) {
       if (options.help) {
         writeHelp(context, ['css']);
@@ -144,7 +144,7 @@ const commands = command.registry([
   })
 ]);
 
-// Запускает CLI со строгой проверкой аргументов и подменяемыми вводом и выводом.
+// Runs the CLI with strict argument validation and replaceable input and output.
 export async function runCommands(
   args,
   {

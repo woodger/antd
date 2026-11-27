@@ -123,7 +123,7 @@ for (const sample of reference.cases) {
     await expect(panel(page)).toHaveCount(0);
     await frames(page);
 
-    // Native Drawer сохраняет закрытый dialog shell и при destroyOnHidden.
+    // Native Drawer keeps closed dialog shell and at destroyOnHidden.
     const expected = sample.afterClose;
 
     await expect.poll(async () => {

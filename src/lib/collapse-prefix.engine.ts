@@ -5,7 +5,7 @@ const rootStates = new Set([
   '-icon-placement-start', '-icon-placement-end'
 ]);
 
-/** Общие variables/marker; native heading/button используют тот же prefix через data parts. */
+/** Shared variables and marker. Native headings and buttons use the same prefix through data parts. */
 export function getCollapsePrefixCss(prefix: string) {
   if (prefix === 'ant-collapse') {
     return undefined;

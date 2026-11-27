@@ -89,7 +89,7 @@
 {#snippet introTitle(node: { value: string; title: string; })}<span in:recordIntro|global>{node.title}</span>{/snippet}
 {#snippet introSummary(items: TreeSelectLabeledValue[])}{#each items as item}{@render content(item.label)}{/each}{/snippet}
 
-<!-- До ThemeScopeStyle: Svelte dynamic element самостоятельно меняет intro state. -->
+<!-- Up to ThemeScopeStyle: Svelte dynamic element independently changes the intro state. -->
 {#if probeIntro}<div data-tree-label-intro-probe>
   <TreeSelect aria-label="Intro probe" multiple treeData={[{ value: 'probe', title: 'Intro label' }]}
     defaultValue={['probe']} maxTagCount={0} treeTitleRender={introTitle} maxTagPlaceholder={introSummary} />

@@ -1,5 +1,5 @@
-// Проверяет границу тестового стенда по исходным импортам. Компоненты
-// загружаются через публичный пакет, сценарии остаются в дереве tests.
+// Checks the test harness boundary through source imports. Components load through the public
+// package, and scenarios stay in the tests tree.
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +23,7 @@ const publicEntries = new Set(exactEntries.map(entry =>
 ));
 
 if (metadata.exports['./locale/*']) {
-  // Разрешает конкретные модули словарей из публичного шаблона без предварительной сборки.
+  // Allows specific locale modules from the public export pattern without requiring a build first.
   const locales = readdirSync(join(root, 'src/lib/locale'), { withFileTypes: true });
   for (const entry of locales) {
     if (entry.isFile() && /^[a-z]{2,3}_[A-Z]{2}\.ts$/.test(entry.name)) {
@@ -33,7 +33,7 @@ if (metadata.exports['./locale/*']) {
   }
 }
 
-// Обходит только файлы, в которых стенд объявляет импорты JavaScript и Svelte.
+// Visits only files where the harness declares JavaScript and Svelte imports.
 function sourceFiles(directory) {
   const entries = readdirSync(directory, { withFileTypes: true });
   const sources = [];
@@ -49,14 +49,14 @@ function sourceFiles(directory) {
   return sources;
 }
 
-// Возвращает оба script-блока компонента в порядке проверки, module затем instance.
+// Returns both component script blocks in check order, module first and instance second.
 function componentScripts(source) {
   const component = parse(source, { modern: true });
   const blocks = [component.module, component.instance].filter(Boolean);
   return blocks.map(block => source.slice(block.content.start, block.content.end));
 }
 
-// Берёт статические import и export из AST, не вычисляя содержимое файлов.
+// Reads static imports and exports from the AST without evaluating the files.
 function imports(file) {
   const source = readFileSync(file, 'utf8');
   const scripts = file.endsWith('.svelte') ? componentScripts(source) : [source];

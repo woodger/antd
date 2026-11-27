@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Использует публичные настройки раскрытия для тех же последовательностей, что Source UMD.
+  // Uses public disclosure settings for the same sequences as Source UMD.
   import type { Snippet } from 'svelte';
   import {
     ConfigProvider, enUS, Table,
@@ -44,7 +44,7 @@
     onExpandedRowsChange: changeKeys
   });
 
-  /** Создаёт данные для плоского и трёхуровневого дерева. */
+  /** Creates data for a flat and three-level tree. */
   function makeRows(count: number, tree: boolean): Row[] {
     const rows: Row[] = Array.from({ length: count }, (_, key) => ({ key, name: `Name ${key}` }));
     if (tree) {
@@ -54,29 +54,29 @@
     return rows;
   }
 
-  /** Обозначает реальный индекс и глубину в классе детали или вложенной записи. */
+  /** Denotes the real index and the depth in the class of the part or nested record. */
   function detailClass(row: Row, index: number, depth: number) {
     return `fixture-expanded-${row.key}-${index}-${depth}`;
   }
 
-  /** Добавляет события в их порядке без повторной интерпретации ключей. */
+  /** Adds events in their order without reinterpreting the keys. */
   function record(...event: unknown[]) {
     events = [...events, event];
   }
 
-  /** Управляемый профиль передаёт ключи Table, когда владелец принимает запрос. */
+  /** The managed profile transmits Table keys when the owner receives the request. */
   function changeKeys(next: TableKey[]) {
     record('keys', next);
     if (accepted) keys = next;
   }
 
-  /** Общий provider может использоваться с таблицами разных схем. */
+  /** The general provider can be used with tables of different schemes. */
   function namedRecord(record: object): record is Pick<Row, 'key' | 'name'> {
     return 'key' in record && typeof record.key === 'number'
       && 'name' in record && typeof record.name === 'string';
   }
 
-  /** Использует ref пакета для проверки ухода и возврата виртуальной строки. */
+  /** Uses a package ref to check the care and return of the virtual string. */
   function scrollTo(key: TableKey) {
     table?.scrollTo({ key, align: 'start' });
   }

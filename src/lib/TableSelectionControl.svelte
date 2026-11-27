@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Checkbox и Radio используют нативный ввод, а состояние принадлежит Table.
-  // Click нужен Shift-выбору, поскольку DOM change не содержит модификаторы.
+  // Checkbox and Radio use native input while Table owns the state. Shift selection needs click
+  // because DOM change carries no modifier keys.
   import { onDestroy, tick } from 'svelte';
   import Checkbox from './Checkbox.svelte';
   import Radio from './Radio.svelte';
@@ -43,10 +43,10 @@
     onClick?.(event);
   }
 
-  // Дочерний контрол не получает собственный checked поверх принятого значения.
+  // The child control does not override the accepted value with its own checked state.
   function keepOwnerValue() {}
 
-  // Нативная группа по name снимает старую отметку ещё до решения владельца.
+  // The native group named by name clears the old selection before the owner decides.
   function restoreRadioPeer(element: HTMLInputElement) {
     const table = element.closest('table');
     if (!table || !element.name) {
@@ -64,7 +64,7 @@
     }
   }
 
-  // Пока владелец решает, принять ли ключ, браузер уже переключил native input.
+  // The browser has already toggled the native input while the owner decides whether to accept the key.
   async function restoreInput(element: HTMLInputElement | undefined) {
     await tick();
     if (!element || element !== input || !element.isConnected) {

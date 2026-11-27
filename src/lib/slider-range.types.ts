@@ -3,7 +3,7 @@ import type { HTMLInputAttributes } from 'svelte/elements';
 import type { SliderTooltipConfig } from './tooltip.types';
 import type { SliderSingleProps } from './slider.types';
 
-/** Исходные настройки нескольких точек; editable имеет приоритет над draggableTrack. */
+/** The starting settings of several points; editable takes precedence over draggableTrack. */
 export interface SliderRangeConfig {
   editable?: boolean;
   draggableTrack?: boolean;
@@ -21,7 +21,7 @@ export type SliderStyles = Partial<Record<SliderSemanticName, string>>;
 export type SliderSemanticValue<Value, Props = SliderRangeProps> = Value
   | ((info: { props: Props; }) => Value);
 
-/** Общие стили Slider; callbacks различают scalar/range по props.range. */
+/** Common Styles Slider; callbacks distinguish between scalar/range on props.range. */
 export interface SliderConfig {
   class?: string;
   style?: string;
@@ -29,7 +29,7 @@ export interface SliderConfig {
   styles?: SliderSemanticValue<SliderStyles, SliderSingleProps | SliderRangeProps>;
 }
 
-/** Методы доступны после mount; nativeElement указывает на корень Slider. */
+/** Techniques are available after mount; nativeElement indicates Slider root. */
 export interface SliderRef {
   readonly nativeElement: HTMLDivElement | undefined;
   focus: () => void;
@@ -37,8 +37,8 @@ export interface SliderRef {
 }
 
 /**
- * Range API Ant Design. Bind:value — Svelte state; callbacks получают отсортированную копию.
- * Name/form принадлежат нативным range inputs; каждый включённый handle отправляет одно поле.
+ * Range API Ant Design. Bind:value – Svelte; callbacks receive a sorted copy. Name/form belongs to
+ * native range inputs; each included handle sends one field.
  */
 export interface SliderRangeProps extends Omit<
   HTMLInputAttributes,
@@ -47,11 +47,11 @@ export interface SliderRangeProps extends Omit<
 > {
   range: true | SliderRangeConfig;
   value?: number[] | null;
-  /** Фиксируется при создании. Undefined создаёт две точки у min, null/[] — пустой Slider. */
+  /** Fixed when creating. Undefined creates two points at min, null/[] – empty Slider. */
   defaultValue?: number[] | null;
   min?: number;
   max?: number;
-  /** Null выравнивает значения только по marks/min/max. @defaultValue 1 */
+  /** Null aligns the values only to marks/min/max. @defaultValue 1 */
   step?: number | null;
   marks?: SliderMarks;
   dots?: boolean;
@@ -60,20 +60,20 @@ export interface SliderRangeProps extends Omit<
   track?: boolean;
   /** @defaultValue true */
   allowCross?: boolean;
-  /** True использует step; при step=null точки выталкиваются к соседним marks. */
+  /** True uses step; at step=null, the points are pushed out to the neighboring marks. */
   pushable?: boolean | number;
-  /** Любая выключенная точка блокирует editable и draggableTrack. */
+  /** Anyone shut-off point blocks editable and draggableTrack. */
   disabled?: boolean | readonly boolean[] | null;
   orientation?: 'horizontal' | 'vertical';
   reverse?: boolean;
   keyboard?: boolean;
   autoFocus?: boolean;
-  /** Svelte callback после изменения bind:value. */
+  /** Svelte callback after change bind:value. */
   onValueChange?: (value: number[]) => void;
-  /** Исходный callback; не вызывается для неизменившегося отсортированного набора. */
+  /** The initial callback; is not called for an unchanged sorted set. */
   onChange?: (value: number[]) => void;
-  /** Вызывается и для действий без изменения значения, как в rc-slider. */
-  /** Mouse/pointer release, navigation keyup и click mark; Delete не завершает действие. */
+  /** Is also called for actions without changing the value, as in rc-slider. */
+  /** Mouse/pointer release, navigation keyup and click; Delete does not terminate. */
   onChangeComplete?: (value: number[]) => void;
   onFocus?: (event: FocusEvent) => void;
   onBlur?: (event: FocusEvent) => void;

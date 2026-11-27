@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Удерживает inline-список при закрытии и при смене режима. Уходящая копия
-  // сохраняет inline-layout и освобождает навигационные ключи.
+  // Retains the inline list through close and mode changes. The leaving copy keeps its inline
+  // layout and releases the navigation keys.
   import { untrack } from 'svelte';
   import { provideMenu, useMenu, type MenuContext } from './menu-context';
   import type { MenuEntry } from './menu.engine';

@@ -1,4 +1,4 @@
-/** Публичные authored inputs независимого этапа выбранных значений Select. */
+/** Public authorized inputs of the independent stage of the selected values Select. */
 export type SelectValueLabel = 'omitted' | 'undefined' | 'null' | 'false' | 'empty' | 'zero' | 'text' | 'rich' | 'array';
 export type SelectValueRenderer = 'omitted' | 'text' | 'undefined' | 'null' | 'false' | 'empty' | 'zero' | 'rich' | 'array';
 export type SelectValueDataset = 'basic' | 'next' | 'removed' | 'rich' | 'disabled' | 'mapped' | 'mixed' | 'duplicates' | 'styled' | 'styled-next';

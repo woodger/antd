@@ -19,12 +19,12 @@ export interface NativeEmptyDatetimePoint extends Pick<EmptyDatetimeSourcePoint,
   sameOwnerAsInitial: boolean;
 }
 
-// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
+// Narrows an unknown value before the recording. null and arrays result in a verification error.
 const object = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
-// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
+// Confirms the shape of the array, leaving its elements unknown until a separate inspection.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;
@@ -61,7 +61,7 @@ function sameDate(actual: EmptyDatetimeSourceDate, source: EmptyDatetimeSourceDa
   for (const key of ['valid', 'epoch', 'iso', 'fields', 'locale'] as const) {
     assert.deepEqual(actual.temporal[key], source.temporal[key], 'Exact Dayjs ' + key);
   }
-  // Передача из браузера сохраняет -0; сохранённый JSON представляет тот же offset как 0.
+  // The transfer from the browser preserves -0; the saved JSON represents the same offset as 0.
   assert.equal(actual.temporal.utcOffset === source.temporal.utcOffset, true);
   assert.deepEqual(actual.sameAsAuthored, source.sameAsAuthored);
   assert.deepEqual(actual.encoded, source.encoded);

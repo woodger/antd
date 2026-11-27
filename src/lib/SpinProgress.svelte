@@ -9,7 +9,7 @@
   let rendered = $state(false);
   let progress = $derived(spinProgress(percent));
 
-  // Source useLayoutEffect: кольцо отсутствует в SSR и остаётся после возврата к нулю.
+  // Upstream useLayoutEffect leaves the ring out of SSR and retains it after the value returns to zero.
   $effect(() => {
     if (percent !== 0) rendered = true;
   });

@@ -1,6 +1,6 @@
 <script lang="ts" generics="Value extends InputNumberValue = number">
-  // Ведёт редактируемый текст отдельно от подтверждённого числа. Форматирование, шаг и blur
-  // используют decimal-операции.
+  // Tracks draft text separately from the committed number. Formatting, stepping, and blur rely on
+  // decimal operations.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';
@@ -88,7 +88,7 @@
   let icons = $derived(typeof props.controls === 'object' ? props.controls : {});
   let controlId = $derived(props.id ?? field?.id ?? `ant-input-number-${generatedId}`);
   let fieldName = $derived(props.name ?? field?.name);
-  // ARIA сериализуется из decimal string: Number потерял бы точность stringMode.
+  // Serialize ARIA from the decimal string to preserve stringMode precision.
   let numericAria: Record<string, InputNumberValue | undefined> = $derived({
     'aria-valuenow': resolvedValue ?? undefined,
     'aria-valuemin': options.min
@@ -163,8 +163,8 @@
   }
 
   $effect.pre(() => {
-    // Native blur при удалении DOM предшествует teardown внешнего keyed block.
-    // Обработчик использует последний действующий render, как closure rc-input-number.
+    // Native blur on DOM removal precedes teardown of the outer keyed block. Like the
+    // rc-input-number closure, the handler uses the last live render.
     blurState = captureBlurState();
   });
 
@@ -530,7 +530,7 @@
 {/snippet}
 
 <svelte:document onreset={handleReset} />
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-number-prefix:${prefixCls}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events, a11y_mouse_events_have_key_events (Mouse callbacks принадлежат root; клавиатурой и фокусом управляет native input.) --><div bind:this={nativeElement} class={[
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-number-prefix:${prefixCls}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events, a11y_mouse_events_have_key_events (The root receives mouse callbacks. The native input handles keyboard input and focus.) --><div bind:this={nativeElement} class={[
   prefixCls, 'ant-input-number-css-var', 'input-number-root', `${prefixCls}-${variant}`,
   `${prefixCls}-mode-${mode}`, disabled && `${prefixCls}-disabled`, readonly && `${prefixCls}-readonly`,
   focused && !disabled && `${prefixCls}-focused`, focused && `${prefixCls}-mode-${mode}-focused`,
@@ -576,7 +576,7 @@
       {#if typeof props.prefix === 'function'}{@render props.prefix()}{:else}{props.prefix}{/if}
     </div>
   {/if}
-  <!-- svelte-ignore a11y_autofocus (Публичный autoFocus/HTML autofocus сохраняет выбор потребителя.) -->
+  <!-- svelte-ignore a11y_autofocus (Public autoFocus and HTML autofocus honor the consumer's choice.) -->
   <input {...attributes} {...numericAria} bind:this={inputElement} id={controlId} type={props.type ?? 'text'}
     role="spinbutton" class={[`${prefixCls}-input`, 'input-number-input', classes.input]}
     style={styles.input} value={editor.text}

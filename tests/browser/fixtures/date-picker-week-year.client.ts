@@ -10,13 +10,13 @@ if (!target || !model) {
   throw Error('Week-year fixture requires a target and model output');
 }
 
-// Преобразует заданную в URL дату, сохраняя отсутствие настройки.
+// Converts the date set to URL, maintaining no customization.
 function readDate(name: string): Dayjs | undefined {
   const value = query.get(name);
   return value === null ? undefined : dayjs(value);
 }
 
-// Записывает опубликованные даты и текст без вычисления номера недели в фикстуре.
+// Records the published dates and text without calculating the number of the week in the fixture.
 function publish(dates: readonly (Dayjs | null)[], texts: string | string[] | null) {
   if (model) {
     model.textContent = JSON.stringify({

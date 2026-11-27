@@ -1,5 +1,5 @@
-// Измеряет только верхний ряд. Невидимые пункты сохраняют ширину для замера,
-// а копии из всплывающего списка не влияют на результат.
+// It only measures the upper row. Invisible items retain the width for measurement, and copies from
+// the pop-up list do not affect the result.
 import { getMenuVisibleCount } from './menu-overflow.engine';
 
 export interface MenuOverflowLayout {
@@ -7,7 +7,7 @@ export interface MenuOverflowLayout {
   hasWidth: boolean;
 }
 
-/** Синхронизирует ширины ряда и индикатора после layout без обновления из resize callback. */
+/** Synchronizes the width of the row and the indicator after the layout without an update from the resize callback. */
 export function connectMenuOverflow(
   root: HTMLUListElement,
   onLayout: (layout: MenuOverflowLayout) => void
@@ -28,14 +28,14 @@ export function connectMenuOverflow(
 
   return disconnect;
 
-  // Объединяет изменения размеров и перестановки пунктов в одно чтение layout.
+  // Combines changes in the size and rearrangement of items into one reading layout.
   function schedule() {
     if (!frame) {
       frame = view.requestAnimationFrame(measure);
     }
   }
 
-  // Применяет целочисленные clientWidth и offsetWidth, как responsive Overflow.
+  // Applies the integer clientWidth and offsetWidth as the Overflow.
   function measure() {
     frame = 0;
     const widths: number[] = [];
@@ -77,7 +77,7 @@ export function connectMenuOverflow(
     });
   }
 
-  // Отменяет отложенный замер при смене режима или удалении Menu.
+  // Cancels the delayed measurement when the mode is changed or Menu is deleted.
   function disconnect() {
     view.cancelAnimationFrame(frame);
     resize.disconnect();

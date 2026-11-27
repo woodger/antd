@@ -3,7 +3,7 @@ export function snapshotAvatarPrefix(host: HTMLElement, sample: {
 }) {
   const root = host.firstElementChild as HTMLElement;
   const prefix = sample.prefixCls || 'ant-avatar';
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element, value: string) => [...node.classList]
     .filter(name => name === value || name.startsWith(`${value}-`))
     .filter(name => name !== `${value}-css-var` && name !== 'ant-avatar-css-var')

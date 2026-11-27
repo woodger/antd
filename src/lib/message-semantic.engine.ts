@@ -1,5 +1,5 @@
-// Разрешает оформление списка и записи. Провайдер задаёт базовый слой, а явный
-// style отдельной записи применяется после семантики всех уровней.
+// Allows the registration of the list and recording. The provider sets the base layer, and the
+// explicit style of a separate record is used after semantics of all levels.
 import { resolveNoticeAppearance } from './notice-semantic.engine';
 import type {
   MessageAppearance, MessageOptions, MessageSemanticName, MessageSemanticProps
@@ -9,7 +9,7 @@ const slots: readonly MessageSemanticName[] = ['list', 'listContent', 'root', 'w
 
 export { resolveNoticeSemantic as resolveMessageSemantic } from './notice-semantic.engine';
 
-/** Объединяет оформление провайдера и держателя по отдельным DOM-частям. */
+/** Unites the registration of the provider and the holder in separate DOM-parts. */
 export function resolveMessageHolder(options: MessageOptions, provider: MessageAppearance | undefined) {
   return resolveNoticeAppearance<MessageSemanticName, MessageSemanticProps>(
     slots, options, options, provider

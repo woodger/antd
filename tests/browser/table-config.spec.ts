@@ -7,7 +7,7 @@ test.use({ viewport: { width: 880, height: 600 }, locale: 'en-US', reducedMotion
 const fixture = '/?fixture=table-config&profile=';
 const viewport = '#table-config-fixture [data-ant-table-part="content"]';
 
-/** Измеряет эффективную раскладку и ключи строк после действия. */
+/** Measures an effective layout and string keys after action. */
 function snapshot() {
   const root = document.getElementById('table-config-fixture');
   const owner = root?.querySelector('[data-ant-table-part="wrapper"]');
@@ -33,7 +33,7 @@ function snapshot() {
   };
 }
 
-/** Выполняет действия из эталона через scrollport и публичный ref. */
+/** Performs actions from the benchmark via scrollport and public ref. */
 async function act(page: Page, action: string, rtl: boolean) {
   if (action === 'move') {
     await page.locator(viewport).evaluate((element, direction) => {

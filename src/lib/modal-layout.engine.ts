@@ -1,5 +1,5 @@
-// Собирает геометрию Modal по токенам темы. Media queries работают уже при SSR,
-// поэтому смена viewport не меняет владельца dialog или его содержимого.
+// Collects geometry Modal on tokens. Media queries work already at SSR, so the change of viewport
+// does not change the owner of the dialog or its contents.
 import { hashTokenString } from './theme-hash.engine';
 import type { AliasToken } from './theme-token.types';
 import type { GridBreakpoint } from './grid.types';
@@ -23,29 +23,29 @@ interface ModalLayout {
   css?: string;
 }
 
-/** Числовая ширина остаётся в пикселях. CSS-длина приходит уже с единицами. */
+/** Numerical width remains in pixels. CSS-length comes already with units. */
 function cssLength(value: number | string): string {
   return typeof value === 'number' ? `${value}px` : value;
 }
 
-/** Имя принадлежит префиксу Modal, в том числе при переносе в getContainer. */
+/** The name belongs to the prefix Modal, including when transferred to getContainer. */
 function widthVariable(prefix: string, breakpoint: GridBreakpoint) {
   return `--${prefix}-${breakpoint}-width`;
 }
 
-/** Интервалы без заданной ширины используют fallback в media queries. */
+/** Intervals without a given width use fallback in media queries. */
 function responsiveVariables(map: Exclude<ModalWidth, string | number>, prefix: string) {
   const variables: [string, string][] = [];
   for (const key of widthBreakpoints) {
     const value = map[key];
-    // initial включает fallback var() и отделяет размеры вложенной панели от внешней.
+    // initial includes fallback var() and separates the dimensions of the nested panel from the external.
     variables.push([widthVariable(prefix, key), value == null ? 'initial' : cssLength(value)]);
   }
 
   return variables;
 }
 
-/** Layout scope разделяет темы с разными breakpoint даже при одном prefixCls. */
+/** Layout scope shares themes with different breakpoint even at one prefixCls. */
 export function getModalLayout(
   width: ModalWidth,
   height: number | string | undefined,

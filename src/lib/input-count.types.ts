@@ -15,18 +15,18 @@ export type InputCountContent =
   | Snippet<[InputCountInfo]>;
 export type InputCountFormatter = (info: InputCountInfo) => InputCountContent;
 
-/** Общая настройка счётчика Input и TextArea; по умолчанию считает UTF-16 code units. */
+/** The general configuration of the counter is Input and TextArea; by default it considers UTF-16 units code. */
 export interface InputCountConfig {
-  /** Мягкий предел с индикацией превышения; 0 снимает предел. Сам по себе ввод не обрезает. */
+  /** Soft limit with exceedance indication; 0 removes the limit. In itself, the input does not trim. */
   max?: number;
   strategy?: (value: string) => number;
-  /** Имеет приоритет над showCount; formatter может вернуть snippet с InputCountInfo. */
+  /** Takes precedence over showCount; the formatter can return snippet from InputCountInfo. */
   show?: boolean | InputCountFormatter;
-  /** Преобразует пользовательский ввод при превышении max после завершения composition. */
+  /** Converts user input when max is exceeded after completion of composition. */
   exceedFormatter?: (value: string, info: { max: number; }) => string;
 }
 
-/** Настройки кнопки очистки; disabled скрывает кнопку, сохраняя её в DOM. */
+/** Clear button settings; disabled hides the button by saving it in DOM. */
 export interface InputAllowClear {
   disabled?: boolean;
   clearIcon?: string | number | false | null | Snippet;

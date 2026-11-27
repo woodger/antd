@@ -10,7 +10,7 @@ export type CarouselSwipeDirection = 'left' | 'right' | 'up' | 'down' | 'vertica
 export type CarouselAutoplayState = 'playing' | 'paused' | 'hovered' | 'focused' | null;
 export type CarouselPlayType = 'update' | 'leave' | 'blur' | 'play' | 'playing';
 
-/** Один исходный child: snippet рендерится внутри его div, width заменяет React style.width. */
+/** One original child. The snippet renders in its div, and width replaces React style.width. */
 export interface CarouselItem {
   children?: CarouselContent;
   width?: number | string;
@@ -19,7 +19,7 @@ export interface CarouselItem {
   attributes?: Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class' | 'style'>;
 }
 
-/** Props корня custom arrow; onClick отсутствует у выключенного направления. */
+/** Root props for a custom arrow. onClick is omitted for a disabled direction. */
 export interface CarouselArrowProps {
   class: string;
   className: string;
@@ -30,7 +30,7 @@ export interface CarouselArrowProps {
   'data-role': 'none';
 }
 
-/** AppendDots применяет эти props к своему корню; customPaging применяет onClick к кнопке. */
+/** appendDots applies these props to its root. customPaging applies onClick to the button. */
 export interface CarouselDotsProps {
   class: string;
   className: string;
@@ -39,47 +39,47 @@ export interface CarouselDotsProps {
   onMouseLeave?: () => void;
 }
 
-/** Делегированный Settings react-slick 2.0.0; defaults сохраняются в реализации. */
+/** Delegated react-slick 2.0.0 Settings. Defaults are defined in the implementation. */
 export interface CarouselSlickSettings {
-  /** Physical Left/Right, кроме input/textarea/select. @defaultValue true */
+  /** Physical Left and Right keys outside input, textarea, and select. @defaultValue true */
   accessibility?: boolean;
-  /** Высота текущего слайда после browser measurements. @defaultValue false */
+  /** Height of the current slide after browser measurements. @defaultValue false */
   adaptiveHeight?: boolean;
-  /** Вызывается после speed; прерванный переход сообщает предыдущий индекс. */
+  /** Called after speed elapses. An interrupted transition reports the previous index. */
   afterChange?: (currentSlide: number) => void;
   appendDots?: Snippet<[dots: Snippet, props: CarouselDotsProps]>;
   /** @defaultValue false */
   arrows?: boolean;
   asNavFor?: CarouselRef | null;
-  /** Интервал JS autoplay равен autoplaySpeed + 50ms. @defaultValue 3000 */
+  /** The JavaScript autoplay interval is autoplaySpeed + 50ms. @defaultValue 3000 */
   autoplaySpeed?: number;
   autoplay?: boolean;
-  /** До изменения currentSlide и перед callback загрузки новых lazy slides. */
+  /** Runs before currentSlide changes and before the callback for newly loaded lazy slides. */
   beforeChange?: (currentSlide: number, nextSlide: number) => void;
   centerMode?: boolean;
   centerPadding?: string;
   children?: CarouselContent;
   class?: string;
   cssEase?: string;
-  /** Custom renderer явно применяет onClick к собственной native кнопке. */
+  /** A custom renderer explicitly applies onClick to its own native button. */
   customPaging?: Snippet<[index: number, props: { onClick: (event: MouseEvent) => void; }]>;
   dots?: boolean;
   dotsClass?: string;
-  /** Мышиный drag; touch отдельно учитывает swipe/touchMove. @defaultValue false */
+  /** Mouse drag. Touch separately uses swipe and touchMove. @defaultValue false */
   draggable?: boolean;
-  /** Сохранён upstream prop; CSS-переход использует cssEase. */
+  /** Retained upstream prop. The CSS transition uses cssEase. */
   easing?: string;
   edgeFriction?: number;
   fade?: boolean;
   focusOnSelect?: boolean;
   infinite?: boolean;
-  /** Применяется повторно при изменении prop или root RTL. @defaultValue 0 */
+  /** Reapplied when the prop or root RTL setting changes. @defaultValue 0 */
   initialSlide?: number;
   lazyLoad?: CarouselLazyLoad;
   nextArrow?: Snippet<[props: CarouselArrowProps]>;
   onEdge?: (direction: CarouselSwipeDirection) => void;
   onInit?: () => void;
-  /** Индексы включают pre/post clones исходного Slick. */
+  /** Indexes include upstream Slick's leading and trailing clones. */
   onLazyLoad?: (slidesToLoad: number[]) => void;
   onLazyLoadError?: () => void;
   onReInit?: () => void;
@@ -88,20 +88,20 @@ export interface CarouselSlickSettings {
   pauseOnFocus?: boolean;
   pauseOnHover?: boolean;
   prevArrow?: Snippet<[props: CarouselArrowProps]>;
-  /** Регистрируется при mount; breakpoint применяется по событию matchMedia. */
+  /** Registered on mount. The breakpoint is applied on the matchMedia event. */
   responsive?: readonly CarouselResponsiveObject[];
-  /** Положительное целое; строки объединяются в логические слайды. @defaultValue 1 */
+  /** Positive integer. Rows are grouped into logical slides. @defaultValue 1 */
   rows?: number;
   rtl?: boolean;
-  /** Сохранён upstream prop; react-slick не использует его для смены тега. */
+  /** Retained upstream prop. react-slick does not use it to change the tag. */
   slide?: string;
-  /** Положительное целое. @defaultValue 1 */
+  /** Positive integer. @defaultValue 1 */
   slidesPerRow?: number;
-  /** Положительное число. @defaultValue 1 */
+  /** Positive number. @defaultValue 1 */
   slidesToScroll?: number;
-  /** Положительное число. @defaultValue 1 */
+  /** Positive number. @defaultValue 1 */
   slidesToShow?: number;
-  /** Длительность CSS-перехода и таймера afterChange, ms. @defaultValue 500 */
+  /** CSS transition and afterChange timer duration in ms. @defaultValue 500 */
   speed?: number;
   swipeToSlide?: boolean;
   swipe?: boolean;
@@ -121,20 +121,20 @@ export interface CarouselResponsiveObject {
   settings: CarouselSlickSettings | 'unslick';
 }
 
-/** Carousel Ant Design; items дают метаданные слайдов, children — один snippet либо массив. */
+/** Ant Design Carousel. items supplies slide metadata. children can be a snippet or an array. */
 export interface CarouselProps extends Omit<
   CarouselSlickSettings,
   'dots' | 'dotsClass' | 'autoplay' | 'verticalSwiping'
 > {
-  /** Имеет приоритет над children. Snippets не разбираются как React virtual tree. */
+  /** Takes precedence over children. Snippets are not inspected as a React virtual tree. */
   items?: readonly CarouselItem[];
   effect?: CarouselEffect;
   style?: string;
-  /** Непустой локальный prefix имеет приоритет; иначе используется ConfigProvider.prefixCls. */
+  /** A nonempty local prefix takes precedence. Otherwise uses ConfigProvider.prefixCls. */
   prefixCls?: string;
   rootClassName?: string;
   id?: string;
-  /** Присутствует в upstream types, но не управляет текущим слайдом; используйте ref.goTo. */
+  /** Present in upstream types but does not control the current slide. Use ref.goTo. */
   slickGoTo?: number;
   dotPlacement?: DotPlacement;
   dots?: boolean | { class?: string; className?: string; };
@@ -142,15 +142,15 @@ export interface CarouselProps extends Omit<
   autoplay?: boolean | { dotDuration?: boolean; };
   /** @defaultValue false */
   waitForAnimate?: boolean;
-  /** Доступен после mount; методы сохраняют отложенный вызов исходного slick. */
+  /** Available after mount. Methods preserve the deferred call behavior of upstream Slick. */
   ref?: CarouselRef;
-  /** Внешний div карусели; поддерживает bind:nativeElement. */
+  /** Outer Carousel div. Supports bind:nativeElement. */
   nativeElement?: HTMLDivElement;
 }
 
-/** Наблюдаемая часть состояния исходного innerSlider. Индекс в RTL зеркальный. */
+/** Observable state from the original innerSlider. In RTL, the index is mirrored. */
 export interface CarouselState {
-  /** Slick оставляет undefined после завершения перехода с useCSS=false. */
+  /** Slick leaves undefined after a transition with useCSS=false. */
   animating: boolean | undefined;
   autoplaying: CarouselAutoplayState;
   currentDirection: number;
@@ -184,7 +184,7 @@ export interface CarouselTouchObject {
   swipeLength?: number;
 }
 
-/** Методы делегированного slider; React instance заменён объектом состояния и DOM refs. */
+/** Methods of the delegated slider. A state object and DOM refs replace the React instance. */
 export interface CarouselInnerSlider {
   readonly list: HTMLDivElement | undefined;
   readonly track: { readonly node: HTMLDivElement | undefined; };
@@ -201,16 +201,16 @@ export interface CarouselInnerSlider {
 
 export interface CarouselRef {
   readonly nativeElement: HTMLDivElement | undefined;
-  /** Методы откладываются на timer; индексы и направление сохраняют Slick RTL semantics. */
+  /** Methods run on a timer. Indexes and direction preserve Slick's RTL semantics. */
   goTo: (slide: number, dontAnimate?: boolean) => void;
   next: () => void;
   prev: () => void;
   autoPlay: (playType?: 'update' | 'leave' | 'blur') => void;
-  /** Отсутствует в responsive unslick; обычный режим предоставляет typed slider API. */
+  /** Omitted in responsive unslick mode. Regular mode exposes the typed slider API. */
   readonly innerSlider: CarouselInnerSlider | undefined;
 }
 
-/** Наследуемые class/style относятся к внутреннему slick-slider, как в Ant Design. */
+/** Inherited class and style apply to the inner slick-slider, as in Ant Design. */
 export interface CarouselConfig {
   class?: string;
   style?: string;

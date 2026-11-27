@@ -1,5 +1,5 @@
-// Вычисляет значения и клавиатурное перемещение одиночной ручки Slider. Десятичная сетка строится
-// с целочисленной арифметикой.
+// Calculates the values and keyboard movement of the Slider single pen. The decidual grid is built
+// with integer arithmetic.
 export interface SliderOptions {
   min: number;
   max: number;
@@ -8,7 +8,7 @@ export interface SliderOptions {
 
 export type SliderDirection = 'ltr' | 'rtl' | 'btt' | 'ttb';
 
-// Нормализует конечные пределы и положительный шаг. Верхняя граница может совпасть с нижней.
+// Normalizes the finite limits and a positive step. The upper boundary may coincide with the bottom.
 export function resolveSliderOptions(options: Partial<SliderOptions> = {}): SliderOptions {
   const min = Number.isFinite(options.min) ? options.min! : 0;
   const max = Number.isFinite(options.max) ? options.max! : 100;
@@ -20,7 +20,7 @@ export function resolveSliderOptions(options: Partial<SliderOptions> = {}): Slid
   };
 }
 
-// Приводит десятичную или экспоненциальную запись к BigInt и неотрицательному scale.
+// Brinks a decimal or exponential entry to BigInt and a non-negative scale.
 function getDecimal(value: number): { integer: bigint; scale: number; } {
   const [mantissa, exponent = '0'] = String(value).split('e');
   const scale = (mantissa.split('.')[1]?.length ?? 0) - Number(exponent);
@@ -29,7 +29,7 @@ function getDecimal(value: number): { integer: bigint; scale: number; } {
   return scale >= 0 ? { integer, scale } : { integer: integer * 10n ** BigInt(-scale), scale: 0 };
 }
 
-// Строит общую сетку значений и выбирает ближайший доступный индекс.
+// Builds a shared grid of values and selects the nearest enabled index.
 function getGrid(value: number | undefined, options: SliderOptions) {
   const clamped = Math.max(
     options.min,
@@ -50,19 +50,19 @@ function getGrid(value: number | undefined, options: SliderOptions) {
   return { min, step, scale, count, index: closest > count ? count : closest };
 }
 
-// Преобразует целочисленную точку сетки обратно в числовое значение Slider.
+// Converts an integer mesh point back into a numerical Slider value.
 function gridValue(grid: ReturnType<typeof getGrid>, index: bigint): number {
   return Number(`${grid.min + index * grid.step}e-${grid.scale}`) || 0;
 }
 
-// Выбирает ближайшую точку step внутри действующих границ.
+// Selects the nearest step point inside the existing boundaries.
 export function normalizeSliderValue(value: number | undefined, options: SliderOptions): number {
   const grid = getGrid(value, options);
 
   return gridValue(grid, grid.index);
 }
 
-// Даёт долю диапазона для track. Деление пополам обходится без переполнения span.
+// Provides a fraction of the range for the track. Dividing in half does not overflow span.
 export function getSliderRatio(value: number, options: SliderOptions): number {
   if (options.min === options.max) {
     return 0;
@@ -76,7 +76,7 @@ export function getSliderRatio(value: number, options: SliderOptions): number {
   return Math.max(0, Math.min(1, ratio));
 }
 
-// Совмещает физическую ось с reverse и RTL для направления роста значения.
+// Combines the physical axis with reverse and RTL for the direction of growth of value.
 export function getSliderDirection(
   orientation: 'horizontal' | 'vertical',
   reverse: boolean,
@@ -85,7 +85,7 @@ export function getSliderDirection(
   return orientation === 'vertical' ? reverse ? 'ttb' : 'btt' : reverse !== rtl ? 'rtl' : 'ltr';
 }
 
-// Преобразует клавишу в сдвиг сетки. Несвязанные клавиши оставляют значение без изменения.
+// Converts the key into a grid shift. Unconnected keys leave the value unchanged.
 export function getSliderKeyValue(
   key: string,
   value: number,

@@ -12,7 +12,7 @@ async function setting(page: Page, name: string, value: string) {
 }
 
 async function closeAndPauseMotion(page: Page) {
-  // Короткая анимация может завершиться до следующего evaluate после click.
+  // A short animation can be completed before the next evaluate after click.
   await message(page).evaluate((element) => {
     const animate = element.animate;
     element.animate = (keyframes, options) => {

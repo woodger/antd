@@ -126,7 +126,7 @@
   const root = element.attachShadow({ mode: 'open' });
   const style = element.ownerDocument.createElement('style');
   root.append(style);
-  // Потребитель выбирает собственные стили ShadowRoot; библиотека их не переносит.
+  // The consumer chooses his own styles ShadowRoot; the library does not tolerate them.
   function syncStyle() {
     const css = Array.from(element.ownerDocument.head.querySelectorAll('style'))
       .map(node => node.textContent).join('\n');

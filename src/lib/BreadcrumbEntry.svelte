@@ -59,14 +59,14 @@
     outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
     outline-offset: 1px;
   }
-  /* Обёртка Svelte Dropdown сохраняет базовую линию соседних пунктов. */
+  /* The Svelte Dropdown wrapper preserves the baseline of adjacent items. */
   [data-ant-breadcrumb-item] > :global(.breadcrumb-dropdown-trigger) { vertical-align: baseline; }
   .breadcrumb-arrow {
     display: inline-flex;
     margin-inline-start: var(--ant-margin-xxs);
     font-size: var(--ant-font-size-icon);
   }
-  /* В upstream текст ссылки и стрелка наследуют цвет от разных элементов. */
+  /* Upstream, the link text and arrow inherit their colors from different elements. */
   :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay] { color: inherit; }
   :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay] > .breadcrumb-overlay-title {
     color: var(--ant-breadcrumb-link-color);
@@ -102,7 +102,7 @@
   {#if itemRender}
     {#if overlay}<span class={`${prefixCls}-overlay-link`} data-ant-breadcrumb-overlay tabindex="-1"
       onfocus={event => {
-        // Dropdown возвращает фокус overlay span; Tab должен вести прямо в native itemRender.
+        // Dropdown returns focus to the overlay span. Tab should move directly into the native itemRender.
         focusPopover(event.currentTarget);
       }}>{@render itemRender(entry.item, params, routes, entry.paths)}{@render arrow()}</span>
     {:else}{@render itemRender(entry.item, params, routes, entry.paths)}{/if}

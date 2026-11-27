@@ -32,8 +32,8 @@ it.each(reference.ssr)('renders responsive $id without measuring or registering 
     expect(field[1].toUpperCase()).toBe(entry.view.tag);
     expect(field[0]).not.toContain('--select-input-width');
     expect(body).toContain('data-input-responsive-bound="false"');
-    // Native сохраняет существующий SSR shell с четырьмя hidden measuring tags;
-    // Source Overflow создаёт их после client layout. Responsive выбор проверяет browser.
+    // Native keeps the existing SSR shell with four hidden measurement tags. Upstream Overflow
+    // creates them after client layout. The browser checks responsive selection.
     expect([...body.matchAll(/data-input-responsive-tag="/g)]).toHaveLength(4);
     expect(entry.view.renderedTags).toBe(0);
     expect(entry.view.query).toBe('');

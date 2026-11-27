@@ -45,7 +45,7 @@ function record(value: unknown): Dictionary {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Dictionary;
 }
-// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
+// Confirms the shape of the array, leaving its elements unknown until a separate inspection.
 function array(value: unknown): unknown[] {
   assert(Array.isArray(value));
   return value;
@@ -53,7 +53,7 @@ function array(value: unknown): unknown[] {
 function property(graph: unknown, key: string) {
   return array(rawRoot(graph).properties).map(record).find(row => row.key === key)?.value;
 }
-// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
+// Looking for an attribute by name. The missing attribute remains null to compare images.
 function attribute(node: Pick<DatePickerPresetNode, 'attributes'> | null, name: string) {
   return node?.attributes.find(([key]) => key === name)?.[1] ?? null;
 }
@@ -73,7 +73,7 @@ function dateSnapshot(value: DatePickerPresetValue) {
   assert.equal(value.temporal.valid, true);
   assert(Number.isFinite(value.temporal.epoch));
   assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
-  // JSON пишет -0 как 0; оба значения обозначают тот же UTC-offset.
+  // JSON writes -0 as 0; both values denote the same UTC-offset.
   assert(value.temporal.utcOffset === 0);
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(rawRoot(value.raw).id, value.identity);
@@ -375,7 +375,7 @@ export function verifyDatePickerPresetsValidationOrder(
   assert.equal(sample.id, 'static-validity');
   assert.deepEqual(validationOrder(native, sample), validationOrder(source, sample));
 }
-/** Полные raw остаются отдельно; здесь проверяются измеренные callbacks, данные и видимые presets. */
+/** The full raw remain separate; measured callbacks, data and visible presets are checked here. */
 export function verifyDatePickerPresetsPoint(
   native: DatePickerPresetPoint,
   source: DatePickerPresetPoint,
@@ -399,7 +399,7 @@ export function verifyDatePickerPresetsPoint(
     hasClass(sourceParent, prefix + '-input-placeholder'));
   const invalid = attribute(native.input, 'aria-invalid');
   const sourceInvalid = attribute(source.input, 'aria-invalid');
-  // Native сохраняет прежний HTML binding: false опускается; Source пишет строку false.
+  // Native preserves the previous HTML binding: false is omitted; Source writes line false.
   assert(invalid === null || invalid === 'true');
   assert(sourceInvalid === 'false' || sourceInvalid === 'true');
   assert.equal(invalid === 'true', sourceInvalid === 'true');
@@ -413,7 +413,7 @@ export function verifyDatePickerPresetsPoint(
     verifyDatePickerPresetsPhysical(native, source, label, renderer);
   }
   else {
-    // Прежний Native popup удаляется; Source сохраняет скрытое дерево rc-trigger.
+    // The previous Native popup is removed; Source preserves hidden tree rc-trigger.
     assert.equal(native.popups.length, 0);
     assert(source.popups.every(popup => !popup.visible));
   }
@@ -431,7 +431,7 @@ function removed(value: Cleanup) {
   assert(value.retained.filter(node => node.owned).every(node => !node.connected));
   assert.deepEqual(value.browserOwnedResourceCounters, counters);
 }
-/** Допускается только фактически измеренный connected blur внутри явного public-unmount интервала. */
+/** Accepts only a measured blur on a connected node within the explicit public-unmount interval. */
 export function verifyDatePickerPresetsDisposal(
   native: DatePickerPresetsDisposal,
   source: Omit<DatePickerPresetsDisposal, 'trace'>,
@@ -464,7 +464,7 @@ export interface DatePickerPresetsRemovalBefore {
   owner: Pick<DatePickerPresetOwner, 'alive' | 'callbackInvocations'>;
 }
 ;
-/** Prefix и фактические поля Native FocusEvent запрещают общий disposal-blur waiver. */
+/** Prefix and the actual fields Native FocusEvent prohibit the general disposal-blur waiver. */
 export function verifyDatePickerPresetsRemovalBlur(
   nativeBefore: DatePickerPresetsRemovalBefore,
   nativeAfter: Pick<DatePickerPresetOwner, 'alive' | 'callbackInvocations'>,

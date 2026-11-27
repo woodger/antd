@@ -10,7 +10,7 @@ if (!target) {
   throw new Error('Missing server-rendered Table sorter');
 }
 
-// Сценарий устанавливает фокус на серверной кнопке до подключения обработчиков.
+// Scenario sets the focus on the server button until handlers are connected.
 target.addEventListener('hydrate-table-sorter', () => {
   const query = new URLSearchParams(location.search);
   if (query.has('column-title')) {

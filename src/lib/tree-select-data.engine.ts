@@ -37,7 +37,7 @@ export function treeSelectChildren<Data extends object>(
   return (children || []) as readonly Data[];
 }
 
-/** Simple mode использует canonical children, независимо от fieldNames, как Source. */
+/** Simple mode uses canonical children, regardless of fieldNames as Source. */
 export function treeSelectData<Data extends object>(
   nodes: readonly Data[],
   mode?: TreeSelectSimpleMode
@@ -54,7 +54,7 @@ export function treeSelectData<Data extends object>(
     const value: unknown = Reflect.get(node, String(id));
     const clone = { ...node, key: Reflect.get(node, 'key') || value };
     const children: unknown = Reflect.get(node, 'children');
-    // Source.push меняет входной children array; Native удерживает собственный shallow copy.
+    // Source.push changes the entrance children array; Native holds its own shallow copy.
     if (Array.isArray(children)) Reflect.set(clone, 'children', [...children]);
     map.set(value, clone);
   }

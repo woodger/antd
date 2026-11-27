@@ -1,21 +1,21 @@
-// Выполняет сценарии прокрутки колонок времени через реальный ввод Playwright.
-// Снимки отличают позицию до жеста, после wheel и после удаления компонента.
+// Performs time column scrolling scenarios through real input Playwright. The pictures distinguish
+// the position before the gesture, after the wheel and after the removal of the component.
 import assert from 'node:assert/strict';
 import type { Locator, Page } from '@playwright/test';
 import type { ScrollAction, ScrollSample } from './date-picker-time-scroll-native-types';
 import { readNativeTimeScroll } from './date-picker-time-scroll-metrics.mjs';
 
-// Снимает метрики в browser realm вместе с идентификаторами колонок.
+// Removes the metrics in browser realm together with column identifiers.
 export const readTimeScroll = (page: Page) => page.evaluate(readNativeTimeScroll);
 
-// Пропускает два кадра и даёт завершиться краткому отложенному scroll.
+// Skips two frames and gives a short delayed scroll.
 export function drainTimeScroll(page: Page) {
   return page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => {
     requestAnimationFrame(() => setTimeout(resolve, 25));
   })));
 }
 
-// Считает состояние устойчивым после четырёх одинаковых повторных снимков.
+// He considers the condition to be stable after four identical repeated shots.
 export async function settleTimeScroll(page: Page) {
   let previous = '';
   let stable = 0;
@@ -32,7 +32,7 @@ export async function settleTimeScroll(page: Page) {
   throw Error('Actual compact Native scroll owner did not settle');
 }
 
-// Настраивает viewport и убирает указатель от колонки до первого измерения.
+// Configures viewport and removes the pointer from the column to the first dimension.
 export async function openTimeScroll(page: Page, sample: ScrollSample) {
   await page.setViewportSize(sample.viewport);
   await page.goto('/date-picker-time-scroll.html?sample=' + encodeURIComponent(sample.id));
@@ -41,7 +41,7 @@ export async function openTimeScroll(page: Page, sample: ScrollSample) {
   await page.mouse.move(1100, 750);
 }
 
-// Отмечает шаг в журнале и отправляет требуемое действие в browser realm.
+// Marks a step in the log and sends the required action to the realm browser.
 export async function actTimeScroll(page: Page, action: ScrollAction, index: number) {
   await page.evaluate(index => window.nativeTimeScroll.setActionIndex(index), index);
   if (action.type === 'input-open') {
@@ -88,7 +88,7 @@ export async function actTimeScroll(page: Page, action: ScrollAction, index: num
   return { before, pointer, observed, afterWheel, pointerLeftTo: { x: 1100, y: 750 } };
 }
 
-// Запоминает исходную позицию и identity колонки перед жестом.
+// Reminds the starting position and identity of the column before the gesture.
 function measureWheelColumn(column: Locator) {
   return column.evaluate(node => ({
     scrollTop: node.scrollTop,
@@ -98,10 +98,10 @@ function measureWheelColumn(column: Locator) {
   }));
 }
 
-// Перехватывает единственное фактическое wheel-событие, включая обе DOM-цели.
+// Intercepts the single actual wheel event across both DOM targets.
 function recordNextWheel(column: Locator) {
   return column.evaluate(node => {
-    // Записывает исходные данные события до удаления одноразового слушателя.
+    // Writes the original event data prior to the removal of a one-time listener.
     node.addEventListener('wheel', event => {
       const wheel = event as WheelEvent;
       if (wheel.target === null || wheel.currentTarget === null) {
@@ -123,7 +123,7 @@ function recordNextWheel(column: Locator) {
   });
 }
 
-// Снимает состояние до unmount, после cleanup и через секунду для проверки поздних эффектов.
+// Removes the status to unmount, after cleanup and after a second to check late effects.
 export async function disposeTimeScroll(page: Page) {
   const trace: string[] = [];
   const beforeUnmount = await readTimeScroll(page);

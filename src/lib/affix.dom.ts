@@ -1,5 +1,5 @@
-// Измеряет placeholder и scroll target Affix. Лёгкое обновление позиции и полное измерение
-// размеров планируются раздельно.
+// Measures Affix's placeholder and scroll target. Position updates and full size measurements are
+// scheduled separately.
 import { affixPosition } from './affix.engine';
 import type { AffixPosition, AffixProps, AffixTarget } from './affix.types';
 
@@ -18,7 +18,7 @@ const events = [
   'load'
 ] as const;
 
-// Владеет наблюдателями DOM и публикует изменение affixed и новую геометрию.
+// Owns the DOM observers and publishes affixed changes and new geometry.
 export function createAffixRuntime(
   root: HTMLElement,
   content: HTMLElement,
@@ -28,7 +28,7 @@ export function createAffixRuntime(
   const view = root.ownerDocument.defaultView!;
   let active = true;
   let options: AffixRuntimeOptions = {
-    // Первое измерение использует окно документа, пока владелец не задал target.
+    // The initial measurement uses the document's window until the owner supplies a target.
     target: () => view
   };
   let listenedTarget: AffixTarget | null = null;
@@ -37,7 +37,7 @@ export function createAffixRuntime(
   let lazyFrame: number | undefined;
   const observed = new Map<Element, readonly (number | undefined)[]>();
 
-  // Переносит слушатели на новый target перед следующим измерением.
+  // Moves listeners to the new target before the next measurement.
   function syncTarget() {
     const getTarget = options.target;
     const target = getTarget();
@@ -51,7 +51,7 @@ export function createAffixRuntime(
     return target;
   }
 
-  // Сверяет позицию и уведомляет о смене affixed до записи актуальной геометрии.
+  // Compares position and reports affixed changes before writing the current geometry.
   function measure(force: boolean) {
     if (!active) {
       return;
@@ -102,7 +102,7 @@ export function createAffixRuntime(
     notify(next);
   }
 
-  // Планирует один полный проход измерения на ближайшем кадре.
+  // Schedules one full measurement pass on the next frame.
   function updatePosition() {
     if (!active || forceFrame !== undefined) {
       return;
@@ -112,7 +112,7 @@ export function createAffixRuntime(
       measure(true);
     });
   }
-  // Реагирует на scroll без публикации тех же краёв и offset.
+  // Handles scrolling without publishing unchanged edges and offset.
   function lazyUpdate() {
     if (!active || lazyFrame !== undefined) {
       return;
@@ -122,7 +122,7 @@ export function createAffixRuntime(
       measure(false);
     });
   }
-  // Отменяет отложенное принудительное измерение.
+  // Cancels the queued forced measurement.
   function cancel() {
     if (forceFrame !== undefined)
       view.cancelAnimationFrame(forceFrame);
@@ -146,11 +146,11 @@ export function createAffixRuntime(
         changed = true;
       }
     }
-    // Rc ResizeObserver дедуплицирует floor/offset-размеры и откладывает callback в microtask.
+    // Rc ResizeObserver deduplicates floor and offset dimensions and schedules the callback in a microtask.
     if (changed)
       void Promise.resolve().then(updatePosition);
   });
-  // Оставляет ResizeObserver у placeholder и актуальных дочерних элементов.
+  // Keeps ResizeObserver attached to the placeholder and current children.
   function observeChildren() {
     if (!active) {
       return;
@@ -174,7 +174,7 @@ export function createAffixRuntime(
   observeChildren();
 
   return {
-    // Меняет параметры и обновляет target до принудительного измерения.
+    // Updates settings and the target before forcing a measurement.
     configure(next: AffixRuntimeOptions) {
       if (!active) {
         return;
@@ -185,7 +185,7 @@ export function createAffixRuntime(
     },
     updatePosition,
     cancel,
-    // Прерывает оба кадра и отключает слушатели target и наблюдатели.
+    // Cancels both frames and disconnects target listeners and observers.
     destroy() {
       if (!active) {
         return;

@@ -48,7 +48,7 @@ test('Tree refreshes aliased labels when only fieldNames changes on the same dat
 
   await page.getByRole('button', { name: 'Change schema only', exact: true }).click();
 
-  // Source обновляет cache только вместе с treeData. Проверяем корректный публичный counterpart.
+  // Source updates cache only with treeData. We check the correct public counterpart.
   await expect.poll(() => page.evaluate(readTreeFields, 'ant-tree'))
     .toEqual(counterpart.steps[0].result);
   expect(reference.observations[0].steps[0].result.nodes[0].title).toBe('Root');

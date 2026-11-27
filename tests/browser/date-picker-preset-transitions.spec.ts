@@ -46,7 +46,7 @@ for (const sample of datePickerPresetTransitionSamples) {
       contentType: 'application/gzip', body: gzipSync(Buffer.from(JSON.stringify(value, null, 2)))
     });
     let disposalStarted = false;
-    // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+    // Saves the result of spare removal and adds an error to the diagnosis of the test.
     async function attachFallbackDisposal() {
       try {
         const before = await settleDatePickerPresetTransitions(page);
@@ -75,7 +75,7 @@ for (const sample of datePickerPresetTransitionSamples) {
           'action-' + index + '-after-call-complete-raw',
           { action, evidence, afterCall }
         );
-        // afterCall сохраняется целиком; семантически сравниваются установившиеся состояния.
+        // afterCall is preserved entirely; semantically compared established states.
         verifyDatePickerPresetTransitionActionEvidence(evidence, original.actionEvidence);
         actual = await settleDatePickerPresetTransitions(page);
         await attach('action-' + index + '-settled-complete-raw', actual);

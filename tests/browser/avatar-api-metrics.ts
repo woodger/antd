@@ -1,6 +1,6 @@
 export function snapshotAvatarApi(host: HTMLElement, group = false) {
   const root = host.querySelector<HTMLElement>(group ? '.ant-avatar-group' : '.ant-avatar')!;
-  // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
+  // Sorts the selected CSS classes, so that the comparison does not depend on the order of tokens.
   const classes = (node: HTMLElement) => [...node.classList]
     .filter(name => name.startsWith('case-')).sort();
   const metric = (node: HTMLElement) => {

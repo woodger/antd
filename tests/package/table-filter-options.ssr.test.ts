@@ -4,7 +4,7 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableFilterOptionsFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-filter-options-reference.json';
 
-/** Читает ключи серверных строк до монтирования вариантов фильтра. */
+/** Reads server row keys before mounting filter options. */
 function rowKeys(markup: string) {
   return Array.from(markup.matchAll(/<tr\b[^>]*\bdata-row-key="([^"]+)"/g),
     ([, key]) => Number(key));

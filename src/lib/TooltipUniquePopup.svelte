@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Одна native поверхность с общим фоном для подсказок и карточек. Контент монтируется
-  // в контексте выбранного триггера, а смена владельца переподключает только выравнивание.
+  // One native surface supplies a shared background for tooltips and cards. Content mounts in the
+  // selected trigger's context. Changing owners reconnects only alignment.
   import { untrack } from 'svelte';
   import TooltipUniqueContent from './TooltipUniqueContent.svelte';
   import { connectInlineStyle } from './inline-style.dom';
@@ -58,7 +58,7 @@
     view && placement ? `${view.prefix}-placement-${placement}` : undefined
   );
 
-  // После движения возвращает обычную геометрию и разрешает ожидающую смену владельца.
+  // After movement, restores ordinary geometry and allows the queued owner change.
   function settleVisibility(next: boolean) {
     if (next) {
       connection?.align();
@@ -106,7 +106,7 @@
     const next = owner;
     const previous = connectedOwner;
     if (surface && previous && previous !== next) {
-      // Перенос фокуса предшествует удалению snippet предыдущего владельца.
+      // Transfers focus before removing the previous owner's snippet.
       untrack(() => previous.view.onTransfer?.(surface));
     }
   });
@@ -123,8 +123,8 @@
 
     shownOwner = undefined;
     let bounds: DOMRect | undefined;
-    // Правая и нижняя координаты Source рассчитаны для отдельной панели. Общий фон
-    // двигается от левого верхнего угла; caller placements остаются неизменными.
+    // Upstream computes right and bottom coordinates for a separate panel. The shared background
+    // moves from its top-left corner and preserves the caller's placements.
     const placements = $derived(Object.fromEntries(
       Object.entries(selected.placements).map(([key, align]) => [
         key, { ...align, dynamicInset: false }
@@ -226,7 +226,7 @@
   }
 </style>
 
-<!-- svelte-ignore a11y_no_noninteractive_tabindex (Только dialog получает отрицательный tabindex.) -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex (Only the dialog receives a negative tabindex.) -->
 <div bind:this={popup}
   id={view?.id}
   role={view?.kind ?? 'tooltip'}

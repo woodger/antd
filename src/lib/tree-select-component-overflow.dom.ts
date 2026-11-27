@@ -1,7 +1,7 @@
 /** MIT: vendor/LICENSE.rc-overflow, vendor/LICENSE.rc-resize-observer. */
 import { treeSelectComponentOverflow, type TreeSelectComponentOverflowLayout } from './tree-select-component-overflow.engine';
 
-/** Source Overflow: измерение suffix после absolute/shrink-to-fit участвует в следующем проходе. */
+/** Source Overflow uses the suffix measurement after absolute positioning and shrink-to-fit in the next pass. */
 export function connectTreeSelectComponentOverflow(
   host: HTMLElement,
   suffix: HTMLElement,
@@ -38,7 +38,7 @@ export function connectTreeSelectComponentOverflow(
     if (!disposed && !frame) frame = view.requestAnimationFrame(measure);
   }
   function sourceSize(node: HTMLElement) {
-    // rc-resize-observer сохраняет дробный border box, если DOM offset округлил его.
+    // rc-resize-observer retains a fractional border box if the DOM offset rounded it.
     const rect = node.getBoundingClientRect();
     const width = Math.floor(rect.width), height = Math.floor(rect.height);
     const { offsetWidth, offsetHeight } = node;

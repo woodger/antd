@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 const fixture = '/?fixture=table-column-defaults';
 
-/** Читает разметку наследуемых свойств и результат обработки записей. */
+/** Reads the marking of inherited properties and the result of record processing. */
 function snapshot() {
   const root = document.getElementById('table-column-defaults-fixture');
   const table = root?.querySelector('table');
@@ -14,7 +14,7 @@ function snapshot() {
     throw new Error('Missing Table column defaults fixture');
   }
 
-  /** Учитывает только видимый текст. Закрытый фильтр остаётся в DOM Svelte. */
+  /** Takes into account only the visible text. Closed filter remains in DOM Svelte. */
   function cell(node: HTMLTableCellElement) {
     return {
       text: node.innerText.trim(),
@@ -41,7 +41,7 @@ function snapshot() {
   };
 }
 
-/** Выполняет действие из эталонного сценария на нативных controls. */
+/** Performs an action from the reference scenario on native controls. */
 async function act(page: Page, action: string) {
   switch (action) {
     case 'update':
@@ -72,7 +72,7 @@ for (const { profile, states } of source.cases) {
         await act(page, action);
       }
 
-      // Таблица Svelte выводит col для каждого листа, включая явную ширину 0.
+      // Table Svelte displays col for each sheet, including a clear width of 0.
       const cols = profile.id === 'inheritance' ? [...state.cols, '0px'] : state.cols;
       await expect.poll(() => page.evaluate(snapshot), {
         message: `${profile.id} ${action ?? 'initial'}`

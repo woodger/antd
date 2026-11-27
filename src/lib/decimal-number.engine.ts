@@ -1,15 +1,15 @@
-// Числовой fallback MiniDecimal для runtime без BigInt. Сохраняет исходную строку и ограничивает
-// результат безопасным диапазоном.
+// Numeric MiniDecimal fallback for runtimes without BigInt. Retains the original text and limits
+// the result to the safe range.
 import { getNumberPrecision, isEmptyDecimal, numberToString } from './decimal-format.engine';
 import type { DecimalValue, MiniDecimal } from './mini-decimal.engine';
 
-/** Исходный fallback mini-decimal для runtime без BigInt. */
+/** The original mini-decimal fallback for runtimes without BigInt. */
 export class NumberDecimal implements MiniDecimal {
   origin = '';
   number?: number;
   empty?: boolean;
 
-  // Различает пустой ввод и недопустимое число, сохраняя исходный текст непустого значения.
+  // Distinguishes empty input from invalid numbers and retains the original text of nonempty input.
   constructor(value: DecimalValue) {
     if (isEmptyDecimal(value)) {
       this.empty = true;
@@ -20,13 +20,13 @@ export class NumberDecimal implements MiniDecimal {
     this.number = Number(value);
   }
 
-  // Возвращает числовое значение с обратным знаком в новом экземпляре.
+  // Returns a new instance with the opposite sign.
   negate() {
     return new NumberDecimal(-this.toNumber()!);
   }
 
-  // Учитывает точность обоих слагаемых и пределы безопасных чисел. Невалидное слагаемое сохраняет
-  // текущее значение.
+  // Accounts for both addends' precision and the safe number range. An invalid addend leaves the
+  // current value unchanged.
   add(value: DecimalValue): NumberDecimal {
     if (this.isInvalidate()) {
       return new NumberDecimal(value);
@@ -50,37 +50,37 @@ export class NumberDecimal implements MiniDecimal {
     return new NumberDecimal(number.toFixed(precision));
   }
 
-  // Показывает отдельно состояние пустого ввода.
+  // Exposes empty input as a separate state.
   isEmpty() {
     return this.empty;
   }
 
-  // Распознаёт невалидное число, сохраняя отдельное состояние пустой строки.
+  // Identifies invalid numbers while keeping empty strings distinct.
   isNaN() {
     return Number.isNaN(this.number);
   }
 
-  // Проверяет, допустимо ли использовать экземпляр в числовой операции.
+  // Checks whether the instance can be used in an arithmetic operation.
   isInvalidate() {
     return this.isEmpty() || this.isNaN();
   }
 
-  // Сравнивает числовые представления без приведения разных типов.
+  // Compares numeric representations without coercing different types.
   equals(target: MiniDecimal | null | undefined) {
     return this.toNumber() === target?.toNumber();
   }
 
-  // Сравнивает знак разности с тем же округлением, что и add.
+  // Compares the sign of the difference using the same rounding as add.
   lessEquals(target: MiniDecimal) {
     return this.add(target.negate().toString()).toNumber()! <= 0;
   }
 
-  // Возвращает сохранённое число или undefined для пустого ввода.
+  // Returns the stored number or undefined for empty input.
   toNumber() {
     return this.number;
   }
 
-  // В raw-режиме сохраняет пользовательское представление, в safe-режиме нормализует число.
+  // Raw mode retains the user's representation, while safe mode normalizes the number.
   toString(safe = true) {
     if (!safe) {
       return this.origin;

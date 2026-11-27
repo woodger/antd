@@ -129,7 +129,7 @@
   }, { producer: 'disabledTime' });
   const shared = $derived({ open, format: formats[formatProfile], style: 'width:100%', disabledDate,
     onChange, onCalendarChange, onPickerValueChange, onPanelChange, onOpenChange, onOk, onClear });
-  // Объект format передаётся через публичный prop без подмены строкой.
+  // The format object is transmitted through a public prop without being replaced by a string.
   const dateProps = $derived({ ...shared, picker: 'date', value: model as Dayjs | null,
     defaultPickerValue: initialPanel as Dayjs, id: 'mask-input',
     ...(sample.family === 'datetime' ? { showTime: clock, disabledTime } : {}) } satisfies DatePickerProps);

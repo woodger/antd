@@ -104,7 +104,7 @@ test('Pagination keeps simple input drafts when unrelated paging props change', 
   await control(page, 'Pager mode').selectOption('simple');
   await simple(page).fill('9');
 
-  // Внешнее обновление не должно подтверждать draft через blur.
+  // An external update should not be validated through blur.
   await control(page, 'Owner page size').evaluate(node => {
     (node as HTMLInputElement).value = '20';
     node.dispatchEvent(new Event('input', { bubbles: true }));

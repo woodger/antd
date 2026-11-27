@@ -17,7 +17,7 @@ interface DialogContainerOptions {
   onPointerCancel?: () => void;
 }
 
-/** Первый перенос сохраняет SSR DOM; последующая смена target пересоздаёт panel, как portal. */
+/** The first move preserves the SSR DOM. Later target changes recreate the panel like a portal. */
 export function createDialogContainer(getOptions: () => DialogContainerOptions) {
   const config = useConfig();
   let target = $state.raw<Element | DocumentFragment | false>();
@@ -40,7 +40,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       return;
     }
 
-    // Цель может монтироваться в том же DOM-обновлении, что и open.
+    // The target may mount in the same DOM update as open.
     const choice = options.getContainer;
     let next: Element | DocumentFragment | false | undefined;
     if (choice === undefined) {
@@ -83,12 +83,12 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       let explicitPortal: (() => void) | undefined;
       const staticHost = origin.closest<HTMLElement>('[data-ant-modal-static-host]');
 
-      /** Подключает CSS-контекст после переноса, чтобы ранний panelRef оставался отсоединённым. */
+      /** Attaches the CSS context after moving the panel, so an early panelRef still points to a detached node. */
       function connectStaticOrigin() {
         if (staticHost && !staticHost.isConnected) document.body.append(staticHost);
       }
 
-      /** Переносит тот же DOM и оставляет владельцу его inline CSS variables. */
+      /** Moves the existing DOM while retaining the owner's inline CSS variables. */
       function attachPortal(destination: Element | DocumentFragment) {
         const current = connectPopupPortal(node, {
           getPopupContainer: () => destination,
@@ -96,7 +96,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
           marker,
           autoLock: false,
           prepareOrigin: staticHost ? connectStaticOrigin : undefined,
-          // Cleanup старого keyed panel не возвращает удаляемый DOM в исходную ветку.
+          // Cleanup of the old keyed panel leaves the DOM being removed out of the original branch.
           get restoreOnDestroy() { return node.isConnected && nodeRevision === currentRevision; },
           get preserveVariables() {
             const style = document.createElement('span').style;
@@ -121,7 +121,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       else if (container === undefined) {
         $effect(() => {
           if (portalByDefault) {
-            // Ближайший dialog удерживает вложенную панель в своём focus scope.
+            // The nearest dialog keeps a nested panel within its own focus scope.
             const destination = origin.closest('dialog') ?? document.body;
             return untrack(() => attachPortal(destination));
           }
@@ -133,9 +133,9 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
 
       function sync() {
         const nonce = config.csp?.nonce;
-        // Скрытый статический корень нужен для CSSOM. Показывать диалог можно после переноса.
+        // The hidden static root is required for CSSOM. The dialog can appear after it is moved.
         connected = node.isConnected && !node.closest('[data-ant-modal-static-host]');
-        // :has() в document не видит modal внутри ShadowRoot; модальность остаётся нативной.
+        // Document :has() cannot see a modal in a ShadowRoot. Native modality still applies.
         const shadowModal = node.isConnected && node.open
           && !node.hasAttribute('data-ant-dialog-unlocked')
           && node.getRootNode() instanceof ShadowRoot;
@@ -144,7 +144,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
           if (nonce !== undefined) next.nonce = nonce;
           next.dataset.antDialogLock = '';
           next.textContent = 'html { overflow: hidden; }';
-          // Политика проверяется при вставке нового style с действующим nonce.
+          // The policy is checked when a new style element is inserted with the current nonce.
           if (lock) {
             lock.replaceWith(next);
           }
@@ -164,15 +164,15 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
         attributes: true,
         attributeFilter: ['open', 'data-ant-dialog-unlocked']
       });
-      // Контейнер может быть временно отключён или быть DocumentFragment до вставки владельцем.
+      // The container may be temporarily detached or may be a DocumentFragment pending insertion by the owner.
       if (container) observer.observe(document, { childList: true, subtree: true });
       sync();
       $effect(sync);
-      // Child handlers выполняются внутри shadow boundary с исходными native event targets.
+      // Child handlers run inside the shadow boundary with the original native event targets.
       const listeners = [
         'click', 'keydown', 'keyup', 'focusin', 'focusout'
       ].map(type => on(node, type, () => {}));
-      // Root handler тоже должен получить native target до retargeting на ShadowRoot host.
+      // The root handler also needs the native target before retargeting to the ShadowRoot host.
       listeners.push(
         on(node, 'pointerdown', event => getOptions().onPointerDown?.(event)),
         on(node, 'pointerup', event => getOptions().onPointerUp?.(event)),

@@ -32,37 +32,37 @@ export const weekBoundaries = Object.freeze({
 });
 const authoredNames: WeekAuthoredDateName[] = ['initialStart', 'initialEnd', 'minDate',
   'maxDate', 'presetA', 'presetB', 'witnessStart', 'witnessEnd'];
-// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
+// Narrows an unknown value before the recording. null and arrays result in a verification error.
 const object = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
-// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
+// Confirms the shape of the array, leaving its elements unknown until a separate inspection.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;
 };
-// Читает собственные свойства сериализованного объекта и проверяет форму каждой строки.
+// Reads its own properties of a serialized object and checks the shape of each line.
 const properties = (value: unknown) => array(object(value).properties).map(object);
-// Извлекает значение по имени свойства. Отсутствующая запись считается неполным снимком.
+// Extends meaning by name properties. The missing entry is considered an incomplete picture.
 const property = (value: unknown, key: string) => {
   const row = properties(value).find(row => row.key === key);
   assert(row, 'Complete observed property ' + key);
   return row.value;
 };
-// Ищет исходный объект по идентификатору. Ссылка без объекта прерывает проверку снимка.
+// Seeks the source object by identifier. The no-object link interrupts the image check.
 const rawNode = (graph: unknown, ref: unknown) => {
   const node = array(object(graph).objects).map(object).find(node => node.id === ref);
   assert(node, 'Actual raw node binding');
   return node;
 };
-// Проходит путь от корня сериализованного графа, разрешая ссылки на каждом шаге.
+// Goes from the root of the serialized graph, allowing links at every step.
 function rawAt(graph: unknown, path: Array<string | number>) {
   let value: unknown = object(graph).root;
   for (const key of path) value = property(rawNode(graph, object(value).ref), String(key));
   return value;
 }
-// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
+// Looking for an attribute by name. The missing attribute remains null to compare images.
 const attr = (surface: WeekSourceSurface, name: string) =>
   surface.attributes.find(row => row[0] === name)?.[1] ?? null;
 
@@ -92,8 +92,8 @@ export function createWeekProof() {
     variants: new Map<WeekSourceVariant, IdentityProof>(), points: 0,
     boundaries: weekBoundaries, observations: [] as unknown[] };
 }
-// Проверяет соответствие identity в обе стороны, исключая слияние разных объектов в одной паре
-// снимков.
+// Checks the correspondence in both directions, excluding the merging of different objects in one
+// pair of shots.
 function bindIdentity(
   actual: number,
   source: number,
@@ -131,7 +131,7 @@ function sameDate(
   for (const key of ['valid', 'epoch', 'iso', 'fields', 'locale'] as const) {
     assert.deepEqual(actual.temporal[key], source.temporal[key], 'Complete Dayjs ' + key);
   }
-  // JSON сохраняет 0 вместо переданного напрямую числового -0; остальные поля строги.
+  // JSON preserves 0 instead of the directly transmitted numerical -0; the remaining fields are strict.
   assert.equal(actual.temporal.utcOffset === source.temporal.utcOffset, true);
   assert.deepEqual(actual.sameAsAuthored, source.sameAsAuthored);
   assert.deepEqual(actual.encoded, source.encoded);

@@ -1,4 +1,4 @@
-// Монтирует публичный Mentions вместе со стилями собранного пакета.
+// Mounts public Mentions together with the styles of the assembled package.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import Fixture from './MentionsKeyboardFixture.svelte';

@@ -69,7 +69,7 @@ describe('Ant Design 6.6.8 official UMD ConfigProvider/useToken conformance', ()
 
       const result = createDesignTokenState(merged);
 
-      // Cache key зависит от состава токенов; после удаления полей сверяются текущие значения.
+      // Cache key depends on the composition of the tokens; after removing the fields, the current values are checked.
       const { _tokenKey, ...token } = result.token;
 
       expect(token).toStrictEqual(sample.token);

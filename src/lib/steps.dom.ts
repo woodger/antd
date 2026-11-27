@@ -73,7 +73,7 @@ export function connectStepsFocus(root: HTMLElement) {
       attributeFilter: ['disabled', 'inert', 'hidden', 'class', 'style']
     }
   );
-  // Общий механизм отвечает за unmount; observer выше сначала восстанавливает соседний шаг.
+  // The overall mechanism is responsible for the unmount observer; the above first restores the neighboring step.
   const disconnect = connectFeedbackFocus(root);
   return () => {
     observer.disconnect();

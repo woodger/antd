@@ -20,8 +20,8 @@ export function mergeTreeSelectComponentAttributes<Attributes extends object>(
       }
     });
   }
-  // React снимает delegated callbacks до удаления focused DOM. Svelte может
-  // доставить blur уже отсоединённому элементу во время удаления snippet.
+  // React removes the delegated callbacks until you delete the focused DOM. Svelte can deliver a
+  // blur to an already disconnected element during snippet removal.
   for (const [key, callback] of Object.entries(target)) {
     if (!key.startsWith('on') || typeof callback !== 'function') continue;
     Reflect.set(target, key, (...args: unknown[]) => {
@@ -36,7 +36,7 @@ export function mergeTreeSelectComponentAttributes<Attributes extends object>(
   return target;
 }
 
-/** Собственный slot handler уже мог отменить событие; Native hook отменяет отдельно. */
+/** Own slot handler could already cancel the event; Native hook cancels separately. */
 export function treeSelectNativeKeyCancelled<EventType extends Event>(
   event: EventType,
   callback: ((event: EventType) => void) | null | undefined

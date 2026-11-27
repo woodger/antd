@@ -1,8 +1,8 @@
-// Рассчитывает видимые теги по ширине или заданному количеству. Остальные записи используются
-// render-подсказкой.
+// Calculates visible tags by width or specified quantity. The rest of the records are used by the
+// render prompt.
 import type { SelectOmittedTag } from './select.types';
 
-/** Rest не занимает место, когда все tags уже помещаются. */
+/** Rest doesn't rank when all tags are already placed. */
 export function getResponsiveTagCount(widths: readonly number[], available: number, rest: number) {
   if (widths.reduce((sum, width) => sum + width, 0) <= available) {
     return widths.length;
@@ -18,7 +18,7 @@ export function getResponsiveTagCount(widths: readonly number[], available: numb
   return widths.length;
 }
 
-/** Source numeric slice сохраняет порядок. NaN не должен скрывать весь выбранный список. */
+/** Source numeric slice keeps order. NaN must not hide the entire selected list. */
 export function getSelectTagOverflow<Value extends string | number, Label = string>(
   tags: readonly { value: Value; label: Label; disabled?: boolean; title?: unknown }[],
   maxCount?: number

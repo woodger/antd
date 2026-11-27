@@ -1,6 +1,6 @@
 import template from './vendor/badge-prefix.css.js';
 
-/** Badge selectors локальны; ScrollNumber следует общему prefix, icon selectors сохраняются. */
+/** Badge selectors are local. ScrollNumber follows the shared prefix, and icon selectors stay the same. */
 export function getBadgePrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-badge' && rootPrefix === 'ant') {
     return undefined;

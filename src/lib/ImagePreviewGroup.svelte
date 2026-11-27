@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Регистрирует изображения и связывает индекс viewer с актуальным списком группы. События
-  // выбора относятся к одному владельцу.
+  // Registers images and ties the viewer index to the group's current list. Selection events go to
+  // the same owner.
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { getImagePrefixCss } from './image-prefix.engine';

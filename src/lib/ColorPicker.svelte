@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Управляет значением цвета, форматом и открытием панели. Изменение при вводе и завершение
-  // выбора имеют отдельные события.
+  // Manages the color value, format, and panel visibility. Editing and completing a selection emit
+  // separate events.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -155,7 +155,7 @@
   $effect.pre(() => {
     const getter = containerGetter;
     const source = anchor;
-    // Одинаковый DOM-контейнер не требует переподключать portal при смене функции.
+    // A new getter for the same DOM container does not require reconnecting the portal.
     portalTarget = rendered && source ? getter?.(source) : undefined;
   });
   $effect(() => { innerMode = color.isGradient() ? 'gradient' : 'single'; });
@@ -403,7 +403,7 @@
           {:else if color.isGradient()}
             {#each color.getColors() as stop, index}
               <span class={[`${prefixCls}-trigger-text-cell`, open && activeIndex !== index
-                && `${prefixCls}-trigger-text-cell-inactive`]}><!-- Раздельные text nodes сохраняют дробную ширину React-подписи. -->{#each [stop.color.toRgbString(), ' ', stop.percent, '%'] as part}{part}{/each}</span>
+                && `${prefixCls}-trigger-text-cell-inactive`]}><!-- Separate text nodes preserve the fractional width of the React label. -->{#each [stop.color.toRgbString(), ' ', stop.percent, '%'] as part}{part}{/each}</span>
             {/each}
           {:else}{getColorText(color, format)}{/if}
         </span>

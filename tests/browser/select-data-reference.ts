@@ -50,7 +50,7 @@ function guard(condition: unknown, message: string): asserts condition {
 function load(filename: string, sha256: string, ids: string[], diagnostics: unknown[]) {
   const bytes = readReferenceBytes(filename);
   guard(createHash('sha256').update(bytes).digest('hex') === sha256, `${filename} SHA256`);
-  // Полный raw57MB читается без вывода TypeScript-типа огромного JSON literal.
+  // The full raw57MB is read without the output TypeScript-type huge JSON literal.
   const reference = JSON.parse(bytes.toString('utf8')) as SourceReference;
   guard(
     reference.reference.version === '6.6.8' && reference.reference.react === '18.3.1',
@@ -158,7 +158,7 @@ guard(cacheCounterpart.steps[3].view.selected[0]?.disabled === true
   && isDeepStrictEqual(cacheCounterpart.steps[4].view.model, cacheCounterpart.steps[3].view.model),
   'actual cache owner disabled selection retained without callback filtering');
 
-/** Согласованные Native contracts используют целые actual public Source counterparts. */
+/** Agreed Native contracts use whole actual public source counterparts. */
 export function selectDataNativeCase(entry: SelectDataSourceCase) {
   return entry.id === cacheCounterpart.id ? cacheCounterpart
     : entry.id === labelCounterpart.id ? labelCounterpart : entry;

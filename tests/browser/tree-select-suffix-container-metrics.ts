@@ -9,9 +9,9 @@ export interface TreeSelectSuffixContainerSnapshot {
   popupParentIsHost: boolean;
 }
 
-// Source raw DOMRect observations и Native DOM проходят одну относительную проекцию.
+// Source raw DOMRect observations and Native DOM pass one relative projection.
 export function projectTreeSelectSuffixContainer(snapshot: TreeSelectSuffixContainerSnapshot) {
-  // Округляет дробное измерение до тысячных для сравнения снимков.
+  // Rounds the fractional dimension to the thousandth for comparing images.
   const round = (value: number) => Math.round(value * 1000) / 1000;
   const relative = (node: PositionedBox) => ({
     x: round(node.rect.left - snapshot.host.rect.left),
@@ -37,7 +37,7 @@ export function readTreeSelectSuffixContainer(): TreeSelectSuffixContainerSnapsh
   const root = host.querySelector<HTMLElement>('.ant-select')!;
   const popup = document.querySelector<HTMLElement>('.ant-tree-select-dropdown');
   const scroller = document.querySelector<HTMLElement>('[data-suffix-container-scroller],[data-source-scroller]')!;
-  // Сохраняет измеренный box в простых числах для передачи из browser realm.
+  // Saves the measured box in prime numbers to transmit from browser realm.
   const rect = (node: HTMLElement) => {
     const box = node.getBoundingClientRect();
     return { left: box.left, top: box.top };

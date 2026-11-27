@@ -13,7 +13,7 @@ export function readFormFeedbackControl() {
   const custom = icon?.querySelector<HTMLElement>('[data-feedback-info]');
   const svg = icon?.querySelector('svg');
   const css = icon ? getComputedStyle(icon) : undefined;
-  // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
+  // Sorts the selected CSS classes, so that the comparison does not depend on the order of tokens.
   const classes = (node: Element, start: string) => [...node.classList].filter(name => name.startsWith(start)).map(name => name.slice(start.length)).sort();
   return {
     root: classes(root, prefix+'-').filter(name => name.startsWith('status-') || ['has-feedback', 'in-form-item',

@@ -125,7 +125,7 @@
     if (!badgeState.hidden) cached = current;
   });
 
-  // Новый API следует source layout; прежние числовые DOM/spacing сохраняются.
+  // The new API follows the upstream layout and preserves the previous numeric DOM structure and spacing.
   let sourceCount = $derived(typeof count === 'string' || typeof count === 'boolean'
     || Boolean(customCount || config.badge || classNames || styles || rootClassName)
     || color !== undefined && !isPreset || sourceOffset
@@ -217,7 +217,7 @@
     color: inherit;
     font-size: inherit;
   }
-  /* Прежний numeric offset меняется сразу; анимируются только разряды. */
+  /* The existing numeric offset changes immediately. Only the digits animate. */
   .ant-badge:not(.ant-badge-source-count) .ant-scroll-number { transition: none; }
   .ant-badge-description:where([data-ant-badge-description]) {
     position: absolute;

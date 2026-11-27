@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Сравнивает заголовки листьев и групп с эталоном по публичным аргументам snippet.
+  // Compares the headings of the leaves and groups with the benchmark on the public arguments snippet.
   import {
     ConfigProvider, enUS, Table, type TableChange, type TableColumn, type TableColumnTitleProps,
     type TableSorterTooltipProps
@@ -28,12 +28,12 @@
       : false
   );
 
-  /** Помечает ячейку для проверки текущего title и aria-sort. */
+  /** Marks the cell for checking the current title and aria-sort. */
   function heading(column: TableColumn<Row>) {
     return { 'data-observed-header': column.key };
   }
 
-  /** Задаёт колонки с теми же значениями сортировок и фильтров, что в эталоне. */
+  /** Specifies columns with the same marks of sorts and filters as in the benchmark. */
   function makeColumns(profile: string, controlled: boolean): TableColumn<Row>[] {
     const score: TableColumn<Row> = {
       key: 'score', dataIndex: 'score', title: scoreTitle, onHeaderCell: heading
@@ -98,13 +98,13 @@
     return [score, rank];
   }
 
-  /** Показывает текущий порядок критериев без записи в состояние таблицы. */
+  /** Shows the current order of the criteria without writing to the state of the table. */
   function describeTitle(info: TableColumnTitleProps<Row>) {
     const sortColumns = info.sortColumns.map(({ column, order }) => ({ key: column.key, order }));
     return JSON.stringify({ sortColumns, filters: info.filters });
   }
 
-  /** Отделяет запрос владельцу из события от контекста применённой сортировки. */
+  /** Separates the query to the owner from the event from the context of the sorting applied. */
   function noteChange(change: TableChange<Row>) {
     const sorters = change.sorters ?? (change.sorter ? [change.sorter] : []);
     const sorted = sorters.map(({ columnKey, order }) => ({ key: columnKey, order }));

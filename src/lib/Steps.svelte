@@ -102,7 +102,7 @@
       }
     }
   );
-  // Source InternalContext Timeline исключает Steps semantics, сохраняя plain root style/class.
+  // Timeline's upstream InternalContext removes Steps semantics while retaining plain root style and class.
   let componentConfig = $derived(composition?.timeline
     ? { style: config.steps?.style } : config.steps);
   let semantic = $derived(mergeComponentSemantics<keyof StepsSemanticSlots, StepsProps>(

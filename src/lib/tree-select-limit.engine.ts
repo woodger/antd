@@ -1,13 +1,13 @@
-// Вычисляет maxCount и недоступность вариантов для текущей стратегии TreeSelect. Отображаемые
-// теги и checked могут иметь разный размер.
-// Ant Design 6.6.8 / rc-tree-select 1.16.1; MIT, vendor/LICENSE.rc-tree-select.
+// Calculates maxCount and unavailability of options for current strategy TreeSelect. Displayed tags
+// and checked can be of varying sizes. Ant Design 6.6.8 / rc-tree-select 1.16.1; MIT,
+// vendor/LICENSE.rc-tree-select.
 import type { TreeSelectIndex } from './tree-select.engine';
 import type { TreeSelectProps, TreeSelectRawValue } from './tree-select.types';
 
 type LimitConfig = Pick<TreeSelectProps,
   'maxCount' | 'multiple' | 'treeCheckable' | 'treeCheckStrictly' | 'showCheckedStrategy'>;
 
-/** Ограничения панели не меняют raw disabled/state данных и не участвуют в conduction. */
+/** Panel restrictions do not change raw disabled/state data and are not involved in conduction. */
 export function treeSelectLimit(
   config: LimitConfig,
   index: TreeSelectIndex<object>,
@@ -17,7 +17,7 @@ export function treeSelectLimit(
   const strict = Boolean(config.treeCheckStrictly);
   const multiple = Boolean(config.multiple || config.treeCheckable || strict);
   const strategy = !config.treeCheckable ? 'SHOW_ALL' : config.showCheckedStrategy ?? 'SHOW_CHILD';
-  // Ant wrapper фильтрует configured strategy до defaults rc-tree-select.
+  // Ant wrapper filters the configured strategy to defaults rc-tree-select.
   const maxCount = !multiple || config.maxCount
     && (config.showCheckedStrategy === 'SHOW_PARENT'
       || config.showCheckedStrategy === 'SHOW_ALL' && !strict)

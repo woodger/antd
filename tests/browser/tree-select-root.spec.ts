@@ -12,9 +12,9 @@ function nativeRootView<View extends { events: readonly unknown[][] }>(
   if (id !== 'composite-unmount' || action !== 'unmount') {
     return view;
   }
-  // React снимает synthetic callbacks до удаления DOM. Chromium доставляет
-  // Native focusout ещё подключённому input, до cleanup регистрации.
-  // Эта граница Svelte DOM отражена отдельно; raw Source остаётся неизменным.
+  // React removes callbacks until DOM is removed. Chromium delivers Native focusout still connected
+  // input, before cleanup registration. This boundary of Svelte DOM is reflected separately; the
+  // raw Source remains unchanged.
   return { ...view, events: [...view.events,
     ['generated:blur', 'INPUT', false, 'INPUT', null],
     ['own:blur', 'INPUT', false, 'INPUT', null]
@@ -60,7 +60,7 @@ async function apply(page: Page, action: TreeSelectRootAction) {
     const key = action === 'enter' || action === 'child-enter' ? 'Enter' : action === 'space' ? 'Space' : 'ArrowDown';
     await (action === 'child-enter' ? child : field).focus();
     await page.keyboard.down(key);
-    // Как в независимом Source trace: отложенное закрытие завершается до keyup.
+    // As in the independent Source trace: the delayed closure is completed before the keyup.
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     await page.keyboard.up(key);
   }

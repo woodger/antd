@@ -34,7 +34,7 @@ test('Form resetFields matches source exact metadata, remounts, scratch state an
       const actual = JSON.parse((await page.getByRole('status', {
         name: 'Reset fields snapshot', exact: true
       }).textContent())!);
-      // Счётчики снятых строк остаются в истории; source публикует только видимые controls.
+      // Counters of removed strings remain in history; source publishes only visible numbers.
       return { ...actual, mounts: Object.fromEntries(
         Object.keys(controls).map((tag) => [tag, actual.mounts[tag]])
       ) };
@@ -49,7 +49,7 @@ test('Form resetFields matches source exact metadata, remounts, scratch state an
     for (const [tag, control] of Object.entries(controls)) {
       const input = page.locator(`[data-reset-main="${tag}"]`);
       const stale = reference.observations.find((entry) => entry.case === id && entry.tag === tag);
-      // Source оставляет stale input после сброса родителя; здесь видимое значение должно совпасть со store.
+      // Source leaves stale input after resetting the parent; here the visible value should coincide with the store.
       await expect(input, id).toHaveValue(stale ? String(stale.store ?? '') : control.value);
       await expect(page.locator(`[data-reset-local="${tag}"]`), id).toHaveValue(control.local);
       if (control.retained !== null) {

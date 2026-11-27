@@ -8,14 +8,14 @@ export function mergeSelectComponentAttributes<Attributes extends object>(
   own: object | undefined,
   slot: 'root' | 'input'
 ): Attributes {
-  // cloneElement сохраняет позиции own keys и затем заменяет их значения.
+  // cloneElement preserves the own keys and then replaces their values.
   if (slot === 'input') Object.assign(target, own);
   return mergeTreeSelectComponentAttributes(target, generated, own, slot);
 }
 
 type ComponentRegistration = SelectRootRegistration<HTMLElement> | SelectInputRegistration<HTMLElement>;
 
-/** Composite без focus не перенаправляет публичный вызов на nativeElement. */
+/** Composite without focus does not redirect the public call to nativeElement. */
 export function focusSelectComponent(
   registration: ComponentRegistration | null | undefined,
   ...args: [options?: FocusOptions]
@@ -27,7 +27,7 @@ export function blurSelectComponent(registration: ComponentRegistration | null |
   registration?.blur?.();
 }
 
-/** DOM определяется структурно: helper не обращается к browser globals при SSR. */
+/** DOM is determined structurally: helper does not address browser globals at SSR. */
 export function selectComponentNativeElement<Element extends HTMLElement>(
   registration: Element | { nativeElement: Element } | null | undefined
 ): Element | undefined {
@@ -37,7 +37,7 @@ export function selectComponentNativeElement<Element extends HTMLElement>(
   return 'nodeType' in registration ? registration : registration.nativeElement;
 }
 
-/** Физический editor отделён от ref, на котором вызываются focus/blur. */
+/** The physical editor is separated from the ref on which focus/blur is caused. */
 export function selectComponentInputElement<Editor extends HTMLElement = HTMLInputElement | HTMLTextAreaElement>(
   registration: HTMLElement | { nativeElement: HTMLElement; inputElement?: Editor } | null | undefined
 ): Editor | undefined {

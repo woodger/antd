@@ -122,7 +122,7 @@ test('FormErrorList cancels a pending hide callback when unmounted', async ({ pa
   await expect(callbacks).toHaveText('[true]');
   await page.clock.install();
 
-  // Обычный click ждёт остановки кнопки под сворачивающимся списком и пропускает leave.
+  // The usual click is waiting to stop the button under the folding list and skips leave.
   await page.getByRole('button', { name: 'Toggle error list', exact: true }).evaluate((button) => {
     const holder = document.querySelector<HTMLElement>('[data-ant-form-error-list]')!;
     const fixture = document.getElementById('form-error-list-fixture')!;

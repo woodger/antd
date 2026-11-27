@@ -9,7 +9,7 @@ const branch = (page: Page) => menu(page).getByRole('menuitem', { name: 'Branch'
 const samplePicker = (page: Page) =>
   page.getByRole('combobox', { name: 'Popup render sample', exact: true });
 
-// Обновляет controlled openKeys без pointerdown вне открытого подменю.
+// Updates control openKeys without pointerdown outside the open submenu.
 async function setOpen(page: Page, keys: readonly string[]) {
   await page.getByLabel('Popup render open keys', { exact: true }).evaluate(
     (input: HTMLInputElement, value) => {
@@ -20,7 +20,7 @@ async function setOpen(page: Page, keys: readonly string[]) {
   );
 }
 
-// Переключает prop, сохраняя фокус и выделение в popup.
+// Switches the prop by saving the focus and selection in the popup.
 async function setFlag(page: Page, label: string, checked: boolean) {
   await page.getByRole('checkbox', { name: label, exact: true }).evaluate(
     (input: HTMLInputElement, value) => {
@@ -31,7 +31,7 @@ async function setFlag(page: Page, label: string, checked: boolean) {
   );
 }
 
-// Извлекает ограниченный публичный результат в формате исходного замера.
+// Extracts a limited public result in the initial measurement format.
 async function contents(page: Page, visible = true) {
   return shells(page).filter({ visible }).evaluateAll(elements => elements.map(element => ({
     owner: element.getAttribute('data-menu-render-owner'),

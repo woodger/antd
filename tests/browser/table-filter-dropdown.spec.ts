@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 const fixture = '/?fixture=table-filter-dropdown';
 
-/** Снимает содержимое и события по публичной панели, в том числе после переноса в портал. */
+/** Removes the content and events on the public panel, including after transfer to the portal. */
 function snapshot() {
   const root = document.getElementById('table-filter-dropdown-fixture');
   if (!root) {
@@ -42,7 +42,7 @@ function snapshot() {
   };
 }
 
-/** Повторяет действие прогона React через кнопку и содержимое фильтра Svelte. */
+/** Repeats the action of the run React through the button and the contents of the filter Svelte. */
 async function act(page: Page, action: string) {
   const trigger = page.getByRole('button', { name: 'Filter: Score', exact: true });
   if (action === 'trigger') {
@@ -93,7 +93,7 @@ for (const { profile, states } of source.cases) {
         await act(page, action);
       }
 
-      // Сохраняет формат TableChange, который перечисляет активные критерии.
+      // Saves the format TableChange, which lists active criteria.
       const changes = state.changes.map(event => 'filters' in event && event.filters
         ? { ...event, filters: Object.fromEntries(Object.entries(event.filters)
           .filter(([, keys]) => keys?.length)) }

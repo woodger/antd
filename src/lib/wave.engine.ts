@@ -1,6 +1,6 @@
 import type { WaveColorSource } from './wave.types';
 
-/** Список исключений повторяет upstream, включая исходную чувствительность к регистру. */
+/** The list of exceptions repeats the upstream, including the original sensitivity to the register. */
 export function isValidWaveColor(color: unknown): color is string {
   return typeof color === 'string' && !!color
     && color !== '#fff' && color !== '#ffffff'

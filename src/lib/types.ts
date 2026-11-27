@@ -20,21 +20,21 @@ import { qrCodeEnUS, qrCodeRuRU } from './qrcode.locale';
 export type ComponentSize = 'small' | 'medium' | 'large';
 export type Variant = 'outlined' | 'borderless' | 'filled' | 'underlined';
 
-/** Настройки Content Security Policy для стилей, которые создаёт библиотека. */
+/** Content Security Policy settings for the styles that the library creates. */
 export interface CSPConfig {
   nonce?: string;
 }
 
-/** Контейнер popup из ConfigProvider; trigger отсутствует у некоторых потребителей upstream. */
+/** Container popup from ConfigProvider; there is no trigger in some upstream consumers. */
 export type GetPopupContainer = (triggerNode?: HTMLElement) => HTMLElement | ShadowRoot;
 
-/** Область переполнения Select, TreeSelect, Cascader и AutoComplete. */
+/** Overflowing area Select, TreeSelect, Cascader and AutoComplete. */
 export type PopupOverflow = 'viewport' | 'scroll';
 
-/** Scroll target Affix/Anchor; getter вызывается только в браузере. */
+/** Scroll targeted Affix/Anchor; getter is only invoked in the browser. */
 export type GetTargetContainer = () => HTMLElement | Window;
 
-/** Контейнер Modal/Drawer: false оставляет DOM на месте; функция вызывается только в браузере. */
+/** Container Modal/Drawer: false leaves DOM in place; the function is called only in the browser. */
 export type GetContainer = string | Element | DocumentFragment
   | (() => Element | DocumentFragment) | false;
 
@@ -42,27 +42,27 @@ export type RenderEmptyComponent = 'Table' | 'Table.filter' | 'Select'
   | 'TreeSelect' | 'Cascader' | 'Transfer' | 'Mentions';
 export type RenderEmptyContent = string | number | boolean | null | undefined | Snippet
   | readonly RenderEmptyContent[];
-/** Producer callback заменяет ReactNode; falsy использует fallback, Table.filter — только nullish. */
+/** Producer callback replaces ReactNode; falsy uses fallback, Table.filter – only nullish. */
 export type RenderEmptyHandler = (componentName?: RenderEmptyComponent) => RenderEmptyContent;
 
-/** Source tokens/algorithms с наследованием; mode/primary/compact сохраняют native theme API. */
+/** Source tokens/algorithms with inheritance; mode/primary/compact save the native theme API. */
 export interface ThemeConfig extends DesignTokenConfig {
   mode?: 'light' | 'dark';
   primary?: 'blue' | 'purple' | 'green';
-  /** Компактные метрики текста, размеров и отступов; native цвета сохраняются. */
+  /** Compact metrics of text, sizes and indents; native colors are preserved. */
   compact?: boolean;
   /**
-   * Компонентные overrides в GlobalToken; algorithm=true пересчитывает зависимые aliases.
-   * Применение ComponentToken к стилям компонентов пока переносится отдельно.
+   * Component overrides in GlobalToken; algorithm=true recalculates dependent aliases. The
+   * application of ComponentToken to the styles of the components is still transferred separately.
    */
   components?: ComponentsConfig;
-  /** false сбрасывает родительские tokens/algorithm/components; hashed/cssVar/zeroRuntime наследуются. */
+  /** false resets parent tokens/algorithm/components; hashed/cssVar/zeroRuntime inherited. */
   inherit?: boolean;
-  /** По умолчанию true; false возвращает пустой hashId. */
+  /** By default true; false returns blank hashId. */
   hashed?: boolean;
-  /** Prefix по умолчанию ant; key генерируется для каждого provider с локальной theme. */
+  /** Prefix by default ant; key is generated for each provider with local theme. */
   cssVar?: { prefix?: string; key?: string; };
-  /** Компоненты используют опубликованный CSS; настройка наследуется вместе с source theme. */
+  /** Components use published CSS; the setting is inherited together with the source theme. */
   zeroRuntime?: boolean;
 }
 
@@ -74,14 +74,14 @@ export interface Locale {
   colorPicker?: Partial<ColorPickerLocale>;
   ColorPicker?: Partial<ColorPickerLocale>;
   typography?: Partial<TypographyLocale>;
-  /** Исходный alias Ant Design; локальные поля Text перекрывают typography. */
+  /** Initial alias Ant Design; Local Text fields overlap typography. */
   Text?: Partial<TypographyLocale>;
   global?: { show?: string; hide?: string; close?: string; backToTop?: string; };
   tour?: Partial<TourLocale>;
-  /** Исходный alias Ant Design; локальный Tour имеет приоритет над tour. */
+  /** Initial alias Ant Design; the local Tour takes precedence over tour. */
   Tour?: Partial<TourLocale>;
   carousel?: Partial<CarouselLocale>;
-  /** Исходный alias Ant Design; локальный Carousel перекрывает carousel. */
+  /** Initial alias Ant Design; the local Carousel overrides the carousel. */
   Carousel?: Partial<CarouselLocale>;
   image?: { preview?: string; };
   tree?: { expand?: string; collapse?: string; };
@@ -91,9 +91,9 @@ export interface Locale {
   transfer?: TransferLocale;
   okText: string;
   cancelText: string;
-  /** Подпись единственной кнопки Modal в словаре Ant Design. */
+  /** Label for the single Modal button in the Ant Design dictionary. */
   justOkText?: string;
-  /** Допускает отдельные подписи действий Popconfirm. */
+  /** Allows separate action labels for Popconfirm. */
   popconfirm?: { okText?: string; cancelText?: string; };
   closeText: string;
   clearText: string;
@@ -222,7 +222,7 @@ export interface SelectOption<Value extends string | number = string> {
   value: Value;
   label: string;
   disabled?: boolean;
-  /** Необязательный ключ optionRender; без него используется value. */
+  /** Obligatory key optionRender; without it used value. */
   key?: string | number | bigint | null;
 }
 

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import AutoCompleteEditorHeightFixtures from './AutoCompleteEditorHeightFixtures.svelte';
 
-/** Рендерит непустой пользовательский редактор до загрузки клиента. */
+/** Rendering a non-empty user editor until the client is downloaded. */
 export function renderAutoCompleteEditorHeight() {
   return render(AutoCompleteEditorHeightFixtures, {
     idPrefix: 'auto-complete-editor-height',

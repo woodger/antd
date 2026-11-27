@@ -2,8 +2,8 @@ import { equalMasonryData, type MasonryHeight } from './masonry.engine';
 import type { MasonryItemType, MasonryKey } from './masonry.types';
 
 /**
- * React сохраняет focus/selection вокруг DOM commit;
- * снимок нужен до записи нового keyed списка.
+ * React preserves focus/selection around DOM commit; the image is needed before the new keyed list
+ * is recorded.
  */
 export function captureMasonryFocus(root: HTMLDivElement) {
   const focused = root.ownerDocument.activeElement;
@@ -134,7 +134,7 @@ export function createMasonryRuntime<Data>(
         target.offsetHeight
       ];
 
-      // Как ResizeObserver эталона: округлённый rect и offset sizes, затем отложенный callback.
+      // As the ResizeObserver benchmark: rounded rect and offset sizes, then delayed callback.
       if (!equalMasonryData(sizes.get(target), size)) {
         sizes.set(target, size);
         void Promise.resolve().then(collect);
@@ -219,7 +219,7 @@ export function createMasonryRuntime<Data>(
   };
 }
 
-/** Шаги CSSMotion 1.3.3: start, два RAF, active, собственный transition/animation end. */
+/** Steps CSSMotion 1.3.3: start, two RAF, active, own transition/animation end. */
 export function createMasonryMotion(
   node: HTMLDivElement,
   publish: (className: string) => void,
@@ -292,7 +292,7 @@ export function createMasonryMotion(
 
           activated = true;
           publish(`${name}-${status} ${name}-${status}-active ${name}`);
-          // После flush/paint CSS без анимации не пришлёт end event.
+          // After flush/paint CSS without animation will not send an end event.
           frame = view.requestAnimationFrame(() => {
             frame = undefined;
             if (!active || !status) {

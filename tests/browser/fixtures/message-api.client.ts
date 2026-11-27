@@ -1,4 +1,4 @@
-// Монтирует кандидата из свежей сборки пакета, используя тот же viewport и данные, что UMD.
+// Mounts a candidate from a fresh package build using the same viewport and data as UMD.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import MessageApiFixtures from './MessageApiFixtures.svelte';

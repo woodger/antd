@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Собирает содержимое и действия Tag со стилями отдельных слотов. Закрытие учитывает реакцию
-  // владельца на событие.
+  // Assembles Tag content and actions with per-slot styles. Dismissal respects the owner's response
+  // to the event.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -202,7 +202,7 @@
       if (!event.repeat) node.click();
     }
 
-    // Прямой listener останавливает всплытие до нативных обработчиков родителя.
+    // A direct listener stops bubbling before the parent's native handlers.
     node.addEventListener('click', handleClose);
     node.addEventListener('keydown', handleCloseKeyDown);
     return () => {
@@ -315,7 +315,7 @@
     max-width: 1em;
     max-height: 1em;
   }
-  /* Нативная кнопка требует явного letter-spacing, который source span наследует. */
+  /* The native button needs explicit letter-spacing, which the upstream span inherits. */
   [data-ant-tag-close] {
     display: inline-flex;
     align-items: center;
@@ -370,7 +370,7 @@
   ><span aria-hidden="true" inert>{#if typeof close.icon === 'function'}{@render close.icon()}{:else if close.icon === undefined}<Icon name="close" />{:else if typeof close.icon !== 'boolean'}{close.icon ?? ''}{/if}</span></button>{/if}
 {/snippet}
 
-<!-- Явные a/span не перемещают SSR-корень при hydration и сохраняют фокус. -->
+<!-- Explicit a and span branches keep the SSR root in place during hydration and preserve focus. -->
 {#if !closed}
   {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`tag-prefix:${prefix}`} />{/if}{#if href}
     <a
@@ -383,7 +383,7 @@
       onclick={handleClick}
     >{@render tagContent()}</a>
   {:else}
-    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions, a11y_no_noninteractive_element_interactions (Source Tag.onClick сохраняет span; клавиатурой управляют native link/close.) -->
+    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions, a11y_no_noninteractive_element_interactions (Upstream Tag.onClick retains a span. The native link and close button handle keyboard input.) -->
     <span
       {...rootAttributes}
       bind:this={nativeElement}

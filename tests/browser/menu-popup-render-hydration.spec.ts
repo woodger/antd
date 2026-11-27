@@ -25,7 +25,7 @@ test.afterAll(async () => {
   }
 });
 
-// Вставляет SSR DOM до импорта client entrypoint со строгой гидратацией.
+// Inserts SSR DOM to the import of client entrypoint with strict hydration.
 async function hydratePopup(page: Page, enableMotion = false) {
   if (!server) {
     throw new Error('SSR fixture server did not start');

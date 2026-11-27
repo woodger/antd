@@ -4,7 +4,7 @@ import reference from './fixtures/ant-design-modal-motion-reference.json' with {
 
 test.use({ viewport: { width: 1280, height: 720 }, reducedMotion: 'no-preference' });
 
-/** Открывает панель тем же видом ввода и в той же точке, что и запись React. */
+/** Opens the panel with the same type of input and at the same point as the entry React. */
 async function openMotion(page: Page, keyboard = false) {
   const opener = page.getByRole('button', { name: 'Open motion', exact: true });
   if (keyboard) {
@@ -16,7 +16,7 @@ async function openMotion(page: Page, keyboard = false) {
   }
 }
 
-/** Закрывает панель после независимого входа маски, как в эталоне. */
+/** Closes the panel after the independent entrance of the mask, as in the standard. */
 async function closeAfterMask(page: Page) {
   await page.evaluate(async () => {
     const mask = document.querySelector('dialog.motion-probe [data-ant-modal-mask]');
@@ -25,20 +25,20 @@ async function closeAfterMask(page: Page) {
   });
 }
 
-/** Читает запись событий без перестановки закрывающих колбэков. */
+/** Reads recorded events without reordering close callbacks. */
 async function readCallbacks(page: Page) {
   const output = await page.locator('#motion-callbacks').textContent();
   return JSON.parse(output ?? '[]') as unknown[];
 }
 
-/** Сравнивает действительные animationstart независимо от порядка кадров разных DOM-узлов. */
+/** Compares valid animationstart regardless of the order of frames of different DOM-nodes. */
 async function readAnimations(page: Page) {
   const output = await page.locator('#motion-animations').textContent();
   const records = JSON.parse(output ?? '[]') as { name: string; duration: number; role: string; }[];
   return records.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/** Удерживает только собственный эффект маски для проверки закрытой панели. */
+/** Retains only its own mask effect to check the closed panel. */
 async function pauseMaskLeave(page: Page) {
   await page.waitForFunction(() => {
     const mask = document.querySelector('dialog.motion-probe [data-ant-modal-mask]');

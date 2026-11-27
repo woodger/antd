@@ -9,7 +9,7 @@ const implicitKeys = new Set(['absent-label', 'twins-pointer', 'twins-keyboard']
 
 test.use({ viewport: { width: 960, height: 640 } });
 
-/** Сохраняет исходные payload fields. React добавляет к ключу идентификатор экземпляра меню. */
+/** Save the original payload fields. React adds a menu instance identifier to the key. */
 function nativeSample(profile: string, state: Sample) {
   const events = state.events.map(event => {
     const [name, payload, prefix] = event;
@@ -40,7 +40,7 @@ function nativeSample(profile: string, state: Sample) {
   return { ...state, events };
 }
 
-/** Считывает подписи, визуальную активность, каретку и порядок публичных событий. */
+/** Reads the labels, visual activity, carriage and order of public events. */
 function readSnapshot(editor: Locator) {
   return editor.evaluate((node: HTMLTextAreaElement) => {
     const root = node.closest('[data-ant-mentions-root]');
@@ -62,7 +62,7 @@ function readSnapshot(editor: Locator) {
   });
 }
 
-/** Открывает подсказки обычным вводом в пакетном компоненте. */
+/** Opens prompts with the usual input in the package component. */
 async function openOptions(page: Page, profile: string, text = '@') {
   await page.goto(`/select-components-hydration.html?mentions-option=${profile}`);
   await page.addScriptTag({ type: 'module', url: '/mentions-option.client.ts' });
@@ -80,7 +80,7 @@ for (const { profile, before, after } of reference.cases) {
     if (profile.endsWith('-keyboard')) await editor.press('ArrowDown');
     await expect.poll(() => readSnapshot(editor)).toEqual(nativeSample(profile, before));
 
-    // Native listbox объявляет один активный вариант даже при общей визуальной подсветке.
+    // Native listbox declares one active option even with general visual illumination.
     await expect(page.getByRole('option', { selected: true })).toHaveCount(1);
     if (profile === 'absent-label' || profile === 'null-label') {
       await expect(options.first()).toHaveAccessibleName('alice');
@@ -98,7 +98,7 @@ for (const { profile, before, after } of reference.cases) {
 
     const expected = nativeSample(profile, after);
     if (profile === 'explicit-disabled') {
-      // Штатный popover сохраняет фокус textarea и при отклонённом выборе.
+      // The regular popover retains the focus of the textarea and when the choice is rejected.
       expected.focused = true;
     }
     await expect.poll(() => readSnapshot(editor)).toEqual(expected);

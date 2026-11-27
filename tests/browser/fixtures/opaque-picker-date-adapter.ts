@@ -1,5 +1,5 @@
-// Адаптер сценариев фабрики. Наружу выходит иммутабельный объект с одним полем;
-// календарная арифметика использует UTC внутри реализации.
+// Factory scenario adapter. An immutable object with a single field comes outwards; calendar
+// arithmetics uses UTC within the implementation.
 import type { GenerateConfig } from '@woodger/antd';
 
 export type OpaquePickerDate = Readonly<{ stamp: number; }>;
@@ -8,17 +8,17 @@ const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const weekMilliseconds = 7 * 24 * 60 * 60 * 1000;
 
-/** Создаёт значение в представлении, которое использует независимый UMD-прогон. */
+/** Creates a value in a view that uses an independent UMD run. */
 export function opaqueDate(text: string): OpaquePickerDate {
   return Object.freeze({ stamp: Date.parse(text) });
 }
 
-/** Разворачивает значение только внутри адаптера или в наблюдении теста. */
+/** Deploys the value only inside the adapter or in the observation of the test. */
 export function readOpaqueDate(value: OpaquePickerDate): Date {
   return new Date(value.stamp);
 }
 
-/** Применяет изменение к отдельной копии UTC даты, сохраняя иммутабельность значения. */
+/** Applies the change to a separate copy UTC of the date, maintaining the immutability of the value. */
 function editOpaqueDate(value: OpaquePickerDate, edit: (date: Date) => number | void) {
   const date = readOpaqueDate(value);
   edit(date);
@@ -26,7 +26,7 @@ function editOpaqueDate(value: OpaquePickerDate, edit: (date: Date) => number | 
   return Object.freeze({ stamp: date.getTime() });
 }
 
-/** Сдвигает месяц с ограничением дня последним числом нового месяца. */
+/** Shifting the month with the limitation of the day with the last number of the new month. */
 function addMonth(value: OpaquePickerDate, amount: number) {
   return editOpaqueDate(value, date => {
     const day = date.getUTCDate();
@@ -37,7 +37,7 @@ function addMonth(value: OpaquePickerDate, amount: number) {
   });
 }
 
-/** Форматирует токены, которые использует тестовый календарь и редактор. */
+/** Formats tokens that the test calendar and editor use. */
 function printOpaqueDate(value: OpaquePickerDate, format: string) {
   const date = readOpaqueDate(value);
   const month = date.getUTCMonth() + 1;
@@ -46,75 +46,75 @@ function printOpaqueDate(value: OpaquePickerDate, format: string) {
     HH: date.getUTCHours(), mm: date.getUTCMinutes(), ss: date.getUTCSeconds(),
     SSS: date.getUTCMilliseconds(), Q: Math.ceil(month / 3)
   };
-  // Литералы в скобках идут в подпись без обработки токенов.
+  // Literals in brackets go into the label without processing tokens.
   return format.replace(/\[[^\]]*\]|YYYY|MM|DD|HH|mm|ss|SSS|M|D|Q/g, token =>
     token.startsWith('[') ? token.slice(1, -1) : String(tokens[token]).padStart(token.length, '0'));
 }
 
 export const opaquePickerAdapter: GenerateConfig<OpaquePickerDate> = {
-  // Связывает служебную дату с receiver конкретного адаптера.
+  // Connects the service date with the receiver of a particular adapter.
   getNow() { return this.getFixedDate('2024-06-19T16:00:00Z'); },
   getFixedDate: opaqueDate,
-  // Определяет последнее число месяца, сохраняя время.
+  // Determines the last number of the month, saving time.
   getEndDate: value => editOpaqueDate(value, date => date.setUTCMonth(date.getUTCMonth() + 1, 0)),
-  // Возвращает индекс дня для сетки с началом недели в воскресенье.
+  // Brings back the index of the day for the grid with the start of the week on Sunday.
   getWeekDay: value => readOpaqueDate(value).getUTCDay(),
-  // Читает календарный год по UTC.
+  // He reads the calendar year on UTC.
   getYear: value => readOpaqueDate(value).getUTCFullYear(),
-  // Возвращает индекс месяца от нуля.
+  // Returns the index of the month from zero.
   getMonth: value => readOpaqueDate(value).getUTCMonth(),
-  // Возвращает число месяца от единицы.
+  // Returns the number of the month from the unit.
   getDate: value => readOpaqueDate(value).getUTCDate(),
-  // Читает час в 24-часовом формате.
+  // Reads an hour in a 24-hour format.
   getHour: value => readOpaqueDate(value).getUTCHours(),
-  // Возвращает минуты в текущем часе.
+  // Returns the minutes in the current hour.
   getMinute: value => readOpaqueDate(value).getUTCMinutes(),
-  // Возвращает секунды в текущей минуте.
+  // Returns seconds in the current minute.
   getSecond: value => readOpaqueDate(value).getUTCSeconds(),
-  // Хранит дробную часть секунды без округления.
+  // Keeps the fractional part of the second without rounding.
   getMillisecond: value => readOpaqueDate(value).getUTCMilliseconds(),
-  // Год и месяц используют один способ выбора дня на границе февраля.
+  // The year and the month use one way to choose the day on the border of February.
   addYear(value, amount) { return this.addMonth(value, amount * 12); },
   addMonth,
-  // Сдвигает дату на календарные дни, сохраняя единицы времени.
+  // Shifts the date on the calendar days, saving units of time.
   addDate: (value, amount) => editOpaqueDate(value, date => date.setUTCDate(date.getUTCDate() + amount)),
-  // Заменяет календарный год, используя нормализацию UTC Date.
+  // Replacing the Calendar year using normalization UTC Date.
   setYear: (value, year) => editOpaqueDate(value, date => date.setUTCFullYear(year)),
-  // Заменяет индекс месяца с переносом в соседний год.
+  // Replaces the index of the month with the transfer in the next year.
   setMonth: (value, month) => editOpaqueDate(value, date => date.setUTCMonth(month)),
-  // Заменяет число месяца.
+  // Replaces the number of the month.
   setDate: (value, day) => editOpaqueDate(value, date => date.setUTCDate(day)),
-  // Устанавливает час с переносом за полночь при переполнении.
+  // Sets an hour with a transfer at midnight when overflowing.
   setHour: (value, hour) => editOpaqueDate(value, date => date.setUTCHours(hour)),
-  // Заменяет единицу времени независимо от календарного дня.
+  // Replaces the unit of time regardless of the calendar day.
   setMinute: (value, minute) => editOpaqueDate(value, date => date.setUTCMinutes(minute)),
-  // Устанавливает секунды без округления миллисекунд.
+  // Set seconds without rounding milliseconds.
   setSecond: (value, second) => editOpaqueDate(value, date => date.setUTCSeconds(second)),
-  // Поддерживает перенос за текущую секунду при отрицательной миллисекунде.
+  // Maintains the transfer in the current second with a negative millisecond.
   setMillisecond: (value, ms) => editOpaqueDate(value, date => date.setUTCMilliseconds(ms)),
-  // Сравнивает абсолютные UTC значения диапазона.
+  // Compares the absolute UTC values of the range.
   isAfter: (a, b) => a.stamp > b.stamp,
-  // Отбрасывает служебное NaN значение, которое возвращает Date.parse.
+  // Discards service NaN value, which returns Date.parse.
   isValidate: value => Number.isFinite(value.stamp),
   locale: {
-    // Начало недели совпадает с настройкой UMD-прогона.
+    // The beginning of the week coincides with the setting of UMD-run.
     getWeekFirstDay: () => 0,
-    // Читает первую дату недели средствами того же календаря.
+    // Reads the first date of the week by means of the same calendar.
     getWeekFirstDate(_locale, value) {
       return opaquePickerAdapter.addDate(value, -opaquePickerAdapter.getWeekDay(value));
     },
-    // Считает номер недели от начала календарного года.
+    // Considers the number of the week from the beginning of the calendar year.
     getWeek(_locale, value) {
       const year = opaquePickerAdapter.getYear(value);
       return Math.ceil((value.stamp - Date.UTC(year, 0, 1)) / weekMilliseconds) + 1;
     },
-    // Использует краткие подписи, захваченные в эталоне.
+    // Uses brief labels captured in the benchmark.
     getShortWeekDays: () => weekdays,
-    // Возвращает подписи в порядке индексов месяца.
+    // Returns labels in the order of indexes of the month.
     getShortMonths: () => months,
-    // Форматирует дату как текст редактора или подпись ячейки.
+    // Formats the date as an editor's text or cell label.
     format: (_locale, value, format) => printOpaqueDate(value, format),
-    // Принимает точную календарную дату и проверяет её через locale receiver.
+    // Accepts an exact calendar date and validates it through the locale receiver.
     parse(locale, text, formats) {
       if (!formats.includes('YYYY-MM-DD') || !/^\d{4}-\d{2}-\d{2}$/.test(text)) {
         return null;

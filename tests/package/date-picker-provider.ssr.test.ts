@@ -9,7 +9,7 @@ import DatePickerProviderFixtures from '../browser/fixtures/DatePickerProviderFi
 const source = readPickerProviderServer();
 const classPattern = new RegExp(authoredClasses);
 
-/** Считывает открывающие теги и атрибуты из серверного HTML обоих пакетов. */
+/** Reads opening tags and attributes from both packages' server HTML. */
 function readElements(body: string) {
   return Array.from(body.matchAll(/<(div|span|input|button)\s+([^>]+)>/g), ([, tag, raw]) => {
     const attributes = Object.fromEntries(Array.from(
@@ -20,7 +20,7 @@ function readElements(body: string) {
   });
 }
 
-/** Сравнивает разметку закрытого picker, исключая внутренние hash и ARIA framework. */
+/** Compares closed picker markup while excluding internal hashes and framework ARIA. */
 function project(body: string) {
   const elements = readElements(body);
   const root = elements.find(node => node.classes.includes('ant-picker'));

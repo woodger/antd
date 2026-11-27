@@ -43,7 +43,7 @@
     if (kind !== 'app') launch();
   });
 
-  /** Замеряет arity обоих способов получить реальный DOM container. */
+  /** Measures the arity of both ways to get a real DOM container. */
   function readTarget(...args: unknown[]) {
     probe.containers.push([target, args.length]);
     const node = document.getElementById(target);
@@ -53,7 +53,7 @@
     return node;
   }
 
-  /** Снимает только поля, которые участвуют в исходном замере props. */
+  /** Removes only the fields that are involved in the original measurement of props. */
   function record(name: string, props: NotificationSemanticProps) {
     probe.arguments[name] = {
       title: props.title, key: props.key, duration: props.duration,
@@ -61,7 +61,7 @@
     };
   }
 
-  /** У каждого слоя уникальные классы и значения, чтобы проверять их приоритет. */
+  /** Each layer has unique classes and values to prioritize them. */
   function semantics(layer: string) {
     return {
       classNames({ props }: { props: NotificationSemanticProps; }) {
@@ -76,7 +76,7 @@
     };
   }
 
-  /** Фиксирует callback конкретного владельца и не скрывает повторные вызовы. */
+  /** Fixes the callback of a particular owner and does not hide repeated calls. */
   function track(event: string) {
     return () => { probe.events.push(event); };
   }
@@ -127,7 +127,7 @@
     }
   }
 
-  /** После tick новые defaults применяются к следующему вызову уже полученного API. */
+  /** After the tick, the new defaults apply to the next call already received API. */
   function launchApp({ notification }: AppInstance) {
     untrack(() => {
       instance = notification;

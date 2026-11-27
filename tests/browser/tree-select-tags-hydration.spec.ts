@@ -36,7 +36,7 @@ for (const name of ['count-one', 'responsive-400', 'renderer-summary']) {
     await page.addScriptTag({ type: 'module', url: '/tree-select-tags-hydration.client.ts' });
     await page.waitForFunction(() => window.treeTagsHydration?.ready);
 
-    // Закрытый multiple сбрасывает pre-hydration query, как неизменённый React-эталон.
+    // Closed multiple shedding pre-hydration query like an unchanged React benchmark.
     expect(await page.evaluate(() => {
       const state = window.treeTagsHydration!;
       return {

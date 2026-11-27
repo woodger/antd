@@ -1,4 +1,4 @@
-// Монтирует пакетный Mentions для проверки параметров popupRender.
+// Mounts batch Mentions to check parameters popupRender.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import Fixture from './MentionsMenuFixture.svelte';

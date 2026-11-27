@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Задаёт те же входы, что отдельный React-прогон, и выставляет binding для наблюдения из теста.
+  // Specifies the same inputs as a separate React-run, and exposes the binding for observation from the test.
   import { untrack, type Snippet } from 'svelte';
   import {
     ConfigProvider, Drawer, enUS, type DrawerConfig, type DrawerProps,
@@ -94,14 +94,14 @@
     styles: providerStyles
   } : profile.provider);
 
-  /** Находит набор параметров по имени из browser/SSR теста. */
+  /** Finds a set of parameters by name from the browser/SSR test. */
   function getProfile(name: string): Profile {
     const current = profiles[name];
     if (!current) throw new Error(`Unknown Drawer panel profile ${name}`);
     return current;
   }
 
-  /** Настраивает Drawer до открытия, когда controls самой фикстуры доступны. */
+  /** Configures Drawer until opened when the fixture itself is available. */
   function selectProfile(name: string) {
     const current = getProfile(name);
     activeProfile = name;
@@ -113,7 +113,7 @@
     visibilityEvents = [];
   }
 
-  /** Помечает фактически полученные props и проверяет CSS-приоритет для каждого слота. */
+  /** Marks actually received props and checks the CSS priority for each slot. */
   function semanticLayer(name: string, kind: 'class' | 'style') {
     return ({ props }: { props: DrawerProps; }) => {
       const part = typeof props.mask === 'boolean' ? 'outer' : 'inner';
@@ -134,7 +134,7 @@
     };
   }
 
-  /** Отличает актуальный section от очищенного или устаревшего binding. */
+  /** Distinguishes the actual section from purified or outdated binding. */
   function refState(element: HTMLDivElement | undefined) {
     if (!element) return 'empty';
     return element.isConnected && element.hasAttribute('data-ant-drawer-section') ? 'section' : 'other';

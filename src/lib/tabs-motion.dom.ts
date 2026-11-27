@@ -1,5 +1,5 @@
-// Управляет фазами появления и ухода панели Tabs. До start hooks коммитит состояния панелей, а
-// callbacks устаревших переходов отбрасывает по ревизии.
+// Manages Tabs panel appearance and departure phases. Prior to start hooks commits the status of
+// the panels, and the callbacks of outdated transitions are discarded by an audit.
 import { getTabsMotionClassName } from './tabs-motion.engine';
 import type { TabsMotionEvent, TabsPaneMotion } from './tabs-motion.types';
 import { createCssMotionFrame } from './css-motion-frame.dom';
@@ -13,7 +13,7 @@ export interface TabsPaneMotionState {
   style?: string;
 }
 
-/** CSSMotion phases без React: собственные end events, два RAF и отмена stale prepare/deadline. */
+/** CSSMotion phases without React: own end events, two RAF and cancellation stale prepare/deadline. */
 export function createTabsPaneMotion(
   node: HTMLDivElement,
   publish: (state: TabsPaneMotionState, commit?: boolean) => void
@@ -35,7 +35,7 @@ export function createTabsPaneMotion(
   let revision = 0;
   let active = true;
 
-  // Разрешает callbacks по текущему статусу, читая конфигурацию на момент фазы.
+  // Allows callbacks over current status, reading the configuration at the time of the phase.
   const handlers = () => {
     const prefix = status === 'appear' ? 'Appear' : status === 'enter' ? 'Enter' : 'Leave';
     return {
@@ -45,13 +45,13 @@ export function createTabsPaneMotion(
       end: config?.[`on${prefix}End`]
     };
   };
-  // Проверяет имя CSSMotion, глобальное разрешение и настройку reduced motion.
+  // Verifies the name CSSMotion, global resolution and setup reduced motion.
   const supported = () => !!config?.motionName && enabled && !reduced.matches;
-  // Учитывает флаг текущего appear, enter или leave. По умолчанию фаза разрешена.
+  // Checks the flag for the current appear, enter, or leave phase. Each phase is enabled by default.
   const allowed = () => config?.[status === 'appear' ? 'motionAppear'
     : status === 'enter' ? 'motionEnter' : 'motionLeave'] !== false;
 
-  // Инвалидирует очередь кадров и снимает таймеры завершения и уведомления.
+  // Invalidates pending frames and clears completion and notification timers.
   function cancel() {
     revision++;
     frames.cancel();
@@ -61,7 +61,7 @@ export function createTabsPaneMotion(
     visibleTimer = undefined;
   }
 
-  // Публикует классы и стиль фазы с возможностью синхронно закоммитить DOM.
+  // Publishes classes and phase style with the ability to synchronously combine DOM.
   function update(commit = false) {
     publish(
       {
@@ -73,7 +73,7 @@ export function createTabsPaneMotion(
     );
   }
 
-  // Снимает временные классы и выбирает момент onVisibleChanged по способу завершения.
+  // Removes temporary classes and chooses the moment onVisibleChanged according to the method of completion.
   function finish(passive = false) {
     cancel();
     status = undefined;
@@ -82,12 +82,12 @@ export function createTabsPaneMotion(
     update();
     if ((seenVisible || notified) && config?.onVisibleChanged) {
       const current = revision;
-      // Вызывает уведомление видимости только для актуального перехода после синхронизации DOM.
+      // Quotes visibility notification only for up-to-date transition after synchronization DOM.
       const notify = () => {
         visibleTimer = undefined;
         if (active && current === revision) config?.onVisibleChanged?.(visible);
       };
-      // CSS end callbacks завершаются до passive notification; без motion хватит DOM commit.
+      // CSS end callbacks are completed to a passive notification; without motion enough DOM commit.
       if (passive) {
         visibleTimer = view.setTimeout(notify, 0);
       }
@@ -98,7 +98,7 @@ export function createTabsPaneMotion(
     notified = true;
   }
 
-  // Откладывает смену фазы до двух RAF и учитывает ревизию контроллера панели.
+  // Postpones the phase change up to two RAF and takes into account the revision of the panel controller.
   function nextFrame(callback: () => void) {
     const current = revision;
     frames.next(() => {
@@ -106,8 +106,7 @@ export function createTabsPaneMotion(
     });
   }
 
-  // Принимает события собственной панели и deadline. End callback может оставить переход
-  // активным.
+  // Accepts the events of its own panel and deadline. End callback can leave the transition active.
   function handleEnd(event: TabsMotionEvent) {
     if (!active || !status || step !== 'active') {
       return;
@@ -120,8 +119,7 @@ export function createTabsPaneMotion(
     if (active && current === revision && result !== false) finish(true);
   }
 
-  // Коммитит prepare и start до active. Каждый пользовательский callback может изменить текущую
-  // ревизию.
+  // Commits prepare and start before active. Each user callback may change the current revision.
   function start() {
     if (!supported()) {
       finish();
@@ -129,7 +127,7 @@ export function createTabsPaneMotion(
     }
     update();
     const current = revision;
-    // Сначала commit обоих panel slots и notifications без motion, затем layout start hooks.
+    // First both commit slots and notifications without motion, then layout start hooks.
     queueMicrotask(() => {
       if (!active || current !== revision) {
         return;
@@ -138,7 +136,7 @@ export function createTabsPaneMotion(
         if (!active || current !== revision) {
           return;
         }
-        // React успевает commit prepare даже при пропущенном prepare hook.
+        // React manages to commit prepare even when missed prepare hook.
         step = 'prepare';
         update(true);
         if (!active || current !== revision) {
@@ -173,7 +171,7 @@ export function createTabsPaneMotion(
     });
   }
 
-  // Завершает движение при включении reduced motion, сохраняя уже ожидающую prepare-фазу.
+  // Concludes the movement when the motion is switched on, saving the already waiting prepare phase.
   function reduce() {
     if (reduced.matches && status && step !== 'prepare') finish();
   }
@@ -183,8 +181,8 @@ export function createTabsPaneMotion(
   reduced.addEventListener('change', reduce);
 
   return {
-    // Согласует изменение видимости с конфигурацией. Prepare должен завершиться перед началом фаз
-    // движения.
+    // Agrees the change in visibility with the configuration. Prepare must be completed before
+    // starting the movement phases.
     sync(next: boolean, options: TabsPaneMotion | undefined, motionEnabled: boolean) {
       if (!active) {
         return;
@@ -240,7 +238,7 @@ export function createTabsPaneMotion(
         start();
       }
     },
-    // Отсоединяет подписки и инвалидирует всю отложенную работу панели.
+    // Disconnects subscriptions and disables the entire deferred work of the panel.
     destroy() {
       active = false;
       cancel();

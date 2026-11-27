@@ -32,7 +32,7 @@ for (const sample of reference.cases) {
 
     expect(initial.visible).toBe(sample.snapshots.initial.visible);
     expect(initial.callbacks).toEqual(sample.snapshots.initial.callbacks);
-    // Native defaults сохраняют eager SSR, Typography и destroy остаются ленивыми.
+    // Native defaults save SSR, Typography and destruction remain lazy.
     if (sample.component === 'typography' || sample.snapshots.initial.visible
       || !sample.snapshots.closed.contents.length) {
       expect(initial.contents).toEqual(sample.snapshots.initial.contents);

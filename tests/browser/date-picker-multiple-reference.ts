@@ -1,4 +1,4 @@
-// Читает повторённые замеры неизменённого UMD без нормализации исходных файлов.
+// Reads repeated measurements of the unchanged UMD without normalizing the original files.
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import type { MultiplePickerProfile } from './fixtures/DatePickerMultipleFixtures.svelte';
@@ -53,36 +53,36 @@ interface ModeSwitch {
   };
 }
 
-/** Распаковывает сохранённый результат с исходным порядком событий и DOM. */
+/** Unpacks the saved result with the original order of events and DOM. */
 function readSource<Pass>(name: 'browser' | 'ssr' | 'interactions' | 'mode'): Capture<Pass> {
   const file = new URL(`./fixtures/ant-design-date-picker-multiple-${name}.json.gz`, import.meta.url);
 
   return JSON.parse(gunzipSync(readFileSync(file)).toString('utf8'));
 }
 
-/** Читает сценарии выбора, удаления, тегов и геометрии. */
+/** Reads scenarios of selection, removal, tags and geometries. */
 export function readMultipleBrowser() {
   return readSource<MultipleBrowserProfile[]>('browser');
 }
 
-/** Читает серверные профили без обращения к DOM. */
+/** Reads server profiles without contacting DOM. */
 export function readMultipleServer() {
   return readSource<{
     version: string; react: string; packets: MultipleServerSample[]; diagnostics: unknown[];
   }>('ssr');
 }
 
-/** Читает дополнительные события владельца и выбор терминальных периодов. */
+/** Reads additional events of the owner and choice of terminal periods. */
 export function readMultipleInteractions() {
   return readSource<MultipleInteraction[]>('interactions');
 }
 
-/** Читает переключения одного и того же экземпляра между одиночным и множественным режимами. */
+/** Reads switching the same instance between single and multiple modes. */
 export function readMultipleMode() {
   return readSource<ModeSwitch[]>('mode');
 }
 
-/** Убирает только дополнительное поле source существующего Svelte API. */
+/** Removes only the additional source field existing Svelte API. */
 export function comparableMultipleEvents(events: unknown[][]) {
   return events.map(event => event[0] === 'calendar' ? event.slice(0, 3) : event);
 }

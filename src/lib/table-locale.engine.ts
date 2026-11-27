@@ -1,11 +1,11 @@
-// Разрешает локальный словарь для одной таблицы. Настройки провайдера остаются общими.
+// Solves a local dictionary for one table. Provider settings remain shared.
 import type { TableLocaleOverrides } from './table.types';
 import { ruRU, type RenderEmptyContent, type TableLocale } from './types';
 
 type ContentField = 'filterApply' | 'filterConfirm' | 'filterReset' | 'filterEmptyText'
   | 'filterCheckAll' | 'selectionAll' | 'selectInvert' | 'selectNone';
 
-/** Значение из собственного поля может явно оставить видимый текст пустым. */
+/** A value from one's own field can clearly leave the visible text blank. */
 function readContent(
   local: TableLocaleOverrides | undefined,
   inherited: RenderEmptyContent,
@@ -22,7 +22,7 @@ function readContent(
   return inherited;
 }
 
-/** Совмещает текстовые подписи Native и актуальные поля словаря Ant Design. */
+/** Combines text labels Native and current Ant Design vocabulary fields. */
 export function resolveTableLocale(
   provider: Partial<TableLocale> | undefined,
   local: TableLocaleOverrides | undefined

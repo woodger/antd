@@ -12,7 +12,7 @@ export interface TreeMotionGroup<Data extends object> {
 }
 export type TreeMotionRow<Data extends object> = TreeEntity<Data> | TreeMotionGroup<Data>;
 
-/** NodeList сохраняет соседние keyed строки и временно заменяет диапазон одной motion group. */
+/** NodeList preserves adjacent keyed strings and temporarily replaces the range of one motion group. */
 export function createTreeMotion<Data extends object>(options: {
   rows: () => readonly TreeEntity<Data>[];
   expanded: () => readonly TreeKey[];
@@ -61,7 +61,7 @@ export function createTreeMotion<Data extends object>(options: {
         const longer = changed.show ? next.rows : previous.rows;
         const position = shorter.findIndex(entry => entry.key === changed.key);
         const nodes = getTreeMotionRange(shorter, longer, changed.key, virtual, height, estimate);
-        // Скрытый expanded key не должен подменять диапазон другого корня.
+        // Hidden extended key should not replace the range of the other root.
         if (position < 0 || !nodes.length) {
           finish();
         }

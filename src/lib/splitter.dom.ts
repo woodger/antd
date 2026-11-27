@@ -1,9 +1,9 @@
-// Подключает измерение и жесты Splitter к DOM. Для lazy drag промежуточное смещение остаётся
-// preview.
+// Connects Splitter measurements and gestures to DOM. For lazy dread, the intermediate offset
+// remains a preview.
 import { getSplitterPreviewOffset } from './splitter.engine';
 
-/** Повторяет округление и microtask delivery @rc-component/resize-observer 1.1.2. */
-// Дедуплицирует размеры и публикует размер текущей оси после микрозадачи.
+/** Repeat rounding and microtask delivery @rc-component/resize-observer 1.1.2. */
+// Deduplicates the dimensions and publishes the size of the current axis after the microtask.
 export function observeSplitterSize(
   root: HTMLDivElement,
   getVertical: () => boolean,
@@ -62,7 +62,7 @@ export interface SplitterDragCallbacks {
   doubleClick: (index: number) => void;
 }
 
-// Удерживает начало жеста и настройки активного разделителя до release.
+// Retains the beginning of the gesture and settings of the active divider to release.
 export function connectSplitterDrag(
   node: HTMLDivElement,
   getOptions: () => SplitterDragOptions,
@@ -75,7 +75,7 @@ export function connectSplitterDrag(
   let preview = 0;
   let lastClick = 0;
 
-  // Делегирует смещение либо preview, используя текущую ось для lazy drag.
+  // Delegates offset or preview using the current axis for lazy drag.
   function move(x: number, y: number) {
     if (!active || !start || !captured) {
       return;
@@ -101,18 +101,18 @@ export function connectSplitterDrag(
     }
   }
 
-  // Передаёт координаты мыши в той же системе, что и начало drag.
+  // Transmits mouse coordinates in the same system as the beginning of drag.
   function handleMouseMove(event: MouseEvent) {
     move(event.pageX, event.pageY);
   }
 
-  // Учитывает движение только одного активного touch.
+  // Takes into account the movement of only one active touch.
   function handleTouchMove(event: TouchEvent) {
     if (event.touches.length === 1)
       move(event.touches[0].pageX, event.touches[0].pageY);
   }
 
-  // Снимает слушатели текущего жеста, оставляя слушатели на dragger.
+  // Removes the listeners of the current gesture, leaving the listeners on dragger.
   function detach() {
     view.removeEventListener('mousemove', handleMouseMove);
     view.removeEventListener('mouseup', finish);
@@ -120,7 +120,7 @@ export function connectSplitterDrag(
     view.removeEventListener('touchend', finish);
   }
 
-  // Публикует lazy-результат перед очисткой preview и завершает соединение жеста.
+  // Publishes the lazy result before clearing the preview and completes the gesture connection.
   function finish() {
     if (!active || !start || !captured) {
       return;
@@ -141,7 +141,7 @@ export function connectSplitterDrag(
     detach();
   }
 
-  // Запоминает настройки жеста перед подпиской на события окна.
+  // Reminder gesture settings before subscribing to window events.
   function attach() {
     captured = { ...getOptions() };
     view.addEventListener('mousemove', handleMouseMove);
@@ -150,7 +150,7 @@ export function connectSplitterDrag(
     view.addEventListener('touchend', finish);
   }
 
-  // Начинает доступный жест и учитывает возможное отключение из start callback.
+  // Begins an accessible gesture and takes into account the possible disconnection from the start callback.
   function begin(x: number, y: number) {
     const options = getOptions();
 
@@ -166,7 +166,7 @@ export function connectSplitterDrag(
       attach();
   }
 
-  // Пропускает второй близкий mousedown, который относится к doubleClick.
+  // Skips the second close mousedown, which relates to doubleClick.
   function handleMouseDown(event: MouseEvent) {
     event.stopPropagation();
 
@@ -181,13 +181,13 @@ export function connectSplitterDrag(
     begin(event.pageX, event.pageY);
   }
 
-  // Открывает жест только для одного touch, сохраняя координаты страницы.
+  // Opens the gesture only for one touch, saving the coordinates of the page.
   function handleTouchStart(event: TouchEvent) {
     if (event.touches.length === 1)
       begin(event.touches[0].pageX, event.touches[0].pageY);
   }
 
-  // Передаёт doubleClick актуальному разделителю по индексу.
+  // Transmits doubleClick to the current divider by index.
   function handleDoubleClick() {
     if (active)
       callbacks.doubleClick(getOptions().index);
@@ -198,7 +198,7 @@ export function connectSplitterDrag(
   node.addEventListener('dblclick', handleDoubleClick);
 
   return {
-    // Обновляет захваченные настройки, если активная граница или lazy меняются во время жеста.
+    // Updates the captured settings if the active boundary or lazy changes during the gesture.
     sync(index: number, lazy: boolean) {
       if (active && start && captured
         && (captured.index !== index || captured.lazy !== lazy)) {
@@ -206,7 +206,7 @@ export function connectSplitterDrag(
         attach();
       }
     },
-    // Отключает временные и постоянные слушатели и освобождает позицию начала жеста.
+    // Disables temporary and permanent listeners and releases the position of the beginning of the gesture.
     destroy() {
       active = false;
       start = undefined;

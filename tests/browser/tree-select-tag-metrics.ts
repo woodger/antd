@@ -1,4 +1,4 @@
-/** Видимые DOM tags Source/Native без measurement-only overflow nodes. */
+/** Visible DOM tags in Source and Native, excluding overflow measurement nodes. */
 export function readTreeTags(prefix: string) {
   const host = document.querySelector('[data-tree-tag-control]')!;
   const input = host.querySelector<HTMLInputElement>('[role="combobox"]')!;

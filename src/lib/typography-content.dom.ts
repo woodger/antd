@@ -4,7 +4,7 @@ export interface TypographySnippetContent {
   copy: string;
 }
 
-/** Только children: actions, ellipsis и suffix не попадают в исходный текст snippet. */
+/** Only children: actions ellipsis and suffix do not fall into the source text snippet. */
 export function connectTypographyContent(
   element: HTMLElement,
   publish: (content: TypographySnippetContent) => void

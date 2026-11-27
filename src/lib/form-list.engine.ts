@@ -1,5 +1,5 @@
-// Синхронизирует значения и ключи строк FormList. При перемещении или удалении прежний ключ
-// остаётся связан со своей строкой.
+// Synchronizes the values and keys of rows FormList. When you move or delete, the former key
+// remains associated with its string.
 interface FormListKeys {
   keys: number[];
   nextKey: number;
@@ -10,8 +10,8 @@ type FormListAction =
   | { type: 'remove'; index: number | readonly number[] }
   | { type: 'move'; from: number; to: number };
 
-// Выделяет новые ключи только заполненным позициям без ключа. Сохраняет ссылку на state, когда
-// ключей достаточно.
+// Highlights new keys only to completed positions without a key. Saves the link to the state when
+// the keys are enough.
 export function syncFormListKeys(state: FormListKeys, values: readonly unknown[]): FormListKeys {
   let keys = state.keys;
   let nextKey = state.nextKey;
@@ -26,7 +26,7 @@ export function syncFormListKeys(state: FormListKeys, values: readonly unknown[]
   return keys === state.keys ? state : { keys, nextKey };
 }
 
-/** Перенос key management из rc-form 1.8.6 List: внешняя замена сохраняет ключи по индексам. */
+/** Transfer key management from rc-form 1.8.6 List: external replacement retains the keys on the indexes. */
 export function changeFormList(
   values: readonly unknown[],
   state: FormListKeys,

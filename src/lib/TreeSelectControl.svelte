@@ -1,6 +1,6 @@
 <script lang="ts" generics="ValueType extends TreeSelectValue = TreeSelectValue, Data extends object = TreeSelectNode, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends TreeSelectEditorElement = HTMLInputElement">
-  // Управляет выбором дерева, редактором поиска и popup TreeSelect. Состояние
-  // checked и набор видимых тегов вычисляются раздельно для каждой стратегии.
+  // Manages tree selection, the search editor, and the TreeSelect popup. Checked state and visible
+  // tags are computed separately for each strategy.
   import { flushSync, onMount, tick, untrack } from 'svelte';
   import type {
     TreeSelectProps,
@@ -228,7 +228,7 @@
     return labeledItems.map(item => ({ ...item, label: item.label ?? item.value }));
   });
 
-  // Подпись выбранного объекта имеет приоритет, когда включён labelInValue.
+  // With labelInValue enabled, the selected object's label takes precedence.
   function createVisibleItem(raw: TreeSelectRawValue) {
     const suppliedItem = labelInValue ? items.find(item => item.value === raw) : undefined;
     return { value: raw, label: suppliedItem?.label };
@@ -255,7 +255,7 @@
     : treeSelectTagOverflow(display,
       responsiveTags ? responsiveCount : typeof maxTagCount === 'number' ? maxTagCount : undefined));
   const labelCache = createTreeSelectLabelCache<Data>();
-  // Summary связывает labels в текущем render, до вызова consumer snippet.
+  // Summary connects labels in the current render before calling the consumer snippet.
   let omittedTags = $derived(treeTitleRender && typeof maxTagPlaceholder === 'function'
     ? labelCache.forSummary(treeTitleRender, tagOverflow.omitted, index.values)
     : { records: tagOverflow.omitted, pending: [] });
@@ -263,7 +263,7 @@
     ? componentResponsive && componentOverflow ? display.slice(0, componentOverflow.renderCount) : display
     : tagOverflow.visible);
   let visibleTagKeys = $derived(new Set(tagOverflow.visible.map(item => item.value)));
-  // Ant wrapper передаёт tagRender по multiple/treeCheckable, независимо от strict-only rc mode.
+  // The Ant wrapper forwards tagRender for multiple or treeCheckable independently of rc's strict-only mode.
   let renderTag = $derived(multiple || treeCheckable ? tagRender : undefined);
   let placeholderTitle = $derived(maxTagPlaceholder == null ? `+ ${tagOverflow.omitted.length} ...`
     : typeof maxTagPlaceholder === 'string' || typeof maxTagPlaceholder === 'number'
@@ -276,7 +276,7 @@
   let composing = false;
   let pastedText: string | undefined;
   let search = $derived(searchConfig.searchValue ?? internalSearch);
-  // Suffix получает исходный showSearch, включая undefined.
+  // Suffix receives the original showSearch, including undefined.
   let suffixSearch = $derived(typeof showSearch === 'object' ? true : showSearch);
   let canSearch = $derived(suffixSearch ?? isMultiple);
   let autoClear = $derived(searchConfig.autoClearSearchValue ?? true);
@@ -490,7 +490,7 @@
     const host = tagContent, suffix = componentInputSuffix;
     const overflow = untrack(() => connectTreeSelectComponentOverflow(host, suffix, () => display.length,
       layout => { componentOverflow = layout; }));
-    // Static renderers могут не изменить DOM при росте выбранного списка.
+    // Static renderers may leave the DOM unchanged as the selection grows.
     $effect(() => {
       void display.length;
       overflow.schedule();
@@ -524,7 +524,7 @@
       disconnect?.();
     };
   });
-  // Внутренние DOM-ссылки сохраняются при обновлении spread props без bind:ref.
+  // Internal DOM refs survive spread prop updates without bind:ref.
   $effect(() => {
     nativeElement = root;
     return () => { nativeElement = undefined; };
@@ -556,11 +556,11 @@
     }
     const resetSearch = handledSearchOpen === undefined || !isOpen;
     handledSearchOpen = isOpen;
-    // Source монтируется с закрытым ssrSafeOpen даже при initial open=true.
+    // Upstream mounts with ssrSafeOpen closed even when initial open=true.
     if (resetSearch) {
       untrack(() => {
         if (!isMultiple) searchInput('', false, false);
-        // Synchronous owner update уже обработан mount cleanup в React batch.
+        // Mount cleanup has already handled the synchronous owner update within the React batch.
         handledSearchOpen = rawOpen;
       });
     }
@@ -594,8 +594,8 @@
     untrack(() => {
       const selected = isMultiple ? undefined : checks.checked[0];
       const next = selected !== undefined && !query ? selected : firstNode(filtered);
-      // Tree учитывает offset при смене activeKey. При повторном открытии тот же key
-      // прокручивается с обычным выравниванием выбранного узла.
+      // Tree accounts for the offset when activeKey changes. Reopening with the same key scrolls
+      // using ordinary selected-node alignment.
       if (opening && next === active && selected !== undefined) panel?.scrollTo({ key: selected });
       active = next;
     });
@@ -873,7 +873,7 @@
     onKeyDown?.(event);
   }
   function componentRootContext(): TreeSelectRootContext<RootElement> {
-    // Ant wrapper вычисляет semantic callbacks и при полной замене selector.
+    // The Ant wrapper evaluates semantic callbacks even when the selector is completely replaced.
     void semantics;
     const own = typeof rootSlot === 'object' ? rootSlot.props : undefined;
     const attrs = Object.assign({}, own);
@@ -1042,7 +1042,7 @@
         return;
       }
       if (checkable) {
-        // Правило 2: исходная запись и Tree entity индексируются одним ключом в treeSelectIndex.
+        // Rule 2: treeSelectIndex indexes the raw record and Tree entity under the same key.
         const entity = index.entities.get(String(raw));
         if (treeCheckDisabled(entity!.node)) {
           return;
@@ -1129,7 +1129,7 @@
   }
   function scheduleClose() {
     cancelClose();
-    // rc-select useOpen задерживает false через MessageChannel до click/close callbacks.
+    // rc-select useOpen defers false through MessageChannel until after click and close callbacks.
     const channel = new MessageChannel();
     pendingClose = channel;
     channel.port1.onmessage = () => {
@@ -1196,12 +1196,12 @@
     return loadData?.(panelNode(node)) ?? Promise.resolve();
   }
   function preserveEditorFocus(event: PointerEvent) {
-    // Source OptionList отменяет mousedown только в Tree, не на padding popup.
+    // Upstream OptionList cancels mousedown inside Tree but allows it on popup padding.
     if (componentResponsive && event.target instanceof Node
       && !(treeElement ?? menuElement)?.contains(event.target)) {
       return false;
     }
-    // Полоса прокрутки сама удерживает фокус при обработке mousedown.
+    // The scrollbar itself retains focus while handling mousedown.
     return !(event.target instanceof Element && event.target.closest('.ant-tree-list-scrollbar'));
   }
   function popupMouseDown() {
@@ -1260,7 +1260,7 @@
     if (cancelled || event.ctrlKey || event.altKey || event.metaKey) {
       return;
     }
-    // rc-select открывает поле разрешённой клавишей ещё до root handler.
+    // rc-select opens the field on an allowed key before the root handler runs.
     if (event.key && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
       && event.code !== 'Semicolon' && event.code !== 'Equal'
       && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',

@@ -426,7 +426,7 @@ test(
     await control(page, 'Page size changer').check();
     await control(page, 'Transfer pagination').selectOption('simple');
     await source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }).click();
-    // Виртуальный Select выводит роль option только для активной строки и её соседей.
+    // The virtual Select displays an option role only for the active line and its neighbors.
     await button(page, '50 / стр.').click();
 
     await expect(rows(page)).toHaveCount(31);
@@ -697,7 +697,7 @@ test('Transfer native form reset preserves model selection and the current searc
   await expect(rows(page)).toHaveText(['Alpha']);
   await expect(events(page)).toHaveText('');
   await expect(move(page)).toBeEnabled();
-  // В upstream native reset сбрасывает checked DOM, но не React selection/checked class.
+  // In the upstream native reset resets checked DOM, but not React selection/checked class.
   await expect(check(page, 'Alpha')).not.toBeChecked();
   await expect(rows(page).first()).toHaveClass(/content-item-checked/);
 });

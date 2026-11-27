@@ -89,7 +89,7 @@
     ? progressGradient(lineColor, config.direction === 'rtl') : lineColor);
   let bright = $derived(isProgressColorBright(strokeColor));
   let strings = $derived({ ...ruRU.progress, ...config.locale.progress });
-  // Старый однопараметрический callback сохраняет число вызовов и аргументов.
+  // The legacy single-parameter callback keeps the same invocation count and arguments.
   let text = $derived(format
     ? format.length > 1 || success !== undefined ? format(value, successValue) : format(value)
     : `${value}%`);

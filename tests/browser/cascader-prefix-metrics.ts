@@ -13,7 +13,7 @@ export function snapshotCascaderPrefix() {
   const font = ['font-size', 'line-height', 'font-family', 'color'];
   const padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
   const border = ['border-top-width', 'border-top-color', 'border-radius'];
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null | undefined, names: string[]) {
     if (!node) {
       return null;
@@ -22,7 +22,7 @@ export function snapshotCascaderPrefix() {
 
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));
   }
-  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
+  // He chooses a part of the complete CSS class of the current prefix, regardless of the neighboring classes.
   const nodePart = (node: Element, suffix: string) =>
     node.querySelector(`[class~="${prefix}${suffix}"]`);
 

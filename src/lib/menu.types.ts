@@ -9,28 +9,28 @@ export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
 export type MenuContent = string | number | Snippet;
 
-/** Событие пересечения границы пункта, заголовка или всей ветки. */
+/** The crossing of the border of the point, the header or the whole branch. */
 export interface MenuHoverInfo {
-  /** Строковый ключ Menu, в том числе для пункта с числовым key. */
+  /** Menu string key, including for item with numerical key. */
   key: string;
-  /** Нативное событие с currentTarget соответствующей строки или заголовка на время вызова. */
+  /** Native Event from currentTarget of the corresponding string or header at the time of the call. */
   domEvent: MouseEvent;
 }
 export type MenuHoverEventHandler = (info: MenuHoverInfo) => void;
 
-/** Данные пункта и состояние выбора для значка после подписи. */
+/** Item data and selection status for the post-label icon. */
 export interface MenuItemIconInfo extends MenuItem {
   eventKey: string;
   isSelected: boolean;
 }
 
-/** Рисует содержимое после подписи и extra. Boolean и null не создают узел. */
+/** Draws the contents after the label and extra. Boolean and null do not create a knot. */
 export type MenuItemIcon = Snippet<[MenuItemIconInfo]> | string | number | boolean | null;
 
-/** Положение поверхности относительно заголовка, включая смещения и обработку краёв. */
+/** Position of the surface relative to the heading, including offsets and edge handling. */
 export type MenuPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 
-/** Параметры подсказок свёрнутого меню. Значение false отключает общий Tooltip. */
+/** Options for twisted menu prompts. The value false disconnects the total Tooltip. */
 export type MenuTooltip = Omit<TooltipProps, 'children'> | false;
 
 export type MenuSubMenuSlots = Partial<Record<
@@ -50,7 +50,7 @@ export type MenuStyles = MenuSubMenuSlots & {
 };
 export type MenuSemantic<T> = T | ((info: { props: MenuProps; }) => T | undefined);
 
-/** Настройки Menu в ConfigProvider. Собственный record заменяет родительский. */
+/** Menu settings in ConfigProvider. Your own record replaces your parent. */
 export interface MenuConfig {
   class?: string;
   style?: string;
@@ -61,25 +61,25 @@ export interface MenuConfig {
 
 interface MenuCommon {
   key?: string | number;
-  /** Подпись пункта, группы или подменю с вложенным содержимым. */
+  /** Label of an item, group, or submenu with nested content. */
   label?: RenderEmptyContent;
   class?: string;
   style?: string;
 }
 export interface MenuItem extends MenuCommon {
-  /** Пользовательские атрибуты пункта. Служебные маркеры Menu имеют приоритет. */
+  /** Custom attribute items. Menu’s service markers take precedence. */
   [attribute: `data-${string}`]: unknown;
   type?: 'item';
   key: string | number;
   icon?: Snippet;
-  /** Значок в конце строки. Пустое значение использует настройку ветки или Menu. */
+  /** The icon at the end of the line. Empty value uses the configuration of the branch or Menu. */
   itemIcon?: MenuItemIcon;
   extra?: MenuContent;
-  /** Строка также задаёт HTML title. False отключает подсказку для пункта. */
+  /** The string also sets HTML title. False disables a hint for point. */
   title?: MenuContent | false | null;
   disabled?: boolean;
   danger?: boolean;
-  /** События строки доступны у включённого пункта. */
+  /** Line events are available at the included item. */
   onMouseEnter?: MenuHoverEventHandler;
   onMouseLeave?: MenuHoverEventHandler;
   onClick?: (info: MenuClickInfo) => void;
@@ -89,26 +89,26 @@ export interface MenuSubMenu extends MenuCommon {
   key: string | number;
   children: readonly MenuItemType[];
   icon?: Snippet;
-  /** Значок в конце строк потомков. False отключает наследуемый значок. */
+  /** An icon at the end of lines of descendants. False disables an inherited badge. */
   itemIcon?: MenuItemIcon;
   title?: string;
   disabled?: boolean;
   theme?: MenuTheme;
   popupClassName?: string;
-  /** Поле делегата rc-menu. Для оформления строки используется class. */
+  /** Field delegate rc-menu. Class is used to design the line. */
   rootClassName?: string;
-  /** Смещение [x, y] в пикселях. Заменяет offset выбранной позиции. */
+  /** Displacement [x, y] in pixels. Replaces the offset of the selected position. */
   popupOffset?: readonly number[];
-  /** Стили отдельной поверхности popup; styles.popup.root имеет приоритет. */
+  /** Separate surface styles popup; styles.popup.root takes precedence. */
   popupStyle?: string;
-  /** Переопределяет popupRender Menu для этой ветки. */
+  /** Redefines popupRender Menu for this branch. */
   popupRender?: MenuPopupRender;
-  /** Переопределяет значок этого подменю; false и null скрывают его. */
+  /** Redefines the icon of this substitution; false and null hide it. */
   expandIcon?: MenuExpandIcon;
-  /** Граница ветки включает её списки, даже когда они вынесены в отдельный контейнер. */
+  /** The boundary of the branch includes its lists, even when they are placed in a separate container. */
   onMouseEnter?: MenuHoverEventHandler;
   onMouseLeave?: MenuHoverEventHandler;
-  /** Граница заголовка. События доступны у включённого заголовка. */
+  /** Boundary of the title. Events are available at the included title. */
   onTitleMouseEnter?: MenuHoverEventHandler;
   onTitleMouseLeave?: MenuHoverEventHandler;
   onClick?: (info: MenuClickInfo) => void;
@@ -124,23 +124,23 @@ export interface MenuDivider extends Omit<MenuCommon, 'label'> {
 }
 export type MenuItemType = MenuItem | MenuSubMenu | MenuGroup | MenuDivider | null;
 
-/** Данные всплывающего подменю и доступ к его штатным строкам. */
+/** Popup submenu data and access to its default rows. */
 export interface MenuPopupRenderInfo {
-  /** Данные ветки, канонический eventKey и непосредственные строки в children. */
+  /** These branches, canonical eventKey and direct strings in children. */
   item: MenuSubMenu & { eventKey: string; };
-  /** Путь от корня до ветки, включая ключ переполнения при его наличии. */
+  /** Root to branch, including the overflowed key when available. */
   keys: readonly string[];
-  /** Выводит строку из item.children со штатными стилями, событиями и ref. */
+  /** Renders a row from item.children with the default styles, events, and ref. */
   renderItem: Snippet<[child: MenuItemType]>;
 }
 
-/** Рисует popup вокруг исходного списка или заменяет его содержимое. */
+/** Draws a popup around the source list or replaces its contents. */
 export type MenuPopupRender = Snippet<[
   originMenu: Snippet<[children?: Snippet]>,
   info: MenuPopupRenderInfo
 ]>;
 
-/** Данные ветки и её текущее состояние при отрисовке значка раскрытия. */
+/** Branch data and current state for rendering the expand icon. */
 export interface MenuExpandIconInfo extends MenuSubMenu {
   eventKey: string;
   isSubMenu: true;
@@ -158,36 +158,36 @@ export interface MenuClickInfo {
 export interface MenuSelectInfo extends MenuClickInfo {
   selectedKeys: string[];
 }
-/** Дерево пунктов навигации со ссылками, выбором, подменю и клавиатурой. */
+/** Wood navigation points with links, selection, submenu and keyboard. */
 export interface MenuProps extends Omit<
   HTMLAttributes<HTMLUListElement>,
   'children' | 'onselect'
 > {
-  /** Локальный префикс всех частей Menu и popup; пустая строка наследует ConfigProvider. */
+  /** Local prefix of all parts of Menu and popup; an empty line inherits ConfigProvider. */
   prefixCls?: string;
   items?: readonly MenuItemType[];
   /** @defaultValue 'vertical' */
   mode?: MenuMode;
-  /** Как в обёртке Ant Design, фактическое направление задаёт ConfigProvider. */
+  /** As in the Ant Destination, the actual direction sets ConfigProvider. */
   direction?: 'ltr' | 'rtl';
   /** @defaultValue 'light' */
   theme?: MenuTheme;
   /** @defaultValue false */
   disabled?: boolean;
-  /** Оставляет все пункты в строке горизонтального Menu. */
+  /** Leaves all the items in the horizontal Menu line. */
   disabledOverflow?: boolean;
-  /** Содержимое кнопки переполнения. Без prop используется значок многоточия. */
+  /** Overflow button content. Defaults to the ellipsis icon. */
   overflowedIndicator?: MenuContent | false | null;
-  /** Класс всплывающего списка невместившихся пунктов. */
+  /** The class of the pop-up list of unincluded items. */
   overflowedIndicatorPopupClassName?: string;
   selectedKeys?: readonly string[];
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultSelectedKeys?: readonly string[];
   /** @defaultValue false */
   multiple?: boolean;
   /** @defaultValue true */
   selectable?: boolean;
-  /** @internal Семантика строк выбора внутри фильтра Table. */
+  /** @internal Semantics for selection rows inside Table filters. */
   _itemRole?: 'menuitemcheckbox' | 'menuitemradio';
   openKeys?: readonly string[];
   defaultOpenKeys?: readonly string[];
@@ -200,9 +200,9 @@ export interface MenuProps extends Omit<
   inlineCollapsed?: boolean;
   /** @defaultValue false */
   forceSubMenuRender?: boolean;
-  /** Замещает встроенные анимации inline-списков и popup. */
+  /** Replaces built-in inline and popup animations. */
   motion?: MenuMotion;
-  /** Обёртка Ant Design разрешает карту встроенных фаз сама; для настройки используйте motion. */
+  /** Ant Design wrapper resolves built-in phases map itself; use motion for customization. */
   defaultMotions?: Partial<Record<MenuMode | 'other', MenuMotion>>;
   /** @defaultValue 'hover' */
   triggerSubMenuAction?: 'hover' | 'click';
@@ -210,30 +210,30 @@ export interface MenuProps extends Omit<
   subMenuOpenDelay?: number;
   /** @defaultValue 0.1 */
   subMenuCloseDelay?: number;
-  /** Заменяет встроенные позиции по имени для подменю и списка переполнения. */
+  /** Replaces built-in positions by name for submenu and overcrowding list. */
   builtinPlacements?: Readonly<Record<string, MenuPopupAlign>>;
-  /** Семантические классы накапливаются после классов из ConfigProvider.menu. */
+  /** Semantic classes accumulate after classes from ConfigProvider.menu. */
   classNames?: MenuSemantic<MenuClassNames>;
   /**
-   * CSS-строки для semantic slots. Для корня порядок слоёв: provider styles.root,
-   * provider style, local styles.root, local style. Вложенные slots заменяются целиком.
+   * CSS lines for semantic slots. For the root order of layers: provider styles.root, provider
+   * style, local styles.root, local style. The nested slots are replaced entirely.
    */
   styles?: MenuSemantic<MenuStyles>;
-  /** Значок раскрытия подменю. Undefined наследует ConfigProvider.menu. */
+  /** Submenu expand icon. undefined inherits ConfigProvider.menu. */
   expandIcon?: MenuExpandIcon;
-  /** Оформляет всплывающие подменю, включая список переполнения. */
+  /** Decorates pop-up changes, including a list of overflows. */
   popupRender?: MenuPopupRender;
-  /** Общий значок после подписи и extra каждого пункта. */
+  /** General icon after label and extra each item. */
   itemIcon?: MenuItemIcon;
-  /** Общие параметры Tooltip для строк свёрнутого меню. */
+  /** General parameters Tooltip for folded menu strings. */
   tooltip?: MenuTooltip;
   /**
-   * Контейнер popup подменю; trigger — native button заголовка.
-   * Отсутствующий prop наследует ConfigProvider; собственный undefined отключает его.
-   * При force render zero-arity getter может сначала получить undefined; SSR не вызывает getter.
+   * Container popup submenu; trigger — native button title. Missing prop inherits ConfigProvider;
+   * its own undefined disables it. In case of render force zero-arity getter can first get
+   * undefined; SSR does not cause getter.
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   rootClassName?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLUListElement;
 }

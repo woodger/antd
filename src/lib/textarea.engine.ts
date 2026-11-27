@@ -5,7 +5,7 @@ export {
   resolveInputClear as resolveTextAreaClear
 } from './input-count.engine';
 
-// Из CSS-строк Svelte переносится только resize root в textarea, как style.resize в React.
+// From CSS-strings Svelte, only resize root is transferred to textarea, as style.resize in React.
 export function textAreaResizeStyle(style = ''): string {
   let current = '';
   let quote = '';

@@ -61,7 +61,7 @@ for (const viewport of [1280, 320]) {
           }
 
           const link = root.getByRole('link', { name: 'Доставка', exact: true });
-          // Индикатор измеряет текущий шрифт; сначала ждём завершения перехода темы.
+          // The indicator measures the current font; first we are waiting for the transition of the theme to be completed.
           await expect(link).toHaveCSS('font-size', theme.compact ? '12px' : '14px');
           await expect(link).toHaveCSS('line-height', theme.compact ? '20px' : '22px');
           await link.focus();

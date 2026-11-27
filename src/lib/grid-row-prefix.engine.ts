@@ -1,6 +1,6 @@
 import template from './vendor/grid-row-prefix.css.js';
 
-/** Row layout/reset selectors ограничены владельцем, canonical Grid marker сохраняется. */
+/** Row layout/reset selectors are restricted by the owner, canonical Grid marker is retained. */
 export function getGridRowPrefixCss(prefix: string) {
   if (prefix === 'ant-row') {
     return undefined;

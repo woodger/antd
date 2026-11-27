@@ -1,12 +1,12 @@
-// Нормализует подсказку подписи формы. Локальное значение накладывается на контекст Tooltip.
+// Normalizes the label of the form. The local value is overlaid on context Tooltip.
 import type { FormItemTooltip, FormTooltipProps } from './form.types';
 
-// Отличает объект настроек от массива или snippet, которые используются как содержимое.
+// Distinguishes the settings object from the array or snippet, which are used as contents.
 function isTooltipOptions(value: FormItemTooltip): value is FormTooltipProps {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
-/** Массивы остаются content, а не превращаются в options через spread, как в source 6.6.8. */
+/** The arrays remain content, not turning into options through spread, as in source 6.6.8. */
 export function resolveFormTooltip(
   value: FormItemTooltip,
   context?: FormTooltipProps

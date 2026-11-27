@@ -5,7 +5,7 @@ import Fixture from '../browser/fixtures/TableHeadingContentFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-heading-content-reference.json';
 import { expectedTableHeadingContent } from '../browser/fixtures/table-heading-content-observations';
 
-/** Читает текст и встроенные метки до подключения DOM. */
+/** Reads text and inline labels before attaching the DOM. */
 function content(markup: string) {
   return {
     text: markup.replace(/<!--[\s\S]*?-->|<[^>]+>/g, '').trim(),
@@ -13,11 +13,11 @@ function content(markup: string) {
   };
 }
 
-/** Снимает наблюдаемые подписи и служебные контролы в серверном ответе. */
+/** Captures observable labels and utility controls in the server response. */
 function snapshot(body: string) {
   const headers = Array.from(body.matchAll(/<th\b([^>]*)>([\s\S]*?)<\/th>/g),
     ([, attrs, markup]) => {
-      // Закрытый Dropdown уже присутствует в SSR, но его пункты не входят в заголовок.
+      // The closed Dropdown is already present in SSR, but its items stay out of the header.
       const popup = markup.search(/<div\b[^>]*\sdata-ant-dropdown-popup\b/);
       const heading = popup === -1 ? markup : markup.slice(0, popup);
       return {

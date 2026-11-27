@@ -4,7 +4,7 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableLoadingFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-loading-reference.json';
 
-/** Возвращает текст ячейки без гидратационных маркеров и неразрывного пробела. */
+/** Returns cell text without hydration markers or the nonbreaking space. */
 function emptyText(body: string) {
   const match = body.match(/<tr\b[^>]*ant-table-placeholder[^>]*>([\s\S]*?)<\/tr>/);
   return match ? match[1].replace(/<!--[\s\S]*?-->|<[^>]*>|&nbsp;/g, '').trim() : null;

@@ -24,14 +24,14 @@
 </script>
 
 <script lang="ts">
-  // Один владелец меняет mode и pickerValue, сохраняя поля и принятые даты.
+  // One owner changes mode and pickerValue, saving the fields and accepted dates.
   import dayjs, { type Dayjs } from 'dayjs';
   import { untrack } from 'svelte';
   import {
     ConfigProvider, DatePicker, RangePicker, enUS, type RangePickerValue
   } from '@woodger/antd';
 
-  /** Берёт профиль независимого браузерного замера из параметра фикстуры. */
+  /** Takes the profile of an independent browser measurement from the fixture parameter. */
   function readProfile(): PickerModeProfile {
     const parameter = new URLSearchParams(globalThis.location?.search).get('profile');
 
@@ -57,7 +57,7 @@
   let minDate = $derived(profile.min ? dayjs(profile.min) : undefined);
   let maxDate = $derived(profile.max ? dayjs(profile.max) : undefined);
 
-  /** Сохраняет время и смещение Dayjs в том же формате, что и эталон. */
+  /** Retains the time and displacement of Dayjs in the same format as the benchmark. */
   function encode(value: Dayjs | null | Dayjs[] | RangePickerValue) {
     if (Array.isArray(value)) {
       return value.map(date => date?.format('YYYY-MM-DDTHH:mm:ss.SSSZ') ?? null);
@@ -65,7 +65,7 @@
     return value?.format('YYYY-MM-DDTHH:mm:ss.SSSZ') ?? null;
   }
 
-  /** На SSR события пользователя и поиск popup target недопустимы. */
+  /** On SSR user events and search for popup target are inadmissible. */
   function report(...event: unknown[]) {
     if (server) {
       throw Error('Unexpected DatePicker mode event during SSR');
@@ -73,7 +73,7 @@
     events.push(event);
   }
 
-  /** Принимает предложенную панель только в профилях с управляемым переходом. */
+  /** Accepts the proposed panel only in profiles with a managed transition. */
   function panelChange(date: Dayjs | RangePickerValue, next: DatePickerMode | RangePickerMode) {
     report('panel', encode(date), next);
     if (profile.accept) {
@@ -81,23 +81,23 @@
     }
   }
 
-  /** Управление в обход browser focus воспроизводит внешнее обновление props. */
+  /** Management bypassing the focus browser reproduces an external update of props. */
   function updateMode(event: Event & { currentTarget: HTMLInputElement; }) {
     const next: DatePickerMode | RangePickerMode | null = JSON.parse(event.currentTarget.value);
     mode = next ?? undefined;
   }
 
-  /** Дата панели обновляется независимо от режима и выбора. */
+  /** The panel date is updated regardless of mode and choice. */
   function updateView(event: Event & { currentTarget: HTMLInputElement; }) {
     view = dayjs(event.currentTarget.value);
   }
 
-  /** Ошибка чтения portal target на сервере сразу прерывает пакетную проверку. */
+  /** Error reading portal target on the server immediately interrupts the batch check. */
   function readServerPortal(_trigger: HTMLElement): never {
     throw Error('Unexpected DatePicker mode portal target during SSR');
   }
 
-  /** Правило одинаково для всех дат мая, включая оба края панели месяца. */
+  /** The rule is the same for all dates of May, including both edges of the month panel. */
   function disabledDate(date: Dayjs) {
     return Boolean(profile.disableMay && date.month() === 4);
   }

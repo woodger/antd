@@ -50,12 +50,12 @@
   const paletteStyles = $derived(paletteLayer
     ? { popup: { root: 'z-index:0 !important' } } : undefined);
 
-  /** Переводит открытые поверхности на новый уровень уже показанного владельца. */
+  /** Translates open surfaces to a new level of the already shown owner. */
   function updateOwner() {
     ownerLayer = keyboard ? 1700 : profile.update;
   }
 
-  /** Переносит палитру в соседний узел внутри того же нативного диалога. */
+  /** Transfers the palette to a nearby node inside the same native dialogue. */
   function getPaletteContainer(trigger: HTMLElement) {
     return portal ?? trigger;
   }

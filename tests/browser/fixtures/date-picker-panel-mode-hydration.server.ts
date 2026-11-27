@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import DatePickerPanelModeFixtures, { panelModeHydrationProfile }
   from './DatePickerPanelModeFixtures.svelte';
 
-/** Формирует RangePicker с двумя разными режимами без DOM. */
+/** Forms RangePicker with two different modes without DOM. */
 export function renderPanelModeFixture() {
   return render(DatePickerPanelModeFixtures, { props: { profile: panelModeHydrationProfile } });
 }

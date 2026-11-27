@@ -1,13 +1,12 @@
-// Определяет текст поиска TreeSelect после ввода, paste и Enter. Разбиение влияет на открытие
-// списка.
-// Ant Design 6.6.8 / @rc-component/select 1.10.1; MIT, vendor/LICENSE.rc-select.
+// Defines the search text TreeSelect after entering, paste and Enter. Breaking affects the opening
+// of the list. Ant Design 6.6.8 / @rc-component/select 1.10.1; MIT, vendor/LICENSE.rc-select.
 import { splitSelectTokens } from './select-token.engine';
 import type { SelectTokenSeparators } from './select.types';
 
 /** TreeSelect tokenization affects search and visibility; it does not select nodes. */
 export type TreeSelectTokenSeparators = SelectTokenSeparators;
 
-// Распознаёт разделитель строки или пользовательскую функцию, которой передаётся Enter.
+// Recognizes a string separator or custom function to which Enter is transferred.
 export function treeSelectTokenWithEnter(separators?: TreeSelectTokenSeparators) {
   return typeof separators === 'function'
     || Boolean(separators?.some(token => token === '\n' || token === '\r\n'));
@@ -26,7 +25,7 @@ export function treeSelectPastedSearch(
   return text.replace(normalized, pasted);
 }
 
-// Очищает результат при разбиении и сообщает, требуется ли уведомление onSearch.
+// Cleans the result when partitioned and informs whether a onSearch notification is required.
 export function treeSelectTokenSearch(text: string, options: {
   previousSearch: string;
   separators?: TreeSelectTokenSeparators;

@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 type Action = NonNullable<(typeof source.cases)[number]['states'][number]['action']>;
 
-/** Снимает видимые ячейки, позиции объединений и результат DOM events. */
+/** Removes the visible cells, positions of associations and the result DOM events. */
 function snapshot({
   rtl, checkHover, checkPositions
 }: { rtl: boolean; checkHover: boolean; checkPositions: boolean; }) {
@@ -16,7 +16,7 @@ function snapshot({
     throw new Error('Missing Table span fixture');
   }
 
-  /** Учитывает атрибуты предоставленного onCell и установленную семантику th. */
+  /** Takes into account the attributes of the provided onCell and the installed semantics th. */
   function readCell(cell: HTMLTableCellElement, virtualBody = false) {
     const key = [...cell.classList].find(name => name.startsWith('fixture-'))?.slice(8);
     const button = cell.querySelector<HTMLElement>('[data-render-index]');
@@ -73,7 +73,7 @@ function snapshot({
     events: JSON.parse(document.getElementById('table-spans-events')?.textContent ?? '[]') };
 }
 
-/** Выполняет измеренные действия клавишами, мышью и через публичный scrollTo. */
+/** Performs the measured actions with keys, mouse and through public scrollTo. */
 async function act(page: Page, action: Action, index: number) {
   if ('scroll' in action && action.scroll) {
     await page.getByTestId(`spans-scroll-${index - 1}`).click();
@@ -107,9 +107,9 @@ type State = (typeof source.cases)[number]['states'][number]['state'];
 type BodyCell = Exclude<State['rows'][number][number], string>[number];
 type Cell = State['head'][number][number] | BodyCell | State['overlay'][number]['cell'];
 
-/** Сравнивает интерактивные ячейки UMD с семантическими ячейками таблицы Svelte. */
+/** Compares interactive cells of UMD with semantic cells of table Svelte. */
 function project(state: State, virtual: boolean, checkHover: boolean) {
-  // Сопоставляет видимые ячейки при разных DOM тегах виртуального тела.
+  // Compares visible cells at different DOM virtual body tags.
   function cellProps(cell: Cell, virtualBody = false) {
     const { visible: _visible, ...props } = cell;
     return { ...props, tag: virtualBody ? null : cell.tag, hovered: checkHover && cell.hovered,

@@ -10,13 +10,13 @@ const scrollport = `${root} [data-ant-table-part="content"]`;
 type Sample = (typeof source.cases)[number];
 type Action = NonNullable<Sample['states'][number]['action']>;
 
-/** Открывает fixture вне общих элементов стенда, как в замере Source. */
+/** Opens fixture outside the general elements of the stand, as in the measurement of Source. */
 async function open(page: Page, query: string) {
   await page.goto(`/select-components-hydration.html?${query}`);
   await page.addScriptTag({ type: 'module', url: '/table-summary.client.ts' });
 }
 
-/** Измеряет bands и позиции ячеек в логических координатах общей таблицы. */
+/** Measures bands and cell positions in the logical coordinates of a common table. */
 function snapshot(rtl: boolean) {
   const viewport = document.querySelector<HTMLDivElement>(
     '#table-summary-fixture [data-ant-table-part="content"]'
@@ -75,7 +75,7 @@ function snapshot(rtl: boolean) {
   };
 }
 
-/** Выполняет прокрутку нужного владельца и действия над текущей страницей. */
+/** Performs scrolling of the desired owner and actions over the current page. */
 async function act(page: Page, action: Action, scrollIndex: number) {
   if ('scroll' in action && action.scroll) {
     await page.getByTestId(`summary-scroll-${scrollIndex}`).click();
@@ -101,7 +101,7 @@ async function act(page: Page, action: Action, scrollIndex: number) {
   }
 }
 
-/** Сравнивает значения и доступные ячейки. Геометрию сверяют по каждому профилю. */
+/** Compares the values and available cells. Geometry is checked for each profile. */
 function values(
   rows: ReturnType<typeof snapshot>['rows'] | Sample['states'][number]['state']['rows']
 ) {
@@ -134,7 +134,7 @@ for (const { profile, states } of source.cases) {
         if (action && 'outer' in action) expect(native.positions[3]).toBe(sourceState.positions[3]);
 
         if (!sourceState.rows.length) {
-          // Source теряет tfoot в двух режимах. Нативная таблица сохраняет итог всей страницы.
+          // Source loses tfoot in two modes. Native table retains the outcome of the whole page.
           expect(native.rows[0].keys).toEqual(Array.from({ length: profile.count }, (_, key) => key));
           expect(native.rows[0].cells[1].text).toBe(String(profile.count * (profile.count + 1) / 2));
           if (profile.headerless) {
@@ -157,7 +157,7 @@ for (const { profile, states } of source.cases) {
         }
 
         if (profile.id === 'scrolling' && action) {
-          // scroll.y в нативной таблице включает шапку. В конце совпадают границы итога и viewport.
+          // scroll.y in the native table includes a cap. At the end, the limits of the result and viewport coincide.
           expect((native.summaryTop ?? 0) + native.summaryHeight).toBe(native.viewportEnd);
         }
         else {

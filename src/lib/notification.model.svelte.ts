@@ -1,5 +1,5 @@
-// Владеет независимой очередью и фиксирует defaults на момент open. Настройки
-// размещения и оформления поверхности могут обновляться отдельно от таймеров.
+// Owns a separate queue and captures defaults on open. Placement and surface styling may update
+// independently of the timers.
 import { untrack } from 'svelte';
 import {
   createNoticeQueue,
@@ -46,8 +46,8 @@ function resolvePlacement(
 }
 
 /**
- * Создаёт независимый экземпляр для одного NotificationHolder. Без подключённого
- * holder таймеры не запускаются; отсоединение очищает очередь без onClose.
+ * Creates an independent instance for one NotificationHolder. Without a connected holder, the
+ * timers do not start; the disconnection clears the queue without onClose.
  */
 export function createNotification(initial: NotificationOptions = {}) {
   let options = $state.raw(initial);
@@ -59,7 +59,7 @@ export function createNotification(initial: NotificationOptions = {}) {
     notice => notice.placement
   );
   const runtime = queue[noticeQueueKey];
-  // Getter сохраняет живые настройки при стабильном экземпляре App.
+  // Getter preserves live settings with a stable App instance.
   const holder = Object.defineProperty(runtime, 'options', {
     get: () => options
   }) as typeof runtime & { readonly options: NotificationOptions; };

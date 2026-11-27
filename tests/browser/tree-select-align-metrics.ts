@@ -6,9 +6,9 @@ export function readTreeSelectAlign() {
   const shadow = document.querySelector('[data-align-shadow]')?.shadowRoot;
   const popup = shadow?.querySelector<HTMLElement>('.ant-tree-select-dropdown') ?? document.querySelector<HTMLElement>('.ant-tree-select-dropdown');
   const visible = Boolean(popup && !popup.hidden && getComputedStyle(popup).display !== 'none' && popup.getClientRects().length);
-  // Округляет дробное измерение до тысячных для сравнения снимков.
+  // Rounds the fractional dimension to the thousandth for comparing images.
   const round = (n: number) => Math.round(n * 1000) / 1000;
-  // Сохраняет измеренный box в простых числах для передачи из browser realm.
+  // Saves the measured box in prime numbers to transmit from browser realm.
   const rect = (node: Element | null) => {
     if (!node) {
       return null;
@@ -26,7 +26,7 @@ export function readTreeSelectAlign() {
       height: round(r.height)
     };
   };
-  // Читает сериализованное состояние fixture. Отсутствующий output остаётся null.
+  // Reads the serialized state fixture. Missing remains the output null.
   const output = (name: string) => {
     const node = document.querySelector(`[data-align-${name}]`);
     return node ? JSON.parse(node.textContent || 'null') : null;

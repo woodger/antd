@@ -4,12 +4,12 @@ import type { ComponentSize } from './types';
 import type { SpaceOrientation, SpaceProps } from './space.types';
 
 export type SpaceCompactSize = ComponentSize | 'medium';
-/** Стыкует границы controls и передаёт им общий размер через контекст Compact. */
+/** Knocks the boundaries and controls gives them a total size through the context of Compact. */
 export interface SpaceCompactProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; не меняет собственные prefixes дочерних controls. */
+  /** Local CSS prefix; does not change its own prefixes of daughter numbers. */
   prefixCls?: string;
   items?: SpaceProps['items'];
   children?: Snippet;
@@ -21,15 +21,15 @@ export interface SpaceCompactProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
-/** Нативный addon для композиции controls в SpaceCompact. */
+/** Native addon for the composition in SpaceCompact. */
 export interface SpaceAddonProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; namespace служебных variables задаёт общий provider prefix. */
+  /** Local CSS prefix; namespace of service variables sets the general provider prefix. */
   prefixCls?: string;
   children?: Snippet;
   /** @defaultValue 'outlined' */
@@ -38,6 +38,6 @@ export interface SpaceAddonProps extends Omit<
   status?: 'error' | 'warning';
   class?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

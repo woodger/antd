@@ -1,22 +1,22 @@
-/** Label создаёт второй input click; bubble lock rc-checkbox оставляет один внешний click. */
+/** A label generates a second input click. The rc-checkbox bubble lock allows one external click. */
 export function createCheckableClickLock() {
   let view: Window | null = null;
   let frame: number | undefined;
 
-  // Отменяет оставшийся RAF и сбрасывает блокировку всплытия для нового click.
+  // Cancels the pending animation frame and clears the bubble lock for the next click.
   function clear() {
     if (frame !== undefined) view?.cancelAnimationFrame(frame);
     frame = undefined;
   }
 
   return {
-    // Устанавливает блокировку на окно документа события до ближайшего кадра.
+    // Sets the lock on the event document's window until the next frame.
     label(event: MouseEvent & { currentTarget: EventTarget & HTMLLabelElement; }) {
       clear();
       view = event.currentTarget.ownerDocument.defaultView;
       frame = view?.requestAnimationFrame(() => { frame = undefined; });
     },
-    // Останавливает только всплытие повторного click в рамках блокировки label.
+    // Stops only the repeated click from bubbling while the label lock is active.
     input(event: MouseEvent) {
       if (frame === undefined) {
         return;

@@ -100,11 +100,11 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
     owner?.addEventListener('dragend', windowEnd);
     options.props().onDragStart?.({ event, node: snapshot });
     try {
-      // Firefox требует запись DataTransfer; readonly transfer может отклонить её.
+      // Firefox requires recording DataTransfer; readonly transfer can reject it.
       event.dataTransfer?.setData('text/plain', '');
     }
     catch {
-      // Ограничение браузера не отменяет начатый drag.
+      // Browser restriction does not cancel the started drag.
     }
     if (event.defaultPrevented) clean();
   }
@@ -148,7 +148,7 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   function eventSnapshot(
     session: Pick<TreeDragSession<Data>, 'data' | 'snapshot'>
   ): TreeEventNode<Data> {
-    // Source удерживает исходную data-ссылку и state начала drag раздельно.
+    // Source keeps the original data-linking and state drag started separately.
     const { key, expanded, selected, checked, halfChecked, loaded, loading, pos, active,
       dragOver, dragOverGapTop, dragOverGapBottom } = session.snapshot;
     return { ...session.data, key, expanded, selected, checked, halfChecked, loaded, loading,
@@ -206,7 +206,7 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
     event.stopPropagation();
     const candidate = resolve(event, entry);
     if (!allowed(candidate) || !candidate) {
-      // Source сохраняет прежний разрешённый target; следующий drop обходит запрет.
+      // Source retains the previous allowed target; the next drop circumvents the ban.
       clearTarget();
       return;
     }

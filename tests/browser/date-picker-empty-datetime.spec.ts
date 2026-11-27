@@ -51,7 +51,7 @@ for (const sample of samples) {
         }
       };
       let disposed = false;
-      // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+      // Saves the result of spare removal and adds an error to the diagnosis of the test.
       async function attachFallbackDisposal() {
         try {
           await attach('finally-actual-disposal', await disposeEmptyDatetime(page));

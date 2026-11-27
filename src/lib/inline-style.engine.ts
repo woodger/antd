@@ -1,7 +1,7 @@
 export type InlineStyleLayer = string | undefined
   | readonly (readonly [string, string, ('' | 'important')?])[];
 
-// Числовые CSS properties без единиц в React DOM 18.3.1, MIT, vendor/LICENSE.react-dom.
+// Numerical CSS properties without units in React DOM 18.3.1, MIT, vendor/LICENSE.react-dom.
 const unitlessNames = [
   'animationIterationCount', 'aspectRatio', 'borderImageOutset', 'borderImageSlice',
   'borderImageWidth', 'boxFlex', 'boxFlexGroup', 'boxOrdinalGroup', 'columnCount', 'columns',
@@ -20,7 +20,7 @@ for (const property of unitlessNames) {
   }
 }
 
-/** Преобразует Source CSS object в декларации с единицами React DOM. */
+/** Converts Source CSS object in declarations with units React DOM. */
 export function serializeCssProperties(style: object) {
   const declarations: string[] = [];
   for (const [property, value] of Object.entries(style)) {
@@ -44,7 +44,7 @@ export function serializeInlineStyleLayers(layers: readonly InlineStyleLayer[]) 
     .filter(Boolean).join(';') || undefined;
 }
 
-/** Сохраняет declaration keys, строки, комментарии и function values без развёртки shorthand. */
+/** Saves declaration keys, strings, comments and function values without shorthand deployment. */
 export function* getInlineStyleDeclarations(layers: readonly InlineStyleLayer[]) {
   for (const layer of layers) {
     if (typeof layer !== 'string') {

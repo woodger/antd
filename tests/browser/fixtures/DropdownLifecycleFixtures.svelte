@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Управляет публичными параметрами и измеряет lifecycle пользовательской панели.
+  // Manages public parameters and measures the lifecycle of the custom panel.
   import { untrack, type Snippet } from 'svelte';
   import {
     ConfigProvider, Dropdown, Form, FormItem, Input, Menu, createForm, type DropdownMenuProps
@@ -46,7 +46,7 @@
     return swappedRenderer ? nextRenderer : renderPopup;
   });
 
-  // Каждая панель получает только те команды и callbacks, которые есть в исходном профиле.
+  // Each panel receives only those commands and callbacks that are in the original profile.
   function getMenu(): DropdownMenuProps | undefined {
     if (editorForm || toggle || content?.noMenu) return undefined;
     if (replacement) {
@@ -65,7 +65,7 @@
     };
   }
 
-  // Переключает заданные владельцем флаги без взаимодействия с trigger или панелью.
+  // Switches flags given by the owner without interacting with the trigger or panel.
   function changeLifecycle(patch: Partial<NonNullable<typeof lifecycleOwner>>) {
     if (lifecycleOwner) lifecycleOwner = { ...lifecycleOwner, ...patch };
   }
@@ -75,13 +75,13 @@
     return portal;
   }
 
-  // Cleanup Svelte читает предыдущий снимок состояния. Журнал сохраняет общий порядок событий.
+  // Cleanup Svelte is reading the previous state shot. The magazine maintains the general order of events.
   function recordEvent(...event: unknown[]) {
     recorded.push(event);
     events = [...recorded];
   }
 
-  // Смена режима повторяет lifecycle эффекта Body при неизменном DOM редактора.
+  // Mode change repeats lifecycle effect Body with an unchanged DOM editor.
   function reportBody() {
     $effect(() => {
       const current = mode;
@@ -90,7 +90,7 @@
     });
   }
 
-  // Задаёт defaultValue теми же DOM-свойствами, что и контрольный редактор React.
+  // Sets defaultValue with the same DOM properties as control editor React.
   function initializeDraft(input: HTMLInputElement) {
     input.value = 'Initial';
     input.defaultValue = 'Initial';

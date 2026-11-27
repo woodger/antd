@@ -6,7 +6,7 @@ const rootStates = new Set([
   '-with-progress', '-rtl'
 ]);
 
-/** Root states изолированы; token namespaces и adaptive defaults сохраняют владельца. */
+/** Root states are isolated; token namespaces and adaptive defaults retain the owner. */
 export function getStepsPrefixCss(prefix: string) {
   if (prefix === 'ant-steps') {
     return undefined;

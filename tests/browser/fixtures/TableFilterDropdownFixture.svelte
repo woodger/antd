@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Собирает встроенную и пользовательскую панели через публичные свойства колонки.
+  // Assembles built-in and user panels through public column properties.
   import type { Snippet } from 'svelte';
   import {
     ConfigProvider, enUS, Menu, Table, type TableChange, type TableColumn,
@@ -24,12 +24,12 @@
   const columns = $derived(getColumns(profileId));
   const dataSource = $derived(profileId === 'custom-typed' ? typedRecords : records);
 
-  /** Возвращает контейнер только для локального Dropdown этой колонки. */
+  /** Returns the container only for the local Dropdown of this column. */
   function getPopupContainer(trigger: HTMLElement) {
     return popupHost ?? trigger.ownerDocument.body;
   }
 
-  /** Задаёт вариант управления по эталонному сценарию. */
+  /** Specifies the management option according to the reference scenario. */
   function getColumns(profile: string): TableColumn<Row>[] {
     const column: TableColumn<Row> = {
       key: 'score',
@@ -93,12 +93,12 @@
     return [column];
   }
 
-  /** Записывает запрос на открытие рядом с событиями фильтрации. */
+  /** Writes a request for opening next to filtering events. */
   function noteOpen(open: boolean) {
     changes = [...changes, { open }];
   }
 
-  /** Записывает критерии и строки, переданные из публичного onChange. */
+  /** Writes down the criteria and strings transferred from public onChange. */
   function noteChange(event: TableChange<Row>) {
     changes = [
       ...changes, { filters: event.filters, rows: event.currentDataSource.map(row => row.key) }

@@ -162,7 +162,7 @@ test('Image themes reach single and group viewers above Modal while preserving t
       const viewer = page.locator('dialog.ant-image-preview[open]');
 
       await expect(viewer).toBeVisible();
-      // Под Modal исходный viewer получает уровень владельца плюс 1.
+      // Under Modal the original viewer receives the level of the owner plus 1.
       await expect(viewer).toHaveCSS('z-index', '1101');
       await expect(viewer).toHaveCSS('--ant-image-z-index-popup', '2100');
       await expect(viewer.getByRole('button', { name: 'zoomIn', exact: true }))

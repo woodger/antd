@@ -34,7 +34,7 @@
       hashId: info.hashId,
       primary: info.token.colorPrimary,
       fontSize: info.token.fontSize,
-      // Ключ внутреннего кэша не относится к публичному набору токенов.
+      // An internal cache key does not apply to a public token set.
       tokenKeys: Object.keys(info.token).filter(key => key !== '_tokenKey').sort(),
       buttonPrimary: info.token.Button && 'colorPrimary' in info.token.Button
         ? info.token.Button.colorPrimary : undefined,

@@ -1,5 +1,5 @@
-// Вычисляет responsive значения, классы и отступы Grid. Приоритет breakpoint определяется
-// порядком активных экранов.
+// Calculates trigger values, Grid classes and indentations. The priority of breakpoint is
+// determined by the order of active screens.
 import type { ColProps, GridGap, GridGutter, GridResponsive, GridScreenMap } from './grid.types';
 import type { AliasToken } from './theme-token.types';
 import type { GridBreakpoint } from './grid.types';
@@ -17,7 +17,7 @@ export const gridMediaQueries = {
 
 type BreakpointTokens = Pick<AliasToken, Extract<keyof AliasToken, `screen${string}`>>;
 
-/** Source responsiveObserver проверяет порядок границ до создания matchMedia queries. */
+/** Source responsiveObserver checks the order of boundaries until matchMedia queries are created. */
 export function getGridMediaQueries(token: BreakpointTokens): Record<GridBreakpoint, string> {
   const names = ['XS', 'SM', 'MD', 'LG', 'XL', 'XXL', 'XXXL'] as const;
   for (const [index, name] of names.entries()) {
@@ -50,7 +50,7 @@ export function getGridMediaQueries(token: BreakpointTokens): Record<GridBreakpo
   };
 }
 
-// Выбирает самое широкое активное значение, включая нулевой размер.
+// Chooses the broadest active value, including zero size.
 export function gridResponsiveValue<Value>(
   value: Value | GridResponsive<Value>,
   screens: GridScreenMap | null
@@ -70,18 +70,18 @@ export function gridResponsiveValue<Value>(
   return undefined;
 }
 
-// Разрешает горизонтальный и вертикальный gutter как отдельные значения.
+// Allows horizontal and vertical gutter as separate values.
 export function gridGutters(
   gutter: GridGutter | [GridGutter, GridGutter],
   screens: GridScreenMap | null
 ): [GridGap, GridGap] {
   const values = Array.isArray(gutter) ? gutter : [gutter, undefined];
-  // useGutter эталона при SSR/null считает все breakpoints совпавшими.
+  // useGutter standards at SSR/null considers all breakpoints to have coincided.
   const available = screens ?? Object.fromEntries(gridBreakpoints.map(key => [key, true]));
   return values.map(value => gridResponsiveValue(value, available)) as [GridGap, GridGap];
 }
 
-// Преобразует числовой flex и размеры в синтаксис flex элемента.
+// Converts numerical flex and dimensions to syntaxis of the flex element.
 export function parseGridFlex(value: string | number): string {
   if (value === 'auto') {
     return '1 1 auto';
@@ -95,7 +95,7 @@ export function parseGridFlex(value: string | number): string {
   return String(value);
 }
 
-// Собирает responsive классы, атрибуты и переменные колонки без доступа к DOM.
+// Collects responsive classes, attributes and column variables without access to DOM.
 export function gridColClasses(
   props: ColProps,
   prefix = 'ant-col',
@@ -138,7 +138,7 @@ export function gridColClasses(
   return { classes, variables: variables.join(';'), attributes };
 }
 
-// Делит gutter пополам и выбирает знак для отступов Row и Col.
+// Divides the gutter in half and chooses a sign for the Row and Col indentations.
 export function gridHalfGutter(value: GridGap, negative = false): string | undefined {
   if (!value) {
     return undefined;

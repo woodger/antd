@@ -10,7 +10,7 @@ import type {
 } from './tooltip.types';
 import type { AliasToken } from './theme-token.types';
 
-/** rc-trigger/useAction: независимые наборы и неявный touch для hover без click. */
+/** rc-trigger/useAction: independent kits and an implicit touch for hover without click. */
 export function getTooltipActions(
   trigger: TooltipTrigger | readonly TooltipTrigger[],
   showAction?: readonly TooltipTrigger[],
@@ -25,7 +25,7 @@ export function getTooltipActions(
   return { show, hide };
 }
 
-/** Ant Design memoOverlay: 0 в title приоритетнее даже truthy legacy overlay. */
+/** Ant Design memoOverlay: 0 in the title is more priority even truthy over legacy. */
 export function getTooltipContent(
   title?: TooltipContent,
   overlay?: TooltipContent
@@ -33,7 +33,7 @@ export function getTooltipContent(
   return title === 0 ? title : overlay || title || '';
 }
 
-/** Native contract подавляет whitespace strings; truthy nodes и число 0 доступны. */
+/** Native contract overwhelms whitespace strings; truthy nodes and number 0 are available. */
 export function hasTooltipContent(value: TooltipContent): boolean {
   return typeof value === 'string' ? Boolean(value.trim()) : Boolean(value) || value === 0;
 }
@@ -51,7 +51,7 @@ export interface TooltipPosition {
   arrowX: number;
   arrowY: number;
   placement: TooltipPlacement;
-  /** История rc-trigger flips для следующего расчёта в том же открытии. */
+  /** History rc-trigger flips for the next calculation in the same discovery. */
   flips?: PopupFlipCache;
   sourceAlign?: PopupSourceAlign;
   alignedPlacement?: string;
@@ -82,7 +82,7 @@ export function getTooltipArrow(arrow?: TooltipArrow, contextArrow?: TooltipArro
   return { ...context, ...config, show: config.show ?? context.show ?? true };
 }
 
-/** Placements используют глобальные tokens; component aliases относятся к CSS стрелки. */
+/** Placements use global tokens; component aliases refers to CSS arrows. */
 export function getTooltipPlacementConfig(
   arrow: TooltipArrow,
   token: Pick<AliasToken, 'sizePopupArrow' | 'marginXXS' | 'borderRadius'>
@@ -111,7 +111,7 @@ function getSourcePosition(
   gap: number,
   context: TooltipPositionContext = {}
 ): TooltipPosition {
-  // Без новых object props corners используют прежнюю сумму half-arrow + offset.
+  // Without the new object props corners use the same amount of half-arrow + offset.
   const source = context.source;
   const placements = context.builtinPlacements || getPopupPlacements(
     source?.pointAtCenter ?? false,
@@ -125,7 +125,7 @@ function getSourcePosition(
   }
   const right = viewport.x + viewport.width;
   const bottom = viewport.y + viewport.height;
-  // Измерение useAlign в (0, 0) расширяет scroll region до размеров popup.
+  // The dimension of useAlign in (0, 0) extends the scroll region to popup sizes.
   const region = context.scrollRegion ?? {
     ...viewport,
     width: Math.max(viewport.width, popup.width),

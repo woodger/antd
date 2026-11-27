@@ -1,7 +1,7 @@
-// Уточняет DOM-границу событий Menu при переносе подменю в другой контейнер.
-// Обработчики получают исходное событие, временная привязка currentTarget локальна для вызова.
+// Clarifies the DOM border of Menu events when transferring the submenu to another container.
+// Processors receive the original event, temporary binding currentTarget is local to call.
 
-/** Вызывает обработчик от имени логического владельца события, затем восстанавливает DOM event. */
+/** Calls the handler on behalf of the logical owner of the event, then restores the DOM event. */
 export function withMenuCurrentTarget<T extends Event, E extends HTMLElement>(
   event: T, target: E, handler: (event: T & { currentTarget: E; }) => void
 ) {
@@ -25,7 +25,7 @@ export function withMenuCurrentTarget<T extends Event, E extends HTMLElement>(
   }
 }
 
-/** При движении в открытый ShadowRoot браузер передаёт host вместо цели внутри него. */
+/** When moving into an open ShadowRoot, the browser supplies the host instead of the target inside it. */
 export function getMenuHoverRelatedTarget(event: MouseEvent, entering: boolean): Node | null {
   const target = event.relatedTarget;
   if (!(target instanceof Node)) {

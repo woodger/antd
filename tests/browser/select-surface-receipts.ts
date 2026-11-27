@@ -42,13 +42,13 @@ function semanticArgument(call: SelectSurfaceProducerCall, sample: SelectSurface
     return argument;
   }
   const props = { ...argument.props };
-  // class — существующее имя Svelte prop; Source сохраняет исходное className.
+  // class is an existing name Svelte prop; Source retains the original className.
   if (Object.hasOwn(props, 'class')) {
     props.className = props.class;
     delete props.class;
   }
   if (sample.control === 'select') {
-    // Named bindables не сохраняют разницу absent/own undefined в публичном $props rest.
+    // Named bindables do not retain the difference of absent/own undefined in public $props rest.
     if (props.value === undefined) delete props.value;
     if (props.open === undefined) delete props.open;
   }

@@ -48,7 +48,7 @@ for (const sample of datePickerPresetTransitionSamples) {
           expect(comparison.sourcePureProducerCalls).toBe(source.serializations[serializer].state.calls.length);
         }
       }
-      // Оба журнала производителей сохраняются; равное или нулевое число вызовов не подставляется.
+      // Retains both producer logs and never substitutes equal or zero call counts.
       expect(capture.readRefs!()).toEqual({ control: null, root: null, owner: null });
       expect(resource).not.toHaveBeenCalled();
       expect(timeout).not.toHaveBeenCalled();

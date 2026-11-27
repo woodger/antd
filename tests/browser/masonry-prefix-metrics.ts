@@ -4,7 +4,7 @@ export function snapshotMasonryPrefix() {
       const root = scope.firstElementChild!;
       const style = getComputedStyle(root);
       const bounds = root.getBoundingClientRect();
-      // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+      // Removes internal runtime classes and sorts the rest for comparison.
       const classes = (node: Element) => [...node.classList].filter(name =>
         !name.startsWith('css-') && !name.endsWith('-css-var')
           && !name.endsWith('-source-theme')).sort();

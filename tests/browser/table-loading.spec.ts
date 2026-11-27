@@ -8,7 +8,7 @@ const root = '#table-loading-fixture';
 const spinHost = `${root} [data-ant-table-part="wrapper"] > [data-ant-spin-root]`;
 type State = (typeof source.cases)[number]['initial'];
 
-/** Читает только те границы Spin и Table, которые наблюдались в эталоне. */
+/** Reads only those boundaries Spin and Table, which were observed in the standard. */
 function snapshot() {
   const wrapper = document.querySelector('#table-loading-fixture [data-ant-table-part="wrapper"]');
   const spin = wrapper?.querySelector<HTMLElement>(':scope > [data-ant-spin-root]');
@@ -40,7 +40,7 @@ function snapshot() {
   };
 }
 
-/** Boolean loading оставляет прежний отдельный индикатор и скрывает пустую ячейку. */
+/** Boolean loading leaves the former separate indicator and hides an empty cell. */
 function expectedState(state: State, simpleLoading = false) {
   const { sameEditor: _sameEditor, ...visual } = state;
   return simpleLoading ? { ...visual, spinning: false, section: false, sectionColor: null, empty: '' }

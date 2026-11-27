@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Рисует трек, клоны, точки и стрелки из расчётов Carousel. Пользовательские элементы получают
-  // прежние команды навигации.
+  // Renders the track, clones, dots, and arrows from Carousel's calculations. Custom elements
+  // receive the existing navigation commands.
   import { untrack } from 'svelte';
   import CarouselContent from './CarouselContent.svelte';
   import {
@@ -43,7 +43,7 @@
   let list = $state<HTMLDivElement>();
   let track = $state<HTMLDivElement>();
   let dotOverState: CarouselAutoplayState | undefined;
-  // Как Track в slick, рендер читает новые props до componentDidUpdate/измерений модели.
+  // Like Slick's Track, rendering reads new props before componentDidUpdate and model measurements.
   let spec = $derived({ ...model.spec, ...settings });
   let slides = $derived(carouselRenderedSlides(spec, groups.length));
   let dots = $derived(carouselDotItems(spec));
@@ -129,7 +129,7 @@
   }
 
   function handleDotsOver() {
-    // React объединяет over/enter одного native события; enter видит состояние до pause.
+    // React groups over and enter from a single native event. Enter sees the state before the pause.
     dotOverState = model.state.autoplaying;
     model.handleHover();
   }
@@ -166,7 +166,7 @@
 <div class={['slick-slider', className, settings.vertical && 'slick-vertical', 'slick-initialized']}
   dir={settings.unslick ? undefined : 'ltr'} {style}>
   {#if settings.arrows && !settings.unslick}{@render arrow(true)}{/if}
-  <!-- svelte-ignore a11y_no_static_element_interactions (Контейнер маршрутизирует drag и keyboard вложенных слайдов.) -->
+  <!-- svelte-ignore a11y_no_static_element_interactions (The container routes drag and keyboard events from its slides.) -->
   <div bind:this={list} class="slick-list" style={settings.unslick ? undefined : listStyle}
     onclick={settings.unslick ? undefined : model.handleClick}
     onkeydown={settings.unslick ? undefined : model.handleKeydown}
@@ -178,14 +178,14 @@
     ontouchcancel={event => {
       if (model.state.dragging) model.handleEnd(event);
     }}>
-    <!-- svelte-ignore a11y_mouse_events_have_key_events (Hover pause не заменяет отдельный pauseOnFocus.) -->
+    <!-- svelte-ignore a11y_mouse_events_have_key_events (pauseOnFocus handles focus independently of hover pause.) -->
     <div bind:this={track} class="slick-track" style={carouselStyle(model.state.trackStyle)}
       onmouseenter={settings.pauseOnHover ? model.handleHover : undefined}
       onmouseover={settings.pauseOnHover ? model.handleHover : undefined}
       onmouseleave={settings.pauseOnHover ? model.handleLeave : undefined}>
       {#each slides as item (item.key)}
         {@const classes = carouselSlideClasses(spec, item.index)}
-        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_tabindex a11y_no_static_element_interactions (Исходный слайд получает focusOnSelect и programmatic focus.) -->
+        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_tabindex a11y_no_static_element_interactions (The source slide receives focusOnSelect and programmatic focus.) -->
         <div data-index={item.index} class={Object.keys(classes).filter(name => classes[name as keyof typeof classes])}
           tabindex="-1" aria-hidden={!classes['slick-active']} style={slideStyle(item)}
           onclick={() => model.select(item.item)}>
@@ -208,7 +208,7 @@
   {#if settings.dots && groups.length >= settings.slidesToShow && !settings.unslick}
     {#if settings.appendDots}{@render settings.appendDots(dotsContent, dotProps)}
     {:else}
-      <!-- svelte-ignore a11y_mouse_events_have_key_events (Hover pause зависит от pauseOnDotsHover.) -->
+      <!-- svelte-ignore a11y_mouse_events_have_key_events (Hover pause depends on pauseOnDotsHover.) -->
       <ul class={dotProps.class} style="display:block" onmouseenter={dotProps.onMouseEnter}
         onmouseover={dotProps.onMouseOver} onmouseleave={dotProps.onMouseLeave}>
         {@render dotsContent()}

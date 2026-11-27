@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import { expect, test } from './test';
 import reference from './fixtures/ant-design-modal-layout-reference.json' with { type: 'json' };
 
-/** Считывает видимую панель вместе с её центром, независимо от родителя портала. */
+/** Reads the visible panel together with its center, regardless of the parent of the portal. */
 function geometry(page: Page) {
   const dialog = page.getByRole('dialog', { name: 'Layout probe', exact: true });
   const panel = dialog.locator(':scope > [data-ant-modal-panel]');
@@ -28,7 +28,7 @@ for (const sample of reference.cases) {
 
     for (const view of sample.views) {
       await page.setViewportSize({ width: view.viewport, height: 720 });
-      // Обычный Svelte Modal сохраняет согласованный отступ 16px с каждой стороны.
+      // Regular Svelte Modal retains the agreed 16px inset on each side.
       const width = sample.profile.id === 'default' ? Math.min(520, view.viewport - 32) : view.width;
       const left = (view.viewport - width) / 2;
       await expect.poll(async () => (await geometry(page)).width).toBeCloseTo(width, 1);

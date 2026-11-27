@@ -11,5 +11,5 @@ const component = hydrate(DatePickerMultipleFixtures, {
   target: root, props: { profile: { id: 'hydrate', maxTagCount: 'responsive' } }, recover: false
 });
 
-// Открывает тесту явное завершение lifecycle после измерения тегов и календаря.
+// Opens the test explicit completion of the lifecycle after measuring the tags and the calendar.
 Object.assign(window, { disposeMultiplePicker: () => unmount(component) });

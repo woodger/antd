@@ -10,32 +10,32 @@ export interface SpaceItem {
   children?: SpaceContent;
 }
 export type SpaceSlots = Partial<Record<'root' | 'item' | 'separator', string>>;
-/** Size/orientation/align разрешены; nodes и CSS сохраняют native Svelte contracts. */
+/** Size/orientation/align allowed; nodes and CSS save native Svelte contracts. */
 export interface SpaceSemanticInfo {
   props: SpaceProps;
 }
 export type SpaceSemantic = SpaceSlots
   | ((info: SpaceSemanticInfo) => SpaceSlots | undefined);
-/** Наследуемые настройки Space; явный record целиком заменяет родительский space. */
+/** Inherited Space settings; clear record completely replaces the parent space. */
 export interface SpaceConfig {
-  /** Используется, когда локальный size отсутствует; componentSize не участвует. */
+  /** Used when local size is absent; componentSize is not involved. */
   size?: SpaceSize | readonly [SpaceSize, SpaceSize];
   class?: string;
-  /** Между context styles.root и локальными styles.root/style. */
+  /** Between context styles.root and local styles.root/style. */
   style?: string;
   classNames?: SpaceSemantic;
   styles?: SpaceSemantic;
 }
-/** Интервалы, wrappers и separators между keyed items или одним children snippet. */
+/** Intervals, wrappers and separators between keyed items or one children snippet. */
 export interface SpaceProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local CSS prefix. Empty and undefined values inherit ConfigProvider.prefixCls. */
   prefixCls?: string;
   items?: readonly (SpaceContent | SpaceItem)[];
   children?: Snippet;
-  /** Локальное значение → ConfigProvider.space.size → small. */
+  /** Local value → ConfigProvider.space.size → small. */
   size?: SpaceSize | readonly [SpaceSize, SpaceSize];
   orientation?: SpaceOrientation;
   vertical?: boolean;
@@ -47,6 +47,6 @@ export interface SpaceProps extends Omit<
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

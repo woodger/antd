@@ -1,4 +1,4 @@
-/** Сопоставляет вычисленные стили Upload, сохраняя различия React/Svelte обёрток. */
+/** Compares calculated Upload styles, saving the differences of React/Svelte wrappers. */
 export function snapshotUploadTheme() {
   const root = document.querySelector('.ant-upload-wrapper');
   if (!root) {
@@ -11,7 +11,7 @@ export function snapshotUploadTheme() {
     'padding-left', 'border-top-width', 'border-top-color', 'border-top-style',
     'border-radius', 'background-color', 'box-shadow'
   ];
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;
@@ -69,7 +69,7 @@ export function snapshotUploadTheme() {
   };
 }
 
-/** Читает defaults и aliases из исходного CSS registration rule Upload. */
+/** Reading defaults and aliases from the original CSS registration rule Upload. */
 export function snapshotUploadThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-upload-wrapper');
   if (!root) {

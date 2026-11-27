@@ -11,7 +11,7 @@ import { readPickerComponentsBrowser, readPickerComponentsServer }
 
 const reference = readPickerComponentsServer();
 
-/** Берёт native поля по id, исключая кнопки и calendar inputs. */
+/** Finds native fields by id and excludes buttons and calendar inputs. */
 function editors(html: string) {
   const fields = html.matchAll(/<input\b[^>]+\bid="(?:start|end)"[^>]*>/g);
 

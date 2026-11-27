@@ -1,5 +1,5 @@
-// Снимает положение TreeSelect с кадра CSS motion. Измерения через proxy
-// повторяют clocks исходной поверхности, чтобы popup и стрелка двигались вместе.
+// Removes position TreeSelect from the frame CSS motion. The measurements through proxy repeat the
+// clocks of the original surface so that the popup and the arrow move together.
 export interface TreeSelectMotionFrameState {
   revision: number;
   status?: 'appear' | 'enter' | 'leave';
@@ -45,7 +45,7 @@ interface TransitionClock {
 }
 const frames = new WeakMap<HTMLElement, ReturnType<typeof createMotionFrame>>();
 
-/** Разбивает список CSS, сохраняя запятые внутри timing functions. */
+/** Breaks the CSS list, keeping the commas inside the timing functions. */
 function list(value: string) {
   const result: string[] = [];
   let depth = 0;
@@ -67,7 +67,7 @@ function list(value: string) {
   return result;
 }
 
-// Typed OM сохраняет операции transform. Строка остаётся fallback для браузеров без Typed OM.
+// Typed OM preserves transform operations. The line remains fallback for browsers without Typed OM.
 function readMotionProperty(
   name: string,
   typed: StylePropertyMapReadOnly | undefined,
@@ -194,7 +194,7 @@ function createMotionFrame(popup: HTMLElement) {
     const underlying = view.getComputedStyle(proxy);
     const typed = proxy.computedStyleMap?.();
     const style: SourceStyle = {
-      // Матрица вместо Typed OM изменила бы способ интерполяции CSS transform.
+      // The matrix instead of Typed OM would change the method of interpolation CSS transform.
       values: Object.fromEntries(properties.map(name => [
         name, readMotionProperty(name, typed, underlying)
       ])),

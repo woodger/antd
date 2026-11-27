@@ -7,19 +7,19 @@ type Callback = Frame['callbacks'][number];
 const popup = '.study-unique-popup';
 const background = '[data-ant-tooltip-unique-background]';
 
-/** Выбирает сценарий в независимом документе с тем же viewport, что и запись UMD. */
+/** He selects the script in an independent document with the same viewport as the record UMD. */
 async function select(page: Page, mode: string) {
   await page.goto('/?fixture=tooltip-unique');
   await page.getByRole('combobox', { name: 'Unique case', exact: true }).selectOption(mode);
 }
 
-/** Передаёт open владельцу без перемещения указателя и outside dismiss. */
+/** Transmits open to the owner without moving the index and outside. */
 async function ownerAction(page: Page, name: string) {
   await page.getByRole('button', { name, exact: true })
     .evaluate(button => (button as HTMLButtonElement).click());
 }
 
-/** Подаёт отдельное действие владельца, pointer или шаг виртуальных часов. */
+/** Serves a separate action of the owner, pointer or virtual clock step. */
 async function act(page: Page, action: string) {
   const [kind, target] = action.split(':');
   if (kind === 'hover') {
@@ -49,7 +49,7 @@ async function act(page: Page, action: string) {
   }
 }
 
-/** Проецирует shared-поверхность и видимую самостоятельную панель на общие наблюдаемые поля. */
+/** Projects the shared surface and the visible stand-alone panel to the general observed fields. */
 function sourcePanels(frame: Frame) {
   return frame.panels
     .filter(panel => panel.visible || panel.classes.some(name => name.endsWith('-unique-controlled')))
@@ -57,7 +57,7 @@ function sourcePanels(frame: Frame) {
     .sort((a, b) => (a.contents ?? '').localeCompare(b.contents ?? ''));
 }
 
-/** Читает фактические native-панели и CSS-классы, включая скрытую общую оболочку. */
+/** Reads actual native panels and CSS classes, including a hidden common shell. */
 async function nativePanels(page: Page) {
   return page.locator(popup).evaluateAll(nodes => nodes
     .filter(node => node.matches('[data-ant-tooltip-unique], :popover-open'))
@@ -88,7 +88,7 @@ for (const sample of reference.cases) {
       await act(page, frame.action);
       events.push(...frame.callbacks);
 
-      // Удаление активного trigger освобождает Native панель и отложенные callbacks.
+      // Removing active trigger releases Native panel and delayed callbacks.
       const removed = frame.action === 'remove:a';
       await expect.poll(() => nativePanels(page)).toEqual(removed ? [] : sourcePanels(frame));
       await expect(page.locator(background)).toHaveCount(removed ? 0 : frame.backgrounds.length);
@@ -198,13 +198,13 @@ test('Slider and ellipsis Tooltip can opt out of the provider', async ({ page })
   await expect(page.locator(background)).toHaveCount(0);
 });
 
-/** Передаёт группе новую цель внутри animationstart и может сразу отменить этот запрос. */
+/** Transmits a new target to the group inside the animationstart and can immediately cancel this request. */
 async function retargetDuringEnter(page: Page, cancel: boolean) {
   await page.evaluate(cancel => {
     const log = document.querySelector<HTMLElement>('[data-testid="unique-events"]');
     if (!log) throw new Error('Fixture log is missing');
 
-    // Отправляет переключение точно внутри первого zoom, без сетевой задержки у теста.
+    // Sending the switch exactly inside the first zoom, with no network latency at the test.
     const retarget = (event: AnimationEvent) => {
       const panel = event.target;
       if (!(panel instanceof HTMLElement) || !panel.matches('[data-ant-tooltip-unique]')) return;

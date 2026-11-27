@@ -1,24 +1,24 @@
 import type { CssMotionConfig, CssMotionEvent, CssMotionStyle } from './css-motion.types';
 
-/** DOM-событие поверхности или истечение motionDeadline. */
+/** DOM-surface event or expiration motionDeadline. */
 export type MenuMotionEvent = CssMotionEvent;
 
-/** Исходный объект CSS properties или CSS-строка Svelte. */
+/** Starting object CSS properties or CSS-line Svelte. */
 export type MenuMotionStyle = CssMotionStyle;
 
-/** Настройки фаз списка и всплывающей поверхности Menu. */
+/** Menu Phase and Pop-Up Settings. */
 export interface MenuMotion extends CssMotionConfig {
-  /** Для inline явно заданное поле перекрывает openKeys. Popup использует состояние Menu. */
+  /** For inline, the clearly defined field overlaps openKeys. Popup uses Menu status. */
   visible?: boolean;
-  /** Menu включает appear для popup и отключает для вложенного inline-списка. */
+  /** Menu includes for popup and disables for the nested inline list. */
   motionAppear?: boolean;
-  /** Menu разрешает ранний монтаж через forceSubMenuRender. Popup также учитывает это поле. */
+  /** Menu allows early installation through forceSubMenuRender. Popup also takes into account this field. */
   forceRender?: boolean;
-  /** Menu удерживает поверхность в пределах текущего режима. */
+  /** Menu keeps the surface within the current mode. */
   removeOnLeave?: boolean;
-  /** Menu назначает класс скрытого списка по своему prefixCls. */
+  /** Menu assigns a class of hidden list according to its prefixCls. */
   leavedClassName?: string;
   eventProps?: { className?: string; style?: MenuMotionStyle; };
-  /** Подготовка popup при appear/enter принадлежит позиционированию. */
+  /** Preparation of popup at appear/enter belongs to positioning. */
   onAppearPrepare?: CssMotionConfig['onAppearPrepare'];
 }

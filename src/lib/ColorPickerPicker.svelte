@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Преобразует действия палитры в редактирование цвета и точек градиента. Завершение жеста
-  // сообщает итоговый цвет.
+  // Turns palette actions into edits to the color and gradient stops. Completing the gesture
+  // reports the final color.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { AggregationColor } from './color';
@@ -194,7 +194,7 @@
       }} />
   {/if}
   <div class={`${prefixCls}-panel`}>
-    <!-- svelte-ignore a11y_no_static_element_interactions (Двумерный palette делегирует клавиатуру native handler button.) -->
+    <!-- svelte-ignore a11y_no_static_element_interactions (The two-dimensional palette delegates keyboard events to the native button handler.) -->
     <div bind:this={select} class={[`${prefixCls}-select`, 'color-picker-palette']}
       onpointerdown={handlePalette}>
       <div class={`${prefixCls}-palette`} style="position:relative">

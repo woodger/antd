@@ -1,6 +1,6 @@
-// Реализует GenerateConfig через Dayjs. Нормализует локаль и значения из другого экземпляра Dayjs
-// перед операциями адаптера.
-// Day.js adapter по @rc-component/picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
+// Implements GenerateConfig with Dayjs. Normalizes the locale and values from another Dayjs
+// instance before adapter operations. The Day.js adapter follows @rc-component/picker 1.12.2. MIT,
+// vendor/LICENSE.rc-picker.
 import dayjs, { type Dayjs } from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import advancedFormat from 'dayjs/plugin/advancedFormat.js';
@@ -20,7 +20,7 @@ dayjs.extend(weekYear);
 dayjs.extend((_options, constructor) => {
   const original = constructor.prototype.format;
   constructor.prototype.format = function(format) {
-    // Оригинальный formatter использует текущий экземпляр Dayjs как receiver.
+    // The original formatter uses the current Dayjs instance as its receiver.
     return original.call(this, (format ?? '').replace('Wo', 'wo'));
   };
 });
@@ -40,17 +40,17 @@ const localeMap: Record<string, string> = {
   zh_HK: 'zh-hk',
   zh_TW: 'zh-tw'
 };
-// Сопоставляет имена locale Picker с кодом Dayjs, сохраняя исключения для регионов.
+// Maps Picker locale names to Dayjs codes while preserving regional exceptions.
 const localeName = (locale: string) => localeMap[locale] || locale.split('_')[0];
-// Сохраняем поведение адаптера при нескольких экземплярах библиотеки Day.js.
+// Preserves adapter behavior when multiple instances of Day.js are present.
 const own = (value: Dayjs) => !dayjs.isDayjs(value) || value instanceof dayjs
   ? value
   : dayjs(value.valueOf());
 
-// Проверяет точное совпадение текста с форматом средствами Dayjs.
+// Uses Dayjs to check whether the text exactly matches the format.
 const parseStrictDayjs = (text: string, format: string) => dayjs(text, format, true);
 
-// Возвращает первый подходящий вариант с локалью поля. Ветка недели завершает поиск.
+// Returns the first match in the field's locale. The week branch ends the search.
 export function parseDayjsInput(
   locale: string,
   text: string,
@@ -69,7 +69,7 @@ export function parseDayjsInput(
           continue;
         }
 
-        // Январская дата может относиться к последней неделе предыдущего года.
+        // A January date may belong to the last week of the preceding year.
         if (!usesWeekYear || candidate.weekYear() === requestedYear) {
           return candidate;
         }
@@ -85,72 +85,72 @@ export function parseDayjsInput(
 }
 
 export const dayjsGenerateConfig: GenerateConfig<Dayjs> = {
-  // Учитывает текущую зону, если у установленного Dayjs доступен plugin timezone.
+  // Uses the current zone when the Dayjs timezone plugin is available.
   getNow: () => {
     const now = dayjs() as Dayjs & { tz?: () => Dayjs; };
     return typeof now.tz === 'function' ? now.tz() : now;
   },
-  // Разбирает служебную дату с месяцем из одной или двух цифр.
+  // Parses an internal date with a one- or two-digit month.
   getFixedDate: text => dayjs(text, ['YYYY-M-DD', 'YYYY-MM-DD']),
-  // Возвращает конец месяца с правилами календаря Dayjs.
+  // Returns the end of the month according to the Dayjs calendar.
   getEndDate: value => own(value).endOf('month'),
-  // Считает индекс дня на общей шкале, используя английскую locale для вычисления.
+  // Computes the weekday index on a shared scale using the English locale.
   getWeekDay: value => {
     const date = own(value).locale('en');
     return date.weekday() + date.localeData().firstDayOfWeek();
   },
-  // Читает календарный год, используемый панелью выбора года.
+  // Reads the calendar year used by the year panel.
   getYear: value => own(value).year(),
-  // Возвращает индекс месяца от нуля, как ожидает GenerateConfig.
+  // Returns a zero-based month index as required by GenerateConfig.
   getMonth: value => own(value).month(),
-  // Возвращает номер дня месяца от единицы для сетки.
+  // Returns a one-based day of the month for the grid.
   getDate: value => own(value).date(),
-  // Читает час в 24-часовой шкале; meridiem вычисляет панель.
+  // Reads the hour on a 24-hour clock. The panel computes meridiem.
   getHour: value => own(value).hour(),
-  // Читает минуту текущего часа для колонки выбора.
+  // Reads the minute of the current hour for the selection column.
   getMinute: value => own(value).minute(),
-  // Читает секунду текущей минуты для колонки выбора.
+  // Reads the second of the current minute for the selection column.
   getSecond: value => own(value).second(),
-  // Сохраняет дробную часть секунды как целое число от 0 до 999.
+  // Represents the fractional second as an integer from 0 to 999.
   getMillisecond: value => own(value).millisecond(),
-  // Сдвигает календарный год с нормализацией дня в целевом месяце.
+  // Shifts the calendar year and normalizes the day in the destination month.
   addYear: (value, amount) => own(value).add(amount, 'year'),
-  // Сдвигает месяц по календарю вместо фиксированного числа дней.
+  // Shifts by calendar month rather than by a fixed number of days.
   addMonth: (value, amount) => own(value).add(amount, 'month'),
-  // Сдвигает календарный день, используя локальную арифметику Dayjs.
+  // Shifts the calendar day using Dayjs local date arithmetic.
   addDate: (value, amount) => own(value).add(amount, 'day'),
-  // Создаёт значение для выбранного года с коррекцией датой адаптера.
+  // Creates a value for the selected year using the adapter's date adjustment.
   setYear: (value, year) => own(value).year(year),
-  // Передаёт Dayjs индекс месяца от нуля, включая перенос через границу года.
+  // Passes a zero-based month index to Dayjs, including year rollover.
   setMonth: (value, month) => own(value).month(month),
-  // Устанавливает календарный день для переходов между ячейками.
+  // Sets the calendar day for navigation between cells.
   setDate: (value, date) => own(value).date(date),
-  // Заменяет часы, сохраняя остальные единицы времени Dayjs.
+  // Sets the hour while retaining the other Dayjs time units.
   setHour: (value, hour) => own(value).hour(hour),
-  // Заменяет минуты, оставляя нормализацию переполнения адаптеру.
+  // Sets the minute and leaves overflow normalization to the adapter.
   setMinute: (value, minute) => own(value).minute(minute),
-  // Заменяет секунды без округления миллисекунд.
+  // Sets the second without rounding milliseconds.
   setSecond: (value, second) => own(value).second(second),
-  // Заменяет миллисекунды в значении времени.
+  // Sets the milliseconds in the time value.
   setMillisecond: (value, millisecond) => own(value).millisecond(millisecond),
-  // Сравнивает приведённые Dayjs без округления до крупной единицы.
+  // Compares normalized Dayjs values without rounding to a larger unit.
   isAfter: (a, b) => own(a).isAfter(own(b)),
-  // Использует статус валидности Dayjs перед публикацией значения.
+  // Checks Dayjs validity before publishing the value.
   isValidate: value => own(value).isValid(),
   locale: {
-    // Читает локальный первый день недели для смещения сетки.
+    // Reads the locale's first day of the week for grid alignment.
     getWeekFirstDay: locale => dayjs().locale(localeName(locale)).localeData().firstDayOfWeek(),
-    // Возвращает начальную дату недели в указанной locale.
+    // Returns the start of the week in the requested locale.
     getWeekFirstDate: (locale, value) => own(value).locale(localeName(locale)).weekday(0),
-    // Читает номер недели по правилам locale, используемой при parse.
+    // Reads the week number using the same locale rules as parse.
     getWeek: (locale, value) => own(value).locale(localeName(locale)).week(),
-    // Передаёт короткие подписи дней из localeData Dayjs.
+    // Returns short weekday labels from Dayjs localeData.
     getShortWeekDays: locale => dayjs().locale(localeName(locale)).localeData().weekdaysMin(),
-    // Передаёт краткие названия месяцев в порядке индексов Dayjs.
+    // Returns short month names in Dayjs index order.
     getShortMonths: locale => dayjs().locale(localeName(locale)).localeData().monthsShort(),
-    // Форматирует значение в указанной locale с поддержкой обозначения номера недели.
+    // Formats the value in the requested locale and supports week number notation.
     format: (locale, value, format) => own(value).locale(localeName(locale)).format(format),
-    // Возвращает только значение для общего контракта GenerateConfig.
+    // Returns just the value for the shared GenerateConfig contract.
     parse: (locale, text, formats) => parseDayjsInput(locale, text, formats)
   }
 };

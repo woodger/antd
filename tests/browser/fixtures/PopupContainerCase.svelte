@@ -125,7 +125,7 @@
 <div id="provider-more" data-container-target="more"></div>
 <div id="provider-shadow" data-container-target="shadow" {@attach element => {
   const root = element.attachShadow({ mode: 'open' });
-  // Как у потребителя ShadowRoot: его собственные стили не берутся из document.
+  // As the consumer ShadowRoot: his own styles do not come from the document.
   const style = element.ownerDocument.createElement('style');
   style.textContent = '[popover]{position:fixed;inset:auto;border:0;margin:0;padding:0}';
   root.append(style);

@@ -30,7 +30,7 @@ const reference: ThemeReference = JSON.parse(readFileSync(
   'utf8'
 ));
 
-// JSON не сохраняет undefined, NaN и -0; encoding эталона восстанавливает их без нормализации.
+// JSON does not save undefined, NaN and -0; the encoding standard restores them without normalization.
 function decode(value: unknown): unknown {
   if (!value || typeof value !== 'object') {
     return value;

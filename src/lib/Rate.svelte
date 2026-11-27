@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Преобразует положение указателя или клавишу в значение рейтинга. Hover предварительно
-  // показывает значение отдельно от подтверждённого.
+  // Maps pointer position or keys to a rating. Hover previews a value independently of the
+  // committed rating.
   import { onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -50,7 +50,7 @@
       return undefined;
     }
 
-    // Source CSS-var registration теряет CSSObject/arrays; прежний native hover сохраняется.
+    // Upstream CSS variable registration drops CSSObject and arrays. The existing native hover remains.
     return tokens.state.prefix === 'ant' ? '--ant-rate-star-hover-scale:scale(1.1)'
       : `--ant-rate-star-hover-scale:var(--${tokens.state.prefix}-rate-star-hover-scale,scale(1.1))`;
   });

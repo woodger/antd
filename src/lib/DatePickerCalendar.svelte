@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType extends object">
-  // Рисует панель даты и применяет ограничения навигации и выбора. Заголовок, сетка и
-  // пользовательские ячейки используют один режим.
+  // Renders the date panel and enforces navigation and selection limits. The header, grid, and
+  // custom cells share the same mode.
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import { tick, untrack, type Snippet } from 'svelte';
   import { createDatePickerEngine } from './date-picker.engine';
@@ -100,7 +100,7 @@
     return adapter.getNow();
   });
   let root: HTMLDivElement;
-  // rc-picker нормализует только время calendar pickerValue, отдельно от выбранного value.
+  // rc-picker normalizes only the time portion of the calendar's pickerValue, independently of the selected value.
   let cellPanel = $derived(pickerCalendarValue(panel, timeTemplate));
   let cells = $derived.by(() => {
     void renderToday;
@@ -166,7 +166,7 @@
       : weekPanel ? samePickerWeek(value, date, locale.locale)
       : mode === 'quarter' ? samePickerQuarter(value, date) : dates.samePeriod(value, date, unit));
   }
-  /** Помечает ячейки текущего календаря, годы соседних периодов остаются за границей. */
+  /** Marks cells in the current calendar period. Years from adjacent periods stay outside it. */
   function cellInView(date: DateType) {
     if (datePanel) {
       return fields.getMonth(date) === fields.getMonth(panel);
@@ -289,7 +289,7 @@
       return;
     }
     const previous = event.target instanceof HTMLElement ? event.target : undefined;
-    // Смена месяца переносит дни между keyed-строками; удерживаем фокус внутри popup.
+    // Changing the month moves days between keyed rows. Keep focus inside the popup.
     root.closest<HTMLElement>(`.${prefixCls}-panel`)?.focus({ preventScroll: true });
     onNavigate(next);
     await tick();

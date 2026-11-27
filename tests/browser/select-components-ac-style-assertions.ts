@@ -92,7 +92,7 @@ function verifyLayoutNode(
       Object.fromEntries(original),
       label + ' complete existing content wrapper attributes'
     );
-    // CSS по умолчанию повторяет публичный styles.content.minHeight='1lh' эталона.
+    // CSS by default repeats public styles.content.minHeight = '1lh' reference.
     const { lineHeight, minHeight } = readAutoCompleteEditorHeightCase('input-height-counterpart').before;
     assert.equal(source.css.lineHeight, lineHeight, label + ' content line height');
     expectedCss = { ...source.css, minHeight };

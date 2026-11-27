@@ -9,13 +9,13 @@ interface SourceClick {
   selectedKeys?: string[];
 }
 
-// Читает полный журнал, чтобы отличить повтор события от смены его аргументов.
+// Reads the full journal to distinguish a repeat of an event from a change in his arguments.
 async function readEvents(page: Page): Promise<unknown[][]> {
   const json = await page.locator('#dropdown-menu-events').textContent();
   return JSON.parse(json ?? '[]');
 }
 
-// Приводит журнал React к форме событий Menu и Dropdown в браузерной фикстуре.
+// Leading the React journal to the Menu and Dropdown event form in the browser fixture.
 function expectedEvents(events: readonly (readonly unknown[])[]) {
   return events.flatMap(([type, value, source]) => {
     if (type === 'dropdown') return [[type, value, { source }]];
@@ -30,12 +30,12 @@ function expectedEvents(events: readonly (readonly unknown[])[]) {
   });
 }
 
-// Действия владельца обновляют props без перемещения фокуса в тестовую панель.
+// The owner's actions are updated props without moving the focus to the test panel.
 function update(page: Page, name: string) {
   return page.getByRole('button', { name, exact: true }).dispatchEvent('click');
 }
 
-// Выполняет те же действия клавиатурой и мышью, что в сохранённой записи React.
+// Performs the same actions with the keyboard and mouse as in the saved entry React.
 async function perform(page: Page, action: string) {
   if (action === 'trigger') return page.getByRole('button', { name: 'Commands' }).click();
   if (action === 'dispose') return update(page, 'Unmount Dropdown');
@@ -47,7 +47,7 @@ async function perform(page: Page, action: string) {
   const key = action === 'leaf' ? '4' : action;
   const row = page.locator(`[data-dropdown-key="${key}"]`);
   if (action === 'blocked') {
-    // Нативный disabled control не принимается locator.click, hit testing идёт через мышь.
+    // Native disabled control is not accepted locator.click, hit testing goes through the mouse.
     const bounds = await row.boundingBox();
     if (!bounds) throw new Error('Disabled Dropdown row must be displayed');
     return page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);

@@ -1,13 +1,13 @@
 import type { StatisticProps } from './statistic.types';
 
 export type StatisticTimerType = 'countdown' | 'countup';
-/** Таймер Statistic; value задаёт исходную временную отметку в миллисекундах. */
+/** Timer Statistic; value sets the original time mark in milliseconds. */
 export interface StatisticTimerProps extends StatisticProps {
   type: StatisticTimerType;
   /** @defaultValue 'HH:mm:ss' */
   format?: string;
-  /** Текущая длительность в миллисекундах. */
+  /** Current duration in milliseconds. */
   onChange?: (value: number) => void;
-  /** Вызывается при достижении нуля countdown. */
+  /** Is caused when you achieve zero countdown. */
   onFinish?: () => void;
 }

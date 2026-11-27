@@ -23,7 +23,7 @@ for (const entry of reference.cases) {
       }
       const expected = structuredClone(entry.result);
       if (entry.sample.id === 'disabled-click') expected.events = [];
-      // Native single показывает закрытый label в input; Source использует отдельный span.
+      // Native single shows a closed label in input; Source uses a separate span.
       if (entry.sample.id === 'single-ignore') expected.query = 'Alpha';
 
       await expect.poll(() => page.evaluate(() => {

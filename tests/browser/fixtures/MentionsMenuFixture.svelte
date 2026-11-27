@@ -49,7 +49,7 @@
     if (replace) return { options: alternate, prefixCls: 'caller-menu' };
   });
 
-  /** Сохраняет данные контекста без сериализации Svelte snippets. */
+  /** Saves these context without serialization Svelte snippets. */
   function summarizeMenu(info: MentionsPopupRenderInfo | undefined) {
     if (!info) {
       return '';
@@ -64,7 +64,7 @@
     });
   }
 
-  /** Записывает фактические данные выбора отдельно от изменений текста. */
+  /** Writes the actual selection data separately from the changes in the text. */
   function select(option: MentionsOption, prefix: string) {
     events.push(['select', option.value, option.label, option.key, prefix]);
   }

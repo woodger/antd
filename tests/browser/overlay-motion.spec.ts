@@ -7,7 +7,7 @@ type Snapshot = Sample['initial'];
 
 test.use({ viewport: { width: 960, height: 720 } });
 
-/** Применяет стабильный native shell и кэш содержимого к записанному снимку Source. */
+/** Applies a stable native shell and content cache to the recorded Source image. */
 function nativeSnapshot(expected: Snapshot, sample: Sample): Snapshot {
   const cached = sample.profile.mode !== 'destroy';
   return {
@@ -22,13 +22,13 @@ function nativeSnapshot(expected: Snapshot, sample: Sample): Snapshot {
   };
 }
 
-/** Обновляет состояние владельца без дополнительного outside-события. */
+/** Updates the owner's condition without an additional outside event. */
 async function ownerAction(page: Page, name: string) {
   await page.getByRole('button', { name, exact: true })
     .evaluate(button => (button as HTMLButtonElement).click());
 }
 
-/** Снимает фактический top layer, наличие содержимого и накопленные callbacks. */
+/** Removes the actual top layer, the presence of content and accumulated callbacks. */
 async function readSnapshot(page: Page): Promise<Snapshot> {
   return page.evaluate(() => {
     const popup = document.querySelector('.motion-study-popup');
@@ -42,13 +42,13 @@ async function readSnapshot(page: Page): Promise<Snapshot> {
   });
 }
 
-/** Сохраняет в тесте реальные начальные props из профиля, а не из предыдущих запусков. */
+/** Saves the actual initial props from the profile, not from previous runs. */
 async function selectCase(page: Page, index: number) {
   await page.goto('/?fixture=overlay-motion');
   await page.getByLabel('Overlay motion case').selectOption(String(index));
 }
 
-/** Проверяет начало CSS анимации отдельно от завершения видимости. */
+/** Verifies the beginning CSS animations separately from the completion of visibility. */
 async function expectAnimation(page: Page, sample: Sample) {
   const expected = sample.activationMotion;
   const observed = page.getByTestId('motion-animation');
@@ -106,7 +106,7 @@ for (const [index, sample] of reference.cases.entries()) {
 
     const deactivated = nativeSnapshot(sample.deactivated, sample);
     if (mode === 'disabled' && family === 'Popconfirm') {
-      // Публичный Svelte disabled скрывает уже открытое подтверждение и сохраняет raw open.
+      // The public Svelte disabled hides the already open confirmation and retains raw open.
       deactivated.visible = false;
       deactivated.events = [{
         type: 'settled', open: false, mounted: true, visible: false, payload: true

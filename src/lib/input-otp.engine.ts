@@ -1,6 +1,6 @@
-// Распределяет ввод и вставку по ячейкам OTP. Сигнал полного значения зависит от заполненности и
-// изменений ячеек.
-/** Вставка заменяет хвост; formatter видит пробелы пустых ячеек до ограничения длины. */
+// Distributes the input and insertion by cells OTP. The total signal depends on the occupancy and
+// changes of the cells.
+/** Insertion replaces the tail; the formatter sees the gaps of the empty cells to the length limit. */
 export function patchOTPCells(
   cells: readonly string[],
   index: number,
@@ -29,7 +29,7 @@ export function patchOTPCells(
   ).slice(0, length);
 }
 
-// Разрешает callback при заполнении всех ячеек и отличии от прежнего значения.
+// Allows callback when filling all the cells and the difference from the previous value.
 export function isOTPCompleteChange(
   previous: readonly string[],
   next: readonly string[],

@@ -1,5 +1,5 @@
-// Выполняет правила Form и собирает ошибки отдельно от предупреждений.
-// Transform действует только внутри правила. Порядок завершения зависит от validateFirst.
+// Complies with Form rules and collects errors separately from warnings. Transform applies only
+// within the rule. Completion depends on validateFirst.
 import {
   matchesValidationType, normalizeValidationType, type ValidationRuleType
 } from './validation-type.engine';
@@ -14,41 +14,41 @@ import {
 } from './validation-message.engine';
 export type { ValidationRuleType } from './validation-type.engine';
 
-/** Значение поля может быть скаляром, вложенным контейнером или экземпляром класса. */
+/** The value of the field can be a scalar, an attached container or an instance of a class. */
 export type FormValue = unknown;
 export type FormValues = Record<string, FormValue>;
 export type FieldName<Values> = Extract<keyof Values, string>;
 
 export interface ValidationRule<Values extends FormValues = FormValues> {
-  /** Явный type включает исходные правила пустых значений и выбора constraints. */
+  /** The explicit type includes the original rules of empty values and the choice of the sparks. */
   type?: ValidationRuleType;
   required?: boolean;
-  /** По умолчанию false; сообщение попадает в warnings и не блокирует submit. */
+  /** By default false; the message falls into the warnings and does not block submit. */
   warningOnly?: boolean;
   min?: number;
   max?: number;
-  /** Точное число/длина; date сравнивает timestamp. Приоритет над min/max. */
+  /** The exact number/length; the date compares timestamp. Priority over min/max. */
   len?: number;
-  /** В implicit/string rule отклоняет непустую строку только из whitespace. */
+  /** In implicit/string, the rule rejects a non-empty string only from whitespace. */
   whitespace?: boolean;
   pattern?: RegExp | string;
-  /** Строгое сравнение без coercion; используется при type='enum'. */
+  /** Strict comparison without coercion; used in type='enum'. */
   enum?: readonly FormValue[];
-  /** Правила именованных дочерних значений при type='object' или 'array'. */
+  /** Rules for named child values when type is 'object' or 'array'. */
   fields?: Readonly<Record<string, ValidationRule<Values> | readonly ValidationRule<Values>[]>>;
-  /** Правило элементов массива; для object применяется к ключам без собственного fields rule. */
+  /** The rule of array elements; for object is applied to keys without its own fields rule. */
   defaultField?: ValidationRule<Values>;
   message?: string;
-  /** Синхронно преобразует значение только для этого правила, не записывая результат в Form. */
+  /** Synchronously converts the value only for this rule, without recording the result in Form. */
   transform?: (value: FormValue) => FormValue;
-  /** При явном type заменяет встроенные проверки; native signature value/values сохраняется. */
+  /** An explicit type replaces built-in validation while retaining the native value/values signature. */
   validator?: (
     value: FormValue,
     values: Readonly<Values>
   ) => string | void | Promise<string | void>;
 }
 
-/** Чистая фабрика настроек получает текущую модель формы; вызывается до проверки правил. */
+/** A clean customization factory receives the current form model; is called before the rules are checked. */
 export type ValidationRuleFactory<Values extends FormValues = FormValues> =
   (form: FormInstance<Values>) => ValidationRule<Values>;
 
@@ -59,12 +59,12 @@ export type FormRules<Values extends FormValues> = Partial<
   Record<FieldName<Values>, readonly FormRule<Values>[]>
 >;
 
-// Раскрывает фабрики относительно текущей Form, сохраняя массив без фабрик.
+// Reveals factories relative to the current Form, keeping an array without factories.
 export function resolveValidationRules<Values extends FormValues>(
   rules: readonly FormRule<Values>[],
   form: FormInstance<Values>
 ): readonly ValidationRule<Values>[] {
-  // Object-only arrays сохраняют прежнюю identity и capture semantics.
+  // Object-only arrays retain their existing identity and capture semantics.
   if (rules.every(rule => typeof rule !== 'function')) {
     return rules;
   }
@@ -74,14 +74,14 @@ export function resolveValidationRules<Values extends FormValues>(
 
 export type FieldErrors<Values extends FormValues> = Partial<Record<FieldName<Values>, string[]>>;
 
-/** Ошибки поля сохраняют исходные сегменты пути, включая различие строк и чисел. */
+/** Field errors retain the original path segments, including the difference between strings and numbers. */
 export interface FieldError {
   name: (string | number)[];
   errors: string[];
   warnings: string[];
 }
 
-// Возвращает блокирующие сообщения для прежнего плоского API проверки.
+// Returns blocking messages for the previous flat API check.
 export async function validateValue<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
@@ -91,7 +91,7 @@ export async function validateValue<Values extends FormValues>(
   return result.errors;
 }
 
-// Начинает проверку поля без состояния рекурсии по вложенным значениям.
+// Begins to check the field without the state of recursion on the nested values.
 export async function validateFieldValue<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
@@ -102,7 +102,7 @@ export async function validateFieldValue<Values extends FormValues>(
   return validateRules(value, values, rules, validateFirst, undefined, context);
 }
 
-// Запускает блокирующие правила раньше warningOnly. Обычный режим сохраняет порядок результатов.
+// Starts blocking rules before warningOnly. The usual mode preserves the order of results.
 async function validateRules<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
@@ -147,8 +147,8 @@ async function validateRules<Values extends FormValues>(
   return { errors, warnings };
 }
 
-// Берёт первую завершившуюся ошибку. Предупреждение может завершить результат,
-// когда все блокирующие правила уже проверены.
+// He's making his first mistake. The warning can complete the result when all blocking rules have
+// already been checked.
 function firstParallelResult(
   checks: readonly Promise<ValidationMessages>[],
   ordered: readonly { warningOnly?: boolean }[]
@@ -181,7 +181,7 @@ function firstParallelResult(
   });
 }
 
-// Применяет transform до скалярных и вложенных правил, сохраняя исходное значение.
+// Applies transform to scalar and nested rules, maintaining the original value.
 async function validateRuleValue<Values extends FormValues>(
   originalValue: FormValue,
   values: Readonly<Values>,
@@ -198,7 +198,7 @@ async function validateRuleValue<Values extends FormValues>(
       transformedValue = rule.transform(originalValue);
     }
     catch (error) {
-      // Исключение transform учитывается при проверке, включая warningOnly.
+      // Excluding transform is taken into account in the inspection, including warningOnly.
       const message = rule.message ?? (error instanceof Error ? error.message : 'Проверьте значение.');
       const formatted = formatValidationMessages([message], rule, context);
       return collectValidationMessages(rule, formatted, []);
@@ -227,7 +227,7 @@ async function validateRuleValue<Values extends FormValues>(
   );
 }
 
-// Проверяет тип, обязательность и ограничения. Явный type с validator делегирует ему проверку.
+// Verifies the type, obligation and limitations. An explicit type with a validator delegates a check to it.
 async function validatePrimitiveRule<Values extends FormValues>(
   transformedValue: FormValue,
   values: Readonly<Values>,
@@ -240,7 +240,7 @@ async function validatePrimitiveRule<Values extends FormValues>(
     return validateCustomRule(transformedValue, values, rule, context);
   }
 
-  // Подставляет путь поля и аргументы конкретного ограничения в локализованное сообщение.
+  // Sets the path of the field and the arguments of a particular limitation into a localized message.
   const message = (
     path: string | readonly [string, string],
     fallback: string,
@@ -350,7 +350,7 @@ async function validatePrimitiveRule<Values extends FormValues>(
   return validateCustomRule(value, values, rule, context);
 }
 
-// Принимает текст валидатора или нормализует его исключение в сообщение поля.
+// Accepts validator text or normalizes its exclusion into the field message.
 async function validateCustomRule<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,

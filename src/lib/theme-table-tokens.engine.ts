@@ -1,7 +1,7 @@
 import { FastColor } from './fast-color.engine';
 import type { AliasToken } from './theme-token.types';
 
-/** Component defaults Table 6.6.8, включая непрозрачные подложки и метрики expand icon. */
+/** Component defaults Table 6.6.8 including opaque substrates and expand icon metrics. */
 export function prepareTableTokens(token: AliasToken) {
   const fillAlter = new FastColor(token.colorFillAlter)
     .onBackground(token.colorBgContainer).toHexString();

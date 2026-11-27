@@ -11,10 +11,10 @@ export interface RadioSemanticSlots {
   label?: string;
 }
 
-/** Функция получает фактические Svelte checked/disabled/value/name, включая локальное состояние. */
+/** The function receives actual Svelte checked/disabled/value/name, including the local state. */
 export type RadioSemantic = RadioSemanticSlots | ((info: { props: RadioProps; }) => RadioSemanticSlots);
 
-/** Событие Ant Design с исходным типом value; nativeEvent — настоящий DOM change. */
+/** Event Ant Design with the original value type; nativeEvent — this DOM change. */
 export interface RadioChangeEvent<Value extends RadioValue = RadioValue> {
   target: Omit<RadioProps, 'value'> & { value: Value; checked: boolean; type: 'radio'; };
   nativeEvent: Event;
@@ -22,7 +22,7 @@ export interface RadioChangeEvent<Value extends RadioValue = RadioValue> {
   preventDefault(): void;
 }
 
-/** Ref rc-checkbox: ссылки очищаются при unmount; методы используют native input. */
+/** Ref rc-checkbox: links are cleared at unmount; methods use native input. */
 export interface RadioRef {
   input: HTMLInputElement;
   nativeElement: HTMLSpanElement;
@@ -30,20 +30,20 @@ export interface RadioRef {
   blur(): void;
 }
 
-/** Нативный radio с типизированным value и bind:checked вне RadioGroup. */
+/** Native radio with typical value and bind:checked outside RadioGroup. */
 export interface RadioProps extends Omit<
   HTMLInputAttributes,
   'type' | 'value' | 'checked' | 'children' | 'class' | 'size'
 > {
   /** @defaultValue 'on' */
   value?: RadioValue;
-  /** Поддерживает bind:checked. */
+  /** Maintenances bind:checked. */
   checked?: boolean | undefined;
   /** @defaultValue false */
   defaultChecked?: boolean;
   children?: Snippet;
   onCheckedChange?: (checked: boolean) => void;
-  /** Вызывается до onChange группы; нативный onchange получает отдельное DOM-событие. */
+  /** Is called up to onChange groups; native onchange receives a separate DOM-event. */
   onChange?: (event: RadioChangeEvent) => void;
   onClick?: HTMLInputAttributes['onclick'];
   onFocus?: HTMLInputAttributes['onfocus'];
@@ -52,23 +52,23 @@ export interface RadioProps extends Omit<
   onKeyPress?: HTMLInputAttributes['onkeypress'];
   onMouseEnter?: (event: MouseEvent & { currentTarget: EventTarget & HTMLLabelElement; }) => void;
   onMouseLeave?: (event: MouseEvent & { currentTarget: EventTarget & HTMLLabelElement; }) => void;
-  /** Один раз вызывает focus при mount; lowercase autofocus сохраняет HTML-поведение. */
+  /** Focuses once on mount. Lowercase autofocus retains native HTML behavior. */
   autoFocus?: boolean;
   tabIndex?: number;
-  /** Базовый prefix без -button; empty/undefined наследуют ConfigProvider. */
+  /** Base prefix without -button; empty/undefined inherit ConfigProvider. */
   prefixCls?: string;
   classNames?: RadioSemantic;
   styles?: RadioSemantic;
   class?: string;
   rootClassName?: string;
-  /** Bindable внутренний span; совпадает с ref.nativeElement и очищается при unmount. */
+  /** Bindable internal span; coincides with ref.nativeElement and purifies at unmount. */
   nativeElement?: HTMLSpanElement;
-  /** Bindable native input; совпадает с ref.input и очищается при unmount. */
+  /** Bindable native input; coincides with ref.input and is cleared at unmount. */
   inputElement?: HTMLInputElement;
   ref?: RadioRef;
 }
 
-/** Radio с кнопочным оформлением; использует состояние, native input и refs Radio. */
+/** Radio with button design; uses condition, native input and refs Radio. */
 export type RadioButtonProps = RadioProps;
 
 export interface RadioOption<Value extends RadioValue = string> {
@@ -83,49 +83,49 @@ export interface RadioOption<Value extends RadioValue = string> {
   onChange?: (event: RadioChangeEvent) => void;
 }
 
-/** Одиночный выбор типизированного значения через независимую группу native radio. */
+/** A single choice of typical value through an independent native radio group. */
 export interface RadioGroupProps<Value extends RadioValue = string> extends Omit<
   HTMLFieldsetAttributes,
   'children' | 'class' | 'onchange'
 > {
-  /** Непустые options имеют приоритет над children; пустой массив оставляет snippet. */
+  /** Non-empty options take precedence over children; an empty array leaves a snippet. */
   options?: readonly (Value | RadioOption<Value>)[];
   children?: Snippet;
-  /** Поддерживает bind:value. */
+  /** Maintenances bind:value. */
   value?: Value | undefined;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultValue?: Value;
   required?: boolean;
   /** @defaultValue 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
-  /** Alias вертикального расположения; явный orientation имеет приоритет. */
+  /** Alias vertical arrangement; clear orientation has priority. */
   vertical?: boolean;
-  /** Button меняет оформление Radio; заданный group optionType перекрывает RadioButton. */
+  /** Button changes the design of Radio; the specified group optionType covers RadioButton. */
   optionType?: 'default' | 'button';
-  /** Только appearance; наследует ConfigProvider.componentSize. */
+  /** Only appearance; inherit ConfigProvider.componentSize. */
   size?: ComponentSize;
-  /** Стиль кнопочного режима, по умолчанию outline. */
+  /** Button mode style, by the default outline. */
   buttonStyle?: 'outline' | 'solid';
-  /** По умолчанию false; растягивает группу и равномерно распределяет варианты. */
+  /** By default false; stretches the group and distributes the options evenly. */
   block?: boolean;
   onValueChange?: (value: Value) => void;
-  /** Вызывается только при смене значения, перед onValueChange. */
+  /** Is called only when the value is changed, before onValueChange. */
   onChange?: (event: RadioChangeEvent<Value>) => void;
-  /** Получают всплывающие focusin/focusout дочернего native input. */
+  /** Receive pop-uppouring focusin/focusout child native input. */
   onFocus?: HTMLFieldsetAttributes['onfocusin'];
   onBlur?: HTMLFieldsetAttributes['onfocusout'];
   onMouseEnter?: HTMLFieldsetAttributes['onmouseenter'];
   onMouseLeave?: HTMLFieldsetAttributes['onmouseleave'];
-  /** Базовый prefix группы и Radio из options; children выбирают свой prefix отдельно. */
+  /** Basic prefix groups and Radio from options; children choose their prefix separately. */
   prefixCls?: string;
-  /** Bindable fieldset; сохраняет нативные disabled, validation и form association. */
+  /** Bindable fieldset; preserves native disabled, validation and form association. */
   nativeElement?: HTMLFieldSetElement;
   class?: string;
   rootClassName?: string;
 }
 
 /**
- * Настройки отдельных Radio/RadioButton, включая варианты внутри RadioGroup.
+ * Settings of the individual Radio/RadioButton, including variants inside RadioGroup.
  * Root style: config.styles.root, config.style, local styles.root, local style.
  */
 export interface RadioConfig {

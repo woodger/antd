@@ -9,7 +9,7 @@ if (!target) {
 const query = new URLSearchParams(location.search);
 const profile = query.get('mentions-semantics') ?? 'live';
 if (query.has('ssr')) {
-  // Тест устанавливает фокус на редакторе из серверной разметки.
+  // The test sets the focus on the editor from the server mark-up.
   target.addEventListener('hydrate-mentions-semantics', () => {
     hydrate(Fixture, { target, props: { profile }, recover: false });
     target.dataset.hydrated = 'true';

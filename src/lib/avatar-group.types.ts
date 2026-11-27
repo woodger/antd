@@ -11,18 +11,18 @@ export interface AvatarGroupMax {
   count?: number;
   style?: string;
   /**
-   * Настройки Svelte Popover; children остаётся кнопкой +N.
-   * Content заменяет список, title — его заголовок. По умолчанию destroyOnHidden=true.
-   * Open — controlled prop с onOpenChange; без open состояние внутреннее.
+   * Svelte Popover settings. children remains the +N button. content replaces the list and title
+   * replaces the heading. destroyOnHidden defaults to true. open is controlled with onOpenChange.
+   * Without open, state is internal.
    */
   popover?: Omit<PopoverProps, 'children'>;
 }
-/** Группа аватаров с лимитом видимых элементов и Popover для оставшихся. */
+/** Groups avatars with a visible limit and a Popover for the rest. */
 export interface AvatarGroupProps {
   items: readonly AvatarGroupItem[];
   size?: AvatarSize;
   shape?: AvatarShape;
-  /** Локальный group/popover prefix; иначе ConfigProvider. Avatar участников независимы. */
+  /** Local group or popup prefix. Otherwise inherits ConfigProvider. Member Avatar components resolve their own prefix. */
   prefixCls?: string;
   max?: AvatarGroupMax;
   id?: string;
@@ -32,6 +32,6 @@ export interface AvatarGroupProps {
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Bindable div; собственные class/style Avatar config к корню группы не применяются. */
+  /** Bindable div. Avatar config's own class and style do not apply to the group root. */
   nativeElement?: HTMLDivElement;
 }

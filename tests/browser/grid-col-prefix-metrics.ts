@@ -1,6 +1,5 @@
 export function snapshotGridColPrefix() {
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const style = (node: Element, properties: string[]) => {
     const computed = getComputedStyle(node);
 
@@ -11,7 +10,7 @@ export function snapshotGridColPrefix() {
   const metrics = (node: Element, parent: Element) => {
     const bounds = node.getBoundingClientRect();
     const origin = parent.getBoundingClientRect();
-    // Округляет дробное измерение до сотых для сравнения снимков.
+    // Rounds the fractional measurement to the 100s for comparing the images.
     const round = (value: number) => Math.round(value * 100) / 100;
 
     return {

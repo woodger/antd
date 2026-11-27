@@ -3,8 +3,8 @@
   import { provideFormField } from './form-context';
 
   let { children }: { children: Snippet } = $props();
-  // Внутренний редактор не становится вторым successful control выбранного поля.
-  // Status/feedback, Form и остальные контексты продолжают наследоваться.
+  // The inner editor does not become a second successful control for the selected field. Status,
+  // feedback, Form, and other contexts continue to be inherited.
   provideFormField(undefined);
 </script>
 

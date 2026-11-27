@@ -6,14 +6,14 @@ import { expectedTableSemantics } from './fixtures/table-semantic-reference';
 test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 const fixture = '/?fixture=table-semantic';
 
-/** Снимает слоты таблицы и переносимой панели без хешей CSS темы. */
+/** Removes table slots and portable panel without hashes CSS themes. */
 function snapshot() {
   const root = document.getElementById('table-semantic-fixture');
   if (!root) {
     throw new Error('Missing Table semantic fixture');
   }
 
-  /** Классы темы и внутренней раскладки исключаются из сравнения. */
+  /** Classes of the theme and internal layout are excluded from the comparison. */
   function markers(node: Element | null | undefined) {
     return Array.from(node?.classList ?? []).filter(name => name.startsWith('observed-'));
   }
@@ -21,7 +21,7 @@ function snapshot() {
   const nodes = root.querySelectorAll<HTMLElement>(
     '[class*="observed-"],[style*="--observed-slot"]'
   );
-  // Нативный popover может быть внутри DOM таблицы и измеряется отдельно.
+  // A native popover can be inside the tables DOM and measured separately.
   const tableNodes = Array.from(nodes).filter(node => !node.closest('[data-ant-dropdown-popup]'));
   const semantic = tableNodes.map(node => {
     const parent = node.tagName === 'LI' ? node.closest('nav') : node.parentElement;
@@ -46,7 +46,7 @@ function snapshot() {
   };
 }
 
-/** Повторяет изменение props или открытие фильтра из прогона React. */
+/** Repeats change props or opening the filter from the React. */
 async function act(page: Page, action: string) {
   const labels: Record<string, string> = {
     filter: 'Filter: Name',

@@ -1,6 +1,6 @@
-// Ведёт состояние взаимодействия с полями диапазона. Решение о переходе отделено от публикации,
-// фокуса и сброса.
-// Переходы useRangeValueChange из rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
+// Maintains a state of interaction with range fields. The decision to move is separated from
+// publication, focus and resetting. Transits useRangeValueChange from rc-picker 1.12.2; MIT,
+// vendor/LICENSE.rc-picker.
 export type RangeInteractionSource =
   'field-switch'
   | 'input'
@@ -14,7 +14,7 @@ export type RangeInteractionSource =
   | 'esc';
 export type RangeInteractionSubmit = (index: number, all: boolean) => void;
 
-// Создаёт отдельное состояние редактирования для одного RangePicker.
+// Creates a separate editing state for one RangePicker.
 export function createRangeInteraction<Value>(options: {
   fieldCount: () => number;
   needConfirm: () => boolean;
@@ -31,21 +31,21 @@ export function createRangeInteraction<Value>(options: {
   let isLastInput = false;
   let current: number | null = null;
   let lastValid = 0;
-  // Читает редактируемое поле. Null используется между взаимодействиями.
+  // reads the editable field. Null is used between interactions.
   const getCurrentIndex = () => current;
-  // Сохраняет последнюю реальную позицию даже после сброса текущего поля.
+  // Retains the last actual position even after resetting the current field.
   const setCurrentIndex = (value: number | null) => {
     current = value;
     if (value !== null)
       lastValid = value;
   };
   let forceFocus = false;
-  // Запоминает необходимость перевести фокус после перехода.
+  // Memories the need to translate the focus after the transition.
   const setForceFocus = (value: boolean) => {
     forceFocus = value;
   };
 
-  // Сбрасывает состояние взаимодействия и подтверждения, сохраняя последнюю реальную позицию.
+  // Resets the state of interaction and confirmation, maintaining the last real position.
   const reset = () => {
     triggeredFields = [];
     confirmedIndex = null;
@@ -53,7 +53,7 @@ export function createRangeInteraction<Value>(options: {
     setCurrentIndex(null);
     setForceFocus(false);
   };
-  // Добавляет поле в порядке действий или обновляет его modified-флаг.
+  // Adds the field in the order of action or updates its modified-flag.
   const recordTriggeredField = (index: number, modified?: boolean) => {
     const field = triggeredFields.find(item => item.index === index);
     if (field) {
@@ -68,7 +68,7 @@ export function createRangeInteraction<Value>(options: {
       }];
     }
   };
-  // Публикует выбранное поле и завершает взаимодействие, когда обработаны все поля.
+  // Publishes the selected field and completes the interaction when all fields are processed.
   const submitField = (index: number, flush: RangeInteractionSubmit) => {
     recordTriggeredField(index);
     const allFieldsTriggered = triggeredFields.length >= options.fieldCount();
@@ -78,7 +78,7 @@ export function createRangeInteraction<Value>(options: {
     }
     return allFieldsTriggered;
   };
-  // Выбирает команду по источнику действия, пустому значению и needConfirm.
+  // Selects the command by source of action, empty value and needConfirm.
   const resolveAction = (
     currentIndex: number | null,
     index: number,
@@ -124,7 +124,7 @@ export function createRangeInteraction<Value>(options: {
     return 'abort';
   };
 
-  // Переход в другое поле разрешён только по циклическому порядку полей.
+  // Transition to another field is allowed only on the cyclical order of fields.
   function fieldSwitchAction(currentIndex: number, index: number, canSwitch: boolean) {
     if (index === currentIndex) {
       return 'abort';
@@ -148,7 +148,7 @@ export function createRangeInteraction<Value>(options: {
     return nextFieldTriggered ? 'resetCurrentAndSwitchNext' : 'resetCurrent';
   }
 
-  // При закрытии учитывает изменения draft, полноту ввода и требование подтверждения.
+  // When closing takes into account draft changes, the completeness of the entry and the confirmation requirement.
   function closeAction(currentIndex: number, canSwitch: boolean, canSubmit: boolean) {
     const interactionModified = triggeredFields.some(field => field.modified);
     if (!interactionModified) {
@@ -171,8 +171,8 @@ export function createRangeInteraction<Value>(options: {
     return canSubmit ? 'switchNext' : 'resetAll';
   }
 
-  // Применяет команду к текущему взаимодействию, публикуя draft до перехода фокуса.
-  // Подтверждение может передать обработчик со снимком принятого значения.
+  // Applies the command to the current interaction, publishing before the transition of the focus.
+  // Confirmation can be transmitted by the handler with a picture of the accepted value.
   const triggerChange = (
     index: number,
     source: RangeInteractionSource,
@@ -235,7 +235,7 @@ export function createRangeInteraction<Value>(options: {
     }
   };
 
-  // Публикует draft и submit перед выбором следующего поля и его фокуса.
+  // Publishes and draft before choosing the next field and its focus.
   function submitAndSwitch(
     actionIndex: number,
     requestedIndex: number,
@@ -270,7 +270,7 @@ export function createRangeInteraction<Value>(options: {
     }
   }
 
-  // Снимает неподтверждённый draft. Явный переход начинает состояние указанного поля.
+  // Removes unconfirmed draft. A clear transition begins the state of the specified field.
   function resetAndSwitch(actionIndex: number, requestedIndex: number, source: RangeInteractionSource) {
     resetValue(actionIndex);
     if (confirmedIndex === actionIndex) {
@@ -291,19 +291,19 @@ export function createRangeInteraction<Value>(options: {
   }
 
   return {
-    // Сообщает текущее поле, пока идёт взаимодействие.
+    // Reports the current field while the interaction is underway.
     get currentIndex() {
       return current;
     },
-    // Сохраняет индекс для панели и после закрытия текущего взаимодействия.
+    // Saves the index for the panel and after closing the current interaction.
     get activeIndex() {
       return current ?? lastValid;
     },
-    // Сообщает владельцу, требуется ли явный фокус при автоматическом переходе.
+    // Informs the holder whether an obvious focus is required during the automatic transition.
     get forceFocus() {
       return forceFocus;
     },
-    // Возвращает индексы без внутренних признаков modified.
+    // Returns indices without internal signs modified.
     get triggeredFields() {
       return triggeredFields.map(field => field.index);
     },

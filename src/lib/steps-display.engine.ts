@@ -13,7 +13,7 @@ export interface DisplayedStep<T> {
   status?: StepsStatus;
 }
 
-// По Ant Design 6.6.8 useDisplaySteps: maxCount считает шаги, исключая многоточия.
+// According to Ant Design 6.6.8 useDisplaySteps: maxCount considers the steps, excluding elbows.
 export function displaySteps<T extends DisplayableStep>(
   items: readonly T[],
   current: number,

@@ -1,8 +1,8 @@
-// Использует SSR-рендерер из среды Vite, с которой собран fixture.
+// Uses the SSR render from environment Vite with which the fixture is assembled.
 import { render } from 'svelte/server';
 import Fixture from './MentionsCountFixture.svelte';
 
-/** Возвращает разметку с начальным числом и Svelte hydration markers. */
+/** Returns markings with the initial number and Svelte hydration markers. */
 export function renderMentionsCount(profile: string) {
   return render(Fixture, { props: { profile } });
 }

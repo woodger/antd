@@ -8,7 +8,7 @@ export interface VariantOptions {
   globalVariant?: Variant;
 }
 
-/** Приоритет form/hooks/useVariants 6.6.8; explicit outlined тоже считается настройкой. */
+/** Priority form/hooks/useVariants 6.6.8; classified is also considered an explicit setting. */
 export function resolveVariant(options: VariantOptions): {
   variant: Variant;
   isConfigured: boolean;

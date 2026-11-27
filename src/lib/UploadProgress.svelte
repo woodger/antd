@@ -35,7 +35,7 @@
     if (!root) {
       return;
     }
-    // После скрытого состояния новый DOM получает enter; только первое видимое появление — appear.
+    // After a hidden state, new DOM runs enter. Only the first visible mount runs appear.
     const previous = hadRoot || initiallyHidden ? false : undefined;
     hadRoot = true;
     const controller = createUploadMotion(root, next => { motionState = next; }, () => {

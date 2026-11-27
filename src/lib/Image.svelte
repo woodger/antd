@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Показывает изображение и открывает preview. Если задана группа, выбор изображения передаётся
-  // её владельцу.
+  // Displays an image and opens its preview. If the image belongs to a group, its owner handles
+  // image selection.
   import { onDestroy, untrack } from 'svelte';
   import type { ImageProps, ImagePreviewConfig, ImageElementData } from './image.types';
   import { useConfig } from './config-context';

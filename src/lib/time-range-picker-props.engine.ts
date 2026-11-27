@@ -10,11 +10,11 @@ const timeOnly = new Set([
   'allowClear', 'status', 'placeholder', 'renderExtraFooter', 'disabledTime', 'mode', 'picker'
 ]);
 
-/** Общие поля RangePicker без time-only callbacks и renderers в native attributes. */
+/** Shared RangePicker fields. Time-only callbacks and renderers stay out of native attributes. */
 export function timeRangeSharedProps<DateType extends object>(
   props: TimeRangePickerRuntimeProps<DateType>
 ): RangePickerProps<DateType> {
-  // Типы callback payload сохраняются на time boundary, остальные поля общие для RangePicker.
+  // Callback payload types are saved to time boundary, the remaining fields are common for RangePicker.
   const shared = Object.fromEntries(
     Object.entries(props).filter(([key]) => !timeOnly.has(key))
   ) as RangePickerProps<DateType>;

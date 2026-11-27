@@ -199,7 +199,7 @@
   });
 </script>
 <style>
-  /* Opaque children — один Compact slot; границы видимых controls определяются на SSR. */
+  /* Opaque children occupy one Compact slot. The boundaries of visible controls are resolved during SSR. */
   [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child)),
   [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child) > [data-ant-float-root]) {
     margin-block-start:calc(0px - var(--ant-line-width));

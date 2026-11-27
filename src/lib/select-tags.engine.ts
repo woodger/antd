@@ -3,7 +3,7 @@ import type {
   SelectDataDisplay, SelectDataFields, SelectDataFilter, SelectDataMaps, SelectDataValue
 } from './select-data.types';
 
-/** @rc-component/select 1.10.1 tag options; MIT, см. vendor/LICENSE.rc-select. */
+/** @rc-component/select 1.10.1 tag options; MIT, see vendor/LICENSE.rc-select. */
 export function getSelectTagOptions<Value extends SelectDataValue, Data extends object>(
   options: readonly Data[],
   selected: readonly SelectDataDisplay<Value, Data>[],
@@ -29,7 +29,7 @@ export function getSelectTagOptions<Value extends SelectDataValue, Data extends 
     || (properties.length ? properties.some(field => Object.hasOwn(option, field)
       && Reflect.get(option, field) === search) : Reflect.get(option, 'value') === search));
 
-  // Не создаём Source whitespace-only tag; явный option с таким value остаётся доступным.
+  // Skips creating the upstream whitespace-only tag. An explicit option with that value remains available.
   return search.trim() && !exact
     && !Reflect.get(maps.valueOptions.get(search as Value) ?? {}, 'disabled')
     ? [create(search), ...filtered] : filtered;

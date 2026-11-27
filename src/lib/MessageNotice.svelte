@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Владеет DOM и фазой показа одной записи. Очередь получает завершение только
-  // после удаления DOM и только для той версии записи, которая закрывалась.
+  // Owns the DOM and visibility phase of one entry. The queue receives completion after DOM removal
+  // and only for the version of the entry that was closing.
   import { onDestroy, tick, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import type { Attachment } from 'svelte/attachments';
@@ -26,7 +26,7 @@
   const id = untrack(() => notice.id);
   const runtime = untrack(() => message[messageHolderKey]);
   const designTheme = useDesignTokenContext();
-  // Канонические variables разрешаются здесь, после локальных variables другого prefix.
+  // Canonical variables resolve here, after local variables for a different prefix.
   let inheritedStyle = $derived(designTheme.enabled && designTheme.state.prefix !== 'ant'
     ? inheritedComponentThemeStyle('Message', designTheme.state.token, designTheme.state.prefix)
     : undefined);
@@ -63,7 +63,7 @@
     });
   }
 
-  /** Локальный CSS transitionName следует тем же фазам, что и другие popup-поверхности. */
+  /** A local CSS transitionName follows the same phases as other popup surfaces. */
   function connectNamedMotion(root: HTMLDivElement) {
     const view = root.ownerDocument.defaultView;
     if (!view) {

@@ -1,10 +1,10 @@
-// Измеряет трек Carousel и управляет DOM-подписками. Состояние слайда приходит из модели, таймеры
-// и наблюдатели живут столько же, сколько привязка к списку.
+// Measures the Carousel track and manages DOM subscriptions. Slide state comes from the model.
+// Timers and observers live for the duration of the list attachment.
 import type { CarouselState } from './carousel.types';
 import type { CarouselSettings } from './carousel-settings.engine';
 import type { CarouselSlideMetrics } from './carousel.engine';
 
-// Считывает размеры списка и трека. В расчёте горизонтального слайда учитывает centerPadding.
+// Reads list and track dimensions. Horizontal slide measurement accounts for centerPadding.
 export function carouselMeasure(
   list: HTMLDivElement,
   track: HTMLDivElement,
@@ -25,7 +25,7 @@ export function carouselMeasure(
   };
 }
 
-// Снимает положение и размеры каждого отрендеренного слайда в порядке DOM.
+// Captures each rendered slide's position and size in DOM order.
 export function carouselMetrics(track: HTMLDivElement | undefined): CarouselSlideMetrics[] {
   return Array.from(track?.children ?? [], element => {
     const slide = element as HTMLElement;
@@ -39,7 +39,7 @@ export function carouselMetrics(track: HTMLDivElement | undefined): CarouselSlid
   });
 }
 
-/** Нативные измерения и ресурсы экземпляра; все отложенные операции отменяются в cleanup. */
+/** Native measurements and instance resources. Cleanup cancels every deferred operation. */
 export function connectCarouselDOM(
   list: HTMLDivElement,
   read: () => { props: CarouselSettings; state: Readonly<CarouselState>; },
@@ -56,7 +56,7 @@ export function connectCarouselDOM(
   const pending = new Set<ReturnType<typeof setTimeout>>();
   const images = new Map<HTMLImageElement, () => void>();
 
-  // Регистрирует таймер, который можно отменить при уничтожении, и снимает запись перед вызовом.
+  // Registers a timer that can be cancelled on destruction and removes its entry before invoking it.
   function defer(callback: () => void, delay: number) {
     const timer = setTimeout(() => {
       pending.delete(timer);
@@ -65,7 +65,7 @@ export function connectCarouselDOM(
     pending.add(timer);
   }
 
-  // Объединяет частые запросы пересчёта, сохраняя флаг обновления трека последнего запроса.
+  // Coalesces frequent recalculation requests and retains the last request's track update flag.
   function resize(setTrackStyle = true) {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
@@ -73,7 +73,7 @@ export function connectCarouselDOM(
     }, 50);
   }
 
-  // Меняет высоту списка по текущему слайду только при включённом adaptiveHeight.
+  // Adjusts the list height to the current slide only when adaptiveHeight is enabled.
   function adaptHeight() {
     const { props, state } = read();
     if (!props.adaptiveHeight) {
@@ -83,12 +83,12 @@ export function connectCarouselDOM(
     list.style.height = `${slide?.offsetHeight ?? 0}px`;
   }
 
-  // Планирует обновление размеров и стиля трека при изменении окна.
+  // Schedules track dimension and style updates when the window changes.
   function handleWindowResize() {
     resize();
   }
 
-  // Запрашивает паузу для фокуса на самом слайде при включённом pauseOnFocus.
+  // Requests a pause when the slide itself receives focus and pauseOnFocus is enabled.
   function handleFocus(event: FocusEvent) {
     const target = event.target;
     if (read().props.pauseOnFocus && target instanceof HTMLElement
@@ -97,7 +97,7 @@ export function connectCarouselDOM(
     }
   }
 
-  // Передаёт модели уход фокуса со слайда, если модель учитывает pauseOnFocus.
+  // Notifies the model when focus leaves the slide if it handles pauseOnFocus.
   function handleBlur(event: FocusEvent) {
     const target = event.target;
     if (read().props.pauseOnFocus && target instanceof HTMLElement
@@ -123,11 +123,11 @@ export function connectCarouselDOM(
 
   return {
     adaptHeight,
-    // Восстанавливает фокус на DOM-узле текущего слайда, если он отрендерен.
+    // Restores focus to the current slide's DOM node if it is rendered.
     focusCurrent() {
       list.querySelector<HTMLElement>('.slick-current')?.focus();
     },
-    // Обновляет подписки прямого взаимодействия с изображениями по текущему составу трека.
+    // Updates direct image interaction subscriptions for the current track contents.
     scanImages() {
       const found = new Set(list.querySelectorAll<HTMLImageElement>('.slick-slide img'));
       for (const [image, dispose] of images) {
@@ -139,12 +139,12 @@ export function connectCarouselDOM(
       let loaded = 0;
       for (const image of found) {
         if (images.has(image)) continue;
-        // Передаёт фокус родителю изображения для навигации со слайда.
+        // Focuses the image's parent to allow navigation from the slide.
         function handleClick() {
           image.parentElement?.focus();
         }
-        // При lazyLoad обновляет высоту и откладывает измерение. Иначе ждёт завершения загрузки
-        // набора.
+        // With lazyLoad, updates height and defers measurement. Otherwise waits for the whole image
+        // set to finish.
         function handleLoad() {
           if (read().props.lazyLoad) {
             adaptHeight();
@@ -154,7 +154,7 @@ export function connectCarouselDOM(
             resize();
           }
         }
-        // Учитывает ошибку в числе завершённых изображений и уведомляет модель вне lazyLoad.
+        // Counts image errors as completed loads and notifies the model outside lazyLoad.
         function handleError() {
           if (!read().props.lazyLoad) {
             if (++loaded >= found.size) resize();
@@ -171,8 +171,8 @@ export function connectCarouselDOM(
         });
       }
     },
-    // Отменяет отложенные пересчёты и удаляет наблюдение, обработчики фокуса и подписки
-    // изображений.
+    // Cancels deferred recalculations and removes observers, focus handlers, and image
+    // subscriptions.
     destroy() {
       active = false;
       clearTimeout(resizeTimer);
@@ -188,7 +188,7 @@ export function connectCarouselDOM(
   };
 }
 
-/** MatchMedia повторяет диапазоны json2mq; исходный slick активирует их по change. */
+/** matchMedia mirrors json2mq ranges. Upstream Slick activates them on change. */
 export function connectCarouselResponsive(
   view: Window,
   breakpoints: readonly number[],
@@ -196,10 +196,10 @@ export function connectCarouselResponsive(
 ) {
   const sorted = [...breakpoints].sort((a, b) => a - b);
   const disposers: (() => void)[] = [];
-  // Добавляет слушатель диапазона и регистрирует его отключение для общей очистки.
+  // Adds a range listener and registers its removal for shared cleanup.
   function watch(query: string, breakpoint: number | null) {
     const media = view.matchMedia(query);
-    // Передаёт breakpoint только при входе в диапазон media query.
+    // Reports a breakpoint only when entering the media query's range.
     function handleChange(event: MediaQueryListEvent) {
       if (event.matches) onChange(breakpoint);
     }
@@ -211,7 +211,7 @@ export function connectCarouselResponsive(
     watch(`(min-width: ${minimum}px) and (max-width: ${value}px)`, value);
   });
   if (sorted.length) watch(`(min-width: ${sorted[sorted.length - 1]}px)`, null);
-  // Снимает media listeners всех диапазонов, принадлежащих этой привязке.
+  // Removes media listeners for all ranges owned by this attachment.
   return () => {
     for (const dispose of disposers) dispose();
   };

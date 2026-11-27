@@ -19,7 +19,7 @@ export function spaceOrientation(
   return 'horizontal';
 }
 export function spaceHasContent(content: SpaceContent): boolean {
-  // React.Children нормализует оба boolean в null до проверки isReactRenderable.
+  // React.Children normalizes both booleans in null until inspection isReactRenderable.
   return content !== undefined
     && content !== null
     && typeof content !== 'boolean'

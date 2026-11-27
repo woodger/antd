@@ -37,7 +37,7 @@ async function perform(
     const row = page.locator(`.ant-select-dropdown [role="treeitem"][id$="-${action.value}"]`);
     const selector = action.kind !== 'title' && (sample.checkable || sample.strict)
       ? '[data-ant-tree-checkbox]' : '[data-ant-tree-content]';
-    // Оба controls проверяют запрет; физический клик по disabled строке не выбирает её.
+    // Both check the ban; the physical click disabled on the line does not select it.
     await row.locator(selector).click({ force: true });
   }
   else if (action.kind === 'search') {

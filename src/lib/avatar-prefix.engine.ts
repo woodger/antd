@@ -1,13 +1,13 @@
 import template from './vendor/avatar-prefix.css.js';
 
-/** Меняет только Avatar componentCls; CSS variables, marker, Image и anticon остаются общими. */
+/** Changes only Avatar componentCls. CSS variables, the marker, Image, and anticon remain shared. */
 export function getAvatarPrefixCss(prefix: string) {
   if (prefix === 'ant-avatar') {
     return undefined;
   }
 
   return template
-    // Общий marker не должен сбрасывать font-size и aliases соседних стандартных Avatar.
+    // The shared marker must not reset font-size or aliases on adjacent default Avatars.
     .replace(
       /(^|[\n,])\.ant-avatar-css-var(?=[\s{:.#>+~[]|$)/g,
       (_, separator: string) =>

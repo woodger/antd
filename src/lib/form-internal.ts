@@ -5,7 +5,7 @@ import type { ValidateMessages } from './validation-messages.types';
 
 export interface FormFieldRegistration {
   readonly name: NamePath;
-  // Symbol сохраняет identity, когда registration хранится внутри Svelte proxy.
+  // Symbol preserves when identity registration is stored inside Svelte proxy.
   readonly mountKey?: symbol;
   readonly rules?: readonly FormRule[];
   readonly validateFirst?: boolean | 'parallel';
@@ -14,9 +14,9 @@ export interface FormFieldRegistration {
   readonly isListField?: boolean;
   readonly initialValue?: unknown;
   readonly messageVariables?: Readonly<Record<string, string>>;
-  /** Snapshot metadata для UI collector; undefined снимает прежний binding. */
+  /** Snapshot metadata for UI collector; undefined removes the former binding. */
   readonly onMetaChange?: (meta: FormFieldMeta | undefined) => void;
-  /** Пересоздаёт содержимое выбранного Field без замены соседних controls. */
+  /** Recreates the contents of the selected Field without replacing the neighboring controls. */
   readonly onReset?: () => void;
   readonly getInstance?: () => unknown;
   readonly getElement?: () => Element | undefined;
@@ -33,7 +33,7 @@ export interface FormHooks {
   changeList(name: NamePath, values: readonly unknown[]): void;
 }
 
-// Неперечисляемый Symbol сохраняет связь и через Svelte proxy, не расширяя публичный FormInstance.
+// Unlisted Symbol retains communication through Svelte proxy, without extending public FormInstance.
 const formHooksKey = Symbol('ant-design-form-hooks');
 
 export function setFormHooks(form: object, hooks: FormHooks) {

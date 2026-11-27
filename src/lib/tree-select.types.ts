@@ -8,15 +8,15 @@ import type { TreeSelectTokenSeparators } from './tree-select-token.engine';
 import type { TreeSelectComponents, TreeSelectEditorElement } from './tree-select-components.types';
 import type { PopupSourceAlign } from './popup-position.engine';
 export type { TreeSelectTokenSeparators } from './tree-select-token.engine';
-/** Методы bind:this. DOM-элементы предоставляются через bindable props. */
+/** Methods bind:this. DOM-elements are provided through bindable props. */
 export type TreeSelectRef = TreeRef;
-/** Текущий AlignType без private experimental API; offsets сохраняют общий Native string contract. */
+/** Current AlignType without private experimental API; offsets save total Native string contract. */
 export type TreeSelectPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 export type TreeSelectRawValue = string | number;
 export type TreeSelectLabel = string | number | boolean | null | undefined | Snippet
   | readonly TreeSelectLabel[];
 type TreeSelectCheckableValue = TreeSelectLabel | bigint | Iterable<TreeSelectCheckableContent>;
-/** Исходное содержимое checkbox используется только как флаг, без render/iteration/await. */
+/** The source contents of the checkbox are used only as a flag, without render/iteration/await. */
 export type TreeSelectCheckableContent = TreeSelectCheckableValue | Promise<TreeSelectCheckableValue>;
 export interface TreeSelectSuffixInfo {
   searchValue: string;
@@ -30,17 +30,17 @@ export interface TreeSelectAllowClear {
   clearIcon?: TreeSelectLabel;
   label?: string;
 }
-/** Пустые имена используют стандартные поля; key всегда берётся из value field. */
+/** Empty names use standard fields; key is always taken from value field. */
 export interface TreeSelectFieldNames {
   value?: string;
   label?: string;
   children?: string;
 }
-/** Связи плоского списка: имена id/pId полей и значение родителя корней. */
+/** Flat list links: names id/pId fields and the value of the root parent. */
 export interface TreeSelectSimpleModeConfig {
   id?: string | number;
   pId?: string | number;
-  /** По умолчанию null: все узлы без найденного родителя становятся корнями. */
+  /** By default null: all nodes without a found parent become roots. */
   rootPId?: TreeSelectRawValue | null;
 }
 export type TreeSelectSimpleMode = boolean | TreeSelectSimpleModeConfig;
@@ -51,7 +51,7 @@ export interface TreeSelectLabeledValue {
   disabled?: boolean;
 }
 export type TreeSelectTagInfo = SelectTagInfo<TreeSelectRawValue>;
-/** Snippet получает полные omitted records без synthetic key; null/undefined выбирают + N ... . */
+/** Snippet receives complete omitted records without synthetic key; null/undefined choose + N... */
 export type TreeSelectTagPlaceholder = string | number | boolean | null
   | readonly TreeSelectLabel[] | Snippet<[TreeSelectLabeledValue[]]>;
 export type TreeSelectValue =
@@ -81,12 +81,12 @@ interface TreeSelectBasicNode<Data extends object = TreeSelectNode> {
 export interface TreeSelectNode extends TreeSelectBasicNode {
   children?: readonly TreeSelectNode[];
 }
-/** Декларативный узел TreeSelect.TreeNode; children содержит вложенные объявления. */
+/** Declarative node TreeSelect.TreeNode; children contains nested ads. */
 export interface TreeSelectTreeNodeProps<Data extends object = TreeSelectNode> extends TreeSelectBasicNode<Data> {
   children?: Snippet;
 }
 export type TreeSelectStrategy = 'SHOW_ALL' | 'SHOW_PARENT' | 'SHOW_CHILD';
-/** Поиск и фильтрация дерева TreeSelect, включая controlled searchValue. */
+/** Seeking and filtration of wood TreeSelect, including controlled searchValue. */
 export interface TreeSelectSearchConfig<Data extends object = TreeSelectNode> {
   searchValue?: string;
   onSearch?: (value: string) => void;
@@ -103,7 +103,7 @@ type TreeSelectControlSlots<Value> = Partial<Record<
 >>;
 type TreeSelectPopupSlots<Value> = Partial<Record<'root' | 'item' | 'itemTitle' | 'itemSwitcher', Value>>;
 export type TreeSelectClassNames = TreeSelectControlSlots<string> & {
-  /** Строка назначается popup.root. */
+  /** The line is assigned popup.root. */
   popup?: string | TreeSelectPopupSlots<string>;
 };
 export type TreeSelectStyles = TreeSelectControlSlots<string> & {
@@ -132,7 +132,7 @@ export type TreeSelectSemanticValue<
   EditorElement extends TreeSelectEditorElement = HTMLInputElement
 > = Slots | ((info: TreeSelectSemanticInfo<ValueType, Data, RootElement, EditorElement>) => Slots | undefined);
 export type TreeSelectSwitcherIcon = TreeTitleContent<TreeEventNode>;
-/** Настройки ConfigProvider.treeSelect. Для оформления используются classNames и styles. */
+/** Settings ConfigProvider.treeSelect. classNames and styles are used for registration. */
 export interface TreeSelectConfig {
   class?: string;
   style?: string;
@@ -147,7 +147,7 @@ export interface TreeSelectConfig {
   ) => TreeSelectStyles | undefined);
   switcherIcon?: TreeSelectSwitcherIcon;
 }
-/** Single/multiple выбор узлов дерева с check strategies, поиском и lazy load. */
+/** Single/multiple selection of tree knots with check strategies, search and lazy load. */
 export interface TreeSelectProps<
   ValueType extends TreeSelectValue = TreeSelectValue,
   Data extends object = TreeSelectNode,
@@ -157,41 +157,41 @@ export interface TreeSelectProps<
   HTMLInputAttributes,
   keyof DOMAttributes<HTMLInputElement> | 'value' | 'defaultValue' | 'size' | 'type' | 'prefix' | 'placeholder'
 >, Omit<DOMAttributes<EditorElement | HTMLInputElement>, 'children' | 'onchange' | 'oninput'> {
-  /** Локальный namespace Select/TreeSelect; пустая строка наследует ConfigProvider. */
+  /** Local namespace Select/TreeSelect; an empty line inherits ConfigProvider. */
   prefixCls?: string;
-  /** Inherited prop: RTL и default placement задаёт ConfigProvider; native dir остаётся отдельным атрибутом. */
+  /** Inherited prop: RTL and default placement is ConfigProvider; dir native remains a separate attribute. */
   direction?: 'ltr' | 'rtl';
   treeData?: readonly Data[];
-  /** Используется при отсутствии treeData. */
+  /** Used in the absence of treeData. */
   children?: Snippet;
   components?: TreeSelectComponents<RootElement, EditorElement>;
   fieldNames?: TreeSelectFieldNames;
-  /** Плоский список; false/undefined сохраняют вложенную структуру. */
+  /** Flat list; false/undefined retain the nested structure. */
   treeDataSimpleMode?: TreeSelectSimpleMode;
-  /** Управляемое значение; владелец принимает результат через onChange. */
+  /** Managed value; the owner accepts the result via onChange. */
   value?: ValueType;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultValue?: ValueType;
   /** @defaultValue false */
   multiple?: boolean;
-  /** Truthy содержимое включает стандартные checkbox; содержимое и snippet не выводятся.
+  /** Truthy content enables standard checkboxes. The content and snippet are not rendered.
    * @defaultValue false
    */
   treeCheckable?: TreeSelectCheckableContent;
-  /** Независимые checkbox; также включает labelInValue. */
+  /** Independent checkbox; also includes labelInValue. */
   treeCheckStrictly?: boolean;
   /** @defaultValue false */
   labelInValue?: boolean;
-  /** Лимит multiple; SHOW_PARENT и nonstrict SHOW_ALL отключают ненулевой limit. */
+  /** The multiple limit; SHOW_PARENT and nonstrict SHOW_ALL disable the non-zero limit. */
   maxCount?: number;
-  /** Усечение только string/number labels тегов; callbacks и title сохраняют полное значение. */
+  /** Truncation only string/number labels tags; callbacks and title retain full significance. */
   maxTagTextLength?: number;
-  /** Видимые теги; остальные значения сохраняются в callbacks и native FormData. */
+  /** Visible tags; the remaining values are stored in callbacks and native FormData. */
   maxTagCount?: number | 'responsive';
   maxTagPlaceholder?: TreeSelectTagPlaceholder;
-  /** Custom tag получает bound label snippet и Source close/summary metadata. */
+  /** Custom tag receives the label bound snippet and Source close/summary metadata. */
   tagRender?: Snippet<[TreeSelectTagInfo]>;
-  /** Inherited prop не используется текущим Source Overflow; не включает tag motion. */
+  /** Inherited prop is not used by current Source Overflow; does not include tag motion. */
   choiceTransitionName?: string;
   showCheckedStrategy?: TreeSelectStrategy;
   onChange?: (
@@ -202,22 +202,22 @@ export interface TreeSelectProps<
   onSelect?: (value: TreeSelectRawValue, node: Data | undefined) => void;
   onDeselect?: (value: TreeSelectRawValue, node: Data | undefined) => void;
   showSearch?: boolean | TreeSelectSearchConfig<Data>;
-  /** Очищает tokenized search и закрывает popup, не выбирая значения дерева. */
+  /** Purifies tokenized search and closes the popup without choosing the values of the tree. */
   tokenSeparators?: TreeSelectTokenSeparators;
   treeNodeLabelProp?: string;
   open?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Ant Design 6.6.8 перекрывает этот inherited callback через onOpenChange. */
+  /** Ant Design 6.6.8 closes this inherited callback via onOpenChange. */
   onPopupVisibleChange?: (open: boolean) => void;
-  /** Focus добавляет открытие по фокусу; click сохраняет обычное открытие указателем. */
+  /** Focus adds an opening to focus; click preserves the usual opening pointer. */
   showAction?: ('focus' | 'click')[];
   autoFocus?: boolean;
   tabIndex?: number;
-  /** Как в Source TreeSelect, не ограничивает поиск; native maxlength задаёт DOM-ограничение. */
+  /** As in Source TreeSelect, does not limit search; native maxlength sets DOM-restriction. */
   maxLength?: number;
-  /** Нативный onkeydown отменяет внутреннюю обработку; этот hook следует порядку Source. */
+  /** Native onkeydown cancels internal processing; this hook follows the Order of Source. */
   onInputKeyDown?: DOMAttributes<EditorElement | HTMLInputElement>['onkeydown'];
   onKeyDown?: DOMAttributes<RootElement | HTMLDivElement>['onkeydown'];
   onKeyUp?: DOMAttributes<RootElement | HTMLDivElement>['onkeyup'];
@@ -229,16 +229,16 @@ export interface TreeSelectProps<
   onClick?: DOMAttributes<RootElement | HTMLDivElement>['onclick'];
   placeholder?: TreeSelectLabel;
   prefix?: TreeSelectLabel;
-  /** Содержимое или snippet с состоянием поля. null/undefined используют suffixIcon. */
+  /** Content or snippet with field state. null/undefined use suffixIcon. */
   suffix?: TreeSelectSuffix;
-  /** null скрывает стандартную стрелку. */
+  /** null hides the standard arrow. */
   suffixIcon?: TreeSelectLabel;
   /** @defaultValue false */
   allowClear?: boolean | TreeSelectAllowClear;
   onClear?: () => void;
-  /** Иконка удаления обычного тега. Пользовательский tagRender задаёт своё содержимое. */
+  /** The icon of removal of the usual tag. Customary tagRender sets its content. */
   removeIcon?: TreeSelectLabel;
-  /** Snippet получает исходное содержимое панели. */
+  /** Snippet receives the original content of the panel. */
   popupRender?: Snippet<[Snippet]>;
   notFoundContent?: TreeSelectLabel | null;
   /** @defaultValue false */
@@ -247,45 +247,45 @@ export interface TreeSelectProps<
   treeDefaultExpandedKeys?: readonly TreeKey[];
   /** @defaultValue false */
   treeDefaultExpandAll?: boolean;
-  /** Раскрытие заголовком; Ctrl/Meta/Shift сохраняют только выбор. @defaultValue false */
+  /** The title expands the node. With Ctrl, Meta, or Shift, it only selects. @defaultValue false */
   treeExpandAction?: TreeExpandAction;
   onTreeExpand?: (keys: TreeKey[]) => void;
   treeLoadedKeys?: readonly TreeKey[];
   onTreeLoad?: (keys: TreeKey[]) => void;
-  /** Асинхронная загрузка children; во время поиска не запускается. */
+  /** Asynchronous download children; during the search does not start. */
   loadData?: (node: TreeEventNode<Data>) => PromiseLike<unknown>;
   /** @defaultValue false */
   treeLine?: boolean | { showLeafIcon: TreeSelectSwitcherIcon; };
   /** @defaultValue false */
   treeIcon?: TreeSelectNodeIcon;
   switcherIcon?: TreeSelectSwitcherIcon;
-  /** Для известного узла label в onChange и omitted records — snippet с этим узлом. */
+  /** For a known node, onChange and omitted records use a snippet with that node as the label. */
   treeTitleRender?: Snippet<[Data]>;
   /** @defaultValue 256 */
   listHeight?: number;
-  /** Оценка высоты строки. По умолчанию controlHeightSM + paddingXXS. */
+  /** Estimation of line height. The default is controlHeightSM + paddingXXS. */
   listItemHeight?: number;
-  /** Дополнительный отступ при прокрутке до активного узла. @defaultValue 0 */
+  /** Additional indentation when scrolling to the active node. @defaultValue 0 */
   listItemScrollOffset?: number;
-  /** Закреплённый rc-tree-select не передаёт этот inherited prop в Tree; поведение не меняется. */
+  /** The pinned rc-tree-select does not forward this inherited prop to Tree, so it has no effect. */
   showScrollBar?: boolean | 'optional';
-  /** Undefined наследует ConfigProvider.virtual. @defaultValue true */
+  /** undefined inherits ConfigProvider.virtual. @defaultValue true */
   virtual?: boolean;
-  /** False оставляет ширину по содержимому и отключает виртуализацию. @defaultValue true */
+  /** False leaves the width on the content and disables virtualization. @defaultValue true */
   popupMatchSelectWidth?: boolean | number;
-  /** Ant Design 6.6.8 перекрывает inherited popupStyle; используйте styles.popup.root. */
+  /** Ant Design 6.6.8 overlaps inherited popupStyle; use styles.popup.root. */
   popupStyle?: string;
-  /** Truthy animation использует `${selectPrefix}-dropdown-${animation}` вместо transitionName. */
+  /** Trusty animation uses `${selectPrefix}-dropdown-${animation}` instead of transitionName. */
   animation?: string;
-  /** Undefined выбирает `${rootPrefix}-slide-up`; пустая строка отключает именованный motion. */
+  /** Undefined chooses `${rootPrefix}-slide-up`; an empty string disables the named motion. */
   transitionName?: string;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
-  /** Shallow override выбранного placement; offset/overflow заменяются целиком. */
+  /** Shallow override selected placement; offset/overflow are replaced entirely. */
   popupAlign?: TreeSelectPopupAlign;
-  /** Полностью заменяет четыре исходных placement, включая явно пустую map. */
+  /** Completely replaces the four original placements, including the apparently empty map. */
   builtinPlacements?: Readonly<Record<string, TreeSelectPopupAlign>>;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
-  /** Локальный getter получает корень Select; undefined наследует ConfigProvider. */
+  /** Local getter receives root Select; undefined inherits ConfigProvider. */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   classNames?: TreeSelectSemanticValue<TreeSelectClassNames, ValueType, Data, RootElement, EditorElement>;
   styles?: TreeSelectSemanticValue<TreeSelectStyles, ValueType, Data, RootElement, EditorElement>;
@@ -293,10 +293,10 @@ export interface TreeSelectProps<
   size?: ComponentSize;
   status?: 'error' | 'warning';
   /** @defaultValue 'outlined' */
-  /** Приоритет: variant, Form, treeSelect config, global variant, outlined. */
+  /** Priority: variant, Form, treeSelect config, global variant, */
   variant?: Variant;
-  /** Текущий корень; снятие custom slot возвращает стандартный div. */
+  /** Current Root; removing the custom slot returns the standard div. */
   nativeElement?: NoInfer<RootElement> | HTMLDivElement;
-  /** Текущий редактор; снятие custom slot возвращает стандартный input. */
+  /** Current editor; withdrawing the custom slot returns the standard input. */
   inputElement?: NoInfer<EditorElement> | HTMLInputElement;
 }

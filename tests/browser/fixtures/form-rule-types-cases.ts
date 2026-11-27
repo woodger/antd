@@ -52,7 +52,7 @@ export function formRuleTypesRule(sample: FormRuleTypesSample): ValidationRule {
   };
 }
 
-/** Source использует parseInt, который ошибочно классифицирует scientific notation. */
+/** Source uses parseInt, which mistakenly classifies scientific notation. */
 export const formRuleTypesCorrections: Readonly<Record<string, boolean>> = {
   'integer-large-integer': true,
   'float-large-integer': false

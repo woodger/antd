@@ -38,11 +38,11 @@
   }: SpinProps = $props();
   const config = useConfig();
   const componentTheme = useComponentTheme('Spin');
-  // Выходной ref может сброситься при смене spread props; lifecycle использует свой DOM host.
+  // The exposed ref can reset when spread props change. The lifecycle uses its own DOM host.
   let host = $state<HTMLDivElement>();
   let content = $state<HTMLDivElement>();
   let mockPercent = $state(0);
-  // Spread props могут инвалидировать getters без смены значения; таймеры сравнивают примитивы.
+  // Spread props can invalidate getters without changing their values. Timers compare primitives.
   let requestedSpinning = $derived(spinning);
   let requestedDelay = $derived(normalizeSpinDelay(delay));
   let isAuto = $derived(percent === 'auto');
@@ -227,7 +227,7 @@
   {:else if description === 0}0{/if}
 {/snippet}
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`spin-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_no_noninteractive_tabindex (Отрицательный tabindex временно паркует фокус вне inert children.) --><div
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`spin-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_no_noninteractive_tabindex (Negative tabindex temporarily holds focus outside inert children.) --><div
   bind:this={host} {id} data-ant-spin-root
   data-ant-spin-prefix={prefixCss ? prefix : undefined}
   role={ariaHidden ? undefined : hasChildren ? 'group' : announce ? 'status' : undefined}

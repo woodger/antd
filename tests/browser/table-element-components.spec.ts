@@ -8,7 +8,7 @@ const viewport = '[data-ant-table-part="content"]';
 type Capture = (typeof source.cases)[number]['states'][number]['state'];
 type Node = Capture['nodes'][number];
 
-/** Сохраняет назначение слота и структуру нативной таблицы в виртуальном окне. */
+/** Saves the purpose of the slot and the structure of the native table in the virtual window. */
 function nativeNode(node: Node): Node {
   if (node.tag !== 'div') {
     return node;
@@ -19,7 +19,7 @@ function nativeNode(node: Node): Node {
   return { ...node, tag };
 }
 
-/** Читает реальные заменённые элементы, вложенность и координаты трёх полос. */
+/** Reads the real substituted elements, nesting and coordinates of the three stripes. */
 function captureGeometry(wide: boolean) {
   const root = document.querySelector('[data-table-elements-fixture]');
   if (!root) {
@@ -58,7 +58,7 @@ function captureGeometry(wide: boolean) {
   };
 }
 
-/** Выполняет действия через текущие элементы и публичный ref Table. */
+/** Performs actions through current elements and public ref Table. */
 async function act(page: Page, action: string) {
   if (action === 'sort') {
     await page.locator('.ant-table-column-sorters .ant-table-column-title').click();
@@ -151,7 +151,7 @@ for (const direction of ['ltr', 'rtl']) {
     const button = header.getByRole('button', { name: 'Name', exact: true });
     const initialLeft = direction === 'rtl' ? -230 : 230;
 
-    /** Отрицательное число означает, что часть кнопки закрыта границей полосы. */
+    /** A negative number means that part of the button is closed by the lane boundary. */
     const visibleGap = () => button.evaluate(node => {
       const band = node.closest('[data-ant-table-custom-band="header"]');
       if (!band) {

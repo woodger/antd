@@ -13,7 +13,7 @@ const owner = hydrate(PickerComponentsFixtures, {
 });
 root.dataset.hydrated = 'true';
 
-/** Освобождает обе регистрации и portal после проверки ввода. */
+/** Liberates both registrations and the portal after checking the entry. */
 function disposeEditorFixture() {
   return unmount(owner);
 }

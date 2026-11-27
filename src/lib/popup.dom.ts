@@ -1,5 +1,5 @@
-// Подключает popover к anchor и управляет его положением, видимостью и dismiss.
-// Стек взаимодействий принадлежит document. Владелец соединения защищает retarget.
+// Connects the popover to and manages its position, visibility, and. Interaction stack belongs to
+// the document. Connection holder protects retarget.
 import {
   getTooltipPosition,
   type TooltipPosition,
@@ -12,21 +12,21 @@ import type { AdjustOverflow, TooltipPlacement } from './tooltip.types';
 const openPopups = new WeakMap<Document, HTMLElement[]>();
 const popupConnections = new WeakMap<HTMLElement, { anchor: Element; }>();
 
-/** Cleanup остаётся вызываемой функцией; forceAlign использует тот же контроллер позиции. */
+/** Cleanup remains a called function; forceAlign uses the same position controller. */
 export interface PopupConnection {
   (retainSurface?: boolean): void;
   forceAlign: () => void;
-  /** После CSS motion возвращает позицию до уведомления о видимости. */
+  /** After CSS, the motion returns the position to visibility notification. */
   align: () => void;
 }
 
-// Учитывает активный узел в ShadowRoot до перехода к документу.
+// Take into account the active node in ShadowRoot before the transition to the document.
 export function getPopupActiveElement(element: Element) {
   const root = element.getRootNode() as Document | ShadowRoot;
   return root.activeElement ?? element.ownerDocument.activeElement;
 }
 
-/** Учитывает логическую связь с trigger, даже когда панель вынесена из scope порталом. */
+/** Take into account the logical connection with the trigger, even when the panel is removed from the scope portal. */
 export function isPopupFocusWithin(scope: HTMLElement, element: Element | null): boolean {
   let current = element;
   const visited = new Set<Element>();
@@ -48,7 +48,7 @@ export function isPopupFocusWithin(scope: HTMLElement, element: Element | null):
   return false;
 }
 
-// Начинает измерения и возвращает единый handle обновления и очистки popup.
+// Starts measurement and returns one handle for popup updates and cleanup.
 export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   trigger?: Element;
   placement: TooltipPlacement;
@@ -56,15 +56,15 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   sourcePlacement?: TooltipSourcePlacement;
   sourceAlign?: PopupSourceAlign;
   builtinPlacements?: Readonly<Record<string, PopupSourceAlign>>;
-  /** Для виртуального anchor имя placement определяется точкой самой панели. */
+  /** For a virtual anchor, the placement name is determined by the point of the panel itself. */
   alignPoint?: boolean;
   onAlign?: (position: TooltipPosition) => void;
   onPlacement: (placement: TooltipPlacement, position: TooltipPosition) => void;
   onDismiss: (reason: 'escape' | 'outside', outsideTarget?: Node) => void;
-  /** Внутренний opt-out для поверхности без обработчика Escape, например заменённого Select menu. */
+  /** An internal opt-out for a surface without an Escape handler, such as a replaced Select menu. */
   dismissOnEscape?: boolean;
   outsideEvents?: 'pointer' | 'mouse';
-  /** Учитывает связанные поверхности, вынесенные из DOM popup отдельным portal. */
+  /** Takes into account the associated surfaces taken from the DOM popup individual portal. */
   isRelatedTarget?: (target: Node) => boolean;
   onKeydown?: (event: KeyboardEvent) => void;
   preserveFocus?: boolean | ((event: PointerEvent) => boolean);
@@ -77,7 +77,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   gap?: number | (() => number | undefined);
   allowZeroSize?: boolean | (() => boolean);
   allowOffscreenAnchor?: boolean;
-  /** Удерживает последнюю геометрию окрашенной поверхности во время CSS transform. */
+  /** Retains the last geometry of the painted surface during CSS transform. */
   pauseAlignment?: () => boolean;
   interactive?: boolean;
   measurePopup?: () => DOMRect;
@@ -87,7 +87,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   onVisibilityChange?: (visible: boolean) => void;
 }): PopupConnection {
   const document = anchor.ownerDocument;
-  // Правило 2: подключение popup выполняется только в browser lifecycle.
+  // Rule 2: Popup connection is done only in browser lifecycle.
   const view = document.defaultView!;
   const owner = { anchor };
   popupConnections.set(popup, owner);
@@ -99,7 +99,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   let lastAlignment = '';
   let flips: PopupFlipCache | undefined;
 
-  // Убирает popup из стека взаимодействий перед уведомлением и скрытием.
+  // Removes the popup from the interaction stack before notification and hiding.
   function hide() {
     const stack = openPopups.get(document);
     const index = stack?.indexOf(popup) ?? -1;
@@ -115,7 +115,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     shown = false;
   }
 
-  // Проверяет доступность anchor, измеряет popup и публикует изменившуюся позицию.
+  // Verifies the availability of anchor, measures the popup and publishes the changed position.
   function update(manual = false) {
     if (disposed || shown && options.pauseAlignment?.()) {
       return;
@@ -240,14 +240,14 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       options.onVisibilityChange?.(true);
   }
 
-  // Измеряет каждый кадр, включая перемещения anchor без изменения размеров.
+  // Measures each frame, including movements anchor without changing dimensions.
   function tick() {
     update();
     if (!disposed)
       frame = view.requestAnimationFrame(tick);
   }
 
-  // Объединяет ручные запросы измерения в одну микрозадачу.
+  // Combines manual measurement queries into a single microtask.
   function forceAlign() {
     const scheduledRevision = ++alignmentRevision;
     Promise.resolve().then(() => {
@@ -255,7 +255,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     });
   }
 
-  // Читает актуальный стек при каждой проверке, в том числе после callbacks.
+  // Reads an up-to-date stack at every check, including after callbacks.
   function isTopInteractivePopup() {
     if (!shown || options.interactive === false || anchor.closest('[inert]')) {
       return false;
@@ -266,10 +266,10 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     return top === popup;
   }
 
-  // Верхний доступный popup обрабатывает клавиши и закрытие Escape.
+  // Upper available popup handles Escape keys and closures.
   function handleKeydown(event: KeyboardEvent) {
     const dialog = getPopupActiveElement(popup)?.closest('dialog[open]');
-    // Вложенный native dialog получает свои keys раньше содержащего его popup.
+    // The nested native dialog gets its keys before containing its popup.
     if (dialog && popup.contains(dialog) && !dialog.contains(anchor)) {
       return;
     }
@@ -287,7 +287,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
   }
 
-  // Считает trigger, popup и их Shadow DOM hosts частью одной поверхности взаимодействия.
+  // Considers popup and their Shadow DOM hosts to be part of a single interaction surface.
   function handleOutside(event: MouseEvent | PointerEvent) {
     const target = event.composedPath()[0] ?? event.target;
     const popupRoot = popup.getRootNode();
@@ -308,23 +308,23 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
   }
 
-  // По умолчанию outside определяется pointerdown, включая touch и pen.
+  // The default outside is the pointerdown, including touch and pen.
   function handlePointerdown(event: PointerEvent) {
     if (options.outsideEvents !== 'mouse') handleOutside(event);
   }
 
-  // Режим mouse использует события мыши и контекстного меню.
+  // Mode uses mouse events and a context menu.
   function handleMousedown(event: MouseEvent) {
     if (options.outsideEvents === 'mouse') handleOutside(event);
   }
 
-  // Позволяет редактору сохранить фокус при клике в popup.
+  // Allows the editor to save focus when clicking in popup.
   function preserveFocus(event: PointerEvent) {
     if (typeof options.preserveFocus !== 'function' || options.preserveFocus(event))
       event.preventDefault();
   }
 
-  // Пока поверхность открыта, отслеживаем и перемещение anchor без resize (включая бегунок).
+  // While the surface is open, tracks anchor movement without a resize, including slider thumb movement.
   tick();
   document.addEventListener('keydown', handleKeydown);
   document.addEventListener('pointerdown', handlePointerdown, true);
@@ -335,7 +335,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
 
   return Object.assign(disconnect, { forceAlign, align: update });
 
-  // Снимает слушатели сразу. При retarget может отложить освобождение DOM-поверхности.
+  // Removes listeners immediately. With retarget may postpone the release of DOM-surface.
   function disconnect(retainSurface = false) {
     disposed = true;
     view.cancelAnimationFrame(frame);
@@ -344,7 +344,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     view.removeEventListener('mousedown', handleMousedown, true);
     view.removeEventListener('contextmenu', handleMousedown, true);
     popup.removeEventListener('pointerdown', preserveFocus);
-    // Поверхность остаётся открыта, если к ней уже подключился новый владелец.
+    // The surface remains open if a new owner has already joined it.
     const release = () => {
       if (popupConnections.get(popup) !== owner) {
         return;
@@ -352,7 +352,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       popupConnections.delete(popup);
       hide();
     };
-    // При retarget в одном flush регистрация триггера может временно исчезнуть.
+    // Retargeting within one flush can temporarily unregister the trigger.
     if (retainSurface) {
       queueMicrotask(release);
     }

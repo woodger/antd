@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Владеет исходным списком popup и сохраняет контекст его строк при переоформлении.
+  // Owns the original popup list and retains its row context when it is restyled.
   import type { Snippet } from 'svelte';
   import { menuSubMenu, type MenuEntry } from './menu.engine';
   import type {
@@ -28,7 +28,7 @@
     leaving: boolean;
   } = $props();
   const parent = useMenu();
-  // Hidden inline portal не заменяет native refs основного списка; getters остаются реактивными.
+  // The hidden inline portal leaves the main list's native refs in place. The getters stay reactive.
   const context: MenuContext = Object.create(parent, {
     mode: {
       get: () => entry.overflow ? 'vertical' : mode

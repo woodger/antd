@@ -71,7 +71,7 @@ for (const source of [false, true]) {
             expect(await popup.evaluate(node => (node as HTMLElement).style.zIndex))
               .toBe(expected.inlineZIndex);
           }
-          // Native shell и его доступное описание существуют также при закрытом popup.
+          // Native shell and its available description also exist when closed popup.
           const described = !frame.props.disabled && Boolean(frame.props.title.trim());
           const id = await popup.getAttribute('id');
           const description = described
@@ -157,7 +157,7 @@ for (const source of [false, true]) {
           const popups = page.locator('[data-ant-tooltip]');
           await expect(page.locator('[data-ant-tooltip]:popover-open'))
             .toHaveCount(frame.snapshot.visibleCount);
-          // Native active-range сохраняет один shell ещё до выбора ручки.
+          // Native active-range preserves one shell even before choosing a pen.
           for (const popup of await popups.all()) {
             await expect(popup.locator('[data-ant-tooltip-container]'))
               .toHaveText(frame.snapshot.texts[0] ?? '');

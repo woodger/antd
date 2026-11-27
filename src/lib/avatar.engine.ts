@@ -1,8 +1,8 @@
-// Нормализует размеры и рассчитывает масштаб текста Avatar для переданной геометрии.
+// Normalizes dimensions and computes Avatar text scale for the provided geometry.
 import type { AvatarSize } from './avatar.types';
 import type { ComponentSize } from './types';
 
-// Выбирает локальный размер. Неположительное или неконечное число уступает размеру из контекста.
+// Chooses the local size. Nonpositive or nonfinite numbers fall back to the context size.
 export function resolveAvatarSize(
   size: AvatarSize | undefined,
   context: ComponentSize = 'medium'
@@ -13,12 +13,12 @@ export function resolveAvatarSize(
     : size ?? inherited;
 }
 
-// Подставляет стандартный отступ для отрицательных и неконечных значений.
+// Uses the standard gap for negative and nonfinite values.
 export function normalizeAvatarGap(gap = 4): number {
   return Number.isFinite(gap) && gap >= 0 ? gap : 4;
 }
 
-// Уменьшает текст только при положительной доступной ширине после учёта отступов.
+// Shrinks text only if the available width remains positive after accounting for spacing.
 export function getAvatarScale(textWidth: number, containerWidth: number, gap = 4): number {
   if (!Number.isFinite(textWidth)
     || !Number.isFinite(containerWidth)

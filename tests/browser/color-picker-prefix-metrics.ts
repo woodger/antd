@@ -5,7 +5,7 @@ export function snapshotColorPickerPrefix() {
   const root = host.querySelector('.fixture-color-prefix');
   const candidate = document.querySelector('.fixture-color-prefix-popup');
   const popup = candidate && candidate.getClientRects().length > 0 ? candidate : null;
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null | undefined, names: string[]) => {
     if (!node) {
       return null;

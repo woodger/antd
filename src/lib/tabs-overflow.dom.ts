@@ -22,7 +22,7 @@ function move(element: HTMLElement, parent: HTMLElement, before: ChildNode | nul
   }
 }
 
-/** Сохраняет native scroll и единственный Add; placeholder повторяет скрытый inner Add rc-tabs. */
+/** Keeps native scrolling and a single Add button. The placeholder matches the hidden inner Add in rc-tabs. */
 export function connectTabsOverflow(
   viewport: HTMLElement,
   list: HTMLElement,
@@ -76,7 +76,7 @@ export function connectTabsOverflow(
     }
     else if (overflow) {
       const box = sizeOf(add);
-      // Поперечная ось растягивается в list; размеры operations не должны расширять заглушку.
+      // The transverse axis is stretched into a list; the dimensions of operations should not extend the plug.
       if (options.vertical) {
         placeholder.style.height = `${box.height}px`;
       }

@@ -1,6 +1,6 @@
 import { DerivativeTheme } from './theme-derivative';
 
-/** Murmur2 @emotion/hash 0.8.0: исходная byte-маска и намеренный fallthrough. */
+/** Murmur2 @emotion/hash 0.8.0: the original by-mask and intentional fallthrough. */
 export function hashTokenString(value: string): string {
   let hash = 0;
   let part: number;
@@ -36,7 +36,7 @@ export function hashTokenString(value: string): string {
 
 const flattened = new WeakMap<object, string>();
 
-/** Порядок ключей и nested Theme.id участвуют в token key, как в cssinjs. */
+/** The order of keys and nested Theme.id participates in token key, as in cssinjs. */
 export function flattenToken(token: object): string {
   const cached = flattened.get(token);
   if (cached) {

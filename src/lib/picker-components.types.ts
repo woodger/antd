@@ -10,7 +10,7 @@ import type { PickerLocale } from './picker-locale.types';
 
 export type DatePickerEditorElement = HTMLInputElement | HTMLTextAreaElement;
 
-/** Общие атрибуты текстового редактора, включая события маски и доступное имя. */
+/** General attributes of the text editor, including masking events and an accessible name. */
 export type DatePickerEditorAttributes = Omit<
   HTMLInputAttributes, symbol | `on${string}` | 'children' | 'value' | 'defaultValue'
 > & Pick<HTMLAttributes<DatePickerEditorElement>,
@@ -20,30 +20,30 @@ export type DatePickerEditorAttributes = Omit<
   'data-range'?: 'start' | 'end';
 };
 
-/** Редактор внутри пользовательской обёртки передаётся по фактическому DOM ref. */
+/** Uses the actual DOM ref for the editor inside a custom wrapper. */
 export type DatePickerEditorRegistration = DatePickerEditorElement
   | { inputElement: DatePickerEditorElement; };
 
-/** Передайте attributes и register полю. Для textarea задайте value явно для SSR. */
+/** Pass attributes and register to the field. Set textarea value explicitly for SSR. */
 export interface DatePickerEditorContext {
   attributes: DatePickerEditorAttributes;
   register: (element: DatePickerEditorRegistration) => () => void;
   range?: 'start' | 'end';
 }
 
-/** Замена нативного редактора или snippet с собственным оформлением. */
+/** Replacement of a native editor or snippet with its own design. */
 export type DatePickerEditor = 'input' | 'textarea' | Snippet<[DatePickerEditorContext]>;
 
-/** Атрибуты кнопки подтверждения и подпись из текущей локали. */
+/** Confirmation button attributes and label from the current locale. */
 export interface DatePickerButtonContext {
   attributes: Pick<HTMLButtonAttributes, 'type' | 'disabled' | 'onclick'>;
   children: string;
 }
 
-/** Ключ datetime заменяет календарь и колонки времени вместе. */
+/** The datetime key replaces the calendar and time columns together. */
 export type DatePickerPanelMode = DatePickerMode | 'datetime';
 
-/** Содержимое кнопок навигации. Подписи и действия остаются у календаря. */
+/** Contents of navigation buttons. Signatures and actions remain at the calendar. */
 export interface DatePickerPanelNavigation {
   prevIcon?: InputContent;
   nextIcon?: InputContent;
@@ -51,7 +51,7 @@ export interface DatePickerPanelNavigation {
   superNextIcon?: InputContent;
 }
 
-/** Настройки времени после разрешения формата и активной границы. */
+/** Setting time after resolution of the format and active boundary. */
 export interface DatePickerPanelTimeConfig<DateType extends object = Dayjs> extends Omit<DatePickerTimeConfig<DateType>, 'defaultOpenValue'> {
   defaultOpenValue?: DateType | readonly DateType[];
   disabledTime?: (date: DateType) => DatePickerDisabledTime;
@@ -59,14 +59,14 @@ export interface DatePickerPanelTimeConfig<DateType extends object = Dayjs> exte
   showNow?: boolean;
 }
 
-/** Данные и действия внутри одного экземпляра панели. */
+/** Data and actions inside a single panel instance. */
 export interface DatePickerPanelContext<DateType extends object = Dayjs> extends DatePickerPanelNavigation {
   mode: DatePickerPanelMode;
   range?: 'start' | 'end';
   prefixCls: string;
   locale: PickerLocale;
   generateConfig: GenerateConfig<DateType>;
-  /** Для второй панели диапазона содержит дату её собственного периода. */
+  /** For the second panel of the range contains the date of its own period. */
   pickerValue: DateType;
   value?: DateType;
   values: readonly DateType[];
@@ -78,24 +78,24 @@ export interface DatePickerPanelContext<DateType extends object = Dayjs> extends
   maxDate?: DateType;
   disabledDate: (date: DateType, info: { type: DatePickerMode; }) => boolean;
   cellRender: Snippet<[DateType | number | 'am' | 'pm', DatePickerCellRenderInfo<DateType>]>;
-  /** Меняет дату просмотра. У управляемого поля сообщает предложенное значение. */
+  /** Changing the viewing date. The controlled field communicates the proposed value. */
   onPickerValueChange: (date: DateType) => void;
   onModeChange: (mode: DatePickerMode, date?: DateType) => void;
-  /** Передаёт выбранную дату в обычную логику черновика и подтверждения. */
+  /** Passes the selected date to the normal draft and confirmation logic. */
   onSelect: (date: DateType) => void;
   onHover: (date: DateType | null) => void;
 }
 
 export type DatePickerPanel<DateType extends object = Dayjs> = Snippet<[DatePickerPanelContext<DateType>]>;
 
-/** Внутренний вызов footer поддерживает прежнюю сигнатуру и режим авторской панели. */
+/** The internal footer call supports the existing signature and custom panel mode. */
 export type PickerModeFooter<Mode extends DatePickerMode> = {
   render(mode?: Mode): ReturnType<Snippet>;
 }['render'];
 
-/** Замены элементов поля и раскрытой панели. */
+/** Replacing the field elements and the opened panel. */
 export interface DatePickerComponents<DateType extends object = Dayjs> extends Partial<Record<DatePickerPanelMode, DatePickerPanel<DateType>>> {
-  /** В одиночном поле и в обеих границах диапазона. */
+  /** In a solitary field and at both limits of the range. */
   input?: DatePickerEditor;
   button?: 'button' | Snippet<[DatePickerButtonContext]>;
 }

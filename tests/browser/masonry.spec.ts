@@ -7,7 +7,7 @@ const columns = (root: Locator) => root.locator('.tile').evaluateAll(
 );
 
 async function expectPixels(element: Locator, property: string, value: number) {
-  // CSS calc делит ширину с квантованием layout units до 1/64 px.
+  // CSS calc splits the width, quantizing layout units to 1/64 px.
   await expect.poll(() => element.evaluate(
     (node, name) => parseFloat(getComputedStyle(node).getPropertyValue(name)),
     property

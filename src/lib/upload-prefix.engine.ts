@@ -1,6 +1,6 @@
 import template from './vendor/upload-prefix.css.js';
 
-/** Upload classes следуют владельцу; canonical tokens и общий link reset сохраняются. */
+/** Upload classes follow the owner; canonical tokens and general link reset are saved. */
 export function getUploadPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-upload' && rootPrefix === 'ant') {
     return undefined;

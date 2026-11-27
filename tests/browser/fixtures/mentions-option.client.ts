@@ -1,4 +1,4 @@
-// Подключает публичный Mentions и стили собранного пакета.
+// Connects public Mentions and the styles of the assembled package.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import Fixture from './MentionsOptionFixture.svelte';

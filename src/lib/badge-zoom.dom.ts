@@ -1,11 +1,10 @@
-// Синхронизирует DOM Badge с фазами CSSMotion. Ревизия кадра ограничивает работу устаревших
-// переходов.
+// Syncs the Badge DOM with CSSMotion phases. A frame revision bounds work from stale transitions.
 export interface BadgeZoomState {
   rendered: boolean;
   className?: string;
 }
 
-/** CSSMotion Badge: no appear, два RAF, собственные end events и deadline 1000 ms. */
+/** Badge CSSMotion skips appear, uses two RAFs, listens for its own end events, and has a 1000 ms deadline. */
 export function createBadgeZoom(
   view: Window,
   getElement: () => HTMLElement | undefined,
@@ -24,7 +23,7 @@ export function createBadgeZoom(
   let revision = 0;
   let alive = true;
 
-  // Публикует наличие узла и классы текущего перехода. После start используются active-классы.
+  // Publishes node presence and classes for the current transition. Active classes apply after start.
   function update() {
     publish({
       rendered,
@@ -34,15 +33,14 @@ export function createBadgeZoom(
     });
   }
 
-  // Отменяет запланированный кадр и инвалидирует callbacks очереди перехода.
+  // Cancels the scheduled frame and invalidates queued transition callbacks.
   function cancelFrame() {
     revision++;
     if (frame !== undefined) view.cancelAnimationFrame(frame);
     frame = undefined;
   }
 
-  // Ожидает два кадра, чтобы разделить смену CSS-классов. В каждом кадре учитывает текущую
-  // ревизию.
+  // Waits two frames to separate CSS class changes. Both frames check the current revision.
   function nextFrame(callback: () => void) {
     const current = revision;
     frame = view.requestAnimationFrame(() => {
@@ -57,14 +55,14 @@ export function createBadgeZoom(
     });
   }
 
-  // Снимает оба события завершения с ранее привязанного узла.
+  // Removes both completion event listeners from the previously attached node.
   function unbind() {
     bound?.removeEventListener('animationend', handleEnd);
     bound?.removeEventListener('transitionend', handleEnd);
     bound = undefined;
   }
 
-  // Сбрасывает переход и передаёт фактическую видимость в состояние рендера.
+  // Resets the transition and publishes actual visibility to render state.
   function finish() {
     cancelFrame();
     status = undefined;
@@ -74,8 +72,8 @@ export function createBadgeZoom(
     update();
   }
 
-  // Обрабатывает события самого Badge. Раннее завершение откладывает удаление узла до нужного
-  // кадра.
+  // Handles events from the Badge itself. Early completion defers node removal until the required
+  // frame.
   function handleEnd(event: Event) {
     if (!alive || !status || !step || step === 'start' || ending
       || event.target !== getElement()) {
@@ -87,13 +85,13 @@ export function createBadgeZoom(
       return;
     }
 
-    // CSSMotion удерживает предыдущий render до STEP_ACTIVATED при раннем end.
+    // CSSMotion keeps the previous render through an early end until STEP_ACTIVATED.
     cancelFrame();
     ending = true;
     nextFrame(finish);
   }
 
-  // Завершает активный переход при включении reduced motion.
+  // Finishes an active transition when reduced motion is enabled.
   function reduce() {
     if (reduced.matches && status) finish();
   }
@@ -101,7 +99,7 @@ export function createBadgeZoom(
   reduced.addEventListener('change', reduce);
 
   return {
-    // Синхронизирует режим и видимость. Обычный повтор значения не запускает ещё одну анимацию.
+    // Syncs mode and visibility. Repeating the same value normally starts no new animation.
     sync(next: boolean, enabled: boolean, normal = true) {
       if (!alive) {
         return;
@@ -157,7 +155,7 @@ export function createBadgeZoom(
         });
       });
     },
-    // Освобождает кадр, deadline, DOM listeners и media listener при уничтожении компонента.
+    // Releases the frame, deadline, DOM listeners, and media listener on component destruction.
     destroy() {
       alive = false;
       cancelFrame();

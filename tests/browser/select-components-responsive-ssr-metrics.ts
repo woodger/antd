@@ -1,7 +1,7 @@
 /** Complete DOM-free content subtree projection. No data/geometry is invented. */
 export function readSelectComponentsResponsiveSSR(html: string) {
   interface Element { tag: string; attributes: string[][]; children: Array<Element | string> }
-  // Разбирает числовые и перечисленные именованные HTML-сущности в захваченном SSR-тексте.
+  // Disassembles the numerical and listed HTML-entities in the captured SSR text.
   const decode = (text: string) => text.replace(/&#(?:x([\da-f]+)|(\d+));|&(amp|lt|gt|quot|apos);/gi,
     (_all, hex, decimal, named) => hex || decimal ? String.fromCodePoint(parseInt(
       hex ?? decimal,

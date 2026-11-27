@@ -13,7 +13,7 @@ import {
 import { projectPath, registryFile } from './ant-design-common.mjs';
 
 const revision = 'a'.repeat(40);
-// Создаёт самостоятельный реестр, который сценарий может изменить без влияния на соседей.
+// Creates an independent registry that a test can modify without affecting others.
 function sample() {
   return {
     schemaVersion: 2,
@@ -166,7 +166,7 @@ describe('Ant Design registry', () => {
     async () => {
       const root = await mkdtemp(join(tmpdir(), 'antd-registry-'));
       roots.push(root);
-      // Готовит запись временного проекта, создавая недостающие каталоги.
+      // Prepares an entry in a temporary project and creates missing directories.
       const put = async (path, content) => {
         const target = join(root, path);
         await mkdir(dirname(target), { recursive: true });
@@ -201,7 +201,7 @@ describe('Ant Design registry', () => {
     async () => {
       const root = await mkdtemp(join(tmpdir(), 'antd-registry-'));
       roots.push(root);
-      // Записывает только локальные свидетельства в изолированный checkout сценария.
+      // Writes only the local evidence files in the test's isolated checkout.
       const put = async (path, content) => {
         const target = join(root, path);
         await mkdir(dirname(target), { recursive: true });

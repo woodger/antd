@@ -1,12 +1,12 @@
-// Готовит звенья Breadcrumb и их ссылки. Вложенный маршрут строится из накопленных path в
-// исходном порядке.
+// Prepares Breadcrumb items and links. Nested routes are built from accumulated path values in
+// their original order.
 import type { BreadcrumbContent, BreadcrumbItem } from './breadcrumb.types';
 
-// Отличает пустое содержимое от значимого числового нуля.
+// Distinguishes empty content from significant numeric zero.
 export function breadcrumbHasContent(value: BreadcrumbContent | undefined): boolean {
   return value !== undefined && value !== null && value !== false && value !== '';
 }
-// Сохраняет snippet заголовка и подставляет параметры только в строковом представлении.
+// Preserves the heading snippet and substitutes parameters only in the string representation.
 export function breadcrumbName(
   title: BreadcrumbContent | undefined,
   params: Record<string, unknown>
@@ -24,8 +24,7 @@ export function breadcrumbName(
     (replacement, key: string) => String(params[key] || replacement)
   );
 }
-// Готовит отдельный снимок накопленного пути для каждого пункта. Разделитель остаётся без
-// заголовка.
+// Prepares a separate snapshot of the accumulated path for each item. A separator has no heading.
 export function breadcrumbEntries(
   items: readonly BreadcrumbItem[],
   params: Record<string, unknown>
@@ -48,7 +47,7 @@ export function breadcrumbEntries(
     };
   });
 }
-// Переносит наружу только data- и aria-атрибуты записи.
+// Forwards only the entry's data and aria attributes.
 export function breadcrumbAttributes(item: BreadcrumbItem): Record<string, unknown> {
   return Object.fromEntries(
     Object.entries(item).filter(([key]) => key.startsWith('data-') || key.startsWith('aria-'))

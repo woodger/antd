@@ -20,7 +20,7 @@ test(
     for (const key of ['Shift+Tab', 'Shift+Tab', 'Tab', 'Tab']) {
       await page.keyboard.press(key);
 
-      // Нативный dialog допускает переход к панели браузера, сохраняя фон страницы inert.
+      // Native dialog allows you to navigate to the browser panel, saving the background of the inert page.
       await expect.poll(() => page.evaluate(() =>
         !document.hasFocus()
         || Boolean(

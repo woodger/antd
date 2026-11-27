@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Координирует текстовый редактор Typography. Enter, Escape и blur определяют разные исходы
-  // завершения.
+  // Coordinates the Typography text editor. Enter, Escape, and blur produce different completion
+  // outcomes.
   import { onDestroy, tick, untrack } from 'svelte';
   import type { Snippet } from 'svelte';
   import { provideFormField, useFormField } from './form-context';
@@ -58,7 +58,7 @@
     get disabled() { return field.disabled; },
     required: false,
     describedBy: undefined,
-    // Editor не становится control внешнего FormItem и не публикует его blur/value.
+    // The editor does not register as a control in the outer FormItem or emit its blur and value.
     onBlur() {}
   } : undefined);
   let current = $state(untrack(() => value));
@@ -73,7 +73,7 @@
   });
 
   function finish(action: () => void) {
-    // Native blur при удалении textarea не должен повторять уже обработанный Enter/Escape.
+    // Native blur during textarea removal must not repeat an Enter or Escape already handled.
     confirming = true;
     action();
     void tick().then(() => {
@@ -141,7 +141,7 @@
       onSave(value);
       return;
     }
-    // Chromium отправляет blur до удаления focused DOM; teardown Svelte идёт после него.
+    // Chromium fires blur before removing focused DOM. Svelte teardown follows.
     void tick().then(() => {
       if (!confirming && element?.isConnected) onSave(value);
     });

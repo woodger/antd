@@ -66,7 +66,7 @@ describe('Source Menu theme SSR', () => {
     expect(body).toContain('--ant-menu-dropdown-width:13em');
     expect(body).toContain('--ant-menu-item-height:2.7em');
     expect(body).toContain('--ant-menu-group-title-line-height:24px');
-    // Upstream добавляет px к строковому activeBarBorderWidth без нормализации.
+    // Upstream appends px to a string activeBarBorderWidth without normalization.
     expect(body).toContain('--ant-menu-item-width:calc(100% + 2pxpx)');
   });
 

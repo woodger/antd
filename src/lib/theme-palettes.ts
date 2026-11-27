@@ -1,6 +1,6 @@
 import type { PresetColorType, PresetColorKey } from './theme-token.types';
 
-/** Исходные preset palettes @ant-design/colors 8.0.1; см. vendor/LICENSE.ant-design-colors. */
+/** Initial preset palettes @ant-design/colors 8.0.1; see vendor/LICENSE.ant-design-colors. */
 export const presetPrimaryColors: PresetColorType = {
   red: '#F5222D',
   volcano: '#FA541C',

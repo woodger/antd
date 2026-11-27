@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Удерживает native dialog до завершения панели. Именованная маска может доиграть после
-  // освобождения модальности. Содержимое при loading заменяется независимо от видимости.
+  // Keeps the native dialog until the panel finishes. A named mask can finish its transition after
+  // the modal state ends. Loading replaces content independently of visibility.
   import { flushSync, tick, untrack, type Snippet } from 'svelte';
   import { on } from 'svelte/events';
   import NoCompactStyle from './NoCompactStyle.svelte';
@@ -38,7 +38,7 @@
     _renderSemanticContent,
     ...props
   }: ModalProps & {
-    /** @internal Подтверждение применяет body slot к собственному содержимому. */
+    /** @internal A confirmation applies the body slot to its own content. */
     _renderSemanticContent?: Snippet<[body: ModalSemanticBody]>;
   } = $props();
   let {
@@ -165,7 +165,7 @@
   let maskMotion = $state.raw<CssMotionState>({});
   let transformOrigin = $state<string>();
   const maskLeaving = $derived(maskMotion.phase === 'leave');
-  // Без параметров lifecycle остаётся прежний eager SSR и монтаж закрытых snippets.
+  // With no lifecycle options, eager SSR and mounting of closed snippets are preserved.
   const preload = $derived(forceRender ?? (destroyOnHidden === undefined));
   const renderPanel = $derived(open || presented || preload || (visited && !destroyOnHidden));
   const renderDialog = $derived(renderPanel || maskLeaving);
@@ -309,7 +309,7 @@
       passiveMask = true;
       node.inert = true;
       node.setAttribute('aria-hidden', 'true');
-      // Маска верхнего dialog остаётся над предыдущим, сохраняя доступ к его элементам.
+      // The top dialog's mask stays above the previous dialog while preserving access to its elements.
       if (keepNativeLayer && typeof node.showPopover === 'function') {
         node.popover = 'manual';
         node.showPopover();
@@ -345,7 +345,7 @@
     }
 
     function closed() {
-      // Смена режима тоже создаёт close event. Уведомление принадлежит фактическому закрытию.
+      // Changing the mode also creates a close event. Notify the owner when the dialog actually closes.
       if (node.open || !shown) {
         return;
       }
@@ -364,7 +364,7 @@
         afterOpenChange?.(false);
       }
       finally {
-        // При destroyOnHidden маска доступна в колбэках, затем уходит вместе с оболочкой.
+        // With destroyOnHidden, callbacks can still access the mask before it is removed with the wrapper.
         if (destroy) motion.reset();
       }
     }
@@ -401,7 +401,7 @@
 
   function finishClose(destroy: boolean) {
     if (destroy) {
-      // afterClose наблюдает удалённые children и завершённый cleanup.
+      // afterClose sees the children removed and cleanup complete.
       flushSync(() => {
         open = false;
         presented = false;
@@ -495,7 +495,7 @@
   function handlePointerUp(event: PointerEvent) {
     const start = backdropPointer;
     backdropPointer = undefined;
-    // В исходной оболочке подстановка этих обработчиков заменяет закрытие по фону.
+    // In the upstream wrapper, substituting these handlers takes over background dismissal.
     if ((wrapProps && ('onclick' in wrapProps || 'onmousedown' in wrapProps))
       || (event.defaultPrevented && (wrapProps || maskProps))) {
       return;
@@ -734,7 +734,7 @@
   </div>
 {/snippet}
 
-<!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
+<!-- The keyed range contains only the dialog being moved. The head style anchors stay outside. -->
 <NoCompactStyle>
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={prefixScope} />{/if}{#if layout.css && layout.scope}<ThemeScopeStyle css={layout.css} scope={layout.scope} />{/if}{#if renderDialog}{#key container.key}<dialog
   {...wrapper.attributes}

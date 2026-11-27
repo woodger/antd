@@ -1,5 +1,5 @@
-// Связывает native dialog с переходом панели. Маска движется независимо, но только панель
-// управляет закрытием, afterOpenChange и восстановлением фокуса.
+// Bind native dialog to the transition of the panel. Mask moves independently, but only the panel
+// manages closure, afterOpenChange and focus recovery.
 import type { CssMotionState } from './css-motion.dom';
 import type { CssMotionEvent } from './css-motion.types';
 import {
@@ -24,7 +24,7 @@ interface DrawerMotionBinding {
   maskVisibility(visible: boolean, present: boolean): void;
 }
 
-/** Создаёт browser lifecycle Drawer с независимыми эффектами панели и маски. */
+/** Creates browser lifecycle Drawer with independent panel and mask effects. */
 export function createDrawerDialog(
   dialog: HTMLDialogElement,
   onClosing: (closing: boolean) => void,
@@ -57,12 +57,12 @@ export function createDrawerDialog(
   let requested = false;
   let cssTransition = false;
 
-  /** Маска может монтироваться и скрываться независимо от wrapper. */
+  /** The mask can be mounted and hidden regardless of the wrapper. */
   function getMask() {
     return dialog.querySelector<HTMLDivElement>(':scope > [data-ant-drawer-mask]') ?? undefined;
   }
 
-  /** После уничтожения children следующая панель снова проходит appear. */
+  /** After the destruction of children, the next panel takes the chase again. */
   function releaseContent() {
     visited = false;
     maskWasVisible = false;
@@ -71,7 +71,7 @@ export function createDrawerDialog(
     binding.maskVisibility(false, false);
   }
 
-  /** Применяет видимость и даёт владельцу прочитать ещё смонтированные children. */
+  /** Applies visibility and gives the owner to read still mounted children. */
   function finish(current: number, open: boolean) {
     if (disposed || revision !== current || open && !dialog.open) {
       return;
@@ -102,13 +102,13 @@ export function createDrawerDialog(
     }
   }
 
-  /** Без таймлайна уведомление всё равно ждёт обновления привязанного DOM. */
+  /** Without a timeline, the notification still awaits an update of tied DOM. */
   function finishWithoutMotion(open: boolean) {
     const current = revision;
     queueMicrotask(() => finish(current, open));
   }
 
-  /** Длительность штатных эффектов берётся из текущего оформления Drawer. */
+  /** The duration of regular effects is taken from the current design of Drawer. */
   function nativeTiming() {
     const duration = reducedMotion.matches ? 0 : getDrawerMotionDuration(
       view.getComputedStyle(dialog).getPropertyValue('--ant-motion-duration-slow')
@@ -124,7 +124,7 @@ export function createDrawerDialog(
     } satisfies KeyframeAnimationOptions;
   }
 
-  /** Прерывает прежний кадр, сохраняя текущую геометрию для штатного перехода. */
+  /** Interrupts the former frame, preserving the current geometry for the regular transition. */
   function begin(open: boolean, placement: DrawerPlacement, options: DrawerTransitionOptions) {
     const maskNode = getMask();
     const opacity = dialog.open && maskNode ? view.getComputedStyle(maskNode).opacity : '0';
@@ -144,7 +144,7 @@ export function createDrawerDialog(
     if (!cssTransition) {
       const to = open ? 'translate(0, 0)' : getDrawerTransform(placement);
       const started = panel.animate('transform', from, to, timing, () => {
-        // Два штатных эффекта очищались вместе до afterOpenChange.
+        // Both built-in effects were cleaned up before afterOpenChange.
         if (!options.maskMotion) mask.cancelNative();
         finish(current, open);
       });
@@ -158,7 +158,7 @@ export function createDrawerDialog(
     }
   }
 
-  /** Синхронизирует CSS-фазы с requested open, пока native dialog удерживает модальность. */
+  /** Synchronizes the CSS-phase with the requested open while the native dialog holds the modality. */
   function syncCss(open: boolean, options: DrawerTransitionOptions) {
     const present = visited || options.forceRender;
     const enabled = options.enabled && !reducedMotion.matches;
@@ -190,7 +190,7 @@ export function createDrawerDialog(
     mask.css.sync({
       motion: {
         ...options.maskMotion,
-        // Первый скрытый кадр может иметь leave-фазу, но ещё не меняет видимость маски.
+        // The first hidden frame may have a leave phase, but it does not yet change the appearance of the mask.
         onVisibleChanged: next => {
           if (next || maskWasVisible) options.maskMotion?.onVisibleChanged?.(next);
         }
@@ -202,7 +202,7 @@ export function createDrawerDialog(
     });
   }
 
-  /** Штатное движение меняет ось с placement, пользовательская CSS-фаза остаётся текущей. */
+  /** The full-time movement changes the axis with placement, the custom CSS-phase remains current. */
   function sync(open: boolean, placement: DrawerPlacement) {
     if (disposed) {
       return;
@@ -232,7 +232,7 @@ export function createDrawerDialog(
     syncCss(open, options);
   }
 
-  /** Отключает активные эффекты при смене системной настройки движения. */
+  /** Disables active effects when changing the system setting of the movement. */
   function handleReducedMotion() {
     if (reducedMotion.matches) {
       panel.finishNative();
@@ -245,18 +245,18 @@ export function createDrawerDialog(
 
   return {
     sync,
-    /** Semantic style владельца сохраняет приоритет над штатным эффектом. */
+    /** The owner's semantic style takes precedence over the built-in effect. */
     syncStyles() {
       panel.syncStyles();
       mask.syncStyles();
     },
-    /** Учитывает собственные события секции или маски, проверяемые контроллером CSSMotion. */
+    /** Takes into account the section’s own events or masks checked by the CSSMotion controller. */
     end(surface: 'panel' | 'mask', event: CssMotionEvent) {
       (surface === 'panel' ? panel : mask).css.end(event);
     },
-    /** Нативное закрытие отменяет выполнявшийся переход без пользовательского уведомления. */
+    /** Native closure cancels the completed transition without user notification. */
     nativeClosed() {
-      // При штатном close панель уже закрыта, а маска может ещё ждать свой deadline.
+      // During a normal close, the panel may already be closed while the mask still waits for its deadline.
       if (phase === 'closed') {
         return;
       }
@@ -271,7 +271,7 @@ export function createDrawerDialog(
       onClosing(false);
       focus.close()?.();
     },
-    /** Отключает обе поверхности и освобождает открытый dialog при размонтировании. */
+    /** Disconnects both surfaces and releases an open dialog when unmounting. */
     destroy() {
       disposed = true;
       revision++;

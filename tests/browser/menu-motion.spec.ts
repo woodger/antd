@@ -23,7 +23,7 @@ const fixture = (page: Page) => page.getByTestId('menu-motion-fixture');
 const callbackLog = (page: Page) => page.getByLabel('Menu motion callbacks');
 const surface = (page: Page) => page.locator('[data-ant-menu-motion]');
 
-// Учитывает CSS commit до следующего кадра, включая короткую prepare-only фазу.
+// Includes the CSS commit before the next frame, even during the short prepare-only phase.
 async function watchPhases(page: Page) {
   await page.evaluate(() => {
     const paints: Paint[] = [];
@@ -49,38 +49,38 @@ async function watchPhases(page: Page) {
   });
 }
 
-// Переключает состояние владельца без побочных mouseenter на элементе управления.
+// Toggles owner state without incidental mouseenter events on the control.
 async function clickOwner(page: Page, name: string) {
   await fixture(page).getByRole('button', { name, exact: true }).evaluate((button: HTMLButtonElement) => {
     button.click();
   });
 }
 
-// Измеряет серию фаз после смены режима или openKeys.
+// Measures a series of phases after mode change or openKeys.
 function resetPhases(page: Page) {
   return page.evaluate(() => { window.menuMotionPaints?.splice(0); });
 }
 
-// Сравнивает только фазы делегата, которые рендерились на поверхности.
+// Compares only the phases of the delegate, which were rendered on the surface.
 async function phases(page: Page) {
   const data = await page.evaluate(() => window.menuMotionPaints ?? []);
   return [...new Set(data.map(item => item.phase))].sort();
 }
 
-// Сохраняет грань между callback CSSMotion и событием браузерной отрисовки.
+// Saves the line between callback CSSMotion and the browser rendering event.
 function expectedCallbacks(sample: { events: (string | number | boolean | string[] | null)[][]; }) {
   return sample.events.filter(([name]) => typeof name === 'string'
     && !['transitionend', 'animationend', 'openKeys'].includes(name)).map(([name, value]) =>
     name === 'visible' ? [name, value] : [name]);
 }
 
-// Сверяет настоящий журнал пользователя без внутренних событий CSS.
+// Checks the real user log without internal events CSS.
 async function callbacks(page: Page) {
   const log: unknown[][] = JSON.parse(await callbackLog(page).textContent() ?? '[]');
   return log.map(([name, value]) => name === 'visible' ? [name, value] : [name]);
 }
 
-// Проверяет именованные фазы и их очистку до следующего изменения владельца.
+// Checks the named phases and their clearing until the owner's next change.
 async function expectFrame(
   page: Page,
   entries: readonly { node: number; phases?: readonly string[]; }[],
@@ -89,7 +89,7 @@ async function expectFrame(
 ) {
   const phasesInFrame = entries.flatMap(entry => {
     const phase = entry.phases?.[1];
-    // В одном из двух Source-прогонов при смене режима появился лишний nested popup.
+    // In one of the two Source runs when changing the mode there was an extra nested popup.
     return phase && !(extraPopup && phase === 'ant-zoom-big-appear-prepare') ? [phase] : [];
   });
   const expected = [...new Set(phasesInFrame)].sort();
@@ -262,11 +262,11 @@ for (const { opts, first, opened, closed } of optionsSource.passes[0]) {
       events.push(...frame.events.map(value => ['visible', value]));
       await expect.poll(() => callbacks(page)).toEqual(events);
 
-      // Абсолютная поверхность старого forceSubMenuRender имеет отдельный Native lifecycle.
+      // The absolute surface of the old forceSubMenuRender has a separate Native lifecycle.
       const expected = frame.surfaces.filter(entry => entry.tag === tag)
         .map(({ display: _display, ...entry }) => ({
           ...entry,
-          // Inline-список сохраняет базовое наследование цвета от своего Menu.
+          // The Inline list retains a basic inherited color from its Menu.
           color: entry.color || (tag === 'UL' ? 'inherit' : '')
         }));
       await expect.poll(() => list.evaluateAll(nodes => nodes.map(node => ({

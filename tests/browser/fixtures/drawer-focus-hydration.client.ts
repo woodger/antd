@@ -5,7 +5,7 @@ import DrawerFocusFixtures from './DrawerFocusFixtures.svelte';
 const target = document.getElementById('root');
 if (!target) throw new Error('Missing server-rendered Drawer');
 
-// Подключает Svelte к уже вставленному серверному dialog.
+// Connects the Svelte to the already inserted server dialog.
 target.addEventListener('hydrate-drawer-focus', () => {
   hydrate(DrawerFocusFixtures, {
     target,

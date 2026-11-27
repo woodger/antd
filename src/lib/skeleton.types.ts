@@ -8,17 +8,17 @@ export interface SkeletonElementSlots {
   content?: string;
 }
 export interface SkeletonElementProps {
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   class?: string;
   rootClassName?: string;
-  /** Как upstream, style относится к content; styles.root — к внешнему div. */
+  /** As an upstream, style relates to content; styles.root to an external div. */
   style?: string;
   active?: boolean;
   classNames?: SkeletonElementSlots;
   styles?: SkeletonElementSlots;
 }
-/** Самостоятельный placeholder аватара и настройки аватара основного Skeleton. */
+/** Independent placeholder avatar and avatar settings of the main Skeleton. */
 export interface SkeletonAvatarProps extends SkeletonElementProps {
   size?: SkeletonAvatarSize;
   shape?: 'circle' | 'square';
@@ -34,27 +34,27 @@ export interface SkeletonInputProps extends SkeletonElementProps {
 }
 export interface SkeletonNodeProps extends SkeletonElementProps {
   children?: Snippet;
-  /** @internal Заменяет стандартный content class, как исходный Node. */
+  /** @internal Replaces the default content class, matching the upstream Node. */
   internalClassName?: string;
 }
 export type SkeletonImageProps = SkeletonElementProps;
 export interface SkeletonPartProps {
   prefixCls?: string;
   class?: string;
-  /** Основной Skeleton заменяет вложенный style соответствующим semantic style. */
+  /** The main Skeleton replaces the nested style with the appropriate semantic style. */
   style?: string;
 }
-/** Геометрия строки title в Skeleton. */
+/** Geometry line title in Skeleton. */
 export interface SkeletonTitleProps extends SkeletonPartProps {
   width?: SkeletonWidth;
 }
-/** Число строк и ширины текстового placeholder Skeleton. */
+/** The number of lines and the width of the text placeholder Skeleton. */
 export interface SkeletonParagraphProps extends SkeletonPartProps {
   rows?: number;
   width?: SkeletonWidth | SkeletonWidth[];
 }
 
-/** Каркас загрузки, который заменяет children и сохраняет доступный статус. */
+/** A boot frame that replaces children and retains available status. */
 export interface SkeletonProps {
   /** @defaultValue true */
   loading?: boolean;
@@ -74,18 +74,18 @@ export interface SkeletonProps {
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
   'aria-hidden'?: boolean;
-  /** Существующий native host; новые semantic root и rootClassName относятся к каркасу. */
+  /** Existing native host; new semantic root and rootClassName belong to the frame. */
   class?: string;
-  /** Существующий native host; styles.root относится к декоративному каркасу. */
+  /** Existing native host; styles.root refers to the decorative frame. */
   style?: string;
-  /** Локальный CSS prefix каркаса; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix of the frame; the absence and empty line inherits ConfigProvider. */
   prefixCls?: string;
   rootClassName?: string;
   classNames?: SkeletonSemanticSlots
     | ((info: SkeletonSemanticInfo) => SkeletonSemanticSlots | undefined);
   styles?: SkeletonSemanticSlots
     | ((info: SkeletonSemanticInfo) => SkeletonSemanticSlots | undefined);
-  /** Placeholder div после mount; undefined, когда loading=false или компонент удалён. */
+  /** Placeholder div after mount; undefined, when loading=false or the component is removed. */
   nativeElement?: HTMLDivElement;
   ref?: SkeletonRef;
 }

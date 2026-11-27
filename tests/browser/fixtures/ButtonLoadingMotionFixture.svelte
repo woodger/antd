@@ -11,7 +11,7 @@
     : true));
   const off: ThemeConfig = { token: { motion: false } };
 
-  /** Публикует DOM в том же действии, чтобы снять состояние начала перехода. */
+  /** Publishes DOM in the same action to remove the state of the beginning of the transition. */
   function setLoading(next: boolean) {
     flushSync(() => {
       active = next;

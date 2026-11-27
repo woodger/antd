@@ -1,11 +1,11 @@
-// Операции со значениями и путями Form. Копирование ограничено plain objects
-// и массивами, а чтение пути учитывает только собственные свойства контейнеров.
+// Transactions with Form values and paths. Copying is limited to plain objects and arrays, and
+// reading the path takes into account only the own properties of containers.
 import type { Dayjs } from 'dayjs';
 
-/** Строка — буквальный ключ; только массив задаёт вложенный путь. Число создаёт индекс массива. */
+/** A string is a literal key; only an array specifies a nested path. The number creates an array index. */
 export type NamePath = string | number | readonly (string | number)[];
 
-/** Тип значения известного пути; динамический путь возвращает unknown. */
+/** The type of value of a known path; the dynamic path returns unknown. */
 export type NamePathValue<Values, Path extends NamePath> = Path extends keyof Values
   ? Values[Path]
   : Path extends readonly []
@@ -19,7 +19,7 @@ export type NamePathValue<Values, Path extends NamePath> = Path extends keyof Va
         : unknown
       : unknown;
 
-/** Plain objects объединяются рекурсивно; массивы и экземпляры классов заменяются целиком. */
+/** Plain objects are combined recursively; arrays and instances of classes are replaced entirely. */
 export type PartialFormValues<Value> = Value extends
   Date | RegExp | Dayjs | Map<unknown, unknown> | Set<unknown>
   ? Value
@@ -29,12 +29,12 @@ export type PartialFormValues<Value> = Value extends
       ? { [Key in keyof Value]?: PartialFormValues<Value[Key]> }
       : Value;
 
-// Сохраняет строковый ключ целиком, включая точки, и копирует переданный массив.
+// Saves the string key in its entirety, including the points, and copies the transferred array.
 export function formNamePath(name: NamePath): (string | number)[] {
   return Array.isArray(name) ? [...name] : [name as string | number];
 }
 
-// Требует точного совпадения всех сегментов, включая их типы.
+// Requires an exact match to all segments, including their types.
 export function sameFormPath(first: NamePath, second: NamePath): boolean {
   const left = formNamePath(first);
   const right = formNamePath(second);
@@ -42,7 +42,7 @@ export function sameFormPath(first: NamePath, second: NamePath): boolean {
   return left.length === right.length && left.every((part, index) => part === right[index]);
 }
 
-// Пустой путь охватывает все поля, остальные проверяются как префиксы.
+// Empty path encompasses all fields, the rest are checked as prefixes.
 export function containsFormPath(parent: NamePath, child: NamePath): boolean {
   const prefix = formNamePath(parent);
   const path = formNamePath(child);
@@ -50,7 +50,7 @@ export function containsFormPath(parent: NamePath, child: NamePath): boolean {
   return prefix.length <= path.length && prefix.every((part, index) => part === path[index]);
 }
 
-// Допускает словари без прототипа. Экземпляры классов остаются непрозрачными.
+// Allows dictionaries without a prototype. Class copies remain opaque.
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (value === null || typeof value !== 'object') {
     return false;
@@ -61,7 +61,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return prototype === Object.prototype || prototype === null;
 }
 
-// Пишет собственное поле даже для имён вроде __proto__, минуя setter прототипа.
+// Writes his own field even for names like __proto_, bypassing the prototype setter.
 function defineValue(target: object, key: string | number, value: unknown) {
   Object.defineProperty(
     target,
@@ -70,7 +70,7 @@ function defineValue(target: object, key: string | number, value: unknown) {
   );
 }
 
-/** Копирует изменяемые контейнеры, сохраняя Dayjs и другие непрозрачные экземпляры. */
+/** Copies variable containers, saving Dayjs and other opaque instances. */
 export function copyFormValue<Value>(value: Value, seen = new WeakMap<object, unknown>()): Value {
   if (!Array.isArray(value) && !isPlainObject(value)) {
     return value;
@@ -92,7 +92,7 @@ export function copyFormValue<Value>(value: Value, seen = new WeakMap<object, un
   return copy as Value;
 }
 
-// Прерывает переход по отсутствующему или унаследованному сегменту пути.
+// Interrupts the transition to an absent or inherited segment of the path.
 export function getFormValue(store: unknown, name: NamePath): unknown {
   let current = store;
 
@@ -107,12 +107,12 @@ export function getFormValue(store: unknown, name: NamePath): unknown {
   return current;
 }
 
-// Копирует контейнеры только вдоль пути и копирует записываемое значение.
+// Copies containers only along the path and copies the recorded value.
 export function setFormValue(store: unknown, name: NamePath, value: unknown): unknown {
   const path = formNamePath(name);
   return setAtPath(store, 0);
 
-  // При отсутствующем контейнере тип следующего сегмента выбирает массив или объект.
+  // In the missing container, the type of the next segment selects an array or object.
   function setAtPath(current: unknown, index: number): unknown {
     if (index === path.length) {
       return copyFormValue(value);
@@ -138,12 +138,12 @@ export function setFormValue(store: unknown, name: NamePath, value: unknown): un
   }
 }
 
-// Рекурсивно объединяет словари и заменяет остальные значения, включая массивы.
+// Recursively combines dictionaries and replaces other values, including arrays.
 export function mergeFormValues<Values>(store: Values, next: unknown): Values {
   const seen = new WeakMap<object, unknown>();
   return merge(store, next) as Values;
 
-  // Регистрирует копию перед рекурсией, чтобы сохранить циклы входного объекта.
+  // Registers a copy before recursing to save the input object cycles.
   function merge(current: unknown, value: unknown): unknown {
     if (!isPlainObject(value)) {
       return copyFormValue(value, seen);
@@ -165,11 +165,11 @@ export function mergeFormValues<Values>(store: Values, next: unknown): Values {
   }
 }
 
-/** Plain containers сравниваются по собственным значениям; непрозрачные экземпляры — по identity. */
+/** Plain containers are compared to their own values; opaque instances – by identity. */
 export function sameFormValue(left: unknown, right: unknown): boolean {
   const pairs = new WeakMap<object, WeakSet<object>>();
 
-  // Повтор пары объектов завершает рекурсию, не требуя общей identity контейнеров.
+  // Repeating a pair of objects completes the recursion without requiring a shared identity container.
   function equal(first: unknown, second: unknown): boolean {
     if (Object.is(first, second)) {
       return true;

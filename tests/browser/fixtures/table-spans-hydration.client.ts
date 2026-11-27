@@ -7,7 +7,7 @@ if (!target) {
   throw new Error('Missing server-rendered Table spans');
 }
 
-// Гидратация начинается с уже сфокусированным серверным редактором.
+// Hydration starts with an already focused server editor.
 target.addEventListener('hydrate-table-spans', () => {
   const query = new URLSearchParams(location.search);
   const profileId = query.get('profile') ?? 'normal';

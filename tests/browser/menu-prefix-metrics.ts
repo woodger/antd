@@ -4,7 +4,7 @@ export function snapshotMenuPrefix() {
   const prefix = [...root.classList].find(value => value.endsWith('-root'))!.slice(0, -5);
   const popup = [...document.querySelectorAll<HTMLElement>(`[class~="${prefix}-submenu-popup"]`)]
     .find(node => node.getClientRects().length && getComputedStyle(node).display !== 'none') ?? null;
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null, keys: string[]) {
     if (!node) {
       return null;
@@ -16,7 +16,7 @@ export function snapshotMenuPrefix() {
   const font = ['font-family', 'font-size', 'line-height', 'color'];
   const box = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left',
     'background-color', 'border-radius'];
-  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
+  // He chooses a part of the complete CSS class of the current prefix, regardless of the neighboring classes.
   const part = (host: Element, suffix: string) => host.querySelector(`[class~="${prefix}${suffix}"]`);
   const row = (node: Element | null) => css(node, [...font, ...box, 'height', 'margin', 'cursor']);
   const nested = root.querySelector<HTMLElement>(`:scope > .sample-parent > [class~="${prefix}-sub"]`);

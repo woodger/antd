@@ -1,6 +1,6 @@
 import template from './vendor/splitter-prefix.css.js';
 
-/** Class prefix и global namespace preview независимы; root rules изолированы по обоим. */
+/** Class prefix and global namespace preview are independent; root rules are isolated by both. */
 export function getSplitterPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-splitter' && rootPrefix === 'ant') {
     return undefined;
@@ -16,7 +16,7 @@ export function getSplitterPrefixCss(prefix: string, rootPrefix = 'ant') {
         if (suffix === '-css-var') {
           return `.ant-splitter-css-var${scope}`;
         }
-        // :has проверяет вложенный Splitter с тем же class, независимо от его namespace.
+        // :has checks the nested Splitter with the same class, regardless of its namespace.
         const root = ['', '-horizontal', '-vertical', '-rtl'].includes(suffix)
           && template.slice(offset - 5, offset) !== ':has(';
         return `.${prefix}${suffix}${root ? scope : ''}`;

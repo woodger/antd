@@ -1,5 +1,5 @@
-// Управляет декоративными слоями BorderBeam внутри host. Измеренные границы принадлежат этому
-// узлу, CSS-переменные обновляются от theme origin.
+// Manages decorative BorderBeam layers inside the host. Measured borders belong to that node, and
+// CSS variables update from the theme origin.
 import {
   getBorderBeamCount,
   getBorderBeamStyle,
@@ -7,18 +7,18 @@ import {
   type BorderBeamRuntimeOptions
 } from './border-beam.engine';
 
-// Снимает исходные размеры границ host и создаёт контроллер его декоративных слоёв.
+// Captures the host's original border widths and creates its decoration controller.
 export function createBorderBeamRuntime(host: HTMLElement) {
   const document = host.ownerDocument;
   const view = document.defaultView!;
   const computed = view.getComputedStyle(host);
-  // Считывает computed border width как число. Неразбираемое значение даёт ноль.
+  // Reads the computed border width as a number. An unparseable value yields zero.
   const parseWidth = (value: string) => {
     const width = parseFloat(value);
 
     return Number.isNaN(width) ? 0 : width;
   };
-  // Как useBorderSize: снимок принадлежит узлу и не обновляется при изменении его стиля.
+  // As with useBorderSize, the snapshot belongs to the node and stays fixed when its style changes.
   const widths: BorderBeamBorderWidth = [
     parseWidth(computed.borderTopWidth),
     parseWidth(computed.borderRightWidth),
@@ -31,8 +31,8 @@ export function createBorderBeamRuntime(host: HTMLElement) {
   let origin: HTMLElement | undefined;
   let observer: MutationObserver | undefined;
 
-  // Наследует CSS-переменные темы, корректирует число слоёв и обновляет атрибуты существующих
-  // элементов.
+  // Inherits theme CSS variables, adjusts the number of layers, and updates existing elements'
+  // attributes.
   function sync() {
     if (!active || !current) {
       return;
@@ -84,8 +84,8 @@ export function createBorderBeamRuntime(host: HTMLElement) {
   }
 
   return {
-    // Переподключает наблюдение только при смене источника темы, затем применяет переданные
-    // настройки.
+    // Reconnects observation only when the theme source changes, then applies the supplied
+    // settings.
     configure(options: BorderBeamRuntimeOptions) {
       if (!active) {
         return;
@@ -103,7 +103,7 @@ export function createBorderBeamRuntime(host: HTMLElement) {
       }
       sync();
     },
-    // Снимает наблюдение и удаляет принадлежащие этому контроллеру слои.
+    // Disconnects observation and removes the layers owned by this controller.
     destroy() {
       active = false;
       observer?.disconnect();

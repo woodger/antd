@@ -21,7 +21,7 @@
     blur(): void;
   }>();
 
-  /** Index по умолчанию 0; число 0/1 — совместимый shorthand rc-picker. */
+  /** Index defaults to 0. The numbers 0 and 1 are compatible rc-picker shorthand. */
   export function focus(options?: TimeRangePickerFocusOptions | 0 | 1) {
     picker?.focus(typeof options === 'number' ? { index: options } : { index: 0, ...options });
   }

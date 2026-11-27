@@ -69,7 +69,7 @@ test('Empty releases refs and prefix styles on unmount and recreates the native 
   await expect(page.getByLabel('Empty source object ref', { exact: true })).toHaveText('false');
   await page.getByRole('button', { name: 'Toggle Empty source mount', exact: true }).click();
 
-  // Счётчик принадлежит fixture; native draft принадлежит заново созданным children Empty.
+  // The meter belongs to fixture; native draft belongs to the newly created children Empty.
   await expect(page.getByRole('button', { name: 'Empty source action 1', exact: true })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Empty source draft', exact: true }))
     .toHaveValue('Fresh draft');

@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Воспроизводит публичные настройки, размеры trigger и журнал событий эталона.
+  // Reproduces public settings, role sizes and standard event log.
   import { ConfigProvider, Dropdown, type DropdownMenuProps, type DropdownProps } from '@woodger/antd';
   import { dropdownPlacementCases } from '../dropdown-placement-reference';
 
@@ -30,7 +30,7 @@
   }
 
   function setOpen() {
-    // Владелец применяет значение отдельным действием из наблюдения React.
+    // The owner applies the value with a separate action from observation React.
   }
 
   function getContainer(trigger: HTMLElement) {

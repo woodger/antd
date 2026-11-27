@@ -38,7 +38,7 @@ test('Responsive tokens update Masonry and Pagination without replacing focused 
     for (const frame of reference.live.fresh) {
       await page.setViewportSize({ width: frame.width, height: 1200 });
 
-      // Source token update оставляет старые queries; fresh public mount даёт текущую раскладку.
+      // Source token update leaves old queries; fresh public mount gives the current layout.
       await expect.poll(() => page.evaluate(snapshotResponsiveControls)).toEqual(frame.metrics);
       expect(await input.evaluate((node, old) => node === old, oldInput)).toBe(true);
       expect(await root.evaluate((node, old) => node === old, oldRoot)).toBe(true);

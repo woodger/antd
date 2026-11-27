@@ -28,7 +28,7 @@
 
   type Selection = Dayjs | RangePickerValue | readonly Dayjs[] | null;
 
-  /** Записывает календарную точность каждого публичного аргумента. */
+  /** Writes down the calendar accuracy of each public argument. */
   function encode(selection: Selection) {
     if (selection === null) {
       return null;
@@ -39,42 +39,42 @@
     return selection.map(date => date?.toISOString() ?? null);
   }
 
-  /** Ведёт журнал запросов открытия и принимает их для controlled open. */
+  /** He keeps an opening query log and accepts them for random open. */
   function onOpenChange(...args: [open: boolean]) {
     events.push(['open', args.length, args[0]]);
     if (profile.controlledOpen) open = args[0];
   }
 
-  /** Сохраняет черновик вместе с текстом и info владельца поля. */
+  /** Saves the draft together with the text and info of the owner of the field. */
   function onCalendarChange(...args: [value: Selection, text: unknown, info: unknown]) {
     events.push(['calendar', args.length, encode(args[0]), args[1], args[2]]);
   }
 
-  /** Записывает публикацию, даже если владелец уже принял выбор из onOk. */
+  /** Records the publication, even if the owner has already accepted the choice from onOk. */
   function onChange(...args: [value: Selection, text: unknown]) {
     events.push(['change', args.length, encode(args[0]), args[1]]);
   }
 
-  /** В сценариях controlled open последнее подтверждение само закрывает панель. */
+  /** In the scenarios of the open controlled last confirmation itself closes the panel. */
   function recordOk(selection: Selection, arity: number) {
     events.push(['ok', arity, encode(selection)]);
     confirmations++;
     if (profile.controlledOpen && confirmations === (profile.range ? 2 : 1)) open = false;
   }
 
-  /** Принимает одиночный результат внутри onOk. */
+  /** Accepts a solitary result inside onOk. */
   function onOk(...args: [value: Dayjs]) {
     recordOk(args[0], args.length);
     if (profile.controlled === 'accept-ok') value = args[0];
   }
 
-  /** Принимает обе границы внутри onOk. */
+  /** Accepts both borders inside onOk. */
   function onRangeOk(...args: [value: RangePickerValue]) {
     recordOk(args[0], args.length);
     if (profile.controlled === 'accept-ok') range = args[0];
   }
 
-  /** Принимает массив выбранных значений внутри onOk. */
+  /** Receives an array of selected values within onOk. */
   function onListOk(...args: [value: Dayjs[]]) {
     recordOk(args[0], args.length);
     if (profile.controlled === 'accept-ok') values = args[0];

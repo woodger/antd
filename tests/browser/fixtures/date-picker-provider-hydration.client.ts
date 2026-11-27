@@ -10,5 +10,5 @@ const component = hydrate(DatePickerProviderFixtures, {
   target, props: { profile: hydrationProfile, openOnMount: false }
 });
 
-// Позволяет проверить очистку привязок и popup после гидратации.
+// Allows you to check the clearing of bindings and popup after hydration.
 Object.assign(window, { disposePickerProvider: () => unmount(component) });

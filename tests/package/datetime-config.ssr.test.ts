@@ -6,7 +6,7 @@ import layered from '../browser/fixtures/ant-design-picker-clock-options-referen
 import DatetimeConfigFixtures from '../browser/fixtures/DatetimeConfigFixtures.svelte';
 import PickerClockOptionsFixtures from '../browser/fixtures/PickerClockOptionsFixtures.svelte';
 
-/** Читает значения полей пикера по id без браузерного DOM. */
+/** Reads picker field values by id without a browser DOM. */
 function pickerFields(html: string) {
   const values: string[][] = [];
   for (const [element] of html.matchAll(/<input\b[^>]*>/g)) {

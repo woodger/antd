@@ -1,6 +1,6 @@
 import template from './vendor/input-number-prefix.css.js';
 
-/** InputNumber сохраняет token namespace и native geometry adapters при смене prefix. */
+/** InputNumber preserves token namespace and native geometry adapters when changing prefix. */
 export function getInputNumberPrefixCss(prefix: string) {
   if (prefix === 'ant-input-number') {
     return undefined;

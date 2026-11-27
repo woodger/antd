@@ -13,13 +13,13 @@ export type TimePickerColumnType = TimePickerUnit | 'meridiem';
 export type TimePickerContent = InputContent;
 export type TimePickerFocusOptions = FocusOptions & { cursor?: 'start' | 'end' | 'all'; };
 
-/** Словарь из Ant Design; prop locale использует общий DatePickerLocale с timePickerLocale. */
+/** Dictionary from Ant Design; prop locale uses a total of DatePickerLocale with timePickerLocale. */
 export interface TimePickerLocale {
   placeholder?: string;
   rangePlaceholder?: [string, string];
 }
 
-/** OriginNode — native button snippet; остальные поля сохраняют форму rc-picker. */
+/** OriginNode – native snippet button; the remaining fields retain form rc-picker. */
 export interface TimePickerCellRenderInfo<DateType extends object = Dayjs> {
   prefixCls: string;
   originNode: Snippet;
@@ -48,17 +48,17 @@ export interface TimePickerSlots {
   prefix?: string;
   input?: string;
   suffix?: string;
-  /** Строка для classNames равнозначна popup.root. */
+  /** The string for classNames is equivalent to popup.root. */
   popup?: string | TimePickerPopupSlots;
 }
 
-/** Как outer TimePicker: локальный callback получает исходные props с разрешённым variant. */
+/** As outer TimePicker: the local callback receives the original props with the authorized variant. */
 export type TimePickerSemantic<DateType extends object = Dayjs> = TimePickerSlots
   | ((info: { props: TimePickerProps<'time', DateType>; }) => TimePickerSlots | undefined);
 
 /**
- * Объект component config заменяется целиком во вложенном ConfigProvider.
- * Общий semantic callback получает range props в TimeRangePicker runtime, как upstream.
+ * The component config object is replaced entirely in nested ConfigProvider. The overall semantic
+ * callback gets range props at TimeRangePicker runtime as upstream.
  */
 export interface TimePickerConfig {
   class?: string;
@@ -70,7 +70,7 @@ export interface TimePickerConfig {
   allowClear?: boolean | { clearIcon?: TimePickerContent; };
 }
 
-/** Выбор времени через адаптер даты; дата, UTC/timezone и точность не сериализуются компонентом. */
+/** Choosing time through the date adapter; date, UTC/timezone and accuracy are not serialized by the component. */
 export interface TimePickerProps<
   Mode extends DatePickerMode = 'time', DateType extends object = Dayjs
 > extends Omit<
@@ -79,15 +79,15 @@ export interface TimePickerProps<
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
     | 'prefix' | 'onclick' | 'mode' | 'multiple' | 'cellRender' | 'picker' | 'renderExtraFooter'
 >, Omit<DatePickerTimeConfig<DateType>, 'format'> {
-  /** Самостоятельный TimePicker выбирает одно значение. */
+  /** Independent TimePicker selects one value. */
   multiple?: false;
-  /** По умолчанию true, как в rc-picker для picker=time. */
+  /** By default true, as at rc-picker for picker=time. */
   needConfirm?: boolean;
-  /** По умолчанию hover; preview не вызывает change/calendarChange. */
+  /** By default hover; preview does not cause change/calendarChange. */
   previewValue?: false | 'hover';
-  /** Выбирает ближайший разрешённый unit через 300 ms после ручной прокрутки. */
+  /** Select the nearest authorized unit via 300 ms after manual scrolling. */
   changeOnScroll?: boolean;
-  /** По умолчанию true; объект настраивает иконку очистки. */
+  /** Default true; the object configures the clearing icon. */
   allowClear?: boolean | { clearIcon?: TimePickerContent; };
   suffixIcon?: TimePickerContent | true;
   prefix?: TimePickerContent;
@@ -95,27 +95,27 @@ export interface TimePickerProps<
   classNames?: TimePickerSemantic<DateType>;
   styles?: TimePickerSemantic<DateType>;
   cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo<DateType>]>;
-  /** Получает snippet стандартной panel layout, сохраняя внешний popup lifecycle. */
+  /** Receives snippet the standard management panel, saving an external popup lifecycle. */
   panelRender?: Snippet<[Snippet]>;
   renderExtraFooter?: [Mode] extends ['time'] ? Snippet : Snippet<[Mode]>;
   presets?: readonly TimePickerPreset<DateType>[];
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
-  /** Совместимый alias; onclick имеет приоритет. */
+  /** Compatible alias; onclick has priority. */
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
   onFocus?: DatePickerProps['onfocus'];
   onBlur?: DatePickerProps['onblur'];
   onKeyDown?: (event: KeyboardEvent) => void;
   disabledDate?: (date: DateType, info: { type: 'time'; }) => boolean;
-  /** Третий аргумент SinglePicker — пустой объект после удаления range. */
+  /** The third argument SinglePicker is an empty object after removing the range. */
   onCalendarChange?: (value: DateType | null, dateString: string, info: Record<string, never>) => void;
-  /** При полной очистке dateString=null, как в runtime SinglePicker rc-picker. */
+  /** With complete clearing of dateString=null, as in runtime SinglePicker rc-picker. */
   onChange?: (value: DateType | null, dateString: string | null) => void;
-  /** Пользовательская панель может запросить календарный режим. */
+  /** The user panel can request calendar mode. */
   onPanelChange?(value: DateType, mode: Mode): void;
   onPickerValueChange?(value: DateType, info: { source: 'reset' | 'panel'; mode: Mode; }): void;
 }
 
-/** Набор времени для DatePicker.TimePicker и фабричного Picker.TimePicker. */
+/** Time set for DatePicker.TimePicker and factory Picker.TimePicker. */
 export interface TimePickerMultipleProps<DateType extends object = Dayjs> extends Omit<
   TimePickerProps<DatePickerMode, DateType>,
   'multiple' | 'value' | 'defaultValue' | 'onChange' | 'onCalendarChange' | 'onOk'
@@ -132,7 +132,7 @@ export interface TimePickerMultipleProps<DateType extends object = Dayjs> extend
   styles?: TimePickerMultipleProps<DateType>['classNames'];
 }
 
-/** Реализация принимает footer обеих публичных сигнатур. */
+/** The implementation takes the footer of both public signatures. */
 export type TimePickerRuntimeProps<DateType extends object = Dayjs> = Omit<TimePickerProps<DatePickerMode, DateType>, 'renderExtraFooter'> & {
   renderExtraFooter?: PickerModeFooter<DatePickerMode>;
 };

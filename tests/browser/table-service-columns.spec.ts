@@ -8,14 +8,14 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 const root = '#table-service-columns-fixture';
 const events = '#table-service-column-events';
 
-/** Считывает только физические ячейки. Измерительные строки принадлежат реализации. */
+/** It only counts physical cells. Measuring lines belong to implementation. */
 function snapshot() {
   const table = document.querySelector<HTMLTableElement>('#table-service-columns-fixture table');
   if (!table) {
     throw new Error('Missing service columns fixture');
   }
 
-  /** Классы выделяют служебные колонки даже при совпадении ключей данных. */
+  /** Classes allocate service columns, even when data keys coincide. */
   function key(cell: Element) {
     const field = [...cell.classList].find(name => name.startsWith('fixture-col-'));
     if (field) return field.slice('fixture-col-'.length);
@@ -24,7 +24,7 @@ function snapshot() {
     return '$empty';
   }
 
-  /** Закрепление выражено логической стороной независимо от dir. */
+  /** Fixation is expressed by the logical side regardless of dir. */
   function pin(cell: Element) {
     if (cell.classList.contains('ant-table-cell-fix-start')) return 'start';
     if (cell.classList.contains('ant-table-cell-fix-end')) return 'end';
@@ -60,7 +60,7 @@ function snapshot() {
   return { headers, rows, details, events };
 }
 
-/** Выполняет тот же шаг через клавиатуру, ячейку или публичный ref. */
+/** Performs the same step through a keyboard, cell or public ref. */
 async function act(page: Page, action: string) {
   const [kind, key] = action.split('-');
   switch (kind) {

@@ -15,12 +15,12 @@ export type RowJustify =
   | 'space-between'
   | 'space-evenly';
 
-/** Строка Grid с responsive gutters и общим выравниванием дочерних Col. */
+/** String Grid with responsive gutters and general alignment of daughter Col. */
 export interface RowProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style' | 'align'
 > {
-  /** Локальный CSS prefix строки; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local CSS prefix lines; empty/undefined inherited ConfigProvider.prefixCls. */
   prefixCls?: string;
   children?: Snippet;
   /** @defaultValue 0 */
@@ -30,7 +30,7 @@ export interface RowProps extends Omit<
   wrap?: boolean;
   class?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 
@@ -42,12 +42,12 @@ export interface ColSize {
   pull?: number | string;
   flex?: number | string;
 }
-/** Колонка Grid с responsive span, offset, order и flex. */
+/** Column Grid with responsive span, offset, order and flex. */
 export interface ColProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 >, ColSize {
-  /** Локальный CSS prefix колонки; empty/undefined наследуют ConfigProvider. */
+  /** Local CSS prefix column; empty/undefined inherits ConfigProvider. */
   prefixCls?: string;
   children?: Snippet;
   xs?: number | string | ColSize;
@@ -59,6 +59,6 @@ export interface ColProps extends Omit<
   xxxl?: number | string | ColSize;
   class?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

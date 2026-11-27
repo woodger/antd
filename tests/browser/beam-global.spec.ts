@@ -8,7 +8,7 @@ for (const entry of reference.cases) {
     await page.goto('/?fixture=beam-global');
     await page.getByRole('combobox', { name: 'Beam global sample', exact: true })
       .selectOption(entry.sample.id);
-    // Source cache теряет inner namespace при shared local class; fresh page даёт эталон.
+    // Source cache loses inner namespace at shared local class; fresh page gives the benchmark.
     const separate = isolated.cases.find(sample => sample.sample.id === entry.sample.id);
     const expected = { ...entry.result, ...separate?.result };
 

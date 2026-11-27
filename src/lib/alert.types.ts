@@ -16,11 +16,11 @@ export interface AlertCloseAttributes {
 }
 export interface AlertClosable extends AlertCloseAttributes {
   disabled?: boolean;
-  /** Пустая строка сохраняет прежнюю пустую кнопку; остальные falsy values выбирают fallback. */
+  /** An empty string preserves the previous empty button. Other falsy values use the fallback. */
   closeIcon?: AlertContent;
-  /** Callback закрытия; preventDefault не отменяет закрытие. */
+  /** Dismissal callback. preventDefault does not cancel dismissal. */
   onClose?: (event: MouseEvent) => void;
-  /** Snapshot при запросе; вызывается после удаления DOM и отменяется при unmount. */
+  /** Captured when dismissal is requested. Called after DOM removal and cancelled on unmount. */
   afterClose?: () => void;
 }
 export interface AlertSemanticSlots {
@@ -43,10 +43,10 @@ export interface AlertSemanticInfo {
 export type AlertSemantic = AlertSemanticSlots
   | ((info: AlertSemanticInfo) => AlertSemanticSlots | undefined);
 export interface AlertRef {
-  /** Snapshot после mount; после закрытия узел остаётся отсоединённым до unmount. */
+  /** Captured after mount. After dismissal, the node stays detached until unmount. */
   readonly nativeElement: HTMLDivElement;
 }
-/** Наследуемое оформление и close/icon defaults; явный record заменяет родительский. */
+/** Inherited styling and close or icon defaults. An explicit record replaces the parent's record. */
 export interface AlertConfig extends Pick<
   AlertProps, 'class' | 'style' | 'variant' | 'classNames' | 'styles'
 > {
@@ -57,16 +57,16 @@ export interface AlertConfig extends Pick<
   errorIcon?: AlertContent;
 }
 
-/** Сообщение со статусом, действием и закрытием с завершением анимации. */
+/** Status message with an action and animated dismissal. */
 export interface AlertProps {
   type?: AlertType;
   /** @defaultValue 'outlined' */
   variant?: AlertVariant;
   title?: AlertContent;
   description?: AlertContent;
-  /** Undefined включает иконку в banner; в обычном режиме она скрыта. */
+  /** undefined shows the icon in a banner and hides it in regular mode. */
   showIcon?: boolean;
-  /** Null/undefined выбирают context/default icon; false и пустая строка оставляют пустой span. */
+  /** null and undefined use the context or default icon. false and an empty string leave an empty span. */
   icon?: AlertContent;
   action?: AlertContent;
   /** @defaultValue false */
@@ -85,18 +85,18 @@ export interface AlertProps {
   'aria-hidden'?: HTMLAttributes<HTMLDivElement>['aria-hidden'];
   class?: string;
   style?: string;
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   rootClassName?: string;
-  /** Callbacks получают разрешённые prefixCls/variant/type/showIcon/boolean closable. */
+  /** Callbacks receive resolved prefixCls, variant, type, showIcon, and boolean closable. */
   classNames?: AlertSemantic;
   styles?: AlertSemantic;
   onClick?: (event: MouseEvent) => void;
   onMouseEnter?: (event: MouseEvent) => void;
   onMouseLeave?: (event: MouseEvent) => void;
-  /** Bind:nativeElement отражает текущий DOM; undefined до mount, после close/unmount. */
+  /** bind:nativeElement reflects the current DOM. It is undefined before mount and after close or unmount. */
   nativeElement?: HTMLDivElement;
-  /** Bind:ref получает snapshot root после mount и очищается при unmount. */
+  /** bind:ref receives the root snapshot after mount and is cleared on unmount. */
   ref?: AlertRef;
   [attribute: `aria-${string}`]: unknown;
   [attribute: `data-${string}`]: unknown;

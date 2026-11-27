@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Применяет размеры, положение и содержимое всплывающей поверхности. Императивное выравнивание
-  // использует текущий popup.
+  // Applies size, position, and content to the popup surface. Imperative alignment uses the current
+  // popup.
   import { getAllContexts, onDestroy, onMount, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
   import {
@@ -96,7 +96,7 @@
   let resolvedAlign = $derived(align ?? semanticProps?.align);
   let configuredPlacements = $derived(builtinPlacements ?? semanticProps?.builtinPlacements);
   let configuredContainer = $derived(getPopupContainer || config.getPopupContainer);
-  // Fallback встроенной подсказки принадлежит порталу, semantic props отражают конфигурацию.
+  // The portal owns the built-in tooltip fallback. Semantic props reflect configuration.
   let container = $derived(configuredContainer
     || (sourceAnchor ? defaultTooltipContainer : undefined));
   let alignCallback = $derived(onPopupAlign ?? semanticProps?.onPopupAlign);
@@ -281,7 +281,7 @@
   });
 
   $effect.pre(() => {
-    // Первый force render получает текущий payload; последующие скрытые updates используют fresh.
+    // The first forced render receives the current payload. Later updates while hidden use fresh.
     if (open || refresh || force && !initialized) {
       cached = { ...payload, title: captureContent(title) };
     }
@@ -291,7 +291,7 @@
     else if (destroy) initialized = false;
   });
 
-  // Снимок массива не удерживает reactive proxy; внутреннее состояние Snippet остаётся Svelte-owned.
+  // The array snapshot retains no reactive proxy. Svelte still owns the Snippet's internal state.
   function captureContent(value: TooltipContent): TooltipContent {
     return Array.isArray(value) ? value.map(captureContent) : value;
   }
@@ -402,7 +402,7 @@
   }
   [data-ant-placement="top"] > [data-ant-tooltip-arrow], [data-ant-placement="bottom"] > [data-ant-tooltip-arrow] { left: var(--arrow-x, 50%); }
   [data-ant-placement="left"] > [data-ant-tooltip-arrow], [data-ant-placement="right"] > [data-ant-tooltip-arrow] { top: var(--arrow-y, 50%); }
-  /* Без getter source portal изолирует private contrast родительского popup. */
+  /* With no getter, the upstream portal isolates the parent popup's private contrast. */
   :global([data-ant-overlay-color]) [data-ant-tooltip][data-ant-tooltip-inline] { --ant-tooltip-overlay-color: initial; }
   @media (prefers-reduced-motion: reduce) {
     [data-ant-tooltip], [data-ant-tooltip-container] {

@@ -74,7 +74,7 @@
     } }
   });
   $effect(() => {
-    // Setter не реактивен: существующий Spin читает fallback при следующем обновлении props.
+    // Setter is not reactive: the existing Spin reads fallback at the next props update.
     if (globalName) Spin.setDefaultIndicator(replacement);
   });
 </script>

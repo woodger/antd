@@ -1,9 +1,9 @@
-/** Шаблон сообщения; функция вызывается при ошибке соответствующего constraint. */
+/** Message pattern; function is called when the corresponding Sext error is errors. */
 export type ValidateMessage = string | (() => string);
 
 /**
- * Частичные шаблоны Form: отсутствующие ключи сохраняют native русские сообщения.
- * Строки поддерживают source printf и последующую подстановку ${variables}.
+ * Partial Form templates: Missing keys save native Russian messages. The strings support the source
+ * printf and the subsequent ${variables} substation.
  */
 export interface ValidateMessages {
   default?: ValidateMessage;

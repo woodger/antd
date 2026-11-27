@@ -1,7 +1,7 @@
-// Хранит только активные браузерные подтверждения для общего Modal.destroyAll.
+// Stores only active browser confirmations for a total of Modal.destroyAll.
 let callbacks: (() => void)[] | undefined;
 
-/** Регистрирует закрытие и возвращает снятие регистрации для владельца окна. */
+/** Registers the closure and returns the check-in withdrawal for the window holder. */
 export function registerModalDestroy(destroy: () => void) {
   if (typeof document === 'undefined') {
     return undefined;
@@ -10,7 +10,7 @@ export function registerModalDestroy(destroy: () => void) {
   const current = callbacks ??= [];
   current.push(destroy);
 
-  /** Удаляет конкретную регистрацию при закрытии или размонтировании владельца. */
+  /** Removes a specific registration when the owner is closed or dismantled. */
   return () => {
     const index = current.indexOf(destroy);
     if (index !== -1) {
@@ -19,7 +19,7 @@ export function registerModalDestroy(destroy: () => void) {
   };
 }
 
-/** Закрывает окна в обратном порядке регистрации. */
+/** Closes the windows in the reverse order of registration. */
 export function destroyAllModals() {
   while (callbacks?.length) {
     const destroy = callbacks.pop();

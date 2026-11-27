@@ -1,4 +1,4 @@
-/** Сохраняет source style diff: shorthand не заставляет повторно писать неизменный longhand. */
+/** Preserves the upstream style diff. A shorthand does not force an unchanged longhand to be written again. */
 export function connectBadgeRibbonStyle(node: HTMLElement) {
   const parser = node.ownerDocument.createElement('span').style;
   let previous = new Map<string, { value: string; priority: string; }>();

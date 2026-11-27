@@ -1,4 +1,4 @@
-// Запускает проверки собранного пакета локальными инструментами проекта.
+// Checks the built package with the project's installed tools.
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { readJson } from './ant-design-common.mjs';
@@ -9,7 +9,7 @@ const checks = {
   browser: ['@playwright/test', 'playwright', ['test']]
 };
 
-// Разрешает bin установленной зависимости и запускает его через текущий Node.
+// Resolves the installed dependency's bin and runs it with the current Node.
 async function runTool(dependency, command, args, root) {
   const manifestURL = import.meta.resolve(dependency + '/package.json');
   const { bin } = await readJson(new URL(manifestURL));
@@ -22,7 +22,7 @@ async function runTool(dependency, command, args, root) {
   execFileSync(process.execPath, [script, ...args], { cwd: root, stdio: 'inherit' });
 }
 
-// Сначала собирает пакет для проверок, читающих dist. В Playwright сборкой владеет webServer.
+// Builds first for checks that read dist. Playwright's webServer handles its build.
 export async function runCheck(kind, args, { root }) {
   if (kind !== 'browser') {
     await runTool('@sveltejs/package', 'svelte-package', [], root);

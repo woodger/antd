@@ -15,7 +15,7 @@ export interface TransferItem {
   disabled?: boolean;
 }
 
-/** Callback сохраняет текст/metadata; ReactElement заменяется возвращаемым snippet. */
+/** Callback preserves text/metadata; ReactElement is replaced by the returned snippet. */
 export type TransferRenderResult<RecordType extends object> = TransferContent<[RecordType]>
   | { label: TransferContent<[RecordType]>; value: string; };
 
@@ -52,7 +52,7 @@ export interface TransferSemantic {
 export type TransferSemanticValue<Value> = TransferSlots<Value>
   | ((info: TransferSemantic) => TransferSlots<Value> | undefined);
 
-/** Настройки наследуются целиком; локальные semantic slots перекрывают context. */
+/** Settings are inherited entirely; local semantic slots overlaps context. */
 export interface TransferConfig {
   class?: string;
   style?: string;
@@ -78,7 +78,7 @@ export interface TransferLocale {
 
 export interface TransferSearchOption {
   placeholder?: string;
-  /** Читается один раз при создании списка; поиск у списков независимый. */
+  /** Read once when creating a list; the search at the lists is independent. */
   defaultValue?: string;
 }
 
@@ -96,13 +96,13 @@ export type TransferPagination = boolean | {
 export interface TransferActionInfo {
   disabled: boolean;
   direction: TransferDirection;
-  /** Стрелка с учётом RTL. */
+  /** Arrow that respects RTL. */
   icon: Snippet;
-  /** Привяжите к onclick собственного native control. */
+  /** Tie to onclick your own native control. */
   onClick: (event: MouseEvent) => void;
 }
 
-/** Собственный action получает сведения, которые upstream внедряет через cloneElement. */
+/** Your own action receives the information that upstream implements through cloneElement. */
 export type TransferAction = TransferContent<[TransferActionInfo]> | {
   children: Snippet<[TransferActionInfo]>;
   disabled?: boolean;
@@ -112,7 +112,7 @@ export type TransferAction = TransferContent<[TransferActionInfo]> | {
 export type TransferSelectAllLabel = Exclude<TransferContent, Snippet>
   | ((info: { selectedCount: number; totalCount: number; }) => TransferContent);
 
-/** Props, передаваемые custom body; direction физический и меняется в RTL. */
+/** Props passed to the custom body. direction is physical and flips in RTL. */
 export interface TransferListBodyProps<RecordType extends object = TransferItem>
   extends TransferLocale {
   prefixCls: string;
@@ -155,14 +155,14 @@ export interface TransferListProps<RecordType extends object = TransferItem>
   handleClear: () => void;
 }
 
-/** Два списка; targetKeys всегда задаёт владелец, selectedKeys можно оставить локальным. */
+/** Two lists; targetKeys is always set by the owner, selectedKeys can be left local. */
 export interface TransferProps<RecordType extends object = TransferItem> extends Omit<
   HTMLAttributes<HTMLDivElement>, 'children' | 'onchange' | 'onscroll' | 'class'
 > {
   dataSource?: readonly RecordType[];
-  /** Контролируемое значение. Компонент предлагает изменения только через onChange. */
+  /** Controlled value. The component offers changes only through onChange. */
   targetKeys?: readonly TransferKey[];
-  /** undefined освобождает локальное выделение; defaultSelectedKeys отсутствует upstream. */
+  /** undefined releases local allocation; defaultSelectedKeys is missing upstream. */
   selectedKeys?: readonly TransferKey[];
   rowKey?: (record: RecordType) => TransferKey;
   render?: (record: RecordType) => TransferRenderResult<RecordType>;
@@ -185,20 +185,20 @@ export interface TransferProps<RecordType extends object = TransferItem> extends
   actions?: readonly TransferAction[];
   /** @defaultValue false */
   oneWay?: boolean;
-  /** Не действует при children, как в Ant Design. @defaultValue false */
+  /** It doesn't work with children, as in Ant Design. @defaultValue false */
   pagination?: TransferPagination;
   children?: Snippet<[TransferListBodyProps<RecordType>]>;
   footer?: Snippet<[TransferListProps<RecordType>, { direction: TransferDirection; }]>;
   disabled?: boolean;
-  /** Пустая строка наследует FormItem; success/validating сохраняются как исходные классы. */
+  /** Empty string inherits FormItem; success/validating is saved as source classes. */
   status?: TransferStatus;
   selectionsIcon?: TransferContent;
   classNames?: TransferSemanticValue<string>;
   styles?: TransferSemanticValue<string>;
-  /** Локальный namespace Transfer; пустая строка наследует ConfigProvider. */
+  /** Local namespace Transfer; an empty line inherits ConfigProvider. */
   prefixCls?: string;
   rootClassName?: string;
   class?: string;
-  /** Нативный корень вместо React ref.nativeElement. Поддерживает bind:nativeElement. */
+  /** Native root instead of React ref.nativeElement. Maintained bind:nativeElement. */
   nativeElement?: HTMLDivElement;
 }

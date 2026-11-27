@@ -12,15 +12,15 @@ export type TabsContent = string | number | boolean | null | Snippet;
 export type TabsExtraContent = TabsContent | { left?: TabsContent; right?: TabsContent; };
 export type TabsIndicatorSize = number | ((origin: number) => number);
 
-/** Размер и logical выравнивание индикатора активного заголовка. */
+/** Size and logical alignment of the active title indicator. */
 export interface TabsIndicator {
-  /** Размер в px или чистое вычисление от полной ширины/высоты заголовка. */
+  /** Size in px or pure calculation from full width/height title. */
   size?: TabsIndicatorSize;
   /** @defaultValue 'center' */
   align?: 'start' | 'center' | 'end';
 }
 
-/** Физическое направление изменения native scroll заголовков. */
+/** The physical direction of changing native scroll titles. */
 export interface TabsScrollInfo {
   direction: 'left' | 'right' | 'top' | 'bottom';
 }
@@ -29,7 +29,7 @@ export type TabsMoreTrigger = 'hover' | 'click' | 'contextMenu' | 'focus';
 export type TabsMorePlacement = 'topLeft' | 'top' | 'topRight'
   | 'bottomLeft' | 'bottom' | 'bottomRight';
 export type TabsMoreOffset = PopupOffset;
-/** Исходный AlignType rc-trigger: физические points, числовые/процентные offsets и overflow. */
+/** Source AlignType rc-trigger: physical points, numerical/interest offsets and overflow. */
 export type TabsMoreAlign = PopupSourceAlign;
 export type TabsMorePlacements = Readonly<Record<string, TabsMoreAlign>>;
 
@@ -38,53 +38,53 @@ export interface TabsMoreRenderInfo {
   onClose: () => void;
 }
 
-/** Параметры меню скрытых вкладок; popupRender получает исходный listbox как snippet. */
+/** Hidden tab menu settings; popupRender gets the original listbox as snippet. */
 export interface TabsMoreProps {
   icon?: TabsContent;
   popupRender?: Snippet<[Snippet, TabsMoreRenderInfo]>;
   /** @defaultValue 'hover' */
   trigger?: TabsMoreTrigger | readonly TabsMoreTrigger[];
-  /** Перекрывает действия trigger только для открытия; пустой массив отключает их. */
+  /** Overlaps trigger actions only for opening; an empty array disables them. */
   showAction?: readonly TabsMoreTrigger[];
-  /** Перекрывает действия закрытия; contextMenu default — ['click'], focus закрывает при blur кнопки. */
+  /** Overlaps the closing actions; contextMenu default — ['click'], focus blur closes at the button. */
   hideAction?: readonly TabsMoreTrigger[];
-  /** Собственный класс открытого More; undefined использует текущий Tabs prefix + dropdown-open. */
+  /** Own class of open More; undefined uses the current Tabs prefix + dropdown-open. */
   openClassName?: string;
-  /** Заменяет стандартное меню и popupRender; содержимое ленивое. */
+  /** Replaces the standard menu and popupRender; content is lazy. */
   overlay?: Snippet;
-  /** Удаляет popup и его state после окончания leave. @defaultValue false */
+  /** Removes the popup and its state after the end of leave. @defaultValue false */
   autoDestroy?: boolean;
-  /** Motion class prefix; default — общий ConfigProvider prefix + slide-up; '' отключает CSS motion. */
+  /** Motion class prefix; default - total ConfigProvider prefix + slide-up; '' disables CSS motion. */
   transitionName?: string;
-  /** Перекрывает transitionName с текущим Tabs prefix + dropdown-; '' не перекрывает. */
+  /** overrides transitionName with current Tabs prefix + dropdown-; '' does not overlap. */
   animation?: string;
   /** @defaultValue 'bottomLeft' */
   placement?: TabsMorePlacement;
-  /** Заменяет исходную таблицу целиком; undefined сохраняет шесть defaults rc-dropdown. */
+  /** Replaces the whole source table; undefined preserves six defaults rc-dropdown. */
   placements?: TabsMorePlacements;
-  /** Перекрывает placements, включая явное undefined, которое даёт пустую таблицу Trigger. */
+  /** Overlaps placements, including the explicit undefined, which gives an empty Trigger table. */
   builtinPlacements?: TabsMorePlacements;
-  /** Неглубоко перекрывает выбранный placement, включая целый объект overflow. */
+  /** Shallowly overlaps the selected placement, including the whole object overflow. */
   align?: TabsMoreAlign;
-  /** Использует client coordinates последнего click/hover/contextMenu; без точки — кнопку. */
+  /** Uses client coordinates of the last click/hover/contextMenu; without the dot - button. */
   alignPoint?: boolean;
-  /** Получает popup и фактические points после flip, перед записью offsets в DOM. */
+  /** Receives popup and actual points after flip, before recording offsets in DOM. */
   onPopupAlign?: (popup: HTMLDivElement, align: TabsMoreAlign) => void;
-  /** Исходный rc-dropdown добавляет div-arrow и show-arrow class без собственных Tabs-стилей. */
+  /** The original rc-dropdown adds div-arrow and show-arrow class without its own Tabs styles. */
   arrow?: boolean;
-  /** Задержки в секундах, как в исходном Dropdown. @defaultValue 0.1 */
+  /** Delays in seconds, as in the original Dropdown. @defaultValue 0.1 */
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   /**
-   * Boolean перекрывает внутреннее состояние, включая onClose.
-   * Явное undefined включает отдельное состояние Trigger: keyboard/onClose меняют только open Tabs.
+   * Boolean overlaps the internal state, including onClose. The explicit undefined includes a
+   * separate Trigger state: keyboard/onClose only changes open Tabs.
    */
   visible?: boolean;
-  /** Как more в rc-tabs, заменяет внутренний pointer/dismiss callback; для control передавайте visible. */
+  /** Like more in rc-tabs, replaces the internal pointer or dismiss callback. Supply visible for controlled operation. */
   onVisibleChange?: (visible: boolean) => void;
   overlayClassName?: string;
   overlayStyle?: string;
-  /** Перекрывает корневую/provider функцию, включая собственный undefined. */
+  /** Overrides the root or provider function, including with an own undefined value. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   autoFocus?: boolean;
   minOverlayWidthMatchTrigger?: boolean;
@@ -96,29 +96,29 @@ export interface TabsItem {
   label: TabsContent;
   children?: Snippet;
   icon?: Snippet;
-  /** Класс отдельной панели после classNames.content; не меняет заголовок вкладки. */
+  /** Detailed panel class after classNames.content; does not change tab title. */
   className?: string;
-  /** CSS-строка панели после styles.content и перед motion styles. */
+  /** CSS-bar panel after styles.content and before motion styles. */
   style?: string;
   disabled?: boolean;
-  /** В editable-card запрещает удаление; disabled также скрывает кнопку. */
+  /** In editable-card prohibits deletion; disabled also hides the button. */
   closable?: boolean;
-  /** Null/false скрывают кнопку при не заданном closable; closable=true сохраняет её. */
+  /** Null and false hide the button when closable is omitted. closable=true keeps it. */
   closeIcon?: TabsContent;
   forceRender?: boolean;
-  /** Настройка панели перекрывает корневую, включая явное false. */
+  /** Configuration of the panel overlaps the root, including the explicit false. */
   destroyOnHidden?: boolean;
 }
 
-/** Исходные доступные имена управляющих кнопок Tabs. */
+/** The original available names of the control buttons are Tabs. */
 export interface TabsLocale {
   addAriaLabel?: string;
   removeAriaLabel?: string;
-  /** Имя listbox скрытых вкладок; пустая строка сохраняется. */
+  /** Listbox name of hidden tabs; empty string is saved. */
   dropdownAriaLabel?: string;
 }
 
-/** Имена классов или CSS-строки; popup string сокращает запись popup.root. */
+/** Class names or CSS lines; popup string reduces record popup.root. */
 export interface TabsSlots {
   root?: string;
   item?: string;
@@ -130,7 +130,7 @@ export interface TabsSlots {
   popup?: string | { root?: string; };
 }
 
-/** Props с source size (undefined без явного размера), physical placement и нормализованными items. */
+/** Props with source size (undefined without explicit size), physical placement and normalized items. */
 export type TabsSemanticProps = Omit<TabsProps, 'items' | 'size' | 'tabPlacement' | 'nativeElement'> & {
   items: readonly TabsItem[];
   size: ComponentSize | 'medium' | undefined;
@@ -139,7 +139,7 @@ export type TabsSemanticProps = Omit<TabsProps, 'items' | 'size' | 'tabPlacement
 
 export type TabsSemantic = TabsSlots | ((info: { props: TabsSemanticProps; }) => TabsSlots);
 
-/** Настройки ConfigProvider.tabs; вложенный provider заменяет весь record. */
+/** Settings ConfigProvider.tabs; nested provider replaces the entire record. */
 export interface TabsConfig {
   class?: string;
   style?: string;
@@ -149,65 +149,65 @@ export interface TabsConfig {
   addIcon?: TabsContent;
   removeIcon?: TabsContent;
   moreIcon?: TabsContent;
-  /** Как в 6.6.8, глобальный more использует только icon; остальные поля не меняют trigger. */
+  /** As in 6.6.8, the global uses more only; the rest of the fields do not change the trigger. */
   more?: Omit<TabsMoreProps, 'popupRender'>;
 }
 
-/** Набор keyed панелей с bind:activeKey, ручной клавиатурной активацией и overflow. */
+/** A set of keyed panels with bind:activeKey, manual keyboard activation and overflow. */
 export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class' | 'style'> {
-  /** Непустой локальный prefix имеет приоритет; иначе используется ConfigProvider.prefixCls. */
+  /** A nonempty local prefix takes precedence. Otherwise uses ConfigProvider.prefixCls. */
   prefixCls?: string;
   items: readonly TabsItem[];
-  /** Поддерживает bind:activeKey. */
+  /** Maintenances bind:activeKey. */
   activeKey?: string | undefined;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultActiveKey?: string;
   onChange?: (activeKey: string) => void;
   onTabClick?: (key: string, event: MouseEvent) => void;
   /**
-   * Только при изменении scroll на текущей оси;
-   * соседние native events могут объединяться браузером.
+   * Only when changing scroll on the current axis; neighboring native events can be combined by the
+   * browser.
    */
   onTabScroll?: (info: TabsScrollInfo) => void;
   indicator?: TabsIndicator;
   type?: TabsType;
-  /** Исходный default: inkBar=true, tabPane=false; true включает обе анимации. */
+  /** The starting default: inkBar = true, tabPane = false; true includes both animations. */
   animated?: boolean | TabsAnimatedConfig;
-  /** Запрашивает изменение items у владельца; add получает событие, remove — key. */
+  /** Requests to change items from the owner; add receives the event, remove - key. */
   onEdit?: (target: MouseEvent | KeyboardEvent | string, action: 'add' | 'remove') => void;
-  /** Скрывает добавление только в editable-card. @defaultValue false */
+  /** Hides the addition only to the editable card. @defaultValue false */
   hideAdd?: boolean;
-  /** Falsy значение использует исходную иконку PlusOutlined. */
+  /** Falsy value uses the original icon PlusOutlined. */
   addIcon?: TabsContent;
-  /** Nullish значение использует CloseOutlined; falsy fallback при удалении — «×». */
+  /** Nullish value uses CloseOutlined; falsy fallback when deleted – “×”. */
   removeIcon?: TabsContent;
-  /** По умолчанию исходные Add tab/remove; не заменяет доступное имя tablist. */
+  /** By default, the original Add tab/remove; does not replace the available name tablist. */
   locale?: TabsLocale;
   more?: TabsMoreProps;
   /**
-   * Иконка More: глобальные tabs.more.icon ?? tabs.moreIcon имеют приоритет.
-   * Явное локальное more.icon перекрывает их, включая null/false/undefined.
+   * More icon precedence: global tabs.more.icon ?? tabs.moreIcon. An explicit local more.icon
+   * overrides them, including null, false, and undefined.
    */
   moreIcon?: TabsContent;
-  /** Отсутствие наследует ConfigProvider; собственный undefined выключает наследование. */
+  /** Absence inherits ConfigProvider; own undefined shuts down inheritance. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   /** @defaultValue 'top' */
   tabPlacement?: TabsPlacement;
   /**
-   * Центрирует горизонтальные заголовки; вертикальный список растягивается как в source.
+   * Centers horizontal headers. The vertical list stretches as in upstream.
    * @defaultValue false
    */
   centered?: boolean;
-  /** Отступ в px перед каждым заголовком, кроме первого, и кнопкой добавления. */
+  /** Space in px before every header except the first and before the add button. */
   tabBarGutter?: number;
-  /** CSS-строка для панели заголовков; style по-прежнему относится к корню Tabs. */
+  /** CSS-string for the header panel; style still refers to the root of Tabs. */
   tabBarStyle?: string;
-  /** При отсутствии используется ConfigProvider.componentSize. */
+  /** In the absence, ConfigProvider.componentSize is used. */
   size?: ComponentSize | 'medium';
   /** @defaultValue false */
   destroyOnHidden?: boolean;
   tabBarExtraContent?: TabsExtraContent;
-  /** Snippet получает разрешённые props и стандартную навигацию с заменяемыми props. */
+  /** Snippet receives allowed props and standard navigation with replaceable props. */
   renderTabBar?: TabsRenderTabBar;
   id?: string;
   'aria-label'?: string;
@@ -215,10 +215,10 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'childre
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Provider и локальные классы накапливаются; callback получает разрешённые props. */
+  /** Provider and local classes accumulate; callback receives the allowed props. */
   classNames?: TabsSemantic;
-  /** CSS-строки; root style перекрывает styles.root, tabBarStyle перекрывает styles.header. */
+  /** CSS-lines; root style overlaps styles.root, tabBarStyle overlaps styles.header. */
   styles?: TabsSemantic;
-  /** bind:nativeElement предоставляет корневой HTMLDivElement после mount; SSR refs не заполняются. */
+  /** bind:nativeElement provides root HTMLDivElement after mount; SSR refs are not filled. */
   nativeElement?: HTMLDivElement;
 }

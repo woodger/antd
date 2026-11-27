@@ -1,5 +1,5 @@
-// Преобразует варианты фильтра в пункты Menu и узлы Tree. Ключи представления
-// отделены от значений фильтра, в том числе для 0, '0' и false.
+// Converts filter options to Menu items and nodes Tree. The representation keys are separated from
+// the filter values, including 0, '0' and false.
 import type { MenuItemType } from './menu.types';
 import type { TableFilterOption } from './table.types';
 
@@ -10,7 +10,7 @@ export interface TableFilterNode {
   children?: TableFilterNode[];
 }
 
-/** Обходит ветви и листья в порядке объявления, включая значения самих ветвей. */
+/** Bypasses the branches and leaves in the order of the announcement, including the values of the branches themselves. */
 export function* walkTableFilterOptions(
   options: readonly TableFilterOption[]
 ): Generator<TableFilterOption> {
@@ -22,12 +22,12 @@ export function* walkTableFilterOptions(
   }
 }
 
-/** Запоминает все позиции вложенных массивов и сохраняет ссылки на snippets. */
+/** Records every nested array position and retains snippet references. */
 function snapshotLabel(text: TableFilterOption['text']): TableFilterOption['text'] {
   return Array.isArray(text) ? Array.from(text, snapshotLabel) : text;
 }
 
-/** Запоминает структуру, значения и подписи открытого списка, включая пустые ветви. */
+/** Remembers the structure, meanings, and labels of an open list, including empty branches. */
 export function snapshotTableFilterOptions(options: readonly TableFilterOption[]) {
   return Array.from(walkTableFilterOptions(options), option => ({
     value: option.value,
@@ -36,7 +36,7 @@ export function snapshotTableFilterOptions(options: readonly TableFilterOption[]
   }));
 }
 
-/** Сравнивает содержимое массива подписи без вызова вложенных snippets. */
+/** Compares the contents of the label array without calling nested snippets. */
 function sameLabel(left: TableFilterOption['text'], right: TableFilterOption['text']): boolean {
   if (!Array.isArray(left) || !Array.isArray(right)) {
     return Object.is(left, right);
@@ -47,7 +47,7 @@ function sameLabel(left: TableFilterOption['text'], right: TableFilterOption['te
 
 type OptionSnapshot = ReturnType<typeof snapshotTableFilterOptions>;
 
-/** Проверяет, подходят ли открытой панели текущие значения, подписи и глубина списка. */
+/** Verifies whether the open panel is suitable for current values, labels, and list depth. */
 export function areTableFilterOptionsEqual(current: OptionSnapshot, opened: OptionSnapshot) {
   return current.length === opened.length && current.every((item, index) => {
     const previous = opened[index];
@@ -57,7 +57,7 @@ export function areTableFilterOptionsEqual(current: OptionSnapshot, opened: Opti
   });
 }
 
-/** Встроенный поиск сравнивает только текстовые и числовые подписи Source. */
+/** Built-in search compares only text and numerical labels Source. */
 export function matchesTableFilterText(text: TableFilterOption['text'], query: string) {
   if (typeof text !== 'string' && typeof text !== 'number') {
     return false;
@@ -66,7 +66,7 @@ export function matchesTableFilterText(text: TableFilterOption['text'], query: s
   return String(text).toLowerCase().includes(query);
 }
 
-/** Связывает узлы интерфейса с исходными вариантами. Ключи строятся по пути внутри колонки. */
+/** Connects interface nodes with the original options. The keys are built on the way inside the column. */
 export function getTableFilterNodes(
   options: readonly TableFilterOption[], parentKey = ''
 ): TableFilterNode[] {
@@ -77,7 +77,7 @@ export function getTableFilterNodes(
   });
 }
 
-/** Обходит подготовленные узлы в том же порядке, в котором Table принимает варианты. */
+/** Bypasses prepared nodes in the same order in which Table takes options. */
 export function* walkTableFilterNodes(
   nodes: readonly TableFilterNode[]
 ): Generator<TableFilterNode> {
@@ -89,7 +89,7 @@ export function* walkTableFilterNodes(
   }
 }
 
-/** При поиске сохраняет заголовки групп, скрывая неподходящие листья. */
+/** When searching, retains group headlines, hiding unsuitable leaves. */
 export function getTableFilterMenu(
   nodes: readonly TableFilterNode[],
   matches: (option: TableFilterOption) => boolean,

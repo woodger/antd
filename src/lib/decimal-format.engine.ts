@@ -1,6 +1,6 @@
-// Разбирает десятичные строки, вычисляет точность и сохраняет числовые форматы MiniDecimal.
-// Числовые преобразования mini-decimal 1.0.1; MIT, LICENSE.rc-mini-decimal.
-// Отделяет знак и части числа, нормализуя отрицательный ноль.
+// Parses decimal strings, computes precision, and preserves MiniDecimal's numeric formats. Numeric
+// conversions follow mini-decimal 1.0.1. MIT, LICENSE.rc-mini-decimal. Splits the sign and numeric
+// parts, normalizing negative zero.
 export function trimNumber(number: string) {
   let text = number.trim();
   let negative = text.startsWith('-');
@@ -22,14 +22,14 @@ export function trimNumber(number: string) {
   return { negative, negativeStr, trimStr, integerStr, decimalStr, fullStr: negativeStr + trimStr };
 }
 
-// Проверяет допустимую числовую строку с обозначением степени.
+// Checks whether a numeric string with an exponent is valid.
 export function isScientificNumber(number: string | number) {
   const text = String(number);
 
   return !Number.isNaN(Number(text)) && text.includes('e');
 }
 
-// Учитывает десятичные знаки и показатель степени при оценке точности.
+// Accounts for decimal places and the exponent when determining precision.
 export function getNumberPrecision(number: string | number | undefined) {
   const text = String(number);
 
@@ -45,7 +45,7 @@ export function getNumberPrecision(number: string | number | undefined) {
   return text.includes('.') && validateNumber(text) ? text.length - text.indexOf('.') - 1 : 0;
 }
 
-// Разворачивает экспоненциальное представление и применяет безопасный fallback без BigInt.
+// Expands exponential notation and uses a safe fallback without BigInt.
 export function numberToString(number: number) {
   let text = String(number);
 
@@ -63,7 +63,7 @@ export function numberToString(number: number) {
   return trimNumber(text).fullStr;
 }
 
-// Допускает редактируемые формы с ведущей или конечной десятичной точкой.
+// Accepts editable forms with a leading or trailing decimal point.
 export function validateNumber(number: string | number | null | undefined) {
   if (typeof number === 'number') {
     return !Number.isNaN(number);
@@ -77,12 +77,12 @@ export function validateNumber(number: string | number | null | undefined) {
     || /^\s*-?\.\d+\s*$/.test(number);
 }
 
-// Отличает пустой ввод от нуля и значения NaN.
+// Distinguishes empty input from zero and NaN.
 export function isEmptyDecimal(value: string | number | null | undefined) {
   return !value && value !== 0 && !Number.isNaN(value) || !String(value).trim();
 }
 
-// Увеличивает шаг Shift на порядок через десятичную строку.
+// Increases the Shift step by a factor of ten using a decimal string.
 export function getDecupleSteps(step: string | number) {
   const text = typeof step === 'number' ? numberToString(step) : trimNumber(step).fullStr;
 

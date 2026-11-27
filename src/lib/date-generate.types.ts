@@ -1,5 +1,5 @@
-// Контракт date adapter из @rc-component/picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
-/** Адаптер операций над датой для календарных engines без привязки к DOM. */
+// Date adapter contract from @rc-component/picker 1.12.2. MIT, vendor/LICENSE.rc-picker.
+/** Date operations adapter for calendar engines, independent of the DOM. */
 export type GenerateConfig<DateType> = {
   getWeekDay: (value: DateType) => number;
   getMillisecond: (value: DateType) => number;

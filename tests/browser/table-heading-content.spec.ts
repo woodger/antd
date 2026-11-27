@@ -5,14 +5,14 @@ import { expectedTableHeadingContent } from './fixtures/table-heading-content-ob
 const fixture = '/?fixture=table-heading-content&profile=';
 test.use({ viewport: { width: 880, height: 550 }, reducedMotion: 'reduce' });
 
-/** Читает реальные заголовки, подпись и порядок строк. */
+/** Reads the real titles, label and order of the lines. */
 function snapshot() {
   const root = document.getElementById('table-heading-content-fixture');
   if (!root) {
     throw new Error('Missing Table heading content fixture');
   }
 
-  /** Отмечает встроенную разметку в порядке вывода. */
+  /** Notes the built-in markings in the order of withdrawal. */
   function readMarkers(node: Element) {
     const selector = '[data-probe-title]:not([data-ant-dropdown-popup] *)';
     return Array.from(node.querySelectorAll<HTMLElement>(selector),

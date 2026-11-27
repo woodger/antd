@@ -25,7 +25,7 @@ interface NativeEvent {
   version: number;
 }
 
-// Сопоставляет получателя исходного callback с нативным button заголовка Menu.
+// Compares the recipient of the original callback with the native button title Menu.
 function expected(events: readonly SourceEvent[]) {
   return events.flatMap(raw => {
     const name = raw.name ?? raw.kind;
@@ -45,13 +45,13 @@ function expected(events: readonly SourceEvent[]) {
   });
 }
 
-// Принимает полный накопленный журнал, чтобы поймать дубли и лишние callbacks.
+// Accepts the full accumulated journal to catch doubles and extra callbacks.
 async function readEvents(page: Page): Promise<NativeEvent[]> {
   const value = await page.getByLabel('Menu hover events').textContent();
   return JSON.parse(value ?? '[]');
 }
 
-// Меняет настройки владельца без перемещения реального указателя.
+// Changes the owner's settings without moving the real pointer.
 function ownerAction(page: Page, name: string) {
   return page.getByRole('button', { name, exact: true })
     .evaluate((button: HTMLButtonElement) => button.click());
@@ -83,8 +83,8 @@ if (!external) throw new Error('The pinned Menu portal capture has no external p
 
 for (const { profile, steps, data, click } of portals.passes[0]) {
   test(`matches logical hover ownership and metadata in ${profile.id}`, async ({ page }) => {
-    // Source теряет enter листа и дважды сообщает leave ветки у границы ShadowRoot.
-    // Логический маршрут в ShadowRoot сверяется с тем же внешним portal без ретаргетинга.
+    // Source loses an enter sheet and twice reports leave branches near the border ShadowRoot. The
+    // logical route in ShadowRoot is checked with the same external portal without retargeting.
     const witness = profile.destination === 'shadow' ? external.steps : steps;
     await page.getByRole('combobox', { name: 'Menu hover sample' })
       .selectOption(`portal-${profile.id}`);

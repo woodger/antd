@@ -2,7 +2,7 @@ import type { ElementHandle, Page } from '@playwright/test';
 import { expect, test } from './test';
 import reference from './fixtures/ant-design-modal-lifecycle-reference.json' with { type: 'json' };
 
-/** Снимает события вместе с физическим присутствием и identity редактируемого input. */
+/** Removes events together with physical presence and identity editable input. */
 async function observe(page: Page, previous?: ElementHandle) {
   return page.evaluate(oldEditor => {
     const editor = document.querySelector<HTMLInputElement>('#lifecycle-editor');
@@ -17,7 +17,7 @@ async function observe(page: Page, previous?: ElementHandle) {
   }, previous ?? null);
 }
 
-/** Наблюдает фактические эффекты панели и видимой маски, включая native ::backdrop. */
+/** Observes the actual effects of the panel and the visible mask, including native ::backdrop. */
 async function motionFrame(page: Page, phase: 'enter' | 'leave') {
   const waiting = await page.waitForFunction(direction => {
     const dialog = document.querySelector('dialog[open]');

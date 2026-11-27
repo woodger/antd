@@ -21,7 +21,7 @@ for (const entry of reference.cases) {
 
       const expected = structuredClone(entry.result[scope]);
       if (scope !== 'sibling' && entry.nativePadding) {
-        // Local Source selector оставляет Select padding; Native сохраняет прежние 0px.
+        // Local Source selector leaves Select padding; Native preserves the previous 0px.
         expected.popup = entry.nativePadding[scope].popup;
         expected.columns = entry.nativePadding[scope].columns;
       }

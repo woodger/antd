@@ -3,8 +3,7 @@ export function snapshotGridTheme() {
   if (!row) {
     throw new Error('Grid row is missing');
   }
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const css = (node: Element) => {
     const style = getComputedStyle(node);
     return Object.fromEntries([

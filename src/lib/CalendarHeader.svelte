@@ -41,7 +41,7 @@
     isFormItemInput: { value: false }
   }));
   const designToken = useDesignTokenContext();
-  // Внутренние controls заголовка не являются отдельными полями внешнего FormItem.
+  // The header controls are part of the surrounding FormItem and do not register as separate fields.
   provideFormField(field ? {
     get disabled() {
       return field.disabled;
@@ -68,7 +68,7 @@
   function handleModeChange(next: CalendarMode) {
     onModeChange(next);
 
-    // Native radio переключается до callback; controlled Calendar может отклонить новый mode.
+    // The native radio switches before the callback. A controlled Calendar can reject the new mode.
     void tick().then(() => {
       if (monthInput) monthInput.checked = mode === 'month';
       if (yearInput) yearInput.checked = mode === 'year';
@@ -77,7 +77,7 @@
 </script>
 
 <style>
-  /* Auto width внешнего div Select зависит от intrinsic ширины native input. */
+  /* The outer Select div's automatic width depends on the native input's intrinsic width. */
   .calendar-header :global(.calendar-year-select),
   .calendar-header :global(.calendar-month-select) {
     display: inline-block;

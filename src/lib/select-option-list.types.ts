@@ -7,7 +7,7 @@ import type { SelectStyle } from './select.types';
 export type SelectOptionListKey = string | number | bigint;
 export type SelectOptionListScrollConfig = VirtualScrollConfig<SelectOptionListKey>;
 
-/** Parent сохраняет исходный item, key и абсолютный index текущего flattened списка. */
+/** Parent preserves the original item, key and absolute index of the current flattened list. */
 export interface SelectOptionListItem<Item> {
   key: SelectOptionListKey;
   originalIndex: number;
@@ -16,7 +16,7 @@ export interface SelectOptionListItem<Item> {
   ariaLabel?: string;
   ariaValue?: string | number;
   ariaSelected: boolean;
-  /** Исходный флаг для srlist; ограничения count меняют только физическую строку. */
+  /** Source flag for srlist; count restrictions only change the physical string. */
   ariaDisabled?: boolean;
   disabled?: boolean;
   ariaAttributes?: Readonly<Record<string, string | number | boolean | null | undefined>>;

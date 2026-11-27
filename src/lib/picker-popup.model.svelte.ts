@@ -1,4 +1,4 @@
-// Связывает портал picker с опорным DOM и переносит клавиатурный фокус при смене панели.
+// Connects the picker portal with the support DOM and transfers the keyboard focus when the panel is changed.
 import { tick, untrack } from 'svelte';
 import { createPopupContainer } from './popup-container.model.svelte.js';
 import { getPopupActiveElement } from './popup.dom';
@@ -12,7 +12,7 @@ interface PickerPopupContainerOptions {
   themeStyle?: string;
 }
 
-/** Открытая панель принимает фокус на текущий доступный день или элемент времени. */
+/** An open panel adopts the focus on the current available day or time item. */
 export function focusPickerPanel(popup: HTMLElement | undefined, mode: DatePickerMode, date: string) {
   if (!popup) {
     return false;
@@ -42,7 +42,7 @@ interface PickerPanelFocusOptions {
   editor?: HTMLElement;
 }
 
-/** Переводит фокус только при удалении ранее сфокусированной ячейки текущего popup. */
+/** Translates the focus only when the previously focused cell of the current popup is removed. */
 export function preservePickerPanelFocus(read: () => PickerPanelFocusOptions) {
   let previous = untrack(() => {
     const { mode, controlled } = read();
@@ -81,19 +81,19 @@ export function preservePickerPanelFocus(read: () => PickerPanelFocusOptions) {
   });
 
   return {
-    /** Удаление ячейки может вызвать focusout до передачи фокуса новой панели. */
+    /** Removing a cell can fire focusout before the new panel receives focus. */
     get moving() {
       return movingFrom !== undefined;
     }
   };
 }
 
-/** Rc-picker пересоздаёт panel при смене portal target, сохраняя его при смене callback. */
+/** rc-picker recreates the panel if the portal target changes. Changing the callback preserves it. */
 export function createPickerPopup(getOptions: () => PickerPopupContainerOptions) {
   let target = $state<HTMLElement | ShadowRoot>();
 
   function resolve(trigger?: HTMLElement) {
-    // До root ref вызывается только getter с нулевой арностью, как rc-trigger.
+    // Only a zero-argument getter is invoked before the root ref is available, matching rc-trigger.
     const next = getOptions().getPopupContainer!(trigger!);
     target = next;
     return next;
@@ -119,7 +119,7 @@ export function createPickerPopup(getOptions: () => PickerPopupContainerOptions)
   return { portal, get target() { return target; } };
 }
 
-/** При замене содержимого оставляет фокус в панели до удаления старой кнопки. */
+/** When replacing the contents, leaves the focus in the panel until the old button is removed. */
 export function retainPickerReplacementFocus<DateType extends object>(getOptions: () => {
   popup?: HTMLElement;
   panel?: DatePickerPanel<DateType>;
@@ -147,7 +147,7 @@ export function retainPickerReplacementFocus<DateType extends object>(getOptions
   });
 }
 
-/** Авторские панели и редакторы сами управляют фокусом своих controls. */
+/** Author's panels and editors themselves manage the focus of their controls. */
 export function keepPickerEditorFocus(
   event: PointerEvent, popup: HTMLElement | undefined, allowNestedEditors: boolean
 ) {

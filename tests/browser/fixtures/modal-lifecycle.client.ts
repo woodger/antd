@@ -1,4 +1,4 @@
-// Подключает одну фикстуру Modal для обычного mount и строгой гидратации.
+// Plugs a single fixture Modal for regular mount and strict hydration.
 import '@woodger/antd/styles.css';
 import { hydrate, mount } from 'svelte';
 import ModalLifecycleFixtures from './ModalLifecycleFixtures.svelte';

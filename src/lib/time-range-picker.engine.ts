@@ -1,6 +1,6 @@
-// Разрешает ввод, настройки и проверки времени для двух концов диапазона. Контекст from
-// передаётся для зависимых ограничений конца.
-// Range time paths rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
+// Resolves input, time settings, and validation for both range endpoints. Passes the from context
+// for dependent end constraints.
+// Range time paths from rc-picker 1.12.2. MIT, vendor/LICENSE.rc-picker.
 import dayjs, { type Dayjs } from 'dayjs';
 import type {} from 'dayjs/plugin/utc.js';
 import type { RangePickerValue } from './range-picker.types';
@@ -18,14 +18,14 @@ export type TimeRangeInputParser<DateType extends object> = (
 
 const calendarFormat = 'YYYY-MM-DD';
 
-// Распознаёт форматы часов, пропуская литералы в квадратных скобках.
+// Recognizes clock formats by skipping literals in square brackets.
 function isTimeOnlyFormat(format: string): boolean {
   const remainingFormat = format.replace(/\[[^\]]*\]|LTS?|[HhmsSAa]/g, '');
   return !/[A-Za-z]/.test(remainingFormat);
 }
 
-// Проверяет время на дате границы. Форматы с явной датой, смещением или timestamp
-// разбираются напрямую, поскольку значения этих полей задаёт сам текст.
+// Checks the time on the border date. Formats with an explicit date, offset, or timestamp are dealt
+// with directly, since the values of these fields are specified by the text itself.
 function parseTimeRangeFormat(text: string, format: string, boundary: Dayjs): Dayjs | null {
   if (!isTimeOnlyFormat(format)) {
     return dayjs(text, format, true);
@@ -35,20 +35,20 @@ function parseTimeRangeFormat(text: string, format: string, boundary: Dayjs): Da
   const input = `${date} ${text}`;
   const inputFormat = `${calendarFormat} ${format}`;
 
-  // Если потребитель подключил UTC, извлекаем поля времени независимо от зоны браузера.
+  // If the consumer has connected UTC, we extract the time fields regardless of the browser zone.
   const parsed = typeof dayjs.utc === 'function'
     ? dayjs.utc(input, inputFormat, true) : dayjs(input, inputFormat, true);
   if (!parsed.isValid()) {
     return null;
   }
 
-  // Перенос сохраняет режим Dayjs границы. Переход на летнее время может сдвинуть
-  // часы при установке, поэтому сверяем итоговые поля с разобранным вводом.
+  // The transfer preserves the Dayjs border regime. The transition to daylight saving time can
+  // shift the clock during installation, so we check the final fields with disassembled input.
   const value = pickerCalendarValue(boundary, parsed);
   return timePickerSameValue(value, parsed) ? value : null;
 }
 
-// Ввод только времени наследует дату и режим Dayjs редактируемой границы.
+// Introduction only time inherits the date and mode Dayjs edited boundary.
 export function parseTimeRangeInput(
   text: string,
   locale: string,
@@ -60,14 +60,14 @@ export function parseTimeRangeInput(
     return parseDayjsInput(locale, text, stringFormats);
   }
 
-  // Использует исходный порядок форматов, подставляя дату только при разборе времени.
+  // Uses the original order of formats, setting the date only during the analysis of time.
   const parseFormat = (input: string, format: string) =>
     parseTimeRangeFormat(input, format, currentBoundary);
   return parseDayjsInput(locale, text, stringFormats, parseFormat);
 }
 
-// Подставляет defaultOpenValue выбранного поля в профиль TimePicker. Одиночное значение относится
-// к началу.
+// Sets defaultOpenValue of the selected field in profile TimePicker. The solitary value refers to
+// the beginning.
 export function timeRangeClock<DateType extends object = Dayjs>(
   props: TimeRangePickerProps<'time', DateType>, locale: PickerLocale, index: number
 ) {
@@ -76,7 +76,7 @@ export function timeRangeClock<DateType extends object = Dayjs>(
   return timePickerClock({ ...clock, defaultOpenValue: defaults[index] }, locale);
 }
 
-/** Сверяет пару временных значений с правилами владельца и адаптера. */
+/** Checks a couple of time values with the rules of the owner and the adapter. */
 export function createTimeRangePickerEngine<DateType extends object>(
   dates: PickerDateOperations<DateType>,
   calendar = createDatePickerEngine(dates),
@@ -86,7 +86,7 @@ export function createTimeRangePickerEngine<DateType extends object>(
   const { parsePicker, pickerCalendarValue, pickerTimeDisabled } = calendar;
   const { timePickerSameValue, timePickerDateDisabled } = timePicker;
 
-  // После переноса отклоняет время, которое адаптер сдвинул из-за смены смещения.
+  // After the transfer, it deflects the time that the adapter has shifted due to the change of displacement.
   function applyParsedTime(boundary: DateType, parsed: DateType): DateType | null {
     const value = pickerCalendarValue(boundary, parsed);
     const sameClock = dates.sameTime(value, parsed)
@@ -95,7 +95,7 @@ export function createTimeRangePickerEngine<DateType extends object>(
     return sameClock && dates.samePeriod(value, boundary, 'day') ? value : null;
   }
 
-  // Разбирает ввод через адаптер. Только формат часов наследует дату границы.
+  // Disassembling the input through the adapter. Only the format of the clock inherits the date of the border.
   function parseAdapterTimeRangeInput(
     text: string,
     locale: string,
@@ -128,13 +128,13 @@ export function createTimeRangePickerEngine<DateType extends object>(
     return null;
   }
 
-  // Сравнивает соответствующие даты по календарным полям времени с точностью до миллисекунд.
+  // Compares the corresponding dates on the calendar fields of time with an accuracy of milliseconds.
   function sameTimeRange(a: RangePickerValue<DateType>, b: RangePickerValue<DateType>) {
     return timePickerSameValue(a[0], b[0]) && timePickerSameValue(a[1], b[1]);
   }
 
-  // Проверяет дату, общие ограничения и затем disabledTime с правильным endpoint и откуда начат
-  // диапазон.
+  // Checks the date, general restrictions and then disabledTime with the correct endpoint and from
+  // where the range is started.
   function timeRangeInvalid(
     date: DateType,
     props: TimeRangePickerProps<'time', DateType>,
@@ -145,20 +145,19 @@ export function createTimeRangePickerEngine<DateType extends object>(
     return !fields.isValidate(date) || timePickerDateDisabled(date, {
       minDate: props.minDate,
       maxDate: props.maxDate,
-      // Передаёт пользовательскому disabledDate тип time и контекст проверки.
+      // Passes time as the type and the validation context to the custom disabledDate.
       disabledDate: value => !!props.disabledDate?.(value, { type: 'time', ...info })
     }) || pickerTimeDisabled(date, {
       showTime: clock,
-      // Преобразует индекс поля в start/end для исходного callback. Отсутствующая настройка даёт
-      // пустые ограничения.
+      // Converts the field index to start/end for the original callback. Missing setup gives empty
+      // restrictions.
       disabledTime: value => props.disabledTime?.(value, index === 1 ? 'end' : 'start', {
         from: info?.from
       }) ?? {}
     });
   }
 
-  // Проверяет разрешённые пустые поля и порядок. Для проверки доступного конца передаёт начало
-  // диапазона.
+  // Checks allowed empty fields and range order. Supplies the range start when validating the end.
   function validTimeRange(
     values: RangePickerValue<DateType>,
     empty: readonly boolean[],

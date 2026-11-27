@@ -12,7 +12,7 @@ import { expect, test } from './test';
 
 type MotionFrame = (typeof reference.cases)[number]['trace'][number];
 
-/** Сохраняет сжатие и раскрытие, учитывая размеры штатной SVG-иконки пакета. */
+/** Retains compression and disclosure, taking into account the dimensions of the full-time SVG-icon of the package. */
 function relativeWidth(frames: MotionFrame[]) {
   return frames.map(frame => ({
     ...frame,
@@ -20,7 +20,7 @@ function relativeWidth(frames: MotionFrame[]) {
   }));
 }
 
-/** Записывает CSS-кадры при мутациях, включая короткую фазу start. */
+/** Records CSS-frames in mutations, including a short start phase. */
 async function watchMotion(action: Locator, alternate: boolean, pauseLeave = false) {
   return action.evaluateHandle((root, { alternate, pauseLeave }) => {
     const prefix = alternate ? 'sample-button' : 'ant-btn';
@@ -28,12 +28,12 @@ async function watchMotion(action: Locator, alternate: boolean, pauseLeave = fal
     const trace: MotionFrame[] = [];
     let lastPhase: string | undefined;
 
-    /** Источником ширины служит только штатный значок текущего Button. */
+    /** The source of the width is only the full-time icon of the current Button. */
     function spinner() {
       return root.querySelector<HTMLElement>('.' + prefix + '-loading-icon');
     }
 
-    /** Снимает постоянные признаки оболочки после завершения фаз. */
+    /** Relieves the constant signs of the shell after the completion of the phases. */
     function read() {
       const span = spinner();
       const icon = root.querySelector<HTMLElement>('[data-kind]');
@@ -45,7 +45,7 @@ async function watchMotion(action: Locator, alternate: boolean, pauseLeave = fal
       };
     }
 
-    /** Активную фазу можно задержать для контролируемого разворота. */
+    /** The active phase can be delayed for a controlled reversal. */
     function record() {
       const span = spinner();
       const label = span && [...span.classList].find(chr =>
@@ -76,7 +76,7 @@ async function watchMotion(action: Locator, alternate: boolean, pauseLeave = fal
   }, { alternate, pauseLeave });
 }
 
-/** Загружает один профиль через публичную сборку пакета. */
+/** Uploads a single profile through a public package assembly. */
 async function openProfile(page: Page, id: string) {
   await page.goto(`/select-components-hydration.html?loading-motion=${id}`);
   await page.addScriptTag({ type: 'module', url: '/button-loading-motion.client.ts' });
@@ -94,7 +94,7 @@ for (const scenario of reference.cases) {
     const { action, start } = await openProfile(page, scenario.id);
     const probe = await watchMotion(action, scenario.id === 'prefix-end-link');
     expect(await probe.evaluate(current => current.read())).toEqual(scenario.initial);
-    // Reduced motion отключает переход. Снятие custom loading не добавляет штатный значок.
+    // Reduced motion disables transition. Removing custom loading doesn't add a full-time badge.
     const expected = reduced || scenario.id === 'custom-loading-icon' ? [] : scenario.trace;
     const incoming = expected.filter(frame => !frame.phase.startsWith('leave-'));
 

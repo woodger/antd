@@ -6,7 +6,7 @@ import {
   type StyledComponent
 } from './theme-component-style.engine';
 
-/** SSR и реактивный root style перед semantic/user styles; native compact получает только метрики. */
+/** SSR and reactive root style before semantic/user styles; compact native only gets metrics. */
 export function useComponentTheme(component: StyledComponent) {
   const context = useDesignTokenContext();
   const explicitKeys = $derived(component === 'Notification'

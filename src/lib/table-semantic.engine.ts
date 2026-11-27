@@ -1,6 +1,5 @@
-// Раскладывает DOM-атрибуты по узлам Table и объединяет классы и CSS слотов.
-// Pagination разрешает callbacks с параметрами конкретного пейджера
-// и с отдельным приоритетом локальных стилей.
+// Lays out DOM attributes according to nodes Table and combines classes and CSS slots. Pagination
+// allows callbacks with specific pager parameters and with a separate local style priority.
 import type { PaginationProps, PaginationSemantic } from './pagination.types';
 import { mergeComponentSemantics } from './semantic-style.engine';
 import type {
@@ -12,7 +11,7 @@ const outerSlots = ['root', 'section', 'title', 'footer', 'content'] as const;
 const groupSlots = ['wrapper', 'row', 'cell'] as const;
 const paginationSlots = ['root', 'item'] as const;
 
-/** Выбирает атрибуты контейнера и семантических таблиц с сохранением 0, false и ''. */
+/** Select attributes of the container and semantic tables with the preservation of 0, false and ''. */
 export function getTableDomAttributes<Row extends object>(props: TableProps<Row>) {
   const data: Record<string, string> = {};
   const aria: Record<string, unknown> = {};
@@ -32,7 +31,7 @@ export function getTableDomAttributes<Row extends object>(props: TableProps<Row>
   return { data, aria };
 }
 
-/** Вызывает настройки провайдера и экземпляра с одними и теми же параметрами таблицы. */
+/** Causes the settings of the provider and instance with the same table parameters. */
 function resolve<Row extends object, Slots extends TableClassNameSlots>(
   value: TableConfigSemantic<Slots> | TableSemantic<Row, Slots> | undefined,
   props: TableProps<Row>
@@ -40,7 +39,7 @@ function resolve<Row extends object, Slots extends TableClassNameSlots>(
   return typeof value === 'function' ? value({ props }) : value;
 }
 
-/** Привязывает сокращённую строку классов к основному элементу группы. */
+/** Links the abbreviated string of classes to the main element of the group. */
 function expandClassNames(classNames?: TableClassNameSlots): TableSemanticSlots | undefined {
   if (!classNames) {
     return undefined;
@@ -56,7 +55,7 @@ function expandClassNames(classNames?: TableClassNameSlots): TableSemanticSlots 
   };
 }
 
-/** Классы складываются, а стили внешнего узла завершаются обычным style экземпляра. */
+/** The classes are folded, and the styles of the external node are completed by the usual style of the instance. */
 export function getTableSemantics<Row extends object>(
   provider: TableConfig | undefined, props: TableProps<Row>
 ) {
@@ -71,7 +70,7 @@ export function getTableSemantics<Row extends object>(
     outerSlots
   );
 
-  // На уровне группы экземпляр заменяет CSS указанного слота целиком.
+  // At the group level, the instance replaces CSS of the specified slot in its entirety.
   const header = mergeComponentSemantics(
     { classNames: providerClasses?.header },
     {
@@ -104,12 +103,12 @@ export function getTableSemantics<Row extends object>(
   };
 }
 
-/** Разрешает настройки конкретного пейджера после его нормализации Pagination. */
+/** Allows the settings of a specific pager after it normalizes Pagination. */
 function resolvePagination(value: PaginationSemantic | undefined, props: PaginationProps) {
   return typeof value === 'function' ? value({ props }) : value;
 }
 
-/** Классы пейджера добавляются к классам Table. Стили Table замыкают каскад. */
+/** Pager classes are added to classes Table. Styles Table close the cascade. */
 export function getTablePaginationSemantics(
   classes: TableSemanticSlots['pagination'],
   styles: TableSemanticSlots['pagination'],
@@ -118,7 +117,7 @@ export function getTablePaginationSemantics(
   const localClasses = pagination ? pagination.classNames : undefined;
   const localStyles = pagination ? pagination.styles : undefined;
 
-  /** Классы владельца страницы идут после классов таблицы. */
+  /** The classes of the owner of the page go after the classes of the table. */
   const classNames: PaginationSemantic | undefined = classes?.root || classes?.item
     ? ({ props }) => {
         const pager = resolvePagination(localClasses, props);
@@ -129,7 +128,7 @@ export function getTablePaginationSemantics(
       }
     : localClasses;
 
-  /** Стиль таблицы перекрывает свойства владельца страницы. */
+  /** The table style overlaps the properties of the page owner. */
   const paginationStyles: PaginationSemantic | undefined = styles?.root || styles?.item
     ? ({ props }) => {
         const pager = resolvePagination(localStyles, props);

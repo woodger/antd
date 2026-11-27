@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Владелец принимает или отклоняет выбор и управляет той же выдачей options.
+  // The owner accepts or rejects the choice and manages the same output of the options.
   import { ConfigProvider, Select, enUS, type SelectProps } from '@woodger/antd';
   import reference from './ant-design-select-immediate-cache-reference.json' with { type: 'json' };
 
@@ -53,30 +53,30 @@
     onDeselect: deselect
   });
 
-  /** Читает принятый владельцем model при каждом запросе из Select. */
+  /** Reads the model accepted by the owner at each request from Select. */
   function readValue() {
     return ownerValue;
   }
 
-  /** Function binding позволяет отклонить запрос, сохранив прежнее значение. */
+  /** Function binding allows you to reject the query by saving the previous value. */
   function writeValue(next: Model) {
     bindingRequest = next;
     if (!rejecting) ownerValue = next;
   }
 
-  /** Ведёт журнал публичных callbacks в фактическом порядке. */
+  /** He keeps the magazine public callbacks in de facto order. */
   function record(name: string, next: unknown, option?: Option | Option[]) {
     events = [...events, [name, next ?? null, option ?? null]];
   }
 
-  /** В one-way варианте значение и список обновляются одним вызовом. */
+  /** In the one-way variant, the value and the list are updated with a single call. */
   function change(next: Model, option: Option | Option[] | undefined) {
     record('change', next, option);
     if (!functionBinding && !directBinding) ownerValue = next;
     if (!profile?.delayed && !directBinding) listed = 'hidden';
   }
 
-  /** Проверяет передачу поверхностной копии с исходным вложенным объектом. */
+  /** Verifies the transfer of the surface copy with the original nested object. */
   function deselect(next: unknown, option: Option) {
     deselectedMetadata = option !== original && option !== fresh
       && (option.meta === original.meta || option.meta === fresh.meta);

@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Делегирует выбор зарегистрированной группе Radio и сообщает native события. Ref и blur
-  // относятся к связанному input.
+  // Delegates selection to the registered Radio group and emits native events. Ref and blur refer
+  // to the bound input.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -118,7 +118,7 @@
     ref = handle;
 
     return () => {
-      // Ref может пройти через $state proxy владельца; DOM-ссылки сохраняют identity.
+      // The ref can pass through the owner's $state proxy. DOM references keep their identity.
       if (ref?.input === input && ref.nativeElement === root) ref = undefined;
     };
   });
@@ -127,7 +127,7 @@
     if (control && !group && resolvedChecked && nativeGroup.name) {
       const input = control;
 
-      // Нативное снятие соседнего radio не вызывает у него change.
+      // Native deselection of another radio does not fire a change event on it.
       untrack(() => syncRadioPeers(input));
     }
   });
@@ -214,7 +214,7 @@
 </style>
 
 <svelte:document onreset={handleReset} />
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`radio-prefix:${radioPrefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (Label блокирует повторный click; клавиатурой и фокусом управляет native input.) --><label class={[
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`radio-prefix:${radioPrefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (The label blocks duplicate clicks. The native input handles keyboard input and focus.) --><label class={[
     `${prefix}-wrapper ant-radio-css-var`,
     componentTheme.className,
     button && 'ant-radio-button-css-var',
@@ -244,7 +244,7 @@
       contextClasses?.icon,
       localClasses?.icon
     ]} style={[contextStyles?.icon, localStyles?.icon].filter(Boolean).join(';') || undefined}>
-    <!-- svelte-ignore a11y_autofocus (Сохраняется публичный autoFocus/HTML autofocus.) -->
+    <!-- svelte-ignore a11y_autofocus (Preserves public autoFocus and HTML autofocus.) -->
     <input
       {...attributes}
       bind:this={inputElement}

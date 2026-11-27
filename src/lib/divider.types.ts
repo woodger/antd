@@ -13,12 +13,12 @@ export interface DividerSemanticInfo {
   };
 }
 
-/** Разделитель с подписью, направлением, размером и вариантами линии. */
+/** Divider with a label, direction, size, and line variants. */
 export interface DividerProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный BEM prefix; пустая строка наследует ConfigProvider prefix. */
+  /** Local BEM prefix. An empty string inherits the ConfigProvider prefix. */
   prefixCls?: string;
   children?: Snippet | string | number | null | false;
   orientation?: DividerOrientation;
@@ -38,13 +38,13 @@ export interface DividerProps extends Omit<
     | ((info: DividerSemanticInfo) => DividerSemanticSlots | undefined);
   styles?: DividerSemanticSlots
     | ((info: DividerSemanticInfo) => DividerSemanticSlots | undefined);
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 
 /**
- * Наследуемый record; явный объект, включая {}, заменяет родительский.
+ * Inherited record. An explicit object, including {}, replaces the parent record.
  * Root style: provider styles.root → provider style → local styles.root → local style.
- * Callbacks получают те же нормализованные props, что локальные semantic callbacks.
+ * Callbacks receive the same normalized props as local semantic callbacks.
  */
 export type DividerConfig = Pick<DividerProps, 'class' | 'style' | 'classNames' | 'styles'>;

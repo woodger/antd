@@ -1,10 +1,10 @@
-// Обрабатывает команды реестра. Проверяет актуальность отчёта, а перезапись
-// выполняет только по команде report.
+// Handles registry commands. Checks that the report is current and rewrites it only when report is
+// requested.
 import { readFile } from 'node:fs/promises';
 import { projectPath, reportFile, writeAtomic } from './ant-design-common.mjs';
 import { inspectRegistry, renderReport, coverage } from './ant-design-registry-core.mjs';
 
-// Выводит отчёт о проверке или одну запись после общей проверки реестра.
+// Prints the validation report or one entry after checking the full registry.
 export async function runRegistry(command, { component, upstream }, { root, stdout }) {
   const result = await inspectRegistry(root, { requireUpstream: upstream === true });
   if (result.errors.length) {
@@ -30,7 +30,7 @@ export async function runRegistry(command, { component, upstream }, { root, stdo
   }
   else {
     const outputPath = projectPath(root, reportFile);
-    // Отсутствующий или недоступный отчёт проверяется так же, как устаревшая копия.
+    // A missing or inaccessible report is checked like a stale copy.
     const actual = await readFile(outputPath, 'utf8').catch(() => '');
     if (actual !== report) {
       throw new Error('Registry report is stale. Run npm run cli -- registry report');

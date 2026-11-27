@@ -45,7 +45,7 @@
 
   let dismiss: (reason?: 'escape' | 'outside') => void = () => {};
 
-  // Typography уже поддерживает bigint; в Tooltip сохраняется его текстовое представление.
+  // Typography already supports bigint. Tooltip retains its text representation.
   function toTooltipContent(value: Content): TooltipContent {
     if (typeof value === 'object' && value !== null) {
       return value.map(toTooltipContent);
@@ -92,14 +92,14 @@
     function request(next: boolean, delay = 0) {
       cancelPending();
       const owner = options.open;
-      // Удаление overrides не отменяет уже запущенный source action.
+      // Removing overrides does not cancel an upstream action already in progress.
       const independentActions = actionOverrides;
       const apply = () => {
         timer = undefined;
         if (!active || !element.isConnected || target !== element) {
           return;
         }
-        // Как в rc-trigger, отсутствие усечения скрывает popup, сохраняя raw onOpenChange.
+        // As in rc-trigger, when text does not truncate, the popup stays hidden and raw onOpenChange still applies.
         if (!available || !Object.is(owner, options.open)
           || !independentActions && !actionOverrides && next && !wanted()
           || next === (options.open ?? open)) {
@@ -172,7 +172,7 @@
           request(false, (options.blurDelay ?? 0) * 1000);
         }
       }
-      // Удаление focused DOM может отправить blur до cleanup родительских props.
+      // Removing focused DOM can fire blur before parent props are cleaned up.
       if (event.relatedTarget === null) {
         queueMicrotask(closeIfOutside);
       }

@@ -360,7 +360,7 @@ test('updating an open custom bar retains More and scroll and uses the latest sc
     const popup = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
 
     await expect(popup).toBeVisible();
-    // ResizeObserver завершает перенос Add и пересчёт допустимого scroll до исходного замера.
+    // ResizeObserver completes the transfer of Add and recalculates the allowable scroll to the original measurement.
     await page.evaluate(() => new Promise(resolve => {
       requestAnimationFrame(() => requestAnimationFrame(resolve));
     }));

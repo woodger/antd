@@ -2,7 +2,7 @@ import base from './vendor/menu-prefix.css.js';
 import theme from './vendor/menu-theme-prefix.css.js';
 import motion from './vendor/menu-motion-prefix.css.js';
 
-/** Сохраняет общий namespace motion; ключевые кадры совпадают у всех Menu. */
+/** Saves a common namespace motion; the key frames coincide with all Menu. */
 export function getMenuMotionCss(rootPrefix: string) {
   if (rootPrefix === 'ant') {
     return undefined;
@@ -13,7 +13,7 @@ export function getMenuMotionCss(rootPrefix: string) {
   ).replace(/<\/style/gi, '<\\/style');
 }
 
-/** Menu/popup сохраняют canonical variables и scoped темы, Typography использует общий prefix. */
+/** Menu/popup save canonical variables and scoped themes, Typography uses general prefix. */
 export function getMenuPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-menu' && rootPrefix === 'ant') {
     return undefined;

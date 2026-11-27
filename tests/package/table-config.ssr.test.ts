@@ -6,7 +6,7 @@ import Fixture from '../browser/fixtures/TableConfigFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-config-reference.json';
 import { expectedTableConfig } from '../browser/fixtures/table-config-reference';
 
-/** Читает одно CSS-свойство из серверного атрибута style. */
+/** Reads one CSS property from the server style attribute. */
 function inlineValue(attributes: string, name: 'max-height' | 'width' | 'min-width' | 'table-layout') {
   const style = attributes.match(/\sstyle="([^"]*)"/)?.[1] ?? '';
   return style.match(new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`))?.[1].trim() ?? '';

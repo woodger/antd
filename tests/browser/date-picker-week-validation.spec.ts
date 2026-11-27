@@ -42,7 +42,7 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
     await expect(popup.locator('td[aria-disabled="true"]')).toHaveCount(kind === 'range' ? 96 : 48);
     const opened = await read();
     if (kind === 'range') expect(opened.calls.some(call => call.hasFrom && call.from === null)).toBe(true);
-    // Реальный ввод той же строки создаёт новый Dayjs; predicate проверяет ссылку.
+    // The real input of the same line creates a new Dayjs; predicate checks the link.
     await input.press('Control+A');
     await page.keyboard.type(text);
 

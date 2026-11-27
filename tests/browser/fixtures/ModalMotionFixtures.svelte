@@ -148,7 +148,7 @@
     animation: panel-slide .18s linear both;
   }
   :global(.probe-panel-leave-active) { animation: panel-end .12s linear both; }
-  /* Разводим окончания панели и штатной маски на несколько кадров браузера. */
+  /* We breed the end of the panel and a full-time mask for several frames of the browser. */
   :global(.probe-panel-long-appear-active), :global(.probe-panel-long-enter-active) {
     animation: panel-slide .36s linear both;
   }

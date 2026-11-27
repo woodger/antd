@@ -1,5 +1,5 @@
-// Воспроизводит действия с пресетами DatePicker и измеряет ответ владельца.
-// Сценарии разделяют реальные действия мыши и вызовы API контрольной страницы.
+// Reproduces actions with presets of DatePicker and measures the owner’s response. Scripts share
+// the real mouse actions and calls API of the control page.
 import type { Page } from '@playwright/test';
 import type { DatePickerPresetAction, DatePickerPresetSample } from './date-picker-presets-cases.mjs';
 import {
@@ -10,14 +10,14 @@ import {
 import { drainSelectSurface } from './select-surface-driver';
 import type { DatePickerPresetsDisposal } from './date-picker-presets-assertions';
 
-// Открывает fixture и исключает исходный hover до начала измерений.
+// Opens the fixture and excludes the original hover before the measurements begin.
 export async function openDatePickerPresets(page: Page, sample: DatePickerPresetSample) {
   await page.goto('/date-picker-presets.html?sample=' + encodeURIComponent(sample.id));
   await page.waitForFunction(() => window.datePickerPresetsNative?.ready === true);
   await page.evaluate(() => document.fonts.ready);
   await page.mouse.move(1000, 750);
 }
-// При таймауте сохраняет последние два наблюдения, чтобы показать источник изменений.
+// At the timeout, keeps the last two observations to show the source of the changes.
 export async function settleDatePickerPresets(page: Page): Promise<DatePickerPresetPoint> {
   let previous = '';
   let stable = 0;
@@ -39,7 +39,7 @@ export async function settleDatePickerPresets(page: Page): Promise<DatePickerPre
     observation: { prior, latest }
   });
 }
-// Синхронизирует индекс действия с browser журналом перед вызовом UI или владельца.
+// Synchronizes the action index with the browser magazine before calling UI or the owner.
 export async function actDatePickerPresets(
   page: Page,
   sample: DatePickerPresetSample,
@@ -89,7 +89,7 @@ export async function actDatePickerPresets(
   return null;
 }
 
-// Вызывает DOM click и возвращает признак trusted вместе с фактической целью.
+// Quotes DOM click and returns the trusted trait along with the actual purpose.
 function observeClearClick(node: Element) {
   if (!(node instanceof HTMLButtonElement)) {
     throw Error('Actual Native clear button required');
@@ -101,7 +101,7 @@ function observeClearClick(node: Element) {
     actualCurrentTarget: boolean;
     targetTag: string | null;
   } = null;
-  // Одноразовый слушатель успевает прочитать событие даже при удалении кнопки.
+  // A one-time listener has time to read the event even when the button is removed.
   node.addEventListener('click', event => {
     observed = {
       type: event.type,
@@ -114,7 +114,7 @@ function observeClearClick(node: Element) {
   return observed;
 }
 
-// Сравнивает состояние владельца после unmount и после окна поздних обновлений.
+// Compares the status of the owner after unmount and after the late update window.
 export async function disposeDatePickerPresets(page: Page,
   beforeUnmount: DatePickerPresetPoint, hooks?: {
     afterCleanup?: () => Promise<void>; afterLate?: () => Promise<void>

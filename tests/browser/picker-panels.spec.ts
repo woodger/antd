@@ -39,7 +39,7 @@ async function act(page: Page, popup: Locator, action: string, multiple?: boolea
   await popup.locator(`[data-action="${key}"]`).nth(second ? 1 : 0).click();
 }
 
-/** Одиночный Native callback дополнительно сообщает источник изменения календаря. */
+/** A solitary Native callback additionally reports calendar change source. */
 function comparableEvents(events: unknown[][], profile: PickerPanelProfile) {
   return events.filter(([name]) => name !== 'restriction').map(event => {
     return !profile.range && event[0] === 'calendar' ? event.slice(0, 3) : event;
@@ -51,7 +51,7 @@ async function readEvents(page: Page): Promise<unknown[][]> {
   return JSON.parse(text ?? '[]');
 }
 
-/** Сравнивает только ограничения, которые запросила сама пользовательская панель. */
+/** Compares only the limitations that the custom panel itself has requested. */
 function explicitRestrictions(events: unknown[][]) {
   return events.flatMap(([name], index) => name === 'check' ? events.slice(index - 2, index) : []);
 }

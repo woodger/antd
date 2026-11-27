@@ -1,4 +1,4 @@
-// Переносит фазы именованных переходов Modal на отдельные DOM-узлы панели и маски.
+// Carries the phases of the named transitions Modal to the separate DOM-nodes of the panel and masks.
 import { createCssMotion, type CssMotionState } from './css-motion.dom';
 import { createCssMotionFrame } from './css-motion-frame.dom';
 import type { CssMotionEvent } from './css-motion.types';
@@ -6,7 +6,7 @@ import type { ModalMotionCallbacks, ModalMotionSettings, ModalMotionPart } from 
 import { getModalMousePoint, getModalTransformOrigin } from './modal-origin.dom';
 import type { ModalMousePosition } from './modal.types';
 
-/** Следит за отменой и заменой CSS, в том числе если для имени нет активных правил. */
+/** Monitors the cancellation and replacement of CSS, including if there are no active rules for the name. */
 function createModalCssSurface(
   view: Window,
   getElement: () => HTMLElement | undefined,
@@ -15,7 +15,7 @@ function createModalCssSurface(
   const frame = createCssMotionFrame(view);
   const motion = createCssMotion(view, getElement, paint);
 
-  /** Отсутствие собственного эффекта завершает фазу после применения классов. */
+  /** Lack of one's own effect completes the phase after class application. */
   function checkForEffect() {
     frame.next(() => {
       if (!getElement()?.getAnimations().length) {
@@ -24,7 +24,7 @@ function createModalCssSurface(
     });
   }
 
-  /** Синхронизирует только текущую CSS-фазу и снимает проверку старого кадра. */
+  /** Synchronizes only the current CSS-phase and removes the test of the old frame. */
   function paint(state: CssMotionState, commit?: boolean) {
     frame.cancel();
     publish(state, commit);
@@ -33,7 +33,7 @@ function createModalCssSurface(
 
   return {
     sync: motion.sync,
-    /** End от потомков отбрасывает CSSMotion, отмену перепроверяем в следующем кадре. */
+    /** End from the descendants drops CSSMotion, the cancellation is rechecked in the next frame. */
     end(event: CssMotionEvent) {
       if ('type' in event && event.type.endsWith('cancel')) {
         if (event.target === getElement()) checkForEffect();
@@ -42,7 +42,7 @@ function createModalCssSurface(
         motion.end(event);
       }
     },
-    /** Снимает фазы до передачи управления другому способу показа. */
+    /** Clears phases before handing control to a different visibility mechanism. */
     destroy() {
       frame.cancel();
       motion.destroy();
@@ -51,7 +51,7 @@ function createModalCssSurface(
   };
 }
 
-/** После закрытия панели mask CSS может завершаться на том же DOM самостоятельно. */
+/** After closing the mask CSS panel can be completed on the same DOM on its own. */
 export function createModalNamedMotion(
   dialog: HTMLDialogElement,
   view: Window,
@@ -68,17 +68,17 @@ export function createModalNamedMotion(
   let current: ModalMotionSettings | undefined;
   let origin: ModalMousePosition | undefined;
 
-  /** Панель может размонтироваться раньше маски при destroyOnHidden. */
+  /** The panel can be mounted before the mask at destroyOnHidden. */
   function getPanel() {
     return dialog.querySelector<HTMLElement>(':scope > [data-ant-modal-panel]') ?? undefined;
   }
 
-  /** Измеряет неанимированный кадр, используя точку, сохранённую при запросе открытия. */
+  /** Measures the unanimated frame using the point saved when requesting an opening. */
   function prepare(element: HTMLElement) {
     callbacks.origin(getModalTransformOrigin(element, origin));
   }
 
-  /** Движение маски начинается отдельно. Только панель сообщает о видимости Modal. */
+  /** Mask movement begins separately. Only the panel communicates the visibility of Modal. */
   function sync(open: boolean, options: ModalMotionSettings) {
     if (open && requested !== open) {
       origin = getModalMousePoint(dialog.ownerDocument, options.mousePosition);
@@ -109,7 +109,7 @@ export function createModalNamedMotion(
     });
   }
 
-  /** Переключение reduced motion применимо и к маске, которая ещё выходит. */
+  /** Shifting reduced motion is also applicable to the mask, which is still coming out. */
   function syncPreference() {
     if (current && requested !== undefined) sync(requested, current);
   }
@@ -117,11 +117,11 @@ export function createModalNamedMotion(
   reducedMotion.addEventListener('change', syncPreference);
   return {
     sync,
-    /** Завершение одной поверхности не меняет фазу другой. */
+    /** Completion of one surface does not change the phase of another. */
     end(part: ModalMotionPart, event: CssMotionEvent) {
       (part === 'panel' ? panel : mask).end(event);
     },
-    /** Удаляет обе фазы и browser listener до размонтирования либо смены режима. */
+    /** Removes both phases and browser listeners before unmounting or changing the mode. */
     destroy() {
       reducedMotion.removeEventListener('change', syncPreference);
       panel.destroy();

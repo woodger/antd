@@ -1,7 +1,7 @@
-// Сводит локальную настройку и ConfigProvider к иконке и атрибутам нативной кнопки close.
+// Draw the local setting and ConfigProvider to the icon and the attributes of the native close button.
 import type { ModalClosable, ModalClosableConfig, ModalConfig, ModalContent } from './modal.types';
 
-/** Отличает отсутствие настройки, отключённую кнопку и включённую кнопку без иконки. */
+/** Is distinguished by the lack of configuration, the disconnected button and the included button without an icon. */
 function getCloseLayer(
   closable: ModalClosable | undefined,
   icon: ModalContent | undefined
@@ -17,7 +17,7 @@ function getCloseLayer(
   return typeof closable === 'object' ? { closeIcon, ...closable } : { closeIcon };
 }
 
-/** Передаёт ARIA и role на кнопку. Undefined сохраняет унаследованное значение. */
+/** Forwards ARIA attributes and role to the button. undefined retains the inherited value. */
 function getCloseAttributes(inherited?: ModalClosableConfig, local?: ModalClosableConfig) {
   const attributes: Record<string, unknown> = {};
   for (const source of [inherited, local]) {
@@ -33,7 +33,7 @@ function getCloseAttributes(inherited?: ModalClosableConfig, local?: ModalClosab
   return attributes;
 }
 
-/** Локальное включение может вернуть скрытую провайдером кнопку. Атрибуты сливаются по полям. */
+/** Local inclusion can return the button hidden by the provider. Attributes merge through fields. */
 export function resolveModalClose(
   closable: ModalClosable | undefined,
   closeIcon: ModalContent | undefined,

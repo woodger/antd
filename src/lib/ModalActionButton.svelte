@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Применяет настройки Button и сохраняет порядок действия Modal и нативного onclick.
+  // Applies Button settings and preserves the order of the Modal action and native onclick.
   import Button from './Button.svelte';
   import type { ModalButtonProps, ModalContent, ModalOkType } from './modal.types';
 
@@ -22,13 +22,13 @@
 
   $effect(() => {
     if (nativeElement) {
-      // Spread в Svelte выставляет autofocus только при true. Сбрасываем DOM-свойство явно.
+      // Svelte's spread sets autofocus only for true. Reset the DOM property explicitly.
       nativeElement.autofocus = Boolean(buttonProps.autofocus);
     }
   });
 
   function click(event: Parameters<NonNullable<ModalButtonProps['onclick']>>[0]) {
-    // Локальный обработчик имеет приоритет, даже если в контексте использован другой alias.
+    // The local handler takes precedence even when the context uses another alias.
     const source = options && ('onclick' in options || 'onClick' in options) ? options : inherited;
     const handler = source?.onclick ?? source?.onClick;
     if (action() !== false) {

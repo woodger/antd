@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Проверяет прокрутку и идентификацию строк при изменениях настроек провайдера.
+  // Verifies the scrolling and identification of strings when the provider’s settings are changed.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type TableColumn, type TableConfig, type TableRef,
@@ -40,19 +40,19 @@
   let providerConfig = $state.raw<TableConfig | undefined>(initialConfig());
   let scroll = $state.raw<TableScrollOptions | undefined>(readScroll(profile.scroll));
 
-  /** Возвращает ключ, которого нет ни в одном поле записи. */
+  /** Returns a key that isn't available in a single record field. */
   function computedKey(record: Row) {
     return `computed-${record.rank}`;
   }
 
-  /** Считанные из JSON значения сохраняют пустой объект scroll. */
+  /** A few of the JSON values retain an empty scroll object. */
   function readScroll(value?: {
     x?: number | string | boolean; y?: number | string; scrollToFirstRowOnChange?: boolean;
   }): TableScrollOptions | undefined {
     return value && { ...value, x: value.x === false ? undefined : value.x };
   }
 
-  /** Варианты провайдера используют один набор строк и колонок. */
+  /** Provider options use a single set of strings and columns. */
   function initialConfig(): TableConfig | undefined {
     if (!profile.provider) {
       return undefined;

@@ -6,7 +6,7 @@ export interface UploadMotionItem<T = unknown> {
   status: 'add' | 'keep' | 'remove';
 }
 
-/** Порядок diffKeys @rc-component/motion 1.3.3 (MIT, vendor/LICENSE.rc-motion) с удержанием uid. */
+/** Procedure diffKeys @rc-component/motion 1.3.3 (MIT, vendor/LICENSE.rc-motion) with uid retention. */
 export function getUploadMotionItems<T>(
   previous: readonly UploadMotionItem<T>[],
   files: readonly UploadFile<T>[]
@@ -33,7 +33,7 @@ export function getUploadMotionItems<T>(
   }
   next.push(...current.slice(currentIndex).map(file => ({ ...file, status: 'add' as const })));
 
-  // В Source plain object ошибочно считает inherited имена uid; Map сохраняет keyed invariant.
+  // In the Source plain object erroneously counts inherited names uid; Map preserves keyed invariant.
   const counts = new Map<string, number>();
   for (const item of next) counts.set(item.key, (counts.get(item.key) ?? 0) + 1);
   next = next.filter(item => counts.get(item.key)! < 2 || item.status !== 'remove');

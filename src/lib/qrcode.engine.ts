@@ -5,7 +5,7 @@ import type { ImageSettings, QRCodeErrorLevel } from './qrcode.types';
 
 const errorLevels = { L: Ecc.LOW, M: Ecc.MEDIUM, Q: Ecc.QUARTILE, H: Ecc.HIGH };
 
-/** Сегментация и автоматический выбор версии/маски из useQRCode 2.0.0. */
+/** Segmentation and automatic version/mask selection from useQRCode 2.0.0. */
 export function encodeQRCode(
   value: string | string[],
   level: QRCodeErrorLevel = 'M',
@@ -17,7 +17,7 @@ export function encodeQRCode(
   return QrCode.encodeSegments(segments, errorLevels[level], 1, undefined, undefined, boostLevel);
 }
 
-/** Алгоритмы путей/изображений rc-qrcode 2.0.0 и qrcode.react (ISC). */
+/** Algorithms of paths/imaginations rc-qrcode 2.0.0 and qrcode.react (ISC). */
 export function qrCodePath(modules: boolean[][], margin = 0) {
   const operations: string[] = [];
 
@@ -107,7 +107,7 @@ export function qrCodeMargin(marginSize?: number) {
   return marginSize != null ? Math.max(Math.floor(marginSize), 0) : 0;
 }
 
-/** pickAttrs(rest, true) выбирает role/aria; data-* остаётся на root. */
+/** pickAttrs(rest, true) selects role/aria; the data-* stays on root. */
 export function qrCodeAttributes(attributes: Record<string, unknown>) {
   const drawing: Record<string, unknown> = {};
   const root: Record<string, unknown> = {};
@@ -118,7 +118,7 @@ export function qrCodeAttributes(attributes: Record<string, unknown>) {
   return { drawing, root };
 }
 
-/** Читает только width/height plain CSS, сохраняя строки calc/var и delimiters внутри quotes. */
+/** Reads only width/height plains CSS, saving strings calc/var and delimiters inside tasters. */
 export function qrCodeDimensions(style?: string) {
   const dimensions: { width?: string; height?: string; } = {};
   let quote = '';

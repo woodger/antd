@@ -1,5 +1,5 @@
-// Объединяет настройки semantic slots Select. Приоритет inline-слоёв зависит
-// от порядка, явного удаления свойства и CSS !important.
+// Combines semantic slots Select settings. The prioritization of the inline layers depends on the
+// order, explicit removal of the property and CSS!important.
 import { getInlineStyleDeclarations } from './inline-style.engine';
 import { serializeSelectDataStyle } from './select-data-style.engine';
 import type {
@@ -12,7 +12,7 @@ const controlSlots = ['root', 'prefix', 'suffix', 'input', 'placeholder', 'conte
 const popupSlots = ['root', 'list', 'listItem'] as const;
 export interface SelectSemanticMaps { classes?: SelectClassNames; styles?: SelectStyles }
 
-/** Сохраняет Source String(label).trim(), не вызывая guarded toString у Snippet. */
+/** Saves Source String(label).trim(), without causing guarded toString from Snippet. */
 export function hasSelectDisplayContent(content: unknown): boolean {
   if (typeof content === 'function') {
     return true;
@@ -23,13 +23,13 @@ export function hasSelectDisplayContent(content: unknown): boolean {
   return content != null && String(content).trim() !== '';
 }
 
-/** Popup-only maps не меняют прежнее наследование цветов Native control. */
+/** Popup-only maps preserve color inheritance for the native control. */
 export function hasSelectControlSemantics(...maps: readonly SelectSemanticMaps[]): boolean {
   return maps.some(({ classes, styles }) => controlSlots.some(slot =>
     Boolean(classes?.[slot]) || styles?.[slot] != null));
 }
 
-// Вычисляет semantic map для текущих props, оставляя возвращённый объект владельцу.
+// Calculates semantic map for the current props, leaving the returned object to the owner.
 export function resolveSelectSemanticValue<Slots, Props>(
   value: SelectSemanticValue<Slots, Props> | undefined,
   info: { props: Props }
@@ -38,7 +38,7 @@ export function resolveSelectSemanticValue<Slots, Props>(
     ? (value as (info: { props: Props }) => Slots | undefined)(info) : value;
 }
 
-// Принимает только плоские CSS-свойства. Boolean считается отсутствующим значением.
+// Receives only flat CSS properties. Boolean is considered to be an absent value.
 function cssObject(style: unknown): SelectCSSProperties | undefined {
   if (style == null) {
     return;
@@ -61,7 +61,7 @@ function cssObject(style: unknown): SelectCSSProperties | undefined {
   return result;
 }
 
-/** CSS keys объединяются до сериализации: поздний own undefined снимает раннее объявление. */
+/** CSS keys are combined to serialization: the late own undefined removes an early announcement. */
 export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | undefined {
   const present = layers.filter(layer => layer != null);
   if (!present.length) {
@@ -87,7 +87,7 @@ export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | u
   return [...declarations].map(([property, { value, priority }]) =>
     `${property}:${value}${priority ? ' !important' : ''}`).join(';') || undefined;
 
-  // Поздний !important может заменить ранее заданный !important в строковом CSS.
+  // Late!important can replace the previously given!important in string CSS.
   function mergeCssText(layer: string) {
     for (const { property, value, priority } of getInlineStyleDeclarations([layer])) {
       const previous = declarations.get(property);
@@ -97,9 +97,9 @@ export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | u
     }
   }
 
-  // Значение объекта переопределяет обычный CSS. Явное пустое значение удаляет запись.
+  // The value of the object redefines the usual CSS. An obvious empty value removes the recording.
   function mergeCssObject(layer: NonNullable<unknown>) {
-    // Правило 2: present уже исключил null и undefined, остальные формы проверяет cssObject.
+    // Rule 2: present has already ruled out null and undefined, the remaining forms check cssObject.
     const style = cssObject(layer)!;
     for (const [property, value] of Object.entries(style)) {
       const name = property.startsWith('--') ? property : property.replace(/[A-Z]/g, '-$&')
@@ -137,8 +137,8 @@ export function mergeSelectSemanticMaps(
     [before, after].filter(Boolean).join(' ') || undefined;
   const classes: SelectClassNames & { popup: SelectPopupClassNames } = { popup: {} };
   const styles: SelectStyles & { popup: SelectPopupStyles } = {
-    // Source заменяет каждый popup CSS leaf целиком, включая явный undefined;
-    // CSS-объявления внутри local и provider leaf не объединяются рекурсивно.
+    // Upstream replaces each popup CSS leaf, including explicit undefined. Local and provider
+    // declarations within a leaf are not merged recursively.
     popup: { ...context.styles?.popup, ...local.styles?.popup }
   };
   const contextPopup = typeof context.classes?.popup === 'string' ? { root: context.classes.popup } : context.classes?.popup;

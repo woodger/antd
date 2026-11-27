@@ -1,16 +1,16 @@
 import type { TreeSelectInputSample } from './fixtures/tree-select-input-cases';
 import type { readTreeSelectInput } from './tree-select-input-metrics';
 
-// Native сохраняет Tree popup и его существующие ARIA связи. Own descriptor
-// перекрывает generated attrs; Source golden и общий projector остаются сырыми.
+// Native maintains Tree popup and its existing ARIA connections. Own descriptor overlaps generated
+// attrs; Source golden and general projector remain raw.
 export function nativeTreeSelectInputView(
   view: ReturnType<typeof readTreeSelectInput>,
   sample: TreeSelectInputSample,
   treeDescendant: string | null
 ) {
   const ownAria = sample.own === 'attrs';
-  // React SyntheticEvent помечает preventDefault даже у noncancelable input,
-  // focus и blur. DOM сохраняет false; cancelable keyboard/composition/paste raw.
+  // React SyntheticEvent marks preventDefault even at noncancelable input, focus and blur. DOM
+  // preserves false; cancelable keyboard/composition/paste raw.
   const events = sample.preventOwn ? view.events.map((event: unknown[]) => {
     const [scope, kind] = event;
     return (scope === 'own' || scope === 'generated')

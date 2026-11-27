@@ -8,7 +8,7 @@ const states = {
     '-collapsed', '-below', '-compact'])
 };
 
-/** Generated flat rules сохраняют общий namespace Layout и независимый prefix Sider. */
+/** Generated flat rules retain the overall namespace Layout and independent prefix Sider. */
 export function getLayoutPrefixCss(prefix: string, part: LayoutPrefixPart) {
   const original = part === 'sider' ? 'ant-layout-sider' : 'ant-layout';
   if (prefix === original) {
@@ -35,7 +35,7 @@ export function getLayoutPrefixCss(prefix: string, part: LayoutPrefixPart) {
     }).join('\n').replace(/<\/style/gi, '<\\/style');
 }
 
-/** Секции сохраняют свою роль; variables внутри Layout наследуются от его корня. */
+/** Sections retain their role; variables inside Layout inherited from its root. */
 export function getLayoutSectionPrefixCss(
   prefix: string,
   part: 'header' | 'content' | 'footer',

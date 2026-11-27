@@ -94,7 +94,7 @@ export function selectDataMappedAriaFields(view: SelectDataView, sample: SelectD
   }
   return changes;
 }
-/** Узкие доказанные Native поля; все Source events/model/query остаются целиком. */
+/** Bottomed proven Native fields; all Source events/model/query remains in its entirety. */
 export function selectDataNativeView(
   view: SelectDataView,
   sample: SelectDataSample
@@ -141,7 +141,7 @@ export function selectDataNativeView(
   }
   return result;
 }
-/** Любая опубликованная Native active-descendant ссылка ведёт на реальный option. */
+/** Any link published by Native active-descendant links to the real option. */
 export function readSelectDataAriaIntegrity() {
   const refs: { editor?: HTMLInputElement | HTMLTextAreaElement } = {};
   document.querySelector('[data-select-data-command]')!

@@ -1,7 +1,7 @@
-// Настраивает исходные CSSMotion defaults Menu и порядок переопределения hooks.
+// Configures Menu's upstream CSSMotion defaults and hook override order.
 import type { MenuMotion } from './menu-motion.types';
 
-/** Collapse начинает рост с нуля, сохраняет текущую высоту при уходе и ждёт её окончания. */
+/** Collapse begins to grow from scratch, maintains the current height during care and waits for its completion. */
 export function getMenuInlineMotion(
   name: string,
   custom: MenuMotion | undefined,
@@ -27,7 +27,7 @@ export function getMenuInlineMotion(
   };
 }
 
-/** Popup готовит позицию перед появлением; leave может использовать пользовательский prepare. */
+/** Popup prepares a position before the appearance; leave can use the custom preparation. */
 export function getMenuPopupMotion(
   name: string,
   custom: MenuMotion | undefined,
@@ -41,21 +41,21 @@ export function getMenuPopupMotion(
   };
 }
 
-// Начинает appear/enter и заканчивает leave на свернутой высоте.
+// Begins appear/enter and ends the leave at a curtailed height.
 function collapsedStyle() {
   return { height: 0, opacity: 0 };
 }
 
-// Открывает список на высоту содержимого, включая вложенные списки текущего уровня.
+// Opens the list to the height of the content, including the nested lists of the current level.
 function expandedStyle(element: HTMLElement) {
   return { height: element.scrollHeight, opacity: 1 };
 }
 
-// Сохраняет окрашенную высоту исходного списка, в том числе при прерывании.
+// Retains the painted height of the original list, including when interrupted.
 function leavingStyle(element: HTMLElement) {
   return { height: element.offsetHeight };
 }
 
-// Opacity может завершиться раньше. Height имеет приоритет до исходного deadline.
+// Opacity can be completed earlier. Height takes precedence before the original deadline.
 const stopCollapse: NonNullable<MenuMotion['onLeaveEnd']> = (_element, event) =>
   'deadline' in event || 'propertyName' in event && event.propertyName === 'height';

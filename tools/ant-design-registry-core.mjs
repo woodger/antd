@@ -1,5 +1,5 @@
-// Проверяет реестр относительно его схемы, экспортов пакета и локального
-// upstream checkout. Не выполняет тесты, на которые ссылаются записи реестра.
+// Validates the registry against its schema, package exports, and local upstream checkout. Tests
+// cited by the registry are outside this check.
 import { access, readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import ts from 'typescript';
@@ -8,10 +8,10 @@ import { projectPath, readJson, registryFile } from './ant-design-common.mjs';
 export const featureStates = ['unreviewed', 'missing', 'partial', 'supported'];
 export const integrationPrefix = 'integration:';
 const scopes = ['target', 'candidate', 'excluded'];
-// Отсутствие доступа трактуется как отсутствие проверяемого пути.
+// An inaccessible path is treated as missing.
 const exists = path => access(path).then(() => true, () => false);
 
-// Читает имена экспортов значений из barrel без загрузки компонентов.
+// Reads value export names from the barrel without loading components.
 export function publicExports(source) {
   const ast = ts.createSourceFile('index.ts', source, ts.ScriptTarget.Latest, true);
   const exports = new Map();
@@ -30,7 +30,7 @@ export function publicExports(source) {
   return exports;
 }
 
-// Считает именованные реэкспорты default только из модулей компонентов.
+// Counts named re-exports of default only from component modules.
 export function componentExportNames(source) {
   const ast = ts.createSourceFile('index.ts', source, ts.ScriptTarget.Latest, true);
   const names = [];
@@ -54,11 +54,11 @@ export function componentExportNames(source) {
   return names;
 }
 
-// Накапливает нарушения схемы в порядке обхода. Межзаписочные проверки идут
-// после проверки записей, когда уже известны идентификаторы и экспорты.
+// Collects schema violations in traversal order. Cross-entry checks run after entry validation has
+// identified the IDs and exports.
 export function validateRegistry(data) {
   const errors = [];
-  // Позволяет вернуть все нарушения текущего раздела одним списком.
+  // Allows all violations in the current section to be returned together.
   const require = (condition, message) => {
     if (!condition)
       errors.push(message);
@@ -90,7 +90,7 @@ export function validateRegistry(data) {
   const ids = new Set();
   const localNames = new Set(data.supportingExports);
 
-  // Проверяет одну запись, пополняя множества имён для поиска дубликатов.
+  // Checks one entry and updates the sets used to find duplicate names.
   function validateComponent(item) {
     if (!item || typeof item !== 'object' || Array.isArray(item)) {
       errors.push('Component must be an object');
@@ -225,7 +225,7 @@ export function validateRegistry(data) {
 
   const visiting = new Set();
   const visited = new Set();
-  // Сохраняет текущий путь рекурсии отдельно от уже проверенных записей.
+  // Tracks the current recursion path separately from entries already checked.
   function visit(componentId) {
     if (visiting.has(componentId)) {
       errors.push(`Dependency cycle: ${componentId}`);
@@ -252,7 +252,7 @@ export function validateRegistry(data) {
   return errors;
 }
 
-// Оценивает обязательный для v1 объём на конкретной ревизии upstream.
+// Determines the scope required for v1 at a particular upstream revision.
 export function coverage(item, revision) {
   if (!item.exports.length) {
     return 'not-started';
@@ -265,7 +265,7 @@ export function coverage(item, revision) {
   return required.every(feature => feature.state === 'supported') ? 'v1-ready' : 'partial';
 }
 
-// Проверяет расхождения в обоих направлениях, сохраняя порядок имён в диагностике.
+// Checks discrepancies in both directions and preserves name order in diagnostics.
 function checkRegisteredExports(data, exports, errors) {
   const registered = new Set(data.supportingExports);
   for (const component of data.components) {
@@ -286,7 +286,7 @@ function checkRegisteredExports(data, exports, errors) {
   }
 }
 
-// Подбирает исходные TypeScript и Svelte-модули по пути из index.ts.
+// Resolves source TypeScript and Svelte modules from a path in index.ts.
 function exportCandidates(source) {
   const base = `src/lib/${source.slice(2)}`;
   const candidates = ['', '.ts', '.svelte.ts', '/index.ts'].map(suffix => base + suffix);
@@ -297,7 +297,7 @@ function exportCandidates(source) {
   return candidates;
 }
 
-// Проверяет принадлежность integration-ссылки компоненту или его feature.
+// Checks that an integration reference belongs to the component or one of its features.
 function registerIntegrationEvidence(item, ref, integrationEvidence, errors) {
   const key = ref.slice(integrationPrefix.length);
   const [componentId, featureId, extra] = key.split('/');
@@ -311,8 +311,8 @@ function registerIntegrationEvidence(item, ref, integrationEvidence, errors) {
   integrationEvidence.add(key);
 }
 
-// Сверяет метаданные с локальными файлами. Отсутствующий checkout допускается
-// для локальной проверки, пока вызывающий код явно не потребовал upstream.
+// Checks metadata against local files. Local validation allows a missing checkout until the caller
+// explicitly asks for upstream.
 export async function inspectRegistry(root, { requireUpstream = false } = {}) {
   const data = await readJson(projectPath(root, registryFile));
   const errors = validateRegistry(data);
@@ -411,10 +411,10 @@ const states = {
   'v1-ready': 'Согласованный v1 покрыт',
   partial: 'Частично покрыт v1'
 };
-// Экранирует разделитель таблицы и сохраняет строку отчёта однострочной.
+// Escapes the table separator and keeps the report row on one line.
 const escape = text => String(text).replaceAll('|', '\\|').replaceAll('\n', ' ');
 
-// Собирает строку таблицы из публичных экспортов, покрытия и оставшихся пробелов.
+// Builds a table row from public exports, coverage, and outstanding gaps.
 function renderComponentRow(item, revision) {
   const source = `https://github.com/ant-design/ant-design/tree/${revision}/${item.upstreamPath}`;
   const gaps = item.features.filter(feature => feature.state !== 'supported')
@@ -430,7 +430,7 @@ function renderComponentRow(item, revision) {
   return `| [${name}](${source}) | ${category} | ${scope} | ${names} | ${status} | ${remaining} |`;
 }
 
-// Формирует детерминированный Markdown из состояния реестра и числа компонентов.
+// Produces deterministic Markdown from registry state and the component count.
 export function renderReport(data, componentExports) {
   const counts = Object.fromEntries(
     Object.keys(states).map(

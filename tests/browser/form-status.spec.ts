@@ -9,7 +9,7 @@ for (const { sample, metrics } of reference.cases) {
       .selectOption(sample.id);
     const expected = structuredClone(metrics);
 
-    // Native Input/Select помечают visual error как aria-invalid и без model errors.
+    // Native Input/Select are marked visual error as aria-invalid and without model errors.
     for (const value of Object.values(expected)) {
       if (value.control.includes('error')) value.ariaInvalid = 'true';
     }

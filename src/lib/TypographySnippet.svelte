@@ -10,6 +10,6 @@
   } = $props();
 </script>
 
-<!-- Snippet остаётся смонтированным при обрезке: его реактивный текст продолжает обновляться. -->
+<!-- The snippet stays mounted while truncated, so its reactive text keeps updating. -->
 <span style:display={hidden ? 'none' : 'contents'} aria-hidden={ariaHidden || undefined}
   {@attach element => untrack(() => connectTypographyContent(element, onContent))}>{@render children()}</span>

@@ -36,7 +36,7 @@ test('Changing the inherited target retains consumer DOM, focus, form values and
     await input.focus();
     await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 8));
     await page.getByRole('button', { name: 'Use target B', exact: true }).dispatchEvent('click');
-    // Native сразу достигает source updatePosition frame; stale geometry записана отдельно.
+    // Native reaches source updatePosition frame; stale geometry is recorded separately.
     await expect.poll(() => page.evaluate(snapshotTargetContainer))
       .toEqual(reference.retarget.afterManualUpdate);
     expect(await content.evaluate((node, old) => node === old, oldContent)).toBe(true);

@@ -10,7 +10,7 @@ const [firstNonce, nextNonce] = reference.nonces;
 const scopedStyles = 'style[data-ant-svelte-theme]';
 const strictScopes = reference.strict.map(sample => sample.scope);
 
-/** Считывает DOM nonce и CSSOM каждой конкретной кнопки. */
+/** Reads DOM nonce and CSSOM of each specific button. */
 async function measureButtons(page: Page, scopes: string[]) {
   return page.evaluate(({ selector, scopes }) => scopes.map(scope => {
     const button = document.getElementById(scope);
@@ -25,7 +25,7 @@ async function measureButtons(page: Page, scopes: string[]) {
   }), { selector: scopedStyles, scopes });
 }
 
-/** Проверяет также token CSS и другие правила, которые не принадлежат одному Button. */
+/** It also checks token CSS and other rules that do not belong to one Button. */
 async function expectScopedStyles(page: Page, nonce: string) {
   const styles = page.locator(scopedStyles);
   expect(await styles.count()).toBeGreaterThan(2);
@@ -42,7 +42,7 @@ test('ConfigProvider inherits, replaces and resets the CSP record', async ({ pag
   await expect.poll(() => measureButtons(page, scopes)).toEqual(reference.normal.initial);
   await page.getByRole('button', { name: 'Change nonce' }).click();
 
-  // В эталоне существующие стили сохраняют прежние nonce. Здесь обновляется scope провайдера.
+  // In the benchmark, the existing styles retain the former nonce. This is the provider's scope updated here.
   const expected = reference.normal.updated.map(sample => ({
     ...sample,
     nonces: sample.scope === 'reset' ? sample.nonces : [nextNonce]

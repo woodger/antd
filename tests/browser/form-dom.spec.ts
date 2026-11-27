@@ -40,7 +40,7 @@ for (const name of controls) {
     expect(JSON.parse((await snapshot.textContent())!)).toMatchObject({ stable: true });
     if (name === 'otp') await expect(field.locator('input').first()).toBeFocused();
     if (name === 'slider' || name === 'range') {
-      // Опубликованный Svelte Slider ref сохраняет native range, а не React handle div.
+      // Published Svelte Slider ref preserves native range, not React div.
       await expect(field.locator('input[type="range"]').first()).toBeFocused();
     }
     if (name === 'select') await expect(field.getByRole('combobox')).toBeFocused();

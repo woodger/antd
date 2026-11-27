@@ -8,7 +8,7 @@ export function snapshotPopupPrefix() {
       return text ? [text] : [];
     });
   }
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^(css-|s-[\w-]{12}$)/.test(name) && !name.endsWith('-css-var')
       && !name.endsWith('-source-theme') && name !== 'range-root').sort();

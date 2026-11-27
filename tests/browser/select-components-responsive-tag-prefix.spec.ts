@@ -61,7 +61,7 @@ for (const sample of selectCustomTagPrefixSamples) test(`Select responsive custo
       ...verifyResponsiveTagPrefixLedger(observed, source, point, label, applied));
     trace.push({ label, actual, appliedBoundaries: [...applied] });
   };
-  // Сохраняет последний журнал даже после прерванного сценария.
+  // Saves the last magazine even after the interrupted scenario.
   async function readFinalLedger() {
     try {
       ledger = await readNativeResponsiveTagPrefixLedger(page);
@@ -71,7 +71,7 @@ for (const sample of selectCustomTagPrefixSamples) test(`Select responsive custo
     }
   }
 
-  // Удаляет оставшийся компонент и читает очистку и отложенное состояние.
+  // Removes the remaining component and reads the clearing and delayed state.
   async function disposeRemainingOwner() {
     try { if (!disposed) {
       await page.evaluate(() => window.customTagPrefixNative.dispose());
@@ -83,7 +83,7 @@ for (const sample of selectCustomTagPrefixSamples) test(`Select responsive custo
     catch (error) { errors.push({ phase: 'finally-cleanup', error: String(error) }); }
   }
 
-  // Снимает отложенное состояние, если очистка прошла и повторного замера ещё нет.
+  // Relieves the delayed state if the clearing has passed and there is no re-measuring.
   async function readMissingLateState() {
     try {
       if (cleanup && !late) {

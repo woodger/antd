@@ -26,8 +26,8 @@
 </script>
 
 <script lang="ts">
-  // Обновляет настройки провайдера вокруг смонтированного поля. Те же настройки
-  // используются при серверном рендеринге, где не должно быть поиска portal target.
+  // Updates the provider’s settings around the mounted field. The same settings are used in server
+  // rendering, where there should be no search for portal target.
   import dayjs, { type Dayjs } from 'dayjs';
   import { untrack } from 'svelte';
   import {
@@ -49,7 +49,7 @@
     defaultValue?: Dayjs | null | readonly (Dayjs | null | undefined)[];
   };
 
-  // Параметр URL передаёт профиль независимого замера в браузерный стенд.
+  // Parameter URL transmits the profile of independent measurement to the browser stand.
   function readProfile(): PickerProviderProfile {
     const profile = new URLSearchParams(globalThis.location?.search).get('profile');
     return profile ? JSON.parse(profile) : { id: 'date', picker: 'date' };
@@ -79,7 +79,7 @@
   let changes = $state(0);
   let nativeElement = $state<HTMLDivElement>();
 
-  // Сохраняет разные публичные аргументы за один переход, исключая повторы вызова.
+  // Retains different public arguments for a single transition, excluding call repetitions.
   function record(owner: AppearanceOwner, role: 'classNames' | 'styles', props: ReportedProps) {
     const fields = ['size', 'disabled', 'status', 'variant', 'picker', 'class', 'allowClear'] as const;
     const entries = Object.fromEntries(fields.map(field => {
@@ -97,9 +97,9 @@
     events.set(JSON.stringify(event), event);
   }
 
-  // Слоты перекрывают одинаковые CSS properties, а классы оставляют видны оба слоя.
+  // Slots overlap the same CSS properties, and the classes leave both layers visible.
   function appearance(owner: AppearanceOwner) {
-    /** Возвращает имена всех ролей вместе со снимком фактических props. */
+    /** Returns the names of all roles together with a snapshoot of the actual props. */
     function classNames({ props }: { props: ReportedProps; }): DatePickerSlots {
       record(owner, 'classNames', props);
       return {
@@ -108,7 +108,7 @@
       };
     }
 
-    /** Записывает перекрываемый цвет отдельно для каждой части поля и календаря. */
+    /** Records the overlapped color separately for each part of the field and the calendar. */
     function styles({ props }: { props: ReportedProps; }): DatePickerSlots {
       record(owner, 'styles', props);
       const color = `color:rgb(${colors[owner]})`;
@@ -124,13 +124,13 @@
     return { class: `plain-${owner}`, classNames, styles };
   }
 
-  // Явный {} заменяет datePicker, а undefined возвращает наследование.
+  // Explicit {} replaces datePicker, and undefined returns inheritance.
   function setMode(next: PickerProviderMode) {
     events.clear();
     mode = next;
   }
 
-  /** Проверяет, что закрытый SSR не вызывает предоставленный getter. */
+  /** Verifies that the closed SSR does not evoke the granted getter. */
   function unexpectedPortal(): never {
     throw Error('Unexpected SSR picker portal lookup');
   }

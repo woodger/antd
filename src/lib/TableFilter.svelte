@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Хранит черновик и связывает операции панели с применённым фильтром Table.
-  // Настроенная панель использует Dropdown для размещения, портала и фокуса.
+  // Keeps the draft and connects panel actions to the applied Table filter. A configured panel uses
+  // Dropdown for positioning, its portal, and focus.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
@@ -69,7 +69,7 @@
   const dropdownZIndex = $derived(designTheme.enabled
     ? componentThemeVariables('Dropdown', designTheme.state.token)[dropdownLayerVariable]
     : undefined);
-  // Встроенная панель передаёт ненулевой слой. В ветке Dropdown он вычисляется там.
+  // The built-in panel supplies a nonzero layer. Dropdown calculates the layer in its own branch.
   provideZIndex(() => usesDropdown || !layer.zIndex ? layer.parentZIndex : layer.contextZIndex);
   const blocked = $derived(disabled || Boolean(filterDropdownProps?.disabled));
   const open = $derived(
@@ -117,10 +117,10 @@
     visible: open
   });
 
-  // После подтверждения без закрытия значения владельца остаются источником черновика.
+  // After confirmation without closing, the owner's values remain the source of the draft.
   $effect.pre(() => {
     if (tableContainer && !retainedDropdown) {
-      // После выбора портала сохраняем триггер и черновик при смене или удалении resolver.
+      // After choosing the portal, retain the trigger and draft when the resolver changes or is removed.
       retainedDropdown = true;
       if (nativeOpen) {
         requestedOpen = true;
@@ -227,7 +227,7 @@
     panel.style.pointerEvents = 'auto';
   }
 
-  /** Фокусирует поиск, навигацию Menu/Tree или выбранный нативный input. */
+  /** Focuses search, Menu or Tree navigation, or the selected native input. */
   function focusOptions(preferChecked = true) {
     const surface = usesDropdown ? content : panel;
     if (!surface) {
@@ -242,13 +242,13 @@
     target?.focus({ preventScroll: true });
   }
 
-  /** Оставляет подменю внутри панели для фокуса и light dismiss. */
+  /** Keeps submenus in the panel for focus and light dismissal. */
   function submenuContainer(anchor: HTMLElement) {
     return panel ?? content?.closest<HTMLElement>('[data-ant-dropdown-popup]')
       ?? anchor.ownerDocument.body;
   }
 
-  /** Фиксирует применённые критерии и варианты на момент открытия штатной панели. */
+  /** Captures applied criteria and options when the default panel opens. */
   function snapshotOpenState() {
     openedValue = [...value];
     openedOptions = optionSnapshot;
@@ -283,7 +283,7 @@
   }
 
   function handleDropdownOpenChange(nextOpen: boolean, { source }: DropdownOpenChangeInfo) {
-    // Пункты Menu внутри фильтра могут менять черновик до отдельного confirm или close.
+    // Menu items inside the filter can change the draft before a separate confirm or close.
     if (source === 'menu') {
       return;
     }
@@ -369,7 +369,7 @@
     }
   }
 
-  /** Передаёт фокус Dropdown редактору или штатным вариантам фильтра. */
+  /** Hands Dropdown focus to the editor or standard filter options. */
   function connectDropdownContent(element: HTMLDivElement) {
     if (!hasPanelOptions || filterDropdownProps?.autoFocus) {
       element.tabIndex = -1;
@@ -412,7 +412,7 @@
     outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
     outline-offset: 2px;
   }
-  /* visibility наследуется Checkbox с transition: all и задерживает фокус при открытии. */
+  /* Checkbox inherits visibility along with transition: all, which delays focus on open. */
   .filter-popover {
     position: fixed;
     inset: auto;

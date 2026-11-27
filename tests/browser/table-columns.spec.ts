@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 type Action = NonNullable<(typeof source.cases)[number]['states'][number]['action']>;
 
-/** Читает видимые строки, заголовки, spans и смещения от логического начала scrollport. */
+/** Reads visible lines, headings, spans and shifts from the logical beginning of scrollport. */
 function snapshot(rtl: boolean) {
   const root = document.getElementById('table-columns-fixture');
   const table = root?.querySelector('table');
@@ -14,7 +14,7 @@ function snapshot(rtl: boolean) {
     throw new Error('Missing table column fixture');
   }
 
-  /** Служебные ячейки и пользовательские колонки различаются по публичным классам. */
+  /** Service cells and custom columns vary in public classes. */
   function columnKey(cell: Element) {
     const className = [...cell.classList].find(name => name.startsWith('fixture-column-'));
     if (className) return className.replace('fixture-column-', '');
@@ -23,7 +23,7 @@ function snapshot(rtl: boolean) {
     return '$empty';
   }
 
-  /** Проверяет наследование фиксированной стороны на группах и листьях. */
+  /** Checks how groups and leaves inherit the fixed side. */
   function fixed(cell: Element) {
     if (cell.classList.contains('ant-table-cell-fix-start')) return 'start';
     if (cell.classList.contains('ant-table-cell-fix-end')) return 'end';
@@ -56,7 +56,7 @@ function snapshot(rtl: boolean) {
   const clip = viewport?.getBoundingClientRect();
   const first = rows?.[0];
 
-  /** Целые пиксели сопоставляют общий colgroup и дробный layout отдельной шапки Source. */
+  /** Whole pixels compare the total colgroup and fractional layout of a separate source cap. */
   function coordinate(cell: HTMLTableCellElement) {
     const rect = cell.getBoundingClientRect();
     const logical = clip ? (rtl ? clip.right - rect.right : rect.left - clip.left) : 0;
@@ -79,7 +79,7 @@ function snapshot(rtl: boolean) {
   };
 }
 
-/** Выполняет ту же команду через props, DOM-контролы или публичный bind:this. */
+/** Performs the same command via props, DOM-control or public bind:this. */
 async function act(page: Page, action: Action, index: number) {
   if ('hide' in action && action.hide) {
     await page.getByTestId(`hide-columns-${index - 1}`).click();
@@ -114,7 +114,7 @@ async function act(page: Page, action: Action, index: number) {
   }
 }
 
-/** Применяет ту же точность измерения к сохранённым дробным координатам UMD. */
+/** Applies the same measurement accuracy to retained fractional coordinates UMD. */
 function pixelCoordinates(items: readonly (readonly (string | number)[])[]) {
   return items.map(item => item.map(value => typeof value === 'number' ? Math.round(value) : value));
 }

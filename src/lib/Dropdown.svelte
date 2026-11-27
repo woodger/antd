@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Владеет панелью от первого открытия до завершения анимации, её привязкой и фокусом.
+  // Owns the panel, its positioning, and its focus from first open through the end of the animation.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import DropdownMenu from './DropdownMenu.svelte';
   import DropdownPopupContent from './DropdownPopupContent.svelte';
@@ -83,7 +83,7 @@
   const designTokens = useDesignTokenContext();
   const localZIndex = $derived(getInlineZIndex(semantics.rootStyle));
   const layer = useZIndex('popup', () => localZIndex);
-  // Source Dropdown с нулевым или отсутствующим zIndex сохраняет контекст родителя.
+  // Upstream Dropdown retains the parent's context when zIndex is zero or unset.
   provideZIndex(() => layer.zIndex ? layer.contextZIndex : layer.parentZIndex);
   const form = useForm();
   const generatedId = $props.id();
@@ -93,7 +93,7 @@
   const initialDefault = untrack(() => defaultOpen);
   let internalOpen = $state(initialDefault);
   let previousOwnerOpen = untrack(() => providedOpen);
-  // Запись в bindable prop уведомляет binding. Обычный open остаётся решением владельца.
+  // Writing to the bindable prop notifies its binding. The owner controls an ordinary open prop.
   let isOpen = $derived(providedOpen === undefined ? internalOpen : providedOpen ?? initialDefault);
   let host = $state<HTMLSpanElement>();
   let anchor = $state<Element>();
@@ -202,7 +202,7 @@
   onMount(() => { mounted = true; });
 
   $effect.pre(() => {
-    // До первого открытия подготовленная forceRender панель ещё не является сохранённой.
+    // A forceRender panel prepared before its first open has not yet been retained.
     if (mounted && visible) visited = true;
     else if (!rendered) visited = false;
 
@@ -224,7 +224,7 @@
   $effect.pre(() => {
     const next = providedOpen;
 
-    // Сохраняем прежний fallback defaultOpen при снятии внешнего управления.
+    // Preserves the previous defaultOpen fallback when external control is removed.
     if (next === undefined && previousOwnerOpen !== undefined) internalOpen = initialDefault;
     previousOwnerOpen = next;
   });
@@ -299,7 +299,7 @@
   $effect(() => {
     if (!expanded) return;
 
-    // Пользовательский renderer может смонтировать Menu тем же обновлением, что и popup.
+    // A custom renderer can mount Menu in the same update as the popup.
     let cancelled = false;
     void tick().then(() => {
       if (!cancelled && expanded) focusOnOpen();
@@ -384,7 +384,7 @@
     pending = undefined;
   }
 
-  // Для prepare браузер измеряет панель с исходным размером, до scale-анимации.
+  // For prepare, the browser measures the original panel size before scaling begins.
   function preparePopup() {
     popupConnection?.forceAlign();
   }
@@ -406,7 +406,7 @@
     arrowStyle = undefined;
   }
 
-  // Прокрутка контейнеров и resize закрывают меню, привязанное к координате окна.
+  // Container scrolling and resize close a menu anchored to viewport coordinates.
   function connectPointDismissal(source: Element, surface: HTMLElement) {
     const document = source.ownerDocument;
     const view = document.defaultView;
@@ -458,7 +458,7 @@
     cancelPending();
     const requestAnchor = anchor;
     const ownerValue = isOpen;
-    // У hover+contextMenu нет hideAction=hover. Уход указателя не отменяет задержку открытия.
+    // hover combined with contextMenu has no hideAction=hover. Leaving the trigger does not cancel the opening delay.
     const retainedHover = next && delay > 0 && alignPoint;
 
     function apply() {
@@ -492,7 +492,7 @@
 
   function focusRequestedEdge() {
     const edge = focusPending;
-    // При быстром переоткрытии DOM может ещё быть inert до следующего обновления.
+    // When the panel reopens quickly, its DOM can stay inert until the next update.
     if (!edge || !popup || popup.inert) return;
 
     focusPending = null;
@@ -514,7 +514,7 @@
     if (autoFocus && !focusCustomRoot()) menuView?.focus();
   }
 
-  // Snippet может передать фокус единственному focusable корню. Menu владеет своими строками.
+  // A snippet can focus its single focusable root. Menu owns its own rows.
   function focusCustomRoot() {
     if (!customContent || !popup) return false;
 
@@ -530,7 +530,7 @@
     return focusedInPopup() === root;
   }
 
-  // Координаты раскладки сохраняют масштаб при нулевом или промежуточном scale панели.
+  // Layout coordinates account for the panel at zero or intermediate scale.
   function layoutTop(element: HTMLElement) {
     let top = element.offsetTop;
     let parent = element.offsetParent;
@@ -564,7 +564,7 @@
     closing = false;
   }
 
-  // Нажатие снаружи может перевести фокус на тот же control после запроса close.
+  // An outside click can move focus to the same control after requesting close.
   function handleDismiss(reason: 'escape' | 'outside', target?: Node) {
     const label = target instanceof Element ? target.closest<HTMLLabelElement>('label') : null;
     dismissedFocusTarget = target && focusedInPopup() ? label?.control ?? target : undefined;
@@ -628,7 +628,7 @@
 
     const clickToOpen = supports('click');
     if (alignPoint) {
-      // У contextMenu обычный клик закрывает панель даже без trigger=click.
+      // A regular click closes a contextMenu panel even without trigger=click.
       if (visible) close('trigger');
       else if (clickToOpen) openFromClick(event);
       return;
@@ -804,7 +804,7 @@
   }
 
   function registerMenu(view: DropdownMenuView) {
-    // При замене renderer cleanup и новая регистрация используют один актуальный набор.
+    // When the renderer changes, cleanup and the new registration use the same current set.
     registeredMenus.add(view);
     menuViews = [...registeredMenus];
     return () => {
@@ -819,7 +819,7 @@
     $effect(() => update(popupStyleLayers));
   }
 
-  // Внешний portal продолжает фокус и hover всей панели. Вложенный DOM всплывает сам.
+  // The external portal extends focus and hover across the whole panel. Events from nested DOM bubble normally.
   function registerPopup(surface: HTMLElement) {
     nestedPopups.add(surface);
     const dispose = [

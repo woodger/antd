@@ -1,9 +1,9 @@
-// XHR-транспорт Upload сохраняет исходные события прогресса и возвращает
-// отмену конкретного запроса. Формирование списка остаётся у контроллера.
+// XHR-transport Upload preserves the starting events of the progress and returns the cancellation
+// of a specific query. Formation of the list remains with the controller.
 import type { UploadRequestOptions } from './upload.types';
-// XHR-транспорт rc-upload 1.1.1; MIT, vendor/LICENSE.rc-upload.
+// XHR-transportation rc-upload 1.1.1; MIT, vendor/LICENSE.rc-upload.
 
-// Добавляет поля до файла. Массивы передаются повторяющимися ключами с [].
+// Adds fields before the file. Arrays use repeated keys with [].
 function createUploadBody<T>(option: UploadRequestOptions<T>): FormData {
   const body = new FormData();
   for (const [key, value] of Object.entries(option.data ?? {})) {
@@ -21,11 +21,11 @@ function createUploadBody<T>(option: UploadRequestOptions<T>): FormData {
   return body;
 }
 
-// Устанавливает обработчики и заголовки до send. Явный null исключает заголовок.
+// Installs handlers and headers before sending. Explicit null rules out the headline.
 export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
   const xhr = new XMLHttpRequest();
   if (option.onProgress && xhr.upload) {
-    // Передаёт тот же ProgressEvent с percent, если известен total.
+    // Passes the same ProgressEvent with percent when total is known.
     xhr.upload.onprogress = event => {
       const progress = event as ProgressEvent & { percent: number; };
       if (event.total > 0)
@@ -35,7 +35,7 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
   }
   const body = createUploadBody(option);
 
-  // Сохраняет непрозрачный ответ, если текст не разбирается как JSON.
+  // Saves an opaque response if the text does not understand as JSON.
   const readResponse = () => {
     const text = xhr.responseText || xhr.response;
     try {
@@ -45,9 +45,9 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
       return text;
     }
   };
-  // Ошибка транспорта передаётся без преобразования события.
+  // Passes the transport error without converting the event.
   xhr.onerror = event => option.onError?.(event);
-  // Декодирует ответ только если соответствующий callback установлен.
+  // Decodes the answer only if the corresponding callback is installed.
   xhr.onload = () => {
     if (xhr.status < 200 || xhr.status >= 300) {
       const error = Object.assign(
@@ -72,7 +72,7 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
   xhr.send(body);
 
   return {
-    // Отменяет XHR этого вызова. Список файлов принадлежит контроллеру.
+    // Cancels XHR of this call. The list of files belongs to the controller.
     abort: () => xhr.abort()
   };
 }

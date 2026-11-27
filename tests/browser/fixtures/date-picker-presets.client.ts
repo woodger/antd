@@ -13,7 +13,7 @@ const api = {
   readRefs: () => capture.readRefs!(),
   setActionIndex: (index: number) => capture.setActionIndex!(index)
 };
-// Тот же DOM-reader; дополнительные поля не добавляются к публичному control.
+// Same DOM-reader; additional fields are not added to public control.
 Object.assign(
   window,
   { raw: { sample, current: api, preMountElements: new Set(document.querySelectorAll('*')) } }

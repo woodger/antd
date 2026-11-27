@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Секция Drawer управляет заголовком, телом и подвалом. Loading заменяет только children.
+  // The Drawer section manages the header, body, and footer. Loading replaces only children.
   import Icon from './Icon.svelte';
   import RenderContent from './RenderContent.svelte';
   import Skeleton from './Skeleton.svelte';

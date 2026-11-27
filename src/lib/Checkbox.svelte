@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-  // Связывает состояние native checkbox с группой и FormItem. Пользовательское действие сообщает
-  // новое checked через callback.
+  // Connects the native checkbox state to its group and FormItem. User input reports the new
+  // checked state through the callback.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -87,7 +87,7 @@
     .filter(([key]) => !owned.has(key))));
 
   $effect.pre(() => {
-    // Native blur на keyed removal не читает уже уничтоженные derived props родителя.
+    // Native blur during keyed removal avoids reading the parent's disposed derived props.
     blurCallbacks = { onBlur: props.onBlur, onblur: props.onblur };
   });
 
@@ -116,7 +116,7 @@
     ref = handle;
 
     return () => {
-      // Объект ref может пройти через $state proxy владельца; DOM-ссылки сохраняют identity.
+      // The ref object can pass through the owner's $state proxy. DOM references retain their identity.
       if (ref?.input === input && ref.nativeElement === root) ref = undefined;
     };
   });
@@ -182,7 +182,7 @@
   }
 </script>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`checkbox-prefix:${prefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (Label блокирует повторный click; клавиатурой и фокусом управляет native input.) --><label class={[
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`checkbox-prefix:${prefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (The label blocks duplicate clicks. The native input handles keyboard input and focus.) --><label class={[
   `${prefix}-wrapper ant-checkbox-css-var`,
   componentTheme.className,
   resolvedChecked && `${prefix}-wrapper-checked`,
@@ -210,7 +210,7 @@
     localClasses?.icon
   ]} title={props.title}
     style={[contextStyles?.icon, localStyles?.icon].filter(Boolean).join(';') || undefined}>
-    <!-- svelte-ignore a11y_autofocus (Сохраняется публичный autoFocus/HTML autofocus.) -->
+    <!-- svelte-ignore a11y_autofocus (Preserves public autoFocus and HTML autofocus.) -->
     <input {...attributes} bind:this={inputElement} type="checkbox" class={`${prefix}-input`}
       id={props.id ?? field?.id} name={nativeName} form={nativeForm}
       value={typeof value === 'boolean' ? String(value) : value} defaultChecked={resolvedDefault}

@@ -5,7 +5,7 @@ import source from './fixtures/ant-design-table-cell-update-reference.json' with
 const fixture = '/?fixture=table-cell-update&profile=';
 test.use({ viewport: { width: 880, height: 480 }, reducedMotion: 'reduce' });
 
-/** Наблюдает содержимое независимо от переданных через onCell атрибутов. */
+/** Observes the contents regardless of the attributes transmitted through onCell. */
 function snapshot() {
   return Array.from(document.querySelectorAll<HTMLElement>('[data-row-key]'), row => [
     row.dataset.rowKey,
@@ -15,14 +15,14 @@ function snapshot() {
   ]);
 }
 
-/** Сопоставляет изменившиеся записи без привязки к числу проходов React и Svelte. */
+/** Compares the changed records without reference to the number of passes React and Svelte. */
 function changedRecords(comparisons: readonly string[][]) {
   const changed = comparisons.filter(([, next, previous]) => next !== previous);
   const keys = changed.map(pair => JSON.stringify(pair));
   return [...new Set(keys)].sort();
 }
 
-/** Дожидается записи аргументов после обновления props Table. */
+/** The record of arguments is expected after updating props Table. */
 async function act(page: Page, action: string) {
   await page.getByRole('button', { name: action, exact: true }).dispatchEvent('click');
   await expect(page.getByLabel('Compared records')).toHaveAttribute('data-action', action);

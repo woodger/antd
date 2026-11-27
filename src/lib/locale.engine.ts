@@ -1,10 +1,10 @@
-// Подключает словари Ant Design к контексту Svelte. У каждого словаря есть
-// английские defaults источника, а locale в нативной форме наследует провайдера.
+// Connects Ant Design vocabularies to context Svelte. Each vocabulary has an English default
+// source, and locale in native form inherits the provider.
 import english from './locale/en_US';
 import type { AntDesignLocale } from './locale.types';
 import { enUS, type Locale } from './types';
 
-/** Держит подпись страницы для accessibility и отдельно переводит суффикс быстрого перехода. */
+/** Keeps the label of the page for accessibility and separately translates the suffix of a quick transition. */
 function paginationLocale(locale: AntDesignLocale['Pagination']): Locale['pagination'] {
   const source = { ...english.Pagination, ...locale };
   const fallback = enUS.pagination;
@@ -25,7 +25,7 @@ function paginationLocale(locale: AntDesignLocale['Pagination']): Locale['pagina
   };
 }
 
-/** Переносит подписи Table. Стандартная пустая таблица использует словарь Empty. */
+/** Reproduces labels Table. The standard blank table uses the Empty dictionary. */
 function tableLocale(locale: AntDesignLocale['Table'], emptyText?: string): Locale['table'] {
   const source = { ...english.Table, ...locale };
   const fallback = enUS.table;
@@ -51,7 +51,7 @@ function tableLocale(locale: AntDesignLocale['Table'], emptyText?: string): Loca
   };
 }
 
-/** Разрешает словарь из публичного подмодуля или возвращает настройки Svelte провайдера. */
+/** Allows a dictionary from a public submodule or returns Svelte provider settings. */
 export function resolveProviderLocale(
   locale?: Partial<Locale> | AntDesignLocale
 ): Partial<Locale> | undefined {

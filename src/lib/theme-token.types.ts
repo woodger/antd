@@ -24,7 +24,7 @@ export type ColorPalettes = {
   [key in `${keyof PresetColorType}${ColorPaletteKeyIndex}`]: string;
 };
 
-/** Исходные seed-параметры Ant Design 6.6.8. Defaults доступны через theme.defaultSeed. */
+/** The initial seed parameters of Ant Design 6.6.8. Defaults are available through theme.defaultSeed. */
 export interface SeedToken extends Omit<PresetColorType, 'pink'> {
   colorPrimary: string;
   colorSuccess: string;
@@ -227,7 +227,7 @@ export interface CommonMapToken extends StyleMapToken {
   motionDurationSlow: string;
 }
 
-/** Результат MappingAlgorithm до применения alias overrides. */
+/** Result of MappingAlgorithm before the use of alias overrides. */
 export interface MapToken
   extends SeedToken,
     ColorPalettes,
@@ -238,7 +238,7 @@ export interface MapToken
     FontMapToken,
     CommonMapToken {}
 
-/** Полный статический AliasToken; CSS text-decoration представлен строкой. */
+/** Total static AliasToken; CSS text-decoration is represented by a string. */
 export interface AliasToken extends MapToken {
   colorFillContentHover: string;
   colorFillAlter: string;
@@ -334,13 +334,13 @@ export interface AliasToken extends MapToken {
   boxShadowTabsOverflowBottom: string;
 }
 
-/** Алгоритм получает исходный seed и результат предыдущего шага цепочки. */
+/** The algorithm receives the original seed and the result of the previous step of the chain. */
 export type MappingAlgorithm = (seed: SeedToken, mapToken?: MapToken) => MapToken;
 
-/** Статический расчёт токенов; не меняет оформление ConfigProvider. */
+/** Static calculation of tokens; does not change the design of ConfigProvider. */
 export interface DesignTokenConfig {
-  /** Seed overrides подаются алгоритмам; остальные поля перекрывают рассчитанные aliases. */
+  /** Passes seed overrides to algorithms. The remaining fields override the computed aliases. */
   token?: Partial<AliasToken>;
-  /** Порядок алгоритмов сохраняется; по умолчанию defaultAlgorithm. */
+  /** The order of algorithms is saved; by default defaultAlgorithm. */
   algorithm?: MappingAlgorithm | readonly MappingAlgorithm[];
 }

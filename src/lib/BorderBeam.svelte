@@ -45,7 +45,7 @@
       'ant-border-beam-css-var'
     ].filter(Boolean).join(' '),
     prefix: prefixCss ? prefix : undefined,
-    // Portal target может находиться вне DOM scope владельца.
+    // The portal target can be outside the owner's DOM scope.
     themeStyle: tokens.enabled
       ? [tokens.element ? undefined : tokens.state.style, componentTheme.style].filter(Boolean)
         .join(';')

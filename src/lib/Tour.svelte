@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Связывает текущий шаг Tour, target и popup. Завершение и закрытие сообщаются владельцу
-  // отдельными событиями.
+  // Connects the current Tour step, target, and popup. Completion and dismissal notify the owner
+  // through separate events.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -45,7 +45,7 @@
   let innerOpen = $state<boolean | undefined>(untrack(() => props.defaultOpen));
   let previousCurrent = untrack(() => props.current);
   let previousOpen = untrack(() => props.open);
-  // rc-util сбрасывает внутреннее значение и при снятии controlled props.
+  // rc-util resets its internal value when controlled props are removed as well.
   let current = $derived((props.current !== undefined ? props.current : innerCurrent)!);
   let visible = $derived(current < 0 || current >= steps.length
     ? false : innerOpen !== undefined && props.open === undefined ? innerOpen : props.open ?? true);
@@ -188,7 +188,7 @@
       parent: host?.parentElement ?? undefined,
       open: props.open,
       gap: props.gap,
-      // Деструктуризация rc-tour задаёт default на шаге до fallback к корневой настройке.
+      // rc-tour destructuring applies a step default before falling back to the root setting.
       scrollIntoViewOptions: step.scrollIntoViewOptions === undefined
         ? { block: 'center' as const, inline: 'center' as const }
         : step.scrollIntoViewOptions

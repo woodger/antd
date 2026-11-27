@@ -1,5 +1,5 @@
 export function snapshotFormPrefix() {
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   const style = (node: Element, properties: string[], pseudo?: string) => {
     const computed = getComputedStyle(node, pseudo);
 
@@ -12,10 +12,10 @@ export function snapshotFormPrefix() {
     [...document.querySelectorAll<HTMLElement>('[data-form-prefix-scope]')].map(host => {
       const form = host.querySelector('.fixture-prefix-form');
       const origin = host.getBoundingClientRect();
-      // Снимает положение и размер. При отсутствии layout box возвращает null.
+      // Removes position and size. In the absence of the layout box returns null.
       const box = (node: Element) => {
         const bounds = node.getBoundingClientRect();
-        // Округляет дробное измерение до сотых для сравнения снимков.
+        // Rounds the fractional measurement to the 100s for comparing the images.
         const round = (value: number) => Math.round(value * 100) / 100;
 
         return node.getClientRects().length ? {

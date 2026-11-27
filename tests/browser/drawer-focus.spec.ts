@@ -11,20 +11,20 @@ const nativeProfiles = new Set([
 ]);
 const manualTraps = new Set(['maskless-trap', 'masked-no-auto', 'focus-fields']);
 
-/** Выбирает сценарий до открытия диалога, пока доступны все controls страницы. */
+/** Select the script before opening the dialog as long as all the numbers pages are available. */
 async function select(page: Page, profile: string) {
   await page.goto('/?fixture=drawer-focus');
   await page.getByRole('combobox', { name: 'Drawer focus profile' }).selectOption(profile);
 }
 
-/** Вызывает программное изменение owner state во время отображения маски. */
+/** Prompts a software change to the owner state during the display of the mask. */
 async function owner(page: Page, action: string) {
   await page.getByTestId(action).evaluate(button => {
     if (button instanceof HTMLButtonElement) button.click();
   });
 }
 
-/** Передаёт реальный Tab, Escape и click по координатам, включая попадание на маску. */
+/** Transmits the actual Tab, Escape and click on the coordinates, including hitting the mask. */
 async function act(page: Page, action: string) {
   if (action === 'open') await page.locator('#before').click();
   else if (action === 'escape') await page.keyboard.press('Escape');
@@ -47,7 +47,7 @@ async function act(page: Page, action: string) {
   else await owner(page, action);
 }
 
-/** Читает видимые оболочки, состояние маски и доступность прокрутки. */
+/** Reading the visible shells, the condition of the mask and the availability of scrolling. */
 async function nativePanels(page: Page) {
   return page.evaluate(() => ({
     panels: ['a', 'b'].map(id => {
@@ -69,7 +69,7 @@ async function nativePanels(page: Page) {
   }));
 }
 
-/** Приводит нативную кнопку закрытия и пользовательские controls к именам UMD-фикстуры. */
+/** Brinks a native closing button and custom controls to the names UMD-fixture. */
 async function focused(page: Page) {
   return page.evaluate(() => {
     let element = document.activeElement;
@@ -83,12 +83,12 @@ async function focused(page: Page) {
   });
 }
 
-/** Учитывает нативный первый control и замыкание Tab в явно удерживаемой области. */
+/** Takes into account the native first control and closure of Tab in the clearly held area. */
 async function checkFocus(page: Page, profile: Profile, frame: Frame, native: boolean) {
   const action = frame.action;
   if (native && frame.panels[0]
     && ['tab-last', 'shift-first', 'focus-outside', 'click-outside'].includes(action)) {
-    // Native dialog может передать Tab адресной строке, но не control фоновой страницы.
+    // Native dialog can transfer Tab to the address bar, but not control the background page.
     await expect.poll(() => focused(page)).toMatch(/^(a-|b-|body)/);
     return;
   }
@@ -105,7 +105,7 @@ for (const { profile, frames } of reference.cases) {
   test(`Drawer follows pinned mask, focus and Escape for ${profile.name}`, async ({ page }) => {
     await select(page, profile.name);
     const events: unknown[][] = [];
-    // Существующий getContainer=false без focusable сохраняет нативную модальность Svelte.
+    // The existing getContainer = false without focusable retains native modality Svelte.
     const expectedFrames = profile.name === 'inline-default' ? baseline : frames;
     expect(expectedFrames.length).toBe(frames.length);
 

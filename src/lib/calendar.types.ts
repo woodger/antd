@@ -8,31 +8,31 @@ export type CalendarMode = 'year' | 'month';
 export type CalendarSelectInfo = { source: 'year' | 'month' | 'date' | 'customize'; };
 export type CalendarGenerateConfig<DateType> = GenerateConfig<DateType>;
 
-/** Форма React ref; в Svelte ссылка на div доступна через bind:nativeElement. */
+/** React ref shape. In Svelte, bind:nativeElement exposes the div. */
 export interface CalendarRef {
   nativeElement: HTMLDivElement;
 }
 
-/** Язык общей панели rc-picker. */
+/** Locale for the shared rc-picker panel. */
 export type CalendarLang = PickerLocale;
 
-/** Объединяется по полям lang с ConfigProvider.locale.calendar и базовой локалью. */
+/** Merges lang fields with ConfigProvider.locale.calendar and the base locale. */
 export interface CalendarLocale {
   lang?: Partial<CalendarLang>;
   timePickerLocale?: { placeholder?: string; };
 }
 
-/** OriginNode — Svelte snippet исходного rc-picker inner; week cells не вызывают renderer. */
+/** OriginNode is a Svelte snippet for rc-picker's original inner content. Week cells skip the renderer. */
 export interface CalendarCellRenderInfo<DateType = Dayjs> {
   prefixCls: string;
   originNode: Snippet;
   today: DateType;
   type: 'date' | 'month';
-  /** В date mode содержит filled formats rc-picker; в month mode — исходный lang. */
+  /** Includes filled rc-picker formats in date mode and the original lang in month mode. */
   locale: CalendarLang;
 }
 
-/** onChange выбирает дату с source=customize; onTypeChange вызывает только onPanelChange. */
+/** onChange selects a date with source=customize. onTypeChange calls only onPanelChange. */
 export interface CalendarHeaderRenderInfo<DateType = Dayjs> {
   value: DateType;
   type: CalendarMode;
@@ -44,41 +44,41 @@ export type CalendarSlots = Partial<Record<
   'root' | 'header' | 'body' | 'content' | 'item' | 'itemContent',
   string
 >>;
-/** Props сохраняют mode/showWeek из вызова; fullscreen имеет default true. */
+/** Props keep the caller's mode and showWeek. fullscreen defaults to true. */
 export type CalendarSemantic<DateType = Dayjs> = CalendarSlots
   | ((info: { props: CalendarProps<DateType>; }) => CalendarSlots | undefined);
 
-/** Вложенный calendar config заменяется целиком; root style идёт после context styles.root. */
+/** The nested calendar config is replaced in full. Root style follows the context styles.root. */
 export interface CalendarConfig {
   class?: string;
   style?: string;
-  // Тип custom date adapter неизвестен общему ConfigProvider, как в upstream CalendarProps<any>.
+  // The shared ConfigProvider does not know the custom date adapter's type, as in upstream CalendarProps<any>.
   classNames?: CalendarSemantic<any>;
   styles?: CalendarSemantic<any>;
 }
 
-/** Calendar Ant Design 6.6.8; value/mode управляются props + callbacks, без bind:value. */
+/** Ant Design 6.6.8 Calendar. Props and callbacks control value and mode without bind:value. */
 export interface CalendarProps<DateType = Dayjs> extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style'
 > {
-  /** Controlled: не меняется без ответа владельца. Без value используется defaultValue/getNow(). */
+  /** Controlled values change only in response to the owner. Without value, uses defaultValue or getNow(). */
   value?: DateType;
-  /** Только начальное значение; время, milliseconds и timezone не нормализуются. */
+  /** Initial value only. Time, milliseconds, and timezone retain their original precision. */
   defaultValue?: DateType;
-  /** Controlled mode; без prop начальный режим month. */
+  /** Controlled mode. The initial mode is month when the prop is omitted. */
   mode?: CalendarMode;
-  /** По умолчанию true; false включает мини-календарь и small controls заголовка. */
+  /** Defaults to true. false enables the mini calendar and small header controls. */
   fullscreen?: boolean;
-  /** Дополнительный столбец недель в month mode; выбор публикует начало строки с source=date. */
+  /** Extra week column in month mode. Selecting a week reports the first day of its row with source=date. */
   showWeek?: boolean;
-  /** Включительно, с исходной точностью timestamp; заголовок ограничивает годы и месяцы. */
+  /** Inclusive bounds at the original timestamp precision. The header restricts available years and months. */
   validRange?: [DateType, DateType];
-  /** Только ячейки панели. Month disabled, когда disabled и первый, и последний день месяца. */
+  /** Applies to panel cells only. A month is disabled when its first and last days are both disabled. */
   disabledDate?: (date: DateType) => boolean;
   onChange?: (date: DateType) => void;
   onPanelChange?: (date: DateType, mode: CalendarMode) => void;
-  /** Вызывается также для повторного выбора; после onPanelChange и onChange, если они нужны. */
+  /** Also called on reselect, after onPanelChange and onChange if needed. */
   onSelect?: (date: DateType, info: CalendarSelectInfo) => void;
   locale?: CalendarLocale;
   headerRender?: Snippet<[CalendarHeaderRenderInfo<DateType>]>;
@@ -86,12 +86,12 @@ export interface CalendarProps<DateType = Dayjs> extends Omit<
   fullCellRender?: Snippet<[DateType, CalendarCellRenderInfo<DateType>]>;
   class?: string;
   rootClassName?: string;
-  /** Локальный picker prefix перекрывает ConfigProvider; Calendar добавляет к нему -calendar. */
+  /** The local picker prefix overrides ConfigProvider. Calendar appends -calendar. */
   prefixCls?: string;
-  /** После context и semantic root styles. */
+  /** Applied after context and semantic root styles. */
   style?: string;
   classNames?: CalendarSemantic<DateType>;
   styles?: CalendarSemantic<DateType>;
-  /** Корневой div вместо React CalendarRef.nativeElement; очищается при unmount. */
+  /** Root div in place of React CalendarRef.nativeElement. Cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

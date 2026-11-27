@@ -1,6 +1,6 @@
 import template from './vendor/flex-prefix.css.js';
 
-/** Все Flex selectors относятся к корню; CSS variables и marker сохраняют имена. */
+/** All Flex selectors belong to the root; CSS variables and marker retain names. */
 export function getFlexPrefixCss(prefix: string) {
   if (prefix === 'ant-flex') {
     return undefined;

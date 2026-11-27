@@ -1,5 +1,5 @@
-// Переиспользует DerivativeTheme по упорядоченной цепочке алгоритмов.
-// Ветви индексируются identity функций, а счётчик обновляется при каждом чтении.
+// Reuses DerivativeTheme according to an ordered chain of algorithms. The branches are indexed
+// functions, and the counter is updated at each reading.
 import { DerivativeTheme } from './theme-derivative';
 import type { MappingAlgorithm } from './theme-token.types';
 
@@ -12,7 +12,7 @@ const cache = new Map<MappingAlgorithm, ThemeCacheNode>();
 let keys: (readonly MappingAlgorithm[])[] = [];
 let callCount = 0;
 
-// Проходит вложенные карты до записи полной цепочки.
+// Passes the nested cards before recording the full chain.
 function getEntry(algorithms: readonly MappingAlgorithm[]) {
   let node: ThemeCacheNode | undefined = { map: cache };
   algorithms.forEach(algorithm => {
@@ -22,7 +22,7 @@ function getEntry(algorithms: readonly MappingAlgorithm[]) {
   return node?.value;
 }
 
-// Удаляет запись цепочки и освобождает пустые ветви, пока возвращается рекурсия.
+// Removes chain recording and releases empty branches while the recursion returns.
 function deletePath(
   current: Map<MappingAlgorithm, ThemeCacheNode>,
   path: readonly MappingAlgorithm[]
@@ -42,12 +42,12 @@ function deletePath(
   if ((!node.map || node.map.size === 0) && !node.value) current.delete(path[0]);
 }
 
-// Удаляет цепочку с наименьшим номером использования, сохраняя остальные ключи.
+// Removes the chain with the smallest usage number, saving the other keys.
 function evictOldestTheme() {
   const oldest = keys.reduce((oldestKey, candidateKey) => {
     const candidate = getEntry(candidateKey);
     const oldestEntry = getEntry(oldestKey);
-    // Правило 2. Каждый ключ описывает сохранённый узел со значением.
+    // Rule 2. Each key describes the saved node with the value.
     const candidateUsage = candidate![1];
     return candidateUsage < oldestEntry![1] ? candidateKey : oldestKey;
   });
@@ -56,7 +56,7 @@ function evictOldestTheme() {
   deletePath(cache, oldest);
 }
 
-/** Кэш цепочек cssinjs 2.1.2. Новая запись сверх 25 вытесняет самую давнюю по использованию. */
+/** Cache chains cssinjs 2.1.2. The new entry over 25 displaces the longest in use. */
 export function createDerivativeTheme(
   derivatives: MappingAlgorithm | readonly MappingAlgorithm[]
 ): DerivativeTheme | undefined {
@@ -64,7 +64,7 @@ export function createDerivativeTheme(
   let entry = getEntry(algorithms);
   if (!entry) {
     const theme = new DerivativeTheme(algorithms);
-    // Сам объект темы хранит исходный массив, а индекс вытеснения хранит снимок пути.
+    // The object of the theme stores the original array, and the displacement index stores a picture of the path.
     const path = algorithms.slice();
     if (!path.length) {
       return undefined;
@@ -82,7 +82,7 @@ export function createDerivativeTheme(
       }
 
       if (index === path.length - 1) {
-        // Префикс и продолжения одной цепочки используют общий узел.
+        // The prefix and the continuation of a single chain use a common node.
         node.value = [theme, callCount++];
         return;
       }

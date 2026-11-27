@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Наблюдает принятые параметры содержимого отдельно от текущих атрибутов ячейки.
+  // Observes the accepted parameters of the contents separately from the current attributes of the cell.
   import { tick } from 'svelte';
   import { ConfigProvider, Table, type TableColumn, type TableRef } from '@woodger/antd';
 
@@ -49,7 +49,7 @@
     }
   ]);
 
-  /** Добавляет строки для проверки выхода первой строки из виртуального окна. */
+  /** Add strings to check the output of the first line from the virtual window. */
   function initialRows(): Row[] {
     const result = [
       { key: 'a', value: 'A0', revision: 0 },
@@ -63,19 +63,19 @@
     return result;
   }
 
-  /** Запоминает пары, переданные предикату, без изменения реактивного состояния таблицы. */
+  /** Remembrances pairs transmitted to predicate, without changing the reactive state of the table. */
   function allow(record: Row, previous: Row) {
     pending.push([record.key, record.value, previous.value]);
     return record.revision !== previous.revision;
   }
 
-  /** Заменяет первую запись, оставляя identity остальных строк. */
+  /** Replaces the first record, leaving the other identity lines. */
   function replaceA(value: string, revision?: number, key = 'a') {
     records = records.map(row => row.key === 'a'
       ? { key, value, revision: revision ?? row.revision } : row);
   }
 
-  /** Публикует пары после обновления Table, чтобы тест видел результат одного действия. */
+  /** Publishes the pairs after the Table update so that the test can see the result of one action. */
   async function run(action: Action) {
     pending = [];
     switch (action) {

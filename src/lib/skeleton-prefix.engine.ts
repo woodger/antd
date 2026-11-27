@@ -2,7 +2,7 @@ import template from './vendor/skeleton-prefix.css.js';
 
 const rootStates = new Set(['', '-element', '-active', '-block', '-round', '-rtl', '-with-avatar']);
 
-/** Marker и variables общие; root declarations ограничены своим Skeleton host. */
+/** Marker and variables general; root declarations are limited to their Skeleton host. */
 export function getSkeletonPrefixCss(prefix: string) {
   if (prefix === 'ant-skeleton') {
     return undefined;

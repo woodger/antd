@@ -5,7 +5,7 @@ const rootStates = new Set([
   '-type-inner', '-rtl'
 ]);
 
-/** Owner Card/Grid/Meta prefix и общий prefix делегированных Typography/Tabs независимы. */
+/** Card, Grid, and Meta owner prefixes are independent of the shared prefix used by delegated Typography and Tabs. */
 export function getCardPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-card' && rootPrefix === 'ant') {
     return undefined;

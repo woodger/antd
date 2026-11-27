@@ -1,5 +1,5 @@
-// Готовит настройки и группы слайдов Carousel. Настройки корня берутся из
-// основного режима, параметры трека дополнительно учитывают responsive override.
+// Prepares Carousel settings and slide groups. Root settings come from the base mode, while track
+// settings also use the responsive override.
 import type { CarouselContent, CarouselItem, CarouselProps } from './carousel.types';
 
 export const carouselDefaults = {
@@ -43,7 +43,7 @@ export const carouselDefaults = {
   unslick: false
 };
 
-// Применяет настройки breakpoint, а затем ограничения center, fade и variableWidth.
+// Applies breakpoint settings, then center, fade, and variableWidth limits.
 export function getCarouselSettings(
   props: CarouselProps,
   direction: 'ltr' | 'rtl',
@@ -95,13 +95,13 @@ export function getCarouselSettings(
 
 export type CarouselSettings = ReturnType<typeof getCarouselSettings>;
 
-// Явный items, включая пустой массив, имеет приоритет над children.
+// Explicit items overrides children, including when it is an empty array.
 export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'>): CarouselItem[] {
   if (props.items !== undefined) {
     return [...props.items];
   }
   const items: CarouselItem[] = [];
-  // Разворачивает вложенные children с сохранением порядка визуальных элементов.
+  // Flattens nested children in visual order.
   function visit(value: CarouselContent) {
     if (Array.isArray(value)) {
       for (const child of value) visit(child);
@@ -114,7 +114,7 @@ export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'
   return items;
 }
 
-// Собирает группы rows × perRow. Ширина учитывает последний подходящий элемент по обходу.
+// Builds groups of rows × perRow. Width uses the last matching element in traversal order.
 export function getCarouselRows(items: readonly CarouselItem[], rows: number, perRow: number) {
   const groups: { rows: CarouselItem[][]; width?: number | string; }[] = [];
   if (!(rows > 0) || !(perRow > 0)) {

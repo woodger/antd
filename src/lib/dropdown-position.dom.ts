@@ -1,5 +1,6 @@
-// Сохраняет размеры absolute-панели React внутри нативного top layer. Расчёт получает
-// размеры в начале контейнера, а браузер подбирает окончательную ширину по свободному месту.
+// Saves the absolute panel sizes React inside the native top layer. The calculation receives the
+// dimensions at the beginning of the container, and the browser selects the final width in free
+// space.
 import type { TooltipPosition } from './tooltip.engine';
 
 const rightInset = '--ant-dropdown-fit-right';
@@ -8,7 +9,7 @@ const inlineAlignment = '--ant-dropdown-fit-justify';
 
 export const dropdownFitVariables = [rightInset, bottomInset, inlineAlignment];
 
-/** Находит область, из которой absolute-поверхность получила бы доступную ширину. */
+/** Finds an area from which the absolute-surface would get an accessible width. */
 function getInlineRegion(surface: HTMLElement, customContainer: boolean) {
   const document = surface.ownerDocument;
   const viewport = document.documentElement;
@@ -30,7 +31,7 @@ function getInlineRegion(surface: HTMLElement, customContainer: boolean) {
   return { left, right: left + viewport.clientWidth };
 }
 
-/** Учитывает позиционирование и CSS-свойства, создающие containing block. */
+/** Takes into account positioning and CSS-properties, creating concluded block. */
 function establishesContainingBlock(view: Window, node: HTMLElement) {
   const style = view.getComputedStyle(node);
   const effects = [style.transform, style.translate, style.rotate, style.scale,
@@ -41,7 +42,7 @@ function establishesContainingBlock(view: Window, node: HTMLElement) {
       .test(style.willChange);
 }
 
-/** Применяет единую позицию и восстанавливает прежнюю геометрию при снятии align. */
+/** Applies a single position and restores the former geometry when removing the align. */
 export function createDropdownPosition(
   surface: HTMLElement,
   useSourcePlacement: () => boolean,
@@ -53,12 +54,12 @@ export function createDropdownPosition(
   let bounds: DOMRect;
   let available = 0;
 
-  // Исправленная граница в px сохраняется между кадрами с теми же размерами.
+  // The corrected boundary in px is preserved between frames with the same dimensions.
   function write(property: string, value: string) {
     if (style.getPropertyValue(property) !== value) style.setProperty(property, value);
   }
 
-  // Прежние placements используют только left/top. Снимаем дополнительные insets.
+  // The previous placements use only left/top. Remove additional insets.
   function reset() {
     if (!region) return;
 
@@ -67,7 +68,7 @@ export function createDropdownPosition(
     available = 0;
   }
 
-  // При достаточном месте в обеих позициях повторное измерение ничего не меняет.
+  // With a sufficient location in both positions, the re-measure does not change anything.
   function measure() {
     if (!useSourcePlacement()) {
       reset();
@@ -86,7 +87,7 @@ export function createDropdownPosition(
     return bounds;
   }
 
-  // Dynamic inset удерживает правый или нижний край при переносе текста в меню.
+  // Dynamic inset holds the right or bottom edge when transferring text to the menu.
   function apply(position: TooltipPosition) {
     if (!region) return;
 

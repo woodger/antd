@@ -4,14 +4,14 @@ import type {
   SelectOptionListItem, SelectOptionListKey, SelectOptionListScrollConfig
 } from './select-option-list.types';
 
-/** Модель принадлежит control; DOM viewport следует прежнему conditional/retained popup. */
+/** The model belongs to the control; DOM viewport follows the same conditional/retained popup. */
 export function createSelectOptionList<Item>(options: {
   items: () => readonly SelectOptionListItem<Item>[];
   height: () => number | undefined;
   estimate: () => number;
   realVirtual: () => boolean;
   open: () => boolean;
-  /** Отложенное закрытие сохраняет последнюю открытую коллекцию. */
+  /** Delayed closure retains the last open collection. */
   lockOptions?: () => boolean;
   searchValue: () => string;
   selectedIndex: () => number;
@@ -42,7 +42,7 @@ export function createSelectOptionList<Item>(options: {
     restoration = undefined;
   }
 
-  // Source кеширует закрытую коллекцию, сохраняя реактивные размеры списка.
+  // Source caches a closed collection, saving the reactive list sizes.
   $effect.pre(() => {
     const next = options.items();
     if (!options.open() || options.lockOptions?.()) {
@@ -72,7 +72,7 @@ export function createSelectOptionList<Item>(options: {
     });
   });
 
-  // Selected scroll зависит от open/search, а не от повторного создания view.
+  // Selected scroll depends on open/search, and not re-creating view.
   $effect(() => {
     const open = options.open();
     void options.searchValue();
@@ -108,7 +108,7 @@ export function createSelectOptionList<Item>(options: {
   function applyScroll(config?: SelectOptionListScrollConfig | null) {
     const top = viewport.top;
     const domTop = holderElement?.scrollTop;
-    // Число публичного OptionList означает index, а не px lower-level virtual-list.
+    // The number of public OptionList means an index, not a mirror-level virtual-list.
     viewport.scrollTo(typeof config === 'number' ? { index: config } : config);
     if (viewport.top !== top || holderElement?.scrollTop !== domTop) cancelRestoration();
   }
@@ -125,7 +125,7 @@ export function createSelectOptionList<Item>(options: {
         viewport.flashScrollbar();
       }
       else if (typeof config === 'object' && ('top' in config || 'left' in config)) {
-        // Закрытый positional request применяется к реальному viewport после открытия.
+        // Closed positional request applies to the real viewport after opening.
         const { left, top } = config;
         pendingPosition = {
           left: left === undefined ? pendingPosition?.left : left,
@@ -188,7 +188,7 @@ export function createSelectOptionList<Item>(options: {
       || !event.isTrusted) {
       return false;
     }
-    // Только первый trusted scroll нового holder к сохранённому offset; прочие события публикуются.
+    // Only the first trusted scroll of the new holder to the saved offset; other events are published.
     cancelRestoration();
     return event.currentTarget.scrollTop === current.top;
   }

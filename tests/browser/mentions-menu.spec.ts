@@ -7,7 +7,7 @@ type Sample = Case['before' | 'after'];
 
 test.use({ viewport: { width: 960, height: 640 } });
 
-/** Приводит служебные ключи React к исходным значениям, с которыми работает Svelte. */
+/** Leads the service keys React to the reference values with which Svelte works. */
 function readSourceKey(key: unknown) {
   if (typeof key !== 'string') {
     throw new Error('Missing option key in Source capture');
@@ -16,7 +16,7 @@ function readSourceKey(key: unknown) {
   return key.replace(/-:[^:]+:$/, '');
 }
 
-/** React сохраняет последний вызов popupRender и после закрытия. Здесь он виден в открытом меню. */
+/** React preserves the last challenge of popupRender and after closure. Here it is visible in the open menu. */
 function nativeSample(state: Sample) {
   const { args, events, ...rest } = state;
   return {
@@ -32,7 +32,7 @@ function nativeSample(state: Sample) {
   };
 }
 
-/** Считывает список, контекст, события и положение каретки из публичного компонента. */
+/** Reads the list, context, events and position of the carriage from the public component. */
 function snapshot(editor: Locator) {
   return editor.evaluate((node: HTMLTextAreaElement) => {
     const root = node.closest('[data-ant-mentions-root]');
@@ -47,7 +47,7 @@ function snapshot(editor: Locator) {
         label: option.textContent,
         active: [...option.classList].some(name => name.endsWith('-item-active'))
       }));
-      // Native empty content принадлежит listbox и исключено из клавиатурных вариантов.
+      // Native empty content belongs listbox and is excluded from the keyboard options.
       if (!entries.length) {
         entries.push({ label: listbox.textContent?.trim() ?? '', active: false });
       }
@@ -68,7 +68,7 @@ function snapshot(editor: Locator) {
   });
 }
 
-/** Открывает popup через ввод, используя только браузерную сборку пакета. */
+/** Opens the popup via input, using only the browser build of the package. */
 async function openMenu(page: Page, profile: string, text = '@') {
   await page.goto(`/select-components-hydration.html?mentions-menu=${profile}`);
   await page.addScriptTag({ type: 'module', url: '/mentions-menu.client.ts' });

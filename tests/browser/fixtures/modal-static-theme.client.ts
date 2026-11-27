@@ -1,4 +1,4 @@
-// Подключает только стили пакета. Цвета сравниваются без CSS потребителя.
+// Connects only package styles. Colors are compared without CSS consumers.
 import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import ModalStaticTheme from './ModalStaticTheme.svelte';

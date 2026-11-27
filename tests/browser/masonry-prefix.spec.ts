@@ -9,7 +9,7 @@ for (const entry of reference.cases) {
     await page.getByRole('combobox', { name: 'Masonry prefix sample', exact: true })
       .selectOption(entry.sample.id);
     const expected = structuredClone(entry.result);
-    // Default RTL stylesheet пересекается с этим alias; fresh source сохраняет LTR.
+    // Default RTL stylesheet intersects with this alias; fresh source preserves LTR.
     if (entry.sample.id === 'rtl-alias') {
       expected.normal = isolated.cases[0].result.normal;
       expected.nested = isolated.cases[0].result.normal;

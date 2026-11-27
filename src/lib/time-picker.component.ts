@@ -1,5 +1,5 @@
-// Перегрузки сохраняют прежние ComponentProps и разрешают режимы авторской панели.
-// Значения экспорта — те же Svelte-компоненты с прежними ref и bindings.
+// Overload retains the previous ComponentProps and allows the modes of the author's panel. Export
+// values are the same Svelte components with previous ref and bindings.
 import type { Component, ComponentConstructorOptions, SvelteComponent } from 'svelte';
 import TimePickerControl from './TimePicker.svelte';
 import { pickerAdapterProps } from './picker-adapter-props.engine';
@@ -11,7 +11,7 @@ import type {
   TimePickerMultipleProps, TimePickerProps, TimePickerRuntimeProps
 } from './time-picker.types';
 
-/** Переход в календарный режим включается своим слотом времени. */
+/** Transition to the calendar mode is switched on by its time slot. */
 export type TimePanelOptions<DateType extends object = Dayjs> = {
   components: DatePickerComponents<DateType> & { time: DatePickerPanel<DateType>; };
 };
@@ -24,7 +24,7 @@ type TimePickerComponent<DateType extends object> = Component<
   TimePickerHandle, 'nativeElement'
 > & Component<TimePickerProps<'time', DateType>, TimePickerHandle, 'nativeElement'>;
 
-/** Изоморфные сигнатуры сохраняют перегрузки в шаблонах и в mount/render. */
+/** Isomorphic signatures retain overloads in templates and in mount/render. */
 export interface GeneratedTimeSelection<DateType extends object> {
   new <Multiple extends true>(
     options: ComponentConstructorOptions<TimePickerMultipleProps<DateType> & { multiple: Multiple; }>
@@ -45,12 +45,12 @@ export interface GeneratedTimeSelection<DateType extends object> {
 export type GeneratedTimePickerComponent<DateType extends object> =
   GeneratedTimeSelection<DateType> & TimePickerComponent<DateType>;
 
-/** Привязывает адаптер времени. Последняя перегрузка сохраняет обычный ComponentProps. */
+/** Ties the time adapter. The last overload preserves the usual ComponentProps. */
 export function createTimePickerComponent<DateType extends object>(
   dateOperations: PickerDateOperations<DateType>,
   standaloneTime = false
 ): GeneratedTimePickerComponent<DateType> {
-  /** Передаёт исходные getter'ы владельца и настройки общего редактора. */
+  /** Forwards the owner's original getters and shared editor options. */
   function render(anchor: unknown, props: TimePickerRuntimeProps<DateType>
     | TimePickerMultipleProps<DateType>) {
     return TimePickerControl<DateType>(
@@ -58,7 +58,7 @@ export function createTimePickerComponent<DateType extends object>(
     );
   }
 
-  // Svelte использует сигнатуры new для проверки шаблона. Runtime вызывает render как функцию.
+  // Svelte uses new signatures to check the template. Runtime calls as a function.
   return render as unknown as GeneratedTimePickerComponent<DateType>;
 }
 

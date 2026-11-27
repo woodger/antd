@@ -32,7 +32,7 @@
   const breakpoint = createBreakpoint();
   let mediaQueries = $derived(designTokens.enabled
     ? getGridMediaQueries(designTokens.state.token) : undefined);
-  // $derived ленивый: Source проверяет пороги при SSR до подключения observer.
+  // $derived is lazy. Upstream validates breakpoints during SSR before attaching the observer.
   untrack(() => mediaQueries);
   let screens = $derived(breakpoint.connected ? breakpoint.screens : null);
   let gutters = $derived(gridGutters(gutter, screens));

@@ -1,4 +1,4 @@
-// Связывает Menu с владельцем панели Dropdown. Пункты и подменю используют один MenuContext.
+// Links Menu to the owner of the Dropdown panel. Points and submenus use one MenuContext.
 import { getContext, setContext } from 'svelte';
 
 export interface DropdownMenuView {
@@ -32,12 +32,12 @@ interface DropdownMenuScope {
 
 const key = Symbol('ant-dropdown-menu');
 
-/** Передаёт настройки ближайшему Menu внутри панели. */
+/** Passes settings to the nearest Menu inside the panel. */
 export function provideDropdownMenu(context: DropdownMenuContext, defaultSelectable?: boolean) {
   setContext<DropdownMenuScope>(key, { context, defaultSelectable });
 }
 
-/** Изолирует Menu. Регистрацию внешних подменю можно передать без управления выбором. */
+/** Isolates Menu. The registration of the external submenu can be transferred without the management of the choice. */
 export function takeDropdownMenu(retainPopupRegistration = false) {
   const scope = getContext<DropdownMenuScope | undefined>(key);
   if (scope) {

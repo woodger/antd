@@ -1,10 +1,10 @@
 <script module lang="ts">
-  /** Нулевой кадр компенсирует место значка в строке кнопки. */
+  /** The first frame accounts for the icon's space in the button row. */
   function collapsed() {
     return { width: 0, opacity: 0, transform: 'scale(0)' };
   }
 
-  /** scrollWidth доступен даже при нулевой ширине оболочки в начале перехода. */
+  /** scrollWidth is available even when the wrapper starts the transition at zero width. */
   function expanded(node: HTMLSpanElement) {
     const width = node.scrollWidth;
     return { width, opacity: 1, transform: 'scale(1)' };
@@ -12,7 +12,7 @@
 </script>
 
 <script lang="ts">
-  // Держит штатный значок до окончания leave. Доступность кнопки следует loading.
+  // Keeps the default icon until the leave transition ends. The loading state controls button accessibility.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { createCssMotion, type CssMotionState } from './css-motion.dom';
@@ -30,7 +30,7 @@
   } = $props();
 
   const theme = useDesignTokenContext();
-  // При первом рендере Button индикатор сразу видим, в том числе на сервере.
+  // The indicator is visible immediately on Button's first render, including on the server.
   const motionAppear = untrack(() => appear);
   let span = $state<HTMLSpanElement>();
   let retained = $state(false);
@@ -89,12 +89,12 @@
     }));
   });
 
-  /** CSSMotion проверяет принадлежность завершившегося перехода оболочке значка. */
+  /** CSSMotion checks whether the finished transition belongs to the icon wrapper. */
   function end(event: TransitionEvent | AnimationEvent) {
     motion?.end(event);
   }
 
-  /** Отмена старого перехода может прийти, когда уже работает новый. */
+  /** The old transition can report cancellation after the new one has started. */
   function cancel(event: TransitionEvent | AnimationEvent) {
     const node = span;
     if (node && event.target === node && node.getAnimations().length === 0) {

@@ -1,5 +1,5 @@
-// Применяет стили Badge слоями и сохраняет порядок shorthand/longhand.
-// Явные overrides и вычисленный inset border приходят после входных деклараций.
+// Applies Badge styles in layers and preserves shorthand and longhand order. Explicit overrides and
+// the computed inset border follow input declarations.
 import {
   getBadgeStyleDeclarations,
   getBadgeStyleValue,
@@ -7,7 +7,7 @@ import {
   type BadgeStyleLayer
 } from './badge-style.engine';
 
-/** React style diff сохраняет порядок shorthand/longhand при реактивных обновлениях. */
+/** React's style diff preserves shorthand and longhand order during reactive updates. */
 export function connectBadgeStyle(node: HTMLElement) {
   const parser = node.ownerDocument.createElement('span').style;
   let previous = new Map<string, { value: string; priority: string; }>();
@@ -15,7 +15,7 @@ export function connectBadgeStyle(node: HTMLElement) {
 
   return applyLayers;
 
-  // При первом вызове убирает декларации, которые HTML разобрал иначе, чем DOM setter.
+  // On the first call, removes declarations that HTML parsed differently from the DOM setter.
   function applyLayers(
     layers: readonly BadgeStyleLayer[],
     overrides: readonly (readonly [string, string])[] = [],
@@ -24,7 +24,7 @@ export function connectBadgeStyle(node: HTMLElement) {
     if (!initialized) {
       initialized = true;
       const raw = layers.filter(layer => typeof layer !== 'string');
-      // HTML style мог разобрать raw value как declarations; DOM setter принимает одно value.
+      // An HTML style can parse a raw value as declarations. The DOM setter accepts a single value.
       const serialized = serializeBadgeStyleLayers([...raw, overrides]);
       for (const { property } of getBadgeStyleDeclarations([serialized])) {
         node.style.removeProperty(property);

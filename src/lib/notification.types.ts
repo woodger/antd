@@ -20,7 +20,7 @@ export type NotificationSemanticProps = NotificationOptions & Partial<Notificati
 export type NotificationSemantic = NotificationSemanticSlots
   | ((info: { props: NotificationSemanticProps; }) => NotificationSemanticSlots | undefined);
 
-/** Оформление слотов. Явный inline style записи применяется после семантики. */
+/** Registration of slots. Obvious inline style records are used after semantics. */
 export interface NotificationAppearance {
   class?: string;
   style?: string;
@@ -28,7 +28,7 @@ export interface NotificationAppearance {
   styles?: NotificationSemantic;
 }
 
-/** Оформление и стандартная кнопка закрытия под ConfigProvider. */
+/** Registration and standard closing button under ConfigProvider. */
 export interface NotificationProviderConfig extends NotificationAppearance {
   closeIcon?: NotificationContent;
 }
@@ -38,7 +38,7 @@ export type NotificationRootAttributes = Omit<HTMLAttributes<HTMLDivElement>,
     | 'onfocusin' | 'onfocusout'
 > & { [key: `data-${string}`]: string | number | boolean | null | undefined; };
 
-/** Порог числа активных карточек в одном placement. */
+/** Threshold of the number of active cards in one placement. */
 export interface NotificationStackConfig {
   threshold?: number;
 }
@@ -46,72 +46,72 @@ export interface NotificationStackConfig {
 export interface NotificationClosable {
   disabled?: boolean;
   closeIcon?: NotificationContent;
-  /** Срабатывает перед onClose карточки при закрытии кнопкой или таймером. */
+  /** Triggers before onClose cards when closed with a button or timer. */
   onClose?: () => void;
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
 }
 
-/** Содержимое, положение и жизненный цикл одного уведомления. */
+/** The content, position and life cycle of a single notification. */
 export interface NotificationConfig extends NotificationAppearance {
   title?: NotificationContent;
   description?: NotificationContent;
   actions?: NotificationContent;
   icon?: NotificationContent;
   type?: NotificationType;
-  /** Совпадающий key обновляет уведомление, сохраняя его место в очереди. */
+  /** The matching key updates the notification, keeping its place in the queue. */
   key?: NotificationKey;
   placement?: NotificationPlacement;
-  /** Время в секундах; 0 или false отключает автоматическое закрытие. */
+  /** Time in seconds; 0 or false disables automatic closure. */
   duration?: number | false;
   pauseOnHover?: boolean;
-  /** Прогресс виден только у карточки с положительной длительностью. */
+  /** The progress is visible only at the card with a positive duration. */
   showProgress?: boolean;
   closable?: boolean | NotificationClosable;
   closeIcon?: NotificationContent;
   role?: 'alert' | 'status';
-  /** Дополнительные атрибуты div, включая data-* и ARIA. */
+  /** Additional attributes of div, including data-* and ARIA. */
   props?: NotificationRootAttributes;
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
-  /** Вызывается при начале закрытия; отсоединение holder не вызывает callback. */
+  /** Called when closing starts; disengagement holder does not cause callback. */
   onClose?: () => void;
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
 }
 
-/** Настройки очереди createNotification; локальная конфигурация уведомления имеет приоритет. */
+/** Settings createNotification; local notification configuration takes precedence. */
 export interface NotificationOptions {
   placement?: NotificationPlacement;
-  /** Продолжительность по умолчанию в секундах; без настройки — 4.5. */
+  /** Default duration in seconds; without setting — 4.5. */
   duration?: number | false;
   pauseOnHover?: boolean;
   showProgress?: boolean;
-  /** Общий лимит для всех placements. */
+  /** The overall limit for all placements. */
   maxCount?: number;
-  /** Корневой prefix всех списков. Пустая строка наследует ConfigProvider. */
+  /** Root prefix of all lists. Empty line inherits ConfigProvider. */
   prefixCls?: string;
   /** @defaultValue 24 */
   top?: number;
   /** @defaultValue 24 */
   bottom?: number;
-  /** При отсутствии значения используется направление ConfigProvider. */
+  /** In the absence of a value, the direction ConfigProvider is used. */
   rtl?: boolean;
-  /** Браузерный getter вызывается без аргументов. */
+  /** Browser getter is called without arguments. */
   getContainer?: () => HTMLElement | ShadowRoot | null | undefined;
-  /** По умолчанию список сворачивается при числе карточек больше трёх. */
+  /** By default, the list is folded with the number of cards more than three. */
   stack?: boolean | NotificationStackConfig;
   closeIcon?: NotificationContent;
   classNames?: NotificationSemantic;
   styles?: NotificationSemantic;
-  /** Вызывается после удаления последнего DOM-узла очереди. */
+  /** Is called after the removal of the last DOM-node of the queue. */
   onAllRemoved?: () => void;
 }
 
 export type NotificationInstance = ReturnType<typeof createNotification>;
 
-/** Единственная поверхность экземпляра createNotification для всех placements. */
+/** The createNotification instance uses one surface across all placements. */
 export interface NotificationHolderProps extends Omit<NotificationOptions,
   'duration' | 'placement' | 'maxCount' | 'pauseOnHover' | 'showProgress'
 > {

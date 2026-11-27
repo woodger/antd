@@ -1,4 +1,4 @@
-// Строит строки сообщений Form и удерживает удаляемые строки до окончания motion.
+// Builds Form message strings and keeps deleted strings until motion ends.
 import type { FormErrorListProps, FormValidateStatus } from './form-error-list.types';
 import type { RenderEmptyContent } from './types';
 
@@ -12,12 +12,12 @@ export interface FormErrorMotionEntity extends FormErrorEntity {
   visible: boolean;
 }
 
-/** Текст сохраняет identity; дубликаты и имена Object.prototype не создают одинаковые keys. */
+/** The text preserves identity; duplicates and names Object.prototype do not create the same keys. */
 export function buildFormErrorList({
   help, helpStatus, errors = [], warnings = []
 }: Pick<FormErrorListProps, 'help' | 'helpStatus' | 'errors' | 'warnings'>): FormErrorEntity[] {
-  // Формирует ключ по префиксу и содержимому. Счётчик повторов применяется после построения
-  // списка.
+  // Forms a key on the prefix and content. The repeat counter is used after the construction of the
+  // list.
   function entity(
     content: RenderEmptyContent,
     prefix: string,
@@ -51,7 +51,7 @@ export function buildFormErrorList({
   });
 }
 
-/** Порядок leaving rows следует diffKeys @rc-component/motion 1.3.3; см. LICENSE.rc-motion. */
+/** The order of leaving rows follows diffKeys @rc-component/motion 1.3.3; see LICENSE.rc-motion. */
 export function reconcileFormErrorList(
   previous: readonly FormErrorMotionEntity[],
   current: readonly FormErrorEntity[]

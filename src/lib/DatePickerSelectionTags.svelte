@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType extends object">
-  // Показывает выбранные периоды и адаптивный счётчик. Скрытые теги участвуют
-  // в измерении, сохраняя порядок и исключаясь из клавиатурной навигации.
+  // Shows selected periods and the responsive count. Hidden tags stay in measurement order and are
+  // excluded from keyboard navigation.
   import { onMount } from 'svelte';
   import type { DatePickerMultipleProps } from './date-picker.types';
   import { connectSelectTagOverflow } from './select-tag-overflow.dom';
@@ -131,7 +131,7 @@
     padding:0;
     font:inherit;
   }
-  /* Поле доступно для фокуса. Текст и рамку отображает оболочка выбора. */
+  /* The field can receive focus. The selection wrapper displays its text and border. */
   :global([data-ant-picker-prefix]) [data-picker-tag-selector] + :global(input[data-picker-multiple-input]) {
     visibility:visible;
     opacity:0;

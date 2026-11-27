@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-  // Связывает native доступность и toggling с текущим checked. Form и клавиатура работают через
-  // тот же элемент.
+  // Connects native accessibility and toggling to the current checked state. The form and keyboard
+  // use the same element.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -72,7 +72,7 @@
     .filter(([key]) => !owned.has(key))));
 
   $effect.pre(() => {
-    // Keyed removal может вызвать native blur после уничтожения props родителя.
+    // Keyed removal can fire native blur after the parent's props have been disposed.
     blurCallbacks = { onBlur: props.onBlur, onblur: props.onblur };
   });
 
@@ -141,7 +141,7 @@
   function handleKeyDown(
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLButtonElement; }
   ) {
-    // React нормализует which из keyCode; rc-switch проверяет LEFT/RIGHT по этим кодам.
+    // React derives which from keyCode. rc-switch uses those codes for LEFT and RIGHT.
     const code = event.keyCode;
     if (!resolvedDisabled && (code === 37 || code === 39)) {
       change(code === 39, event);
@@ -173,7 +173,7 @@
       return;
     }
 
-    // Отмена reset учитывается после всех обработчиков, включая window.
+    // Honor reset cancellation after all handlers, including window listeners.
     const reset = setTimeout(() => {
       resets.delete(reset);
 
@@ -192,7 +192,7 @@
 </style>
 
 <svelte:document onreset={handleReset} />
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`switch-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_autofocus (Сохраняются публичный autoFocus и нативный autofocus.) --><button
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`switch-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_autofocus (Preserves public autoFocus and native autofocus.) --><button
   {...attributes}
   bind:this={nativeElement}
   data-ant-switch-root

@@ -39,7 +39,7 @@
   const designTokens = useDesignTokenContext();
   let mediaQueries = $derived(designTokens.enabled
     ? getGridMediaQueries(designTokens.state.token) : undefined);
-  // Source проверяет порядок порогов и при SSR, до подключения matchMedia.
+  // Upstream checks breakpoint order during SSR too, before attaching matchMedia.
   untrack(() => mediaQueries);
   let columns = $derived(descriptionsColumn(column, breakpoint.screens));
   let rows = $derived(descriptionsRows(items, columns, breakpoint.screens));

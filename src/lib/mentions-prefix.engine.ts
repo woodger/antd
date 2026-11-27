@@ -1,6 +1,6 @@
 import template from './vendor/mentions-prefix.css.js';
 
-/** Text triggers/IDs не зависят от CSS prefix; private input variables используют общий namespace. */
+/** Text triggers/IDs does not depend on CSS prefix; private input variables use general namespace. */
 export function getMentionsPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-mentions' && rootPrefix === 'ant') {
     return undefined;

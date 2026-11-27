@@ -1,6 +1,6 @@
 import template from './vendor/anchor-prefix.css.js';
 
-/** Общий token marker сохраняется; wrapper/alias reset ограничен владельцем prefix. */
+/** The shared token marker stays in place. Wrapper and alias resets are scoped to the prefix owner. */
 export function getAnchorPrefixCss(prefix: string) {
   if (prefix === 'ant-anchor') {
     return undefined;

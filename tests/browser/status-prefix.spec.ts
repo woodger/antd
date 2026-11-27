@@ -5,7 +5,7 @@ import { snapshotStatusPrefix } from './status-prefix-metrics';
 function expectedNative(result: typeof reference.cases[number]['result']) {
   const copy = structuredClone(result);
   for (const widgets of Object.values(copy)) {
-    // Согласованные Native group spacing и прежние Tag default/RTL classes сохранены.
+    // Harmonized Native group spacing and previous Tag default/RTL classes are saved.
     widgets['avatar-group'].padding = widgets['avatar-group'].direction === 'rtl'
       ? '0px 8px 0px 0px' : '0px 0px 0px 8px';
     widgets.tag.classes.push(`${widgets.tag.classes[0]}-default`);

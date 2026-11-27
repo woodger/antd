@@ -3,7 +3,7 @@ import { getGridMediaCss, getGridMediaScope } from './grid-style.engine';
 import { hashTokenString } from './theme-hash.engine';
 import type { AliasToken } from './theme-token.types';
 
-/** Prefix scope независим от общего media scope, включая canonical Col в другом namespace. */
+/** Prefix scope is independent of the overall media scope, including canonical Col in another namespace. */
 export function getGridColPrefixScope(prefix: string, rootPrefix: string, token: AliasToken) {
   if (prefix === 'ant-col' && rootPrefix === 'ant') {
     return undefined;
@@ -14,7 +14,7 @@ export function getGridColPrefixScope(prefix: string, rootPrefix: string, token:
   )}`;
 }
 
-/** Полный Col template сохраняет media thresholds, canonical tokens и namespace private vars. */
+/** The full Col template preserves media thresholds, canonical tokens and namespace private vars. */
 export function getGridColPrefixCss(prefix: string, rootPrefix: string, token: AliasToken) {
   const scope = getGridColPrefixScope(prefix, rootPrefix, token);
   if (!scope) {

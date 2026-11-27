@@ -1,17 +1,17 @@
-// Нормализует пары DateRangePicker и проверяет их перед подтверждением. Сортировка и проверка
-// границ учитывают order и disabled.
+// Normalizes pairs DateRangePicker and checks them before confirmation. Sorting and checking
+// boundaries take into account order and disabled.
 import type { Dayjs } from 'dayjs';
 import type { RangePickerInputValue, RangePickerValue } from './range-picker.types';
 import type { DatePickerPicker } from './date-picker.types';
 import { createDatePickerEngine } from './date-picker.engine';
 import { dayjsPickerDates, type PickerDateOperations } from './picker-date-operations.engine';
-// Заполняет отсутствующие концы диапазона значением null, сохраняя ссылки на даты.
+// Fills the missing ends of the range with a value of null, saving references to dates.
 export function rangePair<DateType extends object = Dayjs>(
   value: RangePickerInputValue<DateType> | null | undefined
 ): RangePickerValue<DateType> {
   return [value?.[0] ?? null, value?.[1] ?? null];
 }
-// Применяет скалярный флаг к обоим полям. Массив задаёт первый и второй флаг независимо.
+// Applies a scalar flag to both fields. The array sets the first and second flag independently.
 export function rangeFlags(
   value: boolean | readonly boolean[] | undefined,
   fallback = false
@@ -20,7 +20,7 @@ export function rangeFlags(
     ? [Boolean(value[0]), Boolean(value[1])]
     : [value ?? fallback, value ?? fallback] as [boolean, boolean];
 }
-// Выбирает первое заполненное из уже затронутых полей, если оно отличается от активного.
+// Chooses the first one filled out of already affected fields, if it differs from active.
 export function rangeFrom<DateType extends object>(
   values: RangePickerValue<DateType>,
   triggered: readonly number[],
@@ -30,19 +30,19 @@ export function rangeFrom<DateType extends object>(
   return first !== undefined && first !== active ? values[first] ?? undefined : undefined;
 }
 
-/** Проверяет и упорядочивает значения диапазона в календаре текущего адаптера. */
+/** Verifies and adjusts the range values in the current adapter calendar. */
 export function createRangePickerEngine<DateType extends object>(
   dates: PickerDateOperations<DateType>,
   calendar = createDatePickerEngine(dates)
 ) {
   const { samePickerQuarter, samePickerWeek } = calendar;
 
-  // Сравнивает timestamp соответствующих границ и учитывает отсутствующие значения.
+  // Compares timestamp of the corresponding boundaries and takes into account the missing values.
   function sameRange(a: RangePickerValue<DateType>, b: RangePickerValue<DateType>): boolean {
     return a.every((date, index) => dates.sameValue(date, b[index]));
   }
-  // Возвращает новую пару. Меняет границы местами только при разрешённой сортировке и двух
-  // доступных полях.
+  // Bringing back a new pair. Changes the boundaries in places only with permitted sorting and two
+  // available fields.
   function orderedRange(
     value: RangePickerValue<DateType>,
     order: boolean,
@@ -52,8 +52,8 @@ export function createRangePickerEngine<DateType extends object>(
       ? [value[1], value[0]]
       : [...value];
   }
-  // Проверяет наличие границ и допустимый порядок календарных периодов до вызова invalid для
-  // доступных полей.
+  // Verifies the existence of boundaries and the permissible order of calendar periods before
+  // calling invalid for available fields.
   function validRange(
     value: RangePickerValue<DateType>,
     allowEmpty: readonly boolean[],

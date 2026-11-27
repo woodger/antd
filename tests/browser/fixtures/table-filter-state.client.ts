@@ -12,7 +12,7 @@ if (!target) {
   throw new Error('Missing server-rendered Table filter state');
 }
 
-// Серверная кнопка получает фокус прежде, чем hydrate подключит обработчики.
+// The server button gets the focus before hydrate connects the handlers.
 target.addEventListener('hydrate-table-filter-state', () => {
   const query = new URLSearchParams(location.search);
   if (query.has('filter-dropdown')) {

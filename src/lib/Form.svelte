@@ -82,7 +82,7 @@
   });
 
   provideFormList(undefined);
-  // Source NoFormStyle сбрасывает visual status, сохраняя metadata ближайшего внешнего Item.
+  // Upstream NoFormStyle resets visual status and preserves metadata from the nearest outer Item.
   provideFormItemStatus(Object.create(useFormItemStatusContext(), {
     status: { get: () => undefined }
   }));
@@ -90,7 +90,7 @@
     hasFeedback: { value: false }, icon: { value: undefined }
   }));
 
-  // Form передаёт SizeContext/DisabledContext; остальные reactive defaults сохраняют владельца.
+  // Form passes down SizeContext and DisabledContext. Other reactive defaults stay with their owner.
   const fieldConfig: ConfigContext = Object.create(config, {
     componentSize: { get: () => size ?? config.componentSize },
     explicitComponentSize: { get: () => resolvedSize },

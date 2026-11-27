@@ -6,7 +6,7 @@ import TableSummaryFixture from '../browser/fixtures/TableSummaryFixture.svelte'
 import focusSource from '../browser/fixtures/ant-design-table-summary-focus-reference.json';
 import source from '../browser/fixtures/ant-design-table-summary-reference.json';
 
-/** Извлекает серверные значения итоговых ячеек и их HTML spans. */
+/** Extracts server-rendered summary cell values and their HTML spans. */
 function summaryRows(markup: string) {
   const foot = markup.match(/<tfoot\b[^>]*>([\s\S]*?)<\/tfoot>/)?.[1] ?? '';
   return Array.from(foot.matchAll(/<tr\b([^>]*)>([\s\S]*?)<\/tr>/g), ([, attributes, content]) => ({

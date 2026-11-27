@@ -37,7 +37,7 @@
   --ant-rate-default-star-color: #fadb14;
 }
 
-/* Select сохраняет внешний container; compact-геометрия принадлежит ему. */
+/* Select retains the outer container, which owns compact geometry. */
 .ant-select-compact-item { border-radius: var(--ant-border-radius); }
 .ant-select-compact-item.ant-select-lg { border-radius: var(--ant-border-radius-lg); }
 .ant-select-compact-item.ant-select-sm { border-radius: var(--ant-border-radius-sm); }
@@ -87,7 +87,7 @@
   --ant-card-header-padding: var(--ant-padding-lg);
 }
 
-/* Прямые Grid видны CSS при SSR до client detection непрозрачных snippets. */
+/* CSS sees direct Grid children during SSR, before client detection of opaque snippets. */
 .ant-card:where(:not([data-ant-contain-grid='false']):has(> .ant-card-body > .ant-card-grid)) { border-radius: var(--ant-border-radius-lg) var(--ant-border-radius-lg) 0 0; }
 .ant-card:where(:not([data-ant-contain-grid='false']):has(> .ant-card-body > .ant-card-grid)):not(:has(> .ant-card-head)) { border-radius: 0; }
 .ant-card:where(:not([data-ant-contain-grid='false']):has(> .ant-card-body > .ant-card-grid)) .ant-card-body {
@@ -132,7 +132,7 @@
   --ant-layout-light-trigger-color: var(--ant-color-text);
 }
 
-/* Snippet непрозрачен для SSR; CSS определяет прямой Sider до client registration. */
+/* SSR cannot inspect the snippet. CSS identifies a direct Sider before client registration. */
 .ant-layout:not([data-ant-has-sider='false']):has(> .ant-layout-sider) { flex-direction: row; }
 .ant-layout:not([data-ant-has-sider='false']):has(> .ant-layout-sider) > .ant-layout,
 .ant-layout:not([data-ant-has-sider='false']):has(> .ant-layout-sider) > .ant-layout-content { width: 0; }
@@ -448,7 +448,7 @@
 }
 
 .ant-listy-css-var {
-  /* Исходный font map задаёт fontSize + 8px, в том числе для compact. */
+  /* The upstream font map uses fontSize + 8px, including in compact mode. */
   line-height: calc(var(--ant-font-size) + 8px);
   --ant-listy-item-padding-block: var(--ant-padding-sm);
   --ant-listy-item-padding-inline: var(--ant-padding);

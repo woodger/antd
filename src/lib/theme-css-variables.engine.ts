@@ -35,7 +35,7 @@ export function tokenToCSSVariable(token: string, prefix = ''): string {
     .toLowerCase();
 }
 
-/** Breakpoints остаются числами, motion parameters и непримитивные токены не попадают в CSS. */
+/** Breakpoints remain numbers, motion parameters and non-primitive tokens do not fall into CSS. */
 export function transformThemeToken(token: object, prefix = 'ant') {
   const variables: Record<string, string> = {};
   const result: Record<string, string | number> = {};
@@ -56,7 +56,7 @@ export function transformThemeToken(token: object, prefix = 'ant') {
   return { token: result, variables };
 }
 
-/** Inline boundary сохраняет SSR-escaping Svelte; пользовательский style дописывается после неё. */
+/** Inline boundary preserves SSR-escaping Svelte; the custom style is written up after it. */
 export function serializeThemeVariables(variables: Record<string, string>, prefix = 'ant'): string {
   const entries = Object.entries(variables);
   const cssPrefix = tokenToCSSVariable('', prefix);
@@ -70,7 +70,7 @@ export function serializeThemeVariables(variables: Record<string, string>, prefi
   return entries.map(([key, value]) => `${key}:${value}`).join(';');
 }
 
-/** Сохраняет вычисленные CSS-переменные для восстановления после вложенного компонента. */
+/** Saves calculated CSS-variables to recover from the nested component. */
 export function snapshotThemeVariables(names: Iterable<string>, scope: string) {
   const snapshots: string[] = [];
   const resets: Record<string, string> = {};
@@ -83,7 +83,7 @@ export function snapshotThemeVariables(names: Iterable<string>, scope: string) {
   return { snapshots: snapshots.join(';'), resets };
 }
 
-/** Снимок provider CSS сохраняет его inline overrides при сбросе aliases на дочерних roots. */
+/** Snapholder CSS preserves its inline overrides when resetting aliases on child roots. */
 export function themeVariableScopes(
   variables: Record<string, string>,
   prefix: string,

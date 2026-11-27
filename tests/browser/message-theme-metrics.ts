@@ -1,10 +1,10 @@
-/** Сверяет оформление Message, сохраняя native popover и управление viewport в DOM-controller. */
+/** Reconciles the design of Message, saving native popover and managing viewport in DOM-controller. */
 export function snapshotMessageTheme() {
   const root = document.querySelector('.ant-message');
   if (!root) {
     throw new Error('Message root is missing');
   }
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;
@@ -34,7 +34,7 @@ export function snapshotMessageTheme() {
   };
 }
 
-/** Все объявления component registration rule из официального UMD. */
+/** All announcements of registration component rule from the official UMD. */
 export function snapshotMessageThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-message');
   if (!root) {

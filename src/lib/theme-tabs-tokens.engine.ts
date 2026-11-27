@@ -1,6 +1,6 @@
 import type { GlobalToken, TabsComponentToken } from './theme-component-token.types';
 
-/** prepareComponentToken Tabs 6.6.8: custom heights участвуют в расчёте defaults padding. */
+/** prepareComponentToken Tabs 6.6.8: custom heights participate in the calculation of default padding. */
 export function prepareTabsTokens(token: GlobalToken & Partial<TabsComponentToken>) {
   const cardHeight = token.cardHeight || token.controlHeightLG;
   const cardHeightSM = token.cardHeightSM || token.controlHeight;

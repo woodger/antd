@@ -1,11 +1,9 @@
-// Разбирает текстовые разделители Select и сопоставляет полученные слова с допустимыми
-// значениями.
+// Disassembles text dividers Select and compares the received words with the permissible values.
 import type { SelectTokenSeparators } from './select.types';
 import type { SelectDataFields, SelectDataMaps, SelectDataValue } from './select-data.types';
 
-/** @rc-component/select 1.10.1; MIT, см. vendor/LICENSE.rc-select. */
-// Возвращает null, когда исходный текст не разделён. end ограничивает только завершённый
-// результат.
+/** @rc-component/select 1.10.1; MIT, see vendor/LICENSE.rc-select. */
+// Returns null, when the original text is not separated. end limits only the completed result.
 export function splitSelectTokens(text: string, separators?: SelectTokenSeparators, end?: number) {
   if (typeof separators === 'function') {
     const words = separators(text);
@@ -18,7 +16,7 @@ export function splitSelectTokens(text: string, separators?: SelectTokenSeparato
   const tokens = separators;
   let matched = false;
 
-  // Применяет оставшиеся разделители к каждому фрагменту и убирает пустые токены.
+  // Applies the remaining dividers to each fragment and removes empty tokens.
   function split(value: string, index: number): string[] {
     const token = tokens[index];
     if (!token) {
@@ -33,7 +31,7 @@ export function splitSelectTokens(text: string, separators?: SelectTokenSeparato
   return matched ? words.slice(0, end) : null;
 }
 
-/** Multiple разрешает label/явные search fields, tags создаёт строки; disabled не добавляются. */
+/** Multiple allows label/obvious search fields, tags creates strings; disabled are not added. */
 export function resolveSelectTokenOptions<Value extends SelectDataValue, Data extends object>(
   maps: SelectDataMaps<Value, Data>,
   words: readonly string[],

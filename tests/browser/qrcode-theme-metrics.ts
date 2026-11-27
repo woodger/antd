@@ -7,15 +7,14 @@ export function snapshotQRCodeTheme() {
       const drawing = (canvas ?? svg)!;
       const cover = root.querySelector('.ant-qrcode-cover');
       const text = root.querySelector('.ant-qrcode-expired, .ant-qrcode-scanned');
-      // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-      // свойств.
+      // Saves individual computed declarations. Serialized image is compared by property names.
       const style = (node: Element, fields: string[]) => {
         const css = getComputedStyle(node);
         return Object.fromEntries(fields.map(field => [field, css.getPropertyValue(field)]));
       };
       let palette: string[] | undefined;
       if (canvas) {
-        // Readback copy не меняет режим 2D context production canvas.
+        // Readback copy does not change the 2D context production canvas mode.
         const copy = document.createElement('canvas');
         copy.width = canvas.width;
         copy.height = canvas.height;

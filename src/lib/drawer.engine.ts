@@ -1,4 +1,4 @@
-// Преобразует dimension и placement Drawer в размер, смещение и параметры движения без DOM.
+// Converts Drawer dimension and placement into size, offset, and motion parameters without using the DOM.
 import type {
   DrawerConfig, DrawerFocusableConfig, DrawerMask,
   DrawerPlacement, DrawerPushConfig, DrawerSize
@@ -9,7 +9,7 @@ export const DEFAULT_DRAWER_SIZE = 378;
 export const DEFAULT_DRAWER_PUSH_DISTANCE = 180;
 const defaultSizeInCss = `${DEFAULT_DRAWER_SIZE}px`;
 
-/** Выбирает native modality для прежних настроек и разрешает независимые режимы фокуса. */
+/** Select native modality for previous settings and allows independent focus modes. */
 export function resolveDrawerInteraction(
   mask: DrawerMask | undefined,
   focusable: DrawerFocusableConfig | undefined,
@@ -33,7 +33,7 @@ export function resolveDrawerInteraction(
 
 export type DrawerInteraction = ReturnType<typeof resolveDrawerInteraction>;
 
-/** Сохраняет CSS-длины. Ноль допустим как результат изменения размера панели. */
+/** Retains CSS-length. Let's say zero as a result of changing the size of the panel. */
 export function getDrawerSize(size: DrawerSize = 'default', allowZero = false): string {
   if (size === 'default') {
     return defaultSizeInCss;
@@ -50,17 +50,17 @@ export function getDrawerSize(size: DrawerSize = 'default', allowZero = false): 
   return /^\d+(\.\d+)?$/.test(text) ? `${text}px` : text || defaultSizeInCss;
 }
 
-/** Только абсолютный размер в пикселях может заменить измерение в начале drag. */
+/** Only an absolute size in pixels can replace the measurement at the beginning drag. */
 export function getDrawerPixelSize(size: string): number | undefined {
   return /^(\d+(\.\d*)?|\.\d+)px$/i.test(size) ? Number.parseFloat(size) : undefined;
 }
 
-/** Ось resize следует физической стороне панели и не зависит от direction. */
+/** The axis resize follows the physical side of the panel and does not depend on the direction. */
 export function isDrawerHorizontal(placement: DrawerPlacement): boolean {
   return placement === 'left' || placement === 'right';
 }
 
-/** Возвращает предлагаемый размер из полной дельты от момента захвата. */
+/** Brings back the proposed size from the full delta from the moment of capture. */
 export function getDrawerResizeSize(
   placement: DrawerPlacement,
   startSize: number,
@@ -74,7 +74,7 @@ export function getDrawerResizeSize(
     ? Math.min(maxSize, next) : next;
 }
 
-/** Неявный push задаёт 180px. Явный true или пустой объект наследуют distance. */
+/** An implicit push sets 180px. An explicit true or an empty object inherits distance. */
 export function getDrawerPushDistance(
   push: boolean | DrawerPushConfig | undefined,
   parentDistance?: number
@@ -95,7 +95,7 @@ export function getDrawerPushDistance(
   return Number.isFinite(pixels) ? pixels : 0;
 }
 
-/** Смещает открытую панель от края. Translate складывается с собственной анимацией transform. */
+/** Shifts the open panel from the edge. Translate develops with its own animation transform. */
 export function getDrawerPushOffset(placement: DrawerPlacement, distance: number): string | undefined {
   if (distance === 0) {
     return undefined;
@@ -106,7 +106,7 @@ export function getDrawerPushOffset(placement: DrawerPlacement, distance: number
   return isDrawerHorizontal(placement) ? offset : `0px ${offset}`;
 }
 
-/** Начальный и конечный кадры движения относятся к физической стороне. */
+/** Initial and final motion footage refers to the physical side. */
 export function getDrawerTransform(placement: DrawerPlacement): string {
   return {
     left: 'translateX(-100%)',
@@ -116,7 +116,7 @@ export function getDrawerTransform(placement: DrawerPlacement): string {
   }[placement];
 }
 
-/** Возвращает длительность в миллисекундах, включая нулевое значение темы. */
+/** Returns the duration in milliseconds, including the zero value of the theme. */
 export function getDrawerMotionDuration(value: string): number {
   const match = value.trim().match(/^(\d*\.?\d+)(ms|s)$/);
   if (!match) {

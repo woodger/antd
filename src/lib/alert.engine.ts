@@ -1,6 +1,6 @@
 import type { AlertCloseAttributes, AlertConfig, AlertProps } from './alert.types';
 
-/** Приоритеты closable; прежний local closeIcon='' остаётся пустым. */
+/** Precedence for closable. The existing local closeIcon='' stays empty. */
 export function resolveAlertClose(props: AlertProps, config?: AlertConfig) {
   const { closable } = props;
   const local = closable && typeof closable === 'object' ? closable : undefined;

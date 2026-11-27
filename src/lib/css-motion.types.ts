@@ -7,14 +7,14 @@ type MotionPrepare<Element extends HTMLElement> = (element: Element) => void | P
 type MotionApply<Element extends HTMLElement> = (element: Element, event: null) => CssMotionStyle | void;
 type MotionEnd<Element extends HTMLElement> = (element: Element, event: CssMotionEvent) => boolean | void;
 
-/** Настройки фаз CSSMotion с DOM-узлом получателя. */
+/** CSSMotion phase options with the target DOM node. */
 export interface CssMotionConfig<Element extends HTMLElement = HTMLElement> {
   motionName?: CssMotionName;
   motionAppear?: boolean;
   motionEnter?: boolean;
   motionLeave?: boolean;
   motionLeaveImmediately?: boolean;
-  /** Положительное число миллисекунд после начала активной фазы. */
+  /** Positive number of milliseconds after the active phase starts. */
   motionDeadline?: number;
   onAppearPrepare?: MotionPrepare<Element>;
   onEnterPrepare?: MotionPrepare<Element>;
@@ -25,7 +25,7 @@ export interface CssMotionConfig<Element extends HTMLElement = HTMLElement> {
   onAppearActive?: MotionApply<Element>;
   onEnterActive?: MotionApply<Element>;
   onLeaveActive?: MotionApply<Element>;
-  /** Возврат false оставляет переход активным до следующего события. */
+  /** Returning false keeps the transition active until the next event. */
   onAppearEnd?: MotionEnd<Element>;
   onEnterEnd?: MotionEnd<Element>;
   onLeaveEnd?: MotionEnd<Element>;

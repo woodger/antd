@@ -4,7 +4,7 @@ export function snapshotCalendarPrefix() {
   const shared = host.dataset.rootPrefix!;
   const calendar = `${prefix}-calendar`;
   const root = host.querySelector('.fixture-calendar-prefix')!;
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   const css = (node: Element | null | undefined, names: string[], pseudo?: string) => {
     if (!node) {
       return null;

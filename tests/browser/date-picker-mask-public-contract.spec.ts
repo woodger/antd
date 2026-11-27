@@ -14,7 +14,7 @@ async function open(page: Page, owner: Owner, scenario: Scenario) {
   return input;
 }
 async function control(page: Page, name: 'reset' | 'plain') {
-  // Обычный owner control сохраняет фокус: click вызывает его публичный DOM handler.
+  // The usual owner control retains a focus: click triggers its public DOM handler.
   await page.locator('[data-contract-' + name + ']').evaluate(button => {
     if (!(button instanceof HTMLButtonElement)) {
       throw Error('Owner control is not a button');

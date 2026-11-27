@@ -1,6 +1,6 @@
 import template from './vendor/listy-prefix.css.js';
 
-/** Scoped CSS работает с raw/virtual parts; scrollbar variable принадлежит rc-virtual-list. */
+/** Scoped CSS targets the raw and virtual parts. rc-virtual-list owns the scrollbar variable. */
 export function getListyPrefixCss(prefix: string) {
   if (prefix === 'ant-listy') {
     return undefined;

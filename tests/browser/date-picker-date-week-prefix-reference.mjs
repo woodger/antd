@@ -8,10 +8,10 @@ const prefix = 'ant-design-date-picker-date-week-prefix-';
 const source = '.upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/';
 const protocolSHA = '22e37486124e2066fbf53f7e53a9bfd7ae119c154413fcad03a46f07a76eccc6';
 const authoredNames = ['initialStart', 'initialEnd'];
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = file => new URL('./fixtures/' + file, import.meta.url);
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const metadataBytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
 assert.equal(sha(metadataBytes), '36370886c1cae8c0cdb845634687b854d165eca09bdf5206eb074979f50f03f5');
@@ -32,7 +32,7 @@ assert.equal(metadata.serialization.completeOriginalManifests, 4);
 assert.equal(Object.keys(metadata.parts).length, 132);
 assert.equal(metadata.serialization.originalStoredGzipBytesCopiedExactly, true);
 
-// Читает один документ захвата и сверяет исходный размер и хеш до возврата байтов.
+// Reads one capture document and checks the original size and hash before returning bytes.
 export function readDateWeekPrefixSourceEvidence(name) {
   const entry = metadata.documents[name];
   assert(entry, 'Unknown original Source evidence document');
@@ -71,14 +71,14 @@ for (const run of release.runs) {
   assert.equal(run.terminalPinsUnchanged, true);
 }
 
-// Определяет исходный манифест отдельно для CSR и SSR и для каждого независимого прогона.
+// Defines the original manifest separately for CSR and SSR and for each independent running.
 function scope(kind, variant) {
   assert(['csr', 'ssr'].includes(kind), 'Unknown Source capture kind');
   assert(['first', 'repeat'].includes(variant), 'Unknown independent Source capture');
   return source + kind + '-source-' + variant + '.json';
 }
-// Проверяет размеры и хеши сжатых и исходных байтов. Распаковка происходит между этими
-// проверками.
+// Checks the dimensions and hashes of compressed and original bytes. Unpacking takes place between
+// these checks.
 function decodeStored(entry, stored) {
   const original = entry.original;
   assert.match(entry.fixture, new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$'));
@@ -91,12 +91,12 @@ function decodeStored(entry, stored) {
   assert.equal(sha(bytes), original.sha256);
   return bytes;
 }
-// Читает одну часть и разбирает JSON после сверки с исходной записью манифеста.
+// Readers one part and disassembles JSON after the reconciliation with the original record of the manifesto.
 function decode(entry) {
   return JSON.parse(decodeStored(entry, fs.readFileSync(fixture(entry.fixture))));
 }
-// Проверяет привязку части к конкретному прогону и исходным метаданным. При заданном пути сверяет
-// и слот действия.
+// Verifies the binding of the part to a specific run and the initial metadata. In a given way, the
+// action slot also checks.
 export function verifyDateWeekPrefixSourcePartBinding(
   reference,
   kind,
@@ -119,7 +119,7 @@ export function verifyDateWeekPrefixSourcePartBinding(
   assert.deepEqual(entry.original, original, 'Exact original raw/stored metadata');
   return entry;
 }
-// Находит прогон, которому принадлежит исходная часть по зафиксированному имени файла.
+// Finds a run that owns the original part of the fixed file name.
 function partScope(reference) {
   const original = reference.rawJSONPart ?? reference;
   for (const kind of ['csr', 'ssr']) {
@@ -131,12 +131,12 @@ function partScope(reference) {
   }
   throw Error('Part does not belong to this independent Source corpus');
 }
-// Сверяет переданные сжатые байты с записью исходного прогона перед распаковкой.
+// Checks the transmitted compressed bytes with the recording of the original run before unpacking.
 export function verifyDateWeekPrefixSourceStoredBytes(reference, stored) {
   const { kind, variant } = partScope(reference);
   return decodeStored(verifyDateWeekPrefixSourcePartBinding(reference, kind, variant), stored);
 }
-// Выбирает привязку по ссылке на захват и читает одну проверенную часть.
+// Selects a binding on the capture link and reads one verified part.
 export function readDateWeekPrefixSourcePart(reference) {
   const { kind, variant } = partScope(reference);
   return decode(verifyDateWeekPrefixSourcePartBinding(reference, kind, variant));
@@ -181,7 +181,7 @@ export function verifyDateWeekPrefixSourceManifest(value, kind = 'csr', variant 
     assert.deepEqual(row.observationErrors, []);
     assert.deepEqual(row.network.failures, []);
     assert(row.network.responses.every(response => response.status < 400));
-    // Привязывает часть к конкретному owner и фазе действия в исходном прогоне.
+    // Binds the part to the specific owner and the phase of action in the original run.
     const bind = (ref, phase) => verifyDateWeekPrefixSourcePartBinding(ref, kind, variant,
       file + '.parts/' + row.id + '-' + phase + '.json');
     bind(row.initial, 'initial');
@@ -227,8 +227,8 @@ export function readDateWeekPrefixSourceCase(id, variant = 'first') {
   assert(row, 'Unknown public Source week owner');
   return row;
 }
-// Разрешает идентификатор объекта и имя его свойства. Сохраняет сериализованное значение без
-// преобразования.
+// Allows object identifier and the name of its properties. Retains a serialized value without
+// conversion.
 function property(graph, identity, key) {
   const node = graph.objects.find(node => node.id === identity);
   assert(node, 'Missing actual raw object identity');
@@ -236,7 +236,7 @@ function property(graph, identity, key) {
   assert(found && Object.hasOwn(found, 'value'), 'Missing original data property ' + key);
   return found.value;
 }
-// Сверяет поля и identity даты с исходным графом и привязками к переданным значениям.
+// Conserves fields and dates with the original graph and bindings to the transmitted values.
 function dateSnapshot(value, authored) {
   assert.equal(value.raw.root.ref, value.identity);
   const fields = ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'];
@@ -252,8 +252,8 @@ function dateSnapshot(value, authored) {
     assert.equal(value.sameAsAuthored[name], value.identity === authored[name].identity);
   }
 }
-// Проверяет порядковый индекс и число фактических аргументов вызова, сохраняя исходный снимок
-// аргументов.
+// Verifies the serial index and the number of actual call arguments, maintaining the initial
+// snapshot of the arguments.
 function invocation(call, index, authored) {
   assert.equal(call.index, index, 'Monotonic invocation index');
   const matchingProperty = call.encodedArguments.properties.find(row => row.key === 'length');

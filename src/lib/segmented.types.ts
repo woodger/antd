@@ -6,7 +6,7 @@ import type { TooltipProps } from './tooltip.types';
 export type SegmentedValue = string | number;
 export interface SegmentedOption<Value extends SegmentedValue = SegmentedValue> {
   value: Value;
-  /** Рядом с icon пустая строка не создаёт текстовый span; числовой 0 отображается. */
+  /** Next to the icon, an empty string doesn't create a text span; the numerical 0 is displayed. */
   label?: string | number | Snippet;
   icon?: Snippet;
   title?: string;
@@ -16,7 +16,7 @@ export interface SegmentedOption<Value extends SegmentedValue = SegmentedValue> 
   tooltip?: string | Omit<TooltipProps, 'children'>;
 }
 export type SegmentedSemanticSlots = Partial<Record<'root' | 'item' | 'label' | 'icon', string>>;
-/** Существующие native props: generated name и defaults сохранены, size остаётся локальным prop. */
+/** Existing native props: generated name and defaults are saved, the size remains a local prop. */
 export interface SegmentedSemanticInfo<Value extends SegmentedValue = SegmentedValue> {
   props: SegmentedProps<Value>;
 }
@@ -26,24 +26,24 @@ type SegmentedConfigSemantic = SegmentedSemanticSlots
   | (<Value extends SegmentedValue>(info: SegmentedSemanticInfo<Value>) =>
     SegmentedSemanticSlots | undefined);
 
-/** Наследуемое оформление; явный record целиком заменяет родительский segmented. */
+/** Inherited design; explicit record completely replaces the parent segmented. */
 export interface SegmentedConfig {
   class?: string;
-  /** Между context styles.root и локальными styles.root/style. */
+  /** Between context styles.root and local styles.root/style. */
   style?: string;
-  /** Callback принимает те же native props, что локальный semantic callback. */
+  /** Callback accepts the same native props as the local semantic callback. */
   classNames?: SegmentedConfigSemantic;
   styles?: SegmentedConfigSemantic;
 }
-/** Типизированный выбор одного значения через нативные radio в сегментированном control. */
+/** Typical selection of one value through native radio in segmented control. */
 export interface SegmentedProps<Value extends SegmentedValue = SegmentedValue> extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children' | 'class' | 'style' | 'onchange'
 > {
   options: readonly (Value | SegmentedOption<Value>)[];
-  /** Поддерживает bind:value. */
+  /** Maintenances bind:value. */
   value?: Value;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultValue?: Value;
   onChange?: (value: Value) => void;
   /** @defaultValue false */
@@ -57,14 +57,14 @@ export interface SegmentedProps<Value extends SegmentedValue = SegmentedValue> e
   vertical?: boolean;
   /** @defaultValue 'default' */
   shape?: 'default' | 'round';
-  /** Локальный CSS prefix для корня, options и thumb; пустая строка наследует ConfigProvider. */
+  /** Local CSS prefix for root, options and; empty string inherits ConfigProvider. */
   prefixCls?: string;
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Context slots дополняются локальными; callback сохраняет native props/defaults. */
+  /** Context slots are supplemented with local; callback preserves native props/defaults. */
   classNames?: SegmentedSemantic<Value>;
   styles?: SegmentedSemantic<Value>;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

@@ -1,16 +1,17 @@
-// Расчёты ширины колонок и оценки строки виртуальной Table до появления DOM.
-// Ant Design 6.6.8 и rc-table 1.11.1/useWidthColumns. MIT, vendor/LICENSE.ant-design.
+// Calculations of the width of columns and estimates of the line virtual Table before the
+// appearance of DOM. Ant Design 6.6.8 and rc-table 1.11.1/useWidthColumns. MIT,
+// vendor/LICENSE.ant-design.
 import type { AliasToken } from './theme-token.types';
 import type { TableScrollOptions } from './table.types';
 import type { ComponentSize } from './types';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 
-/** Виртуальное окно использует числовые размеры, остальные значения дают fallback. */
+/** The virtual window uses numerical dimensions, the remaining values give fallback. */
 export function tableVirtualDimension(value: TableScrollOptions['x'], fallback: number) {
   return typeof value === 'number' && Number.isFinite(value) ? Math.max(0, value) : fallback;
 }
 
-/** Неизмеренная строка использует высоту строки текста, padding и один border. */
+/** An unmeasured string uses the height of the text string, padding and one border. */
 export function tableVirtualRowHeight(token: AliasToken, size: ComponentSize) {
   const padding = size === 'small' ? token.paddingXS
     : size === 'medium' ? token.paddingSM : token.padding;
@@ -19,7 +20,7 @@ export function tableVirtualRowHeight(token: AliasToken, size: ComponentSize) {
   return Math.max(1, padding * 2 + fontHeight + token.lineWidth);
 }
 
-/** После распределения ширины применяет минимумы к общей сетке шапки и тела. */
+/** After distributing the width applies the minimum to the total grid of the cap and body. */
 export function tableVirtualColumns(
   widths: readonly (number | string | undefined)[],
   scrollWidth: number,
@@ -60,7 +61,7 @@ export function tableVirtualColumns(
     }
   }
 
-  // В Source padding div-ячейки и minWidth задают нижнюю границу внешней ширины.
+  // In Source, padding on the div cell and minWidth set the minimum outer width.
   const boxed = filled.map((width, index) => {
     const minimum = tableVirtualDimension(minWidths[index], 0);
     return Math.max(width, cellPadding, minimum);
@@ -69,7 +70,7 @@ export function tableVirtualColumns(
   return { widths: boxed, width: Math.max(target, boxedTotal) };
 }
 
-/** rc-table делегирует ближайшее видимое положение виртуальному списку. */
+/** rc-table delegates the nearest visible position of the virtual list. */
 export function tableVirtualAlign(
   align: ScrollLogicalPosition | undefined,
   offset: number

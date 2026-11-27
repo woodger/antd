@@ -1,4 +1,4 @@
-/** Полный наблюдатель Source attributes; outerHTML не задаёт Native DOM contract. */
+/** Full observer of Source attributes; outerHTML does not set Native DOM contract. */
 export function readSelectDataAttributes() {
   const owner = document.querySelector<HTMLElement>('[data-select-data-case]')!;
   const state: Record<string, unknown> = {};

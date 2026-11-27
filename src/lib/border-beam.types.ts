@@ -1,45 +1,44 @@
 import type { Snippet } from 'svelte';
 
-/** Цвета в исходном порядке; проценты 0–100 масштабируются в видимые 70% луча. */
+/** Colors keep their original order. Percentages 0–100 map to the beam's visible 70%. */
 export type BorderBeamGradient = { color: string; percent: number; }[];
 export type BorderBeamColor = string | BorderBeamGradient;
 
 /**
- * Общие class/style слоёв; локальные значения имеют приоритет.
- * Nested config заменяется целиком.
+ * Shared layer class and style. Local values take precedence. A nested config is replaced in full.
  */
 export interface BorderBeamConfig {
   class?: string;
   style?: string;
 }
 
-/** Декоративные CSS-лучи внутри контейнера без дополнительной обёртки. */
+/** Decorative CSS beams inside a container, with no extra wrapper. */
 export interface BorderBeamProps {
-  /** Локальный CSS prefix; иначе ConfigProvider. Namespace variables задаёт общий prefix. */
+  /** Local CSS prefix. Otherwise inherits ConfigProvider. The shared prefix sets the variable namespace. */
   prefixCls?: string;
   /**
-   * Svelte-замена React child ref: передайте bind:this нативного контейнера
-   * или bind:nativeElement компонента. Без HTMLElement декорация не создаётся.
-   * Позиционирование контейнера остаётся ответственностью вызывающего кода.
+   * Svelte replacement for the React child ref. Pass bind:this from a native container or
+   * bind:nativeElement from a component. Decoration requires an HTMLElement. The caller remains
+   * responsible for positioning the container.
    */
   target?: HTMLElement | SVGElement | null;
   children?: Snippet | string | number | boolean | null;
-  /** Без значения используется градиент primary/primaryHover текущей темы. */
+  /** When omitted, uses the current theme's primary and primaryHover gradient. */
   color?: BorderBeamColor;
-  /** Конечное число >= 1 округляется вниз; остальные значения заменяются на 1. */
+  /** Finite numbers ≥ 1 are rounded down. Other values become 1. */
   count?: number;
-  /** Длительность цикла в секундах; по умолчанию 6, положительное значение переопределяет CSS. */
+  /** Cycle duration in seconds. Defaults to 6. A positive value overrides the CSS. */
   duration?: number;
-  /** Ширина линии; число в px. По умолчанию --ant-line-width. */
+  /** Line width. Numbers are in px. Defaults to --ant-line-width. */
   lineWidth?: number | string;
   /**
-   * Внешний отступ; число в px, строка через calc(-1 * outset).
-   * Без значения используются четыре border-width, измеренные один раз при смене target.
+   * Outset. Numbers are in px. Strings use calc(-1 * outset). When omitted, uses the four border
+   * widths measured once per target change.
    */
   outset?: number | string;
-  /** Размер движущегося псевдоэлемента; число в px, по умолчанию 100px. */
+  /** Size of the moving pseudo-element. Numbers are in px and the default is 100px. */
   size?: number | string;
   class?: string;
-  /** Стиль декоративных слоёв; параметры компонента задают свои CSS variables после style. */
+  /** Style for the decorative layers. Component settings supply their CSS variables after style. */
   style?: string;
 }

@@ -7,7 +7,7 @@ for (const entry of reference.cases) {
     await page.goto('/?fixture=statistic-config');
     await page.getByRole('combobox', { name: 'Statistic config sample', exact: true })
       .selectOption(entry.sample.id);
-    // Прежний native dir=rtl исправляет зафиксированный Source root direction=ltr.
+    // The previous native dir=rtl corrects the fixed Source direction root=ltr.
     const expected = Object.fromEntries(Object.entries(entry.metrics).map(([key, value]) =>
       [key, { ...value, direction: entry.sample.direction }]));
 

@@ -1,6 +1,6 @@
 import template from './vendor/drawer-prefix.css.js';
 
-/** Native dialog/motion selectors независимы от публичного namespace; tokens остаются canonical. */
+/** Native dialog/motion selectors are independent of public namespace; tokens remain canonical. */
 export function getDrawerPrefixCss(prefix: string) {
   if (prefix === 'ant-drawer') {
     return undefined;

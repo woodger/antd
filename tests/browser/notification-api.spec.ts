@@ -5,11 +5,11 @@ import { expect, test } from './test';
 type Sample = typeof reference.cases[number];
 type Frame = Sample['frames'][number];
 
-/** Снимает действующие слоты и позицию карточек на экране после открытия popover. */
+/** Removes the current slots and position of the cards on the screen after the popover is opened. */
 function readFrame(page: Page, nativePlainOrder: boolean) {
   const parts = ['title', 'description', 'wrapper', 'section', 'icon', 'actions', 'close', 'progress'];
   return page.evaluate(({ parts, nativePlainOrder }) => {
-    /** Служебные классы и токены темы остаются за пределами замера пользовательских слотов. */
+    /** Service classes and tokens of the theme remain outside the measurement of custom slots. */
     function appearance(node: HTMLElement | null) {
       if (!node) {
         return null;
@@ -68,7 +68,7 @@ function readFrame(page: Page, nativePlainOrder: boolean) {
   }, { parts, nativePlainOrder });
 }
 
-/** Внутренний --notification-y заменён CSS-раскладкой, порядок обычного списка сохранён. */
+/** The internal --notification-y was replaced with CSS-folding, the order of the usual list is saved. */
 function expectedFrame(frame: Frame, nativePlainOrder: boolean) {
   return frame.map(list => ({
     ...list,
@@ -79,7 +79,7 @@ function expectedFrame(frame: Frame, nativePlainOrder: boolean) {
   }));
 }
 
-/** Сравнивает активный <progress> до паузы и по истечении того же интервала часов. */
+/** Compares the active <progress> to the pause and after the same hour interval. */
 async function readProgressTiming(page: Page) {
   const value = () => page.locator('progress').evaluate((node: HTMLProgressElement) => node.value);
   await page.clock.runFor(320);
@@ -98,7 +98,7 @@ async function readProgressTiming(page: Page) {
   return { moved: running < 100, stableWhileHovered: paused === during, resumed: resumed < during };
 }
 
-/** Восстанавливает отсутствующие поля исходного JSON и оставляет отдельные вызовы getter. */
+/** Restores the missing fields of the original JSON and leaves separate getter calls. */
 function readEvents(page: Page) {
   return page.evaluate(() => {
     const { containers, events, arguments: args } = window.notificationProbe;
@@ -158,7 +158,7 @@ for (const sample of reference.cases) {
       await expect(page.getByText('No timeout', { exact: true })).toBeVisible();
     }
 
-    // Native сохраняет callback при FIFO, включая запись, вытесненную до её первого рендера.
+    // Native save the callback at FIFO, including a record ousted to its first render.
     const events = sample.kind === 'placement' ? ['evicted'] : sample.events;
     await expect.poll(() => readEvents(page)).toEqual({
       args: sample.args, containers: sample.containers, events

@@ -53,7 +53,7 @@ for (const entry of reference.cases) {
     if ('blur' in entry.sample) await page.locator('#tags-outside').click();
     const expected = sourceSnapshot(entry.result);
     if (['controlled-query-blur', 'controlled-query-enter'].includes(entry.sample.id)) {
-      // Source submit обходит maxCount при controlled query; Native не превышает лимит.
+      // Source will bypass maxCount at the controlled query; Native does not exceed the limit.
       expected.values = ['a'];
       expected.labels = ['Alpha'];
       expected.events = [];

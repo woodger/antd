@@ -8,18 +8,18 @@ const popup = '.study-delegate-popup';
 const shell = `${popup}[data-ant-tooltip-unique]`;
 const background = '[data-ant-tooltip-unique-background]';
 
-/** Выбирает режим для парного сценария в stand-alone browser fixture. */
+/** Select the mode for a pair scenario in stand-alone browser fixture. */
 async function select(page: Page, mode: string) {
   await page.goto('/?fixture=tooltip-unique-delegates');
   await page.getByRole('combobox', { name: 'Delegate case', exact: true }).selectOption(mode);
 }
 
-/** Возвращает trigger, одинаково адресуемый в сценариях Tooltip, Popover и Popconfirm. */
+/** Returns trigger, equally addressed in scenarios Tooltip, Popover and Popconfirm. */
 function trigger(page: Page, id: string) {
   return page.locator(`#unique-delegate-${id}`);
 }
 
-/** Сопоставляет видимые панели и уже посещённые самостоятельные оболочки. */
+/** Compares visible panels and already visited independent shells. */
 async function nativePanels(page: Page, frame: Frame) {
   const visited = frame.panels.map(panel => panel.contents);
   return page.locator(popup).evaluateAll((nodes, visited) => nodes.flatMap(node => {
@@ -39,14 +39,14 @@ async function nativePanels(page: Page, frame: Frame) {
   }).sort((a, b) => (a.contents ?? '').localeCompare(b.contents ?? '')), visited);
 }
 
-/** Сравнивает настройку, которую видит пользователь, с проекцией pinned UMD. */
+/** Compares the setting that the user sees, with the projection pinned UMD. */
 function sourcePanels(frame: Frame) {
   return frame.panels.map(({ contents, visible, classes, arrows }) => ({
     contents, visible, classes: [...classes].sort(), arrows
   })).sort((a, b) => (a.contents ?? '').localeCompare(b.contents ?? ''));
 }
 
-/** Сохраняет actual DOM identity без сохранения внутренних данных Svelte. */
+/** Saves actual DOM identity without saving internal data Svelte. */
 async function sameNode(locator: Locator, original: PanelHandle) {
   expect(await locator.evaluate((node, original) => node === original, original)).toBe(true);
 }
@@ -75,8 +75,8 @@ for (const { profile, snapshots } of reference.cases) {
         await expect(page.getByTestId('delegate-events')).toHaveText(JSON.stringify(events));
         if (!frame.backgrounds.length) continue;
 
-        // React оставляет фон preset Popover прозрачным. В Svelte тот же цвет
-        // следует за активным владельцем на окрашиваемом общем фоне.
+        // React leaves the preset Popover background transparent. In Svelte the same color follows
+        // the active owner on a painted general background.
         const expectedBackground = frame.backgrounds[0].background === 'rgba(0, 0, 0, 0)'
           ? 'rgb(22, 119, 255)' : frame.backgrounds[0].background;
         await expect(page.locator(background)).toHaveCSS('background-color', expectedBackground);
@@ -94,7 +94,7 @@ for (const { profile, snapshots } of reference.cases) {
         }
       }
       else {
-        // Независимые карточки завершают motion каждая в своём цикле.
+        // Independent cards complete the motion each in their cycle.
         await expect.poll(async () => {
           const text = await page.getByTestId('delegate-events').textContent();
           const recorded: Frame['callbacks'] = JSON.parse(text ?? '[]');

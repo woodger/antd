@@ -15,7 +15,7 @@ for (const sample of reference.cases) {
       const control = page.locator('[data-rate-theme="normal"] [role="radio"]').nth(3);
       const nativeFallback = 'opaque' in sample && sample.opaque
         && !('priority' in sample && sample.priority);
-      // Raw Source evidence сохраняет none; native opaque-transform boundary описана в реестре.
+      // Raw Source evidence retains none. The registry documents the native opaque-transform boundary.
       const hover = nativeFallback
         ? { ...sample.states.hover, transform: 'matrix(1.1, 0, 0, 1.1, 0, 0)' }
         : sample.states.hover;

@@ -1,6 +1,6 @@
-// Позиционирует стрелку и узкую панель TimeRangePicker относительно активного поля. Измерение
-// живёт только до отключения popup.
-/** Range Popup rc-picker: offset узкой time panel и стрелки относительно активного input. */
+// Positions the arrow and the narrow panel TimeRangePicker relative to the active field. The
+// measurement only lives until the popup is switched off.
+/** Range Popup rc-picker: offset narrow time panel and arrows relatively active input. */
 export function connectTimeRangePopup(
   root: HTMLElement,
   wrapper: HTMLElement,
@@ -14,15 +14,15 @@ export function connectTimeRangePopup(
   let disposed = false;
   let previous = '';
 
-  // Измеряет активное поле и публикует только изменившиеся смещения с учётом RTL.
+  // Measures the active field and publishes only changed offsets taking into account RTL.
   function update() {
     if (disposed) {
       return;
     }
     const input = activeInput();
     if (input) {
-      // Правило 2. RangePickerCore создаёт input внутри поля и стрелку внутри timeWrapper.
-      // Контроллер включается после привязки wrapper и панели к этой разметке.
+      // Rule 2. RangePickerCore creates an input inside the field and an arrow inside timeWrapper.
+      // The controller is switched on after linking the wrapper and the panel to this markup.
       const inputRect = input.parentElement!.getBoundingClientRect();
       const bounds = wrapper.getBoundingClientRect();
       const panelWidth = container.getBoundingClientRect().width;
@@ -44,7 +44,7 @@ export function connectTimeRangePopup(
   }
 
   update();
-  // Останавливает очередное измерение и исключает публикации после уничтожения контроллера.
+  // Stops the next measurement and excludes the publication after the controller is destroyed.
   return () => {
     disposed = true;
     view.cancelAnimationFrame(frame);

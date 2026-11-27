@@ -1,6 +1,6 @@
-// Ведёт отдельные CSSOM-слои редакторов Select и размеры активной ветви Input. История inline
-// style привязана к физическому узлу, измерение к логическому lifetime.
-// rc-select 1.10.1; MIT, vendor/LICENSE.rc-select.
+// Maintains separate CSSOM-layers of editors Select and dimensions of the active branch Input. The
+// history of the inline style is tied to the physical node, the measurement to the logical
+// lifetime. rc-select 1.10.1; MIT, vendor/LICENSE.rc-select.
 import { copySelectStyle, createSelectStyleWriter } from './select-style.dom';
 import type { SelectStyleFrame, SelectStyleProperties } from './select-style.engine';
 import { measureSelectSourceInput } from './select-tag-overflow.dom';
@@ -34,7 +34,7 @@ export function createSelectComponentInputStyle() {
   let previousMeasurement: { syncWidth: boolean; value: string } | undefined;
   let measured: number | undefined;
 
-  // Сбрасывает размеры только при смене ветви редактора.
+  // Resets sizes only when the editor branch is changed.
   function enter(next: SelectComponentInputLifetime) {
     if (next === lifetime) {
       return;
@@ -44,8 +44,8 @@ export function createSelectComponentInputStyle() {
     measured = undefined;
   }
 
-  // Создаёт или находит принятую историю CSSOM узла. При первой гидратации может взять начальное
-  // состояние из DOM.
+  // Creates or finds the accepted history of CSSOM node. At the first hydration can take the
+  // initial state of DOM.
   function editorStyle(
     editor: HTMLElement,
     frame: SelectStyleFrame,
@@ -56,7 +56,7 @@ export function createSelectComponentInputStyle() {
       return state;
     }
     const accepted = editor.ownerDocument.createElement('span').style;
-    // При гидратации CSSOM узла сохраняется отдельно от клиентских props.
+    // When hydrating CSSOM node is saved separately from the client props.
     const preserveHydration = hydrating && !frame.string;
     if (preserveHydration) {
       copySelectStyle(editor.style, accepted);
@@ -72,8 +72,7 @@ export function createSelectComponentInputStyle() {
     return state;
   }
 
-  // Обновляет принадлежащие Input CSS-свойства. Сохраняет исходный SSR CSSOM до первого реального
-  // изменения.
+  // Updates Input CSS properties. Keeps the original SSR CSSOM before the first real change.
   function apply(editor: HTMLElement, frame: SelectStyleFrame, hydrating = false) {
     const state = editorStyle(editor, frame, hydrating);
     const managed: SelectStyleProperties = { ...state.previous.properties, ...frame.properties };
@@ -84,9 +83,9 @@ export function createSelectComponentInputStyle() {
       && before.every(({ property, value, priority }, index) => state.accepted.item(index) === property
         && state.accepted.getPropertyValue(property) === value
         && state.accepted.getPropertyPriority(property) === priority);
-    // Сохраняем SSR-атрибут до первого изменения CSSOM через writer.
+    // Save SSR attribute until the first change of CSSOM through writer.
     if (!untouched) {
-      // Удаляем прежние ключи, сохраняя чужие inline-стили.
+      // Remove the previous keys, saving other people's inline styles.
       copySelectStyle(state.accepted, editor.style, managed);
       state.hydrationPending = false;
     }
@@ -95,7 +94,7 @@ export function createSelectComponentInputStyle() {
   }
 
   return {
-    /** Подготовка до публичного ref; повторная регистрация сохраняет историю узла. */
+    /** Preparing before public ref; re-registration preserves the node’s history. */
     prepare(editor: HTMLElement | undefined, frame: SelectStyleFrame, hydrating = false) {
       if (editor?.isConnected) apply(editor, frame, hydrating);
     },

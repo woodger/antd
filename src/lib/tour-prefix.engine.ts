@@ -1,6 +1,6 @@
 import template from './vendor/tour-prefix.css.js';
 
-/** Button selectors и private Tooltip variables используют общий prefix отдельно от Tour. */
+/** Button selectors and private Tooltip variables use total prefix separately from the Tour. */
 export function getTourPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-tour' && rootPrefix === 'ant') {
     return undefined;

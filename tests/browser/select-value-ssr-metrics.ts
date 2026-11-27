@@ -1,4 +1,4 @@
-/** DOM-free наблюдатель owned outputs и запрещённых SSR browser surfaces. */
+/** DOM′-free observant of owned outputs and prohibited SSR browser surfaces. */
 export function readSelectValueSSR(body: string) {
   const output = (name: string) => {
     const match = body.match(new RegExp(`<output[^>]*data-select-value-${name}[^>]*>([\\s\\S]*?)<\\/output>`));

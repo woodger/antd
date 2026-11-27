@@ -1,11 +1,10 @@
-// Раскладывает записи Transfer по ключам, подготавливает отображение и вычисляет новые наборы
-// selection.
+// Lays out Transfer's records on the keys, prepares the display and computes new selection sets.
 import type {
   TransferDirection, TransferKey, TransferRenderedItem, TransferRenderResult
 } from './transfer.types';
 import { getPaginationItems } from './pagination.engine';
 
-// Принимает только поддерживаемые ключи и сообщает об отсутствии rowKey для остальных записей.
+// Receives only supported keys and reports no rowKey for the rest of the records.
 export function transferKey(record: object): TransferKey {
   if ('key' in record && ['string', 'number', 'bigint'].includes(typeof record.key)) {
     return record.key as TransferKey;
@@ -14,12 +13,12 @@ export function transferKey(record: object): TransferKey {
   throw new TypeError('Transfer records require a string, number or bigint key, or rowKey.');
 }
 
-// Использует флаг самой записи для исключения из переносимых элементов.
+// Uses the flag of the recording itself to exclude from the portable elements.
 export function transferDisabled(record: object): boolean {
   return 'disabled' in record && Boolean(record.disabled);
 }
 
-// Сохраняет исходный порядок левого списка и порядок targetKeys справа.
+// Keeps the original order of the left list and the order targetKeys on the right.
 export function transferData<RecordType extends object>(
   dataSource: readonly RecordType[],
   targetKeys: readonly TransferKey[],
@@ -45,7 +44,7 @@ export function transferData<RecordType extends object>(
   return { all, left, right: right.filter((record): record is RecordType => record !== undefined) };
 }
 
-// Сохраняет только выбранные ключи, относящиеся к переданной стороне.
+// Reserves only the selected keys relating to the transferred party.
 export function transferSelection(
   selectedKeys: readonly TransferKey[],
   records: readonly object[]
@@ -54,7 +53,7 @@ export function transferSelection(
   return selectedKeys.filter(key => keys.has(key));
 }
 
-// Готовит независимые значения для отображения и поиска с приоритетом filterOption.
+// Prepares independent values for display and search with a priority of filterOption.
 export function transferRender<RecordType extends object>(
   records: readonly RecordType[],
   render?: (record: RecordType) => TransferRenderResult<RecordType>,
@@ -75,7 +74,7 @@ export function transferRender<RecordType extends object>(
 
   return result;
 
-  // Сохраняет различие между отображаемым label и строкой для поиска.
+  // Saves the distinction between the displayed label and the search string.
   function renderRecord(item: RecordType) {
     const rendered = render?.(item) ?? null;
     if (typeof rendered === 'object' && rendered !== null) {
@@ -92,7 +91,7 @@ export function transferRender<RecordType extends object>(
   }
 }
 
-// Передаёт moveKeys в порядке выбора и пропускает disabled записи.
+// Passes moveKeys in selection order and skips disabled entries.
 export function transferMove(
   targetKeys: readonly TransferKey[],
   selectedKeys: readonly TransferKey[],
@@ -111,7 +110,7 @@ export function transferMove(
   };
 }
 
-// Заменяет, добавляет или удаляет ровно переданные ключи.
+// Replaces, adds or removes evenly transferred keys.
 export function transferSelectAll(
   selected: readonly TransferKey[],
   keys: readonly TransferKey[],
@@ -128,7 +127,7 @@ export function transferSelectAll(
   return selected.filter(key => !removed.has(key));
 }
 
-/** Диапазон меняет действие на удаление, только если выделены все его enabled строки. */
+/** The range changes the action to delete only if all the modified strings are allocated. */
 export function transferSelectRange(
   selected: readonly TransferKey[],
   keys: readonly TransferKey[],
@@ -153,7 +152,7 @@ export function transferSelectRange(
   return { selected: [...next], anchor: add ? end : null };
 }
 
-/** rc-pagination 1.4.0, MIT (vendor/LICENSE.rc-pagination); границы showLessItems сохранены. */
+/** rc-pagination 1.4.0, MIT (vendor/LICENSE.rc-pagination); borders showLessItems reserved. */
 export function transferPaginationItems(
   current: number,
   count: number,

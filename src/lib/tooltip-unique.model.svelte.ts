@@ -1,5 +1,6 @@
-// Группа владеет одной поверхностью и запросом на её показ. Смена цели во время enter
-// ждёт окончания текущего движения, а удалённый участник освобождает свою запись сразу.
+// The group owns one surface and a request to show it. Changing the goal during the enter is
+// waiting for the end of the current movement, and the remote participant releases his record
+// immediately.
 import { getContext, onDestroy, setContext } from 'svelte';
 import type { ClassValue } from 'svelte/elements';
 import type { InlineStyleLayer } from './inline-style.engine';
@@ -60,17 +61,17 @@ export interface TooltipUniqueSurface {
 
 const key = Symbol('ant-tooltip-unique');
 
-/** Возвращает ближайшую группу при инициализации участника. */
+/** Returns the nearest group at the initialization of the participant. */
 export function useTooltipUnique() {
   return getContext<TooltipUnique | undefined>(key);
 }
 
-/** Содержимое панели не переиспользует поверхность своего родителя. */
+/** The content of the panel does not overuse the surface of its parent. */
 export function isolateTooltipUnique() {
   setContext(key, undefined);
 }
 
-/** Popup внутри другой нативной поверхности сохраняет собственный Escape и top layer. */
+/** Popup inside another native surface retains its own Escape and top layer. */
 export function hasTooltipPopupAncestor(anchor: Element | undefined) {
   let node = anchor;
   while (node) {
@@ -81,7 +82,7 @@ export function hasTooltipPopupAncestor(anchor: Element | undefined) {
   return false;
 }
 
-/** Хранит последний запрос группы и удерживает только одного владельца содержимого. */
+/** Stores the group’s last request and holds only one owner of the content. */
 export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | undefined) {
   let owner = $state.raw<TooltipUniqueOwner>();
   let open = $state(false);
@@ -92,14 +93,14 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
   let scheduled: { owner: TooltipUniqueOwner; open: boolean; } | undefined;
   let timer: ReturnType<typeof setTimeout> | undefined;
 
-  // Инвалидирует также запрос с нулевой задержкой, ожидающий конца обновления Svelte.
+  // Also invalidates a zero-delay request waiting for Svelte to finish updating.
   function cancel() {
     clearTimeout(timer);
     timer = undefined;
     scheduled = undefined;
   }
 
-  // Возвращает признак снятого показа, который мог удерживать предыдущую панель.
+  // Returns the sign of the removed display, which could hold the previous panel.
   function discardPending(target: TooltipUniqueOwner) {
     const pending = scheduled?.owner === target ? scheduled : undefined;
     const wasNext = queued === target || pending?.open === true;
@@ -109,7 +110,7 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
     return wasNext;
   }
 
-  // Оставляет старый контент на экране до завершения первого enter.
+  // Leaves the old content on the screen until the completion of the first enter.
   function show(next: TooltipUniqueOwner) {
     if (open && entering && owner !== next) {
       queued = next;
@@ -122,7 +123,7 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
     open = true;
   }
 
-  // Раннее закрытие предыдущего участника не сбрасывает ожидающий показ следующего.
+  // The previous participant's early closure does not reset the wait-and-see show of the next.
   function request(target: TooltipUniqueOwner, next: boolean, delay: number) {
     if (!active) return;
 
@@ -148,7 +149,7 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
     const change = { owner: requestedOwner, open: next };
     scheduled = change;
 
-    // Проверяет актуальное состояние после задержки и перед обращением к владельцу.
+    // Checks the current state after the delay and before contacting the owner.
     function apply() {
       if (scheduled !== change) return;
 
@@ -177,14 +178,14 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
   });
 
   const group = {
-    // Владелец сохраняет идентичность, даже если его props или DOM-цель обновляются.
+    // The owner retains an identity, even if its props or DOM is updated.
     get owner() { return owner; },
-    // Переключение между открытыми участниками сохраняет видимость общей поверхности.
+    // Switching between open participants retains the appearance of a common surface.
     get open() { return open; },
-    // Фон движется после завершения zoom входа, а при уходе сохраняет расчётную позицию.
+    // The background moves after the zoom entrance is completed, and when you leave, it retains the calculated position.
     get ready() { return ready; },
     request,
-    // Снимает все ссылки на уничтоженный участник, включая отложенные показы.
+    // Removes all references to the destroyed participant, including delayed impressions.
     release(target: TooltipUniqueOwner) {
       if (!active) return;
 
@@ -206,7 +207,7 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
         owner = undefined;
       }
     },
-    // Применяет последний запрос, поступивший во время анимации входа.
+    // Applies the last request received during the entry animation.
     settled(visible: boolean) {
       if (!active) return;
 
@@ -223,7 +224,7 @@ export function provideTooltipUnique(getSurface: () => TooltipUniqueSurface | un
         request(owner, false, 0);
       }
     },
-    // Ref и выравнивание привязаны к владельцу, с которым теперь соединён DOM.
+    // Ref and alignment are tied to the owner with whom DOM is now connected.
     surfaceFor(target: TooltipUniqueOwner) {
       return owner === target ? getSurface() : undefined;
     }

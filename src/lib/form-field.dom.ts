@@ -33,9 +33,9 @@ export function focusFormField(instance: unknown, fallback?: () => Element | und
   }
 }
 
-// Стандартный behavior и callback scroll-into-view-if-needed 3.1.0.
-// Source дважды учитывает scroll-margin и смещает даже видимый control; до отдельного
-// исправления margins не применяются. Raw замеры сохранены в form-dom observation.
+// Standard behavior and callback scroll-into-view-if-needed 3.1.0. Source takes scroll-margin twice
+// into account and shifts even the visible control; prior to a separate fix, margins do not apply.
+// Raw measurements are stored in form-dom observation.
 export function scrollFormField(node: Element, options: FormScrollOptions = {}) {
   if (!node.isConnected) {
     return;

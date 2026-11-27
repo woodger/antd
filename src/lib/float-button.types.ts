@@ -8,7 +8,7 @@ export type FloatButtonShape = 'circle' | 'square';
 export type FloatButtonType = 'default' | 'primary';
 export type FloatButtonPlacement = 'top' | 'left' | 'right' | 'bottom';
 export type FloatButtonBadge = Omit<BadgeProps, 'status' | 'text' | 'title' | 'children'>;
-/** Плавающее нативное действие или ссылка с icon, Badge и Tooltip. */
+/** Floating native action or link with icon, Badge and Tooltip. */
 export interface FloatButtonProps extends Omit<
   ButtonProps,
   'children'
@@ -31,7 +31,7 @@ export interface FloatButtonProps extends Omit<
   | '_themeStyle'
   | 'prefixCls'
 > {
-  /** У кнопки undefined наследует prefix Group; пустой prefix выбирает ConfigProvider. */
+  /** At the button undefined inherit prefix Group; empty prefix chooses ConfigProvider. */
   prefixCls?: string;
   type?: FloatButtonType;
   /** @defaultValue 'circle' */
@@ -58,12 +58,12 @@ export type FloatButtonGroupSlots = Partial<
     string
   >
 >;
-/** Группа плавающих действий с общими настройками и управлением раскрытием. */
+/** Floating action group with shared settings and controlled expansion. */
 export interface FloatButtonGroupProps extends Omit<
   FloatButtonProps,
   'classNames' | 'styles' | 'nativeElement'
 > {
-  /** Базовый prefix без -group; empty/undefined наследуют ConfigProvider. */
+  /** Basic prefix without -group; empty/undefined inherited ConfigProvider. */
   prefixCls?: string;
   children?: Snippet;
   items?: readonly { key: string | number; children: Snippet; }[];
@@ -78,11 +78,11 @@ export interface FloatButtonGroupProps extends Omit<
   styles?:
   FloatButtonGroupSlots
   | ((info: { props: FloatButtonGroupProps; }) => FloatButtonGroupSlots | undefined);
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 export type BackTopTarget = Window | Document | HTMLElement;
-/** Плавающая кнопка возврата к началу выбранного scroll target. */
+/** Floating return button to the beginning of the selected scroll target. */
 export interface FloatButtonBackTopProps extends Omit<FloatButtonProps, 'target'> {
   target?: () => BackTopTarget | null;
   /** @defaultValue 400 */
@@ -92,7 +92,7 @@ export interface FloatButtonBackTopProps extends Omit<FloatButtonProps, 'target'
   /** @defaultValue false */
   showProgress?: boolean;
 }
-/** Настройки ConfigProvider.floatButton; локальные props уточняют оформление. */
+/** Settings ConfigProvider.floatButton; local props specifies the design. */
 export interface FloatButtonConfig {
   backTopIcon?: FloatButtonContent;
   class?: string;
@@ -100,7 +100,7 @@ export interface FloatButtonConfig {
   classNames?: FloatButtonProps['classNames'];
   styles?: FloatButtonProps['styles'];
 }
-/** Настройки ConfigProvider.floatButtonGroup и содержимого группы действий. */
+/** Setting ConfigProvider.floatButtonGroup and action group content. */
 export interface FloatButtonGroupConfig {
   closeIcon?: FloatButtonContent;
   class?: string;

@@ -9,7 +9,7 @@ const root = '[data-table-sorter-tooltip-fixture]';
 const header = `${root} th.ant-table-column-has-sorters`;
 const button = `${header} button.ant-table-column-sorters`;
 
-/** Снимает положение подсказки и текущий публичный результат сортировки. */
+/** Relieves the position of the hint and the current public result of sorting. */
 function snapshot() {
   const fixture = document.querySelector('[data-table-sorter-tooltip-fixture]');
   const header = fixture?.querySelector('th.ant-table-column-has-sorters');
@@ -34,7 +34,7 @@ function snapshot() {
   };
 }
 
-/** Наводит указатель на физическую область, учитывая перекрывающий её CSS. */
+/** Points the physical area, taking into account the overlapping CSS. */
 async function hoverArea(page: Page, target: Locator, inset?: number) {
   const box = await target.boundingBox();
   if (!box) {
@@ -43,7 +43,7 @@ async function hoverArea(page: Page, target: Locator, inset?: number) {
   await page.mouse.move(box.x + (inset ?? box.width / 2), box.y + box.height / 2);
 }
 
-/** Повторяет действие из независимого прогона на нативных элементах. */
+/** Repeats the action from an independent run on native elements. */
 async function act(page: Page, action: string) {
   switch (action) {
     case 'title':
@@ -88,7 +88,7 @@ for (const { profile, states } of source.cases) {
       if (action) {
         await act(page, action);
       }
-      // У Source фокус на th. Native focus-trigger принадлежит самой кнопке.
+      // Source focus on th. The Native focus-trigger belongs to the button itself.
       const expected = profile.id === 'focus-only' && action === 'focus'
         ? { ...state, anchor: 'header', tooltip: 'Ascending', placement: 'top', arrow: true }
         : state;

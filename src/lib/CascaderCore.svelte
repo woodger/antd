@@ -1,6 +1,6 @@
 <script lang="ts" generics="OptionType extends CascaderOption = CascaderOption, Multiple extends boolean = false">
-  // Управляет выбранными путями, поиском и раскрытыми колонками Cascader. Popup и panel
-  // используют один индекс options.
+  // Manages selected paths, search, and expanded Cascader columns. The popup and panel share one
+  // option index.
   import { tick, untrack } from 'svelte';
   import type { Snippet } from 'svelte';
   import type {
@@ -667,7 +667,7 @@
     min-height:var(--ant-native-path-choice-height);
   }
   [data-ant-path-choice-multiple] [data-ant-path-choice-content] { gap:0; }
-  /* Native width с px перекрывает unitless формулу Select и при поздней вставке prefix CSS. */
+  /* The native width in px overrides Select's unitless formula even when the prefix CSS is inserted later. */
   [data-ant-path-choice-control][data-ant-path-choice-multiple] [data-ant-path-choice-input] {
     position:relative;
     inset:auto;
@@ -688,7 +688,7 @@
     flex:1;
     max-width:none;
   }
-  /* Обёртки сохраняют DOM при смене темы; source overflow измеряет каждый tag отдельно. */
+  /* The wrappers preserve their DOM nodes across theme changes. The upstream overflow layout measures each tag separately. */
   .overflow-item { display:contents; }
   [data-ant-path-choice-source-theme][data-ant-path-choice-multiple] .overflow-item { display:block; }
   [data-ant-path-choice-selection-item-remove],.clear {
@@ -752,7 +752,7 @@
     color:inherit;
     background:transparent;
   }
-  /* Upstream оставляет line box вокруг expand/loading icon, включая его высоту. */
+  /* Upstream keeps the line box around the expand or loading icon, including its height. */
   [data-ant-path-choice-source-theme] :global([data-ant-cascader-expand-icon]),[data-ant-path-choice-source-theme] :global([data-ant-cascader-loading-icon]) { display:block; }
   .custom-trigger { width:auto; }
   @media (hover:none) {

@@ -254,8 +254,8 @@
     if (item?.kind === 'node') {
       const token = item.token!, snippet = node(token);
       if (['suffix', 'menuItemSelectedIcon', 'removeIcon'].includes(slot)) {
-        // Явный static content сохраняет Source visibility: function-иконка
-        // вызывается и у unselected rows, статическая — только у selected.
+        // Explicit static content preserves Source visibility: function-icon is also called in
+        // unselected rows, static - only at selected.
         if (!literalNodes.has(token)) {
           literalNodes.set(
             token,

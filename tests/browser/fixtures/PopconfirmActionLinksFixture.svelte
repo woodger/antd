@@ -11,14 +11,14 @@
     return profile === 'empty' ? '' : '#confirmed';
   });
 
-  /** Сбрасывает историю и условный href перед следующим сценарием. */
+  /** Drops history and conditional href before the next scenario. */
   function select(next: string) {
     profile = next;
     href = undefined;
     events = [];
   }
 
-  /** Записывает действие и оставляет Promise открытым до сигнала теста. */
+  /** Writes the action and leaves Promise open to the test signal. */
   function confirm() {
     events.push('confirm');
     if (profile === 'pending') {
@@ -26,18 +26,18 @@
     }
   }
 
-  /** Завершает ожидающее подтверждение, если оно ещё открыто. */
+  /** Concludes the pending confirmation if it's still open. */
   function finish() {
     resolveAction?.();
     resolveAction = undefined;
   }
 
-  /** Читает свойство ссылки с фактического currentTarget. */
+  /** Reads the property of reference from the actual currentTarget. */
   function recordLink(part: string, target: HTMLAnchorElement) {
     events.push([part, target.localName, target.hash]);
   }
 
-  /** Записывает цель, когда условный href может создавать кнопку или ссылку. */
+  /** Writes the target when conditional href can create a button or link. */
   function recordOk(part: string, target: HTMLButtonElement | HTMLAnchorElement) {
     if (target instanceof HTMLAnchorElement) {
       recordLink(part, target);

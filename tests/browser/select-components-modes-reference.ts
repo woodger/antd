@@ -19,10 +19,10 @@ interface Header {
 interface Source<Value> { reference: Header; cases: Value[] }
 interface Copy { path: string; storageBytes: number; storageSha256: string; decodedBytes: number; decodedSha256: string;
   repeatBytes: number; repeatSha256: string; wholePairByteEqual: boolean }
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const manifest = JSON.parse(readFileSync(
   fixture('ant-design-select-components-modes-source-manifest.json'),

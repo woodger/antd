@@ -4,7 +4,7 @@ import registry from '../porting-registry';
 import TableColumnsFixture from '../browser/fixtures/TableColumnsFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-columns-reference.json';
 
-/** Находит пользовательскую или служебную колонку в разметке SSR. */
+/** Finds a custom or utility column in SSR markup. */
 function columnKey(attributes: string) {
   const key = attributes.match(/fixture-column-([\w-]+)/)?.[1];
   if (key) return key;
@@ -13,7 +13,7 @@ function columnKey(attributes: string) {
   return '$empty';
 }
 
-/** Читает размеры ячейки и нормализует отсутствие атрибута до DOM default 1. */
+/** Reads the cell dimensions and maps a missing attribute to the DOM default of 1. */
 function readHeader(attributes: string) {
   const key = columnKey(attributes);
   const colSpan = Number(attributes.match(/\bcolspan="(\d+)"/)?.[1] ?? 1);
@@ -22,7 +22,7 @@ function readHeader(attributes: string) {
   return { key, span: [colSpan, rowSpan], scope: key.startsWith('$') ? null : scope };
 }
 
-/** Сопоставляет шапку, листья и placeholder с отдельным renderToString Ant Design. */
+/** Compares the header, leaves, and placeholder with a separate Ant Design renderToString. */
 function readTable(body: string) {
   const thead = body.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? '';
   const headers = Array.from(thead.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/g), row =>

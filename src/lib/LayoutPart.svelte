@@ -20,7 +20,7 @@
     part: 'header' | 'footer' | 'content';
   } = $props();
   const config = useConfig();
-  // Секции наследуют переменные Layout, включая его style; standalone задаёт свой scope.
+  // Sections inherit Layout variables, including its style. A standalone section defines its own scope.
   const layout = useLayout();
   let componentPrefix = $derived(config.getPrefixCls(`layout-${part}`, prefixCls));
   let prefixCss = $derived(getLayoutSectionPrefixCss(componentPrefix, part, !layout));

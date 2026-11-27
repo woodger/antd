@@ -27,12 +27,12 @@ export interface CollapseSemanticInfo {
 export type CollapseSemantic = CollapseSemanticSlots
   | ((info: CollapseSemanticInfo) => CollapseSemanticSlots | undefined);
 
-/** Readonly item; ключ по умолчанию — строковый индекс, onChange всегда получает строки. */
+/** Readonly item. The key defaults to the string index, and onChange always receives strings. */
 export interface CollapseItem extends Omit<
   HTMLAttributes<HTMLDivElement>, 'children' | 'class' | 'style'
 >, CollapseItemEvents {
   key?: string | number;
-  /** Пассивное содержимое нативной кнопки; controls размещайте в extra или children. */
+  /** Passive content of the native button. Put interactive controls in extra or children. */
   label?: CollapseContent;
   children?: CollapseContent;
   extra?: CollapseContent;
@@ -41,21 +41,21 @@ export interface CollapseItem extends Omit<
   forceRender?: boolean;
   destroyOnHidden?: boolean;
   id?: string;
-  /** Дополнительный класс внешней обёртки заголовка, как в Rc Collapse. */
+  /** Additional class on the outer header wrapper, matching rc-collapse. */
   headerClass?: string;
-  /** Callback ref получает node после mount, null при замене ref или unmount; SSR не вызывает. */
+  /** The callback ref receives a node after mount and null on ref replacement or unmount. SSR does not invoke it. */
   ref?: (node: HTMLDivElement | null) => void;
   class?: string;
   style?: string;
-  /** Item slots дополняют общие classes и перекрывают общие styles. */
+  /** Item slots extend shared classes and override shared styles. */
   classNames?: CollapseItemSemanticSlots;
   styles?: CollapseItemSemanticSlots;
-  /** Вызывается после обновления binding и общего onChange; disabled его не вызывает. */
+  /** Invoked after updating the binding and calling the shared onChange. Disabled items do not invoke it. */
   onItemClick?: (key: string) => void;
   [attribute: `aria-${string}`]: unknown;
   [attribute: `data-${string}`]: unknown;
 }
-/** Данные панели для expandIcon; custom Snippet не получает автоматический rotate. */
+/** Panel data for expandIcon. A custom snippet does not rotate automatically. */
 export interface CollapseExpandIconInfo extends Omit<CollapseItem, 'key' | 'label' | 'ref'> {
   panelKey: string;
   header?: CollapseContent;
@@ -64,20 +64,20 @@ export interface CollapseExpandIconInfo extends Omit<CollapseItem, 'key' | 'labe
   collapsible?: CollapseTrigger;
   showArrow?: boolean;
   prefixCls: string;
-  /** Переключает доступную панель, затем вызывает onChange и item.onItemClick. */
+  /** Toggles an enabled panel, then calls onChange and item.onItemClick. */
   onItemClick: (key: string) => void;
 }
-/** Наследуемое оформление и стрелка; явный record заменяет родительский. */
+/** Inherited styling and arrow. An explicit record replaces the parent record. */
 export interface CollapseConfig extends Pick<
   CollapseProps, 'class' | 'style' | 'expandIcon' | 'classNames' | 'styles'
 > {}
 
-/** Независимые раскрываемые панели или accordion с управлением activeKey. */
+/** Independent collapsible panels or an accordion controlled through activeKey. */
 export interface CollapseProps {
   items?: readonly CollapseItem[];
-  /** Поддерживает bind:activeKey; числа сравниваются по строковому представлению. */
+  /** Supports bind:activeKey. Numeric keys are compared by their string representation. */
   activeKey?: CollapseActiveKey | undefined;
-  /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
+  /** Initial local value. Later prop changes do not reinitialize state. */
   defaultActiveKey?: CollapseActiveKey;
   onChange?: (activeKey: string[]) => void;
   /** @defaultValue false */
@@ -86,14 +86,14 @@ export interface CollapseProps {
   collapsible?: CollapseTrigger;
   /** @defaultValue 'start' */
   expandIconPlacement?: 'start' | 'end';
-  /** Локальный Snippet приоритетнее ConfigProvider.collapse.expandIcon. */
+  /** A local snippet overrides ConfigProvider.collapse.expandIcon. */
   expandIcon?: Snippet<[CollapseExpandIconInfo]>;
   size?: ComponentSize;
   /** @defaultValue true */
   bordered?: boolean;
   /** @defaultValue false */
   ghost?: boolean;
-  /** Удаляет скрытое содержимое; forceRender item сохраняет его. */
+  /** Removes hidden content unless the item sets forceRender. */
   destroyOnHidden?: boolean;
   /** @defaultValue 3 */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
@@ -102,13 +102,13 @@ export interface CollapseProps {
   'aria-labelledby'?: string;
   class?: string;
   style?: string;
-  /** Локальный CSS prefix; отсутствие и пустая строка наследуют ConfigProvider. */
+  /** Local CSS prefix. Omission and an empty string inherit ConfigProvider. */
   prefixCls?: string;
   rootClassName?: string;
-  /** Header slot относится к нативной кнопке, body — к внутреннему содержимому. */
+  /** The header slot targets the native button and the body slot targets its panel content. */
   classNames?: CollapseSemantic;
   styles?: CollapseSemantic;
-  /** Bind:nativeElement и bind:ref получают HTMLDivElement после mount, undefined при unmount. */
+  /** bind:nativeElement and bind:ref receive an HTMLDivElement after mount and undefined on unmount. */
   nativeElement?: HTMLDivElement;
   ref?: HTMLDivElement;
   [attribute: `aria-${string}`]: unknown;

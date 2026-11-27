@@ -1,10 +1,10 @@
-// Хранит знак, целую и дробную части MiniDecimal раздельно. Общий scale используется только для
-// выполнения арифметики.
+// Stores the MiniDecimal sign, integer part, and fractional part separately. A common scale is used
+// only for arithmetic.
 import { isEmptyDecimal, isScientificNumber, numberToString, trimNumber,
   validateNumber } from './decimal-format.engine';
 import type { DecimalValue, MiniDecimal } from './mini-decimal.engine';
 
-/** BigIntDecimal mini-decimal 1.0.1: исходные строки, scale и округления. */
+/** BigIntDecimal from mini-decimal 1.0.1, including original strings, scale, and rounding. */
 export class BigIntDecimal implements MiniDecimal {
   origin = '';
   negative?: boolean;
@@ -14,8 +14,8 @@ export class BigIntDecimal implements MiniDecimal {
   empty?: boolean;
   nan?: boolean;
 
-  // Отделяет пустое значение от невалидного. Целая и дробная части читаются после нормализации
-  // строки.
+  // Distinguishes empty and invalid values. Reads the integer and fractional parts after
+  // normalizing the string.
   constructor(value: DecimalValue) {
     if (isEmptyDecimal(value)) {
       this.empty = true;
@@ -47,27 +47,27 @@ export class BigIntDecimal implements MiniDecimal {
     }
   }
 
-  // Добавляет знак только для отрицательно представленного значения.
+  // Adds the sign only for a value represented as negative.
   private getMark() {
     return this.negative ? '-' : '';
   }
 
-  // Сериализует целую часть экземпляра после проверки его валидности.
+  // Serializes the instance's integer part after checking validity.
   private getIntegerStr() {
     return this.integer!.toString();
   }
 
-  // Восстанавливает ведущие нули дробной части по сохранённому scale.
+  // Restores leading fractional zeros using the stored scale.
   private getDecimalStr() {
     return this.decimal!.toString().padStart(this.decimalLen!, '0');
   }
 
-  // Переводит значение в целое число с общим scale, дополняя дробь справа.
+  // Converts the value to an integer at a common scale, padding the fraction on the right.
   private alignDecimal(length: number) {
     return BigInt(this.getMark() + this.getIntegerStr() + this.getDecimalStr().padEnd(length, '0'));
   }
 
-  // Копирует нормализованную запись и инвертирует знак, не изменяя получателя.
+  // Copies the normalized representation and reverses its sign without mutating the receiver.
   negate() {
     const clone = new BigIntDecimal(this.toString());
     clone.negative = !clone.negative;
@@ -75,7 +75,7 @@ export class BigIntDecimal implements MiniDecimal {
     return clone;
   }
 
-  // Складывает целые с общим scale и восстанавливает положение дробной точки.
+  // Adds integers at a common scale and restores the decimal point.
   add(value: DecimalValue): BigIntDecimal {
     if (this.isInvalidate()) {
       return new BigIntDecimal(value);
@@ -94,37 +94,37 @@ export class BigIntDecimal implements MiniDecimal {
     return new BigIntDecimal(`${hydrated.slice(0, -length)}.${hydrated.slice(-length)}`);
   }
 
-  // Обозначает отсутствие введённого значения независимо от результата parse.
+  // Marks the absence of input independently of the parse result.
   isEmpty() {
     return this.empty;
   }
 
-  // Обозначает ошибку разбора в отдельном флаге.
+  // Marks a parse error in a separate flag.
   isNaN() {
     return this.nan;
   }
 
-  // Проверяет состояния, для которых части числа не были созданы.
+  // Checks states for which the number parts are absent.
   isInvalidate() {
     return this.isEmpty() || this.isNaN();
   }
 
-  // Сравнивает нормализованные десятичные строки без потери точности через number.
+  // Compares normalized decimal strings without losing precision through number conversion.
   equals(target: MiniDecimal | null | undefined) {
     return this.toString() === target?.toString();
   }
 
-  // Сравнивает знак разности, вычисленной с общим scale.
+  // Compares the sign of the difference at a common scale.
   lessEquals(target: MiniDecimal) {
     return this.add(target.negate().toString()).toNumber() <= 0;
   }
 
-  // Преобразует нормализованную строку в число и сохраняет NaN для ошибки разбора.
+  // Converts the normalized string to a number and preserves NaN for parse errors.
   toNumber() {
     return this.isNaN() ? NaN : Number(this.toString());
   }
 
-  // Возвращает исходный текст в raw-режиме и убирает незначащие нули в safe-режиме.
+  // Returns the former text in raw mode and removes insignificant zeros in safe mode.
   toString(safe = true) {
     if (!safe) {
       return this.origin;

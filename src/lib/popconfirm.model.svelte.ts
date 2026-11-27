@@ -1,4 +1,4 @@
-// Привязывает выполнение подтверждения к конкретному открытию карточки.
+// Ties the execution of the confirmation to the specific opening of the card.
 export function createPopconfirmAction(getSession: () => object | null, handlers: {
   onSuccess: () => void;
   onError: (error: unknown) => void;
@@ -28,7 +28,7 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
     get loading() {
       return active !== undefined && isCurrent(active);
     },
-    /** Возвращает управление кнопке после запуска действия или его синхронного завершения. */
+    /** Returns the control of the button after the action is started or its synchronous completion. */
     run(action: () => void | PromiseLike<unknown>, afterAction?: () => void): void | Promise<void> {
       const session = getSession();
 
@@ -58,7 +58,7 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
         () => finish(task, true),
         (error: unknown) => finish(task, false, error)
       );
-      // Завершение Promise уже связано с сессией, даже если обработчик кнопки выбросит ошибку.
+      // Completion of Promise is already connected to the session, even if the button handler throws away an error.
       afterAction?.();
       return pending;
     },

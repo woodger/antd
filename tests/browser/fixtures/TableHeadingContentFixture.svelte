@@ -47,7 +47,7 @@
   });
   const caption = $derived(live && empty ? emptyLabel : label(captionMark));
 
-  /** Передаёт в Table содержимое из соответствующего профиля Ant Design. */
+  /** Transmits content to Table from the corresponding Ant Design profile. */
   function label(mark: Snippet): RenderEmptyContent {
     switch (profile.type) {
       case 'zero': return 0;
@@ -62,12 +62,12 @@
     }
   }
 
-  /** Записывает вызовы пользовательской команды вместе с ключами текущей страницы. */
+  /** Writes the calls of the user command along with the keys of the current page. */
   function noteCommand(keys: TableKey[]) {
     commandEvents = [...commandEvents, ['command', keys]];
   }
 
-  /** Меняет текст внутри прежних snippets. */
+  /** Changes the text inside the previous snippets. */
   function rename() {
     titleText = 'Updated title';
     captionText = 'Updated caption';

@@ -8,10 +8,10 @@ const prefix = 'ant-design-date-picker-mask-';
 const source = '.upstream/artifacts/date-picker-mask-source-proposal-v1/';
 const protocolSHA = '18caf577d37c657652640b13f22292e052e914a435c4ad38627f6b231df790fe';
 const authoredNames = ['initialStart', 'initialEnd'];
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = file => new URL('./fixtures/' + file, import.meta.url);
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const bytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
 assert.equal(sha(bytes), '9e8a052085e1e8a57320a3e1ce05d98afbd06e354e21de2cb9b60209a2daa8da');
@@ -32,7 +32,7 @@ assert.equal(metadata.serialization.completeOriginalParts, 1618);
 assert.equal(metadata.serialization.completeOriginalManifests, 4);
 assert.equal(Object.keys(metadata.parts).length, 1618);
 
-// Читает один документ захвата и сверяет исходный размер и хеш до возврата байтов.
+// Reads one capture document and checks the original size and hash before returning bytes.
 export function readMaskSourceEvidence(name) {
   const entry = metadata.documents[name];
   assert(entry, 'Unknown Source evidence document');
@@ -75,14 +75,14 @@ for (const run of release.runs) {
   assert.equal(run.actualExitCode, 0);
   assert.equal(run.terminalPinsUnchanged, true);
 }
-// Определяет исходный манифест отдельно для CSR и SSR и для каждого независимого прогона.
+// Defines the original manifest separately for CSR and SSR and for each independent running.
 function scope(kind, variant) {
   assert(['csr', 'ssr'].includes(kind), 'Unknown Source capture kind');
   assert(['first', 'repeat'].includes(variant), 'Unknown Source capture variant');
   return source + kind + '-source-' + variant + '.json';
 }
-// Проверяет размеры и хеши сжатых и исходных байтов. Распаковка происходит между этими
-// проверками.
+// Checks the dimensions and hashes of compressed and original bytes. Unpacking takes place between
+// these checks.
 function decodeStored(entry, stored) {
   const original = entry.original;
   assert.equal(entry.originalStoredGzipBytesCopiedExactly, true);
@@ -94,12 +94,12 @@ function decodeStored(entry, stored) {
   assert.equal(sha(raw), original.sha256);
   return raw;
 }
-// Читает одну часть и разбирает JSON после сверки с исходной записью манифеста.
+// Readers one part and disassembles JSON after the reconciliation with the original record of the manifesto.
 function decode(entry) {
   return JSON.parse(decodeStored(entry, fs.readFileSync(fixture(entry.fixture))));
 }
-// Проверяет привязку части к конкретному прогону и исходным метаданным. При заданном пути сверяет
-// и слот действия.
+// Verifies the binding of the part to a specific run and the initial metadata. In a given way, the
+// action slot also checks.
 export function verifyMaskSourcePartBinding(reference, kind, variant = 'first', expectedFile) {
   const original = reference.rawJSONPart ?? reference;
   assert(original.file.startsWith(scope(kind, variant) + '.parts/'), 'Original capture binding');
@@ -116,7 +116,7 @@ export function verifyMaskSourcePartBinding(reference, kind, variant = 'first', 
   assert.deepEqual(entry.original, original);
   return entry;
 }
-// Находит прогон, которому принадлежит исходная часть по зафиксированному имени файла.
+// Finds a run that owns the original part of the fixed file name.
 function partScope(reference) {
   const original = reference.rawJSONPart ?? reference;
   for (const kind of ['csr', 'ssr']) {
@@ -128,12 +128,12 @@ function partScope(reference) {
   }
   throw Error('Part does not belong to this independent Source corpus');
 }
-// Сверяет переданные сжатые байты с записью исходного прогона перед распаковкой.
+// Checks the transmitted compressed bytes with the recording of the original run before unpacking.
 export function verifyMaskSourceStoredBytes(reference, stored) {
   const { kind, variant } = partScope(reference);
   return decodeStored(verifyMaskSourcePartBinding(reference, kind, variant), stored);
 }
-// Выбирает привязку по ссылке на захват и читает одну проверенную часть.
+// Selects a binding on the capture link and reads one verified part.
 export function readMaskSourcePart(reference) {
   const { kind, variant } = partScope(reference);
   return decode(verifyMaskSourcePartBinding(reference, kind, variant));
@@ -191,7 +191,7 @@ export function verifyMaskSourceManifest(value, kind = 'csr', variant = 'first')
     assert.deepEqual(row.observationErrors, []);
     assert.deepEqual(row.network.failures, []);
     assert(row.network.responses.every(response => response.status < 400));
-    // Привязывает часть к конкретному owner и фазе действия в исходном прогоне.
+    // Binds the part to the specific owner and the phase of action in the original run.
     const bind = (ref, phase) => verifyMaskSourcePartBinding(ref, kind, variant,
       file + '.parts/' + row.id + '-' + phase + '.json');
     bind(row.initial, 'initial');
@@ -250,7 +250,7 @@ export function readMaskSourceCase(id, variant = 'first') {
   assert(row, 'Unknown Source owner');
   return row;
 }
-// Ищет исходный объект по идентификатору. Ссылка без объекта прерывает проверку снимка.
+// Seeks the source object by identifier. The no-object link interrupts the image check.
 function rawNode(graph, identity) {
   const node = graph.objects.find(node => node.id === identity);
   assert(node, 'Missing original raw identity');
@@ -266,7 +266,7 @@ function rawAt(graph, path) {
   for (const key of path) result = property(graph, result.ref, String(key));
   return result;
 }
-// Сверяет поля и identity даты с исходным графом и привязками к переданным значениям.
+// Conserves fields and dates with the original graph and bindings to the transmitted values.
 function dateSnapshot(value, authored) {
   assert.equal(value.raw.root.ref, value.identity);
   assert.equal(typeof value.temporal.valid, 'boolean');
@@ -380,7 +380,7 @@ function verifyOwner(owner) {
   });
 }
 export function verifyMaskSourceRows(point) {
-  // Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
+  // Looking for an attribute by name. The missing attribute remains null to compare images.
   const attr = (node, key) => node.attributes.find(([name]) => name === key)?.[1] ?? null;
   const has = (node, name) => (attr(node, 'class') ?? '').split(/\s+/).includes(name);
   for (const popup of point.popups) {

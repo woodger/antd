@@ -5,7 +5,7 @@ const fixture = '/?fixture=table-filter-static-content&profile=';
 const filterName = 'Filter: Value';
 test.use({ viewport: { width: 820, height: 550 }, reducedMotion: 'reduce' });
 
-/** Снимает иконку, индикацию фильтра и ключи строк перед открытием панели. */
+/** Removes the icon, filter indication and line keys before opening the panel. */
 function snapshotTable() {
   const root = document.getElementById('table-filter-static-content-fixture');
   if (!root) {
@@ -25,7 +25,7 @@ function snapshotTable() {
   return { trigger, rows };
 }
 
-/** Читает содержимое открытого popover, включая состояние пустой пользовательской панели. */
+/** Reads the contents of an open popover, including the status of an empty custom panel. */
 function snapshotPanel() {
   const popup = document.querySelector('[data-ant-dropdown-popup]:popover-open');
   const panel = popup?.querySelector('[data-ant-table-filter-part="dropdown"]');
@@ -57,7 +57,7 @@ for (const { profile, initial, panel, changes } of source.cases) {
       await trigger.click();
 
       await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-      // Подписи вариантов и команд проверяются независимо от пробелов между контролами.
+      // Option signatures and commands are checked regardless of the gaps between controls.
       const expectedPanel = panel?.hasFilters ? { ...panel, text: null } : panel;
       await expect.poll(() => page.evaluate(snapshotPanel)).toEqual(expectedPanel);
 

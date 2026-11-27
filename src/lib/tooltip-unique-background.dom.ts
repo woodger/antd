@@ -1,32 +1,32 @@
-// Двигает фон общей подсказки отдельно от её содержимого. Позиции приходят после обычного align,
-// а новая цель стартует от фактически нарисованного кадра незавершённого перехода.
+// Moves the background of the general clue separately from its contents. Positions come after the
+// usual align, and the new goal starts from the actually drawn frame of an unfinished transition.
 import type { TooltipPosition } from './tooltip.engine';
 
-/** Перемещает фон с Source easing и длительностью темы, сохраняя native top layer Tooltip. */
+/** Moves the background with Source easing and theme duration, saving the native top layer Tooltip. */
 export function connectTooltipUniqueBackground(node: HTMLElement, getMoving: () => boolean) {
   const view = node.ownerDocument.defaultView;
   const preference = view?.matchMedia('(prefers-reduced-motion: reduce)');
   let layout: { left: number; top: number; width: number; height: number; } | undefined;
   let animation: Animation | undefined;
 
-  // Снимает временную проекцию, оставляя текущую целевую геометрию в inline style.
+  // Removes the temporary projection, leaving the current targeted geometry in the inline style.
   function cancelAnimation() {
     animation?.cancel();
     animation = undefined;
   }
 
-  // Прекращает сдвиг при закрытии, чтобы следующее открытие начиналось с новой геометрии.
+  // Stops the shift when closed so that the next discovery begins with new geometry.
   function stop() {
     cancelAnimation();
     layout = undefined;
   }
 
-  // Отмена действует также при смене настройки посреди перехода.
+  // Cancellation also applies when you change the setting in the middle of the transition.
   function syncMotion() {
     if (!getMoving() || preference?.matches) cancelAnimation();
   }
 
-  // Считывает длительность из CSS уровня активного владельца.
+  // Reads the duration of the CSS level of the active owner.
   function duration() {
     const value = view?.getComputedStyle(node).getPropertyValue('--ant-motion-duration-slow').trim();
     if (!value) return 300;
@@ -40,12 +40,12 @@ export function connectTooltipUniqueBackground(node: HTMLElement, getMoving: () 
   return {
     stop,
     syncMotion,
-    // Отписывает фон вместе с общей поверхностью.
+    // Unsubscribes the backdrop along with the shared surface.
     destroy() {
       stop();
       preference?.removeEventListener('change', syncMotion);
     },
-    // Применяет новое положение к тексту сразу, а фон ведёт от старой позиции к новой.
+    // Applies a new position to the text at once, and the background leads from the old position to the new one.
     position(next: TooltipPosition, bounds: DOMRect, apply: (position: TooltipPosition) => void) {
       const { left, top } = next;
       const { width, height } = bounds;

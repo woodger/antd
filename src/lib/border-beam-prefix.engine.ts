@@ -1,6 +1,6 @@
 import template from './vendor/border-beam-prefix.css.js';
 
-/** Local class и общий namespace variables независимы; marker изолирует обе настройки. */
+/** The local class and shared variable namespace are independent. The marker isolates both settings. */
 export function getBorderBeamPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-border-beam' && rootPrefix === 'ant') {
     return undefined;

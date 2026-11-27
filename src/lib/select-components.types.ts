@@ -26,7 +26,7 @@ interface SelectOtherElementAttributes<Element extends HTMLElement> extends Omit
   value?: string;
   type?: string;
 }
-/** Source передаёт type и строковый value также в textarea/custom editor. */
+/** Source transmits type and string value also in textarea/custom editor. */
 export type SelectInputAttributes<Element extends HTMLElement = HTMLInputElement> =
   Element extends HTMLInputElement ? SelectInputElementAttributes
     : Element extends HTMLTextAreaElement ? SelectTextareaElementAttributes
@@ -66,13 +66,13 @@ export type SelectRootRegistration<Element extends HTMLElement = HTMLDivElement>
 export type SelectInputRegistration<Element extends HTMLElement = HTMLInputElement> = Element
   | SelectComponentHandle<HTMLElement, Element>;
 
-/** Полная замена поля: примените attributes и зарегистрируйте DOM/composite ref. */
+/** Full Field Replacement: Apply attributes and register DOM/composite ref. */
 export interface SelectRootContext<Element extends HTMLElement = HTMLDivElement> {
   attributes: SelectRootAttributes<Element>;
   register: (registration: SelectRootRegistration<Element>) => () => void;
 }
 
-/** Замена редактора внутри стандартного поля. */
+/** Replacing the editor inside the standard field. */
 export interface SelectInputContext<Element extends HTMLElement = HTMLInputElement> {
   attributes: SelectInputAttributes<Element>;
   register: (registration: SelectInputRegistration<Element>) => () => void;
@@ -82,7 +82,7 @@ export type SelectRootComponent<Element extends HTMLElement = HTMLDivElement> = 
   | { element: string; props?: SelectRootAttributes<Element>; ref?: (node: Element | null) => void }
   | Snippet<[SelectRootContext<Element>]> | {
     render: Snippet<[SelectRootContext<Element>]>;
-    /** Переданные полем attrs перекрывают own props; внутренние callbacks идут первыми. */
+    /** The attrs field overlaps its own props; the internal callbacks are the first. */
     props?: SelectRootAttributes<Element>;
   };
 
@@ -90,7 +90,7 @@ export type SelectInputComponent<Element extends HTMLElement = HTMLInputElement>
   | { element: string; props?: SelectInputOwnProps<Element>; ref?: (node: Element | null) => void }
   | Snippet<[SelectInputContext<Element>]> | {
     render: Snippet<[SelectInputContext<Element>]>;
-    /** Own props перекрывают generated attrs; собственные callbacks идут первыми. */
+    /** Own props overlaps generated attrs; own callbacks go first. */
     props?: SelectInputOwnProps<Element>;
   };
 

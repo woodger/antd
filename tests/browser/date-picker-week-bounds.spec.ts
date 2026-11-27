@@ -2,7 +2,7 @@ import { test, expect } from './test';
 
 type PickerKind = 'DatePicker' | 'RangePicker';
 
-// Передаёт сценарий границ в общую русскоязычную фикстуру недельного Picker.
+// Transmits the boundary scenario to the general Russian-language fixture of the weekly Picker.
 function weekPage(kind: PickerKind, dates: Record<string, string>) {
   const params = new URLSearchParams(dates);
   if (kind === 'RangePicker') {

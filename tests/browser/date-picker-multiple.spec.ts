@@ -12,7 +12,7 @@ const popupSelector = '[data-picker-popup]:not([hidden])';
 
 test.use({ viewport: { width: 1280, height: 720 }, timezoneId: 'UTC', locale: 'en-US' });
 
-/** Монтирует собранный пакет с props независимого эталона. */
+/** Installs the assembled package from the props independent standard. */
 async function mountProfile(page: Page, profile: MultiplePickerProfile) {
   await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
   const search = new URLSearchParams({ fixture: 'date-picker-multiple', profile: JSON.stringify(profile) });
@@ -20,7 +20,7 @@ async function mountProfile(page: Page, profile: MultiplePickerProfile) {
   await expect(page.locator('[data-date-owner]')).toHaveAttribute('data-ref', 'true');
 }
 
-/** Выполняет действие через реальный календарь или контрол владельца. */
+/** Performs the action through the real calendar or the control of the owner. */
 async function applyChoice(page: Page, command: MultipleBrowserProfile['steps'][number]['command']) {
   const root = page.locator(rootSelector);
   if (Array.isArray(command)) {
@@ -82,8 +82,8 @@ for (const sample of readMultipleBrowser().passes[0]) {
       expect(await input.evaluate((element, original) => element === original, original)).toBe(true);
 
       const optionLabels = step.state.tags.filter(tag => !tag.hidden).map(tag => tag.text);
-      // Два Dayjs одной недели имеют одинаковую подпись. В React после удаления
-      // остаётся лишний тег, хотя callback уже исключил обе даты.
+      // Two Dayjs one week has the same label. In React, after removal, there remains an extra tag,
+      // although the callback has already ruled out both dates.
       const expectedTags = profile.id === 'week' && step.command === 'remove-first'
         ? step.state.input.value.split(',') : optionLabels;
       await expect(page.locator(visibleTags)).toHaveText(expectedTags);
@@ -98,7 +98,7 @@ for (const sample of readMultipleBrowser().passes[0]) {
   });
 }
 
-/** Сопоставляет время и список из дополнительного исходного замера. */
+/** Compares the time and list from the additional initial measurement. */
 function interactionEvents(events: unknown[][]) {
   function date(value: unknown) {
     const original = value && typeof value === 'object' && 'date' in value ? value.date : value;
@@ -212,7 +212,7 @@ test('DatePicker switches multiple without resetting its accepted list', async (
         await page.locator('#toggle').evaluate((button: HTMLButtonElement) => button.click());
       }
       else if (action === 'open' && !state.multiple) {
-        // Одиночный Svelte picker открывается кликом по полю.
+        // A solitary Svelte picker opens with a click on the field.
         await input.click();
       }
       else if (action === 'open' || action === 'outside') {

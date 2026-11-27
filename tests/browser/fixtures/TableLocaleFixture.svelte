@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Профиль берёт входные данные из прогона React. Подписи читает сам DOM-тест.
+  // Profile receives inputs from run React. The signature reads the DOM test itself.
   import { untrack, type Snippet } from 'svelte';
   import {
     ConfigProvider, Table, type AntDesignLocale, type RenderEmptyComponent, type RenderEmptyContent,
@@ -39,7 +39,7 @@
   const layer = $derived(updated ? 'Updated' : 'Local');
   const locale = $derived(readLocale(layer));
 
-  /** Задаёт отдельные маркеры для подписи каждого элемента. */
+  /** Set separate markers for the label of each element. */
   function dictionary(owner: string) {
     return {
       filterTitle: owner + ' filter', filterConfirm: owner + ' apply',
@@ -53,7 +53,7 @@
     };
   }
 
-  /** Создаёт колонку для панели, которая измеряется в данном профиле. */
+  /** Creates a column for the panel, which is measured in a given profile. */
   function makeColumn(): TableColumn<Row> {
     const column: TableColumn<Row> = { key: 'name', title: 'Name', dataIndex: 'name' };
     if (profile.kind === 'empty' || profile.kind === 'tree') {
@@ -71,7 +71,7 @@
     return column;
   }
 
-  /** Передаёт пустые значения без подстановки и сохраняет identity редактора. */
+  /** Transmits empty values without a substitute and preserves the editor's identity. */
   function content(value: string, text: string, rich: Snippet): RenderEmptyContent {
     switch (value) {
       case 'text': return text;
@@ -86,7 +86,7 @@
     }
   }
 
-  /** Перекрывает provider частично или явно задаёт локальные значения с тем же словарём. */
+  /** Overlapping the provider partially or explicitly sets local values with the same dictionary. */
   function readLocale(owner: string): TableLocaleOverrides | undefined {
     const local = dictionary(owner);
     if (profile.local === 'partial') {
@@ -115,7 +115,7 @@
     return profile.local || profile.empty ? result : undefined;
   }
 
-  /** Сохраняет имя потребителя для проверки приоритетов в SSR. */
+  /** Saves the consumer's name to check priorities in SSR. */
   function sharedEmpty(name?: RenderEmptyComponent) {
     if (name !== undefined) {
       observed?.push(name);

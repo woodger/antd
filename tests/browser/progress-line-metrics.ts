@@ -6,12 +6,11 @@ export function snapshotProgressLine(prefix = 'ant-progress') {
   const tracks = [...root.querySelectorAll(`.${prefix}-track, .${prefix}-steps-item`)];
   const indicator = root.querySelector(`.${prefix}-indicator`);
   const icon = indicator?.querySelector('svg');
-  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
+  // Removes internal runtime classes and sorts the rest for comparison.
   const classes = (node: Element | null) => node && [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-progress-css-var$|^progress-line-source-scope$/.test(name)
   ).sort();
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const css = (node: Element | null, keys: string[]) => node && Object.fromEntries(keys.map(key =>
     [key, getComputedStyle(node).getPropertyValue(key)]
   ));

@@ -1,4 +1,4 @@
-/** Обновляет переменные темы и указанные свойства, сохраняя координаты DOM-контроллера. */
+/** Updates the theme variables and specified properties, saving the coordinates of DOM-controller. */
 export function connectComponentTheme(
   node: HTMLElement,
   cssText: string | undefined,
@@ -13,7 +13,7 @@ export function connectComponentTheme(
     node.style.setProperty(name, source.getPropertyValue(name), source.getPropertyPriority(name));
   }
 
-  // Освобождает только свойства этой записи при обновлении или снятии attachment.
+  // Relieves only the properties of this entry when you update or withdraw attachment.
   return () => {
     for (const name of names) node.style.removeProperty(name);
   };

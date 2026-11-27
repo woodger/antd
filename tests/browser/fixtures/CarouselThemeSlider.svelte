@@ -11,7 +11,7 @@
 {#snippet content()}
   <div style="height:120px"><input aria-label="Carousel theme draft" value="Draft" /></div>
 {/snippet}
-<!-- Source ConfigProvider не создаёт dir-wrapper; задаём одинаковое наследование в обоих стендах. -->
+<!-- Source ConfigProvider doesn't create a dir-wrapper; we're doing the same inheritance in both stands. -->
 <div data-carousel-theme={id} dir="ltr" style="width:360px">
   <Carousel arrows speed={0} dotPlacement={placement}
     items={[1, 2, 3, 4].map(key => ({ key, children: content }))}

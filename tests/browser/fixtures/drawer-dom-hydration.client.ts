@@ -5,7 +5,7 @@ import DrawerDomFixtures from './DrawerDomFixtures.svelte';
 const target = document.getElementById('root');
 if (!target) throw new Error('Missing Drawer DOM hydration target');
 
-// Подключает locale, callbacks секции и портал к серверному DOM.
+// Connects locale, callbacks sections and portal to server DOM.
 target.addEventListener('hydrate-drawer-dom', () => {
   hydrate(DrawerDomFixtures, {
     target,

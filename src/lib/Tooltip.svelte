@@ -10,15 +10,15 @@
 
   const anchorKey = Symbol('tooltip-anchor');
 
-  /** Подключает Tooltip к существующему элементу без обёртки и изменения публичных props. */
+  /** Attaches Tooltip to an existing element without a wrapper or public prop changes. */
   export function provideTooltipAnchor(anchor: TooltipAnchor) {
     setContext(anchorKey, anchor);
   }
 </script>
 
 <script lang="ts">
-  // Координирует задержки открытия Tooltip с событиями trigger. Popup получает уже принятое
-  // состояние видимости.
+  // Coordinates Tooltip opening delays with trigger events. The popup receives the accepted
+  // visibility state.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
@@ -61,10 +61,10 @@
   provideZIndex(() => layer.contextZIndex);
   const external = getContext<TooltipAnchor | undefined>(anchorKey);
   if (external) {
-    // Tooltip внутри пользовательского содержимого получает собственный trigger.
+    // A Tooltip inside custom content gets its own trigger.
     setContext(anchorKey, undefined);
   }
-  // Source config использует hover; без него сохраняется прежний native hover/focus.
+  // Upstream configuration uses hover. Without it, the existing native hover and focus behavior stays in use.
   let resolvedTrigger = $derived<TooltipTrigger | readonly TooltipTrigger[]>(
     trigger || config.tooltip?.trigger || (external || config.tooltip ? 'hover' : ['hover', 'focus'])
   );
@@ -76,7 +76,7 @@
   let sourceTrigger = $derived(Boolean(external || config.tooltip) || resolvedTrigger.length === 0
     || supports('click') || supports('contextMenu') || actionOverrides);
   const initialDefault = untrack(() => defaultOpen);
-  // Отдельный raw state переживает обновление spread props без входного open.
+  // Separate raw state survives spread prop updates without an open prop.
   let uncontrolledOpen = $state(initialDefault);
   let rawOpen = $derived(providedOpen === undefined ? uncontrolledOpen : open ?? initialDefault);
   let wrapper = $state<HTMLSpanElement>();
@@ -193,7 +193,7 @@
     cancelPending();
     const target = anchor;
     const ownerValue = providedOpen;
-    // Удаление overrides не отменяет уже запущенный source action.
+    // Removing overrides does not cancel an upstream action already in progress.
     const independentActions = actionOverrides;
 
     function apply() {
@@ -213,7 +213,7 @@
         return;
       }
 
-      // При подключении к готовому узлу состояние принадлежит его владельцу.
+      // When attached to an existing node, state belongs to its owner.
       if (!external) {
         uncontrolledOpen = next;
         open = next;
@@ -272,7 +272,7 @@
         request(false, (props.blurDelay ?? 0) * 1000);
       }
     }
-    // Native blur без relatedTarget также приходит во время удаления focused DOM.
+    // Native blur without a relatedTarget also fires when the focused DOM is removed.
     if (event.relatedTarget === null) {
       queueMicrotask(closeIfOutside);
     }

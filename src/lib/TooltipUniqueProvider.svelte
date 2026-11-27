@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Публикует группу для дочерних overlay. Держит один экземпляр панели при смене владельца.
+  // Provides a group for child overlays. Keeps one panel instance across owner changes.
   import type { Snippet } from 'svelte';
   import TooltipUniquePopup from './TooltipUniquePopup.svelte';
   import { provideTooltipUnique, type TooltipUniqueSurface } from './tooltip-unique.model.svelte';

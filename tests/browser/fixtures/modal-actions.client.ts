@@ -1,4 +1,4 @@
-// Подключает одни настройки действий для mount и строгой гидратации.
+// Connects some action settings for mount and strict hydration.
 import '@woodger/antd/styles.css';
 import { hydrate, mount, type ComponentProps } from 'svelte';
 import ModalActionFixtures from './ModalActionFixtures.svelte';

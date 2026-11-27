@@ -1,6 +1,6 @@
 import template from './vendor/notification-prefix.css.js';
 
-/** Status backgrounds остаются canonical component tokens; private metrics следуют global prefix. */
+/** Status backgrounds remain canonical component tokens; private metrics follow global prefix. */
 export function getNotificationPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-notification' && rootPrefix === 'ant') {
     return undefined;

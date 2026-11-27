@@ -309,7 +309,7 @@ test(
     await up.hover();
     const box = (await up.boundingBox())!;
     const time = new Date('2026-11-01T00:00:00Z');
-    // Clock идёт между install и pauseAt, поэтому стартуем раньше точки остановки.
+    // Clock goes between install and pauseAt, so let's start before the stop point.
     await page.clock.install({ time: new Date(time.getTime() - 60_000) });
     await page.clock.pauseAt(time);
 

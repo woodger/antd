@@ -25,12 +25,12 @@
 </script>
 
 <script lang="ts">
-  // Передаёт фабрике непрозрачные даты и записывает только наблюдения владельца поля.
+  // Transmits opaque dates to the factory and records only observations of the field owner.
   import { ConfigProvider, DatePicker, enUS, type DatePickerPanelContext } from '@woodger/antd';
   import { opaqueDate, opaquePickerAdapter, readOpaqueDate, type OpaquePickerDate }
     from './opaque-picker-date-adapter';
 
-  /** Браузер передаёт сценарий в URL, SSR и hydration задают его явно. */
+  /** Browser transmits the script in URL, SSR and hydration set it explicitly. */
   function readProfile(): GeneratedPickerProfile {
     const profile = new URLSearchParams(globalThis.location?.search).get('profile');
     switch (profile) {
@@ -44,7 +44,7 @@
     }
   }
 
-  /** Получает настройки из исходного браузерного профиля для набора времени. */
+  /** Receives settings from the original browser profile for the time gain. */
   function readTimeSelection(): GeneratedTimeSelectionProfile | undefined {
     const reference = new URLSearchParams(globalThis.location?.search).get('time-selection');
     return reference ? JSON.parse(reference) : undefined;
@@ -92,7 +92,7 @@
 
   type Payload = OpaquePickerDate | (OpaquePickerDate | null)[] | null;
 
-  /** Отмечает ссылки исходных значений и последнего onSelect пользовательской панели. */
+  /** Marks the references of the original values and the last onSelect of the custom panel. */
   function encode(value: Payload): unknown {
     if (Array.isArray(value)) {
       return value.map(encode);
@@ -110,12 +110,12 @@
     };
   }
 
-  /** Добавляет значения и уже вычисленные поля события в хронологию владельца. */
+  /** Adds values and already calculated fields of events to the chronology of the owner. */
   function record(event: string, value: Payload, ...extra: unknown[]) {
     log = [...log, [event, encode(value), ...extra]];
   }
 
-  /** Готовит новое значение через конфигурацию, которую получила пользовательская панель. */
+  /** Prepares a new value through the configuration that the custom panel has received. */
   function select(context: DatePickerPanelContext<OpaquePickerDate>, day: number) {
     const { generateConfig, pickerValue, mode } = context;
     selected = mode === 'month' ? generateConfig.addMonth(pickerValue, 2)
@@ -124,30 +124,30 @@
     context.onSelect(selected);
   }
 
-  /** Проверяет навигацию пользовательского месяца через публичное действие панели. */
+  /** Checks the navigation of the user month through the public action of the panel. */
   function navigate(context: DatePickerPanelContext<OpaquePickerDate>) {
     const next = context.generateConfig.addMonth(context.pickerValue, 1);
     context.onPickerValueChange(next);
   }
 
-  /** Держит popup рядом с формой, чтобы наблюдать открытие и FormData через один owner. */
+  /** Keeps the popup next to the form to observe the discovery and FormData through one owner. */
   function popupContainer(trigger: HTMLElement) {
     return trigger.parentElement ?? trigger.ownerDocument.body;
   }
 
   const callbacks = {
-    // Календарь публикует черновик, в том числе до подтверждения диапазона.
+    // The calendar publishes a draft, including before the confirmation of the range.
     onCalendarChange: (value: Payload, text: string | string[], info: unknown) =>
       record('calendar', value, text, info),
-    // Принятое значение сохраняет сырой объект или пару без копирования дат.
+    // Accepted value preserves a raw object or a pair without copying the dates.
     onChange: (value: Payload, text: string | string[] | null) => record('change', value, text),
-    // Дата просмотра имеет свою последовательность, отдельную от принятых дат.
+    // The viewing date has its own sequence, separate from the accepted dates.
     onPickerValueChange: (value: Payload, info: unknown) => record('picker', value, info),
-    // Смена уровня панели сообщает текущий объект и новый mode.
+    // The panel level change communicates the current object and the new mode.
     onPanelChange: (value: Payload, mode: unknown) => record('panel', value, mode),
-    // Сохраняет запрос на изменение открытого состояния без изменения props.
+    // Saves an open state query without changing props.
     onOpenChange: (open: boolean) => { log = [...log, ['open', open]]; },
-    // Принимает значение, подтверждённое кнопкой времени.
+    // Accepts the value confirmed by the time button.
     onOk: (value: Payload) => record('ok', value)
   };
 

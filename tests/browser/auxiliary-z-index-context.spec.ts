@@ -5,7 +5,7 @@ test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
 const fixture = '/?fixture=auxiliary-z-index-context&profile=';
 type Profile = (typeof source.cases)[number];
 
-/** Читает слой у каждой поверхности и её вложенной подсказки. */
+/** Reads the layer at each surface and its nested clue. */
 function snapshot() {
   const surfaces = {
     tour: '.zi-tour.ant-tour',
@@ -39,16 +39,16 @@ function snapshot() {
   }));
 }
 
-/** Учитывает два закреплённых CSS-контракта Svelte, измеряя остальные слои по React. */
+/** Takes into account two fixed CSS-contract Svelte, measuring the remaining layers by React. */
 function expectedLayers(profile: Profile['profile'], observed: Profile['initial']) {
   const layers = { ...observed };
   if (profile.child === undefined) {
-    // Слот styles.root остаётся CSS-слоем FloatButton и перекрывает значение из контекста.
+    // Slot styles.root remains CSS layer FloatButton and overrides the value from the context.
     layers.floatSemantic = { computed: '1660', inline: '1660' };
   }
 
   if (profile.child === 0) {
-    // Нативный viewer применяет числовой preview.zIndex, включая явный 0.
+    // Native viewer applies a numerical preview.zIndex, including an explicit 0.
     layers.image = { computed: '0', inline: '0' };
     layers.imageGroup = { computed: '0', inline: '0' };
   }

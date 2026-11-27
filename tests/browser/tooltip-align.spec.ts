@@ -3,7 +3,7 @@ import { snapshotTooltipAlignment } from './tooltip-align-metrics';
 import type { TooltipAlignmentHost } from './fixtures/tooltip-align.types';
 import reference from './fixtures/ant-design-tooltip-align-reference.json' with { type: 'json' };
 
-// Эталон замеряет layout без zoom, в том числе перед синхронным forceAlign.
+// The benchmark measures layout without zooms, including in front of the synchronous forceAlign.
 test.use({ viewport: { width: 1024, height: 800 }, reducedMotion: 'reduce' });
 
 for (const source of [false, true]) {

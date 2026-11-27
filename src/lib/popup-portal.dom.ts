@@ -1,8 +1,8 @@
-// Переносит popup между origin и целевым контейнером. Отвечает за перенос токенов темы,
-// восстановление фокуса и освобождение scroll lock при закрытии.
+// Carries a popup between the origin and the target container. Responsible for transferring theme
+// tokens, restoring focus and releasing scroll lock when closing.
 import { getPopupActiveElement } from './popup.dom';
 
-// Снимает вычисленные CSS-переменные. Для пустого CSSOM различает пустое значение и
+// Removes calculated CSS-variables. For the empty CSSOM distinguishes between empty value and
 // guaranteed-invalid.
 function readPopupThemeVariables(origin: HTMLElement) {
   const document = origin.ownerDocument;
@@ -17,7 +17,7 @@ function readPopupThemeVariables(origin: HTMLElement) {
     return values;
   }
 
-  // CSSOM возвращает '' и для пустого списка токенов, и для guaranteed-invalid.
+  // CSSOM returns '' both for an empty token list and for guaranteed-invalid.
   const typed = origin.computedStyleMap?.();
   if (typed) {
     for (const name of empty) values.set(name, typed.get(name) === undefined ? 'initial' : ' ');
@@ -45,14 +45,14 @@ function readPopupThemeVariables(origin: HTMLElement) {
   return values;
 }
 
-/** Portal сохраняет вычисленные CSS variables исходной Svelte theme boundary. */
+/** Portal retains the calculated CSS variables of the original Svelte theme. */
 export function connectPopupPortal(element: HTMLElement, options: {
   getPopupContainer: false | ((reference?: HTMLElement) => Element | DocumentFragment) | undefined;
   reference?: HTMLElement;
   autoLock: boolean;
   origin: HTMLElement;
   marker: Comment;
-  /** Подключает отсоединённый CSS-контекст после переноса, до первого чтения CSSOM. */
+  /** Connects the disconnected CSS-context after transfer, until the first reading is CSSOM. */
   prepareOrigin?: () => void;
   preserveVariables?: readonly string[];
   preservePointerEvents?: boolean;
@@ -71,8 +71,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
   let active = true;
   let queued = false;
 
-  // Переносит существующий узел. При fallback вставке восстанавливает фокус внутри него, если
-  // фокус ушёл на body.
+  // Carry the existing node. When the fallback insertion restores the focus inside it, if the focus
+  // has gone to body.
   function move(parent: Element | DocumentFragment, before: ChildNode | null) {
     if (element.parentNode === parent && element.nextSibling === before) {
       return;
@@ -90,10 +90,10 @@ export function connectPopupPortal(element: HTMLElement, options: {
     }
   }
 
-  // Снимает CSS-переменные прошлой синхронизации, кроме уже принадлежащих другим владельцам.
+  // Removes CSS variables of past synchronization, except already belonging to other owners.
   function clearManaged() {
     const preserved = new Set(options.preserveVariables);
-    // После прошлого sync переменная могла перейти component-theme attachment.
+    // After the past sync, the variable could go component-theme attachment.
     for (const name of managed) {
       if (!preserved.has(name)) element.style.removeProperty(name);
     }
@@ -101,15 +101,15 @@ export function connectPopupPortal(element: HTMLElement, options: {
     return preserved;
   }
 
-  // Переносит вычисленные значения из origin после удаления прежнего слоя. Inline popup
-  // пользуется наследованием.
+  // Transfers the calculated values from origin after removing the previous layer. Inline popup
+  // enjoys inheritance.
   function syncTheme() {
     if (!active || inline) {
       return;
     }
     const values = readPopupThemeVariables(origin);
     const preserved = clearManaged();
-    // Копируем готовые значения: локальный var() иначе пересчитается после записи соседней переменной.
+    // Copy the finished values: local var() is otherwise recalculated after recording the neighboring variable.
     for (const [name, value] of values) {
       if (preserved.has(name)) continue;
       element.style.setProperty(name, value);
@@ -117,7 +117,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
     }
   }
 
-  // Объединяет уведомления MutationObserver и resize в одно обновление темы на микрозадачу.
+  // Combines notifications MutationObserver and resize into one microtask theme update.
   function scheduleTheme() {
     if (queued) {
       return;
@@ -129,7 +129,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
     });
   }
 
-  // Native dialog делает body inert; стандартный portal остаётся в его top layer.
+  // Native dialog makes body inert; the standard portal remains in its top layer.
   if (!options.preservePointerEvents) {
     element.style.pointerEvents = !getter && modal ? 'auto' : '';
   }
@@ -156,7 +156,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
     view.addEventListener('resize', scheduleTheme);
   }
 
-  // Отдельный style принадлежит portal: inline и пользовательские контейнеры не блокируют body.
+  // A separate style belongs to the portal: inline and custom containers do not block the body.
   let lock: HTMLStyleElement | undefined;
   if (!inline && options.autoLock && (!getter || container === document.body)) {
     const body = document.body;
@@ -173,8 +173,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
     document.head.append(lock);
   }
 
-  // Освобождает подписки, scroll lock и CSS. При наличии действующего marker может вернуть popup
-  // на исходное место.
+  // Releases subscriptions, scroll lock and CSS. In the presence of a valid marker can return the
+  // popup to the original place.
   const disconnect = () => {
     active = false;
     observer.disconnect();

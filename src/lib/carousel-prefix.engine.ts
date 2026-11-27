@@ -1,6 +1,6 @@
 import template from './vendor/carousel-prefix.css.js';
 
-/** Local wrapper/keyframes и общий prefix Radio/Checkbox selectors независимы. */
+/** Local wrapper and keyframes are independent of the shared Radio and Checkbox selector prefix. */
 export function getCarouselPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-carousel' && rootPrefix === 'ant') {
     return undefined;

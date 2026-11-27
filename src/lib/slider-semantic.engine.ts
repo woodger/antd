@@ -7,7 +7,7 @@ import type {
 } from './slider-range.types';
 import type { SliderSingleProps } from './slider.types';
 
-/** useMergeSemantic Slider: provider slots/style, затем локальные slots/style. */
+/** useMergeSemantic Slider: provider slots/style, then local slots/style. */
 export function sliderSemantics<Props extends SliderSingleProps | SliderRangeProps>(
   props: Props,
   context: SliderConfig | undefined,

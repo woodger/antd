@@ -1,9 +1,9 @@
-// Связывает видимость поверхности с browser lifecycle и синхронными замерами CSSMotion.
+// Connects surface visibility to browser lifecycle and synchronous measurements CSSMotion.
 import { flushSync, untrack } from 'svelte';
 import { createMenuMotion, type MenuMotionInput, type MenuMotionState } from './menu-motion.dom';
 import type { MenuMotionEvent } from './menu-motion.types';
 
-/** Controller создаётся после привязки корня. SSR строит только стабильную разметку. */
+/** Controller is created after linking the root. SSR builds only stable markings. */
 export function useMenuMotion(
   getOwner: () => HTMLElement | undefined,
   getElement: () => HTMLElement | undefined,
@@ -33,9 +33,9 @@ export function useMenuMotion(
   });
 
   return {
-    // Даёт markup держать уходящую поверхность одновременно с обновлением режима.
+    // Allows markup to keep the outgoing surface at the same time as the mode update.
     get state() { return state; },
-    // Событие попадает в текущую ревизию; DOM-controller проверяет саму поверхность.
+    // The event enters the current revision; DOM-controller checks the surface itself.
     end(event: MenuMotionEvent) { runtime?.end(event); }
   };
 }

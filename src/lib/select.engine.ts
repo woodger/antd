@@ -1,13 +1,13 @@
-// Обрабатывает выбор, поиск и переход по доступным строкам Select. Значения сохраняют различие
-// строк и чисел.
+// Processes the selection, search and transition on the available lines Select. Values retain the
+// difference between strings and numbers.
 import type { SelectDataFields } from './select-data.types';
 
-// Считает допустимый лимит достигнутым также при maxCount, равном нулю.
+// Considers the permissible limit achieved also at maxCount, equal to zero.
 export function isSelectCountReached(count: number, maxCount?: number) {
   return maxCount !== undefined && !Number.isNaN(maxCount) && count >= maxCount;
 }
 
-/** Лимит блокирует добавление; выбранный доступный пункт остаётся доступным для удаления. */
+/** Limit blocks the addition; the selected available item remains available for removal. */
 export function isSelectOptionDisabled(
   disabled: unknown,
   selected: boolean,
@@ -16,27 +16,27 @@ export function isSelectOptionDisabled(
   return Boolean(disabled || countReached && !selected);
 }
 
-// Нормализует массив выбора до уникальных значений, сохраняя порядок.
+// Normalizes an array of choices to unique values, maintaining order.
 export function getSelectValues<Value extends string | number>(
   value: Value | readonly Value[] | undefined
 ): Value[] {
   return Array.isArray(value) ? [...new Set<Value>(value)] : [];
 }
 
-/** Согласованный Native default: label, trim и Unicode folding; explicit fields идут отдельно. */
+/** Harmonized Native default: label, trim and Unicode folding; fields go separately. */
 export function matchesSelectDataLabel(search: string, option: object, fields: SelectDataFields) {
   const text: unknown = Reflect.get(option, fields.label);
   return String(text ?? '').normalize('NFKD').toLowerCase()
     .includes(search.trim().normalize('NFKD').toLowerCase());
 }
 
-/** Текст Native editor/tags; исходный label в raw metadata сохраняется отдельно. */
+/** Text Native editor/tags; the original label in raw metadata is saved separately. */
 export function getSelectDisplayLabel(label: unknown, value: string | number) {
   const content = label ?? value;
   return typeof content === 'boolean' ? '' : String(content);
 }
 
-// Начинает обход от текущей позиции или края списка согласно направлению.
+// Begins bypasses from the current position or the edge of the list according to the direction.
 export function getEnabledIndex<Option extends object>(
   options: readonly (Option & { disabled?: boolean; group?: boolean; })[],
   current: number,

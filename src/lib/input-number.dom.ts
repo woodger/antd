@@ -33,7 +33,7 @@ export function createInputNumberRef(input: HTMLInputElement, root: HTMLElement)
 
       const value = Reflect.get(target, property, target);
 
-      // DOM methods требуют native receiver, даже когда ref читается через Proxy.
+      // DOM methods require the native receiver even when a Proxy provides the ref.
       return typeof value === 'function' ? value.bind(target) : value;
     },
     set(target, property, value) {
@@ -81,7 +81,7 @@ export function restoreInputNumberCursor(
   input.setSelectionRange(start, start);
 }
 
-/** Source StepHandler: immediate step, затем 600ms/200ms; native buttons добавляют клавиатуру. */
+/** Source StepHandler: immediate step, then 600ms/200ms; native buttons add a keyboard. */
 export function connectInputNumberStep(element: HTMLButtonElement, onStep: () => void) {
   const document = element.ownerDocument;
   const view = document.defaultView!;

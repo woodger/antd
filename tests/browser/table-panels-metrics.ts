@@ -1,10 +1,10 @@
-/** Title/footer соответствуют Source Panel; caption остаётся нативным именем таблицы. */
+/** Title/footer correspond to the Source Panel; caption remains the table's native name. */
 export function snapshotTablePanels() {
   const root = document.querySelector('#table-panels-control .ant-table');
   if (!root) {
     throw new Error('Table panels are missing');
   }
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null) => {
     if (!node) {
       return null;

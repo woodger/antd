@@ -31,14 +31,14 @@
   let nativeEvents = $derived(profile === 'native-events');
   let appearance = $derived(appearances[profile] ?? defaultAppearance);
 
-  /** Начинает следующий сценарий с новым экземпляром Popconfirm и чистым журналом. */
+  /** Begins the next scenario with a new Popconfirm instance and a clean magazine. */
   function changeProfile(next: string) {
     profile = next;
     updated = false;
     events = [];
   }
 
-  /** Записывает вызов до ожидания или передачи ошибки контроллеру Popconfirm. */
+  /** Records the call before awaiting it or forwarding an error to the Popconfirm controller. */
   function confirm() {
     events.push('confirm');
     if (profile === 'failure') {
@@ -49,19 +49,19 @@
     }
   }
 
-  /** Завершает подтверждение только по сигналу теста. */
+  /** Finishes the confirmation only on the signal of the test. */
   function finish() {
     resolveAction?.();
     resolveAction = undefined;
   }
 
-  /** Помечает фазу обработчика и позволяет проверить defaultPrevented на корне. */
+  /** Marks the processor phase and allows you to check defaultPrevented at the root. */
   function recordButton(event: MouseEvent, name: string) {
     events.push(name);
     event.preventDefault();
   }
 
-  /** Выбирает другой Snippet при обновлении содержимого скрытой карточки. */
+  /** Selects another Snippet when you update the contents of the hidden card. */
   function selectLabel(original: Snippet, replacement: Snippet) {
     if (profile === 'rich') {
       return original;

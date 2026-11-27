@@ -69,7 +69,7 @@ export function stepsContextConfig(sample: StepsConfigSample): StepsConfig {
   }
 
   if (sample.kind === 'timeline') {
-    // Source InternalContext не должен даже вызывать исключённые Steps semantics.
+    // Source InternalContext should not even call the Steps semantics excluded.
     const forbidden = () => { throw Error('Timeline invoked Steps semantics'); };
     return { ...context, classNames: forbidden, styles: forbidden };
   }

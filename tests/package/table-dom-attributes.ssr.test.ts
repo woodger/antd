@@ -9,23 +9,23 @@ import {
   expectedTableDomAttributes, tableAriaNames, tableDataNames
 } from '../browser/fixtures/table-dom-attributes-reference';
 
-/** Читает один атрибут из открывающего тега серверного стенда. */
+/** Reads one attribute from an opening tag in the server fixture. */
 function attribute(tag: string, name: string) {
   return tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Сохраняет имена отсутствующих атрибутов для сравнения мест их вывода. */
+/** Retains missing attribute names to compare where those attributes appear. */
 function attributes(tag: string, names: string[]) {
   return Object.fromEntries(names.map(name => [name, attribute(tag, name)]));
 }
 
-/** Находит открывающий тег одного из двух контейнеров Table. */
+/** Finds the opening tag of one of the two Table containers. */
 function part(markup: string, name: 'wrapper' | 'table') {
   const pattern = new RegExp(`<div\\b([^>]*\\sdata-ant-table-part="${name}"[^>]*)>`);
   return markup.match(pattern)?.[1] ?? '';
 }
 
-/** Читает подпись и вложенную разметку до того, как браузер выполнит гидратацию. */
+/** Reads the caption and nested markup before browser hydration. */
 function caption(markup: string, prefix: string) {
   const match = markup.match(/<caption\b([^>]*)>([\s\S]*?)<\/caption>/);
   if (!match) {

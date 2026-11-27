@@ -1,4 +1,4 @@
-/** Callback/summary labels из реального DOM; ReactNode и Snippet сравниваются после render. */
+/** Callback/summary labels from real DOM; ReactNode and Snippet are compared after render. */
 export function readTreeLabels() {
   const records = (root: Element | null) => root ? [...root.querySelectorAll('[data-renderer-record]')]
     .map(node => ({ ...JSON.parse(node.getAttribute('data-renderer-record')!),

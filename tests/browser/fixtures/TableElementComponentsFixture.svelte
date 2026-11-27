@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Помечает границы заменённых элементов, передавая штатные attrs и ref.
+  // Marks the boundaries of the replaced elements, transmitting full-time attrs and ref.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type TableColumn, type TableComponents,
@@ -52,7 +52,7 @@
   const summary: TableSummaryConfig<Row> | undefined = profile.fixed || profile.sticky
     ? { fixed: 'bottom', render: summaryRows } : undefined;
 
-  /** Привязывает публичный DOM row callback к конкретной записи. */
+  /** Links the public DOM row callback to a specific entry. */
   function noteRow(record: Row, index: number) {
     return {
       'data-probe-data': index,

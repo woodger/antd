@@ -1,5 +1,5 @@
-// Читает исходные замеры официального UMD. HTML SSR и все состояния браузера
-// хранятся целиком, включая повторный независимый прогон.
+// He reads the initial measurements of the official UMD. HTML SSR and all browser states are stored
+// in its entirety, including repeated independent run.
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import type {
@@ -60,19 +60,19 @@ interface ServerReference extends Pick<ReactSource, 'revision' | 'archiveSha256'
   })[];
 }
 
-/** Разжимает точный JSON одного режима, сохраняя оба прохода React. */
+/** Decompresses the exact JSON for one mode, retaining both React passes. */
 function readReference<T>(mode: 'browser' | 'ssr'): T {
   const path = `./fixtures/ant-design-date-picker-provider-${mode}-reference.json.gz`;
   const bytes = readFileSync(new URL(path, import.meta.url));
   return JSON.parse(gunzipSync(bytes).toString('utf8'));
 }
 
-/** Загружает матрицу живых переходов с метаданными версии и Chromium. */
+/** Loads the matrix of live transitions with metadata versions and Chromium. */
 export function readPickerProviderBrowser() {
   return readReference<BrowserReference>('browser');
 }
 
-/** Загружает серверную разметку, вычисления семантики и наблюдаемые события. */
+/** Uploads server markup, semantics calculations and observed events. */
 export function readPickerProviderServer() {
   return readReference<ServerReference>('ssr');
 }
@@ -83,7 +83,7 @@ export const observedProperties = [
 
 export const authoredClasses = '^(?:slot|plain)-|^ant-picker-(?:large|small|outlined|filled|borderless|underlined|status)';
 
-/** Проецирует CSS, заданный профилем, отдельно от вычисленных координат панели. */
+/** Projects the CSS supplied by the profile separately from the computed panel coordinates. */
 export function projectPickerStyle(css: string | null) {
   const declarations: Record<string, string> = {};
   for (const declaration of css?.split(';') ?? []) {

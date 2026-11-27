@@ -4,16 +4,16 @@ import type {
 } from './menu.types';
 import type { AdjustOverflow, TooltipAlignConfig, TooltipPlacement } from './tooltip.types';
 
-/** Физические стороны и углы, включая боковое размещение. */
+/** Physical aspects and angles, including lateral placement. */
 export type DropdownPlacement = TooltipPlacement;
 export type DropdownTrigger = 'hover' | 'click' | 'contextMenu';
 
-/** Источник запроса видимости. Команда меню запрашивает закрытие. */
+/** The source of the visibility request. The menu command requests closure. */
 export interface DropdownOpenChangeInfo {
   source: 'trigger' | 'menu';
 }
 
-/** Объект включает стрелку. pointAtCenter привязывает её к центру trigger. */
+/** The object includes an arrow. pointAtCenter ties it to the center trigger. */
 export interface DropdownArrowOptions {
   pointAtCenter?: boolean;
 }
@@ -23,7 +23,7 @@ export interface DropdownClickInfo {
   domEvent: MouseEvent;
 }
 
-/** Событие встроенного Menu. Кнопки и ссылки передают MouseEvent и при вводе с клавиатуры. */
+/** Event from the built-in Menu. Buttons and links emit a MouseEvent even with keyboard activation. */
 export interface DropdownMenuClickInfo extends MenuClickInfo {
   domEvent: MouseEvent;
 }
@@ -52,13 +52,13 @@ type DropdownBranch = Omit<MenuSubMenu, 'children' | 'onClick'> & DropdownMenuCl
   & { children: readonly DropdownMenuEntry[]; };
 type DropdownGroup = Omit<MenuGroup, 'children'> & { children?: readonly DropdownMenuEntry[]; };
 
-/** Menu принимает команды, группы, разделители и вложенные ветки. */
+/** Menu hosts teams, groups, dividers and nested branches. */
 export type DropdownMenuEntry = DropdownCommand | DropdownBranch | DropdownGroup | MenuDivider | null;
 
-/** Параметры вложенного Menu. Dropdown задаёт вертикальный режим и отключает выбор по умолчанию. */
+/** Parameters of nested Menu. Dropdown sets vertical mode and disables the default selection. */
 export interface DropdownMenuProps extends Omit<MenuProps, 'items' | 'nativeElement' | 'onClick'> {
   items?: readonly DropdownMenuEntry[];
-  /** Выделяет строку без перевода фокуса. */
+  /** Selects a line without translating the focus. */
   activeKey?: string;
   onClick?: (info: DropdownMenuClickInfo) => void;
 }
@@ -69,45 +69,45 @@ export type DropdownSlots = Partial<Record<
 export type DropdownSemantic = DropdownSlots | ((info: { props: DropdownProps; }) =>
   DropdownSlots | undefined);
 
-/** Общие классы и стили панели и её меню. Вложенный provider заменяет record целиком. */
+/** Shared classes and styles of the panel and its menu. The nested provider replaces the entire record. */
 export interface DropdownConfig extends Pick<DropdownProps, 'classNames' | 'styles'> {
-  /** Дополнительный класс корня панели. */
+  /** Additional panel root class. */
   class?: string;
-  /** Слой корня между styles.root провайдера и styles.root экземпляра. */
+  /** Root layer between styles.root provider and styles.root copies. */
   style?: string;
 }
 
-/** Меню команд у trigger snippet с мышью, клавиатурой и возвратом фокуса. */
+/** The command menu at trigger snippet with mouse, keyboard and focus return. */
 export interface DropdownProps {
-  /** Непустой локальный префикс перекрывает ConfigProvider; внутреннее меню получает суффикс -menu. */
+  /** The non-empty local prefix overrides ConfigProvider; the internal menu receives a suffix -menu. */
   prefixCls?: string;
   children: Snippet;
-  /** DOM-узел trigger после монтирования, включая SVG. Очищается при unmount. */
+  /** DOM-node after mounting, including SVG. Purged at unmount. */
   ref?: Element;
-  /** Дополнительный класс панели Dropdown. */
+  /** Additional Dropdown panel class. */
   rootClassName?: string;
-  /** Класс открытого trigger после hydration. Пустая строка отключает `${prefixCls}-open`. */
+  /** The class of open trigger after hydration. Empty string disables `${prefixCls}-open`. */
   openClassName?: string;
   menu?: DropdownMenuProps;
-  /** Оборачивает или заменяет панель. Origin доступен, когда передан menu.items. */
+  /** Wraps or replaces the panel. Origin is available when transferred menu.items. */
   popupRender?: Snippet<[origin?: Snippet]>;
-  /** Удаляет панель после закрытия и завершения анимации. @defaultValue false */
+  /** Removes the panel after the animation is closed and completed. @defaultValue false */
   destroyOnHidden?: boolean;
-  /** Монтирует скрытую панель на клиенте до первого открытия. @defaultValue false */
+  /** Mount the hidden panel on the client before the first opening. @defaultValue false */
   forceRender?: boolean;
-  /** CSSMotion-класс. Пустая строка отключает переход. */
+  /** CSSMotion class. An empty string disables the transition. */
   transitionName?: string;
-  /** Поддерживает bind:open. */
+  /** Maintenances bind:open. */
   open?: boolean | undefined;
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean, info: DropdownOpenChangeInfo) => void;
   trigger?: DropdownTrigger | readonly DropdownTrigger[];
-  /** Фокусирует меню также при открытии наведением или внешним владельцем. */
+  /** It also focuses the menu when opened by guidance or by an external owner. */
   autoFocus?: boolean;
   disabled?: boolean;
   placement?: DropdownPlacement;
-  /** Переопределяет точки, смещения и правила коррекции выбранного placement. */
+  /** Overrides the points, displacements and correction rules of the selected placement. */
   align?: TooltipAlignConfig;
   /** @defaultValue false */
   arrow?: boolean | DropdownArrowOptions;
@@ -117,11 +117,11 @@ export interface DropdownProps {
   mouseEnterDelay?: number;
   /** @defaultValue 0.1 */
   mouseLeaveDelay?: number;
-  /** Локальная функция перекрывает ConfigProvider; undefined сохраняет provider fallback. */
+  /** The local function overrides ConfigProvider; undefined preserves provider fallback. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
-  /** Классы поверхности и строк на каждом уровне меню. */
+  /** Surfacing classes and lines at each menu level. */
   classNames?: DropdownSemantic;
-  /** CSS-декларации поверхности и строк на каждом уровне меню. */
+  /** CSS-declaration of the surface and lines at each menu level. */
   styles?: DropdownSemantic;
   'aria-label'?: string;
   'aria-labelledby'?: string;

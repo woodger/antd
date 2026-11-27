@@ -1,6 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 
-/** Физические строки отделены от виртуального srlist и не зависят от prefixCls. */
+/** Physical strings are separated from the virtual srlist and do not depend on prefixCls. */
 export function physicalSelectOption(
   scope: Page | Locator,
   options: { name?: string | RegExp; exact?: boolean } = {}
@@ -15,7 +15,7 @@ export function physicalSelectOption(
   return rows.filter({ hasText: text });
 }
 
-/** Имя остаётся у действующего listbox; размеры и controller styles принадлежат popup. */
+/** The name remains with the current listbox; the sizes and controller styles belong to the popup. */
 export function physicalSelectPopup(scope: Page | Locator, name?: string) {
   const popups = scope.locator('[popover][data-ant-select-prefix]:visible');
   return name === undefined ? popups : popups.filter({

@@ -1,5 +1,5 @@
 export function snapshotQRCodePrefix() {
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const style = (node: Element | null, fields: readonly string[]) => node
     ? Object.fromEntries(fields.map(key => [key, getComputedStyle(node).getPropertyValue(key)])) : null;
 

@@ -4,12 +4,12 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableColumnTitleFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-column-title-reference.json';
 
-/** Получает значение атрибута в сериализованном заголовке. */
+/** Reads an attribute value from the serialized header. */
 function attribute(markup: string, name: string) {
   return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
 }
 
-/** Читает метаданные, видимые до hydration, и вход snippet. */
+/** Reads metadata visible before hydration and the snippet input. */
 function headings(body: string) {
   return Array.from(body.matchAll(/<th\b([^>]*)>([\s\S]*?)<\/th>/g), ([, attrs, html]) => {
     const sample = attribute(html, 'data-title-sample');

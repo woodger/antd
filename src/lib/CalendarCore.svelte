@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType">
-  // Связывает режимы Calendar с календарным адаптером и состоянием выбора.
-  // Сетка сохраняет порядок ячеек, которым пользуются клавиатура и tabIndex.
+  // Connects Calendar modes to the calendar adapter and selection state. The grid preserves the
+  // cell order used by keyboard navigation and tabIndex.
   import { untrack, type Snippet } from 'svelte';
   import CalendarHeader from './CalendarHeader.svelte';
   import { useConfig } from './config-context';
@@ -105,7 +105,7 @@
   let contextStyles = $derived(resolve(config.calendar?.styles) ?? {});
   let localStyles = $derived(resolve(styles) ?? {});
   let today = $derived.by(() => {
-    // Как при React render, now обновляется вместе с props, локалью и внутренним выбором.
+    // As in a React render, now updates with props, locale, and internal selection.
     void info;
     void mergedLocale;
     void actualValue;
@@ -122,7 +122,7 @@
     );
     return dates.map(buildRow);
 
-    // Индекс охватывает всю сетку, включая дополнительную ячейку номера недели.
+    // The index covers the whole grid, including the extra week number cell.
     function buildRow(row: DateType[]) {
       const rowCells = row.map(createDateCell);
       if (showWeek && panelType === 'date') {
@@ -150,13 +150,13 @@
         title: generateConfig.locale.format(
           filledLocale.locale,
           date,
-          // Правило 2: calendarFilledLocale всегда задаёт оба формата и сохраняет тип PickerLocale.
+          // Rule 2: calendarFilledLocale always supplies both formats and preserves the PickerLocale type.
           panelType === 'date' ? filledLocale.fieldDateFormat! : filledLocale.fieldMonthFormat!
         )
       };
     }
 
-    // Номер недели использует дату первого столбца и не считается выбранной ячейкой.
+    // The week number uses the first column's date and does not count as a selected cell.
     function createWeekCell(date: DateType) {
       return {
         date,
@@ -249,7 +249,7 @@
     }
 
     select(cell.date, panelType);
-    // PickerPanel меняет отображаемую дату даже при отклонённом controlled value.
+    // PickerPanel updates the displayed date even when the owner rejects a controlled value.
     pickerValue = cell.date;
   }
 

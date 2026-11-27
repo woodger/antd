@@ -7,7 +7,7 @@ export function snapshotTooltipAlignment() {
     return null;
   }
   const anchor = document.querySelector<HTMLElement>('[data-alignment-anchor]')!;
-  // Сохраняет измеренный box в простых числах для передачи из browser realm.
+  // Saves the measured box in prime numbers to transmit from browser realm.
   const rect = (node: Element) => {
     const value = node.getBoundingClientRect();
     return { x: value.x, y: value.y, width: value.width, height: value.height };

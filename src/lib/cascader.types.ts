@@ -17,7 +17,7 @@ export interface CascaderOption {
   children?: readonly CascaderOption[];
   disabled?: boolean;
   disableCheckbox?: boolean;
-  /** false сохраняет раскрытие и loadData до появления children. */
+  /** false keeps expansion and loadData enabled until children appear. */
   isLeaf?: boolean;
   title?: string;
   [property: string]: unknown;
@@ -32,11 +32,11 @@ export interface CascaderFieldNames {
 export interface CascaderRenderInfo<OptionType extends CascaderOption = CascaderOption> {
   path: readonly OptionType[];
   searchValue: string;
-  /** Исходное содержимое строки, включая подсветку результатов поиска. */
+  /** Original row content, including highlighted search matches. */
   originNode: Snippet;
 }
 
-/** Поиск полных путей и управление строкой поиска через showSearch. */
+/** Searches full paths and manages the search text through showSearch. */
 export interface CascaderSearchConfig<OptionType extends CascaderOption = CascaderOption> {
   filter?: (search: string, path: OptionType[], fields: CascaderFieldNames) => boolean;
   render?: Snippet<[string, OptionType[], string, Required<CascaderFieldNames>]>;
@@ -48,7 +48,7 @@ export interface CascaderSearchConfig<OptionType extends CascaderOption = Cascad
   ) => number;
   /** @defaultValue true */
   matchInputWidth?: boolean;
-  /** false и неположительное число снимают ограничение. @defaultValue 50 */
+  /** false and nonpositive numbers disable the limit. @defaultValue 50 */
   limit?: number | false;
   searchValue?: string;
   onSearch?: (search: string) => void;
@@ -74,9 +74,9 @@ export interface CascaderSemantic {
     disabled: boolean;
     size: ComponentSize;
     variant: 'outlined' | 'borderless' | 'filled' | 'underlined';
-    /** Разрешённый Form status; локальный Cascader.status принимает error/warning. */
+    /** Resolved Form status. The local Cascader.status accepts error or warning. */
     status?: FormValidateStatus;
-    /** Остальные исходные props передаются как есть; перед использованием уточните их тип. */
+    /** The remaining source props pass through as provided. Narrow their types before use. */
     [property: string]: unknown;
   };
 }
@@ -84,7 +84,7 @@ export interface CascaderSemantic {
 export type CascaderSemanticValue<Value> = CascaderSlots<Value>
   | ((info: CascaderSemantic) => CascaderSlots<Value> | undefined);
 
-/** Наследуемое оформление Cascader; Panel наследует только expandIcon/loadingIcon. */
+/** Inherited Cascader styling. Panel inherits only expandIcon and loadingIcon. */
 export interface CascaderConfig {
   class?: string;
   style?: string;
@@ -101,18 +101,18 @@ export interface CascaderConfig {
 
 export interface CascaderTagInfo {
   label: Snippet;
-  /** Ключ пути rc-cascader, соединённый через __RC_CASCADER_SPLIT__. */
+  /** rc-cascader path key joined with __RC_CASCADER_SPLIT__. */
   value?: string;
   disabled: boolean;
   closable: boolean;
   index?: number;
   onClose?: (event?: Event) => void;
-  /** true для сводного тега maxTagCount; у него нет value/index/onClose. */
+  /** true for the maxTagCount summary tag, which has no value, index, or onClose. */
   isMaxTag: boolean;
 }
 
 export interface CascaderOmittedTag<OptionType extends CascaderOption = CascaderOption> {
-  /** Default label; для собственного displayRender доступны labels/options. */
+  /** Default label. A custom displayRender receives labels and options. */
   label: CascaderContent | undefined;
   labels: CascaderContent[];
   options: (OptionType | undefined)[];
@@ -123,7 +123,7 @@ export interface CascaderOmittedTag<OptionType extends CascaderOption = Cascader
 export interface CascaderTriggerInfo {
   open: boolean;
   disabled: boolean;
-  /** Svelte-замена клонирования React children: привяжите к native control. */
+  /** Svelte equivalent of cloning React children. Bind it to the native control. */
   onClick: () => void;
   onKeyDown: (event: KeyboardEvent) => void;
   onKeyUp: (event: KeyboardEvent) => void;
@@ -131,7 +131,7 @@ export interface CascaderTriggerInfo {
   'aria-controls': string;
 }
 
-/** Общий контракт выбора путей для popup и отдельной Panel. */
+/** Shared path selection contract for the popup and standalone Panel. */
 export interface CascaderPanelProps<
   OptionType extends CascaderOption = CascaderOption,
   Multiple extends boolean = false
@@ -140,16 +140,16 @@ export interface CascaderPanelProps<
   'children' | 'onchange' | 'onfocus' | 'onblur' | 'onkeydown' | 'onkeyup'
     | 'prefix' | 'placeholder'
 > {
-  /** Локальный namespace Select/Cascader; пустая строка наследует ConfigProvider. */
+  /** Local Select/Cascader namespace. An empty string inherits ConfigProvider. */
   prefixCls?: string;
   options?: readonly OptionType[];
-  /** Управляемые пути; undefined после controlled value освобождает локальное состояние. */
+  /** Controlled paths. Passing undefined after a controlled value releases local state. */
   value?: CascaderValue<Multiple>;
-  /** Читается один раз при создании экземпляра. */
+  /** Read once when the instance is created. */
   defaultValue?: CascaderValue<Multiple>;
   /** @defaultValue false */
   multiple?: Multiple;
-  /** single: undefined при очистке; multiple: пустой массив. Missing options сохраняются. */
+  /** Clearing yields undefined in single mode and an empty array in multiple mode. Missing options are preserved. */
   onChange?: (
     value: CascaderValue<Multiple> | (Multiple extends true ? never : undefined),
     options: Multiple extends true
@@ -157,27 +157,27 @@ export interface CascaderPanelProps<
       : (OptionType | undefined)[] | undefined
   ) => void;
   fieldNames?: CascaderFieldNames;
-  /** Позволяет single выбирать промежуточные узлы. @defaultValue false */
+  /** Allows selecting intermediate nodes in single mode. @defaultValue false */
   changeOnSelect?: boolean;
   /** @defaultValue 'SHOW_PARENT' */
   showCheckedStrategy?: CascaderStrategy;
   /** @defaultValue 'click' */
   expandTrigger?: 'click' | 'hover';
-  /** Promise не ожидается: обновите options.children либо isLeaf для снятия индикатора. */
+  /** The Promise is not awaited. Update options.children or isLeaf to clear the loading indicator. */
   loadData?: (selectedOptions: OptionType[]) => void;
   expandIcon?: CascaderContent;
   loadingIcon?: CascaderContent;
-  /** Snippet получает исходный option; originNode сохраняет поисковую подсветку. */
+  /** The snippet receives the original option. originNode preserves search highlights. */
   optionRender?: Snippet<[OptionType, CascaderRenderInfo<OptionType>]>;
   notFoundContent?: CascaderContent;
   disabled?: boolean;
   direction?: 'ltr' | 'rtl';
   rootClassName?: string;
-  /** Ref появляется после mount и очищается при unmount. */
+  /** The ref becomes available after mount and is cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }
 
-/** Каскадный single/multiple выбор; value и open используют controlled/default контракт. */
+/** Single or multiple cascader selection. value and open follow the controlled/default contract. */
 export interface CascaderProps<
   OptionType extends CascaderOption = CascaderOption,
   Multiple extends boolean = false
@@ -192,7 +192,7 @@ export interface CascaderProps<
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Объект не наследует ConfigProvider.cascader.clearIcon; пустой/falsy icon даёт rc-select fallback ×. @defaultValue true */
+  /** Object form bypasses ConfigProvider.cascader.clearIcon. A falsy or missing icon uses the rc-select × fallback. @defaultValue true */
   allowClear?: boolean | { clearIcon?: CascaderContent; };
   onClear?: () => void;
   placeholder?: CascaderContent;
@@ -208,8 +208,8 @@ export interface CascaderProps<
   /** @defaultValue false */
   popupMatchSelectWidth?: boolean | number;
   /**
-   * Локальный getter перекрывает ConfigProvider; custom children передаёт свой DOM trigger.
-   * CascaderPanel не использует контейнер popup.
+   * The local getter overrides ConfigProvider. Custom children provide their own DOM trigger.
+   * CascaderPanel uses no popup container.
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
@@ -218,7 +218,7 @@ export interface CascaderProps<
   maxTagCount?: number | 'responsive';
   maxTagTextLength?: number;
   maxTagPlaceholder?: CascaderContent | Snippet<[CascaderOmittedTag<OptionType>[]]>;
-  /** Svelte-замена React children; native trigger получает handlers и ARIA через snippet. */
+  /** Svelte equivalent of React children. The native trigger receives handlers and ARIA attributes through the snippet. */
   children?: Snippet<[CascaderTriggerInfo]>;
   autoFocus?: boolean;
   showAction?: ('focus' | 'click')[];
@@ -229,6 +229,6 @@ export interface CascaderProps<
   onfocus?: HTMLInputAttributes['onfocus'];
   onblur?: HTMLInputAttributes['onblur'];
   onPopupScroll?: HTMLAttributes<HTMLUListElement>['onscroll'];
-  /** Ref input недоступен при custom children. */
+  /** The input ref is unavailable with custom children. */
   inputElement?: HTMLInputElement;
 }

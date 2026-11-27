@@ -37,7 +37,7 @@ for (const original of source.cases) test(`Select pending custom tag close follo
     }
   });
   let disposed = false;
-  // Убирает компонент при незавершённом сценарии и фиксирует сбой удаления.
+  // Removes the component in an unfinished scenario and fixes the removal failure.
   async function disposeAfterFailure() {
     try {
     await page.evaluate(() => window.customTagPrefixNative.dispose());

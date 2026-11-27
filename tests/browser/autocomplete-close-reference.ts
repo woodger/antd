@@ -63,7 +63,7 @@ interface Header {
   inputPins: Record<string, string>; errors: unknown[]; diagnostics: unknown[];
   archives: Array<{ sha256: string; archiveSha256: string; byteEqual: boolean }>;
 }
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const compressed = readFileSync(new URL(
   './fixtures/ant-design-autocomplete-close-reference.json.gz',

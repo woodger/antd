@@ -1,4 +1,4 @@
-/** Сравнивает наблюдения Select с замером React при различиях в выдаче CSSOM и размеров INPUT. */
+/** Compares observations of Select with the measurement of React with differences in the issuance of CSSOM and the dimensions of INPUT. */
 import assert from 'node:assert/strict';
 
 interface HorizontalMetrics {
@@ -6,7 +6,7 @@ interface HorizontalMetrics {
   scrollWidth: number | null;
 }
 
-/** Сохраняет величину переполнения при разном учёте отступов нативного INPUT. */
+/** Retains the amount of overflow with different accounting of indentations of native INPUT. */
 function inputLayout<Metrics extends HorizontalMetrics>(metrics: Metrics) {
   const { clientWidth, scrollWidth, ...layout } = metrics;
   if (clientWidth === null || scrollWidth === null) {
@@ -16,7 +16,7 @@ function inputLayout<Metrics extends HorizontalMetrics>(metrics: Metrics) {
   return { ...layout, horizontalOverflow: scrollWidth - clientWidth };
 }
 
-/** Сверяет метрики и прокрутку, включая переполнение INPUT. Внешний прямоугольник сверяется отдельно. */
+/** Checks metrics and scrolling, including INPUT overflow. The outer rectangle is checked separately. */
 export function verifySelectComponentMetrics<Metrics extends HorizontalMetrics>(
   actual: Metrics | undefined,
   source: Metrics | undefined,
@@ -31,7 +31,7 @@ export function verifySelectComponentMetrics<Metrics extends HorizontalMetrics>(
   assert.deepEqual(inputLayout(actual), inputLayout(source), label);
 }
 
-/** Приводит эквивалентные значения вычисленного выравнивания внутри flex к одной записи. */
+/** Quotes the equivalent values of the calculated alignment inside the flex to a single record. */
 export function comparableFlexAlignment(value: string, display: string | undefined) {
   if (display === 'flex' || display === 'inline-flex') {
     if (value === 'flow-start') return 'flex-start';
@@ -41,7 +41,7 @@ export function comparableFlexAlignment(value: string, display: string | undefin
   return value;
 }
 
-/** Применяет правило выравнивания к снимку вычисленных стилей, сохраняя исходный снимок. */
+/** Applies the rule of alignment to the picture of calculated styles, saving the original picture. */
 export function comparableSelectComponentCSS(css: Record<string, string>) {
   const alignItems = comparableFlexAlignment(css.alignItems, css.display);
   return alignItems === css.alignItems ? css : { ...css, alignItems };

@@ -1,6 +1,6 @@
-// Решает ограничения для ручек Slider. Disabled отделяет участки диапазона, а перемещение
-// учитывает шаг, marks и минимальный зазор.
-// Алгоритмы @rc-component/slider 1.1.1; MIT, см. vendor/LICENSE.rc-slider.
+// Solves restrictions for Slider pens. Disabled separates sections of the range, and the movement
+// takes into account the step, marks and minimum gap. Algorithms @rc-component/slider 1.1.1; MIT,
+// see vendor/LICENSE.rc-slider.
 import type { SliderRangeConfig, SliderMarks, SliderMarkContent } from './slider-range.types';
 import type { SliderDirection } from './slider.engine';
 
@@ -14,12 +14,12 @@ export interface SliderRangeOptions {
   disabled: boolean | readonly boolean[];
 }
 
-// Разрешает общий или индексный disabled. Отсутствующий индекс означает доступную ручку.
+// Allows general or index disabled. Missing index means an available pen.
 export function sliderHandleDisabled(disabled: SliderRangeOptions['disabled'], index: number) {
   return typeof disabled === 'boolean' ? disabled : disabled[index] ?? false;
 }
 
-// Возвращает отдельные признаки для всех и хотя бы одной заблокированной ручки.
+// Returns individual signs for all and at least one blocked handle.
 export function sliderDisabledState(disabled: SliderRangeOptions['disabled'], values: number[]) {
   if (typeof disabled === 'boolean') {
     return [disabled, disabled && values.length > 0] as const;
@@ -30,7 +30,7 @@ export function sliderDisabledState(disabled: SliderRangeOptions['disabled'], va
   ] as const;
 }
 
-// Согласует editable с draggableTrack и использует общий набор defaults для range=true.
+// Agrees editable with draggableTrack and uses a common set of defaults for range=true.
 export function sliderRangeSettings(range: true | SliderRangeConfig) {
   return range === true ? { editable: false, draggableTrack: false, minCount: 0 } : {
     editable: Boolean(range.editable),
@@ -40,7 +40,7 @@ export function sliderRangeSettings(range: true | SliderRangeConfig) {
   };
 }
 
-// Преобразует ключи marks в числовые позиции и сохраняет числовую подпись 0.
+// Converts keys to numerical positions and retains the numerical label 0.
 export function sliderRangeMarks(marks?: SliderMarks) {
   return Object.keys(marks ?? {}).map(key => {
     const mark = marks![key];
@@ -51,7 +51,7 @@ export function sliderRangeMarks(marks?: SliderMarks) {
     .sort((a, b) => a.value - b.value);
 }
 
-// Использует ближайшие заблокированные ручки как пределы перемещения с учётом зазора.
+// Uses the nearest locked handles as the limits of movement, taking into account the gap.
 export function sliderDisabledBoundaries(
   values: readonly number[],
   index: number,
@@ -75,7 +75,7 @@ export function sliderDisabledBoundaries(
   return [minimum, maximum] as const;
 }
 
-// Выбирает ближайшую доступную ручку, способную достичь позиции. При равенстве берёт последнюю.
+// Choosing the nearest available pen capable of reaching a position. With equality takes the last one.
 export function sliderClosestHandle(
   values: readonly number[],
   target: number,
@@ -97,24 +97,24 @@ export function sliderClosestHandle(
   return closest;
 }
 
-// Создаёт пару операций округления и перемещения для неизменяемой конфигурации диапазона.
+// Creates a couple of rounding and moving operations for an immutable range configuration.
 export function createSliderRangeOffset(options: SliderRangeOptions) {
   const { min, max, step, marks, allowCross, pushable } = options;
-  // Сначала ограничивает целевую координату min и max.
+  // First limits the target coordinate of min and max.
   const clamp = (value: number) => Math.max(min, Math.min(max, value));
-  // Округляет позицию на сетке step и отбрасывает точку, которая оказалась за пределами
-  // диапазона.
+  // Rounds the position on the step grid and discards a point that has found itself outside the
+  // range.
   function stepValue(value: number) {
     if (step === null) {
       return null;
     }
     const next = min + Math.round((clamp(value) - min) / step) * step;
-    // Получает точность десятичной записи для восстановления координаты после округления.
+    // Receives the accuracy of the decimal record to restore the coordinate after rounding.
     const decimal = (value: number) => (String(value).split('.')[1] || '').length;
     const fixed = Number(next.toFixed(Math.max(decimal(step), decimal(max), decimal(min))));
     return min <= fixed && fixed <= max ? fixed : null;
   }
-  // Выбирает ближайшую точку из шага, marks и краёв диапазона в порядке кандидатов.
+  // Chooses the nearest point from the step, marks and the edges of the range in the order of candidates.
   function format(value: number) {
     const target = clamp(value);
     const candidates: (number | null)[] = marks.map(mark => mark.value);
@@ -123,7 +123,7 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
     let closest = candidates[0];
     let distance = max - min;
     for (const candidate of candidates) {
-      // Исходник сравнивает null как число 0, в том числе у неполной последней ступени.
+      // The source compares null as the number 0, including at the incomplete last stage.
       const nextDistance = Math.abs(target - Number(candidate));
       if (nextDistance <= distance) {
         distance = nextDistance;
@@ -132,7 +132,7 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
     }
     return closest as number;
   }
-  // Находит следующую допустимую точку по направлению или кратчайшему расстоянию.
+  // Finds the following allowable point in the direction or the shortest distance.
   function offsetValue(
     values: readonly number[],
     offset: number | 'min' | 'max',
@@ -174,13 +174,13 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
     clone[index] = next;
     return offsetValue(clone, offset - sign, index, mode);
   }
-  // Различает явный запрет совпадения и числовой минимальный зазор между ручками.
+  // There is a clear prohibition of match and a numerical minimum gap between the handles.
   function needsPush(distance: number) {
     return pushable === null && distance === 0
       || typeof pushable === 'number' && distance < pushable;
   }
-  // Двигает одну ручку, пока зазор недостаточен. Прекращает обход, если следующий шаг не меняет
-  // значение.
+  // Moves one handle while the gap is insufficient. Stops bypass if the next step doesn't change
+  // value.
   function push(values: number[], index: number, direction: -1 | 1) {
     let changed = true;
     while (needsPush(direction === 1
@@ -193,8 +193,8 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
     values[index] = direction === 1 ? Math.min(values[index], maximum)
       : Math.max(values[index], minimum);
   }
-  // Перемещает активную ручку и согласует соседние, пока встреченные disabled не остановят
-  // проход.
+  // Moves the active handle and coordinates the neighboring ones, until those greeted disabled stop
+  // the passage.
   function offset(
     values: readonly number[],
     change: number | 'min' | 'max',
@@ -244,7 +244,7 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
   return { format, offset };
 }
 
-// Отличает undefined, создающий две ручки на min, от пустого диапазона.
+// Distinguish undefined, creating two handles on the min, from the empty range.
 export function sliderRangeValues(
   value: readonly number[] | null | undefined,
   options: SliderRangeOptions
@@ -254,7 +254,7 @@ export function sliderRangeValues(
   return values.sort((a, b) => a - b).map(createSliderRangeOffset(options).format);
 }
 
-// Сохраняет порядок кэша при совпадении значений, учитывая одно изменение в editable.
+// Saves the order of the cache when the values coincide, taking into account one change in editable.
 export function sliderRangeCache(raw: readonly number[], cache: number[], editable: boolean) {
   const counts = new Map<number, number>();
   for (const value of cache) counts.set(value, (counts.get(value) ?? 0) + 1);
@@ -263,7 +263,7 @@ export function sliderRangeCache(raw: readonly number[], cache: number[], editab
   return difference <= (editable ? 1 : 0) ? cache : [...raw];
 }
 
-// Располагает центр ручки в нужной оси и направлении через CSS offset.
+// The center of the handle in the desired axis and the direction through the CSS offset.
 export function sliderRangePosition(
   direction: SliderDirection,
   value: number,
@@ -295,7 +295,7 @@ export function sliderRangePosition(
   );
 }
 
-// Следует ориентации для стрелок, оставляя Home/End привязанными к логическим краям.
+// Follows the orientation for the shooters, leaving Home/End tied to logical edges.
 export function sliderRangeKey(key: string, direction: SliderDirection) {
   if (key === 'ArrowLeft') {
     return direction === 'ltr' || direction === 'btt' ? -1 : 1;

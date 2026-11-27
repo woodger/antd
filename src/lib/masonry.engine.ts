@@ -1,5 +1,5 @@
-// Рассчитывает колонки и позиции Masonry. Порядок записей для motion учитывает оставшиеся в DOM
-// строки.
+// Calculates Masonry columns and positions. The order of records for motion takes into account the
+// remaining lines in DOM.
 import { gridResponsiveValue } from './grid.engine';
 import type { GridScreenMap } from './grid.types';
 import type { MasonryItemType, MasonryKey, MasonryProps } from './masonry.types';
@@ -19,7 +19,7 @@ export interface MasonryEntry<Data = unknown> {
   visible: boolean;
 }
 
-// Принимает числовое количество либо выбирает активный breakpoint с запасным xs.
+// Accepts a numerical number or chooses an active breakpoint with a spare xs.
 export function getMasonryColumns(columns: MasonryProps['columns'], screens: GridScreenMap) {
   if (!columns) {
     return 3;
@@ -31,14 +31,14 @@ export function getMasonryColumns(columns: MasonryProps['columns'], screens: Gri
   return gridResponsiveValue(columns, screens) ?? columns.xs ?? 1;
 }
 
-// Раскладывает измеренные элементы по колонкам, сохраняя явно выбранную колонку.
+// Lays out the measured elements on the columns, saving the explicitly selected column.
 export function getMasonryPositions(
   heights: readonly MasonryHeight[],
   columns: number,
   verticalGutter: number
 ) {
   const columnHeights: number[] = [];
-  // length сохраняет RangeError эталона; Array.from незаметно округлил бы columns.
+  // length retains RangeError benchmarks; Array.from would inconspicuously round the columns.
   columnHeights.length = columns;
   columnHeights.fill(0);
   const positions = new Map<MasonryKey, MasonryPosition>();
@@ -57,7 +57,7 @@ export function getMasonryPositions(
   return { positions, height: Math.max(0, Math.max(...columnHeights) - verticalGutter) };
 }
 
-/** Порядок и строковые ключи CSSMotionList/diffKeys 1.3.3; см. vendor/LICENSE.rc-motion. */
+/** Ordinary and string keys CSSMotionList/diffKeys 1.3.3; see vendor/LICENSE.rc-motion. */
 export function mergeMasonryEntries<Data>(
   previous: readonly MasonryEntry<Data>[],
   current: readonly MasonryEntry<Data>[]
@@ -91,11 +91,11 @@ export function mergeMasonryEntries<Data>(
   return result;
 }
 
-/** Сравнение snapshot-данных как @rc-component/util isEqual, без React dev diagnostics. */
+/** Comparing snapshot-data as @rc-component/util isEqual, without React dev diagnostics. */
 export function equalMasonryData(left: unknown, right: unknown) {
   const seen = new Set<unknown>();
 
-  // Рекурсивно сравнивает собственные значения и останавливается при повторном посещении объекта.
+  // Recursively compares your own values and stops when you revisit the object.
   function equal(a: unknown, b: unknown): boolean {
     if (seen.has(a)) {
       return false;

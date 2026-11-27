@@ -17,7 +17,7 @@ export interface TabsIndicatorStyle {
   transform?: string;
 }
 
-/** Формулы useIndicator из @rc-component/tabs 1.13.0, включая end transform в RTL. */
+/** Formula useIndicator of @rc-component/tabs 1.13.0, including end transform in RTL. */
 export function getTabsIndicatorStyle(
   offset: TabsIndicatorOffset | undefined,
   vertical: boolean,
@@ -47,7 +47,7 @@ export function getTabsIndicatorStyle(
   return style;
 }
 
-/** Исходное сравнение округляет только числа; малые колебания не перезапускают transition. */
+/** The initial comparison rounds only numbers; small oscillations do not restart the transition. */
 export function isTabsIndicatorStyleEqual(
   previous: TabsIndicatorStyle | undefined,
   next: TabsIndicatorStyle

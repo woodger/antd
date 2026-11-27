@@ -1,4 +1,4 @@
-// Разрешает имена классов фаз CSSMotion для растущей и уходящей поверхности.
+// Resolves CSSMotion phase class names for entering and leaving surfaces.
 export type CssMotionPhase = 'appear' | 'enter' | 'leave';
 export type CssMotionStep = 'prepare' | 'start' | 'active';
 
@@ -6,7 +6,7 @@ export type CssMotionName = string | Partial<Record<
   CssMotionPhase | `${CssMotionPhase}${Capitalize<CssMotionStep>}`, string
 >>;
 
-/** У строкового имени есть базовый класс. Карта задаёт только перечисленные классы. */
+/** A string name supplies a base class. A map supplies only its listed classes. */
 export function getCssMotionClassName(
   name: CssMotionName | undefined,
   phase: CssMotionPhase,

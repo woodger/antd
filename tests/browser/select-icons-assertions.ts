@@ -109,8 +109,8 @@ export function verifyIconGraph(
     assert.deepEqual(x.authoredRole, y.authoredRole, label + ' complete authored role');
     if (reactElement(y) && (x.type === 'function' || x.array)) {
       if (x.array) {
-        // Один явно статический Snippet сохраняет typeof object для RenderNode;
-        // полные raw graph и public node specification остаются в наблюдении.
+        // One clearly static Snippet preserves typeof object for RenderNode; full raw graph and
+        // public node specification remain in observation.
         assert.equal(x.type, 'object');
         assert.deepEqual(x.properties?.map(p => p.key), ['0', 'length']);
         assert.equal(property(x, 'length'), 1);

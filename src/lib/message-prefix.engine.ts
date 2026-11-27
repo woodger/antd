@@ -1,6 +1,6 @@
 import template from './vendor/message-prefix.css.js';
 
-/** Canonical Message tokens и private Notification metrics используют разные namespaces. */
+/** Canonical Message tokens and private Notification metrics use different namespaces. */
 export function getMessagePrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-message' && rootPrefix === 'ant') {
     return undefined;

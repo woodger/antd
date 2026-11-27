@@ -1,13 +1,13 @@
-// Измеряет области отсечения в координатах viewport для выравнивания popup.
-// rc-trigger 3.10.1 util; MIT, vendor/LICENSE.rc-trigger.
+// Measures cut-off areas in viewport coordinates for popup alignment. rc-trigger 3.10.1 util; MIT,
+// vendor/LICENSE.rc-trigger.
 import type { PopupArea } from './popup-position.engine';
 
-/** Находит предков, которые ограничивают видимую область или сообщают о прокрутке. */
+/** Finds ancestors who limit the visible area or report scrolling. */
 export function getPopupScrollers(
   element: Element,
   from: HTMLElement | null = element.parentElement
 ) {
-  // Правило 2: DOM-измерения начинаются после подключения popup к окну.
+  // Rule 2: DOM-measurements begin after connecting the popup to the window.
   const view = element.ownerDocument.defaultView!;
   const nodes: HTMLElement[] = [];
   let parent = from;
@@ -24,23 +24,23 @@ export function getPopupScrollers(
   return nodes;
 }
 
-/** Читает числовой размер из CSSOM и подставляет 0 для auto. */
+/** Reads the numerical size of CSSOM and frames 0 for auto. */
 function pixels(value: string) {
   return Number.parseFloat(value) || 0;
 }
 
-/** Сохраняет точность масштаба rc-trigger при измерении трансформированных предков. */
+/** Preserves the accuracy of scale rc-trigger in the measurement of transformed ancestors. */
 function viewportScale(physical: number, css: number) {
   const value = Math.round(physical / css * 1000) / 1000;
   return Number.isNaN(value) ? 1 : value;
 }
 
-/** Пересекает область с внутренними границами scroll-контейнеров. */
+/** Crosses the area with the internal boundaries of scroll containers. */
 export function clipPopupArea(initial: PopupArea, scrollers: readonly HTMLElement[]) {
   const area = { ...initial };
   for (const node of scrollers) {
     const document = node.ownerDocument;
-    // Правило 2: контейнеры собраны из того же подключённого DOM.
+    // Rule 2: Containers are assembled from the same connected DOM.
     const view = document.defaultView!;
     if (node === document.body || node === document.documentElement) continue;
 

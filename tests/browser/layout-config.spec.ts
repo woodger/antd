@@ -10,14 +10,14 @@ function nativeStandaloneDefaults(
   const expected = structuredClone(metrics);
 
   for (const scope of ['normal', 'nested', 'sibling'] as const) {
-    // Source standalone Header/Footer теряют Layout variables; native секции сохраняют тему.
+    // Source standalone Header/Footer lose Layout variables; native sections save the theme.
     for (const part of ['header', 'footer'] as const) {
       const standalone = `standalone-${part}` as const;
       expected[scope][standalone] = {
         ...expected[scope][part], classes: expected[scope][standalone].classes
       };
     }
-    // Native standalone sections и Sider явно наследуют RTL.
+    // Native standalone sections and Sider clearly inherited RTL.
     for (const part of [
       'standalone-header', 'standalone-content', 'standalone-footer', 'standalone-sider'
     ] as const) {
@@ -25,7 +25,7 @@ function nativeStandaloneDefaults(
     }
   }
 
-  // Source React удаляет longhand без восстановления неизменившегося shorthand.
+  // Source React removes longhand without recovering an unchanging shorthand.
   if (step === 'config-clear') {
     expected.sibling.root.paddingTop = reference.observations.shorthandRemoval.fresh.paddingTop;
   }

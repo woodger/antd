@@ -17,14 +17,14 @@ async function events(page: Page): Promise<unknown[][]> {
   return JSON.parse(text ?? '[]');
 }
 
-/** React отдельно сообщает onFocus/onBlur, Svelte добавляет source для одиночной даты. */
+/** React separately reports onFocus/onBlur, Svelte adds source for a single date. */
 function comparableEvents(log: unknown[][], range: boolean | undefined) {
   return log.filter(([name]) => name !== 'focus' && name !== 'blur').map(event => (
     !range && event[0] === 'calendar' ? event.slice(0, 3) : event
   ));
 }
 
-/** Обычный Enter в textarea у React вставляет перенос и повторно открывает DatePicker. */
+/** Ordinary Enter in textarea at React inserts the transfer and reopens DatePicker. */
 function expectedEvents(log: unknown[][], profile: PickerComponentsProfile, action: string) {
   const comparable = comparableEvents(log, profile.range);
   if (profile.id === 'date-textarea') {
@@ -38,7 +38,7 @@ function expectedEvents(log: unknown[][], profile: PickerComponentsProfile, acti
   return comparable;
 }
 
-/** Убирает перевод строки только в двух зафиксированных сценариях Enter. */
+/** Removes the translation of the line only in the two recorded Enter scenarios. */
 function expectedValue(text: string, profile: PickerComponentsProfile, action: string) {
   if (profile.id === 'date-textarea' && action === 'submit'
     || profile.id === 'range-textarea' && (action === 'submit' || action === 'end')) {

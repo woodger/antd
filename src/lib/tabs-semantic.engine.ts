@@ -1,6 +1,6 @@
 import type { TabsConfig, TabsSemantic, TabsSemanticProps, TabsSlots } from './tabs.types';
 
-/** useMergeSemantic Tabs: классы накапливаются, CSS-строки сохраняют порядок слоёв. */
+/** useMergeSemantic Tabs: grades accumulate, CSS lines retain the order of layers. */
 export function tabsSemantics(
   context: TabsConfig | undefined,
   classNames: TabsSemantic | undefined,

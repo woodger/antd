@@ -10,13 +10,13 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 const root = '#table-column-layout-fixture';
 const fixture = '/?fixture=table-column-layout';
 
-/** Измеряет физическую сетку и область, в которой отсекается текст. */
+/** Measures the physical mesh and the area in which the text is cut off. */
 function snapshot(prefix: string) {
   const area = document.querySelector<HTMLElement>('#table-column-layout-fixture');
   const table = area?.querySelector<HTMLTableElement>('table');
   if (!area || !table) throw new Error('Missing Table column layout fixture');
 
-  /** Читает layout самой ячейки, включая содержимое заголовка с сортировкой. */
+  /** Reading the layout of the cell itself, including the contents of the sorting header. */
   function cell(element: HTMLTableCellElement) {
     const wrapper = element.querySelector(`.${prefix}-cell-content`);
     const scope = wrapper ?? element.querySelector(`.${prefix}-column-title`) ?? element;
@@ -53,7 +53,7 @@ function snapshot(prefix: string) {
   };
 }
 
-/** Переключает параметры через DOM, как в независимом сценарии. */
+/** Switch parameters through DOM, as in an independent scenario. */
 async function act(page: Page, action: string) {
   switch (action) {
     case 'sort':
@@ -74,7 +74,7 @@ async function act(page: Page, action: string) {
   }
 }
 
-/** Учитывает общую виртуальную сетку Native и действующий контракт вывода значений. */
+/** Takes into account the total virtual grid Native and the current value withdrawal contract. */
 function expected(profile: ColumnCase['profile'], state: Snapshot) {
   const virtualWidths = state.virtual ? state.rows[0].cells.map(cell => cell.width) : undefined;
   const rows = state.rows.map(row => ({

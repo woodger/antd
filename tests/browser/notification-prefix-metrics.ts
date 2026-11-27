@@ -1,11 +1,11 @@
-/** Сверяет тему Notification с сохранением native close target и top-layer поверхности. */
+/** Verifies the Notification theme with the preservation of the native close target and top-layer surface. */
 export function snapshotNotificationPrefix() {
   const notice = document.querySelector<HTMLElement>('.fixture-notification-prefix')!;
   const prefix = [...notice.classList].find(value => value.endsWith('-notice'))!.slice(0, -7);
   const root = notice.closest(`[class~="${prefix}-list"]`)!;
-  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
+  // He chooses a part of the complete CSS class of the current prefix, regardless of the neighboring classes.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;

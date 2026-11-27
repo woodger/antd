@@ -1,12 +1,12 @@
-// Пользовательское тело владеет строками и прокруткой. Table переводит положение
-// в координаты шапки и итогов, а imperative handle остаётся у его владельца.
+// The user body owns strings and scrolls. Table translates the position into the coordinates of the
+// cap and the results, and the handle remains with its owner.
 import { untrack } from 'svelte';
 import { alignTableRow, getTableFocusOffset } from './table-layout.dom';
 import type {
   TableBodyRenderInfo, TableBodyScrollEvent, TableBodyScrollHandle, TableKey, TableScrollConfig
 } from './table.types';
 
-/** Определяет DOM из его собственного окна, включая тело в другом документе. */
+/** Defines DOM from his own window, including the body in another document. */
 function isScrollElement(target: HTMLElement | TableBodyScrollHandle): target is HTMLElement {
   if (!('ownerDocument' in target)) {
     return false;
@@ -16,7 +16,7 @@ function isScrollElement(target: HTMLElement | TableBodyScrollHandle): target is
   return constructor !== undefined && target instanceof constructor;
 }
 
-/** Исключает рамку прокручиваемого элемента из ширины занятой полосы. */
+/** Excludes the frame of the scrolling element from the width of the occupied strip. */
 function scrollbarWidth(element: HTMLElement) {
   const style = element.ownerDocument.defaultView?.getComputedStyle(element);
   const leftBorder = parseFloat(style?.borderLeftWidth ?? '') || 0;
@@ -24,7 +24,7 @@ function scrollbarWidth(element: HTMLElement) {
   return Math.max(0, element.offsetWidth - element.clientWidth - leftBorder - rightBorder);
 }
 
-/** Измеряет полосу документа, когда зарегистрирован только handle виртуализатора. */
+/** Measures the database of the document, when only the handle of the virtualizer is registered. */
 function defaultScrollbarWidth(container: HTMLElement) {
   const probe = container.ownerDocument.createElement('div');
   probe.style.cssText = (
@@ -40,7 +40,7 @@ function defaultScrollbarWidth(container: HTMLElement) {
   return width;
 }
 
-/** Передаёт положение между пользовательским телом и закреплёнными полосами. */
+/** Shares the position between the custom body and fixed strips. */
 export function createTableCustomBody(options: {
   container: () => HTMLDivElement | undefined;
   bands: () => readonly (HTMLDivElement | undefined)[];
@@ -67,7 +67,7 @@ export function createTableCustomBody(options: {
       return;
     }
 
-    /** Измеряет только полосу зарегистрированного DOM-контейнера. */
+    /** Measures only the band of the registered DOM-container. */
     const measure = () => {
       scrollbarSize = scrollbarWidth(node);
     };
@@ -88,7 +88,7 @@ export function createTableCustomBody(options: {
     }
   });
 
-  /** Cleanup старого attachment сохраняет уже зарегистрированную замену. */
+  /** Cleanup old attachment retains an already registered replacement. */
   function register(body: HTMLElement | TableBodyScrollHandle) {
     const handle = { target: body };
     registration = handle;
@@ -99,7 +99,7 @@ export function createTableCustomBody(options: {
     };
   }
 
-  /** Применяет общую физическую координату для шапки и закреплённого итога. */
+  /** Applies a general physical coordinate for the cap and the fixed result. */
   function alignBands(bands: readonly (HTMLDivElement | undefined)[], left: number) {
     for (const band of bands) {
       if (band && band.scrollLeft !== left) {
@@ -108,7 +108,7 @@ export function createTableCustomBody(options: {
     }
   }
 
-  /** Принимает нативный scroll event или явную координату от владельца тела. */
+  /** Accepts a native scroll event or a clear coordinate from the body owner. */
   function syncScroll(event: TableBodyScrollEvent) {
     const current = target;
     const left = event.scrollLeft ?? event.currentTarget?.scrollLeft;
@@ -128,16 +128,16 @@ export function createTableCustomBody(options: {
     }
   }
 
-  /** Переводит колесо и клавиатурную навигацию полосы в прокрутку тела. */
+  /** Translates the wheel and keyboard navigation of the strip into the scrolling of the body. */
   function attachBand(band: HTMLDivElement) {
-    /** Учитывает максимальную прокрутку полосы, включая отличие от ширины тела. */
+    /** Takes into account the maximum scrolling of the strip, including the difference from the width of the body. */
     function clamp(left: number) {
       const range = band.scrollWidth - band.clientWidth;
       return options.rtl() ? Math.max(-range, Math.min(0, left))
         : Math.max(0, Math.min(range, left));
     }
 
-    /** Передаёт физическую координату RTL/LTR в пределах полосы. */
+    /** Passes the physical RTL or LTR coordinate within the strip. */
     function wheel(event: WheelEvent) {
       if (!event.deltaX || !target) {
         return;
@@ -148,7 +148,7 @@ export function createTableCustomBody(options: {
       event.preventDefault();
     }
 
-    /** Браузер может оставить видимым лишь край широкой сфокусированной кнопки. */
+    /** The browser can leave visible only the edge of a broad focused button. */
     function revealFocus(event: FocusEvent) {
       const focused = event.target;
       const view = band.ownerDocument.defaultView;
@@ -169,7 +169,7 @@ export function createTableCustomBody(options: {
       }
     }
 
-    /** Удерживает общую позицию при клике и открывает видимую область для Tab. */
+    /** Maintains the shared position on click and opens the visible region for Tab navigation. */
     function scroll() {
       const current = target;
       if (!current || syncing) {
@@ -198,7 +198,7 @@ export function createTableCustomBody(options: {
     };
   }
 
-  /** Ищет DOM-строку по ключу текущей страницы или передаёт исходный запрос handle. */
+  /** Finds a DOM row by key on the current page or forwards the original request to the handle. */
   function scrollTo(config: TableScrollConfig) {
     const current = target;
     if (!current) {

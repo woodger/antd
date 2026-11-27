@@ -83,7 +83,7 @@ export function connectImagePreview(image: HTMLImageElement, options: {
       options.update({ x: 0, y: 0, scale: min }, 'touchZoom');
       return;
     }
-    // Rc-image пересчитывает mouse rebound лишь при изменении обеих координат.
+    // Rc-image recalculates mouse rebound only when both coordinates are changed.
     if (event.pointerType === 'mouse'
       && old
       && (transform.x === old.x

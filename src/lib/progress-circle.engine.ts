@@ -1,4 +1,4 @@
-// Геометрия @rc-component/progress 1.0.3 (MIT); см. vendor/LICENSE.rc-progress.
+// Geometry @rc-component/progress 1.0.3 (MIT); see vendor/LICENSE.rc-progress.
 // https://github.com/react-component/progress/tree/2f59aea058f27098fd1e73a2cca985faf520e3d2
 import type {
   ProgressGapPlacement, ProgressGradient, ProgressSuccess
@@ -79,7 +79,7 @@ export function progressCircleLayout(options: {
   const rotation = gap > 0 ? 90 + gap / 2 : -90;
   const cap = color && typeof color === 'object' ? 'butt' : options.cap;
   const count = typeof steps === 'object' ? steps.count : steps;
-  // Сохраняем RangeError конструктора Array(count) из исходника.
+  // We save RangeError Array(count) constructors from the source.
   if (count && (!Number.isInteger(count) || count < 0 || count >= 2 ** 32)) {
     throw new RangeError('Invalid array length');
   }

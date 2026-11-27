@@ -107,7 +107,7 @@ export function verifyNativeStyleHistory(
   verifyBorder(actual.border.root, original.border.root, `${label}/root`);
   verifyBorder(actual.border.input, original.border.input, `${label}/input`);
   if (control === 'select' && !original.owner.open && original.border.popup) {
-    // Прежний Native Select снимает default popup при закрытии; root/input сохраняют всю историю.
+    // The previous Native Select removes the default popup when closed; root/input keeps the whole story.
     assert.equal(actual.border.popup, null, `${label} retained Native default popup lifetime`);
   }
   else {

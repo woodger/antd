@@ -1,5 +1,5 @@
-// Извлекает локали из закреплённого UMD и создаёт отдельные входы npm-пакета.
-// Запускается отдельно от сборки и проверяет повторяемость исходных данных.
+// Extracts locales from the pinned UMD bundle and creates separate npm package entry points. Runs
+// separately from the build and checks that the source data is reproducible.
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -15,12 +15,12 @@ const registry = JSON.parse(readFileSync('docs/reference/ant-design-porting/regi
 const { version, revision, archiveSha256 } = registry.upstream;
 const source = 'package/dist/antd-with-locales.min.js';
 
-/** Отпечаток архива или JSON словаря для проверки dist. */
+/** Fingerprint of an archive or JSON dictionary for checking dist. */
 function checksum(input) {
   return createHash('sha256').update(input).digest('hex');
 }
 
-/** Проверяет релиз и загружает UMD вместе с его закреплёнными runtime. */
+/** Verifies the release and loads the UMD bundle with its pinned runtimes. */
 function readScripts() {
   const archive = join(artifacts, `antd-${version}.tgz`);
   if (checksum(readFileSync(archive)) !== archiveSha256) {
@@ -40,7 +40,7 @@ function readScripts() {
   return [...scripts, [source, bundle]];
 }
 
-/** Снимает сериализуемый публичный каталог в изолированном UMD runtime. */
+/** Captures the serializable public catalog in an isolated UMD runtime. */
 function captureLocales(scripts) {
   const context = createContext({ setTimeout, clearTimeout, console });
   context.self = context.window = context;
@@ -56,7 +56,7 @@ function captureLocales(scripts) {
     }
   }
 
-  /** Защищает извлечение от потери вычисляемых переводов при сериализации. */
+  /** Prevents computed translations from being lost during serialization. */
   function serialize(_key, value) {
     if (typeof value === 'function' || typeof value === 'symbol') {
       throw new Error('Locale catalog contains a non-data field');
@@ -66,7 +66,7 @@ function captureLocales(scripts) {
   return JSON.stringify(locales, serialize);
 }
 
-/** Оставляет актуальные поля rc-picker и общее правило Calendar/DatePicker. */
+/** Retains the supported rc-picker fields and the shared Calendar and DatePicker rule. */
 function publicLocale(locale) {
   const lang = { ...locale.DatePicker.lang };
   delete lang.dayFormat;
@@ -77,7 +77,7 @@ function publicLocale(locale) {
   return { ...locale, DatePicker: picker, Calendar: picker };
 }
 
-/** Записывает один модуль без общих зависимостей с другими языками. */
+/** Writes one module with no shared dependencies on other languages. */
 function writeLocale(directory, code, locale) {
   const data = JSON.stringify(locale.DatePicker);
   const fields = Object.entries(locale).map(([key, value]) => {

@@ -6,7 +6,7 @@ const samplePicker = (page: Page) => page.getByRole('combobox', { name: 'Menu it
 const leaf = (page: Page) => page.locator('.sample-leaf:visible');
 const rowsSelector = '.sample-branch, .sample-root, .sample-leaf, .sample-other';
 
-// Читает содержимое видимых строк, включая значение snippet и его позицию после подписи.
+// Reads the contents of visible strings, including the snippet value and its position after the label.
 async function readRows(page: Page) {
   return page.locator(rowsSelector).filter({ visible: true }).evaluateAll(rows => rows.flatMap(row => {
     if (row.closest('[aria-hidden="true"]')) {
@@ -25,7 +25,7 @@ async function readRows(page: Page) {
     const text = element.textContent;
     return [{
       key,
-      // У нативного заголовка ветки перед стрелкой остаётся пробел.
+      // At the native header of the branch in front of the arrow there is a gap.
       text: key === 'sample-branch' ? text?.trimEnd() : text,
       last: last instanceof Element ? last.tagName : last?.textContent,
       custom: marker ? { ...marker.dataset } : null,
@@ -34,7 +34,7 @@ async function readRows(page: Page) {
   }).sort((a, b) => a.key.localeCompare(b.key)));
 }
 
-// Не включает aria-disabled из React: глобальный disabled выключает все строки Native Menu.
+// Does not include aria-disabled from React: global disabled turns off all lines Native Menu.
 function visibleContent(reference: typeof source.cases[number]['initial']) {
   return reference.map(({ ariaDisabled: _disabled, ...entry }) => entry)
     .sort((a, b) => a.key.localeCompare(b.key));

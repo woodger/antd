@@ -422,7 +422,7 @@ test('TimePicker integrates with Form validation, labels and reset without seria
 });
 
 test('TimePicker uses Now without OK and aligns the source millisecond step', async ({ page }) => {
-  // Now читает фиксированную дату; загрузка страницы не ограничена четырьмя секундами.
+  // Now reads the fixed date; the page load is not limited to four seconds.
   await page.clock.setFixedTime(new Date('2024-09-15T12:35:00.789Z'));
   await input(page).click();
   await unit(page, 'Сейчас').click();

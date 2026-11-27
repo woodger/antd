@@ -34,7 +34,7 @@ test('FloatButtonBackTop retains source linear opacity and user transform throug
     await page.goto('/?fixture=float-button');
     await page.evaluate(() => {
       const animate = Element.prototype.animate;
-      // Приостанавливаем настоящий WAAPI в момент создания, до первого кадра.
+      // Suspend this WAAPI at the time of creation, until the first frame.
       Element.prototype.animate = function (this: Element, frames, options) {
         const animation = animate.call(this, frames, options);
         if (this.id === 'fixture-back-top') animation.pause();

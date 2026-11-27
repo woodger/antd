@@ -18,7 +18,7 @@ it('uses the pinned Ant Design archive for the recorded confirmation sequences',
 
 for (const sample of reference.cases) {
   const opened = sample.steps[1];
-  // SSR открывает начальную границу; сценарии с фокусом end проверяются в Chromium.
+  // SSR opens the starting endpoint. Chromium covers scenarios that focus the end endpoint.
   if (opened.action !== 'start') continue;
 
   it(`renders the initial OK state for ${sample.profile.id} without browser effects`, () => {

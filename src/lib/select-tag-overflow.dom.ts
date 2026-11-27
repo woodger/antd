@@ -1,6 +1,6 @@
 import { getResponsiveTagCount } from './select-tag-overflow.engine';
 
-/** Как SelectInput: scrollWidth при width=0 измеряет текст без остатка flex-контейнера. */
+/** As SelectInput: scrollWidth at width=0 measures text without the remnant flex-container. */
 export function measureSelectInput(input: HTMLInputElement | HTMLTextAreaElement): number {
   const previous = { width: input.style.width, flex: input.style.flex };
   input.style.flex = 'none';
@@ -11,7 +11,7 @@ export function measureSelectInput(input: HTMLInputElement | HTMLTextAreaElement
   return Math.max(4, width);
 }
 
-/** Source Input сохраняет logical width prop, но после измерения снимает его DOM setter. */
+/** Source Input preserves logical width prop, but after the measurement removes its DOM setter. */
 export function measureSelectSourceInput(input: HTMLInputElement | HTMLTextAreaElement): number {
   input.style.width = '0px';
   const width = input.scrollWidth;
@@ -19,7 +19,7 @@ export function measureSelectSourceInput(input: HTMLInputElement | HTMLTextAreaE
   return width;
 }
 
-/** Hidden tags измеряются вне flow; observer/RAF принадлежат экземпляру компонента. */
+/** Hidden tags are measured outside flow; observer/RAF belongs to the component instance. */
 export function connectSelectTagOverflow(
   host: HTMLElement,
   update: (count: number) => void,

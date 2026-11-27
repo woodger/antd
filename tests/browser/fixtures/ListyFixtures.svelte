@@ -48,7 +48,7 @@
   function scrollTo(config?: ListyScrollToConfig) { ref?.scrollTo(config); }
 
   function scrollBoth() {
-    // Оба ключа допустимы structural typing; приоритет намеренно различается между режимами.
+    // Both keys are allowable structural typing; prioritization intentionally differs between modes.
     const config = { key, groupKey: 2, align, offset };
     scrollTo(config);
   }

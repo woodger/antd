@@ -1,5 +1,5 @@
-// Разбирает числовой формат Picker на диапазоны и вычисляет результат нажатия.
-// Управление DOM-выделением и разбор календарного значения остаются у вызывающего кода.
+// Splits the numeric Picker format into ranges and computes the result of a key press. The caller
+// owns DOM selection and calendar value parsing.
 // @rc-component/picker 1.12.2, MIT, vendor/LICENSE.rc-picker.
 export const pickerMaskTokens = ['YYYY', 'MM', 'DD', 'HH', 'mm', 'ss', 'SSS'] as const;
 export type PickerMaskToken = typeof pickerMaskTokens[number];
@@ -15,7 +15,7 @@ export interface PickerMaskEdit extends PickerMaskState { filled: boolean; syncS
 export type PickerFieldFormat<Value> = string | ((value: Value) => string);
 export interface PickerObjectFormat { format: string; type?: 'mask' }
 
-/** Объект задаёт режим маски, массивы строк и функций сохраняют прежний формат. */
+/** The object sets the mode of the mask, arrays of strings and functions retain the previous format. */
 export function normalizePickerFieldFormat<Value>(
   value: PickerFieldFormat<Value> | PickerFieldFormat<Value>[] | PickerObjectFormat | undefined,
   fallback: PickerFieldFormat<Value>
@@ -29,7 +29,7 @@ export function normalizePickerFieldFormat<Value>(
   return { formats, mask };
 }
 
-// Сохраняет позиции литералов и числовых сегментов в единицах UTF-16.
+// Retains the positions of literals and numerical segments in units UTF-16.
 export function createPickerMask(format: string): PickerMaskSpec {
   const replace = new RegExp(pickerMaskTokens.map(key => `(${key})`).join('|'), 'g');
   const pattern = format.replace(replace, key => '顧'.repeat(key.length));
@@ -41,7 +41,7 @@ export function createPickerMask(format: string): PickerMaskSpec {
   const segments = cells.filter(cell => cell.mask);
   return { format, pattern, cells, segments };
 
-  // Следующий диапазон начинается сразу после предыдущего литерала или токена.
+  // The next range begins immediately after the previous literal or token.
   function createCell(text: string): PickerMaskCell {
     const mask = pickerMaskTokens.some(token => token === text);
     const start = offset;
@@ -51,7 +51,7 @@ export function createPickerMask(format: string): PickerMaskSpec {
   }
 }
 
-// Режим подсказки использует нулевое выделение до выбора числового сегмента.
+// Prompt mode uses zero selection before selecting the numerical segment.
 export function pickerMaskSelection(
   spec: PickerMaskSpec,
   index: number | null,
@@ -60,7 +60,7 @@ export function pickerMaskSelection(
   const cell = index === null ? undefined : spec.segments[index];
   return helped ? [0, 0] : [cell?.start || 0, cell?.end || 0];
 }
-/** Проверяет позиции литералов. Разбор числа и полной даты выполняется отдельно. */
+/** Checking the positions of writers. The selection of the number and the full date is performed separately. */
 export function pickerMaskMatches(spec: PickerMaskSpec, text: string): boolean {
   for (let index = 0; index < spec.pattern.length; index++) {
     if (!text[index] || spec.pattern[index] !== '顧' && spec.pattern[index] !== text[index]) {
@@ -70,7 +70,7 @@ export function pickerMaskMatches(spec: PickerMaskSpec, text: string): boolean {
   return true;
 }
 
-// Клик по литералу выбирает ближайший числовой сегмент, при равенстве первый.
+// The click on the literal selects the nearest numerical segment, with equality the first.
 export function pickerMaskIndexAt(spec: PickerMaskSpec, anchor: number): number {
   let distance = Number.MAX_SAFE_INTEGER;
   let selected = 0;
@@ -87,7 +87,7 @@ export function pickerMaskIndexAt(spec: PickerMaskSpec, anchor: number): number 
   return selected;
 }
 
-// Возвращает границы сегмента. Текущий год служит запасным значением для YYYY.
+// Returning segment boundaries. Current year serves as a reserve value for YYYY.
 export function pickerMaskRange(key: string, year: number): [number, number, number?] | undefined {
   const ranges: Record<PickerMaskToken, [number, number, number?]> = {
     YYYY: [0, 9999, year],
@@ -101,7 +101,7 @@ export function pickerMaskRange(key: string, year: number): [number, number, num
   return ranges[key as PickerMaskToken];
 }
 
-/** Меняет текущий сегмент. Блокировка мыши, submit и browser events принадлежат редактору. */
+/** Changes the current segment. Blocking the mouse, submit and browser events belong to the editor. */
 export function editPickerMask(
   spec: PickerMaskSpec,
   state: PickerMaskState,
@@ -116,12 +116,12 @@ export function editPickerMask(
   let nextCache: string | null = null;
   let fill: string | null = null;
 
-  // Стрелка оставляет курсор в пределах списка доступных сегментов.
+  // Arrow leaves the cursor within the list of available segments.
   const move = (amount: number) => {
     index = Math.min(Math.max((index ?? 0) + amount, 0), spec.segments.length - 1);
   };
 
-  // Прокручивает число по границам токена, включая заполнение пустого сегмента.
+  // Scrolls the number across the token boundaries, including filling an empty segment.
   const offset = (amount: number) => {
     const range = pickerMaskRange(token, year);
     if (!range) {

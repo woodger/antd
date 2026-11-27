@@ -30,11 +30,11 @@ for (const sample of reference.cases) {
     }
 
     const layered = sample.name.startsWith('fixed');
-    // Scope сверяется у всех ячеек, оформление — у переносимой колонки.
+    // Scope is checked at all cells, the design is at the transferred column.
     await expect.poll(async () => columnMetrics(await page.evaluate(snapshotTableRowScope), layered))
       .toEqual(columnMetrics(sample.expected, layered));
     if (layered) {
-      // Нативный sticky слой сохраняет прежнюю непрозрачную подложку под source headerBg.
+      // Native sticky layer retains the previous opaque substrate under source headerBg.
       const cells = page.locator('#table-row-scope-control tbody tr.ant-table-row .user-row-header');
       const base = sample.expected.rows.at(-1)![0].backgroundColor;
       for (const [index, row] of sample.expected.rows.entries()) {

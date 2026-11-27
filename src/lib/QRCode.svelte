@@ -68,7 +68,7 @@
   } : undefined));
   let foreground = $derived(color ?? (tokens.enabled ? tokens.state.token.colorText ?? '#000000'
     : config.theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.88)'));
-  // Удалённый source alias не должен восстанавливаться из legacy CSS defaults.
+  // A removed upstream alias must stay absent from the legacy CSS defaults.
   let inheritedText = $derived(tokens.enabled && tokens.state.token.colorText === undefined
     ? tokens.state.prefix === 'ant' ? '--ant-color-text:initial'
       : `--ant-color-text:var(--${tokens.state.prefix}-color-text)`

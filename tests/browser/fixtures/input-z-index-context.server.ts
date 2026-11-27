@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import Fixture from './InputZIndexContextFixture.svelte';
 
-/** Рендерит серверный trigger и исходный слой диалога перед подключением клавиатуры. */
+/** Render the server trigger and the original dialog layer before connecting the keyboard. */
 export function renderInputZIndexContext() {
   return render(Fixture, { props: { profileId: 'keyboard' } });
 }

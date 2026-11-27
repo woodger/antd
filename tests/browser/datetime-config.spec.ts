@@ -28,7 +28,7 @@ for (const range of [false, true]) {
         .selectOption(range ? 'literal-range' : 'literal');
 
       const source = reference.cases.find(item => item.name === (range ? 'default-range' : 'default'))!;
-      // Source принимает H/s внутри [Hours] за units; native исключает literal.
+      // Source accepts H/s inside [Hours] for units; native excludes literal.
       const expected = structuredClone(source.metrics);
       expected.inputs = range ? ['2024-09-15 Hours', '2024-09-18 Hours'] : ['2024-09-15 Hours'];
 

@@ -45,7 +45,7 @@
   });
 
   onMount(() => {
-    // Native autofocus не переводит фокус при повторном mount; React делает это явно.
+    // Native autofocus does not move focus on remount. React focuses explicitly.
     if (attributes.autoFocus) inputElement?.focus();
   });
 
@@ -102,7 +102,7 @@
       text = onCellInput(index, event.currentTarget.value);
     }}
     onChange={event => {
-      // OTP слушает native input; clear из общего Input config не меняет ячейки в upstream.
+      // OTP listens for native input. Upstream, clear in the shared Input config does not affect the cells.
       if (event.type === 'click') text = value;
     }}
     onFocus={event => {

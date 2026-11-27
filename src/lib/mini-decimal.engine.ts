@@ -1,4 +1,4 @@
-// Выбирает реализацию MiniDecimal и выполняет округление при записи значения InputNumber.
+// Selects the implementation of MiniDecimal and performs rounding when recording the value of InputNumber.
 import { BigIntDecimal } from './decimal-bigint.engine';
 import { NumberDecimal } from './decimal-number.engine';
 import { trimNumber } from './decimal-format.engine';
@@ -16,12 +16,12 @@ export interface MiniDecimal {
   toString(safe?: boolean): string;
 }
 
-// Предпочитает точную реализацию BigInt при наличии поддержки runtime.
+// Prefers an accurate implementation of BigInt with runtime support.
 export function getMiniDecimal(value: DecimalValue): MiniDecimal {
   return typeof BigInt === 'function' ? new BigIntDecimal(value) : new NumberDecimal(value);
 }
 
-/** Исходное округление mini-decimal; cutOnly отсекает дробь после выхода за min/max. */
+/** Initial rounding mini-decimal; cutOnly cuts off the fraction after the release for min/max. */
 export function toFixed(
   number: string,
   separator: string,

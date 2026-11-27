@@ -1,5 +1,4 @@
-// Переводит алиасы событий Collapse в имена атрибутов Svelte. Зарезервированные props остаются у
-// компонента.
+// Maps Collapse event aliases to Svelte attribute names. Reserved props stay on the component.
 import type { HTMLAttributes } from 'svelte/elements';
 
 const events = {
@@ -64,7 +63,7 @@ const events = {
 } as const satisfies Record<string, keyof HTMLAttributes<HTMLDivElement>>;
 
 type NativeAttributes = HTMLAttributes<HTMLDivElement>;
-/** Native DOM events; camelCase aliases и capture сохраняют Svelte delegation. */
+/** Native DOM events. Camel-case aliases and capture retain Svelte delegation. */
 export type CollapseItemEvents = {
   [Name in keyof typeof events]?: NativeAttributes[typeof events[Name]];
 } & {
@@ -77,7 +76,7 @@ const componentProps = new Set([
   'prefixCls', 'nativeElement', 'ref'
 ]);
 
-// Выделяет нативные атрибуты строки и сохраняет capture-семантику при переводе имён событий.
+// Extracts native row attributes and preserves capture semantics when mapping event names.
 export function collapseItemAttributes(item: object) {
   const attributes: Record<string, unknown> = {};
   for (const [name, value] of Object.entries(item)) {

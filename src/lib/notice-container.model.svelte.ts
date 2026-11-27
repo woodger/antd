@@ -1,5 +1,5 @@
-// Переносит popover сообщений в выбранный DOM-контейнер. Видимость и
-// CSS-переменные по-прежнему зависят от контекста исходного holder.
+// Move the popover messages to the selected DOM-container. Visibility and CSS variables still
+// depend on the context of the original holder.
 import { untrack } from 'svelte';
 import { getInlineStyleDeclarations, type InlineStyleLayer } from './inline-style.engine';
 import { connectNoticeSurface } from './notice.dom';
@@ -18,7 +18,7 @@ interface NoticeSurface {
   onVisible: (visible: boolean) => void;
 }
 
-/** Первый перенос оставляет DOM на месте до подключения, смена уже известной цели меняет key. */
+/** The first transfer leaves DOM in place until the connection, the change of the already known purpose changes the key. */
 export function createNoticeContainer(
   readOrigin: () => HTMLElement | undefined,
   readOptions: () => NoticeContainerOptions,
@@ -30,7 +30,7 @@ export function createNoticeContainer(
   let resolved = false;
   let portal = $state.raw<ReturnType<typeof connectPopupPortal>>();
 
-  /** Сравнивает DOM-цели независимо от identity getter. */
+  /** Compares DOM goals regardless of identity getter. */
   function setContainer(next: NoticeContainer | undefined) {
     if (resolved && target !== next) {
       containerKey++;
@@ -51,7 +51,7 @@ export function createNoticeContainer(
     untrack(() => setContainer(destination));
   });
 
-  /** В нативном dialog даже явная цель portal сохраняет проверку исходного top layer. */
+  /** In native dialog, even a clear goal portal retains the test of the original top layer. */
   function connect(node: HTMLDivElement, origin: HTMLElement, onVisible: NoticeSurface['onVisible']) {
     const destination = target;
     if (!destination) {
@@ -76,7 +76,7 @@ export function createNoticeContainer(
     portal = connection;
     const disconnect = connectNoticeSurface(node, origin, onVisible);
 
-    /** Удаляет portal только после остановки наблюдения за видимостью. */
+    /** Removes the portal only after the visibility observation stops. */
     return () => {
       disconnect();
       connection();
@@ -96,7 +96,7 @@ export function createNoticeContainer(
 
   return {
     get key() { return containerKey; },
-    /** Сверяет CSS variables после обновления собственного inline слоя поверхности. */
+    /** Verifies CSS variables after updating your own inline surface layer. */
     syncTheme() { portal?.syncTheme(); }
   };
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Распределяет значения между ручками диапазона. Native input, track и tooltip используют
-  // состояние конкретной ручки.
+  // Distributes values between range handles. The native input, track, and tooltip use the state of
+  // the relevant handle.
   import { onMount, onDestroy, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -437,7 +437,7 @@
   }
 
   function handleBlur(event: FocusEvent & { currentTarget: HTMLInputElement; }, index: number) {
-    // Svelte может получить blur от remove() раньше cleanup компонента.
+    // Svelte can receive blur from remove() before component cleanup.
     if (!mounted || !event.currentTarget.isConnected) {
       return;
     }
@@ -491,7 +491,7 @@
   });
 
   $effect.pre(() => {
-    // Remove() вызывает blur до onDestroy; spread props родителя уже могут быть уничтожены.
+    // remove() fires blur before onDestroy, when the parent's spread props may already be disposed.
     blurCallbacks = { onBlur: props.onBlur, onblur: props.onblur };
   });
 
@@ -570,7 +570,7 @@
 </style>
 
 <svelte:document onreset={handleReset} />
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`slider-prefix:${prefixCls}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions (Корень маршрутизирует исходный click/drag по дорожке.) --><div bind:this={nativeElement} class={[prefixCls, 'ant-slider-css-var', componentTheme.className, 'range-root',
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`slider-prefix:${prefixCls}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions (The root routes the original click and drag along the track.) --><div bind:this={nativeElement} class={[prefixCls, 'ant-slider-css-var', componentTheme.className, 'range-root',
   `${prefixCls}-${orientation}`, (internal?.direction ?? config.direction) === 'rtl' && `${prefixCls}-rtl`,
   disabledState[0] && `${prefixCls}-disabled`, marks.length && `${prefixCls}-with-marks`,
   locked && `${prefixCls}-lock`, props.class, config.slider?.class, props.rootClassName, classNames.root]}
@@ -586,7 +586,7 @@
       <div class={[`${prefixCls}-tracks`, classNames.tracks]} style={`${trackStyle(raw[0], raw[raw.length - 1])};${styles.tracks ?? ''}`}></div>
     {/if}
     {#each raw.slice(0, -1) as startPoint, index}
-      <!-- svelte-ignore a11y_no_static_element_interactions (Draggable track — часть нативного slider interaction.) -->
+      <!-- svelte-ignore a11y_no_static_element_interactions (The draggable track is part of native slider interaction.) -->
       <div class={[`${prefixCls}-track`, `${prefixCls}-track-${index + 1}`, classNames.track,
         draggableTrack && `${prefixCls}-track-draggable`]}
         style={[trackStyle(startPoint, raw[index + 1]), styles.track].filter(Boolean).join(';')}
@@ -611,7 +611,7 @@
       sliderHandleDisabled(disabled, index) && `${prefixCls}-handle-disabled`]}
       style={[sliderRangePosition(direction, point, minimum, maximum), styles.handle,
         internal?.handleStyle?.(index, point)].filter(Boolean).join(';')}>
-      <!-- svelte-ignore a11y_role_supports_aria_props_implicit (AriaRequired сохраняет явный публичный prop rc-slider; native required передаётся отдельно.) -->
+      <!-- svelte-ignore a11y_role_supports_aria_props_implicit (AriaRequired preserves rc-slider's explicit public prop. Native required is passed separately.) -->
       <input {...inputAttributes} bind:this={inputs[index]} {@attach connectInput}
         type="range" class="slider-range-input"
         id={index === 0 ? props.id ?? field?.id : undefined}

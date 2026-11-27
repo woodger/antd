@@ -5,9 +5,9 @@ import type { TreeSelectComponentsFormAction } from './fixtures/tree-select-comp
 import { readTreeSelectComponentsForm } from './tree-select-components-form-metrics';
 
 function nativeCompositeView(view: ReturnType<typeof readTreeSelectComponentsForm>) {
-  // Native Input отражает унаследованный error status через aria-invalid.
-  // UMD Form без ошибок валидации оставляет null; raw наблюдение сохранено.
-  // Сохраняем существующий Native id help и проверяем реальный узел подсказки.
+  // Native Input reflects inherited error status through aria-invalid. UMD Form without validation
+  // errors leaves null; raw observation is saved. Save the existing Native id help and check the
+  // real node of the hint.
   return { ...view, aria: { ...view.aria, invalid: view.mounted ? 'true' : null,
     describedBy: view.mounted ? 'choice-help' : null },
     help: view.help.map(node => ({
@@ -72,7 +72,7 @@ for (const entry of reference.cases) {
     for (const step of entry.steps) {
       await apply(page, step.action as TreeSelectComponentsFormAction);
       await expect.poll(read, { message: step.action }).toEqual(nativeCompositeView(step.view));
-      // Native successful fields хранят raw выбор; у Source нет hidden values.
+      // Native successful fields store raw choices; Source does not have hidden values.
       expect(step.observed.nativeFormData).toEqual([]);
       expect(step.observed.fieldErrors).toEqual([]);
       expect(await values()).toEqual(step.view.mounted ? [step.view.model] : []);

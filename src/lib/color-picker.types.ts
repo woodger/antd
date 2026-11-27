@@ -20,7 +20,7 @@ export interface ColorPickerStyles extends ColorPickerSlots {
 }
 export type ColorPickerSemantic<T> = T | ((info: { props: ColorPickerProps; }) => T);
 
-/** Точки presets могут быть одиночными цветами или градиентами; defaultOpen читается при mount. */
+/** Preset entries can be single colors or gradients. defaultOpen is read on mount. */
 export interface ColorPickerPreset {
   key?: string | number;
   label: ColorPickerContent;
@@ -28,21 +28,21 @@ export interface ColorPickerPreset {
   defaultOpen?: boolean;
 }
 
-/** ColorPicker Ant Design; переданные value/open/format остаются под управлением владельца. */
+/** Ant Design ColorPicker. Supplied value, open, and format remain controlled by the owner. */
 export interface ColorPickerProps extends Omit<HTMLButtonAttributes,
   'value' | 'defaultValue' | 'children' | 'size' | 'style' | 'class' | 'disabled'
 > {
   value?: ColorValue;
-  /** Начальное значение читается при создании; заданный value имеет приоритет. */
+  /** Initial value read at creation. The supplied value takes precedence. */
   defaultValue?: ColorValue;
   mode?: ColorMode | readonly ColorMode[];
   open?: boolean;
   disabled?: boolean;
   format?: ColorFormat;
-  /** Начальный формат; без format/defaultFormat используется hex. */
+  /** Initial format. Defaults to hex when format and defaultFormat are absent. */
   defaultFormat?: ColorFormat;
   allowClear?: boolean;
-  /** Убирает Alpha control; исходное условие opacity применяется при следующем изменении. */
+  /** Removes the Alpha control. The upstream opacity constraint takes effect on the next change. */
   disabledAlpha?: boolean;
   disabledFormat?: boolean;
   presets?: readonly ColorPickerPreset[];
@@ -51,23 +51,23 @@ export interface ColorPickerProps extends Omit<HTMLButtonAttributes,
   placement?: ColorPickerPlacement;
   arrow?: boolean | { pointAtCenter?: boolean; };
   autoAdjustOverflow?: boolean | { adjustX?: 0 | 1; adjustY?: 0 | 1; };
-  /** По умолчанию скрытая панель сохраняет состояние; true уничтожает её при закрытии. */
+  /** The hidden panel retains state by default. true destroys it on close. */
   destroyOnHidden?: boolean;
   /**
-   * Локальная функция перекрывает ConfigProvider; undefined сохраняет provider fallback.
-   * До первого открытия не вызывается; после destroyOnHidden снова ждёт открытия.
+   * The local function overrides ConfigProvider. undefined preserves the provider fallback. It runs
+   * after the first open, and waits for reopening after destroyOnHidden.
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement;
-  /** Custom trigger сохраняет собственную native семантику. */
+  /** A custom trigger retains its native semantics. */
   children?: Snippet;
   showText?: boolean | Snippet<[color: AggregationColor]>;
-  /** Picker/Presets — snippets вместо React components, panel — исходная композиция. */
+  /** Picker and Presets are snippets in place of React components. panel provides the original composition. */
   panelRender?: Snippet<[panel: Snippet, extra: {
     components: { Picker: Snippet; Presets: Snippet; };
   }]>;
-  /** CSS всегда RGB или linear-gradient независимо от формата редактора. */
+  /** The CSS value is always RGB or linear-gradient regardless of editor format. */
   onChange?: (color: AggregationColor, css: string) => void;
-  /** Независимый callback завершения; позволяет принять controlled value только после drag. */
+  /** Separate completion callback. Allows committing a controlled value after dragging ends. */
   onChangeComplete?: (color: AggregationColor) => void;
   onClear?: () => void;
   onOpenChange?: (open: boolean) => void;
@@ -75,13 +75,13 @@ export interface ColorPickerProps extends Omit<HTMLButtonAttributes,
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Локальный owner перекрывает ConfigProvider.prefixCls; вложенные controls наследуют общий prefix. */
+  /** The local owner overrides ConfigProvider.prefixCls. Nested controls inherit the shared prefix. */
   prefixCls?: string;
   classNames?: ColorPickerSemantic<ColorPickerSlots>;
   styles?: ColorPickerSemantic<ColorPickerStyles>;
 }
 
-/** Наследуемые стили и arrow; локальные semantic slots имеют приоритет. */
+/** Inherited styles and arrow. Local semantic slots take precedence. */
 export interface ColorPickerConfig {
   class?: string;
   style?: string;
@@ -97,7 +97,7 @@ export interface ColorPickerLocale {
   gradientColor: string;
 }
 
-/** Приватная граница композиции panelRender; каждый Picker имеет собственный drag/preview. */
+/** Private panelRender composition boundary. Each Picker manages its own drag and preview state. */
 export interface ColorPickerPanelProps {
   prefixCls: string;
   value: AggregationColor;

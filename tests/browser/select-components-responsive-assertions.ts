@@ -123,7 +123,7 @@ export function verifySelectComponentsResponsivePoint(
       assert(mapped, 'every Source overflow node was covered by the full mode comparator');
       const current = currentNodes.find(node => node.identity === mapped);
       assert(current);
-      // Проверки тегов и обёрток уже сделаны в сравнении режимов Select.
+      // The Select mode comparison already checked tags and wrappers.
       assert.deepEqual(
         comparableSelectComponentCSS(current.css),
         comparableSelectComponentCSS(original.css),

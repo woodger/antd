@@ -5,7 +5,7 @@ const rootStates = new Set(['', '-rtl', '-line', '-circle', '-inline-circle', '-
   '-line-align-start', '-line-align-center', '-line-align-end', '-line-position-inner',
   '-line-position-outer']);
 
-/** Имена variables/marker/anticon остаются общими; root defaults ограничены своим host. */
+/** The names variables/marker/anticon remain shared; root defaults are limited to their host. */
 export function getProgressPrefixCss(prefix: string) {
   if (prefix === 'ant-progress') {
     return undefined;

@@ -1,6 +1,6 @@
 <script lang="ts" generics="Data extends object = TreeDataNode">
-  // Координирует видимые узлы, раскрытие, checked и клавиатурный фокус. События получают данные
-  // узла из текущего индекса.
+  // Coordinates visible nodes, expansion, checked state, and keyboard focus. Events get node data
+  // from the current index.
   import { onDestroy, tick, untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getTreePrefixCss } from './tree-prefix.engine';
@@ -135,7 +135,7 @@
   let context = $derived(_componentConfig ? config.tree : undefined);
   let semanticProps = $derived<TreeProps<Data>>({
     ...componentProps,
-    // Только defaults Ant Tree wrapper; внутренние rc-tree defaults здесь не подставляются.
+    // Uses only the Ant Tree wrapper defaults. Internal rc-tree defaults are not applied here.
     showIcon,
     blockNode,
     checkable,
@@ -210,7 +210,7 @@
     itemHeight: () => itemHeight ?? treeItemHeight(tokens.state.token),
     dragging: () => drag.draggingKey !== null
   });
-  // Source передаёт motion instance вместо строки: virtual sentinel сохраняет itemHeight estimate.
+  // Upstream passes a motion instance instead of a string, so the virtual sentinel retains the itemHeight estimate.
   const viewport = createVirtualList<TreeMotionRow<Data & TreeBasicDataNode<Data>>, TreeKey | symbol>({
     rows: () => transition.rows,
     getKey: entry => entry.key,
@@ -400,8 +400,8 @@
     snapshot?: TreeEventNode<Data>,
     fromTitle = false
   ) {
-    // Selector rc-tree допускает collapse pending-ветки; switcher по-прежнему ждёт загрузку.
-    // Title action сохраняет expanded keys узла без детей до обновления данных.
+    // The rc-tree selector lets a pending branch collapse while the switcher still waits for
+    // loading. A title action retains expanded keys for a node with no children until data updates.
     if (transition.group || (fromTitle ? entry.node.isLeaf : leaf(entry))
       || event && !fromTitle && loading.includes(entry.key)) {
       return;
@@ -633,7 +633,7 @@
     padding:0;
     cursor:pointer;
   }
-  /* Source TreeSelect использует рамку и фон checkbox из своего vendor scope. */
+  /* Upstream TreeSelect uses the checkbox border and background from its own vendor scope. */
   [data-ant-tree-checkbox]:not(:where(.ant-tree-select-source-tree *)) {
     border:0;
     background:transparent;
@@ -727,7 +727,7 @@
         !unavailable && (node.selected || drag.highlightedKey === entry.key)
           && `${componentPrefix}-node-selected`
       ]} onmousedown={event => mouseFocus(event, nodeDraggable && !unavailable)} onclick={event => click(entry, event)} ondblclick={event => doubleClick(entry, event, node)} onmouseenter={event => {
-          // Удержанный DOM-узел может получать события и после unmount.
+          // A retained DOM node can still receive events after unmount.
           if (!disposed) onMouseEnter?.({ event, node });
         }} onmouseleave={event => {
           if (!disposed) onMouseLeave?.({ event, node });

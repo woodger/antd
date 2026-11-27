@@ -9,7 +9,7 @@ const filterValues = { status: 'active', region: 'eu', access: 'public', group: 
 const filterFields = ['status', 'region', 'access', 'group'] as const;
 type FilterRow = typeof filterValues & { key: string; children?: FilterRow[]; };
 
-/** Строит двоичное дерево замера. Все записи проходят каждый активный фильтр. */
+/** Builds a binary tree for the measurement. Every active filter evaluates all records. */
 function filterBranch(key: string, depth: number): FilterRow {
   const row: FilterRow = { key, ...filterValues };
   if (depth > 0) {

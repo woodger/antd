@@ -1,4 +1,4 @@
-// Итоговые ячейки используют текущий префикс и смещения той же сетки колонок.
+// The final cells use the current prefix and displacements of the same column grid.
 import { getContext, setContext } from 'svelte';
 
 export interface TableFixedCell {
@@ -13,12 +13,12 @@ interface TableSummaryContext {
 
 const summaryKey = Symbol('ant-table-summary');
 
-/** Привязывает итоговые ячейки к колонкам ближайшей таблицы. */
+/** Ties the final cells to the columns of the nearest table. */
 export function provideTableSummary(context: TableSummaryContext) {
   setContext(summaryKey, context);
 }
 
-/** Возвращает владельца смещений, в том числе для ячеек в пользовательском snippet. */
+/** Returns the owner of the displacements, including for the cells in the user snippet. */
 export function useTableSummary(): TableSummaryContext {
   return getContext(summaryKey);
 }

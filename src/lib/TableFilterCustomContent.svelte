@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Пользовательский Menu может выбирать значения, сохраняя фокус и портал Dropdown.
+  // A custom Menu can select values while preserving Dropdown's focus and portal.
   import { provideDropdownMenu, takeDropdownMenu } from './dropdown-menu-context';
   import type { TableColumn, TableFilterDropdownProps } from './table.types';
   import RenderContent from './RenderContent.svelte';

@@ -3,9 +3,9 @@ import { destroyAllModals } from './modal-destroy.dom';
 import { openStaticModal } from './modal-static.model.svelte.js';
 import type { ModalConfirmType, ModalStaticConfig } from './modal-confirm.types';
 
-/** Связывает публичный метод с начальным видом подтверждения. */
+/** Connects the public method with the initial type of confirmation. */
 function createMethod(type: ModalConfirmType) {
-  /** Запускает независимое окно по запросу. */
+  /** Starts an independent window on request. */
   return (config: ModalStaticConfig) => openStaticModal(type, config);
 }
 

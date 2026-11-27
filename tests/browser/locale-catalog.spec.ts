@@ -4,10 +4,10 @@ import reference from './fixtures/ant-design-locales-browser-reference.json' wit
 
 test.use({ viewport: { width: 1440, height: 1400 } });
 
-/** Снимает переводы вокруг редакторов, таблицы и навигации. */
+/** Removes translations around editors, tables and navigation. */
 async function readLocale(page: Page) {
   return page.evaluate(() => {
-    /** Убирает разницу в пробелах между текстовыми узлами React и Svelte. */
+    /** Removes the gap difference between text nodes React and Svelte. */
     function text(selector: string) {
       return document.querySelector(selector)?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
     }
@@ -35,7 +35,7 @@ async function readLocale(page: Page) {
   });
 }
 
-/** Меняет состояние fixture без перевода фокуса с действующего редактора. */
+/** Changes the state of fixture without translating the focus from the current editor. */
 async function command(page: Page, name: string) {
   await page.getByRole('button', { name, exact: true })
     .evaluate(button => (button as HTMLButtonElement).click());

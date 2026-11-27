@@ -1,4 +1,4 @@
-/** Прямые наблюдения actual DOM/публичного владельца; не вычисляет ожидаемые labels. */
+/** Straight observations of the actual DOM/publish owner; does not calculate the expected labels. */
 export function readSelectValue() {
   const owner = document.querySelector<HTMLElement>('[data-select-value-case]')!;
   const refs: { root?: HTMLElement; editor?: HTMLInputElement; control?: Record<string, unknown>;

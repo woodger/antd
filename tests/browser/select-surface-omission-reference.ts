@@ -80,7 +80,7 @@ interface SourceHeader {
 }
 interface SourceReference<Case> { reference: SourceHeader; cases: Case[] }
 type SSRCase = { id: string; states: SelectSurfaceOmissionSSRState[] };
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 function reference<Case>(
   filename: string,

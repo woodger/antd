@@ -176,7 +176,7 @@ test('Popover preserves its eager content and retained state by default', async 
   await select(page, 'editor');
   await page.getByLabel('Standalone group popup', { exact: true }).check();
   const input = page.locator('input[aria-label="Owner popup draft"]');
-  // У standalone Popover default сохраняет содержимое; у Group default удаляет.
+  // At standalone Popover default preserves the contents; the default Group removes.
   await expect(input).toHaveCount(1);
   await trigger(page).click();
   await draft(page).fill('Retained standalone draft');

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import DropdownLifecycleFixtures from './DropdownLifecycleFixtures.svelte';
 
-/** React и Svelte создают пользовательскую панель только на клиенте. */
+/** React and Svelte create a custom panel only on the client. */
 export function renderDropdownLifecycle(startOpen: boolean) {
   return render(DropdownLifecycleFixtures, {
     idPrefix: 'dropdown-lifecycle-hydration',

@@ -55,7 +55,7 @@
     filterOnClose: live || transition
   }]);
 
-  /** Собирает статическое содержимое профиля с теми же числами и разметкой, что и React. */
+  /** Collects static profile content with the same numbers and markup as React. */
   function staticContent(kind: string | undefined, mark: Snippet): Exclude<RenderEmptyContent, Snippet> {
     switch (kind) {
       case 'zero': return 0;
@@ -71,19 +71,19 @@
     }
   }
 
-  /** Запоминает запросы видимости от штатного триггера. */
+  /** Memories the requests for visibility from a full-time trigger. */
   function noteOpen(open: boolean) {
     openEvents = [...openEvents, open];
   }
 
-  /** Фиксирует только применение фильтра и запрошенные строки. */
+  /** It only fixes the use of the filter and the requested strings. */
   function noteChange(change: TableChange<Row>) {
     changes = [...changes, {
       filters: change.filters, rows: change.currentDataSource.map(row => row.key)
     }];
   }
 
-  /** Меняет текст в прежних snippets, сохраняя открытые элементы управления. */
+  /** Changes the text to previous snippets, saving open controls. */
   function renameContent() {
     iconText = 'Updated icon';
     panelText = 'Updated panel';

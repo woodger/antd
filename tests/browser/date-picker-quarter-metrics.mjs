@@ -2,14 +2,13 @@
 export function readNativeQuarter() {
   const api = window.nativeQuarter, observation = window.nativeQuarterObservation;
   const recorder = api.getRecorder(), refs = api.readRefs();
-  // Связывает повторный снимок с тем же объектом в recorder. Отсутствующее значение остаётся
-  // null.
+  // Links a re-shot with the same object in the recorder. The missing value remains null.
   const id = value => value == null ? null : recorder.identity(value);
-  // Сохраняет полный фактический список пар имя и значение в порядке DOM.
+  // Saves the full actual list of pairs name and value in order DOM.
   const attributes = node => [...node.attributes].map(item => [item.name, item.value]);
   const cssKeys = ['display', 'visibility', 'opacity', 'position', 'overflow', 'overflow-y',
     'color', 'background-color', 'border-color', 'font-size', 'line-height', 'text-align'];
-  // Снимает геометрию, атрибуты и стиль. Ссылка остаётся в журнале для повторного чтения после
+  // Removes geometry, attributes and style. The link remains in the journal for re-reading after
   // unmount.
   const describe = node => {
     if (node == null) {
@@ -88,11 +87,11 @@ export function readNativeQuarter() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
-// Считывает накопленные вызовы render callbacks начиная с позиции курсора.
+// Counts the accumulated calls callback renders starting from the position of the cursor.
 export function readNativeQuarterProducers(cursor = 0) {
   return window.nativeQuarter.readProducers(cursor);
 }
-// Считывает накопленные уведомления компонента начиная с позиции курсора.
+// Counts the accumulated notifications of the component starting from the cursor position.
 export function readNativeQuarterCallbacks(cursor = 0) {
   return window.nativeQuarter.readCallbacks(cursor);
 }

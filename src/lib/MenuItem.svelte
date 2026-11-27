@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Владеет узлом строки, её фокусом и временем жизни закреплённой за ней подсказки.
+  // Owns the row node, its focus, and the lifetime of its tooltip.
   import { on } from 'svelte/events';
   import { menuItem, type MenuEntry } from './menu.engine';
   import { useMenu } from './menu-context';
@@ -88,7 +88,7 @@
     }
   });
 
-  // Compose на строке сохраняет порядок Tooltip → Menu после событий дочерней ссылки.
+  // Composition at the row preserves Tooltip → Menu order after events from the child link.
   function connectClick(handler: (event: MouseEvent) => void) {
     tooltipClick = handler;
     return () => {
@@ -106,7 +106,7 @@
         context.activate(entry.key);
       }
     }
-    // Переходы между пунктами одного ShadowRoot не доходят до document delegation.
+    // Transitions between items in the same ShadowRoot never reach document delegation.
     return on(element, 'focusin', focus);
   }
 
@@ -158,7 +158,7 @@
       return;
     }
     if (event.key === 'Enter' || activatesChoice) {
-      // Enter на настоящей ссылке создаёт native click, который запускает callback.
+      // Enter on a native link fires a native click, which invokes the callback.
       if (!activatesChoice && event.composedPath()[0] instanceof HTMLAnchorElement) {
         return;
       }
@@ -210,7 +210,7 @@
 </style>
 
 {#snippet rowContents()}
-  <!-- Source icon/label идут подряд; native-тема сохраняет межэлементный пробел. -->
+  <!-- Upstream places the icon and label consecutively. The native theme keeps the space between them. -->
   {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, classes.itemIcon]}
     style={styles.itemIcon} aria-hidden={dropdown ? true : undefined}>{@render item.icon()}</span>{#if !dropdown && !context.componentTheme.className}{' '}{/if}{/if}<span data-ant-dropdown-title={dropdown ? true : undefined} class={[
       `${context.prefixCls}-title-content`,
@@ -232,7 +232,7 @@
 {/if}
 {/snippet}
 
-<!-- При гидратации svelte:element повторно вставляет строку и теряет её фокус. -->
+<!-- During hydration, svelte:element reinserts the row and drops its focus. -->
 {#if dropdown}<li role="none">
   {#if native?.href === undefined}<button type="button" disabled={blocked} {...rowAttributes}
     bind:this={element} data-ant-dropdown-item role="menuitem"

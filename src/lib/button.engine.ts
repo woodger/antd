@@ -1,4 +1,4 @@
-// Выбирает пару color и variant, начальную фазу loading и форматирование короткого текста Button.
+// Resolves Button's color and variant pair, initial loading phase, and short text formatting.
 import type {
   ButtonColor,
   ButtonConfig,
@@ -14,7 +14,7 @@ const types: Record<ButtonType, readonly [ButtonColor | 'link', ButtonVariant]> 
   text: ['default', 'text'],
   link: ['link', 'link']
 };
-// Применяет явную пару до type и danger, затем учитывает контекст. Ghost переводит solid в
+// Applies the explicit pair before type and danger, then checks context. Ghost changes solid to
 // outlined.
 export function buttonAppearance(
   type?: ButtonType,
@@ -46,7 +46,7 @@ export function buttonAppearance(
   }
   return { color: parsed[0], variant: ghost && parsed[1] === 'solid' ? 'outlined' : parsed[1] };
 }
-// Отделяет отложенное включение индикатора от режима, в котором он показывается сразу.
+// Distinguishes delayed loading from immediate indicator display.
 export function buttonLoading(loading: ButtonLoading): { loading: boolean; delay: number; } {
   if (typeof loading === 'object' && loading !== null) {
     const delay = typeof loading.delay === 'number' ? loading.delay : 0;
@@ -54,15 +54,15 @@ export function buttonLoading(loading: ButtonLoading): { loading: boolean; delay
   }
   return { loading: Boolean(loading), delay: 0 };
 }
-// Считает число 0 содержимым, сохраняя пустыми отсутствующие значения и false.
+// Treats numeric 0 as content and keeps missing values and false empty.
 export function buttonHasContent(content: ButtonContent): boolean {
   return content !== undefined && content !== null && content !== false && content !== '';
 }
-// Распознаёт ровно два иероглифа в поддерживаемом диапазоне для правила autoInsertSpace.
+// Recognizes exactly two ideographs in the supported range for autoInsertSpace.
 export function buttonTwoCN(value: string): boolean {
   return /^[\u4E00-\u9FA5]{2}$/.test(value);
 }
-// Вставляет пробел только для двух иероглифов при включённом режиме.
+// Inserts a space only between two ideographs when the behavior is enabled.
 export function buttonText(value: string, insert: boolean): string {
   return insert && buttonTwoCN(value) ? value.split('').join(' ') : value;
 }

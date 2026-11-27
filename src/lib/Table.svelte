@@ -1,6 +1,6 @@
 <script lang="ts" generics="Row extends object">
-  // Координирует данные, выбор и раскрытие. Шапка, тело и итоги используют
-  // одну сетку колонок, а виртуальное окно ограничивает только строки тела.
+  // Coordinates data, selection, and expansion. Headers, body, and summaries share a column grid.
+  // The virtual window limits only body rows.
   import { untrack, type Snippet } from 'svelte';
   import type { Attachment } from 'svelte/attachments';
   import { useConfig } from './config-context';
@@ -204,7 +204,7 @@
     return localSorts;
   });
   const pagerOptions = $derived(pagination || undefined);
-  // Локальный запрос живёт отдельно от props, включая объект с расположением пейджеров.
+  // Keeps the local query separate from props, including the pager placement object.
   let localPage = $state.raw(untrack(() => ({
     current: defaultCurrent ?? pagerOptions?.defaultCurrent ?? 1,
     pageSize: defaultPageSize ?? pagerOptions?.defaultPageSize ?? 10
@@ -228,7 +228,7 @@
     return filters ?? initialFilters;
   });
   const appliedFilters = $derived.by(() => {
-    // Режим Ant Design при наличии filteredValue выбирает критерии управляемых колонок.
+    // When filteredValue is present, Ant Design mode uses criteria from controlled columns.
     if (controlledFilters && !usesTableFilterState) {
       return controlledFilters;
     }
@@ -278,7 +278,7 @@
   const headerElements = $derived(components?.header);
   const splitBands = $derived(pinHeader
     && Boolean(bodyRenderer || components?.table || headerElements?.table));
-  // Пустая или незакреплённая таблица использует обычное тело даже при virtual.
+  // An empty or unpinned table uses a regular body even with virtual enabled.
   const useBodyWrapperSlot = $derived(!virtual || !pinHeader || pageRows.length === 0);
   let expandedRowRender = $derived(expandable?.expandedRowRender);
   const forceExpandedRows = $derived(expandable?.forceRender === true);
@@ -326,7 +326,7 @@
     records: () => tableData.allRows
   });
   const selectedKeys = $derived(selection.checked);
-  // Явная ширина колонки перекрывает token и прежний размер без темы.
+  // An explicit column width overrides both the token and the previous unthemed size.
   const selectionWidth = $derived(selectionOptions?.columnWidth ?? (designTheme.enabled
     ? designTheme.state.token.Table?.selectionColumnWidth : 48));
   let resolvedSize = $derived(size ?? config.componentSize);
@@ -360,7 +360,7 @@
   let table = $state<HTMLTableElement>();
   let bodyElement = $state<HTMLElement>();
   let stickyBar = $state.raw<TableStickyBarLayout>();
-  // План шапки и порядок листьев используют одни и те же видимые колонки.
+  // The header layout and leaf order use the same visible columns.
   let columnLayout = $derived(getTableColumnLayout(
     resolvedColumns,
     breakpoint.connected ? breakpoint.screens : {},
@@ -439,7 +439,7 @@
     const owner = bodyRenderer ? tableSection : content;
     const view = owner?.ownerDocument.defaultView;
     if (view && hasResponsiveColumns) {
-      // useBreakpoint подключает пороги темы на время текущей подписки.
+      // useBreakpoint attaches theme breakpoints for the current subscription's lifetime.
       return breakpoint.connect(view, untrack(() => mediaQueries));
     }
   });
@@ -467,7 +467,7 @@
     summary: () => splitBands && summaryPlacement !== 'inline' ? undefined : summaryPlacement,
     rtl: () => config.direction === 'rtl'
   });
-  // Встроенное виртуальное тело заменяет внешний table целиком, как в React.
+  // The built-in virtual body replaces the outer table entirely, as in React.
   const tableElement = $derived(scrollport.active ? undefined : components?.table);
   const bodyElements = $derived(typeof components?.body === 'object'
     && (!virtual || scrollport.active) ? components.body : undefined);
@@ -477,14 +477,14 @@
   const contentStyle = $derived.by(getContentStyle);
   const resolvedLayout = $derived.by(() => {
     if (scrollport.active) {
-      // Шапка и виртуальные строки используют уже вычисленные общие ширины.
+      // The header and virtual rows use the shared widths already computed.
       return 'fixed';
     }
 
     const x = horizontalWidth;
     const pinned = fixedColumns.some(Boolean);
     if (virtual && scroll?.y === undefined && pinned && tableLayout === undefined) {
-      // Без окна строк фиксированная раскладка сохраняет ширины закреплённых колонок.
+      // With no row window, fixed layout retains the pinned column widths.
       return 'fixed';
     }
 
@@ -504,7 +504,7 @@
     return resolveTableVirtualCells(visibleRows, leaves.map(leaf => leaf.column), start, end);
   });
 
-  // Вычисляет начало и размер merged cells через измерения того же виртуального окна.
+  // Computes merged-cell position and size from the same virtual window's measurements.
   let mergedRows = $derived.by(() => {
     const spans = cellPlan?.merged;
     const layout = scrollport.layout;
@@ -518,7 +518,7 @@
 
     return spans.map(row => measureMergedRow(row, offsets));
   });
-  // Строка и её слой span используют атрибуты одного callback с общим индексом.
+  // A row and its span layer share one callback's attributes and the same index.
   const bodyRowProperties = $derived.by(() => {
     const configure = onRow;
     if (!configure) {
@@ -538,7 +538,7 @@
 
     return properties;
   });
-  // Произвольные итоговые строки сохраняют нативную семантику и свои атрибуты.
+  // Custom summary rows keep their native semantics and their own attributes.
   const virtualRowIndices = $derived(
     scrollport.active && !expandedRowRender && !mergedRows.length && !summaryRender
   );
@@ -569,7 +569,7 @@
     return { ...entry, sourceIndex: index, top, parts };
   }
 
-  /** Прокручивает текущую страницу по абсолютной позиции, ключу или индексу. */
+  /** Scrolls the current page by absolute position, key, or index. */
   export function scrollTo(target: TableScrollConfig): void {
     if (bodyRenderer) {
       scrollport.cancelReset();
@@ -584,7 +584,7 @@
     return typeof value === 'number' ? `${value}px` : value;
   }
 
-  /** Передаёт renderer размер и алгоритм раскладки штатной таблицы. */
+  /** Passes the renderer the default table's size and layout algorithm. */
   function tableStyle(minWidth: string | undefined, width: number | string | undefined) {
     return [
       minWidth && `min-width: ${minWidth};`,
@@ -606,11 +606,11 @@
     return column.onCell ? resolveTableCell(column.onCell(record, index)) : emptyCell;
   }
 
-  /** Хранит принятое содержимое, пока смонтирована конкретная ячейка. */
+  /** Retains accepted content for the lifetime of the mounted cell. */
   function createCellContentReader() {
     let accepted: TableCellContent | undefined;
 
-    /** Передаёт предикату исходные записи, сохраняя параметры предыдущего вывода при отказе. */
+    /** Passes the original records to the predicate. A rejection preserves the previous render parameters. */
     return function readCellContent(leaf: TableLeaf<Row>, entry: TableRowEntry) {
       if (leaf.service) {
         return undefined;
@@ -620,7 +620,7 @@
       const { dataIndex, render, shouldCellUpdate } = leaf.column;
       const previous = accepted;
 
-      // Состояние, которое читает callback владельца, не становится зависимостью ячейки.
+      // State read by the owner's callback does not become a cell dependency.
       if (previous && shouldCellUpdate
         && !untrack(() => shouldCellUpdate(record, previous.record))) {
         return previous;
@@ -649,7 +649,7 @@
     }
   }
 
-  // Удалённый из виртуального окна узел может не получить mouseleave.
+  // A node removed from the virtual window may never receive mouseleave.
   function detachHoveredCell(key: TableKey, leaf: number) {
     return () => clearHoveredCell(key, leaf);
   }
@@ -672,7 +672,7 @@
     };
   }
 
-  /** Сохраняет стиль строки или темы и добавляет настроенный semantic слой. */
+  /** Keeps the row or theme style and adds the configured semantic layer. */
   function appendSemanticStyle(base?: string | null, semantic?: string) {
     if (!semantic) {
       return base;
@@ -681,7 +681,7 @@
     return base ? `${base};${semantic}` : semantic;
   }
 
-  /** Не отбрасывает свойства слота, когда раскладка не задаёт их значения. */
+  /** Retains slot properties when layout supplies no value for them. */
   function getContentStyle() {
     const dimensions = {
       'max-height': cssSize(scrollport.maxHeight ?? scroll?.y),
@@ -704,7 +704,7 @@
     return appendSemanticStyle(layout, slots.content);
   }
 
-  // Слоты ячеек применяются после CSS раскладки и атрибутов вызывающего кода.
+  // Cell slots apply after layout CSS and attributes from the caller.
   function cellStyle(
     fixed: TableFixedCell | undefined,
     zIndex: number,
@@ -721,7 +721,7 @@
       .filter(Boolean).join('; ') || undefined;
   }
 
-  // Закрепление объединённой ячейки зависит от стороны её крайних колонок.
+  // A merged cell is pinned according to the side of its outermost columns.
   function fixedSpan(index: number, span: number) {
     const first = fixedCells[index];
     const last = fixedCells[index + span - 1];
@@ -751,13 +751,13 @@
     }
   }
 
-  /** Берёт DOM из окна элемента, включая таблицы в iframe. */
+  /** Uses the element's own DOM window, including for tables inside an iframe. */
   function readTableElement(node: HTMLElement) {
     const TableElement = node.ownerDocument.defaultView?.HTMLTableElement;
     return TableElement && node instanceof TableElement ? node : undefined;
   }
 
-  /** Сохраняет таблицу для прокрутки, ширин и высот её частей. */
+  /** Retains the table used for scrolling and measuring the widths and heights of its parts. */
   function registerTable(node: HTMLElement) {
     const element = readTableElement(node);
     table = element;
@@ -768,7 +768,7 @@
     };
   }
 
-  /** Связывает виртуальное окно с фактически отрисованной секцией тела. */
+  /** Connects the virtual window to the rendered body section. */
   function registerBody(node: HTMLElement) {
     bodyElement = node;
     return () => {
@@ -778,10 +778,10 @@
     };
   }
 
-  /** Листовые элементы без измерений тоже получают безопасный attachment. */
+  /** Leaf elements also get a safe attachment when measurements are unavailable. */
   function ignoreElementRef() {}
 
-  /** Добавляет размеры накладной ячейки после стиля её штатного элемента. */
+  /** Adds overlay-cell dimensions after the default element's style. */
   function spanCellStyle(style: string | undefined, span?: {
     width: number; height: number; gap: number;
   }) {
@@ -798,7 +798,7 @@
     return appendSemanticStyle(style, geometry);
   }
 
-  /** Регистрирует таблицу конкретной полосы, независимо от её renderer. */
+  /** Registers the table for a specific strip independently of its renderer. */
   function registerBandTable(kind: Band, node: HTMLElement) {
     const element = readTableElement(node);
     bandTables[kind] = element;
@@ -809,7 +809,7 @@
     };
   }
 
-  /** Закрепляет колонки вынесенной полосы по её собственной сетке и scrollbar gutter. */
+  /** Pins the detached strip's columns using its own grid and scrollbar gutter. */
   function attachBand(kind: Band, band: HTMLDivElement) {
     bandNodes[kind] = band;
     const disconnect = customBody.attachBand(band);
@@ -837,7 +837,7 @@
     };
   }
 
-  /** Публикует ширины тела только при смене раскладки. */
+  /** Publishes body widths only when the layout changes. */
   function readBodyLayout(widths: readonly number[], width: number) {
     const previous = untrack(() => bodyLayout);
     if (previous?.width === width && previous.widths.length === widths.length
@@ -848,7 +848,7 @@
     bodyLayout = { widths, width };
   }
 
-  /** Обновляет полосу на текущем владельце горизонтальной прокрутки. */
+  /** Updates the strip on the current horizontal scroll owner. */
   function dragStickyScrollbar(offset: number) {
     if (splitBands) {
       scrollport.cancelReset();
@@ -874,7 +874,7 @@
     }
 
     if (stickyHeader) {
-      // Изменение inline style строки требует снова записать измеренные смещения шапки.
+      // A change to inline row styles requires writing the measured header offsets again.
       void headerRowProperties;
     }
 
@@ -921,7 +921,7 @@
     }, section);
   });
 
-  /** Настройки контейнера из loading могут переопределить восстановленные токены. */
+  /** Container settings in loading can override the restored tokens. */
   function getLoadingStyles(info: SpinSemanticInfo) {
     const options = spinOptions?.styles;
     const styles = typeof options === 'function' ? options(info) : options;
@@ -940,7 +940,7 @@
     pagination?: TableChange<Row>['pagination'];
   }
 
-  /** Управляемые колонки могут запрашивать данные, отличные от отображаемых. */
+  /** Controlled columns can request data that differs from what is displayed. */
   function getChangeData(requested?: TableChangeRequest) {
     if (requested?.sorts === undefined && requested?.filters === undefined) {
       return tableData;
@@ -981,7 +981,7 @@
 
     const requested = changeTableSorts(dataColumns, activeSorts, column, next?.order ?? null);
     localSorts = requested;
-    // Управляемая колонка показывает порядок владельца, а событие описывает запрос.
+    // A controlled column displays the owner's order. Its event describes the requested order.
     notifyChange('sort', controlledSorts.length ? { sorts: requested } : undefined);
   }
 
@@ -990,7 +990,7 @@
       return;
     }
 
-    // Обработчик пейджера может синхронно заменить строки и total.
+    // A pager handler can replace rows and total synchronously.
     const request = {
       data: tableData,
       pagination: { current: page, pageSize: size, total: paging.total }
@@ -1003,7 +1003,7 @@
     notifyChange('paginate', request);
   }
 
-  // Изменения пейджера проходят через onChange, чтобы оба экземпляра читали одну страницу.
+  // Pager changes go through onChange so both instances read the same page.
   function keepPageRequest() {}
 
   function changePagerSize(previous: number, size: number) {
@@ -1034,7 +1034,7 @@
       delete next[columnKey];
     }
 
-    // Сохраняет запрос для локального режима после снятия filteredValue.
+    // Retains the query for local mode after filteredValue is removed.
     if (onlyColumnFilters || localColumnFilters !== undefined) {
       localColumnFilters = next;
     }
@@ -1052,7 +1052,7 @@
     notifyChange('filter', { filters: requestedFilters, pagination: requestedPage, data });
   }
 
-  /** Находит источник имени в массиве, оставляя доступное имя snippet браузеру. */
+  /** Finds the name source in the array and lets the browser determine the snippet's accessible name. */
   function hasHeadingLabel(content: RenderEmptyContent): boolean {
     if (typeof content === 'function' || typeof content === 'number') {
       return true;
@@ -1070,7 +1070,7 @@
       : order === 'descend' ? strings.sortDescending : strings.cancelSort;
   }
 
-  // rowExpandable относится к подробностям; ветка определяется массивом потомков.
+  // rowExpandable governs detail panels. A child array identifies a branch.
   function canExpandRow(row: TableRow<Row>): boolean {
     return expandedRowRender ? expandable?.rowExpandable?.(row.record) ?? true
       : tree && row.children !== undefined;
@@ -1103,7 +1103,7 @@
     onExpandedRowsChange?.([...next]);
   }
 
-  // Встроенные controls и редакторы ячеек используют свои click и keyboard handlers.
+  // Built-in controls and cell editors handle their own clicks and keyboard events.
   function expandByRowClick(row: TableRow<Row>, event: MouseEvent) {
     if (event.defaultPrevented) {
       return;
@@ -1122,7 +1122,7 @@
     changeExpansion(row);
   }
 
-  // Встроенное раскрытие завершается до пользовательского onclick, как в Source.
+  // Built-in expansion finishes before the consumer's onclick, as upstream.
   function rowClick(
     row: TableRow<Row>, canExpand: boolean, listener: TableRowProps['onclick']
   ): TableRowProps['onclick'] {
@@ -1147,7 +1147,7 @@
     )}`;
   }
 
-  // У вложенных строк отдельные tr; aria-controls связывает кнопку с видимыми детьми.
+  // Nested rows have their own tr. aria-controls connects the button to visible children.
   function expandedTargets(row: TableRow<Row>, nested: boolean): string | undefined {
     if (!nested) {
       return expansionId(row.key);
@@ -1160,7 +1160,7 @@
     return targets?.join(' ') || undefined;
   }
 
-  // Пользовательский переключатель вызывает тот же запрос, что и штатная кнопка.
+  // The custom toggle issues the same request as the default button.
   function expandIconInfo(
     row: TableRow<Row>, canExpand: boolean, expanded: boolean, ariaControls: string | undefined
   ): TableExpandIconInfo<Row> {
@@ -1276,7 +1276,7 @@
       + var(--ant-table-virtual-caption-height, 0px) + var(--ant-table-header-row-offset, 0px));
     z-index: 2;
   }
-  /* Непрозрачная подложка нужна и для токенов темы с alpha. */
+  /* An opaque backing is also needed for theme tokens with alpha. */
   [data-ant-table-part="wrapper"] .table-pin-head :global([data-ant-table-part="head"] > tr > th),
   [data-ant-table-part="wrapper"] :global([data-ant-table-part="head"] > tr > .table-fixed-cell) { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] .table-pin-head :global([data-ant-table-part="head"] > tr > th[data-ant-table-sorted]),
@@ -1339,7 +1339,7 @@
     padding: var(--ant-padding-sm);
     color: var(--ant-color-primary);
   }
-  /* Spin принимает фокус ещё до применения inert и смены стиля обёртки. */
+  /* Spin receives focus before the wrapper becomes inert and its style changes. */
   [data-ant-table-part="wrapper"] > :global([data-ant-table-passive-spin]) {
     position: static;
     color: inherit;
@@ -1406,7 +1406,7 @@
   {#if typeof renderer === 'function'}
     {@render overrideElement(renderer, tag, attributes, children, ref)}
   {:else if element === 'th'}
-    <!-- Статические th/td сохраняют редактор при гидратации Svelte 5.57, включая замену тега. -->
+    <!-- Static th and td preserve the editor during Svelte 5.57 hydration, including when the tag is replaced. -->
     <th {...attributes} {@attach ref}>{@render children()}</th>
   {:else if element === 'td'}
     <td {...attributes} {@attach ref}>{@render children()}</td>
@@ -1960,7 +1960,7 @@
       {@const placeholder = cellPlan?.placeholders.get(index)?.[columnIndex]}
       {#if placeholder !== undefined}
         {#if placeholder > 0}
-          <!-- Ширина остаётся в сетке, содержимое находится в строке span. -->
+          <!-- The grid retains the width while the span row contains the content. -->
           <td aria-hidden="true" class={`${prefix}-cell`}
             colspan={placeholder > 1 ? placeholder : undefined} style:visibility="hidden"></td>
         {/if}
@@ -2110,7 +2110,7 @@
       {#if bodyRenderer}
         {@render bodyRenderer(panelData, customBody.info)}
       {:else}
-        <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус нужен для прокрутки таблицы с клавиатуры.) -->
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex (Focus allows keyboard scrolling of the table.) -->
         <div bind:this={content}
           data-ant-table-part="content"
           data-ant-table-virtual={scrollport.active || undefined}

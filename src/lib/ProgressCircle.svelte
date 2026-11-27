@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Рисует круг и подпись Progress. Подсказка миниатюрного режима использует стили и позицию
-  // текущего круга.
+  // Renders the Progress circle and label. The small variant's tooltip uses the current circle's
+  // style and position.
   import Tooltip from './Tooltip.svelte';
   import { useConfig } from './config-context';
   import { connectInlineStyle } from './inline-style.dom';
@@ -56,7 +56,7 @@
   let tooltipRendered = $state(false);
   let gap = $derived(gapDegree || gapDegree === 0 ? gapDegree : type === 'dashboard' ? 75 : 0);
   let gradient = $derived(Boolean(strokeColor && typeof strokeColor === 'object'));
-  // Native сжатие сохраняет квадрат; явный semantic width оставляет исходную высоту.
+  // Native shrinking keeps the circle square. An explicit semantic width retains the original height.
   let bodyHeight = $derived.by(() => {
     for (const declaration of getInlineStyleDeclarations([styles.body])) {
       if (declaration.property === 'width' || declaration.property === 'inline-size') {
@@ -226,7 +226,7 @@
   {#if tooltipRendered}{@render indicator?.()}{/if}
 {/snippet}
 
-<!-- Native Tooltip сохраняет скрытый контент; маленький Progress создаёт подпись при открытии. -->
+<!-- The native Tooltip retains hidden content. Small Progress creates its label when opened. -->
 {#if diameter <= 20}
   <Tooltip title={indicator ? tooltipTitle : undefined}
     getPopupContainer={config.getPopupContainer ? undefined : defaultTooltipContainer}

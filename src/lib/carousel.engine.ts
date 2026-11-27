@@ -1,6 +1,6 @@
-// Считает трек, циклические клоны и переходы Carousel. Размеры DOM приходят снаружи, SSR
-// использует отдельный проход.
-// Алгоритмы @ant-design/react-slick 2.0.0; MIT, см. vendor/LICENSE.react-slick.
+// Computes the Carousel track, loop clones, and transitions. DOM dimensions are supplied by the
+// caller. SSR uses a separate pass. Based on @ant-design/react-slick 2.0.0 algorithms under MIT.
+// See vendor/LICENSE.react-slick.
 import type { CarouselState, CarouselLazyLoad } from './carousel.types';
 
 export interface CarouselSlideMetrics {
@@ -57,12 +57,12 @@ export type CarouselChange = {
   index: number;
 };
 
-// Ограничивает индекс или позицию заданными границами.
+// Clamps an index or position within the supplied bounds.
 export function carouselClamp(value: number, lower: number, upper: number) {
   return Math.max(lower, Math.min(value, upper));
 }
 
-// Определяет число повторов с учётом infinite, center и variableWidth.
+// Computes the clone count from infinite, center, and variableWidth.
 export function carouselPreClones(spec: Pick<
   CarouselSpec,
   'unslick' | 'infinite' | 'variableWidth' | 'slideCount' | 'slidesToShow' | 'centerMode'
@@ -75,7 +75,7 @@ export function carouselPreClones(spec: Pick<
 
 export const carouselPostClones = carouselPreClones;
 
-// Расширяет окно загрузки из-за centerPadding, когда видны соседние слайды.
+// Extends the loading window for centerPadding when adjacent slides are visible.
 export function carouselLazyRange(
   spec: Pick<CarouselSpec, 'currentSlide' | 'centerMode' | 'slidesToShow' | 'centerPadding'>
 ) {
@@ -86,7 +86,7 @@ export function carouselLazyRange(
   return { start: spec.currentSlide - left, end: spec.currentSlide + right };
 }
 
-// Выбирает видимые индексы, отсутствующие среди загруженных.
+// Selects visible indexes that have yet to load.
 export function carouselOnDemandSlides(spec: Pick<
   CarouselSpec, 'currentSlide' | 'centerMode' | 'slidesToShow' | 'centerPadding' | 'lazyLoadedList'
 >) {
@@ -98,7 +98,7 @@ export function carouselOnDemandSlides(spec: Pick<
   return slides;
 }
 
-// Проверяет возможность продвижения по конечному треку.
+// Checks whether the finite track can advance.
 export function carouselCanGoNext(spec: Pick<
   CarouselSpec, 'infinite' | 'centerMode' | 'currentSlide' | 'slideCount' | 'slidesToShow'
 >) {
@@ -107,7 +107,7 @@ export function carouselCanGoNext(spec: Pick<
     || spec.currentSlide >= spec.slideCount - spec.slidesToShow);
 }
 
-// Вычисляет позицию слайда с учётом клонов, вертикального ряда и измеренных размеров.
+// Computes the slide position from clones, vertical layout, and measured dimensions.
 export function carouselTrackLeft(spec: CarouselSpec, slideIndex: number) {
   if (spec.unslick || spec.fade || spec.slideCount === 1) {
     return 0;
@@ -156,7 +156,7 @@ export function carouselTrackLeft(spec: CarouselSpec, slideIndex: number) {
   return left;
 }
 
-// Формирует CSS для положения трека, включая выбор transform и анимации.
+// Builds CSS for track positioning, including transform and animation selection.
 export function carouselTrackStyle(spec: CarouselSpec, left: number, animate = false) {
   const total = spec.slideCount === 1 ? 1
     : carouselPreClones(spec) + spec.slideCount + carouselPostClones(spec);
@@ -190,8 +190,8 @@ export function carouselTrackStyle(spec: CarouselSpec, left: number, animate = f
   return style;
 }
 
-// Возвращает состояние начала и конца перехода. При цикле конечный индекс может отличаться от
-// целевого.
+// Returns the start and end states of a transition. In loop mode, the end index may differ from the
+// target.
 export function carouselSlideTransition(
   spec: CarouselSpec,
   index: number
@@ -297,7 +297,7 @@ export function carouselSlideTransition(
   };
 }
 
-// Выбирает ближайшее направление по доступным соседям и текущему RTL.
+// Chooses the nearest direction from available neighbors and the current RTL setting.
 function carouselSiblingDirection(spec: CarouselSpec, target: number) {
   let right = spec.rtl ? 0 : spec.slidesToShow - 1;
   let left = spec.rtl ? spec.slidesToShow - 1 : 0;
@@ -321,14 +321,14 @@ function carouselSiblingDirection(spec: CarouselSpec, target: number) {
     : target < spec.currentSlide - left ? 'right' : 'left';
 }
 
-// Сопоставляет команду смены слайда с индексом, учитывая шаг и границы трека.
+// Maps a slide-change command to an index using the step and track bounds.
 export function carouselChangeSlide(spec: CarouselSpec, options: CarouselChange) {
   const { slideCount, slidesToScroll, slidesToShow, currentSlide, targetSlide, infinite } = spec;
   const offset = slideCount % slidesToScroll !== 0
     ? 0 : (slideCount - currentSlide) % slidesToScroll;
   if (options.message === 'previous') {
     const delta = offset === 0 ? slidesToScroll : slidesToShow - offset;
-    // Окончательный finite target в исходнике заменяет промежуточный lazyLoad target.
+    // In upstream, the final finite target replaces the intermediate lazyLoad target.
     return infinite ? currentSlide - delta : targetSlide - slidesToScroll;
   }
   if (options.message === 'next') {
@@ -352,7 +352,7 @@ export function carouselChangeSlide(spec: CarouselSpec, options: CarouselChange)
   return target;
 }
 
-// Собирает точки навигации и активный диапазон для текущей группы.
+// Builds navigation dots and their active range for the current group.
 export function carouselDotItems(spec: Pick<
   CarouselSpec, 'slideCount' | 'slidesToScroll' | 'slidesToShow' | 'infinite' | 'currentSlide'
 >) {
@@ -373,7 +373,7 @@ export function carouselDotItems(spec: Pick<
   return dots;
 }
 
-// Отмечает активные, соседние и целевые слайды, включая клоны.
+// Marks active, adjacent, and target slides, including clones.
 export function carouselSlideClasses(spec: Pick<
   CarouselSpec,
   'rtl' | 'slideCount' | 'slidesToShow' | 'centerMode' | 'currentSlide' | 'targetSlide'
@@ -393,7 +393,7 @@ export function carouselSlideClasses(spec: Pick<
   };
 }
 
-// Ставит клоны до и после основных слайдов, затем учитывает RTL и ленивую загрузку.
+// Places clones before and after the real slides, then accounts for RTL and lazy loading.
 export function carouselRenderedSlides(spec: CarouselSpec, childrenCount = spec.slideCount) {
   const original: { index: number; item: number; loaded: boolean; key: string; }[] = [];
   const before: typeof original = [];
@@ -420,13 +420,13 @@ export function carouselRenderedSlides(spec: CarouselSpec, childrenCount = spec.
   return spec.rtl ? result.reverse() : result;
 }
 
-/** Только исходная SSR-геометрия; initial RTL index пересчитывается после mount. */
+/** Original SSR geometry only. The initial RTL index is recalculated after mount. */
 export function carouselSSRStyle(
   spec: CarouselSpec,
   widths: readonly (number | string | undefined)[]
 ) {
   if (spec.variableWidth) {
-    // Объединяет числовые размеры или сохраняет CSS-выражение для SSR.
+    // Combines numeric dimensions or retains a CSS expression for SSR.
     function add(left: number | string, right: number | string | undefined) {
       return typeof left === 'string' || typeof right === 'string'
         ? String(left) + right : left + Number(right);
@@ -461,7 +461,7 @@ export function carouselSSRStyle(
   };
 }
 
-// Сериализует свойства трека, сохраняя принятые имена CSS.
+// Serializes track properties using accepted CSS names.
 export function carouselStyle(values: Record<string, string | number | undefined>) {
   return Object.entries(values).filter(([, value]) => value !== undefined).map(([key, value]) => {
     const name = key.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)

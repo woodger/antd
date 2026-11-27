@@ -17,7 +17,7 @@
   let shared = $derived(timePickerSharedProps(time));
   let picker = $state<{ focus(options?: TimePickerFocusOptions): void; blur(): void; }>();
 
-  /** Передаёт массив отдельной модели, оставляя общие поля настройки часов. */
+  /** Passes the array to a separate model while retaining the shared clock settings. */
   function multipleFieldProps(
     props: TimePickerMultipleProps<DateType>
   ): TimePickerRuntimeProps<DateType> {

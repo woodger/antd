@@ -38,13 +38,13 @@
   let componentPrefix = $derived(config.getPrefixCls('anchor', prefixCls));
   let prefixCss = $derived(getAnchorPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Anchor');
-  // Spread props могут сбросить выходной ref; runtime сохраняет собственный DOM host.
+  // Spread props can reset the exposed ref. The runtime keeps its own DOM host.
   let host = $state<HTMLDivElement>();
   let activeLink = $state<string | null>(null);
   let ink = $state<HTMLSpanElement>();
   let runtime = $state.raw<ReturnType<typeof createAnchorRuntime>>();
   let registrations = $state.raw<readonly { href: string; targetOffset?: number; }[]>([]);
-  // Cleanup effects могут читать прошлый rune snapshot; Map сохраняет актуальные регистрации.
+  // Effect cleanup can read an earlier rune snapshot. The Map holds the current registrations.
   const registeredLinks = new Map<string, (typeof registrations)[number]>();
   const defaultContainer = () => window;
   let container = $derived(getContainer ?? config.getTargetContainer ?? defaultContainer);
@@ -138,7 +138,7 @@
     untrack(() => controller?.configure(options));
   });
   $effect(() => {
-    // Semantic style заменяет inline attribute; измеряем после commit дочерних links/styles.
+    // Semantic styles replace the inline attribute. Measure after the child links and styles commit.
     void [
       activeLink, direction, registrations, getCurrentAnchor, classes, slots, componentPrefix,
       className, rootClassName, config.anchor?.class

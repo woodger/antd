@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Воспроизводит варианты Menu из замеров и предоставляет управляемый переключатель collapse.
+  // Reproduces Menu variants from measurements and provides a controlled collapse switch.
   import { untrack } from 'svelte';
   import {
     ConfigProvider,
@@ -98,23 +98,23 @@
     };
   });
 
-  // Сохраняет запросы видимости отдельно от controlled prop из исходного сценария.
+  // Saves visibility requests separately from the controlled prop from the original scenario.
   function record(open: boolean) {
     changes.push(open);
     sequence.push(['tooltip', open]);
   }
 
-  // Записывает порядок синхронных обработчиков на существующей строке.
+  // Records the order of synchronous handlers on the existing line.
   function recordClick(info: MenuClickInfo) {
     sequence.push(['click', info.key]);
   }
 
-  // Сохраняет ключи, принятые при клике по строке.
+  // Saves the keys accepted when clicking on the line.
   function recordSelect(info: MenuSelectInfo) {
     sequence.push(['select', info.selectedKeys]);
   }
 
-  // Записывает фактический trigger и возвращает контейнер владельца.
+  // Recorders the actual trigger and returns the owner's container.
   function getPopupContainer(element: HTMLElement) {
     seenContainers.add(element.tagName);
     containers = JSON.stringify([...seenContainers]);
@@ -122,7 +122,7 @@
     return document.getElementById('tooltip-container') ?? document.body;
   }
 
-  // Изолирует состояние Menu между сценариями.
+  // Isolates Menu state between scenarios.
   function select(event: Event & { currentTarget: HTMLSelectElement; }) {
     current = event.currentTarget.value;
     collapsed = current !== 'force-expanded' && current !== 'sider';

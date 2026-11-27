@@ -1,4 +1,4 @@
-/** Только публичный DOM и наблюдения владельца; отсутствующие Source keys не выводятся. */
+/** Only public DOM and owner observations; missing Source keys are not displayed. */
 export function readSelectData() {
   const owner = document.querySelector<HTMLElement>('[data-select-data-case]')!;
   const roots: (Document | ShadowRoot)[] = [document];

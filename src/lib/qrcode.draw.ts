@@ -10,7 +10,7 @@ export interface QRCodeDrawing {
   color: string;
 }
 
-/** Canvas effect rc-qrcode: DPR bitmap, background, modules, затем загруженная иконка. */
+/** Canvas effect rc-qrcode: DPR bitmap, background, modules, then uploaded icon. */
 export function drawQRCode(
   canvas: HTMLCanvasElement,
   settings: QRCodeDrawing,
@@ -46,14 +46,14 @@ export function drawQRCode(
     supportsPath = true;
   }
   catch {
-    // Исходный fallback также проверяет работоспособность addPath, а не только наличие Path2D.
+    // The original fallback also checks the performance of addPath, and not only the presence of Path2D.
   }
 
   if (supportsPath) {
     context.fill(new view.Path2D(qrCodePath(cellsToDraw, margin)));
   }
   else {
-    // В fallback эталон рисует исходные modules без excavation; сохраняем это отличие путей.
+    // In fallback the standard draws the original modules without excavation; maintain this difference of ways.
     modules.forEach((row, y) => row.forEach((cell, x) => {
       if (cell)
         context.fillRect(x + margin, y + margin, 1, 1);

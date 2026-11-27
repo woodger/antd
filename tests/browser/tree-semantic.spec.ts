@@ -8,7 +8,7 @@ for (const [index, entry] of reference.cases.entries()) {
     await page.getByRole('combobox', { name: 'Tree semantic sample', exact: true })
       .selectOption(String(index));
     const prefix = `${'prefix' in entry.sample ? entry.sample.prefix : 'ant'}-tree`;
-    // React motion/className snapshots сохранены как raw; common props проверяют class markers.
+    // React motion/className snapshots are saved as raw; common props check class markers.
     const initial = {
       root: entry.initial.root, list: entry.initial.list,
       nodes: entry.initial.nodes, peer: entry.initial.peer

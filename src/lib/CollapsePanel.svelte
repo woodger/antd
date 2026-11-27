@@ -30,7 +30,7 @@
   let mounted = $state(false);
   let renderContent = $derived(open || forceRender || mounted && !destroyOnHidden);
 
-  // История фактического монтирования сохраняет панель без копирования open через effect.
+  // Tracks whether the panel has ever mounted, so it can be retained without copying open through an effect.
   function rememberContent() {
     mounted = true;
     return () => {

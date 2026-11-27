@@ -2,13 +2,12 @@
 export function readNativeEmptyDatetime() {
   const api = window.nativeEmptyDatetime, observation = window.nativeEmptyDatetimeObservation;
   const recorder = api.getRecorder(), refs = api.readRefs();
-  // Связывает повторный снимок с тем же объектом в recorder. Отсутствующее значение остаётся
-  // null.
+  // Links a re-shot with the same object in the recorder. The missing value remains null.
   const id = value => value == null ? null : recorder.identity(value);
-  // Сохраняет полный фактический список пар имя и значение в порядке DOM.
+  // Saves the full actual list of pairs name and value in order DOM.
   const attributes = node => [...node.attributes].map(item => [item.name, item.value]);
   const cssKeys = ['display', 'visibility', 'opacity', 'position', 'overflow', 'overflow-y'];
-  // Снимает геометрию, атрибуты и стиль. Ссылка остаётся в журнале для повторного чтения после
+  // Removes geometry, attributes and style. The link remains in the journal for re-reading after
   // unmount.
   const describe = node => {
     if (node == null) {

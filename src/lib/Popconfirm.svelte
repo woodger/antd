@@ -1,5 +1,5 @@
 <script lang="ts" generics="OkHref extends string | undefined = undefined, CancelHref extends string | undefined = undefined">
-  // Передаёт показ Popover и управляет действиями текущего подтверждения.
+  // Passes through Popover visibility and handles actions for the current confirmation.
   import { onDestroy, untrack } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
   import { useConfig } from './config-context';
@@ -92,7 +92,7 @@
   const titleId = `ant-popconfirm-${generatedId}-title`;
   const descriptionId = `ant-popconfirm-${generatedId}-description`;
   const initialDefault = untrack(() => defaultOpen);
-  // Raw open переживает обновление spread props без входного open.
+  // The raw open state survives updates to spread props when no open prop is supplied.
   let uncontrolledOpen = $state(initialDefault);
   let rawOpen = $derived(providedOpen === undefined ? uncontrolledOpen : open ?? initialDefault);
   let overlay = $state<HTMLDivElement>();
@@ -144,7 +144,7 @@
   let initialized = false;
 
   $effect.pre(() => {
-    // Содержимое принадлежит этому Snippet; внешний Popover не может заморозить его props.
+    // This snippet owns its content. The outer Popover cannot freeze its props.
     if (visible || refresh || force && !initialized) cached = payload;
     if (visible || force) {
       initialized = true;
@@ -155,7 +155,7 @@
   $effect.pre(() => {
     const element = overlay;
 
-    // Сохраняем фокус в карточке до отключения кнопок на время Promise.
+    // Keep focus in the card before disabling the buttons for the duration of the promise.
     if (action.loading && element?.contains(getPopupActiveElement(element)))
       element.focus({ preventScroll: true });
   });
@@ -175,14 +175,14 @@
     onOpenChange?.(next);
   }
 
-  /** Учитывает фактический тег Button, если href обновляется между кликами. */
+  /** Uses the actual Button tag if href changes between clicks. */
   function matchesClick<Tag extends 'a' | 'button'>(
     event: ActionClick, tag: Tag
   ): event is ActionClick<HTMLElementTagNameMap[Tag]> {
     return event.currentTarget.localName === tag;
   }
 
-  /** Вызывает нативный обработчик до действия либо возвращает совместимый вызов для конца. */
+  /** Calls the native handler before the action or returns a compatible call to run afterward. */
   function applyClick<Target extends ActionElement>(
     event: ActionClick<Target>,
     options: { onclick?: MouseEventHandler<Target> | null; onClick?: MouseEventHandler<Target> }
@@ -197,7 +197,7 @@
     return compatibleClick && (() => compatibleClick.call(options, event));
   }
 
-  /** Передаёт опциям событие именно той разновидности Button, которую показал DOM. */
+  /** Passes the options the event for the Button variant actually rendered in the DOM. */
   function prepareClick(event: ActionClick, options: PopconfirmActionOptions | undefined) {
     if (!options) {
       return;

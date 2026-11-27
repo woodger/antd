@@ -1,5 +1,5 @@
-// Объединяет слоты общего пикера и внешнего TimePicker. Семейство фабрики
-// выводит слоты из фактических props одиночного поля или набора времени.
+// Combines slots of total picker and external TimePicker. The factory family removes slots from the
+// actual props single field or time set.
 import type {
   TimePickerConfig,
   TimePickerMultipleProps,
@@ -8,12 +8,12 @@ import type {
   TimePickerPopupSlots
 } from './time-picker.types';
 
-/** Сохраняет порядок источников и переводит строковый popup в слот root. */
+/** Reserves the order of the sources and translates the string popup into the root slot. */
 export function mergePickerSlots(values: (TimePickerSlots | undefined)[], separator: string) {
-  /** Нормализует запись слота для общего обхода классов и стилей. */
+  /** Normalizes the recording of the slot for the general circumvention of classes and styles. */
   const popup = (value: TimePickerSlots | undefined): TimePickerPopupSlots =>
     typeof value?.popup === 'string' ? { root: value.popup } : value?.popup ?? {};
-  /** Возвращает undefined, когда у слота нет ни одного источника. */
+  /** Returns undefined when the slot does not have a single source. */
   const join = (parts: (string | undefined)[]) =>
     parts.filter(Boolean).join(separator) || undefined;
 
@@ -35,15 +35,15 @@ export function mergePickerSlots(values: (TimePickerSlots | undefined)[], separa
 type SlotOptions<Props extends object> = TimePickerSlots
   | ((info: { props: Props; }) => TimePickerSlots | undefined);
 
-/** Читает провайдер и слоты владельца с одним снимком props. */
+/** Reads the owner's provider and slots with one shot of props. */
 function mergeTimePickerAppearance<Props extends object>(
   props: Props, config: TimePickerConfig | undefined,
   localClasses: SlotOptions<Props> | undefined, localStyles: SlotOptions<Props> | undefined
 ) {
-  /** Выполняет callback на фактических props с типом даты текущего адаптера. */
+  /** Performs callback on the actual props with the date type of the current adapter. */
   const resolve = (value: SlotOptions<Props> | undefined) =>
     typeof value === 'function' ? value({ props }) : value;
-  // Провайдер разделяется между пикерами разных адаптеров и размеров выбора.
+  // The provider is divided between pickers of different adapters and sizes of choice.
   const providerClasses = config?.classNames as SlotOptions<Props> | undefined;
   const providerStyles = config?.styles as SlotOptions<Props> | undefined;
 
@@ -55,7 +55,7 @@ function mergeTimePickerAppearance<Props extends object>(
   };
 }
 
-/** Semantic слои outer TimePicker/inner SinglePicker, включая порядок callbacks. */
+/** Semantic layers are outer TimePicker/inner SinglePicker, including callbacks order. */
 export function timePickerSemantic<DateType extends object>(
   props: TimePickerProps<'time', DateType> | TimePickerMultipleProps<DateType>,
   config: TimePickerConfig | undefined,

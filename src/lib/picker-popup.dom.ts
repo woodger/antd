@@ -1,5 +1,5 @@
-// Разрешает placement и смещения rc-picker для native top layer. Геометрия
-// следует за полем, а новая настройка align принимается при повторном измерении.
+// Allows placement and displacement rc-picker for native top layer. Geometry follows the field, and
+// the new align setting is taken when re-measured.
 import type { DatePickerPopupAlign, DatePickerProps } from './date-picker.types';
 import { connectPopup } from './popup.dom';
 import { clipPopupArea, getPopupScrollers } from './popup-geometry.dom';
@@ -29,7 +29,7 @@ interface PickerAlignment {
   fitViewport: boolean;
 }
 
-/** Сохраняет параметры последнего измерения, включая изменяемые массивы Svelte props. */
+/** Saves the parameters of the last measurement, including variable arrays Svelte props. */
 function readAlignment(
   props: AlignmentProps,
   placements: Readonly<Record<string, DatePickerPopupAlign>>
@@ -51,7 +51,7 @@ function readAlignment(
   };
 }
 
-/** Оставляет стандартную панель доступной, если исходный flip не помещает её в окно. */
+/** Leaves the standard panel accessible if the original flip does not place it in the window. */
 function fitPickerViewport(
   reference: DOMRect, bounds: DOMRect, viewport: TooltipRect, placement: Placement
 ): TooltipPosition {
@@ -69,7 +69,7 @@ function fitPickerViewport(
   };
 }
 
-/** Измеряет позиции в viewport, применяя области отсечения портала. */
+/** Measures positions in viewport, applying portal cut-off areas. */
 function alignPickerPopup(
   reference: DOMRect,
   bounds: DOMRect,
@@ -117,7 +117,7 @@ function alignPickerPopup(
   };
 }
 
-/** Подключает одну поверхность, сохраняя refs, фокус и историю flip при обновлении props. */
+/** Connects a single surface, saving refs, focus, and flip history when updating props. */
 export function connectPickerPopup(
   popup: HTMLElement,
   anchor: HTMLElement,
@@ -135,12 +135,12 @@ export function connectPickerPopup(
   let alignment: PickerAlignment | undefined;
   let position: TooltipPosition | undefined;
 
-  /** Следующее измерение читает актуальные props после scroll или resize. */
+  /** The following dimension reads actual props after scroll or resize. */
   function invalidateAlignment() {
     needsMeasurement = true;
   }
 
-  /** Переносит scroll listeners при смене DOM-контейнера панели. */
+  /** Carries scroll listeners when changing DOM-container panel. */
   function watchScrollers() {
     scrollTargets.forEach(target => target.removeEventListener('scroll', invalidateAlignment));
     popupScrollers = getPopupScrollers(popup);
@@ -153,7 +153,7 @@ export function connectPickerPopup(
     invalidateAlignment();
   }
 
-  /** Подменяет настройки выравнивания на границе измерения, а класс берёт из текущей карты. */
+  /** Replaces the alignment settings at the measurement boundary, and the class takes from the current map. */
   function measure(reference: DOMRect, bounds: DOMRect, viewport: TooltipRect) {
     if (parent !== popup.parentNode) {
       watchScrollers();
@@ -204,7 +204,7 @@ export function connectPickerPopup(
     }
   });
 
-  /** Снимает собственные listeners вместе с общим соединением popup. */
+  /** Removes its own listeners together with a common popup connection. */
   return () => {
     scrollTargets.forEach(target => target.removeEventListener('scroll', invalidateAlignment));
     defaultView?.removeEventListener('resize', invalidateAlignment);

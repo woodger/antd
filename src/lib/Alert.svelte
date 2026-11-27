@@ -128,7 +128,7 @@
         focusAfterAlert(node, ownedFocus);
         disposeMotion = closeAlert(node, () => {
           phase = 'closed';
-          // afterClose видит уже удалённое содержимое и не вызывается после unmount.
+          // afterClose runs once the content is gone and is skipped after unmount.
           void tick().then(() => {
             if (active)
               afterClose?.();

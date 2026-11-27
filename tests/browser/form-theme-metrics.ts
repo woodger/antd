@@ -1,5 +1,5 @@
 export function snapshotFormTheme() {
-  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
+  // Readers computed declarations of a node or a pseudo-element on a list of measured properties.
   function properties(node: Element, names: readonly string[], pseudo?: string) {
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));

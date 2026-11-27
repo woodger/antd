@@ -600,7 +600,7 @@ for (const placement of ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', '
 
       await expect(popup).toHaveClass(new RegExp(`ant-dropdown-placement-${placement}(?: |$)`));
 
-      // Измеряем размещение после стартового scale(0) из CSSMotion.
+      // We measure the placement after the starting scale(0) of CSSMotion.
       await expect(async () => {
         const anchor = await trigger(page).boundingBox();
         const bounds = await popup.boundingBox();

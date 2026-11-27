@@ -1,5 +1,5 @@
-// Наследует числовой слой по дереву компонентов, в том числе после переноса DOM в портал.
-// Корневая поверхность берёт слой из собственных CSS-токенов.
+// Inherit a numerical layer of wood components, including after the transfer of DOM to the portal.
+// Root Surfaces take a layer of its own CSS tokens.
 import { getContext, setContext } from 'svelte';
 import { getInlineStyleDeclarations, type InlineStyleLayer } from './inline-style.engine';
 import { useDesignTokenContext } from './theme-context.svelte';
@@ -15,7 +15,7 @@ export interface ZIndexLayer {
   readonly style: string | undefined;
 }
 
-/** Разрешает слой поверхности и уровень для потомков с исходными смещениями Ant Design. */
+/** Solves the surface layer and the level for descendants with the original Ant Design displacements. */
 export function useZIndex(kind: LayerKind, readLocal?: ReadZIndex): ZIndexLayer {
   const readParent = getContext<ReadZIndex | undefined>(key);
   const theme = useDesignTokenContext();
@@ -27,7 +27,7 @@ export function useZIndex(kind: LayerKind, readLocal?: ReadZIndex): ZIndexLayer 
     }
 
     if (kind === 'container') {
-      // Исходный контейнер с нулевым родителем начинает от базового токена.
+      // The zero-parent source container starts from the basic token.
       return (parentZIndex || theme.state.token.zIndexPopupBase) + 100;
     }
 
@@ -37,23 +37,23 @@ export function useZIndex(kind: LayerKind, readLocal?: ReadZIndex): ZIndexLayer 
   const zIndex = $derived(localZIndex ?? (parentZIndex === undefined ? undefined : contextZIndex));
 
   return {
-    /** Корневая поверхность без явного слоя использует собственный CSS. */
+    /** Root surface without an obvious layer uses its own CSS. */
     get zIndex() { return zIndex; },
-    /** Потомки получают числовую базу, в том числе при корневом CSS-слое. */
+    /** Descendants receive a numerical base, including in the root of CSS. */
     get contextZIndex() { return contextZIndex; },
-    /** Позволяет передать уровень владельца сквозь Dropdown без собственного слоя. */
+    /** Allows you to transfer the level of the owner through Dropdown without its own layer. */
     get parentZIndex() { return parentZIndex; },
-    /** Формирует inline-слой для слияния с семантическими стилями панели. */
+    /** Forms an inline layer for merging with semantic panel styles. */
     get style() { return zIndex === undefined ? undefined : `z-index:${zIndex}`; }
   };
 }
 
-/** Передаёт потомкам текущее значение даже при смене владельца и темы. */
+/** Gives descendants the current value even when changing the owner and theme. */
 export function provideZIndex(read: ReadZIndex) {
   setContext(key, read);
 }
 
-/** Извлекает целое число из CSS с учётом порядка деклараций и приоритета important. */
+/** Extracts an integer from CSS, taking into account the order of declarations and the priority of important. */
 export function getInlineZIndex(style: InlineStyleLayer): number | undefined {
   let value: string | undefined;
   let important = false;

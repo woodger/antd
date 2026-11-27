@@ -1,6 +1,6 @@
 import template from './vendor/space-prefix.css.js';
 
-/** Badge selector использует общий prefix независимо от локального Space. */
+/** Badge selector uses shared prefix regardless of local Space. */
 export function getSpacePrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-space' && rootPrefix === 'ant') {
     return undefined;

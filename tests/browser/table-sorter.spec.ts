@@ -6,7 +6,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 
 const root = '[data-table-sorter-fixture]';
 
-/** Считывает фактические направления, стрелки, строки и список запросов владельцу. */
+/** Reads the actual directions, arrows, strings and list of queries to the owner. */
 function snapshot() {
   const fixture = document.querySelector('[data-table-sorter-fixture]');
   if (!fixture) {
@@ -29,7 +29,7 @@ function snapshot() {
   };
 }
 
-/** Выполняет действие через публичную кнопку или ширину окна из профиля. */
+/** Performs an action through a public button or window width from the profile. */
 async function act(page: Page, action: string) {
   if (action === 'wide') {
     await page.setViewportSize({ width: 1100, height: source.reference.viewport.height });

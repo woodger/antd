@@ -16,7 +16,7 @@ const popupSelector = '[data-picker-popup]:not([hidden])';
 
 test.use({ viewport: { width: 1280, height: 900 }, timezoneId: 'UTC' });
 
-/** Открывает собранный пакет с публичными props выбранного исходного профиля. */
+/** Opens the assembled package with public props of the selected source profile. */
 async function openProfile(page: Page, profile: PickerProviderProfile) {
   await page.clock.setFixedTime(new Date('2024-06-19T12:00:00Z'));
   const params = new URLSearchParams({
@@ -26,12 +26,12 @@ async function openProfile(page: Page, profile: PickerProviderProfile) {
   await expect(page.locator('[data-picker-control]')).toHaveAttribute('data-picker-ref', 'true');
 }
 
-/** Применяет смену настройки без перевода фокуса на кнопку стенда. */
+/** Applies a change of customization without translating the focus on the stand button. */
 async function pressOwnerControl(page: Page, id: string) {
   await page.locator('#' + id).evaluate((button: HTMLButtonElement) => button.click());
 }
 
-/** Сравнивает каждый календарный слот, отбрасывая служебные координаты popup. */
+/** Compares each calendar slot, discarding popup service coordinates. */
 function expectedFrame(state: PickerProviderState) {
   const { producers: _producers, slots, ...props } = state;
   const entries = Object.fromEntries(Object.entries(slots).map(([name, slot]) => [
@@ -47,7 +47,7 @@ function expectedFrame(state: PickerProviderState) {
   return { ...props, samePopup: true, slots: entries };
 }
 
-/** Снимает опубликованные классы, CSS и состояние редактора на реальном DOM. */
+/** Removes the published classes, CSS and the state of the editor on the real DOM. */
 function readFrame(control: Locator, nodes: {
   root: ElementHandle;
   input: ElementHandle;
@@ -71,7 +71,7 @@ function readFrame(control: Locator, nodes: {
       container: [...popup?.querySelectorAll<HTMLElement>('.ant-picker-panel-container') ?? []]
     };
 
-    /** Считывает только декларации, которые задаёт стенд через classNames и styles. */
+    /** Reads only the declarations that the booth sets through classNames and styles. */
     function readSlot(node: HTMLElement) {
       return {
         tag: node.tagName,

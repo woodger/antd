@@ -1,5 +1,6 @@
-// Преобразует измерения drag и touch Carousel в направление, смещение и цель перехода.
-// Swipe и navigable indexes из @ant-design/react-slick 2.0.0; MIT, LICENSE.react-slick.
+// Maps Carousel drag and touch measurements to a direction, offset, and transition target. Swipe
+// and navigable indexes derive from @ant-design/react-slick 2.0.0, under MIT. See
+// LICENSE.react-slick.
 import type { CarouselState, CarouselSwipeDirection, CarouselTouchObject } from './carousel.types';
 import {
   carouselCanGoNext,
@@ -31,7 +32,7 @@ type CarouselSwipePatch = Partial<Pick<
     | 'touchObject' | 'currentDirection' | 'trackStyle'
 >>;
 
-// Различает горизонтальный жест и вертикальную ветку по углу, учитывая verticalSwiping.
+// Distinguishes a horizontal gesture from the vertical branch by angle and verticalSwiping.
 export function carouselSwipeDirection(
   touch: CarouselTouchObject,
   verticalSwiping = false
@@ -49,7 +50,7 @@ export function carouselSwipeDirection(
   return verticalSwiping ? angle >= 35 && angle <= 135 ? 'up' : 'down' : 'vertical';
 }
 
-// Обновляет touch-состояние и вычисляет edge friction для ограниченного трека.
+// Updates touch state and calculates edge friction on a bounded track.
 export function carouselSwipeMove(
   spec: CarouselSwipeSpec,
   x: number,
@@ -113,7 +114,7 @@ export function carouselSwipeMove(
   return { state, preventDefault, edge, swipeEvent };
 }
 
-// Строит последовательность индексов для заданного шага, включая возможные клоны.
+// Builds an index sequence for the specified step, including possible clones.
 export function carouselNavigableIndexes(
   spec: Pick<CarouselSpec, 'infinite' | 'slideCount' | 'slidesToShow' | 'slidesToScroll'>
 ) {
@@ -132,7 +133,7 @@ export function carouselNavigableIndexes(
   return indexes;
 }
 
-// Возвращает ближайшую не превышающую цель позицию навигации.
+// Returns the closest navigation position at or below the target.
 export function carouselCheckNavigable(spec: CarouselSpec, value: number) {
   const navigable = carouselNavigableIndexes(spec);
   if (value > navigable[navigable.length - 1]) {
@@ -148,7 +149,7 @@ export function carouselCheckNavigable(spec: CarouselSpec, value: number) {
   return value;
 }
 
-// Берёт стандартный шаг либо число пересечённых измеренных слайдов.
+// Uses the default step or the number of measured slides crossed.
 export function carouselSlidesTraversed(spec: CarouselSwipeSpec) {
   if (!spec.swipeToSlide) {
     return spec.slidesToScroll;
@@ -164,7 +165,7 @@ export function carouselSlidesTraversed(spec: CarouselSwipeSpec) {
   return Math.abs(target.index - current) || 1;
 }
 
-// Завершает жест, определяя целевой индекс только после достижения порога.
+// Finishes the gesture and resolves a target index only after the threshold is reached.
 export function carouselSwipeEnd(spec: CarouselSwipeSpec): {
   state: CarouselSwipePatch;
   preventDefault: boolean;

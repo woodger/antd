@@ -32,7 +32,7 @@
     key === 'role' || key.startsWith('aria-') || key.startsWith('data-')
   )));
 
-  // Как upstream: Tag config типизирован для Tag, но callbacks группы получают её raw props.
+  // As upstream, Tag config is typed for Tag, but group callbacks receive the group's raw props.
   const resolve = (value: CheckableTagGroupSemantic<Value> | undefined) =>
     (typeof value === 'function' ? value({ props }) : value) ?? {};
   let contextClasses = $derived(resolve(

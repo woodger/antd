@@ -1,4 +1,4 @@
-// Локали Ant Design 6.6.8 / rc-picker 1.12.2, MIT; vendor/LICENSE.rc-picker.
+// Ant Design 6.6.8 / rc-picker 1.12.2 locales. MIT, vendor/LICENSE.rc-picker.
 export const datePickerEnUS = {
   "lang": {
     "placeholder": "Select date",

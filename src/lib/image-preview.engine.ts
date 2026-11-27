@@ -1,8 +1,8 @@
-// Вычисляет масштабирование и границы положения viewer. Входные размеры приходят из измерений
-// DOM.
+// Calculates the scaling and boundaries of the viewer position. The input dimensions come from
+// measurements of DOM.
 import type { ImageTransform } from './image.types';
 
-// Создаёт независимое исходное положение без зума, вращения и отражения.
+// Creates an independent starting position without zoom, rotation and reflection.
 export function initialImageTransform(): ImageTransform {
   return { x: 0, y: 0, rotate: 0, scale: 1, flipX: false, flipY: false };
 }
@@ -15,8 +15,7 @@ export interface ImageGeometry {
   offsetTop: number;
 }
 
-// Сохраняет точку zoom относительно viewport. Touch допускает промежуточный масштаб ниже
-// minScale.
+// Saves the zoom point relative to viewport. Touch allows for an intermediate scale below minScale.
 export function zoomImage(
   transform: ImageTransform,
   ratio: number,
@@ -52,13 +51,13 @@ export function zoomImage(
   return { ...transform, x: nextX, y: nextY, scale };
 }
 
-// Переводит wheel delta в ограниченный множитель с направлением увеличения.
+// Translates wheel delta into a limited multiplier with an increase direction.
 export function imageWheelRatio(deltaY: number, step: number) {
   const ratio = 1 + Math.min(Math.abs(deltaY / 100), 1) * step;
   return deltaY > 0 ? 1 / ratio : ratio;
 }
 
-// Корректирует смещение после жеста, возвращая полностью помещающееся изображение к центру.
+// Corrects the offset after the gesture, returning the fully placed image to the center.
 export function fixImagePosition(
   width: number,
   height: number,
@@ -69,7 +68,7 @@ export function fixImagePosition(
   if (width <= viewport.width && height <= viewport.height) {
     return { x: 0, y: 0 };
   }
-  // Ограничивает смещение по одной оси с учётом размера ближайшей границы.
+  // Limits the displacement of one axis, taking into account the size of the nearest boundary.
   function fix(key: 'x' | 'y', start: number, size: number, client: number) {
     const offset = (size - client) / 2;
     if (size > client) {
@@ -92,12 +91,12 @@ export interface ImagePoint {
   x: number;
   y: number;
 }
-// Считает масштаб по расстоянию пальцев и выбирает взвешенную точку привязки.
+// Considers the scale of the distance of the fingers and chooses a weighted binding point.
 export function imageTouchZoom(
   old: readonly [ImagePoint, ImagePoint],
   next: readonly [ImagePoint, ImagePoint]
 ) {
-  // Измеряет расстояние в координатах viewport, общих для обеих точек жеста.
+  // Measures the distance in viewport coordinates common to both gesture points.
   const distance = (a: ImagePoint, b: ImagePoint) => Math.hypot(a.x - b.x, a.y - b.y);
   const first = distance(old[0], next[0]);
   const second = distance(old[1], next[1]);

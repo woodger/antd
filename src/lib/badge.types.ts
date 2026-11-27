@@ -4,11 +4,11 @@ import type { TagPresetColor } from './tag.types';
 
 export type BadgeStatus = 'success' | 'processing' | 'default' | 'error' | 'warning';
 export type BadgeColor = TagPresetColor | (string & {});
-/** Обычный или уменьшенный счётчик. */
+/** Regular or small count. */
 export type BadgeSize = 'medium' | 'small';
 export type BadgeText = string | number | boolean | null | Snippet;
 export type BadgeOffset = readonly [number | string, number | string];
-/** Атрибуты исходного custom count; Snippet применяет их к собственному корню. */
+/** Attributes for the upstream custom count. The Snippet applies them to its own root. */
 export interface BadgeCountContext {
   class: string;
   style: string | undefined;
@@ -17,7 +17,7 @@ export interface BadgeCountContext {
 export type BadgeCount = number | string | boolean | null | Snippet<[BadgeCountContext]>;
 
 export interface BadgeContext {
-  /** Существующий числовой контракт: строка/Snippet не преобразуются в число. */
+  /** Existing numeric contract. Strings and Snippets are not converted to numbers. */
   count: number | undefined;
   descriptionId: string | undefined;
 }
@@ -27,7 +27,7 @@ export interface BadgeSlots {
   indicator?: string;
 }
 
-/** CSS задаётся строками; callback получает props с разрешёнными defaults. */
+/** CSS is supplied as strings. The callback gets props with resolved defaults. */
 export type BadgeSemantic = BadgeSlots
   | ((info: { props: BadgeProps; }) => BadgeSlots | undefined);
 
@@ -38,11 +38,11 @@ export interface BadgeConfig {
   styles?: BadgeSemantic;
 }
 
-/** Счётчик или статус у дочернего содержимого; число и отображаемый текст различаются. */
+/** Count or status beside child content. Numeric value and displayed text are distinct. */
 export interface BadgeProps extends Omit<
   HTMLAttributes<HTMLSpanElement>, 'children' | 'class' | 'style' | 'title' | 'color'
 >, BadgeConfig {
-  /** Snippet получает class/style вместо React.cloneElement; собственные attrs имеют приоритет. */
+  /** The Snippet receives class and style in place of React.cloneElement. Its own attributes take precedence. */
   count?: BadgeCount;
   /** @defaultValue 99 */
   overflowCount?: number;
@@ -55,7 +55,7 @@ export interface BadgeProps extends Omit<
   text?: BadgeText;
   /** @defaultValue 'medium' */
   size?: BadgeSize;
-  /** X разбирается через parseFloat; строковый Y сохраняет CSS units. */
+  /** X is parsed with parseFloat. A string Y retains its CSS units. */
   offset?: BadgeOffset;
   title?: string | false | null;
   children?: Snippet<[BadgeContext]>;
@@ -66,12 +66,12 @@ export interface BadgeProps extends Omit<
   class?: string;
   style?: string;
   rootClassName?: string;
-  /** Локальный Badge prefix; иначе ConfigProvider. CSS берётся из закреплённого template. */
+  /** Local Badge prefix. Otherwise inherits ConfigProvider. CSS comes from the pinned template. */
   prefixCls?: string;
-  /** Локальные ScrollNumber/digit classes; иначе ConfigProvider. CSS следует общему prefix. */
+  /** Local ScrollNumber and digit classes. Otherwise inherits ConfigProvider. CSS follows the shared prefix. */
   scrollNumberPrefixCls?: string;
-  /** Нативный onclick имеет приоритет над React-compatible alias. */
+  /** Native onclick takes precedence over the React-compatible alias. */
   onClick?: HTMLAttributes<HTMLSpanElement>['onclick'];
-  /** bind:nativeElement заменяет React ref и очищается при unmount. */
+  /** bind:nativeElement replaces the React ref and is cleared on unmount. */
   nativeElement?: HTMLSpanElement;
 }

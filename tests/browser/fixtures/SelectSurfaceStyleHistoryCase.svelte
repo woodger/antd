@@ -100,7 +100,7 @@
     + 'font-size:16px;'
     + 'line-height:normal'}>
   <ConfigProvider {theme} locale={enUS} popupOverflow="viewport">
-    <!-- Сохраняем заданный Source parent font поверх существующего provider reset. -->
+    <!-- Save the specified Source parent font on top of the existing provider reset. -->
     <div style={'position:absolute;'
       + 'left:300px;'
       + 'top:200px;'

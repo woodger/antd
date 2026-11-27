@@ -1,5 +1,5 @@
-// Алгоритм Project Nayuki из @rc-component/qrcode 2.0.0, MIT.
-// См. vendor/LICENSE.qrcodegen и vendor/LICENSE.rc-qrcode.
+// Algorithm Project Nayuki from @rc-component/qrcode 2.0.0, MIT. See vendor/LICENSE.qrcodegen and
+// vendor/LICENSE.rc-qrcode.
 
 export class Ecc {
   public static readonly LOW = new Ecc(0, 1);

@@ -1,5 +1,5 @@
-// Связывает фазы CSSMotion с native popover. Закрытое содержимое удерживается до уведомления
-// владельца, а смена open или уничтожение компонента отменяет устаревшее уведомление.
+// Connects phases CSSMotion with native popover. Closed content is withheld until notified to the
+// owner, and changing the open or destroying the component cancels the outdated notification.
 import { tick } from 'svelte';
 import { on } from 'svelte/events';
 import { useMenuMotion } from './menu-motion.svelte';
@@ -14,7 +14,7 @@ interface OverlayMotionInput {
   afterOpenChange?: (open: boolean) => void;
 }
 
-/** Устойчивый shell позволяет отделить CSS leave от доступности и удаления содержимого. */
+/** Sustainable shell allows you to separate CSS leave from the availability and removal of contents. */
 export function useOverlayMotion(
   getPopup: () => HTMLElement | undefined,
   getInput: () => OverlayMotionInput
@@ -33,7 +33,7 @@ export function useOverlayMotion(
 
     const media = view.matchMedia('(prefers-reduced-motion: reduce)');
 
-    // Изменение настройки действует также на уже начатую фазу.
+    // Changing the setting is also valid for the phase already started.
     function update() {
       reduced = media.matches;
     }
@@ -77,7 +77,7 @@ export function useOverlayMotion(
     }
 
     let active = true;
-    // Сначала Svelte закрывает native popover. Snippet ещё доступен из ref в callback.
+    // At first Svelte closes the native popover. Snippet is still available from ref to callback.
     void tick().then(() => {
       const { visible, afterOpenChange } = getInput();
       if (!active || current !== change || visible !== current.visible || motion.state.phase) {
@@ -96,28 +96,28 @@ export function useOverlayMotion(
     return () => { active = false; };
   });
 
-  // Создаёт browser controller при первом показе или предварительном рендере.
+  // Creates a browser controller at the first display or preliminary render.
   function getMotionOwner() {
     return visited ? getPopup() : undefined;
   }
 
   return {
-    // Leave держит поверхности в top layer до окончания движения.
+    // Leave keeps surfaces in the top layer until the end of the movement.
     get leaving() { return motion.state.phase === 'leave'; },
-    // Содержимое переживает снятие top layer до завершения callback.
+    // The content is experiencing the removal of the top layer until the callback is completed.
     get retained() { return retained; },
-    // Классы совместимы с пользовательскими правилами для motionName.
+    // The classes are compatible with custom rules for motionName.
     get className() { return motion.state.className; },
-    // Рецепт Source подставляется только для встроенного имени.
+    // The Source recipe is set up only for the built-in name.
     get zoom() {
       const { phase, step } = motion.state;
       return builtIn && phase && step ? `${phase}-${step}` : undefined;
     },
-    // Следующий align использует раскладку без scale и сохраняет выбранный край.
+    // The following align uses the layout without scale and preserves the selected edge.
     get pauseAlignment() {
       return motion.state.step === 'active' || motion.state.phase === 'leave';
     },
-    // CSSMotion фильтрует события потомков и одновременно снимает deadline.
+    // CSSMotion filters the events of the descendants and at the same time removes the deadline.
     end(event: MenuMotionEvent) { motion.end(event); }
   };
 }

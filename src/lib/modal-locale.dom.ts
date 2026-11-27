@@ -1,4 +1,4 @@
-// Собирает переводы Modal от смонтированных провайдеров для отдельных браузерных корней.
+// Collects transfers of Modal from mounted providers for individual browser roots.
 import type { AntDesignLocale } from './locale.types';
 import english from './locale/en_US';
 import { enUS, type Locale } from './types';
@@ -6,7 +6,7 @@ import { enUS, type Locale } from './types';
 type ModalLabels = Pick<Locale, 'okText' | 'cancelText' | 'justOkText'>;
 const providers = new Set<Partial<ModalLabels>>();
 
-/** Учитывает только явно заданные ключи, чтобы частичные словари дополняли друг друга. */
+/** Takes into account only the clearly defined keys, so that the partial dictionaries complement each other. */
 export function registerModalLocale(locale: Partial<Locale> | AntDesignLocale) {
   const source = 'locale' in locale ? locale.Modal : locale;
   if (!source) {
@@ -22,13 +22,13 @@ export function registerModalLocale(locale: Partial<Locale> | AntDesignLocale) {
   }
   providers.add(labels);
 
-  /** Снимает вклад конкретного экземпляра при смене словаря или unmount. */
+  /** Removes the contribution of a particular instance when changing the vocabulary or unmount. */
   return () => {
     providers.delete(labels);
   };
 }
 
-/** Отдаёт снимок английских defaults с актуальными подписями статического подтверждения. */
+/** Provides a picture of English defaults with up-to-date static confirmation labels. */
 export function readModalLocale(): Locale {
   const locale = { ...enUS, ...english.Modal };
   for (const labels of providers) {

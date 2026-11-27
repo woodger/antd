@@ -10,7 +10,7 @@ export interface PaginationItemInfo {
   active: boolean;
   label: string;
   title?: string;
-  /** Привяжите к native control, если не используете originalElement. */
+  /** Link to native control if you do not use originalElement. */
   onClick: (event: MouseEvent) => void;
 }
 
@@ -23,7 +23,7 @@ export interface PaginationSizeChangerInfo {
   onChange: (value: number) => void;
 }
 
-/** Поддержанные Select props; onChange сохраняет callback Ant Design. */
+/** Supported Select props; onChange preserves callback Ant Design. */
 export interface PaginationSizeChangerProps extends Omit<Partial<SelectProps<number>>, 'onChange'> {
   onChange?: (value: number, option: SelectOption<number> | undefined) => void;
 }
@@ -36,7 +36,7 @@ export interface PaginationSlots {
 export type PaginationSemantic = PaginationSlots
   | ((info: { props: PaginationProps; }) => PaginationSlots | undefined);
 
-/** Общие настройки Pagination; локальные props имеют приоритет. */
+/** General Pagination settings; local props take precedence. */
 export interface PaginationComponentConfig {
   class?: string;
   style?: string;
@@ -47,45 +47,45 @@ export interface PaginationComponentConfig {
   totalBoundaryShowSizeChanger?: number;
 }
 
-/** Pagination сохраняет bind:current/pageSize и нормализацию чисел прежнего API. */
+/** Pagination preserves bind:current/pageSize and the normalization of the numbers of the former API. */
 export interface PaginationProps {
   /** @defaultValue 0 */
   total?: number;
-  /** Поддерживает bind:current. */
+  /** Maintenances bind:current. */
   current?: number;
-  /** Читается один раз. @defaultValue 1 */
+  /** It's read once. @defaultValue 1 */
   defaultCurrent?: number;
-  /** Поддерживает bind:pageSize. */
+  /** Maintenances bind:pageSize. */
   pageSize?: number;
-  /** Читается один раз. @defaultValue 10 */
+  /** It's read once. @defaultValue 10 */
   defaultPageSize?: number;
   pageSizeOptions?: readonly (number | string)[];
   showSizeChanger?: boolean | PaginationSizeChangerProps;
-  /** Порог автоматического size changer. @defaultValue 50 */
+  /** Threshold automatic size changer. @defaultValue 50 */
   totalBoundaryShowSizeChanger?: number;
   /** @defaultValue false */
   hideOnSinglePage?: boolean;
   showTotal?: Snippet<[total: number, range: [number, number]]>;
-  /** По умолчанию буфер 2; true задаёт буфер 1 и jump на 3. @defaultValue false */
+  /** By default buffer 2; true sets buffer 1 and jump to 3. @defaultValue false */
   showLessItems?: boolean;
   /** @defaultValue true */
   showPrevNextJumpers?: boolean;
-  /** Input принимает цифры; goButton=true добавляет стандартную кнопку. @defaultValue false */
+  /** Input accepts digits; goButton=true adds a standard button. @defaultValue false */
   showQuickJumper?: boolean | { goButton?: PaginationContent; };
   /** @defaultValue true */
   showTitle?: boolean;
-  /** Объект включает simple mode; readOnly скрывает редактирование. @defaultValue false */
+  /** Objection includes simple mode; readOnly hides editing. @defaultValue false */
   simple?: boolean | { readOnly?: boolean; };
   align?: 'start' | 'center' | 'end';
-  /** XS включает legacy mini без явного size; CSS 6.6.8 меняет высоту только при size=small. */
+  /** XS includes a mini without an obvious size; CSS 6.6.8 changes the height only at size=small. */
   responsive?: boolean;
   disabled?: boolean;
   size?: ComponentSize;
-  /** Snake_case aliases; locale.page — suffix, config.locale.pagination.page — прежний label. */
+  /** Snake_case aliases; locale.page – suffix, config.locale.pagination.page – former label. */
   locale?: Partial<PaginationLocale>;
   onChange?: (page: number, pageSize: number) => void;
   onShowSizeChange?: (current: number, pageSize: number) => void;
-  /** OriginalElement — готовый native button; info заменяет cloneElement/LI click. */
+  /** OriginalElement – finished native button; info replaces cloneElement/LI click. */
   itemRender?: Snippet<[number, PaginationItemType, Snippet, PaginationItemInfo]>;
   prevIcon?: PaginationContent;
   nextIcon?: PaginationContent;
@@ -95,16 +95,16 @@ export interface PaginationProps {
   classNames?: PaginationSemantic;
   styles?: PaginationSemantic;
   rootClassName?: string;
-  /** Локальный префикс частей Pagination; пустая строка наследует ConfigProvider. */
+  /** Pagination parts local prefix; empty string inherits ConfigProvider. */
   prefixCls?: string;
-  /** Префикс custom size changer; штатный Select сохраняет собственные классы. */
+  /** Prefix for a custom size changer. The built-in Select retains its own classes. */
   selectPrefixCls?: string;
   id?: string;
   role?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
-  /** Прежний class применяется к ul; semantic root соответствует native nav. */
+  /** The former class applies to ul; semantic root corresponds to native nav. */
   class?: string;
   style?: string;
   [attribute: `data-${string}`]: unknown;

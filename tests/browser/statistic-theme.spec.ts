@@ -11,7 +11,7 @@ for (const sample of reference.cases) {
 
     const expected = Object.fromEntries(Object.entries(sample.metrics).map(([id, metrics]) => [id, {
       ...metrics,
-      // Native dir=rtl сохраняется; исходный -rtl class в 6.6.8 не задаёт direction.
+      // Native dir=rtl is saved; the original -rtl class in 6.6.8 does not set the direction.
       direction: 'rtl' in sample && sample.rtl && id !== 'outside' && id !== 'sibling'
         ? 'rtl' : metrics.direction
     }]));

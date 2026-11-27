@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Использует одни данные для снимков SSR, браузера и проверки редактора.
+  // Uses some data for images SSR, browser and editor verification.
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Table, type SpinSemanticInfo, type TableColumn, type TableProps, type ThemeConfig
@@ -38,7 +38,7 @@
     } : undefined
   });
 
-  /** Добавляет нативные сниппеты и semantic callback к настройкам из замера. */
+  /** Adds native snippets and semantic callback to measurement settings. */
   function loadingOptions(): TableProps<Row>['loading'] {
     const options = profile.loading;
     if (typeof options !== 'object') {
@@ -57,7 +57,7 @@
     };
   }
 
-  /** Привязывает метку к фактическим props видимого индикатора. */
+  /** Ties the label to the actual props of the visible indicator. */
   function semanticClasses({ props }: SpinSemanticInfo) {
     return {
       root: 'saving-root', section: 'saving-section', container: 'saving-container',

@@ -2,32 +2,32 @@ import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { GridBreakpoint } from './grid.types';
 
-/** Нативная секция Layout с дополнительными HTML-атрибутами. */
+/** Native Layout section with additional HTML attributes. */
 export interface LayoutSectionProps extends Omit<
   HTMLAttributes<HTMLElement>,
   'children' | 'class' | 'style'
 > {
-  /** Локальный CSS prefix; пустая строка использует prefix ближайшего ConfigProvider. */
+  /** Local CSS prefix; the empty string uses prefix of the nearest ConfigProvider. */
   prefixCls?: string;
   children?: Snippet;
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Нативный ref доступен после mount и очищается при unmount. */
+  /** The native ref is available after mount and cleared on unmount. */
   nativeElement?: HTMLElement;
 }
-/** Контейнер Layout; hasSider позволяет явно задать структуру при SSR. */
+/** Layout Container; hasSider allows you to clearly specify the structure at SSR. */
 export interface LayoutProps extends LayoutSectionProps {
   hasSider?: boolean;
 }
-/** Общие class/style применяются только к контейнерам Layout, без его секций и Sider. */
+/** The total class/style applies only to Layout containers, without its sections and Sider. */
 export type LayoutConfig = Pick<LayoutProps, 'class' | 'style'>;
 
 export type LayoutCollapseType = 'clickTrigger' | 'responsive';
 export type LayoutSiderSemanticSlots = Partial<Record<'root' | 'body', string>>;
-/** Боковая секция Layout с collapse, responsive breakpoint и trigger. */
+/** Side section Layout with collapse, chopping breakpoint and trigger. */
 export interface LayoutSiderProps extends LayoutSectionProps {
-  /** Поддерживает bind:collapsed. */
+  /** Maintenances bind:collapsed. */
   collapsed?: boolean;
   /** @defaultValue false */
   defaultCollapsed?: boolean;

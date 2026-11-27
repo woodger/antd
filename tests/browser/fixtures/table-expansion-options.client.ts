@@ -8,7 +8,7 @@ if (!target) {
 }
 
 const profileId = new URLSearchParams(location.search).get('profile') ?? 'forced';
-// Тест сохраняет ссылки на серверные узлы и переводит фокус до гидратации.
+// The test preserves links to server nodes and translates the focus before hydration.
 target.addEventListener('hydrate-table-expansion-options', () => {
   hydrate(Fixture, { target, props: { profileId }, recover: false });
   target.dataset.hydrated = 'true';

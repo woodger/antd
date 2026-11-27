@@ -1,5 +1,5 @@
-// Локальные пути и файловые операции CLI. Запись через временный файл оставляет
-// предыдущий артефакт доступным до успешного переименования.
+// Local paths and file operations for the CLI. Writing to a temporary file keeps the previous
+// artifact available until rename succeeds.
 import { readFile, writeFile, rename, mkdir, rm } from 'node:fs/promises';
 import { resolve, relative, isAbsolute, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,7 +8,7 @@ export const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 export const registryFile = 'docs/reference/ant-design-porting/registry.json';
 export const reportFile = 'docs/reference/ant-design-porting/status.md';
 
-// Разрешает относительный путь внутри корня проекта до обращения к файлам.
+// Resolves a relative path within the project root before accessing files.
 export function projectPath(root, path) {
   if (typeof path !== 'string'
     || !path
@@ -27,7 +27,7 @@ export function projectPath(root, path) {
   return target;
 }
 
-// Уточняет путь в диагностике независимо от того, не удались чтение или разбор.
+// Includes the path in diagnostics for both read and parse failures.
 export async function readJson(path) {
   try {
     const text = await readFile(path, 'utf8');
@@ -38,7 +38,7 @@ export async function readJson(path) {
   }
 }
 
-// Создаёт родительский каталог и удаляет временный файл при ошибке записи или rename.
+// Creates the parent directory and removes the temporary file if writing or renaming fails.
 export async function writeAtomic(path, content) {
   await mkdir(dirname(path), { recursive: true });
   const temporary = `${path}.${process.pid}.tmp`;
@@ -53,7 +53,7 @@ export async function writeAtomic(path, content) {
   }
 }
 
-// Переводит отказ команды в stderr и ненулевой exit code без принудительного выхода.
+// Reports a command failure to stderr and sets a nonzero exit code without forcing an exit.
 export function runCli(main) {
   return main().catch(error => {
     process.stderr.write(`${error.message}\n`);

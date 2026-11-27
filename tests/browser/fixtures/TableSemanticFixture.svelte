@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Фиксирует размещение слотов и приоритет CSS на публичной таблице и Pagination.
+  // Fixes the placement of slots and priority CSS on the public table and Pagination.
   import {
     ConfigProvider, enUS, Table, type TableClassNameSlots, type TableColumn, type TableConfig,
     type TablePaginationConfig, type TableProps, type TableSemanticSlots
@@ -45,7 +45,7 @@
     defaultExpandedRowKeys: [0], expandedRowRender: details
   } : undefined);
 
-  /** Помечает каждую область, в том числе wrapper таблицы и корень Pagination. */
+  /** Marks each area, including wrapper tables and root Pagination. */
   function slotClasses(layer: string): TableSemanticSlots {
     const prefix = `observed-${layer}-`;
     return {
@@ -57,9 +57,9 @@
     };
   }
 
-  /** Два CSS-свойства отличают замену слота от слияния его стилей. */
+  /** Two CSS properties distinguish the replacement of the slot from the merger of its styles. */
   function slotStyles(layer: string): TableSemanticSlots {
-    /** Оставляет уникальное свойство провайдера для проверки наследования. */
+    /** Deserves a unique provider property for inheriting verification. */
     function style(slot: string) {
       const value = `--observed-slot:${layer}-${slot}`;
       return layer === 'provider' ? `${value};--observed-provider-slot:${slot}` : value;
@@ -75,7 +75,7 @@
     };
   }
 
-  /** Отражает размер, полученный из props таблицы. */
+  /** Reflects the size obtained from props table. */
   function localClasses({ props }: { props: TableProps<Row>; }): TableClassNameSlots {
     const classes = slotClasses(updated ? 'updated' : 'local');
     const root = `${classes.root} observed-size-${props.size ?? 'unset'}`;
@@ -89,7 +89,7 @@
     return { ...classes, root };
   }
 
-  /** Пропущенный вложенный слот наследуется, явно заданный undefined очищается. */
+  /** The missed nested slot is inherited, the explicitly given undefined is cleared. */
   function localStyles({ props }: { props: TableProps<Row>; }) {
     const styles = slotStyles(props.bordered ? 'updated' : 'local');
     if (shorthand) {
@@ -103,7 +103,7 @@
     return styles;
   }
 
-  /** Сохраняет атрибуты конкретной колонки, поверх которых кладётся общий стиль. */
+  /** Saves the attributes of a particular column, on top of which a general style is placed. */
   function makeColumns(): TableColumn<Row>[] {
     const name: TableColumn<Row> = {
       key: 'name', title: 'Name', dataIndex: 'name', width: 140,
@@ -125,7 +125,7 @@
     return [name, { key: 'amount', title: 'Amount', dataIndex: 'amount', width: 180 }];
   }
 
-  /** Добавляет собственное свойство строки и значение для проверки приоритета. */
+  /** Adds your own string property and value to prioritize. */
   function onHeaderRow() {
     return {
       class: 'observed-caller-header-row',

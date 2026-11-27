@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Рисует один уровень Menu с пунктами, разделителями, группами и подменю.
+  // Renders one Menu level with items, separators, groups, and submenus.
   import type { MenuEntry } from './menu.engine';
   import type { MenuTheme } from './menu.types';
   import { useMenu } from './menu-context';

@@ -1,6 +1,6 @@
 <script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>, LabelInValue extends boolean = false, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends HTMLElement = HTMLInputElement">
-  // Связывает выбор, поиск и открытие списка с редактором и popup Select.
-  // Кэш подписей живёт отдельно от options, а события публикуются из обработчиков.
+  // Connects selection, search, and list visibility to the Select editor and popup. The label cache
+  // is separate from options, and handlers emit events.
   import { onMount, onDestroy, tick, untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -292,14 +292,14 @@
   let controlId = $derived(id ?? field?.id ?? `ant-select-${generatedId}`);
   let tagMode = $derived(mode === 'tags');
   let multiple = $derived(mode === 'multiple' || tagMode);
-  // Повторный parent spread может сбросить локальный bindable shadow без нового
-  // owner value. Сохраняем лишь выбранные raw keys; обычные labels остаются live.
+  // A repeated parent spread can reset the local bindable shadow without a new owner value.
+  // Preserve only selected raw keys. Ordinary labels stay live.
   let selectedValue = $derived(value !== undefined ? value : useDefault ? initialDefault
     : providedValue === undefined && uncontrolledLabels
       ? multiple ? uncontrolledLabels.map(item => item.value) : uncontrolledLabels[0]?.value
       : undefined);
   let canSearch = $derived(tagMode || (typeof mergedShowSearch === 'object' ? true : mergedShowSearch ?? multiple));
-  // Readonly исключает input из нативной проверки; required multiple блокирует ввод через beforeinput.
+  // Readonly excludes the input from native validation. required in multiple mode blocks input through beforeinput.
   let isReadOnly = $derived(!canSearch && (!multiple || !attributes.required));
   let intrinsicWidth = $derived(_autoWidth && !multiple && isReadOnly);
   let localDrafts = $derived(selectValueDrafts(selectedValue, multiple));
@@ -395,7 +395,7 @@
     SelectFlattenOption<RawValue, OptionType>, { index: number }
   ]> | undefined);
 
-  // Вызывает labelRender при вычислении displayValues, до чтения disabled из кэша.
+  // Calls labelRender while resolving displayValues, before reading disabled from the cache.
   function createDisplayValue(item: SelectValueItem<RawValue>) {
     const displayValue = { ...item };
     const renderedLabel = labelRender
@@ -427,7 +427,7 @@
       return;
     }
 
-    // Скрытый native remove button передаёт фокус input, не отменяя новый выбор владельца.
+    // The hidden native remove button transfers focus to the input without undoing the owner's new selection.
     void tick().then(() => {
       if (!input.isConnected || active.isConnected && !active.closest('[inert]')) {
         return;
@@ -453,7 +453,7 @@
         tag: ':scope > [data-select-tag]', rest: ':scope > [data-select-rest]',
         prefix: ':scope > [class*="-content-item-prefix"]'
       }));
-    // Query/style/width не сбрасывают историю размеров rest и suffix.
+    // Query, style, and width changes retain the measurement history for rest and suffix.
     $effect(() => {
       void tags.length;
       overflow.schedule();
@@ -478,8 +478,8 @@
       if (!disposed) {
         const update = (count: number) => { responsiveCount = count; };
         if (sourceWidth) {
-          // rc-overflow1.0.1 Item64–68/Overflow137–147 учитывает offsetWidth
-          // suffix, а не новый scrollWidth после сохранённой Source width history.
+          // rc-overflow 1.0.1 Item64–68 and Overflow137–147 use the suffix offsetWidth, avoiding a
+          // new scrollWidth after the upstream width history is saved.
           disconnect = connectSelectTagOverflow(host, update, {
             tag: ':scope > [data-select-tag]', rest: ':scope > [data-select-rest]', input
           });
@@ -531,7 +531,7 @@
     sourceInputWidth || measuredInputWidth === undefined ? [] : [[['width', `${measuredInputWidth}px`]]], () =>
     sourceInputWidth ? [[['--select-input-width', measuredInputWidth === undefined ? '' : String(measuredInputWidth)]]] : []);
   function attachInputStyle(input: HTMLInputElement) {
-    // При одном font/query update сначала применяем owner style, затем измеряем value.
+    // When font and query update together, apply the owner's styles before measuring the value.
     inputStyle.attach(input);
     $effect(() => {
       if (!multiple) {
@@ -539,7 +539,7 @@
         return;
       }
       const sourceWidth = sourceInputWidth;
-      // Legacy сохраняет прежний hash dependency и responsive short-circuit.
+      // The legacy path keeps its hash dependency and responsive short circuit.
       if (!sourceWidth && !responsiveTags && !componentTheme.className) {
         measuredInputWidth = undefined;
         return;
@@ -553,7 +553,7 @@
   const initialContentStyle = untrack(() => serializeSelectStyle(semantics.styles.content));
   const initialSuffixStyle = untrack(() => serializeSelectStyle(semantics.styles.suffix));
   let compactItemClasses = $derived(compactClasses(prefix, config.direction, compact));
-  // Число 0 остаётся содержимым; null/empty string скрывают пустой список.
+  // Numeric 0 remains content. null and the empty string hide the empty list.
   let hiddenEmpty = $derived(filtered.length === 0
     && (notFoundContent === null || notFoundContent === false || notFoundContent === ''));
   let expanded = $derived(hydrated && isOpen && !resolvedDisabled && !hiddenEmpty);
@@ -593,8 +593,8 @@
   $effect(() => { if (expanded && (rootSlot || inputSlot)) componentPopupVisited = true; });
   let customPopup = $derived(Boolean(popupRender) || popupVisited);
   let popupPresent = $derived(expanded || popupVisited || Boolean(rootSlot || inputSlot) && componentPopupVisited);
-  // Чтение present вычисляет весь объект: producer работает и для закрытого
-  // control/SSR; только DOM ниже остаётся условным.
+  // Reading present computes the entire object, so producers run for closed controls and during
+  // SSR. Only the DOM below is conditional.
   let popupView = $derived.by(() => {
     void semantics;
     return { present: popupPresent, content: popupRender ? popupRender(originMenu) : originMenu };
@@ -602,7 +602,7 @@
 
   onMount(() => {
     clearSelectComponentHydration(defaultReference);
-    // Source сначала публикует измеренный закрытый Input, затем открывает список.
+    // Upstream emits the measured closed Input first, then opens the list.
     if (componentResponsive) {
       void tick().then(() => { if (!componentDestroyed) hydrated = true; });
     }
@@ -754,7 +754,7 @@
       ariaLabel: !option.group && typeof option.label === 'string' ? option.label : undefined,
       ariaValue: typeof data.value === 'string' || typeof data.value === 'number' ? data.value : undefined,
       ariaAttributes: selectDataAttributes(option, fields).aria as SelectOptionListItem<Row>['ariaAttributes'],
-      // Коллекция Source кешируется закрытой; rawValues продолжает менять ARIA.
+      // The upstream collection is cached while closed. rawValues continues to update ARIA.
       get ariaSelected() { return selected(); },
       ariaDisabled: data.disabled as boolean | undefined,
       get disabled() { return isSelectOptionDisabled(data.disabled, selected(), countReached); }
@@ -773,7 +773,7 @@
   let lastListSearch: string | undefined;
   let openingKeyboardActivation: { index: number } | undefined;
 
-  // Source сохраняет OptionList после первого открытия; условный Native DOM не сбрасывает activation.
+  // Upstream retains OptionList after its first open. Conditional native DOM does not reset activation.
   $effect(() => {
     const visible = expanded;
     if (customPopup && !menuElement) {
@@ -925,7 +925,7 @@
       const channel = new MessageChannel();
       componentCloseChannel = channel;
       channel.port1.onmessage = () => {
-        // Даже устаревшая задача освобождает собственные порты.
+        // A stale task still releases its own ports.
         channel.port1.close();
         channel.port2.close();
         if (componentDestroyed || componentCloseChannel !== channel) {
@@ -1111,9 +1111,9 @@
     const clearInternalSearch = !next && !tagMode && (!multiple || autoClearSearch);
     internalOpen = next;
     open = next;
-    // DOM blur при удалении приходит до cleanup, когда owner props уже уничтожены.
+    // DOM removal fires blur before cleanup, when owner props are already disposed.
     if (notify) (fromBlur ? committedOpenChange : onOpenChange)?.(next);
-    // Принятый bind/callback сохраняет active, выбранный текущим keyboard event.
+    // An accepted binding or callback retains the active item chosen by the current keyboard event.
     if (!fromBlur && providedOpen === next) previousOwnerOpen = next;
 
     if (clearInternalSearch) {
@@ -1164,7 +1164,7 @@
   function keepOpeningKeyboardActivation(index: number) {
     const request = { index };
     openingKeyboardActivation = request;
-    // Native typeahead/ArrowUp задают цель до первого OptionList effect.
+    // Native typeahead and ArrowUp set the target before the first OptionList effect.
     void tick().then(() => {
       if (openingKeyboardActivation === request) openingKeyboardActivation = undefined;
     });
@@ -1180,12 +1180,12 @@
     setOpen(true);
   }
 
-  /** Сохраняет данные выбора до bind/value callbacks, которые могут заменить options. */
+  /** Saves selection data before binding or value callbacks can replace options. */
   function rememberSelection(items: readonly SelectValueItem<RawValue>[]) {
     if (items.length) {
       cachedData = rememberSelectOptions(cachedData, items, dataMaps.valueOptions);
     }
-    // Snapshot нужен и при позднем включении label API после обычного выбора.
+    // The snapshot also supports enabling the label API after an ordinary selection.
     internalLabels = items;
     uncontrolledLabels = providedValue === undefined ? items : undefined;
   }
@@ -1204,7 +1204,7 @@
     const rawOptions = callback && changed ? next.map(callbackOption) : undefined;
     useDefault = false;
     rememberSelection(labeled);
-    // TypeScript не сужает generic Mode/LabelInValue при runtime проверке.
+    // TypeScript cannot narrow the generic Mode or LabelInValue through a runtime check.
     value = output as typeof value;
     (onValueChange as ((value: unknown) => void) | undefined)?.(output);
     if (rawOptions) callback?.(output, rawOptions);
@@ -1413,12 +1413,12 @@
     const onClose = (event?: Event) => {
       if (event) event.stopPropagation();
       const data = optionData(item.value);
-      // Source захватывает display-record, но при вызове читает текущие records.
+      // Upstream captures the display record but reads current records when called.
       const remaining = displayValues.filter(current => current !== item);
       if (remaining.length !== displayValues.length) {
         changeMultiple(remaining.map(current => current.value), 'display');
       }
-      // Даже stale/non-closable callback отправляет deselect с актуальной option.
+      // A stale or non-closable callback still emits deselect with the current option.
       notifySelect(item.value, data, false);
     };
     return onClose;
@@ -1427,7 +1427,7 @@
   function handleCustomTagMouseDown(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
-    // Source useOpen откладывает false; legacy default tag path сохраняется.
+    // Upstream useOpen defers false. The legacy default tag path is retained.
     if (inputSlot && expanded) {
       scheduleComponentClose(false, true);
     }
@@ -1525,8 +1525,8 @@
   function handleKeyboardNavigation(event: KeyboardEvent) {
     if (expanded && customPopup && !menuElement && (['ArrowDown', 'ArrowUp', 'Home', 'End',
       'Enter', 'Escape', 'Tab'].includes(event.key) || event.key === ' ' && !canSearch)) {
-      // BaseSelect сохраняет input-level prevention; отсутствующий OptionList
-      // не выбирает value и не закрывает Escape. Tab завершает обычный blur.
+      // BaseSelect preserves input-level prevention. Without an OptionList, Escape neither selects
+      // a value nor closes the popup. Tab uses ordinary blur.
       if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key) || event.key === ' ' && !canSearch) {
         event.preventDefault();
       }
@@ -1784,7 +1784,7 @@
 
   function handleFocus(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     focused = true;
-    // Прямой Svelte handler получает native input в this; обёртка сохраняет receiver.
+    // A direct Svelte handler receives the native input as this. The wrapper keeps the receiver.
     onfocus?.call(event.currentTarget, event);
   }
 
@@ -1834,7 +1834,7 @@
     min-width: 0;
     width: 100%;
   }
-  /* Inline-flex Source root использует text strut родителя, а не token font wrapper. */
+  /* The upstream inline-flex root uses the parent's text strut independently of the token font wrapper. */
   .container:has(> [data-ant-select-multiple] > [data-ant-select-content] > div[class*="-content-item-suffix"]) {
     font-family: inherit;
     font-size: inherit;
@@ -1922,7 +1922,7 @@
     max-height: none;
     overflow: visible;
   }
-  /* Исходный virtual-list размещает options в flex column без сжатия строк. */
+  /* The upstream virtual list places options in a flex column without shrinking rows. */
   .popup[data-ant-select-source-popup] {
     display: flex;
     flex-direction: column;
@@ -1956,7 +1956,7 @@
     min-height: var(--ant-native-select-height);
   }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] { gap: 0; }
-  /* Source suffix wrapper имеет собственный отступ до пустого input. */
+  /* The upstream suffix wrapper adds its own spacing before the empty input. */
   [data-ant-select-content][data-select-source-empty-input]::before {
     flex: none;
     width: var(--ant-native-select-empty-input-gap);
@@ -2133,7 +2133,7 @@
 {#snippet removeGlyph()}<SelectIcon name="close" />{/snippet}
 {#snippet clearGlyph()}<SelectIcon name="close-circle" />{/snippet}
 
-<!-- Пробельный узел перед Select занимает ширину в строке inline-block. -->
+<!-- The whitespace node before Select takes up width in an inline-block line. -->
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}{#if rootSlot && rootContext}
   <SelectComponent component={rootSlot} context={rootContext} root />
   {@render componentPopup()}

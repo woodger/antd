@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
   await expect(menu(page)).toBeVisible();
 });
 
-/** Изменяет ширину через публичный prop с сохранением фокуса в Menu. */
+/** Changes the width through the public prop while retaining focus in Menu. */
 async function resize(page: Page, width: number) {
   await page.getByLabel('Menu width', { exact: true }).evaluate((input: HTMLInputElement, value) => {
     input.value = String(value);
@@ -22,14 +22,14 @@ async function resize(page: Page, width: number) {
   }, width);
 }
 
-/** Снимает порядок и доступность строк; popup остаётся измерим после закрытия. */
+/** Removes the order and availability of rows; popup remains measurable after closing. */
 async function snapshot(root: Locator) {
   return root.evaluate(node => {
     const row = node.querySelector<HTMLElement>(':scope > [data-menu-overflow-rest]');
     const title = row?.querySelector(':scope > [role="menuitem"]');
     const surface = document.querySelector<HTMLElement>('.custom-overflow-popup');
 
-    /** Класс fixture связывает один и тот же тестовый элемент в обеих библиотеках. */
+    /** The fixture class connects the same test element in both libraries. */
     function getKey(element: Element) {
       return [...element.classList].find(cls => cls.startsWith('sample-'))?.slice(7);
     }

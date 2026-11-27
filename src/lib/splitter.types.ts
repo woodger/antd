@@ -5,50 +5,50 @@ export type SplitterSize = number | string;
 export type SplitterContent = string | number | boolean | null | Snippet;
 export type SplitterIconVisibility = boolean | 'auto';
 
-/** Svelte-дескриптор React Splitter.Panel; элементы сохраняются по позиции, не по key. */
+/** Svelte-descriptor React Splitter.Panel; the elements are saved by position, not by key. */
 export interface SplitterPanelProps {
   children?: SplitterContent;
-  /** Контролирует всю группу, если хотя бы у одной панели size не null/undefined. */
+  /** Monitors the entire group, if at least one panel size is not null/undefined. */
   size?: SplitterSize;
-  /** Читается только при создании Splitter; по умолчанию остаток делится между панелями. */
+  /** Is read only when creating Splitter; by default, the balance is divided between the panels. */
   defaultSize?: SplitterSize;
-  /** Число в px либо процентная строка. */
+  /** Number in px or percentage line. */
   min?: SplitterSize;
   max?: SplitterSize;
-  /** Обе соседние панели должны разрешать resize; по умолчанию true. */
+  /** Both adjacent panels must allow resize; by default true. */
   resizable?: boolean;
-  /** По умолчанию false; у объекта showCollapsibleIcon по умолчанию auto. */
+  /** By default false; at object showCollapsibleIcon by default auto. */
   collapsible?: boolean | {
     start?: boolean;
     end?: boolean;
     showCollapsibleIcon?: SplitterIconVisibility;
   };
-  /** Переопределяет Splitter.destroyOnHidden; false сохраняет скрытое содержимое. */
+  /** Redefines Splitter.destroyOnHidden; false stores hidden content. */
   destroyOnHidden?: boolean;
   class?: string;
-  /** Геометрические flex-basis/flex-grow задаются после style. */
+  /** Geometric flex-basis/flex-grow is set after style. */
   style?: string;
 }
 
 export interface SplitterClassSlots {
   root?: string;
   panel?: string;
-  /** Строка равнозначна { default: value }. */
+  /** The string is equivalent to { default: value }. */
   dragger?: string | { default?: string; active?: string; };
 }
 
 export interface SplitterStyleSlots {
   root?: string;
   panel?: string;
-  /** Как в pinned SplitBar, применяется default; поле active принимается, но не используется. */
+  /** As in pinned SplitBar, default is applied; the active field is accepted but not used. */
   dragger?: { default?: string; active?: string; };
 }
 
-/** Callback получает разрешённые orientation и vertical; CSS styles передаются строками. */
+/** Callback receives authorized orientation and vertical; CSS styles are transmitted by strings. */
 export type SplitterSemantic<Value> = Value
   | ((info: { props: SplitterProps; }) => Value | undefined);
 
-/** Наследуемые root/panel/dragger styles; nested config заменяется целиком. */
+/** Inherited root/panel/dragger styles; nested config is replaced entirely. */
 export interface SplitterConfig {
   class?: string;
   style?: string;
@@ -56,40 +56,40 @@ export interface SplitterConfig {
   styles?: SplitterSemantic<SplitterStyleSlots>;
 }
 
-/** Splitter с исходными правилами размеров, drag/lazy и collapse Ant Design 6.6.8. */
+/** Splitter with original size rules, drag/lazy and Ant Design 6.6.8. */
 export interface SplitterProps {
-  /** Локальный CSS prefix; empty/undefined наследуют ConfigProvider.prefixCls. */
+  /** Local CSS prefix. Empty and undefined values inherit ConfigProvider.prefixCls. */
   prefixCls?: string;
-  /** Явная замена анализа React children/Panel; содержимое задаётся scalar или Snippet. */
+  /** A clear replacement of the analysis React children/Panel; the contents are given scalar or Snippet. */
   items?: SplitterPanelProps[];
-  /** Приоритет: orientation, boolean vertical, horizontal. */
+  /** Priority: orientation, boolean vertical, horizontal. */
   orientation?: SplitterOrientation;
   vertical?: boolean;
-  /** Lazy меняет размеры только на release и вызывает onResizeEnd без onResize. */
+  /** Lazy changes sizes only on release and causes onResizeEnd without onResize. */
   lazy?: boolean;
-  /** По умолчанию содержимое collapsed панелей остаётся в DOM. */
+  /** By default, the contents of the panels remain in DOM. */
   destroyOnHidden?: boolean;
   collapsible?: {
-    /** CSS transition; по умолчанию false, на время drag отключается. */
+    /** CSS transition; by default false, for the duration of the drag is disabled. */
     motion?: boolean;
     icon?: { start?: SplitterContent; end?: SplitterContent; };
   };
-  /** undefined оставляет исходный spinner; null/false создают пустой custom wrapper. */
+  /** undefined leaves the original spinner; null/false creates an empty custom wrapper. */
   draggerIcon?: SplitterContent;
-  /** Вызывается также у resizable=false; второй mousedown в пределах 300ms не начинает drag. */
+  /** Is also caused by resizable = false; the second mousedown within 300ms does not start drag. */
   onDraggerDoubleClick?: (index: number) => void;
   onResizeStart?: (sizes: number[]) => void;
-  /** Предложенные размеры в px, включая controlled rejection; collapse тоже вызывает callback. */
+  /** The proposed dimensions in px, including rejection controlled; split also causes a callback. */
   onResize?: (sizes: number[]) => void;
-  /** Normal drag сообщает текущие размеры, lazy и collapse — предложенные. */
+  /** Normal drag reports current sizes, lazy and collapse — proposed. */
   onResizeEnd?: (sizes: number[]) => void;
-  /** После onResize и onResizeEnd; collapsed определяется через abs(size) < Number.EPSILON. */
+  /** After onResize and onResizeEnd; collapsed is determined via abs(size) < Number.EPSILON. */
   onCollapse?: (collapsed: boolean[], sizes: number[]) => void;
   class?: string;
   rootClassName?: string;
   style?: string;
   classNames?: SplitterSemantic<SplitterClassSlots>;
   styles?: SplitterSemantic<SplitterStyleSlots>;
-  /** bind:nativeElement заменяет React SplitterRef и очищается при unmount. */
+  /** bind:nativeElement replaces React SplitterRef and is purified at unmount. */
   nativeElement?: HTMLDivElement;
 }

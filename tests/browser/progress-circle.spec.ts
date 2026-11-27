@@ -102,7 +102,7 @@ test('Progress circle respects reduced motion and cleans refs and popup on unmou
 
 test('Progress circle matches source transition durations for rapid and spaced updates', async ({ page }) => {
   await page.clock.install({ time: new Date('2030-01-01T00:00:00Z') });
-  // install продолжает ход часов; pauseAt отделяет интервалы приложения от задержек DOM/CDP.
+  // install continues the course of hours; pauseAt separates the application intervals from the delays DOM/CDP.
   await page.clock.pauseAt(new Date('2030-01-01T00:00:01Z'));
   const select = page.getByRole('combobox', { name: 'Progress circle case', exact: true });
   await select.selectOption('empty');
@@ -122,8 +122,8 @@ test('Progress circle matches source transition durations for rapid and spaced u
 });
 
 
-// Значения взяты из независимых первых и повторных замеров Ant Design 6.6.8.
-// Provider и Snippet проверяют сохраняемые контракты Native.
+// Values are taken from the independent first and repeated measurements of Ant Design 6.6.8.
+// Provider and Snippet inspect retained contracts Native.
 for (const sample of miniReference.cases) {
   test(`Tiny Progress Tooltip matches Source CSS and AX for ${sample.name}`, async ({ page }) => {
     await page.getByLabel('Mount tiny Progress cases', { exact: true }).check();

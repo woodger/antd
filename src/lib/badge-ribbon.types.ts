@@ -9,11 +9,11 @@ export interface BadgeRibbonSlots {
   indicator?: string;
 }
 
-/** CSS задаётся строками; callback получает props с разрешённым placement. */
+/** CSS is supplied as strings. The callback gets props with resolved placement. */
 export type BadgeRibbonSemantic = BadgeRibbonSlots
   | ((info: { props: BadgeRibbonProps; }) => BadgeRibbonSlots | undefined);
 
-/** class/style относятся к ленте, semantic root — к обёртке содержимого. */
+/** class and style belong to the ribbon. The semantic root is the content wrapper. */
 export interface BadgeRibbonConfig {
   class?: string;
   style?: string;
@@ -21,7 +21,7 @@ export interface BadgeRibbonConfig {
   styles?: BadgeRibbonSemantic;
 }
 
-/** Badge.Ribbon 6.6.8; start/end следуют направлению текста. */
+/** Badge.Ribbon 6.6.8. start and end follow text direction. */
 export interface BadgeRibbonProps extends BadgeRibbonConfig {
   text?: BadgeRibbonContent;
   children?: BadgeRibbonContent;
@@ -29,8 +29,8 @@ export interface BadgeRibbonProps extends BadgeRibbonConfig {
   /** @defaultValue 'end' */
   placement?: BadgeRibbonPlacement;
   rootClassName?: string;
-  /** Локальный DOM prefix; иначе ConfigProvider. Markers и namespace variables сохраняются. */
+  /** Local DOM prefix. Otherwise inherits ConfigProvider. Markers and the variable namespace are preserved. */
   prefixCls?: string;
-  /** bind:nativeElement заменяет RibbonRef.nativeElement и очищается при unmount. */
+  /** bind:nativeElement replaces RibbonRef.nativeElement and is cleared on unmount. */
   nativeElement?: HTMLDivElement;
 }

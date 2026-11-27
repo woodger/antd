@@ -5,26 +5,26 @@ import type { NotificationInstance, NotificationOptions } from './notification.t
 import type { ModalInstance } from './modal-confirm.types';
 
 export interface AppMessageConfig extends MessageOptions {
-  /** Локальный prefix MessageHolder; иначе наследуется ConfigProvider. */
+  /** Local MessageHolder prefix. Otherwise inherits ConfigProvider. */
   prefixCls?: string;
-  /** Вертикальный отступ поверхности MessageHolder; по умолчанию 8. */
+  /** Vertical offset for the MessageHolder surface. Defaults to 8. */
   top?: number | string;
 }
 
 export interface AppNotificationConfig extends NotificationOptions {
-  /** Локальный prefix NotificationHolder; иначе наследуется ConfigProvider. */
+  /** Local NotificationHolder prefix. Otherwise inherits ConfigProvider. */
   prefixCls?: string;
   top?: number;
   bottom?: number;
 }
 
-/** Каждый record наследуется от ближайшего App и дополняется локальными полями. */
+/** Each record inherits from the nearest App and adds local fields. */
 export interface AppOptions {
   message?: AppMessageConfig;
   notification?: AppNotificationConfig;
 }
 
-/** Общие class/style внешней обёртки App; record заменяет родительский целиком. */
+/** Shared class and style for the App wrapper. An explicit record replaces the parent's record in full. */
 export interface AppConfig {
   class?: string;
   style?: string;
@@ -37,8 +37,8 @@ export interface AppInstance {
 }
 
 /**
- * Атрибуты пользовательского корня App. Children включает holders и содержимое.
- * Для DOM-ref корень передаёт свой элемент через $bindable nativeElement.
+ * Attributes for a custom App root. Children includes holders and content. To expose a DOM ref, the
+ * root passes its element through $bindable nativeElement.
  */
 export interface AppRootProps extends Omit<HTMLAttributes<HTMLElement>, 'children' | 'class'> {
   children?: Snippet;
@@ -46,23 +46,23 @@ export interface AppRootProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
   nativeElement?: HTMLElement;
 }
 
-/** Контекст API и holders; component=false выводит только содержимое и holders. */
+/** Context for the APIs and holders. component=false renders only content and holders. */
 export interface AppProps<Props extends object = {}> extends AppOptions, Omit<
   HTMLAttributes<HTMLElement>,
   'children' | 'class' | 'style'
 > {
   children?: Snippet;
-  /** Нативный тег, Svelte-компонент или false. @defaultValue 'div' */
+  /** Native tag, Svelte component, or false. @defaultValue 'div' */
   component?: keyof HTMLElementTagNameMap | Component<Props> | false;
-  /** Локальный CSS prefix; иначе ConfigProvider prefix + app. */
+  /** Local CSS prefix. Otherwise uses the ConfigProvider prefix plus app. */
   prefixCls?: string;
   class?: string;
   rootClassName?: string;
   style?: string;
-  /** Поддерживает bind; undefined при component=false и после unmount. */
+  /** Supports binding. It is undefined with component=false and after unmount. */
   nativeElement?: HTMLElement;
 }
 
-/** Дополнительные параметры компонента корня передаются через App. */
+/** App forwards additional parameters to the root component. */
 export type AppComponentProps<Props extends object = {}> = AppProps<Props>
   & Omit<Props, 'children' | 'class' | 'style' | 'dir' | 'nativeElement'>;

@@ -19,7 +19,7 @@ export async function snapshotBadgeApi(page: Page, includeText = false, prefixDe
       }
       const rect = node.getBoundingClientRect();
       const style = getComputedStyle(node);
-      // Округляет дробное измерение до тысячных для сравнения снимков.
+      // Rounds the fractional dimension to the thousandth for comparing images.
       const round = (value: number) => Math.round(value * 1000) / 1000;
 
       return {
@@ -38,7 +38,7 @@ export async function snapshotBadgeApi(page: Page, includeText = false, prefixDe
         } : {})
       };
     };
-    // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
+    // Sorts the selected CSS classes, so that the comparison does not depend on the order of tokens.
     const classes = (node: HTMLElement | null) => node
       ? [...node.classList].filter(name => name.startsWith('case-')).sort() : [];
 

@@ -220,11 +220,11 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
       window.dispatchEvent(new Event('resize'));
       window.dispatchEvent(new Event('scroll'));
     });
-    // Продвигаем часы за blur/close timers, чтобы проверить настоящий поздний ledger после unmount.
+    // Promote the watch for blur/close timers to check out the real late ledger after unmount.
     await page.clock.runFor(1000);
     const disposal = await page.evaluate(() => window.inertApiDisposal!.trace);
     const disposed = { ledger: [...events, ['blur']], rootConnected: false, editorConnected: false };
-    // Native unmount синхронно вызывает один blur, пока editor ещё подключён; после await callbacks отсутствуют.
+    // Native unmount synchronously causes one blur while the editor is still connected; after await callbacks are missing.
     expect(disposal).toEqual({
       phase: 'disposed', before: { ledger: events, rootConnected: true, editorConnected: true },
       afterCall: disposed, afterAwait: disposed,

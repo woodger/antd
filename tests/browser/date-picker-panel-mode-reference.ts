@@ -1,4 +1,4 @@
-// Читает два независимых прогона официального UMD с исходными DOM и событиями.
+// Reading two independent runs of the official UMD with the original DOM and events.
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
@@ -49,7 +49,7 @@ interface ModeReference<Pass> {
   passes: [Pass, Pass];
 }
 
-/** Проверяет хеш исходных байтов до чтения неизменённых событий и DOM. */
+/** Checks the hash of the original bytes before reading unchanged events and DOM. */
 function readCapture<Pass>(suffix: keyof typeof sourceHashes): ModeReference<Pass> {
   const file = new URL(`./fixtures/ant-design-date-picker-panel-mode-${suffix}.json.gz`, import.meta.url);
   const raw = gunzipSync(readFileSync(file));
@@ -60,17 +60,17 @@ function readCapture<Pass>(suffix: keyof typeof sourceHashes): ModeReference<Pas
   return JSON.parse(raw.toString('utf8'));
 }
 
-/** Возвращает оба браузерных прогона с публичным API. */
+/** Returns both browser runs through the public API. */
 export function readPickerModeReference(suffix: 'browser' | 'supplement' | 'bounds') {
   return readCapture<PickerModeCapture[]>(suffix).passes;
 }
 
-/** Возвращает SSR с отключёнными DOM и таймерами. */
+/** Retrieves SSR with DOM and timers disabled. */
 export function readPickerModeServer() {
   return readCapture<ServerPass>('ssr');
 }
 
-/** Одиночный Native callback сохраняет дополнительное поле source. */
+/** A single Native callback preserves an additional source field. */
 export function comparablePanelModeEvents(events: unknown[][], range: boolean | undefined) {
   return events.map(event => !range && event[0] === 'calendar' ? event.slice(0, 3) : event);
 }

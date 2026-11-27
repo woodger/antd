@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Сопоставляет состояние владельца, отображаемые строки и запросы публичного Table.
+  // Compares the owner's status, displayed strings and queries of public Table.
   import {
     ConfigProvider, enUS, Table, type TableChange, type TableColumn, type TableFilters,
     type TableProps
@@ -39,12 +39,12 @@
     defaultFilters: profileId === 'table-defaults' ? { score: odd } : undefined
   });
 
-  /** Применяет шаг владельца без перемонтирования таблицы. */
+  /** Applies the owner's step without remounting the table. */
   function update() {
     phase += 1;
   }
 
-  /** Возвращает колонки с теми же ключами при смене начальных и управляемых свойств. */
+  /** Returns columns with the same keys when changing initial and controlled properties. */
   function getColumns(profile: string, step: number): readonly TableColumn<Row>[] {
     switch (profile) {
       case 'initial':
@@ -84,7 +84,7 @@
     }
   }
 
-  /** Фиксирует запрос фильтрации вместе с выборкой для onChange. */
+  /** Fix the filtering query along with a sample for onChange. */
   function noteChange(change: TableChange<Row>) {
     changes = [...changes, {
       action: change.action,

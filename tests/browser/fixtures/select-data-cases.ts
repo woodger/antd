@@ -1,4 +1,4 @@
-/** Чистые публичные входы этапа raw data Select/AutoComplete. */
+/** Net public input stage raw data Select/AutoComplete. */
 export type SelectDataFamily = 'select' | 'auto-complete';
 export type SelectDataMapping = 'omitted' | 'undefined' | 'empty' | 'label' | 'mapped' | 'mapped-no-group' | 'empty-strings';
 export type SelectDataDataset = 'flat' | 'flat-next' | 'groups' | 'mapped' | 'mapped-next' | 'keys'
@@ -51,7 +51,7 @@ export function selectDataFieldNames(mapping: SelectDataMapping): SelectDataFiel
   return { label: 'text', value: 'uid', options: 'nodes', groupLabel: 'heading' };
 }
 
-/** Значения остаются исходными JS values до явного кодирования наблюдений. */
+/** Values remain the original JS values until the observations are clearly encoded. */
 export function selectDataRaw(dataset: SelectDataDataset): Record<string, unknown>[] {
   const raw = (token: string, fields: Record<string, unknown>): Record<string, unknown> => {
     const record = { auditToken: `${dataset}:${token}`, ...fields,
@@ -124,7 +124,7 @@ export function selectDataRaw(dataset: SelectDataDataset): Record<string, unknow
   return children;
 }
 
-/** JSON сохраняет bigint, -0, undefined и нечисловые значения через явные tags. */
+/** JSON preserves bigint, -0, undefined and numerical values through explicit tags. */
 export function encodeSelectData(value: unknown, seen: object[] = []): unknown {
   if (value === null) return { type: 'null' };
   if (typeof value === 'undefined') return { type: 'undefined' };

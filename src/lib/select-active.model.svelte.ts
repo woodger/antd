@@ -1,4 +1,4 @@
-/** rc-select оставляет последнее onActive за microtask; unmount отменяет Native callback. */
+/** rc-select leaves the last onActive for microtask; unmount cancels Native callback. */
 export function createSelectActive<Value>(getCallback: () => ((value: Value | null) => void) | undefined) {
   let generation = 0;
   let disposed = false;

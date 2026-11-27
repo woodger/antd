@@ -1,6 +1,5 @@
 export function snapshotRatePrefix() {
-  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
-  // свойств.
+  // Saves individual computed declarations. Serialized image is compared by property names.
   const style = (node: Element, keys: string[]) => {
     const css = getComputedStyle(node);
 

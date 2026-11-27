@@ -16,7 +16,7 @@ function getCloseConfig({ closable, closeIcon }: Pick<TagProps, 'closable' | 'cl
   return result;
 }
 
-/** Undefined icon означает default glyph; boolean из object config оставляет пустой control. */
+/** Undefined icon means default glyph; boolean from object config leaves an empty control. */
 export function getTagClose(
   props: Pick<TagProps, 'closable' | 'closeIcon'>,
   context?: Pick<TagConfig, 'closable' | 'closeIcon'>

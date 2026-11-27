@@ -7,7 +7,7 @@ type VariantComponent = 'input' | 'textArea' | 'inputPassword' | 'inputSearch' |
   | 'inputNumber' | 'select' | 'treeSelect' | 'cascader' | 'mentions' | 'datePicker'
   | 'timePicker' | 'rangePicker' | 'card';
 
-/** Общая реактивная boundary оформления; Search отдельно читает isConfigured для кнопки. */
+/** Total reactive boundary design; Search separately reads isConfigured for the button. */
 export function useVariant(
   component: VariantComponent,
   getProps?: () => { variant?: Variant; },

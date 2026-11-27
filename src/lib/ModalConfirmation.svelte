@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Отображает подтверждение контроллера на зарезервированном слое Modal.
+  // Renders a controller confirmation on Modal's reserved layer.
   import { untrack } from 'svelte';
   import Modal from './Modal.svelte';
   import ModalActionButton from './ModalActionButton.svelte';
@@ -46,7 +46,7 @@
   const icon = $derived(options.icon === undefined ? config.modal?.[defaultIcon.option] : options.icon);
   const hasIcon = $derived(icon !== null && typeof icon !== 'boolean');
   let okCancel = $derived(options.okCancel ?? confirmation.type === 'confirm');
-  // Контроллер выполняет afterClose вместе с cleanup записи подтверждения.
+  // The controller runs afterClose when it cleans up the confirmation entry.
   const closable = $derived(typeof options.closable === 'object'
     ? { ...options.closable, afterClose: undefined } : options.closable ?? false);
   const autofocusButton = $derived.by(() => {
@@ -85,7 +85,7 @@
       return;
     }
 
-    // После update ищем доступную кнопку в новом footer, включая пользовательский snippet.
+    // After update, look for an available button in the new footer, including a custom snippet.
     const timer = view.setTimeout(() => {
       const owner = wrapper.closest('dialog[open]');
       if (!owner) {
@@ -108,7 +108,7 @@
       return;
     }
 
-    // Отрисованная оболочка проходит lifecycle, даже если modalRender заменил всё тело.
+    // The rendered wrapper runs its lifecycle even if modalRender replaced the whole body.
     owner.mounted(id, node);
     if (ref) {
       untrack(() => ref(node));

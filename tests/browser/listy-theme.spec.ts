@@ -5,7 +5,7 @@ import { snapshotListyTheme, snapshotListyVirtualSizes } from './listy-theme-met
 test.use({ viewport: reference.viewport });
 
 const updatedSample = reference.cases.find(sample => sample.name === 'updated-tokens')!;
-// Source 1.5.1 пропускает itemHeight в useMemo: для неизменных строк берём свежий source кадр.
+// Source 1.5.1 misses itemHeight in useMemo: for unchanged lines, we take a fresh source frame.
 const updatedVirtualSizes = {
   ...reference.updatedVirtualSizes,
   priority: {
@@ -43,7 +43,7 @@ for (const part of ['raw', 'raw-grouped', 'virtual', 'virtual-grouped']) {
         .dispatchEvent('click');
 
       await expect.poll(() => page.evaluate(snapshotListyTheme)).toEqual(updatedSample.metrics);
-      // Внеэкранные строки сохраняют старые измерения; эталон также обновляет живой cache.
+      // Out-of-screen strings save old measurements; the benchmark also updates the living cache.
       await expect.poll(() => page.evaluate(snapshotListyVirtualSizes))
         .toEqual(updatedVirtualSizes);
       expect(await input.evaluate((node, old) => node === old, original)).toBe(true);

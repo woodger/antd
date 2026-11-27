@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Представляет черновик в списке, вложенном Menu или Tree. Обрабатываемые
-  // таблицей значения и момент подтверждения принадлежат TableFilter.
+  // Presents the draft as a list, nested Menu, or Tree. TableFilter owns the values passed to Table
+  // and the confirmation timing.
   import { untrack } from 'svelte';
   import { takeDropdownMenu } from './dropdown-menu-context';
   import {
@@ -46,8 +46,8 @@
     retainDropdownPopup: boolean;
   } = $props();
 
-  // Внешний портал остаётся внутри области взаимодействия панели фильтра.
-  // Выбор пунктов применяет сам TableFilter, когда пользователь подтвердит черновик.
+  // The external portal stays inside the filter panel's interaction boundary. TableFilter applies
+  // selections when the user confirms the draft.
   takeDropdownMenu(untrack(() => retainDropdownPopup));
   const placeholder = $derived(strings.filterSearchPlaceholder);
   const emptyText = $derived(strings.filterEmptyText);
@@ -77,7 +77,7 @@
     }
   });
 
-  /** В меню пользовательский предикат получает нормализованный запрос. */
+  /** The custom predicate receives a normalized query in a menu. */
   function matchesMenu(option: TableFilterOption) {
     if (!normalizedQuery) {
       return true;
@@ -88,14 +88,14 @@
       : matchesTableFilterText(option.text, normalizedQuery);
   }
 
-  /** Дерево сохраняет ветви, а пользовательский предикат получает исходный запрос. */
+  /** Tree preserves its branches and passes the raw query to the custom predicate. */
   function matchesTree(node: TreeEventNode<TableFilterNode>) {
     return typeof search === 'function'
       ? search(query, node.option)
       : matchesTableFilterText(node.option.text, normalizedQuery);
   }
 
-  /** Переводит ключи Menu и Tree в уникальные значения в порядке объявления вариантов. */
+  /** Maps Menu and Tree keys to unique values in the declared option order. */
   function selectKeys(keys: readonly TreeKey[]) {
     const selected = new Set(keys);
     const values = orderedNodes.flatMap(node => selected.has(node.key) ? [node.option.value] : []);
@@ -119,7 +119,7 @@
     draft = checked ? [...allValues] : [];
   }
 
-  /** В плоском списке сохраняет нативный выбор и порядок отмеченных значений. */
+  /** A flat list retains native selection and the order of checked values. */
   function choose(option: TableFilterValue, checked: boolean) {
     if (!multiple) {
       draft = [option];

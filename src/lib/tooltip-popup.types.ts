@@ -3,7 +3,7 @@ import type {
   AdjustOverflow, TooltipArrow, TooltipColor, TooltipContent, TooltipPlacement, TooltipProps
 } from './tooltip.types';
 
-/** Входы Tooltip и его встраиваемых вариантов. */
+/** Entrances Tooltip and its built-in options. */
 export interface TooltipPopupProps {
   title: TooltipContent;
   contentAvailable?: boolean;

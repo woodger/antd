@@ -1,6 +1,6 @@
 import template from './vendor/input-search-prefix.css.js';
 
-/** Search classes локальны; Button и служебные переменные используют общий namespace. */
+/** Search classes are local; Button and service variables use common namespace. */
 export function getInputSearchPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-input-search' && rootPrefix === 'ant') {
     return undefined;

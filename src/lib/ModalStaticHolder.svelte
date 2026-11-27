@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Держит контекст темы в скрытом корне. Панель открывается в своём portal.
+  // Keeps the theme context in a hidden root. The panel opens in its own portal.
   import ConfigProvider from './ConfigProvider.svelte';
   import ModalConfirmation from './ModalConfirmation.svelte';
   import { provideConfig, useConfig, type ConfigContext } from './config-context';
@@ -12,7 +12,7 @@
   });
   provideConfig(base);
 
-  /** Используется при отсутствии контейнера у подтверждения и holderRender. */
+  /** Used when the confirmation supplies neither a container nor holderRender. */
   function defaultContainer() {
     return owner.document.body;
   }

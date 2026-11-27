@@ -1,6 +1,6 @@
 <script lang="ts" generics="Value extends CheckboxGroupValue = string">
-  // Хранит список зарегистрированных checkbox для одного выбора. Синхронизирует общую группу при
-  // смене участников.
+  // Tracks the checkboxes registered for a single selection and synchronizes the group when
+  // membership changes.
   import { onDestroy, untrack } from 'svelte';
   import Checkbox from './Checkbox.svelte';
   import { useConfig } from './config-context';
@@ -160,7 +160,7 @@
       return;
     }
 
-    // Следующая задача учитывает отмену reset даже в позднем listener на window.
+    // The next task honors reset cancellation even from a late window listener.
     const reset = setTimeout(() => {
       resets.delete(reset);
 

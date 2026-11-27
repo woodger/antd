@@ -2,7 +2,7 @@ import type { SpinConfig, SpinIndicator, SpinProps } from './spin.types';
 
 let defaultIndicator: SpinIndicator | null | undefined;
 
-/** Как upstream setter: сам вызов не обновляет уже смонтированные экземпляры. */
+/** As an upstream setter: the call itself does not update already mounted instances. */
 export function setDefaultSpinIndicator(indicator: SpinIndicator | null | undefined) {
   defaultIndicator = indicator;
 }

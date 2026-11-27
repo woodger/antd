@@ -1,4 +1,4 @@
-/** HTML-наблюдения владельца без DOM и layout при Source/Native SSR. */
+/** HTML-observations of the owner without DOM and layout at Source/Native SSR. */
 export function readSelectDataSSR(html: string) {
   const decode = (text: string) => text.replace(/&#x27;/g, "'").replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');

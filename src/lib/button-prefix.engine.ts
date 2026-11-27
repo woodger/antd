@@ -1,6 +1,6 @@
 import template from './vendor/button-prefix.css.js';
 
-/** Варианты Button используют общий namespace; icon/loading classes следуют local prefix. */
+/** Button variants share a namespace. Icon and loading classes follow the local prefix. */
 export function getButtonPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-btn' && rootPrefix === 'ant') {
     return undefined;

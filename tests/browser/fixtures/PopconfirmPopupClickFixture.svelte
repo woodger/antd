@@ -12,19 +12,19 @@
   let target = $state<HTMLDivElement>();
   const events = $state<Array<string | Click>>([]);
 
-  /** Фиксирует вложенный обработчик и результат preventDefault до всплытия. */
+  /** Fixes the nested handler and result preventDefault before revolving. */
   function preventDefault(event: MouseEvent) {
     events.push('prevented');
     event.preventDefault();
   }
 
-  /** Останавливает click на дочернем контроле, сохраняя его собственное действие. */
+  /** Stops the click on the child, keeping his own action. */
   function stopPropagation(event: MouseEvent) {
     events.push('stopped');
     event.stopPropagation();
   }
 
-  /** Снимает делегированный click и отмечает владельца при смене общей панели. */
+  /** Removes the delegated click and notes the owner when changing the common panel. */
   function recordClick(event: MouseEvent, second: boolean) {
     const clicked = event.target instanceof Element
       ? event.target.closest('[data-click-role]') : null;
@@ -38,7 +38,7 @@
     });
   }
 
-  /** Явный контейнер находится за пределами первого Popconfirm. */
+  /** An explicit container is located outside the first Popconfirm. */
   function container(trigger: HTMLElement) {
     return target ?? trigger.ownerDocument.body;
   }

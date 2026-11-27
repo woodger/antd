@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Выполняет те же действия, что профили Source, через публичные методы и события Table.
+  // Performs the same actions as Source profiles, through public methods and events Table.
   import {
     ConfigProvider, enUS, Table,
     type TableColumn, type TableExpandable, type TableKey, type TableRef,
@@ -31,7 +31,7 @@
   let virtual = $state(true);
   let dataSource = $derived(createRows(profile.count, profile.tree));
 
-  /** Использует ключи и порядок записей из исходного прогона rc-table. */
+  /** Uses the keys and the order of records from the original run rc-table. */
   function createRows(count: number, tree?: boolean) {
     return Array.from({ length: count }, (_, key): Row => {
       const row: Row = { key, rank: count - key, name: `Row ${key}`, end: `End ${key}` };
@@ -62,7 +62,7 @@
     ? { columnWidth: 46, expandedRowRender: details }
     : profile.tree ? { defaultExpandedRowKeys: [0] } : undefined);
 
-  /** Передаёт таблице объект настроек таким же, каким он пришёл из профиля. */
+  /** Transmits the table the settings object the same as it came from the profile. */
   function scrollTo(target: TableScrollConfig) {
     table?.scrollTo(target);
   }

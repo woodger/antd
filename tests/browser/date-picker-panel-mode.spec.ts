@@ -8,7 +8,7 @@ import type { PickerModeProfile } from './fixtures/DatePickerPanelModeFixtures.s
 const popupSelector = '[data-picker-popup]';
 const rootSelector = '[data-mode-owner] > .ant-picker';
 
-/** Монтирует те же начальные даты с публичными props и фиксированным локальным временем. */
+/** Mounts the same initial dates with public props and fixed local time. */
 async function openFixture(page: Page, profile: PickerModeProfile) {
   await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
   await page.goto(`/?fixture=date-picker-panel-mode&profile=${encodeURIComponent(JSON.stringify(profile))}`);
@@ -18,7 +18,7 @@ async function openFixture(page: Page, profile: PickerModeProfile) {
   return owner;
 }
 
-/** Внешнее изменение mode не переводит фокус в элемент управления тестом. */
+/** An external mode change doesn’t translate the focus into the test control. */
 async function setOwnerValue(control: Locator, value: string) {
   await control.evaluate((element: HTMLInputElement, next) => {
     element.value = next;
@@ -26,7 +26,7 @@ async function setOwnerValue(control: Locator, value: string) {
   }, value);
 }
 
-/** Повторяет действия по видимой панели и двум нативным полям. */
+/** Repeats actions on the visible panel and two native fields. */
 async function perform(page: Page, owner: Locator, action: PickerModeAction, multiple = false) {
   const popup = page.locator(popupSelector);
   if (Array.isArray(action)) {
@@ -69,7 +69,7 @@ async function perform(page: Page, owner: Locator, action: PickerModeAction, mul
   }
 }
 
-/** Проверяет режим, заголовок, число панелей и колонки времени. */
+/** Checks the mode, header, number of panels and time columns. */
 async function assertPanels(popup: Locator, expected: PickerModeState['panels']) {
   if (!expected.length) {
     await expect(popup).toBeHidden();
@@ -105,7 +105,7 @@ async function assertPanels(popup: Locator, expected: PickerModeState['panels'])
   }
 }
 
-/** Сравнивает порядок событий и полные значения Dayjs обеих границ. */
+/** Compares the order of events and the full values of Dayjs of both borders. */
 async function assertEvents(page: Page, expected: unknown[][], range: boolean | undefined) {
   await expect.poll(async () => {
     const serialized = await page.locator('#mode-events').textContent() ?? '[]';
@@ -131,8 +131,9 @@ for (const group of ['browser', 'supplement', 'bounds'] as const) {
           await perform(page, owner, action, profile.multiple);
           if (profile.id === 'release-mode' && action === 'cell'
             && state.events.at(-1)?.[2] === 'decade') {
-            // Source после снятия mode отображает date, но обрабатывает её как undefined.
-            // Native согласует панель и выбор с picker и сразу подтверждает день.
+            // Source after removing the mode displays the date, but processes it as undefined.
+            // Native will agree the panel and choice with the picker and immediately confirm the
+            // day.
             await expect(popup).toBeHidden();
             await expect(inputs.first()).toHaveValue('2023-06-04');
             const previous = state.events.slice(0, -4);
@@ -148,7 +149,7 @@ for (const group of ['browser', 'supplement', 'bounds'] as const) {
           await assertPanels(popup, state.panels);
           await assertEvents(page, releasedEvents ?? state.events, profile.range);
 
-          // Базовый снимок включает hover preview под указателем после замены режима.
+          // The basic shot includes a hover preview under the pointer after the mode is replaced.
           if (group !== 'browser' || !state.panels.length || action === 'start') {
             for (const [index, field] of state.fields.entries()) {
               await expect(inputs.nth(index)).toHaveValue(field);

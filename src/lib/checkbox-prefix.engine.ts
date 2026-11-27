@@ -1,6 +1,6 @@
 import template from './vendor/checkbox-prefix.css.js';
 
-/** Local Checkbox/Group classes и общий Row namespace независимы. */
+/** Local Checkbox/Group classes and the shared Row namespace are independent. */
 export function getCheckboxPrefixCss(prefix: string, rootPrefix = 'ant') {
   if (prefix === 'ant-checkbox' && rootPrefix === 'ant') {
     return undefined;

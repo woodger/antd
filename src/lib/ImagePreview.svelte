@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Управляет native viewer, масштабированием и переходами между изображениями. Части кадра
-  // согласуются с жестами и lifecycle popup.
+  // Manages the native viewer, zoom, and navigation between images. Coordinates the frame elements
+  // with gestures and the popup lifecycle.
   import { onDestroy, tick, untrack } from 'svelte';
   import type {
     ImageElementData,

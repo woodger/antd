@@ -18,7 +18,7 @@ export const defaultPresetColors: PresetColorType = {
 
 const { pink: _pink, ...seedColors } = defaultPresetColors;
 
-/** Исходный seed Ant Design 6.6.8; getDesignToken копирует его перед расчётом. */
+/** Source seed Ant Design 6.6.8; getDesignToken copies it before calculating. */
 const defaultSeed: SeedToken = {
   ...seedColors,
 

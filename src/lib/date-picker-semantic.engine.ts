@@ -1,16 +1,16 @@
-// Объединяет оформление календаря и диапазона. Отдельный plain style диапазона
-// применяется между семантическими настройками провайдера и самого поля.
+// Merges date picker and range styling. The range's plain style goes between the provider's
+// semantic styles and the field's own styles.
 import type {
   DatePickerConfig, DatePickerSemantic, DatePickerSlots
 } from './date-picker.types';
 import { mergePickerSlots } from './time-picker-semantic.engine';
 
-/** Вычисляет слоты в контексте фактического поля, не меняя переданные props. */
+/** Resolves slots in the actual field's context without changing the received props. */
 function resolveSlots<Props extends object>(value: DatePickerSemantic<Props> | undefined, props: Props) {
   return typeof value === 'function' ? value({ props }) : value;
 }
 
-/** Объединяет общие слоты picker и роли заголовка и тела календаря. */
+/** Merges shared picker slots with the calendar header and body roles. */
 function mergeCalendarSlots(layers: (DatePickerSlots | undefined)[], separator: string) {
   const common = mergePickerSlots(layers, separator);
   const headers: string[] = [];
@@ -34,7 +34,7 @@ function mergeCalendarSlots(layers: (DatePickerSlots | undefined)[], separator: 
   };
 }
 
-/** Собирает контекст и локальные слои в порядке DatePicker/RangePicker. */
+/** Combines contextual and local layers in DatePicker/RangePicker precedence order. */
 export function datePickerSemantic<Props extends object>(
   props: Props,
   config: DatePickerConfig | undefined,
@@ -42,8 +42,8 @@ export function datePickerSemantic<Props extends object>(
   localStyles: DatePickerSemantic<Props> | undefined,
   providerStyle: string | undefined
 ) {
-  // ConfigProvider разделяется между пикерами с разными адаптерами. Его callback
-  // получает настоящие props поля, в том числе объект даты выбранного адаптера.
+  // ConfigProvider is shared by pickers with different adapters. Its callback receives the actual
+  // field props, including a date object from the selected adapter.
   const providerClasses = config?.classNames as DatePickerSemantic<Props> | undefined;
   const providerStyles = config?.styles as DatePickerSemantic<Props> | undefined;
 

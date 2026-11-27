@@ -19,7 +19,7 @@
 </script>
 
 <script lang="ts">
-  // Один вызов menu владеет своими DOM-ID, вариантами и подписками фокуса.
+  // Each menu call owns its DOM IDs, options, and focus subscriptions.
   import { onDestroy, onMount, untrack, type Snippet } from 'svelte';
   import RenderContent from './RenderContent.svelte';
   import type { MentionMenuRow } from './mentions.engine';
@@ -57,7 +57,7 @@
   }
 
   function connectFocus(node: HTMLDivElement) {
-    // Переходы внутри одного ShadowRoot не доходят до delegated listeners документа.
+    // Transitions within one ShadowRoot never reach the document's delegated listeners.
     const { focus, blur } = owner;
     node.addEventListener('focusin', focus);
     node.addEventListener('focusout', blur);
@@ -69,7 +69,7 @@
   }
 
   function chooseByKey(key: string) {
-    // Клик выбирает первое совпадение в этой копии меню. Enter в textarea использует индекс.
+    // A click selects the first match in this menu copy. Enter in the textarea uses the index.
     const row = rows.find(candidate => candidate.menuKey === key);
     if (row) void owner.choose(row.option);
   }

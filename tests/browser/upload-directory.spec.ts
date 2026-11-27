@@ -47,7 +47,7 @@ for (const [index, entry] of reference.cases.entries()) {
       }
 
       const expected = entry.readableCounterpart ?? entry;
-      // Source пропускает error callback файла; Native продолжает оставшимися читаемыми файлами.
+      // Source skips the error callback file; Native continues the remaining readable files.
       await expect(page.getByLabel('Directory before', { exact: true }))
         .toHaveText(JSON.stringify(expected.before));
       await expect(page.getByLabel('Directory changes', { exact: true }))

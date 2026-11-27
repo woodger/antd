@@ -74,8 +74,8 @@ it.each(reference.ssr)('renders $id root replacement without default content or 
     expect(events[1].replace(/<!--[\s\S]*?-->/g, '')).toBe('[]');
     const refs = /<output(?=[^>]*\bdata-root-refs(?:[=\s>]))[^>]*>([\s\S]*?)<\/output>/.exec(body)!;
     expect(JSON.parse(refs[1].replace(/<!--[\s\S]*?-->/g, ''))).toEqual(entry.view.refs);
-    // Native сохраняет запрошенный SSR open и скрытый popup shell;
-    // Source useOpen выключает серверный флаг. Оба наблюдения отражены явно.
+    // Native retains requested SSR open and the hidden popup shell. Upstream useOpen turns off the
+    // server flag. Both observations are captured explicitly.
     const nativeOpen = Boolean((sample.defaultOpen || sample.controlled?.endsWith('-open')) && !sample.disabled);
     expect(/<div(?=[^>]*popover="manual")(?=[^>]*\bhidden(?:[=\s>]))[^>]*>/.test(body)).toBe(nativeOpen);
     expect(vi.getTimerCount()).toBe(0);

@@ -127,7 +127,7 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
       }) };
     }
   }
-  /** Пользовательское поле при hydration уже может быть в фокусе. */
+  /** The custom field at hydration can already be in focus. */
   function attach(node: DatePickerEditorElement, restoreFocus = false) {
     cancelFrames();
     selectionVersion = undefined;

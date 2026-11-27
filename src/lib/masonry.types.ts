@@ -4,16 +4,15 @@ import type { GridGutter, GridResponsive } from './grid.types';
 export type MasonryKey = string | number;
 export type MasonryContent = string | number | boolean | null | Snippet;
 
-/** Данные одной ячейки; key должен быть уникален после преобразования в строку. */
+/** The data of one cell; the key should be unique after converting into a string. */
 export interface MasonryItemType<Data = unknown> {
   key: MasonryKey;
-  /** Предпочтительная колонка; верхняя граница ограничена columns - 1. */
+  /** Preferred column; the upper boundary is limited to columns - 1. */
   column?: number;
-  /** Поле эталонного API; раскладка использует измеренную DOM-высоту, а не это значение. */
+  /** Reference field API; the layout uses the measured DOM-height, not that value. */
   height?: number;
   /**
-   * Любое значение кроме null/undefined перекрывает itemRender,
-   * включая 0/false/пустую строку.
+   * Any value other than null/undefined overlaps itemRender, including 0/false/empty string.
    */
   children?: MasonryContent;
   data: Data;
@@ -25,50 +24,50 @@ export type MasonryRenderInfo<Data = unknown> = MasonryItemType<Data> & {
 };
 
 export type MasonrySemanticSlots = Partial<Record<'root' | 'item', string>>;
-/** Semantic callbacks получают Props с разрешённым числом columns. */
+/** Semantic callbacks get Props with a permitted number of columns. */
 export type MasonrySemantic<Data = unknown> = MasonrySemanticSlots
   | ((info: { props: MasonryProps<Data>; }) => MasonrySemanticSlots | undefined);
 
-/** Настройки слоёв root/item; nested config заменяется целиком. */
+/** Layer settings root/item; nested config is replaced entirely. */
 export interface MasonryConfig {
   class?: string;
   style?: string;
-  // Тип данных экземпляра неизвестен общему ConfigProvider, как в upstream MasonryProps<any>.
+  // The data type of the instance is unknown to the total ConfigProvider, as in upstream MasonryProps<any>.
   classNames?: MasonrySemantic<any>;
   styles?: MasonrySemantic<any>;
 }
 
-/** Измеряемая раскладка элементов разной высоты в самые короткие колонки. */
+/** Measurable layout of elements of different heights in the shortest columns. */
 export interface MasonryProps<Data = unknown> {
-  /** Локальный CSS prefix; иначе ConfigProvider. Namespace item width задаёт общий prefix. */
+  /** Local CSS prefix; otherwise ConfigProvider. Namespace item width sets a general prefix. */
   prefixCls?: string;
-  /** Как в React PropsWithChildren, принимается, но не используется для отображения ячеек. */
+  /** As in React PropsWithChildren, it is accepted but not used to display cells. */
   children?: MasonryContent;
-  /** Элементы появляются после mount, как в React useEffect; на SSR root пустой. */
+  /** Elements appear after mount, as in React useEffect; on SSR root empty. */
   items?: MasonryItemType<Data>[];
-  /** Svelte snippet вместо React renderer; вызывается, когда у item нет children. */
+  /** Svelte snippet instead of React renderer; called when item does not have children. */
   itemRender?: Snippet<[MasonryRenderInfo<Data>]>;
   /**
-   * Положительное целое число либо responsive map. По умолчанию 3;
-   * для map без совпадения берётся xs, затем 1. Число не округляется.
+   * Positive integer or responsive map. By default 3; for map without a match is taken xs, then 1.
+   * The number is not rounded.
    */
   columns?: number | GridResponsive<number>;
-  /** По умолчанию 0; одиночное значение применяется к обеим осям. */
+  /** By default 0; the solitary value applies to both axes. */
   gutter?: GridGutter | [GridGutter, GridGutter];
-  /** Дополнительно наблюдает размеры ячеек; по умолчанию только root и image load/error. */
+  /** Additionally observes cell sizes; by default only root and image load/error. */
   fresh?: boolean;
   /**
-   * Изменение распределения: элементы в исходном порядке с вычисленным column.
-   * Содержит исходные поля item; одинаковые данные не порождают повторный callback.
+   * Distribution Change: elements in the original order with the computed column. Contains the
+   * original item fields; the same data does not generate a repeated callback.
    */
   onLayoutChange?: (items: (MasonryItemType<Data> & { column: number; })[]) => void;
   class?: string;
   rootClassName?: string;
-  /** Локальный root style идёт после semantic root, context и вычисленной высоты. */
+  /** The local root style comes after semantic root, context and calculated height. */
   style?: string;
   classNames?: MasonrySemantic<Data>;
-  /** Геометрия ячеек идёт после semantic item styles. */
+  /** Geometry of the cells comes after semantic item styles. */
   styles?: MasonrySemantic<Data>;
-  /** bind:nativeElement возвращает корневой div и очищается при unmount. */
+  /** bind:nativeElement returns root div and is purified at unmount. */
   nativeElement?: HTMLDivElement;
 }

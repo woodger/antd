@@ -1,6 +1,6 @@
 import template from './vendor/breadcrumb-prefix.css.js';
 
-/** Canonical token marker и anticon сохраняются; root/reset selectors ограничены владельцем. */
+/** The canonical token marker and anticon are preserved. Root and reset selectors are scoped to the owner. */
 export function getBreadcrumbPrefixCss(prefix: string) {
   if (prefix === 'ant-breadcrumb') {
     return undefined;

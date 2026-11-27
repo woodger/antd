@@ -1,6 +1,6 @@
 import template from './vendor/select-prefix.css.js';
 
-/** Select owner classes, private variables и вложенные Input/Typography namespaces независимы. */
+/** Select owners classes, private variables and nested Input/Typography namespaces are independent. */
 export function getSelectPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-select' && rootPrefix === 'ant') {
     return undefined;
@@ -40,7 +40,7 @@ export function getSelectPrefixCss(prefix: string, rootPrefix: string) {
       return match === '"ant-select"' ? `"${prefix}"` : `" ${prefix}"`;
     }
   );
-  // Native container владеет compact geometry; значения совпадают с canonical theme bridge.
+  // Native container owns compact geometry; the values coincide with the canonical bridge theme.
   const native = `.${prefix}-compact-item${scope}{border-radius:var(--ant-border-radius);}`
     + `.${prefix}-compact-item.${prefix}-lg${scope}{border-radius:var(--ant-border-radius-lg);}`
     + `.${prefix}-compact-item.${prefix}-sm${scope}{border-radius:var(--ant-border-radius-sm);}`

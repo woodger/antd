@@ -1,4 +1,4 @@
-/** Общие метрики панели; native centering и резерв title под close остаются отдельным contract. */
+/** Common panel metrics; native centering and title reserve under close remain a separate contract. */
 export function snapshotModalPrefix() {
   const host = document.querySelector<HTMLElement>('.fixture-modal-prefix')!;
   const root = host.querySelector<HTMLElement>('[data-ant-modal-panel]') ?? host;
@@ -8,7 +8,7 @@ export function snapshotModalPrefix() {
   const box = ['width', 'height', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
     'border-top-width', 'border-top-color', 'border-bottom-width', 'border-bottom-color',
     'border-radius', 'background-color', 'box-shadow'];
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null, keys: string[]) {
     if (!node) {
       return null;
@@ -17,7 +17,7 @@ export function snapshotModalPrefix() {
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   }
-  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
+  // He chooses a part of the complete CSS class of the current prefix, regardless of the neighboring classes.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
   const header = part('-header');
   const hasHeader = header && getComputedStyle(header).display !== 'none';

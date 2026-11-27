@@ -1,8 +1,8 @@
-// Измеряет только классы и декларации из публичных semantic slots. Геометрию
-// исходного rc-trigger и нативного popover проверяют отдельные сценарии.
+// Measures only classes and declarations from public semantic slots. Geometry of the original
+// rc-trigger and the native popover are checked by individual scenarios.
 type MenuConfigHost = HTMLElement & { menuConfigCalls?: Record<string, unknown>; };
 
-/** Считывает узлы одной панели и фактические аргументы callbacks после рендера. */
+/** Readers nodes of the same panel and actual callbacks arguments after the render. */
 export function readMenuConfig() {
   const host = document.querySelector<MenuConfigHost>('#menu-config-fixture');
   const root = host?.querySelector('ul.ant-menu-root');
@@ -10,7 +10,7 @@ export function readMenuConfig() {
     return null;
   }
 
-  // Inline-ветка и её скрытая portal-копия могут быть смонтированы одновременно.
+  // Inline branch and its hidden portal-copy can be mounted at the same time.
   const popup = host.querySelector('.x-popup-parent');
   const parentList = root.querySelector('.x-parent > ul') ?? popup?.querySelector(':scope > ul');
   const nestedPopup = host.querySelector('.x-popup-nested');
@@ -46,7 +46,7 @@ export function readMenuConfig() {
     'padding-block-end', 'padding-inline-start', 'letter-spacing', 'z-index'
   ];
 
-  /** Извлекает следы провайдера, локальных слоёв и значка из одного узла. */
+  /** Retrieves traces of the provider, local layers and an icon from a single node. */
   function readNode(node: HTMLElement) {
     const styles = Object.fromEntries(properties.flatMap(property => {
       const value = node.style.getPropertyValue(property);

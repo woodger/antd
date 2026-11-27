@@ -8,73 +8,73 @@ export type MessageContent = string | number | boolean | null | Snippet;
 
 export type MessageSemanticName = 'list' | 'listContent' | 'root' | 'wrapper' | 'icon' | 'title';
 export type MessageSemanticSlots = Partial<Record<MessageSemanticName, string>>;
-/** Настройки списка и, для семантики отдельной записи, её поля. */
+/** Setting the list and, for the semantics of a separate record, its fields. */
 export type MessageSemanticProps = MessageOptions
   & Partial<Omit<MessageConfig, 'classNames' | 'styles'>>;
 export type MessageSemantic = MessageSemanticSlots
   | ((info: { props: MessageSemanticProps; }) => MessageSemanticSlots | undefined);
 
-/** Оформление сообщений внутри ConfigProvider и в конфигурации отдельной записи. */
+/** Registration of messages inside ConfigProvider and in the configuration of a separate entry. */
 export interface MessageAppearance {
   class?: string;
   style?: string;
   classNames?: MessageSemantic;
-  /** Inline CSS каждого слота. */
+  /** Inline CSS every slot. */
   styles?: MessageSemantic;
 }
 
-/** Сколько карточек можно показать до сворачивания списка. */
+/** How many cards can be shown before the list is folded. */
 export interface MessageStackConfig {
   threshold?: number;
 }
 
-/** Содержимое и жизненный цикл одного сообщения createMessage. */
+/** The content and life cycle of one message createMessage. */
 export interface MessageConfig extends MessageAppearance {
   content: MessageContent;
-  /** По умолчанию info. Явный null оставляет сообщение без статусной иконки. */
+  /** The default info. Explicit null leaves a message without a status icon. */
   type?: MessageType | null;
-  /** Совпадающий key обновляет существующее сообщение. */
+  /** The matching key updates an existing message. */
   key?: MessageKey;
-  /** Время в секундах; 0 отключает автоматическое закрытие. */
+  /** Time in seconds; 0 disables automatic closure. */
   duration?: number;
   pauseOnHover?: boolean;
   icon?: MessageContent;
   role?: 'status' | 'alert';
-  /** Вызывается при начале закрытия; отсоединение holder не вызывает callback. */
+  /** Called when closing starts; disengagement holder does not cause callback. */
   onClose?: () => void;
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
 }
 
-/** Настройки независимой очереди createMessage; значения сообщения имеют приоритет. */
+/** Configurations of independent queue createMessage; message values have prioritization. */
 export interface MessageOptions {
-  /** Продолжительность по умолчанию в секундах; без настройки — 3. */
+  /** Default duration in seconds; no set-up – 3. */
   duration?: number;
-  /** Лимит очереди; новые записи вытесняют наиболее старые. */
+  /** Limit of the queue; the new records displace the oldest. */
   maxCount?: number;
   pauseOnHover?: boolean;
   prefixCls?: string;
   /** @defaultValue 8 */
   top?: number | string;
-  /** Иначе направление ближайшего ConfigProvider. */
+  /** Otherwise the direction of the nearest ConfigProvider. */
   rtl?: boolean;
-  /** Цель portal; при пустом результате используется ближайший getPopupContainer. */
+  /** Objective portal; with an empty result, the nearest getPopupContainer is used. */
   getContainer?: () => HTMLElement | null | undefined;
-  /** Имя CSS-перехода; пустая строка отключает движение. */
+  /** Name CSS-junction; an empty string disables movement. */
   transitionName?: string;
-  /** Сворачивает список выше порога, который по умолчанию равен трём. */
+  /** Folds the list above the threshold, which by default is equal to three. */
   stack?: boolean | MessageStackConfig;
   classNames?: MessageSemantic;
   styles?: MessageSemantic;
 }
 
-/** Вызов закрывает сообщение; await даёт true после завершения, false при отсоединении holder. */
+/** The call closes the message; await gives true after completion, false when disconnecting the holder. */
 export interface MessageHandle extends PromiseLike<boolean> {
   (): void;
 }
 
 export type MessageInstance = ReturnType<typeof createMessage>;
 
-/** Единственная визуальная поверхность выбранного экземпляра createMessage. */
+/** Single visual surface for the selected createMessage instance. */
 export interface MessageHolderProps extends Omit<MessageOptions, 'duration' | 'pauseOnHover' | 'maxCount'> {
   message: MessageInstance;
   id?: string;

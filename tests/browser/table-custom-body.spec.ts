@@ -10,7 +10,7 @@ const bodySelector = '[data-probe-body]';
 const headerSelector = '[data-ant-table-custom-band="header"]';
 type Action = NonNullable<(typeof source.cases)[number]['states'][number]['action']>;
 
-/** Читает выравнивание полос и состояние пользовательского тела из DOM. */
+/** Reads the alignment of the strips and the condition of the user body from DOM. */
 function snapshot() {
   const root = document.querySelector('[data-custom-body-fixture]');
   if (!root) {
@@ -46,7 +46,7 @@ function snapshot() {
   };
 }
 
-/** Взаимодействует с публичным ref, таблицей и прокруткой владельца. */
+/** Interacts with public ref, table and scrolling of the owner. */
 async function act(page: Page, action: Action, index: number) {
   const [kind, value] = action;
   switch (kind) {

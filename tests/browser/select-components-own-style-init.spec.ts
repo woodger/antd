@@ -245,8 +245,8 @@ for (const sample of selectOwnStyleInitSamples) for (const entryPath of selectOw
         observation: null
       }]);
       expect(removed.owner.calls).toEqual(before.owner.calls);
-      // Source не вызывает blur при удалении. Native сохраняет прежний
-      // синхронный focusout ещё подключённых root/editor у обоих controls.
+      // Source does not cause blur when deleted. Native preserves the previous synchronous focusout
+      // yet connected root/editor at both.
       expect(entry.cleanup.events).toEqual(entry.events);
       expect(entry.cleanup.rawEvents).toEqual(entry.rawEvents);
       expect(entry.cleanup.producerCalls).toEqual(entry.producerCalls);

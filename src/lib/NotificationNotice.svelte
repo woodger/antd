@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Отрисовывает одну карточку и её уход. Прогресс подписан на часы очереди,
-  // а восстановление фокуса по-прежнему предшествует inert и снятию DOM.
+  // Renders one card and its exit transition. Progress subscribes to the queue clock, and focus is
+  // restored before inert is set and before DOM removal.
   import { onDestroy, tick, untrack } from 'svelte';
   import Icon from './Icon.svelte';
   import { useConfig } from './config-context';
@@ -111,7 +111,7 @@
     }
   }
 
-  /** RAF обновляет только value, когда таймер идёт. Пауза и unmount отменяют кадр. */
+  /** RAF updates only value while the timer is running. Pausing or unmounting cancels the frame. */
   function connectProgress(progressNode: HTMLProgressElement) {
     const view = progressNode.ownerDocument.defaultView;
     if (!view) {
@@ -147,7 +147,7 @@
   $effect.pre(() => {
     const root = node;
     const closing = notice.closing;
-    // Снимок фокуса нужен до inert и до возможного удаления action snippet.
+    // Capture focus before setting inert and before an action snippet can be removed.
     if (root) {
       untrack(() => {
         const ownedFocus = root.contains(root.ownerDocument.activeElement);
@@ -247,11 +247,11 @@
     overflow-wrap: anywhere;
   }
   [data-ant-notification-notice-icon] { display: inline-flex; }
-  /* Absolute notice в Source создаёт BFC; native relative notice сохраняет float через flow-root. */
+  /* Upstream's absolutely positioned notice creates a BFC. The native relative notice retains floats with flow-root. */
   .notification-source-theme { display: flow-root; }
   .notification-source-theme [data-ant-notification-notice-icon] { display: block; }
   .notification-source-theme [data-ant-notification-notice-actions] { display: block; }
-  /* Общий markup сохраняет controls при смене темы; grid повторяет прежний legacy layout. */
+  /* Shared markup keeps controls mounted through theme changes. The grid follows the previous layout. */
   [data-ant-notification-notice]:not(.notification-source-theme) {
     display: grid;
     grid-template-columns: minmax(0, 1fr);

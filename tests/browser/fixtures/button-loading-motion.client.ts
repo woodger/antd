@@ -10,7 +10,7 @@ if (!target) {
 const query = new URLSearchParams(location.search);
 const profile = query.get('loading-motion') ?? 'default';
 if (query.has('ssr')) {
-  // Подключает обработчики после того, как тест снимет серверный значок.
+  // Connects handlers after the test removes the server icon.
   target.addEventListener('hydrate-loading-button', () => {
     hydrate(Fixture, { target, props: { profile }, recover: false });
     target.dataset.hydrated = 'true';

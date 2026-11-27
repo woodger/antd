@@ -1,5 +1,5 @@
-// Индексирует ветки Table и готовит их для отображения и выбора. Ключи принадлежат
-// исходным записям, а сортировка и фильтры меняют только представление дерева.
+// Indexes the branches Table and prepares them for display and selection. The keys belong to the
+// original records, and the sorting and filters change only the representation of the tree.
 import type { TableColumn, TableFilters, TableKey, TableRowKey } from './table.types';
 import { conductTreeCheckByKey } from './tree.engine';
 
@@ -10,7 +10,7 @@ export interface TableRow<Row extends object> {
   children?: TableRow<Row>[];
 }
 
-/** Проверяет уникальность ключей во всём дереве, включая свёрнутые ветки. */
+/** Checking the uniqueness of the keys in the whole tree, including curtailed branches. */
 export function indexTableRows<Row extends object>(
   data: readonly Row[],
   rowKey: TableRowKey<Row> | PropertyKey | undefined,
@@ -19,7 +19,7 @@ export function indexTableRows<Row extends object>(
   const keys = new Set<TableKey>();
   const allRows: TableRow<Row>[] = [];
 
-  /** Сохраняет ссылку на исходную запись для событий выбора. */
+  /** Saves a link to the original record for selection events. */
   function createRow(record: Row, sourceIndex: number): TableRow<Row> {
     if (record === null || (typeof record !== 'object' && typeof record !== 'function')) {
       throw new Error('Table rows must be objects');
@@ -38,7 +38,7 @@ export function indexTableRows<Row extends object>(
     allRows.push(row);
     const children: unknown = Reflect.get(record, childrenColumnName);
     if (Array.isArray(children)) {
-      // Поле потомков использует тот же тип записи и те же проверки, что dataSource.
+      // The offspring field uses the same type of recording and the same checks as dataSource.
       row.children = (children as readonly Row[]).map(createRow);
     }
 
@@ -49,13 +49,13 @@ export function indexTableRows<Row extends object>(
   return { roots, allRows };
 }
 
-/** Индекс среди соседей нужен column.render, глубина нужна строке и отступу первой ячейки. */
+/** The index among the neighbors needs column.render, the depth is needed by the line and the retreat of the first cell. */
 export function flattenTableRows<Row extends object>(
   roots: readonly TableRow<Row>[], expandedKeys?: ReadonlySet<TableKey>
 ) {
   const result: { row: TableRow<Row>; index: number; depth: number; }[] = [];
 
-  // Без набора раскрытия обходятся все строки, включая скрытые потомки для выбора.
+  // Without an opening set, all lines, including hidden descendants to choose.
   function walk(rows: readonly TableRow<Row>[], depth: number) {
     rows.forEach((row, index) => {
       result.push({ row, index, depth });
@@ -70,7 +70,7 @@ export function flattenTableRows<Row extends object>(
   return result;
 }
 
-/** Проецирует потомков в запись для render и currentDataSource с сохранением ключа. */
+/** Protects the descendants into the entry for render and currentDataSource while saving the key. */
 function withChildren<Row extends object>(
   row: TableRow<Row>, children: TableRow<Row>[], childrenColumnName: string
 ): TableRow<Row> {
@@ -81,7 +81,7 @@ function withChildren<Row extends object>(
   return { ...row, children, record };
 }
 
-/** Сортирует каждого родителя и его потомков на их собственном уровне. */
+/** Sorts every parent and their descendants at their own level. */
 export function sortTableTree<Row extends object>(
   rows: readonly TableRow<Row>[],
   compare: (left: Row, right: Row) => number,
@@ -100,7 +100,7 @@ export function sortTableTree<Row extends object>(
   });
 }
 
-/** Предикат родителя получает потомков после применения всех активных фильтров. */
+/** The parent's predicate receives descendants after the use of all active filters. */
 export function filterTableTree<Row extends object>(
   rows: TableRow<Row>[],
   columns: readonly TableColumn<Row>[],
@@ -114,7 +114,7 @@ export function filterTableTree<Row extends object>(
     const values = filters[column.key];
     for (const row of current) {
       let children = row.children;
-      // После первого критерия строка уже хранит отфильтрованную ветку.
+      // After the first criterion, the string already keeps the filtered branch.
       if (filterIndex === 0 && children) {
         children = filterTableTree(children, columns, filters, childrenColumnName);
       }
@@ -140,7 +140,7 @@ interface TableCheckEntry {
   disabled: boolean;
 }
 
-/** Связывает доступные отметки по отфильтрованному дереву, сохраняя ключи вне него. */
+/** Binds the available marks to the filtered tree, keeping the keys outside it. */
 export function getTableLinkedSelection<Row extends object>(
   roots: readonly TableRow<Row>[],
   keys: readonly TableKey[],
@@ -149,7 +149,7 @@ export function getTableLinkedSelection<Row extends object>(
   const indexed = new Set<TableKey>();
   const groups = new Map<string, TableCheckEntry[]>();
 
-  // Source обходит числовые имена раньше строковых. Table сохраняет разные типы ключей.
+  // Source bypasses numerical names before string names. Table preserves different types of keys.
   function visit(rows: readonly TableRow<Row>[], parent?: TableCheckEntry) {
     for (const row of rows) {
       const { key, children } = row;
@@ -172,7 +172,7 @@ export function getTableLinkedSelection<Row extends object>(
   const entries = Object.values(Object.fromEntries(groups)).flat();
   const preserved = keys.filter(key => !indexed.has(key));
 
-  // Disabled checkbox разрывает связь, не исключая его доступных потомков из страницы.
+  // Disabled checkbox breaks the connection, not excluding its available descendants from the page.
   function conduct(checked: readonly TableKey[], half?: readonly TableKey[]) {
     return conductTreeCheckByKey(
       checked, entries, key => indexed.has(key), entry => entry.disabled, half
@@ -181,7 +181,7 @@ export function getTableLinkedSelection<Row extends object>(
 
   const state = conduct(keys);
 
-  // Перед снятием отметки заполняет связанные ключи, затем очищает зависимые отметки.
+  // Fills in related keys before unchecking and then clears dependent checks.
   function toggle(key: TableKey, checked: boolean) {
     const filled = conduct([...state.checked, key]);
     const next = checked ? filled.checked : conduct(

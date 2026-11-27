@@ -60,11 +60,11 @@ it.each(reference.ssr)('renders $id with inherited feedback and only the Native 
     expect(editor).toContain(`aria-required="${entry.view.aria.required}"`);
     expect(entry.view.aria.describedBy).toBe('choice_help');
     expect(editor).toContain('aria-describedby="choice-help"');
-    // Существующий Native Input отражает status в ARIA у обоих composite slots.
+    // The existing native Input reflects status in ARIA for both composite slots.
     expect(entry.view.aria.invalid).toBeNull();
     expect(editor).toContain('aria-invalid="true"');
     expect(entry.fieldErrors).toEqual([]);
-    // Source создаёт help DOM только на клиенте; Native сохраняет SSR help.
+    // Upstream creates help DOM only on the client. Native retains SSR help.
     expect(entry.view.help).toEqual([]);
     expect(body).toContain('id="choice-help"');
     expect(body).toContain('Choice help');

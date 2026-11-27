@@ -9,7 +9,7 @@ const peer = '[data-probe-title="peer"]';
 
 test.use({ viewport: { width: 880, height: 550 }, reducedMotion: 'reduce' });
 
-/** Наблюдает ключ заголовка, порядок строк и событие владельца Table. */
+/** Observes the header key, line order and event of the owner Table. */
 function snapshot() {
   const root = document.getElementById('table-column-keys-fixture');
   if (!root) {
@@ -31,7 +31,7 @@ function snapshot() {
   };
 }
 
-/** Подтверждает фильтр через пользовательские controls. */
+/** Confirms the filter through custom controls. */
 async function filterProbe(page: Page) {
   const name = 'Filter menu: Probe column';
   await page.getByRole('button', { name, exact: true }).click();

@@ -2,34 +2,34 @@ import type { createModal } from './modal.model.svelte.js';
 import type { ModalContent, ModalFocusableConfig, ModalProps, ModalSurfaceProps } from './modal.types';
 
 export type ModalConfirmType = 'info' | 'success' | 'error' | 'warning' | 'confirm';
-/** Callback с аргументом close управляет закрытием вручную; Promise включает loading. */
+/** Callback with an argument close manually manages closure; Promise includes loading. */
 export type ModalConfirmAction = (close: () => void) => unknown;
 
-/** Управляет фокусом кнопок стандартного footer при открытии и после update. */
+/** Manages the focus of standard footer buttons when opening and after update. */
 export interface ModalConfirmFocusableConfig extends ModalFocusableConfig {
-  /** Null отключает явный autofocus обеих кнопок. @defaultValue 'ok' */
+  /** Null disables the explicit autofocus of both buttons. @defaultValue 'ok' */
   autoFocusButton?: 'ok' | 'cancel' | null;
 }
 
-/** Контекстное подтверждение createModal, отображаемое единственным ModalHolder. */
+/** Context confirmation of createModal, displayed by a single ModalHolder. */
 export interface ModalConfirmConfig extends ModalSurfaceProps {
-  /** Локальный namespace подтверждения; пустая строка наследует ConfigProvider держателя. */
+  /** Local namespace confirmations; empty string inherits ConfigProvider holder. */
   prefixCls?: string;
-  /** Локальное направление подтверждения. Undefined наследует провайдера. */
+  /** Local direction of confirmation. Undefined inherits the provider. */
   direction?: 'ltr' | 'rtl';
-  /** Начальный тип задаёт вызванный метод. Update может сменить вариант. */
+  /** The initial type sets the called method. Update can change the option. */
   type?: ModalConfirmType;
   title?: ModalContent;
   content?: ModalContent;
-  /** Undefined выбирает иконку ConfigProvider по типу подтверждения. */
+  /** Undefined selects icon ConfigProvider by confirmation type. */
   icon?: ModalContent;
   /** @defaultValue 416 */
   width?: number | string;
   height?: ModalProps['height'];
   centered?: ModalProps['centered'];
-  /** По умолчанию zIndexPopupBase + 1000. Потомки наследуют этот слой. */
+  /** The default is zIndexPopupBase + 1000. Descendants inherit this layer. */
   zIndex?: ModalProps['zIndex'];
-  /** Только confirm показывает Cancel по умолчанию. */
+  /** Only confirm shows Cancel by default. */
   okCancel?: boolean;
   okText?: ModalContent;
   cancelText?: ModalContent;
@@ -41,7 +41,7 @@ export interface ModalConfirmConfig extends ModalSurfaceProps {
   closeIcon?: ModalProps['closeIcon'];
   /** @defaultValue true */
   keyboard?: boolean;
-  /** По умолчанию закрытие по фону запрещено. */
+  /** By default, closing on the background is prohibited. */
   mask?: ModalProps['mask'];
   focusable?: ModalConfirmFocusableConfig;
   scrollLock?: ModalProps['scrollLock'];
@@ -51,7 +51,7 @@ export interface ModalConfirmConfig extends ModalSurfaceProps {
   maskTransitionName?: ModalProps['maskTransitionName'];
   mousePosition?: ModalProps['mousePosition'];
   getContainer?: ModalProps['getContainer'];
-  /** Получает нативный dialog. Undefined освобождает ссылку и предыдущий обработчик. */
+  /** Receives a native dialog. Undefined releases the link and the previous handler. */
   panelRef?: (node: HTMLDialogElement | undefined) => void;
   class?: string;
   footer?: ModalProps['footer'];
@@ -62,7 +62,7 @@ export interface ModalConfirmConfig extends ModalSurfaceProps {
 }
 
 export interface ModalConfirmHandle extends PromiseLike<boolean> {
-  /** Закрывает без onCancel; await завершается с false. */
+  /** Closes without onCancel; await concludes with false. */
   destroy(): void;
   update(
     patch: Partial<ModalConfirmConfig>
@@ -77,14 +77,14 @@ export interface ModalHolderProps {
 }
 
 export interface ModalStaticConfig extends ModalConfirmConfig {
-  /** При вызове окно открывается. Update может скрыть и повторно показать его. */
+  /** When you call, the window opens. The Update can hide and reshow it. */
   open?: boolean;
 }
 
 export interface ModalStaticHandle {
-  /** Закрывает и освобождает отдельный корень окна. */
+  /** Closes and frees a separate root of the window. */
   destroy(): void;
-  /** Объект дополняет конфигурацию, функция возвращает её новую версию целиком. */
+  /** The object complements the configuration, the function returns its new version entirely. */
   update(
     config: ModalStaticConfig
       | ((previous: Readonly<ModalStaticConfig & { close: () => void; }>) => ModalStaticConfig)
@@ -100,7 +100,7 @@ export interface ModalConfirmation {
   readonly pendingCancel: boolean;
 }
 
-/** Операции владельца, которые инициирует общая панель подтверждения. */
+/** Owner operations invoked by the shared confirmation panel. */
 export interface ModalConfirmationRuntime {
   mounted(id: number, panel?: HTMLDialogElement): void;
   act(id: number, confirmed: boolean): boolean;

@@ -1,4 +1,4 @@
-// Использует только публичный пакет и фиксирует момент строгой hydration в браузере.
+// Uses only a public package and fixes the moment of strict hydration in the browser.
 import '@woodger/antd/styles.css';
 import './mentions-lifecycle.css';
 import { hydrate, mount } from 'svelte';

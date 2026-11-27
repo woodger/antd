@@ -215,7 +215,7 @@ test.describe('TimeRangePicker daylight-saving input', () => {
         const other = endpoint === 'start' ? end(page) : start(page);
 
         if (format === 'mask') {
-          // Указатель после нажатия кнопки подготовки может попасть на открывшуюся панель.
+          // The pointer after pressing the preparation button can get to the opened panel.
           await page.mouse.move(0, 0);
           await input.focus();
           const hourKeys = endpoint === 'start' ? ['ArrowUp'] : ['ArrowDown', 'ArrowDown'];

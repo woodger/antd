@@ -5,7 +5,7 @@ import registry from '../porting-registry';
 import Fixture from '../browser/fixtures/TableCellUpdateFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-cell-update-reference.json';
 
-/** Читает текст и пользовательские атрибуты двух колонок серверного fixture. */
+/** Reads text and custom attributes for both columns of the SSR fixture. */
 function readRows(markup: string) {
   const rows = /<tr\b[^>]*\bdata-row-key="([^"]+)"[^>]*>([\s\S]*?)<\/tr>/g;
   const cells = /<td\b[^>]*\bdata-probe-content="([^"]+)"[^>]*>([\s\S]*?)<\/td>/g;

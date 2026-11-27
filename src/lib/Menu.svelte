@@ -1,6 +1,5 @@
 <script lang="ts">
-  // Владеет состоянием открытых и выбранных пунктов Menu. Клавиатура обрабатывает
-  // зарегистрированные видимые элементы.
+  // Owns open and selected menu items. Keyboard handling uses the visible registered items.
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import {
     buildMenuEntries,
@@ -170,7 +169,7 @@
     }
 
     const preference = view.matchMedia('(prefers-reduced-motion: reduce)');
-    // Один media listener определяет motion для обеих поверхностей каждого подменю.
+    // One media listener controls motion for both surfaces of each submenu.
     function update() { reducedMotion = preference.matches; }
     update();
     preference.addEventListener('change', update);
@@ -320,7 +319,7 @@
     }
   }
 
-  // Нативные события идут по физическому DOM. Portal добавляет пропущенные логические ветки.
+  // Native events follow the physical DOM. The portal covers logical branches that path misses.
   function notifyPopupHover(
     entry: MenuEntry, event: MouseEvent, entering: boolean, surface: HTMLElement
   ) {
@@ -392,7 +391,7 @@
     }
 
     const toggles = actualMode === 'inline' || triggerSubMenuAction === 'click';
-    // Trigger Dropdown меняет openKeys до уведомления заголовка.
+    // The Dropdown trigger updates openKeys before notifying the heading.
     if (dropdown && toggles) setOpen(entry, !actualOpen.includes(entry.key));
     submenu.onTitleClick?.({ key: entry.key, domEvent: event });
     if (!dropdown && toggles) setOpen(entry, !actualOpen.includes(entry.key));
@@ -452,7 +451,7 @@
   function visibleLevel(items: MenuEntry[], parent?: MenuEntry) {
     const visible = items.filter(available);
     if (parent && (menuSubMenu(parent).popupRender || popupRender)) {
-      // Пользовательский список может переставить строки, сохранив их ключи и пути.
+      // A custom list can reorder rows while retaining their keys and paths.
       visible.sort(comparePopupItems);
     }
     return visible;
@@ -623,7 +622,7 @@
   });
 
   function keydown(event: KeyboardEvent & { currentTarget: EventTarget & HTMLUListElement; }) {
-    // Вложенные portal могут находиться в одном контейнере; событие обрабатывается один раз.
+    // Nested portals can share a container. Each event is handled once.
     if (handledKeys.has(event)) {
       return;
     }
@@ -634,7 +633,7 @@
       || target && element.id === target.id);
     const key = match?.[0];
     if (key !== undefined || event.target === rootElement) {
-      // Элементы управления в собственном содержимом popup получают обычные клавиши.
+      // Controls in the popup's custom content receive ordinary key events.
       const entry = key === undefined ? null : navigationEntry(key) ?? null;
       void keyboard(entry, event);
     }

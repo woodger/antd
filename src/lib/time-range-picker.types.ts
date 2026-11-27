@@ -20,11 +20,11 @@ export type TimeRangePickerFocusOptions = FocusOptions & {
   cursor?: 'start' | 'end' | 'all';
 };
 
-/** В диапазоне semantic callback получает resolved size/disabled и исходный variant. */
+/** In the semantic callback range receives size/disabled and the original variant. */
 export type TimeRangePickerSemantic<DateType extends object = Dayjs> = TimePickerSlots
   | ((info: { props: TimeRangePickerProps<'time', DateType>; }) => TimePickerSlots | undefined);
 
-/** Пара дат с picker=time; каждая граница подтверждается отдельно, как в rc-picker. */
+/** A pair of dates with picker=time; each boundary is confirmed separately, as in rc-picker. */
 export interface TimeRangePickerProps<
   Mode extends DatePickerMode = 'time', DateType extends object = Dayjs
 > extends Omit<
@@ -35,7 +35,7 @@ export interface TimeRangePickerProps<
     | 'cellRender' | 'picker' | 'mode'
 > {
   placeholder?: string | [string, string];
-  /** Заполняет только панель и кандидат OK; одиночная дата относится к start. */
+  /** Fills only the panel and candidate OK; the single date refers to the start. */
   defaultOpenValue?: DateType | [DateType, DateType];
   changeOnScroll?: boolean;
   allowClear?: boolean | { clearIcon?: TimePickerContent; };
@@ -57,11 +57,11 @@ export interface TimeRangePickerProps<
     value: [DateType, DateType],
     info: RangePickerInfo & { source: 'reset' | 'panel'; mode: [Mode, Mode]; }
   ): void;
-  /** Пользовательская панель может изменить режим одной границы. */
+  /** The user panel can change the mode of a single boundary. */
   onPanelChange?(value: [DateType | null, DateType | null], modes: [Mode, Mode]): void;
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
-  /** Вызывается и для native controls панели; info относится к активной границе. */
+  /** Called for the native panel; info refers to the active boundary. */
   onfocus?: (event: FocusEvent, info: RangePickerInfo) => void;
   onblur?: (event: FocusEvent, info: RangePickerInfo) => void;
   onFocus?: TimeRangePickerProps['onfocus'];
@@ -69,12 +69,12 @@ export interface TimeRangePickerProps<
   onKeyDown?: (event: KeyboardEvent) => void;
 }
 
-/** Реализация принимает footer обеих публичных сигнатур. */
+/** The implementation takes the footer of both public signatures. */
 export type TimeRangePickerRuntimeProps<DateType extends object = Dayjs> = Omit<
   TimeRangePickerProps<DatePickerMode, DateType>, 'renderExtraFooter'
 > & { renderExtraFooter?: PickerModeFooter<DatePickerMode>; };
 
-/** Режим времени в семействе DatePicker также принимает вложенные настройки часов. */
+/** The time mode in family DatePicker also accepts nested watch settings. */
 export interface TimeRangePickerModeOptions<DateType extends object> {
   picker: 'time';
   showTime?: boolean | (Omit<RangePickerTimeConfig<DateType>, 'disabledTime'> &

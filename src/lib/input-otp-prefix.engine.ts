@@ -1,6 +1,6 @@
 import template from './vendor/input-otp-prefix.css.js';
 
-/** OTP descendants используют prefix владельца; вложенный Input сохраняет свой namespace. */
+/** OTP descendants use prefix of the owner; nested Input keeps its namespace. */
 export function getInputOTPPrefixCss(prefix: string) {
   if (prefix === 'ant-otp') {
     return undefined;

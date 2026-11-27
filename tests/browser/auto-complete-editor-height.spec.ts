@@ -20,7 +20,7 @@ const cases = [
   ['author-height', 'author-height']
 ] as const;
 
-/** Сверяет размеры и поведение подключённого DOM после обновления props. */
+/** Verifies the dimensions and behavior of the connected DOM after the props update. */
 async function expectEditorState(
   editor: Locator,
   original: ElementHandle<Element>,
@@ -35,7 +35,7 @@ async function expectEditorState(
     const surface = content?.parentElement;
     if (!content || !surface) throw new Error('Missing AutoComplete layout');
 
-    /** Измеряет бокс без координат обёртки тестовой страницы. */
+    /** Measures the box without the coordinates of the test page. */
     function box(element: HTMLElement) {
       const { width, height } = element.getBoundingClientRect();
       return { width, height };
@@ -128,7 +128,7 @@ test('AutoComplete hydrates an initially filled custom editor at its full height
     await page.waitForFunction(() => Boolean(window.disposeAutoCompleteEditorHeight));
 
     const source = readAutoCompleteEditorHeightCase('initial-height-counterpart');
-    // До правки гидратация серверного textarea ставила каретку в конец значения.
+    // Prior to the edit, the hydration of the server textarea put the carriage at the end of the value.
     const endOfValue = source.before.value.length;
     await expectEditorState(editor, original, { ...source.before, selection: [endOfValue, endOfValue] });
     await expect(page.locator('#auto-complete-editor-height-fixture'))

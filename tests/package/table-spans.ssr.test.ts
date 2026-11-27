@@ -5,7 +5,7 @@ import registry from '../porting-registry';
 import TableSpansFixture from '../browser/fixtures/TableSpansFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-spans-reference.json';
 
-/** Снимает те же spans и исходные индексы из серверного markup. */
+/** Captures the same spans and original indexes from server markup. */
 function cells(markup: string) {
   return Array.from(markup.matchAll(/<(?:th|td)\b([^>]*)>/g), ([, attrs]) => ({
     hidden: attrs.includes('aria-hidden="true"'),
@@ -18,7 +18,7 @@ function cells(markup: string) {
   })).filter(cell => !cell.hidden).map(cell => cell.state);
 }
 
-/** Читает ключи строк, разделяя обычный поток и виртуальные объединения. */
+/** Reads row keys and distinguishes regular flow from virtual merged cells. */
 function bodyRows(markup: string, part: 'row' | 'span-row') {
   const pattern = new RegExp(
     `<tr\\b(?=[^>]*data-ant-table-part="${part}")[^>]* data-row-key="([^"]+)"[^>]*>([\\s\\S]*?)</tr>`,

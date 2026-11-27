@@ -1,6 +1,6 @@
 <script lang="ts" generics="T = unknown">
-  // Связывает выбор файлов, drag и paste с контроллером Upload. Контроллер отвечает за подготовку
-  // партий, callbacks и отмену транспорта.
+  // Connects file selection, drag, and paste to the Upload controller. The controller prepares
+  // batches, invokes callbacks, and cancels transport.
   import { onDestroy, untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getUploadPrefixCss } from './upload-prefix.engine';
@@ -66,7 +66,7 @@
   } = $derived(suppliedProps);
   const config = useConfig();
   let accept = $derived(customAccept ?? config.upload?.accept ?? '');
-  // Shared config не фиксирует response type отдельного Upload<T>.
+  // Shared config does not fix the response type of a particular Upload<T>.
   let request = $derived(
     customRequest || config.upload?.customRequest as UploadProps<T>['customRequest']
   );
@@ -75,7 +75,7 @@
   let componentPrefix = $derived(config.getPrefixCls('upload', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefixCss = $derived(getUploadPrefixCss(componentPrefix, rootPrefix));
-  // В браузере сохраняются строковые attributes Source; SSR канонизирует boolean attribute.
+  // The browser retains upstream string attributes. SSR canonicalizes the boolean attribute.
   let directoryAttributes = $derived<Record<string, string>>(directory
     ? { directory: 'directory', webkitdirectory: 'webkitdirectory' } : {});
   const componentTheme = useComponentTheme('Upload');
@@ -128,13 +128,13 @@
     [componentTheme.style, sharedStyles.root, semanticStyles.root].filter(Boolean).join(';')
       || undefined
   );
-  // Trigger сбрасывает vendor defaults, сохраняя variables semantic root и их scope.
+  // Trigger resets vendor defaults and retains semantic-root variables and their scope.
   let inheritedRootVariables = $derived(
     [...getInlineStyleDeclarations([sharedStyles.root, semanticStyles.root])]
       .filter(({ property }) => property.startsWith('--'))
       .map(({ property }) => `${property}:inherit`).join(';')
   );
-  // Bridge нужен и на trigger: локальный prefix должен перекрывать значение wrapper.
+  // The trigger also needs the bridge so the local prefix can override the wrapper value.
   let triggerStyle = $derived(
     [
       componentTheme.style,
@@ -209,7 +209,7 @@
   }
   function transferFiles(transfer: DataTransfer | null) {
     const all = [...transfer?.files ?? []];
-    // rc-upload single paste/drop берёт первый исходный файл до accept filtering.
+    // For single paste or drop, rc-upload takes the first original file before accept filtering.
     return multiple ? all.filter(file => filterUploadFile(file, accept, true)) : all.slice(0, 1);
   }
   async function uploadTransfer(transfer: DataTransfer | null) {
@@ -260,7 +260,7 @@
   }
 </style>
 {#snippet trigger()}
-  <!-- svelte-ignore a11y_no_static_element_interactions, a11y_no_noninteractive_tabindex — tabindex появляется только вместе с role=button. -->
+  <!-- svelte-ignore a11y_no_static_element_interactions, a11y_no_noninteractive_tabindex — tabindex is present only with role=button. -->
   <span data-ant-upload-control class={[
       componentPrefix,
       type === 'drag' && `${componentPrefix}-btn`,

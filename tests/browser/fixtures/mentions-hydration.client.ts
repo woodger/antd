@@ -1,4 +1,4 @@
-// Активирует публичный компонент после действий с SSR-узлом.
+// Activates the public component after actions with the SSR node.
 import '@woodger/antd/styles.css';
 import { hydrate, mount } from 'svelte';
 import Fixture from './MentionsHydrationFixture.svelte';

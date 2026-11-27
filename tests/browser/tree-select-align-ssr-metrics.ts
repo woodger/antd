@@ -1,6 +1,6 @@
 import type { TreeSelectAlignSample } from './fixtures/tree-select-align-cases';
 
-/** DOM-free SSR: читаем только emitted attributes и actual callback receipts, без предполагаемой геометрии. */
+/** DOM-free SSR reads only emitted attributes and actual callback receipts without assuming geometry. */
 export function readTreeSelectAlignSSR(html: string) {
   const decode = (value: string) => value.replace(/&(?:amp|lt|gt|quot|#39|#x27);/g, entity =>
     ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);
@@ -68,7 +68,7 @@ export function readTreeSelectAlignSSR(html: string) {
   };
 }
 
-/** Существующий Native default/input root: role=presentation и provider dir; custom root задаёт attrs сам. */
+/** Existing Native default/input root: role=representation and provider dir; custom root sets attrs itself. */
 export function treeSelectAlignNativeSSRExpected<View extends { root: {
   dir: string | null;
   role: string | null

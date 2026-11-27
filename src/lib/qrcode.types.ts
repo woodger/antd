@@ -4,14 +4,14 @@ import type { HTMLAttributes, HTMLCanvasAttributes, SVGAttributes } from 'svelte
 export type QRCodeErrorLevel = 'L' | 'M' | 'Q' | 'H';
 export type QRStatus = 'active' | 'expired' | 'loading' | 'scanned';
 
-/** Исходные три подписи QRCode; ConfigProvider.locale.qrcode объединяется по полям. */
+/** The first three labels QRCode; ConfigProvider.locale.qrcode are combined into fields. */
 export interface QRCodeLocale {
   expired: string;
   refresh: string;
   scanned: string;
 }
 
-/** Низкоуровневые настройки изображения rc-qrcode; QRCode использует icon/iconSize. */
+/** Low-level image settings rc-qrcode; QRCode uses icon/iconSize. */
 export interface ImageSettings {
   src: string;
   height: number;
@@ -23,7 +23,7 @@ export interface ImageSettings {
   crossOrigin?: 'anonymous' | 'use-credentials' | '';
 }
 
-/** Тип rc-qrcode для совместимости; низкоуровневые React renderers не экспортируются. */
+/** Type rc-qrcode for compatibility; low-level React renderers are not exported. */
 export interface QRProps {
   value: string | string[];
   boostLevel?: boolean;
@@ -41,7 +41,7 @@ export interface QRProps {
 export type QRPropsCanvas = QRProps & Omit<HTMLCanvasAttributes, keyof QRProps>;
 export type QRPropsSvg = QRProps & Omit<SVGAttributes<SVGSVGElement>, keyof QRProps>;
 
-/** Status snippet вызывается только для неактивного статуса и получает refresh callback. */
+/** Status snippet is called only for inactive status and receives a callback. */
 export interface StatusRenderInfo {
   status: Exclude<QRStatus, 'active'>;
   locale: QRCodeLocale;
@@ -53,11 +53,11 @@ export interface QRCodeSlots {
   cover?: string;
 }
 
-/** Callback получает разрешённые type/size/status/bordered/errorLevel/bgColor. */
+/** Callback receives allowed type/size/status/bordered/errorLevel/bgColor. */
 export type QRCodeSemantic = QRCodeSlots
   | ((info: { props: QRCodeProps; }) => QRCodeSlots | undefined);
 
-/** Root/cover оформление; вложенный ConfigProvider.qrcode заменяет объект целиком. */
+/** Root/cover decoration; nested ConfigProvider.qrcode replaces the object in its entirety. */
 export interface QRCodeConfig {
   class?: string;
   style?: string;
@@ -65,44 +65,44 @@ export interface QRCodeConfig {
   styles?: QRCodeSemantic;
 }
 
-/** QRCode Ant Design 6.6.8 с canvas/SVG; children и title не передаются в рисунок. */
+/** QRCode Ant Design 6.6.8 from canvas/SVG; children and title are not transferred to drawing. */
 export interface QRCodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style' | 'class'> {
-  /** Локальный prefix root/cover/status classes; пустая строка наследует ConfigProvider prefix. */
+  /** Local prefix root/cover/status classes; blank line inherits ConfigProvider prefix. */
   prefixCls?: string;
-  /** Пустая строка не создаёт DOM; массив задаёт отдельные сегменты, включая пустой массив. */
+  /** An empty line does not create DOM; the array sets individual segments, including an empty array. */
   value: string | string[];
-  /** По умолчанию canvas; SVG полностью формируется при SSR, canvas рисуется после mount. */
+  /** By default canvas; SVG is fully generated at SSR, canvas is drawn after mount. */
   type?: 'canvas' | 'svg';
-  /** Размер bitmap и fallback root width/height, по умолчанию 160. */
+  /** Bitmap size and fallback root width/height, by default 160. */
   size?: number;
-  /** По умолчанию цвет текста текущей темы; style.color не меняет модули. */
-  /** При token theme берётся global colorText; component aliases не меняют цвет модулей. */
+  /** By default, the text color of the current theme; style.color does not change the modules. */
+  /** Token themes use the global colorText. Component aliases leave module colors unchanged. */
   color?: string;
   bgColor?: string;
-  /** По умолчанию M. */
+  /** Definition M. */
   errorLevel?: QRCodeErrorLevel;
-  /** По умолчанию true: повышает коррекцию, если версия остаётся прежней. */
+  /** By default true: Increases the correction if the version stays the same. */
   boostLevel?: boolean;
-  /** Quiet zone в модулях: floor и clamp снизу до 0; по умолчанию 0. */
+  /** Quiet zone in modules: floor and clamp from the bottom to 0; by default 0. */
   marginSize?: number;
-  /** Изображение загружается с crossOrigin=anonymous; в SVG вырезается место до загрузки. */
+  /** The image is loaded from crossOrigin=anonymous; in SVG the place is carved before download. */
   icon?: string;
-  /** По умолчанию 40×40 px; 0 сохраняет fallback rc-qrcode к 10% от size. */
+  /** By default 40 × 40 px; 0 preserves fallback rc-qrcode to 10% from size. */
   iconSize?: number | { width: number; height: number; };
-  /** По умолчанию true; false сохраняет прозрачную границу без padding/radius. */
+  /** By default true; false preserves a transparent boundary without padding/radius. */
   bordered?: boolean;
   status?: QRStatus;
   onRefresh?: () => void;
-  /** Заменяет default cover content; пустой snippet не включает fallback. */
+  /** Replaces the default cover content; the empty snippet does not include fallback. */
   statusRender?: Snippet<[StatusRenderInfo]>;
   class?: string;
   rootClassName?: string;
-  /** После semantic root; только width/height plain style передаются также canvas/SVG. */
+  /** After semantic root; only width/height plain style are also transmitted canvas/SVG. */
   style?: string;
   classNames?: QRCodeSemantic;
   styles?: QRCodeSemantic;
-  /** Совместимый alias; нативный onclick имеет приоритет. */
+  /** Compatible alias; native onclick has priority. */
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
-  /** Нативный root ref вместо React QRCodeRef; очищается при пустом value и unmount. */
+  /** Native root ref instead of React QRCodeRef; cleared at an empty value and unmount. */
   nativeElement?: HTMLDivElement;
 }

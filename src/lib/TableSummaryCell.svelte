@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Итоговая ячейка занимает физические колонки владельца, включая служебные.
+  // The summary cell spans the owner's physical columns, including utility columns.
   import { useTableSummary } from './table-summary-context';
   import type { TableSummaryCellProps } from './table.types';
 

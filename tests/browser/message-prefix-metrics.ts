@@ -1,4 +1,4 @@
-/** Native viewport и перенос длинных слов проверяются отдельно от общих Source CSS metrics. */
+/** Native viewport and long word transfer are checked separately from general Source CSS metrics. */
 export function snapshotMessagePrefix() {
   const notice = document.querySelector<HTMLElement>('.fixture-message-prefix')!;
   const prefix = [...notice.classList].find(value => value.endsWith('-notice'))!.slice(0, -7);
@@ -7,7 +7,7 @@ export function snapshotMessagePrefix() {
   const typography = ['font-family', 'font-size', 'font-weight', 'line-height', 'color'];
   const box = ['width', 'height', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
     'border-top-width', 'border-top-color', 'border-radius', 'background-color', 'box-shadow'];
-  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
+  // Fixes computed declarations. The missing node remains null in the picture.
   function css(node: Element | null, keys: string[]) {
     if (!node) {
       return null;
@@ -16,7 +16,7 @@ export function snapshotMessagePrefix() {
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   }
-  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
+  // He chooses a part of the complete CSS class of the current prefix, regardless of the neighboring classes.
   const part = (suffix: string) => notice.querySelector(`[class~="${prefix}${suffix}"]`);
 
   return {

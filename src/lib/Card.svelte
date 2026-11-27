@@ -164,7 +164,7 @@
   {/if}
   {#if cardHasContent(cover)}<div class={[`${prefixCls}-cover`, classes.cover]} style={slots.cover}>{@render value(cover)}</div>{/if}
   {#if loading || children}
-    <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус парковки при замене содержимого Skeleton.) -->
+    <!-- svelte-ignore a11y_no_noninteractive_tabindex (Holds focus while Skeleton replaces the content.) -->
     <div data-ant-card-part="body" bind:this={body} class={[`${prefixCls}-body`, classes.body]} style={slots.body ?? ''} tabindex="-1" aria-busy={loading || undefined}>
       {#if loading}<Skeleton active title={false} paragraph={{ rows: 4 }} />{:else}{@render children?.()}{/if}
     </div>

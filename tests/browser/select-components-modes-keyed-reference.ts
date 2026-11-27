@@ -5,10 +5,10 @@ import { gunzipSync } from 'node:zlib';
 import { selectComponentSamples } from './select-components-modes-cases.mjs';
 import type { ModesCase } from './select-components-modes-reference';
 import type { ComponentsSSRState } from './select-components-reference';
-// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
-// результат.
+// Allows the path to a local image relative to the module. Current working directory does not
+// affect the result.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
-// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
+// Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
 const protocol = 'd8eea1e2c35befcaed18d700e9f2f2291f2ea476589d3425984e563981e6ed24';
 interface Copy { path: string; storageBytes: number; storageSha256: string; decodedBytes: number; decodedSha256: string;

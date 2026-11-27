@@ -15,7 +15,7 @@ export interface StepsIconInfo {
   components: { Icon: typeof StepIcon; };
 }
 export type StepsIconRender = Snippet<[Snippet, StepsIconInfo]>;
-/** Внутренние параметры отображения одного элемента Steps. */
+/** The internal display parameters of one Steps element. */
 export interface StepItemViewProps {
   prefixCls?: string;
   item: NormalizedStepsDataItem;

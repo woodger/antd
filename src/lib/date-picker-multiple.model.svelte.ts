@@ -1,5 +1,5 @@
-// Хранит принятый массив отдельно от выбора в открытой панели. Даты и их
-// ссылки сохраняются, сортировка затрагивает только новый массив выбора.
+// Keeps committed values separate from selection in the open panel. Date references are preserved,
+// and sorting only affects the new selection array.
 import { untrack } from 'svelte';
 import type { createDatePickerEngine } from './date-picker.engine';
 import type { PickerDateOperations } from './picker-date-operations.engine';
@@ -20,13 +20,13 @@ interface MultiplePickerOptions<DateType extends object> {
 
 export const emptyPickerDates: readonly never[] = [];
 
-/** Связывает изменения панели, подтверждение и отклонённое значение владельца. */
+/** Coordinates panel changes, confirmation, and values rejected by the owner. */
 export function createMultiplePicker<DateType extends object>(
   options: MultiplePickerOptions<DateType>,
   dates: PickerDateOperations<DateType>,
   { formatPicker, samePickerPanelValue }: ReturnType<typeof createDatePickerEngine<DateType>>
 ) {
-  /** Строго сравнивает порядок и полные календарные поля выбранных дат. */
+  /** Compares both the order and all calendar fields of the selected dates. */
   function sameDates(left: readonly DateType[], right: readonly DateType[]) {
     return left.length === right.length && left.every((date, index) => {
       const other = right[index];
@@ -48,14 +48,14 @@ export function createMultiplePicker<DateType extends object>(
     draft = accepted;
   });
 
-  /** Выводит одну дату общим форматом поля, включая locale и callback. */
+  /** Formats one date with the shared field format, locale, and callback. */
   function format(value: DateType) {
     const { locale, formats } = options;
 
     return formatPicker(value, locale, formats);
   }
 
-  /** Обновляет список панели и сообщает владельцу только фактическое изменение. */
+  /** Updates the panel list and informs the owner only when it changes. */
   function update(values: readonly DateType[]) {
     const props = options.props;
     const next = [...values];
@@ -69,7 +69,7 @@ export function createMultiplePicker<DateType extends object>(
     }
   }
 
-  /** Кнопка тега удаляет все значения того же периода или времени с точностью до секунды. */
+  /** The tag button removes all values in the same period or at the same time to the second. */
   function withoutPeriod(value: DateType) {
     const { picker, locale } = options;
     if (picker === 'time') {
@@ -79,7 +79,7 @@ export function createMultiplePicker<DateType extends object>(
     return draft.filter(date => !samePickerPanelValue(value, date, false, picker, locale));
   }
 
-  /** Повторный выбор времени снимает первый совпавший тег, как useToggleDates. */
+  /** Selecting the same time again removes the first matching tag, as in useToggleDates. */
   function toggle(value: DateType) {
     if (options.picker === 'time') {
       const index = draft.findIndex(date => dates.sameTime(value, date));
@@ -98,7 +98,7 @@ export function createMultiplePicker<DateType extends object>(
     return remainder.length === draft.length ? [...draft, value] : remainder;
   }
 
-  /** Публикует проверенный массив. Полная очистка имеет специальный null payload. */
+  /** Publishes the validated array. Clearing the selection has a special null payload. */
   function publish(clear = false, accepted?: readonly DateType[]) {
     const { props, disabled, valid } = options;
 
@@ -114,7 +114,7 @@ export function createMultiplePicker<DateType extends object>(
     return true;
   }
 
-  /** Восстанавливает принятый список. Отмена панели также сообщает о смене черновика. */
+  /** Restores the committed list. Canceling the panel also reports a draft change. */
   function reset(notify: boolean) {
     const accepted = saved;
 
@@ -127,23 +127,23 @@ export function createMultiplePicker<DateType extends object>(
   }
 
   return {
-    /** Интерактивное поле показывает черновик до закрытия панели. */
+    /** The interactive field displays the draft until the panel closes. */
     get values() { return draft; },
-    /** Начинает новый цикл подтверждения после открытия. */
+    /** Begins a new confirmation session after opening. */
     open() {
       confirmed = false;
     },
-    /** Сохраняет подсветку панели и pending tags до завершения выбора. */
+    /** Preserves the panel highlight and pending tags until selection finishes. */
     select(value: DateType) {
       confirmed = false;
       update(toggle(value));
     },
-    /** Пресет применяет период сразу и оставляет панель открытой. */
+    /** A preset applies the period immediately and keeps the panel open. */
     preset(value: DateType) {
       update(toggle(value));
       publish();
     },
-    /** В открытой панели удаление остаётся черновиком до её закрытия. */
+    /** Removal in the open panel stays in the draft until the panel closes. */
     remove(value: DateType, open: boolean) {
       confirmed = false;
       update(withoutPeriod(value));
@@ -152,13 +152,13 @@ export function createMultiplePicker<DateType extends object>(
         reset(false);
       }
     },
-    /** Проверяет возможность подтверждения всего выбранного набора. */
+    /** Checks whether the entire selection can be confirmed. */
     get canConfirm() {
       const { valid } = options;
 
       return draft.length > 0 && draft.every(valid);
     },
-    /** Сообщает черновик и готовит отправку с value, действовавшим до onOk. */
+    /** Reports the draft and prepares submission with the value from before onOk. */
     prepareConfirmation() {
       if (!this.canConfirm) {
         return undefined;
@@ -169,10 +169,10 @@ export function createMultiplePicker<DateType extends object>(
       const accepted = onOk && saved;
       onOk?.call(props, [...draft]);
 
-      /** Время отправки выбирает владелец сессии подтверждения. */
+      /** The confirmation session owner determines when to submit. */
       return () => publish(false, accepted);
     },
-    /** Завершает календарный выбор после успешной отправки. */
+    /** Finishes calendar selection after a successful submission. */
     confirm() {
       const submit = this.prepareConfirmation();
       if (!submit) {
@@ -182,7 +182,7 @@ export function createMultiplePicker<DateType extends object>(
       confirmed = submit();
       return confirmed;
     },
-    /** Применяет черновик после закрытия либо возвращает принятые даты. */
+    /** Commits the draft on close or restores the accepted dates. */
     close(needsConfirmation: boolean) {
       if (confirmed || !needsConfirmation
         && (sameDates(saved, draft) || draft.length && publish())) {
@@ -193,7 +193,7 @@ export function createMultiplePicker<DateType extends object>(
       }
       confirmed = false;
     },
-    /** Явная очистка может опубликовать пустой выбор независимо от needConfirm. */
+    /** An explicit clear can publish an empty selection regardless of needConfirm. */
     clear() {
       update(emptyPickerDates);
       publish(true);

@@ -30,7 +30,7 @@
     onSelect(event);
     await tick();
 
-    // Владелец может отклонить controlled selection; браузер уже переключил native checkbox.
+    // The owner can reject controlled selection after the browser has toggled the native checkbox.
     if (input) {
       input.checked = checked;
       input.indeterminate = indeterminate;

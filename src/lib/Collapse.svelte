@@ -1,6 +1,6 @@
 <script lang="ts">
-  // Управляет открытием панелей и клавиатурным фокусом по ключам. Недоступные заголовки
-  // исключаются из навигации.
+  // Manages panel expansion and keyboard focus by key. Keyboard navigation skips unavailable
+  // headers.
   import { onDestroy, onMount, untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useComponentTheme } from './theme-component.svelte';

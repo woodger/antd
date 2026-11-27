@@ -1,4 +1,4 @@
-/** Сохраняет native focus связанного контрола при пересоздании Field. */
+/** Reserves the native focus of connected control when recreating Field. */
 export function captureFormResetFocus(host: HTMLElement | undefined, id: string) {
   if (!host?.isConnected) {
     return;
@@ -8,7 +8,7 @@ export function captureFormResetFocus(host: HTMLElement | undefined, id: string)
     ? [...host.querySelectorAll<HTMLElement>('[id]')].find((node) => node.id === id) : undefined);
 }
 
-/** NoStyle ищет новый control через регистрацию, поскольку собственного DOM-контейнера нет. */
+/** NoStyle is looking for a new control through registration, since there is no own DOM-container. */
 export function captureFormControlResetFocus(control: () => Element | undefined) {
   const previous = control();
   if (!previous?.isConnected) {

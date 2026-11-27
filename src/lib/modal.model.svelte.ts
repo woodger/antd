@@ -1,4 +1,4 @@
-// Владеет очередью подтверждений и результатом действий. Holder монтирует DOM в своём контексте.
+// Has a queue of confirmations and the result of actions. Holder mounts DOM in its context.
 import { tick } from 'svelte';
 import { runModalAction } from './modal-confirm-action.engine';
 import { registerModalDestroy } from './modal-destroy.dom';
@@ -19,7 +19,7 @@ interface Entry {
   unregister?: () => void;
 }
 
-/** Изолированные подтверждения; DOM, тема и локаль принадлежат ModalHolder. */
+/** Insulated Confirmations; DOM, theme and locale belong to ModalHolder. */
 export function createModal() {
   const entries = new Map<number, Entry>();
   let confirmations = $state.raw<readonly ModalConfirmation[]>([]);
@@ -40,7 +40,7 @@ export function createModal() {
   }
 
   function register(entry: Entry) {
-    // Source destroyAll снимает контекстную панель сразу, как при удалении holder.
+    // Source destroyAll removes the context panel as soon as when removing the holder.
     entry.unregister = registerModalDestroy(() => {
       remove(entry);
       entry.resolve(false);
@@ -68,7 +68,7 @@ export function createModal() {
       config.afterOpenChange?.(false);
     }
     finally {
-      // Cleanup дочерних компонентов должен видеть изменения, внесённые в этих callbacks.
+      // Cleanup of child components should see the changes made in these callbacks.
       void tick().then(() => remove(entry));
     }
   }
@@ -112,7 +112,7 @@ export function createModal() {
     }
     const callback = entry.view.config.onCancel;
     close(entry, false);
-    // Escape/close/mask уже закрыли dialog; callback не задерживает закрытие.
+    // Escape/close/mask has already closed the dialog; the callback does not delay the closure.
     void Promise.resolve(callback?.(() => {})).catch(() => {});
   }
 
@@ -151,7 +151,7 @@ export function createModal() {
         }
         const current = { ...entry.view.config };
         const changes = typeof patch === 'function' ? patch(current) : patch;
-        // update callback может уничтожить окно или отсоединить holder.
+        // update callback can destroy the window or disconnect the holder.
         if (entries.get(entry.view.id) !== entry || !entry.view.open) {
           return;
         }
@@ -159,7 +159,7 @@ export function createModal() {
         entry.view = { ...entry.view, config, type: config.type };
         publish();
       },
-      // oxlint-disable-next-line unicorn/no-thenable -- Hook Modal API возвращает PromiseLike handle.
+      // oxlint-disable-next-line unicorn/no-thenable -- The Modal hook API returns a PromiseLike handle.
       then: completion.then.bind(completion)
     };
   }
