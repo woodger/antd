@@ -1,12 +1,11 @@
 // Normalizes keys Tabs and sets the keyboard order. DOM id is equally constructed from the key for
 // the header and the corresponding panel.
 import type { TabsItem, TabsPlacement } from './tabs.types';
+import { encodeDomIdKey } from './dom-id';
 
 /** ID native header or panel for fully custom navigation Tabs. */
 export function getTabsItemId(rootId: string, key: string, kind: 'tab' | 'panel'): string {
-  // Rule 2: Array.from supplies each code point as a nonempty string.
-  const encoded = Array.from(key, character => character.codePointAt(0)!.toString(16)).join('-');
-  return `${rootId}-${kind}-${encoded || 'empty'}`;
+  return `${rootId}-${kind}-${encodeDomIdKey(key)}`;
 }
 
 // Explicit closable is taken into account separately from the empty icon and disabled.

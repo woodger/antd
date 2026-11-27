@@ -5,6 +5,7 @@
   import { setStepsIcon } from './steps-icon-context';
   import { useWave } from './wave.svelte';
   import { stepsDataHasContent } from './steps-data.engine';
+  import { encodeDomIdKey } from './dom-id';
   import type { StepsDataContent } from './steps-data.engine';
   import type { StepItemViewProps } from './steps-expanded.types';
   let {
@@ -60,9 +61,7 @@
       return !progress;
     }
   });
-  const encodedKey = $derived(
-    Array.from(item.key, character => character.codePointAt(0)!.toString(16)).join('-') || 'empty'
-  );
+  const encodedKey = $derived(encodeDomIdKey(item.key));
   let statusId = $derived(`${rootId}-status-${encodedKey}`);
   let contentId = $derived(`${rootId}-content-${encodedKey}`);
 </script>

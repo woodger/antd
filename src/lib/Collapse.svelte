@@ -7,6 +7,7 @@
   import { getCollapsePrefixCss } from './collapse-prefix.engine';
   import CollapseItemView from './CollapseItemView.svelte';
   import { provideCollapse } from './collapse-context';
+  import { encodeDomIdKey } from './dom-id';
   import { useConfig } from './config-context';
   import {
     getCollapseFocusKey,
@@ -209,10 +210,7 @@
   });
 
   function itemId(key: string, kind: 'header' | 'panel' | 'label') {
-    const encoded = Array.from(key, (character) => character.codePointAt(0)!.toString(16)).join(
-      '-'
-    );
-    return `${rootId}-${kind}-${encoded || 'empty'}`;
+    return `${rootId}-${kind}-${encodeDomIdKey(key)}`;
   }
 
   function focusHeader(key: string | undefined) {

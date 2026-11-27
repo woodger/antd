@@ -65,7 +65,11 @@ describe('Tabs renderTabBar SSR', () => {
     expect(body).not.toMatch(/class="ant-tabs-body[^>]*o-body/);
   });
 
-  it.each(['', 'a/b', 'Ключ 🗝️'])('links custom native tabs and panels for key %j', key => {
+  it.each([
+    ['', 'empty'],
+    ['a/b', '61-2f-62'],
+    ['Ключ 🗝️', '41a-43b-44e-447-20-1f5dd-fe0f']
+  ])('links custom native tabs and panels for key %j', (key, encoded) => {
     const tab = getTabsItemId('custom', key, 'tab');
     const panel = getTabsItemId('custom', key, 'panel');
     const { body } = render(Tabs, { props: {
@@ -74,7 +78,7 @@ describe('Tabs renderTabBar SSR', () => {
       activeKey: key
     } });
 
-    expect(tab).toMatch(/^custom-tab-[a-z0-9-]+$/);
+    expect(tab).toBe(`custom-tab-${encoded}`);
     expect(panel).toBe(tab.replace('custom-tab-', 'custom-panel-'));
     expect(getTabsItemId('other', key, 'tab')).not.toBe(tab);
     expect(getTabsItemId('custom', key + 'x', 'tab')).not.toBe(tab);

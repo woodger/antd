@@ -3,6 +3,7 @@
   // requests.
   import { flushSync, onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
+  import { encodeDomIdKey } from './dom-id';
   import { connectPopup, getPopupActiveElement } from './popup.dom';
   import { connectPopupPortal } from './popup-portal.dom';
   import { getTooltipDelay } from './tooltip.engine';
@@ -600,8 +601,7 @@
   }
 
   function optionId(key: string) {
-    return `${popupId}-${Array.from(key, part => part.codePointAt(0)!.toString(16)).join('-')
-      || 'empty'}`;
+    return `${popupId}-${encodeDomIdKey(key)}`;
   }
 
   function focusOption(key: string | undefined) {
