@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import type { RenderEmptyComponent, RenderEmptyContent } from '../types';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import DefaultRenderEmpty from './DefaultRenderEmpty.svelte';
   import RenderContent from '../RenderContent.svelte';
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getSpacePrefixCss } from './space-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { spaceEntries, spaceGap, spaceHasContent, spaceOrientation } from './space.engine';
   import { connectFeedbackFocus } from '../feedback.dom';
   import type { SpaceContent, SpaceProps, SpaceSlots } from './space.types';

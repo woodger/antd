@@ -4,9 +4,9 @@
 
 <script lang="ts" generics="Href extends string | undefined = undefined">
   import { onMount, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useWave } from '../wave.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useWave } from '../wave/wave.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
   import { useForm } from '../form/form-context';
@@ -14,8 +14,8 @@
   import { connectButtonText } from './button.dom';
   import { getButtonPrefixCss } from './button-prefix.engine';
   import ButtonLoadingIcon from './ButtonLoadingIcon.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import Icon from '../Icon.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import Icon from '../icon/Icon.svelte';
   import type { ButtonColor, ButtonContent, ButtonElementProps } from './button.types';
   let {
     children,

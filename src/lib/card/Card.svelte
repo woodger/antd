@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { provideCard } from './card-context';
   import { getCardPrefixCss } from './card-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { cardHasContent, cardTabItems } from './card.engine';
   import { cardSemantics } from './card-semantic.engine';
   import { connectCardGrid } from './card.dom';

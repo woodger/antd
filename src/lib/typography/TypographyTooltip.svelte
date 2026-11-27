@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getTooltipActions, getTooltipDelay } from '../tooltip/tooltip.engine';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import TooltipPopup from '../tooltip/TooltipPopup.svelte';

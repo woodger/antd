@@ -1,6 +1,6 @@
 // Combines semantic slots Select settings. The prioritization of the inline layers depends on the
 // order, explicit removal of the property and CSS!important.
-import { getInlineStyleDeclarations } from '../inline-style.engine';
+import { getInlineStyleDeclarations } from '../style/inline-style.engine';
 import { serializeSelectDataStyle } from './select-data-style.engine';
 import type {
   SelectClassNames, SelectCSSProperties, SelectPopupClassNames, SelectPopupStyles,

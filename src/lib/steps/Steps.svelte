@@ -1,10 +1,10 @@
 <script lang="ts">
   import { useStepsComposition } from './steps-composition-context';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { mergeComponentSemantics } from '../semantic-style.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { getStepsPrefixCss } from './steps-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import StepItem from './StepItem.svelte';
   import { connectStepsFocus } from './steps.dom';
   import { getStepsStatus, normalizeStepsCurrent } from './steps.engine';

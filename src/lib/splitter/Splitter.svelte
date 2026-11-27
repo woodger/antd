@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getSplitterPrefixCss } from './splitter-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSplitterAria, splitterDraggerClasses } from './splitter.engine';
   import { observeSplitterSize } from './splitter.dom';
   import { createSplitterModel } from './splitter.model.svelte.js';

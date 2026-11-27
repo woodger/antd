@@ -6,9 +6,9 @@
   // Coordinates the native editor with value, clearing, the counter, and FormItem. The public ref
   // delegates to the same input.
   import { onDestroy, onMount, tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
   import { useForm, useFormField } from '../form/form-context';
@@ -18,9 +18,9 @@
   import { inputCountInfo, inputExceedValue, resolveInputClear } from './input-count.engine';
   import { inputChangeEvent } from './input-event.dom';
   import { getInputPrefixCss } from './input-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { InputProps, InputContent } from './input.types';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   let {
     value = $bindable(),

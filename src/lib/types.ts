@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
-import type { DesignTokenConfig } from './theme-token.types';
-import type { ComponentsConfig } from './theme-component-token.types';
+import type { DesignTokenConfig } from './theme/theme-token.types';
+import type { ComponentsConfig } from './theme/theme-component-token.types';
 import type { FormLocale } from './form/form.types';
 import type { TypographyLocale } from './typography/typography.types';
 import type { ColorPickerLocale } from './color-picker/color-picker.types';

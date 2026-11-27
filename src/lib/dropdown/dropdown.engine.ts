@@ -3,7 +3,7 @@ import type {
   DropdownConfig, DropdownMenuClickInfo, DropdownMenuEntry, DropdownPlacement, DropdownProps,
   DropdownSemantic, DropdownSlots
 } from './dropdown.types';
-import { serializeInlineStyleLayers } from '../inline-style.engine';
+import { serializeInlineStyleLayers } from '../style/inline-style.engine';
 import type { MenuClickInfo, MenuItem, MenuItemType } from '../menu/menu.types';
 
 const dropdownSlots = ['root', 'item', 'itemTitle', 'itemIcon', 'itemContent'] as const;

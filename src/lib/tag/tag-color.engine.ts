@@ -1,5 +1,5 @@
-import { FastColor } from '../fast-color.engine';
-import { presetColors } from '../theme-token.types';
+import { FastColor } from '../color/fast-color.engine';
+import { presetColors } from '../theme/theme-token.types';
 import type { TagProps, TagVariant } from './tag.types';
 
 export function getTagColor(

@@ -1,6 +1,6 @@
 // Allows design settings for the same props from the provider and owner of Modal.
 import type { HTMLAttributes } from 'svelte/elements';
-import { serializeInlineStyleLayers } from '../inline-style.engine';
+import { serializeInlineStyleLayers } from '../style/inline-style.engine';
 import type { ModalConfig, ModalProps, ModalSemantic, ModalSemanticName, ModalSemanticSlots }
   from './modal.types';
 

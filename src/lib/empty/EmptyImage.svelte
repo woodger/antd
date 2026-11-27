@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { resolveEmptyImageColors } from './empty-image.engine';
   // Geometry from Ant Design 6.6.8, es/empty/{empty,simple}.js, under MIT. See
   // vendor/LICENSE.ant-design.

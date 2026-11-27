@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { VirtualScrollAlign } from '../virtual-list.engine';
-import type { VirtualScrollOffset, VirtualScrollOffsetInfo } from '../virtual-list.types';
+import type { VirtualScrollAlign } from '../virtual-list/virtual-list.engine';
+import type { VirtualScrollOffset, VirtualScrollOffsetInfo } from '../virtual-list/virtual-list.types';
 import type { TreeMotionConfig } from './tree-motion.types';
 export type TreeKey = string | number | bigint;
 export type TreeExpandAction = false | 'click' | 'doubleClick';

@@ -2,13 +2,13 @@
   // Renders one card and its exit transition. Progress subscribes to the queue clock, and focus is
   // restored before inert is set and before DOM removal.
   import { onDestroy, tick, untrack } from 'svelte';
-  import Icon from '../Icon.svelte';
-  import { useConfig } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { inheritedComponentThemeStyle } from '../theme-component-style.engine';
+  import Icon from '../icon/Icon.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { inheritedComponentThemeStyle } from '../theme/theme-component-style.engine';
   import { notificationHolderKey, type NotificationNotice } from './notification.model.svelte.js';
-  import { animateNotice, focusAfterNotice } from '../notice.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
+  import { animateNotice, focusAfterNotice } from '../notice/notice.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import type {
     NotificationContent, NotificationInstance, NotificationSemanticName, NotificationSemanticSlots
   } from './notification.types';

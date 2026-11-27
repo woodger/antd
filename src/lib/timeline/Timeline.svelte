@@ -1,11 +1,11 @@
 <script lang="ts">
   import Steps from '../steps/Steps.svelte';
   import { setStepsComposition } from '../steps/steps-composition-context';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { mergeComponentSemantics } from '../semantic-style.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { getTimelinePrefixCss } from './timeline-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { timelineItems, timelineLayoutAlternate, timelineMode } from './timeline.engine';
   import type { StepsProps } from '../steps/steps.types';
   import type { TimelineProps, TimelineSlots } from './timeline.types';

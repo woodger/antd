@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSkeletonPrefixCss } from './skeleton-prefix.engine';
   import type { Snippet } from 'svelte';
   import type { SkeletonAvatarSize, SkeletonElementProps } from './skeleton.types';

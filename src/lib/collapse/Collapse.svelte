@@ -2,13 +2,13 @@
   // Manages panel expansion and keyboard focus by key. Keyboard navigation skips unavailable
   // headers.
   import { onDestroy, onMount, untrack } from 'svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getCollapsePrefixCss } from './collapse-prefix.engine';
   import CollapseItemView from './CollapseItemView.svelte';
   import { provideCollapse } from './collapse-context';
   import { encodeDomIdKey } from '../dom-id';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import {
     getCollapseFocusKey,
     getCollapseKeys,

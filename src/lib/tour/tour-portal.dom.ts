@@ -1,4 +1,4 @@
-export { connectPopupPortal as connectTourPortal } from '../popup-portal.dom';
+export { connectPopupPortal as connectTourPortal } from '../popup/popup-portal.dom';
 
 interface EscapeScope {
   callbacks: ((event: KeyboardEvent) => void)[];

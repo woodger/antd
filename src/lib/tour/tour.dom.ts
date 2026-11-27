@@ -265,4 +265,4 @@ export function getTourOffsetStyle(position: TourAlignment | undefined) {
       + `bottom:auto`);
 }
 
-export { getPopupArrowStyle as getTourArrowStyle } from '../popup-position.engine';
+export { getPopupArrowStyle as getTourArrowStyle } from '../popup/popup-position.engine';

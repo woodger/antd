@@ -7,12 +7,12 @@
   // editor.
   import { onDestroy, untrack } from 'svelte';
   import Input from './Input.svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { inputPasswordIcons } from './input-password-icons';
   import { getInputPasswordPrefixCss } from './input-password-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { InputPasswordProps } from './input-password.types';
   import type { InputSemanticSlots } from './input.types';
 

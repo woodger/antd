@@ -1,10 +1,10 @@
 <script lang="ts">
   import { createAffixRuntime } from './affix.dom';
   import { connectFeedbackFocus } from '../feedback.dom';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useConfig } from '../config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
   import { getAffixPrefixCss } from './affix-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { AffixPosition, AffixProps, AffixUpdatePosition } from './affix.types';
   let {
     prefixCls,

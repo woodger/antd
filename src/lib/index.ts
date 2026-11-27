@@ -367,7 +367,7 @@ export type {
   DescriptionsConfig,
   DescriptionsSemantic
 } from './descriptions/descriptions.types';
-export { default as ConfigProvider } from './config-provider.component';
+export { default as ConfigProvider } from './config-provider/config-provider.component';
 export { default as Button } from './button/Button.svelte';
 export type {
   ButtonLinkProps,
@@ -409,8 +409,8 @@ export type {
 export { default as InputNumber } from './input-number/InputNumber.svelte';
 export { default as Slider } from './slider/Slider.svelte';
 export { default as ColorPicker } from './color-picker/ColorPicker.svelte';
-export type { AggregationColor as Color } from './color';
-export type { ColorGenInput } from './color-core.engine';
+export type { AggregationColor as Color } from './color/color';
+export type { ColorGenInput } from './color/color-core.engine';
 export type { ColorMode, ColorFormat, ColorValue } from './color-picker/color-picker.engine';
 export type {
   ColorPickerProps, ColorPickerPreset, ColorPickerConfig, ColorPickerLocale,
@@ -882,14 +882,14 @@ export type {
   RadioConfig
 } from './radio/radio.types';
 export type { SwitchProps } from './switch/Switch.svelte';
-export { theme } from './theme';
-export type { CSSVariableToken, ThemeTokenResult } from './theme-context.types';
+export { theme } from './theme/theme';
+export type { CSSVariableToken, ThemeTokenResult } from './theme/theme-context.types';
 export type {
   ComponentTokenMap,
   ComponentsConfig,
   GlobalToken,
   OverrideToken
-} from './theme-component-token.types';
+} from './theme/theme-component-token.types';
 export type {
   AliasToken,
   DesignTokenConfig,
@@ -898,7 +898,7 @@ export type {
   PresetColorKey,
   PresetColorType,
   SeedToken
-} from './theme-token.types';
+} from './theme/theme-token.types';
 export type {
   SwitchSize,
   SwitchContent,
@@ -1035,8 +1035,8 @@ export type {
   ModalClosableConfig, ModalClosable, ModalSemanticName, ModalSemanticSlots, ModalSemantic,
   ModalWrapProps, ModalPartProps, ModalSurfaceProps
 } from './modal/modal.types';
-export type { ConfigProviderProps } from './ConfigProvider.svelte';
-export type { GlobalConfigProps } from './config-provider-global';
+export type { ConfigProviderProps } from './config-provider/ConfigProvider.svelte';
+export type { GlobalConfigProps } from './config-provider/config-provider-global';
 export type {
   WaveConfig,
   WaveTriggerType,
@@ -1044,7 +1044,7 @@ export type {
   WaveComponent,
   WaveEffectInfo,
   ShowWaveEffect
-} from './wave.types';
+} from './wave/wave.types';
 export type { FormItemProps } from './form/FormItem.svelte';
 export type { ValidateMessage, ValidateMessages } from './form/validation-messages.types';
 export { useFormItemStatus } from './form/form-item-status';

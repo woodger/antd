@@ -1,5 +1,5 @@
 import { tick, untrack } from 'svelte';
-import { createVirtualList } from '../virtual-list.model.svelte';
+import { createVirtualList } from '../virtual-list/virtual-list.model.svelte';
 import type {
   SelectOptionListItem, SelectOptionListKey, SelectOptionListScrollConfig
 } from './select-option-list.types';

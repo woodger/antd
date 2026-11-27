@@ -1,1 +1,1 @@
-export { connectInlineStyle as connectTagStyle } from '../inline-style.dom';
+export { connectInlineStyle as connectTagStyle } from '../style/inline-style.dom';

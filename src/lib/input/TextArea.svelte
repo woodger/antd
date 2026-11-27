@@ -2,9 +2,9 @@
   // Emits changes from the multiline editor, clearing, and FormItem. Focus and ref belong to one
   // textarea.
   import { onDestroy, tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
   import { useForm, useFormField } from '../form/form-context';
@@ -19,9 +19,9 @@
   } from './textarea.engine';
   import { createTextAreaMeasure, textAreaChangeEvent } from './textarea.dom';
   import { getInputPrefixCss } from './input-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { TextAreaProps } from './textarea.types';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   let {
     value = $bindable(),

@@ -4,7 +4,7 @@
   import { on } from 'svelte/events';
   import NotificationNotice from './NotificationNotice.svelte';
   import { notificationHolderKey, type NotificationNotice as Notice } from './notification.model.svelte.js';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import type {
     NotificationInstance, NotificationOptions, NotificationPlacement, NotificationProviderConfig,
     NotificationSemanticSlots

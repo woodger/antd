@@ -2,12 +2,12 @@
   // Displays hidden tabs in a popup. A change in list state cancels pending focus and hover
   // requests.
   import { flushSync, onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { encodeDomIdKey } from '../dom-id';
-  import { connectPopup, getPopupActiveElement } from '../popup.dom';
-  import { connectPopupPortal } from '../popup-portal.dom';
+  import { connectPopup, getPopupActiveElement } from '../popup/popup.dom';
+  import { connectPopupPortal } from '../popup/popup-portal.dom';
   import { getTooltipDelay } from '../tooltip/tooltip.engine';
-  import { getPopupPlacement, type PopupFlipCache } from '../popup-position.engine';
+  import { getPopupPlacement, type PopupFlipCache } from '../popup/popup-position.engine';
   import { getTabsMoreActions, getTabsMorePlacements } from './tabs-more.engine';
   import {
     getTabsMoreArea,
@@ -17,7 +17,7 @@
   } from './tabs-more.dom';
   import { getTabsClickEvent } from './tabs.dom';
   import { createTabsPaneMotion, type TabsPaneMotionState } from './tabs-motion.dom';
-  import { useToken } from '../theme-context.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
   import { getTabsMoreNavigationKey, isTabsMobileDevice } from './tabs-overflow.engine';
   import { getTabsNavigationKey, isTabsItemRemovable } from './tabs.engine';
   import TabsEditIcon from './TabsEditIcon.svelte';

@@ -1,11 +1,11 @@
 <script lang="ts" generics="Value extends CheckableTagValue = CheckableTagValue">
   import { untrack } from 'svelte';
   import CheckableTag from './CheckableTag.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectTagStyle } from './tag-style.dom';
   import { getTagPrefixCss } from './tag-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type {
     CheckableTagGroupProps,
     CheckableTagGroupSemantic,

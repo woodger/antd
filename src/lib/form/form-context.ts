@@ -6,7 +6,7 @@ import type { FormFieldMeta } from './form.model.svelte';
 import type { ColProps } from '../grid/grid.types';
 import type { NamePath } from './form-store.engine';
 import type { Variant } from '../types';
-import { useConfig } from '../config-context';
+import { useConfig } from '../config-provider/config-context';
 import type { FormRule } from './validation.engine';
 
 export interface FormContext {

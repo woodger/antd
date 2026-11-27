@@ -4,12 +4,12 @@
   import Tooltip from '../tooltip/Tooltip.svelte';
   import FloatButtonIcon from './FloatButtonIcon.svelte';
   import { buttonHasContent, buttonText } from '../button/button.engine';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useZIndex } from '../z-index-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useZIndex } from '../popup/z-index-context.svelte';
   import { useFloatButton } from './float-button-context';
   import { getFloatButtonPrefixCss } from './float-button-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import type { BadgeProps } from '../badge/badge.types';
   import type { TooltipProps } from '../tooltip/tooltip.types';

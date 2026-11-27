@@ -17,9 +17,9 @@
     isTopImagePreview
   } from './image-preview.dom';
   import { checkImageSource } from './image-status.dom';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useZIndex } from '../z-index-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useZIndex } from '../popup/z-index-context.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import ImagePreviewIcon from './ImagePreviewIcon.svelte';
 

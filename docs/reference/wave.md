@@ -5,7 +5,7 @@ RadioButton, Switch, интерактивным Tag и Steps с onChange. Нат
 callbacks, формы и порядок фокуса сохраняются. Эффект не создаёт DOM при SSR.
 
 Настройки задаются через ConfigProvider.wave. Точные типы —
-[WaveConfig и WaveEffectInfo](../../src/lib/wave.types.ts).
+[WaveConfig и WaveEffectInfo](../../src/lib/wave/wave.types.ts).
 
 ```svelte
 <script lang="ts">
@@ -87,7 +87,7 @@ pending RAF, timers, observers и holder DOM. Повторные эффекты 
 в пакет не добавлены. CSS извлекается рецептом wave из проверенного npm-архива:
 [vendor/wave.css](../../src/lib/vendor/wave.css), восемь правил без keyframes.
 
-- [Выбор цвета](../../src/lib/wave.engine.test.ts).
+- [Выбор цвета](../../src/lib/wave/wave.engine.test.ts).
 - [SSR публичного пакета](../../tests/package/wave.ssr.test.ts).
 - [События, геометрия и lifecycle в Chromium](../../tests/browser/wave.spec.ts),
   маршрут ?fixture=wave.

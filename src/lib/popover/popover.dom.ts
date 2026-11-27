@@ -1,4 +1,4 @@
-import { getPopupActiveElement } from '../popup.dom';
+import { getPopupActiveElement } from '../popup/popup.dom';
 
 export function connectPopoverTrigger(
   element: Element,

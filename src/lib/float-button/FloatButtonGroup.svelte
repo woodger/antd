@@ -5,11 +5,11 @@
   import FloatButtonSlot from './FloatButtonSlot.svelte';
   import Flex from '../flex/Flex.svelte';
   import SpaceCompact from '../space/SpaceCompact.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useZIndex } from '../z-index-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useZIndex } from '../popup/z-index-context.svelte';
   import { getFloatButtonPrefixCss } from './float-button-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useForm } from '../form/form-context';
   import { floatButtonPlacement } from './float-button.engine';
   import { createFloatButtonMotion } from './float-button-motion.dom';

@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from '../types';
 import type { TabsAnimatedConfig } from './tabs-motion.types';
 import type { TabsRenderTabBar } from './tabs-nav.types';
-import type { PopupOffset, PopupSourceAlign } from '../popup-position.engine';
+import type { PopupOffset, PopupSourceAlign } from '../popup/popup-position.engine';
 
 export type TabsType = 'line' | 'card' | 'editable-card';
 export type TabsPlacement = 'top' | 'bottom' | 'start' | 'end';

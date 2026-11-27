@@ -1,5 +1,5 @@
 import type { TabsAnimatedConfig } from './tabs-motion.types';
-export { getCssMotionClassName as getTabsMotionClassName } from '../css-motion.engine';
+export { getCssMotionClassName as getTabsMotionClassName } from '../motion/css-motion.engine';
 
 /** Two original useAnimateConfig: Ant Design wrapper, then rc-tabs 1.13.0. */
 export function getTabsAnimation(

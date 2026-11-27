@@ -1,11 +1,11 @@
 <script lang="ts" generics="Data = unknown">
   import { tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { getMasonryPrefixCss } from './masonry-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getGridMediaQueries, gridGutters } from '../grid/grid.engine';
   import { captureMasonryFocus, createMasonryRuntime } from './masonry.dom';
   import {

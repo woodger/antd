@@ -308,7 +308,7 @@ AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0
 [browser](../../../tests/browser/overlay-options.spec.ts). Они включают настройки tokens,
 обновления открытой карточки, оба режима range Tooltip и сохранение draft/focus.
 Расчёт угловых позиций использует общий
-[движок rc-trigger](../../../src/lib/popup-position.engine.ts). Координаты, CSS стрелки,
+[движок rc-trigger](../../../src/lib/popup/popup-position.engine.ts). Координаты, CSS стрелки,
 fractional sizes, flip history и смена placement проверяются по
 [99 UMD-эталонам](../../../tests/browser/fixtures/ant-design-overlay-corner-reference.json),
 [unit](../../../src/lib/tooltip/tooltip-corner-reference.test.ts),

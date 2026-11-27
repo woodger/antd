@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
-import type { PopupSourceAlign } from '../popup-position.engine';
-import type { PresetColorKey } from '../theme-token.types';
+import type { PopupSourceAlign } from '../popup/popup-position.engine';
+import type { PresetColorKey } from '../theme/theme-token.types';
 import type { RenderEmptyContent } from '../types';
 
 /** ReactNode is replaced by text, boolean, nested arrays and Svelte Snippet. */

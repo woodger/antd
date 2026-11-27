@@ -1,15 +1,15 @@
 <script lang="ts">
   import { onDestroy, tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { provideSider, useLayout } from './layout-context';
   import { layoutSiderWidth } from './layout.engine';
   import { connectSiderBreakpoint } from './layout.dom';
   import { getLayoutPrefixCss } from './layout-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
-  import { focusAfterNotice } from '../notice.dom';
-  import Icon from '../Icon.svelte';
+  import { focusAfterNotice } from '../notice/notice.dom';
+  import Icon from '../icon/Icon.svelte';
   import { ruRU } from '../types';
   import type { LayoutCollapseType, LayoutSiderProps } from './layout.types';
 

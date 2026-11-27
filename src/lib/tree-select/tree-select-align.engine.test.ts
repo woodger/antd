@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { treeSelectAlignProjection, treeSelectBuiltinPlacements } from './tree-select-align.engine';
-import { getPopupPosition } from '../popup-position.engine';
+import { getPopupPosition } from '../popup/popup-position.engine';
 
 describe('treeSelectBuiltinPlacements', () => {
   it('uses Ant Select corner offsets, visible clipping and vertical shift without arrow offsets', () => {

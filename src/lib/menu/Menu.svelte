@@ -17,19 +17,19 @@
   import { takeDropdownMenu } from '../dropdown/dropdown-menu-context';
   import { getDropdownPrefixCss } from '../dropdown/dropdown-prefix.engine';
   import { isDropdownMenuKey } from '../dropdown/dropdown.engine';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useSider } from '../layout/layout-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useToken } from '../theme-context.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
   import MenuList from './MenuList.svelte';
   import MenuSubMenu from './MenuSubMenu.svelte';
   import EllipsisIcon from '../tabs/TabsMoreIcon.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getMenuMotionCss, getMenuPrefixCss } from './menu-prefix.engine';
   import { menuSemantics } from './menu-semantic.engine';
   import { buildMenuMore, getMenuMoreKey } from './menu-overflow.engine';
   import { connectMenuOverflow, type MenuOverflowLayout } from './menu-overflow.dom';
-  import { getPopupActiveElement } from '../popup.dom';
+  import { getPopupActiveElement } from '../popup/popup.dom';
 
   let { nativeElement = $bindable(), ...menuProps }: MenuProps = $props();
   let {

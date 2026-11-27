@@ -98,7 +98,7 @@ React development warnings остаются за пределами перено
 [браузер](../../../tests/browser/listy.spec.ts), `?fixture=listy`.
 Темы, видимое окно и высота виртуального содержимого сверяются с
 [официальным UMD](../../../tests/browser/fixtures/ant-design-listy-theme-reference.json)
-в [unit](../../../src/lib/theme-listy-tokens-reference.test.ts),
+в [unit](../../../src/lib/theme/theme-listy-tokens-reference.test.ts),
 [SSR](../../../tests/package/listy-theme.ssr.test.ts) и
 [браузере](../../../tests/browser/listy-theme.spec.ts), `?fixture=listy-theme`.
 [CSS-рецепт](../../../tools/ant-design-css-recipes.json) воспроизводит

@@ -5,7 +5,7 @@ import {
   createNoticeQueue,
   noticeQueueKey,
   type QueueNotice
-} from '../notice-queue.model.svelte.js';
+} from '../notice/notice-queue.model.svelte.js';
 import { resolveMessageSemantic } from './message-semantic.engine';
 import type {
   MessageConfig, MessageContent, MessageOptions, MessageSemanticSlots, MessageType
@@ -14,7 +14,7 @@ import type {
 export {
   noticeQueueKey as messageHolderKey,
   type NoticeClock as MessageClock
-} from '../notice-queue.model.svelte.js';
+} from '../notice/notice-queue.model.svelte.js';
 type ResolvedMessage = Omit<MessageConfig, 'classNames' | 'styles' | 'role'> & {
   role: 'status' | 'alert';
   classNames?: MessageSemanticSlots;

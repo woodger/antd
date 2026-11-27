@@ -1,5 +1,5 @@
 import type { Dayjs } from 'dayjs';
-import type { PopupSourceAlign } from '../popup-position.engine';
+import type { PopupSourceAlign } from '../popup/popup-position.engine';
 import type { HTMLInputAttributes } from 'svelte/elements';
 import type { Snippet } from 'svelte';
 import type { InputContent } from '../input/input.types';

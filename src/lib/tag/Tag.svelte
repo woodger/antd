@@ -2,17 +2,17 @@
   // Assembles Tag content and actions with per-slot styles. Dismissal respects the owner's response
   // to the event.
   import { onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getTagColor } from './tag-color.engine';
   import { getTagClose } from './tag-close.engine';
   import { getTagPrefixCss } from './tag-prefix.engine';
   import { connectTagStyle } from './tag-style.dom';
-  import { useWave } from '../wave.svelte';
-  import { connectWaveLink } from '../wave.dom';
+  import { useWave } from '../wave/wave.svelte';
+  import { connectWaveLink } from '../wave/wave.dom';
   import { connectFeedbackFocus } from '../feedback.dom';
-  import Icon from '../Icon.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import Icon from '../icon/Icon.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { TagProps, TagSemantic } from './tag.types';
 
   let { nativeElement = $bindable(), ...props }: TagProps = $props();

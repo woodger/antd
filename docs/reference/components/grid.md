@@ -53,7 +53,7 @@ fontSize/fontFamily, вложенные provider и custom cssVar prefix. Соб
 редактируемое значение, focus/selection и responsive layout.
 14 тем / 140 CSS-состояний UMD сверяются в
 [browser](../../../tests/browser/grid-theme.spec.ts), declarations —
-в [unit](../../../src/lib/theme-grid-tokens-reference.test.ts), серверная граница —
+в [unit](../../../src/lib/theme/theme-grid-tokens-reference.test.ts), серверная граница —
 в [SSR](../../../tests/package/grid-theme.ssr.test.ts). Fixture `?fixture=grid-theme`.
 
 Глобальные theme.token.screen* задают Row observer, а screen*Min — Col media CSS.

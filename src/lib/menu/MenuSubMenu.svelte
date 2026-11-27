@@ -9,13 +9,13 @@
   import { provideMenu, useMenu, type MenuContext } from './menu-context';
   import { getMenuPopupAlignment } from './menu-popup-align.engine';
   import { createMenuPopupPosition } from './menu-popup-align.dom';
-  import { connectPopup, type PopupConnection } from '../popup.dom';
-  import { getPopupPlacement, type PopupSourceAlign } from '../popup-position.engine';
-  import { createPopupContainer } from '../popup-container.model.svelte.js';
+  import { connectPopup, type PopupConnection } from '../popup/popup.dom';
+  import { getPopupPlacement, type PopupSourceAlign } from '../popup/popup-position.engine';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
   import { getMenuHoverRelatedTarget, withMenuCurrentTarget } from './menu-event.dom';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../inline-style.engine';
-  import { useZIndex } from '../z-index-context.svelte';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { useZIndex } from '../popup/z-index-context.svelte';
   import type { TooltipPosition } from '../tooltip/tooltip.engine';
   import type { TooltipPlacement } from '../tooltip/tooltip.types';
   import { getMenuMotionStyle } from './menu-motion.dom';
@@ -24,7 +24,7 @@
   import type { MenuMotion } from './menu-motion.types';
   import MenuInlineSubMenu from './MenuInlineSubMenu.svelte';
   import MenuPopupContent from './MenuPopupContent.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import RenderContent from '../RenderContent.svelte';
 
   let {

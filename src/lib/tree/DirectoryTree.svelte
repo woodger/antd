@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import Tree from './Tree.svelte';
   import TreeIcon from './TreeIcon.svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { buildTreeEntities, expandTreeParents, treeLeaf } from './tree.engine';
   import { getDirectoryRangeKeys, getDirectorySelectedNodes } from './directory-tree.engine';
   import type {

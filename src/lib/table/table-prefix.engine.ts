@@ -1,7 +1,7 @@
 import template from '../vendor/table-prefix.css.js';
-import type { DesignTokenState } from '../theme-context.types';
+import type { DesignTokenState } from '../theme/theme-context.types';
 import { serializeThemeVariables, snapshotThemeVariables, tokenToCSSVariable }
-  from '../theme-css-variables.engine';
+  from '../theme/theme-css-variables.engine';
 
 /** Table owner and private nested border are independent of total Checkbox/Pagination namespaces. */
 export function getTablePrefixCss(prefix: string, rootPrefix: string) {

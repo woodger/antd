@@ -1,7 +1,7 @@
 <script lang="ts">
   // Header items use Dropdown for menus, keyboard navigation, and focus restoration.
   import Dropdown from '../dropdown/Dropdown.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import type { DropdownMenuEntry, DropdownProps } from '../dropdown/dropdown.types';
   import type { ResolvedTableLocale } from './table-locale.engine';
   import { SELECTION_ALL, SELECTION_INVERT, SELECTION_NONE } from './table-selection.constants';

@@ -1,4 +1,4 @@
-import type { PopupSourceAlign } from '../popup-position.engine';
+import type { PopupSourceAlign } from '../popup/popup-position.engine';
 import type { PopupOverflow } from '../types';
 
 /** Ant Design 6.6.8 Select/TreeSelect/Cascader defaults; MIT, vendor/LICENSE.ant-design. */

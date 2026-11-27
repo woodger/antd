@@ -1,7 +1,7 @@
 <script lang="ts">
   import Tooltip from '../tooltip/Tooltip.svelte';
   import RenderContent from '../RenderContent.svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import type { FormTooltipProps } from './form.types';
   import type { TooltipTrigger } from '../tooltip/tooltip.types';
 

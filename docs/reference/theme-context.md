@@ -49,7 +49,7 @@
 `Input: { colorPrimary: '#0f766e', algorithm: true }` пересчитает производные
 цвета поля по алгоритму текущей темы. Без `algorithm: true` компонент получает
 только заданные переопределения. Для собственного расчёта укажите функцию или
-массив функций. Доступные поля перечислены в [типах токенов компонентов](../../src/lib/theme-component-token.types.ts).
+массив функций. Доступные поля перечислены в [типах токенов компонентов](../../src/lib/theme/theme-component-token.types.ts).
 
 ### Переопределить тему внутри страницы
 
@@ -558,23 +558,23 @@ HTML вручную через `render` из `svelte/server`, включите `
 Наследование и результат `theme.useToken()` можно сверить с исходниками Ant Design и с тестами библиотеки.
 
 - Исходники Ant Design — [useTheme](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/hooks/useTheme.ts), [ConfigProvider](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/index.tsx), [useToken](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/theme/useToken.ts).
-- Расчёт темы — [эталон токенов](../../tools/fixtures/ant-design-theme-context-reference.json), [сопоставление с эталоном](../../src/lib/theme-context-reference.test.ts), [наследование](../../src/lib/theme-config.engine.test.ts).
+- Расчёт темы — [эталон токенов](../../tools/fixtures/ant-design-theme-context-reference.json), [сопоставление с эталоном](../../src/lib/theme/theme-context-reference.test.ts), [наследование](../../src/lib/theme/theme-config.engine.test.ts).
 - Чтение темы в компонентах — [SSR](../../tests/package/theme-context.ssr.test.ts), [браузер](../../tests/browser/theme-context.spec.ts).
 
 ### Проверки полей и элементов выбора
 
 | Компонент | Проверки и исходные замеры |
 | --- | --- |
-| Кнопки и поля ввода | [Расчёт](../../src/lib/theme-control-tokens-reference.test.ts), [SSR](../../tests/package/control-theme.ssr.test.ts), [Браузер](../../tests/browser/control-theme.spec.ts) |
-| Checkbox, Radio и Switch | [Расчёт](../../src/lib/theme-toggle-tokens-reference.test.ts), [SSR](../../tests/package/toggle-theme.ssr.test.ts), [Браузер](../../tests/browser/toggle-theme.spec.ts) |
+| Кнопки и поля ввода | [Расчёт](../../src/lib/theme/theme-control-tokens-reference.test.ts), [SSR](../../tests/package/control-theme.ssr.test.ts), [Браузер](../../tests/browser/control-theme.spec.ts) |
+| Checkbox, Radio и Switch | [Расчёт](../../src/lib/theme/theme-toggle-tokens-reference.test.ts), [SSR](../../tests/package/toggle-theme.ssr.test.ts), [Браузер](../../tests/browser/toggle-theme.spec.ts) |
 | Выбор даты и времени | [Кнопка подтверждения](../../tests/browser/picker-button.spec.ts) |
 | Компактная тема | [Браузер](../../tests/browser/compact-theme.spec.ts), [SSR](../../tests/package/compact-theme.ssr.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-compact-metrics.json) |
-| Select | [Расчёт](../../src/lib/theme-select-tokens-reference.test.ts), [Браузер](../../tests/browser/select-theme.spec.ts), [SSR](../../tests/package/select-theme.ssr.test.ts) |
+| Select | [Расчёт](../../src/lib/theme/theme-select-tokens-reference.test.ts), [Браузер](../../tests/browser/select-theme.spec.ts), [SSR](../../tests/package/select-theme.ssr.test.ts) |
 | AutoComplete | [Размеры](../../tests/browser/fixtures/ant-design-auto-complete-metrics.json), [Браузер](../../tests/browser/auto-complete-theme.spec.ts), [SSR](../../tests/package/auto-complete-theme.ssr.test.ts) |
-| TreeSelect | [Расчёт](../../src/lib/theme-tree-select-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-tree-select-metrics.json), [Браузер](../../tests/browser/tree-select-theme.spec.ts), [SSR](../../tests/package/tree-select-theme.ssr.test.ts) |
-| Slider | [Расчёт](../../src/lib/theme-slider-tokens-reference.test.ts), [Размеры и цвета](../../tests/browser/fixtures/ant-design-slider-theme-reference.json), [SSR](../../tests/package/slider-theme.ssr.test.ts), [Браузер](../../tests/browser/slider-theme.spec.ts) |
-| Mentions | [Браузер](../../tests/browser/mentions-theme.spec.ts), [Расчёт](../../src/lib/theme-mentions-tokens-reference.test.ts), [SSR](../../tests/package/mentions-theme.ssr.test.ts) |
-| Upload | [Расчёт](../../src/lib/theme-upload-tokens-reference.test.ts), [SSR](../../tests/package/upload-theme.ssr.test.ts), [Браузер](../../tests/browser/upload-theme.spec.ts) |
+| TreeSelect | [Расчёт](../../src/lib/theme/theme-tree-select-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-tree-select-metrics.json), [Браузер](../../tests/browser/tree-select-theme.spec.ts), [SSR](../../tests/package/tree-select-theme.ssr.test.ts) |
+| Slider | [Расчёт](../../src/lib/theme/theme-slider-tokens-reference.test.ts), [Размеры и цвета](../../tests/browser/fixtures/ant-design-slider-theme-reference.json), [SSR](../../tests/package/slider-theme.ssr.test.ts), [Браузер](../../tests/browser/slider-theme.spec.ts) |
+| Mentions | [Браузер](../../tests/browser/mentions-theme.spec.ts), [Расчёт](../../src/lib/theme/theme-mentions-tokens-reference.test.ts), [SSR](../../tests/package/mentions-theme.ssr.test.ts) |
+| Upload | [Расчёт](../../src/lib/theme/theme-upload-tokens-reference.test.ts), [SSR](../../tests/package/upload-theme.ssr.test.ts), [Браузер](../../tests/browser/upload-theme.spec.ts) |
 
 ### Проверки компоновки и навигации
 
@@ -583,26 +583,26 @@ HTML вручную через `render` из `svelte/server`, включите `
 | Flex | [Параметры и стили](../../tests/browser/flex-source.spec.ts) |
 | Flex и Divider | [Префикс при SSR](../../tests/package/core-prefix.ssr.test.ts), [Префикс в браузере](../../tests/browser/core-prefix.spec.ts) |
 | Divider | [Браузер](../../tests/browser/divider-theme.spec.ts), [SSR](../../tests/package/divider-theme.ssr.test.ts), [Стили и префикс](../../tests/browser/divider-config.spec.ts) |
-| Affix | [Расчёт](../../src/lib/theme-affix-tokens-reference.test.ts), [Геометрия](../../tests/browser/fixtures/ant-design-affix-theme-reference.json), [SSR](../../tests/package/affix-theme.ssr.test.ts), [Браузер](../../tests/browser/affix-theme.spec.ts) |
+| Affix | [Расчёт](../../src/lib/theme/theme-affix-tokens-reference.test.ts), [Геометрия](../../tests/browser/fixtures/ant-design-affix-theme-reference.json), [SSR](../../tests/package/affix-theme.ssr.test.ts), [Браузер](../../tests/browser/affix-theme.spec.ts) |
 | Space | [Тема и настройки](../../tests/browser/fixtures/ant-design-space-theme-reference.json), [SSR](../../tests/package/space-theme.ssr.test.ts), [Браузер](../../tests/browser/space-theme.spec.ts) |
 | Layout | [Размеры секций](../../tests/browser/fixtures/ant-design-layout-theme-reference.json) |
 | Masonry | [Стили и размеры](../../tests/browser/fixtures/ant-design-masonry-theme-reference.json) |
-| Row и Col | [Расчёт](../../src/lib/theme-grid-tokens-reference.test.ts), [SSR](../../tests/package/grid-theme.ssr.test.ts), [Браузер](../../tests/browser/grid-theme.spec.ts), [Пороги компонента](../../tests/browser/fixtures/ant-design-grid-media-observation.json) |
+| Row и Col | [Расчёт](../../src/lib/theme/theme-grid-tokens-reference.test.ts), [SSR](../../tests/package/grid-theme.ssr.test.ts), [Браузер](../../tests/browser/grid-theme.spec.ts), [Пороги компонента](../../tests/browser/fixtures/ant-design-grid-media-observation.json) |
 | Адаптивные пороги сетки | [Эталон](../../tests/browser/fixtures/ant-design-grid-breakpoints-reference.json), [Браузер](../../tests/browser/grid-breakpoints.spec.ts), [Страница без JavaScript](../../tests/browser/grid-breakpoints-ssr.spec.ts), [SSR](../../tests/package/grid-breakpoints.ssr.test.ts), [Расчёт порогов](../../src/lib/grid/grid-style.engine.test.ts), [Обновление темы](../../tests/browser/fixtures/ant-design-grid-breakpoints-update-observation.json) |
-| Steps и Timeline | [Расчёт](../../src/lib/theme-steps-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-steps-metrics.json), [Браузер](../../tests/browser/steps-theme.spec.ts), [SSR](../../tests/package/steps-theme.ssr.test.ts) |
-| Pagination | [Расчёт](../../src/lib/theme-pagination-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-pagination-metrics.json), [SSR](../../tests/package/pagination-theme.ssr.test.ts), [Браузер](../../tests/browser/pagination-theme.spec.ts) |
-| Tabs | [Расчёт](../../src/lib/theme-tabs-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-tabs-theme-metrics.json), [SSR](../../tests/package/tabs-theme.ssr.test.ts), [Браузер](../../tests/browser/tabs-theme.spec.ts) |
+| Steps и Timeline | [Расчёт](../../src/lib/theme/theme-steps-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-steps-metrics.json), [Браузер](../../tests/browser/steps-theme.spec.ts), [SSR](../../tests/package/steps-theme.ssr.test.ts) |
+| Pagination | [Расчёт](../../src/lib/theme/theme-pagination-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-pagination-metrics.json), [SSR](../../tests/package/pagination-theme.ssr.test.ts), [Браузер](../../tests/browser/pagination-theme.spec.ts) |
+| Tabs | [Расчёт](../../src/lib/theme/theme-tabs-tokens-reference.test.ts), [Размеры](../../tests/browser/fixtures/ant-design-tabs-theme-metrics.json), [SSR](../../tests/package/tabs-theme.ssr.test.ts), [Браузер](../../tests/browser/tabs-theme.spec.ts) |
 | Стили и переходы Tabs | [Стили](../../tests/browser/fixtures/ant-design-tabs-semantic-reference.json), [Стили при SSR](../../tests/package/tabs-semantic.ssr.test.ts), [Стили в браузере](../../tests/browser/tabs-semantic.spec.ts), [Переходы](../../tests/browser/fixtures/ant-design-tabs-motion-reference.json), [Переходы при SSR](../../tests/package/tabs-motion.ssr.test.ts), [Переходы в браузере](../../tests/browser/tabs-motion.spec.ts) |
 
 ### Проверки данных и обратной связи
 
 | Компонент | Проверки и исходные замеры |
 | --- | --- |
-| Avatar и Badge | [Расчёт](../../src/lib/theme-display-tokens-reference.test.ts), [Браузер](../../tests/browser/avatar-badge-theme.spec.ts), [SSR](../../tests/package/avatar-badge-theme.ssr.test.ts) |
+| Avatar и Badge | [Расчёт](../../src/lib/theme/theme-display-tokens-reference.test.ts), [Браузер](../../tests/browser/avatar-badge-theme.spec.ts), [SSR](../../tests/package/avatar-badge-theme.ssr.test.ts) |
 | Image | [Миниатюра и просмотр](../../tests/browser/fixtures/ant-design-image-theme-reference.json) |
 | Watermark | [Отрисовка](../../tests/browser/fixtures/ant-design-watermark-theme-reference.json), [Браузер](../../tests/browser/watermark-theme.spec.ts), [SSR](../../tests/package/watermark-theme.ssr.test.ts) |
-| BorderBeam | [Расчёт](../../src/lib/theme-border-beam-tokens-reference.test.ts), [Внешний контейнер](../../tests/browser/fixtures/ant-design-border-beam-theme-reference.json), [Браузер](../../tests/browser/border-beam-theme.spec.ts), [SSR](../../tests/package/border-beam-theme.ssr.test.ts) |
-| Table | [Расчёт](../../src/lib/theme-table-tokens-reference.test.ts), [SSR](../../tests/package/table-theme.ssr.test.ts), [Браузер](../../tests/browser/table-theme.spec.ts) |
+| BorderBeam | [Расчёт](../../src/lib/theme/theme-border-beam-tokens-reference.test.ts), [Внешний контейнер](../../tests/browser/fixtures/ant-design-border-beam-theme-reference.json), [Браузер](../../tests/browser/border-beam-theme.spec.ts), [SSR](../../tests/package/border-beam-theme.ssr.test.ts) |
+| Table | [Расчёт](../../src/lib/theme/theme-table-tokens-reference.test.ts), [SSR](../../tests/package/table-theme.ssr.test.ts), [Браузер](../../tests/browser/table-theme.spec.ts) |
 | Стили и состояния таблицы | [Стили корня](../../tests/browser/fixtures/ant-design-table-root-style-observation.json), [Панели](../../tests/browser/fixtures/ant-design-table-panels-reference.json), [Панели в браузере](../../tests/browser/table-panels.spec.ts), [Подсветка строк](../../tests/browser/fixtures/ant-design-table-hover-observation.json), [Параметры строк](../../tests/browser/table-row-options.spec.ts) |
 | Alert | [Стили](../../tests/browser/fixtures/ant-design-alert-reference.json), [Оформление по умолчанию](../../tests/browser/fixtures/alert-native-reference.json), [SSR](../../tests/package/alert.ssr.test.ts), [Браузер](../../tests/browser/alert-source.spec.ts) |
 | Result | [Стили и статусы](../../tests/browser/fixtures/ant-design-result-reference.json), [Браузер](../../tests/browser/result-source.spec.ts), [SSR](../../tests/package/result.ssr.test.ts) |
@@ -615,11 +615,11 @@ HTML вручную через `render` из `svelte/server`, включите `
 
 | Компонент | Проверки и исходные замеры |
 | --- | --- |
-| Drawer | [Расчёт](../../src/lib/theme-drawer-tokens-reference.test.ts), [SSR](../../tests/package/drawer-theme.ssr.test.ts), [Браузер](../../tests/browser/drawer-theme.spec.ts) |
-| Modal | [Расчёт](../../src/lib/theme-modal-tokens-reference.test.ts), [SSR](../../tests/package/modal-theme.ssr.test.ts), [Браузер](../../tests/browser/modal-theme.spec.ts) |
-| Message | [Расчёт](../../src/lib/theme-message-tokens-reference.test.ts), [SSR](../../tests/package/message-theme.ssr.test.ts), [Браузер](../../tests/browser/message-theme.spec.ts), [Перенос текста](../../tests/browser/fixtures/ant-design-message-wrap-observation.json) |
-| Notification | [Расчёт](../../src/lib/theme-notification-tokens-reference.test.ts), [SSR](../../tests/package/notification-theme.ssr.test.ts), [Браузер](../../tests/browser/notification-theme.spec.ts), [Цвета статусов](../../tests/browser/fixtures/ant-design-notification-background-observation.json), [Ширина карточки](../../tests/browser/fixtures/ant-design-notification-width-observation.json) |
-| Всплывающие панели | [Расчёт](../../src/lib/theme-overlay-tokens-reference.test.ts), [Браузер](../../tests/browser/overlay-theme.spec.ts), [SSR](../../tests/package/overlay-theme.ssr.test.ts) |
+| Drawer | [Расчёт](../../src/lib/theme/theme-drawer-tokens-reference.test.ts), [SSR](../../tests/package/drawer-theme.ssr.test.ts), [Браузер](../../tests/browser/drawer-theme.spec.ts) |
+| Modal | [Расчёт](../../src/lib/theme/theme-modal-tokens-reference.test.ts), [SSR](../../tests/package/modal-theme.ssr.test.ts), [Браузер](../../tests/browser/modal-theme.spec.ts) |
+| Message | [Расчёт](../../src/lib/theme/theme-message-tokens-reference.test.ts), [SSR](../../tests/package/message-theme.ssr.test.ts), [Браузер](../../tests/browser/message-theme.spec.ts), [Перенос текста](../../tests/browser/fixtures/ant-design-message-wrap-observation.json) |
+| Notification | [Расчёт](../../src/lib/theme/theme-notification-tokens-reference.test.ts), [SSR](../../tests/package/notification-theme.ssr.test.ts), [Браузер](../../tests/browser/notification-theme.spec.ts), [Цвета статусов](../../tests/browser/fixtures/ant-design-notification-background-observation.json), [Ширина карточки](../../tests/browser/fixtures/ant-design-notification-width-observation.json) |
+| Всплывающие панели | [Расчёт](../../src/lib/theme/theme-overlay-tokens-reference.test.ts), [Браузер](../../tests/browser/overlay-theme.spec.ts), [SSR](../../tests/package/overlay-theme.ssr.test.ts) |
 | Tour | [Приоритет zIndex](../../tests/browser/fixtures/ant-design-tour-z-index-observation.json) |
 
 Лицензии исходных библиотек — [Ant Design](../../src/lib/vendor/LICENSE.ant-design), [cssinjs](../../src/lib/vendor/LICENSE.cssinjs), [cssinjs-utils](../../src/lib/vendor/LICENSE.cssinjs-utils), [emotion/hash](../../src/lib/vendor/LICENSE.emotion-hash).

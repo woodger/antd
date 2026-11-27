@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getSpaceCompactPrefixCss } from './space-compact-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useCompact } from './space-compact-context';
   import { compactEntries } from './space-compact.engine';
   import { spaceOrientation } from './space.engine';

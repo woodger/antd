@@ -1,11 +1,11 @@
 // Choosing a full-time movement or CSS-phase at the boundary of the transition. The panel alone
 // determines the end of opening and closing Modal. The mask can finish its phase on its own.
-import type { CssMotionState } from '../css-motion.dom';
-import type { CssMotionEvent } from '../css-motion.types';
+import type { CssMotionState } from '../motion/css-motion.dom';
+import type { CssMotionEvent } from '../motion/css-motion.types';
 import { createModalNamedMotion } from './modal-named-motion.dom';
 import { getModalMousePoint, getModalTransformOrigin } from './modal-origin.dom';
 import type { ModalMousePosition } from './modal.types';
-import type { AliasToken } from '../theme-token.types';
+import type { AliasToken } from '../theme/theme-token.types';
 
 type ModalMotionToken = Pick<AliasToken,
   'motion' | 'motionDurationMid' | 'motionDurationSlow' | 'motionEaseOutCirc' | 'motionEaseInOutCirc'>;

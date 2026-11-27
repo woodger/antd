@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack, type Snippet } from 'svelte';
   import { useAnchor } from './anchor-context';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import type { AnchorItem } from './anchor.types';
   let {
     prefixCls,

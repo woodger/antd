@@ -1,14 +1,14 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useToken } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { getGridMediaQueries, gridBreakpoints, gridResponsiveValue } from '../grid/grid.engine';
   import { resolveAvatarSize, normalizeAvatarGap } from './avatar.engine';
   import { connectAvatarText } from './avatar.dom';
   import { getAvatarPrefixCss } from './avatar-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { AvatarProps } from './avatar.types';
   import type { GridBreakpoint } from '../grid/grid.types';
 

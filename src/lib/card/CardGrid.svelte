@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { CardGridProps } from './card.types';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useCard } from './card-context';
   let {
     children,

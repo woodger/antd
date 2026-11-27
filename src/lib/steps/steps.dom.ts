@@ -1,5 +1,5 @@
 import { connectFeedbackFocus } from '../feedback.dom';
-import { focusAfterNotice } from '../notice.dom';
+import { focusAfterNotice } from '../notice/notice.dom';
 
 export function connectStepsFocus(root: HTMLElement) {
   const document = root.ownerDocument;

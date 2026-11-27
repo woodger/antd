@@ -6,14 +6,14 @@
   // Connects the native checkbox state to its group and FormItem. User input reports the new
   // checked state through the callback.
   import { onDestroy, onMount, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useWave } from '../wave.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useWave } from '../wave/wave.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useCheckboxGroup } from './checkbox-context';
   import { createCheckableClickLock } from '../checkable.dom';
   import { getCheckboxPrefixCss } from './checkbox-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { CheckboxChangeEvent, CheckboxProps } from './checkbox.types';
 
   let {

@@ -1,12 +1,12 @@
 <script lang="ts" generics="T = unknown, K extends ListyKey = ListyKey">
   import { tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { captureListyFocus } from './listy.dom';
   import { listyItemHeight } from './listy.engine';
   import { getListyPrefixCss } from './listy-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { ListyKey, ListyProps, ListySemantic } from './listy.types';
   import ListyRaw from './ListyRaw.svelte';
   import ListyVirtual from './ListyVirtual.svelte';

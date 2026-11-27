@@ -3,8 +3,8 @@
   // the current gesture.
   import { onDestroy, onMount, untrack } from 'svelte';
   import type { SliderSingleProps } from './slider.types';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import {
     getSliderDirection,
@@ -23,7 +23,7 @@
   } from './slider-range.engine';
   import { sliderSemantics } from './slider-semantic.engine';
   import { getSliderPrefixCss } from './slider-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import TooltipPopup from '../tooltip/TooltipPopup.svelte';
 
   interface Interaction {

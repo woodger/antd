@@ -1,11 +1,11 @@
 // Bind native dialog to the transition of the panel. Mask moves independently, but only the panel
 // manages closure, afterOpenChange and focus recovery.
-import type { CssMotionState } from '../css-motion.dom';
-import type { CssMotionEvent } from '../css-motion.types';
+import type { CssMotionState } from '../motion/css-motion.dom';
+import type { CssMotionEvent } from '../motion/css-motion.types';
 import {
   getDrawerMotionDuration, getDrawerTransform, type DrawerInteraction
 } from './drawer.engine';
-import { connectDialogFocus } from '../dialog-focus.dom';
+import { connectDialogFocus } from '../dialog/dialog-focus.dom';
 import { createDrawerMotion } from './drawer-motion.dom';
 import type { DrawerMotionConfig, DrawerPlacement } from './drawer.types';
 

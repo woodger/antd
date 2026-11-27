@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { componentThemeVariables } from '../theme-component-style.engine';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { componentThemeVariables } from '../theme/theme-component-style.engine';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { formatStatisticValue } from './statistic.engine';
-  import { mergeComponentSemantics } from '../semantic-style.engine';
+  import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { getStatisticPrefixCss } from './statistic-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import Skeleton from '../skeleton/Skeleton.svelte';
   import type {
     StatisticContent, StatisticProps, StatisticSemanticInfo, StatisticSemanticSlots

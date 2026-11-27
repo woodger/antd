@@ -2,15 +2,15 @@
   import { tick, untrack } from 'svelte';
   import Affix from '../affix/Affix.svelte';
   import AnchorItems from './AnchorItems.svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { setAnchor } from './anchor-context';
   import { createAnchorRuntime } from './anchor.dom';
   import { anchorSemantics } from './anchor-semantic.engine';
   import { revealAnchorLink } from './anchor-scroll.dom';
   import { connectFeedbackFocus } from '../feedback.dom';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getAnchorPrefixCss } from './anchor-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { AnchorProps } from './anchor.types';
   let {
     prefixCls,

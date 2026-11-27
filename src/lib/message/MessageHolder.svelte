@@ -3,17 +3,17 @@
   // preserving the deadlines and handles of open messages.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getMessagePrefixCss } from './message-prefix.engine';
   import MessageNotice from './MessageNotice.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { serializeInlineStyleLayers, type InlineStyleLayer } from '../inline-style.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { serializeInlineStyleLayers, type InlineStyleLayer } from '../style/inline-style.engine';
   import { messageHolderKey } from './message.model.svelte.js';
   import { resolveMessageHolder } from './message-semantic.engine';
-  import { createNoticeContainer } from '../notice-container.model.svelte';
-  import { createNoticeClock } from '../notice.dom';
+  import { createNoticeContainer } from '../notice/notice-container.model.svelte';
+  import { createNoticeClock } from '../notice/notice.dom';
   import type { MessageHolderProps } from './message.types';
 
   let {

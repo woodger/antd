@@ -1,4 +1,4 @@
-import type { ZIndexLayer } from '../z-index-context.svelte';
+import type { ZIndexLayer } from '../popup/z-index-context.svelte';
 import type {
   AdjustOverflow, TooltipArrow, TooltipColor, TooltipContent, TooltipPlacement, TooltipProps
 } from './tooltip.types';

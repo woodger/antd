@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { VirtualScrollConfig } from '../virtual-list.types';
+import type { VirtualScrollConfig } from '../virtual-list/virtual-list.types';
 import type { createSelectOptionList } from './select-option-list.model.svelte';
 import type { SelectStyle } from './select.types';
 

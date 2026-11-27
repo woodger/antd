@@ -2,7 +2,7 @@
 
 ColorPicker выбирает цвет или градиент. Props и snippets описаны в
 [color-picker.types.ts](../../../src/lib/color-picker/color-picker.types.ts), методы Color —
-в [color.ts](../../../src/lib/color.ts).
+в [color.ts](../../../src/lib/color/color.ts).
 
 ```svelte
 <script lang="ts">

@@ -1,5 +1,5 @@
-import { FastColor } from '../fast-color.engine';
-import type { AliasToken } from '../theme-token.types';
+import { FastColor } from '../color/fast-color.engine';
+import type { AliasToken } from '../theme/theme-token.types';
 
 /** Source empty/utils.getAsSolidColor: CSS variables are not composed in advance. */
 function solidColor(color: string, background: string) {

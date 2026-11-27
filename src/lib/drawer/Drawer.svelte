@@ -3,18 +3,18 @@
   // owner's callbacks.
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import DrawerPanel from './DrawerPanel.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getDrawerPrefixCss } from './drawer-prefix.engine';
   import { flushSync, onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { isolateFormItemStyle } from '../form/form-item-status';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { provideZIndex, useZIndex } from '../z-index-context.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { useWatermarkPanel } from '../watermark/watermark-context';
   import { createDrawerDialog, type DrawerTransitionOptions } from './drawer.dom';
-  import type { CssMotionState } from '../css-motion.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
+  import type { CssMotionState } from '../motion/css-motion.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import {
     DEFAULT_DRAWER_PUSH_DISTANCE, DEFAULT_DRAWER_SIZE,
     getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal,
@@ -23,7 +23,7 @@
   import { getDrawerAttributes, hasDrawerContent, resolveDrawerSemantics } from './drawer-panel.engine';
   import { provideDrawerPush, useDrawerPush } from './drawer-push-context';
   import { connectDrawerResize } from './drawer-resize.dom';
-  import { createDialogContainer } from '../dialog-container.model.svelte.js';
+  import { createDialogContainer } from '../dialog/dialog-container.model.svelte.js';
   import type { DrawerProps } from './drawer.types';
 
   let {

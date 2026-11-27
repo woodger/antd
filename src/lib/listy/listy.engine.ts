@@ -1,8 +1,8 @@
 // Forms a flat window Listy of elements and headers of groups. The key of the logical string is
 // used when the scroll, renderKey distinguishes the duplicates in Svelte.
 import type { ListyGroup, ListyKey, ListyProps, ListyScrollAlign } from './listy.types';
-import type { GlobalToken } from '../theme-component-token.types';
-import { virtualListScrollStep, virtualListSizes, virtualListWindow } from '../virtual-list.engine';
+import type { GlobalToken } from '../theme/theme-component-token.types';
+import { virtualListScrollStep, virtualListSizes, virtualListWindow } from '../virtual-list/virtual-list.engine';
 
 /** Source estimate does not include the boundary; the actual heights are refined by measuring the lines. */
 export function listyItemHeight(token: GlobalToken): number {

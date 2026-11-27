@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { getResultPrefixCss } from './result-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import RenderContent from '../RenderContent.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import ResultImage from './ResultImage.svelte';
   import type { ResultContent, ResultProps, ResultSemanticSlots } from './result.types';
 

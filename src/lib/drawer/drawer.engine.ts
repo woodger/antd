@@ -3,7 +3,7 @@ import type {
   DrawerConfig, DrawerFocusableConfig, DrawerMask,
   DrawerPlacement, DrawerPushConfig, DrawerSize
 } from './drawer.types';
-import { resolveDialogFocusable, resolveDialogMask } from '../dialog-interaction.engine';
+import { resolveDialogFocusable, resolveDialogMask } from '../dialog/dialog-interaction.engine';
 
 export const DEFAULT_DRAWER_SIZE = 378;
 export const DEFAULT_DRAWER_PUSH_DISTANCE = 180;

@@ -2,8 +2,8 @@
   import { untrack } from 'svelte';
   import type { UploadFile, UploadListProgressProps } from './upload.types';
   import { createUploadMotion, type UploadItemMotionState } from './upload-motion.dom';
-  import { useConfig } from '../config-context';
-  import { useToken } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useToken } from '../theme/theme-context.svelte';
   import Progress from '../progress/Progress.svelte';
 
   let {

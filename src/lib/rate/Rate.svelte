@@ -2,14 +2,14 @@
   // Maps pointer position or keys to a rating. Hover previews a value independently of the
   // committed rating.
   import { onMount, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { getRateKeyValue, getRatePointerValue, getRateStarClass } from './rate.engine';
   import { getRatePrefixCss } from './rate-prefix.engine';
   import type { RateCharacterInfo, RateProps } from './rate.types';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import Tooltip from '../tooltip/Tooltip.svelte';
 
   let {

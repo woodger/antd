@@ -4,10 +4,10 @@
   import { onDestroy, tick, untrack } from 'svelte';
   import type { Snippet } from 'svelte';
   import { provideFormField, useFormField } from '../form/form-context';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getTypographyPrefixCss } from './typography-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { typographyEditKey, typographyEditValue } from './typography.engine';
   import type { TypographyEditConfig, TypographySlots } from './typography.types';
   import TextArea from '../input/TextArea.svelte';

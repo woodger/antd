@@ -2,10 +2,10 @@
   // Connects selection, search, and list visibility to the Select editor and popup. The label cache
   // is separate from options, and handlers emit events.
   import { onMount, onDestroy, tick, untrack, type Snippet } from 'svelte';
-  import { useConfig } from '../config-context';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
-  import { useVariant } from '../variant.svelte';
+  import { useVariant } from '../config-provider/variant.svelte';
   import RenderEmpty from '../empty/RenderEmpty.svelte';
   import RenderContent from '../RenderContent.svelte';
   import SelectPopupContent from './SelectPopupContent.svelte';
@@ -13,18 +13,18 @@
   import { createSelectStyle, selectStyle, selectStyleAttributes } from './select-style.model.svelte';
   import { resolveSelectPopupRootStyle, resolveSelectStyleFrame } from './select-style.engine';
   import { createSelectComponentInputStyle, type SelectComponentInputLifetime } from './select-component-input-style.dom';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useToken } from '../theme-context.svelte';
-  import { useZIndex } from '../z-index-context.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
+  import { useZIndex } from '../popup/z-index-context.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
   import { createSelectOptionList } from './select-option-list.model.svelte';
   import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
   import { createSelectActive } from './select-active.model.svelte';
-  import { connectPopup } from '../popup.dom';
+  import { connectPopup } from '../popup/popup.dom';
   import { createTreeSelectAlign } from '../tree-select/tree-select-align.dom';
-  import { createOverlayStyle } from '../overlay-style.model.svelte';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
-  import { createPopupContainer } from '../popup-container.model.svelte.js';
+  import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
   import { useFormField } from '../form/form-context';

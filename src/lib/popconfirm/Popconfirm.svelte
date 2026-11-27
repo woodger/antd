@@ -2,21 +2,21 @@
   // Passes through Popover visibility and handles actions for the current confirmation.
   import { onDestroy, untrack } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useForm } from '../form/form-context';
   import { providePopconfirmTheme } from '../popover/popover-theme-context';
   import { ruRU } from '../types';
   import { createPopconfirmAction } from './popconfirm.model.svelte.js';
-  import { getPopupActiveElement } from '../popup.dom';
-  import { getOverlaySemantics } from '../overlay-semantic.engine';
-  import { getOverlayPrefixCss } from '../overlay-prefix.engine';
+  import { getPopupActiveElement } from '../popup/popup.dom';
+  import { getOverlaySemantics } from '../popup/overlay-semantic.engine';
+  import { getOverlayPrefixCss } from '../popup/overlay-prefix.engine';
   import prefixTemplate from '../vendor/popconfirm-prefix.css.js';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { PopconfirmActionOptions, PopconfirmProps, PopconfirmSemanticProps } from './popconfirm.types';
   import type { PopoverRef } from '../popover/popover.types';
   import Popover from '../popover/Popover.svelte';
   import Button from '../button/Button.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   type ActionElement = HTMLButtonElement | HTMLAnchorElement;
   type ActionClick<Target extends ActionElement = ActionElement> =

@@ -2,11 +2,11 @@
   // Tracks draft text separately from the committed number. Formatting, stepping, and blur rely on
   // decimal operations.
   import { onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getInputNumberPrefixCss } from './input-number-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
   import { useForm, useFormField } from '../form/form-context';

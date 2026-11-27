@@ -33,11 +33,11 @@
     type CascaderRow
   } from './cascader.engine';
   import { connectCascaderTags, measureCascaderInput } from './cascader.dom';
-  import { useConfig } from '../config-context';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from '../select/select-prefix.engine';
   import { getCascaderPrefixCss } from './cascader-prefix.engine';
-  import { useVariant } from '../variant.svelte';
+  import { useVariant } from '../config-provider/variant.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
@@ -46,17 +46,17 @@
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
   import { getSelectTagText } from '../select/select-tag-text.engine';
-  import { connectPopup, getPopupActiveElement } from '../popup.dom';
-  import { createPopupContainer } from '../popup-container.model.svelte.js';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useZIndex } from '../z-index-context.svelte';
+  import { connectPopup, getPopupActiveElement } from '../popup/popup.dom';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useZIndex } from '../popup/z-index-context.svelte';
   import { createTreeSelectAlign, type TreeSelectAlignSnapshot } from '../tree-select/tree-select-align.dom';
-  import { createOverlayStyle } from '../overlay-style.model.svelte';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
+  import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import CascaderColumns from './CascaderColumns.svelte';
   import RenderEmpty from '../empty/RenderEmpty.svelte';
   import Empty from '../empty/Empty.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
 
   let {

@@ -1,11 +1,11 @@
 import {
   getInlineStyleDeclarations as getBadgeStyleDeclarations,
   type InlineStyleLayer as BadgeStyleLayer
-} from '../inline-style.engine';
+} from '../style/inline-style.engine';
 
-export { getInlineStyleDeclarations as getBadgeStyleDeclarations } from '../inline-style.engine';
-export type { InlineStyleLayer as BadgeStyleLayer } from '../inline-style.engine';
-export { serializeInlineStyleLayers as serializeBadgeStyleLayers } from '../inline-style.engine';
+export { getInlineStyleDeclarations as getBadgeStyleDeclarations } from '../style/inline-style.engine';
+export type { InlineStyleLayer as BadgeStyleLayer } from '../style/inline-style.engine';
+export { serializeInlineStyleLayers as serializeBadgeStyleLayers } from '../style/inline-style.engine';
 
 // Finds the winning CSS property value. Later declarations win at equal priority.
 export function getBadgeStyleValue(layers: readonly BadgeStyleLayer[], property: string) {

@@ -3,7 +3,7 @@
   // shares its hover area.
   import type { Snippet } from 'svelte';
   import { on } from 'svelte/events';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import TableSorterTooltip from './TableSorterTooltip.svelte';
   import type { TableColumn, TableSorterTooltipProps, TableSortOrder } from './table.types';
 

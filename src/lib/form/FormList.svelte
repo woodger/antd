@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { useForm } from './form-context';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { provideFormPrefix } from './form-prefix-context';
   import { provideFormList, useFormList } from './form-list-context';
   import { changeFormList, syncFormListKeys } from './form-list.engine';

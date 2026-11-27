@@ -1,10 +1,10 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getGridRowPrefixCss } from './grid-row-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { createBreakpoint } from './grid-breakpoint.model.svelte.js';
   import { provideGridRow } from './grid-context';
   import {

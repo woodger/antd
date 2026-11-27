@@ -91,8 +91,8 @@ custom seed, все preset colors, прозрачность, размеры, mot
 он не нормализует результаты. Тесты проверяют также порядок ключей.
 Для запуска сохранённого эталона локальный upstream или сеть не нужны.
 
-- [Unit и boundary cases](../../src/lib/theme.engine.test.ts).
-- [Сверка с официальным UMD](../../src/lib/theme-reference.test.ts).
+- [Unit и boundary cases](../../src/lib/theme/theme.engine.test.ts).
+- [Сверка с официальным UMD](../../src/lib/theme/theme-reference.test.ts).
 - [SSR публичного пакета](../../tests/package/theme-tokens.ssr.test.ts).
 - [Браузерный consumer](../../tests/browser/theme-tokens.spec.ts), маршрут
   `?fixture=theme-tokens`.

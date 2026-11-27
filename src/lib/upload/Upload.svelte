@@ -2,16 +2,16 @@
   // Connects file selection, drag, and paste to the Upload controller. The controller prepares
   // batches, invokes callbacks, and cancels transport.
   import { onDestroy, untrack } from 'svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getUploadPrefixCss } from './upload-prefix.engine';
   import type { UploadProps, UploadFile, UploadSemanticInfo } from './upload.types';
   import { createUploadController } from './upload-controller.engine';
   import { filterUploadFile } from './upload.engine';
   import { uploadRequest } from './upload-request.dom';
   import { collectUploadDirectoryFiles } from './upload-directory.dom';
-  import { getInlineStyleDeclarations } from '../inline-style.engine';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { getInlineStyleDeclarations } from '../style/inline-style.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useForm } from '../form/form-context';
   import UploadList from './UploadList.svelte';
   import UploadSelectTrigger from './UploadSelectTrigger.svelte';

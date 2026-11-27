@@ -1,7 +1,7 @@
 // Parks the focus on Spin while its contents are locked. The focus revision cancels the delayed
 // recovery after a new transition or removal of Spin.
 import { tick } from 'svelte';
-import { focusAfterNotice } from '../notice.dom';
+import { focusAfterNotice } from '../notice/notice.dom';
 
 // For recovery, only the visible and interactive DOM node is selected.
 function available(node: HTMLElement | undefined): node is HTMLElement {

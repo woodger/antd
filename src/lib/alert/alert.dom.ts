@@ -1,6 +1,6 @@
 // Manages completion of Alert dismissal. Coordinates WAAPI, reduced motion, and node removal by the
 // calling component.
-export { focusAfterNotice as focusAfterAlert } from '../notice.dom';
+export { focusAfterNotice as focusAfterAlert } from '../notice/notice.dom';
 
 // Captures geometry and styles before changing height. Returns a dismissal cancellation callback
 // for the component lifecycle.

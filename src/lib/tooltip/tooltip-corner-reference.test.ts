@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getTooltipPosition } from './tooltip.engine';
-import type { PopupFlipCache } from '../popup-position.engine';
+import type { PopupFlipCache } from '../popup/popup-position.engine';
 import reference from '../../../tests/browser/fixtures/ant-design-overlay-corner-reference.json';
 import type { TooltipPlacement } from './tooltip.types';
 

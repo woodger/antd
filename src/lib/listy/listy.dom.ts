@@ -1,6 +1,6 @@
 import { listyTag } from './listy.engine';
 import type { ListyScrollToConfig } from './listy.types';
-export { measureVirtualListRow as measureListyRow } from '../virtual-list.dom';
+export { measureVirtualListRow as measureListyRow } from '../virtual-list/virtual-list.dom';
 
 export function scrollRawListy(
   holder: HTMLDivElement,

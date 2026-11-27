@@ -1,5 +1,5 @@
 import type { BreadcrumbConfig, BreadcrumbProps, BreadcrumbSlots } from './breadcrumb.types';
-import { mergeComponentSemantics } from '../semantic-style.engine';
+import { mergeComponentSemantics } from '../style/semantic-style.engine';
 
 // Applies semantic settings to the root, items, and separators using the instance parameter type.
 export function breadcrumbSemantics<Params extends Record<string, unknown>>(

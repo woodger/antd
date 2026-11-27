@@ -1,10 +1,10 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import RenderContent from '../RenderContent.svelte';
   import CollapsePanel from './CollapsePanel.svelte';
   import { useCollapse } from './collapse-context';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getCollapseTrigger } from './collapse.engine';
   import { collapseItemAttributes } from './collapse-events.engine';
   import type { CollapseItem, CollapseSemanticSlots } from './collapse.types';

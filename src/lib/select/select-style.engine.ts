@@ -1,4 +1,4 @@
-import { getInlineStyleDeclarations, serializeInlineStyleLayers, type InlineStyleLayer } from '../inline-style.engine';
+import { getInlineStyleDeclarations, serializeInlineStyleLayers, type InlineStyleLayer } from '../style/inline-style.engine';
 import { serializeSelectDataStyle } from './select-data-style.engine';
 import type { SelectStyle } from './select.types';
 

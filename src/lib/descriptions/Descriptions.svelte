@@ -1,11 +1,11 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { getGridMediaQueries } from '../grid/grid.engine';
   import { getDescriptionsPrefixCss } from './descriptions-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { descriptionsColumn, descriptionsItems, descriptionsRows } from './descriptions.engine';
   import { descriptionsSemantics } from './descriptions-semantic.engine';

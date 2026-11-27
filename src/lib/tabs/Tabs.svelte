@@ -4,13 +4,13 @@
   import TabsEditIcon from './TabsEditIcon.svelte';
   import TabsNav from './TabsNav.svelte';
   import TabsMoreIcon from './TabsMoreIcon.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getTabsPrefixCss } from './tabs-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { tabsSemantics } from './tabs-semantic.engine';
   import { getTabsAnimation } from './tabs-motion.engine';
-  import { useToken } from '../theme-context.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
   import { getTabsClickEvent } from './tabs.dom';
   import { isTabsMobileDevice } from './tabs-overflow.engine';
   import type { TabsNavApi, TabsNavContext, TabsTabBarProps } from './tabs-nav.types';

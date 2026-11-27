@@ -15,30 +15,30 @@
     replaceMention
   } from './mentions.engine';
   import { captureMentionsHydrationSelection, connectMentionsMeasure } from './mentions.dom';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getMentionsPrefixCss } from './mentions-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { getInlineZIndex, useZIndex } from '../z-index-context.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { getInlineZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { inputCountInfo, inputExceedValue, resolveInputClear } from '../input/input-count.engine';
-  import { mergeComponentSemantics } from '../semantic-style.engine';
-  import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../inline-style.engine';
-  import { createOverlayStyle } from '../overlay-style.model.svelte';
+  import { mergeComponentSemantics } from '../style/semantic-style.engine';
+  import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
   import { useMenuMotion } from '../menu/menu-motion.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
   import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
   import { useCompact } from '../space/space-compact-context';
-  import { connectPopup, getPopupActiveElement, type PopupConnection } from '../popup.dom';
-  import { createPopupContainer } from '../popup-container.model.svelte.js';
+  import { connectPopup, getPopupActiveElement, type PopupConnection } from '../popup/popup.dom';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
   import MentionsListbox, {
     type MentionsListboxOwner, type MentionsListboxRef
   } from './MentionsListbox.svelte';
   import MentionsPopupContent from './MentionsPopupContent.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   type EditorEvent<T extends Event = Event> = T & { currentTarget: HTMLTextAreaElement; };
 

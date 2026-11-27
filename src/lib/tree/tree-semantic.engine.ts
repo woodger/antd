@@ -1,4 +1,4 @@
-import { mergeComponentSemantics } from '../semantic-style.engine';
+import { mergeComponentSemantics } from '../style/semantic-style.engine';
 import type { TreeConfig, TreeProps, TreeSemanticName } from './tree.types';
 
 /** Tree slots follow provider/local order; native style remains on the outer root. */

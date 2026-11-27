@@ -3,8 +3,8 @@
 // immediately.
 import { getContext, onDestroy, setContext } from 'svelte';
 import type { ClassValue } from 'svelte/elements';
-import type { InlineStyleLayer } from '../inline-style.engine';
-import type { PopupSourceAlign } from '../popup-position.engine';
+import type { InlineStyleLayer } from '../style/inline-style.engine';
+import type { PopupSourceAlign } from '../popup/popup-position.engine';
 import type { TooltipSourcePlacement } from './tooltip.engine';
 import type { AdjustOverflow, TooltipContent, TooltipPlacement } from './tooltip.types';
 

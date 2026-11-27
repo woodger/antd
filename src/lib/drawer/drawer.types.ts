@@ -1,8 +1,8 @@
 import type { Snippet } from 'svelte';
 import type { AriaAttributes, HTMLAttributes } from 'svelte/elements';
 import type { GetContainer, RenderEmptyContent } from '../types';
-import type { CssMotionName } from '../css-motion.engine';
-import type { CssMotionConfig, CssMotionEvent, CssMotionStyle } from '../css-motion.types';
+import type { CssMotionName } from '../motion/css-motion.engine';
+import type { CssMotionConfig, CssMotionEvent, CssMotionStyle } from '../motion/css-motion.types';
 
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left';
 export type DrawerSize = 'default' | 'large' | number | (string & {});

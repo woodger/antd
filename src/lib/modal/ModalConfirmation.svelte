@@ -3,10 +3,10 @@
   import { untrack } from 'svelte';
   import Modal from './Modal.svelte';
   import ModalActionButton from './ModalActionButton.svelte';
-  import Icon from '../Icon.svelte';
-  import { provideConfig, useConfig, type ConfigContext } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { normalizeDialogMask } from '../dialog-interaction.engine';
+  import Icon from '../icon/Icon.svelte';
+  import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { normalizeDialogMask } from '../dialog/dialog-interaction.engine';
   import type { ModalConfirmation, ModalConfirmationRuntime } from './modal-confirm.types';
   import type { ModalSemanticBody } from './modal-semantic.engine';
   import type { ModalContent } from './modal.types';

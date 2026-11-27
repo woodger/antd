@@ -1,7 +1,7 @@
 import template from '../vendor/grid-responsive.css.js';
 import { getGridMediaCss, getGridMediaScope } from './grid-style.engine';
-import { hashTokenString } from '../theme-hash.engine';
-import type { AliasToken } from '../theme-token.types';
+import { hashTokenString } from '../theme/theme-hash.engine';
+import type { AliasToken } from '../theme/theme-token.types';
 
 /** Prefix scope is independent of the overall media scope, including canonical Col in another namespace. */
 export function getGridColPrefixScope(prefix: string, rootPrefix: string, token: AliasToken) {

@@ -1,7 +1,7 @@
 // Prepares single and gradient ColorPicker values. Formatting and palette calculations are
 // independent of the DOM.
-import { AggregationColor, type ColorStops } from '../color';
-import { ColorCore, type ColorGenInput } from '../color-core.engine';
+import { AggregationColor, type ColorStops } from '../color/color';
+import { ColorCore, type ColorGenInput } from '../color/color-core.engine';
 
 export type ColorMode = 'single' | 'gradient';
 export type ColorFormat = 'hex' | 'rgb' | 'hsb';

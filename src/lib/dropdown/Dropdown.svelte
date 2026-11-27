@@ -3,23 +3,23 @@
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import DropdownMenu from './DropdownMenu.svelte';
   import DropdownPopupContent from './DropdownPopupContent.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getDropdownMotionCss, getDropdownPrefixCss } from './dropdown-prefix.engine';
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import { on } from 'svelte/events';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useForm } from '../form/form-context';
-  import { connectPopup, getPopupActiveElement, type PopupConnection } from '../popup.dom';
-  import { getPopupArrowStyle, getPopupPlacements } from '../popup-position.engine';
+  import { connectPopup, getPopupActiveElement, type PopupConnection } from '../popup/popup.dom';
+  import { getPopupArrowStyle, getPopupPlacements } from '../popup/popup-position.engine';
   import { createDropdownPosition, dropdownFitVariables } from './dropdown-position.dom';
-  import { createPopupContainer } from '../popup-container.model.svelte.js';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
   import { connectPopoverTrigger, focusPopover } from '../popover/popover.dom';
   import { connectTooltipOpenClass } from '../tooltip/tooltip.dom';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
-  import { getInlineZIndex, provideZIndex, useZIndex } from '../z-index-context.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { getInlineZIndex, provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { getTooltipDelay, type TooltipPosition } from '../tooltip/tooltip.engine';
   import {
     dropdownSemantics, getDropdownMatch, getDropdownMotionName, isDropdownMenuKey

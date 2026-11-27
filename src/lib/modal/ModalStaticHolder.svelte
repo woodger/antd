@@ -1,8 +1,8 @@
 <script lang="ts">
   // Keeps the theme context in a hidden root. The panel opens in its own portal.
-  import ConfigProvider from '../ConfigProvider.svelte';
+  import ConfigProvider from '../config-provider/ConfigProvider.svelte';
   import ModalConfirmation from './ModalConfirmation.svelte';
-  import { provideConfig, useConfig, type ConfigContext } from '../config-context';
+  import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
   import type { ModalStaticOwner } from './modal-static.model.svelte.js';
 
   let { owner }: { owner: ModalStaticOwner; } = $props();

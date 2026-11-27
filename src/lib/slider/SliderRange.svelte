@@ -2,8 +2,8 @@
   // Distributes values between range handles. The native input, track, and tooltip use the state of
   // the relevant handle.
   import { onMount, onDestroy, tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { getSliderDirection } from './slider.engine';
   import {
@@ -23,7 +23,7 @@
   import { useSliderInternal } from './slider-internal-context';
   import { sliderSemantics } from './slider-semantic.engine';
   import { getSliderPrefixCss } from './slider-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { SliderRangeProps } from './slider-range.types';
   import TooltipPopup from '../tooltip/TooltipPopup.svelte';
 

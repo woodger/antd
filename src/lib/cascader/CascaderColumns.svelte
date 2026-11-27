@@ -9,7 +9,7 @@
     CascaderProps
   } from './cascader.types';
   import { cascaderHighlight, cascaderPathKey, type CascaderRow } from './cascader.engine';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   let {
     prefixCls,

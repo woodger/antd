@@ -15,7 +15,7 @@
   import type { TableFilterLocale } from './table-locale.engine';
   import Checkbox from '../checkbox/Checkbox.svelte';
   import Empty from '../empty/Empty.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import Input from '../input/Input.svelte';
   import Menu from '../menu/Menu.svelte';
   import NoFormItemBinding from '../form/NoFormItemBinding.svelte';

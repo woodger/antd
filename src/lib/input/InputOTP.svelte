@@ -7,15 +7,15 @@
   // filled.
   import { untrack } from 'svelte';
   import InputOTPCell from './InputOTPCell.svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
   import { provideFormField, useForm, useFormField } from '../form/form-context';
   import { provideFormItemStatus, useFormItemStatusContext } from '../form/form-item-status';
   import { provideFormFeedback, useFormFeedback } from '../form/form-feedback-context';
   import { isOTPCompleteChange, patchOTPCells } from './input-otp.engine';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getInputOTPPrefixCss } from './input-otp-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { InputOTPProps } from './input-otp.types';
 
   let {

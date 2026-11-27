@@ -2,15 +2,15 @@
   // Delegates selection to the registered Radio group and emits native events. Ref and blur refer
   // to the bound input.
   import { onDestroy, onMount, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useWave } from '../wave.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useWave } from '../wave/wave.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useRadioGroup, useRadioOptionType } from './radio-context';
   import { connectRadio, syncRadioPeers } from './radio.dom';
   import { createCheckableClickLock } from '../checkable.dom';
   import { getRadioPrefixCss } from './radio-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { RadioChangeEvent, RadioProps } from './radio.types';
 
   let {

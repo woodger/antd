@@ -2,10 +2,10 @@
   import { onMount } from 'svelte';
   import ProgressCircle from './ProgressCircle.svelte';
   import { progressCircleIcons } from './progress-circle-icons';
-  import { statusIcons } from '../status-icons';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { statusIcons } from '../icon/status-icons';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getProgressPrefixCss } from './progress-prefix.engine';
   import {
     getProgressCircleGeometry,

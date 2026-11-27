@@ -101,7 +101,7 @@ prefix владельца, сохраняя явный item override. В
 Фикстура — `?fixture=anchor`. Unit/SSR/Chromium
 проверяют приоритеты offsets, callbacks/history, анимацию/cleanup, nested items,
 RTL/indicator и production hydration. Source tokens и метрики проверяются
-[по официальному UMD](../../../src/lib/theme-anchor-tokens-reference.test.ts) и
+[по официальному UMD](../../../src/lib/theme/theme-anchor-tokens-reference.test.ts) и
 [в браузере](../../../tests/browser/anchor-theme.spec.ts). CSS-рецепты anchor и anchor-prefix
 содержат 22 правила; второй хранит module template для local classes. Prefix
 проверяют [browser](../../../tests/browser/anchor-prefix.spec.ts),

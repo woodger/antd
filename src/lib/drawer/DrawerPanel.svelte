@@ -1,9 +1,9 @@
 <script lang="ts">
   // The Drawer section manages the header, body, and footer. Loading replaces only children.
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import RenderContent from '../RenderContent.svelte';
   import Skeleton from '../skeleton/Skeleton.svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import {
     getDrawerPanelSemanticProps, hasDrawerContent, resolveDrawerClose, resolveDrawerSemantics
   } from './drawer-panel.engine';

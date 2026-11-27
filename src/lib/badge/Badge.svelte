@@ -1,9 +1,9 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useToken } from '../theme-context.svelte';
-  import { presetColors } from '../theme-token.types';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
+  import { presetColors } from '../theme/theme-token.types';
   import { createBadgeZoom, type BadgeZoomState } from './badge-zoom.dom';
   import { connectBadgeStyle } from './badge-style.dom';
   import {
@@ -14,7 +14,7 @@
   import { ruRU } from '../types';
   import type { BadgeContext, BadgeCountContext, BadgeProps, BadgeSemantic } from './badge.types';
   import BadgeNumber from './BadgeNumber.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
 
   let { nativeElement = $bindable(), ...props }: BadgeProps = $props();
   let {

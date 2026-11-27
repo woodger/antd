@@ -3,10 +3,10 @@
   // image selection.
   import { onDestroy, untrack } from 'svelte';
   import type { ImageProps, ImagePreviewConfig, ImageElementData } from './image.types';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getImagePrefixCss } from './image-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useImageGroup } from './image-group-context';
   import { checkImageSource } from './image-status.dom';
   import ImagePreview from './ImagePreview.svelte';

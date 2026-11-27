@@ -6,21 +6,21 @@
   import {
     hasTooltipPopupAncestor, isolateTooltipUnique, useTooltipUnique, type TooltipUniqueOwner
   } from './tooltip-unique.model.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { getOverlaySemantics } from '../overlay-semantic.engine';
-  import { createOverlayStyle } from '../overlay-style.model.svelte';
-  import { useOverlayMotion } from '../overlay-motion.svelte';
-  import { getPopupArrowStyle, getPopupPlacement, getPopupPlacements } from '../popup-position.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { getOverlaySemantics } from '../popup/overlay-semantic.engine';
+  import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
+  import { useOverlayMotion } from '../popup/overlay-motion.svelte';
+  import { getPopupArrowStyle, getPopupPlacement, getPopupPlacements } from '../popup/popup-position.engine';
   import type { TooltipPosition } from './tooltip.engine';
   import { getTooltipColor } from './tooltip-color.engine';
-  import { getOverlayPrefixCss } from '../overlay-prefix.engine';
+  import { getOverlayPrefixCss } from '../popup/overlay-prefix.engine';
   import prefixTemplate from '../vendor/tooltip-prefix.css.js';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { provideZIndex, useZIndex, type ZIndexLayer } from '../z-index-context.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { provideZIndex, useZIndex, type ZIndexLayer } from '../popup/z-index-context.svelte';
   import {
     connectTooltipDescription, connectTooltipOpenClass, defaultTooltipContainer
   } from './tooltip.dom';
@@ -31,8 +31,8 @@
     hasTooltipContent,
     isTooltipCorner
   } from './tooltip.engine';
-  import { connectPopup, type PopupConnection } from '../popup.dom';
-  import { createPopupContainer } from '../popup-container.model.svelte.js';
+  import { connectPopup, type PopupConnection } from '../popup/popup.dom';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
   import type { TooltipPopupProps } from './tooltip-popup.types';
   import type { TooltipContent, TooltipSemanticProps } from './tooltip.types';
 

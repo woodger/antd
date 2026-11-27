@@ -11,7 +11,7 @@
   import TransferPagination from './TransferPagination.svelte';
   import Dropdown from '../dropdown/Dropdown.svelte';
   import Input from '../input/Input.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import RenderContent from '../RenderContent.svelte';
   import type { RenderEmptyContent } from '../types';
 

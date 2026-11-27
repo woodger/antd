@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getFormPrefixCss, getFormPrefixScope } from './form-prefix.engine';
-import { createDesignTokenState, defaultThemeConfig } from '../theme-config.engine';
+import { createDesignTokenState, defaultThemeConfig } from '../theme/theme-config.engine';
 
 const token = createDesignTokenState(defaultThemeConfig).token;
 

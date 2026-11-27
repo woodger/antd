@@ -1,6 +1,6 @@
 <script lang="ts" generics="Params extends Record<string, unknown> = Record<string, unknown>">
   import Dropdown from '../dropdown/Dropdown.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import { breadcrumbAttributes } from './breadcrumb.engine';
   import { focusPopover } from '../popover/popover.dom';
   import type { breadcrumbEntries } from './breadcrumb.engine';

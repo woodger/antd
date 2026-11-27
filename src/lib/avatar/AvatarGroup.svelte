@@ -2,11 +2,11 @@
   import Avatar from './Avatar.svelte';
   import AvatarGroupOverflow from './AvatarGroupOverflow.svelte';
   import { getAvatarGroupItems } from './avatar-group.engine';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { getAvatarPrefixCss } from './avatar-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { ruRU } from '../types';
   import type { AvatarGroupProps } from './avatar-group.types';
 

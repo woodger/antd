@@ -1,8 +1,8 @@
 /** rc-trigger 3.10.1 useAlign/util; MIT, vendor/LICENSE.rc-trigger. */
 import { treeSelectAlignProjection, type TreeSelectAlignPoint } from './tree-select-align.engine';
-import type { getPopupPosition } from '../popup-position.engine';
-import { clipPopupArea } from '../popup-geometry.dom';
-import type { InlineStyleLayer } from '../inline-style.engine';
+import type { getPopupPosition } from '../popup/popup-position.engine';
+import { clipPopupArea } from '../popup/popup-geometry.dom';
+import type { InlineStyleLayer } from '../style/inline-style.engine';
 import {
   createTreeSelectMotionFrame,
   type TreeSelectMotionFrameState,

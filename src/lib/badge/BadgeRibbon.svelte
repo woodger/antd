@@ -2,13 +2,13 @@
   // Places the ribbon over its content. The center, indicator, and corner slots receive their own
   // style layers.
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useToken } from '../theme-context.svelte';
-  import { presetColors } from '../theme-token.types';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
+  import { presetColors } from '../theme/theme-token.types';
   import { connectBadgeRibbonStyle } from './badge-ribbon.dom';
   import { getBadgeRibbonPrefixCss } from './badge-ribbon-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { BadgeRibbonProps, BadgeRibbonSemantic } from './badge-ribbon.types';
 
   let { nativeElement = $bindable(), ...props }: BadgeRibbonProps = $props();

@@ -1,6 +1,6 @@
 import {
   getPopupPlacements, getPopupPosition, type PopupFlipCache, type PopupSourceAlign
-} from '../popup-position.engine';
+} from '../popup/popup-position.engine';
 import type {
   AdjustOverflow,
   TooltipArrow,
@@ -8,7 +8,7 @@ import type {
   TooltipPlacement,
   TooltipTrigger
 } from './tooltip.types';
-import type { AliasToken } from '../theme-token.types';
+import type { AliasToken } from '../theme/theme-token.types';
 
 /** rc-trigger/useAction: independent kits and an implicit touch for hover without click. */
 export function getTooltipActions(

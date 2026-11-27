@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import Avatar from './Avatar.svelte';
   import Popover from '../popover/Popover.svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { ruRU } from '../types';
   import type { AvatarGroupItem, AvatarGroupMax } from './avatar-group.types';
   import type { AvatarShape, AvatarSize } from './avatar.types';

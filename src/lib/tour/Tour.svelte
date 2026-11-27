@@ -2,11 +2,11 @@
   // Connects the current Tour step, target, and popup. Completion and dismissal notify the owner
   // through separate events.
   import { onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { provideZIndex, useZIndex } from '../z-index-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { getTourPrefixCss } from './tour-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getTourClosable, getTourSemantics, type TourHighlight } from './tour.engine';
   import { connectTourEscape } from './tour-portal.dom';
   import {

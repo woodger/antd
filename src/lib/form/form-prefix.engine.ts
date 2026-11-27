@@ -1,6 +1,6 @@
 import template from '../vendor/form-prefix.css.js';
-import { hashTokenString } from '../theme-hash.engine';
-import type { AliasToken } from '../theme-token.types';
+import { hashTokenString } from '../theme/theme-hash.engine';
+import type { AliasToken } from '../theme/theme-token.types';
 
 const mediaKeys = ['screenXSMax', 'screenSMMax', 'screenMDMax', 'screenLGMax'] as const;
 const defaults = [575, 767, 991, 1199] as const;

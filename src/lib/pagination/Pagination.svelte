@@ -6,10 +6,10 @@
   // Coordinates the page, page size, and quick jump editors. Draft text may differ from the current
   // page until committed.
   import { tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { provideFormField, useFormField } from '../form/form-context';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { getGridMediaQueries } from '../grid/grid.engine';
@@ -24,7 +24,7 @@
   } from './pagination.types';
   import PaginationControl from './PaginationControl.svelte';
   import Select from '../select/Select.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getPaginationPrefixCss } from './pagination-prefix.engine';
 
   let { current = $bindable(), pageSize = $bindable(), ...rawProps }: PaginationProps = $props();

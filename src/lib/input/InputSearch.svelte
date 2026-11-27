@@ -7,13 +7,13 @@
   import Input from './Input.svelte';
   import Button from '../button/Button.svelte';
   import SpaceCompact from '../space/SpaceCompact.svelte';
-  import { useConfig } from '../config-context';
-  import { useVariant } from '../variant.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { useForm, useFormField } from '../form/form-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getInputSearchPrefixCss } from './input-search-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { ButtonSlots } from '../button/button.types';
   import type { InputChangeEvent, InputContent, InputSemanticSlots } from './input.types';
   import type { InputSearchProps, InputSearchButtonContext } from './input-search.types';

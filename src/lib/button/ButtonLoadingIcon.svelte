@@ -15,10 +15,10 @@
   // Keeps the default icon until the leave transition ends. The loading state controls button accessibility.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
-  import { createCssMotion, type CssMotionState } from '../css-motion.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import Icon from '../Icon.svelte';
+  import { createCssMotion, type CssMotionState } from '../motion/css-motion.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   let { owner, prefixCls, visible, appear, classNames, style }: {
     owner?: HTMLElement;

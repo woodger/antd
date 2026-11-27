@@ -3,10 +3,10 @@
   // Dropdown for positioning, its portal, and focus.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
-  import { useConfig } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { componentThemeVariables } from '../theme-component-style.engine';
-  import { provideZIndex, useZIndex } from '../z-index-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { componentThemeVariables } from '../theme/theme-component-style.engine';
+  import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import type { DropdownOpenChangeInfo, DropdownProps } from '../dropdown/dropdown.types';
   import {
     areTableFilterOptionsEqual, snapshotTableFilterOptions
@@ -19,7 +19,7 @@
   } from './table.types';
   import Button from '../button/Button.svelte';
   import Dropdown from '../dropdown/Dropdown.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import RenderContent from '../RenderContent.svelte';
   import TableFilterCustomContent from './TableFilterCustomContent.svelte';
   import TableFilterOptions from './TableFilterOptions.svelte';

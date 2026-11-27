@@ -2,9 +2,9 @@
   // Registers images and ties the viewer index to the group's current list. Selection events go to
   // the same owner.
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getImagePrefixCss } from './image-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type {
     ImagePreviewGroupProps,
     ImagePreviewGroupConfig

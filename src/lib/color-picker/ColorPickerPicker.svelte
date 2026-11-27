@@ -2,9 +2,9 @@
   // Turns palette actions into edits to the color and gradient stops. Completing the gesture
   // reports the final color.
   import { onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { AggregationColor } from '../color';
-  import { ColorCore } from '../color-core.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { AggregationColor } from '../color/color';
+  import { ColorCore } from '../color/color-core.engine';
   import {
     calculatePickerColor, fillPickerColor, generateColor, getGradientPercentColor,
     getPickerColors, type ColorMode

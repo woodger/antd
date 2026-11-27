@@ -4,13 +4,13 @@
   import { onDestroy, tick, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import type { Attachment } from 'svelte/attachments';
-  import Icon from '../Icon.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { inheritedComponentThemeStyle } from '../theme-component-style.engine';
+  import Icon from '../icon/Icon.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { inheritedComponentThemeStyle } from '../theme/theme-component-style.engine';
   import { messageHolderKey, type MessageNotice } from './message.model.svelte.js';
   import { animateMessageNotice } from './message.dom';
-  import { createCssMotion } from '../css-motion.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
+  import { createCssMotion } from '../motion/css-motion.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import type { MessageInstance, MessageSemanticSlots } from './message.types';
 
   let { notice, message, prefixCls, appearance, providerClass, transitionName, obscured, measure }: {

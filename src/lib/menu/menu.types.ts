@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { PopupSourceAlign } from '../popup-position.engine';
+import type { PopupSourceAlign } from '../popup/popup-position.engine';
 import type { TooltipProps } from '../tooltip/tooltip.types';
 import type { MenuMotion } from './menu-motion.types';
 import type { RenderEmptyContent } from '../types';

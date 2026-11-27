@@ -1,7 +1,7 @@
 // Lays out DOM attributes according to nodes Table and combines classes and CSS slots. Pagination
 // allows callbacks with specific pager parameters and with a separate local style priority.
 import type { PaginationProps, PaginationSemantic } from '../pagination/pagination.types';
-import { mergeComponentSemantics } from '../semantic-style.engine';
+import { mergeComponentSemantics } from '../style/semantic-style.engine';
 import type {
   TableClassNameSlots, TableConfig, TableConfigSemantic, TablePaginationConfig, TableProps,
   TableSemantic, TableSemanticSlots

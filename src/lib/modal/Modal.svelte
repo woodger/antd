@@ -4,30 +4,30 @@
   import { flushSync, tick, untrack, type Snippet } from 'svelte';
   import { on } from 'svelte/events';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { isolateFormItemStyle } from '../form/form-item-status';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { resolveModalClose } from './modal-close.engine';
   import { getModalLayout } from './modal-layout.engine';
   import { resolveModalPart, resolveModalSemantics, type ModalSemanticBody }
     from './modal-semantic.engine';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
-  import { provideZIndex, useZIndex } from '../z-index-context.svelte';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { useWatermarkPanel } from '../watermark/watermark-context';
-  import { createDialogContainer } from '../dialog-container.model.svelte.js';
-  import { connectDialogFocus } from '../dialog-focus.dom';
-  import { resolveDialogFocusable, resolveDialogMask } from '../dialog-interaction.engine';
+  import { createDialogContainer } from '../dialog/dialog-container.model.svelte.js';
+  import { connectDialogFocus } from '../dialog/dialog-focus.dom';
+  import { resolveDialogFocusable, resolveDialogMask } from '../dialog/dialog-interaction.engine';
   import { createModalMotion, type ModalMotionPart, type ModalMotionSettings }
     from './modal-motion.dom';
-  import type { CssMotionState } from '../css-motion.dom';
-  import type { CssMotionEvent } from '../css-motion.types';
-  import { getPopupActiveElement, isPopupFocusWithin } from '../popup.dom';
+  import type { CssMotionState } from '../motion/css-motion.dom';
+  import type { CssMotionEvent } from '../motion/css-motion.types';
+  import { getPopupActiveElement, isPopupFocusWithin } from '../popup/popup.dom';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
   import ModalActionButton from './ModalActionButton.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import Skeleton from '../skeleton/Skeleton.svelte';
 
   export type ModalProps = ModalComponentProps;

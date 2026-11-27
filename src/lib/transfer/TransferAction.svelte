@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '../button/Button.svelte';
-  import Icon from '../Icon.svelte';
-  import { useConfig } from '../config-context';
+  import Icon from '../icon/Icon.svelte';
+  import { useConfig } from '../config-provider/config-context';
   import type { TransferAction, TransferActionInfo, TransferDirection } from './transfer.types';
 
   let { action, direction, disabled, onMove, extra = false }: {

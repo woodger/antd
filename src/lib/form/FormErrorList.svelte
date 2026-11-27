@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
   import RenderContent from '../RenderContent.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useFormPrefix } from './form-prefix-context';
   import { useFormList } from './form-list-context';
   import { getFormPrefixScope } from './form-prefix.engine';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import {
     buildFormErrorList, reconcileFormErrorList, type FormErrorMotionEntity
   } from './form-error-list.engine';
@@ -15,7 +15,7 @@
   import type { FormErrorListProps } from './form-error-list.types';
   import type { RenderEmptyContent } from '../types';
   import { useForm } from './form-context';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
 
   let {
     fieldId,

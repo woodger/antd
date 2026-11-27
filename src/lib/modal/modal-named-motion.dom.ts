@@ -1,7 +1,7 @@
 // Carries the phases of the named transitions Modal to the separate DOM-nodes of the panel and masks.
-import { createCssMotion, type CssMotionState } from '../css-motion.dom';
-import { createCssMotionFrame } from '../css-motion-frame.dom';
-import type { CssMotionEvent } from '../css-motion.types';
+import { createCssMotion, type CssMotionState } from '../motion/css-motion.dom';
+import { createCssMotionFrame } from '../motion/css-motion-frame.dom';
+import type { CssMotionEvent } from '../motion/css-motion.types';
 import type { ModalMotionCallbacks, ModalMotionSettings, ModalMotionPart } from './modal-motion.dom';
 import { getModalMousePoint, getModalTransformOrigin } from './modal-origin.dom';
 import type { ModalMousePosition } from './modal.types';

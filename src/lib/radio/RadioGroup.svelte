@@ -1,14 +1,14 @@
 <script lang="ts" generics="Value extends RadioValue = string">
   import { onDestroy, untrack } from 'svelte';
   import Radio from './Radio.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { provideRadioGroup } from './radio-context';
   import { getRadioOptions } from './radio.engine';
   import { spaceOrientation } from '../space/space.engine';
   import { getRadioPrefixCss } from './radio-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { RadioChangeEvent, RadioGroupProps, RadioValue } from './radio.types';
 
   let {

@@ -3,13 +3,13 @@
   // selected trigger's context. Changing owners reconnects only alignment.
   import { untrack } from 'svelte';
   import TooltipUniqueContent from './TooltipUniqueContent.svelte';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { serializeInlineStyleLayers } from '../inline-style.engine';
-  import { useOverlayMotion } from '../overlay-motion.svelte';
-  import { createOverlayStyle } from '../overlay-style.model.svelte';
-  import { createPopupContainer } from '../popup-container.model.svelte';
-  import { connectPopup, type PopupConnection } from '../popup.dom';
-  import { getPopupPlacement } from '../popup-position.engine';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
+  import { useOverlayMotion } from '../popup/overlay-motion.svelte';
+  import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
+  import { createPopupContainer } from '../popup/popup-container.model.svelte';
+  import { connectPopup, type PopupConnection } from '../popup/popup.dom';
+  import { getPopupPlacement } from '../popup/popup-position.engine';
   import { defaultTooltipContainer } from './tooltip.dom';
   import type { TooltipPosition } from './tooltip.engine';
   import { connectTooltipUniqueBackground } from './tooltip-unique-background.dom';

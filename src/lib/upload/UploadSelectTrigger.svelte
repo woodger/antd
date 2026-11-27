@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack, type Snippet } from 'svelte';
-  import { useToken } from '../theme-context.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
   import { createUploadMotion, type UploadItemMotionState } from './upload-motion.dom';
 
   let {

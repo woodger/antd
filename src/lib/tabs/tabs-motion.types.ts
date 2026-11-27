@@ -1,4 +1,4 @@
-import type { CssMotionName } from '../css-motion.engine';
+import type { CssMotionName } from '../motion/css-motion.engine';
 
 /** Native end event CSS motion or original deadline without DOM event. */
 export type TabsMotionEvent = Event | { deadline: true; };

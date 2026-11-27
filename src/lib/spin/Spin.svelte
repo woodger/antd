@@ -1,14 +1,14 @@
 <script lang="ts">
   import { onDestroy, onMount, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { createSpinModel, normalizeSpinDelay } from './spin.model.svelte.js';
   import { createSpinFocus } from './spin.dom';
   import { advanceSpinPercent } from './spin-percent.engine';
   import { resolveSpinIndicator } from './spin-indicator';
   import { getSpinPrefixCss } from './spin-prefix.engine';
   import SpinProgress from './SpinProgress.svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { ruRU } from '../types';
   import type { SpinProps, SpinSemanticInfo, SpinSemanticSlots } from './spin.types';
 

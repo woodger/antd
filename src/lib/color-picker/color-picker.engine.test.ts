@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { AggregationColor, toHexFormat } from '../color';
-import { ColorCore } from '../color-core.engine';
+import { AggregationColor, toHexFormat } from '../color/color';
+import { ColorCore } from '../color/color-core.engine';
 import {
   calculatePickerColor,
   fillPickerColor,

@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import FloatButton from './FloatButton.svelte';
   import FloatButtonIcon from './FloatButtonIcon.svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useFloatButton } from './float-button-context';
   import { createBackTopRuntime } from './float-button-back-top.dom';
   import { createFloatButtonMotion } from './float-button-motion.dom';

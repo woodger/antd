@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLButtonAttributes } from 'svelte/elements';
-import type { AggregationColor } from '../color';
+import type { AggregationColor } from '../color/color';
 import type { ColorMode, ColorFormat, ColorValue } from './color-picker.engine';
 import type { ComponentSize } from '../types';
 

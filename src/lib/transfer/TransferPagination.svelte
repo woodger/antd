@@ -2,14 +2,14 @@
   // Connects Transfer pagination controls to the draft page number. Typing and navigation do not
   // change row selection.
   import { untrack } from 'svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getPaginationPrefixCss } from '../pagination/pagination-prefix.engine';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getPaginationState, getPageSizeOptions } from '../pagination/pagination.engine';
   import { transferPaginationItems } from './transfer.engine';
   import { ruRU } from '../types';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import Select from '../select/Select.svelte';
 
   let { current, pageSize, total, simple, showSizeChanger, showLessItems, disabled, onChange,

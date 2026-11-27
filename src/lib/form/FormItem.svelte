@@ -5,12 +5,12 @@
   import type { FormFieldRegistration } from './form-internal';
   import type { FormFieldMeta } from './form.model.svelte';
   import { useForm, type FormFieldContext } from './form-context';
-  import { useConfig } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { getFormPrefixCss, getFormPrefixScope } from './form-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { provideFormPrefix, useFormPrefix } from './form-prefix-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { formNamePath, type NamePath } from './form-store.engine';
   import type { FormRule } from './validation.engine';
   import { useFormList } from './form-list-context';

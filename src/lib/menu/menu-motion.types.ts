@@ -1,4 +1,4 @@
-import type { CssMotionConfig, CssMotionEvent, CssMotionStyle } from '../css-motion.types';
+import type { CssMotionConfig, CssMotionEvent, CssMotionStyle } from '../motion/css-motion.types';
 
 /** DOM-surface event or expiration motionDeadline. */
 export type MenuMotionEvent = CssMotionEvent;

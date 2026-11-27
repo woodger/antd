@@ -1,7 +1,7 @@
 // He has a separate confirmation, his postponed render and the liberation of the root.
 import { mount, tick, unmount } from 'svelte';
 import ModalStaticHolder from './ModalStaticHolder.svelte';
-import { readGlobalConfig, type GlobalConfigProps } from '../config-provider-global';
+import { readGlobalConfig, type GlobalConfigProps } from '../config-provider/config-provider-global';
 import { registerModalDestroy } from './modal-destroy.dom';
 import { readModalLocale } from './modal-locale.dom';
 import { runModalAction } from './modal-confirm-action.engine';

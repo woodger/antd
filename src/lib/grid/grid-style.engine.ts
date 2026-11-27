@@ -1,7 +1,7 @@
 // Produces an CSS Grid for modified breakpoint. Scope is only associated with screen sizes.
 import template from '../vendor/grid-responsive.css.js';
-import { hashTokenString } from '../theme-hash.engine';
-import type { AliasToken } from '../theme-token.types';
+import { hashTokenString } from '../theme/theme-hash.engine';
+import type { AliasToken } from '../theme/theme-token.types';
 
 const mediaTokens = [
   'screenSMMin', 'screenMDMin', 'screenLGMin', 'screenXLMin', 'screenXXLMin', 'screenXXXLMin'

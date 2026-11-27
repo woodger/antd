@@ -1,9 +1,9 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useConfig } from '../config-context';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useConfig } from '../config-provider/config-context';
   import { getCheckboxPrefixCss } from '../checkbox/checkbox-prefix.engine';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
 
   let { checked, indeterminate = false, disabled, label, onSelect,
     class: className = '', style }: {

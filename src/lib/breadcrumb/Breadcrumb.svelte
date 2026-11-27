@@ -1,8 +1,8 @@
 <script lang="ts" generics="Params extends Record<string, unknown> = Record<string, unknown>">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getBreadcrumbPrefixCss } from './breadcrumb-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { breadcrumbEntries, breadcrumbHasContent } from './breadcrumb.engine';
   import { breadcrumbSemantics } from './breadcrumb-semantic.engine';
   import BreadcrumbEntry from './BreadcrumbEntry.svelte';

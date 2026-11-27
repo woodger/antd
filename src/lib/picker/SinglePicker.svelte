@@ -17,21 +17,21 @@
   import { createPickerPanelEngine, pickerPanelClock, pickerPanelSlot } from './picker-panel.engine';
   import { createDatePickerEngine, pickerFormats, nextPickerPanelMode } from './date-picker.engine';
   import { datePickerEnUS } from './date-picker.locale';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useVariant } from '../variant.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useZIndex } from '../z-index-context.svelte';
-  import { connectComponentTheme } from '../theme-component.dom';
-  import { createOverlayStyle } from '../overlay-style.model.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useZIndex } from '../popup/z-index-context.svelte';
+  import { connectComponentTheme } from '../theme/theme-component.dom';
+  import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
   import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
-  import { getPopupActiveElement } from '../popup.dom';
+  import { getPopupActiveElement } from '../popup/popup.dom';
   import {
     createPickerPopup, focusPickerPanel, keepPickerEditorFocus,
     preservePickerPanelFocus, retainPickerReplacementFocus
@@ -45,7 +45,7 @@
   import DatePickerSelectionTags from './DatePickerSelectionTags.svelte';
   import DatePickerTimePanel, { type DatePickerTimeScrollMemory }
     from './DatePickerTimePanel.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import PickerCalendarIcon from './PickerCalendarIcon.svelte';
   import PickerClockIcon from './PickerClockIcon.svelte';
   import PickerTimePanel from './PickerTimePanel.svelte';

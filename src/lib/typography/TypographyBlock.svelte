@@ -2,7 +2,7 @@
   // Manages text truncation, editing, and expansion. Content size is measured independently of user
   // events.
   import { onDestroy, tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { typographySemantics } from './typography-semantic.engine';
   import {
     typographyActionNode,

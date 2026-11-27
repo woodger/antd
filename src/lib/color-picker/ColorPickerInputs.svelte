@@ -3,7 +3,7 @@
   import Input from '../input/Input.svelte';
   import InputNumber from '../input-number/InputNumber.svelte';
   import Select from '../select/Select.svelte';
-  import { toHexFormat, type AggregationColor } from '../color';
+  import { toHexFormat, type AggregationColor } from '../color/color';
   import { generateColor, getColorAlpha, type ColorFormat } from './color-picker.engine';
 
   let { prefixCls, value, format, disabledAlpha, disabledFormat, onFormatChange, onChange }: {

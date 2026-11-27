@@ -1,7 +1,7 @@
 // Connects the picker portal with the support DOM and transfers the keyboard focus when the panel is changed.
 import { tick, untrack } from 'svelte';
-import { createPopupContainer } from '../popup-container.model.svelte.js';
-import { getPopupActiveElement } from '../popup.dom';
+import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
+import { getPopupActiveElement } from '../popup/popup.dom';
 import type { DatePickerMode } from './date-picker.types';
 import type { DatePickerPanel } from './picker-components.types';
 

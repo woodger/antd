@@ -1,7 +1,7 @@
 // Calculates trigger values, Grid classes and indentations. The priority of breakpoint is
 // determined by the order of active screens.
 import type { ColProps, GridGap, GridGutter, GridResponsive, GridScreenMap } from './grid.types';
-import type { AliasToken } from '../theme-token.types';
+import type { AliasToken } from '../theme/theme-token.types';
 import type { GridBreakpoint } from './grid.types';
 
 export const gridBreakpoints = ['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs'] as const;

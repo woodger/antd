@@ -1,6 +1,6 @@
 // Manages one surface Drawer. Phase CSS receives the callback knot separately from the wrapper on
 // which the style appears. The full-time movement remains on Web Animations.
-import { createCssMotion, type CssMotionState } from '../css-motion.dom';
+import { createCssMotion, type CssMotionState } from '../motion/css-motion.dom';
 
 type AnimatedProperty = 'transform' | 'opacity';
 

@@ -2,7 +2,7 @@
 
 `ConfigProvider.variant` задаёт общее оформление полей: outlined, filled, borderless
 или underlined. `Form.variant` задаёт оформление внутри ближайшего Form.
-Точная форма API принадлежит [ConfigProvider](../../src/lib/ConfigProvider.svelte),
+Точная форма API принадлежит [ConfigProvider](../../src/lib/config-provider/ConfigProvider.svelte),
 [FormProps](../../src/lib/form/form.types.ts) и типам отдельных компонентов.
 
 ```svelte
@@ -77,6 +77,6 @@ MentionsComponentConfig относится к provider; прежний MentionsC
 Эталон — неизменённый UMD Ant Design 6.6.8 из закреплённого npm-архива. Raw computed
 colors/borders и классы всех потребителей находятся в
 [reference matrix](../../tests/browser/fixtures/ant-design-config-variants-reference.json).
-Приоритеты проверяют [unit tests](../../src/lib/variant.engine.test.ts), публичный
+Приоритеты проверяют [unit tests](../../src/lib/config-provider/variant.engine.test.ts), публичный
 SSR — [package tests](../../tests/package/config-variants.ssr.test.ts), оформление,
 обновления и изоляцию — [browser tests](../../tests/browser/config-variants.spec.ts).

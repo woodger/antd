@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { typographySemantics } from './typography-semantic.engine';
   import type { TypographyProps } from './typography.types';
   import TypographyContent from './TypographyContent.svelte';

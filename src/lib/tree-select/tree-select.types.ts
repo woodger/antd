@@ -6,7 +6,7 @@ import type { TreeEventNode, TreeExpandAction, TreeKey, TreeRef, TreeTitleConten
 import type { SelectTagInfo } from '../select/select.types';
 import type { TreeSelectTokenSeparators } from './tree-select-token.engine';
 import type { TreeSelectComponents, TreeSelectEditorElement } from './tree-select-components.types';
-import type { PopupSourceAlign } from '../popup-position.engine';
+import type { PopupSourceAlign } from '../popup/popup-position.engine';
 export type { TreeSelectTokenSeparators } from './tree-select-token.engine';
 /** Methods bind:this. DOM-elements are provided through bindable props. */
 export type TreeSelectRef = TreeRef;

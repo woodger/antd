@@ -8,8 +8,8 @@
   import { createNotification, notificationOptionsKey } from '../notification/notification.model.svelte.js';
   import { createModal } from '../modal/modal.model.svelte.js';
   import { provideApp, useAppOptions } from './app-context';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import type { AppComponentProps, AppOptions, AppRootProps } from './app.types';
 
   let {

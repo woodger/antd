@@ -1,9 +1,9 @@
 <script lang="ts">
   import Tooltip from '../tooltip/Tooltip.svelte';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import StepIcon from './StepIcon.svelte';
   import { setStepsIcon } from './steps-icon-context';
-  import { useWave } from '../wave.svelte';
+  import { useWave } from '../wave/wave.svelte';
   import { stepsDataHasContent } from './steps-data.engine';
   import { encodeDomIdKey } from '../dom-id';
   import type { StepsDataContent } from './steps-data.engine';

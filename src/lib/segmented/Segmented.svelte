@@ -1,12 +1,12 @@
 <script lang="ts" generics="Value extends SegmentedValue = SegmentedValue">
   import { onDestroy, tick, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { normalizeSegmentedOptions, offsetSegmentedValue } from './segmented.engine';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { animateSegmentedThumb } from './segmented.dom';
   import { getSegmentedPrefixCss } from './segmented-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import Tooltip from '../tooltip/Tooltip.svelte';
   import type {
     SegmentedOption, SegmentedProps, SegmentedValue, SegmentedSemanticSlots

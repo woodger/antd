@@ -1,5 +1,5 @@
 import type { DescriptionsConfig, DescriptionsProps, DescriptionsSlots } from './descriptions.types';
-import { mergeComponentSemantics } from '../semantic-style.engine';
+import { mergeComponentSemantics } from '../style/semantic-style.engine';
 
 export function descriptionsSemantics(
   context: DescriptionsConfig | undefined,

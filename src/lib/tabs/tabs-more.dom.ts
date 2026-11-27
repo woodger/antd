@@ -1,4 +1,4 @@
-import { getPopupPosition, type PopupArea, type PopupFlipCache } from '../popup-position.engine';
+import { getPopupPosition, type PopupArea, type PopupFlipCache } from '../popup/popup-position.engine';
 import type { TabsMoreAlign, TabsMorePlacements, TabsMorePlacement } from './tabs.types';
 
 /** CSS motion changes client rect; popup is aligned according to the original border box. */

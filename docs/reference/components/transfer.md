@@ -157,5 +157,5 @@ draft/selection/focus, страницы, keyed rows и порядок move callb
 Native сохраняет поле и введённую строку. Для CSS-сверки эталон дополнительно
 восстанавливает ту же строку и фокус через публичный Input.
 Декларации сверяются с UMD отдельным
-[unit-набором](../../../src/lib/theme-transfer-tokens-reference.test.ts),
+[unit-набором](../../../src/lib/theme/theme-transfer-tokens-reference.test.ts),
 [SSR](../../../tests/package/transfer-theme.ssr.test.ts) не создаёт браузерные ресурсы.

@@ -1,5 +1,5 @@
-import { AggregationColor } from '../color';
-import { presetColors } from '../theme-token.types';
+import { AggregationColor } from '../color/color';
+import { presetColors } from '../theme/theme-token.types';
 import type { TooltipColor } from './tooltip.types';
 
 /** parseColor 6.6.8: alpha is not involved in luminance; unidentified CSS formats are steaming Color. */

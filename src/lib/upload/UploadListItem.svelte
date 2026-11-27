@@ -2,7 +2,7 @@
   // Displays one Upload file's state and actions. Preview and download use the current row's data.
   import { onMount, untrack } from 'svelte';
   import { createUploadMotion, type UploadItemMotionState } from './upload-motion.dom';
-  import { useToken } from '../theme-context.svelte';
+  import { useToken } from '../theme/theme-context.svelte';
   import type {
     UploadFile,
     UploadLocale,

@@ -3,10 +3,10 @@
   // membership changes.
   import { onDestroy, untrack } from 'svelte';
   import Checkbox from './Checkbox.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getCheckboxPrefixCss } from './checkbox-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { provideCheckboxGroup } from './checkbox-context';
   import {

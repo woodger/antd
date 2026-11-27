@@ -1,4 +1,4 @@
-import { serializeCssProperties } from '../inline-style.engine';
+import { serializeCssProperties } from '../style/inline-style.engine';
 
 /** Raw option style accepts CSS object Source and existing Native CSS line. */
 export function serializeSelectDataStyle(style: unknown): string | undefined {

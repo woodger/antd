@@ -1,5 +1,5 @@
 import { untrack } from 'svelte';
-import type { InlineStyleLayer } from '../inline-style.engine';
+import type { InlineStyleLayer } from '../style/inline-style.engine';
 import type { SelectStyle } from './select.types';
 import { resolveSelectStyleFrame, type SelectStyleFrame } from './select-style.engine';
 import { copySelectStyle, createSelectStyleWriter } from './select-style.dom';

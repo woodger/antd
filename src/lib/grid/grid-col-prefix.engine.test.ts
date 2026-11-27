@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getGridColPrefixCss, getGridColPrefixScope } from './grid-col-prefix.engine';
-import { createDesignTokenState, defaultThemeConfig } from '../theme-config.engine';
+import { createDesignTokenState, defaultThemeConfig } from '../theme/theme-config.engine';
 
 const token = createDesignTokenState(defaultThemeConfig).token;
 

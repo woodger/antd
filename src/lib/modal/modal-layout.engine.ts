@@ -1,10 +1,10 @@
 // Collects geometry Modal on tokens. Media queries work already at SSR, so the change of viewport
 // does not change the owner of the dialog or its contents.
-import { hashTokenString } from '../theme-hash.engine';
-import type { AliasToken } from '../theme-token.types';
+import { hashTokenString } from '../theme/theme-hash.engine';
+import type { AliasToken } from '../theme/theme-token.types';
 import type { GridBreakpoint } from '../grid/grid.types';
 import type { ModalWidth } from './modal.types';
-import type { InlineStyleLayer } from '../inline-style.engine';
+import type { InlineStyleLayer } from '../style/inline-style.engine';
 
 const breakpoints = [
   ['sm', 'screenSMMin'], ['md', 'screenMDMin'], ['lg', 'screenLGMin'],

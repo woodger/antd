@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { provideConfig, useConfig, type ConfigContext } from '../config-context';
+  import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
   import { provideFormField, useForm } from './form-context';
 
   let { children }: { children: Snippet } = $props();

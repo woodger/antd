@@ -53,7 +53,7 @@ markers и --ant-* bridge сохраняются. В SSR классы и исх�
 Сверка: [13 UMD случаев и три перехода](../../tests/browser/fixtures/ant-design-config-prefix-reference.json),
 [browser](../../tests/browser/config-prefix.spec.ts),
 [SSR](../../tests/package/config-prefix.ssr.test.ts),
-[приоритет namespace](../../src/lib/theme-prefix.test.ts).
+[приоритет namespace](../../src/lib/theme/theme-prefix.test.ts).
 
 Statistic/Timer, QRCode, Timeline и Steps проверяются также по
 [девяти исходным примерам и трём переходам](../../tests/browser/fixtures/ant-design-widget-prefix-reference.json):

@@ -1,7 +1,7 @@
 import type { CardConfig, CardMetaConfig, CardProps, CardMetaProps, CardSlots, CardMetaSlots }
   from './card.types';
 
-import { mergeComponentSemantics } from '../semantic-style.engine';
+import { mergeComponentSemantics } from '../style/semantic-style.engine';
 
 /** Order of the current useMergeSemantic layers for Card. */
 export function cardSemantics(context: CardConfig | undefined, props: CardProps) {

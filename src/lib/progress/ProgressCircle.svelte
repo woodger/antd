@@ -2,10 +2,10 @@
   // Renders the Progress circle and label. The small variant's tooltip uses the current circle's
   // style and position.
   import Tooltip from '../tooltip/Tooltip.svelte';
-  import { useConfig } from '../config-context';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { getInlineStyleDeclarations } from '../inline-style.engine';
-  import type { InlineStyleLayer } from '../inline-style.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { getInlineStyleDeclarations } from '../style/inline-style.engine';
+  import type { InlineStyleLayer } from '../style/inline-style.engine';
   import { progressCircleGradient, progressCircleLayout, progressGapPosition }
     from './progress-circle.engine';
   import type { Snippet } from 'svelte';

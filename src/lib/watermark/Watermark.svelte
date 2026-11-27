@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { createWatermarkRuntime } from './watermark.dom';
   import type { WatermarkContext } from './watermark-context';
   import type { WatermarkContent, WatermarkProps } from './watermark.types';

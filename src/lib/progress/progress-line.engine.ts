@@ -1,4 +1,4 @@
-import { FastColor } from '../fast-color.engine';
+import { FastColor } from '../color/fast-color.engine';
 import type { ProgressGradient, ProgressLineSize, ProgressSuccess } from './progress.types';
 
 /** Source validProgress for the new success segment; legacy is normalized separately. */

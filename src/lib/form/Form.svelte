@@ -1,10 +1,10 @@
 <script lang="ts" generics="Values extends FormValues">
   import { onDestroy, tick } from 'svelte';
-  import { provideConfig, useConfig, type ConfigContext } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { getFormPrefixCss, getFormPrefixScope } from './form-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { provideForm } from './form-context';
   import { getFormHooks } from './form-internal';
   import { provideFormList } from './form-list-context';
@@ -12,7 +12,7 @@
   import { provideFormFeedback, useFormFeedback } from './form-feedback-context';
   import type { FormProps, FormSemanticSlots } from './form.types';
   import { resolveValidationRules, type FormValues } from './validation.engine';
-  import { mergeComponentSemantics } from '../semantic-style.engine';
+  import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { mergeValidationMessages } from './validation-message.engine';
 
   let props: FormProps<Values> = $props();

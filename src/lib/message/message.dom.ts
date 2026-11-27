@@ -1,1 +1,1 @@
-export { animateNotice as animateMessageNotice } from '../notice.dom';
+export { animateNotice as animateMessageNotice } from '../notice/notice.dom';

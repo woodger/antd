@@ -5,8 +5,8 @@ import {
   createNoticeQueue,
   noticeQueueKey,
   type QueueNotice
-} from '../notice-queue.model.svelte.js';
-import { resolveNoticeSemantic } from '../notice-semantic.engine';
+} from '../notice/notice-queue.model.svelte.js';
+import { resolveNoticeSemantic } from '../notice/notice-semantic.engine';
 import type {
   NotificationConfig,
   NotificationOptions,
@@ -28,7 +28,7 @@ export const notificationPlacements: readonly NotificationPlacement[] = [
 export const notificationOptionsKey = Symbol('ant-notification-options');
 export {
   noticeQueueKey as notificationHolderKey
-} from '../notice-queue.model.svelte.js';
+} from '../notice/notice-queue.model.svelte.js';
 type ResolvedNotification = Omit<NotificationConfig, 'duration' | 'classNames' | 'styles'> & {
   duration?: number;
   onDismiss?: () => void;

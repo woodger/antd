@@ -1,4 +1,4 @@
-import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../inline-style.engine';
+import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../style/inline-style.engine';
 import type { TreeSelectEditorElement } from './tree-select-components.types';
 import type {
   TreeSelectClassNames, TreeSelectConfig, TreeSelectSemanticInfo, TreeSelectSemanticValue,

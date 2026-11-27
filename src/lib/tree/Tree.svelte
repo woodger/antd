@@ -2,7 +2,7 @@
   // Coordinates visible nodes, expansion, checked state, and keyboard focus. Events get node data
   // from the current index.
   import { onDestroy, tick, untrack } from 'svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getTreePrefixCss } from './tree-prefix.engine';
   import type {
     TreeProps,
@@ -34,12 +34,12 @@
   import type { TreeMotionRow } from './tree-motion.model.svelte';
   import { getTreeMotionConfig } from './tree-motion.engine';
   import TreeMotion from './TreeMotion.svelte';
-  import { createVirtualList } from '../virtual-list.model.svelte';
+  import { createVirtualList } from '../virtual-list/virtual-list.model.svelte';
   import { connectListyGestures } from '../listy/listy-gestures.dom';
   import VirtualScrollbar from '../listy/ListyScrollbar.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useForm } from '../form/form-context';
   import TreeIcon from './TreeIcon.svelte';
   import TreeTitle from './TreeTitle.svelte';

@@ -8,7 +8,7 @@
 @import './vendor/tooltip.css';
 @import './vendor/popover.css';
 @import './vendor/popconfirm.css';
-@import './overlay-motion.css';
+@import './popup/overlay-motion.css';
 @import './vendor/overlay-color.css';
 @import './vendor/dropdown.css';
 @import './vendor/tabs.css';

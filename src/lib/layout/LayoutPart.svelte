@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useLayout } from './layout-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getLayoutSectionPrefixCss } from './layout-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { LayoutSectionProps } from './layout.types';
   let {
     tag,

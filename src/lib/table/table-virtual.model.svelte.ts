@@ -5,8 +5,8 @@ import { scrollFrame } from '../scroll.engine';
 import { alignTableRow } from './table-layout.dom';
 import { tableVirtualAlign, tableVirtualColumns, tableVirtualDimension } from './table-virtual.engine';
 import type { TableKey, TableScrollConfig, TableScrollOptions } from './table.types';
-import { measureVirtualListRow } from '../virtual-list.dom';
-import { createVirtualList } from '../virtual-list.model.svelte';
+import { measureVirtualListRow } from '../virtual-list/virtual-list.dom';
+import { createVirtualList } from '../virtual-list/virtual-list.model.svelte';
 
 /** The details go immediately behind the line and are included in its size to search for the key. */
 function measureTableRow(row: HTMLElement): number | undefined {

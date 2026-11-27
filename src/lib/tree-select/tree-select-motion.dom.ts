@@ -1,5 +1,5 @@
 /** rc-motion1.3.3 useStatus/useStepQueue, Trigger3.10.1 Popup; MIT, vendor licenses. */
-import { createCssMotionFrame } from '../css-motion-frame.dom';
+import { createCssMotionFrame } from '../motion/css-motion-frame.dom';
 import type { TreeSelectMotionFrameState } from './tree-select-motion-frame.dom';
 
 type MotionStatus = NonNullable<TreeSelectMotionFrameState['status']>;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import PaginationJumpIcon from './PaginationJumpIcon.svelte';
   import type {
     PaginationContent,

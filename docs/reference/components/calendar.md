@@ -105,7 +105,7 @@ outside. Дополнительные замеры сделаны при viewpor
 [Browser-проверки](../../../tests/browser/calendar-theme.spec.ts) защищают фокус/выбор даты,
 точные timestamps callbacks, открытые options и DOM input при theme update,
 inherit reset и возврате к оформлению по умолчанию. Декларации сверяются с UMD отдельным
-[unit-набором](../../../src/lib/theme-calendar-tokens-reference.test.ts),
+[unit-набором](../../../src/lib/theme/theme-calendar-tokens-reference.test.ts),
 [SSR](../../../tests/package/calendar-theme.ssr.test.ts) не создаёт browser resources.
 
 Calendar принимает локальный `prefixCls` для Picker и добавляет `-calendar` к

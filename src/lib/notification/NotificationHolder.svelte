@@ -2,17 +2,17 @@
   // One surface and one timer owner serve all placements. Changing the portal target recreates
   // lists while retaining the outer instance and its queue.
   import { untrack } from 'svelte';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getNotificationPrefixCss } from './notification-prefix.engine';
   import NotificationList from './NotificationList.svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { connectInlineStyle } from '../inline-style.dom';
-  import { serializeInlineStyleLayers, type InlineStyleLayer } from '../inline-style.engine';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { connectInlineStyle } from '../style/inline-style.dom';
+  import { serializeInlineStyleLayers, type InlineStyleLayer } from '../style/inline-style.engine';
   import { notificationHolderKey, notificationPlacements } from './notification.model.svelte.js';
-  import { createNoticeContainer } from '../notice-container.model.svelte';
-  import { createNoticeClock } from '../notice.dom';
-  import { resolveNoticeAppearance } from '../notice-semantic.engine';
+  import { createNoticeContainer } from '../notice/notice-container.model.svelte';
+  import { createNoticeClock } from '../notice/notice.dom';
+  import { resolveNoticeAppearance } from '../notice/notice-semantic.engine';
   import type {
     NotificationHolderProps, NotificationSemanticName, NotificationSemanticProps
   } from './notification.types';

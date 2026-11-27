@@ -1,10 +1,10 @@
 // Calculations of the width of columns and estimates of the line virtual Table before the
 // appearance of DOM. Ant Design 6.6.8 and rc-table 1.11.1/useWidthColumns. MIT,
 // vendor/LICENSE.ant-design.
-import type { AliasToken } from '../theme-token.types';
+import type { AliasToken } from '../theme/theme-token.types';
 import type { TableScrollOptions } from './table.types';
 import type { ComponentSize } from '../types';
-import type { VirtualScrollAlign } from '../virtual-list.engine';
+import type { VirtualScrollAlign } from '../virtual-list/virtual-list.engine';
 
 /** The virtual window uses numerical dimensions, the remaining values give fallback. */
 export function tableVirtualDimension(value: TableScrollOptions['x'], fallback: number) {

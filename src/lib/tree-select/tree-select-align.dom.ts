@@ -4,13 +4,13 @@
 /** rc-trigger 3.10.1 useAlign/useWatch scheduling; MIT, vendor/LICENSE.rc-trigger. */
 import {
   getPopupPlacement, getPopupPosition, type PopupFlipCache, type PopupSourceAlign
-} from '../popup-position.engine';
+} from '../popup/popup-position.engine';
 import { treeSelectBuiltinPlacements } from './tree-select-align.engine';
 import {
   createTreeSelectAlignSurface, type TreeSelectAlignBorderBox
 } from './tree-select-align-surface.dom';
-import { getPopupScrollers } from '../popup-geometry.dom';
-import type { InlineStyleLayer } from '../inline-style.engine';
+import { getPopupScrollers } from '../popup/popup-geometry.dom';
+import type { InlineStyleLayer } from '../style/inline-style.engine';
 import type { TooltipPlacement } from '../tooltip/tooltip.types';
 import type { TooltipPosition, TooltipRect } from '../tooltip/tooltip.engine';
 import type { PopupOverflow } from '../types';

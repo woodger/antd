@@ -2,27 +2,27 @@
   // Manages the color value, format, and panel visibility. Editing and completing a selection emit
   // separate events.
   import { onDestroy, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { connectComponentTheme } from '../theme-component.dom';
-  import { provideZIndex, useZIndex } from '../z-index-context.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { connectComponentTheme } from '../theme/theme-component.dom';
+  import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
-  import { connectPopup, getPopupActiveElement } from '../popup.dom';
-  import { connectPopupPortal } from '../popup-portal.dom';
-  import { getPopupAlignment, getPopupArrowStyle, type PopupFlipCache } from '../popup-position.engine';
+  import { connectPopup, getPopupActiveElement } from '../popup/popup.dom';
+  import { connectPopupPortal } from '../popup/popup-portal.dom';
+  import { getPopupAlignment, getPopupArrowStyle, type PopupFlipCache } from '../popup/popup-position.engine';
   import { genAlphaColor, generateColor, getColorAlpha, getColorModes, getColorText,
     type ColorMode, type ColorFormat, type ColorValue } from './color-picker.engine';
-  import type { AggregationColor } from '../color';
+  import type { AggregationColor } from '../color/color';
   import type { ColorPickerProps, ColorPickerSlots, ColorPickerStyles } from './color-picker.types';
   import { colorPickerRuRU } from './color-picker.locale';
   import ColorPickerPanel from './ColorPickerPanel.svelte';
   import { getColorPickerPrefixCss } from './color-picker-prefix.engine';
-  import { getOverlayPrefixCss } from '../overlay-prefix.engine';
+  import { getOverlayPrefixCss } from '../popup/overlay-prefix.engine';
   import popoverTemplate from '../vendor/popover-prefix.css.js';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
 
   let props: ColorPickerProps = $props();
   const config = useConfig();

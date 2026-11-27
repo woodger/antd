@@ -3,11 +3,11 @@
   // The virtual window limits only body rows.
   import { untrack, type Snippet } from 'svelte';
   import type { Attachment } from 'svelte/attachments';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { getTablePrefixCss, getTableSpinTheme } from './table-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte';
   import { getGridMediaQueries } from '../grid/grid.engine';
   import { getPaginationState } from '../pagination/pagination.engine';
@@ -68,7 +68,7 @@
     TableSorter,
     TableSortOrder
   } from './table.types';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
   import Pagination from '../pagination/Pagination.svelte';
   import TableFilter from './TableFilter.svelte';
   import TableSortButton from './TableSortButton.svelte';

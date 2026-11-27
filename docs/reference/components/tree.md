@@ -239,7 +239,7 @@ checkbox, disabled/selected/active nodes, RTL и nested/reset/sibling scopes.
 DOM, фокуса, active descendant, отметок и pending load при обновлении токенов;
 [SSR-проверки](../../../tests/package/tree-theme.ssr.test.ts) не запускают загрузку или
 браузерные ресурсы. Декларации сверяются с официальным UMD отдельным
-[unit-набором](../../../src/lib/theme-tree-tokens-reference.test.ts).
+[unit-набором](../../../src/lib/theme/theme-tree-tokens-reference.test.ts).
 
 `classNames` и `styles` настраивают пять частей: root, item, itemIcon, itemTitle
 и itemSwitcher. Они принимают объект или `({props}) => slots`; props сохраняют

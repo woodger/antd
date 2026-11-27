@@ -1,5 +1,5 @@
 import { tick } from 'svelte';
-import { focusAfterNotice } from './notice.dom';
+import { focusAfterNotice } from './notice/notice.dom';
 
 const focusable = 'button, input, select, textarea, a[href], summary, iframe, [tabindex], [contenteditable="true"]';
 

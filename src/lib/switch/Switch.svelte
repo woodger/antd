@@ -6,13 +6,13 @@
   // Connects native accessibility and toggling to the current checked state. The form and keyboard
   // use the same element.
   import { onDestroy, onMount, untrack } from 'svelte';
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useWave } from '../wave.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useWave } from '../wave/wave.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { getSwitchPrefixCss } from './switch-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import Icon from '../Icon.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import Icon from '../icon/Icon.svelte';
   import type { SwitchEvent, SwitchProps } from './switch.types';
 
   let {

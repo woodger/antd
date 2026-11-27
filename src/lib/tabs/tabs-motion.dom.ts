@@ -2,7 +2,7 @@
 // the panels, and the callbacks of outdated transitions are discarded by an audit.
 import { getTabsMotionClassName } from './tabs-motion.engine';
 import type { TabsMotionEvent, TabsPaneMotion } from './tabs-motion.types';
-import { createCssMotionFrame } from '../css-motion-frame.dom';
+import { createCssMotionFrame } from '../motion/css-motion-frame.dom';
 
 type MotionStatus = 'appear' | 'enter' | 'leave';
 type MotionStep = 'prepare' | 'start' | 'active';

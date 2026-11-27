@@ -1,6 +1,6 @@
 // Collects semantic slots Menu. General styles are supplemented by declarations, and the local
 // style of the nested slot replaces the style of the provider completely.
-import { mergeComponentSemantics } from '../semantic-style.engine';
+import { mergeComponentSemantics } from '../style/semantic-style.engine';
 import type { MenuClassNames, MenuConfig, MenuProps, MenuSemantic, MenuStyles } from './menu.types';
 
 const subMenuSlots = ['item', 'itemTitle', 'list', 'itemIcon', 'itemContent'] as const;

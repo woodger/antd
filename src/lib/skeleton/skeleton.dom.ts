@@ -1,6 +1,6 @@
 // Saves the focus return point when replacing the contents with Skeleton. Neighbors are fixed at
 // the time of parking, while the original position in DOM is still available.
-import { focusAfterNotice } from '../notice.dom';
+import { focusAfterNotice } from '../notice/notice.dom';
 
 // Checks the original neighbors again: they could hide or become inaccessible.
 function available(node: HTMLElement): boolean {

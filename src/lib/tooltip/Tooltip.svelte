@@ -22,8 +22,8 @@
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
-  import { useConfig } from '../config-context';
-  import { provideZIndex, useZIndex } from '../z-index-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import {
     getTooltipActions,
     getTooltipContent,

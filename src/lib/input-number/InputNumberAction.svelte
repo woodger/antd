@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { ruRU } from '../types';
   import { connectInputNumberStep } from './input-number.dom';
   import type { InputNumberContent } from './input-number.types';
-  import Icon from '../Icon.svelte';
+  import Icon from '../icon/Icon.svelte';
 
   let {
     prefixCls,

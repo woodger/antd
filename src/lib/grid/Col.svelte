@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
-  import { useDesignTokenContext } from '../theme-context.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
   import { getGridMediaScope } from './grid-style.engine';
   import { getGridColPrefixCss, getGridColPrefixScope } from './grid-col-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useGridRow } from './grid-context';
   import { gridColClasses, gridHalfGutter, parseGridFlex } from './grid.engine';
   import type { ColProps } from './grid.types';

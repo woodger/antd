@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cardHasContent } from './card.engine';
   import { cardMetaSemantics } from './card-semantic.engine';
-  import { useConfig } from '../config-context';
+  import { useConfig } from '../config-provider/config-context';
   import { useCard } from './card-context';
   import type { CardContent, CardMetaProps } from './card.types';
   let {

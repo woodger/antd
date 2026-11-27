@@ -1,8 +1,8 @@
 <script lang="ts" generics="Props extends object = {}">
-  import { useConfig } from '../config-context';
-  import { useComponentTheme } from '../theme-component.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getFlexPrefixCss } from './flex-prefix.engine';
-  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { FlexComponentProps, FlexRootProps } from './flex.types';
 
   let {
