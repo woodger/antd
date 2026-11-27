@@ -149,7 +149,7 @@
   const dateEngine = createDatePickerEngine(dates);
   const {
     pickerCalendarValue, pickerDateWithCalendar, samePickerPanelValue, offsetPickerPanel,
-    samePickerPanel, samePickerQuarter, samePickerWeek, formatPicker, parsePicker,
+    samePickerPanel, formatPicker, parsePicker,
     pickerDateDisabled, pickerTimeDisabled, validPickerTime
   } = dateEngine;
   const { sameRange, orderedRange, validRange } = createRangePickerEngine(dates, dateEngine);
@@ -696,6 +696,21 @@
     }
     return disabledTime?.(date, active === 1 ? 'end' : 'start', { from: from() }) ?? {};
   }
+
+  // The locked endpoint still allows dates within its calendar period.
+  function crossesLockedBoundary(date: DateType, index: number, type: DatePickerCalendarMode) {
+    const oppositeIndex = index ^ 1;
+    const other = calendar[oppositeIndex];
+    const samePeriod = other && samePickerPanelPeriod(
+      other, date, type, type === 'week' ? lang.locale : undefined
+    );
+    if (!blocked[oppositeIndex] || !other || samePeriod) {
+      return false;
+    }
+
+    return index === 1 ? dates.isAfter(other, date) : dates.isAfter(date, other);
+  }
+
   function invalid(
     date: DateType,
     index: number,
@@ -707,29 +722,20 @@
       return timeRangeInvalid(date, time, clock, index,
         reference === undefined ? undefined : { from: reference });
     }
-    const other = calendar[index ^ 1];
-    const same = other
-      && (type === 'decade'
-        ? Math.floor(fields.getYear(other) / 10) === Math.floor(fields.getYear(date) / 10)
-        : type === 'week' ? samePickerWeek(other, date, lang.locale)
-        : type === 'quarter' ? samePickerQuarter(other, date)
-        : dates.samePeriod(other, date, type === 'date' ? 'day' : type));
-    if (blocked[index ^ 1]
-      && other
-      && !same
-      && (index === 1
-        ? dates.isAfter(other, date)
-        : dates.isAfter(date, other))) {
+    if (crossesLockedBoundary(date, index, type)) {
       return true;
     }
+
+    const omitReference = typeOnlyInfo
+      || (reference === undefined && (type === 'quarter' || type === 'week'));
     if (pickerDateDisabled(
       date,
       {
         minDate,
         maxDate,
-        disabledDate: next => Boolean(disabledDate?.(next, typeOnlyInfo
-          || (type === 'quarter' || type === 'week') && reference === undefined
-          ? { type } : { type, from: reference }))
+        disabledDate: next => Boolean(disabledDate?.(
+          next, omitReference ? { type } : { type, from: reference }
+        ))
       },
       type,
       lang.locale
@@ -749,27 +755,15 @@
       }
     );
   }
+
   function panelDisabled(date: DateType, info: { type: DatePickerCalendarMode; }) {
-    const other = calendar[active ^ 1];
-    const same = other
-      && (info.type === 'decade'
-        ? Math.floor(fields.getYear(other) / 10) === Math.floor(fields.getYear(date) / 10)
-        : info.type === 'week' ? samePickerWeek(other, date, lang.locale)
-        : info.type === 'quarter' ? samePickerQuarter(other, date)
-        : dates.samePeriod(other, date, info.type === 'date' ? 'day' : info.type));
-    return Boolean(
-      blocked[active ^ 1]
-      && other
-      && !same
-      && (active === 1
-        ? dates.isAfter(other, date)
-        : dates.isAfter(date, other))
-      || disabledDate?.(
-        date,
-        { ...info, from: from() }
-      )
-    );
+    if (crossesLockedBoundary(date, active, info.type)) {
+      return true;
+    }
+
+    return Boolean(disabledDate?.(date, { ...info, from: from() }));
   }
+
   function changeCalendar(next: RangePickerValue<DateType>) {
     const sameDate = time ? timePickerSameValue : dates.sameValue;
     const changed = time ? !sameTimeRange(calendar, next) : !sameRange(calendar, next);

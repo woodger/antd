@@ -31,7 +31,7 @@ export function createPickerPanelEngine<DateType extends object>(
   const { samePickerPanelValue } = calendar;
 
   /** Compares the limitation period or time units in panel mode. */
-  function samePickerPanelPeriod(a: DateType, b: DateType, mode: DatePickerMode, locale: string) {
+  function samePickerPanelPeriod(a: DateType, b: DateType, mode: DatePickerMode, locale?: string) {
     if (mode === 'decade') {
       return Math.floor(fields.getYear(a) / 10) === Math.floor(fields.getYear(b) / 10);
     }
