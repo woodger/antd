@@ -5,6 +5,7 @@ import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset, VirtualScrollOffsetInfo } from './virtual-list.types';
 import type { FormValidateStatus } from './form-error-list.types';
 import type { SelectComponents } from './select-components.types';
+import type { SelectOptionSnapshot } from './select-data.types';
 import type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
 
 export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
@@ -191,6 +192,10 @@ export interface SelectSearchConfig<
   autoClearSearchValue?: boolean;
 }
 
+type SelectEventOption<Mode, Data extends object> = Mode extends 'tags'
+  ? SelectOptionSnapshot<Data>
+  : Data;
+
 /** Single/multiple/tags with native FormData; free tags add string values. */
 export interface SelectProps<
   Value extends string | number = string,
@@ -299,20 +304,22 @@ export interface SelectProps<
   status?: 'error' | 'warning';
   onValueChange?: (value: SelectValueModel<Value, Mode, LabelInValue>
     | (Mode extends 'multiple' | 'tags' ? never : undefined)) => void;
-  /** Modifying value sequences; the second argument preserves the original fields of options. */
+  /** Receives the selected option copies. A free tag without a source option contributes {}. */
   onChange?: (
     value: SelectValueModel<Value, Mode, LabelInValue> | (Mode extends 'multiple' | 'tags' ? never : undefined),
-    option: Mode extends 'multiple' | 'tags' ? OptionType[] : OptionType | undefined
+    option: Mode extends 'multiple' | 'tags'
+      ? SelectEventOption<Mode, OptionType>[]
+      : OptionType | undefined
   ) => void;
-  /** Choosing an item, including repeated single selection; option is a superficial copy of the raw record. */
+  /** Fires on selection, including repeated single selection. A free tag can have an empty option. */
   onSelect?: (
     value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>,
-    option: OptionType
+    option: SelectEventOption<Mode, OptionType>
   ) => void;
   /** Removing a choice in multiple/tags; clearing all values does not cause a callback. */
   onDeselect?: (
     value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>,
-    option: OptionType
+    option: SelectEventOption<Mode, OptionType>
   ) => void;
   /** Custom clearing; called up to onChange. */
   onClear?: () => void;

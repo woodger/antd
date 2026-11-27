@@ -3,6 +3,9 @@ import type { SelectFieldNames, SelectScrollKey } from './select.types';
 export type SelectDataValue = string | number;
 export type SelectDataFields = Required<SelectFieldNames>;
 
+/** Events get a shallow copy of the source option, or an empty object if the value has no source. */
+export type SelectOptionSnapshot<Data extends object> = Data | { [Key in keyof Data]?: never };
+
 /** Raw metadata Source; the index sets the position in the flattened array, including headers. */
 export interface SelectDataRow<Value extends SelectDataValue, Data extends object> {
   key: SelectScrollKey;

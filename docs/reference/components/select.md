@@ -54,7 +54,10 @@ OnChange вызывается при изменении последовател
 OnClear предшествует onChange и не создаёт onDeselect. Второй аргумент сохраняет raw поля:
 это shallow copy выбранного record, а для multiple — массив копий. При одинаковом value
 выбирается последний record из текущей карты данных. Вложенные объекты не клонируются;
-для свободного tag без исходного record callback получает пустой объект. Bind:value и
+для свободного tag без исходного record callback получает пустой объект. В режиме
+`tags` типы `onChange`, `onSelect` и `onDeselect` учитывают этот случай.
+Проверка обязательного поля исходной опции, например `option.sku !== undefined`,
+позволяет TypeScript восстановить её полный тип. Bind:value и
 onValueChange сохраняются. Удалённый selected option остаётся в cache до снятия выбора.
 Без labelInValue selected value остаётся string/number или их массив.
 

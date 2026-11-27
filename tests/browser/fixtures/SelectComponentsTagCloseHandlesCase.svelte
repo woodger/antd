@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, setContext, untrack, type Snippet } from 'svelte';
+  import { onMount, setContext, untrack, type ComponentProps, type Snippet } from 'svelte';
   import { Select, ConfigProvider, type SelectRef, type SelectInputContext, type SelectTagInfo } from '@woodger/antd';
   import TagBody from './SelectComponentsTagCloseHandlesTagBody.svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
@@ -8,6 +8,7 @@
   import { tagCloseHandlesContext, type TagCloseHandlesContext } from '../select-components-tag-close-handles-context';
   import type { SelectTagCloseHandleCapture } from '../select-components-tag-close-handles-metrics.mjs';
   const Choice = Select<string, 'multiple' | 'tags', SelectTagCloseHandleOption>;
+  type EventOption = Parameters<NonNullable<ComponentProps<typeof Choice>['onSelect']>>[1];
   type Info = SelectTagInfo<string>;
   type Handle = { value: string; info: Info; callback: (event?: Event) => void };
   let { sample, capture }: {
@@ -42,20 +43,20 @@
   };
   const onChange = handler('change', function onChange(
     value: string[] | undefined,
-    option: SelectTagCloseHandleOption[]
+    option: EventOption[]
   ) {
     model = value;
     event('change', value, option);
   });
   const onDeselect = handler('deselect', function onDeselect(
     value: string,
-    option: SelectTagCloseHandleOption
+    option: EventOption
   ) {
     event('deselect', value, option);
   });
   const onSelect = handler('select', function onSelect(
     value: string,
-    option: SelectTagCloseHandleOption
+    option: EventOption
   ) {
     event('select', value, option);
   });

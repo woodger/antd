@@ -4,7 +4,7 @@
 import type { SelectFieldNames, SelectScrollKey } from './select.types';
 import type {
   SelectDataAttributes, SelectDataCache, SelectDataDisplay, SelectDataFields, SelectDataFilter,
-  SelectDataMaps, SelectDataRow, SelectDataValue
+  SelectDataMaps, SelectDataRow, SelectDataValue, SelectOptionSnapshot
 } from './select-data.types';
 
 // Normalizing the names of the fields. The default group signature uses the same field as option.
@@ -127,11 +127,15 @@ export function collectSelectData<
   return { valueOptions, labelOptions, nativeLabelOptions };
 }
 
-// Returns a superficial copy of the option for a public callback.
+// Give each callback its own shallow copy, including a fresh empty object for a missing option.
 export function copySelectData<Data extends object>(data: Data): Data;
-export function copySelectData<Data extends object>(data: Data | undefined): Partial<Data>;
-export function copySelectData<Data extends object>(data: Data | undefined): Partial<Data> {
-  return { ...data };
+export function copySelectData<Data extends object>(
+  data: Data | undefined
+): SelectOptionSnapshot<Data>;
+export function copySelectData<Data extends object>(
+  data: Data | undefined
+): SelectOptionSnapshot<Data> {
+  return data === undefined ? {} : { ...data };
 }
 
 // The search compares text and combined label snippets without registering.

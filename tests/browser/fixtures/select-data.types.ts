@@ -1,11 +1,13 @@
 import type {
   AutoCompleteProps,
+  Select,
   SelectFieldNames,
   SelectFlattenOption,
   SelectOption,
   SelectProps,
   SelectSearchConfig
 } from '@woodger/antd';
+import type { ComponentProps } from 'svelte';
 
 interface MappedOption {
   uid: string;
@@ -20,6 +22,9 @@ type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends
   (<T>() => T extends B ? 1 : 2) ? true : false;
 type Assert<Value extends true> = Value;
 
+type TagProps = ComponentProps<typeof Select<string, 'tags', MappedOption>>;
+type TagOption = Parameters<NonNullable<TagProps['onSelect']>>[1];
+
 export type SelectDataContracts = [
   Assert<Equal<SelectProps<number>['options'], readonly SelectOption<number>[] | undefined>>,
   Assert<Equal<SelectProps<number>['value'], number | null | undefined>>,
@@ -33,10 +38,17 @@ export type SelectDataContracts = [
   Assert<Equal<Parameters<NonNullable<
     SelectProps<string, 'multiple', MappedOption>['onChange']
   >>[1], MappedOption[]>>,
+  Assert<Equal<TagOption['audit'], MappedOption['audit'] | undefined>>,
+  Assert<Equal<Parameters<NonNullable<TagProps['onChange']>>[1], TagOption[]>>,
+  Assert<Equal<Parameters<NonNullable<TagProps['onDeselect']>>[1], TagOption>>,
   Assert<Equal<Parameters<NonNullable<
     AutoCompleteProps<MappedOption>['onSelect']
   >>[1], MappedOption>>
 ];
+
+export function tagSource(option: TagOption): string | undefined {
+  return option.uid === undefined ? undefined : option.audit.source;
+}
 
 export const mappedSelectFields = {
   value: 'uid', label: 'text', options: 'nodes', groupLabel: 'heading'

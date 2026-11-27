@@ -48,7 +48,7 @@
     selectDataContent,
     selectDataTitle
   } from './select-data.engine';
-  import type { SelectDataRow } from './select-data.types';
+  import type { SelectDataRow, SelectOptionSnapshot } from './select-data.types';
   import {
     emptySelectValueCache, resolveSelectValueCache, rememberSelectOptions, convertSelectValues,
     selectValueDrafts,
@@ -87,6 +87,7 @@
 
   type RawValue = Value | string;
   type Row = SelectDataRow<RawValue, OptionType>;
+  type OptionSnapshot = SelectOptionSnapshot<OptionType>;
 
   let {
     open = $bindable<boolean | undefined>(),
@@ -1200,7 +1201,7 @@
     const drafts = next.map(raw => origin === 'raw' ? raw : previous.find(item => item.value === raw) ?? raw);
     const labeled = convertSelectValues(drafts, dataMaps, fields, optionLabelProp);
     const output = selectValueOutput(labeled, true, Boolean(labelInValue));
-    const callback = onChange as ((value: unknown, options: OptionType[]) => void) | undefined;
+    const callback = onChange as ((value: unknown, options: OptionSnapshot[]) => void) | undefined;
     const rawOptions = callback && changed ? next.map(callbackOption) : undefined;
     useDefault = false;
     rememberSelection(labeled);
@@ -1214,16 +1215,16 @@
     return dataMaps.valueOptions.get(value) ?? selectionData.options.get(value);
   }
 
-  function callbackOption(value: RawValue): OptionType {
-    return copySelectData(optionData(value)) as OptionType;
+  function callbackOption(value: RawValue): OptionSnapshot {
+    return copySelectData(optionData(value));
   }
 
   function notifySelect(value: RawValue, data: OptionType | undefined, selected: boolean) {
     const callback = (selected ? onSelect : onDeselect) as
-      ((value: unknown, option: OptionType) => void) | undefined;
+      ((value: unknown, option: OptionSnapshot) => void) | undefined;
     callback?.(
       selectValueEvent(value, data, fields, Boolean(labelInValue)),
-      copySelectData(data) as OptionType
+      copySelectData(data)
     );
   }
 
@@ -1350,8 +1351,8 @@
 
     const changed = chosenValue !== selectedRaw;
     const callback = onChange as
-      ((value: unknown, option: OptionType | undefined) => void) | undefined;
-    const rawOption = chosenValue === undefined ? undefined : copySelectData(data) as OptionType;
+      ((value: unknown, option: OptionSnapshot | undefined) => void) | undefined;
+    const rawOption = chosenValue === undefined ? undefined : copySelectData(data);
     if (!option && selected) onClear?.();
     useDefault = false;
     const labeled = convertSelectValues(
