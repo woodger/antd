@@ -69,7 +69,7 @@ style → local styles.root → local style. Вложенный ConfigProvider.c
 Calendar.generateCalendar. Фабрика возвращает Svelte component с теми же Props,
 реактивными value/mode и bind:nativeElement; CalendarGenerateConfig описывает
 исходные операции над датой. Типы и defaults находятся в
-[calendar.types.ts](../../../src/lib/calendar.types.ts).
+[calendar.types.ts](../../../src/lib/calendar/calendar.types.ts).
 
 Адаптация доступности: table имеет роль grid, ячейки — gridcell с selected,
 disabled, today и одним tab stop. Стрелки/Home/End перемещают только фокус,

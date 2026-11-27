@@ -66,7 +66,7 @@ styles.root → rangePicker style → local styles.root → local style.
 
 Prefix/icons, cellRender с info.range и originNode, panelRender, presets и footer
 используют Svelte snippets. Footer получает mode='time'. Полная форма находится в
-[time-range-picker.types.ts](../../../src/lib/time-range-picker.types.ts).
+[time-range-picker.types.ts](../../../src/lib/picker/time-range-picker.types.ts).
 Bind:nativeElement/startInput/endInput возвращают native refs и очищаются при
 unmount. Focus принимает объект с index/cursor/preventScroll либо число 0/1;
 индекс по умолчанию 0. Один focus не открывает закрытую панель. Keyboard и native
@@ -91,8 +91,8 @@ Popup наследует общий container API DatePicker, сохраняет
 а направление внутри колонок меняется. Темы, compact, размеры, locale и status
 используют текущие контексты библиотеки. [Положение панели](./date-picker.md#положение-панели)
 
-Проверки: [engine](../../../src/lib/time-range-picker.engine.test.ts),
-[SSR](../../../src/lib/time-range-picker.ssr.test.ts),
+Проверки: [engine](../../../src/lib/picker/time-range-picker.engine.test.ts),
+[SSR](../../../src/lib/picker/time-range-picker.ssr.test.ts),
 [public package](../../../tests/package/time-range-picker.ssr.test.ts),
 [browser](../../../tests/browser/time-range-picker.spec.ts) и `?fixture=time-range-picker`.
 Для собственного типа даты используйте `RangePicker` из

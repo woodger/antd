@@ -8,7 +8,7 @@ import type { StepsConfig } from './steps.types';
 import type { LayoutConfig } from './layout.types';
 import type { TreeSelectConfig } from './tree-select/tree-select.types';
 import type { TreeConfig } from './tree.types';
-import type { DatePickerConfig } from './date-picker.types';
+import type { DatePickerConfig } from './picker/date-picker.types';
 import type { CardConfig, CardMetaConfig } from './card.types';
 import type { MentionsComponentConfig } from './mentions/mentions.types';
 import type { DescriptionsConfig } from './descriptions.types';
@@ -33,8 +33,8 @@ import type { BorderBeamConfig } from './border-beam.types';
 import type { MasonryConfig } from './masonry.types';
 import type { SplitterConfig } from './splitter.types';
 import type { QRCodeConfig } from './qrcode.types';
-import type { CalendarConfig } from './calendar.types';
-import type { TimePickerConfig } from './time-picker.types';
+import type { CalendarConfig } from './calendar/calendar.types';
+import type { TimePickerConfig } from './picker/time-picker.types';
 import type { CascaderConfig } from './cascader/cascader.types';
 import type { TransferConfig } from './transfer/transfer.types';
 import type { PaginationComponentConfig } from './pagination.types';
@@ -68,7 +68,7 @@ import type { WaveConfig } from './wave.types';
 import type {
   CSPConfig, GetPopupContainer, GetTargetContainer, PopupOverflow, RenderEmptyHandler
 } from './types';
-import type { RangePickerConfig } from './range-picker.types';
+import type { RangePickerConfig } from './picker/range-picker.types';
 import type { InputConfig } from './input/input.types';
 import type { InputPasswordConfig } from './input/input-password.types';
 import type { InputSearchConfig } from './input/input-search.types';

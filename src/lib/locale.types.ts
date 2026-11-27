@@ -1,9 +1,9 @@
 import type { CarouselLocale } from './carousel.types';
 import type { ColorPickerLocale } from './color-picker/color-picker.types';
-import type { DatePickerLocale } from './date-picker.types';
+import type { DatePickerLocale } from './picker/date-picker.types';
 import type { FormLocale } from './form/form.types';
 import type { QRCodeLocale } from './qrcode.types';
-import type { TimePickerLocale } from './time-picker.types';
+import type { TimePickerLocale } from './picker/time-picker.types';
 import type { TourLocale } from './tour.types';
 import type { TransferLocale } from './transfer/transfer.types';
 import type { TypographyLocale } from './typography.types';

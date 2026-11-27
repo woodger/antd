@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { DatePickerEditor, DatePickerEditorContext } from './picker-components.types';
-  import type { ComponentSize } from './types';
+  import type { ComponentSize } from '../types';
 
   let { editor, attributes, register, range, size: editorSize }: DatePickerEditorContext & {
     editor: DatePickerEditor;

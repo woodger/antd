@@ -1,10 +1,10 @@
 // Calendar grid and year and month list operations use GenerateConfig. The adapter owns date
 // formatting and comparison. Calendar 6.6.8 and PickerPanel 1.12.2, under MIT. See
 // vendor/LICENSE.ant-design and LICENSE.rc-picker.
-import type { GenerateConfig } from './date-generate.types';
+import type { GenerateConfig } from '../picker/date-generate.types';
 import type { CalendarLang, CalendarLocale, CalendarMode } from './calendar.types';
-import { datePickerEnUS } from './date-picker.locale';
-export { fillPickerLocale as calendarFilledLocale } from './picker-locale.engine';
+import { datePickerEnUS } from '../picker/date-picker.locale';
+export { fillPickerLocale as calendarFilledLocale } from '../picker/picker-locale.engine';
 
 // Compares the years of two dates through the adapter.
 export function calendarSameYear<T>(a: T | undefined, b: T | undefined, date: GenerateConfig<T>) {

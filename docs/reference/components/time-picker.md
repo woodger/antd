@@ -70,7 +70,7 @@ root/content/item/footer/container. Локальный callback получает
 Prefix/suffixIcon/allowClear.clearIcon, cellRender, panelRender, renderExtraFooter
 и presets принимают Svelte snippets вместо React nodes/render functions.
 Cell info.originNode — snippet
-нативной кнопки, остальные поля описаны в [time-picker.types.ts](../../../src/lib/time-picker.types.ts).
+нативной кнопки, остальные поля описаны в [time-picker.types.ts](../../../src/lib/picker/time-picker.types.ts).
 Bind:nativeElement даёт root div, bind:this — focus({cursor,preventScroll})/blur().
 Native name/id/required и FormItem работают без скрытого ISO input; FormData
 содержит отображаемую строку, Form model хранит Dayjs напрямую.
@@ -94,8 +94,8 @@ native popover lifecycle библиотеки. Класс popup задаётся
 showToday, прямые disabled units, addon/onSelect и второй аргумент onKeyDown удалены. Темы, compact, RTL, status и размеры
 наследуют текущие контексты.
 
-Проверки: [engine](../../../src/lib/time-picker.engine.test.ts),
-[SSR](../../../src/lib/time-picker.ssr.test.ts),
+Проверки: [engine](../../../src/lib/picker/time-picker.engine.test.ts),
+[SSR](../../../src/lib/picker/time-picker.ssr.test.ts),
 [public package](../../../tests/package/time-picker.ssr.test.ts),
 [browser](../../../tests/browser/time-picker.spec.ts) и `?fixture=time-picker`.
 Общие component tokens настраиваются через `components.DatePicker`; подробности

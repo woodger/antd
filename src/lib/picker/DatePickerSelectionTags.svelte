@@ -3,8 +3,8 @@
   // excluded from keyboard navigation.
   import { onMount } from 'svelte';
   import type { DatePickerMultipleProps } from './date-picker.types';
-  import { connectSelectTagOverflow } from './select/select-tag-overflow.dom';
-  import Icon from './Icon.svelte';
+  import { connectSelectTagOverflow } from '../select/select-tag-overflow.dom';
+  import Icon from '../Icon.svelte';
 
   let {
     prefix, input, values, format, dateKey, disabled, placeholder, clearLabel,

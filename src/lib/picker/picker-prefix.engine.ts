@@ -1,4 +1,4 @@
-import template from './vendor/date-picker-prefix.css.js';
+import template from '../vendor/date-picker-prefix.css.js';
 
 /** Date/Time single/range is shared by owner, general private affix namespace and canonical tokens. */
 export function getPickerPrefixCss(prefix: string, rootPrefix: string) {

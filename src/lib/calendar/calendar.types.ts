@@ -1,8 +1,8 @@
 import type { Dayjs } from 'dayjs';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { GenerateConfig } from './date-generate.types';
-import type { PickerLocale } from './picker-locale.types';
+import type { GenerateConfig } from '../picker/date-generate.types';
+import type { PickerLocale } from '../picker/picker-locale.types';
 
 export type CalendarMode = 'year' | 'month';
 export type CalendarSelectInfo = { source: 'year' | 'month' | 'date' | 'customize'; };

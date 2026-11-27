@@ -17,27 +17,27 @@
   import { createPickerPanelEngine, pickerPanelClock, pickerPanelSlot } from './picker-panel.engine';
   import { createDatePickerEngine, pickerFormats, nextPickerPanelMode } from './date-picker.engine';
   import { datePickerEnUS } from './date-picker.locale';
-  import { useConfig } from './config-context';
+  import { useConfig } from '../config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
-  import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import { useVariant } from './variant.svelte';
-  import { useComponentTheme } from './theme-component.svelte';
-  import { useZIndex } from './z-index-context.svelte';
-  import { connectComponentTheme } from './theme-component.dom';
-  import { createOverlayStyle } from './overlay-style.model.svelte';
-  import { useForm, useFormField } from './form/form-context';
-  import { useFormItemStatusContext } from './form/form-item-status';
-  import { useFormFeedback } from './form/form-feedback-context';
-  import FormFeedbackIcon from './form/FormFeedbackIcon.svelte';
-  import { useCompact } from './space-compact-context';
-  import { compactClasses } from './space-compact.engine';
-  import { getPopupActiveElement } from './popup.dom';
+  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import { useVariant } from '../variant.svelte';
+  import { useComponentTheme } from '../theme-component.svelte';
+  import { useZIndex } from '../z-index-context.svelte';
+  import { connectComponentTheme } from '../theme-component.dom';
+  import { createOverlayStyle } from '../overlay-style.model.svelte';
+  import { useForm, useFormField } from '../form/form-context';
+  import { useFormItemStatusContext } from '../form/form-item-status';
+  import { useFormFeedback } from '../form/form-feedback-context';
+  import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
+  import { useCompact } from '../space-compact-context';
+  import { compactClasses } from '../space-compact.engine';
+  import { getPopupActiveElement } from '../popup.dom';
   import {
     createPickerPopup, focusPickerPanel, keepPickerEditorFocus,
     preservePickerPanelFocus, retainPickerReplacementFocus
   } from './picker-popup.model.svelte.js';
   import { connectPickerPopup } from './picker-popup.dom';
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from '../NoCompactStyle.svelte';
   import PickerConfirmButton from './PickerConfirmButton.svelte';
   import PickerEditor from './PickerEditor.svelte';
   import PickerPanelReplacement from './PickerPanelReplacement.svelte';
@@ -45,7 +45,7 @@
   import DatePickerSelectionTags from './DatePickerSelectionTags.svelte';
   import DatePickerTimePanel, { type DatePickerTimeScrollMemory }
     from './DatePickerTimePanel.svelte';
-  import Icon from './Icon.svelte';
+  import Icon from '../Icon.svelte';
   import PickerCalendarIcon from './PickerCalendarIcon.svelte';
   import PickerClockIcon from './PickerClockIcon.svelte';
   import PickerTimePanel from './PickerTimePanel.svelte';

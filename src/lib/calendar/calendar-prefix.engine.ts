@@ -1,4 +1,4 @@
-import template from './vendor/calendar-prefix.css.js';
+import template from '../vendor/calendar-prefix.css.js';
 
 /** Calendar derives its owner from the picker prefix. Variables and theme marker stay canonical. */
 export function getCalendarPrefixCss(prefix: string) {

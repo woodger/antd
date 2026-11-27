@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from './button/Button.svelte';
+  import Button from '../button/Button.svelte';
   import type { DatePickerComponents } from './picker-components.types';
 
   let { component, disabled, onclick, children }: {

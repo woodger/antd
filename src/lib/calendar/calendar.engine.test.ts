@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import { describe, expect, it } from 'vitest';
-import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
-import { datePickerRuRU } from './date-picker.locale';
+import { dayjsGenerateConfig as date } from '../picker/date-picker-dayjs.engine';
+import { datePickerRuRU } from '../picker/date-picker.locale';
 import {
   calendarDateDisabled,
   calendarFilledLocale,

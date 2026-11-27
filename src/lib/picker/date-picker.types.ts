@@ -1,9 +1,9 @@
 import type { Dayjs } from 'dayjs';
-import type { PopupSourceAlign } from './popup-position.engine';
+import type { PopupSourceAlign } from '../popup-position.engine';
 import type { HTMLInputAttributes } from 'svelte/elements';
 import type { Snippet } from 'svelte';
-import type { InputContent } from './input/input.types';
-import type { ComponentSize } from './types';
+import type { InputContent } from '../input/input.types';
+import type { ComponentSize } from '../types';
 import type { PickerLocale } from './picker-locale.types';
 import type { RangePickerProps } from './range-picker.types';
 import type { TimePickerColumnType } from './time-picker.types';

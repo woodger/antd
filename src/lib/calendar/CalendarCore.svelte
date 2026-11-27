@@ -3,10 +3,10 @@
   // cell order used by keyboard navigation and tabIndex.
   import { untrack, type Snippet } from 'svelte';
   import CalendarHeader from './CalendarHeader.svelte';
-  import { useConfig } from './config-context';
-  import { useComponentTheme } from './theme-component.svelte';
+  import { useConfig } from '../config-context';
+  import { useComponentTheme } from '../theme-component.svelte';
   import { getCalendarPrefixCss } from './calendar-prefix.engine';
-  import ThemeScopeStyle from './ThemeScopeStyle.svelte';
+  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
   import {
     calendarDateDisabled,
     calendarFilledLocale,
@@ -25,7 +25,7 @@
     CalendarSemantic,
     CalendarSlots
   } from './calendar.types';
-  import type { GenerateConfig } from './date-generate.types';
+  import type { GenerateConfig } from '../picker/date-generate.types';
 
   let {
     generateConfig,
