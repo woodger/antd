@@ -3,7 +3,7 @@
 InputPassword добавляет к Input переключение видимости пароля. Он поддерживает
 bind:value, defaultValue, нативные атрибуты и события, clear/count, affixes,
 FormItem, Compact и методы refs. Настройки описаны в
-[исходных типах](../../../src/lib/input-password.types.ts).
+[исходных типах](../../../src/lib/input/input-password.types.ts).
 
 ```svelte
 <script lang="ts">

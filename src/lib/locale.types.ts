@@ -1,14 +1,14 @@
 import type { CarouselLocale } from './carousel.types';
-import type { ColorPickerLocale } from './color-picker.types';
+import type { ColorPickerLocale } from './color-picker/color-picker.types';
 import type { DatePickerLocale } from './date-picker.types';
-import type { FormLocale } from './form.types';
+import type { FormLocale } from './form/form.types';
 import type { QRCodeLocale } from './qrcode.types';
 import type { TimePickerLocale } from './time-picker.types';
 import type { TourLocale } from './tour.types';
-import type { TransferLocale } from './transfer.types';
+import type { TransferLocale } from './transfer/transfer.types';
 import type { TypographyLocale } from './typography.types';
 import type { EmptyLocale, Locale, PaginationLocale, TableLocale } from './types';
-import type { UploadLocale } from './upload.types';
+import type { UploadLocale } from './upload/upload.types';
 
 type SourcePaginationLocale = Pick<PaginationLocale,
   'items_per_page' | 'jump_to' | 'jump_to_confirm' | 'page' | 'page_size'

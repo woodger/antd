@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Button from './Button.svelte';
+  import Button from './button/Button.svelte';
   import Badge from './Badge.svelte';
   import Tooltip from './Tooltip.svelte';
   import FloatButtonIcon from './FloatButtonIcon.svelte';
-  import { buttonHasContent, buttonText } from './button.engine';
+  import { buttonHasContent, buttonText } from './button/button.engine';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useZIndex } from './z-index-context.svelte';

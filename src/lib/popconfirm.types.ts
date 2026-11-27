@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { ButtonContent, ButtonElementProps, ButtonLinkProps, ButtonType } from './button.types';
+import type { ButtonContent, ButtonElementProps, ButtonLinkProps, ButtonType } from './button/button.types';
 import type {
   PopoverContent,
   PopoverPlacement,

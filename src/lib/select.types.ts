@@ -3,7 +3,7 @@ import type { HTMLInputAttributes, HTMLAttributes, DOMAttributes } from 'svelte/
 import type { ComponentSize, RenderEmptyContent, SelectOption } from './types';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset, VirtualScrollOffsetInfo } from './virtual-list.types';
-import type { FormValidateStatus } from './form-error-list.types';
+import type { FormValidateStatus } from './form/form-error-list.types';
 import type { SelectComponents } from './select-components.types';
 import type { SelectOptionSnapshot } from './select-data.types';
 import type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';

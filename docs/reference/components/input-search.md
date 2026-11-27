@@ -1,7 +1,7 @@
 # InputSearch (Input.Search)
 
 InputSearch объединяет Input и кнопку поиска в SpaceCompact. Публичные типы
-описаны в [исходных объявлениях](../../../src/lib/input-search.types.ts).
+описаны в [исходных объявлениях](../../../src/lib/input/input-search.types.ts).
 
 ```svelte
 <script lang="ts">

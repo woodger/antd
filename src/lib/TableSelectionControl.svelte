@@ -2,11 +2,11 @@
   // Checkbox and Radio use native input while Table owns the state. Shift selection needs click
   // because DOM change carries no modifier keys.
   import { onDestroy, tick } from 'svelte';
-  import Checkbox from './Checkbox.svelte';
-  import Radio from './Radio.svelte';
-  import { isolateRadioContext } from './radio-context';
-  import type { CheckboxChangeEvent } from './checkbox.types';
-  import type { RadioChangeEvent } from './radio.types';
+  import Checkbox from './checkbox/Checkbox.svelte';
+  import Radio from './radio/Radio.svelte';
+  import { isolateRadioContext } from './radio/radio-context';
+  import type { CheckboxChangeEvent } from './checkbox/checkbox.types';
+  import type { RadioChangeEvent } from './radio/radio.types';
   import type { TableSelectionControlProps } from './table.types';
 
   let {

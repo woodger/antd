@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { MouseEventHandler } from 'svelte/elements';
-import type { ButtonProps, ButtonSlots, ButtonContent } from './button.types';
+import type { ButtonProps, ButtonSlots, ButtonContent } from './button/button.types';
 import type { BadgeProps } from './badge.types';
 import type { TooltipProps } from './tooltip.types';
 export type FloatButtonContent = ButtonContent;

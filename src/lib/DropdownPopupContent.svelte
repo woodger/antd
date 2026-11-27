@@ -3,7 +3,7 @@
   // registration independently of the parent field.
   import { untrack, type Snippet } from 'svelte';
   import { provideDropdownMenu, type DropdownMenuContext } from './dropdown-menu-context';
-  import { provideFormField } from './form-context';
+  import { provideFormField } from './form/form-context';
 
   let { renderer, origin, context }: {
     renderer: Snippet<[origin?: Snippet]>;

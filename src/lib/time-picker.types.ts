@@ -6,7 +6,7 @@ import type {
 } from './date-picker.types';
 import type { PickerModeFooter } from './picker-components.types';
 import type { PickerLocale } from './picker-locale.types';
-import type { InputContent } from './input.types';
+import type { InputContent } from './input/input.types';
 import type { TimeRangePickerProps } from './time-range-picker.types';
 
 export type TimePickerUnit = 'hour' | 'minute' | 'second' | 'millisecond';

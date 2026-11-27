@@ -113,7 +113,7 @@ Bind:inputElement возвращает input, bind:nativeElement — корен�
 proxy native input с nativeElement и focus({ cursor, preventScroll })/blur(). Методы
 focus/blur доступны также через bind:this. Mouse callbacks с именами Ant Design
 относятся к корню; нативные lowercase handlers сохраняют события input.
-Публичные типы и JSDoc находятся в [input-number.types.ts](../../../src/lib/input-number.types.ts).
+Публичные типы и JSDoc находятся в [input-number.types.ts](../../../src/lib/input-number/input-number.types.ts).
 
 Обычный числовой режим сохраняет прежние native контракты выше: строгий parser,
 finite number/null, safe-integer defaults, проверку формы и commit черновика.

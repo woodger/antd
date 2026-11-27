@@ -1,7 +1,7 @@
 # ColorPicker
 
 ColorPicker выбирает цвет или градиент. Props и snippets описаны в
-[color-picker.types.ts](../../../src/lib/color-picker.types.ts), методы Color —
+[color-picker.types.ts](../../../src/lib/color-picker/color-picker.types.ts), методы Color —
 в [color.ts](../../../src/lib/color.ts).
 
 ```svelte
@@ -90,7 +90,7 @@ development/PurePanel API. Native DOM и Svelte snippets заменяют React 
 Логика сопровождается MIT [FastColor](../../../src/lib/vendor/LICENSE.fast-color) и
 [rc-color-picker](../../../src/lib/vendor/LICENSE.rc-color-picker). Formatter/parser опираются
 на [rc-input-number 1.6.2](../../../src/lib/vendor/LICENSE.rc-input-number).
-Проверки: [engine](../../../src/lib/color-picker.engine.test.ts),
+Проверки: [engine](../../../src/lib/color-picker/color-picker.engine.test.ts),
 [package SSR](../../../tests/package/color-picker.ssr.test.ts),
 [browser](../../../tests/browser/color-picker.spec.ts); fixture: `?fixture=color-picker`.
 

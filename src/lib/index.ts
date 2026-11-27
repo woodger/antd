@@ -41,8 +41,8 @@ export type {
   ImagePreviewActions,
   ImagePreviewRenderInfo
 } from './image.types';
-export { default as Mentions } from './Mentions.svelte';
-export { getMentions } from './mentions.engine';
+export { default as Mentions } from './mentions/Mentions.svelte';
+export { getMentions } from './mentions/mentions.engine';
 export type {
   MentionsProps,
   MentionsSemantic,
@@ -54,7 +54,7 @@ export type {
   MentionsPopupMenu,
   MentionsPopupRender,
   MentionsPopupRenderInfo
-} from './mentions.types';
+} from './mentions/mentions.types';
 export { default as AutoComplete } from './AutoComplete.svelte';
 export type {
   AutoCompleteProps,
@@ -188,9 +188,9 @@ export type {
   TreeCheckInfo
 } from './tree.types';
 export type { TreeMotionConfig, TreeMotionName, TreeMotionEvent } from './tree-motion.types';
-export { default as Upload } from './Upload.svelte';
-export { default as UploadDragger } from './UploadDragger.svelte';
-export { UPLOAD_LIST_IGNORE } from './upload.engine';
+export { default as Upload } from './upload/Upload.svelte';
+export { default as UploadDragger } from './upload/UploadDragger.svelte';
+export { UPLOAD_LIST_IGNORE } from './upload/upload.engine';
 export type {
   UploadProps,
   UploadDraggerProps,
@@ -212,7 +212,7 @@ export type {
   UploadRequestOptions,
   UploadRequestHandler,
   UploadRequest
-} from './upload.types';
+} from './upload/upload.types';
 export { default as RangePicker } from './range-picker.component';
 export type {
   RangePickerProps,
@@ -262,7 +262,7 @@ export type {
   DatePickerPanelNavigation,
   DatePickerPanelTimeConfig
 } from './picker-components.types';
-export { default as TextArea } from './TextArea.svelte';
+export { default as TextArea } from './input/TextArea.svelte';
 export type {
   TextAreaProps,
   TextAreaConfig,
@@ -275,7 +275,7 @@ export type {
   TextAreaSemanticSlots,
   TextAreaSemantic,
   TextAreaChangeEvent
-} from './textarea.types';
+} from './input/textarea.types';
 export { default as FloatButton } from './FloatButton.svelte';
 export { default as FloatButtonGroup } from './FloatButtonGroup.svelte';
 export { default as FloatButtonBackTop } from './FloatButtonBackTop.svelte';
@@ -368,7 +368,7 @@ export type {
   DescriptionsSemantic
 } from './descriptions.types';
 export { default as ConfigProvider } from './config-provider.component';
-export { default as Button } from './Button.svelte';
+export { default as Button } from './button/Button.svelte';
 export type {
   ButtonLinkProps,
   ButtonConfig,
@@ -380,43 +380,43 @@ export type {
   ButtonLoading,
   ButtonSlots,
   ButtonSemanticProps
-} from './button.types';
-export { default as Input } from './Input.svelte';
-export { default as InputPassword } from './InputPassword.svelte';
-export { default as InputSearch } from './InputSearch.svelte';
-export { default as InputOTP } from './InputOTP.svelte';
+} from './button/button.types';
+export { default as Input } from './input/Input.svelte';
+export { default as InputPassword } from './input/InputPassword.svelte';
+export { default as InputSearch } from './input/InputSearch.svelte';
+export { default as InputOTP } from './input/InputOTP.svelte';
 export type {
   InputOTPProps,
   InputOTPConfig,
   InputOTPSemantic,
   InputOTPSemanticSlots,
   InputOTPSeparatorContent
-} from './input-otp.types';
+} from './input/input-otp.types';
 export type {
   InputSearchProps,
   InputSearchConfig,
   InputSearchSemantic,
   InputSearchSemanticSlots,
   InputSearchButtonContext
-} from './input-search.types';
+} from './input/input-search.types';
 export type {
   InputPasswordProps,
   InputPasswordConfig,
   InputPasswordVisibilityToggle,
   InputPasswordIconRender,
   InputPasswordSemantic
-} from './input-password.types';
-export { default as InputNumber } from './InputNumber.svelte';
-export { default as Slider } from './Slider.svelte';
-export { default as ColorPicker } from './ColorPicker.svelte';
+} from './input/input-password.types';
+export { default as InputNumber } from './input-number/InputNumber.svelte';
+export { default as Slider } from './slider/Slider.svelte';
+export { default as ColorPicker } from './color-picker/ColorPicker.svelte';
 export type { AggregationColor as Color } from './color';
 export type { ColorGenInput } from './color-core.engine';
-export type { ColorMode, ColorFormat, ColorValue } from './color-picker.engine';
+export type { ColorMode, ColorFormat, ColorValue } from './color-picker/color-picker.engine';
 export type {
   ColorPickerProps, ColorPickerPreset, ColorPickerConfig, ColorPickerLocale,
   ColorPickerContent, ColorPickerPlacement, ColorPickerSlots, ColorPickerStyles,
   ColorPickerSemantic
-} from './color-picker.types';
+} from './color-picker/color-picker.types';
 export { default as Tooltip } from './tooltip.component';
 export { default as Popover } from './Popover.svelte';
 export { default as Popconfirm } from './popconfirm.component';
@@ -450,7 +450,7 @@ export { default as AvatarGroup } from './AvatarGroup.svelte';
 export { default as Divider } from './Divider.svelte';
 export { default as Flex } from './Flex.svelte';
 export { default as Statistic } from './Statistic.svelte';
-export { default as Segmented } from './Segmented.svelte';
+export { default as Segmented } from './segmented/Segmented.svelte';
 export { default as Row } from './Row.svelte';
 export { default as Col } from './Col.svelte';
 export { default as Layout } from './Layout.svelte';
@@ -488,7 +488,7 @@ export type {
   SegmentedSemanticInfo,
   SegmentedSemantic,
   SegmentedConfig
-} from './segmented.types';
+} from './segmented/segmented.types';
 export { default as StatisticTimer } from './StatisticTimer.svelte';
 export type {
   StatisticTimerProps,
@@ -513,19 +513,19 @@ export type {
   DividerSemanticSlots,
   DividerSemanticInfo
 } from './divider.types';
-export { default as Checkbox } from './Checkbox.svelte';
-export { default as CheckboxGroup } from './CheckboxGroup.svelte';
-export { default as Radio } from './Radio.svelte';
-export { default as RadioGroup } from './RadioGroup.svelte';
-export { default as Switch } from './Switch.svelte';
+export { default as Checkbox } from './checkbox/Checkbox.svelte';
+export { default as CheckboxGroup } from './checkbox/CheckboxGroup.svelte';
+export { default as Radio } from './radio/Radio.svelte';
+export { default as RadioGroup } from './radio/RadioGroup.svelte';
+export { default as Switch } from './switch/Switch.svelte';
 export { default as Pagination } from './Pagination.svelte';
 export { default as Table } from './table.component';
 export { default as Select } from './Select.svelte';
 export { default as Modal } from './modal.component';
-export { default as Form } from './Form.svelte';
-export { default as FormItem } from './FormItem.svelte';
-export { default as FormList } from './FormList.svelte';
-export { default as FormErrorList } from './FormErrorList.svelte';
+export { default as Form } from './form/Form.svelte';
+export { default as FormItem } from './form/FormItem.svelte';
+export { default as FormList } from './form/FormList.svelte';
+export { default as FormErrorList } from './form/FormErrorList.svelte';
 export {
   createForm,
   type FormInstance,
@@ -535,9 +535,9 @@ export {
   type FormGetFieldsValueConfig,
   type FormFieldData,
   type SubmissionResult
-} from './form.model.svelte.js';
-export { FormValidationError } from './FormValidationError';
-export type { ButtonProps } from './Button.svelte';
+} from './form/form.model.svelte.js';
+export { FormValidationError } from './form/FormValidationError';
+export type { ButtonProps } from './button/Button.svelte';
 export type {
   InputProps,
   InputConfig,
@@ -551,8 +551,8 @@ export type {
   InputCountInfo,
   InputCountFormatter,
   InputCountContent
-} from './input.types';
-export type { InputNumberProps } from './InputNumber.svelte';
+} from './input/input.types';
+export type { InputNumberProps } from './input-number/InputNumber.svelte';
 export type {
   InputNumberValue,
   InputNumberContent,
@@ -562,9 +562,9 @@ export type {
   InputNumberSlots,
   InputNumberSemantic,
   InputNumberConfig
-} from './input-number.types';
-export type { SliderProps } from './Slider.svelte';
-export type { SliderSingleProps } from './slider.types';
+} from './input-number/input-number.types';
+export type { SliderProps } from './slider/Slider.svelte';
+export type { SliderSingleProps } from './slider/slider.types';
 export type {
   SliderRangeProps,
   SliderRangeConfig,
@@ -576,7 +576,7 @@ export type {
   SliderStyles,
   SliderSemanticName,
   SliderSemanticValue
-} from './slider-range.types';
+} from './slider/slider-range.types';
 export type {
   TooltipProps,
   TooltipContent,
@@ -854,7 +854,7 @@ export type {
 } from './avatar-group.types';
 export type { AvatarGroupLocale } from './types';
 export type { EmptyLocale } from './types';
-export type { CheckboxProps } from './Checkbox.svelte';
+export type { CheckboxProps } from './checkbox/Checkbox.svelte';
 export type {
   CheckboxValue,
   CheckboxContent,
@@ -863,12 +863,12 @@ export type {
   CheckboxSemanticSlots,
   CheckboxSemantic,
   CheckboxConfig
-} from './checkbox.types';
+} from './checkbox/checkbox.types';
 export type {
   CheckboxGroupProps,
   CheckboxGroupOption,
   CheckboxGroupValue
-} from './checkbox-group.types';
+} from './checkbox/checkbox-group.types';
 export type {
   RadioProps,
   RadioGroupProps,
@@ -880,8 +880,8 @@ export type {
   RadioSemanticSlots,
   RadioSemantic,
   RadioConfig
-} from './radio.types';
-export type { SwitchProps } from './Switch.svelte';
+} from './radio/radio.types';
+export type { SwitchProps } from './switch/Switch.svelte';
 export { theme } from './theme';
 export type { CSSVariableToken, ThemeTokenResult } from './theme-context.types';
 export type {
@@ -908,7 +908,7 @@ export type {
   SwitchSemanticSlots,
   SwitchSemantic,
   SwitchConfig
-} from './switch.types';
+} from './switch/switch.types';
 export type { PaginationProps } from './Pagination.svelte';
 export type {
   PaginationComponentConfig,
@@ -1028,7 +1028,7 @@ export type { SelectComponents, SelectRootAttributes, SelectInputAttributes, Sel
 export type {
   FormProps, FormConfig, FormScrollOptions, FormRequiredMark, FormRequiredMarkInfo, FormLocale,
   FormSemanticSlots, FormSemantic, FormTooltipProps, FormItemTooltip, FormFeedbackIcons, FormFeedbackInfo
-} from './form.types';
+} from './form/form.types';
 export type {
   ModalProps, ModalContent, ModalConfig, ModalMask, ModalMaskConfig, ModalFocusableConfig, ModalWidth,
   ModalMousePosition, ModalButtonProps, ModalOkType, ModalFooterButtons, ModalFooter,
@@ -1045,18 +1045,18 @@ export type {
   WaveEffectInfo,
   ShowWaveEffect
 } from './wave.types';
-export type { FormItemProps } from './FormItem.svelte';
-export type { ValidateMessage, ValidateMessages } from './validation-messages.types';
-export { useFormItemStatus } from './form-item-status';
-export type { FormItemStatus } from './form-item-status';
-export type { FormErrorListProps, FormValidateStatus } from './form-error-list.types';
+export type { FormItemProps } from './form/FormItem.svelte';
+export type { ValidateMessage, ValidateMessages } from './form/validation-messages.types';
+export { useFormItemStatus } from './form/form-item-status';
+export type { FormItemStatus } from './form/form-item-status';
+export type { FormErrorListProps, FormValidateStatus } from './form/form-error-list.types';
 export type {
   FormListProps,
   FormListFieldData,
   FormListOperation,
   FormListMeta,
   FormListRule
-} from './form-list.types';
+} from './form/form-list.types';
 export type {
   ValidationRule,
   ValidationRuleType,
@@ -1066,9 +1066,9 @@ export type {
   FieldErrors,
   FormValue,
   FormValues
-} from './validation.engine';
-export type { FieldError } from './validation.engine';
-export type { NamePath, NamePathValue, PartialFormValues } from './form-store.engine';
+} from './form/validation.engine';
+export type { FieldError } from './form/validation.engine';
+export type { NamePath, NamePathValue, PartialFormValues } from './form/form-store.engine';
 export type { AntDesignLocale } from './locale.types';
 export {
   ruRU,
@@ -1090,8 +1090,8 @@ export {
   type ThemeConfig,
   type SelectOption
 } from './types';
-export { default as Rate } from './Rate.svelte';
-export type { RateProps, RateConfig, RateCharacterInfo } from './rate.types';
+export { default as Rate } from './rate/Rate.svelte';
+export type { RateProps, RateConfig, RateCharacterInfo } from './rate/rate.types';
 export { default as Watermark } from './Watermark.svelte';
 export type {
   WatermarkProps,
@@ -1132,8 +1132,8 @@ export type {
   SplitterStyleSlots
 } from './splitter.types';
 export { default as QRCode } from './QRCode.svelte';
-export { default as RadioButton } from './RadioButton.svelte';
-export type { RadioButtonProps } from './radio.types';
+export { default as RadioButton } from './radio/RadioButton.svelte';
+export type { RadioButtonProps } from './radio/radio.types';
 export { default as Calendar } from './Calendar.svelte';
 export { default as Cascader } from './Cascader.svelte';
 export { default as CascaderPanel } from './CascaderPanel.svelte';
@@ -1158,7 +1158,7 @@ export type {
   CascaderSemanticValue,
   CascaderConfig
 } from './cascader.types';
-export { default as Transfer } from './Transfer.svelte';
+export { default as Transfer } from './transfer/Transfer.svelte';
 export type {
   TransferProps,
   TransferItem,
@@ -1181,7 +1181,7 @@ export type {
   TransferSectionSlots,
   TransferSemantic,
   TransferSemanticValue
-} from './transfer.types';
+} from './transfer/transfer.types';
 export { default as Listy } from './Listy.svelte';
 export type {
   ListyProps,
@@ -1321,4 +1321,4 @@ export type { SelectConfig } from './select.types';
 export type { TreeSelectConfig } from './tree-select.types';
 export type { DatePickerConfig } from './date-picker.types';
 export type { CardConfig } from './card.types';
-export type { MentionsComponentConfig } from './mentions.types';
+export type { MentionsComponentConfig } from './mentions/mentions.types';

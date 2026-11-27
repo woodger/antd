@@ -29,10 +29,10 @@
   import { useZIndex } from './z-index-context.svelte';
   import { connectComponentTheme } from './theme-component.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
-  import { useForm, useFormField } from './form-context';
-  import { useFormItemStatusContext } from './form-item-status';
-  import { useFormFeedback } from './form-feedback-context';
-  import FormFeedbackIcon from './FormFeedbackIcon.svelte';
+  import { useForm, useFormField } from './form/form-context';
+  import { useFormItemStatusContext } from './form/form-item-status';
+  import { useFormFeedback } from './form/form-feedback-context';
+  import FormFeedbackIcon from './form/FormFeedbackIcon.svelte';
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
   import { getPopupActiveElement } from './popup.dom';

@@ -58,10 +58,10 @@
   import { useVariant } from './variant.svelte';
   import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
-  import { useForm, useFormField } from './form-context';
-  import { useFormItemStatusContext } from './form-item-status';
-  import { useFormFeedback } from './form-feedback-context';
-  import FormFeedbackIcon from './FormFeedbackIcon.svelte';
+  import { useForm, useFormField } from './form/form-context';
+  import { useFormItemStatusContext } from './form/form-item-status';
+  import { useFormFeedback } from './form/form-feedback-context';
+  import FormFeedbackIcon from './form/FormFeedbackIcon.svelte';
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
   import { connectPopup, getPopupActiveElement } from './popup.dom';

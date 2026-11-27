@@ -1,0 +1,288 @@
+<script module lang="ts">
+  export type { ButtonProps } from './button.types';
+</script>
+
+<script lang="ts" generics="Href extends string | undefined = undefined">
+  import { onMount, untrack } from 'svelte';
+  import { useConfig } from '../config-context';
+  import { useComponentTheme } from '../theme-component.svelte';
+  import { useWave } from '../wave.svelte';
+  import { useCompact } from '../space-compact-context';
+  import { compactClasses } from '../space-compact.engine';
+  import { useForm } from '../form/form-context';
+  import { buttonAppearance, buttonHasContent, buttonLoading, buttonText } from './button.engine';
+  import { connectButtonText } from './button.dom';
+  import { getButtonPrefixCss } from './button-prefix.engine';
+  import ButtonLoadingIcon from './ButtonLoadingIcon.svelte';
+  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import Icon from '../Icon.svelte';
+  import type { ButtonColor, ButtonContent, ButtonElementProps } from './button.types';
+  let {
+    children,
+    icon,
+    type,
+    htmlType = 'button',
+    color,
+    variant,
+    size,
+    loading = false,
+    danger = false,
+    block = false,
+    shape,
+    ghost = false,
+    disabled,
+    iconPlacement,
+    autoInsertSpace,
+    autoFocus,
+    href,
+    target,
+    rel,
+    download,
+    hreflang,
+    referrerpolicy,
+    onclick,
+    onClick,
+    classNames,
+    styles,
+    class: className = '',
+    rootClassName = '',
+    prefixCls: customizePrefixCls,
+    style,
+    nativeElement = $bindable(),
+    _skipSemantic,
+    _skipContentWrapper,
+    _themeStyle,
+    ...attributes
+  }: ButtonElementProps<
+    Href
+  > = $props();
+  const config = useConfig();
+  const componentTheme = useComponentTheme('Button');
+  const wave = useWave('Button', () => innerLoading);
+  const compact = useCompact();
+  const form = useForm();
+  let prefixCls = $derived(config.getPrefixCls('btn', customizePrefixCls));
+  let rootPrefixCls = $derived(config.getPrefixCls());
+  let prefixCss = $derived(getButtonPrefixCss(prefixCls, rootPrefixCls));
+  let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
+  let compactItemClasses = $derived(compactClasses(prefixCls, config.direction, compact));
+  let appearance = $derived(buttonAppearance(type, danger, color, variant, ghost, config.button));
+  let resolvedShape = $derived(shape || config.button?.shape || 'default');
+  let blocked = $derived(disabled ?? form?.disabled ?? config.componentDisabled);
+  let delay = $derived(buttonLoading(loading).delay);
+  let immediateLoading = $derived(buttonLoading(loading).loading);
+  let delayedLoading = $state(untrack(() => buttonLoading(loading).loading));
+  let innerLoading = $derived(delay > 0 ? delayedLoading : immediateLoading);
+  let loadingIcon = $derived(
+    typeof loading === 'object' && loading.icon ? loading.icon : config.button?.loadingIcon
+  );
+  let placement = $derived(iconPlacement ?? 'start');
+  let insert = $derived(
+    (autoInsertSpace
+      ?? config.button?.autoInsertSpace
+      ?? true)
+    && !icon
+    && appearance.variant !== 'link'
+    && appearance.variant !== 'text'
+  );
+  let content = $state<HTMLSpanElement>();
+  let twoCN = $state(false);
+  let textRuntime = $state.raw<ReturnType<typeof connectButtonText>>();
+  let mounted = $state(false);
+  let info = $derived({
+    props: {
+      ...attributes,
+      children,
+      icon,
+      type: type || 'default',
+      color: appearance.color as ButtonColor,
+      variant: appearance.variant,
+      danger: appearance.color === 'danger',
+      shape: resolvedShape,
+      size: resolvedSize,
+      disabled: blocked,
+      loading: innerLoading,
+      block,
+      ghost,
+      htmlType,
+      href,
+      target,
+      rel,
+      download,
+      hreflang,
+      referrerpolicy,
+      iconPlacement: placement,
+      autoInsertSpace,
+      autoFocus,
+      classNames,
+      styles,
+      class: className,
+      rootClassName,
+      prefixCls: customizePrefixCls,
+      style,
+      onclick,
+      onClick
+    }
+  });
+  let contextClasses = $derived(
+    _skipSemantic
+      ? {}
+      : typeof config.button?.classNames === 'function'
+        ? config.button.classNames(info) ?? {}
+        : config.button?.classNames ?? {}
+  );
+  let contextStyles = $derived(
+    _skipSemantic
+      ? {}
+      : typeof config.button?.styles === 'function'
+        ? config.button.styles(info) ?? {}
+        : config.button?.styles ?? {}
+  );
+  let classes = $derived(
+    typeof classNames === 'function' ? classNames(info) ?? {} : classNames ?? {}
+  );
+  let slots = $derived(typeof styles === 'function' ? styles(info) ?? {} : styles ?? {});
+  let iconClassNames = $derived([contextClasses.icon, classes.icon]);
+  let iconStyle = $derived([contextStyles.icon, slots.icon].filter(Boolean).join(';'));
+  let rootClasses = $derived(
+    [
+      prefixCls,
+      prefixCss && 'ant-btn-css-var',
+      componentTheme.className,
+      `${prefixCls}-${type || 'default'}`,
+      `${prefixCls}-color-${appearance.color === 'danger' ? 'dangerous' : appearance.color}`,
+      `${prefixCls}-variant-${appearance.variant}`,
+      resolvedSize === 'large' && `${prefixCls}-lg`,
+      resolvedSize === 'small' && `${prefixCls}-sm`,
+      innerLoading && `${prefixCls}-loading`,
+      danger && `${prefixCls}-dangerous`,
+      block && `${prefixCls}-block`,
+      resolvedShape !== 'default' && resolvedShape !== 'square' && `${prefixCls}-${resolvedShape}`,
+      !children && children !== 0 && Boolean(innerLoading || icon) && `${prefixCls}-icon-only`,
+      ghost
+      && appearance.variant !== 'text'
+      && appearance.variant !== 'link'
+      && `${prefixCls}-background-ghost`,
+      twoCN && insert && !innerLoading && `${prefixCls}-two-chinese-chars`,
+      config.direction === 'rtl' && `${prefixCls}-rtl`,
+      placement === 'end' && `${prefixCls}-icon-end`,
+      href !== undefined && blocked && `${prefixCls}-disabled`,
+      compactItemClasses,
+      className,
+      rootClassName,
+      config.button?.class,
+      contextClasses.root,
+      classes.root
+    ]
+  );
+  let rootStyle = $derived(
+    [componentTheme.style, _themeStyle, contextStyles.root, config.button?.style, slots.root, style]
+      .filter(Boolean).join(';')
+  );
+  // The native branches share attributes. During hydration, a dynamic Svelte tag reinserts the
+  // existing node and drops focus.
+  let rootAttributes = $derived({
+    'data-ant-button-root': true,
+    'data-ant-button-prefix': prefixCss ? prefixCls : undefined,
+    'data-ant-button-global': prefixCss ? rootPrefixCls : undefined,
+    target,
+    rel,
+    download,
+    hreflang,
+    referrerpolicy
+  });
+  // ButtonProps describes additional DOM events via HTMLButtonElement. The link passes those
+  // attributes through and preserves the original API.
+  let linkAttributes: Record<string, unknown> = $derived(attributes);
+
+  $effect(() => {
+    if (delay > 0) {
+      const timeout = setTimeout(() => {
+        delayedLoading = true;
+      }, delay);
+      return () => clearTimeout(timeout);
+    }
+    delayedLoading = immediateLoading;
+  });
+  $effect(() => {
+    if (!content || typeof children !== 'function') {
+      twoCN = false;
+      return;
+    }
+    const runtime = connectButtonText(content, () => insert, value => {
+      twoCN = value;
+    });
+    textRuntime = runtime;
+    return () => {
+      runtime.destroy();
+      textRuntime = undefined;
+    };
+  });
+  $effect(() => {
+    if (!insert)
+      twoCN = false;
+    textRuntime?.refresh();
+  });
+  onMount(() => {
+    mounted = true;
+    if (autoFocus)
+      nativeElement?.focus();
+  });
+
+  function click(event: MouseEvent) {
+    if (blocked || innerLoading) {
+      event.preventDefault();
+      return;
+    }
+    (onclick
+      ?? onClick)?.(event as Parameters<NonNullable<ButtonElementProps<Href>['onclick']>>[0]);
+  }
+</script>
+
+{#snippet value(node: ButtonContent, spacing = false)}
+  {#if typeof node === 'function'}{@render node()}{:else if node !== true && node !== false}{typeof node === 'string' ? buttonText(node, spacing) : node ?? ''}{/if}
+{/snippet}
+{#snippet body()}
+  {#if icon || innerLoading && loadingIcon}
+    <span class={[
+        `${prefixCls}-icon`,
+        innerLoading && !loadingIcon && `${prefixCls}-loading-icon`,
+        iconClassNames
+      ]} style={iconStyle}>
+      {#if innerLoading}{#if loadingIcon}{@render value(loadingIcon)}{:else}<Icon name="loading" />{/if}{:else}{@render value(icon)}{/if}
+    </span>
+  {:else}
+    <ButtonLoadingIcon
+      owner={nativeElement}
+      {prefixCls}
+      visible={innerLoading}
+      appear={mounted}
+      classNames={iconClassNames}
+      style={iconStyle}
+    />
+  {/if}
+  {#if _skipContentWrapper && typeof children === 'function'}{@render children()}{:else if buttonHasContent(children)}<span bind:this={content} class={[contextClasses.content, classes.content]} style={[contextStyles.content, slots.content].filter(Boolean).join(';')}>{@render value(children, insert)}</span>{/if}
+{/snippet}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`button-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}{#if href === undefined}<button
+  {...attributes}
+  {...rootAttributes}
+  bind:this={nativeElement}
+  {@attach appearance.variant !== 'text' && appearance.variant !== 'link' ? wave : undefined}
+  type={htmlType}
+  disabled={innerLoading || blocked}
+  aria-disabled={undefined}
+  aria-busy={innerLoading || undefined}
+  tabindex={attributes.tabindex}
+  class={rootClasses}
+  style={rootStyle}
+  onclick={click}>{@render body()}</button>{:else}<a
+  {...linkAttributes}
+  {...rootAttributes}
+  bind:this={nativeElement}
+  href={blocked ? undefined : href}
+  aria-disabled={blocked}
+  aria-busy={innerLoading || undefined}
+  tabindex={blocked ? -1 : 0}
+  class={rootClasses}
+  style={rootStyle}
+  onclick={click}>{@render body()}</a>{/if}

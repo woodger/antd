@@ -13,12 +13,12 @@
   import type { MenuItemIconInfo, MenuProps, MenuSelectInfo } from './menu.types';
   import type { TreeCheckedKeys, TreeCheckInfo, TreeEventNode, TreeKey } from './tree.types';
   import type { TableFilterLocale } from './table-locale.engine';
-  import Checkbox from './Checkbox.svelte';
+  import Checkbox from './checkbox/Checkbox.svelte';
   import Empty from './Empty.svelte';
   import Icon from './Icon.svelte';
-  import Input from './Input.svelte';
+  import Input from './input/Input.svelte';
   import Menu from './Menu.svelte';
-  import NoFormItemBinding from './NoFormItemBinding.svelte';
+  import NoFormItemBinding from './form/NoFormItemBinding.svelte';
   import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import Tree from './Tree.svelte';

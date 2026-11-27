@@ -1,6 +1,6 @@
 import { FastColor } from './fast-color.engine';
 import { AggregationColor } from './color';
-import { isBrightColor } from './color-picker.engine';
+import { isBrightColor } from './color-picker/color-picker.engine';
 import { getAlphaColor } from './theme-alias.engine';
 import { presetColors, type AliasToken } from './theme-token.types';
 import type {

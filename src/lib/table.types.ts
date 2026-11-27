@@ -5,12 +5,12 @@ import type {
   HTMLThAttributes
 } from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
-import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
+import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox/checkbox.types';
 import type { DropdownProps } from './dropdown.types';
 import type { SpinProps } from './spin.types';
 import type { GridBreakpoint } from './grid.types';
 import type { PaginationSlots } from './pagination.types';
-import type { RadioChangeEvent } from './radio.types';
+import type { RadioChangeEvent } from './radio/radio.types';
 import type { TooltipProps } from './tooltip.types';
 import type { ComponentSize, RenderEmptyContent, TableLocale } from './types';
 

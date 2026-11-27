@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
-import type { FormValidateStatus } from './form-error-list.types';
+import type { FormValidateStatus } from './form/form-error-list.types';
 
 export type CascaderRawValue = string | number;
 export type CascaderPath = readonly CascaderRawValue[];

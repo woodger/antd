@@ -10,7 +10,7 @@
   } from './date-picker.types';
   import type { PickerLocale } from './picker-locale.types';
   import type { DatePickerPanelNavigation } from './picker-components.types';
-  import type { InputContent } from './input.types';
+  import type { InputContent } from './input/input.types';
   let {
     dateOperations,
     prefixCls,

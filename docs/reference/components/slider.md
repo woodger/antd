@@ -137,8 +137,8 @@ Escape скрывает подсказку, сохраняя фокус и чи�
 `Range` включает исходный multiple-handle API Ant Design 6.6.8 и
 @rc-component/slider 1.1.1. Старые одиночные bind, normalization, callbacks,
 native events и reset сохраняются. Точные интерфейсы:
-[slider.types.ts](../../../src/lib/slider.types.ts) и
-[slider-range.types.ts](../../../src/lib/slider-range.types.ts).
+[slider.types.ts](../../../src/lib/slider/slider.types.ts) и
+[slider-range.types.ts](../../../src/lib/slider/slider-range.types.ts).
 
 ```svelte
 <script lang="ts">

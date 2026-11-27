@@ -1,7 +1,7 @@
 import type { AliasToken } from './theme-token.types';
 import { AggregationColor } from './color';
 import { FastColor } from './fast-color.engine';
-import { isBrightColor } from './color-picker.engine';
+import { isBrightColor } from './color-picker/color-picker.engine';
 
 export function prepareTagTokens(token: AliasToken) {
   return {

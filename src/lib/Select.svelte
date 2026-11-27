@@ -27,10 +27,10 @@
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
-  import { useFormField } from './form-context';
-  import { useFormItemStatusContext } from './form-item-status';
-  import { useFormFeedback } from './form-feedback-context';
-  import FormFeedbackIcon from './FormFeedbackIcon.svelte';
+  import { useFormField } from './form/form-context';
+  import { useFormItemStatusContext } from './form/form-item-status';
+  import { useFormFeedback } from './form/form-feedback-context';
+  import FormFeedbackIcon from './form/FormFeedbackIcon.svelte';
   import {
     getEnabledIndex,
     isSelectCountReached,

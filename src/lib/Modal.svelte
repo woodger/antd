@@ -7,7 +7,7 @@
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
   import { useConfig } from './config-context';
-  import { isolateFormItemStyle } from './form-item-status';
+  import { isolateFormItemStyle } from './form/form-item-status';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { resolveModalClose } from './modal-close.engine';

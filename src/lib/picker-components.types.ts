@@ -5,7 +5,7 @@ import type { GenerateConfig } from './date-generate.types';
 import type {
   DatePickerCellRenderInfo, DatePickerDisabledTime, DatePickerMode, DatePickerTimeConfig
 } from './date-picker.types';
-import type { InputContent } from './input.types';
+import type { InputContent } from './input/input.types';
 import type { PickerLocale } from './picker-locale.types';
 
 export type DatePickerEditorElement = HTMLInputElement | HTMLTextAreaElement;

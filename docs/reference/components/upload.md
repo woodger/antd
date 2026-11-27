@@ -49,7 +49,7 @@ unmount не публикуют изменения. Вложенный upload п
 [два transport-сценария](../../../tests/browser/fixtures/ant-design-upload-ref-transport-reference.json),
 [browser](../../../tests/browser/upload-ref.spec.ts),
 [SSR](../../../tests/package/upload-ref.ssr.test.ts) и
-[controller](../../../src/lib/upload-controller.engine.test.ts) защищают lifecycle API.
+[controller](../../../src/lib/upload/upload-controller.engine.test.ts) защищают lifecycle API.
 
 Если первый onChange синхронно размонтирует компонент, оставшийся batch
 останавливается до следующих callbacks, изменений статуса и отправки запросов.
@@ -187,7 +187,7 @@ Tooltip сохраняет строку и file input.
 [Десять исходных случаев и четыре transitions](../../../tests/browser/fixtures/ant-design-upload-error-message-reference.json),
 [browser](../../../tests/browser/upload-error-message.spec.ts) и
 [SSR](../../../tests/package/upload-error-message.ssr.test.ts) проверяют этот порядок;
-[чистая логика](../../../src/lib/upload.engine.test.ts) также защищает locale fallback.
+[чистая логика](../../../src/lib/upload/upload.engine.test.ts) также защищает locale fallback.
 
 `showUploadList.previewIcon/downloadIcon/removeIcon` — snippets `(file)`
 для содержимого стандартных действий. Они не меняют show*Icon predicates,
@@ -326,7 +326,7 @@ webkitdirectory как boolean attribute; в браузере сохраняют
 После disable/unmount завершившееся чтение не вызывает beforeUpload.
 [Browser](../../../tests/browser/upload-directory.spec.ts),
 [SSR](../../../tests/package/upload-directory.ssr.test.ts) и
-[обходчик](../../../src/lib/upload-directory.dom.test.ts) защищают эти границы.
+[обходчик](../../../src/lib/upload/upload-directory.dom.test.ts) защищают эти границы.
 
 `pastable=true` включает paste файлов в документе, как AjaxUploader 1.1.1;
 по умолчанию false. UploadDragger наследует этот prop. Наличие файлов отменяет

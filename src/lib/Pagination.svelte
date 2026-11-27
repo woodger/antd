@@ -10,7 +10,7 @@
   import { useVariant } from './variant.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
-  import { provideFormField, useFormField } from './form-context';
+  import { provideFormField, useFormField } from './form/form-context';
   import { createBreakpoint } from './grid-breakpoint.model.svelte.js';
   import { getGridMediaQueries } from './grid.engine';
   import { getPaginationItems, getPaginationState, getPageSizeOptions } from './pagination.engine';

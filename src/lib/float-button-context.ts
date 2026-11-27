@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import type { ButtonSlots } from './button.types';
+import type { ButtonSlots } from './button/button.types';
 import type { FloatButtonShape } from './float-button.types';
 export interface FloatButtonContext {
   readonly prefixCls?: string;

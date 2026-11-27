@@ -3,7 +3,7 @@
   import { onDestroy, untrack } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
   import { useConfig } from './config-context';
-  import { useForm } from './form-context';
+  import { useForm } from './form/form-context';
   import { providePopconfirmTheme } from './popover-theme-context';
   import { ruRU } from './types';
   import { createPopconfirmAction } from './popconfirm.model.svelte.js';
@@ -15,7 +15,7 @@
   import type { PopconfirmActionOptions, PopconfirmProps, PopconfirmSemanticProps } from './popconfirm.types';
   import type { PopoverRef } from './popover.types';
   import Popover from './Popover.svelte';
-  import Button from './Button.svelte';
+  import Button from './button/Button.svelte';
   import Icon from './Icon.svelte';
 
   type ActionElement = HTMLButtonElement | HTMLAnchorElement;

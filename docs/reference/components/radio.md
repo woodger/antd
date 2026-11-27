@@ -112,7 +112,7 @@ Bind:ref возвращает `{ input, nativeElement, focus(options?), blur() }
 AutoFocus переводит фокус на input при mount; lowercase autofocus сохраняет нативное
 поведение. TabIndex — alias нативного tabindex.
 `rootClassName`, как class/style, относится к label. Точные объявления — в
-[radio.types.ts](../../../src/lib/radio.types.ts).
+[radio.types.ts](../../../src/lib/radio/radio.types.ts).
 
 Рецепт radio-button воспроизводит 70 правил эталона для кнопок, размеров,
 vertical/block и Badge; прежний vendor/radio.css сохранён. Проверки —

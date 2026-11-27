@@ -8,7 +8,7 @@
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
-  import { useForm } from './form-context';
+  import { useForm } from './form/form-context';
   import { connectPopup, getPopupActiveElement, type PopupConnection } from './popup.dom';
   import { getPopupArrowStyle, getPopupPlacements } from './popup-position.engine';
   import { createDropdownPosition, dropdownFitVariables } from './dropdown-position.dom';

@@ -3,7 +3,7 @@
 `ConfigProvider.variant` задаёт общее оформление полей: outlined, filled, borderless
 или underlined. `Form.variant` задаёт оформление внутри ближайшего Form.
 Точная форма API принадлежит [ConfigProvider](../../src/lib/ConfigProvider.svelte),
-[FormProps](../../src/lib/form.types.ts) и типам отдельных компонентов.
+[FormProps](../../src/lib/form/form.types.ts) и типам отдельных компонентов.
 
 ```svelte
 <script lang="ts">

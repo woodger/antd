@@ -1,5 +1,5 @@
 import { useConfig } from './config-context';
-import { useForm } from './form-context';
+import { useForm } from './form/form-context';
 import { resolveVariant } from './variant.engine';
 import type { Variant } from './types';
 

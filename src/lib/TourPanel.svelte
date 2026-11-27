@@ -2,7 +2,7 @@
   import type { TourPanelInfo, TourProps, TourLocale } from './tour.types';
   import { pickCloseButtonAttributes } from './close-button-attributes';
   import { hasTourContent } from './tour.engine';
-  import Button from './Button.svelte';
+  import Button from './button/Button.svelte';
   import TourContent from './TourContent.svelte';
   import TourCloseIcon from './TourCloseIcon.svelte';
 

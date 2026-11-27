@@ -3,14 +3,14 @@
   // outcomes.
   import { onDestroy, tick, untrack } from 'svelte';
   import type { Snippet } from 'svelte';
-  import { provideFormField, useFormField } from './form-context';
+  import { provideFormField, useFormField } from './form/form-context';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { getTypographyPrefixCss } from './typography-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { typographyEditKey, typographyEditValue } from './typography.engine';
   import type { TypographyEditConfig, TypographySlots } from './typography.types';
-  import TextArea from './TextArea.svelte';
+  import TextArea from './input/TextArea.svelte';
   import TypographyIcon from './TypographyIcon.svelte';
   import TypographyContent from './TypographyContent.svelte';
 

@@ -112,9 +112,9 @@ indeterminate. Source Checkbox aliases и отдельные theme algorithms п
 Local/shared prefix CSS и Wave подключены; React diagnostics/statics остаются
 неперенесёнными. Сверка с официальным UMD — `?fixture=checkbox-prefix` и
 [browser](../../../tests/browser/checkbox-prefix.spec.ts). Типы —
-[checkbox.types.ts](../../../src/lib/checkbox.types.ts) и
-[checkbox-group.types.ts](../../../src/lib/checkbox-group.types.ts); проверки —
+[checkbox.types.ts](../../../src/lib/checkbox/checkbox.types.ts) и
+[checkbox-group.types.ts](../../../src/lib/checkbox/checkbox-group.types.ts); проверки —
 [browser](../../../tests/browser/checkbox-features.spec.ts),
 [package SSR](../../../tests/package/checkbox-features.ssr.test.ts) и
-[engine](../../../src/lib/checkbox-group.engine.test.ts).
+[engine](../../../src/lib/checkbox/checkbox-group.engine.test.ts).
 

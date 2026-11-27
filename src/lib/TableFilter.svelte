@@ -17,7 +17,7 @@
     TableColumn, TableFilterConfirmOptions, TableFilterDropdownOptions, TableFilterDropdownProps,
     TableFilterMode, TableFilterOption, TableFilterResetOptions, TableFilterSearch, TableFilterValue
   } from './table.types';
-  import Button from './Button.svelte';
+  import Button from './button/Button.svelte';
   import Dropdown from './Dropdown.svelte';
   import Icon from './Icon.svelte';
   import RenderContent from './RenderContent.svelte';

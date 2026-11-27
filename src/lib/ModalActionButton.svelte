@@ -1,6 +1,6 @@
 <script lang="ts">
   // Applies Button settings and preserves the order of the Modal action and native onclick.
-  import Button from './Button.svelte';
+  import Button from './button/Button.svelte';
   import type { ModalButtonProps, ModalContent, ModalOkType } from './modal.types';
 
   interface Props {
