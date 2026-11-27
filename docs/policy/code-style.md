@@ -128,6 +128,7 @@ assertions через несколько `;` в строке.
 
 ## CSS и layout
 
+- На одной строке размещается не более одного объявления CSS-свойства.
 - Component-specific styles остаются scoped внутри компонента.
 - `:global` используется только для сознательной границы с child component или
   document-level стилем.
