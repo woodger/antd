@@ -22,18 +22,21 @@
   let changes = $state<string[]>([]);
   let context = $derived<AnchorConfig>({ ...anchorConfigProfile(current.context),
     ...(updated || recolored ? {
-      style: updated ? 'opacity:0.6;outline-offset:7px' : undefined,
+      style: updated ? 'opacity:0.6;'
+        + 'outline-offset:7px' : undefined,
       styles: info => {
         const original = anchorConfigProfile(current.context).styles;
         return { ...(typeof original === 'function' ? original(info) : original),
-          ...(updated ? { itemTitle: 'color:#722ed1;padding:20px 28px' } : {}),
+          ...(updated ? { itemTitle: 'color:#722ed1;'
+            + 'padding:20px 28px' } : {}),
           indicator: `background-color:${recolored ? '#d4380d' : '#722ed1'}` };
       }
     } : {}) });
   let nested = $derived<AnchorConfig | undefined>(current.nested === 'empty' ? {}
     : current.nested === 'replace' ? { class: 'context-replaced' } : undefined);
   let local = $derived<AnchorConfig>({ ...anchorConfigProfile(current.local, true),
-    ...(localUpdated ? { styles: { itemTitle: 'color:#873800;padding:12px 16px',
+    ...(localUpdated ? { styles: { itemTitle: 'color:#873800;'
+      + 'padding:12px 16px',
       indicator: 'background-color:#873800' } } : {}) });
   let direction = $derived<AnchorDirection>(current.direction === 'horizontal'
     ? 'horizontal' : 'vertical');
@@ -84,7 +87,8 @@
           colorPrimary: '#eb2f96', linkPaddingBlock: 9, linkPaddingInlineStart: 23 } } : undefined }}>
     <ConfigProvider anchor={nested}>
       <div class="anchor-config-main" dir={current.rtl ? 'rtl' : 'ltr'}
-        style="width:680px;color:rgb(0,0,0)">
+        style={'width:680px;'
+          + 'color:rgb(0,0,0)'}>
         {#key current.name}
           <Anchor {...local} {items} {direction} offsetTop={12} bounds={5}
             affix={!!current.affix} showInkInFixed={current.showInk !== false} {getCurrentAnchor}

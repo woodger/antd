@@ -156,8 +156,13 @@
 </script>
 {#snippet customLabel()}{#if customProfile}<Label id={customProfile.id} text={customProfile.label} activity={bodyActivity} {lifecycle} />{/if}{/snippet}
 <section bind:this={owner} data-picker-presets-owner={initial.id}>
-  <ConfigProvider {...provider}><div style="position:absolute;left:{box.left}px;top:{box.top}px;width:{box.width}px"><DatePicker {...ownerProps} bind:this={control} bind:nativeElement={root} /></div></ConfigProvider>
-  <div style="position:fixed;left:16px;top:16px"><button type="button" data-picker-outside="">Outside</button><button type="button" data-picker-preview="hover" onclick={() => {
+  <ConfigProvider {...provider}><div style={'position:absolute;'
+    + `left:${(box.left) ?? ''}px;`
+    + `top:${(box.top) ?? ''}px;`
+    + `width:${(box.width) ?? ''}px`}><DatePicker {...ownerProps} bind:this={control} bind:nativeElement={root} /></div></ConfigProvider>
+  <div style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:16px'}><button type="button" data-picker-outside="">Outside</button><button type="button" data-picker-preview="hover" onclick={() => {
     preview = 'hover';
   }}>Preview hover</button><button type="button" data-picker-preview="false" onclick={() => {
     preview = false;

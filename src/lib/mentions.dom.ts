@@ -152,7 +152,17 @@ export function connectMentionsMeasure(
       shadow.style.width = style.width;
       shadow
         .style
-        .cssText += ';position:absolute;visibility:hidden;height:0;min-height:0;max-height:none;overflow:hidden;pointer-events:none;top:0;right:0;';
+        .cssText += (
+          ';position:absolute;'
+          + 'visibility:hidden;'
+          + 'height:0;'
+          + 'min-height:0;'
+          + 'max-height:none;'
+          + 'overflow:hidden;'
+          + 'pointer-events:none;'
+          + 'top:0;'
+          + 'right:0;'
+        );
       if (textarea.wrap)
         shadow.wrap = textarea.wrap;
       shadow.value = textarea.value || textarea.placeholder || '';

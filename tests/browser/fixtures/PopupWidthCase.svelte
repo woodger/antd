@@ -33,7 +33,10 @@
   let autoEditor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let control = $state<object>();
   let name = $derived(named ? 'width-selection' : undefined);
-  let positionStyle = $derived(`position:absolute;left:${initialPosition.left}px;top:${initialPosition.top}px;width:${anchorWidth}px`);
+  let positionStyle = $derived(`position:absolute;`
+    + `left:${initialPosition.left}px;`
+    + `top:${initialPosition.top}px;`
+    + `width:${anchorWidth}px`);
 
   function record(...entry: unknown[]) { events.push(entry); }
   function change(next: unknown) {
@@ -132,19 +135,30 @@
 {/snippet}
 
 <section data-width-case={sample.id} data-width-family={sample.family} data-width-bound={Boolean(control)}
-  bind:this={host} style="font-family:initial;font-size:16px;line-height:normal;direction:ltr">
+  bind:this={host} style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal;'
+    + 'direction:ltr'}>
   <ConfigProvider {...outerProps} {...containerProps} popupOverflow="viewport"
     direction={sample.layout === 'rtl' ? 'rtl' : 'ltr'} {theme}>
     <ConfigProvider {...innerProps}>
       {#if sample.layout === 'scaled-shadow'}
-        <div data-width-surface style={`position:absolute;left:${popupWidthGeometry.surface.left}px;top:${popupWidthGeometry.surface.top}px;width:${popupWidthGeometry.surface.width}px;height:${popupWidthGeometry.surface.height}px;transform:scale(${popupWidthGeometry.surface.scale});transform-origin:0 0`}>
+        <div data-width-surface style={`position:absolute;`
+          + `left:${popupWidthGeometry.surface.left}px;`
+          + `top:${popupWidthGeometry.surface.top}px;`
+          + `width:${popupWidthGeometry.surface.width}px;`
+          + `height:${popupWidthGeometry.surface.height}px;`
+          + `transform:scale(${popupWidthGeometry.surface.scale});`
+          + `transform-origin:0 0`}>
           <div data-width-position style={positionStyle}>{@render field()}</div>
           <div data-width-shadow style="display:contents" {@attach attachShadow}></div>
         </div>
       {:else}<div data-width-position style={positionStyle}>{@render field()}</div>{/if}
     </ConfigProvider>
   </ConfigProvider>
-  <button type="button" data-width-outside style="position:fixed;left:16px;top:80px">Outside width</button>
+  <button type="button" data-width-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside width</button>
   <output data-width-receipts hidden>{JSON.stringify(readReceipts())}</output>
   <output data-width-model hidden>{JSON.stringify(model)}</output>
   <output data-width-query hidden>{JSON.stringify(query)}</output>
@@ -164,4 +178,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

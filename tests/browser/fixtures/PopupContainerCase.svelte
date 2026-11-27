@@ -131,7 +131,8 @@
   root.append(style);
   shadow = root;
 }}></div>
-<div style="width:280px;margin:100px">
+<div style={'width:280px;'
+  + 'margin:100px'}>
   <ConfigProvider {...parentOptions} theme={{
     mode: dark ? 'dark' : 'light', token: { motion: false }, cssVar: { key: 'provider-container' }
   }}>

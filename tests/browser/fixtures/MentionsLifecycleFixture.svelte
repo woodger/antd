@@ -36,7 +36,8 @@
 <button type="button" onclick={() => { renamed = true; }}>Rename motion</button>
 <output id="probe-events">{JSON.stringify(events)}</output>
 <output id="probe-mounts">{popupMounts},{popupUnmounts}</output>
-<div style="margin:100px 300px;width:280px">
+<div style={'margin:100px 300px;'
+  + 'width:280px'}>
   <ConfigProvider {theme}>
     <Mentions
       aria-label="Mention editor"

@@ -188,7 +188,8 @@ test(
 
     await mark.evaluate(
       element => {
-        element.setAttribute('style', 'display:none;visibility:hidden');
+        element.setAttribute('style', 'display:none;'
+          + 'visibility:hidden');
         element.setAttribute('class', 'tampered');
       }
     );
@@ -227,7 +228,11 @@ test(
 
     await root.evaluate(
       element => {
-        (element as HTMLElement).style.cssText = 'width:250px;position:static;overflow:visible';
+        (element as HTMLElement).style.cssText = (
+          'width:250px;'
+          + 'position:static;'
+          + 'overflow:visible'
+        );
       }
     );
 

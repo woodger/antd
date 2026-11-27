@@ -183,18 +183,57 @@
 </script>
 
 <style>
-  .ant-badge { max-width: 100%; min-width: 0; vertical-align: middle; }
-  .ant-badge .ant-badge-indicator:where([data-ant-badge-native-indicator]) { pointer-events: none; margin-top: var(--ant-badge-offset-top, 0px); inset-inline-end: var(--ant-badge-offset-inline, 0px); box-shadow: 0 0 0 var(--ant-line-width) var(--ant-color-bg-container); }
+  .ant-badge {
+    max-width: 100%;
+    min-width: 0;
+    vertical-align: middle;
+  }
+  .ant-badge .ant-badge-indicator:where([data-ant-badge-native-indicator]) {
+    pointer-events: none;
+    margin-top: var(--ant-badge-offset-top, 0px);
+    inset-inline-end: var(--ant-badge-offset-inline, 0px);
+    box-shadow: 0 0 0 var(--ant-line-width) var(--ant-color-bg-container);
+  }
   .ant-badge-source-tokens .ant-badge-indicator:where([data-ant-badge-native-indicator]) { box-shadow: 0 0 0 var(--ant-line-width) var(--ant-color-border-bg); }
-  .ant-badge-not-a-wrapper .ant-badge-indicator:where([data-ant-badge-native-indicator]) { position: relative; top: auto; transform: none; display: inline-flex; }
-  .ant-badge-status-standalone:where([data-ant-badge-native-status]) { margin-top: var(--ant-badge-offset-top, 0px); inset-inline-end: var(--ant-badge-offset-inline, auto); }
-  .ant-badge-status-text:where([data-ant-badge-status-text]) { margin-inline-start: var(--ant-margin-xs); color: var(--ant-color-text); font-size: var(--ant-font-size); overflow-wrap: anywhere; }
+  .ant-badge-not-a-wrapper .ant-badge-indicator:where([data-ant-badge-native-indicator]) {
+    position: relative;
+    top: auto;
+    transform: none;
+    display: inline-flex;
+  }
+  .ant-badge-status-standalone:where([data-ant-badge-native-status]) {
+    margin-top: var(--ant-badge-offset-top, 0px);
+    inset-inline-end: var(--ant-badge-offset-inline, auto);
+  }
+  .ant-badge-status-text:where([data-ant-badge-status-text]) {
+    margin-inline-start: var(--ant-margin-xs);
+    color: var(--ant-color-text);
+    font-size: var(--ant-font-size);
+    overflow-wrap: anywhere;
+  }
   .ant-badge-source-count.ant-badge-not-a-wrapper .ant-badge-indicator:where([data-ant-badge-native-indicator]) { display: block; }
-  .ant-badge-source-count:not(.ant-badge-status) .ant-badge-status-text:where([data-ant-badge-status-text]) { margin-inline-start: 0; color: inherit; font-size: inherit; }
+  .ant-badge-source-count:not(.ant-badge-status) .ant-badge-status-text:where([data-ant-badge-status-text]) {
+    margin-inline-start: 0;
+    color: inherit;
+    font-size: inherit;
+  }
   /* Прежний numeric offset меняется сразу; анимируются только разряды. */
   .ant-badge:not(.ant-badge-source-count) .ant-scroll-number { transition: none; }
-  .ant-badge-description:where([data-ant-badge-description]) { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  @media (prefers-reduced-motion: reduce) { .ant-badge-css-var [data-ant-badge-visual], .ant-badge-css-var [data-ant-badge-visual]::after { transition: none; animation: none; } }
+  .ant-badge-description:where([data-ant-badge-description]) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ant-badge-css-var [data-ant-badge-visual], .ant-badge-css-var [data-ant-badge-visual]::after {
+      transition: none;
+      animation: none;
+    }
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`badge-prefix:${prefix}`} />{/if}<span {...rest} data-ant-badge-native-status={prefix === 'ant-badge' && badgeState.statusStandalone ? '' : undefined} bind:this={nativeElement} id={rootId} role={role !== undefined ? role : ariaLabel || ariaLabelledby ? 'group' : undefined} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby} dir={elementDirection !== undefined ? elementDirection : config.direction} title={nativeTitle} onclick={onclick ?? onClick} class={[

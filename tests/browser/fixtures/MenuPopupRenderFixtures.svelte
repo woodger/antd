@@ -131,7 +131,8 @@
       {#if mounted}
         <Menu {mode} {items} inlineCollapsed={sample.collapsed} forceSubMenuRender={sample.force}
           popupRender={useRoot ? rootRender : undefined} openKeys={open}
-          style={`width:${sample.width ?? 420}px;position:relative`}
+          style={`width:${sample.width ?? 420}px;`
+            + `position:relative`}
           aria-label="Popup render menu" triggerSubMenuAction="click"
           subMenuOpenDelay={0} subMenuCloseDelay={0} bind:this={instance}
           bind:nativeElement={menuElement}

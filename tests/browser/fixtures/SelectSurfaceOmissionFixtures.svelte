@@ -25,7 +25,10 @@
 </script>
 
 <section id="select-surface-omission-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Select surface omission sample
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>Select surface omission sample
     <select bind:value={selected} onchange={() => { mounted = true; }}>
       {#each samples as sample}<option value={sample.id}>{sample.id}</option>{/each}
     </select>

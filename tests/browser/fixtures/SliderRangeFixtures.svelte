@@ -33,10 +33,21 @@
 
 <style>
   section { padding: 24px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; max-width: 700px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    max-width: 700px;
+  }
   label { display: block; }
-  .frame { margin: 40px 24px; max-width: 100%; }
-  output { display: block; min-height: 24px; }
+  .frame {
+    margin: 40px 24px;
+    max-width: 100%;
+  }
+  output {
+    display: block;
+    min-height: 24px;
+  }
 </style>
 
 <section id="slider-range-fixture" aria-label="Slider range fixture">
@@ -79,7 +90,9 @@
       <div class="frame">
         {#if mounted}
           <Slider {range} bind:value bind:ref id="range-input" name="interval" step={markOnly ? null : 5}
-            style={vertical ? 'height:240px;width:12px' : 'width:400px;max-width:calc(100% - 20px)'}
+            style={vertical ? 'height:240px;'
+              + 'width:12px' : 'width:400px;'
+              + 'max-width:calc(100% - 20px)'}
             orientation={vertical ? 'vertical' : 'horizontal'} {reverse} allowCross={cross}
             pushable={push || false} disabled={disableMiddle ? [false, true, false] : undefined}
             marks={marks ? { 0: 'Cold', 25: { label: 'Warm', style: 'color:red' }, 100: 'Hot' } : undefined}

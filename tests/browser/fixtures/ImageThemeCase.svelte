@@ -47,7 +47,8 @@
 {#snippet control(id: string)}
   <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'}>
     <div data-image-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-      style="font-size:14px;color:rgb(31,41,51)">
+      style={'font-size:14px;'
+        + 'color:rgb(31,41,51)'}>
       {#if id === 'group' || id === 'explicit-group'}
         <ImagePreviewGroup classNames={{ popup: { root: `image-theme-preview-${id}` } }} preview={{
           zIndex: id === 'explicit-group' ? 2300 : undefined

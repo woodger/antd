@@ -132,7 +132,8 @@
     {@render field()}</FormItem>{:else}{@render field()}{/if}
 {/snippet}
 <div data-feedback-case={sample.id} data-feedback-prefix={componentPrefix} data-feedback-kind={sample.control}
-  data-feedback-refs={Boolean((input || textarea) && (nativeRoot || numberRoot))} style="margin:64px;width:420px">
+  data-feedback-refs={Boolean((input || textarea) && (nativeRoot || numberRoot))} style={'margin:64px;'
+    + 'width:420px'}>
   <ConfigProvider prefixCls={prefix} direction={sample.rtl ? 'rtl' : 'ltr'} theme={{
     cssVar: { key: 'form-feedback-controls' }, token: { motion: false },
     mode: sample.theme === 'dark' ? 'dark' : 'light', compact: sample.theme === 'compact'

@@ -128,7 +128,8 @@
     {@render field()}</FormItem>{:else}{@render field()}{/if}
 {/snippet}
 <div data-feedback-picker-case={sample.id} data-feedback-prefix={componentPrefix} data-feedback-picker-kind={sample.picker}
-  data-feedback-refs={Boolean(nativeRoot)} style="margin:64px;width:420px">
+  data-feedback-refs={Boolean(nativeRoot)} style={'margin:64px;'
+    + 'width:420px'}>
   <ConfigProvider prefixCls={prefix} direction={sample.rtl ? 'rtl' : 'ltr'} theme={{
     cssVar: { key: 'form-feedback-pickers' }, token: { motion: false },
     mode: sample.theme === 'dark' ? 'dark' : 'light', compact: sample.theme === 'compact'

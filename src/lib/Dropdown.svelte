@@ -868,8 +868,22 @@
 </script>
 
 <style>
-  [data-ant-dropdown-trigger] { display: inline-block; max-width: 100%; vertical-align: middle; }
-  [data-ant-dropdown-popup] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; width: max-content; min-width: var(--ant-dropdown-anchor-width, 0px); overflow: visible; }
+  [data-ant-dropdown-trigger] {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  [data-ant-dropdown-popup] {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    width: max-content;
+    min-width: var(--ant-dropdown-anchor-width, 0px);
+    overflow: visible;
+  }
   [data-ant-dropdown-popup][data-ant-dropdown-source-align] {
     width: fit-content;
     right: var(--ant-dropdown-fit-right, auto);
@@ -877,8 +891,16 @@
     justify-self: var(--ant-dropdown-fit-justify, unsafe left);
   }
   [data-ant-dropdown-popup][hidden], [data-ant-dropdown-popup]:not(:popover-open) { display: none; }
-  [data-ant-dropdown-placement^="top"]:where(:not([data-ant-dropdown-source-theme], [data-ant-dropdown-source-align])) > [data-ant-dropdown-arrow] { left: var(--arrow-x, 50%); right: auto; transform: translateX(-50%) translateY(100%) rotate(180deg); }
-  [data-ant-dropdown-placement^="bottom"]:where(:not([data-ant-dropdown-source-theme], [data-ant-dropdown-source-align])) > [data-ant-dropdown-arrow] { left: var(--arrow-x, 50%); right: auto; transform: translateX(-50%) translateY(-100%); }
+  [data-ant-dropdown-placement^="top"]:where(:not([data-ant-dropdown-source-theme], [data-ant-dropdown-source-align])) > [data-ant-dropdown-arrow] {
+    left: var(--arrow-x, 50%);
+    right: auto;
+    transform: translateX(-50%) translateY(100%) rotate(180deg);
+  }
+  [data-ant-dropdown-placement^="bottom"]:where(:not([data-ant-dropdown-source-theme], [data-ant-dropdown-source-align])) > [data-ant-dropdown-arrow] {
+    left: var(--arrow-x, 50%);
+    right: auto;
+    transform: translateX(-50%) translateY(-100%);
+  }
   @media (prefers-reduced-motion: reduce) {
     [data-ant-dropdown-popup],
     [data-ant-dropdown-popup] :global([data-ant-dropdown-menu]) {

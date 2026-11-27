@@ -46,10 +46,18 @@
 
 <style>
   section { padding: 20px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
   label { display: block; }
   .frame { margin-top: 30px; }
-  output { display: block; min-height: 24px; overflow-wrap: anywhere; }
+  output {
+    display: block;
+    min-height: 24px;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 <section id="color-picker-fixture">

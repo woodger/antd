@@ -22,7 +22,10 @@
   <output aria-label="Options frame">{step}</output>
   {#if mounted}{#key name}<OverlayCornerCase {sample} {step} {native} />{/key}{/if}
 
-  <div aria-label="Range arrow options" style="position:fixed;left:200px;top:240px;width:200px">
+  <div aria-label="Range arrow options" style={'position:fixed;'
+    + 'left:200px;'
+    + 'top:240px;'
+    + 'width:200px'}>
     <Slider range defaultValue={[25, 75]} tooltip={{
       placement: 'topLeft',
       arrow: { pointAtCenter: true },

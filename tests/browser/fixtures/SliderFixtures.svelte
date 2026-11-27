@@ -54,11 +54,25 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label, output { display: block; margin-block: 8px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label, output {
+    display: block;
+    margin-block: 8px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
   .slider-zone { max-width: 400px; }
-  .vertical { display: flex; justify-content: center; }
+  .vertical {
+    display: flex;
+    justify-content: center;
+  }
 </style>
 
 <svelte:window onkeydown={hotkey} />
@@ -107,7 +121,8 @@
   </div>
   <ConfigProvider
     theme={{ mode: dark ? 'dark' : 'light', compact, primary: purple ? 'purple' : 'blue' }}
-    style="background: var(--ant-color-bg-container); padding: 16px"
+    style={'background: var(--ant-color-bg-container); '
+      + 'padding: 16px'}
   >
     <form
       id="slider-native-form"

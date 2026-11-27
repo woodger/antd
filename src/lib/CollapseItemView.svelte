@@ -70,19 +70,67 @@
 </script>
 
 <style>
-  :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] { padding: 0; align-items: center; cursor: default; }
-  .ant-collapse-heading { flex: 1; min-width: 0; margin: 0; font: inherit; color: inherit; }
-  .ant-collapse-trigger { display: flex; align-items: flex-start; width: 100%; min-width: 0; margin: 0; padding: var(--ant-collapse-toggle-padding); border: 0; border-radius: inherit; background: transparent; color: inherit; font: inherit; text-align: start; cursor: pointer; }
+  :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] {
+    padding: 0;
+    align-items: center;
+    cursor: default;
+  }
+  .ant-collapse-heading {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+  .ant-collapse-trigger {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: var(--ant-collapse-toggle-padding);
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
   .ant-collapse-trigger:disabled { cursor: not-allowed; }
-  .ant-collapse-trigger:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -3px; }
-  [data-ant-collapse-part="title"] { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .ant-collapse-trigger:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -3px;
+  }
+  [data-ant-collapse-part="title"] {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] [data-ant-collapse-part="icon"] { height: 1lh; }
   :global([data-ant-collapse][data-size="small"][data-placement="start"]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] [data-ant-collapse-part="icon"] { margin-inline-start: calc(var(--ant-padding-sm) - var(--ant-padding-xs)); }
   :global([data-ant-collapse][data-size="large"][data-placement="start"]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] [data-ant-collapse-part="icon"] { margin-inline-start: calc(var(--ant-padding-lg) - var(--ant-padding)); }
-  .ant-collapse-trigger-icon { pointer-events: none; cursor: default; }
-  .ant-collapse-trigger-icon [data-ant-collapse-part="icon"] { pointer-events: auto; cursor: pointer; }
-  [data-ant-collapse-part="extra"] { flex: none; min-width: 0; max-width: 45%; margin-inline-end: var(--ant-collapse-extra-spacing); overflow-wrap: anywhere; }
-  @media (prefers-reduced-motion: reduce) { :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"], :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] [data-ant-collapse-part="arrow"] { animation: none; transition: none; } }
+  .ant-collapse-trigger-icon {
+    pointer-events: none;
+    cursor: default;
+  }
+  .ant-collapse-trigger-icon [data-ant-collapse-part="icon"] {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  [data-ant-collapse-part="extra"] {
+    flex: none;
+    min-width: 0;
+    max-width: 45%;
+    margin-inline-end: var(--ant-collapse-extra-spacing);
+    overflow-wrap: anywhere;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"], :global([data-ant-collapse]) > [data-ant-collapse-part="item"] > [data-ant-collapse-part="header"] [data-ant-collapse-part="arrow"] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
 <div {...attributes} bind:this={nativeElement} id={item.id} data-collapse-key={item.key} data-ant-collapse-part="item" class={[

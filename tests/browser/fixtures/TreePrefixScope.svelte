@@ -54,7 +54,8 @@
     disabled={sample.disabled} blockNode={sample.block} selectable={sample.noSelect ? false : undefined}
     showLine={sample.line ? { showLeafIcon: !!sample.leafIcons } : undefined}
     filterTreeNode={sample.filter ? node => node.title === 'Alpha' : undefined}
-    style={sample.userStyle ? 'padding:9px;background:#fffbe6' : undefined}
+    style={sample.userStyle ? 'padding:9px;'
+      + 'background:#fffbe6' : undefined}
     loadData={sample.lazy ? load : undefined}
     onExpand={(_keys, info) => events.push(`expand:${info.node.key}`)}
     onLoad={(_keys, info) => events.push(`loaded:${info.node.key}`)}

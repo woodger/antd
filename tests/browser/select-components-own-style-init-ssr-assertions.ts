@@ -95,7 +95,8 @@ export function verifyOwnStyleSSRLayout(
         path + ' the real Source selection supplies the accessible label'
       );
       assert.deepEqual(right, [['class', 'ant-select-selection-item-remove'],
-        ['style', 'user-select:none;-webkit-user-select:none'], ['unselectable', 'on'], ['aria-hidden', 'true']], path + ' exact inherited Source TransBtn');
+        ['style', 'user-select:none;'
+          + '-webkit-user-select:none'], ['unselectable', 'on'], ['aria-hidden', 'true']], path + ' exact inherited Source TransBtn');
       assert.deepEqual(left, [['type', 'button'], ['data-ant-select-selection-item-remove', 'true'],
         ['class', 'ant-select-selection-item-remove'], ['aria-label', 'Удалить ' + itemTitle]], path + ' exact existing Native removal button');
       currentTag = source.tag;

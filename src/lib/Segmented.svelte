@@ -206,8 +206,19 @@
 </script>
 
 <style>
-  [data-ant-segmented] { --ant-segmented-track-bg: var(--ant-color-bg-layout); --ant-segmented-item-color: var(--ant-color-text-label); --ant-segmented-item-hover-color: var(--ant-color-text); --ant-segmented-item-hover-bg: var(--ant-color-fill-secondary); --ant-segmented-item-selected-bg: var(--ant-color-bg-elevated); --ant-segmented-item-active-bg: var(--ant-color-fill); --ant-segmented-item-selected-color: var(--ant-color-text); }
-  [data-ant-segmented-item]:has(input:focus-visible) { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 1px; }
+  [data-ant-segmented] {
+    --ant-segmented-track-bg: var(--ant-color-bg-layout);
+    --ant-segmented-item-color: var(--ant-color-text-label);
+    --ant-segmented-item-hover-color: var(--ant-color-text);
+    --ant-segmented-item-hover-bg: var(--ant-color-fill-secondary);
+    --ant-segmented-item-selected-bg: var(--ant-color-bg-elevated);
+    --ant-segmented-item-active-bg: var(--ant-color-fill);
+    --ant-segmented-item-selected-color: var(--ant-color-text);
+  }
+  [data-ant-segmented-item]:has(input:focus-visible) {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 1px;
+  }
   [data-ant-segmented-group]:has(> :global([data-ant-segmented-thumb])) [data-ant-segmented-item]:not([data-ant-segmented-item-disabled])::after { background-color: transparent; }
   @media (prefers-reduced-motion: reduce) { [data-ant-segmented], [data-ant-segmented-item], [data-ant-segmented-item]::after { transition: none; } }
 </style>

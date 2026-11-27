@@ -41,7 +41,11 @@
 >{JSON.stringify(info.transform)}</output>{/snippet}
 {#snippet customImage(original: Snippet, info: { transform: ImageTransform; image: ImageInfo; current?: number })}<div
   class="custom-image-content"
-  style="display:flex;align-items:center;justify-content:center;max-width:90%;height:70%"
+  style={'display:flex;'
+    + 'align-items:center;'
+    + 'justify-content:center;'
+    + 'max-width:90%;'
+    + 'height:70%'}
   data-image-width={info.image.width}
 >{@render original()}</div>{/snippet}
 <section id="image-fixture">

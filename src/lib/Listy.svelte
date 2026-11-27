@@ -105,7 +105,10 @@
 </script>
 
 <style>
-  :global([data-ant-listy] :focus-visible) { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
+  :global([data-ant-listy] :focus-visible) {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 2px;
+  }
   /* Prefix stylesheet появляется в head позже bundle; native reduced motion остаётся приоритетным. */
   @media (prefers-reduced-motion: reduce) { :global([data-ant-listy][data-ant-listy-prefix] [data-ant-listy-item]) { transition: none; } }
 </style>

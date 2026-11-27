@@ -12,7 +12,10 @@
   });
 </script>
 <section>
-  <label id="autocomplete-render-fixture" style="position:fixed;left:0;top:0;z-index:1">AutoComplete render sample<select bind:value={selected} onchange={() => {
+  <label id="autocomplete-render-fixture" style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>AutoComplete render sample<select bind:value={selected} onchange={() => {
     mounted = true;
   }}>
     {#each autocompleteRenderSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}

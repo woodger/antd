@@ -45,10 +45,16 @@
 
 {#snippet custom(attributes: BadgeCountContext)}<span {...attributes} data-custom-zoom
   class={[attributes.class, 'case-custom-zoom']}
-  style={`${attributes.style ?? ''};width:24px;height:16px;display:inline-block`}>{#if interactive}<input
-    aria-label="Zoom custom draft" value="Seed" style="width:64px;font:inherit" />{:else}★{/if}</span>{/snippet}
+  style={`${attributes.style ?? ''};width:24px;`
+    + `height:16px;`
+    + `display:inline-block`}>{#if interactive}<input
+    aria-label="Zoom custom draft" value="Seed" style={'width:64px;'
+      + 'font:inherit'} />{:else}★{/if}</span>{/snippet}
 {#snippet target(context: BadgeContext)}<button type="button" aria-label="Zoom owner"
-  aria-describedby={context.descriptionId} style="width:48px;height:48px;border:0;padding:0">T</button>{/snippet}
+  aria-describedby={context.descriptionId} style={'width:48px;'
+    + 'height:48px;'
+    + 'border:0;'
+    + 'padding:0'}>T</button>{/snippet}
 
 <button type="button" onclick={next} disabled={step >= sample.steps.length}>Next zoom step</button>
 <ConfigProvider theme={{ token: {

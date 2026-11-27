@@ -46,7 +46,8 @@
 
 <ConfigProvider locale={enUS} theme={resolveTableHeaderTheme(sample.config)}
   direction={rtl ? 'rtl' : 'ltr'}>
-  <div id="table-header-control" style="width:640px;max-width:100%">
+  <div id="table-header-control" style={'width:640px;'
+    + 'max-width:100%'}>
     <form aria-label="Table header form">
       <Table dataSource={rows} {columns} showHeader={header} title={hasTitle ? title : undefined}
         caption="Header people" size="medium" pagination={false}

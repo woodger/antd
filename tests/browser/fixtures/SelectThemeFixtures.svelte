@@ -45,7 +45,12 @@
 </script>
 
 <style>
-  .samples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-block: 32px; }
+  .samples {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-block: 32px;
+  }
 </style>
 
 <section id="select-theme-fixture">
@@ -63,7 +68,8 @@
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }}>
       <form id="themed-select-form">
-        <div class="samples" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:#ff0000' : undefined}>
+        <div class="samples" style={parentAliases ? '--ant-font-size:30px;'
+          + '--ant-color-text:#ff0000' : undefined}>
           {#each sizes as size}
             <div class={`select-token-single-${referenceSizeLabel(size)}`}>
               <Select {options} {size} bind:value={single} aria-label={`Themed single ${size}`}

@@ -272,15 +272,27 @@ export function sliderRangePosition(
 ) {
   const offset = (value - min) / (max - min) * 100;
   if (direction === 'rtl') {
-    return `right:${offset}%;transform:translateX(50%)`;
+    return (
+      `right:${offset}%;`
+      + `transform:translateX(50%)`
+    );
   }
   if (direction === 'btt') {
-    return `bottom:${offset}%;transform:translateY(50%)`;
+    return (
+      `bottom:${offset}%;`
+      + `transform:translateY(50%)`
+    );
   }
   if (direction === 'ttb') {
-    return `top:${offset}%;transform:translateY(-50%)`;
+    return (
+      `top:${offset}%;`
+      + `transform:translateY(-50%)`
+    );
   }
-  return `left:${offset}%;transform:translateX(-50%)`;
+  return (
+    `left:${offset}%;`
+    + `transform:translateX(-50%)`
+  );
 }
 
 // Следует ориентации для стрелок, оставляя Home/End привязанными к логическим краям.

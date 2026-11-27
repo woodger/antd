@@ -97,7 +97,11 @@
 {/snippet}
 
 <style>
-  .triggers { display: flex; gap: 160px; margin: 160px 0 120px 90px; }
+  .triggers {
+    display: flex;
+    gap: 160px;
+    margin: 160px 0 120px 90px;
+  }
 </style>
 
 <section id="tooltip-unique-delegate-fixture">

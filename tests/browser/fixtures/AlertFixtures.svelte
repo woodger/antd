@@ -68,9 +68,19 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label, output { display: block; margin-block: 8px; }
-  .stage { margin-block: 16px; padding: 12px; background: var(--ant-color-bg-container); }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label, output {
+    display: block;
+    margin-block: 8px;
+  }
+  .stage {
+    margin-block: 16px;
+    padding: 12px;
+    background: var(--ant-color-bg-container);
+  }
   .spacer { min-height: 120px; }
 </style>
 

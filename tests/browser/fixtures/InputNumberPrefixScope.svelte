@@ -36,7 +36,8 @@
   let events = $state<string[]>([]);
 </script>
 
-<form data-number-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-number-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <InputNumber stringMode prefixCls={local ? sample.local : undefined}
     bind:value bind:inputElement bind:nativeElement bind:ref

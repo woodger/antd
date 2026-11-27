@@ -41,10 +41,12 @@
   });
 </script>
 
-<div data-col-prefix-scope={scope} style="width:480px;padding:12px">
+<div data-col-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}>
   <Row gutter={16} wrap={!sample.flex} class="fixture-col-row">
     <Col {...colProps} {prefixCls} bind:nativeElement data-fixture-col="first"
-      style={sample.userStyle ? 'flex:0 0 100px;max-width:100px' : undefined}>
+      style={sample.userStyle ? 'flex:0 0 100px;'
+        + 'max-width:100px' : undefined}>
       <input name="draft" value="Draft" aria-label={`${scope} column draft`} style="width:80px" />
     </Col>
     <Col {prefixCls} span={sample.flex ? undefined : 12} flex={sample.flex ? 2 : undefined}

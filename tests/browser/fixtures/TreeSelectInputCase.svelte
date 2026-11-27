@@ -69,7 +69,8 @@
     defaultOpen: sample.defaultOpen, disabled: options.disabled, autoFocus: sample.autoFocus,
     tabIndex: options.tabIndex, placeholder: 'Generated placeholder', maxLength: 2,
     'aria-label': 'Generated input', 'aria-required': true,
-    classNames: { input: 'semantic-input' }, styles: { input: 'color:rgb(20,70,90);background-color:rgb(230,240,250)' },
+    classNames: { input: 'semantic-input' }, styles: { input: 'color:rgb(20,70,90);'
+      + 'background-color:rgb(230,240,250)' },
     style: 'width:380px', treeData: [{ value: 'a', title: sample.label ?? 'Alpha' }, {
       value: 'b',
       title: 'Beta'
@@ -150,4 +151,5 @@
     return () => node.removeEventListener('fixtureupdate', listener);
   }}></div>
 </div>
-<button type="button" style="display:block;margin-top:320px">Outside input tree</button>
+<button type="button" style={'display:block;'
+  + 'margin-top:320px'}>Outside input tree</button>

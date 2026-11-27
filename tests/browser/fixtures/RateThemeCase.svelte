@@ -23,7 +23,8 @@
 
 {#if mounted}
   <ConfigProvider theme={current} rate={priority ? {
-    style: '--ant-rate-star-color:#873800;--ant-rate-star-hover-scale:scale(1.8)'
+    style: '--ant-rate-star-color:#873800;'
+      + '--ant-rate-star-hover-scale:scale(1.8)'
   } : undefined}>
     {#each ['normal', 'small', 'large', 'rtl', 'disabled', 'character', 'tooltips'] as id}
       <RateThemeControl {id} {priority} />

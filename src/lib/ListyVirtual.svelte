@@ -84,12 +84,24 @@
   style={[styles.root, 'position:relative'].filter(Boolean).join(';')}>
   <div bind:this={holder} class={`${prefixCls}-holder`} onscroll={handleScroll} role="presentation"
     onmouseenter={model.flashScrollbar}
-    style={height ? `max-height:${height}px;overflow-y:${range.useVirtual ? 'hidden' : 'auto'};overflow-anchor:none;${model.moving ? 'pointer-events:none' : ''}` : undefined}>
+    style={height ? `max-height:${height}px;`
+      + `overflow-y:${range.useVirtual ? 'hidden' : 'auto'};`
+      + `overflow-anchor:none;`
+      + `${model.moving ? 'pointer-events:none' : ''}` : undefined}>
     <div style={range.offset !== undefined
-      ? `height:${range.scrollHeight}px;position:relative;overflow:hidden` : undefined}>
+      ? `height:${range.scrollHeight}px;`
+        + `position:relative;`
+        + `overflow:hidden` : undefined}>
       <div bind:this={inner} class={`${prefixCls}-holder-inner`}
-        style={`display:flex;flex-direction:column;${range.offset !== undefined
-          ? `position:absolute;left:0;right:0;top:0;transform:translateY(${range.offset}px);${direction === 'rtl' ? 'margin-right' : 'margin-left'}:0` : ''}`}>
+        style={`display:flex;`
+          + `flex-direction:column;`
+          + `${range.offset !== undefined
+          ? `position:absolute;`
+            + `left:0;`
+            + `right:0;`
+            + `top:0;`
+            + `transform:translateY(${range.offset}px);`
+            + `${direction === 'rtl' ? 'margin-right' : 'margin-left'}:0` : ''}`}>
         {#each visible as row (row.renderKey)}
           {#if row.type === 'group' && group}
             <ListyGroupHeader {row} title={group.title} {prefixCls}

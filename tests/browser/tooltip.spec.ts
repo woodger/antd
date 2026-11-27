@@ -41,7 +41,15 @@ test('Tooltip hides a zero-size trigger and reappears when its size returns', as
   const style = await button.getAttribute('style');
 
   await button.evaluate(element => {
-    element.style.cssText += ';width:0;height:0;min-width:0;min-height:0;padding:0;border:0;overflow:hidden';
+    element.style.cssText += (
+      ';width:0;'
+      + 'height:0;'
+      + 'min-width:0;'
+      + 'min-height:0;'
+      + 'padding:0;'
+      + 'border:0;'
+      + 'overflow:hidden'
+    );
   });
 
   await expect(tooltip(page)).toBeHidden();

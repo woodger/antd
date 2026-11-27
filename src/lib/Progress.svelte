@@ -159,16 +159,44 @@
 </script>
 
 <style>
-  [data-ant-progress-root]:not([data-ant-progress-steps]) { min-width: 0; max-width: 100%; }
+  [data-ant-progress-root]:not([data-ant-progress-steps]) {
+    min-width: 0;
+    max-width: 100%;
+  }
   [data-ant-progress-type="line"]:not([data-ant-progress-steps]) [data-ant-progress-part="body"], [data-ant-progress-type="line"]:not([data-ant-progress-steps]) [data-ant-progress-part="rail"] { min-width: 0; }
-  [data-ant-progress-type="line"] [data-ant-progress-part="indicator"][data-ant-progress-position="outer"]:not([data-ant-progress-icon]) { flex: none; max-width: 50%; overflow: hidden; text-overflow: ellipsis; }
-  .anticon { display: inline-flex; line-height: 0; vertical-align: -0.125em; }
+  [data-ant-progress-type="line"] [data-ant-progress-part="indicator"][data-ant-progress-position="outer"]:not([data-ant-progress-icon]) {
+    flex: none;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .anticon {
+    display: inline-flex;
+    line-height: 0;
+    vertical-align: -0.125em;
+  }
   [data-ant-progress-direction="rtl"][data-ant-progress-active] [data-ant-progress-part="track"]::after { animation-name: ant-svelte-progress-rtl-active; }
-  @keyframes ant-svelte-progress-rtl-active { 0% { transform: translateX(100%) scaleX(0); opacity: 0.1; } 20% { transform: translateX(100%) scaleX(0); opacity: 0.5; } to { transform: translateX(0) scaleX(1); opacity: 0; } }
+  @keyframes ant-svelte-progress-rtl-active {
+    0% {
+      transform: translateX(100%) scaleX(0);
+      opacity: 0.1;
+    }
+    20% {
+      transform: translateX(100%) scaleX(0);
+      opacity: 0.5;
+    }
+    to {
+      transform: translateX(0) scaleX(1);
+      opacity: 0;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     [data-ant-progress-root] [data-ant-progress-part="track"], [data-ant-progress-root] [data-ant-progress-part="step"] { transition: none; }
     [data-ant-progress-root][data-ant-progress-active] [data-ant-progress-part="track"]::after { animation: none; }
-    [data-ant-progress-root] [data-ant-progress-part="indicator"] :global(*) { animation: none !important; transition: none !important; }
+    [data-ant-progress-root] [data-ant-progress-part="indicator"] :global(*) {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 </style>
 
@@ -218,7 +246,9 @@
       {#each stepLayout.items as active, index}
         <div class={[`${prefix}-steps-item`, active && `${prefix}-steps-item-active`,
           semantics.classes.track]} data-ant-progress-part="step"
-          style={`background-color: ${active ? (Array.isArray(strokeColor) ? strokeColor[index] : typeof strokeColor === 'string' ? strokeColor : '') ?? '' : railColor ?? ''};width: ${stepLayout.width}px;height: ${stepLayout.height}px;${semantics.styles.track ?? ''}`}></div>
+          style={`background-color: ${active ? (Array.isArray(strokeColor) ? strokeColor[index] : typeof strokeColor === 'string' ? strokeColor : '') ?? '' : railColor ?? ''};`
+            + `width: ${stepLayout.width}px;`
+            + `height: ${stepLayout.height}px;${semantics.styles.track ?? ''}`}></div>
       {/each}
       {#if showInfo}{@render indicator()}{/if}
     </div>
@@ -227,15 +257,26 @@
       && `${prefix}-body-layout-bottom`, semantics.classes.body]} data-ant-progress-part="body"
       style={`width: ${lineSize.width};${semantics.styles.body ?? ''}`}>
       <div class={[`${prefix}-rail`, semantics.classes.rail]} data-ant-progress-part="rail"
-        style={`height: ${lineSize.height}px;${railColor ? `background: ${railColor};` : ''}${strokeLinecap !== 'round' ? 'border-radius: 0px;' : ''}${semantics.styles.rail ?? ''}`}>
+        style={`height: ${lineSize.height}px;`
+          + `${railColor ? `background: ${railColor};` : ''}`
+          + `${strokeLinecap !== 'round' ? 'border-radius: 0px;' : ''}${semantics.styles.rail ?? ''}`}>
         <div class={[`${prefix}-track`, semantics.classes.track]} data-ant-progress-part="track"
-          style={`width: ${value}%;height: ${lineSize.height}px;${background ? `background: ${background};--progress-line-stroke-color: ${background};` : ''}${strokeLinecap !== 'round' ? 'border-radius: 0px;' : ''}${semantics.styles.track ?? ''}`}>
+          style={`width: ${value}%;`
+            + `height: ${lineSize.height}px;`
+            + `${background
+              ? `background: ${background};`
+                + `--progress-line-stroke-color: ${background};`
+              : ''}`
+            + `${strokeLinecap !== 'round' ? 'border-radius: 0px;' : ''}${semantics.styles.track ?? ''}`}>
           {#if showInfo && infoPosition === 'inner'}{@render indicator()}{/if}
         </div>
         {#if success?.percent !== undefined}
           <div class={[`${prefix}-track ${prefix}-track-success`, semantics.classes.track]}
             data-ant-progress-part="track"
-            style={`width: ${successValue}%;height: ${lineSize.height}px;${success.strokeColor ? `background-color: ${success.strokeColor};` : ''}${strokeLinecap !== 'round' ? 'border-radius: 0px;' : ''}${semantics.styles.track ?? ''}`}></div>
+            style={`width: ${successValue}%;`
+              + `height: ${lineSize.height}px;`
+              + `${success.strokeColor ? `background-color: ${success.strokeColor};` : ''}`
+              + `${strokeLinecap !== 'round' ? 'border-radius: 0px;' : ''}${semantics.styles.track ?? ''}`}></div>
         {/if}
       </div>
       {#if showInfo && infoPosition === 'outer'}{@render indicator()}{/if}

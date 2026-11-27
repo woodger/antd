@@ -170,5 +170,7 @@
 </ConfigProvider>
 <input id="owner-mode" type="hidden" oninput={updateMode} />
 <input id="owner-view" type="hidden" oninput={updateView} />
-<button id="outside" type="button" style="position:fixed;right:16px;bottom:16px">Outside</button>
+<button id="outside" type="button" style={'position:fixed;'
+  + 'right:16px;'
+  + 'bottom:16px'}>Outside</button>
 <output id="mode-events">{JSON.stringify(events)}</output>

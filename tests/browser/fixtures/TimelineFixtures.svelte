@@ -32,7 +32,9 @@
   aria-label="Timeline draft"
   name="timeline-draft"
   value="initial"
-  style="width:100%;min-width:0;box-sizing:border-box"
+  style={'width:100%;'
+    + 'min-width:0;'
+    + 'box-sizing:border-box'}
 /></label>{/snippet}
 <section id="timeline-fixture" aria-label="Timeline fixture">
   <label>Timeline mode <select aria-label="Timeline mode" bind:value={mode}><option>start</option><option>end</option><option>alternate</option></select></label>

@@ -36,7 +36,8 @@
       item: 'observed-page-owner-item'
     }),
     styles: ({ props }) => ({
-      root: `--observed-slot:page-owner-root;--pager-owner-size:${props.pageSize}`,
+      root: `--observed-slot:page-owner-root;`
+        + `--pager-owner-size:${props.pageSize}`,
       item: '--observed-slot:page-owner-item'
     })
   };
@@ -66,7 +67,8 @@
 
     return {
       root: style('root'), section: style('section'), title: style('title'), footer: style('footer'),
-      content: `${style('content')};max-height:240px;scroll-padding-top:7px`,
+      content: `${style('content')};max-height:240px;`
+        + `scroll-padding-top:7px`,
       header: { wrapper: style('header'), row: style('header-row'), cell: style('header-cell') },
       body: { wrapper: style('body'), row: style('body-row'), cell: style('body-cell') },
       pagination: { root: style('pager'), item: style('page') }
@@ -127,7 +129,8 @@
   function onHeaderRow() {
     return {
       class: 'observed-caller-header-row',
-      style: '--observed-slot:caller-header-row;--caller-header-row:kept'
+      style: '--observed-slot:caller-header-row;'
+        + '--caller-header-row:kept'
     };
   }
 </script>

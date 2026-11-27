@@ -24,7 +24,9 @@
 </script>
 
 {#snippet prefix()}
-  <span data-input-responsive-prefix style={`display:inline-block;width:${prefixWidth}px;flex:none`}>Prefix</span>
+  <span data-input-responsive-prefix style={`display:inline-block;`
+    + `width:${prefixWidth}px;`
+    + `flex:none`}>Prefix</span>
 {/snippet}
 {#if kind === 'fragment'}
   <!-- React Fragment передаёт соседние элементы без текстового пробела. -->

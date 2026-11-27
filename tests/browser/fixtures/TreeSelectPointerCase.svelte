@@ -24,7 +24,8 @@
 {#snippet popup(menu: Snippet)}{@render menu()}<input aria-label="Pointer draft" value="Draft" />{/snippet}
 <ConfigProvider theme={{ token: { motion: false }, cssVar: { key: 'tree-select-pointer' } }}>
   <output data-pointer-events hidden>{JSON.stringify(events)}</output>
-  <div data-pointer-control style="margin:64px;width:320px" data-pointer-refs={Boolean(inputElement && nativeElement)}>
+  <div data-pointer-control style={'margin:64px;'
+    + 'width:320px'} data-pointer-refs={Boolean(inputElement && nativeElement)}>
     <TreeSelect bind:inputElement bind:nativeElement aria-label="Pointer selection" style="width:320px"
       treeData={[{ value: 'a', title: label }, { value: 'b', title: 'Beta' }]}
       defaultValue={sample.multiple || sample.checked ? ['a'] : 'a'} multiple={sample.multiple}

@@ -91,15 +91,24 @@
 {/snippet}
 {#snippet summary(omitted: TreeSelectLabeledValue[])}
   <span data-suffix-layout-rest data-suffix-layout-omitted={omitted.map(item => item.value).join(',')}
-    style={`display:inline-flex;width:${restWidth}px;height:22px;box-sizing:border-box`}>Rest</span>
+    style={`display:inline-flex;`
+      + `width:${restWidth}px;`
+      + `height:22px;`
+      + `box-sizing:border-box`}>Rest</span>
 {/snippet}
 {#snippet tag(info: TreeSelectTagInfo)}
   {#if info.isMaxTag}{@render info.label()}{:else}<span data-suffix-layout-tag={String(info.value)}
-    style="display:inline-flex;width:64px;height:22px;box-sizing:border-box">{@render info.label()}</span>{/if}
+    style={'display:inline-flex;'
+      + 'width:64px;'
+      + 'height:22px;'
+      + 'box-sizing:border-box'}>{@render info.label()}</span>{/if}
 {/snippet}
 <div data-suffix-layout-case={sample.id} data-suffix-layout-bound={Boolean(root && editor && control)} style="margin:64px">
   <!-- React Provider передаёт context без DOM: host сохраняет LTR и UA font 16px/normal. -->
-  <ConfigProvider {direction} style="direction:ltr;font-family:initial;font-size:16px;line-height:normal"
+  <ConfigProvider {direction} style={'direction:ltr;'
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}
     theme={{ cssVar: { key: 'tree-select-suffix-layout' }, token: { motion: false } }}>
     {#if sample.kind === 'textarea'}
       <TreeSelect {...common} components={{ input: { render: textareaRender, props: {} } }}
@@ -126,5 +135,6 @@
       node.removeEventListener('suffixlayoutupdate', onUpdate);
     };
   }}></div>
-  <button type="button" style="display:block;margin-top:320px">Outside suffix layout</button>
+  <button type="button" style={'display:block;'
+    + 'margin-top:320px'}>Outside suffix layout</button>
 </div>

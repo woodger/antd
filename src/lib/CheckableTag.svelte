@@ -82,11 +82,35 @@
 </script>
 
 <style>
-  .ant-tag-css-var { display: inline-flex; align-items: center; appearance: none; min-width: 0; max-width: 100%; white-space: normal; vertical-align: middle; --ant-tag-default-color: var(--ant-color-text); }
-  .ant-tag-content { box-sizing: border-box; min-width: 0; overflow-wrap: anywhere; }
-  .ant-tag-icon { box-sizing: border-box; display: inline-flex; flex: none; align-items: center; }
-  .ant-tag-icon :global(svg) { max-width: 1em; max-height: 1em; }
-  .ant-tag-css-var:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 1px; }
+  .ant-tag-css-var {
+    display: inline-flex;
+    align-items: center;
+    appearance: none;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    vertical-align: middle;
+    --ant-tag-default-color: var(--ant-color-text);
+  }
+  .ant-tag-content {
+    box-sizing: border-box;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .ant-tag-icon {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+  .ant-tag-icon :global(svg) {
+    max-width: 1em;
+    max-height: 1em;
+  }
+  .ant-tag-css-var:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 1px;
+  }
   @media (prefers-reduced-motion: reduce) { .ant-tag-css-var { transition: none; } }
 </style>
 

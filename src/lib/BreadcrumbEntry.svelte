@@ -46,19 +46,49 @@
 </script>
 
 <style>
-  button { appearance: none; margin-block: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
-  button:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 1px; }
+  button {
+    appearance: none;
+    margin-block: 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 1px;
+  }
   /* Обёртка Svelte Dropdown сохраняет базовую линию соседних пунктов. */
   [data-ant-breadcrumb-item] > :global(.breadcrumb-dropdown-trigger) { vertical-align: baseline; }
-  .breadcrumb-arrow { display: inline-flex; margin-inline-start: var(--ant-margin-xxs); font-size: var(--ant-font-size-icon); }
+  .breadcrumb-arrow {
+    display: inline-flex;
+    margin-inline-start: var(--ant-margin-xxs);
+    font-size: var(--ant-font-size-icon);
+  }
   /* В upstream текст ссылки и стрелка наследуют цвет от разных элементов. */
   :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay] { color: inherit; }
-  :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay] > .breadcrumb-overlay-title { color: var(--ant-breadcrumb-link-color); display: inline-block; box-sizing: border-box; height: var(--ant-font-height); padding: 0 var(--ant-padding-xxs); margin-inline: calc(var(--ant-margin-xxs) * -1); }
+  :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay] > .breadcrumb-overlay-title {
+    color: var(--ant-breadcrumb-link-color);
+    display: inline-block;
+    box-sizing: border-box;
+    height: var(--ant-font-height);
+    padding: 0 var(--ant-padding-xxs);
+    margin-inline: calc(var(--ant-margin-xxs) * -1);
+  }
   :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay]:hover, :global(.ant-breadcrumb-source-theme) a[data-ant-breadcrumb-overlay]:hover > .breadcrumb-overlay-title { color: var(--ant-breadcrumb-link-hover-color); }
   :global(.ant-breadcrumb-source-theme) .breadcrumb-arrow { vertical-align: -0.125em; }
-  .breadcrumb-overlay-title > :global(svg) { display: inline-block; vertical-align: middle; margin-block-end: 0.2em; }
+  .breadcrumb-overlay-title > :global(svg) {
+    display: inline-block;
+    vertical-align: middle;
+    margin-block-end: 0.2em;
+  }
   .breadcrumb-overlay-title > :global(.anticon + span), .breadcrumb-overlay-title > :global(.anticon + a), .breadcrumb-overlay-title > :global(svg + span), .breadcrumb-overlay-title > :global(svg + a) { margin-inline-start: var(--ant-margin-xxs); }
-  :global(.ant-breadcrumb-source-theme) :is(a, button)[data-ant-breadcrumb-overlay] > :global(svg) { display: inline; vertical-align: baseline; margin-block-end: 0; }
+  :global(.ant-breadcrumb-source-theme) :is(a, button)[data-ant-breadcrumb-overlay] > :global(svg) {
+    display: inline;
+    vertical-align: baseline;
+    margin-block-end: 0;
+  }
 </style>
 
 {#snippet value(node: BreadcrumbContent | undefined)}

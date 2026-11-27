@@ -165,9 +165,21 @@
 </script>
 
 <style>
-  [data-ant-steps-root] { min-width: 0; max-width: 100%; }
-  [data-ant-steps-orientation="horizontal"] { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
-  @media (prefers-reduced-motion: reduce) { [data-ant-steps-root] :global(*) { transition: none; animation: none; } }
+  [data-ant-steps-root] {
+    min-width: 0;
+    max-width: 100%;
+  }
+  [data-ant-steps-orientation="horizontal"] {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-ant-steps-root] :global(*) {
+      transition: none;
+      animation: none;
+    }
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`steps-prefix:${componentPrefix}`} />{/if}<ol {...rest} bind:this={nativeElement} data-ant-steps-root=""

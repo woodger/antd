@@ -98,7 +98,8 @@
     if (sample.node === 'style') {
       result.style = [
         typeof original.style === 'string' ? original.style : undefined,
-        'cursor:move;padding-left:15px'
+        'cursor:move;'
+          + 'padding-left:15px'
       ].filter(Boolean).join(';');
     }
     if (sample.node === 'intercept') result.onclick = () => trace.push(`node:${item.key}`);

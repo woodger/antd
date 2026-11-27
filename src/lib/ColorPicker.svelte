@@ -320,16 +320,38 @@
 </script>
 
 <style>
-  .color-picker-popup { position: absolute; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; }
+  .color-picker-popup {
+    position: absolute;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
   .color-picker-popup[hidden], .color-picker-popup:not(:popover-open) { display: none; }
   .color-picker-surface { max-width: calc(100vw - 16px); }
-  .color-picker-button { font: inherit; color: inherit; text-align: start; line-height: normal; }
-  .color-picker-button.color-picker-source-theme { font-size: var(--ant-font-size); font-family: var(--ant-font-family); }
+  .color-picker-button {
+    font: inherit;
+    color: inherit;
+    text-align: start;
+    line-height: normal;
+  }
+  .color-picker-button.color-picker-source-theme {
+    font-size: var(--ant-font-size);
+    font-family: var(--ant-font-family);
+  }
   .color-picker-button.color-picker-source-theme:disabled { color: var(--ant-color-text-disabled); }
-  .color-picker-source-theme :global(.color-fields [data-ant-input-number-size="small"]) { height: auto; min-height: var(--ant-control-height-sm); }
+  .color-picker-source-theme :global(.color-fields [data-ant-input-number-size="small"]) {
+    height: auto;
+    min-height: var(--ant-control-height-sm);
+  }
   .color-picker-source-theme :global(.color-fields .color-picker-format > [data-ant-select-control]) { height: 100%; }
   .color-picker-source-theme :global([data-color-picker-inner]) { color: var(--ant-color-text); }
-  .color-picker-button:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
+  .color-picker-button:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
   .color-picker-trigger-clear { display: block; }
   @media (prefers-reduced-motion: reduce) { .color-picker-button { transition: none; } }
 </style>
@@ -370,7 +392,8 @@
       {:else}
         <span class={[`${prefixCls}-color-block`, classes.body]} style={styles.body}>
           <span class={[`${prefixCls}-color-block-inner`, classes.content]}
-            style={`display:block;background:${color.toCssString()};${styles.content ?? ''}`}></span>
+            style={`display:block;`
+              + `background:${color.toCssString()};${styles.content ?? ''}`}></span>
         </span>
       {/if}
       {#if props.showText}

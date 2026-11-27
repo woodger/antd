@@ -32,7 +32,8 @@
     class: 'fixture-message-prefix',
     content: sample.multiline ? multiline : 'Prefix message',
     icon: sample.customIcon ? icon : undefined,
-    style: sample.userStyle ? 'padding:7px 19px;color:rgb(18, 52, 86)' : undefined,
+    style: sample.userStyle ? 'padding:7px 19px;'
+      + 'color:rgb(18, 52, 86)' : undefined,
     onClose: () => events.push('close')
   }));
 

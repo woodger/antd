@@ -73,7 +73,8 @@
   {#if mounted}
     <ConfigProvider theme={enabled ? config : undefined}>
       <!-- Родитель повторяет body 16px в эталоне UMD для проверки наследуемых undefined. -->
-      <div style="font-size:16px;line-height:normal">
+      <div style={'font-size:16px;'
+        + 'line-height:normal'}>
         <Avatar id="themed-avatar" alt="Themed avatar">A</Avatar>
         <Avatar id="themed-small-avatar" size="small">A</Avatar>
         <Avatar id="themed-large-avatar" size="large">A</Avatar>
@@ -93,7 +94,8 @@
         <Avatar id="badge-child-avatar" alt="Badge child">A</Avatar>
       </Badge>
       <Avatar id="avatar-style-priority" size={51}
-        style="width:53px;--ant-avatar-text-font-size:23px">A</Avatar>
+        style={'width:53px;'
+          + '--ant-avatar-text-font-size:23px'}>A</Avatar>
       <Badge id="badge-style-priority" count={7}
         style="--ant-badge-indicator-height:31px">Style</Badge>
       <Avatar id="avatar-fitting-text" alt="Long avatar text">WIDE AVATAR TEXT</Avatar>

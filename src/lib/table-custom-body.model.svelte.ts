@@ -27,7 +27,13 @@ function scrollbarWidth(element: HTMLElement) {
 /** Измеряет полосу документа, когда зарегистрирован только handle виртуализатора. */
 function defaultScrollbarWidth(container: HTMLElement) {
   const probe = container.ownerDocument.createElement('div');
-  probe.style.cssText = 'position:absolute;visibility:hidden;width:100px;height:100px;overflow:scroll';
+  probe.style.cssText = (
+    'position:absolute;'
+    + 'visibility:hidden;'
+    + 'width:100px;'
+    + 'height:100px;'
+    + 'overflow:scroll'
+  );
   container.append(probe);
   const width = scrollbarWidth(probe);
   probe.remove();

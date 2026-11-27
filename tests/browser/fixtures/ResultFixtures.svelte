@@ -32,7 +32,10 @@
 </script>
 
 <style>
-  .surface { background: var(--ant-color-bg-container); color: var(--ant-color-text); }
+  .surface {
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+  }
 </style>
 
 <svelte:window

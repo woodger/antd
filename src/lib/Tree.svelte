@@ -613,12 +613,31 @@
   }
 </script>
 <style>
-  button[data-ant-tree-switcher], button[data-ant-tree-content] { padding:0;border:0;background:transparent;color:inherit;font:inherit; }
-  button[data-ant-tree-content] { padding:0 var(--ant-padding-xs);text-align:inherit; }
-  [data-ant-tree-list-inner] { display:flex;flex-direction:column; }
-  [data-ant-tree-checkbox] { flex-shrink:0;padding:0;cursor:pointer; }
+  button[data-ant-tree-switcher], button[data-ant-tree-content] {
+    padding:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+  }
+  button[data-ant-tree-content] {
+    padding:0 var(--ant-padding-xs);
+    text-align:inherit;
+  }
+  [data-ant-tree-list-inner] {
+    display:flex;
+    flex-direction:column;
+  }
+  [data-ant-tree-checkbox] {
+    flex-shrink:0;
+    padding:0;
+    cursor:pointer;
+  }
   /* Source TreeSelect использует рамку и фон checkbox из своего vendor scope. */
-  [data-ant-tree-checkbox]:not(:where(.ant-tree-select-source-tree *)) { border:0;background:transparent; }
+  [data-ant-tree-checkbox]:not(:where(.ant-tree-select-source-tree *)) {
+    border:0;
+    background:transparent;
+  }
   [data-ant-tree-checkbox]:focus-visible { outline:2px solid var(--ant-color-primary); }
   [data-ant-tree-switcher]:focus-visible { outline:2px solid var(--ant-color-primary); }
 </style>
@@ -755,15 +774,30 @@
           onblur?.(event);
         }}>
     {#if draggable}<span bind:this={indentMeasurer} class={`${componentPrefix}-indent-unit`}
-      aria-hidden="true" style="position:absolute;visibility:hidden;pointer-events:none"></span>{/if}
+      aria-hidden="true" style={'position:absolute;'
+        + 'visibility:hidden;'
+        + 'pointer-events:none'}></span>{/if}
     <div bind:this={holder} class={`${componentPrefix}-list-holder`} role="presentation" onscroll={handleScroll}
       onmouseenter={viewport.flashScrollbar}
-      style={height ? `max-height:${height}px;overflow-y:${range.useVirtual ? 'hidden' : 'auto'};overflow-anchor:none;${range.useVirtual && scrollWidth ? 'overflow-x:hidden;' : ''}${viewport.moving ? 'pointer-events:none' : ''}` : undefined}>
+      style={height ? `max-height:${height}px;`
+        + `overflow-y:${range.useVirtual ? 'hidden' : 'auto'};`
+        + `overflow-anchor:none;`
+        + `${range.useVirtual && scrollWidth ? 'overflow-x:hidden;' : ''}`
+        + `${viewport.moving ? 'pointer-events:none' : ''}` : undefined}>
     <div style={range.offset !== undefined
-      ? `height:${range.scrollHeight}px;position:relative;overflow:hidden` : undefined}>
+      ? `height:${range.scrollHeight}px;`
+        + `position:relative;`
+        + `overflow:hidden` : undefined}>
     <div bind:this={inner} data-ant-tree-list-inner class={`${componentPrefix}-list-holder-inner`}
-      style={`display:flex;flex-direction:column;${range.offset !== undefined
-        ? `position:absolute;left:0;right:0;top:0;transform:translateY(${range.offset}px);${config.direction === 'rtl' ? 'margin-right' : 'margin-left'}:${-viewport.left}px` : ''}`}>
+      style={`display:flex;`
+        + `flex-direction:column;`
+        + `${range.offset !== undefined
+        ? `position:absolute;`
+          + `left:0;`
+          + `right:0;`
+          + `top:0;`
+          + `transform:translateY(${range.offset}px);`
+          + `${config.direction === 'rtl' ? 'margin-right' : 'margin-left'}:${-viewport.left}px` : ''}`}>
       {#each rendered as entry (entry.key)}
         {#if 'motionNodes' in entry}
           {#if motion}<TreeMotion prefixCls={componentPrefix} show={entry.show} {motion}

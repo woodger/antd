@@ -75,7 +75,8 @@
     {@render control()}</FormItem>{:else}{@render control()}{/if}
 {/snippet}
 <div data-feedback-case={sample.id} data-feedback-prefix={componentPrefix} data-feedback-kind={sample.component}
-  data-feedback-root-ref={Boolean(root)} style="margin:64px;width:800px">
+  data-feedback-root-ref={Boolean(root)} style={'margin:64px;'
+    + 'width:800px'}>
   <ConfigProvider prefixCls={prefix} direction={sample.rtl ? 'rtl' : 'ltr'} theme={{
     cssVar: { key: 'form-feedback-mentions' }, token: { motion: false },
     mode: sample.theme === 'dark' ? 'dark' : 'light', compact: sample.theme === 'compact'

@@ -166,12 +166,33 @@
 </script>
 
 <style>
-  [data-ant-radio-group] { display: inline-flex; flex-wrap: wrap; min-width: 0; max-width: 100%; padding: 0; border: 0; row-gap: var(--ant-margin-xs); }
-  [data-ant-radio-group][data-ant-radio-vertical] { display: flex; flex-direction: column; align-items: stretch; }
+  [data-ant-radio-group] {
+    display: inline-flex;
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    row-gap: var(--ant-margin-xs);
+  }
+  [data-ant-radio-group][data-ant-radio-vertical] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
   [data-ant-radio-vertical]:has(> :global([data-ant-radio-button-wrapper]), > :global(span) > :global([data-ant-radio-button-wrapper])) { align-items: stretch; }
-  [data-ant-radio-group][data-ant-radio-block] { display: flex; width: 100%; }
-  [data-ant-radio-group]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  [data-ant-radio-group] :global([data-ant-radio-wrapper]) { min-width: 0; max-width: 100%; }
+  [data-ant-radio-group][data-ant-radio-block] {
+    display: flex;
+    width: 100%;
+  }
+  [data-ant-radio-group]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  [data-ant-radio-group] :global([data-ant-radio-wrapper]) {
+    min-width: 0;
+    max-width: 100%;
+  }
 </style>
 
 <svelte:document onreset={handleReset} />

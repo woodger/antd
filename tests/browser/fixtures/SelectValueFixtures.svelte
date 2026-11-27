@@ -10,7 +10,10 @@
 </script>
 
 <section id="select-value-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>
     Select value sample
     <select bind:value={selected}>
       {#each samples as entry}<option value={entry.id}>{entry.id}</option>{/each}

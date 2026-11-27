@@ -10,7 +10,10 @@ export function descriptionsConfigProfile(
   const prefix = local ? 'local' : 'context';
   const keys = ['root', 'header', 'title', 'extra', 'label', 'content'];
   const classes = Object.fromEntries(keys.map(key => [key, `${prefix}-descriptions-${key}`]));
-  const style = `color:${local ? '#873800' : '#722ed1'};padding-top:${local ? 25 : 15}px;`
+  const style = (
+    `color:${local ? '#873800' : '#722ed1'};`
+    + `padding-top:${local ? 25 : 15}px;`
+  )
     + `margin-top:${local ? 7 : 5}px`;
   const styles = Object.fromEntries(keys.map(key => [key, style]));
   const result: DescriptionsConfig = {
@@ -24,10 +27,15 @@ export function descriptionsConfigProfile(
       root: `${styles.root};opacity:${props.column === 3 ? 0.65 : 0.8}` });
   }
   if (name === 'priority') {
-    result.styles = { root: local ? 'background-color:#008000;margin-top:3px'
-      : 'background-color:#ff0000;margin-top:1px;padding-top:1px' };
+    result.styles = { root: local ? 'background-color:#008000;'
+      + 'margin-top:3px'
+      : 'background-color:#ff0000;'
+        + 'margin-top:1px;'
+        + 'padding-top:1px' };
     result.style = local ? 'background-color:#ffff00'
-      : 'background-color:#0000ff;margin-top:2px;padding-top:2px';
+      : 'background-color:#0000ff;'
+        + 'margin-top:2px;'
+        + 'padding-top:2px';
   }
   if (name === 'variables') {
     result.styles = undefined;

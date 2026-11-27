@@ -25,10 +25,15 @@
     root: 'local-root', image: 'local-image', description: 'local-description', footer: 'local-footer'
   };
   const styles: EmptySemanticSlots = {
-    root: 'padding-top:7px;background:#112233',
-    image: 'height:37px;padding-top:2px;background:#224466',
-    description: 'padding-top:3px;color:#335577',
-    footer: 'padding-top:4px;background:#446688'
+    root: 'padding-top:7px;'
+      + 'background:#112233',
+    image: 'height:37px;'
+      + 'padding-top:2px;'
+      + 'background:#224466',
+    description: 'padding-top:3px;'
+      + 'color:#335577',
+    footer: 'padding-top:4px;'
+      + 'background:#446688'
   };
   const flag = (info: EmptySemanticInfo) => [
     info.props.image === undefined ? 'unset-image' : 'given-image',
@@ -42,7 +47,9 @@
       description: 'provider-description', footer: 'provider-footer'
     },
     styles: {
-      root: 'padding-top:3px;background:red', image: 'height:25px;background:blue',
+      root: 'padding-top:3px;'
+        + 'background:red', image: 'height:25px;'
+        + 'background:blue',
       description: 'color:red', footer: 'background:green'
     }
   } satisfies EmptyConfig;
@@ -57,7 +64,8 @@
     ...(sample.semantic === 'function' ? {
       classNames: info => ({ ...classes, root: `local-root ${flag(info)}` }),
       styles: info => ({ ...styles,
-        root: `padding-top:${info.props.description === 0 ? 9 : 7}px;background:#112233` })
+        root: `padding-top:${info.props.description === 0 ? 9 : 7}px;`
+          + `background:#112233` })
     } : {}),
     ...(sample.customImage ? { image: customImage } : {}),
     ...(sample.richDescription ? { description: richDescription } : {}),
@@ -99,7 +107,9 @@
 <ConfigProvider theme={sourceTheme} locale={enUS} direction={sample.rtl ? 'rtl' : 'ltr'}
   empty={sample.provider ? providerConfig : undefined}>
   <ConfigProvider empty={sample.childProvider === 'empty' ? {} : undefined}>
-    <div data-empty-source-frame style="width:300px;--empty-bg:#e0d0c0;--empty-ink:rgba(40,80,120,.4)">
+    <div data-empty-source-frame style={'width:300px;'
+      + '--empty-bg:#e0d0c0;'
+      + '--empty-ink:rgba(40,80,120,.4)'}>
       {#if mounted}<Empty {...emptyProps} bind:nativeElement bind:ref />{/if}
     </div>
   </ConfigProvider>

@@ -65,7 +65,8 @@
 
 <div class="position-canvas"></div>
 <div bind:this={container} class="position-container"></div>
-<div class="position-stage" style={`left:${sample.x ?? 350}px;top:${sample.y ?? 250}px`}>
+<div class="position-stage" style={`left:${sample.x ?? 350}px;`
+  + `top:${sample.y ?? 250}px`}>
   <ConfigProvider direction={sample.rtl ? 'rtl' : 'ltr'} theme={{
     cssVar: { key: 'tabs-more-position' }, token: { motion }
   }}>

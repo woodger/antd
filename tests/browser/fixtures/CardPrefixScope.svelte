@@ -36,7 +36,9 @@
 </script>
 
 {#snippet title()}<TypographyTitle level={4}>Card heading</TypographyTitle>{/snippet}
-{#snippet avatar()}<span style="display:inline-block;width:24px;height:24px">AV</span>{/snippet}
+{#snippet avatar()}<span style={'display:inline-block;'
+  + 'width:24px;'
+  + 'height:24px'}>AV</span>{/snippet}
 {#snippet action()}<button type="button">Action</button>{/snippet}
 {#snippet tabAlpha()}<span class="fixture-card-tab-label">Alpha</span>{/snippet}
 {#snippet tabBeta()}<span class="fixture-card-tab-label">Beta</span>{/snippet}
@@ -45,7 +47,12 @@
     classNames={{ root: 'fixture-card-meta', title: 'fixture-meta-title',
       description: 'fixture-meta-description' }} />
   <input aria-label={`${scope} card draft`} name="draft" value="Draft"
-    style="width:90px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />
+    style={'width:90px;'
+      + 'height:32px;'
+      + 'box-sizing:border-box;'
+      + 'font:inherit;'
+      + 'padding:0;'
+      + 'border:1px solid'} />
 {/snippet}
 <form data-card-prefix-scope={scope} style="width:480px" onsubmit={event => event.preventDefault()}>
   <Card prefixCls={local ? sample.local : undefined} bind:nativeElement {title} extra="Extra"

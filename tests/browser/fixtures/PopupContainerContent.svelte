@@ -6,7 +6,9 @@
 </script>
 
 <div data-provider-content role="group" tabindex="-1" aria-label="Container overlay"
-  style="width:200px;min-height:100px;background:white">
+  style={'width:200px;'
+    + 'min-height:100px;'
+    + 'background:white'}>
   <input aria-label="Container draft" data-provider-draft value="Container draft" />
   <button type="button" data-provider-count onclick={() => count++}>{count}</button>
   {@render children?.()}

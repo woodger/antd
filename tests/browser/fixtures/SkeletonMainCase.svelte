@@ -29,11 +29,16 @@
     paragraph: 'local-paragraph'
   });
   const styles = (): SkeletonSemanticSlots => ({
-    root: 'padding-top:7px;background:#112233',
-    header: 'padding-top:2px;background:#224466',
+    root: 'padding-top:7px;'
+      + 'background:#112233',
+    header: 'padding-top:2px;'
+      + 'background:#224466',
     section: 'background:#334455',
-    avatar: 'width:30px;height:25px;background:#446688',
-    title: 'height:11px;background:#5588aa',
+    avatar: 'width:30px;'
+      + 'height:25px;'
+      + 'background:#446688',
+    title: 'height:11px;'
+      + 'background:#5588aa',
     paragraph: 'background:#6688bb'
   });
   const provider = {
@@ -48,7 +53,8 @@
       paragraph: 'provider-paragraph'
     },
     styles: {
-      root: 'padding-top:3px;background:red',
+      root: 'padding-top:3px;'
+        + 'background:red',
       header: 'background:blue',
       section: 'background:green',
       avatar: 'background:red',

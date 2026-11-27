@@ -28,7 +28,8 @@
   <textarea {...rest} value={value} data-modes-composite-safe-editor={initial}
     {@attach node => register(untrack(() => context), node)}></textarea>
 {/snippet}
-<section data-modes-composite-safe={initial} style="width:320px;margin:16px" {@attach node => {
+<section data-modes-composite-safe={initial} style={'width:320px;'
+  + 'margin:16px'} {@attach node => {
   const capture = (event: Event) => Object.assign((event as CustomEvent).detail,
     { read, focus: () => control?.focus({ preventScroll: true }), readRefs: () => ({ control, root, editor }) });
   node.addEventListener('modescompositesafecapture', capture);

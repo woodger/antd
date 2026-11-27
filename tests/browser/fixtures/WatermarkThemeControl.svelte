@@ -19,7 +19,11 @@
     font={id === 'explicit' ? {
       color: '#c41d7f', fontSize: 20, fontFamily: 'serif', fontWeight: 700, textAlign: 'left'
     } : undefined}
-    style={`width:320px;height:120px;${id === 'css' ? '--ant-color-fill:#ff0000;--ant-font-size-lg:50px;--ant-z-index-popup-base:6000' : ''}`}>
+    style={`width:320px;`
+      + `height:120px;`
+      + `${id === 'css' ? '--ant-color-fill:#ff0000;'
+      + '--ant-font-size-lg:50px;'
+      + '--ant-z-index-popup-base:6000' : ''}`}>
     <input aria-label={`Watermark theme draft ${id}`} name={`watermark-${id}`} value="Draft" />
     {#if id === 'normal'}
       <button type="button" onclick={() => modal = true}>Open themed Watermark modal</button>

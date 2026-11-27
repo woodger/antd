@@ -45,7 +45,8 @@
 <ConfigProvider theme={{ cssVar: { key: 'boundary-source' },
   components: { Alert: sample.theme ? { fontSize: 17, fontSizeLG: 21 } : {} } }}
   alert={configured ? config : undefined}>
-  <div data-boundary-frame style="width:600px;max-width:100%">
+  <div data-boundary-frame style={'width:600px;'
+    + 'max-width:100%'}>
     {#if mounted}
       {#if nested}<Alert.ErrorBoundary title="Outer boundary" description="Outer fallback">
         {@render boundary()}

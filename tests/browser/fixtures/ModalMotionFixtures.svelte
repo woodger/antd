@@ -139,7 +139,11 @@
 </script>
 
 <style>
-  #motion-probe-open { position: fixed; left: 60px; top: 180px; }
+  #motion-probe-open {
+    position: fixed;
+    left: 60px;
+    top: 180px;
+  }
   :global(.probe-panel-appear-active), :global(.probe-panel-enter-active) {
     animation: panel-slide .18s linear both;
   }
@@ -160,12 +164,50 @@
     transition: opacity .18s linear;
   }
   :global(.probe-transition-leave) { opacity: 1; }
-  :global(.probe-transition-leave-active) { opacity: 0; transition: opacity .12s linear; }
-  @keyframes -global-panel-slide { from { transform: translateY(-30px); } to { transform: translateY(0); } }
-  @keyframes -global-panel-end { from { transform: translateY(0); } to { transform: translateY(-30px); } }
-  @keyframes -global-mask-enter { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes -global-mask-end { from { opacity: 1; } to { opacity: 0; } }
-  @keyframes -global-panel-swap { from { transform: translateY(0); } to { transform: translateY(40px); } }
+  :global(.probe-transition-leave-active) {
+    opacity: 0;
+    transition: opacity .12s linear;
+  }
+  @keyframes -global-panel-slide {
+    from {
+      transform: translateY(-30px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  @keyframes -global-panel-end {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-30px);
+    }
+  }
+  @keyframes -global-mask-enter {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes -global-mask-end {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes -global-panel-swap {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(40px);
+    }
+  }
 </style>
 
 <svelte:document onanimationstart={recordMotion} ontransitionstart={recordMotion} />

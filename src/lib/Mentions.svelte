@@ -698,12 +698,43 @@
     width: 100%;
     min-width: 0;
   }
-  [data-ant-mentions-measure] { position: absolute; inset: 0 auto auto 0; overflow: hidden; visibility: hidden; pointer-events: none; white-space: pre-wrap; }
-  .caret-anchor { display: inline-block; width: 1px; height: 1em; vertical-align: text-bottom; }
-  .popup { position: fixed; margin: 0; border: 0; overflow: auto; }
-  [data-ant-mentions-clear] { position: absolute; inset-inline-end: var(--ant-padding-xs); top: 50%; transform: translateY(-50%); display: flex; padding: 0; border: 0; color: var(--ant-color-text-quaternary); background: transparent; cursor: pointer; }
+  [data-ant-mentions-measure] {
+    position: absolute;
+    inset: 0 auto auto 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+    white-space: pre-wrap;
+  }
+  .caret-anchor {
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    vertical-align: text-bottom;
+  }
+  .popup {
+    position: fixed;
+    margin: 0;
+    border: 0;
+    overflow: auto;
+  }
+  [data-ant-mentions-clear] {
+    position: absolute;
+    inset-inline-end: var(--ant-padding-xs);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    padding: 0;
+    border: 0;
+    color: var(--ant-color-text-quaternary);
+    background: transparent;
+    cursor: pointer;
+  }
   [data-ant-mentions-clear]:focus-visible { outline: 2px solid var(--ant-color-primary); }
-  [data-ant-mentions-feedback-suffix] > [data-ant-mentions-clear] { position: static; transform: none; }
+  [data-ant-mentions-feedback-suffix] > [data-ant-mentions-clear] {
+    position: static;
+    transform: none;
+  }
 </style>
 
 {#snippet clearControl()}

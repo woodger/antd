@@ -320,10 +320,18 @@
 {#snippet wrappedPrevent(origin: Snippet)}{@render wrapped(origin, 'prevent')}{/snippet}
 
 <section data-surface-case={sample.id} data-surface-bound={Boolean(control)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {...providerProps} {theme} locale={enUS} popupOverflow="viewport">
     <!-- Сохраняем заданный родителю Source font поверх существующего provider reset. -->
-    <div data-surface-position style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px;font-family:initial;font-size:16px;line-height:normal`}>
+    <div data-surface-position style={`position:absolute;`
+      + `left:${position.left}px;`
+      + `top:${position.top}px;`
+      + `width:${position.width}px;`
+      + `font-family:initial;`
+      + `font-size:16px;`
+      + `line-height:normal`}>
       {#if settings.control === 'autocomplete'}
         <SurfaceAutoComplete {...autoCompleteProps} bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={autoCompleteEditor} />
       {:else}
@@ -331,7 +339,9 @@
       {/if}
     </div>
   </ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside surface</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside surface</button>
   <output data-surface-owner hidden>{JSON.stringify(read())}</output>
   <div data-surface-command hidden {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<SelectSurfaceAction>).detail);
@@ -348,4 +358,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

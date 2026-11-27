@@ -153,7 +153,11 @@
 {#snippet body()}{#if contentMode === 'rich'}Before <b>atomic</b> after{:else}{text}{/if}{/snippet}
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
   .surface { background: var(--ant-color-bg-container); }
 </style>
 

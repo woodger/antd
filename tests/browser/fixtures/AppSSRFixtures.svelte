@@ -4,7 +4,8 @@
   let { component = 'main' }: Pick<AppProps, 'component'> = $props();
 </script>
 
-<ConfigProvider app={{ class: 'context-app', style: 'color:#abcdef;padding:5px' }}
+<ConfigProvider app={{ class: 'context-app', style: 'color:#abcdef;'
+  + 'padding:5px' }}
   theme={{ cssVar: {}, components: { App: { fontSize: 20, lineHeight: 2 } } }}>
   <App {component} class="local-app" rootClassName="root-app" style="padding:7px"
     id="ssr-app" aria-label="SSR application">

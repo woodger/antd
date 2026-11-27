@@ -30,7 +30,8 @@
       screenXSMax: 639, screenSMMin: 640, screenSM: 640, screenSMMax: 799,
       screenMDMin: 800, screenMD: 800, motion: false
     } }}>
-      <div id="grid-breakpoints-neighbor" style="width:640px;max-width:100%">
+      <div id="grid-breakpoints-neighbor" style={'width:640px;'
+        + 'max-width:100%'}>
         <Row><Col md={6}>Neighbor</Col></Row>
       </div>
     </ConfigProvider>

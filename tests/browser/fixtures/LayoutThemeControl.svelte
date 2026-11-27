@@ -24,9 +24,13 @@
 
 <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'}>
   <div data-layout-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-    style="width:650px;font-size:14px;line-height:22px;color:rgb(31,41,51)">
+    style={'width:650px;'
+      + 'font-size:14px;'
+      + 'line-height:22px;'
+      + 'color:rgb(31,41,51)'}>
     <Layout hasSider bind:nativeElement={root} style={[
-      'height:240px;transform:translateZ(0)',
+      'height:240px;'
+        + 'transform:translateZ(0)',
       id === 'root-variable' && `--${prefix}-layout-header-height:94px`,
       priority && 'background:#fff0f6'
     ].filter(Boolean).join(';')}>
@@ -34,8 +38,10 @@
         collapsible collapsedWidth={zero ? 0 : 80} reverseArrow={id === 'reverse'}
         theme={light ? 'light' : 'dark'}
         styles={priority ? { root: 'background:#e6fffb', body: 'padding:5px' } : undefined}
-        style={priority ? 'background:#fffbe6;width:999px' : undefined}
-        zeroWidthTriggerStyle={priority ? 'height:31px;background:#ffd6e7' : undefined}
+        style={priority ? 'background:#fffbe6;'
+          + 'width:999px' : undefined}
+        zeroWidthTriggerStyle={priority ? 'height:31px;'
+          + 'background:#ffd6e7' : undefined}
         onCollapse={(collapsed, type) => changes = [...changes, { collapsed, type }]}>
         <input aria-label={`Layout draft ${id}`} value="Draft" />
       </LayoutSider>
@@ -44,7 +50,9 @@
         id === 'root-variable' && `--${prefix}-layout-header-height:94px`
       ].filter(Boolean).join(';')}>
         <LayoutHeader style={priority
-          ? 'height:66px;line-height:66px;background:#391085' : undefined}>Header</LayoutHeader>
+          ? 'height:66px;'
+            + 'line-height:66px;'
+            + 'background:#391085' : undefined}>Header</LayoutHeader>
         <LayoutContent>Content</LayoutContent><LayoutFooter>Footer</LayoutFooter>
       </Layout>
     </Layout>

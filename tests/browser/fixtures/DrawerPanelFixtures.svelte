@@ -125,7 +125,8 @@
 
       for (const slot of slots) {
         decorations[slot] = kind === 'style'
-          ? `--${name}-${slot}:${value};--study-shared:${name}`
+          ? `--${name}-${slot}:${value};`
+            + `--study-shared:${name}`
           : `${name}-${slot} ${name}-${value}`;
       }
 

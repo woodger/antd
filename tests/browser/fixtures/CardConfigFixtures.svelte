@@ -21,9 +21,11 @@
   let changes = $state(0);
   const form = createForm({ initialValues: {} });
   let contextCard = $derived<CardConfig>({ ...cardConfigProfile(current.context),
-    ...(updated ? { class: 'context-card-updated', style: 'opacity:0.6;outline-offset:7px' } : {}) });
+    ...(updated ? { class: 'context-card-updated', style: 'opacity:0.6;'
+      + 'outline-offset:7px' } : {}) });
   let contextMeta = $derived<CardMetaConfig>({ ...cardMetaConfigProfile(current.context),
-    ...(updated ? { class: 'context-meta-updated', style: 'opacity:0.6;outline-offset:7px' } : {}) });
+    ...(updated ? { class: 'context-meta-updated', style: 'opacity:0.6;'
+      + 'outline-offset:7px' } : {}) });
   let nestedCard = $derived<CardConfig | undefined>(current.nested === 'empty' ? {}
     : current.nested === 'replace' ? { class: 'context-card-replaced' } : undefined);
   let nestedMeta = $derived<CardMetaConfig | undefined>(current.nested === 'empty' ? {}

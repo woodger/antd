@@ -53,7 +53,15 @@ export function connectTabsOverflow(
     if (overflow && add.parentElement !== operations) {
       const box = sizeOf(add);
       const style = view.getComputedStyle(add);
-      placeholder.style.cssText = `display:block;box-sizing:border-box;flex:none;visibility:hidden;width:${options.vertical ? 'auto' : `${box.width}px`};height:${options.vertical ? `${box.height}px` : 'auto'};margin:${style.marginTop} ${style.marginRight} ${style.marginBottom} ${style.marginLeft}`;
+      placeholder.style.cssText = (
+        `display:block;`
+        + `box-sizing:border-box;`
+        + `flex:none;`
+        + `visibility:hidden;`
+        + `width:${options.vertical ? 'auto' : `${box.width}px`};`
+        + `height:${options.vertical ? `${box.height}px` : 'auto'};`
+        + `margin:${style.marginTop} ${style.marginRight} ${style.marginBottom} ${style.marginLeft}`
+      );
       placeholder.hidden = false;
       add.classList.add('ant-tabs-add-in-operations');
       add.setAttribute('data-tabs-add-in-operations', '');

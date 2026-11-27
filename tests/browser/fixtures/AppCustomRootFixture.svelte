@@ -44,7 +44,8 @@
   {theme}
   prefixCls="brand"
   direction={revised ? 'ltr' : 'rtl'}
-  app={{ class: 'context-app', style: 'padding-top:5px;color:#abcdef' }}
+  app={{ class: 'context-app', style: 'padding-top:5px;'
+    + 'color:#abcdef' }}
 >
   <App
     {...props}

@@ -15,5 +15,7 @@
 
 <section data-checkable-hydration>
   <TreeSelectCheckableCase {sample} formName="checked" bind:this={fixture} />
-  <input aria-label="Checkable outside draft" style="position:fixed;left:16px;bottom:16px" />
+  <input aria-label="Checkable outside draft" style={'position:fixed;'
+    + 'left:16px;'
+    + 'bottom:16px'} />
 </section>

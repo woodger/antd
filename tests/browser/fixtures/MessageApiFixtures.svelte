@@ -60,7 +60,8 @@
       },
       styles({ props }) {
         record(`${layer}Styles`, props);
-        return Object.fromEntries(slots.map(slot => [slot, `--winner:${layer};--${layer}:${slot}`]));
+        return Object.fromEntries(slots.map(slot => [slot, `--winner:${layer};`
+          + `--${layer}:${slot}`]));
       }
     };
   }
@@ -112,7 +113,8 @@
     else if (kind === 'context-semantics') {
       store('semantic', api.warning({
         ...item('Decorated'), ...semantics('notice'), class: 'notice-extra',
-        style: '--winner:noticeInline;--extra:notice',
+        style: '--winner:noticeInline;'
+          + '--extra:notice',
         onClick: event => probe.events.push(['click', event.currentTarget.tagName])
       }));
     }

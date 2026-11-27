@@ -78,8 +78,10 @@
   );
 </script>
 
-{#snippet clearIcon()}<strong style="display:inline-flex;line-height:1">Custom clear</strong>{/snippet}
-{#snippet contextIcon()}<span style="display:inline-flex;line-height:1">Context clear</span>{/snippet}
+{#snippet clearIcon()}<strong style={'display:inline-flex;'
+  + 'line-height:1'}>Custom clear</strong>{/snippet}
+{#snippet contextIcon()}<span style={'display:inline-flex;'
+  + 'line-height:1'}>Context clear</span>{/snippet}
 {#snippet formattedCount(info: TextAreaCountInfo)}<strong>{info.count} of {info.maxLength ?? '∞'}</strong>{/snippet}
 
 <section id="textarea-features-fixture">
@@ -137,7 +139,8 @@
         : undefined
     }}
   >
-    <div style="max-width:420px;margin-bottom:36px">
+    <div style={'max-width:420px;'
+      + 'margin-bottom:36px'}>
       {#if mounted}<TextArea
         aria-label="Feature text"
         name="feature"
@@ -156,7 +159,8 @@
         maxLength={nativeLimit ? 10 : undefined}
         class="feature-textarea"
         rootClassName="owner-textarea"
-        style={`${manual ? 'resize:both;height:120px;' : ''}${semantic ? 'color:blue;' : ''}`}
+        style={`${manual ? 'resize:both;'
+          + 'height:120px;' : ''}${semantic ? 'color:blue;' : ''}`}
         classNames={semantic
           ? ({ props }) =>
           ({

@@ -34,7 +34,12 @@
 </script>
 
 {#snippet spaceEditor()}<input aria-label={`${scope} space editor`} value="Draft"
-  style="width:100px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />{/snippet}
+  style={'width:100px;'
+    + 'height:32px;'
+    + 'box-sizing:border-box;'
+    + 'font:inherit;'
+    + 'padding:0;'
+    + 'border:1px solid'} />{/snippet}
 {#snippet badge()}<Badge count={5} data-space-prefix-badge />{/snippet}
 {#snippet text()}<span>Last</span>{/snippet}
 {#snippet start()}<SpaceAddon prefixCls={local ? sample.addon : undefined}
@@ -43,7 +48,12 @@
 {#snippet end()}<SpaceAddon prefixCls={local ? sample.addon : undefined}
   class="fixture-addon-prefix" variant={sample.variant}>To</SpaceAddon>{/snippet}
 {#snippet compactEditor()}<input aria-label={`${scope} compact editor`} value="Compact"
-  style="width:100px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />{/snippet}
+  style={'width:100px;'
+    + 'height:32px;'
+    + 'box-sizing:border-box;'
+    + 'font:inherit;'
+    + 'padding:0;'
+    + 'border:1px solid'} />{/snippet}
 
 <div data-space-prefix-scope={scope} style="width:400px">
   <Space bind:nativeElement={spaceRef} prefixCls={local ? sample.local : undefined}

@@ -260,11 +260,28 @@
 </script>
 
 <style>
-  [data-ant-collapse] { min-width: 0; max-width: 100%; --ant-collapse-toggle-padding: var(--ant-collapse-header-padding); --ant-collapse-extra-spacing: var(--ant-padding); }
-  [data-ant-collapse][data-size="small"] { --ant-collapse-toggle-padding: var(--ant-collapse-header-padding-sm); --ant-collapse-extra-spacing: var(--ant-padding-sm); }
-  [data-ant-collapse][data-size="large"] { --ant-collapse-toggle-padding: var(--ant-collapse-header-padding-lg); --ant-collapse-extra-spacing: var(--ant-padding-lg); }
-  .ant-collapse-empty { padding: var(--ant-padding-sm); color: var(--ant-color-text-description); }
-  [data-ant-collapse]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -3px; }
+  [data-ant-collapse] {
+    min-width: 0;
+    max-width: 100%;
+    --ant-collapse-toggle-padding: var(--ant-collapse-header-padding);
+    --ant-collapse-extra-spacing: var(--ant-padding);
+  }
+  [data-ant-collapse][data-size="small"] {
+    --ant-collapse-toggle-padding: var(--ant-collapse-header-padding-sm);
+    --ant-collapse-extra-spacing: var(--ant-padding-sm);
+  }
+  [data-ant-collapse][data-size="large"] {
+    --ant-collapse-toggle-padding: var(--ant-collapse-header-padding-lg);
+    --ant-collapse-extra-spacing: var(--ant-padding-lg);
+  }
+  .ant-collapse-empty {
+    padding: var(--ant-padding-sm);
+    color: var(--ant-color-text-description);
+  }
+  [data-ant-collapse]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -3px;
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`collapse-prefix:${prefix}`} />{/if}<div {...attributes} bind:this={root} id={rootId} role="group" aria-label={ariaLabel}

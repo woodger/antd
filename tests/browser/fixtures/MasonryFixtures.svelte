@@ -62,9 +62,19 @@
 </script>
 
 <style>
-  .holder { max-width: 100%; margin-block: 16px; }
-  .tile { box-sizing: border-box; border: 1px solid var(--ant-color-border); padding: 4px; }
-  .tile input { box-sizing: border-box; width: 100%; }
+  .holder {
+    max-width: 100%;
+    margin-block: 16px;
+  }
+  .tile {
+    box-sizing: border-box;
+    border: 1px solid var(--ant-color-border);
+    padding: 4px;
+  }
+  .tile input {
+    box-sizing: border-box;
+    width: 100%;
+  }
   .tile button { max-width: 100%; }
 </style>
 
@@ -148,7 +158,10 @@
             class="fixture-masonry"
             rootClassName="masonry-owner"
             classNames={({ props }) => ({ root: `local-columns-${props.columns}`, item: 'local-item' })}
-            styles={styled ? { root: 'outline-offset:8px', item: 'outline-offset:8px;position:relative;top:99px;width:99px' } : undefined}
+            styles={styled ? { root: 'outline-offset:8px', item: 'outline-offset:8px;'
+              + 'position:relative;'
+              + 'top:99px;'
+              + 'width:99px' } : undefined}
             style={slowLeave ? '--ant-motion-duration-fast:1s' : styled ? 'outline-offset:10px' : undefined}
             bind:nativeElement
           />

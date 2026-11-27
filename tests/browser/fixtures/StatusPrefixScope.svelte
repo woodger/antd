@@ -51,7 +51,8 @@
     <span>Item</span>
   </Badge></div>
   <div data-prefix-widget="ribbon"><BadgeRibbon prefixCls={prefix('ribbon')} text="Badge">
-    <div style="width:120px;height:40px">Item</div>
+    <div style={'width:120px;'
+      + 'height:40px'}>Item</div>
   </BadgeRibbon></div>
   <div data-prefix-widget="tag"><Tag prefixCls={prefix('tag')}>Tag</Tag></div>
   <div data-prefix-widget="checkable-tag">

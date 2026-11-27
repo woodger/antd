@@ -125,7 +125,8 @@
   root.append(style);
   shadow = root;
 }}></div>
-<div style="width:300px;margin:100px">
+<div style={'width:300px;'
+  + 'margin:100px'}>
   <ConfigProvider {...parentOptions} direction={sample.rtl ? 'rtl' : undefined}
     style={`--mention-origin:${dark ? 'dark' : 'light'}`} theme={{
       mode: dark ? 'dark' : 'light', token: { motion: false }

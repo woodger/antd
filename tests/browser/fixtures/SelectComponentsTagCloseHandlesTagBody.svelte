@@ -16,6 +16,11 @@
   }
 </script>
 {#snippet body()}<span data-handles-tag={String(info.value)} data-closable={String(info.closable)} data-item-disabled={String(info.disabled)}
-  style="display:inline-flex;width:{geometry.width}px;height:{geometry.height}px;line-height:24px;font-size:14px;white-space:nowrap">{@render info.label()}</span>{/snippet}
+  style={'display:inline-flex;'
+    + `width:${(geometry.width) ?? ''}px;`
+    + `height:${(geometry.height) ?? ''}px;`
+    + 'line-height:24px;'
+    + 'font-size:14px;'
+    + 'white-space:nowrap'}>{@render info.label()}</span>{/snippet}
 {#snippet renderedBody()}{@const content = observe(body)}{@render content()}{/snippet}
 {@render renderedBody()}

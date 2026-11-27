@@ -30,7 +30,8 @@
   let panels = $state.raw<ReadonlySet<HTMLElement>>(new Set());
   let runtime = $state.raw<ReturnType<typeof createWatermarkRuntime>>();
   let containerStyle = $derived(
-    ['position:relative;overflow:hidden', config.watermark?.style, style].filter(Boolean).join(
+    ['position:relative;'
+      + 'overflow:hidden', config.watermark?.style, style].filter(Boolean).join(
       ';'
     )
   );

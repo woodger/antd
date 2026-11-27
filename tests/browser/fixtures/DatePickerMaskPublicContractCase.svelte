@@ -84,7 +84,8 @@
 </script>
 
 <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>
-  <section style="padding: 48px; width: 520px;">
+  <section style={'padding: 48px; '
+    + 'width: 520px;'}>
     {#if owner === 'date'}
       <DatePicker {...common} id="contract-start" value={single} defaultPickerValue={start}
         onChange={changeSingle} />

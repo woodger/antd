@@ -180,7 +180,9 @@ test('Tabs keeps header styles on the header through theme changes and releases 
   async ({ page }) => {
     await check(page, 'Interactive Tabs layout');
     await page.getByLabel('Tabs header style', { exact: true }).fill(
-      'background-color:rgb(9, 10, 11);padding:6px;border-top:3px solid red'
+      'background-color:rgb(9, 10, 11);'
+        + 'padding:6px;'
+        + 'border-top:3px solid red'
     );
     await check(page, 'Center Tabs layout');
     await check(page, 'Dark Tabs layout');

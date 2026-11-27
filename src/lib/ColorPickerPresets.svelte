@@ -33,10 +33,31 @@
 </script>
 
 <style>
-  .preset-heading { margin: 0; font: inherit; flex: 1; }
-  .preset-trigger { display: flex; width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: start; cursor: pointer; }
-  .preset-trigger:focus-visible, .preset-color:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  .preset-color { padding: 0; border: 0; background-color: transparent; }
+  .preset-heading {
+    margin: 0;
+    font: inherit;
+    flex: 1;
+  }
+  .preset-trigger {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+  .preset-trigger:focus-visible, .preset-color:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  .preset-color {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+  }
   @media (prefers-reduced-motion: reduce) { .preset-arrow { transition: none; } }
 </style>
 
@@ -82,7 +103,8 @@
                     && `${prefixCls}-presets-color-bright`]}
                 onclick={() => onChange(color)}>
                 <span class={`${prefixCls}-color-block-inner`}
-                  style={`display:block;background:${color.toCssString()}`}></span>
+                  style={`display:block;`
+                    + `background:${color.toCssString()}`}></span>
               </button>
             {:else}<span class={`${prefixCls}-presets-empty`}>{locale.presetEmpty}</span>{/each}
           </div>

@@ -22,7 +22,8 @@
     styles: priority ? {
       root: '--ant-statistic-title-font-size:17px',
       title: 'font-size:21px',
-      content: 'font-size:29px;color:#722ed1',
+      content: 'font-size:29px;'
+        + 'color:#722ed1',
       prefix: 'font-size:13px',
       suffix: 'margin-inline-start:7px'
     } : undefined

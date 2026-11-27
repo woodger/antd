@@ -25,7 +25,12 @@
 </script>
 
 <style>
-  svg { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; }
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
   .loading { animation: ant-svelte-spin 1s linear infinite; }
   @keyframes ant-svelte-spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .loading { animation-duration: 2s; } }

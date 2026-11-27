@@ -46,7 +46,9 @@
 </script>
 
 <section data-color-prefix-host data-color-prefix={prefix} data-root-prefix={rootPrefix}
-  style="width:800px;padding:16px;color:rgb(1,2,3)">
+  style={'width:800px;'
+    + 'padding:16px;'
+    + 'color:rgb(1,2,3)'}>
   <ColorPicker prefixCls={local ? sample.local : undefined} class="fixture-color-prefix"
     classNames={{ popup: { root: 'fixture-color-prefix-popup' } }}
     defaultValue={sample.gradient ? gradient : sample.cleared ? '' : '#1677ff'}
@@ -56,7 +58,8 @@
     showText open={!sample.closed && open} allowClear
     presets={sample.noPresets ? undefined : presets}
     getPopupContainer={sample.portal ? () => document.getElementById('color-prefix-portal')! : undefined}
-    style={sample.priority ? 'padding-top:13px;color:green' : undefined}
+    style={sample.priority ? 'padding-top:13px;'
+      + 'color:green' : undefined}
     styles={sample.priority ? {
       description: 'color:#cf1322', popup: { root: 'color:#389e0d' }
     } : undefined}

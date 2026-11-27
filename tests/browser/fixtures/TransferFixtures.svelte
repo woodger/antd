@@ -69,7 +69,8 @@
     rules: { field: [{ required: true, message: 'Transfer required' }] }
   });
   let context = $derived<TransferConfig | undefined>(semantics ? {
-    class: 'context-transfer', style: 'padding:1px;color:red',
+    class: 'context-transfer', style: 'padding:1px;'
+      + 'color:red',
     classNames: { root: 'context-root', item: 'context-item', source: { item: 'context-source' } },
     styles: { root: 'padding:2px', section: 'width:210px',
       source: { section: 'width:211px' }, item: 'color:red' }
@@ -95,11 +96,29 @@
 </script>
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-block: 16px; }
-  .controls label { display: inline-flex; align-items: center; gap: 4px; }
-  output { display: block; overflow-wrap: anywhere; }
-  .custom-body { margin: 0; padding: 8px; }
-  .footer { display: block; padding: 8px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-block: 16px;
+  }
+  .controls label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+  .custom-body {
+    margin: 0;
+    padding: 8px;
+  }
+  .footer {
+    display: block;
+    padding: 8px;
+  }
 </style>
 
 <section id="transfer-fixture">
@@ -174,7 +193,8 @@
     </button>
   </div>
   <ConfigProvider theme={{ mode: dark ? 'dark' : 'light', compact }} transfer={context}
-    style="background:var(--ant-color-bg-container);color:var(--ant-color-text)">
+    style={'background:var(--ant-color-bg-container);'
+      + 'color:var(--ant-color-text)'}>
     <form data-testid="transfer-form" onsubmit={event => event.preventDefault()}>
       {#key instance}
         <Transfer dataSource={data} targetKeys={targets} selectedKeys={controlled ? selected : undefined}
@@ -203,7 +223,8 @@
               if (prevent) event.preventDefault();
             } }, 'Back', extraAction] : undefined}
           class="fixture-transfer" rootClassName={semantics ? 'root-extra' : undefined}
-          style={semantics ? 'padding:4px;color:green' : undefined}
+          style={semantics ? 'padding:4px;'
+            + 'color:green' : undefined}
           classNames={semantics ? ({ props }) => ({ root: `local-disabled-${props.disabled}`,
             item: 'local-item', source: { item: 'local-source' }, target: { item: 'local-target' } })
             : undefined}

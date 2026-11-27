@@ -17,5 +17,9 @@ export function renderSelectSurfaceHydration(id: string) {
     { props: { sample, capture }, idPrefix: 'select-surface-hydration' }
   );
   return { head: rendered.head, domFree: true, state: capture.read!(),
-    body: `<section data-select-surface-hydration><div data-select-surface-hydration-target>${rendered.body}</div><input aria-label="Surface outside draft" style="position:fixed;left:16px;bottom:16px" /></section>` };
+    body: '<section data-select-surface-hydration>'
+      + `<div data-select-surface-hydration-target>${rendered.body}</div>`
+      + '<input aria-label="Surface outside draft" style="position:fixed;'
+      + 'left:16px;'
+      + 'bottom:16px" /></section>' };
 }

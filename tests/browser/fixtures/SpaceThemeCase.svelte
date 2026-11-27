@@ -39,7 +39,8 @@
     ...sourceSpaceConfig(sample.configMode),
     size: [4, 6],
     class: 'context-updated',
-    style: 'column-gap:47px;background:#e6f4ff'
+    style: 'column-gap:47px;'
+      + 'background:#e6f4ff'
   } : sourceSpaceConfig(sample.configMode));
   let priority = $derived(sample.priority);
   let prefix = $derived(sample.config.cssVar?.prefix ?? 'ant');

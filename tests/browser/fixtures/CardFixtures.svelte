@@ -22,7 +22,8 @@
     if (event.key === 'F4') mounted = !mounted;
   }}
 />
-{#snippet cover()}<div style="height:48px;background:var(--ant-color-primary-bg)">Local cover</div>{/snippet}
+{#snippet cover()}<div style={'height:48px;'
+  + 'background:var(--ant-color-primary-bg)'}>Local cover</div>{/snippet}
 {#snippet avatar()}<span aria-label="Card avatar">AD</span>{/snippet}
 {#snippet action()}<button type="button" onclick={() => { extraClicks++; }}>Card action</button>{/snippet}
 {#snippet left()}<button type="button" onclick={() => { extraClicks++; }}>Left extra</button>{/snippet}

@@ -43,7 +43,8 @@
     container: 'local-container'
   });
   const styles = (): SpinSemanticSlots => ({
-    root: 'padding-top:7px;color:#cc2200', section: 'padding-top:6px',
+    root: 'padding-top:7px;'
+      + 'color:#cc2200', section: 'padding-top:6px',
     indicator: 'color:#1122aa', description: 'font-size:19px', container: 'background-color:#eee'
   });
   let provider = $derived<SpinConfig>({
@@ -84,7 +85,8 @@
 {#snippet provided(info: SpinIndicatorInfo)}{@render icon('provider', info)}{/snippet}
 {#snippet globalCustom(info: SpinIndicatorInfo)}{@render icon('global', info)}{/snippet}
 {#snippet replacement(info: SpinIndicatorInfo)}{@render icon('replacement', info)}{/snippet}
-{#snippet contents()}<div style="width:260px;height:96px"><input aria-label="Spin source draft" value="Draft" /><button
+{#snippet contents()}<div style={'width:260px;'
+  + 'height:96px'}><input aria-label="Spin source draft" value="Draft" /><button
   type="button" onclick={() => count++}>Child counter {count}</button></div>{/snippet}
 <ConfigProvider theme={sourceTheme} spin={sample.provider ? provider : undefined}
   componentSize={sample.providerSize} direction={sample.rtl ? 'rtl' : 'ltr'}>

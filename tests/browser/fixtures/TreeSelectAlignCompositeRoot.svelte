@@ -25,8 +25,12 @@
 </script>
 
 <span data-align-root bind:this={nativeElement} style={[context.attributes.style, 'display:inline-flex'].filter(Boolean).join(';')}>
-  <span style="display:inline-flex;width:64px;flex:none">Root prefix</span>
-  <input {...attributes} bind:this={inputElement} data-align-editor style="width:156px;height:40px;box-sizing:border-box"
+  <span style={'display:inline-flex;'
+    + 'width:64px;'
+    + 'flex:none'}>Root prefix</span>
+  <input {...attributes} bind:this={inputElement} data-align-editor style={'width:156px;'
+    + 'height:40px;'
+    + 'box-sizing:border-box'}
     oninput={event => onInput(event.currentTarget.value)} />
 </span>
 <output data-align-received hidden>{JSON.stringify({ keys: ['popupAlign', 'builtinPlacements'].filter(key => Object.hasOwn(context.attributes, key)) })}</output>

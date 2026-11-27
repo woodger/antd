@@ -93,7 +93,8 @@
       data-hook-today-identity={observation.todayIdentity}>
       {#if cellStrategy === 'editable' && (info.type === 'date' && dayjs.isDayjs(current)
         && current.format('YYYY-MM-DD') === '2024-06-18' || info.subType === 'minute' && current === 15)}
-        <input aria-label="Cell editor" value="Cell" style="width:20px;box-sizing:border-box"
+        <input aria-label="Cell editor" value="Cell" style={'width:20px;'
+          + 'box-sizing:border-box'}
           onclick={event => event.stopPropagation()} />
       {:else if cellStrategy === 'wrap'}{@render info.originNode()}
       {:else}{dayjs.isDayjs(current) ? current.date() : current}{/if}
@@ -129,7 +130,10 @@
 {/snippet}
 
 <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>
-  <section id="date-picker-render-hooks-fixture" style="position:absolute;left:320px;top:80px;width:360px">
+  <section id="date-picker-render-hooks-fixture" style={'position:absolute;'
+    + 'left:320px;'
+    + 'top:80px;'
+    + 'width:360px'}>
     {#if range}
       <RangePicker id={{ start: 'hook-field-start', end: 'hook-field-end' }} value={values}
         locale={customCellLocale ? cellLocale : undefined}

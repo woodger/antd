@@ -53,7 +53,13 @@
 </script>
 
 <style>
-  .surface { padding: 24px; margin-block: 16px; min-width: 0; background: var(--ant-color-bg-container); color: var(--ant-color-text); }
+  .surface {
+    padding: 24px;
+    margin-block: 16px;
+    min-width: 0;
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+  }
   label { display: block; }
   input, select { max-width: 100%; }
 </style>

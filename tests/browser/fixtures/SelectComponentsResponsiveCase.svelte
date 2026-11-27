@@ -370,7 +370,8 @@
             } : {}),
             placeholder: 'Origin root', defaultValue: 'Root draft',
             ...(collisions ? { id: 'origin-root-id', class: 'select-icons-origin-root', name: 'origin-root-field',
-              style: 'color:rgb(63,17,31);width:197px' } : {}) }) };
+              style: 'color:rgb(63,17,31);'
+                + 'width:197px' } : {}) }) };
       const ref = handler('component-ref-' + slot, (value: HTMLElement | null) => {
         elementRefs[slot] = value ?? undefined;
         lifecycle.push({ slot, event: value ? 'attach' : 'detach', tag: value?.tagName ?? null });
@@ -501,7 +502,12 @@
 {#snippet inputFunction(context: ReplacementContext)}
   {@const attrs = recordComponent('input', 'function', context)}
   {@const { value, ...rest } = attrs}
-  <input {...rest} data-select-icons-component="input:function" value={value as string | undefined} {@attach element => connectComponent('input', 'function', untrack(() => context), element)} />{#if initial.renderer === 'forwardRef-fragment-input-adornment'}<span data-select-components-responsive-adornment="" aria-hidden="true" style="display:inline-block;width:{settings.adornmentWidth ?? 36}px;height:12px;line-height:12px;font-size:10px;vertical-align:middle">+</span>{/if}
+  <input {...rest} data-select-icons-component="input:function" value={value as string | undefined} {@attach element => connectComponent('input', 'function', untrack(() => context), element)} />{#if initial.renderer === 'forwardRef-fragment-input-adornment'}<span data-select-components-responsive-adornment="" aria-hidden="true" style={'display:inline-block;'
+    + `width:${settings.adornmentWidth ?? 36}px;`
+    + 'height:12px;'
+    + 'line-height:12px;'
+    + 'font-size:10px;'
+    + 'vertical-align:middle'}>+</span>{/if}
 {/snippet}
 {#snippet inputComposite(context: ReplacementContext)}
   {@const attrs = recordComponent('input', 'composite', context)}
@@ -518,11 +524,21 @@
   {#if settings.form}<form data-select-icons-form onsubmit={onSubmit}>{@render feedback()}</form>
   {:else}{@render feedback()}{/if}
 {/snippet}
-<section data-surface-case={initial.id} data-components-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
-  <ConfigProvider {...provider}><div style="position:absolute;left:300px;top:200px;width:{settings.containerWidth ?? 440}px;font-family:initial;font-size:16px;line-height:normal">
+<section data-surface-case={initial.id} data-components-bound={Boolean(control)} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
+  <ConfigProvider {...provider}><div style={'position:absolute;'
+    + 'left:300px;'
+    + 'top:200px;'
+    + `width:${settings.containerWidth ?? 440}px;`
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
     {#if inner}<ConfigProvider {...inner}>{@render formBody()}</ConfigProvider>{:else}{@render formBody()}{/if}
   </div></ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside icons</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside icons</button>
   <div hidden data-surface-command {@attach element => {
     const updated = (event: Event) => update((event as CustomEvent<SelectComponentsAction>).detail);
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());

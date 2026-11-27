@@ -28,7 +28,13 @@
 
 <div data-beam-global-scope={scope}>
   <div bind:this={target} data-beam-global-target
-    style="position:relative;box-sizing:border-box;width:300px;height:100px;border-style:solid;border-width:1px 2px 3px 4px;border-radius:12px">
+    style={'position:relative;'
+      + 'box-sizing:border-box;'
+      + 'width:300px;'
+      + 'height:100px;'
+      + 'border-style:solid;'
+      + 'border-width:1px 2px 3px 4px;'
+      + 'border-radius:12px'}>
     <input aria-label={`${scope} widget draft`} value="initial draft" />
   </div>
   <BorderBeam {target} prefixCls={local ? sample.local : undefined}

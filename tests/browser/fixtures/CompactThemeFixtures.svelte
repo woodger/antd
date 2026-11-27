@@ -44,7 +44,8 @@
     <ConfigProvider theme={config} componentSize={size} class="compact-metrics-provider">
       <CompactThemeControls id="compact-metrics" />
       <Input id="compact-style-priority" aria-label="Compact style priority"
-        style="--ant-input-padding-block:9px;--ant-input-padding-inline:17px" />
+        style={'--ant-input-padding-block:9px;'
+          + '--ant-input-padding-inline:17px'} />
       <ConfigProvider><CompactThemeControls id="compact-inherited" /></ConfigProvider>
       <ConfigProvider theme={{ compact: false }}>
         <CompactThemeControls id="compact-normal-child" />

@@ -176,9 +176,21 @@
 </script>
 
 <style>
-  [data-ant-checkbox-group] { min-width: 0; max-width: 100%; border: 0; row-gap: var(--ant-margin-xs); }
-  [data-ant-checkbox-group]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  [data-ant-checkbox-group] :global([data-ant-checkbox-wrapper]) { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  [data-ant-checkbox-group] {
+    min-width: 0;
+    max-width: 100%;
+    border: 0;
+    row-gap: var(--ant-margin-xs);
+  }
+  [data-ant-checkbox-group]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  [data-ant-checkbox-group] :global([data-ant-checkbox-wrapper]) {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
   [data-ant-checkbox-group] :global([data-ant-checkbox-label]) { min-width: 0; }
 </style>
 

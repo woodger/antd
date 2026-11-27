@@ -174,10 +174,29 @@
 </script>
 
 <style>
-  [data-ant-rate-star] > button { display: block; margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; line-height: inherit; cursor: inherit; }
-  [data-ant-rate]:focus-visible { outline: var(--ant-rate-line-width-focus) dashed var(--ant-rate-star-color); outline-offset: 2px; }
+  [data-ant-rate-star] > button {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    cursor: inherit;
+  }
+  [data-ant-rate]:focus-visible {
+    outline: var(--ant-rate-line-width-focus) dashed var(--ant-rate-star-color);
+    outline-offset: 2px;
+  }
   [data-ant-rate-first], [data-ant-rate-second] { display: block; }
-  .anticon { display: inline-flex; align-items: center; color: inherit; line-height: 0; vertical-align: -0.125em; }
+  .anticon {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    line-height: 0;
+    vertical-align: -0.125em;
+  }
   @media (prefers-reduced-motion: reduce) { [data-ant-rate-star] > button, [data-ant-rate-first], [data-ant-rate-second] { transition: none; } }
 </style>
 

@@ -36,7 +36,9 @@
   let contentClass = $derived(kind === 'node' && internalClassName
     ? internalClassName : `${prefix}-${kind}`);
   let numericSize = $derived(typeof mergedSize === 'number' && !Number.isNaN(mergedSize)
-    ? `width:${mergedSize}px;height:${mergedSize}px;line-height:${mergedSize}px` : undefined);
+    ? `width:${mergedSize}px;`
+      + `height:${mergedSize}px;`
+      + `line-height:${mergedSize}px` : undefined);
   let contentStyle = $derived([numericSize, styles?.content, style].filter(Boolean).join(';'));
 </script>
 

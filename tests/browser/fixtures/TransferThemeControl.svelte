@@ -20,11 +20,18 @@
   let selectedKeys = $state<TransferKey[]>(['a', 'b']);
   let events = $state<string[]>([]);
   let rootStyle = $derived([
-    styled && 'font-size:28px;color:rgb(0,128,0)',
-    id === 'variable' && `--${prefix}-transfer-list-width:211px;--${prefix}-transfer-item-height:47px`
+    styled && (
+      'font-size:28px;'
+      + 'color:rgb(0,128,0)'
+    ),
+    id === 'variable' && (
+      `--${prefix}-transfer-list-width:211px;`
+      + `--${prefix}-transfer-item-height:47px`
+    )
   ].filter(Boolean).join(';') || undefined);
   let styles = $derived<TransferSlots<string> | undefined>(styled ? {
-    root: 'font-size:30px;color:#531dab',
+    root: 'font-size:30px;'
+      + 'color:#531dab',
     header: 'padding-top:11px',
     item: 'padding-top:3px',
     source: { section: 'width:231px' }
@@ -40,9 +47,11 @@
 {/snippet}
 
 <section data-transfer-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-  style="width:800px;padding:16px">
+  style={'width:800px;'
+    + 'padding:16px'}>
   <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'} transfer={styled ? {
-    style: 'font-size:32px;color:red', styles: { header: 'padding-top:9px' }
+    style: 'font-size:32px;'
+      + 'color:red', styles: { header: 'padding-top:9px' }
   } : undefined}>
     {#each panels as mode}
       <div data-transfer-panel={mode} style="margin-bottom:16px">

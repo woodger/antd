@@ -70,7 +70,8 @@
       },
       styles({ props }: { props: NotificationSemanticProps; }) {
         record(`${layer}Styles`, props);
-        return Object.fromEntries(slots.map(slot => [slot, `--winner:${layer};--${layer}:${slot}`]));
+        return Object.fromEntries(slots.map(slot => [slot, `--winner:${layer};`
+          + `--${layer}:${slot}`]));
       }
     };
   }
@@ -85,7 +86,8 @@
       api.warning({
         key: 0, title: 'Decorated', description: 'Description', icon: customIcon, actions,
         ...semantics('notice'), class: 'notice-extra',
-        style: '--winner:inline;--inline-local:root',
+        style: '--winner:inline;'
+          + '--inline-local:root',
         props: { id: 'semantic-notice', title: 'Native title', 'aria-label': 'Native name' },
         onClick: event => probe.events.push(['click', event.currentTarget.tagName]),
         onClose: track('notice-close')

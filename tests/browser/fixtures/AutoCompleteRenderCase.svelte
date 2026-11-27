@@ -344,7 +344,8 @@
 {#snippet tag(info: SelectTagInfo<string>)}{@const result = tagValue(info)}{@render rendered(result)}{/snippet}
 {#snippet child(context: AutoCompleteInput)}
   {#if initial.input === 'textarea'}<textarea {...context.attributes} data-ac-render-child="textarea" aria-label="Surface value"
-    class="ac-render-child" style="color:rgb(9,31,57);font-size:15px" rows="2" use:childRegistration={context.register}
+    class="ac-render-child" style={'color:rgb(9,31,57);'
+      + 'font-size:15px'} rows="2" use:childRegistration={context.register}
     oninput={input => {
       childChange(input);
       context.attributes.oninput(input);
@@ -354,7 +355,8 @@
       context.attributes.onkeydown(input);
     }}></textarea>
   {:else}<input {...context.attributes} data-ac-render-child="input" aria-label="Surface value"
-    class="ac-render-child" style="color:rgb(9,31,57);font-size:15px" use:childRegistration={context.register}
+    class="ac-render-child" style={'color:rgb(9,31,57);'
+      + 'font-size:15px'} use:childRegistration={context.register}
     oninput={input => {
       childChange(input);
       context.attributes.oninput(input);
@@ -365,11 +367,21 @@
     }} />{/if}
 {/snippet}
 
-<section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
-  <ConfigProvider {...provider} locale={enUS}><div style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+<section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
+  <ConfigProvider {...provider} locale={enUS}><div style={'position:absolute;'
+    + 'left:300px;'
+    + 'top:200px;'
+    + 'width:280px;'
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
     <Completion {...completionProps} bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={editor} />
   </div></ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside render</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside render</button>
   <output hidden data-ac-render-owner>{JSON.stringify(read())}</output>
   <div hidden data-ac-render-command data-surface-command {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<AutocompleteRenderAction>).detail);
@@ -384,4 +396,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

@@ -230,9 +230,14 @@
 
 <section data-select-data-case={sample.id} data-select-data-family={sample.family}
   data-select-data-bound={Boolean(control)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {theme} popupOverflow="viewport" locale={enUS}>
-    <div data-select-data-position style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px`}>
+    <div data-select-data-position style={`position:absolute;`
+      + `left:${position.left}px;`
+      + `top:${position.top}px;`
+      + `width:${position.width}px`}>
       {#if sample.family === 'select'}
         <DataSelect {...localProps} id="data-field" class="select-data-control" style="width:100%" {name}
           {options} value={Array.isArray(model) ? model : typeof model === 'string' ? model : undefined}
@@ -253,7 +258,9 @@
       {/if}
     </div>
   </ConfigProvider>
-  <button type="button" data-select-data-outside style="position:fixed;left:16px;top:80px">Outside data</button>
+  <button type="button" data-select-data-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside data</button>
   <output data-select-data-receipts hidden>{JSON.stringify(read().receipts)}</output>
   <output data-select-data-model hidden>{JSON.stringify(read().model)}</output>
   <output data-select-data-query hidden>{JSON.stringify(query)}</output>
@@ -271,4 +278,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

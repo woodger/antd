@@ -102,7 +102,10 @@
 
 <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>
   <section bind:this={ownerElement} data-empty-datetime-owner={profile}
-    style="position:absolute;left:240px;top:80px;width:420px">
+    style={'position:absolute;'
+      + 'left:240px;'
+      + 'top:80px;'
+      + 'width:420px'}>
     {#if range}<RangePicker {...rangeProps} bind:this={control} bind:nativeElement={root} />
     {:else}<DatePicker {...singleProps} bind:this={control} bind:nativeElement={root} />{/if}
     <button type="button" tabindex="-1" data-empty-datetime-control="template" onclick={event => {

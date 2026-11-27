@@ -13,7 +13,11 @@
 </script>
 
 <style>
-  .anticon { display: inline-flex; line-height: 0; vertical-align: -0.125em; }
+  .anticon {
+    display: inline-flex;
+    line-height: 0;
+    vertical-align: -0.125em;
+  }
 </style>
 
 <span class={`anticon anticon-${name}`} aria-hidden="true" inert><svg viewBox="64 64 896 896" width="1em" height="1em"

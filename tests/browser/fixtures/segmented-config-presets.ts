@@ -19,7 +19,8 @@ export function segmentedConfigRecord(
     label: `segcfg-${side}-label`, icon: `segcfg-${side}-icon`
   };
   const styles: SegmentedSemanticSlots = {
-    root: `padding:${padding}px;background:${side === 'local' ? '#fff7e6' : '#e6f4ff'}`,
+    root: `padding:${padding}px;`
+      + `background:${side === 'local' ? '#fff7e6' : '#e6f4ff'}`,
     item: `color:${side === 'local' ? '#722ed1' : '#873800'}`,
     label: `padding-inline:${padding + 9}px`,
     icon: `font-size:${padding + 15}px`
@@ -32,7 +33,8 @@ export function segmentedConfigRecord(
     });
     result.styles = ({ props }) => ({
       ...styles,
-      root: `padding:${props.shape === 'round' ? padding + 1 : padding}px;background:${side === 'local' ? '#fff7e6' : '#e6f4ff'}`
+      root: `padding:${props.shape === 'round' ? padding + 1 : padding}px;`
+        + `background:${side === 'local' ? '#fff7e6' : '#e6f4ff'}`
     });
   }
   if (mode === 'undefined') {

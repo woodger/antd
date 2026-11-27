@@ -13,7 +13,9 @@
   let clicks = $state<string[]>([]);
   let shadow = $state<ShadowRoot>();
   let variables = $derived(custom
-    ? '--ant-link-decoration:overline;--ant-link-hover-decoration:underline;--ant-link-focus-decoration:line-through'
+    ? '--ant-link-decoration:overline;'
+      + '--ant-link-hover-decoration:underline;'
+      + '--ant-link-focus-decoration:line-through'
     : undefined);
   let linkStyle = $derived(inline ? 'text-decoration:underline' : undefined);
   let theme = $derived({
@@ -76,7 +78,9 @@
   </select>
   <div id="menu-link-shadow" {@attach shadowStyles}></div>
   <ConfigProvider {theme} direction={rtl ? 'rtl' : 'ltr'}>
-    <div style="width:700px;max-width:90vw;margin:80px 40px">
+    <div style={'width:700px;'
+      + 'max-width:90vw;'
+      + 'margin:80px 40px'}>
       <Menu {mode} theme={dark ? 'dark' : 'light'}
         aria-label="Decoration Menu" class="decoration-menu" style={variables}
         getPopupContainer={target === 'native' ? undefined : getContainer}

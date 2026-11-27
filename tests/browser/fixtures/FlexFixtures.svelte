@@ -24,8 +24,18 @@
 </script>
 
 <style>
-  .surface { padding: 16px; margin-block: 16px; background: var(--ant-color-bg-container); color: var(--ant-color-text); }
-  .tile { box-sizing: border-box; flex-shrink: 0; width: 80px; min-height: 32px; }
+  .surface {
+    padding: 16px;
+    margin-block: 16px;
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+  }
+  .tile {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: 80px;
+    min-height: 32px;
+  }
 </style>
 
 {#snippet tiles()}
@@ -69,7 +79,9 @@
         bind:nativeElement
         class="custom-flex"
         rootClassName="outer-flex"
-        style={`min-height:120px;font-size:21px;${inlineGap ? `gap:${inlineGap}` : ''}`}
+        style={`min-height:120px;`
+          + `font-size:21px;`
+          + `${inlineGap ? `gap:${inlineGap}` : ''}`}
         children={empty ? undefined : tiles}
         onclick={() => { clicks++; }}
       />

@@ -6,7 +6,8 @@
   let colElement = $state<HTMLDivElement>();
 </script>
 
-<div id="grid-breakpoints-control" style="width:640px;max-width:calc(100vw - 48px)">
+<div id="grid-breakpoints-control" style={'width:640px;'
+  + 'max-width:calc(100vw - 48px)'}>
   <form aria-label="Grid breakpoint form">
     <Row gutter={[
       { xs: 4, sm: 10, md: 16, lg: 20, xl: 24, xxl: 28, xxxl: 32 },
@@ -28,7 +29,10 @@
         lg={{ flex: 0 }} xl={{ flex: '25%' }} xxl={{ flex: 'auto' }}
         xxxl={{ flex: '0 0 40%' }}>Flex</Col>
       <Col xs={24} sm={12} md={8}
-        style="flex:0 0 73px;max-width:73px;order:8;--ant-grid-display:flex">Styled</Col>
+        style={'flex:0 0 73px;'
+          + 'max-width:73px;'
+          + 'order:8;'
+          + '--ant-grid-display:flex'}>Styled</Col>
     </Row>
     <Row><Col span={24} xs={24} sm={20} md={16} lg={12} xl={8} xxl={4} xxxl={2}>All screens</Col></Row>
   </form>

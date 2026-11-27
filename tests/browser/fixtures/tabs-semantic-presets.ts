@@ -127,7 +127,8 @@ export function tabsSemanticSettings(
         root: 'color:rgb(30,40,50)',
         item: 'padding:6px 11px',
         remove: 'color:rgb(60,70,80)',
-        indicator: 'width:7px;transform:none',
+        indicator: 'width:7px;'
+          + 'transform:none',
         content: 'padding-left:11px',
         popup: { root: 'background-color:rgb(70,80,90)' }
       }

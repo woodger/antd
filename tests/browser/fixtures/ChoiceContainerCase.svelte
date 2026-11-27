@@ -149,7 +149,8 @@
   root.append(style);
   shadow = root;
 }}></div>
-<div style="width:280px;margin:100px">
+<div style={'width:280px;'
+  + 'margin:100px'}>
   <ConfigProvider {...parentOptions} style={`--choice-origin:${dark ? 'dark' : 'light'}`}
     theme={{
       mode: dark ? 'dark' : 'light', token: { motion: false }, cssVar: { key: 'choice-container' },

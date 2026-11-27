@@ -169,12 +169,37 @@
 </script>
 
 <style>
-  [data-ant-menu-item]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
-  [data-ant-menu-item-disabled] :global(a) { pointer-events: none; cursor: not-allowed; }
-  :where([data-ant-dropdown-item]) { appearance: none; width: 100%; margin: 0; border: 0; background: transparent; color: inherit; text-align: start; font: inherit; }
-  :global([data-ant-dropdown-source-theme]) [data-ant-dropdown-item] { box-sizing: content-box; width: stretch; height: auto; }
-  a[data-ant-dropdown-item] { box-sizing: border-box; text-decoration: none; }
-  [data-ant-dropdown-title] { min-width: 0; white-space: normal; }
+  [data-ant-menu-item]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: -2px;
+  }
+  [data-ant-menu-item-disabled] :global(a) {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  :where([data-ant-dropdown-item]) {
+    appearance: none;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: start;
+    font: inherit;
+  }
+  :global([data-ant-dropdown-source-theme]) [data-ant-dropdown-item] {
+    box-sizing: content-box;
+    width: stretch;
+    height: auto;
+  }
+  a[data-ant-dropdown-item] {
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+  [data-ant-dropdown-title] {
+    min-width: 0;
+    white-space: normal;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     :global([data-ant-dropdown-prefix][data-ant-dropdown-menu-prefix]) [data-ant-dropdown-item] {

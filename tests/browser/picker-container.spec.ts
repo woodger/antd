@@ -146,7 +146,10 @@ for (const fallback of [false, true]) {
       await page.locator('#picker-shadow').evaluate(node => {
         const style = node.ownerDocument.createElement('style');
         style.textContent = '.ant-picker-dropdown{--portal-invalid:1050;'
-          + '--portal-empty:rgb(9,8,7);z-index:var(--portal-invalid,33);'
+          + (
+            '--portal-empty:rgb(9,8,7);'
+            + 'z-index:var(--portal-invalid,33);'
+          )
           + 'border-top-color:var(--portal-empty,rgb(1,2,3))!important}';
         node.shadowRoot!.append(style);
       });

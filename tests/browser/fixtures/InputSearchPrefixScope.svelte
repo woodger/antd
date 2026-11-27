@@ -36,7 +36,8 @@
 </script>
 
 <form data-search-prefix-scope={scope} data-search-global={global}
-  style="width:480px;padding:12px" onsubmit={event => event.preventDefault()}>
+  style={'width:480px;'
+    + 'padding:12px'} onsubmit={event => event.preventDefault()}>
   <InputSearch prefixCls={local ? sample.local : undefined}
     inputPrefixCls={local ? sample.inputPrefix : undefined}
     bind:value bind:inputElement bind:nativeElement

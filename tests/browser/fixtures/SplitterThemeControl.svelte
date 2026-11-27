@@ -10,12 +10,16 @@
 
 {#snippet content()}
   <input aria-label={`Splitter theme draft ${id}`} bind:value={draft}
-    style="font:inherit;border:0;padding:0" />
+    style={'font:inherit;'
+      + 'border:0;'
+      + 'padding:0'} />
 {/snippet}
 {#snippet icon()}<span>drag</span>{/snippet}
 
 <div data-splitter-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-  style={`width:480px;height:${height}px;color:rgb(31,41,51)`}>
+  style={`width:480px;`
+    + `height:${height}px;`
+    + `color:rgb(31,41,51)`}>
   <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'}>
     <Splitter bind:nativeElement orientation={id === 'vertical' ? 'vertical' : 'horizontal'}
       lazy={id === 'lazy'} draggerIcon={id === 'custom' ? icon : undefined}
@@ -25,10 +29,15 @@
           style: priority ? 'color:#722ed1' : undefined },
         { collapsible: { showCollapsibleIcon: true }, children: 'Second' }
       ]}
-      style={`width:480px;height:${height}px;${priority ? '--ant-splitter-split-bar-size:5px' : ''}`}
-      styles={priority ? { root: '--ant-splitter-split-bar-size:3px;background:#fff7e6',
+      style={`width:480px;`
+        + `height:${height}px;`
+        + `${priority ? '--ant-splitter-split-bar-size:5px' : ''}`}
+      styles={priority ? { root: '--ant-splitter-split-bar-size:3px;'
+        + 'background:#fff7e6',
         panel: 'background:#e6f4ff',
-        dragger: { default: 'width:17px;height:41px;background:#fffbe6' } } : undefined}
+        dragger: { default: 'width:17px;'
+          + 'height:41px;'
+          + 'background:#fffbe6' } } : undefined}
       onResizeStart={sizes => events = [...events, { event: 'start', sizes }]}
       onResize={sizes => events = [...events, { event: 'resize', sizes }]}
       onResizeEnd={sizes => events = [...events, { event: 'end', sizes }]} />

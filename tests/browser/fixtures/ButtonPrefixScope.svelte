@@ -37,14 +37,17 @@
   let submissions = $state(0);
 </script>
 
-{#snippet icon()}<span aria-hidden="true" style="display:inline-block;width:12px;height:12px">+</span>{/snippet}
+{#snippet icon()}<span aria-hidden="true" style={'display:inline-block;'
+  + 'width:12px;'
+  + 'height:12px'}>+</span>{/snippet}
 {#snippet compactButton(label: string)}
   <Button prefixCls={local ? sample.local : undefined} type="primary" size={sample.size}
     class="fixture-button-prefix" classNames={{ content: 'fixture-button-content' }}>{label}</Button>
 {/snippet}
 {#snippet first()}{@render compactButton('First')}{/snippet}
 {#snippet last()}{@render compactButton('Last')}{/snippet}
-<form data-button-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-button-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => {
     event.preventDefault();
     submissions++;
@@ -57,7 +60,8 @@
     classNames={({ props }) => ({
       root: `fixture-button-prefix fixture-raw-${props.prefixCls === undefined ? 'unset' : props.prefixCls || 'empty'}`,
       icon: 'fixture-button-icon', content: 'fixture-button-content'
-    })} styles={sample.userStyle ? { root: 'height:41px;color:rgb(18, 52, 86)' } : undefined}
+    })} styles={sample.userStyle ? { root: 'height:41px;'
+      + 'color:rgb(18, 52, 86)' } : undefined}
     style={sample.userStyle ? 'height:43px' : undefined} onclick={() => events++}>
     {sample.chinese ? '按钮' : 'Action'}
   </Button>

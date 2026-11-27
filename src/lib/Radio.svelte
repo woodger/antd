@@ -207,7 +207,10 @@
 </script>
 
 <style>
-  .ant-radio-label { min-width: 0; overflow-wrap: anywhere; }
+  .ant-radio-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 <svelte:document onreset={handleReset} />

@@ -54,7 +54,12 @@
 }}>
   <ConfigProvider ribbon={sample.innerProvider}>
     <div id="ribbon-reference-surface" dir={sample.direction ?? 'ltr'}
-      style="width:320px;font-family:Arial;font-size:14px;color:rgb(12,34,56);line-height:22px;--ribbon-custom:#4682b4">
+      style={'width:320px;'
+        + 'font-family:Arial;'
+        + 'font-size:14px;'
+        + 'color:rgb(12,34,56);'
+        + 'line-height:22px;'
+        + '--ribbon-custom:#4682b4'}>
       <BadgeRibbon {text} {children} {placement} {color} bind:nativeElement
         class={sample.class} style={sample.style} rootClassName={sample.rootClassName}
         prefixCls={sample.prefixCls}

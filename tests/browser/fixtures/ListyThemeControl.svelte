@@ -15,25 +15,39 @@
   let refs = $state<Record<string, ListyRef | undefined>>({});
   let styled = $derived(priority || id === 'priority');
   let style = $derived([
-    styled && 'font-size:30px;color:rgb(255,0,0)',
-    id === 'variable' && `--${prefix}-listy-item-padding-block:3px;--${prefix}-color-text:rgb(255,0,255)`
+    styled && (
+      'font-size:30px;'
+      + 'color:rgb(255,0,0)'
+    ),
+    id === 'variable' && (
+      `--${prefix}-listy-item-padding-block:3px;`
+      + `--${prefix}-color-text:rgb(255,0,255)`
+    )
   ].filter(Boolean).join(';') || undefined);
   let styles = $derived(styled ? {
-    root: 'font-size:28px;color:rgb(0,128,0);position:static;line-height:1.25',
-    item: 'padding-block:5px;color:rgb(128,0,128)',
+    root: 'font-size:28px;'
+      + 'color:rgb(0,128,0);'
+      + 'position:static;'
+      + 'line-height:1.25',
+    item: 'padding-block:5px;'
+      + 'color:rgb(128,0,128)',
     groupHeader: 'padding-block:9px'
   } : undefined);
 </script>
 
 <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'} listy={styled ? {
-  style: 'font-size:26px;color:rgb(0,0,255)',
+  style: 'font-size:26px;'
+    + 'color:rgb(0,0,255)',
   styles: {
-    root: 'font-size:24px;color:rgb(255,0,255)',
-    item: 'padding-inline:8px;color:rgb(255,0,0)',
+    root: 'font-size:24px;'
+      + 'color:rgb(255,0,255)',
+    item: 'padding-inline:8px;'
+      + 'color:rgb(255,0,0)',
     groupHeader: 'padding-block:7px'
   }
 } : undefined}>
-  <section data-listy-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'} style="width:600px;padding:16px">
+  <section data-listy-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'} style={'width:600px;'
+    + 'padding:16px'}>
     {#each ['raw', 'raw-grouped', 'virtual', 'virtual-grouped'] as part}
       {@const grouped = part.endsWith('-grouped')}
       <div data-listy-part={part}>

@@ -29,7 +29,8 @@
       <circle class={`${prefixCls}-dot-circle ${prefixCls}-dot-circle-bg`}
         r="40" cx="50" cy="50" stroke-width="20" data-ant-spin-part="circle" />
       <circle class={`${prefixCls}-dot-circle`} r="40" cx="50" cy="50" stroke-width="20"
-        style={`stroke-dashoffset:${progress.offset};stroke-dasharray:${progress.dash}`}
+        style={`stroke-dashoffset:${progress.offset};`
+          + `stroke-dasharray:${progress.dash}`}
         data-ant-spin-part="circle" />
     </svg>
   </span>

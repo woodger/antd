@@ -11,7 +11,8 @@
     close: 'case-close'
   });
   const styles: TagSemantic = ({ props }) => ({
-    root: `opacity:${props.disabled ? '.4' : '.8'};outline:1px solid rgb(44,55,66)`,
+    root: `opacity:${props.disabled ? '.4' : '.8'};`
+      + `outline:1px solid rgb(44,55,66)`,
     icon: `color:${props.variant === 'solid' ? 'rgb(9,8,7)' : 'rgb(7,8,9)'}`,
     content: `font-weight:${props.disabled ? 400 : 700}`,
     close: 'color:rgb(88,77,66)'

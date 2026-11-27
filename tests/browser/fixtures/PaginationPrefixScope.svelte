@@ -28,7 +28,8 @@
   let events = $state<string[]>([]);
 </script>
 
-<section data-pagination-prefix-scope={scope} style="padding:24px;width:740px">
+<section data-pagination-prefix-scope={scope} style={'padding:24px;'
+  + 'width:740px'}>
   <Pagination prefixCls={local ? sample.local : undefined} total={500} bind:current bind:pageSize
     disabled={sample.disabled} size={sample.size} align={sample.align}
     simple={sample.readonly ? { readOnly: true } : sample.simple}

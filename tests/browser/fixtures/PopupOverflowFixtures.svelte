@@ -6,7 +6,10 @@
   let sample = $derived(popupOverflowAllSamples.find(sample => sample.id === selected)!);
 </script>
 
-<label style="position:fixed;left:0;top:0;z-index:1">
+<label style={'position:fixed;'
+  + 'left:0;'
+  + 'top:0;'
+  + 'z-index:1'}>
   Popup overflow sample
   <select bind:value={selected}>
     {#each popupOverflowAllSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}

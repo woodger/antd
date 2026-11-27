@@ -51,10 +51,20 @@
 </script>
 
 <style>
-  [data-ant-avatar-group] { align-items: center; flex-wrap: wrap; row-gap: 8px; max-width: 100%; padding-inline-start: calc(-1 * var(--ant-avatar-group-overlapping)); vertical-align: middle; }
+  [data-ant-avatar-group] {
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    max-width: 100%;
+    padding-inline-start: calc(-1 * var(--ant-avatar-group-overlapping));
+    vertical-align: middle;
+  }
   [data-ant-avatar-group] > :global(*) { margin-inline-start: var(--ant-avatar-group-overlapping); }
   [data-ant-avatar-group] :global(.ant-avatar) { --ant-avatar-group-border-color: var(--ant-color-bg-container); }
-  .ant-avatar-group-overflow { display: inline-flex; flex-shrink: 0; }
+  .ant-avatar-group-overflow {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`avatar-prefix:${prefix}`} />{/if}<div bind:this={nativeElement} data-ant-avatar-group="" {id} role="group" aria-label={ariaLabel ?? (ariaLabelledby ? undefined : strings.label)} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby} dir={config.direction} class={[

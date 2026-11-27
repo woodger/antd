@@ -42,7 +42,10 @@
   const secondContainer = (trigger?: HTMLElement) => container(trigger);
 </script>
 
-<section data-mini-progress-fixture style="padding:32px;display:flex;gap:28px;flex-wrap:wrap">
+<section data-mini-progress-fixture style={'padding:32px;'
+  + 'display:flex;'
+  + 'gap:28px;'
+  + 'flex-wrap:wrap'}>
   {#each samples as sample (sample.name)}
     <div data-mini-progress={sample.name}>
       {#if mounted}<Progress {...sample.props} aria-label="Miniature circle" />{/if}
@@ -61,7 +64,8 @@
       {#if mounted}<Progress type="circle" {percent} size={18} format={formatter}
         prefixCls="tiny-progress" aria-label="Lazy miniature circle"
         classNames={{ indicator: 'tiny-caption' }}
-        styles={{ indicator: 'color:rgb(102,34,170);font-size:19px' }} />{/if}
+        styles={{ indicator: 'color:rgb(102,34,170);'
+          + 'font-size:19px' }} />{/if}
     </div>
   </ConfigProvider>
 </section>

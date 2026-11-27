@@ -13,7 +13,10 @@
 </script>
 
 <section id="select-surface-style-history-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Select surface style history sample
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>Select surface style history sample
     <select bind:value={selected} onchange={() => { mounted = true; }}>
       {#each selectSurfaceStyleHistorySamples as sample}<option value={sample.id}>{sample.id}</option>{/each}
     </select>

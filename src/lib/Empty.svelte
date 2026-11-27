@@ -87,11 +87,31 @@
 </script>
 
 <style>
-  [data-ant-empty] { min-width: 0; max-width: 100%; }
-  [data-ant-empty-part="description"] { min-width: 0; overflow-wrap: anywhere; }
-  [data-ant-empty-part="image"] { min-width: 0; max-width: 100%; }
-  [data-ant-empty-part="image"] :global(img), [data-ant-empty-part="image"] :global(svg) { max-width: 100%; max-height: 100%; object-fit: contain; }
-  [data-ant-empty-part="footer"] { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; min-width: 0; }
+  [data-ant-empty] {
+    min-width: 0;
+    max-width: 100%;
+  }
+  [data-ant-empty-part="description"] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  [data-ant-empty-part="image"] {
+    min-width: 0;
+    max-width: 100%;
+  }
+  [data-ant-empty-part="image"] :global(img), [data-ant-empty-part="image"] :global(svg) {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  [data-ant-empty-part="footer"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+  }
   [data-ant-empty-part="footer"] > :global(*) { max-width: 100%; }
 </style>
 

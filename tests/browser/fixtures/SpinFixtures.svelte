@@ -48,12 +48,37 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label { display: block; margin-block: 8px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .surface { max-width: 640px; padding: 20px; background: var(--ant-color-bg-container); }
-  .card { min-height: 180px; padding: 12px; border: 1px solid var(--ant-color-border); }
-  .custom { display: block; width: 1em; height: 1em; border: 2px solid currentColor; border-radius: 50%; }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label {
+    display: block;
+    margin-block: 8px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .surface {
+    max-width: 640px;
+    padding: 20px;
+    background: var(--ant-color-bg-container);
+  }
+  .card {
+    min-height: 180px;
+    padding: 12px;
+    border: 1px solid var(--ant-color-border);
+  }
+  .custom {
+    display: block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+  }
 </style>
 
 <svelte:window onkeydown={hotkey} />

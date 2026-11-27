@@ -65,7 +65,10 @@
 
 <style>
   label { display: block; }
-  .stage { width: 800px; max-width: 100%; }
+  .stage {
+    width: 800px;
+    max-width: 100%;
+  }
 </style>
 
 {#snippet customIcon()}<svg width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1L15 15" stroke="currentColor" /></svg>{/snippet}
@@ -85,7 +88,8 @@
   <label>Steps icon size <input type="number" bind:value={iconSize} /></label>
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }} direction={rtl ? 'rtl' : 'ltr'}>
-      <div class="stage" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}
+      <div class="stage" style={parentAliases ? '--ant-font-size:30px;'
+        + '--ant-color-text:red' : undefined}
         style:width={narrow ? '200px' : undefined}>
         {#each variants as variant (variant.name)}
           <Steps class={`steps-token-${variant.name}`} aria-label={`Themed ${variant.name} Steps`}

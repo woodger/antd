@@ -33,7 +33,8 @@
   let submitted = $state<string[]>([]);
 </script>
 
-<div data-form-prefix-scope={scope} style="width:480px;padding:12px">
+<div data-form-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}>
   <Form form={model} name={`${scope}-form`} prefixCls={local ? sample.local : undefined}
     layout={sample.layout ?? 'horizontal'} size={sample.size} disabled={sample.disabled}
     component={sample.component} requiredMark={sample.optional ? 'optional' : sample.requiredMark}

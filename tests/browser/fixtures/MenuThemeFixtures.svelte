@@ -86,7 +86,8 @@
   <button type="button" onclick={() => { opened = ['parent']; }}>Open themed Menu popup</button>
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }}>
-      <div class="samples" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}>
+      <div class="samples" style={parentAliases ? '--ant-font-size:30px;'
+        + '--ant-color-text:red' : undefined}>
         {#each modes as mode}
           {#each appearances as appearance}
             <div class={['sample-row', mode === 'horizontal' && 'wide']}>
@@ -100,7 +101,8 @@
         {/each}
         <Menu {items} {mode} theme={appearance} selectedKeys={selected} openKeys={opened} multiple
           class="menu-token-main" aria-label="Controlled themed Menu" triggerSubMenuAction="click"
-          style={rootOverride ? 'width:260px;--ant-menu-item-selected-bg:#ffddee' : 'width:260px'}
+          style={rootOverride ? 'width:260px;'
+            + '--ant-menu-item-selected-bg:#ffddee' : 'width:260px'}
           onOpenChange={next => { opened = next; }}
           onSelect={info => {
             selected = info.selectedKeys;

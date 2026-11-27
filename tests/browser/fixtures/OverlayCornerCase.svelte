@@ -13,11 +13,19 @@
     ? 'ant-tooltip' : 'ant-popover');
   let css = $derived(`
     #corner-case [data-corner-anchor],#corner-case .ant-avatar-group-more,#corner-case .ant-slider-handle{
-      position:fixed!important;left:${values.rect.x}px!important;top:${values.rect.y}px!important;
-      width:${values.rect.width}px!important;height:${values.rect.height}px!important;
-      transform:none!important;box-sizing:border-box!important;margin:0!important;
+      position:fixed!important;`
+    + `left:${values.rect.x}px!important;`
+    + `top:${values.rect.y}px!important;
+      width:${values.rect.width}px!important;`
+    + `height:${values.rect.height}px!important;
+      transform:none!important;`
+    + `box-sizing:border-box!important;`
+    + `margin:0!important;
     }
-    ${values.popup ? `.${prefix}{width:${values.popup.width}px!important;height:${values.popup.height}px!important;min-width:0!important;max-width:none!important}` : ''}
+    ${values.popup ? `.${prefix}{width:${values.popup.width}px!important;`
+      + `height:${values.popup.height}px!important;`
+      + `min-width:0!important;`
+      + `max-width:none!important}` : ''}
   `);
   let options = $derived({
     open: values.open ?? true,
@@ -30,7 +38,13 @@
 <svelte:head><svelte:element this={'style'}>{css}</svelte:element></svelte:head>
 
 {#snippet content()}
-  <div style="display:block;width:136px;height:40px"><input aria-label="Corner draft" value="Draft" style="width:100px;height:20px;padding:0;border:0;font:14px sans-serif" /></div>
+  <div style={'display:block;'
+    + 'width:136px;'
+    + 'height:40px'}><input aria-label="Corner draft" value="Draft" style={'width:100px;'
+      + 'height:20px;'
+      + 'padding:0;'
+      + 'border:0;'
+      + 'font:14px sans-serif'} /></div>
 {/snippet}
 {#snippet anchor()}<button data-corner-anchor="" type="button">Anchor</button>{/snippet}
 

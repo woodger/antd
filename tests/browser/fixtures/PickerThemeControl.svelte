@@ -48,7 +48,10 @@
       open: id === 'normal' && opened === mode,
       classNames: { popup: { root: id === 'normal' && opened === mode
         ? 'theme-picker-popup' : undefined } },
-      style: ['width:280px', styled && 'color:rgb(0,128,0);padding-top:13px',
+      style: ['width:280px', styled && (
+        'color:rgb(0,128,0);'
+        + 'padding-top:13px'
+      ),
         id === 'variable' && `--${prefix}-date-picker-padding-inline:21px`]
         .filter(Boolean).join(';'),
       showNow: false,
@@ -62,7 +65,8 @@
 </script>
 
 <section data-picker-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-  style="width:800px;padding:16px">
+  style={'width:800px;'
+    + 'padding:16px'}>
   <ConfigProvider locale={enUS} direction={id === 'rtl' ? 'rtl' : 'ltr'}>
     {#each modes as mode}
       {@const props = common(mode)}

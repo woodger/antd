@@ -18,7 +18,8 @@
   let small = $state(false);
   let context = $derived<DescriptionsConfig>({ ...descriptionsConfigProfile(current.context),
     ...(updated ? { class: 'context-descriptions-updated',
-      style: 'opacity:0.6;outline-offset:7px' } : {}) });
+      style: 'opacity:0.6;'
+        + 'outline-offset:7px' } : {}) });
   let nested = $derived<DescriptionsConfig | undefined>(current.nested === 'empty' ? {}
     : current.nested === 'replace' ? { class: 'context-replaced' } : undefined);
   let local = $derived(descriptionsConfigProfile(current.local, true));
@@ -30,8 +31,10 @@
   let items = $derived<DescriptionsItem[]>([
     { key: 'one', label: 'First', children: editor, ...(current.item ? {
       classNames: { label: 'item-label', content: 'item-content' },
-      styles: { label: 'color:#c41d7f;margin-top:11px',
-        content: 'color:#389e0d;margin-top:13px' }
+      styles: { label: 'color:#c41d7f;'
+        + 'margin-top:11px',
+        content: 'color:#389e0d;'
+          + 'margin-top:13px' }
     } : {}) },
     { key: 'two', label: 'Second', children: 'Value' },
     { key: 'three', label: 'Third', children: 'Filled', span: 'filled' }

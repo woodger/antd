@@ -240,13 +240,34 @@
 </script>
 
 <style>
-  [data-ant-popconfirm-content] { min-width: min(200px, calc(100vw - 40px)); overflow-wrap: anywhere; }
-  [data-ant-popconfirm-content]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
+  [data-ant-popconfirm-content] {
+    min-width: min(200px, calc(100vw - 40px));
+    overflow-wrap: anywhere;
+  }
+  [data-ant-popconfirm-content]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
   [data-ant-popconfirm-message-text] { min-width: 0; }
-  [data-ant-popconfirm-content] [data-ant-popconfirm-buttons] { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--ant-margin-xs); white-space: normal; }
-  [data-ant-popconfirm-buttons] :global(.ant-btn) { max-width: 100%; min-height: var(--ant-control-height-sm); height: auto; margin-inline-start: 0; white-space: normal; }
+  [data-ant-popconfirm-content] [data-ant-popconfirm-buttons] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--ant-margin-xs);
+    white-space: normal;
+  }
+  [data-ant-popconfirm-buttons] :global(.ant-btn) {
+    max-width: 100%;
+    min-height: var(--ant-control-height-sm);
+    height: auto;
+    margin-inline-start: 0;
+    white-space: normal;
+  }
   .anticon { display: inline-flex; }
-  [data-ant-popconfirm-error] { margin: 8px 0 0; color: var(--ant-color-error); }
+  [data-ant-popconfirm-error] {
+    margin: 8px 0 0;
+    color: var(--ant-color-error);
+  }
 </style>
 
 {#snippet content()}

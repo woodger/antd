@@ -25,7 +25,9 @@
   </select></label>
   <label><input type="checkbox" bind:checked={interactive} /> Interactive Typography tooltip</label>
   <label><input type="checkbox" bind:checked={preparing} /> Prepare Typography measurement</label>
-  <label style="position:fixed;right:8px;bottom:8px">
+  <label style={'position:fixed;'
+    + 'right:8px;'
+    + 'bottom:8px'}>
     <input type="checkbox" bind:checked={actions} /> Typography action tooltips
   </label>
   <button type="button" onclick={() => step++}>Next Typography tooltip frame</button>

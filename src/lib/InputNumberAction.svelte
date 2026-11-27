@@ -31,8 +31,17 @@
 </script>
 
 <style>
-  button { padding: 0; border: 0; border-radius: 0; background: transparent; font: inherit; }
-  button:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
+  button {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    font: inherit;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: -2px;
+  }
   .action-icon { display: inline-flex; }
   .up-icon { transform: rotate(180deg); }
   @media (prefers-reduced-motion: reduce) { button { transition: none; } }

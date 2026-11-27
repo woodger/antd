@@ -101,7 +101,12 @@
 
 <style>
   /* Native button сохраняет геометрию исходного div role=button. */
-  [data-ant-splitter-collapse] { border: 0; padding: 0; font-family: inherit; line-height: inherit; }
+  [data-ant-splitter-collapse] {
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+    line-height: inherit;
+  }
 </style>
 
 <div class={barPrefix} data-ant-splitter-bar>

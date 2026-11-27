@@ -20,8 +20,10 @@
   let configured = $derived(sample.native ?? resolveAffixTheme(sample.config));
   let localPrefix = $derived(prefix ?? sample.prefix);
   let common = $derived<AffixConfig>(replaced
-    ? { class: 'updated-affix', style: 'opacity:0.65;outline-offset:7px' }
-    : { class: 'provider-affix', style: 'opacity:0.5;outline-offset:6px' });
+    ? { class: 'updated-affix', style: 'opacity:0.65;'
+      + 'outline-offset:7px' }
+    : { class: 'provider-affix', style: 'opacity:0.5;'
+      + 'outline-offset:6px' });
 </script>
 
 <button type="button" onclick={() => prefix = 'next-affix'}>Set alternate Affix prefix</button>
@@ -31,7 +33,8 @@
   <ConfigProvider theme={configured} affix={common}>
     <AffixThemeControl id="normal" prefixCls={localPrefix} />
     <AffixThemeControl id="explicit" prefixCls={localPrefix}
-      style="opacity:0.8;outline-offset:9px" />
+      style={'opacity:0.8;'
+        + 'outline-offset:9px'} />
     <ConfigProvider affix={undefined}>
       <AffixThemeControl id="inherited" prefixCls={localPrefix} />
     </ConfigProvider>

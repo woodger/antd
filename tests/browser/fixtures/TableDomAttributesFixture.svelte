@@ -85,7 +85,8 @@
 {/snippet}
 
 {#snippet customBody(_rows: readonly Row[], info: TableBodyRenderInfo)}
-  <div data-probe-custom-body="" style="overflow:auto;max-height:120px"
+  <div data-probe-custom-body="" style={'overflow:auto;'
+    + 'max-height:120px'}
     {@attach node => info.ref(node)} onscroll={info.onScroll}>Custom report</div>
 {/snippet}
 
@@ -114,5 +115,8 @@
 <style>
   section { width: 400px; }
   input { max-width: 100%; }
-  strong[data-probe-caption] { display: block; padding-block-end: 16px; }
+  strong[data-probe-caption] {
+    display: block;
+    padding-block-end: 16px;
+  }
 </style>

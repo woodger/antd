@@ -298,8 +298,18 @@
   }
 </script>
 <style>
-  .date-cell { color:inherit;border:0;background:transparent;padding:0;font:inherit;cursor:pointer; }
-  .date-cell:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:-2px; }
+  .date-cell {
+    color:inherit;
+    border:0;
+    background:transparent;
+    padding:0;
+    font:inherit;
+    cursor:pointer;
+  }
+  .date-cell:focus-visible {
+    outline:2px solid var(--ant-color-primary);
+    outline-offset:-2px;
+  }
 </style>
 {#snippet navigationIcon(icon: InputContent | undefined, part: string)}
   {#if icon === undefined}<span class={`${prefixCls}-${part}-icon`}></span>
@@ -330,7 +340,11 @@
   <div class={[`${prefixCls}-body`, classNames?.body]} style={styles?.body}>
     <table class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}
       role="grid" aria-label={dates.formatKey(panel, 'YYYY-MM', locale.locale)}>
-      {#if datePanel}<thead><tr>{#if weekPrefix}<th scope="col"><span style="width:0;height:0;position:absolute;overflow:hidden;opacity:0">{locale.week}</span></th>{/if}{#each weeks as _, n}<th scope="col">{weeks[(n + firstDay) % 7]}</th>{/each}</tr></thead>{/if}
+      {#if datePanel}<thead><tr>{#if weekPrefix}<th scope="col"><span style={'width:0;'
+        + 'height:0;'
+        + 'position:absolute;'
+        + 'overflow:hidden;'
+        + 'opacity:0'}>{locale.week}</span></th>{/if}{#each weeks as _, n}<th scope="col">{weeks[(n + firstDay) % 7]}</th>{/each}</tr></thead>{/if}
       <tbody>
         {#each Array.from({ length: cells.length / width }, (_, n) => n) as row}
           {@const rowDate = cells[row * width]}

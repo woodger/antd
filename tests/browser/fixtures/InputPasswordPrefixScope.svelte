@@ -35,7 +35,8 @@
   let events = $state<string[]>([]);
 </script>
 
-<form data-password-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-password-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <InputPassword prefixCls={local ? sample.local : undefined}
     inputPrefixCls={local ? sample.inputPrefix : undefined}
@@ -48,7 +49,8 @@
     iconRender={sample.icon ? () => 'V' : undefined}
     classNames={{ root: 'fixture-password-root', input: 'fixture-password-leaf' }}
     styles={sample.userStyle ? { root: 'border-radius:11px' } : undefined}
-    style={sample.userStyle ? 'width:240px;border-radius:13px' : 'width:240px'}
+    style={sample.userStyle ? 'width:240px;'
+      + 'border-radius:13px' : 'width:240px'}
     onValueChange={text => events.push(`value:${text}`)} />
   <output aria-label={`${scope} password refs`}>{inputElement && nativeElement ? 'mounted' : 'empty'}</output>
   <output aria-label={`${scope} password events`}>{events.join('|')}</output>

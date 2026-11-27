@@ -39,7 +39,9 @@
     listType: sample.listType ?? 'text',
     showUploadList: sample.noList ? false : { showDownloadIcon: true },
     disabled: sample.disabled,
-    style: sample.userStyle ? 'width:117px;height:119px;border-radius:13px' : undefined,
+    style: sample.userStyle ? 'width:117px;'
+      + 'height:119px;'
+      + 'border-radius:13px' : undefined,
     onChange: info => {
       files = info.fileList;
       events.push(`change:${info.file.name}:${'status' in info.file ? info.file.status : ''}`);

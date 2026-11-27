@@ -10,12 +10,17 @@
 
 <div data-affix-theme={id}>
   <div data-affix-scroll bind:this={container}
-    style="width:260px;height:100px;overflow:auto;font:14px/20px monospace;color:#17292b">
+    style={'width:260px;'
+      + 'height:100px;'
+      + 'overflow:auto;'
+      + 'font:14px/20px monospace;'
+      + 'color:#17292b'}>
     <div style="height:40px"></div>
     <Affix {prefixCls} class="theme-affix" rootClassName="theme-affix-fixed" bind:nativeElement
       bind:this={instance} target={() => container ?? null} offsetTop={5}
       style={[
-        id === 'style' ? '--ant-font-size:28px;--ant-affix-z-index-popup:444' : undefined,
+        id === 'style' ? '--ant-font-size:28px;'
+          + '--ant-affix-z-index-popup:444' : undefined,
         style
       ].filter(Boolean).join(';') || undefined}
       onChange={value => changes = [...changes, Boolean(value)]}>

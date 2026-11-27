@@ -41,7 +41,13 @@
 </script>
 
 <style>
-  .samples { display: grid; grid-template-columns: repeat(3, 240px); align-items: start; gap: 20px; margin-block: 24px; }
+  .samples {
+    display: grid;
+    grid-template-columns: repeat(3, 240px);
+    align-items: start;
+    gap: 20px;
+    margin-block: 24px;
+  }
 </style>
 
 <section id="auto-complete-theme-fixture">
@@ -60,7 +66,8 @@
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }}>
       <form id="themed-completion-form">
-        <div class="samples" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}>
+        <div class="samples" style={parentAliases ? '--ant-font-size:30px;'
+          + '--ant-color-text:red' : undefined}>
           {#each sizes as size}
             <AutoComplete {size} {options} defaultValue="b" class={`completion-token-${referenceSizeLabel(size)}`}
               aria-label={`Themed completion ${size}`} style="width:240px" />
@@ -79,7 +86,9 @@
             aria-label="Themed completion textarea" style="width:240px">
             {#snippet children(control)}
               <textarea {...control.attributes} use:control.register rows="3"
-                style="width:100%;font:inherit;box-sizing:border-box"></textarea>
+                style={'width:100%;'
+                  + 'font:inherit;'
+                  + 'box-sizing:border-box'}></textarea>
             {/snippet}
           </AutoComplete>
           <AutoComplete {options} defaultValue="b" class="completion-token-popup" name="query"

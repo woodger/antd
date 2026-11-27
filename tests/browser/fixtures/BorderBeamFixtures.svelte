@@ -38,7 +38,11 @@
 </script>
 
 <style>
-  .host { width: 320px; padding: 24px; margin-block: 12px; }
+  .host {
+    width: 320px;
+    padding: 24px;
+    margin-block: 12px;
+  }
   .beam-hover-host :global(.hover-beam) { opacity: 0; }
   .beam-hover-host :global(.hover-beam::before) { animation-play-state: paused; }
   .beam-hover-host:hover :global(.hover-beam) { opacity: 1; }
@@ -69,7 +73,8 @@
   <button type="button" onclick={() => { gradient[1].percent = 30; }}>Change gradient stop</button>
 
   <ConfigProvider
-    borderBeam={{ class: 'beam-context', style: 'opacity:0.5;outline-offset:6px' }}
+    borderBeam={{ class: 'beam-context', style: 'opacity:0.5;'
+      + 'outline-offset:6px' }}
     theme={{ mode: dark ? 'dark' : 'light', primary: purple ? 'purple' : 'green' }}
   >
     <BorderBeam
@@ -82,7 +87,11 @@
       outset={customized ? cssUnits ? '2em' : 4 : undefined}
       class="primary-beam"
       style={customStyle
-        ? 'opacity:0.8;--ant-border-beam-size:84px;--ant-border-beam-duration:9s;--ant-border-beam-delay:1s;--ant-border-beam-inset-offset:99px'
+        ? 'opacity:0.8;'
+          + '--ant-border-beam-size:84px;'
+          + '--ant-border-beam-duration:9s;'
+          + '--ant-border-beam-delay:1s;'
+          + '--ant-border-beam-inset-offset:99px'
         : 'opacity:0.8'}
     >
       {#key hostVersion}
@@ -90,7 +99,10 @@
           id="border-beam-host"
           class="host"
           bind:this={host}
-          style={`position:${staticHost ? 'static' : 'relative'};border-style:solid;border-width:${wideBorder ? '5px 6px 7px 8px' : '1px 2px 3px 4px'};border-radius:${round ? '12px 24px 36px 48px' : '8px'}`}
+          style={`position:${staticHost ? 'static' : 'relative'};`
+            + `border-style:solid;`
+            + `border-width:${wideBorder ? '5px 6px 7px 8px' : '1px 2px 3px 4px'};`
+            + `border-radius:${round ? '12px 24px 36px 48px' : '8px'}`}
         >
           <form onsubmit={event => {
             event.preventDefault();
@@ -116,13 +128,16 @@
     </ConfigProvider>
   </ConfigProvider>
 
-  <div id="moving-host-a" class="host" style="position:relative;border:2px solid" bind:this={firstHost}>First host</div>
-  <div id="moving-host-b" class="host" style="position:relative;border:4px solid" bind:this={secondHost}>Second host</div>
+  <div id="moving-host-a" class="host" style={'position:relative;'
+    + 'border:2px solid'} bind:this={firstHost}>First host</div>
+  <div id="moving-host-b" class="host" style={'position:relative;'
+    + 'border:4px solid'} bind:this={secondHost}>Second host</div>
   {#if mounted}<BorderBeam target={available ? second ? secondHost : firstHost : null} class="moving-beam" />{/if}
   <BorderBeam target={svgHost} class="svg-beam"><svg aria-label="Beam SVG" bind:this={svgHost}><title>SVG content</title></svg></BorderBeam>
   <BorderBeam class="unresolved-beam"><p id="unresolved-host">Content without a target</p></BorderBeam>
   <BorderBeam children="Plain beam content" />
   <BorderBeam target={hoverHost} class="hover-beam">
-    <div class="host beam-hover-host" bind:this={hoverHost} style="position:relative;border:1px solid">Hover beam content</div>
+    <div class="host beam-hover-host" bind:this={hoverHost} style={'position:relative;'
+      + 'border:1px solid'}>Hover beam content</div>
   </BorderBeam>
 </section>

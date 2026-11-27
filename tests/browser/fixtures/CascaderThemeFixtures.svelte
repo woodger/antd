@@ -51,7 +51,13 @@
 </script>
 
 <style>
-  .samples { display:grid;grid-template-columns:repeat(3,320px);align-items:start;gap:20px;margin-block:24px; }
+  .samples {
+    display:grid;
+    grid-template-columns:repeat(3,320px);
+    align-items:start;
+    gap:20px;
+    margin-block:24px;
+  }
 </style>
 
 <section id="cascader-theme-fixture">
@@ -69,7 +75,8 @@
   <label>Cascader responsive width <input type="number" bind:value={responsiveWidth} /></label>
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }}>
-      <div class="samples" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}>
+      <div class="samples" style={parentAliases ? '--ant-font-size:30px;'
+        + '--ant-color-text:red' : undefined}>
         {#each sizes as size}
           <Cascader {size} {options} defaultValue={['p', 'a']} class={`cascader-token-single-${referenceSizeLabel(size)}`}
             aria-label={`Themed single path ${size}`} />

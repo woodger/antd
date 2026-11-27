@@ -471,7 +471,14 @@ test('Typography preserves source action widths and the exact two-line cut point
       const host = document.createElement('div');
       host.inert = true;
       host.setAttribute('aria-hidden', 'true');
-      host.style.cssText = 'position:fixed;left:-9999px;top:0;width:300px;visibility:hidden;pointer-events:none';
+      host.style.cssText = (
+        'position:fixed;'
+        + 'left:-9999px;'
+        + 'top:0;'
+        + 'width:300px;'
+        + 'visibility:hidden;'
+        + 'pointer-events:none'
+      );
       document.body.append(host);
 
       try {

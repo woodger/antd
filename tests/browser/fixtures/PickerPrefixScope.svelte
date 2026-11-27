@@ -84,7 +84,8 @@
 </script>
 
 <section data-picker-prefix-host data-picker-prefix={prefix} data-root-prefix={rootPrefix}
-  style="width:800px;padding:16px">
+  style={'width:800px;'
+    + 'padding:16px'}>
   {#if kind === 'time'}
     <TimePicker {...common} bind:nativeElement defaultValue={sample.empty ? undefined : start}
       {...clock} {disabledTime} prefix={sample.affix ? 'At' : undefined} presets={timePresets}

@@ -40,7 +40,10 @@
 </script>
 
 <style>
-  [data-collapse-panel] { min-width: 0; overflow-wrap: anywhere; }
+  [data-collapse-panel] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   [data-collapse-panel][hidden] { display: none; }
 </style>
 

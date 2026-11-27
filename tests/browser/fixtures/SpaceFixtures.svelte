@@ -64,7 +64,8 @@
         size={preset === 'custom' ? [horizontal, vertical] : preset as SpaceSize}
         separator={separator ? '|' : undefined}
         styles={{ item: 'color:rgb(1, 2, 3)', separator: 'color:rgb(4, 5, 6)' }}
-        style={override ? 'gap:99px;flex-wrap:nowrap' : undefined}
+        style={override ? 'gap:99px;'
+          + 'flex-wrap:nowrap' : undefined}
       />
       <button type="button">After Space</button>
     </form>

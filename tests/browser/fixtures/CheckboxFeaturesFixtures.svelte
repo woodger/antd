@@ -67,9 +67,17 @@
 
 <style>
   section { padding: 20px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-block: 12px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-block: 12px;
+  }
   .form-block { margin-block: 16px; }
-  output { display: block; overflow-wrap: anywhere; }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 {#snippet richLabel()}<strong>Rich checkbox option</strong>{/snippet}

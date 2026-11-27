@@ -22,7 +22,9 @@
     ? { cssVar: {}, algorithm: dark ? theme.darkAlgorithm : undefined }
     : { mode: dark ? 'dark' : 'light', primary: 'blue' });
   let colors = $derived(custom
-    ? '--ant-pagination-item-active-color:#117733;--ant-pagination-item-active-color-hover:#338855;--ant-pagination-item-active-color-disabled:#775533'
+    ? '--ant-pagination-item-active-color:#117733;'
+      + '--ant-pagination-item-active-color-hover:#338855;'
+      + '--ant-pagination-item-active-color-disabled:#775533'
     : undefined);
 </script>
 

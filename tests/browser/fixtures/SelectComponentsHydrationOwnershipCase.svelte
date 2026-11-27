@@ -122,7 +122,13 @@
     return () => { alive = false; };
   });
   const frame = untrack(() => initial.frame);
-  const frameStyle = `position:${frame.position};left:${frame.left}px;top:${frame.top}px;width:${frame.width}px;font-family:${frame.fontFamily};font-size:${frame.fontSize}px;line-height:${frame.lineHeight}`;
+  const frameStyle = `position:${frame.position};`
+    + `left:${frame.left}px;`
+    + `top:${frame.top}px;`
+    + `width:${frame.width}px;`
+    + `font-family:${frame.fontFamily};`
+    + `font-size:${frame.fontSize}px;`
+    + `line-height:${frame.lineHeight}`;
 </script>
 
 <section data-ownership-owner={initial.ownerKey} data-ownership-scenario={initial.scenarioId} style={frameStyle}>
@@ -131,5 +137,6 @@
       bind:this={control} bind:nativeElement={root} bind:inputElement={editor} />
     {:else}<Completion {...ownerProps} value={query} bind:this={control} bind:nativeElement={root} bind:inputElement={editor} />{/if}
   </ConfigProvider>
-  <button bind:this={outside} type="button" data-ownership-outside={initial.ownerKey} style="display:block;margin-top:24px">Outside {initial.ownerKey}</button>
+  <button bind:this={outside} type="button" data-ownership-outside={initial.ownerKey} style={'display:block;'
+    + 'margin-top:24px'}>Outside {initial.ownerKey}</button>
 </section>

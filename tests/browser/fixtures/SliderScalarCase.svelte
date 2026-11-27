@@ -36,7 +36,8 @@
 
 {#snippet control()}
   <form id="scalar-form" bind:this={form} onsubmit={event => event.preventDefault()}>
-    <div data-scalar-case style="width:400px;height:220px">
+    <div data-scalar-case style={'width:400px;'
+      + 'height:220px'}>
       <span id="scalar-label">Scalar label</span>
       {#if mounted}
         <Slider {...inputProps} range={false} bind:value bind:ref bind:nativeElement name="scalar"

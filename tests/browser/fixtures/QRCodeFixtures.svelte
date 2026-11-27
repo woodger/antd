@@ -42,8 +42,16 @@
 </script>
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .drawing-holder { width: 320px; height: 240px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .drawing-holder {
+    width: 320px;
+    height: 240px;
+  }
   .reference { margin-block: 12px; }
 </style>
 
@@ -102,7 +110,9 @@
     theme={{ mode: dark ? 'dark' : 'light', primary: 'purple' }}
     qrcode={{
       class: 'qrcode-context',
-      style: 'outline-offset:4px;width:999px;height:999px',
+      style: 'outline-offset:4px;'
+        + 'width:999px;'
+        + 'height:999px',
       classNames: ({ props }) => ({ root: `context-${props.type}`, cover: 'context-cover' }),
       styles: { root: 'outline-offset:2px', cover: 'outline-offset:2px' }
     }}
@@ -133,10 +143,16 @@
           aria-label="Scannable QR code"
           classNames={({ props }) => ({ root: `local-${props.type}`, cover: 'local-cover' })}
           styles={styled ? {
-            root: 'outline-offset:6px;width:888px;height:888px;color:rgb(255,0,0)',
-            cover: 'outline-offset:4px;color:rgb(0,0,255)'
+            root: 'outline-offset:6px;'
+              + 'width:888px;'
+              + 'height:888px;'
+              + 'color:rgb(255,0,0)',
+            cover: 'outline-offset:4px;'
+              + 'color:rgb(0,0,255)'
           } : undefined}
-          style={dimensions ? 'width:100%;height:80%;outline-offset:8px' : undefined}
+          style={dimensions ? 'width:100%;'
+            + 'height:80%;'
+            + 'outline-offset:8px' : undefined}
           bind:nativeElement
         />{/if}
       </div>

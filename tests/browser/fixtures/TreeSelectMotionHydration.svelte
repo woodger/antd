@@ -22,5 +22,7 @@
 
 <section data-motion-hydration>
   <TreeSelectMotionCase {sample} bind:this={fixture} />
-  <input aria-label="Motion outside draft" style="position:fixed;left:16px;bottom:16px" />
+  <input aria-label="Motion outside draft" style={'position:fixed;'
+    + 'left:16px;'
+    + 'bottom:16px'} />
 </section>

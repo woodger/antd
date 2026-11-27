@@ -124,7 +124,8 @@
   root.append(style);
   shadow = root;
 }}></div>
-<div style="width:280px;margin:100px">
+<div style={'width:280px;'
+  + 'margin:100px'}>
   <ConfigProvider {...parentOptions}
     style={`--overlay-origin:${dark ? 'dark' : 'light'}`} theme={{
       mode: dark ? 'dark' : 'light',
@@ -155,7 +156,8 @@
               { key: 'alpha', label: 'Alpha command' }, { key: 'beta', label: 'Beta command' }
             ] }}>{@render trigger()}</Dropdown>
         {:else if sample.component === 'typography'}
-          <TypographyText style="width:120px;display:inline-block" data-overlay-trigger="typography"
+          <TypographyText style={'width:120px;'
+            + 'display:inline-block'} data-overlay-trigger="typography"
             ellipsis={{ tooltip: { ...localOptions, open: opened } }}
             children="A long typography label which needs a tooltip for its full content" />
         {:else if sample.component === 'slider-range'}

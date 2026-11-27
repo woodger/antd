@@ -399,11 +399,39 @@
 </script>
 
 <style>
-  [data-ant-table-filter-part="trigger"] { flex: none; min-width: 24px; min-height: 24px; border: 0; background: transparent; font: inherit; }
+  [data-ant-table-filter-part="trigger"] {
+    flex: none;
+    min-width: 24px;
+    min-height: 24px;
+    border: 0;
+    background: transparent;
+    font: inherit;
+  }
   [data-ant-table-filter-part="trigger"]:disabled { cursor: not-allowed; }
-  [data-ant-table-filter-part="trigger"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
+  [data-ant-table-filter-part="trigger"]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 2px;
+  }
   /* visibility наследуется Checkbox с transition: all и задерживает фокус при открытии. */
-  .filter-popover { position: fixed; inset: auto; width: min(260px, calc(100vw - 16px)); max-height: min(360px, calc(100dvh - 16px)); margin: 0; padding: 0; overflow-y: auto; opacity: 0; pointer-events: none; border: 0; border-radius: var(--ant-border-radius-lg); background: var(--ant-color-bg-container); color: var(--ant-color-text); box-shadow: var(--ant-box-shadow-secondary); font: var(--ant-font-size)/var(--ant-line-height) var(--ant-font-family); font-weight: 400; text-align: start; }
+  .filter-popover {
+    position: fixed;
+    inset: auto;
+    width: min(260px, calc(100vw - 16px));
+    max-height: min(360px, calc(100dvh - 16px));
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    border: 0;
+    border-radius: var(--ant-border-radius-lg);
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+    box-shadow: var(--ant-box-shadow-secondary);
+    font: var(--ant-font-size)/var(--ant-line-height) var(--ant-font-family);
+    font-weight: 400;
+    text-align: start;
+  }
   .filter-popover { z-index: var(--ant-dropdown-z-index-popup, 1050); }
   .dropdown-content {
     max-inline-size: calc(100vw - 16px);
@@ -421,7 +449,13 @@
     max-block-size: min(360px, calc(100dvh - 16px));
   }
   .table-filter-source, .table-filter-source [data-ant-table-filter-part="dropdown"] { background: var(--ant-table-filter-dropdown-bg); }
-  [data-ant-table-filter-part="buttons"] { display: flex; justify-content: space-between; gap: var(--ant-margin-xs); padding: var(--ant-padding-xs); border-top: var(--ant-line-width) solid var(--ant-color-border-secondary); }
+  [data-ant-table-filter-part="buttons"] {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--ant-margin-xs);
+    padding: var(--ant-padding-xs);
+    border-top: var(--ant-line-width) solid var(--ant-color-border-secondary);
+  }
   .table-filter-source [data-ant-table-filter-part="buttons"] { border-top-color: var(--ant-table-border-color); }
 </style>
 

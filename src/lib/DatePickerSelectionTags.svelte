@@ -120,10 +120,22 @@
 </div>
 
 <style>
-  [data-picker-measure-tag] { position:absolute;visibility:hidden;pointer-events:none; }
-  [data-picker-tag-remove] { background:transparent;border:0;padding:0;font:inherit; }
+  [data-picker-measure-tag] {
+    position:absolute;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  [data-picker-tag-remove] {
+    background:transparent;
+    border:0;
+    padding:0;
+    font:inherit;
+  }
   /* Поле доступно для фокуса. Текст и рамку отображает оболочка выбора. */
   :global([data-ant-picker-prefix]) [data-picker-tag-selector] + :global(input[data-picker-multiple-input]) {
-    visibility:visible;opacity:0;z-index:0;inset-inline-start:0;
+    visibility:visible;
+    opacity:0;
+    z-index:0;
+    inset-inline-start:0;
   }
 </style>

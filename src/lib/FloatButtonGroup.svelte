@@ -201,13 +201,27 @@
 <style>
   /* Opaque children — один Compact slot; границы видимых controls определяются на SSR. */
   [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child)),
-  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child) > [data-ant-float-root]) { margin-block-start:calc(0px - var(--ant-line-width));border-start-start-radius:0;border-start-end-radius:0; }
+  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child) > [data-ant-float-root]) {
+    margin-block-start:calc(0px - var(--ant-line-width));
+    border-start-start-radius:0;
+    border-start-end-radius:0;
+  }
   [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):has(~ :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])))),
-  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):has(~ :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root]))) > [data-ant-float-root]) { border-end-start-radius:0;border-end-end-radius:0; }
+  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque][data-ant-float-vertical] > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):has(~ :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root]))) > [data-ant-float-root]) {
+    border-end-start-radius:0;
+    border-end-end-radius:0;
+  }
   [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque]:not([data-ant-float-vertical]) > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child)),
-  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque]:not([data-ant-float-vertical]) > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child) > [data-ant-float-root]) { margin-inline-start:calc(0px - var(--ant-line-width));border-start-start-radius:0;border-end-start-radius:0; }
+  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque]:not([data-ant-float-vertical]) > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):not(:first-child) > [data-ant-float-root]) {
+    margin-inline-start:calc(0px - var(--ant-line-width));
+    border-start-start-radius:0;
+    border-end-start-radius:0;
+  }
   [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque]:not([data-ant-float-vertical]) > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):has(~ :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])))),
-  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque]:not([data-ant-float-vertical]) > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):has(~ :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root]))) > [data-ant-float-root]) { border-start-end-radius:0;border-end-end-radius:0; }
+  [data-ant-float-group] > :global([data-ant-float-list][data-ant-float-opaque]:not([data-ant-float-vertical]) > :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root])):has(~ :is([data-ant-float-root],.ant-tooltip-trigger:has(> [data-ant-float-root]))) > [data-ant-float-root]) {
+    border-start-end-radius:0;
+    border-end-end-radius:0;
+  }
 </style>
 
 {#snippet defaultIcon()}<FloatButtonIcon name="file-text" />{/snippet}

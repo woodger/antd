@@ -69,7 +69,8 @@
 </script>
 
 {#snippet customIndicator()}
-  <span class="custom-rest" style="display:inline-block;width:48px">More</span>
+  <span class="custom-rest" style={'display:inline-block;'
+    + 'width:48px'}>More</span>
 {/snippet}
 {#snippet leafLink()}<a href="#menu-overflow-destination">Leaf</a>{/snippet}
 
@@ -104,7 +105,8 @@
       <Menu {...indicatorProps} {mode} {disabledOverflow} {forceSubMenuRender}
         prefixCls={prefixed ? 'navigation' : undefined} items={currentItems}
         classNames={{ item: 'slot-first', subMenu: { item: 'slot-nested' } }}
-        style={`width:${width}px;position:relative`} aria-label="Overflow menu"
+        style={`width:${width}px;`
+          + `position:relative`} aria-label="Overflow menu"
         overflowedIndicatorPopupClassName="custom-overflow-popup"
         defaultSelectedKeys={['last']}
         triggerSubMenuAction="click"

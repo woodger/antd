@@ -26,7 +26,12 @@
   let { name }: { name: keyof typeof paths; } = $props();
 </script>
 <style>
-  .anticon { display:inline-flex;align-items:center;line-height:0;vertical-align:-0.125em; }
+  .anticon {
+    display:inline-flex;
+    align-items:center;
+    line-height:0;
+    vertical-align:-0.125em;
+  }
   .spin { animation:upload-spin 1s linear infinite; }
   @keyframes upload-spin { to { transform:rotate(360deg); } }
   @media (prefers-reduced-motion:reduce) { .spin { animation-duration:2s; } }

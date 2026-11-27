@@ -65,7 +65,17 @@
 </script>
 
 <style>
-  .surface { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 16px; margin-block: 16px; background: var(--ant-color-bg-container); color: var(--ant-color-text); min-width: 0; }
+  .surface {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 16px;
+    margin-block: 16px;
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+    min-width: 0;
+  }
 </style>
 
 <svelte:window

@@ -63,7 +63,18 @@ export function createTextAreaMeasure(
         .style
         .cssText = sizing.map(name => `${name}:${style.getPropertyValue(name)}`).join(
           ';'
-        ) + ';min-height:0!important;max-height:none!important;height:0!important;visibility:hidden!important;overflow:hidden!important;position:absolute!important;z-index:-1000!important;top:0!important;right:0!important;pointer-events:none!important';
+        ) + (
+          ';min-height:0!important;'
+          + 'max-height:none!important;'
+          + 'height:0!important;'
+          + 'visibility:hidden!important;'
+          + 'overflow:hidden!important;'
+          + 'position:absolute!important;'
+          + 'z-index:-1000!important;'
+          + 'top:0!important;'
+          + 'right:0!important;'
+          + 'pointer-events:none!important'
+        );
       const wrap = element.getAttribute('wrap');
       if (wrap) {
         node.setAttribute('wrap', wrap);

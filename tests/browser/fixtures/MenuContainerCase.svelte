@@ -131,7 +131,8 @@
   shadow = root;
   return () => observer.disconnect();
 }}></div>
-<div id="menu-host" style="width:500px;margin:200px">
+<div id="menu-host" style={'width:500px;'
+  + 'margin:200px'}>
   <ConfigProvider {...parentOptions} direction={sample.rtl ? 'rtl' : undefined}
     style={`--menu-origin:${dark ? 'dark' : 'light'}`} theme={{
       mode: dark ? 'dark' : 'light',

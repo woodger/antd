@@ -340,11 +340,18 @@
   {#if settings.feedback}<Form form={feedbackForm}><FormItem hasFeedback validateStatus="error" help="Icon feedback">{@render choice()}</FormItem></Form>
   {:else}{@render choice()}{/if}
 {/snippet}
-<section data-surface-case={initial.id} data-icons-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
-  <ConfigProvider {...provider}><div style="position:absolute;left:300px;top:200px;width:280px">
+<section data-surface-case={initial.id} data-icons-bound={Boolean(control)} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
+  <ConfigProvider {...provider}><div style={'position:absolute;'
+    + 'left:300px;'
+    + 'top:200px;'
+    + 'width:280px'}>
     {#if inner}<ConfigProvider {...inner}>{@render feedback()}</ConfigProvider>{:else}{@render feedback()}{/if}
   </div></ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside icons</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside icons</button>
   <div hidden data-surface-command {@attach element => {
     const updated = (event: Event) => update((event as CustomEvent<SelectIconAction>).detail);
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());

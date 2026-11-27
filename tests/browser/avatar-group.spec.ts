@@ -319,7 +319,8 @@ test(
     await expect(avatars(page).nth(1).locator('strong')).toHaveText('Rich fallback');
 
     await page.getByRole('textbox', { name: 'AvatarGroup overflow style', exact: true })
-      .fill('background: rgb(114, 46, 209); color: white');
+      .fill('background: rgb(114, 46, 209);'
+        + ' color: white');
 
     await expect(more(page).locator('.ant-avatar')).toHaveCSS(
       'background-color',

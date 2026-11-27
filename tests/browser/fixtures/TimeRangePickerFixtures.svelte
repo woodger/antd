@@ -102,9 +102,20 @@
 </script>
 
 <style>
-  .controls { display:flex;flex-wrap:wrap;gap:8px;margin-block:12px; }
-  .holder { max-width:100%;margin-block:16px; }
-  output { display:block;overflow-wrap:anywhere; }
+  .controls {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-block:12px;
+  }
+  .holder {
+    max-width:100%;
+    margin-block:16px;
+  }
+  output {
+    display:block;
+    overflow-wrap:anywhere;
+  }
 </style>
 
 {#snippet customCell(unit: number | 'am' | 'pm', info: TimePickerCellRenderInfo)}

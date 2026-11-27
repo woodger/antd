@@ -245,7 +245,17 @@
 {/snippet}
 {#snippet renderTag(info: Info)}{#snippet content()}<TagBody {info} />{/snippet}{@const rendered = tagCall(info, content)}{@render rendered()}{/snippet}
 {#snippet button(action: SelectTagCloseHandleAction | SelectTagCloseHandleRetain)}<button type="button" data-handles-action={action.id} onclick={() => activate(action)}>{action.id}</button>{/snippet}
-<section data-handles-case={initial.id} style="font-family:initial;font-size:16px;line-height:normal">
-  <ConfigProvider {...provider}><div style="position:absolute;left:{box.left}px;top:{box.top}px;width:{box.width}px;font-family:initial;font-size:16px;line-height:normal"><Choice {...ownerProps} bind:this={control} bind:nativeElement={root} bind:inputElement={editor} /></div></ConfigProvider>
-  <div data-handles-actions="" style="position:fixed;left:{actionPosition.left}px;top:{actionPosition.top}px">{#if initial.retentionSetup}{@render button(initial.retentionSetup)}{/if}{#each initial.actions as action (action.id)}{@render button(action)}{/each}</div>
+<section data-handles-case={initial.id} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
+  <ConfigProvider {...provider}><div style={'position:absolute;'
+    + `left:${(box.left) ?? ''}px;`
+    + `top:${(box.top) ?? ''}px;`
+    + `width:${(box.width) ?? ''}px;`
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}><Choice {...ownerProps} bind:this={control} bind:nativeElement={root} bind:inputElement={editor} /></div></ConfigProvider>
+  <div data-handles-actions="" style={'position:fixed;'
+    + `left:${(actionPosition.left) ?? ''}px;`
+    + `top:${(actionPosition.top) ?? ''}px`}>{#if initial.retentionSetup}{@render button(initial.retentionSetup)}{/if}{#each initial.actions as action (action.id)}{@render button(action)}{/each}</div>
 </section>

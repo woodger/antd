@@ -377,10 +377,25 @@
   :global(html:has(dialog.ant-svelte-drawer[open]:not([data-ant-dialog-unlocked]))) {
     overflow: hidden;
   }
-  .ant-svelte-drawer { width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent; pointer-events: auto; outline: none; }
+  .ant-svelte-drawer {
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    background: transparent;
+    pointer-events: auto;
+    outline: none;
+  }
   .ant-svelte-drawer[data-ant-drawer-maskless] { pointer-events: none; }
   .ant-svelte-drawer > [data-ant-drawer-mask-passive] { pointer-events: none; }
-  .ant-svelte-drawer[data-ant-drawer-inline] { position: absolute; height: 100%; }
+  .ant-svelte-drawer[data-ant-drawer-inline] {
+    position: absolute;
+    height: 100%;
+  }
   .ant-svelte-drawer:not([open]) { display: none; }
   .ant-svelte-drawer::backdrop { background: transparent; }
   .ant-svelte-drawer > [data-ant-drawer-content-wrapper] {
@@ -393,8 +408,14 @@
     user-select: none;
     will-change: width, height;
   }
-  [data-ant-drawer-placement="left"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="right"] > [data-ant-drawer-content-wrapper] { width: min(var(--ant-svelte-drawer-size), 100%); height: 100%; }
-  [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] { width: 100%; height: min(var(--ant-svelte-drawer-size), 100%); }
+  [data-ant-drawer-placement="left"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="right"] > [data-ant-drawer-content-wrapper] {
+    width: min(var(--ant-svelte-drawer-size), 100%);
+    height: 100%;
+  }
+  [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] {
+    width: 100%;
+    height: min(var(--ant-svelte-drawer-size), 100%);
+  }
   [data-ant-drawer-section] { min-height: 0; }
   [data-ant-drawer-dragging] > [data-ant-drawer-section] { pointer-events: none; }
   [data-ant-drawer-dragger] {
@@ -404,7 +425,10 @@
     pointer-events: auto;
     z-index: 1;
   }
-  [data-ant-drawer-dragger]:hover { background: var(--ant-color-primary); opacity: 0.2; }
+  [data-ant-drawer-dragger]:hover {
+    background: var(--ant-color-primary);
+    opacity: 0.2;
+  }
   [data-ant-drawer-dragging] > [data-ant-drawer-dragger] {
     background: var(--ant-color-primary);
     opacity: 0.3;

@@ -39,7 +39,8 @@
       pagination={mode === 'pagination' ? { pageSize: 2 } : false}
       disabled={sample.disabled} status={sample.status} {footer}
       children={mode === 'custom' ? custom : undefined}
-      style={sample.userStyle ? 'font-size:19px;color:rgb(18, 52, 86)' : undefined}
+      style={sample.userStyle ? 'font-size:19px;'
+        + 'color:rgb(18, 52, 86)' : undefined}
       onSearch={(direction, query) => events.push(`search:${direction}:${query}`)}
       onChange={(next, direction, moved) => {
         targetKeys = next;

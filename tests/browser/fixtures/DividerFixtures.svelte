@@ -37,7 +37,9 @@
     <ConfigProvider><Divider id="divider-nested" /></ConfigProvider>
     <button type="button">Before Divider</button>
     <div
-      style="padding:16px; background:var(--ant-color-bg-container); color:var(--ant-color-text)"
+      style={'padding:16px; '
+        + 'background:var(--ant-color-bg-container); '
+        + 'color:var(--ant-color-text)'}
     >
       <Divider
         id="fixture-divider"

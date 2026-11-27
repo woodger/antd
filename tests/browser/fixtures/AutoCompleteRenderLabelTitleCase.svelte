@@ -99,11 +99,21 @@
   }
 </script>
 {#snippet child(context: AutoCompleteInput)}<input {...context.attributes} data-label-title-child aria-label="Label title value" use:registerChild={context.register} />{/snippet}
-<section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
-  <ConfigProvider {...provider} locale={enUS}><div style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+<section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
+  <ConfigProvider {...provider} locale={enUS}><div style={'position:absolute;'
+    + 'left:300px;'
+    + 'top:200px;'
+    + 'width:280px;'
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
     <Completion {...completionProps} bind:this={control} bind:nativeElement={root} bind:inputElement={editor} />
   </div></ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside title</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside title</button>
   <output hidden data-label-title-owner>{JSON.stringify(read())}</output>
   <div hidden data-surface-command {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<LabelTitleAction>).detail);
@@ -117,4 +127,8 @@
     };
   }}></div>
 </section>
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

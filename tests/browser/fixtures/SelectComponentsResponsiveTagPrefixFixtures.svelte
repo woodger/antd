@@ -11,7 +11,10 @@
   });
 </script>
 <section id="select-components-responsive-tag-prefix-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Responsive custom tag/prefix sample<select bind:value={selected} onchange={() => {
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>Responsive custom tag/prefix sample<select bind:value={selected} onchange={() => {
     mounted = true;
   }}>
     {#each selectCustomTagPrefixSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}
@@ -26,4 +29,11 @@
     return () => element.removeEventListener('selectcomponentscapture', captured);
   }}></div>
 </section>
-<style>#select-components-responsive-tag-prefix-fixture { min-height:1px; } :global(body) { margin:0; min-width:2200px; min-height:1800px; }</style>
+<style>#select-components-responsive-tag-prefix-fixture {
+    min-height:1px;
+  }
+  :global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

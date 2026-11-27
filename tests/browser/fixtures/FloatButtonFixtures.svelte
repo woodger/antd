@@ -120,7 +120,9 @@
     floatButton={configIcons ? { backTopIcon: customBack } : undefined}
     floatButtonGroup={configIcons ? { closeIcon: customClose } : undefined}
   >
-    <div style="position:relative;margin:150px 140px;min-height:60px">
+    <div style={'position:relative;'
+      + 'margin:150px 140px;'
+      + 'min-height:60px'}>
       <FloatButtonGroup
         id="fixture-floating-group"
         aria-label="Floating menu"
@@ -157,7 +159,11 @@
     <div
       id="float-scroll"
       bind:this={scrollArea}
-      style="height:140px;width:260px;max-width:100%;overflow:auto;background:var(--ant-color-fill-quaternary)"
+      style={'height:140px;'
+        + 'width:260px;'
+        + 'max-width:100%;'
+        + 'overflow:auto;'
+        + 'background:var(--ant-color-fill-quaternary)'}
     ><div
       style="height:700px"
     >Scroll target</div></div>

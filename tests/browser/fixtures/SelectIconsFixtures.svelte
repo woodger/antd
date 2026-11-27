@@ -11,7 +11,10 @@
   });
 </script>
 <section id="select-icons-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Select icon sample<select bind:value={selected} onchange={() => {
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>Select icon sample<select bind:value={selected} onchange={() => {
     mounted = true;
   }}>
     {#each selectIconSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}
@@ -26,4 +29,11 @@
   }}></div>
 </section>
 
-<style>#select-icons-fixture { min-height: 1px; } :global(body) { margin: 0; min-width: 2200px; min-height: 1800px; }</style>
+<style>#select-icons-fixture {
+    min-height: 1px;
+  }
+  :global(body) {
+    margin: 0;
+    min-width: 2200px;
+    min-height: 1800px;
+  }</style>

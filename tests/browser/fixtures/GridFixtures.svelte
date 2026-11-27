@@ -13,8 +13,16 @@
 </script>
 
 <style>
-  .surface { padding: 16px; max-width: 100%; background: var(--ant-color-bg-container); }
-  .cell { background: var(--ant-color-primary-bg); padding: 8px; min-height: 40px; }
+  .surface {
+    padding: 16px;
+    max-width: 100%;
+    background: var(--ant-color-bg-container);
+  }
+  .cell {
+    background: var(--ant-color-primary-bg);
+    padding: 8px;
+    min-height: 40px;
+  }
 </style>
 
 <section id="grid-fixture" aria-label="Grid fixture">

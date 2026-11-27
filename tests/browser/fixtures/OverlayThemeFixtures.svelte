@@ -39,7 +39,13 @@
 </script>
 
 <style>
-  .samples { display: flex; align-items: start; justify-content: space-around; gap: 12px; margin-block: 48px; }
+  .samples {
+    display: flex;
+    align-items: start;
+    justify-content: space-around;
+    gap: 12px;
+    margin-block: 48px;
+  }
 </style>
 
 {#snippet content()}

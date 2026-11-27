@@ -30,9 +30,15 @@
     body: 'local-body', extra: 'local-extra', icon: 'local-icon'
   };
   const styles: ResultSemanticSlots = {
-    root: 'padding-top:7px;background:#112233', title: 'color:#335577;padding-top:3px',
-    subTitle: 'color:#7799bb;padding-top:4px', body: 'background:#446688;padding-top:5px',
-    extra: 'color:#337755;padding-top:6px', icon: 'color:#773355;padding-top:2px'
+    root: 'padding-top:7px;'
+      + 'background:#112233', title: 'color:#335577;'
+      + 'padding-top:3px',
+    subTitle: 'color:#7799bb;'
+      + 'padding-top:4px', body: 'background:#446688;'
+      + 'padding-top:5px',
+    extra: 'color:#337755;'
+      + 'padding-top:6px', icon: 'color:#773355;'
+      + 'padding-top:2px'
   };
   const flag = (info: ResultSemanticInfo) => [
     `status-${info.props.status}`,
@@ -46,7 +52,8 @@
       body: 'provider-body', extra: 'provider-extra', icon: 'provider-icon'
     },
     styles: {
-      root: 'padding-top:3px;background:red', title: 'color:red', subTitle: 'color:blue',
+      root: 'padding-top:3px;'
+        + 'background:red', title: 'color:red', subTitle: 'color:blue',
       body: 'background:green', extra: 'color:orange', icon: 'color:purple'
     }
   } satisfies ResultConfig;
@@ -61,7 +68,8 @@
     ...(sample.semantic === 'function' ? {
       classNames: info => ({ ...classes, root: `local-root ${flag(info)}` }),
       styles: info => ({ ...styles,
-        root: `padding-top:${info.props.title === 0 ? 9 : 7}px;background:#112233` })
+        root: `padding-top:${info.props.title === 0 ? 9 : 7}px;`
+          + `background:#112233` })
     } : sample.semantic === 'undefined' ? {
       classNames: () => undefined, styles: () => undefined
     } : {}),
@@ -105,7 +113,8 @@
 <ConfigProvider theme={sourceTheme} direction={sample.rtl ? 'rtl' : 'ltr'}
   result={sample.provider ? providerConfig : undefined}>
   <ConfigProvider result={sample.childProvider === 'empty' ? {} : undefined}>
-    <div data-result-source-frame style="width:600px;max-width:100%">
+    <div data-result-source-frame style={'width:600px;'
+      + 'max-width:100%'}>
       {#if mounted}
         {#if sample.staticImage === '403'}<Result.PRESENTED_IMAGE_403 />
         {:else if sample.staticImage === '404'}<Result.PRESENTED_IMAGE_404 />

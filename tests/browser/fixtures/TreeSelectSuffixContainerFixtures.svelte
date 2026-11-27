@@ -19,8 +19,12 @@
   <label>TreeSelect suffix container sample<select bind:value={selected}>
     {#each treeSelectSuffixContainerSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}
   </select></label>
-  <div data-suffix-container-scroller style="width:900px;height:420px;overflow:auto;position:relative">
-    <div style="min-width:1400px;min-height:1000px">
+  <div data-suffix-container-scroller style={'width:900px;'
+    + 'height:420px;'
+    + 'overflow:auto;'
+    + 'position:relative'}>
+    <div style={'min-width:1400px;'
+      + 'min-height:1000px'}>
       {#key selected}<TreeSelectSuffixLayoutCase {sample} {popupContainer} bind:this={fixture} />{/key}
     </div>
   </div>

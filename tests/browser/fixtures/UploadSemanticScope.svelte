@@ -36,10 +36,13 @@
     trigger: 'custom-trigger'
   };
   const slots: UploadSemanticSlots = {
-    root: 'color:#135790;padding-top:3px',
+    root: 'color:#135790;'
+      + 'padding-top:3px',
     list: 'margin-top:7px',
     item: 'min-height:33px',
-    trigger: 'color:#357913;background-color:#f0f2f4;padding-top:5px'
+    trigger: 'color:#357913;'
+      + 'background-color:#f0f2f4;'
+      + 'padding-top:5px'
   };
   let classNames = $derived.by<UploadProps['classNames']>(() => {
     if (sample.mode === 'default') {
@@ -91,7 +94,8 @@
       showUploadList={sample.hiddenList ? false : undefined}
       disabled={sample.disabled} multiple={sample.multiple} isImageUrl={() => false}
       class="local-root" rootClassName="local-extra" {classNames} {styles}
-      style={sample.priority ? 'color:#975310;padding-top:11px' : undefined}
+      style={sample.priority ? 'color:#975310;'
+        + 'padding-top:11px' : undefined}
       children={sample.hiddenChildren ? undefined : control} />
   </section>
 </ConfigProvider>

@@ -114,15 +114,25 @@
 
 {#snippet optionRenderer(option: SelectFlattenOption<string, Option>, info: { index: number })}{optionValue(option, info)}{/snippet}
 {#if initial}
-  <section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
-    <ConfigProvider {...provider}><div style="position:absolute;left:300px;top:200px;width:280px">
+  <section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
+    <ConfigProvider {...provider}><div style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:280px'}>
       <AutoComplete {...ownerProps} bind:this={control} bind:nativeElement={root} bind:inputElement={editor} />
     </div></ConfigProvider>
-    <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside contrast</button>
+    <button type="button" data-surface-outside style={'position:fixed;'
+      + 'left:16px;'
+      + 'top:80px'}>Outside contrast</button>
     <div hidden data-surface-command></div>
   </section>
 {:else}
-  <label id="autocomplete-close-fixture" style="position:fixed;left:0;top:0;z-index:1">AutoComplete close sample<select bind:value={selected} onchange={() => {
+  <label id="autocomplete-close-fixture" style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>AutoComplete close sample<select bind:value={selected} onchange={() => {
     mounted = true;
   }}>
     {#each samples as item}<option value={item.id}>{item.id}</option>{/each}
@@ -136,4 +146,8 @@
   }}></div>
 {/if}
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

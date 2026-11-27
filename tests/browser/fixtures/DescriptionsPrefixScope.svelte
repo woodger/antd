@@ -38,7 +38,12 @@
 
 {#snippet editor()}
   <input aria-label={`${scope} descriptions draft`} name="draft" value="Draft"
-    style="width:90px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />
+    style={'width:90px;'
+      + 'height:32px;'
+      + 'box-sizing:border-box;'
+      + 'font:inherit;'
+      + 'padding:0;'
+      + 'border:1px solid'} />
 {/snippet}
 {#snippet content()}
   <Descriptions bind:nativeElement data-prefix-desc-root title="Parameters" extra="Extra"
@@ -54,7 +59,8 @@
 <form data-descriptions-prefix-scope={scope} style="width:480px"
   onsubmit={event => event.preventDefault()}>
   {#if sample.tableContext}
-    <div class={`${rootPrefix}-table-wrapper`}><table style="width:100%;border-spacing:0"><tbody>
+    <div class={`${rootPrefix}-table-wrapper`}><table style={'width:100%;'
+      + 'border-spacing:0'}><tbody>
       <tr class={`${rootPrefix}-table-expanded-row`}><td>{@render content()}</td></tr>
     </tbody></table></div>
   {:else}{@render content()}{/if}

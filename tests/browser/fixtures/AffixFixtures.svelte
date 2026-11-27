@@ -33,7 +33,11 @@
     <div
       id="affix-scroll"
       bind:this={container}
-      style={`height:220px;overflow:auto;max-width:100%;width:${width}px;background:var(--ant-color-fill-quaternary)`}
+      style={`height:220px;`
+        + `overflow:auto;`
+        + `max-width:100%;`
+        + `width:${width}px;`
+        + `background:var(--ant-color-fill-quaternary)`}
     >
       <div style={`height:${bottom ? 320 : 80}px`}></div>
       {#if mounted}
@@ -47,11 +51,13 @@
           target={() => missingTarget ? null : windowTarget ? window : container ?? null}
           onChange={value => { changes = [...changes, Boolean(value)]; }}
         >
-          <div style="height:40px;background:var(--ant-color-bg-container)"><input
+          <div style={'height:40px;'
+            + 'background:var(--ant-color-bg-container)'}><input
             aria-label="Affix draft"
             name="draft"
             value="initial"
-            style="width:100%;box-sizing:border-box"
+            style={'width:100%;'
+              + 'box-sizing:border-box'}
           /></div>
         </Affix>
       {/if}

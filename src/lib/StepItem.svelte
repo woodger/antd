@@ -73,11 +73,40 @@
   [data-ant-step-part="header"] { flex-wrap: wrap; }
   [data-ant-step-part="title"], [data-ant-step-part="subtitle"], [data-ant-step-part="content"] { overflow-wrap: anywhere; }
   [data-ant-step-part="subtitle"] { flex-shrink: 1; }
-  [data-ant-step-part="trigger"] { display: flex; flex-wrap: wrap; align-items: center; min-height: var(--ant-cmp-steps-heading-height); max-width: 100%; border: 0; padding: 0; margin: 0; background: transparent; color: inherit; font: inherit; text-align: start; cursor: pointer; }
+  [data-ant-step-part="trigger"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: var(--ant-cmp-steps-heading-height);
+    max-width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
   [data-ant-step-part="trigger"]:disabled { cursor: default; }
-  [data-ant-step-part="trigger"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -2px; border-radius: var(--ant-border-radius-sm); }
-  [data-ant-step-part="item"] :global([data-ant-step-part="icon"] svg) { max-width: 100%; max-height: 100%; }
-  [data-ant-step-part="status"] { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  [data-ant-step-part="trigger"]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -2px;
+    border-radius: var(--ant-border-radius-sm);
+  }
+  [data-ant-step-part="item"] :global([data-ant-step-part="icon"] svg) {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  [data-ant-step-part="status"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 </style>
 
 {#snippet value(node: StepsDataContent)}

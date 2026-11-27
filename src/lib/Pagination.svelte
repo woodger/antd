@@ -303,33 +303,81 @@
 </script>
 
 <style>
-  [data-ant-pagination] { flex-wrap: wrap; row-gap: var(--ant-margin-xs); }
-  [data-ant-pagination] [data-ant-pagination-options] { display: inline-flex; align-items: center; }
+  [data-ant-pagination] {
+    flex-wrap: wrap;
+    row-gap: var(--ant-margin-xs);
+  }
+  [data-ant-pagination] [data-ant-pagination-options] {
+    display: inline-flex;
+    align-items: center;
+  }
   [data-ant-pagination] [data-ant-pagination-options] :global(.container) { min-width: 90px; }
-  .quick-button { cursor: pointer; font: inherit; }
-  input:focus-visible, .quick-button:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 1px; }
-  [data-ant-pagination-source-theme] :global([data-ant-pagination-item] .page-button) { padding-inline: calc(var(--ant-margin-xxs) * 1.5); color: var(--ant-color-text); }
+  .quick-button {
+    cursor: pointer;
+    font: inherit;
+  }
+  input:focus-visible, .quick-button:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 1px;
+  }
+  [data-ant-pagination-source-theme] :global([data-ant-pagination-item] .page-button) {
+    padding-inline: calc(var(--ant-margin-xxs) * 1.5);
+    color: var(--ant-color-text);
+  }
   [data-ant-pagination] :global([data-ant-pagination-active] .page-button) { color: var(--ant-pagination-item-active-color); }
   [data-ant-pagination] :global([data-ant-pagination-active]:hover .page-button) { color: var(--ant-pagination-item-active-color-hover); }
   /* Source button сохраняет normal и при неопределённой высоте item. */
   [data-ant-pagination-source-theme] :global([data-ant-pagination-prev] button), [data-ant-pagination-source-theme] :global([data-ant-pagination-next] button) { line-height: normal; }
   [data-ant-pagination][data-ant-pagination-disabled] :global([data-ant-pagination-item] .page-button) { color: var(--ant-color-text-disabled); }
-  [data-ant-pagination-source-theme][data-ant-pagination-disabled] :global([data-ant-pagination-item] .page-button) { background-color: transparent; border: none; cursor: not-allowed; }
+  [data-ant-pagination-source-theme][data-ant-pagination-disabled] :global([data-ant-pagination-item] .page-button) {
+    background-color: transparent;
+    border: none;
+    cursor: not-allowed;
+  }
   [data-ant-pagination][data-ant-pagination-disabled] :global([data-ant-pagination-active] .page-button) { color: var(--ant-pagination-item-active-color-disabled); }
   /* Ant Design 6.6.8 pagination/style/bordered.ts; этих правил нет в dist/antd.css. */
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev]:hover button), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next]:hover button) { border-color: var(--ant-color-primary-hover); background-color: var(--ant-pagination-item-bg); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev] :is([data-ant-pagination-link], .ant-pagination-item-link)), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next] :is([data-ant-pagination-link], .ant-pagination-item-link)) { background-color: var(--ant-pagination-item-link-bg); border-color: var(--ant-color-border); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev]:hover :is([data-ant-pagination-link], .ant-pagination-item-link)), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next]:hover :is([data-ant-pagination-link], .ant-pagination-item-link)) { border-color: var(--ant-color-primary); background-color: var(--ant-pagination-item-bg); color: var(--ant-color-primary); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev][data-ant-pagination-disabled] :is([data-ant-pagination-link], .ant-pagination-item-link)), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next][data-ant-pagination-disabled] :is([data-ant-pagination-link], .ant-pagination-item-link)) { border-color: var(--ant-color-border); color: var(--ant-color-text-disabled); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-item]) { background-color: var(--ant-pagination-item-bg); border: var(--ant-line-width) var(--ant-line-type) var(--ant-color-border); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active])) { border-color: var(--ant-color-primary); background-color: var(--ant-pagination-item-bg); }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev]:hover button), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next]:hover button) {
+    border-color: var(--ant-color-primary-hover);
+    background-color: var(--ant-pagination-item-bg);
+  }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev] :is([data-ant-pagination-link], .ant-pagination-item-link)), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next] :is([data-ant-pagination-link], .ant-pagination-item-link)) {
+    background-color: var(--ant-pagination-item-link-bg);
+    border-color: var(--ant-color-border);
+  }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev]:hover :is([data-ant-pagination-link], .ant-pagination-item-link)), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next]:hover :is([data-ant-pagination-link], .ant-pagination-item-link)) {
+    border-color: var(--ant-color-primary);
+    background-color: var(--ant-pagination-item-bg);
+    color: var(--ant-color-primary);
+  }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-prev][data-ant-pagination-disabled] :is([data-ant-pagination-link], .ant-pagination-item-link)), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-next][data-ant-pagination-disabled] :is([data-ant-pagination-link], .ant-pagination-item-link)) {
+    border-color: var(--ant-color-border);
+    color: var(--ant-color-text-disabled);
+  }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-item]) {
+    background-color: var(--ant-pagination-item-bg);
+    border: var(--ant-line-width) var(--ant-line-type) var(--ant-color-border);
+  }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active])) {
+    border-color: var(--ant-color-primary);
+    background-color: var(--ant-pagination-item-bg);
+  }
   [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active]) > a), [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active]) .page-button) { color: var(--ant-color-primary); }
   [data-ant-pagination-source-theme][data-ant-pagination-bordered] :global([data-ant-pagination-active]) { border-color: var(--ant-color-primary); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-item]), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global(:is([data-ant-pagination-link], .ant-pagination-item-link)) { background-color: var(--ant-color-bg-container-disabled); border-color: var(--ant-color-border); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active])), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global(:is([data-ant-pagination-link], .ant-pagination-item-link):hover:not([data-ant-pagination-active])) { background-color: var(--ant-color-bg-container-disabled); border-color: var(--ant-color-border); }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-item]), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global(:is([data-ant-pagination-link], .ant-pagination-item-link)) {
+    background-color: var(--ant-color-bg-container-disabled);
+    border-color: var(--ant-color-border);
+  }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active])), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global(:is([data-ant-pagination-link], .ant-pagination-item-link):hover:not([data-ant-pagination-active])) {
+    background-color: var(--ant-color-bg-container-disabled);
+    border-color: var(--ant-color-border);
+  }
   [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active]) > a), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-item]:hover:not([data-ant-pagination-active]) .page-button) { color: var(--ant-color-text-disabled); }
   [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-active]) { background-color: var(--ant-pagination-item-active-bg-disabled); }
-  [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-prev]:hover button), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-next]:hover button) { background-color: var(--ant-color-bg-container-disabled); border-color: var(--ant-color-border); color: var(--ant-color-text-disabled); }
+  [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-prev]:hover button), [data-ant-pagination-source-theme][data-ant-pagination-bordered][data-ant-pagination-disabled] :global([data-ant-pagination-next]:hover button) {
+    background-color: var(--ant-color-bg-container-disabled);
+    border-color: var(--ant-color-border);
+    color: var(--ant-color-text-disabled);
+  }
   @media (max-width: 576px) { [data-ant-pagination] [data-ant-pagination-quick], [data-ant-pagination] .quick-options-only { display: none; } }
   @media (prefers-reduced-motion: reduce) { input, [data-ant-pagination] :global([data-ant-pagination-item]), [data-ant-pagination] :global(:is([data-ant-pagination-link], .ant-pagination-item-link)) { transition: none; } }
 </style>

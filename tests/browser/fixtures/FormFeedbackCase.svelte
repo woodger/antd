@@ -121,7 +121,8 @@
 {/snippet}
 
 <div data-feedback-case={sample.id} data-feedback-prefix={sample.treePrefix ?? `${prefix}-select`}
-  style="margin:64px;width:420px" data-feedback-ref={Boolean(root && input)}>
+  style={'margin:64px;'
+    + 'width:420px'} data-feedback-ref={Boolean(root && input)}>
   <ConfigProvider prefixCls={prefix} direction={sample.rtl ? 'rtl' : 'ltr'} theme={{
     cssVar: { key: 'form-feedback-source' }, token: { motion: false },
     mode: sample.theme === 'dark' ? 'dark' : 'light', compact: sample.theme === 'compact'

@@ -148,7 +148,8 @@
   <output hidden aria-label="Menu hover selection">{JSON.stringify(clicked)}</output>
   <div bind:this={host} data-testid="hover-container"></div>
   <div {@attach connectShadow} data-testid="hover-shadow"></div>
-  <div style={`width:${profile.width ?? 220}px;margin:80px 0 0 330px`}>
+  <div style={`width:${profile.width ?? 220}px;`
+    + `margin:80px 0 0 330px`}>
     {#if mounted}
       {#key sample}
         <ConfigProvider direction={providerDirection ?? profile.direction}

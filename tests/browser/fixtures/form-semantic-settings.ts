@@ -31,7 +31,8 @@ function classes(side: string): FormSemantic {
 }
 
 const styles: FormSemantic = ({ props }) => Object.fromEntries(keys.map((key, index) => [
-  key, `color:rgb(${props.disabled ? 151 : 101}, ${21 + index}, ${31 + index});padding-left:${index + 1}px`
+  key, `color:rgb(${props.disabled ? 151 : 101}, ${21 + index}, ${31 + index});`
+    + `padding-left:${index + 1}px`
 ]));
 
 export function formSemanticSettings(

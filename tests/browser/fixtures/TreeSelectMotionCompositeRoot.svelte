@@ -27,9 +27,13 @@
 
 <span data-motion-root bind:this={nativeElement}
   style={[context.attributes.style, 'display:inline-flex'].filter(Boolean).join(';')}>
-  <span style="display:inline-flex;width:64px;flex:none">Root prefix</span>
+  <span style={'display:inline-flex;'
+    + 'width:64px;'
+    + 'flex:none'}>Root prefix</span>
   <input {...attributes} bind:this={inputElement} data-motion-editor
-    style="width:156px;height:40px;box-sizing:border-box"
+    style={'width:156px;'
+      + 'height:40px;'
+      + 'box-sizing:border-box'}
     oninput={event => onInput(event.currentTarget.value)} />
 </span>
 <output data-motion-received hidden>{JSON.stringify({

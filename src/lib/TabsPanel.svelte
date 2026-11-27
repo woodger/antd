@@ -105,7 +105,10 @@
 </script>
 
 <style>
-  [data-ant-tabs-part="content"] { min-width: 0; overflow-wrap: anywhere; }
+  [data-ant-tabs-part="content"] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   [data-ant-tabs-part="content"][hidden] { display: none; }
 </style>
 

@@ -28,7 +28,10 @@
 {/snippet}
 {#snippet tag(info: TreeSelectTagInfo)}
   <span data-input-responsive-tag={info.isMaxTag ? undefined : String(info.value)} data-input-responsive-rest={info.isMaxTag || undefined}
-    style="display:inline-flex;width:64px;height:22px;box-sizing:border-box">{#if info.isMaxTag}Rest{:else}{@render info.label()}{/if}</span>
+    style={'display:inline-flex;'
+      + 'width:64px;'
+      + 'height:22px;'
+      + 'box-sizing:border-box'}>{#if info.isMaxTag}Rest{:else}{@render info.label()}{/if}</span>
 {/snippet}
 <div data-input-responsive-case={sample.id} data-input-responsive-bound={Boolean(root && editor)}>
   <ConfigProvider theme={{ cssVar: { key: 'tree-select-input-responsive-source' }, token: { motion: false } }}>

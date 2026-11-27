@@ -27,7 +27,8 @@
 </script>
 
 {#snippet details()}<input aria-label="Table draft" name="draft" value="Draft" style="width:100px" />{/snippet}
-<div id="table-theme-control" style="width:640px;max-width:100%">
+<div id="table-theme-control" style={'width:640px;'
+  + 'max-width:100%'}>
   <form aria-label="Table theme form">
     <Table dataSource={rows} {columns} aria-label="Themed people" pagination={false}
       size={mode === 'large' ? 'large' : mode === 'small' ? 'small' : 'medium'}

@@ -23,7 +23,9 @@
   });
 </script>
 
-{#snippet prefix()}<span data-suffix-layout-prefix style={`display:inline-block;width:${prefixWidth}px;flex:none`}>Prefix</span>{/snippet}
+{#snippet prefix()}<span data-suffix-layout-prefix style={`display:inline-block;`
+  + `width:${prefixWidth}px;`
+  + `flex:none`}>Prefix</span>{/snippet}
 {#if kind === 'fragment'}{@render prefix()}<input {...context.attributes} {@attach context.register} data-suffix-layout-editor />
 {:else if kind === 'wrapped-dom-ref' || kind === 'composite-ref'}
   <span data-suffix-layout-wrapper bind:this={wrapper} style="display:inline-flex">

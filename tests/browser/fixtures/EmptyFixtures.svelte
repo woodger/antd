@@ -54,10 +54,23 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label { display: block; margin-block: 8px; }
-  .surface { max-width: 640px; padding: 20px; background: var(--ant-color-bg-container); }
-  .custom-image { width: 120px; height: 80px; }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label {
+    display: block;
+    margin-block: 8px;
+  }
+  .surface {
+    max-width: 640px;
+    padding: 20px;
+    background: var(--ant-color-bg-container);
+  }
+  .custom-image {
+    width: 120px;
+    height: 80px;
+  }
 </style>
 
 <svelte:window onkeydown={hotkey} />

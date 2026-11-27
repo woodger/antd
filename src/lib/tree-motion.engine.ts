@@ -37,9 +37,11 @@ function endHeight(_: HTMLDivElement, event: TreeMotionEvent) {
     || 'propertyName' in event && event.propertyName === 'height';
 }
 // Использует нулевую высоту и прозрачность для закрытого края анимации.
-const collapsed = () => 'height:0px;opacity:0';
+const collapsed = () => 'height:0px;'
+  + 'opacity:0';
 // Читает полную высоту содержимого для открытого края анимации.
-const real = (node: HTMLDivElement) => `height:${node.scrollHeight}px;opacity:1`;
+const real = (node: HTMLDivElement) => `height:${node.scrollHeight}px;`
+  + `opacity:1`;
 
 /** Ant wrapper подставляет collapse object только для null/undefined, сохраняя custom object. */
 export function getTreeMotionConfig(

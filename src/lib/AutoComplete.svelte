@@ -1182,42 +1182,122 @@
 </script>
 
 <style>
-  .auto-complete { display: inline-flex; width: 100%; min-width: 0; }
-  .auto-complete[data-ant-auto-complete-customize] { height: auto; min-height: var(--ant-native-select-height); padding: 0; }
-  [data-ant-auto-complete-content] { flex: 1; min-width: 0; }
-  .auto-complete [data-ant-auto-complete-input] { position: absolute; inset: 0; width: 100%; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; color: var(--ant-native-select-color, var(--ant-color-text)); font: inherit; line-height: inherit; opacity: 1; }
+  .auto-complete {
+    display: inline-flex;
+    width: 100%;
+    min-width: 0;
+  }
+  .auto-complete[data-ant-auto-complete-customize] {
+    height: auto;
+    min-height: var(--ant-native-select-height);
+    padding: 0;
+  }
+  [data-ant-auto-complete-content] {
+    flex: 1;
+    min-width: 0;
+  }
+  .auto-complete [data-ant-auto-complete-input] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ant-native-select-color, var(--ant-color-text));
+    font: inherit;
+    line-height: inherit;
+    opacity: 1;
+  }
   .auto-complete:where([data-ant-auto-complete-legacy-color]) > [data-ant-auto-complete-content] { -webkit-text-fill-color: transparent; }
-  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > [data-ant-auto-complete-input] { color: inherit; -webkit-text-fill-color: currentColor; }
+  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > [data-ant-auto-complete-input] {
+    color: inherit;
+    -webkit-text-fill-color: currentColor;
+  }
   .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > [data-ant-auto-complete-placeholder] { -webkit-text-fill-color: currentColor; }
-  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > :not([data-ant-auto-complete-input]):not([data-ant-auto-complete-placeholder]) { opacity: 0; -webkit-text-fill-color: currentColor; }
+  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > :not([data-ant-auto-complete-input]):not([data-ant-auto-complete-placeholder]) {
+    opacity: 0;
+    -webkit-text-fill-color: currentColor;
+  }
   [data-ant-auto-complete-input]::placeholder { color: var(--ant-color-text-placeholder); }
   [data-ant-auto-complete-content]:has(> [data-ant-auto-complete-placeholder]) > [data-ant-auto-complete-input]::placeholder { color: transparent; }
-  .auto-complete:focus-within { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  .auto-complete[data-ant-auto-complete-source-theme]:focus-within { outline: 0; outline-offset: 0; }
+  .auto-complete:focus-within {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  .auto-complete[data-ant-auto-complete-source-theme]:focus-within {
+    outline: 0;
+    outline-offset: 0;
+  }
   .auto-complete[data-ant-auto-complete-source-theme][data-ant-auto-complete-customize] { min-height: 0; }
-  .auto-complete[data-ant-auto-complete-component-input] { height: auto; min-height: 0; align-items: flex-start; }
+  .auto-complete[data-ant-auto-complete-component-input] {
+    height: auto;
+    min-height: 0;
+    align-items: flex-start;
+  }
   .auto-complete[data-ant-auto-complete-component-input] > [data-ant-auto-complete-content] {
     flex: 1 1 auto;
     /* Заполненное поле скрывает ::before, а абсолютный редактор сам не задаёт высоту. */
     min-height: 1lh;
   }
-  .clear { display: flex; flex: none; padding: 0; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
+  .clear {
+    display: flex;
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ant-color-text-tertiary);
+    cursor: pointer;
+  }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); }
-  .feedback-suffix { display: block; flex: none; }
+  .feedback-suffix {
+    display: block;
+    flex: none;
+  }
   /* The retained native popup is a child; Source's portal does not affect :last-child. */
   .auto-complete[data-ant-select-prefix]:not(:has(> .clear)) > .feedback-suffix { opacity: 1; }
-  [data-ant-auto-complete-source-theme] .clear { display: inline-block; flex: 0 1 auto; color: var(--ant-color-text-quaternary); }
+  [data-ant-auto-complete-source-theme] .clear {
+    display: inline-block;
+    flex: 0 1 auto;
+    color: var(--ant-color-text-quaternary);
+  }
   [data-ant-auto-complete-source-theme] .clear:hover { color: var(--ant-color-icon); }
   [data-ant-auto-complete-source-theme] .clear:focus-visible { opacity: 1; }
-  .popup { position: fixed; margin: 0; border: 0; overflow: visible; }
+  .popup {
+    position: fixed;
+    margin: 0;
+    border: 0;
+    overflow: visible;
+  }
   .popup[hidden] { pointer-events: none; }
-  [data-ant-auto-complete-item] { display: block; width: 100%; border: 0; background: transparent; color: inherit; font: inherit; text-align: start; }
+  [data-ant-auto-complete-item] {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+  }
   /* Options повторяют flex column rc-select, пустая выдача остаётся обычным блоком. */
-  .popup[data-ant-auto-complete-source-popup]:not([hidden]) { display: flex; flex-direction: column; }
+  .popup[data-ant-auto-complete-source-popup]:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+  }
   .popup[data-ant-auto-complete-custom-popup]:not([hidden]) { display: block; }
-  [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item] { flex: none; font-size: var(--ant-select-option-font-size); line-height: var(--ant-select-option-line-height); font-weight: 400; color: var(--ant-color-text); }
+  [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item] {
+    flex: none;
+    font-size: var(--ant-select-option-font-size);
+    line-height: var(--ant-select-option-line-height);
+    font-weight: 400;
+    color: var(--ant-color-text);
+  }
   [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item-option] { display: flex; }
-  [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item-group] { font-size: var(--ant-font-size-sm); color: var(--ant-color-text-description); }
+  [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item-group] {
+    font-size: var(--ant-font-size-sm);
+    color: var(--ant-color-text-description);
+  }
   [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item-option-disabled] { color: var(--ant-color-text-disabled); }
 </style>
 

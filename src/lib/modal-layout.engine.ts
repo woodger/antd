@@ -63,7 +63,8 @@ export function getModalLayout(
   const scope = `antd-modal-layout-${hashTokenString(JSON.stringify([prefix, metrics, centered]))}`;
   const rule = `[data-ant-modal-layout="${scope}"]`;
   const maxWidth = `calc(100vw - ${token.margin * 2}px)`;
-  const desktop = `${rule}{--ant-svelte-modal-max-width:${maxWidth};--ant-svelte-modal-top:100px}`;
+  const desktop = `${rule}{--ant-svelte-modal-max-width:${maxWidth};`
+    + `--ant-svelte-modal-top:100px}`;
   const compact = `--ant-svelte-modal-max-width:calc(100vw - 16px);`
     + `--ant-svelte-modal-top:${100 + token.marginXS}px`;
   const rules = [desktop, `@media(max-width:${token.screenSMMax}px){${rule}{${compact}}}`];

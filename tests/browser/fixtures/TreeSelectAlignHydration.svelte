@@ -16,5 +16,7 @@
 
 <section data-align-hydration>
   <TreeSelectAlignCase {sample} bind:this={fixture} />
-  <input aria-label="Align outside draft" style="position:fixed;left:16px;bottom:16px" />
+  <input aria-label="Align outside draft" style={'position:fixed;'
+    + 'left:16px;'
+    + 'bottom:16px'} />
 </section>

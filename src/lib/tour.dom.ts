@@ -97,7 +97,13 @@ export function connectTourLayout(
         popup.style.getPropertyPriority(name)
       ]);
     const dummy = popup.ownerDocument.createElement('div');
-    dummy.style.cssText = `position:${style.position};left:${popup.offsetLeft}px;top:${popup.offsetTop}px;width:${popup.offsetWidth}px;height:${popup.offsetHeight}px`;
+    dummy.style.cssText = (
+      `position:${style.position};`
+      + `left:${popup.offsetLeft}px;`
+      + `top:${popup.offsetTop}px;`
+      + `width:${popup.offsetWidth}px;`
+      + `height:${popup.offsetHeight}px`
+    );
     popup.parentElement?.append(dummy);
     popup.style.left = '0';
     popup.style.top = '0';
@@ -241,13 +247,22 @@ export function isTourEditableTarget(event: KeyboardEvent) {
 
 export function getTourOffsetStyle(position: TourAlignment | undefined) {
   if (!position) {
-    return 'left:-1000vw;top:-1000vh;right:auto;bottom:auto';
+    return (
+      'left:-1000vw;'
+      + 'top:-1000vh;'
+      + 'right:auto;'
+      + 'bottom:auto'
+    );
   }
   const points = position.align.points?.[0];
   const right = position.align.dynamicInset && points?.[1] === 'r';
   const bottom = position.align.dynamicInset && points?.[0] === 'b';
-  return `${right ? `right:${position.right}px;left:auto` : `left:${position.x}px;right:auto`};`
-    + (bottom ? `bottom:${position.bottom}px;top:auto` : `top:${position.y}px;bottom:auto`);
+  return `${right ? `right:${position.right}px;`
+    + `left:auto` : `left:${position.x}px;`
+    + `right:auto`};`
+    + (bottom ? `bottom:${position.bottom}px;`
+      + `top:auto` : `top:${position.y}px;`
+      + `bottom:auto`);
 }
 
 export { getPopupArrowStyle as getTourArrowStyle } from './popup-position.engine';

@@ -28,7 +28,11 @@
 {/snippet}
 
 <button bind:this={target} type="button" id="tour-theme-target"
-  style="position:absolute;left:350px;top:160px;width:140px;height:38px">Target</button>
+  style={'position:absolute;'
+    + 'left:350px;'
+    + 'top:160px;'
+    + 'width:140px;'
+    + 'height:38px'}>Target</button>
 <Tour open defaultCurrent={1} mask={false} {zIndex}
   type={mode === 'primary' ? 'primary' : 'default'}
   placement={targeted ? mode === 'right' ? 'right' : 'bottomLeft' : undefined}

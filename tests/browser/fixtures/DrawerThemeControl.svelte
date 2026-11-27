@@ -18,7 +18,10 @@
   let placement = $derived<DrawerPlacement>(mode === 'left' || mode === 'top' || mode === 'bottom'
     ? mode : 'right');
   let rootStyle = $derived([
-    styled && 'color:rgb(0,128,0);z-index:1900',
+    styled && (
+      'color:rgb(0,128,0);'
+      + 'z-index:1900'
+    ),
     scope === 'variable' && `--${prefix}-drawer-footer-padding-block:17px`
   ].filter(Boolean).join(';'));
 

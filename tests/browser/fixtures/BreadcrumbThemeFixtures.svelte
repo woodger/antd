@@ -54,7 +54,10 @@
 
 <style>
   label { display: block; }
-  .stage { padding: 300px 20px; width: 400px; }
+  .stage {
+    padding: 300px 20px;
+    width: 400px;
+  }
 </style>
 
 {#snippet sampleSvg()}<svg width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1L15 15" stroke="currentColor" /></svg>{/snippet}
@@ -85,7 +88,8 @@
   <label>Breadcrumb link color <input bind:value={color} /></label>
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }} direction={rtl ? 'rtl' : 'ltr'}>
-      <div class="stage" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}
+      <div class="stage" style={parentAliases ? '--ant-font-size:30px;'
+        + '--ant-color-text:red' : undefined}
         style:width={narrow ? '160px' : undefined} style:padding-block={narrow ? '20px' : undefined}>
         <Breadcrumb {items} dropdownIcon={arrowContent} class="breadcrumb-token-main" aria-label="Themed Breadcrumb"
           styles={overrideStyles ? {

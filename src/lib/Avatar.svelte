@@ -71,13 +71,17 @@
     [
       componentTheme.style && `${componentTheme.style};`,
       typeof resolvedSize === 'number'
-        ? `width: ${resolvedSize}px; height: ${resolvedSize}px; font-size: ${icon
-          ? resolvedSize / 2
-          : 18}px;`
+        ? `width: ${resolvedSize}px;`
+          + ` height: ${resolvedSize}px;`
+          + ` font-size: ${icon
+            ? resolvedSize / 2
+            : 18}px;`
         : '',
       responsiveSize
-        ? `width: ${responsiveSize}px; height: ${responsiveSize}px; font-size: ${icon || children
-          ? responsiveSize / 2 : 18}px;`
+        ? `width: ${responsiveSize}px;`
+          + ` height: ${responsiveSize}px;`
+          + ` font-size: ${icon || children
+            ? responsiveSize / 2 : 18}px;`
         : '',
       config.avatar?.style && `${config.avatar.style};`,
       style
@@ -123,10 +127,30 @@
 
 <style>
   .ant-avatar-css-var { flex-shrink: 0; }
-  [data-ant-avatar-string] { display: inline-block; flex: none; transform-origin: center; white-space: nowrap; }
-  .ant-avatar-icon-content { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; }
-  .ant-avatar-icon-content :global(svg) { width: 1em; height: 1em; }
-  @media (prefers-reduced-motion: reduce) { .ant-avatar-css-var, [data-ant-avatar-string] { animation: none; transition: none; } }
+  [data-ant-avatar-string] {
+    display: inline-block;
+    flex: none;
+    transform-origin: center;
+    white-space: nowrap;
+  }
+  .ant-avatar-icon-content {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+  }
+  .ant-avatar-icon-content :global(svg) {
+    width: 1em;
+    height: 1em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ant-avatar-css-var, [data-ant-avatar-string] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`avatar-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions, a11y_no_noninteractive_element_interactions (Avatar.onClick сохраняет span; keyboard behavior принадлежит владельцу.) --><span {...attributes} bind:this={nativeElement} {id} {title}

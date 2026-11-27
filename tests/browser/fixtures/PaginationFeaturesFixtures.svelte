@@ -42,7 +42,8 @@
   let log = $state<string[]>([]);
   let context = $derived<PaginationComponentConfig | undefined>(semantics ? {
     class: 'pagination-context',
-    style: 'padding:2px;color:red',
+    style: 'padding:2px;'
+      + 'color:red',
     styles: { root: 'padding:1px', item: 'color:red' },
     classNames: { root: 'context-root', item: 'context-page' },
     showSizeChanger: { showSearch: false },
@@ -93,7 +94,8 @@
     } : undefined,
     class: 'pagination-features',
     rootClassName: semantics ? 'pagination-root-extra' : undefined,
-    style: semantics ? 'padding:4px;color:green' : undefined,
+    style: semantics ? 'padding:4px;'
+      + 'color:green' : undefined,
     classNames: semantics ? ({ props }) => ({
       root: `local-size-${props.size ?? 'none'}`,
       item: 'local-page'
@@ -113,8 +115,17 @@
 </script>
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-block: 16px; }
-  .controls label { display: inline-flex; align-items: center; gap: 4px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-block: 16px;
+  }
+  .controls label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
   output { display: block; }
 </style>
 
@@ -177,7 +188,8 @@
   </div>
   <ConfigProvider pagination={context} theme={{ mode: dark ? 'dark' : 'light', compact }}
     componentSize={contextSize === 'inherit' ? undefined : contextSize as 'small' | 'medium' | 'large'}
-    style="background:var(--ant-color-bg-container);color:var(--ant-color-text)">
+    style={'background:var(--ant-color-bg-container);'
+      + 'color:var(--ant-color-text)'}>
     <form onsubmit={event => event.preventDefault()}>
       {#if mounted}
         {#if strict}<Pagination {...props}

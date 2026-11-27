@@ -21,7 +21,8 @@
   let context = $derived<BreadcrumbConfig>({ ...breadcrumbConfigProfile(current.context, false,
     { separator: contextSeparator, dropdownIcon: contextIcon }),
     ...(updated ? { class: 'context-breadcrumb-updated',
-      style: 'opacity:0.6;outline-offset:7px', separator: '>>', dropdownIcon: updatedIcon } : {}) });
+      style: 'opacity:0.6;'
+        + 'outline-offset:7px', separator: '>>', dropdownIcon: updatedIcon } : {}) });
   let nested = $derived<BreadcrumbConfig | undefined>(current.nested === 'empty' ? {}
     : current.nested === 'replace' ? { class: 'context-replaced' } : undefined);
   let local = $derived(breadcrumbConfigProfile(current.local, true,
@@ -71,7 +72,8 @@
           colorPrimary: '#eb2f96', separatorMargin: 13, lastItemColor: '#c41d7f' } } : undefined }}>
     <ConfigProvider breadcrumb={nested}>
       <div class="breadcrumb-config-main" dir={current.rtl ? 'rtl' : 'ltr'}
-        style="width:680px;color:rgb(0,0,0)">
+        style={'width:680px;'
+          + 'color:rgb(0,0,0)'}>
         <Breadcrumb {...local} {items} params={probeDefaults ? undefined : params}
           separator={Object.hasOwn(current, 'separator') ? current.separator : local.separator}
           dropdownIcon={Object.hasOwn(current, 'icon') ? current.icon : local.dropdownIcon}

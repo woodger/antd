@@ -15,8 +15,10 @@
     item: props.multiple ? 'case-fn-many' : 'case-fn-one'
   });
   const styles: CheckableTagGroupSemantic = ({ props }) => ({
-    root: `padding:${props.multiple ? 8 : 4}px;opacity:${props.disabled ? '.4' : '.8'}`,
-    item: `font-weight:${props.multiple ? 700 : 400};border-radius:3px`
+    root: `padding:${props.multiple ? 8 : 4}px;`
+      + `opacity:${props.disabled ? '.4' : '.8'}`,
+    item: `font-weight:${props.multiple ? 700 : 400};`
+      + `border-radius:3px`
   });
   let provider = $derived(sample.contextFunctions
     ? { ...sample.provider, classNames, styles } as unknown as typeof sample.provider

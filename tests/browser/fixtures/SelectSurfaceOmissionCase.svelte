@@ -179,9 +179,17 @@
     nextInstance={() => ++footerInstance} {trace} inputRef={footerRef} onInput={onFooterInput} /></div>{/snippet}
 
 <section data-surface-case={sample.id} data-parent-revision={unrelated} data-surface-bound={Boolean(control)}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {...provider} locale={enUS}>
-    <div style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+    <div style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:280px;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
       {#if isAutoComplete}
         <OmissionAutoComplete {...autoCompleteProps} bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={autoCompleteEditor} />
       {:else}
@@ -189,7 +197,9 @@
       {/if}
     </div>
   </ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside {isOpenWidth ? 'width' : 'omission'}</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside {isOpenWidth ? 'width' : 'omission'}</button>
   <output hidden data-surface-omission-owner>{JSON.stringify(read())}</output>
   <div hidden data-surface-command {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<SelectSurfaceOmissionAction>).detail);
@@ -204,4 +214,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

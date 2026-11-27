@@ -309,8 +309,17 @@
 </script>
 
 <style>
-  [data-calendar-position]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
-  .week-name { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; }
+  [data-calendar-position]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: -2px;
+  }
+  .week-name {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`calendar-prefix:${prefix}`} />{/if}<div

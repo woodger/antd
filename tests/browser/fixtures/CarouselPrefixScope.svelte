@@ -29,7 +29,12 @@
 
 {#snippet content()}
   <div style="height:120px"><input aria-label={`${scope} slide draft`} value="Draft"
-    style="width:90px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" /></div>
+    style={'width:90px;'
+      + 'height:32px;'
+      + 'box-sizing:border-box;'
+      + 'font:inherit;'
+      + 'padding:0;'
+      + 'border:1px solid'} /></div>
 {/snippet}
 <section data-carousel-prefix-scope={scope} style="width:360px">
   <Carousel bind:ref={api} prefixCls={local ? sample.local : undefined} {items}

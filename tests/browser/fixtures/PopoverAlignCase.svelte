@@ -19,8 +19,11 @@
     trigger: [] as const,
     onPopupAlign: record,
     styles: {
-      root: `width:${width}px;height:80px;max-width:none;${style(sample.rootStyle)}`,
-      container: 'height:100%;box-sizing:border-box',
+      root: `width:${width}px;`
+        + `height:80px;`
+        + `max-width:none;${style(sample.rootStyle)}`,
+      container: 'height:100%;'
+        + 'box-sizing:border-box',
       arrow: style(sample.arrowStyle)
     }
   });
@@ -67,9 +70,19 @@
 {#snippet content()}<input aria-label="Alignment draft" value="Draft" style="width:80px" />
   <button type="button" aria-label="Alignment count" onclick={() => count++}>{count}</button>{/snippet}
 {#snippet anchor()}<button type="button" data-alignment-anchor=""
-  style={`position:fixed;left:${sample.anchor.x}px;top:${sample.anchor.y}px;width:${sample.anchor.width}px;height:${sample.anchor.height}px;padding:0;border:0;margin:0`}>Align target</button>{/snippet}
+  style={`position:fixed;`
+    + `left:${sample.anchor.x}px;`
+    + `top:${sample.anchor.y}px;`
+    + `width:${sample.anchor.width}px;`
+    + `height:${sample.anchor.height}px;`
+    + `padding:0;`
+    + `border:0;`
+    + `margin:0`}>Align target</button>{/snippet}
 <div id="popover-align-case" {@attach expose}
-  style={`--alignment-left:${sample.anchor.x}px;--alignment-top:${sample.anchor.y}px;--alignment-width:${sample.anchor.width}px;--alignment-height:${sample.anchor.height}px`}>
+  style={`--alignment-left:${sample.anchor.x}px;`
+    + `--alignment-top:${sample.anchor.y}px;`
+    + `--alignment-width:${sample.anchor.width}px;`
+    + `--alignment-height:${sample.anchor.height}px`}>
   <button type="button" onclick={() => changed = true}>Change alignment props</button>
   <button type="button" onclick={() => width = 180}>Resize alignment popup</button>
   <output aria-label="Alignment calls">{calls}</output>

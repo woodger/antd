@@ -140,7 +140,8 @@
     onclick={() => usePaint('pattern')}
   >Use Watermark pattern</button>
   <ConfigProvider
-    watermark={{ class: 'watermark-context', style: 'overflow:visible;opacity:0.9' }}
+    watermark={{ class: 'watermark-context', style: 'overflow:visible;'
+      + 'opacity:0.9' }}
     theme={{ mode: dark ? 'dark' : 'light', compact }}
   >
     {#if visible}<Watermark
@@ -160,9 +161,12 @@
       {inherit}
       bind:nativeElement
       onRemove={() => { removed++; }}
-      style={`height:240px;overflow:${customRoot ? 'visible' : 'hidden'};position:${customRoot
+      style={`height:240px;`
+        + `overflow:${customRoot ? 'visible' : 'hidden'};`
+        + `position:${customRoot
         ? 'absolute'
-        : 'relative'};opacity:1`}
+        : 'relative'};`
+        + `opacity:1`}
     >
       <p>Protected content <button type="button" onclick={() => { actions++; }}>Watermark child action</button></p>
       <button type="button" onclick={() => { modal = true; }}>Open Watermark Modal</button>

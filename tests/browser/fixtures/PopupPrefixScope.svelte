@@ -29,7 +29,10 @@
 </script>
 
 <div data-popup-prefix-scope={scope}
-  style={`position:fixed;top:250px;left:${position}px;width:220px`}>
+  style={`position:fixed;`
+    + `top:250px;`
+    + `left:${position}px;`
+    + `width:220px`}>
   <ConfigProvider getPopupContainer={container}>
     <div data-prefix-widget={kind}>
       {#if kind === 'single'}

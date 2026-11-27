@@ -178,7 +178,18 @@ export function createTreeSelectAlignSurface(
       try {
       const positions = [[0, 0], [100, 0], [100, 100], [0, 100]];
       const corners = points.map((node, index) => {
-        node.style.cssText = 'all:initial!important;position:absolute!important;width:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important;transform:none!important;visibility:hidden!important;pointer-events:none!important;';
+        node.style.cssText = (
+          'all:initial!important;'
+          + 'position:absolute!important;'
+          + 'width:0!important;'
+          + 'height:0!important;'
+          + 'margin:0!important;'
+          + 'padding:0!important;'
+          + 'border:0!important;'
+          + 'transform:none!important;'
+          + 'visibility:hidden!important;'
+          + 'pointer-events:none!important;'
+        );
         node.style.setProperty('left', `${positions[index][0] - proxy.clientLeft}px`, 'important');
         node.style.setProperty('top', `${positions[index][1] - proxy.clientTop}px`, 'important');
         const rect = node.getBoundingClientRect();

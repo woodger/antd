@@ -30,7 +30,10 @@
       : mode === 'borderless' ? 'borderless' : 'outlined'}
     disabled={mode === 'disabled'}
     status={mode === 'error' ? 'error' : mode === 'warning' ? 'warning' : undefined}
-    style={['width:320px', styled && 'color:rgb(0,128,0);border-radius:13px',
+    style={['width:320px', styled && (
+      'color:rgb(0,128,0);'
+      + 'border-radius:13px'
+    ),
       scope === 'variable' && `--${prefix}-mentions-padding-inline:19px`]
       .filter(Boolean).join(';')}
     onChange={value => events.push(`change:${value}`)}

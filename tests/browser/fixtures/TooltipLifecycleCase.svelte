@@ -77,7 +77,8 @@
       {#if mounted}
         {#if kind === 'typography'}
           <TypographyText id="lifecycle-trigger" aria-describedby="existing-description" tabindex={0}
-            style="display:block;width:80px"
+            style={'display:block;'
+              + 'width:80px'}
             ellipsis={{
               onEllipsis: () => {},
               tooltip: {

@@ -7,7 +7,10 @@
 </script>
 
 <section id="select-data-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>
     Select data sample
     <select bind:value={selected}>
       {#each selectDataSamples as item}<option value={item.id}>{item.id}</option>{/each}

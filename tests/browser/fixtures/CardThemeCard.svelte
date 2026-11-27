@@ -17,7 +17,8 @@
   style={priority ? 'background-color:rgb(11, 12, 13)' : undefined}
   styles={priority ? {
     root: 'background-color:rgb(7, 8, 9)',
-    header: 'min-height:83px;padding:15px',
+    header: 'min-height:83px;'
+      + 'padding:15px',
     body: 'padding:13px',
     actions: 'background-color:rgb(4, 5, 6)'
   } : undefined}>

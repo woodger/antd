@@ -146,7 +146,8 @@
   <div data-custom-wrap>{@render origin()}</div>
 {/snippet}
 
-<section id="table-filter-dropdown-fixture" style="width:520px;margin-top:180px">
+<section id="table-filter-dropdown-fixture" style={'width:520px;'
+  + 'margin-top:180px'}>
   <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>
     <Table {columns} {dataSource} pagination={false} onChange={noteChange}
       dropdownPrefixCls={profileId === 'custom-container' ? 'choices' : undefined}

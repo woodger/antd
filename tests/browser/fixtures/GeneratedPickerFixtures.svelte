@@ -258,7 +258,9 @@
     {/if}
   </form>
 </ConfigProvider>
-<button id="outside" type="button" style="position:fixed;right:16px;bottom:16px">Outside</button>
+<button id="outside" type="button" style={'position:fixed;'
+  + 'right:16px;'
+  + 'bottom:16px'}>Outside</button>
 <button id="new-value" type="button" onclick={() => { controlled = dates[1]; }}>New value</button>
 <button id="focus-picker" type="button" onclick={() => handle?.focus()}>Focus</button>
 {#if profile === 'switch-time'}
@@ -266,7 +268,9 @@
     Switch picker
   </button>
 {/if}
-<button id="remove-picker" type="button" style="position:fixed;right:16px;bottom:58px"
+<button id="remove-picker" type="button" style={'position:fixed;'
+  + 'right:16px;'
+  + 'bottom:58px'}
   onclick={() => { mounted = false; }}>Remove</button>
 <output id="generated-events">{JSON.stringify(log)}</output>
 <output id="generated-refs">{JSON.stringify([

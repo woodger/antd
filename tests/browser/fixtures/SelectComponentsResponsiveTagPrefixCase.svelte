@@ -226,9 +226,19 @@
   {#snippet content()}<TagBody {info} />{/snippet}{@const rendered = tagCall(info, content)}{@render rendered()}
 {/snippet}
 {#snippet prefixBody()}<PrefixBody />{/snippet}
-<section data-surface-case={initial.id} style="font-family:initial;font-size:16px;line-height:normal">
-  <ConfigProvider {...provider}><div data-custom-tag-frame="" style="position:absolute;left:{position.left}px;top:{position.top}px;width:{settings.containerWidth}px;font-family:initial;font-size:16px;line-height:normal">
+<section data-surface-case={initial.id} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
+  <ConfigProvider {...provider}><div data-custom-tag-frame="" style={'position:absolute;'
+    + `left:${(position.left) ?? ''}px;`
+    + `top:${(position.top) ?? ''}px;`
+    + `width:${(settings.containerWidth) ?? ''}px;`
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
     <form data-select-icons-form onsubmit={onSubmit}><Choice {...ownerProps} bind:this={control} bind:nativeElement={root} bind:inputElement={editor} /></form>
   </div></ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside custom tags</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside custom tags</button>
 </section>

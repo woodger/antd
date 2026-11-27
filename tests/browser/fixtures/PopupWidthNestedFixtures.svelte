@@ -7,7 +7,10 @@
 </script>
 
 <section id="popup-width-nested-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>
     Popup width nested sample
     <select bind:value={selected}>
       {#each popupWidthNestedSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}

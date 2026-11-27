@@ -120,8 +120,20 @@
 </script>
 
 <style>
-  button { color: inherit; width: 100%; border: 0; background: transparent; font: inherit; text-align: inherit; padding: 0; cursor: pointer; }
-  button:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
+  button {
+    color: inherit;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    text-align: inherit;
+    padding: 0;
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: -2px;
+  }
 </style>
 
 <ul class={`${prefixCls}-time-panel-column`} data-type={type} aria-label={type} bind:this={element}>

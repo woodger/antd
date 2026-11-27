@@ -23,7 +23,15 @@
 </article>
 
 <style>
-  article { margin-block: 12px; padding: 12px; border: 1px solid var(--ant-color-border); }
+  article {
+    margin-block: 12px;
+    padding: 12px;
+    border: 1px solid var(--ant-color-border);
+  }
   output { display: block; }
-  pre { max-height: 50px; overflow: auto; white-space: pre-wrap; }
+  pre {
+    max-height: 50px;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
 </style>

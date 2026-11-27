@@ -120,7 +120,8 @@
   }
 </script>
 
-<section data-table-sorter-tooltip-fixture style="margin:115px 65px;width:450px">
+<section data-table-sorter-tooltip-fixture style={'margin:115px 65px;'
+  + 'width:450px'}>
   <ConfigProvider {locale} prefixCls={customPrefix ? 'sample' : undefined}
     theme={{ token: { motion: false } }}>
     <Table {columns} {dataSource} {loading} pagination={false} showSorterTooltip={tableTooltip}

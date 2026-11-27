@@ -24,7 +24,15 @@
 <button type="button" onclick={() => prefix = 'next-beam'}>Set alternate beam prefix</button>
 <button type="button" onclick={() => prefix = ''}>Use default beam prefix</button>
 <div data-beam-theme="external" bind:this={target}
-  style="position:relative;box-sizing:border-box;width:300px;height:100px;border-style:solid;border-width:1px 2px 3px 4px;border-radius:12px;--ant-color-primary:#fa541c;--ant-line-width:9px">
+  style={'position:relative;'
+    + 'box-sizing:border-box;'
+    + 'width:300px;'
+    + 'height:100px;'
+    + 'border-style:solid;'
+    + 'border-width:1px 2px 3px 4px;'
+    + 'border-radius:12px;'
+    + '--ant-color-primary:#fa541c;'
+    + '--ant-line-width:9px'}>
   <input aria-label="Beam external draft" value="External draft" />
 </div>
 {#if mounted}

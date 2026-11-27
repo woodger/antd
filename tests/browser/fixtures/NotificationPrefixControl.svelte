@@ -43,7 +43,8 @@
     actions: sample.noActions ? undefined : action,
     closable: sample.noClose ? false : sample.disabledClose ? { disabled: true } : undefined,
     icon: sample.customIcon ? icon : undefined,
-    style: sample.userStyle ? 'padding:17px 29px;color:rgb(18, 52, 86)' : undefined,
+    style: sample.userStyle ? 'padding:17px 29px;'
+      + 'color:rgb(18, 52, 86)' : undefined,
     onClose: () => events.push('close')
   }));
 
@@ -57,7 +58,10 @@
 </script>
 
 {#snippet editor()}<input aria-label="Notification prefix draft" bind:value={draft}
-  style="width:160px;max-width:100%;padding:2px 4px;font:inherit" />{/snippet}
+  style={'width:160px;'
+    + 'max-width:100%;'
+    + 'padding:2px 4px;'
+    + 'font:inherit'} />{/snippet}
 {#snippet icon()}<span>!</span>{/snippet}
 {#snippet action()}<Button onclick={() => events.push('action')}>Action</Button>{/snippet}
 {#if holder}<NotificationHolder {notification} prefixCls={local ? sample.local : undefined} />{/if}

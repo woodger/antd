@@ -8,5 +8,7 @@
 
 <section data-select-data-hydration>
   <form data-select-data-form><SelectDataCase {sample} named bind:this={fixture} /></form>
-  <input aria-label="Data outside draft" style="position:fixed;left:16px;bottom:16px" />
+  <input aria-label="Data outside draft" style={'position:fixed;'
+    + 'left:16px;'
+    + 'bottom:16px'} />
 </section>

@@ -76,7 +76,10 @@
 <style>
   label { display: block; }
   .sample { width: 800px; }
-  .stage { width: 420px; max-width: 100%; }
+  .stage {
+    width: 420px;
+    max-width: 100%;
+  }
 </style>
 
 {#snippet alpha()}<input name="alpha" aria-label="Editable Alpha draft" value="Alpha draft" />{/snippet}

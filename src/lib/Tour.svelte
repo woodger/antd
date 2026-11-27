@@ -269,9 +269,16 @@
   <div bind:this={host} style="display:contents">
     <TourPortal getPopupContainer={props.getPopupContainer}>
       <div {...prefixAttributes} class={[`${prefixCls}-mask`, ...rootClass, semantics.classes.mask]}
-        style={`${componentTheme.style ?? ''};position:${props.getPopupContainer === false ? 'absolute' : 'fixed'};left:0;right:0;top:0;bottom:0;z-index:${zIndex};pointer-events:${highlight && !props.disabledInteraction ? 'none' : 'auto'};${maskStyle ?? ''};${semantics.styles.mask ?? ''}`}>
+        style={`${componentTheme.style ?? ''};position:${props.getPopupContainer === false ? 'absolute' : 'fixed'};`
+          + `left:0;`
+          + `right:0;`
+          + `top:0;`
+          + `bottom:0;`
+          + `z-index:${zIndex};`
+          + `pointer-events:${highlight && !props.disabledInteraction ? 'none' : 'auto'};${maskStyle ?? ''};${semantics.styles.mask ?? ''}`}>
         {#if mask}
-          <svg style="width:100%;height:100%" aria-hidden="true">
+          <svg style={'width:100%;'
+            + 'height:100%'} aria-hidden="true">
             <defs><mask id={maskId}>
               <rect x="0" y="0" width={maskSize} height={maskHeight} fill="white" />
               {#if highlight}<rect x={highlight.left} y={highlight.top} rx={highlight.radius}

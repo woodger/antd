@@ -12,7 +12,10 @@
 
 <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'}>
   <div data-qrcode-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-    style="width:240px;height:180px;font-size:14px;color:rgb(31,41,51)">
+    style={'width:240px;'
+      + 'height:180px;'
+      + 'font-size:14px;'
+      + 'color:rgb(31,41,51)'}>
     <QRCode bind:nativeElement value="token-scopes" size={160} aria-label={`QRCode theme ${id}`}
       type={['canvas', 'borderless', 'explicit', 'custom', 'nested', 'sibling'].includes(id)
         ? 'canvas' : 'svg'}
@@ -22,9 +25,12 @@
         : id === 'loading' ? 'loading' : id === 'scanned' ? 'scanned' : 'active'}
       statusRender={id === 'custom' ? status : undefined}
       onRefresh={() => refreshes++}
-      styles={priority ? { root: 'padding:7px;border-radius:11px',
-        cover: 'background:#fff1f0;color:#873800' } : undefined}
-      style={priority ? 'padding:9px;border-radius:3px' : undefined} />
+      styles={priority ? { root: 'padding:7px;'
+        + 'border-radius:11px',
+        cover: 'background:#fff1f0;'
+          + 'color:#873800' } : undefined}
+      style={priority ? 'padding:9px;'
+        + 'border-radius:3px' : undefined} />
   </div>
 </ConfigProvider>
 <output aria-label={`QRCode theme ref ${id}`}>{nativeElement ? 'mounted' : 'empty'}</output>

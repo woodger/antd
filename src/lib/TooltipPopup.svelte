@@ -384,14 +384,32 @@
 </script>
 
 <style>
-  [data-ant-tooltip] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; }
+  [data-ant-tooltip] {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
   [data-ant-tooltip][hidden], [data-ant-tooltip]:not(:popover-open) { display: none; }
-  [data-ant-tooltip-container] { display: block; max-height: calc(100dvh - 16px); overflow: auto; overflow-wrap: anywhere; }
+  [data-ant-tooltip-container] {
+    display: block;
+    max-height: calc(100dvh - 16px);
+    overflow: auto;
+    overflow-wrap: anywhere;
+  }
   [data-ant-placement="top"] > [data-ant-tooltip-arrow], [data-ant-placement="bottom"] > [data-ant-tooltip-arrow] { left: var(--arrow-x, 50%); }
   [data-ant-placement="left"] > [data-ant-tooltip-arrow], [data-ant-placement="right"] > [data-ant-tooltip-arrow] { top: var(--arrow-y, 50%); }
   /* Без getter source portal изолирует private contrast родительского popup. */
   :global([data-ant-overlay-color]) [data-ant-tooltip][data-ant-tooltip-inline] { --ant-tooltip-overlay-color: initial; }
-  @media (prefers-reduced-motion: reduce) { [data-ant-tooltip], [data-ant-tooltip-container] { animation: none; transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    [data-ant-tooltip], [data-ant-tooltip-container] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
 {#if prefixCss && (!grouped || group?.owner === owner)}<ThemeScopeStyle css={prefixCss}

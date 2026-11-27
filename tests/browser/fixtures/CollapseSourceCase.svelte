@@ -37,9 +37,14 @@
     icon: 'local-icon'
   };
   const styles: CollapseSemanticSlots = {
-    root: 'padding-top:7px;background:#112233', header: 'padding-top:13px;color:#773355',
-    title: 'padding-top:3px;color:#335577', body: 'padding-top:4px;color:#7799bb',
-    icon: 'padding-top:5px;color:#337755'
+    root: 'padding-top:7px;'
+      + 'background:#112233', header: 'padding-top:13px;'
+      + 'color:#773355',
+    title: 'padding-top:3px;'
+      + 'color:#335577', body: 'padding-top:4px;'
+      + 'color:#7799bb',
+    icon: 'padding-top:5px;'
+      + 'color:#337755'
   };
   const flag = (info: CollapseSemanticInfo) => [
     `flag-size-${info.props.size}`, `flag-placement-${info.props.expandIconPlacement}`,
@@ -54,7 +59,8 @@
     class: 'provider-owner', style: 'padding-top:5px',
     classNames: { root: 'provider-root', header: 'provider-header', title: 'provider-title',
       body: 'provider-body', icon: 'provider-icon' },
-    styles: { root: 'padding-top:3px;background:red', header: 'color:purple', title: 'color:red',
+    styles: { root: 'padding-top:3px;'
+      + 'background:red', header: 'color:purple', title: 'color:red',
       body: 'color:blue', icon: 'color:orange' }
   } satisfies CollapseConfig;
   let providerConfig = $derived<CollapseConfig>(sample.provider === 'icon' ? {
@@ -146,7 +152,8 @@
 <ConfigProvider componentSize={sample.providerSize} theme={sourceTheme} direction={sample.rtl ? 'rtl' : 'ltr'}
   collapse={sample.provider ? providerConfig : undefined}>
   <ConfigProvider collapse={sample.childProvider === 'empty' ? {} : undefined}>
-    <div {...frameAttributes} data-collapse-source-frame style="width:600px;max-width:100%">
+    <div {...frameAttributes} data-collapse-source-frame style={'width:600px;'
+      + 'max-width:100%'}>
       {#if mounted}<Collapse {...collapseProps} bind:nativeElement bind:ref />{/if}
     </div>
   </ConfigProvider>

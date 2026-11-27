@@ -20,7 +20,9 @@
   let customRoot = $state<HTMLButtonElement>();
   let editor = $state<HTMLInputElement>();
   let root = $derived(customRoot ?? defaultRoot);
-  const ownStyle = 'width:220px;color:rgb(90,30,20);--inert-api-own-root:own';
+  const ownStyle = 'width:220px;'
+    + 'color:rgb(90,30,20);'
+    + '--inert-api-own-root:own';
   // A receipt from the actual semantic callback; no state writes inside derived rendering.
   const capture: { semantic: unknown } = { semantic: null };
   function record(...entry: unknown[]) { events = [...events, entry]; }
@@ -29,7 +31,9 @@
   let resolved = $derived.by(() => {
     const spec = treeSelectInertApiPropSpec(sample, mode);
     const style = spec.style === 'empty' ? '' : spec.style
-      ? `outline:${spec.style.outlineWidth}px solid rgb(1,2,3);width:${spec.style.width}px;--inert-api-ignored-popup:${spec.style.marker}` : undefined;
+      ? `outline:${spec.style.outlineWidth}px solid rgb(1,2,3);`
+        + `width:${spec.style.width}px;`
+        + `--inert-api-ignored-popup:${spec.style.marker}` : undefined;
     const callback = spec.callback ? mode === 'live' ? liveCallback : providedCallback : undefined;
     const props: InertProps = spec.keys ? { onPopupVisibleChange: callback, popupStyle: style,
       choiceTransitionName: spec.choice, direction: spec.direction } : {};
@@ -45,7 +49,8 @@
         sameReference: info.props.popupStyle === resolved.style }
     };
     return { root: '--inert-api-semantic-root:semantic',
-      popup: { root: 'outline:7px solid rgb(11,22,33);--inert-api-semantic-popup:semantic' } };
+      popup: { root: 'outline:7px solid rgb(11,22,33);'
+        + '--inert-api-semantic-popup:semantic' } };
   }
   function semanticReceipt() {
     // Refresh the receipt after a consumer update, keeping the callback itself pure.
@@ -94,10 +99,17 @@
   <input {...context.attributes} data-inert-api-input {@attach context.register} />
   <output data-inert-api-received hidden>{received(context.attributes, 'input')}</output>
 {/snippet}
-<ConfigProvider direction={sample.provider} style="direction:ltr;font-family:initial;font-size:16px;line-height:normal"
+<ConfigProvider direction={sample.provider} style={'direction:ltr;'
+  + 'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}
   theme={{ token: { motion: false }, cssVar: { key: 'tree-select-inert-api' } }}>
   <div data-inert-api-case={sample.id} data-inert-api-bound={Boolean(root && control && (sample.slot === 'root' || editor))}
-    style="margin:160px;direction:ltr;font-family:initial;font-size:16px;line-height:normal">
+    style={'margin:160px;'
+      + 'direction:ltr;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
     {#if sample.slot === 'root'}
       <TreeSelect {...common} components={{ root: { render: rootRender, props: { dir: sample.ownDir, style: ownStyle } } }}
         bind:this={control} bind:nativeElement={customRoot} bind:inputElement={editor} />
@@ -121,6 +133,7 @@
         node.removeEventListener('inertapirefs', refs);
       };
     }}></div>
-    <button type="button" style="display:block;margin-top:320px">Outside inert API</button>
+    <button type="button" style={'display:block;'
+      + 'margin-top:320px'}>Outside inert API</button>
   </div>
 </ConfigProvider>

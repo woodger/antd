@@ -296,12 +296,28 @@
 
 <style>
   :global(html:has(dialog.image-preview-dialog[open])) { overflow: hidden; }
-  .image-preview-dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; overflow: hidden; color: var(--ant-color-text-light-solid); }
+  .image-preview-dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+    color: var(--ant-color-text-light-solid);
+  }
   .image-preview-dialog:not([open]) { display: none; }
   .image-preview-dialog::backdrop { background: transparent; }
   [data-ant-image-preview-img] { touch-action: none; }
   [data-ant-image-preview-img].moving { transition-duration: 0s; }
-  [data-ant-image-preview-action]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
+  [data-ant-image-preview-action]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
   @media (prefers-reduced-motion: reduce) { .image-preview-dialog [data-ant-image-preview-img] { transition: none; } }
 </style>
 
@@ -314,7 +330,8 @@
             ? '-'
             : ''}${transform.scale},${transform.flipY
               ? '-'
-              : ''}${transform.scale},1) rotate(${transform.rotate}deg);${switching
+              : ''}${transform.scale},1) rotate(${transform.rotate}deg);`
+      + `${switching
                 ? 'transition-duration:0s;'
                 : ''}`}
     onerror={event => {

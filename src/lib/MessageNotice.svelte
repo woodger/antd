@@ -163,13 +163,24 @@
 
 <style>
   :global([data-ant-message-top]) > :global([data-ant-message-content]) > [data-ant-message-notice] {
-    position: relative; top: auto; left: auto; transform: none; max-width: 100%;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    max-width: 100%;
   }
   [data-ant-message-notice][data-ant-message-native-motion] { transition: none; }
   :global([data-ant-message-top]) > :global([data-ant-message-content]) > [data-ant-message-obscured] {
-    position: absolute; inset-block-start: 0; inset-inline: auto; opacity: 0; pointer-events: none;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: auto;
+    opacity: 0;
+    pointer-events: none;
   }
-  [data-ant-message-title] { min-width: 0; overflow-wrap: anywhere; }
+  [data-ant-message-title] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   [data-ant-message-wrapper] { min-width: 0; }
   [data-ant-message-icon] { display: inline-flex; }
   .message-source-theme [data-ant-message-icon] { display: block; }

@@ -14,7 +14,8 @@
   <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M0 0h12v12H0z" /></svg>
 {/snippet}
 
-<div data-segmented-prefix-case={id} style="width:360px;color:rgb(31,41,51)">
+<div data-segmented-prefix-case={id} style={'width:360px;'
+  + 'color:rgb(31,41,51)'}>
   <ConfigProvider direction={id === 'vertical' ? 'rtl' : 'ltr'}>
     <Segmented bind:value bind:nativeElement prefixCls={prefix} name={`prefix-${id}`}
       aria-label={`Prefix control ${id}`}

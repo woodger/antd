@@ -82,8 +82,10 @@
   }
 </script>
 
-{#snippet clearIcon()}<strong style="display:inline-flex;line-height:1">Custom input clear</strong>{/snippet}
-{#snippet contextIcon()}<span style="display:inline-flex;line-height:1">Context input clear</span>{/snippet}
+{#snippet clearIcon()}<strong style={'display:inline-flex;'
+  + 'line-height:1'}>Custom input clear</strong>{/snippet}
+{#snippet contextIcon()}<span style={'display:inline-flex;'
+  + 'line-height:1'}>Context input clear</span>{/snippet}
 {#snippet formattedCount(info: InputCountInfo)}<strong>{info.count} of {info.maxLength ?? '∞'}</strong>{/snippet}
 {#snippet prefixContent()}<span>Prefix</span>{/snippet}
 {#snippet suffixContent()}<span>Suffix</span>{/snippet}

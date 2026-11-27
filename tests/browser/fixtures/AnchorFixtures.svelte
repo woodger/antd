@@ -34,8 +34,11 @@
   <label>Anchor target offset <input type="number" bind:value={targetOffset} /></label>
   <output aria-label="Anchor changes">{JSON.stringify(changes)}</output>
   <output aria-label="Anchor clicked">{clicked}</output>
-  <div style="display:flex;gap:16px;align-items:start">
-    <div style="width:190px;min-width:0">
+  <div style={'display:flex;'
+    + 'gap:16px;'
+    + 'align-items:start'}>
+    <div style={'width:190px;'
+      + 'min-width:0'}>
       {#if mounted}
         <Anchor
           id="fixture-anchor"
@@ -61,7 +64,11 @@
     <div
       bind:this={container}
       id="anchor-scroll"
-      style="height:240px;overflow:auto;flex:1;min-width:0;background:var(--ant-color-fill-quaternary)"
+      style={'height:240px;'
+        + 'overflow:auto;'
+        + 'flex:1;'
+        + 'min-width:0;'
+        + 'background:var(--ant-color-fill-quaternary)'}
     >
       <div id="anchor-one" style="height:180px">First</div>
       <div id="anchor-nested" style="height:180px">Nested</div>

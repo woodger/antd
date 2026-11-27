@@ -74,10 +74,25 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label { display: block; margin-block: 8px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .surface { max-width: 640px; padding: 20px; background: var(--ant-color-bg-container); }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label {
+    display: block;
+    margin-block: 8px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .surface {
+    max-width: 640px;
+    padding: 20px;
+    background: var(--ant-color-bg-container);
+  }
 </style>
 
 <svelte:window

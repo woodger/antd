@@ -25,7 +25,9 @@
 {#snippet panelEditor()}<input aria-label={`${scope} panel draft`} value="panel draft" />{/snippet}
 <div data-structure-prefix-scope={scope} style="width:480px">
   <div data-prefix-widget="affix">
-    <div bind:this={target} data-affix-prefix-target style="height:80px;width:140px;overflow:auto">
+    <div bind:this={target} data-affix-prefix-target style={'height:80px;'
+      + 'width:140px;'
+      + 'overflow:auto'}>
       <div style="height:200px">
         <Affix prefixCls={prefix('affix')} offsetTop={0} target={() => target ?? null}>
           <div style="height:24px">Affixed</div>

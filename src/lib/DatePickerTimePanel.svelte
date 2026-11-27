@@ -288,8 +288,20 @@
   }
 </script>
 <style>
-  button { color:inherit;width:100%;border:0;background:transparent;font:inherit;text-align:inherit;padding:0;cursor:pointer; }
-  button:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:-2px; }
+  button {
+    color:inherit;
+    width:100%;
+    border:0;
+    background:transparent;
+    font:inherit;
+    text-align:inherit;
+    padding:0;
+    cursor:pointer;
+  }
+  button:focus-visible {
+    outline:2px solid var(--ant-color-primary);
+    outline-offset:-2px;
+  }
 </style>
 <div bind:this={root} class={`${prefixCls}-time-panel`}>
   <div class={[`${prefixCls}-header`, classNames?.header]} style={styles?.header}>

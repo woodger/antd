@@ -75,12 +75,17 @@
         theme={{ hashed: false, cssVar: {}, components: sample.aliases ? { App: {
           colorText: '#123456', fontSize: 20, fontFamily: 'monospace', lineHeight: 2
         } } : undefined }}
-        app={sample.context ? { class: 'context-app', style: 'color:#abcdef;padding:5px' } : undefined}
+        app={sample.context ? { class: 'context-app', style: 'color:#abcdef;'
+          + 'padding:5px' } : undefined}
         style={sample.component === false
-          ? 'color:#000;font-size:16px;line-height:normal;font-family:"Times New Roman"' : undefined}>
+          ? 'color:#000;'
+            + 'font-size:16px;'
+            + 'line-height:normal;'
+            + 'font-family:"Times New Roman"' : undefined}>
         <App component={sample.component ?? component} prefixCls={sample.prefix}
           class={sample.local ? 'local-app' : undefined}
-          style={sample.local ? 'color:#112233;padding:7px' : undefined}
+          style={sample.local ? 'color:#112233;'
+            + 'padding:7px' : undefined}
           message={{ maxCount, duration, top }}
           notification={{ maxCount, duration, placement, top, bottom: 50 }}
           bind:nativeElement>

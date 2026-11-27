@@ -32,7 +32,8 @@
     `--${sample.prefix}-color-link-hover:#389e0d`,
     `--${sample.prefix}-color-link-active:#531dab`
   ].join(';') : undefined);
-  let inlineStyle = $derived(sample.inline ? 'text-decoration:underline;color:rgb(0,128,0)' : undefined);
+  let inlineStyle = $derived(sample.inline ? 'text-decoration:underline;'
+    + 'color:rgb(0,128,0)' : undefined);
 </script>
 
 <section id="list-links-fixture">
@@ -45,7 +46,9 @@
   <button type="button" onclick={() => { preset = 'custom'; }}>Update list link tokens</button>
   <ConfigProvider theme={configured} direction={sample.rtl ? 'rtl' : 'ltr'}>
     {#if mounted}
-      <div style="width:600px;max-width:90vw;margin:40px" dir={sample.rtl ? 'rtl' : 'ltr'}>
+      <div style={'width:600px;'
+        + 'max-width:90vw;'
+        + 'margin:40px'} dir={sample.rtl ? 'rtl' : 'ltr'}>
         <Listy style={rootStyle} {items} rowKey="id" virtual={false}>
           {#snippet itemRender()}<a id="list-link-row" href="#row" style={inlineStyle}
             onclick={() => clicks++}>Row link</a>{/snippet}

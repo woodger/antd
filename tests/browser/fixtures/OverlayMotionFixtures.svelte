@@ -82,8 +82,22 @@
     animation: studyPulseOut 160ms both;
   }
 
-  @keyframes -global-studyPulseIn { from { opacity: 0.3; } to { opacity: 1; } }
-  @keyframes -global-studyPulseOut { from { opacity: 1; } to { opacity: 0.3; } }
+  @keyframes -global-studyPulseIn {
+    from {
+      opacity: 0.3;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes -global-studyPulseOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.3;
+    }
+  }
 </style>
 
 {#snippet payload()}

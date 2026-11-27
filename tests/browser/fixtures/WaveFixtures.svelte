@@ -90,7 +90,8 @@
         <Button id="wave-href" href="#wave-fixture">Wave anchor</Button>
         <Button id="wave-disabled" disabled>Disabled wave button</Button>
         <Button id="wave-loading" loading>Loading wave button</Button>
-        <Button id="wave-white" style="border-color:white;background-color:white">Fallback wave</Button>
+        <Button id="wave-white" style={'border-color:white;'
+          + 'background-color:white'}>Fallback wave</Button>
         <Checkbox id="wave-checkbox" name="wave-check" value="yes"
           onChange={() => changes++}>Wave checkbox</Checkbox>
         <Radio id="wave-radio" name="wave-radio" onChange={() => changes++}>Wave radio</Radio>

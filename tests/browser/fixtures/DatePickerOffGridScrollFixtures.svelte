@@ -16,7 +16,10 @@
 
 <ConfigProvider locale={enUS} {theme}>
   <section id="date-picker-offgrid-scroll-fixture"
-    style="position:absolute;left:320px;top:120px;width:320px">
+    style={'position:absolute;'
+      + 'left:320px;'
+      + 'top:120px;'
+      + 'width:320px'}>
     <DatePicker id="offgrid-scroll-input" {value} {open} {showTime} showNow={false}
       format="YYYY-MM-DD HH:mm" style="width:100%"
       disabledTime={disableZero ? restrictedTime : enabledTime}

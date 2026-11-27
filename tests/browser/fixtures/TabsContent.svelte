@@ -13,7 +13,10 @@
 </script>
 
 <style>
-  label { display: block; margin-block: 12px; }
+  label {
+    display: block;
+    margin-block: 12px;
+  }
 </style>
 
 <label>{name} draft<Input defaultValue={`${name} initial`} name={name} /></label>

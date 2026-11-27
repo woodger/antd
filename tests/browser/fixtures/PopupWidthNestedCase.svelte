@@ -30,7 +30,10 @@
   let control = $state<object>();
   let publicRoot = $state<HTMLDivElement>();
   let cascaderEditor = $state<HTMLInputElement>();
-  let positionStyle = $derived(`position:absolute;left:${popupWidthGeometry.plain.left}px;top:${popupWidthGeometry.plain.top}px;width:${anchorWidth}px`);
+  let positionStyle = $derived(`position:absolute;`
+    + `left:${popupWidthGeometry.plain.left}px;`
+    + `top:${popupWidthGeometry.plain.top}px;`
+    + `width:${anchorWidth}px`);
 
   function getRoot() {
     if (!host) {
@@ -135,7 +138,10 @@
 
 <section data-width-case={sample.id} data-width-family={sample.family} data-width-count={sample.count ?? 2}
   data-width-bound={Boolean(control)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal;direction:ltr">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal;'
+    + 'direction:ltr'}>
   <ConfigProvider {...outerProps} getPopupContainer={globalContainer} popupOverflow="viewport" {theme} locale={enUS}>
     <ConfigProvider {...innerProps}>
       <div data-width-position style={positionStyle}>
@@ -158,7 +164,9 @@
       </div>
     </ConfigProvider>
   </ConfigProvider>
-  <button type="button" data-width-outside style="position:fixed;left:16px;top:80px">Outside width</button>
+  <button type="button" data-width-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside width</button>
   <output data-width-receipts hidden>{JSON.stringify(readReceipts())}</output>
   <output data-width-model hidden>{JSON.stringify(model)}</output>
   <output data-width-query hidden>{JSON.stringify(query)}</output>
@@ -176,4 +184,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

@@ -55,7 +55,8 @@
     model.resetFields();
   }}>Reset token field</button>
   <button type="button" data-token-unmount onclick={() => { active = false; }}>Unmount token field</button>
-  <button type="button" style="display:block;margin-top:320px">Outside token lifecycle</button>
+  <button type="button" style={'display:block;'
+    + 'margin-top:320px'}>Outside token lifecycle</button>
   <output data-token-native-events>{JSON.stringify(nativeEvents)}</output>
   <output data-token-lifecycle-events>{JSON.stringify(events)}</output>
   <output data-token-splits>{JSON.stringify(splits)}</output>

@@ -33,15 +33,19 @@
 </script>
 
 <section data-calendar-prefix-host data-picker-prefix={prefix} data-root-prefix={rootPrefix}
-  style="width:760px;padding:16px">
+  style={'width:760px;'
+    + 'padding:16px'}>
   <Calendar prefixCls={local ? sample.local : undefined} class="fixture-calendar-prefix"
     bind:nativeElement {value} mode={sample.year ? 'year' : mode}
     fullscreen={!sample.mini} showWeek={sample.week}
     validRange={sample.range ? [dayjs('2024-09-01'), dayjs('2024-11-30')] : undefined}
     disabledDate={date => date.date() === 18}
-    style={`width:${sample.mini ? 320 : 760}px;${sample.priority ? 'font-size:28px;color:green' : ''}`}
+    style={`width:${sample.mini ? 320 : 760}px;`
+      + `${sample.priority ? 'font-size:28px;'
+      + 'color:green' : ''}`}
     styles={sample.priority ? {
-      root: 'font-size:30px;color:#531dab', header: 'padding-top:11px',
+      root: 'font-size:30px;'
+        + 'color:#531dab', header: 'padding-top:11px',
       itemContent: 'color:#eb2f96'
     } : undefined}
     aria-label="Prefix calendar"

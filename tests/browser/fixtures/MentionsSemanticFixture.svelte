@@ -27,13 +27,22 @@
     allowClear: { clearIcon: contextIcon },
     classNames: slots(revised ? 'revised' : 'context'),
     styles: ({ props }) => ({
-      root: 'margin-top:4px;padding-bottom:4px',
-      textarea: 'font:inherit;font-family:monospace;font-size:16px;letter-spacing:'
+      root: 'margin-top:4px;'
+        + 'padding-bottom:4px',
+      textarea: (
+        'font:inherit;'
+        + 'font-family:monospace;'
+        + 'font-size:16px;'
+        + 'letter-spacing:'
+      )
         + (props.status === 'error' ? '3px' : '1px'),
-      popup: 'background-color:#aabbcc;padding-top:3px;z-index:5',
+      popup: 'background-color:#aabbcc;'
+        + 'padding-top:3px;'
+        + 'z-index:5',
       suffix: 'opacity:0.65'
     }),
-    style: 'margin-top:5px;padding-bottom:5px'
+    style: 'margin-top:5px;'
+      + 'padding-bottom:5px'
   });
 
   const classes: MentionsSemantic = ({ props }) => ({
@@ -42,9 +51,11 @@
       + '-' + String(Boolean(props.disabled))
   });
   let styles = $derived<MentionsSlots>({
-    root: 'margin-top:7px;padding-bottom:7px',
+    root: 'margin-top:7px;'
+      + 'padding-bottom:7px',
     textarea: profile === 'autosize' ? (revised ? 'height:71px' : 'height:59px') : undefined,
-    popup: 'padding-top:9px;z-index:0'
+    popup: 'padding-top:9px;'
+      + 'z-index:0'
   });
 
   /** Локальный portal запрашивается при первом открытии. */
@@ -78,7 +89,8 @@
     autoSize={autoSize ? { minRows: 1, maxRows: 2 } : false}
     classNames={classes}
     {styles}
-    style="margin-top:9px;resize:vertical"
+    style={'margin-top:9px;'
+      + 'resize:vertical'}
     aria-label="Mention"
     onChange={value => events.push(['change', value])}
     onSelect={select}

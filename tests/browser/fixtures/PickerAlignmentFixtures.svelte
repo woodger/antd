@@ -101,7 +101,13 @@
     theme={{ token: { motion: false } }}>
     {#if sample.container}
       <div id="clip" bind:this={clip}
-        style="position:absolute;left:90px;top:82px;width:487px;height:378px;overflow:auto;border:3px solid black">
+        style={'position:absolute;'
+          + 'left:90px;'
+          + 'top:82px;'
+          + 'width:487px;'
+          + 'height:378px;'
+          + 'overflow:auto;'
+          + 'border:3px solid black'}>
         {@render picker()}
         {#if sample.scroll}
           <div aria-hidden="true" style:height="900px"></div>

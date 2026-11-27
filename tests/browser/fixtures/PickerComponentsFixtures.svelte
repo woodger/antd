@@ -161,7 +161,9 @@
     </div>
   </form>
 </ConfigProvider>
-<button id="outside" type="button" style="position:fixed;right:16px;bottom:16px">Outside</button>
+<button id="outside" type="button" style={'position:fixed;'
+  + 'right:16px;'
+  + 'bottom:16px'}>Outside</button>
 <button id="appearance" type="button" onclick={() => { appearances = !appearances; }}>Appearance</button>
 <button id="ordinary-input" type="button" onclick={() => { replacement = 'missing'; }}>Default input</button>
 <button id="textarea-input" type="button" onclick={() => { replacement = 'textarea'; }}>Textarea</button>

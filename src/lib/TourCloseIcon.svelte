@@ -3,8 +3,22 @@
 </script>
 
 <style>
-  span { display: inline-flex; align-items: center; color: inherit; font-style: normal; line-height: 0; vertical-align: -0.125em; text-align: center; text-transform: none; }
-  svg { display: inline-block; width: 1em; height: 1em; fill: currentColor; }
+  span {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    vertical-align: -0.125em;
+    text-align: center;
+    text-transform: none;
+  }
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
 </style>
 
 <span class={['anticon', 'anticon-close', className]} aria-hidden="true"><svg

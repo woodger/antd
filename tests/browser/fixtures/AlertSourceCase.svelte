@@ -32,10 +32,16 @@
     description: 'local-description', actions: 'local-actions', close: 'local-close'
   };
   const styles: AlertSemanticSlots = {
-    root: 'padding-top:7px;background:#112233', icon: 'color:#773355;padding-top:2px',
-    section: 'padding-top:3px', title: 'color:#335577;padding-top:4px',
-    description: 'color:#7799bb;padding-top:5px', actions: 'color:#337755;padding-top:6px',
-    close: 'color:#553377;padding-top:8px'
+    root: 'padding-top:7px;'
+      + 'background:#112233', icon: 'color:#773355;'
+      + 'padding-top:2px',
+    section: 'padding-top:3px', title: 'color:#335577;'
+      + 'padding-top:4px',
+    description: 'color:#7799bb;'
+      + 'padding-top:5px', actions: 'color:#337755;'
+      + 'padding-top:6px',
+    close: 'color:#553377;'
+      + 'padding-top:8px'
   };
   const flag = (info: AlertSemanticInfo) => [
     `type-${info.props.type}`, `variant-${info.props.variant}`, `prefix-${info.props.prefixCls}`,
@@ -52,7 +58,8 @@
       actions: 'provider-actions', close: 'provider-close'
     },
     styles: {
-      root: 'padding-top:3px;background:red', icon: 'color:purple', section: 'padding-top:1px',
+      root: 'padding-top:3px;'
+        + 'background:red', icon: 'color:purple', section: 'padding-top:1px',
       title: 'color:red', description: 'color:blue', actions: 'color:orange', close: 'color:green'
     }
   } satisfies AlertConfig;
@@ -123,7 +130,8 @@
 <ConfigProvider theme={sourceTheme} direction={sample.rtl ? 'rtl' : 'ltr'}
   alert={sample.provider ? providerConfig : undefined}>
   <ConfigProvider alert={sample.childProvider === 'empty' ? {} : undefined}>
-    <div data-alert-source-frame style="width:600px;max-width:100%">
+    <div data-alert-source-frame style={'width:600px;'
+      + 'max-width:100%'}>
       {#if mounted}<Alert {...alertProps} bind:nativeElement bind:ref />{/if}
     </div>
   </ConfigProvider>

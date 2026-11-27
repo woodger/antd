@@ -13,7 +13,10 @@
 </script>
 
 <section id="select-surface-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Select surface sample
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>Select surface sample
     <select bind:value={selected} onchange={() => { active = true; }}>
       {#each selectSurfaceSamples as entry}<option value={entry.id}>{entry.id}</option>{/each}
     </select>

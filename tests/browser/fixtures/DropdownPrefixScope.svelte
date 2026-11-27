@@ -28,7 +28,8 @@
 
 {#snippet icon()}★{/snippet}
 {#snippet label()}<strong>Rich label</strong>{/snippet}
-<section data-dropdown-prefix-scope={scope} style="width:480px;padding:240px 20px">
+<section data-dropdown-prefix-scope={scope} style={'width:480px;'
+  + 'padding:240px 20px'}>
   <Dropdown prefixCls={local ? sample.local : undefined} bind:open
     trigger={['click']} arrow={sample.arrow} placement={sample.placement}
     {getPopupContainer} aria-label="Prefix commands" onOpenChange={value => changes.push(value)}

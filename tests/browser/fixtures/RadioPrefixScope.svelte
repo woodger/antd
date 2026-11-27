@@ -37,7 +37,8 @@
 {#snippet alpha()}{@render label('Alpha')}{/snippet}
 {#snippet beta()}{@render label('Beta')}{/snippet}
 {#snippet gamma()}{@render label('Gamma')}{/snippet}
-<form data-radio-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-radio-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <Radio prefixCls={prefix} defaultChecked value="solo" name={`${scope}-solo`}
     disabled={sample.disabled} class="fixture-radio-single" bind:inputElement bind:nativeElement>

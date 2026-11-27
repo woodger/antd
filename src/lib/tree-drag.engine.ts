@@ -106,5 +106,9 @@ export function treeDropIndicatorStyle(state: TreeDropState, indent: number, rtl
   const start = rtl ? 'right' : 'left';
   const end = rtl ? 'left' : 'right';
   const inset = state.dropPosition === 0 ? indent + 4 : -state.dropLevelOffset * indent + 4;
-  return `${start}:${inset}px;${end}:0;${state.dropPosition === -1 ? 'top' : 'bottom'}:-3px`;
+  return (
+    `${start}:${inset}px;`
+    + `${end}:0;`
+    + `${state.dropPosition === -1 ? 'top' : 'bottom'}:-3px`
+  );
 }

@@ -7,7 +7,10 @@
 </script>
 
 <section id="select-virtual-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'z-index:1'}>
     Select virtual sample
     <select bind:value={selected}>
       {#each selectVirtualSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}

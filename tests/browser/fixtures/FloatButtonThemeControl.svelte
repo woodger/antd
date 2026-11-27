@@ -15,18 +15,27 @@
   let menu = $derived(id === 'group-menu' || id === 'rtl');
   let styled = $derived(priority || id === 'priority');
   let style = $derived(styled
-    ? 'width:58px;bottom:19px;gap:9px;color:rgb(255,0,0);z-index:77'
+    ? 'width:58px;'
+      + 'bottom:19px;'
+      + 'gap:9px;'
+      + 'color:rgb(255,0,0);'
+      + 'z-index:77'
     : id === 'variable' ? `--${prefix}-control-height-lg:61px` : undefined);
   let styles = $derived(styled ? {
-    root: `width:62px;color:rgb(0,128,0);--${prefix}-padding-xxs:7px`,
+    root: `width:62px;`
+      + `color:rgb(0,128,0);`
+      + `--${prefix}-padding-xxs:7px`,
     icon: 'color:rgb(0,0,255)'
   } : undefined);
 </script>
 
 <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'} button={buttonStyle ? {
-  style: `--${prefix}-padding-xxs:5px;color:rgb(255,0,255)`
+  style: `--${prefix}-padding-xxs:5px;`
+    + `color:rgb(255,0,255)`
 } : undefined}>
-  <div data-float-theme={id} style="width:360px;height:260px;transform:translateZ(0)">
+  <div data-float-theme={id} style={'width:360px;'
+    + 'height:260px;'
+    + 'transform:translateZ(0)'}>
     <form onsubmit={event => {
       event.preventDefault();
       submissions++;
@@ -44,7 +53,9 @@
           open={menu ? true : undefined}
           placement={id === 'rtl' ? 'right' : 'top'}
           type="primary"
-          style={styled ? 'bottom:19px;gap:9px;z-index:77' : undefined}
+          style={styled ? 'bottom:19px;'
+            + 'gap:9px;'
+            + 'z-index:77' : undefined}
           styles={styled ? {
             root: 'gap:13px', list: 'gap:11px', item: 'color:rgb(0,128,0)',
             trigger: 'color:rgb(0,0,255)'

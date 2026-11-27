@@ -20,7 +20,9 @@
 }}>
   <Anchor {items} {affix} getContainer={browserOnly} getCurrentAnchor={browserOnly}
     onChange={browserOnly} offsetTop={30}
-    styles={semantic ? { root: '--ant-anchor-link-padding-inline-start:31px;max-height:200px' }
+    styles={semantic ? { root: '--ant-anchor-link-padding-inline-start:31px;'
+      + 'max-height:200px' }
       : undefined}
-    style={semantic ? '--ant-anchor-link-padding-inline-start:37px;max-height:100px' : undefined} />
+    style={semantic ? '--ant-anchor-link-padding-inline-start:37px;'
+      + 'max-height:100px' : undefined} />
 </ConfigProvider>

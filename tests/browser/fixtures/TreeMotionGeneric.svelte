@@ -20,7 +20,8 @@
   }
 </script>
 
-<section id="tree-motion-generic-fixture" style="width:360px;margin:64px">
+<section id="tree-motion-generic-fixture" style={'width:360px;'
+  + 'margin:64px'}>
   <ConfigProvider prefixCls={prefix}>
     <Tree treeData={nodes} fieldNames={{ key: 'id', title: 'caption', children: 'nodes' }}
       defaultExpandParent={false} onExpand={expand} titleRender={title} />

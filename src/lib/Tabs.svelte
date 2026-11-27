@@ -297,8 +297,14 @@
 </script>
 
 <style>
-  [data-ant-tabs-root] { min-width: 0; max-width: 100%; }
-  [data-ant-tabs-part="empty"] { padding: var(--ant-padding-sm); color: var(--ant-color-text-description); }
+  [data-ant-tabs-root] {
+    min-width: 0;
+    max-width: 100%;
+  }
+  [data-ant-tabs-part="empty"] {
+    padding: var(--ant-padding-sm);
+    color: var(--ant-color-text-description);
+  }
 </style>
 
 {#snippet defaultMore()}<TabsMoreIcon />{/snippet}

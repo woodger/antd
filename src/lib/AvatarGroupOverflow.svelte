@@ -36,12 +36,48 @@
 </script>
 
 <style>
-  .ant-avatar-group-more { display: inline-flex; padding: 0; margin: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; font: inherit; vertical-align: middle; cursor: pointer; }
-  .ant-avatar-group-more:focus-visible { position: relative; z-index: 1; outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  .ant-avatar-group-list { display: grid; gap: var(--ant-avatar-group-space); padding: 0; margin: 0; list-style: none; max-width: 100%; }
-  .ant-avatar-group-list li { display: flex; align-items: center; gap: 8px; min-width: 0; }
-  .ant-avatar-group-name { min-width: 0; overflow-wrap: anywhere; }
-  @media (prefers-reduced-motion: reduce) { .ant-avatar-group-more { transition: none; animation: none; } }
+  .ant-avatar-group-more {
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  .ant-avatar-group-more:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  .ant-avatar-group-list {
+    display: grid;
+    gap: var(--ant-avatar-group-space);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    max-width: 100%;
+  }
+  .ant-avatar-group-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .ant-avatar-group-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ant-avatar-group-more {
+      transition: none;
+      animation: none;
+    }
+  }
 </style>
 
 {#snippet hiddenItems()}<ul class="ant-avatar-group-list" aria-label={strings.hiddenLabel}>{#each items as { key, label, text, ...item } (key)}

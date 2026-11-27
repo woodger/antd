@@ -22,7 +22,14 @@
   let provider = $derived<FlexConfig | undefined>(alternate ? {
     vertical: true, class: 'alternate-flex', style: 'gap:37px'
   } : sample.provider);
-  const itemStyle = 'all:unset;box-sizing:border-box;width:60px;height:30px;flex-shrink:0;font:inherit;color:inherit;border:1px solid black';
+  const itemStyle = 'all:unset;'
+    + 'box-sizing:border-box;'
+    + 'width:60px;'
+    + 'height:30px;'
+    + 'flex-shrink:0;'
+    + 'font:inherit;'
+    + 'color:inherit;'
+    + 'border:1px solid black';
 </script>
 
 {#snippet items()}
@@ -33,7 +40,9 @@
 
 <ConfigProvider flex={provider} direction={sample.rtl ? 'rtl' : 'ltr'} theme={flexSourceTheme(sample)}>
   <ConfigProvider flex={sample.child ?? undefined}>
-    <div data-flex-source style={`width:${sample.width ?? 360}px;font:21px/31px Arial;color:rgb(20,30,40)`}>
+    <div data-flex-source style={`width:${sample.width ?? 360}px;`
+      + `font:21px/31px Arial;`
+      + `color:rgb(20,30,40)`}>
       {#if mounted}<Flex {...raw} component={Root} label="Root" bind:nativeElement
         prefixCls={prefixOverride ?? sample.props.prefixCls}
         children={sample.empty ? undefined : items} onclick={event => {

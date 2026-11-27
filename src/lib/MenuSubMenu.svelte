@@ -97,7 +97,8 @@
     || context.mode !== 'inline' && (childrenActive
       || entry.children.some(child => contains(child, context.active)))));
   const nestedStyle = $derived(context.componentTheme.className
-    ? `${context.componentTheme.inheritedStyle};color:inherit;font:inherit` : undefined);
+    ? `${context.componentTheme.inheritedStyle};color:inherit;`
+      + `font:inherit` : undefined);
   let selected = $derived(
     context.selected.some(key => entry.children.some(child => contains(child, key)))
   );
@@ -427,16 +428,40 @@
 </script>
 
 <style>
-  [data-ant-menu-submenu-title] { display: block; width: 100%; padding-block: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; }
-  [data-ant-menu-submenu-title]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
-  .menu-popup { position: fixed; margin: 0; border: 0; overflow: visible; background: transparent; }
+  [data-ant-menu-submenu-title] {
+    display: block;
+    width: 100%;
+    padding-block: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+  }
+  [data-ant-menu-submenu-title]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: -2px;
+  }
+  .menu-popup {
+    position: fixed;
+    margin: 0;
+    border: 0;
+    overflow: visible;
+    background: transparent;
+  }
   .menu-popup[data-ant-dropdown-prefix] { z-index: var(--ant-dropdown-z-index-popup, 1050); }
   /* Horizontal vendor display не должен раскрывать forceSubMenuRender popup. */
   .menu-popup[hidden] { display: none; }
   .menu-popup:global(.ant-menu-source-theme) { border-radius: var(--ant-border-radius-lg); }
   [data-ant-dropdown-branch] { position: relative; }
   [data-ant-dropdown-branch] > [data-ant-menu-submenu-title] { padding-inline-end: calc(var(--ant-control-padding-horizontal) + var(--ant-font-size-sm)); }
-  .dropdown-arrow { position: absolute; inset-inline-end: var(--ant-padding-xs); display: inline-flex; color: var(--ant-color-icon); font-size: var(--ant-font-size-icon); }
+  .dropdown-arrow {
+    position: absolute;
+    inset-inline-end: var(--ant-padding-xs);
+    display: inline-flex;
+    color: var(--ant-color-icon);
+    font-size: var(--ant-font-size-icon);
+  }
 
   @media (prefers-reduced-motion: reduce) {
     [data-ant-dropdown-branch][data-ant-dropdown-menu-prefix] > [data-ant-menu-submenu-title] {
@@ -485,8 +510,11 @@
         : undefined)}
     style={[
         !dropdown && context.componentTheme.className && (context.mode === 'horizontal' && !entry.parent
-          ? 'width:auto;padding-inline:0'
-          : 'width:stretch;min-width:var(--ant-menu-item-width);max-width:var(--ant-menu-item-width)'),
+          ? 'width:auto;'
+            + 'padding-inline:0'
+          : 'width:stretch;'
+            + 'min-width:var(--ant-menu-item-width);'
+            + 'max-width:var(--ant-menu-item-width)'),
         context.mode === 'inline' && `padding-${context.direction === 'rtl'
           ? 'right' : 'left'}:${entry.level * context.inlineIndent}px`
       ].filter(Boolean).join(';') || undefined}

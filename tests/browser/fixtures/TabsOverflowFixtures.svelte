@@ -80,7 +80,10 @@
     if (portal) props.getPopupContainer = () => document.getElementById('tabs-more-container')!;
     if (styled) {
       props.overlayClassName = 'tabs-more-custom';
-      props.overlayStyle = 'background:rgb(1,2,3);--ant-color-text:rgb(20,40,60)';
+      props.overlayStyle = (
+        'background:rgb(1,2,3);'
+        + '--ant-color-text:rgb(20,40,60)'
+      );
     }
     return props;
   });

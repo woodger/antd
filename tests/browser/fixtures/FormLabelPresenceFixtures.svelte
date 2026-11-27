@@ -39,7 +39,8 @@
   }}>Seed unlabelled metadata</button>
   <button type="button" onclick={() => { required = true; }}>Require unlabelled field</button>
   <ConfigProvider direction={sample.direction} theme={{ cssVar: {}, token: { motion: false } }}>
-    <div style={`width:360px;direction:${sample.direction}`} data-label-presence-case>
+    <div style={`width:360px;`
+      + `direction:${sample.direction}`} data-label-presence-case>
       <Form form={model} layout="horizontal" {...sample.form}
         onFinishFailed={() => { failed += 1; }}>
         <FormItem name="name" {label} class="columns-root" {...sample.item}

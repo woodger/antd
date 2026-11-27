@@ -63,7 +63,10 @@
 
 <style>
   #modal-interaction-fixture { min-height: 2000px; }
-  #interaction-opener, #interaction-background { position: fixed; left: 12px; }
+  #interaction-opener, #interaction-background {
+    position: fixed;
+    left: 12px;
+  }
   #interaction-opener { top: 12px; }
   #interaction-background { top: 72px; }
 </style>

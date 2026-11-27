@@ -34,8 +34,14 @@
 </script>
 
 <style>
-  :global(.user-col-accent) { text-transform: uppercase; letter-spacing: 2px; }
-  :global(.user-col-alternate) { text-transform: lowercase; letter-spacing: 1.25px; }
+  :global(.user-col-accent) {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  :global(.user-col-alternate) {
+    text-transform: lowercase;
+    letter-spacing: 1.25px;
+  }
 </style>
 
 {#snippet nameCell(record: typeof rows[number])}{#if record.key === 0}<input name="draft" aria-label="Column draft" value="Draft" style="width:80px" />{:else}{record.name}{/if}{/snippet}
@@ -49,7 +55,8 @@
   <button type="button" onclick={() => { updated = !updated; }}>Update column classes</button>
   <ConfigProvider locale={enUS} direction={current.name === 'rtl' ? 'rtl' : 'ltr'}
     theme={{ cssVar: {}, token: { motion: false } }}>
-    <div id="table-column-classes-control" style="width:320px;max-width:100%">
+    <div id="table-column-classes-control" style={'width:320px;'
+      + 'max-width:100%'}>
       <form aria-label="Table column form">
         <Table {columns} dataSource={current.name === 'empty-data' ? [] : rows}
           size="medium" rowSelection pagination={false}

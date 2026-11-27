@@ -130,8 +130,19 @@
 </script>
 
 <style>
-  .image-trigger { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; vertical-align: middle; }
-  .image-trigger:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
+  .image-trigger {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    vertical-align: middle;
+  }
+  .image-trigger:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}:${previewPrefixCls ?? `${componentPrefix}-preview`}`} />{/if}<svelte:element this={canPreview ? 'button' : 'div'} data-ant-image-prefix={componentPrefix} bind:this={nativeElement} type={canPreview ? 'button' : undefined} role={canPreview ? 'button' : undefined}

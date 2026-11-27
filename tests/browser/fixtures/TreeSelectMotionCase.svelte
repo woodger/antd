@@ -197,19 +197,28 @@
 {/snippet}
 {#snippet configured()}
   <ConfigProvider prefixCls={settings.prefix} theme={configuration}
-    style="direction:ltr;font-family:initial;font-size:16px;line-height:normal">
+    style={'direction:ltr;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
     <div data-motion-case={sample.id} data-motion-host
       data-motion-bound={Boolean(root && control && (sample.slot?.startsWith('root-') || editor))}
       bind:this={host}
-      style={`position:fixed;left:${left}px;top:200px;width:420px;height:160px`}>
+      style={`position:fixed;`
+        + `left:${left}px;`
+        + `top:200px;`
+        + `width:420px;`
+        + `height:160px`}>
       {#if sample.slot === 'root-button'}
         <TreeSelect {...common}
           components={{ root: { render: rootVersion ? replacementButton : button,
-            props: { style: 'width:220px;height:40px' } } }}
+            props: { style: 'width:220px;'
+              + 'height:40px' } } }}
           bind:this={control} bind:nativeElement={buttonRoot} />
       {:else if sample.slot === 'root-composite'}
         <TreeSelect {...common}
-          components={{ root: { render: composite, props: { style: 'width:220px;height:40px' } } }}
+          components={{ root: { render: composite, props: { style: 'width:220px;'
+            + 'height:40px' } } }}
           bind:this={control} bind:nativeElement={publicCompositeRoot} />
       {:else if sample.slot === 'input'}
         <TreeSelect {...common} components={{ input }}
@@ -247,7 +256,9 @@
         return () => { shadow = undefined; };
       }}></div>
     {/if}
-    <button type="button" data-motion-outside style="position:fixed;left:10px;top:10px">
+    <button type="button" data-motion-outside style={'position:fixed;'
+      + 'left:10px;'
+      + 'top:10px'}>
       Motion outside
     </button>
   </ConfigProvider>

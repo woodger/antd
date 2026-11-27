@@ -97,7 +97,8 @@
   <ConfigProvider
     theme={{ mode: dark ? 'dark' : 'light', compact }}
     componentSize={providerSize}
-    rate={{ class: 'context-rate', style: 'opacity:0.8;color:rgb(1,2,3)' }}
+    rate={{ class: 'context-rate', style: 'opacity:0.8;'
+      + 'color:rgb(1,2,3)' }}
   >
     <form aria-label="Rate native form" onsubmit={event => event.preventDefault()}>
       <button type="button">Before Rate</button>

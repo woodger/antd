@@ -56,7 +56,8 @@
         : current.name === 'compact' ? theme.compactAlgorithm : theme.defaultAlgorithm,
       ...(current.name.includes('custom') ? { components: { Table: { headerBg: '#ffeedd',
         headerColor: '#123456', bodySortBg: '#334455' } } } : {}) }}>
-    <div id="table-row-scope-control" style="width:320px;max-width:100%">
+    <div id="table-row-scope-control" style={'width:320px;'
+      + 'max-width:100%'}>
       <form aria-label="Table row scope form">
         <Table {columns} dataSource={rows} size="medium" rowSelection pagination={false}
           rowHoverable={!current.name.includes('no-hover')} showHeader={current.name !== 'no-header'}

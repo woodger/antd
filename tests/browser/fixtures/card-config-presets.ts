@@ -4,7 +4,10 @@ function profile(kind: 'card' | 'meta', local: boolean) {
   const prefix = local ? 'local' : 'context';
   const keys = kind === 'card' ? ['root', 'header', 'body', 'title', 'extra', 'actions', 'cover']
     : ['root', 'section', 'avatar', 'title', 'description'];
-  const styles = `color:${local ? '#873800' : '#722ed1'};padding-top:${local ? 23 : 19}px;`
+  const styles = (
+    `color:${local ? '#873800' : '#722ed1'};`
+    + `padding-top:${local ? 23 : 19}px;`
+  )
     + `margin-top:${local ? 7 : 5}px`;
 
   return {
@@ -28,10 +31,15 @@ export function cardConfigProfile(name: string | undefined, local = false): Card
       root: `${base.styles.root};opacity:${props.size === 'small' ? 0.65 : 0.8}` });
   }
   if (name === 'priority') {
-    result.styles = { root: local ? 'background-color:#008000;margin-top:3px'
-      : 'background-color:#ff0000;margin-top:1px;padding-top:1px' };
+    result.styles = { root: local ? 'background-color:#008000;'
+      + 'margin-top:3px'
+      : 'background-color:#ff0000;'
+        + 'margin-top:1px;'
+        + 'padding-top:1px' };
     result.style = local ? 'background-color:#ffff00'
-      : 'background-color:#0000ff;margin-top:2px;padding-top:2px';
+      : 'background-color:#0000ff;'
+        + 'margin-top:2px;'
+        + 'padding-top:2px';
   }
   if (name === 'variables') {
     result.styles = undefined;
@@ -54,10 +62,15 @@ export function cardMetaConfigProfile(name: string | undefined, local = false): 
     result.styles = () => ({ ...base.styles, root: `${base.styles.root};opacity:0.8` });
   }
   if (name === 'priority') {
-    result.styles = { root: local ? 'background-color:#008000;margin-top:3px'
-      : 'background-color:#ff0000;margin-top:1px;padding-top:1px' };
+    result.styles = { root: local ? 'background-color:#008000;'
+      + 'margin-top:3px'
+      : 'background-color:#ff0000;'
+        + 'margin-top:1px;'
+        + 'padding-top:1px' };
     result.style = local ? 'background-color:#ffff00'
-      : 'background-color:#0000ff;margin-top:2px;padding-top:2px';
+      : 'background-color:#0000ff;'
+        + 'margin-top:2px;'
+        + 'padding-top:2px';
   }
   if (name === 'variables') {
     result.styles = undefined;

@@ -22,7 +22,8 @@
 </svelte:boundary>
 {#if failure}
   <Alert {id} type="error" title={title ?? failure.message}>
-    {#snippet description()}<pre style="font-size:0.9em;overflow-x:auto"><RenderContent
+    {#snippet description()}<pre style={'font-size:0.9em;'
+      + 'overflow-x:auto'}><RenderContent
       value={customDescription ?? failure?.stack ?? null} /></pre>{/snippet}
   </Alert>
 {/if}

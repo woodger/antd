@@ -166,7 +166,10 @@ export function connectPopupPortal(element: HTMLElement, options: {
     const scrollbar = Math.max(0, view.innerWidth - document.documentElement.clientWidth);
     lock = document.createElement('style');
     lock.dataset.antTourLock = '';
-    lock.textContent = `html body { overflow-y:hidden;${overflowing ? `width:calc(100% - ${scrollbar}px);` : ''} }`;
+    lock.textContent = (
+      `html body { overflow-y:hidden;`
+      + `${overflowing ? `width:calc(100% - ${scrollbar}px);` : ''} }`
+    );
     document.head.append(lock);
   }
 

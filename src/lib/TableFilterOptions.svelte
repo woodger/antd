@@ -138,11 +138,30 @@
 </script>
 
 <style>
-  .filter-options { display: grid; gap: var(--ant-margin-xs); padding: var(--ant-padding-sm); overflow-wrap: anywhere; }
+  .filter-options {
+    display: grid;
+    gap: var(--ant-margin-xs);
+    padding: var(--ant-padding-sm);
+    overflow-wrap: anywhere;
+  }
   :global(.table-filter-source) .filter-options { background: var(--ant-table-filter-dropdown-menu-bg); }
-  .radio-option { display: flex; align-items: center; gap: var(--ant-margin-xs); cursor: pointer; }
-  .radio-option input { flex: none; width: 16px; height: 16px; margin: 0; accent-color: var(--ant-color-primary); }
-  input:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: var(--ant-margin-xs);
+    cursor: pointer;
+  }
+  .radio-option input {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--ant-color-primary);
+  }
+  input:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 2px;
+  }
   .filter-search {
     padding: var(--ant-padding-xs);
     border-bottom: var(--ant-line-width) solid var(--ant-color-border-secondary);
@@ -186,7 +205,8 @@
 
 {#snippet nativeEmpty()}
   <Empty image="simple" {description}
-    styles={{ image: 'height:24px' }} style="margin:0;padding:16px 0" />
+    styles={{ image: 'height:24px' }} style={'margin:0;'
+      + 'padding:16px 0'} />
 {/snippet}
 
 {#snippet searchIcon()}<Icon name="search" />{/snippet}

@@ -365,7 +365,11 @@
 </script>
 
 <style>
-  .ant-tooltip-trigger { display: inline-block; max-width: 100%; vertical-align: middle; }
+  .ant-tooltip-trigger {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+  }
 </style>
 
 {#if !external}<span bind:this={wrapper} role="presentation" class={['ant-tooltip-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>{/if}{#if renderPopup}<NoCompactStyle><TooltipPopup bind:this={popupController} title={content} color={props.color} prefixCls={props.prefixCls} open={visible} {anchor} {describe} trigger={host} {placement} {arrow} {autoAdjustOverflow} {getPopupContainer}

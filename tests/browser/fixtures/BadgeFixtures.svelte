@@ -43,7 +43,17 @@
 </script>
 
 <style>
-  .surface { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; min-width: 0; padding: 32px; margin-block: 16px; background: var(--ant-color-bg-container); color: var(--ant-color-text); }
+  .surface {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    min-width: 0;
+    padding: 32px;
+    margin-block: 16px;
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+  }
   .surface :global(button) { min-height: 32px; }
   input, select { max-width: 100%; }
   output { display: block; }

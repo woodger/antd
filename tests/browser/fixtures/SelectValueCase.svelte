@@ -256,10 +256,18 @@
 </script>
 
 <section data-select-value-case={sample.id} data-select-value-bound={Boolean(control)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {theme} popupOverflow="viewport" locale={enUS}>
     <!-- Restore the authored Source owner font inside Native ConfigProvider's reset wrapper. -->
-    <div data-select-value-position style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px;font-family:initial;font-size:16px;line-height:normal`}>
+    <div data-select-value-position style={`position:absolute;`
+      + `left:${position.left}px;`
+      + `top:${position.top}px;`
+      + `width:${position.width}px;`
+      + `font-family:initial;`
+      + `font-size:16px;`
+      + `line-height:normal`}>
       <ValueSelect {...passed} id="value-field" class="select-value-control" style="width:100%" {name} {required}
         {options} {open} allowClear listHeight={140} placeholder="Choose value" aria-label="Selected values"
         showSearch={{ searchValue: query, filterOption: settings.filter, onSearch: open ? searched : undefined }}
@@ -268,7 +276,9 @@
         bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={editor} />
     </div>
   </ConfigProvider>
-  <button type="button" data-select-value-outside style="position:fixed;left:16px;top:80px">Outside value</button>
+  <button type="button" data-select-value-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside value</button>
   <output data-select-value-receipts hidden>{JSON.stringify(serverOutputs?.receipts ?? read().receipts)}</output>
   <output data-select-value-model hidden>{JSON.stringify(serverOutputs?.model ?? read().model)}</output>
   <output data-select-value-query hidden>{JSON.stringify(serverOutputs ? serverOutputs.query : query)}</output>
@@ -284,4 +294,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

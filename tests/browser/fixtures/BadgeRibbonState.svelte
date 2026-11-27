@@ -4,6 +4,10 @@
 </script>
 
 <span data-ribbon-state={label}><input aria-label={`${label} draft`} value="Seed"
-  style="width:64px;font:inherit;line-height:16px" /><button type="button"
+  style={'width:64px;'
+    + 'font:inherit;'
+    + 'line-height:16px'} /><button type="button"
   aria-label={`${label} counter`} onclick={() => count++}
-  style="font:inherit;padding:0;border:0">{count}</button></span>
+  style={'font:inherit;'
+    + 'padding:0;'
+    + 'border:0'}>{count}</button></span>

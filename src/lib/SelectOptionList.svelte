@@ -100,7 +100,9 @@
 {#if model.realVirtual}
   <div role="listbox" {id} aria-label={ariaLabel}
     aria-multiselectable={multiple || undefined} aria-busy={busy || undefined}
-    style="height:0;width:0;overflow:hidden">
+    style={'height:0;'
+      + 'width:0;'
+      + 'overflow:hidden'}>
     {#each screenReaderItems as row (row.originalIndex)}
       <div aria-label={row.ariaLabel} {...row.ariaAttributes}
         role={row.group ? 'presentation' : 'option'} id={itemId(row.originalIndex)}
@@ -111,16 +113,28 @@
   <!-- svelte-ignore a11y_no_static_element_interactions (Source holder лишь показывает scrollbar; listbox принадлежит srlist либо inner.) -->
   <div bind:this={holderElement} class={`${listPrefix}-holder`} onscroll={handleScroll}
     onmouseenter={handleMouseEnter}
-    style={model.height ? `max-height:${model.height}px;overflow-y:${range.useVirtual ? 'hidden' : 'auto'};overflow-anchor:none;${range.useVirtual && viewport.moving ? 'pointer-events:none' : ''}` : undefined}>
+    style={model.height ? `max-height:${model.height}px;`
+      + `overflow-y:${range.useVirtual ? 'hidden' : 'auto'};`
+      + `overflow-anchor:none;`
+      + `${range.useVirtual && viewport.moving ? 'pointer-events:none' : ''}` : undefined}>
     <div style={range.offset !== undefined
-      ? `height:${range.scrollHeight}px;position:relative;overflow:hidden` : undefined}>
+      ? `height:${range.scrollHeight}px;`
+        + `position:relative;`
+        + `overflow:hidden` : undefined}>
       <div bind:this={inner} class={`${listPrefix}-holder-inner`}
         role={model.realVirtual ? undefined : 'listbox'} id={model.realVirtual ? undefined : id}
         aria-label={model.realVirtual ? undefined : ariaLabel}
         aria-multiselectable={model.realVirtual ? undefined : multiple || undefined}
         aria-busy={model.realVirtual ? undefined : busy || undefined}
-        style={`display:flex;flex-direction:column;${range.offset !== undefined
-          ? `position:absolute;left:0;right:0;top:0;transform:translateY(${range.offset}px);${direction === 'rtl' ? 'margin-right' : 'margin-left'}:0` : ''}`}>
+        style={`display:flex;`
+          + `flex-direction:column;`
+          + `${range.offset !== undefined
+          ? `position:absolute;`
+            + `left:0;`
+            + `right:0;`
+            + `top:0;`
+            + `transform:translateY(${range.offset}px);`
+            + `${direction === 'rtl' ? 'margin-right' : 'margin-left'}:0` : ''}`}>
         {#each visible as row (row.key)}
           {@render renderItem(row.item, { index: row.originalIndex, virtual: model.realVirtual,
             attach: node => viewport.attach(node, row.key), attributes: attributes(row) })}

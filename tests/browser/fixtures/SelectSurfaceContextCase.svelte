@@ -107,10 +107,18 @@
 {/snippet}
 
 <section data-surface-context-case={initialId} data-surface-context-bound={Boolean(control)}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {theme} locale={enUS} componentDisabled={false} variant="filled">
     <!-- Восстанавливаем заданный родителю Source font поверх provider reset. -->
-    <div style="position:absolute;left:300px;top:200px;width:700px;font-family:initial;font-size:16px;line-height:normal">
+    <div style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:700px;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
       <Form {form} name="surface-context-form" {disabled} {variant}>
         <FormItem name="field" validateStatus="error" hasFeedback>
           <SpaceCompact size="small" items={[parentControl, outsideInput, outsideButton]} />
@@ -119,7 +127,9 @@
       </Form>
     </div>
   </ConfigProvider>
-  <button type="button" data-surface-context-outside style="position:fixed;left:16px;top:80px">Outside context</button>
+  <button type="button" data-surface-context-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside context</button>
   <output hidden data-surface-context-owner>{JSON.stringify(read())}</output>
   <div hidden data-surface-context-command {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<SelectSurfaceContextAction>).detail);
@@ -136,4 +146,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

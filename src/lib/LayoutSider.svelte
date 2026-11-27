@@ -149,9 +149,19 @@
 </script>
 
 <style>
-  button { border: 0; padding: 0; font: inherit; }
-  button:focus-visible, [data-ant-layout-sider]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -2px; }
-  svg { width: 1em; height: 1em; }
+  button {
+    border: 0;
+    padding: 0;
+    font: inherit;
+  }
+  button:focus-visible, [data-ant-layout-sider]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -2px;
+  }
+  svg {
+    width: 1em;
+    height: 1em;
+  }
   [data-ant-layout-compact] [data-ant-layout-zero-trigger] { font-size: 16px; }
   @media (prefers-reduced-motion: reduce) { [data-ant-layout-sider], button, button::after { transition: none; } }
 </style>
@@ -176,7 +186,10 @@
       componentTheme.style,
       slots.root,
       style,
-      `flex:0 0 ${actualWidth};max-width:${actualWidth};min-width:${actualWidth};width:${actualWidth}`
+      `flex:0 0 ${actualWidth};`
+        + `max-width:${actualWidth};`
+        + `min-width:${actualWidth};`
+        + `width:${actualWidth}`
     ].filter(
       Boolean
     ).join(

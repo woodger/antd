@@ -29,7 +29,8 @@
   let events = $state<string[]>([]);
 </script>
 
-<form data-switch-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-switch-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <Switch prefixCls={local ? sample.local : undefined} bind:checked bind:nativeElement bind:ref
     name={`${scope}-enabled`} aria-label={`${scope} toggle`} size={sample.size}

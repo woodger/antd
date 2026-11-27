@@ -130,9 +130,17 @@
     data-hydration-editor="" {@attach editor => connectComposite(untrack(() => context), editor)}></textarea></span>
 {/snippet}
 
-<section data-components-hydration-case={sample.id} style="font-family:initial;font-size:16px;line-height:normal">
+<section data-components-hydration-case={sample.id} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
   <ConfigProvider theme={{ token: { motion: false }, cssVar: { key: 'components-hydration' } }}>
-    <div data-hydration-control style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+    <div data-hydration-control style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:280px;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
       {#if alive}
         {#if sample.control === 'autocomplete'}
           <HydrationCompletion {...controlProps} bind:nativeElement bind:inputElement bind:this={control} />
@@ -140,5 +148,7 @@
       {/if}
     </div>
   </ConfigProvider>
-  <button type="button" data-hydration-outside style="position:fixed;left:16px;top:80px">Outside hydration</button>
+  <button type="button" data-hydration-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside hydration</button>
 </section>

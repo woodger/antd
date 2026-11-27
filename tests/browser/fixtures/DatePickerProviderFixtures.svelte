@@ -137,28 +137,32 @@
 
   const datePicker: DatePickerConfig = $derived({
     ...appearance('date'),
-    style: `color:rgb(${plainColors.date});padding-inline-start:13px`,
+    style: `color:rgb(${plainColors.date});`
+      + `padding-inline-start:13px`,
     variant: 'underlined',
     suffixIcon: dateSuffix,
     allowClear: profile.providerClear ?? { clearIcon: dateClear }
   });
   const innerPicker: DatePickerConfig = {
     ...appearance('inner'),
-    style: `color:rgb(${plainColors.inner});padding-inline-start:13px`,
+    style: `color:rgb(${plainColors.inner});`
+      + `padding-inline-start:13px`,
     variant: 'filled',
     suffixIcon: innerSuffix,
     allowClear: { clearIcon: innerClear }
   };
   const timePicker: TimePickerConfig = {
     ...appearance('time'),
-    style: `color:rgb(${plainColors.time});padding-inline-start:13px`,
+    style: `color:rgb(${plainColors.time});`
+      + `padding-inline-start:13px`,
     variant: 'underlined',
     suffixIcon: timeSuffix,
     allowClear: { clearIcon: timeClear }
   };
   const rangePicker: RangePickerConfig = {
     class: 'plain-range',
-    style: 'color:rgb(43,44,45);padding-inline-start:19px',
+    style: 'color:rgb(43,44,45);'
+      + 'padding-inline-start:19px',
     variant: 'borderless',
     separator
   };
@@ -184,7 +188,8 @@
       suffixIcon: localSuffix
     } : {};
     const plainStyle = profile.local && !profile.onlySemantic
-      ? { style: `color:rgb(${plainColors.local});padding-inline-start:23px` } : {};
+      ? { style: `color:rgb(${plainColors.local});`
+        + `padding-inline-start:23px` } : {};
     const shorthand = profile.shorthand ? {
       classNames: { popup: 'slot-shorthand-popup-root' },
       styles({ props }: { props: ReportedProps; }) {

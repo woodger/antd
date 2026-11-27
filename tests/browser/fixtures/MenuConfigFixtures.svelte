@@ -61,7 +61,8 @@
   let localExpand = $derived(hideExpandIcon ? null : undefined);
   const provider: MenuConfig = {
     class: 'provider-menu',
-    style: 'color:#222222;padding-block-end:9px',
+    style: 'color:#222222;'
+      + 'padding-block-end:9px',
     classNames({ props }) {
       capture('providerClasses', props);
       return {
@@ -84,15 +85,20 @@
     styles({ props }) {
       capture('providerStyles', props);
       return {
-        root: 'color:#111111;background-color:#223344',
+        root: 'color:#111111;'
+          + 'background-color:#223344',
         itemTitle: 'font-weight:600',
         list: 'letter-spacing:1px',
-        item: 'color:#112244;background-color:#dfefff',
+        item: 'color:#112244;'
+          + 'background-color:#dfefff',
         itemContent: 'font-weight:500',
         itemIcon: 'opacity:.5',
-        popup: { root: 'color:#444444;opacity:.92;z-index:3022' },
+        popup: { root: 'color:#444444;'
+          + 'opacity:.92;'
+          + 'z-index:3022' },
         subMenu: {
-          item: 'color:#223344;background-color:#ffeedd',
+          item: 'color:#223344;'
+            + 'background-color:#ffeedd',
           itemContent: 'font-weight:600',
           itemTitle: 'letter-spacing:3px',
           list: 'color:#565656',
@@ -126,14 +132,20 @@
     capture('localStyles', props);
 
     return {
-      root: 'color:#333333;padding-inline-start:7px',
-      item: 'color:#445566;padding-inline-start:21px',
+      root: 'color:#333333;'
+        + 'padding-inline-start:7px',
+      item: 'color:#445566;'
+        + 'padding-inline-start:21px',
       itemIcon: 'opacity:.6',
       itemContent: 'font-weight:700',
       popup: { root: [
         updated ? 'background-color:#776655' : 'background-color:#556677',
         'z-index:3023',
-        manualPosition && 'left:640px;top:320px;max-width:212px'
+        manualPosition && (
+          'left:640px;'
+          + 'top:320px;'
+          + 'max-width:212px'
+        )
       ].filter(Boolean).join(';') },
       subMenu: { item: 'color:#334455', itemContent: 'color:#445566' }
     };
@@ -183,7 +195,8 @@
         forceSubMenuRender
         class={providerOnly ? undefined : 'local-menu'}
         rootClassName={providerOnly ? undefined : 'local-root'}
-        style={providerOnly ? undefined : 'color:#666666;padding-block-start:6px'}
+        style={providerOnly ? undefined : 'color:#666666;'
+          + 'padding-block-start:6px'}
         classNames={providerOnly ? undefined : localClasses}
         styles={providerOnly ? undefined : localStyles}
         expandIcon={localExpand}

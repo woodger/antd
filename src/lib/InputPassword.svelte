@@ -175,9 +175,21 @@
 </script>
 
 <style>
-  [data-ant-input-password-icon] { border: 0; padding: 0; background: transparent; font: inherit; }
-  .anticon { display: inline-flex; align-items: center; line-height: 0; }
-  svg { width: 1em; height: 1em; }
+  [data-ant-input-password-icon] {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+  }
+  .anticon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+  svg {
+    width: 1em;
+    height: 1em;
+  }
 </style>
 
 {#snippet passwordSuffix()}

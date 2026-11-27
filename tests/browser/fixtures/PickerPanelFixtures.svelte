@@ -263,5 +263,7 @@
 </ConfigProvider>
 <button type="button" id="accept" onclick={() => { mode = 'year'; }}>Accept mode</button>
 <button type="button" id="toggle" onclick={() => { slotsActive = !slotsActive; }}>Toggle slots</button>
-<button type="button" id="outside" style="position:fixed;bottom:16px;right:16px">Outside</button>
+<button type="button" id="outside" style={'position:fixed;'
+  + 'bottom:16px;'
+  + 'right:16px'}>Outside</button>
 <output id="panel-events">{JSON.stringify(log)}</output>

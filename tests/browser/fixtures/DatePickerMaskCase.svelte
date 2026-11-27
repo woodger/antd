@@ -188,7 +188,10 @@
 
 <ConfigProvider locale={enUS} {theme}>
   <section bind:this={ownerElement} data-mask-owner={sample.id}
-    style="position:absolute;left:160px;top:80px;width:520px">
+    style={'position:absolute;'
+      + 'left:160px;'
+      + 'top:80px;'
+      + 'width:520px'}>
     {#if time && range}<TimeRangePicker {...timeRangeProps} bind:this={control} bind:nativeElement={root} />
     {:else if time}<TimePicker {...timeProps} bind:this={control} bind:nativeElement={root} />
     {:else if range}<RangePicker {...rangeProps} bind:this={control} bind:nativeElement={root} />

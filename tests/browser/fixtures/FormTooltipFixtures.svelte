@@ -102,7 +102,8 @@
     theme={{ cssVar: {}, token: { motion: false }, compact: sample.compact,
       mode: sample.dark ? 'dark' : 'light' }}>
     <ConfigProvider form={sample.child === 'reset' ? {} : defaults(sample.child)}>
-      <div data-tooltip-case dir={sample.direction ?? 'ltr'} style="width:400px;margin-top:200px">
+      <div data-tooltip-case dir={sample.direction ?? 'ltr'} style={'width:400px;'
+        + 'margin-top:200px'}>
         <button id="before-tooltip" type="button">Before</button>
         {#if sample.outer}
           <Form form={outer} component={false} tooltip={{ children: 'Outer', title: 'Outer' }}>

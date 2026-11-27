@@ -37,7 +37,11 @@
 `}</svelte:element></svelte:head>
 
 {#snippet content()}
-  <input aria-label="Config draft" value="Draft" style="width:100px;height:20px;padding:0;border:0;font:14px sans-serif" />
+  <input aria-label="Config draft" value="Draft" style={'width:100px;'
+    + 'height:20px;'
+    + 'padding:0;'
+    + 'border:0;'
+    + 'font:14px sans-serif'} />
 {/snippet}
 {#snippet anchor()}<button type="button" class={values.anchorClass} data-config-anchor="">Anchor</button>{/snippet}
 
@@ -61,7 +65,8 @@
           { key: 'b', label: 'Beta', text: 'B' }
         ]} max={{ count: 1, popover: { ...options, title: 'Config title', content } }} />
       {:else if sample.component === 'typography'}
-        <TypographyText data-config-anchor="" style="display:block;width:80px"
+        <TypographyText data-config-anchor="" style={'display:block;'
+          + 'width:80px'}
           tabindex={sample.focusable ? 0 : undefined}
           ellipsis={{ suffix: sample.jsEllipsis ? '' : undefined,
             tooltip: { ...options, title: content } }}>

@@ -46,11 +46,20 @@
   <output aria-label="Alignment calls">{calls}</output>
   <Tooltip {...options} bind:ref={api} title={content} open trigger={[]} onPopupAlign={record}
     styles={{
-      root: `width:${width}px;height:80px;max-width:none;${style(sample.rootStyle)}`,
-      container: 'height:100%;box-sizing:border-box',
+      root: `width:${width}px;`
+        + `height:80px;`
+        + `max-width:none;${style(sample.rootStyle)}`,
+      container: 'height:100%;'
+        + 'box-sizing:border-box',
       arrow: style(sample.arrowStyle)
     }}>
     <button type="button" data-alignment-anchor=""
-      style={`position:fixed;left:${sample.anchor.x}px;top:${sample.anchor.y}px;width:${sample.anchor.width}px;height:${sample.anchor.height}px;padding:0;border:0`}>Align target</button>
+      style={`position:fixed;`
+        + `left:${sample.anchor.x}px;`
+        + `top:${sample.anchor.y}px;`
+        + `width:${sample.anchor.width}px;`
+        + `height:${sample.anchor.height}px;`
+        + `padding:0;`
+        + `border:0`}>Align target</button>
   </Tooltip>
 </div>

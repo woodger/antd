@@ -47,13 +47,29 @@
 </script>
 
 <style>
-  .outer { height: 260px; overflow: auto; }
+  .outer {
+    height: 260px;
+    overflow: auto;
+  }
   .nested { height: 120px; }
   .nested .spacer { height: 180px; }
-  .box { height: 160px; width: 280px; overflow: auto; }
+  .box {
+    height: 160px;
+    width: 280px;
+    overflow: auto;
+  }
   .hidden { overflow: hidden; }
-  .space { height: 320px; width: 800px; }
-  .target { display: block; height: 24px; width: 100px; box-sizing: border-box; margin-left: 400px; }
+  .space {
+    height: 320px;
+    width: 800px;
+  }
+  .target {
+    display: block;
+    height: 24px;
+    width: 100px;
+    box-sizing: border-box;
+    margin-left: 400px;
+  }
 </style>
 
 <section id="form-dom-scroll-fixture" aria-label="Form scrolling">

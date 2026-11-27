@@ -96,10 +96,18 @@
 </script>
 
 <section data-surface-case={sample.id} data-surface-bound={Boolean(control)}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {theme} locale={enUS} popupOverflow="viewport">
     <!-- Сохраняем заданный Source parent font поверх существующего provider reset. -->
-    <div style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+    <div style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:280px;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
       {#if sample.control === 'autocomplete'}
         <HistoryAutoComplete {...autoCompleteProps} bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={autoCompleteEditor} />
       {:else}
@@ -107,7 +115,9 @@
       {/if}
     </div>
   </ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside history</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside history</button>
   <output hidden data-surface-history-owner>{JSON.stringify(read())}</output>
   <div hidden data-surface-command {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<{ type: 'color'; phase: SelectSurfaceStylePhase }>).detail);
@@ -124,4 +134,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

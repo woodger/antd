@@ -26,14 +26,24 @@
   <input {...context.attributes} {@attach context.register} data-suffix-edge-editor />
 {/snippet}
 {#snippet summary()}
-  <span data-suffix-edge-rest style="display:inline-flex;width:64px;height:22px;box-sizing:border-box">Rest</span>
+  <span data-suffix-edge-rest style={'display:inline-flex;'
+    + 'width:64px;'
+    + 'height:22px;'
+    + 'box-sizing:border-box'}>Rest</span>
 {/snippet}
 {#snippet tag(_info: TreeSelectTagInfo)}
-  <span data-suffix-edge-tag style="display:inline-flex;width:64px;height:22px;box-sizing:border-box">Choice</span>
+  <span data-suffix-edge-tag style={'display:inline-flex;'
+    + 'width:64px;'
+    + 'height:22px;'
+    + 'box-sizing:border-box'}>Choice</span>
 {/snippet}
 <div data-suffix-edge-host={sample.id} data-suffix-edge-bound={Boolean(root && editor)} bind:this={host}
-  style={`margin:${64 + top}px 64px 64px ${64 + left}px;${sample.willChange ? 'will-change:transform' : ''}`}>
-  <ConfigProvider direction={sample.direction} style="direction:ltr;font-family:initial;font-size:16px;line-height:normal"
+  style={`margin:${64 + top}px 64px 64px ${64 + left}px;`
+    + `${sample.willChange ? 'will-change:transform' : ''}`}>
+  <ConfigProvider direction={sample.direction} style={'direction:ltr;'
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}
     theme={{ cssVar: { key: 'tree-select-suffix-layout-edges' }, token: { motion: false } }}>
     <TreeSelect id="suffix-edge-control" multiple value={values} style={`width:${rootWidth}px`}
       maxTagCount="responsive" components={{ input }} maxTagPlaceholder={summary} tagRender={tag}

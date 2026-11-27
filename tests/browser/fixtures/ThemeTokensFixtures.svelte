@@ -20,10 +20,25 @@
 
 <style>
   section { padding: 20px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 16px; }
-  .preview { padding: 12px; border: 1px solid; }
-  output { display: block; overflow-wrap: anywhere; }
-  .json { max-height: 80px; overflow: auto; font-family: monospace; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 16px;
+  }
+  .preview {
+    padding: 12px;
+    border: 1px solid;
+  }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+  .json {
+    max-height: 80px;
+    overflow: auto;
+    font-family: monospace;
+  }
 </style>
 
 <section id="theme-tokens-fixture">

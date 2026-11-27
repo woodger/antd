@@ -82,10 +82,16 @@
 
 <section data-select-virtual-case={sample.id} data-select-virtual-family="auto-complete"
   data-select-virtual-bound={Boolean(control)}
-  style="font-family:initial;font-size:16px;line-height:normal;direction:ltr">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal;'
+    + 'direction:ltr'}>
   <ConfigProvider {...outerProps} {theme} popupOverflow="viewport" direction="ltr" locale={enUS}>
     <ConfigProvider {...innerProps}>
-      <div data-select-virtual-position style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px`}>
+      <div data-select-virtual-position style={`position:absolute;`
+        + `left:${position.left}px;`
+        + `top:${position.top}px;`
+        + `width:${position.width}px`}>
         <AutoComplete {...localProps} id="virtual-field" class="select-virtual-control" style="width:100%"
           {options} value={query} {open} showSearch={{ filterOption: false, onSearch: search }}
           onChange={change} onOpenChange={opening} onActive={active} onPopupScroll={scrolled}
@@ -93,7 +99,9 @@
       </div>
     </ConfigProvider>
   </ConfigProvider>
-  <button type="button" data-select-virtual-outside style="position:fixed;left:16px;top:80px">Outside virtual</button>
+  <button type="button" data-select-virtual-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside virtual</button>
   <output data-select-virtual-receipts hidden>{JSON.stringify(readReceipts())}</output>
   <output data-select-virtual-model hidden>{JSON.stringify(model)}</output>
   <output data-select-virtual-query hidden>{JSON.stringify(query)}</output>
@@ -112,4 +120,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

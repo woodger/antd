@@ -55,11 +55,18 @@
     onChange: (next: unknown) => record('change', next)
   });
   let hostStyle = $derived([
-    'position:fixed;left:300px',
+    'position:fixed;'
+      + 'left:300px',
     `top:${hostTop}px`,
-    'width:420px;height:160px;box-sizing:content-box',
-    `transform:${transform};transform-origin:50% 50%`,
-    'direction:ltr;font-family:initial;font-size:16px;line-height:normal'
+    'width:420px;'
+      + 'height:160px;'
+      + 'box-sizing:content-box',
+    `transform:${transform};`
+      + `transform-origin:50% 50%`,
+    'direction:ltr;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'
   ].join(';'));
 </script>
 
@@ -73,14 +80,21 @@
 {/snippet}
 
 <div id="tree-select-align-frame-fixture">
-  <label style="position:fixed;left:0;top:0;font:14px Arial;z-index:1">
+  <label style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'font:14px Arial;'
+    + 'z-index:1'}>
     TreeSelect frame sample
     <select bind:value={selected}>
       {#each treeSelectAlignFrameSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}
     </select>
   </label>
   <ConfigProvider
-    style="direction:ltr;font-family:initial;font-size:16px;line-height:normal"
+    style={'direction:ltr;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}
     theme={{ token: { motion: false }, cssVar: { key: 'tree-select-align-frame' } }}>
     {#key selected}
       <div data-align-frame-case={sample.id} data-align-frame-bound={Boolean(root && control)}
@@ -89,7 +103,8 @@
           <TreeSelect {...common}
             components={{ root: {
               render: rootKind === 'A' ? buttonA : buttonB,
-              props: { style: 'width:220px;height:40px' }
+              props: { style: 'width:220px;'
+                + 'height:40px' }
             } }}
             bind:this={control} bind:nativeElement={buttonRoot} />
         {:else}
@@ -113,9 +128,16 @@
       </div>
     {/key}
   </ConfigProvider>
-  <div style="position:absolute;left:0;top:0;height:1600px;width:1px" aria-hidden="true"></div>
+  <div style={'position:absolute;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'height:1600px;'
+    + 'width:1px'} aria-hidden="true"></div>
 </div>
 
 <style>
-  :global(body) { margin:0;min-height:1600px; }
+  :global(body) {
+    margin:0;
+    min-height:1600px;
+  }
 </style>

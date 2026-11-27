@@ -104,13 +104,23 @@
   }
 </script>
 
-<section data-surface-case={sampleId} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
+<section data-surface-case={sampleId} data-surface-bound={Boolean(control)} style={'font-family:initial;'
+  + 'font-size:16px;'
+  + 'line-height:normal'}>
   <ConfigProvider {...provider} locale={enUS}>
-    <div style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+    <div style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:280px;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
       <WidthSelect {...selectProps} bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={editor} />
     </div>
   </ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside width ownership</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside width ownership</button>
   <output hidden data-surface-input-width-own-owner>{JSON.stringify(read())}</output>
   <div hidden data-surface-command {@attach node => {
     const updating = (event: Event) => update((event as CustomEvent<SelectSurfaceInputWidthOwnAction>).detail);
@@ -125,4 +135,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

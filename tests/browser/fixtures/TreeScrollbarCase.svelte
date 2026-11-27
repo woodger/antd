@@ -20,7 +20,8 @@
   }
 </script>
 <div data-tree-scrollbar-host data-tree-scrollbar-kind="tree-select" data-tree-scrollbar-ref={Boolean(instance && element)}
-  data-tree-scrollbar-mode={String(mode)} style="margin:64px;width:320px">
+  data-tree-scrollbar-mode={String(mode)} style={'margin:64px;'
+    + 'width:320px'}>
   <ConfigProvider theme={{ token: { motion: false } }}>
     {#if mounted}<TreeSelect bind:this={instance} bind:nativeElement={element} aria-label="Scrollbar field"
       open treeData={treeScrollbarData(sample)} style="width:320px" listHeight={height}

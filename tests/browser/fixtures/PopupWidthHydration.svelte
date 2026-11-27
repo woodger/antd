@@ -8,5 +8,7 @@
 
 <section data-width-hydration>
   <form data-width-form><PopupWidthCase {sample} named bind:this={fixture} /></form>
-  <input aria-label="Width outside draft" style="position:fixed;left:16px;bottom:16px" />
+  <input aria-label="Width outside draft" style={'position:fixed;'
+    + 'left:16px;'
+    + 'bottom:16px'} />
 </section>

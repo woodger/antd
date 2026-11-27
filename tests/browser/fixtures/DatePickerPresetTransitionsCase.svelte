@@ -286,12 +286,17 @@
 <section bind:this={owner} data-picker-presets-owner={initial.id}>
   <form data-preset-transition-form="">
     <ConfigProvider {...provider}>
-      <div style="position:absolute;left:{box.left}px;top:{box.top}px;width:{box.width}px">
+      <div style={'position:absolute;'
+        + `left:${(box.left) ?? ''}px;`
+        + `top:${(box.top) ?? ''}px;`
+        + `width:${(box.width) ?? ''}px`}>
         <DatePicker {...ownerProps} bind:this={control} bind:nativeElement={root} />
       </div>
     </ConfigProvider>
   </form>
-  <div style="position:fixed;left:16px;top:16px">
+  <div style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:16px'}>
     {#each ownerButtons as button (button.kind + '-' + String(button.value))}
       <button type="button" data-transition-control={button.kind} data-transition-value={String(button.value)} onclick={event => ownerAction(button.kind, button.value, event)}>{button.kind + ' ' + String(button.value)}</button>
     {/each}

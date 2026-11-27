@@ -110,11 +110,33 @@
 
 <style>
   [data-ant-cascader-menu] { position: relative; }
-  .cascader-option { display:flex;align-items:center;width:100%;min-width:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;line-height:inherit;text-align:start;cursor:inherit; }
-  .cascader-option:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:2px; }
+  .cascader-option {
+    display:flex;
+    align-items:center;
+    width:100%;
+    min-width:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+    line-height:inherit;
+    text-align:start;
+    cursor:inherit;
+  }
+  .cascader-option:focus-visible {
+    outline:2px solid var(--ant-color-primary);
+    outline-offset:2px;
+  }
   [data-ant-cascader-checkbox] { flex:none; }
-  .cascader-option [data-ant-cascader-content] { padding:0;text-align:start; }
-  [data-ant-cascader-expand-icon],[data-ant-cascader-loading-icon] { display:flex;flex:none; }
+  .cascader-option [data-ant-cascader-content] {
+    padding:0;
+    text-align:start;
+  }
+  [data-ant-cascader-expand-icon],[data-ant-cascader-loading-icon] {
+    display:flex;
+    flex:none;
+  }
 </style>
 
 {#snippet content(value: CascaderContent | undefined)}

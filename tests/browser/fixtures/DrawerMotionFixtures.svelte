@@ -145,7 +145,14 @@
 </script>
 
 <style>
-  @keyframes drawer-api-test { from { opacity: .9; } to { opacity: 1; } }
+  @keyframes drawer-api-test {
+    from {
+      opacity: .9;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   :global(.api-panel-active > [data-ant-drawer-section]) { animation: drawer-api-test .12s; }
   :global(.api-mask-active) { animation: drawer-api-test .04s; }
 </style>

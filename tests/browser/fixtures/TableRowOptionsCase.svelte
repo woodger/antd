@@ -48,7 +48,8 @@
 {#snippet nameCell(record: typeof rows[number])}{#if record.key === 1}<input name="draft" aria-label="Row draft" value="Draft" style="width:100px" />{:else}{record.name}{/if}{/snippet}
 
 <ConfigProvider locale={enUS} theme={configured}>
-  <div id="table-row-control" style="width:640px;max-width:100%">
+  <div id="table-row-control" style={'width:640px;'
+    + 'max-width:100%'}>
     <form aria-label="Table row form">
       <Table columns={columns}
         dataSource={classes && classMode === 'empty' ? [] : classes && classMode === 'zero'

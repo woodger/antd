@@ -47,7 +47,9 @@
       },
       destroyOnHidden: index === 0 && retainFirst ? false : undefined,
       class: `splitter-item-${index}`,
-      style: styled ? 'outline-offset:3px;flex-basis:99px;flex-grow:99' : undefined
+      style: styled ? 'outline-offset:3px;'
+        + 'flex-basis:99px;'
+        + 'flex-grow:99' : undefined
     }));
   });
 
@@ -69,11 +71,25 @@
 </script>
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .holder { max-width: 100%; margin-block: 16px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .holder {
+    max-width: 100%;
+    margin-block: 16px;
+  }
   .content { padding: 8px; }
-  .content input { box-sizing: border-box; max-width: 100%; }
-  output { display: block; overflow-wrap: anywhere; }
+  .content input {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 {#snippet first()}<div class="content">
@@ -152,7 +168,9 @@
         event.preventDefault();
         events.push({ event: 'submit' });
       }}>
-        <div class="holder" style={`width:${extent}px;height:${extent}px;${hidden ? 'display:none' : ''}`}>
+        <div class="holder" style={`width:${extent}px;`
+          + `height:${extent}px;`
+          + `${hidden ? 'display:none' : ''}`}>
           {#if mounted}{#key generation}<Splitter
             {items}
             {orientation}
@@ -182,7 +200,9 @@
               panel: 'outline-offset:2px',
               dragger: { default: 'outline-offset:4px', active: 'outline-offset:88px' }
             } : undefined}
-            style={`width:100%;height:100%;${styled ? 'outline-offset:8px' : ''}`}
+            style={`width:100%;`
+              + `height:100%;`
+              + `${styled ? 'outline-offset:8px' : ''}`}
             bind:nativeElement
           />{/key}{/if}
         </div>

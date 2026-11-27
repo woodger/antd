@@ -32,7 +32,11 @@
 {#snippet cover()}<div style="height:40px">Cover</div>{/snippet}
 
 <button bind:this={target} type="button" id="tour-prefix-target"
-  style="position:absolute;left:570px;top:400px;width:140px;height:38px">Target</button>
+  style={'position:absolute;'
+    + 'left:570px;'
+    + 'top:400px;'
+    + 'width:140px;'
+    + 'height:38px'}>Target</button>
 <Tour open defaultCurrent={1} mask={false} prefixCls={local ? sample.local : undefined}
   type={sample.primary ? 'primary' : 'default'}
   placement={sample.placement ?? 'bottomLeft'} arrow={!sample.noArrow}

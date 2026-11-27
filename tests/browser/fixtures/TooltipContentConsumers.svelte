@@ -16,7 +16,8 @@
 <button type="button" onclick={() => title = 'B'}>Update consumer title</button>
 <div class="tooltip-content-consumer">
   {#if mode === 'typography'}
-    <TypographyText style="display:block;width:80px" tabindex={0}
+    <TypographyText style={'display:block;'
+      + 'width:80px'} tabindex={0}
       ellipsis={{ tooltip: { title, fresh, mouseEnterDelay: 0, mouseLeaveDelay: 0 } }}>
       A long text that exceeds the width
     </TypographyText>

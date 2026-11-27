@@ -74,9 +74,16 @@
 
 <style>
   section { padding: 20px; }
-  .controls, .actions, .numbers { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .controls, .actions, .numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
   .numbers { margin-block: 20px; }
-  output { display: block; overflow-wrap: anywhere; }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 <section id="input-number-features-fixture">

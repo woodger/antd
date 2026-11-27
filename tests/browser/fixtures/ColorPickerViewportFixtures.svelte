@@ -13,8 +13,12 @@
   </select></label>{/if}
   <ConfigProvider locale={enUS}>
     <div style={kind === 'short'
-      ? 'position:absolute;left:35vw;top:calc(50vh - 16.36px)'
-      : `position:absolute;left:480px;top:${top}px`}>
+      ? 'position:absolute;'
+        + 'left:35vw;'
+        + 'top:calc(50vh - 16.36px)'
+      : `position:absolute;`
+        + `left:480px;`
+        + `top:${top}px`}>
       <ColorPicker defaultValue="#52c41a" showText aria-label="Viewport color"
         styles={fixedPopup ? { popup: { root: 'position:fixed' } } : undefined}
         onChange={color => { selected = color.toHexString(); }}

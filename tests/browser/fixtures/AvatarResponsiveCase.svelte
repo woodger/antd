@@ -57,7 +57,9 @@
         <Avatar {size} alt="Responsive avatar" children={sample.content === 'text' ? content : undefined}
           icon={sample.content === 'icon' ? icon : undefined}
           src={sample.content === 'image' ? image : undefined} onError={() => { errors++; }}
-          style={sample.style ? 'width:73px;height:27px;font-size:9px' : undefined} />
+          style={sample.style ? 'width:73px;'
+            + 'height:27px;'
+            + 'font-size:9px' : undefined} />
       </button>
     {/if}
   </div>

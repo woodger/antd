@@ -130,11 +130,33 @@
 </script>
 
 <style>
-  .ant-message-anchor { position: absolute; width: 0; height: 0; pointer-events: none; visibility: hidden; }
-  [data-ant-message-root][data-ant-message-list] { position: fixed; inset: auto; top: calc(var(--notification-top) + var(--ant-svelte-notice-viewport-top, 0px) - var(--notification-margin-edge)); left: 0; right: auto; width: 100%; max-width: 100vw; height: auto; max-height: calc(100dvh - var(--notification-top) + var(--notification-margin-edge)); margin: 0; border: 0; background: transparent; transform: none; outline: none; }
+  .ant-message-anchor {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  [data-ant-message-root][data-ant-message-list] {
+    position: fixed;
+    inset: auto;
+    top: calc(var(--notification-top) + var(--ant-svelte-notice-viewport-top, 0px) - var(--notification-margin-edge));
+    left: 0;
+    right: auto;
+    width: 100%;
+    max-width: 100vw;
+    height: auto;
+    max-height: calc(100dvh - var(--notification-top) + var(--notification-margin-edge));
+    margin: 0;
+    border: 0;
+    background: transparent;
+    transform: none;
+    outline: none;
+  }
   [data-ant-message-root]:not(:popover-open) { display: none; }
   [data-ant-message-root] > [data-ant-message-content] {
-    align-items: center; flex-direction: column-reverse;
+    align-items: center;
+    flex-direction: column-reverse;
   }
   [data-ant-message-content][data-ant-message-stack] { isolation: isolate; }
   [data-ant-message-content][data-ant-message-collapsed] {
@@ -173,7 +195,10 @@
   @media (prefers-reduced-motion: reduce) {
     [data-ant-message-stack]::before, [data-ant-message-stack]::after { transition: none; }
   }
-  [data-ant-message-root]::backdrop { pointer-events: none; background: transparent; }
+  [data-ant-message-root]::backdrop {
+    pointer-events: none;
+    background: transparent;
+  }
 </style>
 
 <span bind:this={anchor} class="ant-message-anchor" aria-hidden="true" {@attach connectHost}></span>

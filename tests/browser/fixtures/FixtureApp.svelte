@@ -17,8 +17,14 @@
 
 <style>
   :global(body) { margin: 0; }
-  .fixtures { max-width: 800px; padding: 24px; }
-  label { display: block; margin-block: 8px; }
+  .fixtures {
+    max-width: 800px;
+    padding: 24px;
+  }
+  label {
+    display: block;
+    margin-block: 8px;
+  }
 </style>
 
 {#if route.mode === 'invalid'}

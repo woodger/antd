@@ -14,7 +14,9 @@
     ...(source ? { cssVar: {} } : {})
   });
   let variables = $derived(custom
-    ? '--ant-link-decoration:overline;--ant-link-hover-decoration:underline;--ant-link-focus-decoration:line-through'
+    ? '--ant-link-decoration:overline;'
+      + '--ant-link-hover-decoration:underline;'
+      + '--ant-link-focus-decoration:line-through'
     : undefined);
 </script>
 

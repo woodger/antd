@@ -8,5 +8,7 @@
 
 <section data-overflow-hydration>
   <form data-overflow-form><PopupOverflowCase {sample} named bind:this={fixture} /></form>
-  <input aria-label="Overflow outside draft" style="position:fixed;left:16px;bottom:16px" />
+  <input aria-label="Overflow outside draft" style={'position:fixed;'
+    + 'left:16px;'
+    + 'bottom:16px'} />
 </section>

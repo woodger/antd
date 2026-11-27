@@ -152,7 +152,10 @@
     const position = direction === 'rtl' ? 'right' : direction === 'btt' ? 'bottom'
       : direction === 'ttb' ? 'top' : 'left';
     const dimension = orientation === 'vertical' ? 'height' : 'width';
-    return `${position}:${percent(start)}%;${dimension}:${percent(end) - percent(start)}%`;
+    return (
+      `${position}:${percent(start)}%;`
+      + `${dimension}:${percent(end) - percent(start)}%`
+    );
   }
 
   function isIncluded(point: number) {
@@ -505,9 +508,30 @@
 </script>
 
 <style>
-  .slider-range-input { position: absolute; z-index: 1; inset: -2px; width: calc(100% + 4px); height: calc(100% + 4px); opacity: 0; appearance: none; margin: 0; padding: 0; border: 0; touch-action: none; cursor: inherit; }
-  .slider-range-input::-webkit-slider-thumb { appearance: none; width: 100%; height: 100%; }
-  .slider-range-input::-moz-range-thumb { width: 100%; height: 100%; border: 0; }
+  .slider-range-input {
+    position: absolute;
+    z-index: 1;
+    inset: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    opacity: 0;
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    touch-action: none;
+    cursor: inherit;
+  }
+  .slider-range-input::-webkit-slider-thumb {
+    appearance: none;
+    width: 100%;
+    height: 100%;
+  }
+  .slider-range-input::-moz-range-thumb {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
   .range-root { touch-action: none; }
   .range-root[data-ant-slider-source] .range-handle:focus-within::before {
     inset-inline-start: calc(((var(--ant-slider-handle-size-hover) - var(--ant-slider-handle-size)) / 2 + var(--ant-slider-handle-line-width-hover)) * -1);
@@ -515,10 +539,29 @@
     width: calc(var(--ant-slider-handle-size-hover) + var(--ant-slider-handle-line-width-hover) * 2);
     height: calc(var(--ant-slider-handle-size-hover) + var(--ant-slider-handle-line-width-hover) * 2);
   }
-  .range-handle:has(input:focus-visible)::after { outline: 6px solid var(--ant-slider-handle-active-outline-color); box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color); }
-  .range-handle:focus-within::after { width: var(--ant-slider-handle-size-hover); height: var(--ant-slider-handle-size-hover); inset-inline-start: calc((var(--ant-slider-handle-size) - var(--ant-slider-handle-size-hover)) / 2); inset-block-start: calc((var(--ant-slider-handle-size) - var(--ant-slider-handle-size-hover)) / 2); box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color); outline: 6px solid var(--ant-slider-handle-active-outline-color); }
-  .range-mark { border: 0; padding: 0; background: transparent; font: inherit; line-height: inherit; }
-  .range-mark:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
+  .range-handle:has(input:focus-visible)::after {
+    outline: 6px solid var(--ant-slider-handle-active-outline-color);
+    box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color);
+  }
+  .range-handle:focus-within::after {
+    width: var(--ant-slider-handle-size-hover);
+    height: var(--ant-slider-handle-size-hover);
+    inset-inline-start: calc((var(--ant-slider-handle-size) - var(--ant-slider-handle-size-hover)) / 2);
+    inset-block-start: calc((var(--ant-slider-handle-size) - var(--ant-slider-handle-size-hover)) / 2);
+    box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color);
+    outline: 6px solid var(--ant-slider-handle-active-outline-color);
+  }
+  .range-mark {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    line-height: inherit;
+  }
+  .range-mark:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
   @media (prefers-reduced-motion: reduce) {
     .range-root :global(.ant-slider-rail), .range-root :global(.ant-slider-track),
     .range-root :global(.ant-slider-handle)::before,

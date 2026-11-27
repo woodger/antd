@@ -44,7 +44,8 @@
     bind:nativeElement bind:imageElement />
 {/snippet}
 
-<section data-image-prefix-scope={scope} style="width:480px;padding:12px">
+<section data-image-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}>
   {#if sample.group}
     <ImagePreviewGroup previewPrefixCls={local ? sample.groupLocal : undefined}
       classNames={{ popup: { root: 'fixture-image-preview' } }}

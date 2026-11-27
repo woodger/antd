@@ -58,7 +58,8 @@
 {#snippet input(context: SelectInputContext<HTMLInputElement>)}
   <input {...context.attributes} data-component-regression-editor {@attach node => register(untrack(() => context), node)} />
 {/snippet}
-<section data-component-regression={initial} style="width:320px;padding:12px" {@attach node => {
+<section data-component-regression={initial} style={'width:320px;'
+  + 'padding:12px'} {@attach node => {
   const capture = (event: Event) => Object.assign((event as CustomEvent).detail, { read, focus });
   node.addEventListener('componentregressioncapture', capture);
   return () => node.removeEventListener('componentregressioncapture', capture);

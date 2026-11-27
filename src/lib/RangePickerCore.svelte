@@ -1659,12 +1659,44 @@
 </script>
 
 <style>
-  [data-picker-popup] { position:fixed;margin:0;padding:0;border:0;background:transparent;overflow:visible; }
-  [data-picker-clear] { padding:0;border:0;background:transparent;cursor:pointer; }
-  [data-picker-clear]:focus-visible { opacity:1;outline:2px solid var(--ant-color-primary); }
-  [data-picker-current] { padding:0;border:0;background:transparent;color:var(--ant-color-link);font:inherit;cursor:pointer; }
-  [data-picker-current]:disabled { color:var(--ant-color-text-disabled);cursor:not-allowed; }
-  [data-picker-presets] button { border:0;padding:0;background:transparent;color:inherit;font:inherit;cursor:pointer; }
+  [data-picker-popup] {
+    position:fixed;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    overflow:visible;
+  }
+  [data-picker-clear] {
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+  }
+  [data-picker-clear]:focus-visible {
+    opacity:1;
+    outline:2px solid var(--ant-color-primary);
+  }
+  [data-picker-current] {
+    padding:0;
+    border:0;
+    background:transparent;
+    color:var(--ant-color-link);
+    font:inherit;
+    cursor:pointer;
+  }
+  [data-picker-current]:disabled {
+    color:var(--ant-color-text-disabled);
+    cursor:not-allowed;
+  }
+  [data-picker-presets] button {
+    border:0;
+    padding:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+    cursor:pointer;
+  }
 </style>
 
 {#snippet dateCalendar(calendarMode: DatePickerCalendarMode, offset: number)}
@@ -1927,7 +1959,9 @@
       <input {...editorAttributes(1)} bind:this={nativeEnd} {@attach maskInputs[1].attach} />
     {/if}
   </div>
-  <div class={`${prefix}-active-bar`} style={`position:absolute;left:${bar.left}px;width:${bar.width}px`}></div>
+  <div class={`${prefix}-active-bar`} style={`position:absolute;`
+    + `left:${bar.left}px;`
+    + `width:${bar.width}px`}></div>
   {#if suffixContent !== false && suffixContent !== null && suffixContent !== ''}
     <span
       class={[`${prefix}-suffix`, semantic?.classes.suffix]}
@@ -1988,8 +2022,10 @@
             ]}
             style={[
               config.direction === 'rtl'
-                ? `margin-right:${timePosition.offset}px;margin-left:auto`
-                : `margin-left:${timePosition.offset}px;margin-right:auto`,
+                ? `margin-right:${timePosition.offset}px;`
+                  + `margin-left:auto`
+                : `margin-left:${timePosition.offset}px;`
+                  + `margin-right:auto`,
               semantic?.styles.popup.container
             ].filter(Boolean).join(';')}
             tabindex="-1"

@@ -39,9 +39,22 @@
 
 <style>
   section { padding: 20px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-block: 12px; }
-  form { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-  output { display: block; overflow-wrap: anywhere; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-block: 12px;
+  }
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 {#snippet rich()}<strong>Rich ON</strong>{/snippet}

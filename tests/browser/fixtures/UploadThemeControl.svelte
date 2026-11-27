@@ -41,9 +41,16 @@
       ? 'picture-card' : 'text';
   });
   let areaStyle = $derived([
-    styled && 'width:117px;height:119px;border-radius:13px',
+    styled && (
+      'width:117px;'
+      + 'height:119px;'
+      + 'border-radius:13px'
+    ),
     (scope === 'variable' || mode === 'trigger-variables')
-      && `--${prefix}-upload-picture-card-size:139px;--${prefix}-upload-actions-color:rgb(0,128,0)`
+      && (
+        `--${prefix}-upload-picture-card-size:139px;`
+        + `--${prefix}-upload-actions-color:rgb(0,128,0)`
+      )
   ].filter(Boolean).join(';'));
   let uploadProps = $derived<UploadProps>({
     fileList: files,

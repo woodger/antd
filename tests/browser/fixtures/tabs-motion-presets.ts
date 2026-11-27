@@ -89,7 +89,8 @@ export function tabsMotionSettings(
         motion[`on${phase}Active`] = (node, event) => {
           report('active', node, event);
           return sample.paint
-            ? `opacity:${phase === 'Leave' ? 0 : 1};transition:opacity .24s linear${color}`
+            ? `opacity:${phase === 'Leave' ? 0 : 1};`
+              + `transition:opacity .24s linear${color}`
             : undefined;
         };
         motion[`on${phase}End`] = (node, event) => {

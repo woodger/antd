@@ -142,7 +142,8 @@
   shadow = root;
   return () => observer.disconnect();
 }}></div>
-<div style="width:600px;margin:500px 200px">
+<div style={'width:600px;'
+  + 'margin:500px 200px'}>
   <ConfigProvider {...parentOptions} direction={sample.rtl ? 'rtl' : undefined}
     style={`--picker-origin:${dark ? 'dark' : 'light'}`} theme={{
       mode: dark ? 'dark' : 'light',

@@ -66,7 +66,9 @@
   /** Сопоставляет строковые CSS-слои с объектами style в исходном замере. */
   function styles(source: string, border: number): ModalSemanticSlots {
     return Object.fromEntries(slots.map(slot => [
-      slot, `--winner:${source};--${source}:${slot};border-top-width:${border}px`
+      slot, `--winner:${source};`
+        + `--${source}:${slot};`
+        + `border-top-width:${border}px`
     ]));
   }
 
@@ -77,7 +79,8 @@
 
   const provider: ModalConfig | undefined = profile.provider ? {
     class: 'provider-panel',
-    style: '--winner:providerStyle;--provider-panel:panel',
+    style: '--winner:providerStyle;'
+      + '--provider-panel:panel',
     classNames: ({ props }) => {
       storeInput('providerClasses', props);
       return classes('provider');
@@ -104,7 +107,8 @@
         },
         styles: ({ props }) => {
           storeInput('localStyles', props);
-          return { ...styles('local', 3), body: `--winner:local;--width:${props.width}` };
+          return { ...styles('local', 3), body: `--winner:local;`
+            + `--width:${props.width}` };
         }
       };
     }
@@ -114,11 +118,14 @@
 
   const nativeParts: ModalSurfaceProps = profile.elementProps ? {
     wrapProps: { class: 'replacement-wrap', 'data-extra': 'wrapper',
-      style: '--winner:wrapProps;z-index:1200' },
+      style: '--winner:wrapProps;'
+        + 'z-index:1200' },
     maskProps: { class: 'replacement-mask', 'data-extra': 'mask',
-      style: '--winner:maskProps;z-index:1199' },
+      style: '--winner:maskProps;'
+        + 'z-index:1199' },
     bodyProps: { class: 'replacement-body', 'data-extra': 'body',
-      style: '--winner:bodyProps;padding:11px', 'aria-label': 'body props' }
+      style: '--winner:bodyProps;'
+        + 'padding:11px', 'aria-label': 'body props' }
   } : interactiveMask || animatedMask || namedMask || managedMask ? {
     wrapProps: interactiveMask ? {
       onclick: event => {
@@ -128,14 +135,16 @@
       }
     } : undefined,
     maskProps: {
-      style: 'background:rgb(20,30,40);z-index:1500',
+      style: 'background:rgb(20,30,40);'
+        + 'z-index:1500',
       onclick: () => events.push('mask-click')
     }
   } : {};
 
   const shared: ModalSurfaceProps = {
     ...localOptions(), ...nativeParts, rootClassName: 'explicit-root',
-    wrapClassName: 'explicit-wrapper', style: '--winner:explicitStyle;--explicit:panel',
+    wrapClassName: 'explicit-wrapper', style: '--winner:explicitStyle;'
+      + '--explicit:panel',
     modalRender: profile.render ? renderWrapper : undefined
   };
 

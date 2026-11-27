@@ -35,7 +35,9 @@
   let childrenPrefix = $derived(local ? sample.childLocal : undefined);
 </script>
 
-{#snippet icon()}<span aria-hidden="true" style="display:inline-block;width:12px;height:12px">+</span>{/snippet}
+{#snippet icon()}<span aria-hidden="true" style={'display:inline-block;'
+  + 'width:12px;'
+  + 'height:12px'}>+</span>{/snippet}
 {#snippet first()}
   <FloatButton prefixCls={childrenPrefix} {icon} content="First" aria-label={`${scope} first action`}
     class="fixture-float-item" classNames={{ icon: 'fixture-float-icon',
@@ -46,7 +48,9 @@
     class="fixture-float-item" classNames={{ icon: 'fixture-float-icon',
       content: 'fixture-float-content' }} />
 {/snippet}
-<form data-float-prefix-scope={scope} style="width:480px;position:relative;padding:12px"
+<form data-float-prefix-scope={scope} style={'width:480px;'
+  + 'position:relative;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <FloatButton prefixCls={local ? sample.local : undefined} bind:nativeElement {icon}
     aria-label={`${scope} standalone action`} content="Do" shape="square"
@@ -68,7 +72,8 @@
       triggerIcon: 'fixture-float-icon' }}>
     {#if sample.opaque}{@render first()}{@render last()}{/if}
   </FloatButtonGroup>
-  <div class="fixture-float-scroller" bind:this={scroller} style="height:60px;overflow:auto">
+  <div class="fixture-float-scroller" bind:this={scroller} style={'height:60px;'
+    + 'overflow:auto'}>
     <div style="height:300px">Scroll content</div>
   </div>
   <FloatButtonBackTop prefixCls={local ? sample.local : undefined} target={() => scroller ?? null}

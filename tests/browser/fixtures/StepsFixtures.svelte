@@ -85,7 +85,12 @@
 </script>
 
 <style>
-  .surface { margin-block: 20px; padding: 16px; background: var(--ant-color-bg-container); color: var(--ant-color-text); }
+  .surface {
+    margin-block: 20px;
+    padding: 16px;
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+  }
 </style>
 
 <svelte:window

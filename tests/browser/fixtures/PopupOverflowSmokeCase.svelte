@@ -98,11 +98,17 @@
 
 <section data-overflow-case={sample.id} data-overflow-family={sample.family}
   data-overflow-reader={sample.reader} data-overflow-bound={Boolean(host)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal;direction:ltr">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal;'
+    + 'direction:ltr'}>
   <ConfigProvider {...outerProps} direction={sample.direction ?? 'ltr'} {theme} locale={enUS}>
     <ConfigProvider {...innerProps}>
       <div data-overflow-position
-        style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px`}>
+        style={`position:absolute;`
+          + `left:${position.left}px;`
+          + `top:${position.top}px;`
+          + `width:${position.width}px`}>
         {#if sample.family === 'pagination'}
           <Pagination id="overflow-field" class="popup-overflow-control"
             style={'publicStyle' in sample ? sample.publicStyle : 'width:100%'}
@@ -140,7 +146,9 @@
       if (shadow === root) shadow = undefined;
     };
   })}></div>
-  <button type="button" data-overflow-outside style="position:fixed;left:16px;top:80px">Outside overflow</button>
+  <button type="button" data-overflow-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside overflow</button>
   <output data-overflow-context hidden>{JSON.stringify(readContext())}</output>
   <output data-overflow-model hidden>{JSON.stringify(model)}</output>
   <output data-overflow-query hidden>{JSON.stringify(query)}</output>
@@ -161,5 +169,9 @@
 </section>
 
 <style>
-  :global(body) { margin:0;min-width:2200px;min-height:2000px; }
+  :global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:2000px;
+  }
 </style>

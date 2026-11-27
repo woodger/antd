@@ -813,15 +813,37 @@
 </script>
 
 <style>
-  .ant-popover-trigger { display: inline-block; max-width: 100%; vertical-align: middle; }
-  [data-ant-popover] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; }
+  .ant-popover-trigger {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  [data-ant-popover] {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
   [data-ant-popover][hidden], [data-ant-popover]:not(:popover-open) { display: none; }
-  [data-ant-popover-container] { box-sizing: border-box; max-height: calc(100dvh - 16px); overflow: auto; overflow-wrap: anywhere; }
+  [data-ant-popover-container] {
+    box-sizing: border-box;
+    max-height: calc(100dvh - 16px);
+    overflow: auto;
+    overflow-wrap: anywhere;
+  }
   [data-ant-popover-title],
   [data-ant-popover][data-ant-custom-prefix] [data-ant-popover-title] { min-width: min(var(--ant-popover-title-min-width), calc(100vw - 48px)); }
   [data-ant-placement="top"] > [data-ant-popover-arrow], [data-ant-placement="bottom"] > [data-ant-popover-arrow] { left: var(--arrow-x, 50%); }
   [data-ant-placement="left"] > [data-ant-popover-arrow], [data-ant-placement="right"] > [data-ant-popover-arrow] { top: var(--arrow-y, 50%); }
-  @media (prefers-reduced-motion: reduce) { [data-ant-popover], [data-ant-popover-container] { animation: none; transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    [data-ant-popover], [data-ant-popover-container] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
 {#snippet popupSections(sections: typeof payload)}

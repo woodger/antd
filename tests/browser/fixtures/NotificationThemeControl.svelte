@@ -18,14 +18,18 @@
   let events = $state<string[]>([]);
   const notification = createNotification({ duration: 0 });
   let holderStyle = $derived(scope === 'holder-style'
-    ? `--${prefix}-notification-z-index-popup:2600;--${prefix}-notification-width:450px`
+    ? `--${prefix}-notification-z-index-popup:2600;`
+      + `--${prefix}-notification-width:450px`
     : undefined);
 
   untrack(() => {
     const type: NotificationType | undefined = mode === 'plain' ? undefined
       : mode === 'success' || mode === 'warning' || mode === 'error' ? mode : 'info';
     const style = [
-      (priority || scope === 'priority') && 'color:rgb(0,128,0);padding:5px 19px',
+      (priority || scope === 'priority') && (
+        'color:rgb(0,128,0);'
+        + 'padding:5px 19px'
+      ),
       scope === 'variable' && `--${prefix}-notification-width:310px`
     ].filter(Boolean).join(';');
 

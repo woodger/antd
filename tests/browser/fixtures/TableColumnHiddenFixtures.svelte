@@ -63,7 +63,8 @@
   <label><input type="checkbox" bind:checked={rowHeader} /> Hidden row header column</label>
   <ConfigProvider locale={enUS} direction={current.name === 'rtl-hidden' ? 'rtl' : 'ltr'}
     theme={{ cssVar: {}, token: { motion: false } }}>
-    <div id="table-column-hidden-control" style="width:320px;max-width:100%">
+    <div id="table-column-hidden-control" style={'width:320px;'
+      + 'max-width:100%'}>
       <form aria-label="Table hidden column form">
         <Table {columns} dataSource={current.name === 'all-hidden-empty' ? [] : rows}
           size="medium" pagination={false} rowSelection={current.selection}

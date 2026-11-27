@@ -142,7 +142,13 @@
 </script>
 
 <style>
-  .loading { display: inline-block; width: 1em; height: 1em; fill: currentColor; animation: timeline-loading 1s linear infinite; }
+  .loading {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    animation: timeline-loading 1s linear infinite;
+  }
   @keyframes timeline-loading { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .loading { animation-duration: 2s; } }
 </style>

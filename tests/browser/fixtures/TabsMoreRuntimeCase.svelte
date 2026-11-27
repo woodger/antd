@@ -34,7 +34,8 @@
       autoDestroy: destroy || sample.more?.autoDestroy,
       autoFocus: autofocus || sample.more?.autoFocus,
       onOverlayClick: () => events.push('overlay:click'),
-      overlayStyle: styled ? 'padding-top:13px;color:rgb(70,80,90)' : sample.more?.overlayStyle
+      overlayStyle: styled ? 'padding-top:13px;'
+        + 'color:rgb(70,80,90)' : sample.more?.overlayStyle
     };
     if (sample.raw) options.overlay = raw;
     if (sample.wrap) options.popupRender = wrapped;
@@ -60,7 +61,10 @@
 </script>
 
 <style>
-  .stage { width: 360px; margin-top: 240px; }
+  .stage {
+    width: 360px;
+    margin-top: 240px;
+  }
 </style>
 
 {#snippet raw()}

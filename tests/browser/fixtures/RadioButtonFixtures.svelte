@@ -23,8 +23,17 @@
 </script>
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .holder { width: 360px; max-width: 100%; margin-block: 16px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .holder {
+    width: 360px;
+    max-width: 100%;
+    margin-block: 16px;
+  }
   output { display: block; }
 </style>
 

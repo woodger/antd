@@ -40,7 +40,8 @@
     <Checkbox prefixCls={childPrefix} value={item.value}>{@render label(item.text)}</Checkbox>
   {/each}
 {/snippet}
-<form data-checkbox-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-checkbox-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <Checkbox prefixCls={prefix} checked={sample.checked !== false} indeterminate={sample.mixed}
     value="solo" name={`${scope}-solo`} disabled={sample.disabled}

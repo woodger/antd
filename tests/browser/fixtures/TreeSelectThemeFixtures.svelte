@@ -41,7 +41,13 @@
 </script>
 
 <style>
-  .samples { display:grid;grid-template-columns:repeat(3,240px);align-items:start;gap:20px;margin-block:24px; }
+  .samples {
+    display:grid;
+    grid-template-columns:repeat(3,240px);
+    align-items:start;
+    gap:20px;
+    margin-block:24px;
+  }
 </style>
 
 <section id="tree-select-theme-fixture">
@@ -60,7 +66,8 @@
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }}>
       <form id="themed-tree-select-form">
-        <div class="samples" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}>
+        <div class="samples" style={parentAliases ? '--ant-font-size:30px;'
+          + '--ant-color-text:red' : undefined}>
           {#each sizes as size}
             <TreeSelect {size} {treeData} defaultValue="a" class={`tree-token-single-${referenceSizeLabel(size)}`}
               aria-label={`Themed single tree ${size}`} style="width:240px" />

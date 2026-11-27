@@ -30,7 +30,12 @@
     class="fixture-row-prefix" {gutter} {align} {justify} wrap={sample.nowrap ? false : undefined}>
     <Col span={sample.nowrap ? undefined : 6} flex={sample.nowrap ? 1 : undefined}>
       <input aria-label={`${scope} row editor`} name="draft" value="Draft"
-        style="width:90px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />
+        style={'width:90px;'
+          + 'height:32px;'
+          + 'box-sizing:border-box;'
+          + 'font:inherit;'
+          + 'padding:0;'
+          + 'border:1px solid'} />
     </Col>
     <Col span={sample.nowrap ? undefined : 12} offset={sample.nowrap ? undefined : 2}
       flex={sample.nowrap ? 2 : undefined}><div style="height:36px">Second</div></Col>

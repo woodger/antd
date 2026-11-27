@@ -39,7 +39,8 @@
         collapsible: { start: true, end: true, showCollapsibleIcon: true }, children: editor },
       { collapsible: { start: true, end: true, showCollapsibleIcon: true }, children: 'Second' }
     ]}
-    style={`width:480px;height:${sample.vertical ? 240 : 160}px`}
+    style={`width:480px;`
+      + `height:${sample.vertical ? 240 : 160}px`}
     onResizeStart={sizes => events = [...events, { event: 'start', sizes }]}
     onResize={sizes => events = [...events, { event: 'resize', sizes }]}
     onResizeEnd={sizes => events = [...events, { event: 'end', sizes }]}

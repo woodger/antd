@@ -39,7 +39,8 @@
 {#snippet customRoot(context: TreeSelectRootContext<HTMLElement>)}
   <TreeSelectComponentsFormInput rootContext={context} />
 {/snippet}
-<section data-form-components-case={sample.id} data-form-components-ready={ready} style="margin:48px;width:420px">
+<section data-form-components-case={sample.id} data-form-components-ready={ready} style={'margin:48px;'
+  + 'width:420px'}>
   <ConfigProvider theme={{ token: { motion: false } }}>
     <Form form={model} data-form-components-native>
       {#if active}<FormItem name="choice" initialValue="a" htmlFor="choice" validateStatus="error" hasFeedback

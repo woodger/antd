@@ -29,7 +29,8 @@
   let events = $state<(string | undefined)[]>([]);
 </script>
 
-<form data-mentions-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-mentions-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <Mentions prefixCls={local ? sample.local : undefined} defaultValue="Draft"
     options={sample.empty ? [] : [

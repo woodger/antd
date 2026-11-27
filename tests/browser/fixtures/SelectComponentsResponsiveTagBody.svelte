@@ -24,12 +24,35 @@
   }
 </script>
 {#snippet label()}<span data-custom-tag-label={info.isMaxTag ? 'rest' : String(info.value)} style={fragment
-  ? `display:inline-block;width:${info.isMaxTag ? caller.current.restWidth : caller.current.tagWidth}px;height:24px;line-height:24px;font-size:14px;white-space:nowrap`
-  : 'flex:1 1 auto;min-width:0;overflow:hidden'}>{@render info.label()}</span>{/snippet}
+  ? `display:inline-block;`
+    + `width:${info.isMaxTag ? caller.current.restWidth : caller.current.tagWidth}px;`
+    + `height:24px;`
+    + `line-height:24px;`
+    + `font-size:14px;`
+    + `white-space:nowrap`
+  : 'flex:1 1 auto;'
+    + 'min-width:0;'
+    + 'overflow:hidden'}>{@render info.label()}</span>{/snippet}
 {#snippet button()}{#if info.closable}{@const click = closeHandler()}<button type="button" data-custom-tag-close={String(info.value)} aria-label={'Remove ' + info.value}
-  style="display:inline-block;flex:0 0 auto;box-sizing:border-box;width:{caller.current.closeWidth}px;height:18px;line-height:18px;margin:0;padding:0;border:0;font-size:10px;background:transparent"
+  style={'display:inline-block;'
+    + 'flex:0 0 auto;'
+    + 'box-sizing:border-box;'
+    + `width:${(caller.current.closeWidth) ?? ''}px;`
+    + 'height:18px;'
+    + 'line-height:18px;'
+    + 'margin:0;'
+    + 'padding:0;'
+    + 'border:0;'
+    + 'font-size:10px;'
+    + 'background:transparent'}
   onclick={click}>×</button>{/if}{/snippet}
 {#snippet fragmentBody()}{@render label()}{@render button()}{/snippet}
-{#snippet spanBody()}<span data-custom-tag={info.isMaxTag ? 'rest' : String(info.value)} style="display:inline-flex;align-items:center;width:{info.isMaxTag ? caller.current.restWidth : caller.current.tagWidth}px;height:24px;line-height:24px;font-size:14px;white-space:nowrap">{@render label()}{@render button()}</span>{/snippet}
+{#snippet spanBody()}<span data-custom-tag={info.isMaxTag ? 'rest' : String(info.value)} style={'display:inline-flex;'
+  + 'align-items:center;'
+  + `width:${(info.isMaxTag ? caller.current.restWidth : caller.current.tagWidth) ?? ''}px;`
+  + 'height:24px;'
+  + 'line-height:24px;'
+  + 'font-size:14px;'
+  + 'white-space:nowrap'}>{@render label()}{@render button()}</span>{/snippet}
 {#snippet renderedBody()}{@const content = observe(fragment ? fragmentBody : spanBody)}{@render content()}{/snippet}
 {@render renderedBody()}

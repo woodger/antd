@@ -47,7 +47,8 @@
 {#snippet bottom(data: readonly typeof rows[number][])}{#if mode !== 'empty-panels'}<div><output data-footer-data>{JSON.stringify(data.map(row => row.key))}</output>{#if mode === 'stateful'}<input name="footerDraft" aria-label="Footer draft" value="Footer draft" />{/if}</div>{/if}{/snippet}
 
 <ConfigProvider locale={enUS} theme={configured} direction={mode === 'rtl' ? 'rtl' : 'ltr'}>
-  <div id="table-panels-control" style="width:640px;max-width:100%">
+  <div id="table-panels-control" style={'width:640px;'
+    + 'max-width:100%'}>
     <form aria-label="Table panels form">
       <Table dataSource={mode === 'empty' ? [] : server ? rows.slice(2, 4) : rows} {columns}
         caption="Panel people" mode={server ? 'server' : 'client'} total={server ? 50 : undefined}

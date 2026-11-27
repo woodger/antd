@@ -35,7 +35,11 @@
 </script>
 
 <style>
-  .samples { width:300px;max-width:100%;margin-block:24px; }
+  .samples {
+    width:300px;
+    max-width:100%;
+    margin-block:24px;
+  }
 </style>
 
 <section id="anchor-theme-fixture">
@@ -52,7 +56,8 @@
   <label>Anchor color override <input bind:value={color} /></label>
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact }}>
-      <div class="samples" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}>
+      <div class="samples" style={parentAliases ? '--ant-font-size:30px;'
+        + '--ant-color-text:red' : undefined}>
         {#each directions as direction}
           <Anchor class={`anchor-token-${direction}`} {direction} affix={false} showInkInFixed
             {items} getCurrentAnchor={current} />
@@ -63,7 +68,8 @@
           styles={spacingOverride ? { root: '--ant-anchor-link-padding-inline-start:31px' } : undefined}
           style={spacingOverride ? '--ant-anchor-link-padding-inline-start:37px' : undefined} />
       </div>
-      <div bind:this={container} id="anchor-theme-scroll" style="height:200px;overflow:auto">
+      <div bind:this={container} id="anchor-theme-scroll" style={'height:200px;'
+        + 'overflow:auto'}>
         <div id="theme-overview" style="height:200px">Overview section</div>
         <div id="theme-delivery" style="height:200px">Delivery section</div>
         <div id="theme-details" style="height:200px">Details section</div>

@@ -25,11 +25,25 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label, output { display: block; margin-block: 8px; }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label, output {
+    display: block;
+    margin-block: 8px;
+  }
   output { overflow-wrap: anywhere; }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .detail { display: grid; gap: 12px; }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .detail {
+    display: grid;
+    gap: 12px;
+  }
   .detail p { margin: 0; }
 </style>
 

@@ -39,7 +39,11 @@
   });
   const styles = (): ProgressSemanticSlots => ({
     root: 'padding-top:7px', body: 'padding-left:4px', rail: 'border-radius:3px',
-    track: 'height:9px;stroke:#119955;stroke-dashoffset:12;stroke-width:3px;transform:rotate(45deg)', indicator: 'color:#6622aa'
+    track: 'height:9px;'
+      + 'stroke:#119955;'
+      + 'stroke-dashoffset:12;'
+      + 'stroke-width:3px;'
+      + 'transform:rotate(45deg)', indicator: 'color:#6622aa'
   });
   const provider: ProgressConfig = {
     class: 'provider-progress', style: 'padding-top:5px',

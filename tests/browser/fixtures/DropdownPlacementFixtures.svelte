@@ -87,13 +87,41 @@
 <style>
   :global(body:has(#dropdown-placement-fixture)) { margin: 0; }
   :global(body:has(#dropdown-placement-fixture[data-long-page])) { min-height: 1400px; }
-  #trigger { position: absolute; left: 64px; top: 120px; width: 260px; height: 60px; }
+  #trigger {
+    position: absolute;
+    left: 64px;
+    top: 120px;
+    width: 260px;
+    height: 60px;
+  }
   #trigger.centered { left: 400px; }
-  #trigger.corner { left: 727px; top: 630px; }
-  #host { position: absolute; top: 80px; left: 38px; }
-  #host.scrolling { width: 800px; height: 420px; overflow: auto; pointer-events: none; }
+  #trigger.corner {
+    left: 727px;
+    top: 630px;
+  }
+  #host {
+    position: absolute;
+    top: 80px;
+    left: 38px;
+  }
+  #host.scrolling {
+    width: 800px;
+    height: 420px;
+    overflow: auto;
+    pointer-events: none;
+  }
   :global(body:has(#dropdown-placement-fixture) .context-popup) { pointer-events: auto; }
-  [data-scroll-menu] :global(#context-menu) { max-height: 110px; overflow: auto; }
-  #scroller { position: absolute; top: 0; left: 0; width: 100%; height: 440px; overflow: auto; }
+  [data-scroll-menu] :global(#context-menu) {
+    max-height: 110px;
+    overflow: auto;
+  }
+  #scroller {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 440px;
+    overflow: auto;
+  }
   .filler { height: 1000px; }
 </style>

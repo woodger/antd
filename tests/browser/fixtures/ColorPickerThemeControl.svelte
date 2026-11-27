@@ -21,7 +21,9 @@
 </script>
 
 <ConfigProvider locale={enUS} direction={id === 'rtl' ? 'rtl' : 'ltr'}>
-  <section data-color-theme={id} style="width:800px;padding:16px;color:rgb(1,2,3)">
+  <section data-color-theme={id} style={'width:800px;'
+    + 'padding:16px;'
+    + 'color:rgb(1,2,3)'}>
     {#each modes as mode}
       {@const active = id === 'normal' && opened === mode}
       <div data-color-control={mode} style="margin-bottom:16px">
@@ -31,7 +33,10 @@
           size={mode === 'small' ? 'small' : mode === 'large' ? 'large' : undefined}
           disabled={mode === 'disabled'} showText open={active} allowClear
           presets={active ? presets : undefined}
-          style={[styled && 'color:rgb(0,128,0);padding-top:13px',
+          style={[styled && (
+            'color:rgb(0,128,0);'
+            + 'padding-top:13px'
+          ),
             id === 'variable' && `--${prefix}-font-size:21px`].filter(Boolean).join(';')}
           classNames={active ? { popup: { root: 'theme-color-popup' } } : undefined}
           styles={styled ? { description: 'color:#cf1322', popup: { root: 'color:#389e0d' } }

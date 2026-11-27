@@ -28,6 +28,8 @@
       style="width:100%" />
   </div>
 </ConfigProvider>
-<button id="outside" type="button" style="position:fixed;right:16px;bottom:16px">Outside</button>
+<button id="outside" type="button" style={'position:fixed;'
+  + 'right:16px;'
+  + 'bottom:16px'}>Outside</button>
 <button id="toggle" type="button" onclick={() => { multiple = !multiple; }}>Toggle</button>
 <output id="multiple-events">{JSON.stringify(events)}</output>

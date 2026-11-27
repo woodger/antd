@@ -226,7 +226,8 @@
 
 {#snippet optionRender(flat: SelectFlattenOption<string>, info: { index: number })}
   <div data-select-virtual-render={info.index} data-select-virtual-key={String(flat.key)}
-    style={`height:${selectVirtualChildHeight(info.index)}px;display:block`}
+    style={`height:${selectVirtualChildHeight(info.index)}px;`
+      + `display:block`}
     {@attach () => untrack(() => rendered(flat, info))}>{flat.label}</div>
 {/snippet}
 
@@ -252,21 +253,38 @@
 
 <section data-select-virtual-case={sample.id} data-select-virtual-family={sample.family}
   data-select-virtual-bound={Boolean(control)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal;direction:ltr">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal;'
+    + 'direction:ltr'}>
   <ConfigProvider {...outerProps} direction={sample.layout === 'rtl' ? 'rtl' : 'ltr'} {theme}
     popupOverflow="viewport" locale={enUS}>
     <ConfigProvider {...innerProps}>
       {#if sample.layout === 'scaled-shadow'}
-        <div data-select-virtual-surface style={`position:absolute;left:${selectVirtualGeometry.surface.left}px;top:${selectVirtualGeometry.surface.top}px;width:${selectVirtualGeometry.surface.width}px;height:${selectVirtualGeometry.surface.height}px;transform:scale(${selectVirtualGeometry.surface.scale});transform-origin:0 0`}>
-          <div data-select-virtual-position style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px`}>{@render field()}</div>
+        <div data-select-virtual-surface style={`position:absolute;`
+          + `left:${selectVirtualGeometry.surface.left}px;`
+          + `top:${selectVirtualGeometry.surface.top}px;`
+          + `width:${selectVirtualGeometry.surface.width}px;`
+          + `height:${selectVirtualGeometry.surface.height}px;`
+          + `transform:scale(${selectVirtualGeometry.surface.scale});`
+          + `transform-origin:0 0`}>
+          <div data-select-virtual-position style={`position:absolute;`
+            + `left:${position.left}px;`
+            + `top:${position.top}px;`
+            + `width:${position.width}px`}>{@render field()}</div>
           <div data-select-virtual-shadow style="display:contents" {@attach attachShadow}></div>
         </div>
       {:else}
-        <div data-select-virtual-position style={`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px`}>{@render field()}</div>
+        <div data-select-virtual-position style={`position:absolute;`
+          + `left:${position.left}px;`
+          + `top:${position.top}px;`
+          + `width:${position.width}px`}>{@render field()}</div>
       {/if}
     </ConfigProvider>
   </ConfigProvider>
-  <button type="button" data-select-virtual-outside style="position:fixed;left:16px;top:80px">Outside virtual</button>
+  <button type="button" data-select-virtual-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside virtual</button>
   <output data-select-virtual-receipts hidden>{JSON.stringify(readReceipts())}</output>
   <output data-select-virtual-model hidden>{JSON.stringify(model)}</output>
   <output data-select-virtual-query hidden>{JSON.stringify(query)}</output>
@@ -287,4 +305,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

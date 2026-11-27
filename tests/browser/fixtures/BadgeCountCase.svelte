@@ -25,14 +25,28 @@
 
 {#snippet label({ class: className, style }: BadgeCountContext)}<span data-count-root
   class={['case-custom-count', className]}
-  style={`${style ?? ''};display:inline-flex;width:24px;height:16px;align-items:center;justify-content:center;color:rgb(245,34,45);${sample.ownOffset ? 'margin-top:7px;inset-inline-end:3px' : ''}`}
+  style={`${style ?? ''};display:inline-flex;`
+    + `width:24px;`
+    + `height:16px;`
+    + `align-items:center;`
+    + `justify-content:center;`
+    + `color:rgb(245,34,45);`
+    + `${sample.ownOffset ? 'margin-top:7px;'
+    + 'inset-inline-end:3px' : ''}`}
   title={sample.ownTitle ? 'Own count' : undefined}>★</span>{/snippet}
 {#snippet stateful(attributes: BadgeCountContext)}<BadgeCountState {...attributes} />{/snippet}
 {#snippet empty()}{/snippet}
 {#snippet target(context: BadgeContext)}<button type="button" aria-label="Badge count target"
   aria-describedby={context.descriptionId} data-count={String(context.count)}
   onclick={() => clicks++}
-  style="display:inline-block;padding:0;border:0;width:48px;height:48px;font:inherit;line-height:1;background:#eee">T</button>{/snippet}
+  style={'display:inline-block;'
+    + 'padding:0;'
+    + 'border:0;'
+    + 'width:48px;'
+    + 'height:48px;'
+    + 'font:inherit;'
+    + 'line-height:1;'
+    + 'background:#eee'}>T</button>{/snippet}
 
 <ConfigProvider direction={sample.direction} theme={{
   token: { motion: false },
@@ -41,7 +55,10 @@
   components: sample.badge ? { Badge: sample.badge } : undefined
 }}>
   <div id="badge-count-surface"
-    style="font-family:Arial;font-size:14px;color:rgb(12,34,56);line-height:22px">
+    style={'font-family:Arial;'
+      + 'font-size:14px;'
+      + 'color:rgb(12,34,56);'
+      + 'line-height:22px'}>
     {#if mounted}<Badge {count} overflowCount={sample.overflowCount} showZero={sample.showZero}
       dot={sample.dot} status={sample.status} text={sample.text} size={sample.size}
       offset={changed ? [18, 6] : sample.offset} title={sample.title}

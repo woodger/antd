@@ -30,5 +30,13 @@
   } as const;
   let { name }: { name: keyof typeof paths | 'flipY'; } = $props();
 </script>
-<style>svg { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; } .vertical { transform: rotate(90deg); }</style>
+<style>svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+  .vertical {
+    transform: rotate(90deg);
+  }</style>
 <svg viewBox="64 64 896 896" fill="currentColor" aria-hidden="true" focusable="false" class:vertical={name === 'flipY'}>{#each paths[name === 'flipY' ? 'flipX' : name] as d}<path {d} />{/each}</svg>

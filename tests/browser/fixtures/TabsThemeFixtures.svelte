@@ -46,13 +46,15 @@
   <input aria-label="Themed Tabs outside" />
   {#if mounted}
     <ConfigProvider theme={enabled ? config : { compact, primary: 'purple' }} direction={rtl ? 'rtl' : 'ltr'}>
-      <div style={parentAliases ? '--ant-font-size:33px;--ant-color-text:red' : undefined}>
+      <div style={parentAliases ? '--ant-font-size:33px;'
+        + '--ant-color-text:red' : undefined}>
         {#each reference.variants as variant (variant.name)}
           <div class="stage" class:overflow={Boolean('overflow' in variant && variant.overflow)}>
             <Tabs class={`tabs-token-${variant.name}`} type={variant.type as TabsType}
               size={'size' in variant ? variant.size as 'small' | 'large' : undefined}
               tabPlacement={'tabPlacement' in variant ? variant.tabPlacement as TabsPlacement : undefined}
-              style={overrideStyles ? 'height:240px;--ant-tabs-card-padding:3px 7px' : 'height:240px'}
+              style={overrideStyles ? 'height:240px;'
+                + '--ant-tabs-card-padding:3px 7px' : 'height:240px'}
               items={Array.from({ length: 'overflow' in variant && variant.overflow ? 10 : 3 }, (_, index) => ({
                 key: String(index),
                 label: `Tab ${index + 1}`,

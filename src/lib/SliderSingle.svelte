@@ -497,14 +497,51 @@
   [data-ant-slider-part="rail"], [data-ant-slider-part="track"], [data-ant-slider-part="handle"] { pointer-events: none; }
   [data-ant-slider-single="horizontal"] [data-ant-slider-part="handle"] { transform: translateX(-50%); }
   [data-ant-slider-single="vertical"] [data-ant-slider-part="handle"] { transform: translateY(-50%); }
-  .slider-input { position: absolute; margin: 0; padding: 0; border: 0; opacity: 0; cursor: inherit; appearance: none; touch-action: none; }
-  [data-ant-slider-single="horizontal"] .slider-input { left: calc(var(--ant-slider-handle-size) / -2); top: calc((var(--ant-slider-rail-size) * 3 - 32px) / 2); width: calc(100% + var(--ant-slider-handle-size)); height: 32px; }
-  [data-ant-slider-single="vertical"] .slider-input { top: calc(var(--ant-slider-handle-size) / -2); left: calc((var(--ant-slider-rail-size) * 3 - 32px) / 2); height: calc(100% + var(--ant-slider-handle-size)); width: 32px; writing-mode: vertical-lr; }
-  .slider-input::-webkit-slider-thumb { appearance: none; width: var(--ant-slider-handle-size); height: var(--ant-slider-handle-size); }
-  .slider-input::-moz-range-thumb { width: var(--ant-slider-handle-size); height: var(--ant-slider-handle-size); border: 0; }
-  .slider-mark { border: 0; padding: 0; background: transparent; font: inherit; line-height: inherit; }
+  .slider-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    cursor: inherit;
+    appearance: none;
+    touch-action: none;
+  }
+  [data-ant-slider-single="horizontal"] .slider-input {
+    left: calc(var(--ant-slider-handle-size) / -2);
+    top: calc((var(--ant-slider-rail-size) * 3 - 32px) / 2);
+    width: calc(100% + var(--ant-slider-handle-size));
+    height: 32px;
+  }
+  [data-ant-slider-single="vertical"] .slider-input {
+    top: calc(var(--ant-slider-handle-size) / -2);
+    left: calc((var(--ant-slider-rail-size) * 3 - 32px) / 2);
+    height: calc(100% + var(--ant-slider-handle-size));
+    width: 32px;
+    writing-mode: vertical-lr;
+  }
+  .slider-input::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--ant-slider-handle-size);
+    height: var(--ant-slider-handle-size);
+  }
+  .slider-input::-moz-range-thumb {
+    width: var(--ant-slider-handle-size);
+    height: var(--ant-slider-handle-size);
+    border: 0;
+  }
+  .slider-mark {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    line-height: inherit;
+  }
   .slider-mark:not(:disabled) { cursor: pointer; }
-  [data-ant-slider-single]:has(.slider-input:focus-visible) [data-ant-slider-part="handle"]::after { outline: 6px solid var(--ant-slider-handle-active-outline-color); box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color); }
+  [data-ant-slider-single]:has(.slider-input:focus-visible) [data-ant-slider-part="handle"]::after {
+    outline: 6px solid var(--ant-slider-handle-active-outline-color);
+    box-shadow: 0 0 0 var(--ant-slider-handle-line-width-hover) var(--ant-slider-handle-active-color);
+  }
   /* В source фокусируется div handle, в native adapter — input. */
   [data-ant-slider-single].ant-slider-css-var:has(.slider-input:focus) [data-ant-slider-part="handle"]::before {
     inset-inline-start: calc(((var(--ant-slider-handle-size-hover) - var(--ant-slider-handle-size)) / 2 + var(--ant-slider-handle-line-width-hover)) * -1);
@@ -552,14 +589,18 @@
     {#if classes.tracks || styles.tracks}
       <div class={[`${prefix}-tracks`, classes.tracks]} aria-hidden="true"
         style={[orientation === 'horizontal'
-          ? `left:${trackStart}%;width:${percentage}%`
-          : `top:${trackStart}%;height:${percentage}%`, styles.tracks].filter(Boolean).join(';')}></div>
+          ? `left:${trackStart}%;`
+            + `width:${percentage}%`
+          : `top:${trackStart}%;`
+            + `height:${percentage}%`, styles.tracks].filter(Boolean).join(';')}></div>
     {/if}
     <div class={[`${prefix}-track`, `${prefix}-track-1`, classes.track]} data-ant-slider-part="track"
       aria-hidden="true" style={[
       orientation === 'horizontal'
-      ? `left:${trackStart}%;width:${percentage}%`
-      : `top:${trackStart}%;height:${percentage}%`, styles.track
+      ? `left:${trackStart}%;`
+        + `width:${percentage}%`
+      : `top:${trackStart}%;`
+        + `height:${percentage}%`, styles.track
     ].filter(Boolean).join(';')}></div>
   {/if}
   {#if stepDots.length}

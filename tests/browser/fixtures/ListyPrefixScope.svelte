@@ -30,7 +30,8 @@
 
 {#snippet title(team: string)}Group {team}{/snippet}
 
-<section data-listy-prefix-scope={scope} style="width:480px;padding:12px">
+<section data-listy-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}>
   {#each ['raw', 'raw-grouped', 'virtual', 'virtual-grouped'] as part}
     {@const grouped = part.endsWith('-grouped')}
     <div data-listy-prefix-part={part}>
@@ -41,7 +42,8 @@
         classNames={{ root: 'fixture-listy-prefix', item: 'fixture-listy-row',
           groupHeader: 'fixture-listy-header' }}
         styles={sample.userStyle ? {
-          root: 'font-size:18px;color:rgb(1,2,3)', item: 'padding-block:5px',
+          root: 'font-size:18px;'
+            + 'color:rgb(1,2,3)', item: 'padding-block:5px',
           groupHeader: 'padding-block:7px'
         } : undefined} style={sample.userStyle ? 'color:rgb(4,5,6)' : undefined}
         bind:ref={refs[part]}>

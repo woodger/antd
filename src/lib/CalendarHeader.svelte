@@ -79,8 +79,15 @@
 <style>
   /* Auto width внешнего div Select зависит от intrinsic ширины native input. */
   .calendar-header :global(.calendar-year-select),
-  .calendar-header :global(.calendar-month-select) { display: inline-block; flex: none; vertical-align: top; }
-  .calendar-header :global(.calendar-mode-switch) { flex-shrink: 0; flex-wrap: nowrap; }
+  .calendar-header :global(.calendar-month-select) {
+    display: inline-block;
+    flex: none;
+    vertical-align: top;
+  }
+  .calendar-header :global(.calendar-mode-switch) {
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+  }
   @media (width > 480px) {
     .calendar-header:not(.source-header) :global(.calendar-year-select) { width: var(--ant-calendar-year-control-width); }
     .calendar-header:not(.source-header) :global(.calendar-month-select) { width: var(--ant-calendar-month-control-width); }

@@ -31,7 +31,8 @@
   let events = $state<string[]>([]);
 </script>
 
-<form data-otp-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-otp-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <InputOTP prefixCls={local ? sample.local : undefined} bind:nativeElement {value}
     defaultValue={sample.empty ? '' : '12'} length={4} aria-label={`${scope} code`}

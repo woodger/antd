@@ -76,7 +76,8 @@
         ]} max={{ count: 1, popover: { ...options, title: 'Lifecycle title', content } }} />
       {:else}
         <TypographyText data-lifecycle-anchor="" children="A long text that exceeds its width"
-          tabindex={0} style="display:block;width:80px"
+          tabindex={0} style={'display:block;'
+            + 'width:80px'}
           ellipsis={{ tooltip: { ...options, title: content } }} />
       {/if}
     {/if}

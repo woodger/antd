@@ -81,10 +81,31 @@
 </script>
 
 <style>
-  button { font: inherit; color: inherit; cursor: inherit; }
-  .page-button { display: block; width: 100%; height: 100%; padding: 0 6px; border: 0; border-radius: inherit; background: transparent; }
-  .jump-button { width: 100%; height: 100%; padding: 0; border: 0; background: transparent; }
-  button:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 1px; }
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: inherit;
+  }
+  .page-button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 6px;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+  }
+  .jump-button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  button:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 1px;
+  }
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`transfer-pagination-prefix:${prefix}:${rootPrefix}`} />{/if}<ul data-ant-pagination-prefix={prefix} data-ant-pagination-root-prefix={rootPrefix} class={[`${prefix} ant-pagination-css-var ${prefix}-small ${prefix}-mini`,

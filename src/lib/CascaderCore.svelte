@@ -611,44 +611,147 @@
 </script>
 
 <style>
-  [data-ant-path-choice-control] { display:inline-flex;align-items:center;position:relative;max-width:100%; }
-  [data-ant-path-choice-control]:focus-within { outline:2px solid var(--ant-color-primary);outline-offset:2px; }
-  [data-ant-path-choice-control][data-ant-path-choice-source-theme] { align-items:flex-start;max-width:none; }
-  [data-ant-path-choice-control][data-ant-path-choice-source-theme]:focus-within { outline:0;outline-offset:0; }
-  [data-ant-path-choice-content] { min-width:0;position:relative; }
-  [data-ant-path-choice-single] [data-ant-path-choice-content] { overflow:hidden;white-space:nowrap;min-height:1lh; }
+  [data-ant-path-choice-control] {
+    display:inline-flex;
+    align-items:center;
+    position:relative;
+    max-width:100%;
+  }
+  [data-ant-path-choice-control]:focus-within {
+    outline:2px solid var(--ant-color-primary);
+    outline-offset:2px;
+  }
+  [data-ant-path-choice-control][data-ant-path-choice-source-theme] {
+    align-items:flex-start;
+    max-width:none;
+  }
+  [data-ant-path-choice-control][data-ant-path-choice-source-theme]:focus-within {
+    outline:0;
+    outline-offset:0;
+  }
+  [data-ant-path-choice-content] {
+    min-width:0;
+    position:relative;
+  }
+  [data-ant-path-choice-single] [data-ant-path-choice-content] {
+    overflow:hidden;
+    white-space:nowrap;
+    min-height:1lh;
+  }
   [data-ant-path-choice-single] { min-height:var(--ant-native-path-choice-height); }
-  [data-ant-path-choice-single] .selected-label { overflow:hidden;text-overflow:ellipsis; }
-  [data-ant-path-choice-single] [data-ant-path-choice-input] { position:absolute;inset:0;width:100%;height:100%; }
-  [data-ant-path-choice-control] [data-ant-path-choice-input] { min-width:0;padding:0;border:0;outline:0;background:transparent;color:var(--ant-native-path-choice-color);font:inherit;line-height:inherit;cursor:inherit; }
+  [data-ant-path-choice-single] .selected-label {
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  [data-ant-path-choice-single] [data-ant-path-choice-input] {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+  [data-ant-path-choice-control] [data-ant-path-choice-input] {
+    min-width:0;
+    padding:0;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:var(--ant-native-path-choice-color);
+    font:inherit;
+    line-height:inherit;
+    cursor:inherit;
+  }
   [data-ant-path-choice-control][data-ant-path-choice-single][data-ant-path-choice-open] [data-ant-path-choice-content-has-search-value] > .overflow-item { opacity:1; }
   [data-ant-path-choice-input]::placeholder { color:var(--ant-color-text-placeholder); }
-  [data-ant-path-choice-multiple] { height:auto;min-height:var(--ant-native-path-choice-height); }
+  [data-ant-path-choice-multiple] {
+    height:auto;
+    min-height:var(--ant-native-path-choice-height);
+  }
   [data-ant-path-choice-multiple] [data-ant-path-choice-content] { gap:0; }
   /* Native width с px перекрывает unitless формулу Select и при поздней вставке prefix CSS. */
-  [data-ant-path-choice-control][data-ant-path-choice-multiple] [data-ant-path-choice-input] { position:relative;inset:auto;flex:0 1 auto;width:var(--select-input-width,4px);min-width:4px;max-width:100%;height:auto; }
+  [data-ant-path-choice-control][data-ant-path-choice-multiple] [data-ant-path-choice-input] {
+    position:relative;
+    inset:auto;
+    flex:0 1 auto;
+    width:var(--select-input-width,4px);
+    min-width:4px;
+    max-width:100%;
+    height:auto;
+  }
   [data-ant-path-choice-source-theme][data-ant-path-choice-multiple] [data-ant-path-choice-input] { line-height:calc(var(--ant-select-internal_fixed_item_margin) * 2 + var(--ant-native-path-choice-multi-item-height)); }
-  [data-ant-path-choice-selection-item] { flex:none;box-sizing:border-box;max-width:100%;min-width:0; }
-  [data-ant-path-choice-source-theme] [data-ant-path-choice-selection-item] { flex:1;max-width:none; }
+  [data-ant-path-choice-selection-item] {
+    flex:none;
+    box-sizing:border-box;
+    max-width:100%;
+    min-width:0;
+  }
+  [data-ant-path-choice-source-theme] [data-ant-path-choice-selection-item] {
+    flex:1;
+    max-width:none;
+  }
   /* Обёртки сохраняют DOM при смене темы; source overflow измеряет каждый tag отдельно. */
   .overflow-item { display:contents; }
   [data-ant-path-choice-source-theme][data-ant-path-choice-multiple] .overflow-item { display:block; }
-  [data-ant-path-choice-selection-item-remove],.clear { padding:0;border:0;background:transparent;cursor:pointer;flex:none; }
-  .clear { margin-inline-end:4px;color:var(--ant-color-text-tertiary);display:flex; }
-  .suffix { display:flex;flex:none;color:var(--ant-color-text-quaternary);pointer-events:none; }
-  [data-ant-path-choice-source-theme] .clear { margin-inline-end:0;display:inline-block;color:var(--ant-color-text-quaternary); }
+  [data-ant-path-choice-selection-item-remove],.clear {
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    flex:none;
+  }
+  .clear {
+    margin-inline-end:4px;
+    color:var(--ant-color-text-tertiary);
+    display:flex;
+  }
+  .suffix {
+    display:flex;
+    flex:none;
+    color:var(--ant-color-text-quaternary);
+    pointer-events:none;
+  }
+  [data-ant-path-choice-source-theme] .clear {
+    margin-inline-end:0;
+    display:inline-block;
+    color:var(--ant-color-text-quaternary);
+  }
   [data-ant-path-choice-source-theme] .clear:hover { color:var(--ant-color-icon); }
   [data-ant-path-choice-source-theme]:has(.clear):hover .suffix,[data-ant-path-choice-source-theme]:has(.clear:focus-visible) .suffix { opacity:0; }
-  .prefix { display:flex;flex:none;margin-inline-end:var(--ant-padding-xs); }
+  .prefix {
+    display:flex;
+    flex:none;
+    margin-inline-end:var(--ant-padding-xs);
+  }
   [data-ant-path-choice-selection-item-disabled] { color:var(--ant-select-multiple-item-color-disabled); }
   [data-ant-path-choice-source-theme] [data-ant-path-choice-selection-item-disabled] { color:inherit; }
   [data-ant-path-choice-selection-item-remove]:focus-visible,.clear:focus-visible { outline:2px solid var(--ant-color-primary); }
   .clear:focus-visible { opacity:1; }
-  .measure-tag { position:absolute;inset-block-start:0;inset-inline-start:0;visibility:hidden;pointer-events:none; }
-  .placeholder { position:absolute;inset-inline-start:0;pointer-events:none;color:var(--ant-color-text-placeholder); }
-  .popup { position:fixed;margin:0;border:0;overflow:auto; }
-  [data-ant-path-choice-panel] { color:var(--ant-color-text);background:var(--ant-color-bg-container); }
-  [data-ant-path-choice-panel][data-ant-path-choice-source-theme] { color:inherit;background:transparent; }
+  .measure-tag {
+    position:absolute;
+    inset-block-start:0;
+    inset-inline-start:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .placeholder {
+    position:absolute;
+    inset-inline-start:0;
+    pointer-events:none;
+    color:var(--ant-color-text-placeholder);
+  }
+  .popup {
+    position:fixed;
+    margin:0;
+    border:0;
+    overflow:auto;
+  }
+  [data-ant-path-choice-panel] {
+    color:var(--ant-color-text);
+    background:var(--ant-color-bg-container);
+  }
+  [data-ant-path-choice-panel][data-ant-path-choice-source-theme] {
+    color:inherit;
+    background:transparent;
+  }
   /* Upstream оставляет line box вокруг expand/loading icon, включая его высоту. */
   [data-ant-path-choice-source-theme] :global([data-ant-cascader-expand-icon]),[data-ant-path-choice-source-theme] :global([data-ant-cascader-loading-icon]) { display:block; }
   .custom-trigger { width:auto; }

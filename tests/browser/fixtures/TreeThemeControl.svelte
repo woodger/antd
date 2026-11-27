@@ -16,8 +16,14 @@
     { key: 'o', title: 'Other' }
   ]);
   let style = $derived([
-    styled && 'font-size:30px;color:rgb(0,128,0)',
-    id === 'variable' && `--${prefix}-tree-title-height:29px;--${prefix}-tree-node-selected-bg:rgb(255,0,255)`
+    styled && (
+      'font-size:30px;'
+      + 'color:rgb(0,128,0)'
+    ),
+    id === 'variable' && (
+      `--${prefix}-tree-title-height:29px;`
+      + `--${prefix}-tree-node-selected-bg:rgb(255,0,255)`
+    )
   ].filter(Boolean).join(';') || undefined);
   let events = $state<string[]>([]);
   let lazy = $state.raw<TreeDataNode[]>([{ key: 'load', title: 'Load branch', isLeaf: false }]);
@@ -36,7 +42,8 @@
   }
 </script>
 
-<section data-tree-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'} style="width:500px;padding:16px">
+<section data-tree-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'} style={'width:500px;'
+  + 'padding:16px'}>
   <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'}>
     <Tree {style} treeData={data} checkable defaultExpandedKeys={['p']}
       defaultSelectedKeys={['a']} defaultCheckedKeys={['a']} aria-label={`Themed Tree ${id}`}

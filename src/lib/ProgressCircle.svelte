@@ -153,8 +153,17 @@
 
 <style>
   [data-ant-progress-circle-body] { max-width: 100%; }
-  [data-ant-progress-circle-body] > svg { width: 100%; height: auto; vertical-align: top; }
-  [data-ant-progress-circle-body] :global([data-ant-progress-part="indicator"]) { padding-inline: 10%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  [data-ant-progress-circle-body] > svg {
+    width: 100%;
+    height: auto;
+    vertical-align: top;
+  }
+  [data-ant-progress-circle-body] :global([data-ant-progress-part="indicator"]) {
+    padding-inline: 10%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   @media (prefers-reduced-motion: reduce) {
     [data-ant-progress-circle-body] :global(circle) { transition: none !important; }
   }
@@ -175,21 +184,34 @@
 {#snippet body()}
   <div class={[`${prefix}-body`, gradient && `${prefix}-circle-gradient`, classes.body]}
     data-ant-progress-circle-body data-ant-progress-part="body"
-    style={`width: ${diameter}px;height: ${bodyHeight};aspect-ratio: 1;font-size: ${diameter * 0.15 + 6}px;${styles.body ?? ''}`}>
+    style={`width: ${diameter}px;`
+      + `height: ${bodyHeight};`
+      + `aspect-ratio: 1;`
+      + `font-size: ${diameter * 0.15 + 6}px;${styles.body ?? ''}`}>
     <svg bind:this={svg} class={`${prefix}-circle`} viewBox="0 0 100 100"
       aria-hidden="true" focusable="false">
       {#if layout.rail}
         <circle class={[`${prefix}-circle-rail`, classes.rail]} r={layout.radius} cx="50" cy="50"
           data-ant-progress-circle-rail
           stroke={railColor} stroke-width={strokeWidth} stroke-linecap={layout.cap} fill="none"
-          style={`stroke: ${layout.rail.stroke ?? ''};stroke-dasharray: ${layout.rail.dashArray};stroke-dashoffset: ${layout.rail.dashOffset};transform: ${layout.rail.transform};transform-origin: 50px 50px;transition: ${layout.rail.transition};fill-opacity: 0;${styles.rail ?? ''}`} />
+          style={`stroke: ${layout.rail.stroke ?? ''};`
+            + `stroke-dasharray: ${layout.rail.dashArray};`
+            + `stroke-dashoffset: ${layout.rail.dashOffset};`
+            + `transform: ${layout.rail.transform};`
+            + `transform-origin: 50px 50px;`
+            + `transition: ${layout.rail.transition};`
+            + `fill-opacity: 0;${styles.rail ?? ''}`} />
       {/if}
       {#each layout.paths as path (path.index)}
         {#if !path.step && path.color && typeof path.color === 'object'}
           {@const backgrounds = progressCircleGradient(path.color, gap)}
           <mask id={`${gradientId}-conic`}>{@render pathNode(path)}</mask>
           <foreignObject x="0" y="0" width="100" height="100" mask={`url(#${gradientId}-conic)`}>
-            <div style={`width:100%;height:100%;background:${backgrounds.linear}`}><div style={`width:100%;height:100%;background:${backgrounds.conic}`}></div></div>
+            <div style={`width:100%;`
+              + `height:100%;`
+              + `background:${backgrounds.linear}`}><div style={`width:100%;`
+              + `height:100%;`
+              + `background:${backgrounds.conic}`}></div></div>
           </foreignObject>
         {:else}
           {@render pathNode(path)}

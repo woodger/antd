@@ -696,12 +696,42 @@
 
 <style>
   [data-ant-tabs-part="nav-more"][hidden] { display: none; }
-  [data-ant-tabs-part="dropdown"] { position: fixed; inset: auto; border: 0; margin: 0; padding: 0; background: transparent; visibility: visible; overflow: visible; }
+  [data-ant-tabs-part="dropdown"] {
+    position: fixed;
+    inset: auto;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    visibility: visible;
+    overflow: visible;
+  }
   [data-ant-tabs-part="dropdown"][hidden] { display: none; }
   [data-ant-tabs-part="dropdown-menu-item"] { position: relative; }
-  [data-ant-tabs-part="dropdown-menu-option"] { appearance: none; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: inherit; }
-  [data-ant-tabs-part="dropdown-menu-option"]::after { content: ''; position: absolute; inset: 0; }
-  [data-ant-tabs-part="dropdown-menu-item-remove"] { position: relative; z-index: 1; }
+  [data-ant-tabs-part="dropdown-menu-option"] {
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: inherit;
+  }
+  [data-ant-tabs-part="dropdown-menu-option"]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  [data-ant-tabs-part="dropdown-menu-item-remove"] {
+    position: relative;
+    z-index: 1;
+  }
   @media (prefers-reduced-motion: reduce) { [data-ant-tabs-part="dropdown-menu-item"] { transition: none; } }
 </style>
 
@@ -752,7 +782,8 @@
       `${prefixCls}-nav-more`,
       dropdownVisible && (more?.openClassName ?? `${prefixCls}-dropdown-open`)
     ]} hidden={mobile}
-    style={`${tabBarGutter === undefined ? '' : `margin-inline-start:${tabBarGutter}px;`}${items.length ? '' : 'visibility:hidden;order:1'}`}
+    style={`${tabBarGutter === undefined ? '' : `margin-inline-start:${tabBarGutter}px;`}${items.length ? '' : 'visibility:hidden;'
+      + 'order:1'}`}
     aria-haspopup="listbox" aria-controls={popupId} aria-expanded={open}
     aria-label={icon === defaultMoreIcon || icon === null
       || typeof icon === 'boolean' || icon === ''

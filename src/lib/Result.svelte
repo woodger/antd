@@ -108,15 +108,42 @@
 </script>
 
 <style>
-  [data-ant-result] { min-width: 0; max-width: 100%; padding-inline: clamp(16px, 4vw, 32px); }
+  [data-ant-result] {
+    min-width: 0;
+    max-width: 100%;
+    padding-inline: clamp(16px, 4vw, 32px);
+  }
   [data-ant-result-part="title"] { font-weight: 400; }
-  [data-ant-result-part="title"], [data-ant-result-part="subTitle"], [data-ant-result-part="body"] { min-width: 0; overflow-wrap: anywhere; }
-  [data-ant-result-part="icon"] { min-width: 0; max-width: 100%; }
+  [data-ant-result-part="title"], [data-ant-result-part="subTitle"], [data-ant-result-part="body"] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  [data-ant-result-part="icon"] {
+    min-width: 0;
+    max-width: 100%;
+  }
   [data-ant-result-part="icon"] :global(svg) { max-width: 100%; }
-  [data-ant-result-image] { max-width: 100%; height: auto; }
-  [data-ant-result-image] :global(svg) { display: block; width: 100%; height: auto; }
-  [data-ant-result-part="extra"] { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--ant-padding-xs); min-width: 0; }
-  [data-ant-result-part="extra"] > :global(*) { max-width: 100%; margin-inline-end: 0; }
+  [data-ant-result-image] {
+    max-width: 100%;
+    height: auto;
+  }
+  [data-ant-result-image] :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  [data-ant-result-part="extra"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ant-padding-xs);
+    min-width: 0;
+  }
+  [data-ant-result-part="extra"] > :global(*) {
+    max-width: 100%;
+    margin-inline-end: 0;
+  }
   [data-ant-result-part="body"] { padding: var(--ant-padding-lg) clamp(16px, 5vw, 40px); }
 </style>
 

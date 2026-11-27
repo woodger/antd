@@ -119,10 +119,19 @@
   }
   .sort-button:disabled { cursor: not-allowed; }
   .sort-button:not(.sort-button-full)::after { content: none; }
-  .sort-heading { display: flex; align-items: center; min-width: 0; }
+  .sort-heading {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
   .sort-heading:not(.sort-heading-disabled) { cursor: pointer; }
   .sort-heading:not(.sort-heading-full)::after { content: none; }
-  .sort-title { position: relative; z-index: 1; flex: 1; min-width: 0; }
+  .sort-title {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+  }
   .sort-button-icon {
     display: inline-flex;
     align-items: center;
@@ -131,9 +140,17 @@
     width: auto;
     flex: none;
   }
-  .sort-arrow { display: block; width: 0; height: 0; border-inline: 4px solid transparent; }
+  .sort-arrow {
+    display: block;
+    width: 0;
+    height: 0;
+    border-inline: 4px solid transparent;
+  }
   .sort-arrow.active { color: var(--ant-color-primary); }
-  .sort-up { margin-bottom: 2px; border-bottom: 5px solid currentColor; }
+  .sort-up {
+    margin-bottom: 2px;
+    border-bottom: 5px solid currentColor;
+  }
   .sort-down { border-top: 5px solid currentColor; }
 </style>
 

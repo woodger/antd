@@ -32,12 +32,17 @@
     bind:nativeElement={input} bind:rootElement={wrapper} bind:this={component} />
 {:else if wrapped}
   <span bind:this={wrapper} data-input-wrapper style="display:inline-flex">
-    <span data-input-prefix style="position:relative;z-index:1;display:inline-block;width:48px">Prefix</span>
+    <span data-input-prefix style={'position:relative;'
+      + 'z-index:1;'
+      + 'display:inline-block;'
+      + 'width:48px'}>Prefix</span>
     {#if composite}
-      <textarea {...context.attributes} style={`${context.attributes.style ?? ''};position:relative;width:220px`}
+      <textarea {...context.attributes} style={`${context.attributes.style ?? ''};position:relative;`
+        + `width:220px`}
         bind:this={input} data-input-probe></textarea>
     {:else}
-      <textarea {...context.attributes} style={`${context.attributes.style ?? ''};position:relative;width:220px`}
+      <textarea {...context.attributes} style={`${context.attributes.style ?? ''};position:relative;`
+        + `width:220px`}
         {@attach context.register} data-input-probe></textarea>
     {/if}
   </span>

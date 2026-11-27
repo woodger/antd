@@ -92,7 +92,8 @@
     {@render field()}</FormItem>{:else}{@render field()}{/if}
 {/snippet}
 <div data-feedback-autocomplete={sample.id} data-feedback-prefix={sample.treePrefix ?? `${prefix}-select`}
-  data-feedback-refs={Boolean(root && input)} style="margin:64px;width:420px">
+  data-feedback-refs={Boolean(root && input)} style={'margin:64px;'
+    + 'width:420px'}>
   <ConfigProvider prefixCls={prefix} direction={sample.rtl ? 'rtl' : 'ltr'} theme={{
     cssVar: { key: 'form-feedback-autocomplete' }, token: { motion: false },
     mode: sample.theme === 'dark' ? 'dark' : 'light', compact: sample.theme === 'compact'

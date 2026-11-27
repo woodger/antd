@@ -64,7 +64,8 @@
       [sample.alias ? 'id' : 'key']: index === 0 && !sample.zero ? 'first' : index,
       [sample.alias ? 'caption' : 'title']: `Item ${index}`,
       isLeaf: !sample.lazy,
-      ...(sample.variable ? { style: `min-height:${index % 3 ? 35 : 42}px;margin-bottom:2px` } : {}),
+      ...(sample.variable ? { style: `min-height:${index % 3 ? 35 : 42}px;`
+        + `margin-bottom:2px` } : {}),
       ...(sample.fixed ? { style: 'height:49px' } : {})
     }));
     return sample.branch ? [{ [sample.alias ? 'id' : 'key']: 'root',

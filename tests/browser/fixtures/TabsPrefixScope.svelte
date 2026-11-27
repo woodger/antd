@@ -57,12 +57,22 @@
 {#snippet zeta()}<span class="fixture-tab-label">Zeta</span>{/snippet}
 {#snippet editor()}
   <input aria-label={`${scope} tabs panel draft`} value="Draft"
-    style="width:90px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />
+    style={'width:90px;'
+      + 'height:32px;'
+      + 'box-sizing:border-box;'
+      + 'font:inherit;'
+      + 'padding:0;'
+      + 'border:1px solid'} />
 {/snippet}
 {#snippet popupContent(menu: Snippet)}
   {@render menu()}
   <input aria-label={`${scope} tabs popup draft`} value="Popup"
-    style="width:90px;height:32px;box-sizing:border-box;font:inherit;padding:0;border:1px solid" />
+    style={'width:90px;'
+      + 'height:32px;'
+      + 'box-sizing:border-box;'
+      + 'font:inherit;'
+      + 'padding:0;'
+      + 'border:1px solid'} />
 {/snippet}
 <section data-tabs-prefix-scope={scope} data-tabs-prefix-base={prefix}
   style={`width:${sample.overflow ? 260 : 480}px`}>

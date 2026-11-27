@@ -46,7 +46,8 @@
     }]);
   }}>Seed columns metadata</button>
   <ConfigProvider direction={sample.direction} theme={{ cssVar: {}, token: { motion: false } }}>
-    <div style={`width:360px;direction:${sample.direction}`} data-columns-case>
+    <div style={`width:360px;`
+      + `direction:${sample.direction}`} data-columns-case>
       <Form form={model} layout={sample.layout ?? 'horizontal'} {...sample.form}>
         <FormItem name="name" label="Name" class="columns-root" {...sample.item}>
           {#if sample.nested}

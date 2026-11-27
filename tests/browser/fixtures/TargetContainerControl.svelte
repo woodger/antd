@@ -17,14 +17,19 @@
 <div data-target-consumer={id} data-target-name={target}>
   <Affix class="target-affix" offsetTop={7} target={local} bind:nativeElement
     onChange={value => changes = [...changes, Boolean(value)]}
-    style={`position:absolute;top:${20 + 40 * index}px;width:260px`}>
+    style={`position:absolute;`
+      + `top:${20 + 40 * index}px;`
+      + `width:260px`}>
     <div style="height:32px"><input aria-label={`Target draft ${id}`} name={id} value="Draft" /></div>
   </Affix>
   <Anchor class="target-anchor" affix={false} getContainer={local}
     onChange={value => anchors = [...anchors, value]}
     items={[{ key: 'one', href: `#${target}-1`, title: 'One' },
       { key: 'two', href: `#${target}-2`, title: 'Two' }]}
-    style={`position:absolute;top:${20 + 100 * index}px;left:500px;width:180px`} />
+    style={`position:absolute;`
+      + `top:${20 + 100 * index}px;`
+      + `left:500px;`
+      + `width:180px`} />
   <output aria-label={`Target changes ${id}`}>{JSON.stringify(changes)}</output>
   <output aria-label={`Target ref ${id}`}>{nativeElement ? 'mounted' : 'empty'}</output>
   <output aria-label={`Target anchors ${id}`}>{JSON.stringify(anchors)}</output>

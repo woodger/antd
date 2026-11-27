@@ -117,7 +117,10 @@
 </script>
 
 <style>
-  [data-ant-card-part="body"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -2px; }
+  [data-ant-card-part="body"]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -2px;
+  }
   [data-ant-card-loading] > [data-ant-card-part="body"] :global(.ant-skeleton-host) { width: 100%; }
   [data-ant-card-root] :global([data-ant-card-head-tabs] [data-ant-tabs-part="empty"]) { display: none; }
   @media (prefers-reduced-motion: reduce) { [data-ant-card-root], [data-ant-card-root] :global(:is([data-ant-card-grid], .ant-card-grid)) { transition: none; } }

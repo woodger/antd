@@ -1829,16 +1829,32 @@
 </script>
 
 <style>
-  .container { position: relative; min-width: 0; width: 100%; }
+  .container {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+  }
   /* Inline-flex Source root использует text strut родителя, а не token font wrapper. */
   .container:has(> [data-ant-select-multiple] > [data-ant-select-content] > div[class*="-content-item-suffix"]) {
-    font-family: inherit; font-size: inherit;
+    font-family: inherit;
+    font-size: inherit;
   }
   .container[data-ant-select-value-layer] { display: inline-flex; }
-  [data-ant-select-control] { display: flex; align-items: center; min-width: 0; width: 100%; }
-  [data-ant-select-control]:focus-within { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
+  [data-ant-select-control] {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+  }
+  [data-ant-select-control]:focus-within {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
   [data-ant-select-control][data-ant-select-source-theme] { align-items: flex-start; }
-  [data-ant-select-control][data-ant-select-source-theme]:focus-within { outline: 0; outline-offset: 0; }
+  [data-ant-select-control][data-ant-select-source-theme]:focus-within {
+    outline: 0;
+    outline-offset: 0;
+  }
   [data-ant-select-control][data-ant-select-single] [data-ant-select-input], [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input] {
     position: relative;
     inset: auto;
@@ -1856,58 +1872,164 @@
   [data-ant-select-input]::placeholder { color: var(--ant-color-text-placeholder); }
   [data-ant-select-control] [data-ant-select-input][data-ant-select-semantic-color] { color: var(--ant-native-select-color, var(--ant-color-text)); }
   [data-ant-select-content]:has(> [data-ant-select-placeholder]) [data-ant-select-input]::placeholder { color: transparent; }
-  [data-ant-select-placeholder] { position: absolute; inset-inline-start: 0; }
-  [data-ant-select-control][data-ant-select-single] [data-ant-select-content][data-select-value-layer] [data-ant-select-input] { position: absolute; inset: 0; }
+  [data-ant-select-placeholder] {
+    position: absolute;
+    inset-inline-start: 0;
+  }
+  [data-ant-select-control][data-ant-select-single] [data-ant-select-content][data-select-value-layer] [data-ant-select-input] {
+    position: absolute;
+    inset: 0;
+  }
   [data-ant-select-content][data-select-value-layer]:not([data-select-value-search]) [data-ant-select-input] { -webkit-text-fill-color: transparent; }
-  [data-ant-select-content][data-select-value-search] [data-ant-select-input] { color: var(--ant-native-select-color, var(--ant-color-text)); -webkit-text-fill-color: currentColor; }
+  [data-ant-select-content][data-select-value-search] [data-ant-select-input] {
+    color: var(--ant-native-select-color, var(--ant-color-text));
+    -webkit-text-fill-color: currentColor;
+  }
   [data-ant-select-content][data-select-value-layer] { display: block; }
   [data-ant-select-content][data-select-value-layer][data-select-value-has-content]::before { display: none; }
   [data-ant-select-content][data-select-value-search] > [data-ant-select-value] { opacity: 0; }
   .intrinsic-width { width: auto; }
   .intrinsic-width [data-ant-select-content] { position: relative; }
-  .intrinsic-width [data-ant-select-control][data-ant-select-single] [data-ant-select-input] { position: absolute; inset: 0; }
-  .intrinsic-label { visibility: hidden; white-space: pre; }
-  .suffix { display: block; flex: none; color: var(--ant-color-text-quaternary); }
-  .clear { display: flex; padding: 0; margin-inline-end: 4px; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
-  .clear:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  .popup[data-ant-select-dropdown] { top: calc(100% + 4px); inset-inline: 0; max-height: none; overflow: visible; }
+  .intrinsic-width [data-ant-select-control][data-ant-select-single] [data-ant-select-input] {
+    position: absolute;
+    inset: 0;
+  }
+  .intrinsic-label {
+    visibility: hidden;
+    white-space: pre;
+  }
+  .suffix {
+    display: block;
+    flex: none;
+    color: var(--ant-color-text-quaternary);
+  }
+  .clear {
+    display: flex;
+    padding: 0;
+    margin-inline-end: 4px;
+    border: 0;
+    background: none;
+    color: var(--ant-color-text-tertiary);
+    cursor: pointer;
+  }
+  .clear:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  .popup[data-ant-select-dropdown] {
+    top: calc(100% + 4px);
+    inset-inline: 0;
+    max-height: none;
+    overflow: visible;
+  }
   /* Исходный virtual-list размещает options в flex column без сжатия строк. */
-  .popup[data-ant-select-source-popup] { display: flex; flex-direction: column; }
+  .popup[data-ant-select-source-popup] {
+    display: flex;
+    flex-direction: column;
+  }
   .popup[data-ant-select-custom-popup]:not([hidden]) { display: block; }
-  .popup[data-ant-select-dropdown][popover] { position: fixed; inset: auto; margin: 0; border: 0; }
+  .popup[data-ant-select-dropdown][popover] {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    border: 0;
+  }
   .popup[data-ant-select-dropdown][hidden] { display: none; }
   [data-ant-select-source-popup] > [data-ant-select-item] { flex: none; }
-  [data-ant-select-source-theme] .clear { display: inline-block; margin-inline-end: 0; color: var(--ant-color-text-quaternary); }
+  [data-ant-select-source-theme] .clear {
+    display: inline-block;
+    margin-inline-end: 0;
+    color: var(--ant-color-text-quaternary);
+  }
   [data-ant-select-source-theme] .clear:hover { color: var(--ant-color-icon); }
   [data-ant-select-source-theme] .clear:focus-visible { opacity: 1; }
   [data-ant-select-source-theme]:has(.clear):hover .suffix, [data-ant-select-source-theme]:has(.clear:focus-visible) .suffix { opacity: 0; }
-  [data-ant-select-item] { width: 100%; border: 0; background: none; font-family: inherit; text-align: start; }
-  [data-ant-select-control][data-ant-select-multiple] { height: auto; min-height: var(--ant-native-select-height); }
+  [data-ant-select-item] {
+    width: 100%;
+    border: 0;
+    background: none;
+    font-family: inherit;
+    text-align: start;
+  }
+  [data-ant-select-control][data-ant-select-multiple] {
+    height: auto;
+    min-height: var(--ant-native-select-height);
+  }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] { gap: 0; }
   /* Source suffix wrapper имеет собственный отступ до пустого input. */
-  [data-ant-select-content][data-select-source-empty-input]::before { flex: none; width: var(--ant-native-select-empty-input-gap); }
+  [data-ant-select-content][data-select-source-empty-input]::before {
+    flex: none;
+    width: var(--ant-native-select-empty-input-gap);
+  }
   [data-ant-select-content][data-select-source-empty-input] > [data-ant-select-placeholder] { inset-inline-start: var(--ant-native-select-empty-input-gap); }
-  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input] { flex: 1 1 60px; width: 60px; min-width: 40px; max-width: 100%; }
-  [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { flex: none; width: 4px; min-width: 4px; }
-  [data-ant-select-control][data-ant-select-responsive-tags] [data-ant-select-input] { flex: none; width: 4px; min-width: 4px; }
-  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input][data-ant-select-semantic-color] { flex: none; width: calc(var(--select-input-width, 0) * 1px); min-width: 4px; }
-  .measure-tag { position: absolute; inset-block-start: 0; inset-inline-start: 0; visibility: hidden; pointer-events: none; }
-  .custom-tag { display: inline-flex; flex: none; min-width: 0; max-width: 100%; }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input] {
+    flex: 1 1 60px;
+    width: 60px;
+    min-width: 40px;
+    max-width: 100%;
+  }
+  [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] {
+    flex: none;
+    width: 4px;
+    min-width: 4px;
+  }
+  [data-ant-select-control][data-ant-select-responsive-tags] [data-ant-select-input] {
+    flex: none;
+    width: 4px;
+    min-width: 4px;
+  }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input][data-ant-select-semantic-color] {
+    flex: none;
+    width: calc(var(--select-input-width, 0) * 1px);
+    min-width: 4px;
+  }
+  .measure-tag {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .custom-tag {
+    display: inline-flex;
+    flex: none;
+    min-width: 0;
+    max-width: 100%;
+  }
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { line-height: calc(var(--ant-select-internal_fixed_item_margin) * 2 + var(--ant-native-select-multi-item-height)); }
-  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-selection-item] { flex: none; box-sizing: border-box; max-width: calc(100% - var(--ant-select-internal_fixed_item_margin) * 2); min-width: 0; }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-selection-item] {
+    flex: none;
+    box-sizing: border-box;
+    max-width: calc(100% - var(--ant-select-internal_fixed_item_margin) * 2);
+    min-width: 0;
+  }
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-selection-item] { max-width: calc(100% - 4px - var(--ant-select-internal_fixed_item_margin) * 2); }
-  [data-ant-select-selection-item-remove] { padding: 0; border: 0; background: transparent; font-family: inherit; }
-  [data-ant-select-selection-item-remove]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 1px; }
+  [data-ant-select-selection-item-remove] {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+  }
+  [data-ant-select-selection-item-remove]:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 1px;
+  }
   [data-ant-select-selection-item-disabled] { color: var(--ant-select-multiple-item-color-disabled); }
   [data-ant-select-source-theme] [data-ant-select-selection-item-disabled] { color: inherit; }
   [data-ant-select-component-popup][hidden] { pointer-events: none; }
   [data-ant-select-component-popup][hidden] [data-ant-select-item] { width: auto; }
 
-  [data-ant-select-control][data-ant-select-multiple]:has(> [data-ant-select-content] > div[class*="-content-item-suffix"]) { display: inline-flex; min-height: initial; }
+  [data-ant-select-control][data-ant-select-multiple]:has(> [data-ant-select-content] > div[class*="-content-item-suffix"]) {
+    display: inline-flex;
+    min-height: initial;
+  }
   /* Only the new Overflow wrapper structure opts out of legacy flat tag CSS.
      Source: select/style/index.ts and select-input-multiple.ts:53-90. */
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content]:has(> div[class*="-content-item-suffix"]) { gap: normal; }
-  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] > div[class*="-content-item"] > [data-ant-select-selection-item] { flex: 1; max-width: none; }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] > div[class*="-content-item"] > [data-ant-select-selection-item] {
+    flex: 1;
+    max-width: none;
+  }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] > div[class*="-content-item-prefix"] > [data-ant-select-placeholder] { inset-inline-start: var(--ant-native-select-empty-input-gap); }
   [data-ant-select-control][data-ant-select-multiple] [class*="-prefix"] + [data-ant-select-content] > div[class*="-content-item-prefix"] > [data-ant-select-placeholder] { inset-inline-start: 0; }
   .container[data-ant-select-compact-item] > [data-ant-select-control] { border-radius: inherit; }

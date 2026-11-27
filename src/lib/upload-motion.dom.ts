@@ -100,7 +100,8 @@ export function createUploadMotion(
       status = visible ? first ? 'appear' : 'enter' : 'leave';
       step = 'start';
       style = !collapse ? undefined
-        : visible ? 'height:0px;opacity:0' : `height:${node.offsetHeight}px`;
+        : visible ? 'height:0px;'
+          + 'opacity:0' : `height:${node.offsetHeight}px`;
       update();
       const current = revision;
       frame = view.requestAnimationFrame(() => {
@@ -114,7 +115,9 @@ export function createUploadMotion(
           }
           step = 'active';
           style = !collapse ? undefined : visible
-            ? `height:${node.scrollHeight}px;opacity:1` : 'height:0px;opacity:0';
+            ? `height:${node.scrollHeight}px;`
+              + `opacity:1` : 'height:0px;'
+              + 'opacity:0';
           update();
           deadline = view.setTimeout(() => {
             deadline = undefined;

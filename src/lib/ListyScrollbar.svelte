@@ -145,11 +145,30 @@
 <div bind:this={bar} aria-hidden="true"
   class={[`${prefixCls}-scrollbar`, `${prefixCls}-scrollbar-${horizontal ? 'horizontal' : 'vertical'}`,
     visible && `${prefixCls}-scrollbar-visible`]}
-  style={`position:absolute;${visible ? '' : 'visibility:hidden;'}${horizontal
-    ? 'height:8px;left:0;right:0;bottom:0' : `width:8px;top:0;bottom:0;${rtl ? 'left' : 'right'}:0`}`}>
+  style={`position:absolute;`
+    + `${visible ? '' : 'visibility:hidden;'}`
+    + `${horizontal
+      ? 'height:8px;'
+        + 'left:0;'
+        + 'right:0;'
+        + 'bottom:0'
+      : `width:8px;`
+        + `top:0;`
+        + `bottom:0;`
+        + `${rtl ? 'left' : 'right'}:0`}`}>
   <div bind:this={thumb}
     class={[`${prefixCls}-scrollbar-thumb`, moving && `${prefixCls}-scrollbar-thumb-moving`]}
-    style={`position:absolute;border-radius:99px;background:var(--rc-virtual-list-scrollbar-bg,rgba(0,0,0,0.5));cursor:pointer;user-select:none;${horizontal
-      ? `height:100%;width:${geometry.thumb}px;top:0;${rtl ? 'right' : 'left'}:${geometry.top}px`
-      : `width:100%;height:${geometry.thumb}px;top:${geometry.top}px`}`}></div>
+    style={`position:absolute;`
+      + `border-radius:99px;`
+      + `background:var(--rc-virtual-list-scrollbar-bg,rgba(0,0,0,0.5));`
+      + `cursor:pointer;`
+      + `user-select:none;`
+      + `${horizontal
+        ? `height:100%;`
+          + `width:${geometry.thumb}px;`
+          + `top:0;`
+          + `${rtl ? 'right' : 'left'}:${geometry.top}px`
+        : `width:100%;`
+          + `height:${geometry.thumb}px;`
+          + `top:${geometry.top}px`}`}></div>
 </div>

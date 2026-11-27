@@ -108,9 +108,17 @@
 </script>
 
 <section data-surface-case={sample.id} data-surface-bound={Boolean(control)}
-  style="font-family:initial;font-size:16px;line-height:normal">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}>
   <ConfigProvider {theme} locale={enUS} popupOverflow="viewport">
-    <div style="position:absolute;left:300px;top:200px;width:280px;font-family:initial;font-size:16px;line-height:normal">
+    <div style={'position:absolute;'
+      + 'left:300px;'
+      + 'top:200px;'
+      + 'width:280px;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'}>
       {#if sample.control === 'autocomplete'}
         <EdgeAutoComplete {...autoCompleteProps} bind:this={control} bind:nativeElement={publicRoot} bind:inputElement={autoCompleteEditor} />
       {:else}
@@ -118,7 +126,9 @@
       {/if}
     </div>
   </ConfigProvider>
-  <button type="button" data-surface-outside style="position:fixed;left:16px;top:80px">Outside edge</button>
+  <button type="button" data-surface-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside edge</button>
   <div data-surface-command hidden {@attach node => {
     const reading = (event: Event) => Object.assign((event as CustomEvent).detail, read());
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
@@ -130,4 +140,8 @@
   }}></div>
 </section>
 
-<style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>
+<style>:global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:1800px;
+  }</style>

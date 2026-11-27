@@ -25,7 +25,8 @@
 
 <ConfigProvider theme={sliderPrefixTheme(sample)} direction={sample.rtl ? 'rtl' : 'ltr'}>
   <form id="prefix-form" onsubmit={event => event.preventDefault()}>
-    <div data-slider-prefix-case style="width:420px;height:240px">
+    <div data-slider-prefix-case style={'width:420px;'
+      + 'height:240px'}>
       {#if mounted}
         {#if sample.mode === 'single'}
           <Slider range={false} bind:value={single} prefixCls={prefix}

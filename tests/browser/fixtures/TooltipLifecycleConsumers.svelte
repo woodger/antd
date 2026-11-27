@@ -14,7 +14,8 @@
   });
 </script>
 
-<div id="tooltip-lifecycle-consumers" style="margin:180px;width:400px">
+<div id="tooltip-lifecycle-consumers" style={'margin:180px;'
+  + 'width:400px'}>
   <button type="button" onclick={() => step++} disabled={step >= sample.frames.length - 1}>
     Next consumer step
   </button>
@@ -22,7 +23,8 @@
   <ConfigProvider theme={source ? { cssVar: {}, token: { motion: false } }
     : { mode: 'light', primary: 'blue' }} tooltip={source ? {} : undefined}>
     {#if sample.mode === 'typography'}
-      <TypographyText style="display:block;width:80px" tabindex={0}
+      <TypographyText style={'display:block;'
+        + 'width:80px'} tabindex={0}
         ellipsis={{ tooltip: {
           ...tooltip,
           title: 'Consumer value',

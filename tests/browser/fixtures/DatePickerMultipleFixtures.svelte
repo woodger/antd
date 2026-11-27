@@ -106,7 +106,9 @@
     </div>
   </form>
 </ConfigProvider>
-<button id="outside" type="button" style="position:fixed;right:16px;bottom:16px">Outside</button>
+<button id="outside" type="button" style={'position:fixed;'
+  + 'right:16px;'
+  + 'bottom:16px'}>Outside</button>
 <button id="accept" type="button" onclick={() => { accepted = true; }}>Accept next change</button>
 <label>Owner width <input id="owner-width" type="number" bind:value={width} /></label>
 <output id="multiple-events">{JSON.stringify(events)}</output>

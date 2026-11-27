@@ -57,15 +57,18 @@
       trigger: `${name}-trigger`
     };
     const styles = {
-      root: 'color:#135790;padding-top:3px',
+      root: 'color:#135790;'
+        + 'padding-top:3px',
       list: 'margin-top:7px',
       item: 'min-height:33px',
-      trigger: 'color:#357913;padding-top:5px'
+      trigger: 'color:#357913;'
+        + 'padding-top:5px'
     };
 
     return {
       class: `${name}-class`,
-      style: 'color:#975310;padding-top:11px',
+      style: 'color:#975310;'
+        + 'padding-top:11px',
       classNames: callbacks ? ({ props }) => ({
         ...classNames,
         root: `${classNames.root} raw-${props.accept || 'none'}-${props.disabled}`

@@ -214,7 +214,10 @@
   <output aria-label="Menu open requests">{JSON.stringify(openRequests)}</output>
   <output aria-label="Menu pending preparations">{pendingPreparations}</output>
   <output aria-label="Menu leaf registered">{String(hasRegisteredLeaf)}</output>
-  <div style={`position:absolute;top:80px;left:120px;width:${profile.width ?? 320}px`}>
+  <div style={`position:absolute;`
+    + `top:80px;`
+    + `left:120px;`
+    + `width:${profile.width ?? 320}px`}>
     {#if active}
       {#key profileId}
         <ConfigProvider prefixCls={profile.providerPrefix}

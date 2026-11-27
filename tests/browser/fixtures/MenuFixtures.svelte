@@ -50,7 +50,8 @@
 {#snippet link()}<a href="#menu-destination" onclick={() => { clicks++; }}>Alpha link</a>{/snippet}
 {#snippet disabledLink()}<a href="#disabled-destination">Disabled link</a>{/snippet}
 <section id="menu-fixture" aria-label="Menu fixture">
-  <div style="width:320px;max-width:100%">{#if visible}<Menu
+  <div style={'width:320px;'
+    + 'max-width:100%'}>{#if visible}<Menu
     bind:this={menu}
     {items}
     {mode}

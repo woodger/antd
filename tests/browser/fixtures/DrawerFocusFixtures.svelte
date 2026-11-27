@@ -150,7 +150,8 @@
   <div id="focus-shadow" {@attach installShadow}></div>
   <button id="before" type="button" onclick={() => { open = true; }}>Open focus drawer</button>
   <button id="outside" type="button" onclick={() => { outsideClicks++; }}>Outside drawer</button>
-  <div id="focus-host" bind:this={custom} style="position:relative;min-height:320px">
+  <div id="focus-host" bind:this={custom} style={'position:relative;'
+    + 'min-height:320px'}>
     {#key profile.name}
       <ConfigProvider drawer={profile.provider} theme={{ token: { motion: false } }}>
         {#if profile.nestedProvider}

@@ -192,7 +192,10 @@
 
 <ConfigProvider {...provider}>
   <section bind:this={owner} data-time-scroll-owner={initial.id}
-    style="position:absolute;left:320px;top:120px;width:320px">
+    style={'position:absolute;'
+      + 'left:320px;'
+      + 'top:120px;'
+      + 'width:320px'}>
     <div bind:this={targetA} data-scroll-target="A"></div>
     <div bind:this={targetB} data-scroll-target="B"></div>
     <DatePicker {...publicProps} bind:this={control} bind:nativeElement />

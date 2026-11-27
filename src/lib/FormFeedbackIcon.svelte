@@ -10,8 +10,22 @@
 </script>
 
 <style>
-  [data-form-feedback-glyph] { color:inherit;font-style:normal;line-height:0;text-align:center;text-transform:none;vertical-align:-0.125em;display:inline-flex;align-items:center; }
-  svg { display:inline-block;width:1em;height:1em;fill:currentColor; }
+  [data-form-feedback-glyph] {
+    color:inherit;
+    font-style:normal;
+    line-height:0;
+    text-align:center;
+    text-transform:none;
+    vertical-align:-0.125em;
+    display:inline-flex;
+    align-items:center;
+  }
+  svg {
+    display:inline-block;
+    width:1em;
+    height:1em;
+    fill:currentColor;
+  }
   .spin { animation:ant-svelte-form-feedback-spin 1s linear infinite; }
   @keyframes ant-svelte-form-feedback-spin { to { transform:rotate(360deg); } }
   @media (prefers-reduced-motion:reduce) { .spin { animation-duration:2s; } }

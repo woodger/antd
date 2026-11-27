@@ -38,7 +38,9 @@
     prefixCls: prefix,
     class: 'semantic-direct',
     rootClassName: 'semantic-root-class',
-    style: 'width:320px;--semantic-inline:root;--semantic-priority:inline',
+    style: 'width:320px;'
+      + '--semantic-inline:root;'
+      + '--semantic-priority:inline',
     ...appearance(
       sample.local,
       updated ? layers.updated : layers.local,
@@ -151,7 +153,9 @@
     <div data-semantic-target></div>
     <button type="button" onclick={() => { updated = true; }}>Update semantic styles</button>
     <button type="button" onclick={() => finish?.()}>Finish semantic load</button>
-    <button type="button" style="position:absolute;top:20px;right:20px">Outside semantic selection</button>
+    <button type="button" style={'position:absolute;'
+      + 'top:20px;'
+      + 'right:20px'}>Outside semantic selection</button>
     <output data-semantic-events>{JSON.stringify(events)}</output>
   </div>
 </ConfigProvider>

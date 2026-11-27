@@ -81,7 +81,11 @@
 {/snippet}
 
 <style>
-  .triggers { display: flex; gap: 160px; margin: 160px 0 120px 90px; }
+  .triggers {
+    display: flex;
+    gap: 160px;
+    margin: 160px 0 120px 90px;
+  }
 </style>
 
 <section id="tooltip-unique-fixture">
@@ -124,7 +128,8 @@
             {@render themed('a')}{@render themed('b')}
           {:else if mode === 'consumers' || mode === 'consumers-opt-out'}
             {@const unique = mode === 'consumers-opt-out' ? false : undefined}
-            <TypographyText class="unique-ellipsis-trigger" style="display:block;width:65px"
+            <TypographyText class="unique-ellipsis-trigger" style={'display:block;'
+              + 'width:65px'}
               ellipsis={{ tooltip: { title: 'Text payload', unique } }}>
               This label visibly overflows
             </TypographyText>

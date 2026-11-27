@@ -32,6 +32,7 @@
     header: 'margin-bottom:37px',
     title: 'color:#0958d9',
     extra: 'color:#c41d7f',
-    label: 'background-color:#fff1f0;color:#d4380d',
+    label: 'background-color:#fff1f0;'
+      + 'color:#d4380d',
     content: 'color:#0958d9'
   } : undefined} />

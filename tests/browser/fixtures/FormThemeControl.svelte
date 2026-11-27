@@ -18,7 +18,11 @@
   let styled = $derived(priority || id === 'priority');
   let style = $derived([
     'width:320px',
-    styled && 'font-size:30px;color:rgb(255,0,0);margin-bottom:5px',
+    styled && (
+      'font-size:30px;'
+      + 'color:rgb(255,0,0);'
+      + 'margin-bottom:5px'
+    ),
     id === 'variable' && `--${prefix}-form-label-color:rgb(255,0,255)`
   ].filter(Boolean).join(';'));
 </script>
@@ -32,7 +36,8 @@
 
 <ConfigProvider direction={id === 'rtl' ? 'rtl' : 'ltr'}>
   <div data-form-theme={id} dir={id === 'rtl' ? 'rtl' : 'ltr'}
-    style="width:320px;min-height:150px">
+    style={'width:320px;'
+      + 'min-height:150px'}>
     {#if id === 'standalone'}
       {@render item()}
     {:else}

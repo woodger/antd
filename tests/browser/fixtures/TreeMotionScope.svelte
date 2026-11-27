@@ -60,11 +60,14 @@
       };
       config[`on${phase}Start`] = (node, event) => {
         record(`${phase.toLowerCase()}-start`, node, event);
-        return phase === 'Leave' ? `height:${node.offsetHeight}px` : 'height:0px;opacity:0.25';
+        return phase === 'Leave' ? `height:${node.offsetHeight}px` : 'height:0px;'
+          + 'opacity:0.25';
       };
       config[`on${phase}Active`] = (node, event) => {
         record(`${phase.toLowerCase()}-active`, node, event);
-        return phase === 'Leave' ? 'height:0px;opacity:0' : `height:${node.scrollHeight}px;opacity:1`;
+        return phase === 'Leave' ? 'height:0px;'
+          + 'opacity:0' : `height:${node.scrollHeight}px;`
+          + `opacity:1`;
       };
       config[`on${phase}End`] = (node, event) => {
         record(`${phase.toLowerCase()}-end`, node, event);
@@ -75,7 +78,8 @@
   });
 </script>
 
-<div style="width:360px;margin:64px">
+<div style={'width:360px;'
+  + 'margin:64px'}>
   <ConfigProvider theme={configuration} prefixCls={prefix} direction={rtl ? 'rtl' : 'ltr'}>
     {#if mounted}<Component bind:this={tree} bind:nativeElement={element} treeData={data}
       prefixCls={localPrefix} {motion} defaultExpandParent={false}

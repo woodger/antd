@@ -129,7 +129,8 @@
         class={sample.local ? 'component-local' : undefined}
         rootClassName={sample.local ? 'root-extra' : undefined}
         classNames={localClasses} styles={localStyles}
-        style={sample.localStyle ? 'padding-left:13px;color:rgb(71,81,91)' : undefined}
+        style={sample.localStyle ? 'padding-left:13px;'
+          + 'color:rgb(71,81,91)' : undefined}
         loadData={sample.lazy ? load : undefined}
         onLoad={() => { events = [...events, 'loaded']; }}
         icon={sample.customIcon && !sample.nativeDefaultIcon ? emptyIcon : undefined}

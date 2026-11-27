@@ -67,7 +67,8 @@
       <ConfigProvider theme={enabled ? config : { compact }} direction={rtl ? 'rtl' : 'ltr'}
         input={{ variant: variant.inputVariant ?? 'outlined' }}>
         <div class="stage row" style={parentAliases
-          ? '--ant-font-size:30px;--ant-color-text:red' : undefined}
+          ? '--ant-font-size:30px;'
+            + '--ant-color-text:red' : undefined}
           style:width={narrow ? '200px' : undefined}>
           <Pagination class={`pagination-token-${variant.name}`}
             aria-label={`Themed ${variant.name} Pagination`} total={200}

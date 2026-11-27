@@ -545,7 +545,11 @@ test('Tour realigns on custom ancestor scrolling and removes its watcher on unmo
   await page.getByRole('combobox', { name: 'Tour container', exact: true }).selectOption('custom');
   const container = page.locator('.portal-container');
   await container.evaluate(element => {
-    element.style.cssText = 'width:600px;height:400px;overflow:auto';
+    element.style.cssText = (
+      'width:600px;'
+      + 'height:400px;'
+      + 'overflow:auto'
+    );
     const spacer = document.createElement('div');
     spacer.style.height = '1400px';
     element.append(spacer);

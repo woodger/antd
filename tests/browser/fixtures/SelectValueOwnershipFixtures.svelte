@@ -45,7 +45,9 @@
 
 <section id="select-value-ownership-fixture">
   <ConfigProvider locale={enUS} {theme}>
-    <form data-value-ownership-form style="display:grid;gap:16px;width:320px">
+    <form data-value-ownership-form style={'display:grid;'
+      + 'gap:16px;'
+      + 'width:320px'}>
       <Single {...singleProps} />
       <Multiple {...multipleProps} />
       <Single {...controlledProps} />
@@ -54,7 +56,11 @@
         data-parent-revision={revision} />
     </form>
     <!-- Owner commands remain reachable while the multiple popup is open. -->
-    <div style="position:fixed;right:16px;top:120px;display:grid;gap:8px">
+    <div style={'position:fixed;'
+      + 'right:16px;'
+      + 'top:120px;'
+      + 'display:grid;'
+      + 'gap:8px'}>
       <button type="button" onclick={() => revision += 1}>Unrelated revision</button>
       <button type="button" onclick={() => {
         relabeled = true;

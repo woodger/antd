@@ -240,8 +240,17 @@
 </script>
 
 <style>
-  .anticon { display: inline-flex; align-items: center; line-height: 0; }
-  svg { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; }
+  .anticon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
 </style>
 
 {#snippet content(node: InputContent | undefined)}

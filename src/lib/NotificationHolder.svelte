@@ -109,11 +109,41 @@
 </script>
 
 <style>
-  .ant-notification-anchor { position: absolute; width: 0; height: 0; pointer-events: none; visibility: hidden; }
-  .ant-notification-surface { position: fixed; inset: auto; top: var(--ant-svelte-notice-viewport-top, 0px); left: 0; width: 100%; height: var(--ant-svelte-notice-viewport-height, 100dvh); max-width: 100vw; max-height: none; margin: 0; border: 0; padding: 0; overflow: hidden; background: transparent; pointer-events: none; outline: none; }
+  .ant-notification-anchor {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .ant-notification-surface {
+    position: fixed;
+    inset: auto;
+    top: var(--ant-svelte-notice-viewport-top, 0px);
+    left: 0;
+    width: 100%;
+    height: var(--ant-svelte-notice-viewport-height, 100dvh);
+    max-width: 100vw;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+    pointer-events: none;
+    outline: none;
+  }
   .ant-notification-surface:not(:popover-open) { display: none; }
-  .ant-notification-surface::backdrop { pointer-events: none; background: transparent; }
-  .ant-notification-surface > :global([data-ant-notification-root][data-ant-notification-list]) { position: absolute; height: auto; max-width: 100%; max-height: calc(100% - max(0px, var(--notification-top) - var(--ant-margin-lg))); }
+  .ant-notification-surface::backdrop {
+    pointer-events: none;
+    background: transparent;
+  }
+  .ant-notification-surface > :global([data-ant-notification-root][data-ant-notification-list]) {
+    position: absolute;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100% - max(0px, var(--notification-top) - var(--ant-margin-lg)));
+  }
   .ant-notification-surface > :global([data-ant-notification-root][data-ant-notification-list][data-placement^='bottom']) { max-height: calc(100% - max(0px, var(--notification-bottom) - var(--ant-margin-lg))); }
   .ant-notification-surface :global([data-ant-notification-content]) { pointer-events: none; }
 </style>

@@ -17,7 +17,8 @@
   let local = $derived(layoutConfigRecord(sample.local));
   let inner = $derived(layoutConfigRecord(sample.inner));
   let siderLocal = $derived(layoutSiderLocalProps(sample));
-  let sectionStyle = $derived(sample.sectionStyle ? 'color:#334455;padding-top:7px' : undefined);
+  let sectionStyle = $derived(sample.sectionStyle ? 'color:#334455;'
+    + 'padding-top:7px' : undefined);
   let collapsed = $state(false);
   let changes = $state<{ collapsed: boolean; type: LayoutCollapseType }[]>([]);
 </script>

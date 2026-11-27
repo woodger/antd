@@ -60,9 +60,17 @@
 
 <style>
   .surface { background: var(--ant-color-bg-container); }
-  .controls { display: flex; gap: 12px; flex-wrap: wrap; }
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
   .controls label { display: block; }
-  .row { display: flex; justify-content: space-between; align-items: center; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .tail { height: 400px; }
 </style>
 

@@ -193,7 +193,8 @@
             {#each groups[item.item].rows as row}
               <div>{#each row as child}
                 <div {...child.attributes} tabindex="-1" class={child.class}
-                  style={`width:${100 / settings.slidesPerRow}%;display:inline-block`}>
+                  style={`width:${100 / settings.slidesPerRow}%;`
+                    + `display:inline-block`}>
                   <CarouselContent value={child.children} />
                 </div>
               {/each}</div>

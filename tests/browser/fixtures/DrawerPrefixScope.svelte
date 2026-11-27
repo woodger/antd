@@ -28,6 +28,9 @@
   closable={sample.noClose ? false : undefined} mask={sample.blur ? { blur: true } : undefined}
   class="fixture-drawer-prefix" {extra} {footer} onClose={() => { closes += 1; }}>
   <input aria-label="Drawer prefix draft" bind:value={draft}
-    style="width:240px;max-width:100%;padding:4px 8px;font:inherit" />
+    style={'width:240px;'
+      + 'max-width:100%;'
+      + 'padding:4px 8px;'
+      + 'font:inherit'} />
 </Drawer>
 <output aria-label="Drawer prefix state">{open ? 'open' : 'closed'}:{closes}</output>

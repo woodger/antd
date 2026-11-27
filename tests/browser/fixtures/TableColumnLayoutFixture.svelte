@@ -105,7 +105,8 @@
 
 {#snippet nameEditor(row: Row)}
   {#if row.key === 0}
-    <input aria-label="Column editor" value="Initial text" style="max-width:100%;width:70px" />
+    <input aria-label="Column editor" value="Initial text" style={'max-width:100%;'
+      + 'width:70px'} />
   {:else}
     {row.name}
   {/if}

@@ -218,7 +218,13 @@
 </script>
 
 <style>
-  :global([data-ant-notification-root][data-ant-notification-list]) > :global([data-ant-notification-content]) > [data-ant-notification-notice] { position: relative; inset: auto; max-width: 100%; transform: none; transition: none; }
+  :global([data-ant-notification-root][data-ant-notification-list]) > :global([data-ant-notification-content]) > [data-ant-notification-notice] {
+    position: relative;
+    inset: auto;
+    max-width: 100%;
+    transform: none;
+    transition: none;
+  }
   :global([data-ant-notification-root][data-placement]) > :global([data-ant-notification-folded])
     > [data-ant-notification-stacked] {
     position: absolute;
@@ -236,24 +242,56 @@
     opacity: 0;
     pointer-events: none;
   }
-  [data-ant-notification-notice-title], [data-ant-notification-notice-description] { min-width: 0; overflow-wrap: anywhere; }
+  [data-ant-notification-notice-title], [data-ant-notification-notice-description] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   [data-ant-notification-notice-icon] { display: inline-flex; }
   /* Absolute notice в Source создаёт BFC; native relative notice сохраняет float через flow-root. */
   .notification-source-theme { display: flow-root; }
   .notification-source-theme [data-ant-notification-notice-icon] { display: block; }
   .notification-source-theme [data-ant-notification-notice-actions] { display: block; }
   /* Общий markup сохраняет controls при смене темы; grid повторяет прежний legacy layout. */
-  [data-ant-notification-notice]:not(.notification-source-theme) { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--ant-margin-xs); }
-  [data-ant-notification-notice]:not(.notification-source-theme).notification-with-icon { grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--ant-margin-sm); }
+  [data-ant-notification-notice]:not(.notification-source-theme) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--ant-margin-xs);
+  }
+  [data-ant-notification-notice]:not(.notification-source-theme).notification-with-icon {
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: var(--ant-margin-sm);
+  }
   [data-ant-notification-notice]:not(.notification-source-theme) [data-ant-notification-notice-wrapper] { display: contents; }
-  [data-ant-notification-notice]:not(.notification-source-theme) :is([data-ant-notification-notice-section], [data-ant-notification-notice-title], [data-ant-notification-notice-description]) { grid-column: -2 / -1; grid-row: 1; }
-  [data-ant-notification-notice]:not(.notification-source-theme) [data-ant-notification-notice-icon] { grid-column: 1; grid-row: 1; align-self: start; }
+  [data-ant-notification-notice]:not(.notification-source-theme) :is([data-ant-notification-notice-section], [data-ant-notification-notice-title], [data-ant-notification-notice-description]) {
+    grid-column: -2 / -1;
+    grid-row: 1;
+  }
+  [data-ant-notification-notice]:not(.notification-source-theme) [data-ant-notification-notice-icon] {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
   [data-ant-notification-notice]:not(.notification-source-theme):has(> [data-ant-notification-notice-actions]) [data-ant-notification-notice-icon] { grid-row: 1 / span 2; }
   [data-ant-notification-notice]:not(.notification-source-theme):not(.notification-with-text) { row-gap: 0; }
-  [data-ant-notification-notice]:not(.notification-source-theme) > [data-ant-notification-notice-actions] { grid-column: -2 / -1; grid-row: 2; float: none; }
-  [data-ant-notification-notice-close] { min-width: 24px; min-height: 24px; padding: 0; cursor: pointer; }
+  [data-ant-notification-notice]:not(.notification-source-theme) > [data-ant-notification-notice-actions] {
+    grid-column: -2 / -1;
+    grid-row: 2;
+    float: none;
+  }
+  [data-ant-notification-notice-close] {
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+    cursor: pointer;
+  }
   [data-ant-notification-notice-close]:disabled { cursor: default; }
-  [data-ant-notification-notice-actions] { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--ant-margin-xs); max-width: 100%; }
+  [data-ant-notification-notice-actions] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--ant-margin-xs);
+    max-width: 100%;
+  }
   [data-ant-notification-notice-progress] {
     position: absolute;
     inset-inline: var(--ant-border-radius-lg);

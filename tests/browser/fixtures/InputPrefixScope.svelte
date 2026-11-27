@@ -35,10 +35,12 @@
   let textRoot = $state<HTMLElement>();
   let events = $state<string[]>([]);
   let prefixCls = $derived(local ? sample.local : undefined);
-  let rootStyle = $derived(sample.userStyle ? 'width:240px;border-radius:13px' : 'width:240px');
+  let rootStyle = $derived(sample.userStyle ? 'width:240px;'
+    + 'border-radius:13px' : 'width:240px');
 </script>
 
-<form data-input-prefix-scope={scope} style="width:480px;padding:12px"
+<form data-input-prefix-scope={scope} style={'width:480px;'
+  + 'padding:12px'}
   onsubmit={event => event.preventDefault()}>
   <Input {prefixCls} bind:value bind:inputElement bind:nativeElement
     name="single" aria-label={`${scope} single draft`} disabled={sample.disabled}

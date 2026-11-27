@@ -98,11 +98,31 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label, output { display: block; margin-block: 8px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .stage { display: flex; justify-content: center; padding: 180px 16px; }
-  .clip { height: 88px; overflow: hidden; border: 1px solid #ddd; padding: 16px; }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label, output {
+    display: block;
+    margin-block: 8px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .stage {
+    display: flex;
+    justify-content: center;
+    padding: 180px 16px;
+  }
+  .clip {
+    height: 88px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    padding: 16px;
+  }
   .modal-content { min-height: 180px; }
 </style>
 

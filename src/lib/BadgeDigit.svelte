@@ -37,5 +37,7 @@
   style={plan.transform ? `transform:${plan.transform}` : 'transition:none'}
   ontransitionend={finish}>{#each plan.units as unit (String(unit.key))}<span
     class={[`${prefixCls}-only-unit`, unit.current && 'current']}
-    style={unit.offset ? `position:absolute;top:${unit.offset}00%;left:0` : undefined}
+    style={unit.offset ? `position:absolute;`
+      + `top:${unit.offset}00%;`
+      + `left:0` : undefined}
   >{unit.value}</span>{/each}</span>

@@ -36,7 +36,8 @@
       return undefined;
     }
 
-    return cascade ? `Z-Index: ${zIndex} !important; z-index: 9000` : `z-index:${zIndex}`;
+    return cascade ? `Z-Index: ${zIndex} !important;`
+      + ` z-index: 9000` : `z-index:${zIndex}`;
   });
 
   onMount(() => {

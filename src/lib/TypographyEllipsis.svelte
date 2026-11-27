@@ -38,9 +38,22 @@
   let midpoint = $state<HTMLSpanElement>();
   let middle = $derived(range ? Math.ceil((range[0] + range[1]) / 2) : 0);
   let complete = $derived(phase === 'need' && range !== null && range[0] === range[1]);
-  let measuringStyle = $derived(`position:fixed;display:block;left:0;top:0;pointer-events:none;`+
-    `width:${width}px;margin:0;padding:0;white-space:${whitespace === 'nowrap' ? 'normal' : 'inherit'}`);
-  let clippedStyle = $derived(`${measuringStyle};display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical`);
+  let measuringStyle = $derived((
+    `position:fixed;`
+    + `display:block;`
+    + `left:0;`
+    + `top:0;`
+    + `pointer-events:none;`
+  )+
+    (
+      `width:${width}px;`
+      + `margin:0;`
+      + `padding:0;`
+      + `white-space:${whitespace === 'nowrap' ? 'normal' : 'inherit'}`
+    ));
+  let clippedStyle = $derived(`${measuringStyle};display:-webkit-box;`
+    + `overflow:hidden;`
+    + `-webkit-box-orient:vertical`);
 
   $effect(() => {
     void text;
@@ -86,7 +99,10 @@
 {:else if phase === 'none' || phase === 'fit'}
   {@render children(nodes, false, false)}
 {:else}
-  <span style={`display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:${rows}`}>
+  <span style={`display:-webkit-box;`
+    + `overflow:hidden;`
+    + `-webkit-box-orient:vertical;`
+    + `-webkit-line-clamp:${rows}`}>
     {@render children(nodes, false, false)}
   </span>
 {/if}

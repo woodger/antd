@@ -213,34 +213,127 @@
 </script>
 
 <style>
-  .ant-tag-css-var { display: inline-flex; align-items: center; min-width: 0; max-width: 100%; white-space: normal; vertical-align: middle; --ant-tag-default-color: var(--ant-color-text); }
+  .ant-tag-css-var {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    vertical-align: middle;
+    --ant-tag-default-color: var(--ant-color-text);
+  }
   .ant-tag-dark { --ant-tag-default-bg: var(--ant-color-fill-tertiary); }
-  .ant-tag-dark[data-ant-tag-color="default"][data-ant-tag-variant="solid"]:not([data-ant-tag-disabled]) { background-color: var(--ant-color-text); color: var(--ant-color-bg-container); }
-  .ant-tag-dark[data-ant-tag-color="blue"] { --ant-tag-accent: var(--ant-blue-6); --ant-tag-dark-color: var(--ant-blue-4); }
-  .ant-tag-dark[data-ant-tag-color="purple"] { --ant-tag-accent: var(--ant-purple-6); --ant-tag-dark-color: var(--ant-purple-4); }
-  .ant-tag-dark[data-ant-tag-color="cyan"] { --ant-tag-accent: var(--ant-cyan-6); --ant-tag-dark-color: var(--ant-cyan-4); }
-  .ant-tag-dark[data-ant-tag-color="green"] { --ant-tag-accent: var(--ant-green-6); --ant-tag-dark-color: var(--ant-green-4); }
-  .ant-tag-dark[data-ant-tag-color="magenta"] { --ant-tag-accent: var(--ant-magenta-6); --ant-tag-dark-color: var(--ant-magenta-4); }
-  .ant-tag-dark[data-ant-tag-color="pink"] { --ant-tag-accent: var(--ant-pink-6); --ant-tag-dark-color: var(--ant-pink-4); }
-  .ant-tag-dark[data-ant-tag-color="red"] { --ant-tag-accent: var(--ant-red-6); --ant-tag-dark-color: var(--ant-red-4); }
-  .ant-tag-dark[data-ant-tag-color="orange"] { --ant-tag-accent: var(--ant-orange-6); --ant-tag-dark-color: var(--ant-orange-4); }
-  .ant-tag-dark[data-ant-tag-color="yellow"] { --ant-tag-accent: var(--ant-yellow-6); --ant-tag-dark-color: var(--ant-yellow-4); }
-  .ant-tag-dark[data-ant-tag-color="volcano"] { --ant-tag-accent: var(--ant-volcano-6); --ant-tag-dark-color: var(--ant-volcano-4); }
-  .ant-tag-dark[data-ant-tag-color="geekblue"] { --ant-tag-accent: var(--ant-geekblue-6); --ant-tag-dark-color: var(--ant-geekblue-4); }
-  .ant-tag-dark[data-ant-tag-color="lime"] { --ant-tag-accent: var(--ant-lime-6); --ant-tag-dark-color: var(--ant-lime-4); }
-  .ant-tag-dark[data-ant-tag-color="gold"] { --ant-tag-accent: var(--ant-gold-6); --ant-tag-dark-color: var(--ant-gold-4); }
-  .ant-tag-dark[data-ant-tag-color="success"] { --ant-tag-accent: var(--ant-color-success); --ant-tag-dark-color: var(--ant-color-success); }
-  .ant-tag-dark[data-ant-tag-color="processing"] { --ant-tag-accent: var(--ant-color-info); --ant-tag-dark-color: var(--ant-color-info); }
-  .ant-tag-dark[data-ant-tag-color="error"] { --ant-tag-accent: var(--ant-color-error); --ant-tag-dark-color: var(--ant-color-error); }
-  .ant-tag-dark[data-ant-tag-color="warning"] { --ant-tag-accent: var(--ant-color-warning); --ant-tag-dark-color: var(--ant-color-warning); }
-  .ant-tag-dark:not([data-ant-tag-color="default"]):not([data-ant-tag-variant="solid"]):not([data-ant-tag-disabled]) { color: var(--ant-tag-dark-color); background-color: color-mix(in srgb, var(--ant-tag-accent) 15%, var(--ant-color-bg-container)); }
+  .ant-tag-dark[data-ant-tag-color="default"][data-ant-tag-variant="solid"]:not([data-ant-tag-disabled]) {
+    background-color: var(--ant-color-text);
+    color: var(--ant-color-bg-container);
+  }
+  .ant-tag-dark[data-ant-tag-color="blue"] {
+    --ant-tag-accent: var(--ant-blue-6);
+    --ant-tag-dark-color: var(--ant-blue-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="purple"] {
+    --ant-tag-accent: var(--ant-purple-6);
+    --ant-tag-dark-color: var(--ant-purple-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="cyan"] {
+    --ant-tag-accent: var(--ant-cyan-6);
+    --ant-tag-dark-color: var(--ant-cyan-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="green"] {
+    --ant-tag-accent: var(--ant-green-6);
+    --ant-tag-dark-color: var(--ant-green-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="magenta"] {
+    --ant-tag-accent: var(--ant-magenta-6);
+    --ant-tag-dark-color: var(--ant-magenta-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="pink"] {
+    --ant-tag-accent: var(--ant-pink-6);
+    --ant-tag-dark-color: var(--ant-pink-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="red"] {
+    --ant-tag-accent: var(--ant-red-6);
+    --ant-tag-dark-color: var(--ant-red-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="orange"] {
+    --ant-tag-accent: var(--ant-orange-6);
+    --ant-tag-dark-color: var(--ant-orange-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="yellow"] {
+    --ant-tag-accent: var(--ant-yellow-6);
+    --ant-tag-dark-color: var(--ant-yellow-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="volcano"] {
+    --ant-tag-accent: var(--ant-volcano-6);
+    --ant-tag-dark-color: var(--ant-volcano-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="geekblue"] {
+    --ant-tag-accent: var(--ant-geekblue-6);
+    --ant-tag-dark-color: var(--ant-geekblue-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="lime"] {
+    --ant-tag-accent: var(--ant-lime-6);
+    --ant-tag-dark-color: var(--ant-lime-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="gold"] {
+    --ant-tag-accent: var(--ant-gold-6);
+    --ant-tag-dark-color: var(--ant-gold-4);
+  }
+  .ant-tag-dark[data-ant-tag-color="success"] {
+    --ant-tag-accent: var(--ant-color-success);
+    --ant-tag-dark-color: var(--ant-color-success);
+  }
+  .ant-tag-dark[data-ant-tag-color="processing"] {
+    --ant-tag-accent: var(--ant-color-info);
+    --ant-tag-dark-color: var(--ant-color-info);
+  }
+  .ant-tag-dark[data-ant-tag-color="error"] {
+    --ant-tag-accent: var(--ant-color-error);
+    --ant-tag-dark-color: var(--ant-color-error);
+  }
+  .ant-tag-dark[data-ant-tag-color="warning"] {
+    --ant-tag-accent: var(--ant-color-warning);
+    --ant-tag-dark-color: var(--ant-color-warning);
+  }
+  .ant-tag-dark:not([data-ant-tag-color="default"]):not([data-ant-tag-variant="solid"]):not([data-ant-tag-disabled]) {
+    color: var(--ant-tag-dark-color);
+    background-color: color-mix(in srgb, var(--ant-tag-accent) 15%, var(--ant-color-bg-container));
+  }
   .ant-tag-dark[data-ant-tag-variant="outlined"]:not([data-ant-tag-color="default"]):not([data-ant-tag-disabled]) { border-color: color-mix(in srgb, var(--ant-tag-accent) 40%, var(--ant-color-bg-container)); }
-  .ant-tag-content { box-sizing: border-box; min-width: 0; overflow-wrap: anywhere; }
-  .ant-tag-icon { box-sizing: border-box; display: inline-flex; flex: none; align-items: center; }
-  .ant-tag-icon :global(svg) { max-width: 1em; max-height: 1em; }
+  .ant-tag-content {
+    box-sizing: border-box;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .ant-tag-icon {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+  .ant-tag-icon :global(svg) {
+    max-width: 1em;
+    max-height: 1em;
+  }
   /* Нативная кнопка требует явного letter-spacing, который source span наследует. */
-  [data-ant-tag-close] { display: inline-flex; align-items: center; justify-content: center; flex: none; min-width: 20px; min-height: 20px; border: 0; padding: 0; background: transparent; font: inherit; letter-spacing: inherit; }
-  [data-ant-tag-close]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -2px; border-radius: var(--ant-border-radius-sm); }
+  [data-ant-tag-close] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    min-width: 20px;
+    min-height: 20px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    letter-spacing: inherit;
+  }
+  [data-ant-tag-close]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -2px;
+    border-radius: var(--ant-border-radius-sm);
+  }
   [data-ant-tag-close]:disabled { cursor: not-allowed; }
   .ant-tag-dark [data-ant-tag-close] { color: inherit; }
   @media (prefers-reduced-motion: reduce) { .ant-tag-css-var, [data-ant-tag-close] { transition: none; } }

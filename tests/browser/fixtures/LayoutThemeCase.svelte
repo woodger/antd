@@ -62,7 +62,9 @@
     }}>
       <LayoutThemeControl id="reset" {priority} />
     </ConfigProvider>
-    <div data-layout-standalone style="font-size:14px;line-height:22px;color:rgb(31,41,51)">
+    <div data-layout-standalone style={'font-size:14px;'
+      + 'line-height:22px;'
+      + 'color:rgb(31,41,51)'}>
       <LayoutHeader>Standalone header</LayoutHeader>
       <LayoutContent>Standalone content</LayoutContent>
       <LayoutFooter>Standalone footer</LayoutFooter>

@@ -65,7 +65,8 @@ export function getLayoutSectionPrefixCss(
     rules.push(selectors.join(',').replaceAll(`.${original}`, () => `.${prefix}:where(${marker})`)
       + declarations);
   }
-  rules.push(`.${prefix}:where(${marker}){display:block;box-sizing:border-box;}`);
+  rules.push(`.${prefix}:where(${marker}){display:block;`
+    + `box-sizing:border-box;}`);
 
   return rules.join('\n').replace(/<\/style/gi, '<\\/style');
 }

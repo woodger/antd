@@ -1562,12 +1562,46 @@
   }
 </script>
 <style>
-  [data-picker-popup] { position:fixed;margin:0;padding:0;border:0;background:transparent;overflow:visible; }
-  [data-picker-clear] { padding:0;border:0;background:transparent;cursor:pointer; }
-  [data-picker-clear]:focus-visible { opacity:1;outline:2px solid var(--ant-color-primary); }
-  [data-picker-current] { padding:0;border:0;background:transparent;color:var(--ant-color-link);font:inherit;cursor:pointer; }
-  [data-picker-current]:disabled { color:var(--ant-color-text-disabled);cursor:not-allowed; }
-  [data-picker-presets] button { width:100%;padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:inherit;cursor:pointer; }
+  [data-picker-popup] {
+    position:fixed;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    overflow:visible;
+  }
+  [data-picker-clear] {
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+  }
+  [data-picker-clear]:focus-visible {
+    opacity:1;
+    outline:2px solid var(--ant-color-primary);
+  }
+  [data-picker-current] {
+    padding:0;
+    border:0;
+    background:transparent;
+    color:var(--ant-color-link);
+    font:inherit;
+    cursor:pointer;
+  }
+  [data-picker-current]:disabled {
+    color:var(--ant-color-text-disabled);
+    cursor:not-allowed;
+  }
+  [data-picker-presets] button {
+    width:100%;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+    text-align:inherit;
+    cursor:pointer;
+  }
 </style>{#snippet dateCalendar(calendarMode: DatePickerCalendarMode)}
   <DatePickerCalendar
     dateOperations={dates}

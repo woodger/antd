@@ -7,7 +7,8 @@ export function getTagPrefixCss(prefix: string) {
   }
 
   // Runtime stylesheet следует scoped styles; равная specificity сохраняет native font.
-  const nativeFont = '\n.ant-tag:where(.ant-tag-css-var) [data-ant-tag-close]{font:inherit;letter-spacing:inherit;}';
+  const nativeFont = '\n.ant-tag:where(.ant-tag-css-var) [data-ant-tag-close]{font:inherit;'
+    + 'letter-spacing:inherit;}';
   return `${template}${nativeFont}`
     .replace(/\.ant-tag(?!-css-var\b)/g, () => `.${prefix}`)
     .replace(/"ant-tag"/g, () => `"${prefix}"`)

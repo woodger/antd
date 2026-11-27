@@ -68,11 +68,26 @@
 </script>
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
-  .calendar-holder { max-width: 100%; width: 700px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .calendar-holder {
+    max-width: 100%;
+    width: 700px;
+  }
   .calendar-holder.mini { width: 300px; }
-  .custom-holder { width: 300px; max-width: 100%; margin-block: 16px; }
-  output { display: block; overflow-wrap: anywhere; }
+  .custom-holder {
+    width: 300px;
+    max-width: 100%;
+    margin-block: 16px;
+  }
+  output {
+    display: block;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 {#snippet header(info: CalendarHeaderRenderInfo)}
@@ -95,7 +110,8 @@
       event.stopPropagation();
       embedded++;
     }}>Cell action {value.format('YYYY-MM-DD')}</button>
-    <input aria-label={`Cell note ${value.format('YYYY-MM-DD')}`} style="width:100%;min-width:0" />
+    <input aria-label={`Cell note ${value.format('YYYY-MM-DD')}`} style={'width:100%;'
+      + 'min-width:0'} />
   </div>
 {/snippet}
 {#snippet empty()}{/snippet}

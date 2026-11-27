@@ -82,7 +82,8 @@
           tabPlacement={options.tabPlacement as TabsPlacement}
           size={interactive ? size || undefined : undefined}
           centered={options.centered} tabBarGutter={options.gutter}
-          tabBarStyle={options.headerStyle} style="height:320px;color:rgb(170,20,30)"
+          tabBarStyle={options.headerStyle} style={'height:320px;'
+            + 'color:rgb(170,20,30)'}
           items={!interactive && selected.empty ? [] : [
             { key: '', label: 'Alpha', children: alpha },
             { key: 'locked', label: 'Locked', disabled: true },

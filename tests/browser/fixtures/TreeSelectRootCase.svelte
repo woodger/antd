@@ -20,7 +20,8 @@
       event instanceof KeyboardEvent ? event.key : null]);
   }
   let ownProps = $derived(sample.own ? {
-    class: 'root-own', style: 'width: 220px; color: rgb(120, 30, 20);',
+    class: 'root-own', style: 'width: 220px;'
+      + ' color: rgb(120, 30, 20);',
     id: 'own-id', tabindex: 7, title: 'Own title', 'aria-label': 'Own label',
     'data-collision': 'own', 'data-own': 'kept', name: 'own-name',
     placeholder: 'Own placeholder', disabled: sample.ownDisabled,
@@ -73,14 +74,16 @@
   <output data-root-events hidden>{JSON.stringify(events)}</output>
   <output data-root-refs hidden>{JSON.stringify(refs)}</output>
   <output data-root-native-editor hidden>{inputElement?.tagName ?? ''}</output>
-  <div data-tree-select-root-host style="margin:64px;width:340px" data-root-ready={Boolean(nativeElement)}>
+  <div data-tree-select-root-host style={'margin:64px;'
+    + 'width:340px'} data-root-ready={Boolean(nativeElement)}>
     {#if mounted}<TreeSelect bind:this={control} bind:nativeElement bind:inputElement
       components={{ root: ownProps ? { render: root, props: ownProps } : root,
         input: sample.both ? inert : undefined }}
       treeData={[{ value: 'a', title: 'Alpha' }, { value: 'b', title: 'Beta' }]} defaultValue="a"
       id="generated-id" title="Generated title" name="generated-name" tabIndex={4}
       data-root-probe="control" data-collision="generated" aria-label="Generated label"
-      class="generated-class" style="width:310px;color:rgb(20,30,120)" placeholder="Generated placeholder"
+      class="generated-class" style={'width:310px;'
+        + 'color:rgb(20,30,120)'} placeholder="Generated placeholder"
       allowClear showSearch={{ onSearch: value => events.push(['search', value]) }} {prefix} {suffix}
       disabled={sample.disabled} defaultOpen={sample.defaultOpen} open={sample.controlled ? open : undefined}
       showAction={sample.showAction}

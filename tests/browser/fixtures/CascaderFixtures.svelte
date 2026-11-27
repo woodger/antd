@@ -156,9 +156,20 @@
 </script>
 
 <style>
-  .controls { display:flex;flex-wrap:wrap;gap:8px;margin-block:12px; }
-  .holder { max-width:100%;margin-block:16px; }
-  output { display:block;overflow-wrap:anywhere; }
+  .controls {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-block:12px;
+  }
+  .holder {
+    max-width:100%;
+    margin-block:16px;
+  }
+  output {
+    display:block;
+    overflow-wrap:anywhere;
+  }
   .panel { margin-block:20px; }
 </style>
 
@@ -335,7 +346,8 @@
             expandIcon={hideIcons ? false : undefined} loadingIcon={hideIcons ? false : undefined}
             removeIcon={icons ? icon : undefined}
             notFoundContent={emptyContent ? null : custom ? empty : undefined}
-            class="fixture-cascader" style={`width:${width}px;${styled ? 'color:rgb(50, 60, 70)' : ''}`}
+            class="fixture-cascader" style={`width:${width}px;`
+              + `${styled ? 'color:rgb(50, 60, 70)' : ''}`}
             aria-label="Path" placeholder="Choose path" />
         {/key}{/if}
       </div>

@@ -83,7 +83,9 @@
         </FormItem>
       </Form>
     {:else}{@render control()}{/if}
-    <button type="button" style="position:absolute;top:32px;right:32px">Outside selection</button>
+    <button type="button" style={'position:absolute;'
+      + 'top:32px;'
+      + 'right:32px'}>Outside selection</button>
     <button type="button" onclick={() => { mounted = false; }}>Unmount selection</button>
     <div data-surface-target></div>
     <output data-surface-events>{JSON.stringify(events)}</output>

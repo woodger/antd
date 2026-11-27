@@ -522,12 +522,24 @@
   :global(html:has(dialog.ant-svelte-dialog[open]:not([data-ant-dialog-unlocked]))) {
     overflow: hidden;
   }
-  .ant-svelte-dialog { max-width: calc(100vw - 32px); max-height: calc(100dvh - 48px); padding: 0; border: 0; overflow: visible; background: transparent; color: var(--ant-color-text); }
+  .ant-svelte-dialog {
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 48px);
+    padding: 0;
+    border: 0;
+    overflow: visible;
+    background: transparent;
+    color: var(--ant-color-text);
+  }
   .ant-svelte-dialog {
     --ant-svelte-modal-offset: 24px;
     z-index: var(--ant-z-index-popup-base, 1000);
   }
-  .ant-svelte-dialog[data-ant-modal-managed] { position: fixed; inset: 0; margin: auto; }
+  .ant-svelte-dialog[data-ant-modal-managed] {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+  }
   .ant-svelte-dialog[data-ant-modal-layout] { max-width: var(--ant-svelte-modal-max-width); }
   .ant-svelte-dialog[data-ant-modal-top] {
     --ant-svelte-modal-offset: min(var(--ant-svelte-modal-top, 100px), max(0px, 100dvh - 96px));
@@ -549,8 +561,16 @@
     pointer-events: none;
   }
   .ant-svelte-dialog[data-ant-modal-mask-tail]:not([open]) > [data-ant-modal-panel] { display: none; }
-  [data-ant-modal-backdrop] { position: fixed; inset: 0; z-index: -1; }
-  [data-ant-modal-mask-layer] { position: fixed; inset: 0; z-index: -1; }
+  [data-ant-modal-backdrop] {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
+  [data-ant-modal-mask-layer] {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
   .ant-svelte-dialog:not([data-ant-modal-managed]) > [data-ant-modal-mask-layer],
   [data-ant-modal-mask-layer] > [data-ant-modal-backdrop] { pointer-events: none; }
   [data-ant-modal-mask] { background: var(--ant-color-bg-mask); }
@@ -561,22 +581,58 @@
   [data-ant-modal-fade='enter'] { animation: antFadeIn var(--ant-svelte-modal-fade) linear both; }
   [data-ant-modal-fade='leave'] { animation: antFadeOut var(--ant-svelte-modal-fade) linear both; }
   @keyframes antZoomIn {
-    from { transform: scale(0.2); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+      transform: scale(0.2);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
   @keyframes antZoomOut {
-    from { transform: scale(1); opacity: 1; }
-    to { transform: scale(0.2); opacity: 0; }
+    from {
+      transform: scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(0.2);
+      opacity: 0;
+    }
   }
-  @keyframes antFadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes antFadeOut { from { opacity: 1; } to { opacity: 0; } }
-  [data-ant-modal-panel] { top: auto; max-width: none; width: 100%; margin: 0; padding: 0; }
+  @keyframes antFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes antFadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  [data-ant-modal-panel] {
+    top: auto;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
   [data-ant-modal-container] {
     max-height: calc(100dvh - var(--ant-svelte-modal-offset, 24px) - 24px);
     overflow: auto;
   }
   [data-ant-modal-title] { padding-inline-end: 32px; }
-  [data-ant-modal-close] { display: flex; align-items: center; justify-content: center; }
+  [data-ant-modal-close] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>
 
 {#snippet content(value: ModalContent | undefined)}

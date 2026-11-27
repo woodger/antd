@@ -311,7 +311,8 @@ test('Avatar refits live text gap font weight and custom root width', async ({ p
   await number(page, 'gap', '8');
 
   await expect.poll(() => scale(page)).toBeLessThan(previous);
-  await input(page, 'root style').fill('width: 96px; height: 96px');
+  await input(page, 'root style').fill('width: 96px;'
+    + ' height: 96px');
 
   await expect(host(page)).toHaveCSS('width', '96px');
 
@@ -339,7 +340,10 @@ test('Avatar refits live text gap font weight and custom root width', async ({ p
 test('Avatar respects owner style precedence for numeric size', async ({ page }) => {
   await setting(page, 'size', 'custom');
   await input(page, 'root style').fill(
-    'width: 80px; height: 80px; font-size: 20px; background: rgb(114, 46, 209)'
+    'width: 80px;'
+      + ' height: 80px;'
+      + ' font-size: 20px;'
+      + ' background: rgb(114, 46, 209)'
   );
 
   await expect(host(page)).toHaveCSS('width', '80px');

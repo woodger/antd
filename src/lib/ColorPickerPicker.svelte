@@ -155,9 +155,19 @@
 
 <style>
   .color-picker-palette { touch-action: none; }
-  .color-picker-point { padding: 0; color: inherit; font: inherit; }
-  .color-picker-point:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  .color-picker-clear { padding: 0; background: transparent; }
+  .color-picker-point {
+    padding: 0;
+    color: inherit;
+    font: inherit;
+  }
+  .color-picker-point:focus-visible {
+    outline: 2px solid var(--ant-color-primary);
+    outline-offset: 2px;
+  }
+  .color-picker-clear {
+    padding: 0;
+    background: transparent;
+  }
 </style>
 
   {#if props.allowClear || modes.length > 1}
@@ -188,13 +198,18 @@
     <div bind:this={select} class={[`${prefixCls}-select`, 'color-picker-palette']}
       onpointerdown={handlePalette}>
       <div class={`${prefixCls}-palette`} style="position:relative">
-        <div style={`position:absolute;left:${picker.toHsb().s * 100}%;top:${(1 - picker.toHsb().b) * 100}%;z-index:1;transform:translate(-50%,-50%)`}>
+        <div style={`position:absolute;`
+          + `left:${picker.toHsb().s * 100}%;`
+          + `top:${(1 - picker.toHsb().b) * 100}%;`
+          + `z-index:1;`
+          + `transform:translate(-50%,-50%)`}>
           <button bind:this={handler} type="button" aria-label="Saturation and brightness"
             class={[`${prefixCls}-handler`, 'color-picker-point']}
             style={`background-color:${picker.toRgbString()}`} onkeydown={handlePaletteKey}></button>
         </div>
         <div class={`${prefixCls}-saturation`}
-          style={`background-color:hsl(${picker.toHsb().h},100%,50%);background-image:linear-gradient(0deg,#000,transparent),linear-gradient(90deg,#fff,hsla(0,0%,100%,0))`}></div>
+          style={`background-color:hsl(${picker.toHsb().h},100%,50%);`
+            + `background-image:linear-gradient(0deg,#000,transparent),linear-gradient(90deg,#fff,hsla(0,0%,100%,0))`}></div>
       </div>
     </div>
     <div class={`${prefixCls}-slider-container`}>

@@ -85,7 +85,11 @@
 
 <style>
   /* Shared reset регистрируется upstream и при локальном prefixCls. */
-  .ant-ribbon-wrapper-css-var { font-family: var(--ant-font-family); font-size: var(--ant-font-size); box-sizing: border-box; }
+  .ant-ribbon-wrapper-css-var {
+    font-family: var(--ant-font-family);
+    font-size: var(--ant-font-size);
+    box-sizing: border-box;
+  }
   .ant-ribbon-wrapper-css-var::before, .ant-ribbon-wrapper-css-var::after, .ant-ribbon-css-var, .ant-ribbon-content-css-var, .ant-ribbon-corner-css-var { box-sizing: border-box; }
   .ant-ribbon-css-var::before, .ant-ribbon-css-var::after, .ant-ribbon-content-css-var::before, .ant-ribbon-content-css-var::after, .ant-ribbon-corner-css-var::before, .ant-ribbon-corner-css-var::after { box-sizing: border-box; }
 </style>

@@ -156,13 +156,39 @@
 {/snippet}
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 4px 16px; }
-  .scene { position: relative; width: 1100px; height: 560px; background: var(--ant-color-bg-layout); }
-  .first { position: absolute; left: 400px; top: 120px; }
-  .second { position: absolute; left: 100px; top: 260px; }
-  .third { position: absolute; right: 16px; bottom: 28px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+  .scene {
+    position: relative;
+    width: 1100px;
+    height: 560px;
+    background: var(--ant-color-bg-layout);
+  }
+  .first {
+    position: absolute;
+    left: 400px;
+    top: 120px;
+  }
+  .second {
+    position: absolute;
+    left: 100px;
+    top: 260px;
+  }
+  .third {
+    position: absolute;
+    right: 16px;
+    bottom: 28px;
+  }
   .portal-container { position: relative; }
-  .events { display: block; height: 24px; overflow: auto; white-space: nowrap; }
+  .events {
+    display: block;
+    height: 24px;
+    overflow: auto;
+    white-space: nowrap;
+  }
 </style>
 
 <section id="tour-fixture">

@@ -156,7 +156,9 @@
   <output aria-label="Menu tooltip sequence">{JSON.stringify(sequence)}</output>
   <output aria-label="Menu tooltip containers">{containers}</output>
   <div id="tooltip-container"></div>
-  <div style="position:absolute;left:400px;top:180px">
+  <div style={'position:absolute;'
+    + 'left:400px;'
+    + 'top:180px'}>
     {#if active}
       {#key current}
         <ConfigProvider direction={sample.direction === 'rtl' ? 'rtl' : 'ltr'}

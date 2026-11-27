@@ -172,10 +172,16 @@
   <ConfigProvider theme={{ token: { motion: false }, cssVar: { key: 'tree-select-checkable' } }}>
     <div data-checkable-case={sample.id} data-checkable-searchable={Boolean(sample.searchable)}
       data-checkable-bound={Boolean(root && control && (sample.slot === 'root' || editor))}
-      style="margin:160px;width:420px;direction:ltr;font-family:initial;font-size:16px;line-height:normal">
+      style={'margin:160px;'
+        + 'width:420px;'
+        + 'direction:ltr;'
+        + 'font-family:initial;'
+        + 'font-size:16px;'
+        + 'line-height:normal'}>
       {#if sample.slot === 'root'}
         <TreeSelect {...common} components={{ root: { render: rootRender,
-          props: { style: 'width:220px;height:40px' } } }}
+          props: { style: 'width:220px;'
+            + 'height:40px' } } }}
           bind:this={control} bind:nativeElement={customRoot} bind:inputElement={editor} />
       {:else if sample.slot === 'input'}
         <TreeSelect {...common} components={{ input: inputRender }}

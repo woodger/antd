@@ -166,14 +166,44 @@
 {/snippet}
 
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 4px 12px; }
-  .frame { width: 600px; max-width: 100%; }
-  .events { display: block; height: 24px; overflow: auto; white-space: nowrap; }
-  .slide { color: #fff; text-align: center; background: #364d79; height: 160px; }
-  .slide h3 { margin: 0; color: inherit; line-height: 48px; }
-  .second { height: 220px; background: #547baa; }
-  .third { height: 180px; background: #476353; }
-  .fourth { height: 200px; background: #6b4b6b; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  .frame {
+    width: 600px;
+    max-width: 100%;
+  }
+  .events {
+    display: block;
+    height: 24px;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  .slide {
+    color: #fff;
+    text-align: center;
+    background: #364d79;
+    height: 160px;
+  }
+  .slide h3 {
+    margin: 0;
+    color: inherit;
+    line-height: 48px;
+  }
+  .second {
+    height: 220px;
+    background: #547baa;
+  }
+  .third {
+    height: 180px;
+    background: #476353;
+  }
+  .fourth {
+    height: 200px;
+    background: #6b4b6b;
+  }
 </style>
 
 <section id="carousel-fixture">

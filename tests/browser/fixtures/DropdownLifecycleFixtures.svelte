@@ -179,12 +179,30 @@
 <style>
   #dropdown-lifecycle-fixture { margin: 100px 10%; }
   #dropdown-lifecycle-fixture.motion-case #trigger {
-    position: absolute; left: 400px; top: 300px; width: 150px; height: 35px;
+    position: absolute;
+    left: 400px;
+    top: 300px;
+    width: 150px;
+    height: 35px;
   }
   #dropdown-lifecycle-fixture.motion-case #trigger.near-bottom { top: 650px; }
   :global(.subject-popup.case-fade-enter-active),
   :global(.subject-popup.case-fade-appear-active) { animation: case-in 320ms both; }
   :global(.subject-popup.case-fade-leave-active) { animation: case-out 480ms both; }
-  @keyframes -global-case-in { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes -global-case-out { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes -global-case-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes -global-case-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 </style>

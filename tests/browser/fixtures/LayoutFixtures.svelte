@@ -60,7 +60,8 @@
       <Layout
         id="fixture-layout"
         hasSider={hasSider === 'auto' ? undefined : hasSider === 'true'}
-        style="min-height:280px;transform:translateZ(0)"
+        style={'min-height:280px;'
+          + 'transform:translateZ(0)'}
       >
         {#if mounted}<LayoutSider
           id="fixture-sider"

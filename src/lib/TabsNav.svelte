@@ -390,24 +390,66 @@
 
 <style>
   :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] { min-width: 0; }
-  :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="nav-wrap"] { min-width: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: none; scroll-behavior: auto; }
+  :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="nav-wrap"] {
+    min-width: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-behavior: auto;
+  }
   /* Operations не наследует inline gutter скрытого inner Add; исходный card gutter остаётся. */
-  :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] :global([data-tabs-add-in-operations]) { margin-block: 0 !important; margin-right: 0 !important; margin-left: var(--ant-tabs-card-gutter) !important; }
-  :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="nav-list"] { flex: 0 0 auto; min-height: var(--ant-control-height); }
+  :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] :global([data-tabs-add-in-operations]) {
+    margin-block: 0 !important;
+    margin-right: 0 !important;
+    margin-left: var(--ant-tabs-card-gutter) !important;
+  }
+  :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="nav-list"] {
+    flex: 0 0 auto;
+    min-height: var(--ant-control-height);
+  }
   /* Source tokens могут задавать шапку ниже native минимума, включая zero/undefined. */
   :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"][data-tabs-source-theme] [data-ant-tabs-part="nav-list"] { min-height: 0; }
   /* В исходном centered вертикальный список растягивается, заголовки остаются сверху. */
   :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-centered-vertical] [data-ant-tabs-part="nav-list"] { flex-grow: 1; }
   :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="left"], :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="right"] { max-width: 45%; }
   :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="left"] [data-ant-tabs-part="nav-wrap"], :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="right"] [data-ant-tabs-part="nav-wrap"] { max-height: min(400px, 60dvh); }
-  :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="left"] [data-ant-tabs-part="tab"], :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="right"] [data-ant-tabs-part="tab"] { white-space: normal; overflow-wrap: anywhere; }
-  :where(button[data-ant-tabs-part="tab"]) { appearance: none; margin: 0; font: inherit; text-align: inherit; flex: none; }
-  button[data-ant-tabs-part="tab-btn"] { appearance: none; padding: 0; border: 0; background: transparent; font: inherit; color: inherit; text-align: inherit; cursor: inherit; }
+  :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="left"] [data-ant-tabs-part="tab"], :global([data-ant-tabs-root]) > [data-ant-tabs-part="nav"][data-tabs-root-placement="right"] [data-ant-tabs-part="tab"] {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  :where(button[data-ant-tabs-part="tab"]) {
+    appearance: none;
+    margin: 0;
+    font: inherit;
+    text-align: inherit;
+    flex: none;
+  }
+  button[data-ant-tabs-part="tab-btn"] {
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    cursor: inherit;
+  }
   button[data-ant-tabs-part="tab-btn"]:disabled { cursor: not-allowed; }
-  button[data-ant-tabs-part="tab-btn"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 1px; }
-  :global([data-ant-tabs-root]) [data-ant-tabs-part="tab"]:focus-visible, [data-ant-tabs-part="nav-list"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: -3px; }
+  button[data-ant-tabs-part="tab-btn"]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: 1px;
+  }
+  :global([data-ant-tabs-root]) [data-ant-tabs-part="tab"]:focus-visible, [data-ant-tabs-part="nav-list"]:focus-visible {
+    outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
+    outline-offset: -3px;
+  }
   [data-ant-tabs-part="ink-bar"][hidden] { display: none; }
-  @media (prefers-reduced-motion: reduce) { :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="nav-list"], :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="tab"], :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="tab-btn"], :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="ink-bar"] { animation: none; transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="nav-list"], :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="tab"], :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="tab-btn"], :global([data-ant-tabs-root]) [data-ant-tabs-part="nav"] [data-ant-tabs-part="ink-bar"] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
 {#snippet value(node: TabsContent | undefined)}

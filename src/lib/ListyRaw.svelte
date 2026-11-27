@@ -51,7 +51,10 @@
 <div {...attributes} bind:this={nativeElement} dir={direction}
   class={[prefixCls, direction === 'rtl' && `${prefixCls}-rtl`, classNames.root]}
   style={[
-    height !== undefined && `max-height:${height}px;overflow-y:auto`,
+    height !== undefined && (
+      `max-height:${height}px;`
+      + `overflow-y:auto`
+    ),
     'overflow-anchor:none',
     styles.root
   ].filter(Boolean).join(';')} onscroll={onScroll}>

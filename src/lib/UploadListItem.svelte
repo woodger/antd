@@ -162,7 +162,15 @@
   [data-ant-upload-item-container] :global(.ant-tooltip-trigger) { display:block; }
   :global([data-ant-upload-list-type="picture-card"]) [data-ant-upload-item-container] :global(.ant-tooltip-trigger),
   :global([data-ant-upload-list-type="picture-circle"]) [data-ant-upload-item-container] :global(.ant-tooltip-trigger) { height:100%; }
-  button[data-ant-upload-item-name] { padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:inherit;cursor:pointer; }
+  button[data-ant-upload-item-name] {
+    padding:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+    text-align:inherit;
+    cursor:pointer;
+  }
   [data-ant-upload-item-name]:focus-visible { outline:2px solid var(--ant-color-primary); }
 </style>
 {#snippet fileIcon()}{#if iconRender}{@render iconRender(file, listType)}{:else}{#if file.status === 'uploading'}{#if card}{locale.uploading}{:else}<UploadIcon name="loading" />{/if}{:else}<UploadIcon name={picture ? image ? 'picture' : 'file' : 'paper-clip'} />{/if}{/if}{/snippet}

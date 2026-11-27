@@ -28,7 +28,10 @@
 </script>
 
 {#snippet target(context: BadgeContext)}<button type="button" aria-label="Digit owner"
-  aria-describedby={context.descriptionId} style="width:48px;height:48px;border:0;padding:0">T</button>{/snippet}
+  aria-describedby={context.descriptionId} style={'width:48px;'
+    + 'height:48px;'
+    + 'border:0;'
+    + 'padding:0'}>T</button>{/snippet}
 
 <button type="button" onclick={next} disabled={step >= sample.steps.length}>Next digit step</button>
 <button type="button" onclick={finish}>Finish digit transition</button>

@@ -27,7 +27,8 @@ export function createWatermarkRuntime(
   let active = true;
   let busy = false;
   let frame: number | undefined;
-  let options: WatermarkRuntimeOptions = { containerStyle: 'position:relative;overflow:hidden' };
+  let options: WatermarkRuntimeOptions = { containerStyle: 'position:relative;'
+    + 'overflow:hidden' };
   let font: Required<WatermarkFont> | undefined;
   let lines: WatermarkContentLine[] = [];
   let gap: readonly [number, number] = [100, 100];

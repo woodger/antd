@@ -13,6 +13,10 @@
     return caller.recorder.record('prefixBody', 'own', context, content);
   }
 </script>
-{#snippet body()}<span data-custom-tag-prefix="" aria-hidden="true" style="display:inline-block;width:{caller.current.prefixWidth}px;height:16px;line-height:16px;font-size:12px">P</span>{/snippet}
+{#snippet body()}<span data-custom-tag-prefix="" aria-hidden="true" style={'display:inline-block;'
+  + `width:${(caller.current.prefixWidth) ?? ''}px;`
+  + 'height:16px;'
+  + 'line-height:16px;'
+  + 'font-size:12px'}>P</span>{/snippet}
 {#snippet renderedBody()}{@const content = observe(body)}{@render content()}{/snippet}
 {@render renderedBody()}

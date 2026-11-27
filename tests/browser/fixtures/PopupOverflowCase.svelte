@@ -52,7 +52,10 @@
   });
   let innerProps = $derived(provider(inner));
   const rootStyle = 'width:100%';
-  let positionStyle = $derived(`position:absolute;left:${position.left}px;top:${position.top}px;width:${position.width}px`);
+  let positionStyle = $derived(`position:absolute;`
+    + `left:${position.left}px;`
+    + `top:${position.top}px;`
+    + `width:${position.width}px`);
   let name = $derived(named ? 'overflow-selection' : undefined);
 
   function record(...entry: unknown[]) { events.push(entry); }
@@ -118,7 +121,8 @@
 </script>
 
 {#snippet trigger(info: CascaderTriggerInfo)}
-  <button type="button" data-overflow-anchor style="width:180px;height:40px"
+  <button type="button" data-overflow-anchor style={'width:180px;'
+    + 'height:40px'}
     disabled={info.disabled} aria-expanded={info['aria-expanded']} aria-controls={info['aria-controls']}
     onclick={info.onClick} onkeydown={info.onKeyDown} onkeyup={info.onKeyUp}>Custom trigger</button>
 {/snippet}
@@ -156,12 +160,22 @@
 
 <section data-overflow-case={sample.id} data-overflow-family={sample.family}
   data-overflow-bound={Boolean(control)} bind:this={host}
-  style="font-family:initial;font-size:16px;line-height:normal;direction:ltr">
+  style={'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal;'
+    + 'direction:ltr'}>
   <ConfigProvider {...outerProps} direction={sample.direction ?? 'ltr'} {theme}>
     <ConfigProvider {...innerProps}>
       {#if sample.layout === 'clip'}
-        <div data-overflow-clip bind:this={clip} style={`position:absolute;left:${popupOverflowGeometry.clip.left}px;top:${popupOverflowGeometry.clip.top}px;width:${popupOverflowGeometry.clip.width}px;height:${popupOverflowGeometry.clip.height}px;overflow:auto`}>
-          <div data-overflow-clip-content style={`position:relative;width:${popupOverflowGeometry.clip.contentWidth}px;height:${popupOverflowGeometry.clip.contentHeight}px`}>
+        <div data-overflow-clip bind:this={clip} style={`position:absolute;`
+          + `left:${popupOverflowGeometry.clip.left}px;`
+          + `top:${popupOverflowGeometry.clip.top}px;`
+          + `width:${popupOverflowGeometry.clip.width}px;`
+          + `height:${popupOverflowGeometry.clip.height}px;`
+          + `overflow:auto`}>
+          <div data-overflow-clip-content style={`position:relative;`
+            + `width:${popupOverflowGeometry.clip.contentWidth}px;`
+            + `height:${popupOverflowGeometry.clip.contentHeight}px`}>
             <div data-overflow-position style={positionStyle}>{@render field()}</div>
           </div>
         </div>
@@ -176,7 +190,9 @@
       if (shadow === root) shadow = undefined;
     };
   })}></div>
-  <button type="button" data-overflow-outside style="position:fixed;left:16px;top:80px">Outside overflow</button>
+  <button type="button" data-overflow-outside style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:80px'}>Outside overflow</button>
   <output data-overflow-context hidden>{JSON.stringify(readContext())}</output>
   <output data-overflow-model hidden>{JSON.stringify(model)}</output>
   <output data-overflow-query hidden>{JSON.stringify(query)}</output>
@@ -197,5 +213,9 @@
 </section>
 
 <style>
-  :global(body) { margin:0;min-width:2200px;min-height:2000px; }
+  :global(body) {
+    margin:0;
+    min-width:2200px;
+    min-height:2000px;
+  }
 </style>

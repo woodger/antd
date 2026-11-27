@@ -28,7 +28,8 @@
         direction={horizontal ? 'horizontal' : 'vertical'} getContainer={() => container!}
         onClick={() => clicks++} onChange={value => { changed = value; }} />
     </div>
-    <div bind:this={container} id="spacing-scroll" style="height:200px;overflow:auto">
+    <div bind:this={container} id="spacing-scroll" style={'height:200px;'
+      + 'overflow:auto'}>
       <div id="spacing-overview" style="height:200px">Описание</div>
       <div id="spacing-delivery" style="height:200px">Доставка</div>
       <div id="spacing-details" style="height:200px">Условия доставки</div>

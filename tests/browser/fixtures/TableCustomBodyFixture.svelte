@@ -101,9 +101,12 @@
     onscroll={info.onScroll} class="custom-scrollport">
     <div style="width:660px">
       <input aria-label="Editor" value="Draft"
-        style="position:absolute;inset-inline-end:4px;top:2px" />
+        style={'position:absolute;'
+          + 'inset-inline-end:4px;'
+          + 'top:2px'} />
       {#each data as row (row.key)}
-        <div data-row-key={row.key} style="height:30px;line-height:30px">{row.name}</div>
+        <div data-row-key={row.key} style={'height:30px;'
+          + 'line-height:30px'}>{row.name}</div>
       {/each}
     </div>
   </div>
@@ -141,7 +144,16 @@
 </section>
 
 <style>
-  section { width: 430px; position: relative; }
-  .custom-scrollport { height: 135px; overflow: auto; }
-  .custom-scrollport[data-gutter]::-webkit-scrollbar { width: 12px; height: 9px; }
+  section {
+    width: 430px;
+    position: relative;
+  }
+  .custom-scrollport {
+    height: 135px;
+    overflow: auto;
+  }
+  .custom-scrollport[data-gutter]::-webkit-scrollbar {
+    width: 12px;
+    height: 9px;
+  }
 </style>

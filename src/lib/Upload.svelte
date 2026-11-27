@@ -254,7 +254,10 @@
   }
 </script>
 <style>
-  [data-ant-upload-control]:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:2px; }
+  [data-ant-upload-control]:focus-visible {
+    outline:2px solid var(--ant-color-primary);
+    outline-offset:2px;
+  }
 </style>
 {#snippet trigger()}
   <!-- svelte-ignore a11y_no_static_element_interactions, a11y_no_noninteractive_tabindex — tabindex появляется только вместе с role=button. -->

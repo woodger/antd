@@ -30,7 +30,8 @@
 
 <output data-trigger-events hidden>{JSON.stringify(events)}</output>
 <output data-trigger-native-events hidden>{JSON.stringify(nativeEvents)}</output>
-<div data-trigger-control data-trigger-multiple={sample.multiple || undefined} style="margin:64px;width:320px"
+<div data-trigger-control data-trigger-multiple={sample.multiple || undefined} style={'margin:64px;'
+  + 'width:320px'}
   data-trigger-ref={Boolean(nativeElement && inputElement)}>
   {#if active}<TreeSelect bind:this={control} bind:nativeElement bind:inputElement
     aria-label="Trigger selection" style="width:320px" treeData={[

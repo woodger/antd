@@ -43,7 +43,8 @@
   } : provider ? undefined : { root: 'popup-only' };
   const styles: DropdownProps['styles'] = local ? input => {
     record('local:styles', input);
-    return { root: 'padding: 7px; border-width: 0', item: 'color: #880011' };
+    return { root: 'padding: 7px;'
+      + ' border-width: 0', item: 'color: #880011' };
   } : undefined;
 
   // Считывает входы callback без влияния на реактивность провайдера или самого Dropdown.
@@ -63,7 +64,10 @@
   function configuration(label: string): DropdownConfig {
     return {
       class: `${label}-config`,
-      style: 'color: #bb00aa; background-color: #f1f4f1; border-width: 3px; border-style: solid',
+      style: 'color: #bb00aa;'
+        + ' background-color: #f1f4f1;'
+        + ' border-width: 3px;'
+        + ' border-style: solid',
       classNames: input => {
         record(`${label}:classes`, input);
         return { root: `${label}-root`, item: `${label}-item`, itemContent: `${label}-title` };
@@ -71,8 +75,11 @@
       styles: input => {
         record(`${label}:styles`, input);
         return {
-          root: 'color: #004477; padding: 3px',
-          item: 'border-top-width: 2px; border-top-style: solid; color: #118833',
+          root: 'color: #004477;'
+            + ' padding: 3px',
+          item: 'border-top-width: 2px;'
+            + ' border-top-style: solid;'
+            + ' color: #118833',
           itemContent: 'font-weight: 650'
         };
       }

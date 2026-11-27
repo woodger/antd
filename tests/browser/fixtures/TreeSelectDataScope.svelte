@@ -39,7 +39,8 @@
   }
 </script>
 
-<div style="width:360px;margin:64px">
+<div style={'width:360px;'
+  + 'margin:64px'}>
   <ConfigProvider theme={{ token: { motion: false } }} direction={sample.rtl ? 'rtl' : 'ltr'}>
     <div data-tree-select-data-control>
       {#if mounted}<TreeSelect bind:nativeElement={element} bind:inputElement={input}

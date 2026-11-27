@@ -13,7 +13,8 @@
 </script>
 
 {#snippet icon()}<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M0 0h12v12H0z" /></svg>{/snippet}
-<div data-segmented-config={id} style="width:360px;color:rgb(31, 41, 51)">
+<div data-segmented-config={id} style={'width:360px;'
+  + 'color:rgb(31, 41, 51)'}>
   <Segmented {...local} rootClassName={local?.class ? 'segcfg-local-root-class' : undefined}
     name={`config-${id}`} aria-label={`Segmented config ${id}`}
     options={[{ value: 'a', label, title: 'Icon option', icon }, { value: 'b', label: 'Beta' },

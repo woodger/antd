@@ -45,7 +45,11 @@
 </script>
 
 <style>
-  .triggers { display: flex; gap: 120px; margin: 170px 0 40px 80px; }
+  .triggers {
+    display: flex;
+    gap: 120px;
+    margin: 170px 0 40px 80px;
+  }
 </style>
 
 {#snippet confirmation(second = false)}

@@ -39,7 +39,9 @@
   let prefix = $derived(sample.config.cssVar?.prefix ?? 'ant');
 </script>
 
-<div style="display:grid;grid-template-columns:repeat(4,360px);gap:12px">
+<div style={'display:grid;'
+  + 'grid-template-columns:repeat(4,360px);'
+  + 'gap:12px'}>
   {#if mounted}
     <ConfigProvider theme={configured}>
       {#each ['normal', 'primary', 'content', 'disabled', 'backtop', 'group-circle',

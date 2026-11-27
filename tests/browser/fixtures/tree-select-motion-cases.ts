@@ -79,37 +79,52 @@ export const treeSelectMotionSamples: readonly TreeSelectMotionSample[] = [
 /** Consumer CSS is identical in Source and Native; default slide CSS remains the pinned vendor CSS. */
 export const treeSelectMotionCss = `
 @keyframes auditMotionIn {
-  from { transform:scaleY(.75);opacity:.4 }
-  to { transform:scaleY(1);opacity:1 }
+  from { transform:scaleY(.75);`
+  + `opacity:.4 }
+  to { transform:scaleY(1);`
+  + `opacity:1 }
 }
 @keyframes auditMotionOut {
-  from { transform:scaleY(1);opacity:1 }
-  to { transform:scaleY(.75);opacity:.4 }
+  from { transform:scaleY(1);`
+  + `opacity:1 }
+  to { transform:scaleY(.75);`
+  + `opacity:.4 }
 }
 .motion-audit-popup:is([class*="audit-custom-"],[class*="audit-replaced-"],[class*="-dropdown-audit-spin-"],[class*="-dropdown-audit-bounce-"]) {
-  animation-duration:1000ms;animation-fill-mode:both;animation-timing-function:linear;
-  animation-play-state:paused;transform-origin:0 0;
+  animation-duration:1000ms;`
+  + `animation-fill-mode:both;`
+  + `animation-timing-function:linear;
+  animation-play-state:paused;`
+  + `transform-origin:0 0;
 }
 .motion-audit-popup:is([class*="audit-custom-appear-active"],[class*="audit-custom-enter-active"],[class*="audit-replaced-appear-active"],[class*="audit-replaced-enter-active"],[class*="-dropdown-audit-spin-appear-active"],[class*="-dropdown-audit-spin-enter-active"],[class*="-dropdown-audit-bounce-appear-active"],[class*="-dropdown-audit-bounce-enter-active"]) {
-  animation-name:auditMotionIn;animation-play-state:running;
+  animation-name:auditMotionIn;`
+  + `animation-play-state:running;
 }
 .motion-audit-popup:is([class*="audit-custom-leave-active"],[class*="audit-replaced-leave-active"],[class*="-dropdown-audit-spin-leave-active"],[class*="-dropdown-audit-bounce-leave-active"]) {
-  animation-name:auditMotionOut;animation-play-state:running;
+  animation-name:auditMotionOut;`
+  + `animation-play-state:running;
 }
 .audit-transition-appear,.audit-transition-enter {
-  transform:scaleY(.75);transform-origin:0 0;
+  transform:scaleY(.75);`
+  + `transform-origin:0 0;
 }
 .audit-transition-appear-prepare,.audit-transition-enter-prepare {
   transform:scaleY(1);
 }
 .audit-transition-appear-active,.audit-transition-enter-active {
-  transform:scaleY(1);transition:transform 1000ms linear;transform-origin:0 0;
+  transform:scaleY(1);`
+  + `transition:transform 1000ms linear;`
+  + `transform-origin:0 0;
 }
 .audit-transition-leave {
-  transform:scaleY(1);transform-origin:0 0;
+  transform:scaleY(1);`
+  + `transform-origin:0 0;
 }
 .audit-transition-leave-active {
-  transform:scaleY(.75);transition:transform 1000ms linear;transform-origin:0 0;
+  transform:scaleY(.75);`
+  + `transition:transform 1000ms linear;`
+  + `transform-origin:0 0;
 }
 `;
 

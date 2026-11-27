@@ -48,7 +48,8 @@
 
 {#snippet details()}<input aria-label="Table prefix draft" name="draft" value="Draft" style="width:100px" />{/snippet}
 <section data-table-prefix-host data-table-prefix={prefix} data-root-prefix={rootPrefix}
-  style="width:640px;padding:16px">
+  style={'width:640px;'
+    + 'padding:16px'}>
   <form aria-label="Table prefix form">
     <Table prefixCls={local ? sample.local : undefined}
       dropdownPrefixCls={local ? sample.dropdown : undefined} class="fixture-table-prefix"

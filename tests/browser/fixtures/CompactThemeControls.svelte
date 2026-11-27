@@ -12,7 +12,12 @@
 </script>
 
 <style>
-  .controls { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+  .controls {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
   .controls > div { width: 180px; }
 </style>
 

@@ -54,9 +54,27 @@
 </script>
 
 <style>
-  .surface { display: flex; align-items: center; justify-content: center; min-height: 120px; padding: 16px; margin-block: 16px; background: var(--ant-color-bg-container); color: var(--ant-color-text); }
-  .owner { display: inline-flex; gap: 12px; align-items: center; max-width: 100%; padding: 8px; }
-  .owner-label { min-width: 0; overflow-wrap: anywhere; }
+  .surface {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 16px;
+    margin-block: 16px;
+    background: var(--ant-color-bg-container);
+    color: var(--ant-color-text);
+  }
+  .owner {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    max-width: 100%;
+    padding: 8px;
+  }
+  .owner-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   input, select { max-width: 100%; }
 </style>
 

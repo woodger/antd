@@ -113,7 +113,11 @@
     sample.hostStyle?.padding === undefined ? undefined : `padding:${sample.hostStyle.padding}px`,
     sample.hostStyle?.overflow ? `overflow:${sample.hostStyle.overflow}` : undefined,
     sample.hostStyle?.scale ? `transform:scale(${sample.hostStyle.scale})` : undefined,
-    'transform-origin:0 0;direction:ltr;font-family:initial;font-size:16px;line-height:normal'
+    'transform-origin:0 0;'
+      + 'direction:ltr;'
+      + 'font-family:initial;'
+      + 'font-size:16px;'
+      + 'line-height:normal'
   ].filter(Boolean).join(';'));
   export function readRefs() {
     return { root: buttonRoot ?? publicCompositeRoot ?? defaultRoot, editor: compositeEditor ?? editor, control,
@@ -145,21 +149,28 @@
   <TreeSelectAlignCompositeRoot {context} onInput={text => record('root-input', text)}
     bind:nativeElement={compositeRoot} bind:inputElement={compositeEditor} />
 {/snippet}
-{#snippet fragmentInput(context: TreeSelectInputContext)}<span data-align-prefix style="display:inline-block;width:64px">Prefix</span><input {...context.attributes} data-align-editor {@attach context.register} /><output data-align-received hidden>{JSON.stringify({ keys: ['popupAlign', 'builtinPlacements'].filter(key => Object.hasOwn(context.attributes, key)) })}</output>{/snippet}
+{#snippet fragmentInput(context: TreeSelectInputContext)}<span data-align-prefix style={'display:inline-block;'
+  + 'width:64px'}>Prefix</span><input {...context.attributes} data-align-editor {@attach context.register} /><output data-align-received hidden>{JSON.stringify({ keys: ['popupAlign', 'builtinPlacements'].filter(key => Object.hasOwn(context.attributes, key)) })}</output>{/snippet}
 {#snippet rest(_omitted: TreeSelectLabeledValue[])}
-  <span data-align-rest style="display:inline-flex;width:64px;height:22px">Rest</span>
+  <span data-align-rest style={'display:inline-flex;'
+    + 'width:64px;'
+    + 'height:22px'}>Rest</span>
 {/snippet}
 {#snippet tag(info: TreeSelectTagInfo)}
-  {#if info.isMaxTag}{@render info.label()}{:else}<span data-align-tag={String(info.value)} style="display:inline-flex;width:64px;height:22px">{@render info.label()}</span>{/if}
+  {#if info.isMaxTag}{@render info.label()}{:else}<span data-align-tag={String(info.value)} style={'display:inline-flex;'
+    + 'width:64px;'
+    + 'height:22px'}>{@render info.label()}</span>{/if}
 {/snippet}
 {#snippet content()}
   <div data-align-case={sample.id} data-align-bound={Boolean(root && control && (sample.slot?.startsWith('root-') || editor))}
     bind:this={host} style={hostStyle}>
     {#if sample.slot === 'root-button'}
-      <TreeSelect {...common} components={{ root: { render: button, props: { style: 'width:220px;height:40px' } } }}
+      <TreeSelect {...common} components={{ root: { render: button, props: { style: 'width:220px;'
+        + 'height:40px' } } }}
         bind:this={control} bind:nativeElement={buttonRoot} />
     {:else if sample.slot === 'root-composite'}
-      <TreeSelect {...common} components={{ root: { render: composite, props: { style: 'width:220px;height:40px' } } }}
+      <TreeSelect {...common} components={{ root: { render: composite, props: { style: 'width:220px;'
+        + 'height:40px' } } }}
         bind:this={control} bind:nativeElement={publicCompositeRoot} />
     {:else if sample.slot === 'input-responsive'}
       <TreeSelect {...common} components={{ input: fragmentInput }} maxTagPlaceholder={rest} tagRender={tag}
@@ -185,14 +196,26 @@
   </div>
 {/snippet}
 <ConfigProvider direction={settings.provider ?? 'ltr'}
-  style="direction:ltr;font-family:initial;font-size:16px;line-height:normal"
+  style={'direction:ltr;'
+    + 'font-family:initial;'
+    + 'font-size:16px;'
+    + 'line-height:normal'}
   theme={{ token: { motion: false }, cssVar: { key: 'tree-select-align' } }}>
-  {#if sample.scrollAncestor}<div data-align-scroller style="position:fixed;left:0;top:0;width:1000px;height:600px;overflow:auto">
-    <div style="position:relative;min-width:1600px;min-height:1600px">{@render content()}</div>
+  {#if sample.scrollAncestor}<div data-align-scroller style={'position:fixed;'
+    + 'left:0;'
+    + 'top:0;'
+    + 'width:1000px;'
+    + 'height:600px;'
+    + 'overflow:auto'}>
+    <div style={'position:relative;'
+      + 'min-width:1600px;'
+      + 'min-height:1600px'}>{@render content()}</div>
   </div>{:else}{@render content()}{/if}
   {#if sample.container === 'shadow'}<div data-align-shadow style="display:contents" {@attach node => {
     shadow = node.shadowRoot ?? node.attachShadow({ mode: 'open' });
     return () => { shadow = undefined; };
   }}></div>{/if}
-  <button type="button" style="position:fixed;left:16px;top:16px">Outside align</button>
+  <button type="button" style={'position:fixed;'
+    + 'left:16px;'
+    + 'top:16px'}>Outside align</button>
 </ConfigProvider>

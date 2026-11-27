@@ -112,7 +112,10 @@
       <div data-scroll-case>
         <button id="submit-control" type="button" onclick={requestSubmit}>Submit scroll form</button>
         <div bind:this={viewport} data-scroll-viewport
-          style="height:180px;width:360px;overflow:auto;position:relative">
+          style={'height:180px;'
+            + 'width:360px;'
+            + 'overflow:auto;'
+            + 'position:relative'}>
           {#if mounted}
             <Form form={model} layout="vertical" scrollToFirstError={sample.scroll}
               onFinish={() => { capture.order.push('finish'); }}

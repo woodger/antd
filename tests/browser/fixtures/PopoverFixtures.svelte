@@ -54,13 +54,39 @@
 </script>
 
 <style>
-  section { padding: 20px 0; border-bottom: 1px solid #ddd; }
-  label, output { display: block; margin-block: 8px; }
-  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block: 12px; }
-  .stage { display: flex; justify-content: center; padding: 180px 16px; }
-  .editor { width: 230px; max-width: 100%; }
-  .clipped { overflow: hidden; height: 34px; }
-  .scroller { height: 180px; overflow: auto; border: 1px solid #999; }
+  section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  label, output {
+    display: block;
+    margin-block: 8px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .stage {
+    display: flex;
+    justify-content: center;
+    padding: 180px 16px;
+  }
+  .editor {
+    width: 230px;
+    max-width: 100%;
+  }
+  .clipped {
+    overflow: hidden;
+    height: 34px;
+  }
+  .scroller {
+    height: 180px;
+    overflow: auto;
+    border: 1px solid #999;
+  }
   .scroll-content { padding: 80px 40px 240px; }
   .shifted { padding-inline-start: 180px; }
   .modal-content { min-height: 180px; }

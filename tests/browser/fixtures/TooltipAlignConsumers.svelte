@@ -12,13 +12,17 @@
   }
 </script>
 
-<div id="alignment-consumers" style="margin:180px;width:400px">
+<div id="alignment-consumers" style={'margin:180px;'
+  + 'width:400px'}>
   <button type="button" onclick={() => shifted = true}>Shift consumer alignment</button>
-  <output aria-label="Consumer alignment payload" style="display:block;height:80px;overflow:hidden">
+  <output aria-label="Consumer alignment payload" style={'display:block;'
+    + 'height:80px;'
+    + 'overflow:hidden'}>
     {payload}
   </output>
   {#if mode === 'typography'}
-    <TypographyText style="display:block;width:80px" tabindex={0}
+    <TypographyText style={'display:block;'
+      + 'width:80px'} tabindex={0}
       ellipsis={{ tooltip: { title: 'Consumer value', align, builtinPlacements: placements,
         onPopupAlign: record, mouseEnterDelay: 0, mouseLeaveDelay: 0 } }}>
       A long text that exceeds its width

@@ -149,7 +149,10 @@
 
 <ConfigProvider locale={enUS} theme={providerTheme}>
   <section bind:this={ownerElement} data-week-owner={sample.id}
-    style="position:absolute;left:160px;top:80px;width:520px">
+    style={'position:absolute;'
+      + 'left:160px;'
+      + 'top:80px;'
+      + 'width:520px'}>
     {#if range}<RangePicker {...rangeProps} bind:this={control} bind:nativeElement={root} />
     {:else}<DatePicker {...singleProps} bind:this={control} bind:nativeElement={root} />{/if}
     {#each controls as value (value)}

@@ -16,12 +16,16 @@
   let events = $state<string[]>([]);
   const message = createMessage({ duration: 0 });
   let holderStyle = $derived(scope === 'holder-style'
-    ? `z-index:2600;--${prefix}-message-content-bg:#fff0f6` : undefined);
+    ? `z-index:2600;`
+      + `--${prefix}-message-content-bg:#fff0f6` : undefined);
   const handle = untrack(() => {
     const type: MessageType = mode === 'success' || mode === 'warning'
       || mode === 'error' || mode === 'loading' ? mode : 'info';
     const style = [
-      (priority || scope === 'priority') && 'color:rgb(0,128,0);padding:5px 19px',
+      (priority || scope === 'priority') && (
+        'color:rgb(0,128,0);'
+        + 'padding:5px 19px'
+      ),
       scope === 'variable' && `--${prefix}-message-content-padding:3px 17px`
     ].filter(Boolean).join(';');
 

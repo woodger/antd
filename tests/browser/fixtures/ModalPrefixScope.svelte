@@ -58,7 +58,10 @@
 </script>
 
 {#snippet editor()}<input aria-label="Modal prefix draft" bind:value={draft}
-  style="width:240px;max-width:100%;padding:4px 8px;font:inherit" />{/snippet}
+  style={'width:240px;'
+    + 'max-width:100%;'
+    + 'padding:4px 8px;'
+    + 'font:inherit'} />{/snippet}
 <Button onclick={show}>Open prefix Modal</Button>
 {#if sample.type}<ModalHolder {modal} />
 {:else}
