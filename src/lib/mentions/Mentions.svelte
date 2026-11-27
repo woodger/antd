@@ -3,7 +3,7 @@
   // keyboard control.
   import { onDestroy, tick, untrack } from 'svelte';
   import RenderContent from '../RenderContent.svelte';
-  import RenderEmpty from '../RenderEmpty.svelte';
+  import RenderEmpty from '../empty/RenderEmpty.svelte';
   import type {
     MentionsProps, MentionsOption, MentionsPopupRenderInfo, MentionsSemanticProps
   } from './mentions.types';

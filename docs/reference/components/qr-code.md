@@ -2,7 +2,7 @@
 
 QRCode показывает код на canvas или в SVG и поддерживает состояния загрузки
 и ошибки. Props, status snippet и semantic/config описаны в
-[исходных объявлениях](../../../src/lib/qrcode.types.ts).
+[исходных объявлениях](../../../src/lib/qr-code/qrcode.types.ts).
 
 ```svelte
 <script lang="ts">
@@ -92,7 +92,7 @@ canvas/SVG, encoding, status, refs и доступная с клавиатуры
 Fallback-переменная module не перекрывает адаптивный cover прежней light/dark темы.
 Native RTL наследуется, исходное LTR-направление корня хранится в raw reference.
 Сверка: [44 исходных случая и 4 обновления](../../../tests/browser/fixtures/ant-design-qrcode-prefix-reference.json),
-[CSS boundary](../../../src/lib/qrcode-prefix.test.ts),
+[CSS boundary](../../../src/lib/qr-code/qrcode-prefix.test.ts),
 [браузер](../../../tests/browser/qrcode-prefix.spec.ts),
 [публичный пакет и SSR](../../../tests/package/qrcode-prefix.ssr.test.ts), `?fixture=qrcode-prefix`.
 Рецепт qrcode-prefix воспроизводит те же 11 правил CSS data module с проверкой SHA-256.

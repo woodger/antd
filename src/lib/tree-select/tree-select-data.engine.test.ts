@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { treeSelectChildren, treeSelectData, treeSelectFields, treeSelectNodeLabel, treeSelectNodeValue } from './tree-select-data.engine';
 import { filterTreeSelect, treeSelectIndex, treeSelectLabels } from './tree-select.engine';
-import { flattenTree } from '../tree.engine';
+import { flattenTree } from '../tree/tree.engine';
 import reference from '../../../tests/browser/fixtures/ant-design-tree-select-data-reference.json';
 import { treeSelectData as sourceData, treeSelectDataSamples } from '../../../tests/browser/fixtures/tree-select-data-cases';
 

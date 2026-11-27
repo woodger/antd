@@ -318,8 +318,8 @@ TreeSelect сохраняет прежнее самостоятельное уп
 
 [23 Source сценария и raw наблюдение](../../../tests/browser/fixtures/ant-design-tree-motion-reference.json),
 [12 SSR вариантов](../../../tests/browser/fixtures/ant-design-tree-motion-ssr-reference.json),
-[engine](../../../src/lib/tree-motion.engine.test.ts),
-[lifecycle](../../../src/lib/tree-motion.dom.test.ts),
+[engine](../../../src/lib/tree/tree-motion.engine.test.ts),
+[lifecycle](../../../src/lib/tree/tree-motion.dom.test.ts),
 [browser](../../../tests/browser/tree-motion.spec.ts),
 [Native browser](../../../tests/browser/tree-motion-native.spec.ts) и
 [SSR](../../../tests/package/tree-motion.ssr.test.ts) проверяют фазы, callbacks,
@@ -365,7 +365,7 @@ DragNode сохраняет state начала drag и исходную data-с�
 
 [38 независимых Source сценариев и шесть raw наблюдений](../../../tests/browser/fixtures/ant-design-tree-drag-reference.json),
 [12 Source SSR вариантов без DOM](../../../tests/browser/fixtures/ant-design-tree-drag-ssr-reference.json),
-[engine](../../../src/lib/tree-drag.engine.test.ts),
+[engine](../../../src/lib/tree/tree-drag.engine.test.ts),
 [SSR](../../../tests/package/tree-drag.ssr.test.ts) и
 [browser](../../../tests/browser/tree-drag.spec.ts) фиксируют геометрию, snapshots,
 defaults, controlled keys, generic data/fieldNames, icons, prefix/RTL и lifecycle.
@@ -422,7 +422,7 @@ UI-компоненты Tree/DirectoryTree принимают ту же схем
 lookup отсутствующих constructor/__proto__/toString читает plain object prototype
 и возвращает function/Object.prototype вместо DataEntity. Исходное наблюдение
 сохранено; реальные data keys с такими именами поддерживаются.
-[Unit](../../../src/lib/tree-data-model.test.ts),
+[Unit](../../../src/lib/tree/tree-data-model.test.ts),
 [browser](../../../tests/browser/tree-data-model.spec.ts) и
 [package/SSR](../../../tests/package/tree-data-model.ssr.test.ts) проверяют модель.
 

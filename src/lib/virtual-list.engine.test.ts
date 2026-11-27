@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { virtualListScrollStep, virtualListSizes, virtualListWindow } from './virtual-list.engine';
-import { treeItemHeight } from './tree-virtual.engine';
+import { treeItemHeight } from './tree/tree-virtual.engine';
 
 describe('virtual list window', () => {
   const rows = Array.from({ length: 8 }, (_, key) => ({ key }));

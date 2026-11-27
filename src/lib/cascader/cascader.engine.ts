@@ -11,8 +11,8 @@ import type {
   CascaderSlots,
   CascaderStrategy
 } from './cascader.types';
-import { buildTreeEntities, conductTreeCheck } from '../tree.engine';
-import type { TreeDataNode } from '../tree.types';
+import { buildTreeEntities, conductTreeCheck } from '../tree/tree.engine';
+import type { TreeDataNode } from '../tree/tree.types';
 
 export const CASCADER_SHOW_PARENT = 'SHOW_PARENT';
 export const CASCADER_SHOW_CHILD = 'SHOW_CHILD';

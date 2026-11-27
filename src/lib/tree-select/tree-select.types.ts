@@ -2,7 +2,7 @@ import type { Snippet } from 'svelte';
 import type { DOMAttributes, HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize, Variant } from '../types';
 import type { FormValidateStatus } from '../form/form-error-list.types';
-import type { TreeEventNode, TreeExpandAction, TreeKey, TreeRef, TreeTitleContent } from '../tree.types';
+import type { TreeEventNode, TreeExpandAction, TreeKey, TreeRef, TreeTitleContent } from '../tree/tree.types';
 import type { SelectTagInfo } from '../select/select.types';
 import type { TreeSelectTokenSeparators } from './tree-select-token.engine';
 import type { TreeSelectComponents, TreeSelectEditorElement } from './tree-select-components.types';

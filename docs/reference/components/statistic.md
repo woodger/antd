@@ -48,7 +48,7 @@ statistic-record, любой собственный объект, включая
 Смена prefix сохраняет DOM корня, semantic styles, темы и native compact defaults.
 Сверка: [22 исходных случая и 4 смены prefix](../../../tests/browser/fixtures/ant-design-statistic-prefix-reference.json),
 [браузер](../../../tests/browser/statistic-prefix.spec.ts),
-[CSS boundary](../../../src/lib/statistic-prefix.test.ts),
+[CSS boundary](../../../src/lib/statistic/statistic-prefix.test.ts),
 [публичный пакет и SSR](../../../tests/package/statistic-prefix.ssr.test.ts), `?fixture=statistic-prefix`.
 Общий ConfigProvider.prefixCls применяется также к Timer; локальный prefix имеет приоритет.
 

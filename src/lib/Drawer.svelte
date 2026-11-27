@@ -11,7 +11,7 @@
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
-  import { useWatermarkPanel } from './watermark-context';
+  import { useWatermarkPanel } from './watermark/watermark-context';
   import { createDrawerDialog, type DrawerTransitionOptions } from './drawer.dom';
   import type { CssMotionState } from './css-motion.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';

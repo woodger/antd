@@ -74,8 +74,8 @@ Callback должен быть чистым: он может вычислять�
 
 ## Проверки и источники
 
-- [Общий renderer](../../src/lib/RenderEmpty.svelte) и
-  [presets](../../src/lib/DefaultRenderEmpty.svelte).
+- [Общий renderer](../../src/lib/empty/RenderEmpty.svelte) и
+  [presets](../../src/lib/empty/DefaultRenderEmpty.svelte).
 - [151 официальный сценарий и Select interaction trace](../../tests/browser/fixtures/ant-design-render-empty-reference.json)
   из закреплённого UMD; 149 сценариев сверяются напрямую, два — с native baseline.
 - [Браузерные проверки](../../tests/browser/render-empty.spec.ts) и

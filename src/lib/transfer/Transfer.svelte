@@ -20,8 +20,8 @@
   import { transferRuRU } from './transfer.locale';
   import TransferSection from './TransferSection.svelte';
   import TransferAction from './TransferAction.svelte';
-  import Empty from '../Empty.svelte';
-  import DefaultRenderEmpty from '../DefaultRenderEmpty.svelte';
+  import Empty from '../empty/Empty.svelte';
+  import DefaultRenderEmpty from '../empty/DefaultRenderEmpty.svelte';
   import type {
     TransferDirection, TransferItem, TransferKey, TransferListProps, TransferProps,
     TransferSemanticValue, TransferSlots, TransferSectionSlots

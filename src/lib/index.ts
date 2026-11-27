@@ -1,4 +1,4 @@
-export { default as ImagePreviewGroup } from './ImagePreviewGroup.svelte';
+export { default as ImagePreviewGroup } from './image/ImagePreviewGroup.svelte';
 export { default as App } from './app.component';
 export { useApp } from './app-context';
 export type {
@@ -24,14 +24,14 @@ export type {
   ModalInstance,
   ModalHolderProps
 } from './modal-confirm.types';
-export { getTableData } from './table.engine';
+export { getTableData } from './table/table.engine';
 export { getPaginationState } from './pagination/pagination.engine';
 export type {
   ImagePreviewGroupProps,
   ImagePreviewGroupConfig,
   ImagePreviewGroupItem
-} from './image-preview-group.types';
-export { default as Image } from './Image.svelte';
+} from './image/image-preview-group.types';
+export { default as Image } from './image/Image.svelte';
 export type {
   ImageProps,
   ImagePreviewConfig,
@@ -40,7 +40,7 @@ export type {
   ImageInfo,
   ImagePreviewActions,
   ImagePreviewRenderInfo
-} from './image.types';
+} from './image/image.types';
 export { default as Mentions } from './mentions/Mentions.svelte';
 export { getMentions } from './mentions/mentions.engine';
 export type {
@@ -148,9 +148,9 @@ export type {
   TreeSelectRootAttributes,
   TreeSelectInputAttributes
 } from './tree-select/tree-select-components.types';
-export { default as Tree } from './Tree.svelte';
-export { default as DirectoryTree } from './DirectoryTree.svelte';
-export { createTree } from './tree-data-model';
+export { default as Tree } from './tree/Tree.svelte';
+export { default as DirectoryTree } from './tree/DirectoryTree.svelte';
+export { createTree } from './tree/tree-data-model';
 export type {
   TreeProps,
   DirectoryTreeProps,
@@ -186,8 +186,8 @@ export type {
   TreeDropInfo,
   TreeCheckedKeys,
   TreeCheckInfo
-} from './tree.types';
-export type { TreeMotionConfig, TreeMotionName, TreeMotionEvent } from './tree-motion.types';
+} from './tree/tree.types';
+export type { TreeMotionConfig, TreeMotionName, TreeMotionEvent } from './tree/tree-motion.types';
 export { default as Upload } from './upload/Upload.svelte';
 export { default as UploadDragger } from './upload/UploadDragger.svelte';
 export { UPLOAD_LIST_IGNORE } from './upload/upload.engine';
@@ -293,7 +293,7 @@ export type {
   FloatButtonConfig,
   FloatButtonGroupConfig
 } from './float-button/float-button.types';
-export { default as Timeline } from './Timeline.svelte';
+export { default as Timeline } from './timeline/Timeline.svelte';
 export type {
   TimelineProps,
   TimelineConfig,
@@ -302,7 +302,7 @@ export type {
   TimelineMode,
   TimelinePlacement,
   TimelineSlots
-} from './timeline.types';
+} from './timeline/timeline.types';
 export { default as Anchor } from './anchor/Anchor.svelte';
 export type {
   AnchorProps,
@@ -341,9 +341,9 @@ export type {
   BreadcrumbSemantic,
   BreadcrumbConfig
 } from './breadcrumb/breadcrumb.types';
-export { default as Card } from './Card.svelte';
-export { default as CardGrid } from './CardGrid.svelte';
-export { default as CardMeta } from './CardMeta.svelte';
+export { default as Card } from './card/Card.svelte';
+export { default as CardGrid } from './card/CardGrid.svelte';
+export { default as CardMeta } from './card/CardMeta.svelte';
 export type {
   CardProps,
   CardGridProps,
@@ -355,9 +355,9 @@ export type {
   CardMetaSemantic,
   CardMetaConfig,
   CardTabItem
-} from './card.types';
+} from './card/card.types';
 export type { TabsContent, TabsExtraContent } from './tabs/tabs.types';
-export { default as Descriptions } from './Descriptions.svelte';
+export { default as Descriptions } from './descriptions/Descriptions.svelte';
 export type {
   DescriptionsProps,
   DescriptionsItem,
@@ -366,7 +366,7 @@ export type {
   DescriptionsCellSlots,
   DescriptionsConfig,
   DescriptionsSemantic
-} from './descriptions.types';
+} from './descriptions/descriptions.types';
 export { default as ConfigProvider } from './config-provider.component';
 export { default as Button } from './button/Button.svelte';
 export type {
@@ -422,7 +422,7 @@ export { default as Popover } from './Popover.svelte';
 export { default as Popconfirm } from './popconfirm.component';
 export { default as Dropdown } from './dropdown/Dropdown.svelte';
 export { default as Tabs } from './tabs/Tabs.svelte';
-export { default as Collapse } from './Collapse.svelte';
+export { default as Collapse } from './collapse/Collapse.svelte';
 export { default as Drawer } from './Drawer.svelte';
 export { default as Alert } from './alert/alert.component';
 export { default as MessageHolder } from './MessageHolder.svelte';
@@ -437,19 +437,19 @@ export { default as SkeletonButton } from './SkeletonButton.svelte';
 export { default as SkeletonInput } from './SkeletonInput.svelte';
 export { default as SkeletonImage } from './SkeletonImage.svelte';
 export { default as SkeletonNode } from './SkeletonNode.svelte';
-export { default as Empty } from './empty.component';
+export { default as Empty } from './empty/empty.component';
 export { default as Result } from './result.component';
 export { default as Steps } from './steps/Steps.svelte';
-export { default as Tag } from './Tag.svelte';
-export { default as CheckableTag } from './CheckableTag.svelte';
-export { default as CheckableTagGroup } from './CheckableTagGroup.svelte';
-export { default as Badge } from './Badge.svelte';
-export { default as BadgeRibbon } from './BadgeRibbon.svelte';
-export { default as Avatar } from './Avatar.svelte';
-export { default as AvatarGroup } from './AvatarGroup.svelte';
+export { default as Tag } from './tag/Tag.svelte';
+export { default as CheckableTag } from './tag/CheckableTag.svelte';
+export { default as CheckableTagGroup } from './tag/CheckableTagGroup.svelte';
+export { default as Badge } from './badge/Badge.svelte';
+export { default as BadgeRibbon } from './badge/BadgeRibbon.svelte';
+export { default as Avatar } from './avatar/Avatar.svelte';
+export { default as AvatarGroup } from './avatar/AvatarGroup.svelte';
 export { default as Divider } from './divider/Divider.svelte';
 export { default as Flex } from './flex/Flex.svelte';
-export { default as Statistic } from './Statistic.svelte';
+export { default as Statistic } from './statistic/Statistic.svelte';
 export { default as Segmented } from './segmented/Segmented.svelte';
 export { default as Row } from './grid/Row.svelte';
 export { default as Col } from './grid/Col.svelte';
@@ -489,11 +489,11 @@ export type {
   SegmentedSemantic,
   SegmentedConfig
 } from './segmented/segmented.types';
-export { default as StatisticTimer } from './StatisticTimer.svelte';
+export { default as StatisticTimer } from './statistic/StatisticTimer.svelte';
 export type {
   StatisticTimerProps,
   StatisticTimerType
-} from './statistic-timer.types';
+} from './statistic/statistic-timer.types';
 export type {
   StatisticProps,
   StatisticConfig,
@@ -501,7 +501,7 @@ export type {
   StatisticContent,
   StatisticSemanticSlots,
   StatisticSemanticInfo
-} from './statistic.types';
+} from './statistic/statistic.types';
 export type { FlexProps, FlexComponentProps, FlexRootProps, FlexConfig, FlexAlign, FlexJustify, FlexGap }
   from './flex/flex.types';
 export type {
@@ -519,7 +519,7 @@ export { default as Radio } from './radio/Radio.svelte';
 export { default as RadioGroup } from './radio/RadioGroup.svelte';
 export { default as Switch } from './switch/Switch.svelte';
 export { default as Pagination } from './pagination/Pagination.svelte';
-export { default as Table } from './table.component';
+export { default as Table } from './table/table.component';
 export { default as Select } from './select/Select.svelte';
 export { default as Modal } from './modal.component';
 export { default as Form } from './form/Form.svelte';
@@ -678,7 +678,7 @@ export type {
   CollapseItemSemanticSlots,
   CollapseSemanticInfo,
   CollapseExpandIconInfo
-} from './collapse.types';
+} from './collapse/collapse.types';
 export type {
   DrawerProps, DrawerPlacement, DrawerSize, DrawerResizableConfig, DrawerPushConfig,
   DrawerConfig, DrawerMask, DrawerMaskConfig, DrawerFocusableConfig,
@@ -776,10 +776,10 @@ export type {
   SkeletonConfig, SkeletonSemanticSlots, SkeletonSemanticInfo, SkeletonRef, SkeletonPartProps
 } from './skeleton.types';
 export type { SkeletonLocale } from './types';
-export type { EmptyProps, EmptyImage, EmptyDescription } from './empty.types';
+export type { EmptyProps, EmptyImage, EmptyDescription } from './empty/empty.types';
 export type {
   EmptyContent, EmptySemanticSlots, EmptySemanticInfo, EmptySemantic, EmptyConfig, EmptyRef
-} from './empty.types';
+} from './empty/empty.types';
 export type {
   ResultProps, ResultStatus, ResultContent, ResultSemanticSlots, ResultSemanticInfo,
   ResultSemantic, ResultRef, ResultConfig
@@ -821,7 +821,7 @@ export type {
   CheckableTagGroupSemantic,
   CheckableTagGroupProps,
   CheckableTagProps
-} from './tag.types';
+} from './tag/tag.types';
 export type {
   BadgeProps,
   BadgeStatus,
@@ -835,7 +835,7 @@ export type {
   BadgeConfig,
   BadgeSlots,
   BadgeSemantic
-} from './badge.types';
+} from './badge/badge.types';
 export type { BadgeLocale } from './types';
 export type {
   BadgeRibbonProps,
@@ -844,14 +844,14 @@ export type {
   BadgeRibbonSemantic,
   BadgeRibbonPlacement,
   BadgeRibbonContent
-} from './badge-ribbon.types';
-export type { AvatarProps, AvatarShape, AvatarSize, AvatarConfig } from './avatar.types';
+} from './badge/badge-ribbon.types';
+export type { AvatarProps, AvatarShape, AvatarSize, AvatarConfig } from './avatar/avatar.types';
 export type {
   AvatarGroupProps,
   AvatarGroupItem,
   AvatarGroupKey,
   AvatarGroupMax
-} from './avatar-group.types';
+} from './avatar/avatar-group.types';
 export type { AvatarGroupLocale } from './types';
 export type { EmptyLocale } from './types';
 export type { CheckboxProps } from './checkbox/Checkbox.svelte';
@@ -990,7 +990,7 @@ export type {
   TableSummaryRowProps,
   TableSummaryCellProps,
   TableRef
-} from './table.types';
+} from './table/table.types';
 export type {
   SelectProps,
   SelectRef,
@@ -1092,21 +1092,21 @@ export {
 } from './types';
 export { default as Rate } from './rate/Rate.svelte';
 export type { RateProps, RateConfig, RateCharacterInfo } from './rate/rate.types';
-export { default as Watermark } from './Watermark.svelte';
+export { default as Watermark } from './watermark/Watermark.svelte';
 export type {
   WatermarkProps,
   WatermarkConfig,
   WatermarkFont,
   WatermarkText,
   WatermarkContent
-} from './watermark.types';
-export { default as BorderBeam } from './BorderBeam.svelte';
+} from './watermark/watermark.types';
+export { default as BorderBeam } from './border-beam/BorderBeam.svelte';
 export type {
   BorderBeamProps,
   BorderBeamConfig,
   BorderBeamColor,
   BorderBeamGradient
-} from './border-beam.types';
+} from './border-beam/border-beam.types';
 export { default as Masonry } from './masonry/Masonry.svelte';
 export type {
   MasonryProps,
@@ -1131,7 +1131,7 @@ export type {
   SplitterClassSlots,
   SplitterStyleSlots
 } from './splitter/splitter.types';
-export { default as QRCode } from './QRCode.svelte';
+export { default as QRCode } from './qr-code/QRCode.svelte';
 export { default as RadioButton } from './radio/RadioButton.svelte';
 export type { RadioButtonProps } from './radio/radio.types';
 export { default as Calendar } from './calendar/Calendar.svelte';
@@ -1182,7 +1182,7 @@ export type {
   TransferSemantic,
   TransferSemanticValue
 } from './transfer/transfer.types';
-export { default as Listy } from './Listy.svelte';
+export { default as Listy } from './listy/Listy.svelte';
 export type {
   ListyProps,
   ListyRef,
@@ -1197,8 +1197,8 @@ export type {
   ListySemantic,
   ListySemanticProps,
   ListySemanticName
-} from './listy.types';
-export { default as Carousel } from './Carousel.svelte';
+} from './listy/listy.types';
+export { default as Carousel } from './carousel/Carousel.svelte';
 export type {
   CarouselProps,
   CarouselRef,
@@ -1219,7 +1219,7 @@ export type {
   CarouselPlayType,
   CarouselConfig,
   CarouselLocale
-} from './carousel.types';
+} from './carousel/carousel.types';
 export { default as Tour } from './Tour.svelte';
 export type {
   TourProps,
@@ -1241,11 +1241,11 @@ export type {
   TourLocale,
   TourAlign
 } from './tour.types';
-export { default as Typography } from './Typography.svelte';
-export { default as TypographyText } from './TypographyText.svelte';
-export { default as TypographyTitle } from './TypographyTitle.svelte';
-export { default as TypographyParagraph } from './TypographyParagraph.svelte';
-export { default as TypographyLink } from './TypographyLink.svelte';
+export { default as Typography } from './typography/Typography.svelte';
+export { default as TypographyText } from './typography/TypographyText.svelte';
+export { default as TypographyTitle } from './typography/TypographyTitle.svelte';
+export { default as TypographyParagraph } from './typography/TypographyParagraph.svelte';
+export { default as TypographyLink } from './typography/TypographyLink.svelte';
 export type {
   TypographyProps,
   TypographyBlockProps,
@@ -1264,7 +1264,7 @@ export type {
   TypographyEditConfig,
   TypographyEllipsisConfig,
   TypographyLocale
-} from './typography.types';
+} from './typography/typography.types';
 export { default as TimePicker } from './picker/time-picker.component';
 export { default as TimeRangePicker } from './picker/time-range-picker.component';
 export type {
@@ -1315,10 +1315,10 @@ export type {
   QRProps,
   QRPropsCanvas,
   QRPropsSvg
-} from './qrcode.types';
+} from './qr-code/qrcode.types';
 
 export type { SelectConfig } from './select/select.types';
 export type { TreeSelectConfig } from './tree-select/tree-select.types';
 export type { DatePickerConfig } from './picker/date-picker.types';
-export type { CardConfig } from './card.types';
+export type { CardConfig } from './card/card.types';
 export type { MentionsComponentConfig } from './mentions/mentions.types';

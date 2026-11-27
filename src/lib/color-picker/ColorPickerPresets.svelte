@@ -4,13 +4,13 @@
   import { useComponentTheme } from '../theme-component.svelte';
   import { useDesignTokenContext } from '../theme-context.svelte';
   import { generateColor, isBrightColor } from './color-picker.engine';
-  import { toggleCollapseKey } from '../collapse.engine';
+  import { toggleCollapseKey } from '../collapse/collapse.engine';
   import { colorPickerRuRU } from './color-picker.locale';
   import type { AggregationColor } from '../color';
   import type { ColorPickerPreset } from './color-picker.types';
-  import CollapsePanel from '../CollapsePanel.svelte';
+  import CollapsePanel from '../collapse/CollapsePanel.svelte';
   import Icon from '../Icon.svelte';
-  import { getCollapsePrefixCss } from '../collapse-prefix.engine';
+  import { getCollapsePrefixCss } from '../collapse/collapse-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
 
   let { prefixCls, presets, value, onChange }: {

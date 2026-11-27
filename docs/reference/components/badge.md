@@ -46,7 +46,7 @@ Reduced motion отключает переходы. Прежний numeric offse
 это сохранённая native-граница внешнего ScrollNumber, независимо от движения цифр.
 18 последовательностей и 68 кадров закреплены в
 [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-digit-motion-reference.json),
-проверки — [engine](../../../src/lib/badge-digit.engine.test.ts),
+проверки — [engine](../../../src/lib/badge/badge-digit.engine.test.ts),
 [browser](../../../tests/browser/badge-digit-motion.spec.ts) и
 [SSR](../../../tests/package/badge-digit-motion.ssr.test.ts), фикстура — `?fixture=badge-digit-motion`.
 
@@ -179,7 +179,7 @@ root style и оформление standalone/non-status text; эти грани
 58 вариантов text/offset/size и обратимые обновления закреплены в
 [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-values-reference.json),
 проверки — [browser](../../../tests/browser/badge-values.spec.ts),
-[engine](../../../src/lib/badge.engine.test.ts) и
+[engine](../../../src/lib/badge/badge.engine.test.ts) и
 [SSR](../../../tests/package/badge-values.ssr.test.ts), фикстура — `?fixture=badge-values`.
 
 PrefixCls меняет классы Badge, status/text и zoom; пустая строка наследует

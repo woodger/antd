@@ -2,8 +2,8 @@
   // Renders Select list rows and connects them to the active item. Virtualization receives the same
   // row keys.
   import { untrack } from 'svelte';
-  import { connectListyGestures } from '../listy-gestures.dom';
-  import ListyScrollbar from '../ListyScrollbar.svelte';
+  import { connectListyGestures } from '../listy/listy-gestures.dom';
+  import ListyScrollbar from '../listy/ListyScrollbar.svelte';
   import type { SelectOptionListItem, SelectOptionListProps } from './select-option-list.types';
   import { createSelectStyle, selectStyleAttributes } from './select-style.model.svelte';
 

@@ -6,7 +6,7 @@
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
   import { useVariant } from '../variant.svelte';
-  import RenderEmpty from '../RenderEmpty.svelte';
+  import RenderEmpty from '../empty/RenderEmpty.svelte';
   import RenderContent from '../RenderContent.svelte';
   import SelectPopupContent from './SelectPopupContent.svelte';
   import { hasSelectControlSemantics, hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle } from './select-semantic.engine';

@@ -16,7 +16,7 @@
     from './modal-semantic.engine';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
-  import { useWatermarkPanel } from './watermark-context';
+  import { useWatermarkPanel } from './watermark/watermark-context';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
   import { connectDialogFocus } from './dialog-focus.dom';
   import { resolveDialogFocusable, resolveDialogMask } from './dialog-interaction.engine';

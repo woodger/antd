@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { componentThemeVariables } from './theme-component-style.engine';
-import { listyItemHeight } from './listy.engine';
+import { listyItemHeight } from './listy/listy.engine';
 import {
   createDesignTokenState,
   defaultThemeConfig,

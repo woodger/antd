@@ -54,8 +54,8 @@
   import { createOverlayStyle } from '../overlay-style.model.svelte';
   import { serializeInlineStyleLayers } from '../inline-style.engine';
   import CascaderColumns from './CascaderColumns.svelte';
-  import RenderEmpty from '../RenderEmpty.svelte';
-  import Empty from '../Empty.svelte';
+  import RenderEmpty from '../empty/RenderEmpty.svelte';
+  import Empty from '../empty/Empty.svelte';
   import Icon from '../Icon.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
 

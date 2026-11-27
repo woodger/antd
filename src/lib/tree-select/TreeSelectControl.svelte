@@ -14,7 +14,7 @@
     TreeSelectNodeIcon,
     TreeSelectRef
   } from './tree-select.types';
-  import type { TreeDataNode, TreeEventNode, TreeKey, TreeScrollConfig } from '../tree.types';
+  import type { TreeDataNode, TreeEventNode, TreeKey, TreeScrollConfig } from '../tree/tree.types';
   import {
     treeSelectIndex,
     treeSelectLabeled,
@@ -24,7 +24,7 @@
     filterTreeSelect,
     toggleTreeSelect
   } from './tree-select.engine';
-  import { expandTreeParents, treeCheckDisabled } from '../tree.engine';
+  import { expandTreeParents, treeCheckDisabled } from '../tree/tree.engine';
   import { treeSelectChildren, treeSelectData, treeSelectNodeValue } from './tree-select-data.engine';
   import { treeSelectLimit } from './tree-select-limit.engine';
   import { treeSelectPastedSearch, treeSelectTokenSearch } from './tree-select-token.engine';
@@ -57,7 +57,7 @@
   import { getTreeSelectPrefixCss } from './tree-select-prefix.engine';
   import { useVariant } from '../variant.svelte';
   import RenderContent from '../RenderContent.svelte';
-  import RenderEmpty from '../RenderEmpty.svelte';
+  import RenderEmpty from '../empty/RenderEmpty.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
@@ -71,8 +71,8 @@
   import { useComponentTheme } from '../theme-component.svelte';
   import { useToken } from '../theme-context.svelte';
   import { useZIndex } from '../z-index-context.svelte';
-  import Tree from '../Tree.svelte';
-  import TreeTitle from '../TreeTitle.svelte';
+  import Tree from '../tree/Tree.svelte';
+  import TreeTitle from '../tree/TreeTitle.svelte';
   import Icon from '../Icon.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   let {

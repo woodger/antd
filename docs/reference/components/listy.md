@@ -24,7 +24,7 @@ Listy отображает список с группировкой, закре�
 <button onclick={() => list?.scrollTo({ key: 'three', align: 'top' })}>Show Gamma</button>
 ```
 
-Точные props, semantic slots и refs описаны в [исходных типах](../../../src/lib/listy.types.ts).
+Точные props, semantic slots и refs описаны в [исходных типах](../../../src/lib/listy/listy.types.ts).
 Items принимает readonly массив; rowKey обязателен и не подменяется индексом.
 Группы собираются по всему массиву в порядке первого появления ключа, даже когда
 записи группы идут вперемежку. Title получает исходные объекты группы;
@@ -93,7 +93,7 @@ source fallback для оценки. LineHeight темы применяется 
 для отдельного разбора.
 
 React development warnings остаются за пределами переноса.
-Проверки: [engine](../../../src/lib/listy.engine.test.ts),
+Проверки: [engine](../../../src/lib/listy/listy.engine.test.ts),
 [публичный пакет/SSR](../../../tests/package/listy.ssr.test.ts),
 [браузер](../../../tests/browser/listy.spec.ts), `?fixture=listy`.
 Темы, видимое окно и высота виртуального содержимого сверяются с

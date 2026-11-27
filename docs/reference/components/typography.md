@@ -4,7 +4,7 @@
 его тег. `TypographyText`, `TypographyTitle`, `TypographyParagraph` и
 `TypographyLink` соответствуют Text/Title/Paragraph/Link Ant Design и
 добавляют операции над текстом. Точные контракты находятся в
-[typography.types.ts](../../../src/lib/typography.types.ts).
+[typography.types.ts](../../../src/lib/typography/typography.types.ts).
 
 ```svelte
 <script lang="ts">

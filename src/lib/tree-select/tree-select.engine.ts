@@ -1,7 +1,7 @@
 // Prepares node index, calculating checked, filtration and labels TreeSelect. The starting nodes
 // are saved separately from TreeDataNode for custom callbacks.
-import { buildTreeEntities, conductTreeCheck, treeCheckDisabled } from '../tree.engine';
-import type { TreeBasicDataNode, TreeDataNode, TreeKey } from '../tree.types';
+import { buildTreeEntities, conductTreeCheck, treeCheckDisabled } from '../tree/tree.engine';
+import type { TreeBasicDataNode, TreeDataNode, TreeKey } from '../tree/tree.types';
 import { treeSelectChildren, treeSelectFields, treeSelectNodeLabel, treeSelectNodeValue } from './tree-select-data.engine';
 import type {
   TreeSelectNode,

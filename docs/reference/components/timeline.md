@@ -70,7 +70,7 @@ prefix сохраняет ol, theme/semantics, titleSpan и назначение
 Рецепт timeline-prefix воспроизводит 43 исходных правила CSS data module;
 fallback variables не перекрывают прежние adaptive theme defaults.
 Сверка: [28 исходных случаев и 4 обновления](../../../tests/browser/fixtures/ant-design-timeline-prefix-reference.json),
-[CSS и item classes](../../../src/lib/timeline-prefix.test.ts),
+[CSS и item classes](../../../src/lib/timeline/timeline-prefix.test.ts),
 [браузер](../../../tests/browser/timeline-prefix.spec.ts),
 [публичный пакет и SSR](../../../tests/package/timeline-prefix.ssr.test.ts), `?fixture=timeline-prefix`.
 

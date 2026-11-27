@@ -1,7 +1,7 @@
 # Carousel
 
 Carousel отображает слайды с поддержкой прокрутки и автоматического переключения.
-Props, snippets и refs описаны в [carousel.types.ts](../../../src/lib/carousel.types.ts).
+Props, snippets и refs описаны в [carousel.types.ts](../../../src/lib/carousel/carousel.types.ts).
 
 ```svelte
 <script lang="ts">
