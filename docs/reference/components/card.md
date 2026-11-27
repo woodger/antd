@@ -58,7 +58,7 @@ selector только для Suite Typography/Tabs. Raw/matched snapshot сох�
 freshNested измеряет свежий Source Inner с той же темой, expectedNative использует
 его для nested scope. Native изолирует class и namespace.
 Сверка: [официальные prefix-замеры](../../../tests/browser/fixtures/ant-design-card-prefix-reference.json),
-[браузер](../../../tests/browser/card-prefix.spec.ts) и
+[браузер](../../../tests/browser/card/card-prefix.spec.ts) и
 [SSR](../../../tests/package/card/card-prefix.ssr.test.ts), `?fixture=card-prefix`.
 
 ConfigProvider.card задаёт variant, class/style и те же semantic classNames/styles;
@@ -68,7 +68,7 @@ style → local semantic → local style; переменные темы идут
 Явный вложенный record, включая {}, заменяет соответствующий родительский целиком;
 undefined наследует его. Обновления сохраняют editors, focus/selection, FormData,
 выбранную вкладку и существующие callbacks. Фикстура — `?fixture=card-config`,
-[проверки](../../../tests/browser/card-config.spec.ts) используют неизменённый UMD 6.6.8.
+[проверки](../../../tests/browser/card/card-config.spec.ts) используют неизменённый UMD 6.6.8.
 
 Semantic callbacks Card сохраняют прежние native defaults: loading/hoverable=false
 и tabProps={} при отсутствии этих props. Raw source mergedProps оставляет их
@@ -106,6 +106,6 @@ activeTabKey имеет приоритет над tabProps.activeKey. TabBarExtr
 Фикстура — `?fixture=card`; unit/SSR/Chromium
 проверяют стили, слоты, Grid, загрузку/фокус и вкладки. Рецепт card извлекает
 59 правил без keyframes. Компонентные темы отдельно сверяются с UMD 6.6.8 в
-`tests/browser/card-theme.spec.ts`, фикстура — `?fixture=card-theme`.
+`tests/browser/card/card-theme.spec.ts`, фикстура — `?fixture=card-theme`.
 Отсутствующие возможности Tabs остаются в полном объёме миграции.
 

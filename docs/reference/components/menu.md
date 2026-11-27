@@ -194,7 +194,7 @@ Inline-список раскрывается по высоте с изменен
 При быстром повторном открытии и размонтировании ожидающие кадры и результаты
 прежней подготовки теряют силу.
 [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-motion-reference.json),
-[проверки в браузере](../../../tests/browser/menu-motion.spec.ts).
+[проверки в браузере](../../../tests/browser/menu/menu-motion.spec.ts).
 
 ### Подсказки в свёрнутом меню
 
@@ -319,7 +319,7 @@ LinkDecoration/linkHoverDecoration/linkFocusDecoration и inline styles сохр
 приоритет; ссылки вне Menu не меняются. Рецепт menu-link-reset извлекает 14 общих
 правил из закреплённого CSS. Сверка:
 [39 UMD-сценариев](../../../tests/browser/fixtures/ant-design-menu-link-decoration-reference.json) и
-[browser](../../../tests/browser/menu-link-decoration.spec.ts), `?fixture=menu-link-decoration`.
+[browser](../../../tests/browser/menu/menu-link-decoration.spec.ts), `?fixture=menu-link-decoration`.
 
 Inline Up/Down обходят все видимые доступные пункты, Enter переключает подменю.
 Horizontal Left/Right меняют пункты первого уровня с учётом RTL, Down/Enter входят

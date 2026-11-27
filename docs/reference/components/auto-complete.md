@@ -92,7 +92,7 @@ variables отделены от canonical theme tokens. Смена префик�
 popup/options, generated IDs, refs, query, text selection, focus, FormData и callbacks.
 [28 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-auto-complete-prefix-reference.json)
 в normal/nested/reset scopes включают custom Input/TextArea, filled и disabled Input;
-[browser](../../../tests/browser/auto-complete-prefix.spec.ts) и
+[browser](../../../tests/browser/auto-complete/auto-complete-prefix.spec.ts) и
 [SSR](../../../tests/package/auto-complete/auto-complete-prefix.ssr.test.ts) проверяют эти границы.
 
 FieldNames и generic `AutoCompleteProps<OptionType>` используют

@@ -259,7 +259,7 @@ DOM/ref, draft/selection/focus и открытый popup с его редакт�
 прокручиваются целиком, включая кнопку удаления, чтобы активная вкладка не
 попадала в More из-за видимого только текста.
 Сверка: [официальный prefix-эталон](../../../tests/browser/fixtures/ant-design-tabs-prefix-reference.json),
-[браузер](../../../tests/browser/tabs-prefix.spec.ts) и
+[браузер](../../../tests/browser/tabs/tabs-prefix.spec.ts) и
 [SSR](../../../tests/package/tabs/tabs-prefix.ssr.test.ts), `?fixture=tabs-prefix`.
 
 More открывается через hover с задержками 0.1/0.1 секунды. `more.trigger` также

@@ -11,7 +11,7 @@ default/custom footer. Возврат к содержимому монтируе
 accessibility wrappers Skeleton, max-width containment и имена CSS keyframes.
 [Независимые Source-повторы](../../../tests/browser/fixtures/ant-design-modal-loading-source-manifest.json)
 проверяют 2 owners, 10 действий, 12 состояний и lifecycle после удаления.
-[Browser](../../../tests/browser/modal-loading.spec.ts) проверяет переходы и cleanup,
+[Browser](../../../tests/browser/modal/modal-loading.spec.ts) проверяет переходы и cleanup,
 [SSR](../../../tests/package/modal/modal-loading.ssr.test.ts) — закрытый Native shell без DOM и timers.
 Title и children необязательны. Title принимает scalar либо Snippet; пустой/null/false
 title убирает header, число 0 остаётся видимым. Без видимого заголовка задайте
@@ -24,7 +24,7 @@ aria-labelledby имеет приоритет, затем непустой aria-
 
 На границе Modal сбрасываются статус и индикатор проверки внешнего `Form.Item`.
 Локальный `Form.Item` и явный `status` поля задают оформление внутри окна.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/dialog-form-style.spec.ts).
+[Сверка с Ant Design 6.6.8](../../../tests/browser/dialog/dialog-form-style.spec.ts).
 
 `prefixCls` меняет namespace Modal и его частей; пустая строка наследует
 ConfigProvider.prefixCls. Настройка доступна и в config контекстного подтверждения,
@@ -56,7 +56,7 @@ ConfigProvider.getPopupContainer; Modal вызывает глобальный ge
 как Ant Design 6.6.8. False оставляет DOM на месте и отключает global fallback.
 При смене `open` контейнер разрешается после обновления DOM. Селектор и getter
 видят узел, который монтируется вместе с открытием окна.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/drawer-container-timing.spec.ts).
+[Сверка с Ant Design 6.6.8](../../../tests/browser/drawer/drawer-container-timing.spec.ts).
 Без обеих настроек сохраняется прежнее native-размещение.
 
 ```svelte
@@ -88,8 +88,8 @@ selector или пустой результат getter используют body
 лицензии сохранены в [LICENSE.rc-dialog](../../../src/lib/vendor/LICENSE.rc-dialog) и
 [LICENSE.rc-portal](../../../src/lib/vendor/LICENSE.rc-portal).
 Сверка Modal/Drawer использует 36 снимков официального UMD,
-[browser-проверки](../../../tests/browser/dialog-container.spec.ts) и
-[проверки взаимодействия](../../../tests/browser/dialog-container-interaction.spec.ts),
+[browser-проверки](../../../tests/browser/dialog/dialog-container.spec.ts) и
+[проверки взаимодействия](../../../tests/browser/dialog/dialog-container-interaction.spec.ts),
 фикстура — `?fixture=dialog-container`.
 
 ## Маска, прокрутка и фокус
@@ -111,8 +111,8 @@ selector или пустой результат getter используют body
 блокирует страницу при стандартном портале и в `document.body`, как Ant Design.
 Смена режима сохраняет dialog, черновик и фокус внутри панели.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-interaction-reference.json)
-· [Chromium](../../../tests/browser/modal-interaction.spec.ts)
-· [Гидратация](../../../tests/browser/modal-interaction-hydration.spec.ts).
+· [Chromium](../../../tests/browser/modal/modal-interaction.spec.ts)
+· [Гидратация](../../../tests/browser/modal/modal-interaction-hydration.spec.ts).
 
 ## Размеры и положение
 
@@ -129,8 +129,8 @@ Grid от `xs` до `xxxl`. Явный размер действует с ука
 размещения содержимое прокручивается внутри панели по доступной высоте.
 Смена размеров и положения сохраняет DOM, черновик, выделение и фокус.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-layout-reference.json)
-· [Chromium](../../../tests/browser/modal-layout.spec.ts)
-· [Гидратация](../../../tests/browser/modal-layout-hydration.spec.ts).
+· [Chromium](../../../tests/browser/modal/modal-layout.spec.ts)
+· [Гидратация](../../../tests/browser/modal/modal-layout-hydration.spec.ts).
 
 ## Монтаж и завершение переходов
 
@@ -158,9 +158,9 @@ Grid от `xs` до `xxxl`. Явный размер действует с ука
 SSR не запускает анимацию и не вызывает колбэки. Первое открытие при гидратации
 использует уже отрисованный DOM.
 [Снимки Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-lifecycle-reference.json)
-· [Chromium](../../../tests/browser/modal-lifecycle.spec.ts)
+· [Chromium](../../../tests/browser/modal/modal-lifecycle.spec.ts)
 · [SSR](../../../tests/package/modal/modal-lifecycle.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal-lifecycle-hydration.spec.ts).
+· [Гидратация](../../../tests/browser/modal/modal-lifecycle-hydration.spec.ts).
 
 ## Именованные переходы и точка начала движения
 
@@ -183,9 +183,9 @@ CSS-эффекта, Svelte завершает фазу после проверк
 6.6.8 без CSS-правил оболочка оставалась видимой после закрытия, а колбэки
 не приходили.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-motion-reference.json)
-· [Chromium](../../../tests/browser/modal-motion.spec.ts)
+· [Chromium](../../../tests/browser/modal/modal-motion.spec.ts)
 · [SSR](../../../tests/package/modal/modal-motion.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal-motion-hydration.spec.ts).
+· [Гидратация](../../../tests/browser/modal/modal-motion-hydration.spec.ts).
 
 ## Кнопки, футер и закрытие
 
@@ -236,9 +236,9 @@ Escape и фон управляются через `keyboard` и `mask.closable`
 При загрузке сам Button использует нативный disabled. В обычном Modal OK
 наследует `componentDisabled`, если в настройках кнопки не задано `disabled`.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-actions-reference.json)
-· [Chromium](../../../tests/browser/modal-actions.spec.ts)
+· [Chromium](../../../tests/browser/modal/modal-actions.spec.ts)
 · [SSR и типы](../../../tests/package/modal/modal-actions.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal-actions-hydration.spec.ts).
+· [Гидратация](../../../tests/browser/modal/modal-actions-hydration.spec.ts).
 
 ## Семантические части и оболочка
 
@@ -273,9 +273,9 @@ DOM-элемент под панелью. По умолчанию маска р�
 заголовок. Слоты `header` и `title` оформляют заголовок обычного Modal.
 
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-semantics-reference.json)
-· [Chromium](../../../tests/browser/modal-semantics.spec.ts)
+· [Chromium](../../../tests/browser/modal/modal-semantics.spec.ts)
 · [SSR и типы](../../../tests/package/modal/modal-semantics.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal-semantics-hydration.spec.ts).
+· [Гидратация](../../../tests/browser/modal/modal-semantics-hydration.spec.ts).
 
 ## Контекстные подтверждения Modal
 
@@ -318,7 +318,7 @@ mask, focusable, scrollLock, getContainer и class применяются отд
 Клик по фону закрывает подтверждение при локальном `mask.closable: true`.
 `focusable.autoFocusButton` выбирает OK или Cancel при открытии и в `handle.update()`.
 По умолчанию выбирается OK. При `null` ни одна кнопка не получает явный autofocus.
-В Ant Design 6.6.8 `null` даёт фокус OK. [Сверка](../../../tests/browser/modal-interaction.spec.ts).
+В Ant Design 6.6.8 `null` даёт фокус OK. [Сверка](../../../tests/browser/modal/modal-interaction.spec.ts).
 
 Callback onOk/onCancel без аргумента закрывает окно после синхронного результата.
 Callback с аргументом close оставляет закрытие владельцу. Возвращённый Promise
@@ -342,7 +342,7 @@ Destroy и удаление holder завершают ожидающие handles
 поведение исходного await-режима, без unhandled rejection. Прежние Native
 подписи кнопок из locale.okText/cancelText сохранены.
 [модель](../../../src/lib/modal/modal.model.test.ts),
-[браузер](../../../tests/browser/modal-controller.spec.ts),
+[браузер](../../../tests/browser/modal/modal-controller.spec.ts),
 [SSR и декларации](../../../tests/package/modal/modal-controller.ssr.test.ts).
 
 ## Глобальные подтверждения
@@ -382,6 +382,6 @@ CSS-переменные своего провайдера. При обновл�
 [ConfigProvider.config](../config-provider.md#глобальные-настройки-статических-вызовов)
 
 [21 профиль Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-static-reference.json)
-· [Chromium](../../../tests/browser/modal-static.spec.ts)
-· [Цвета портального окна](../../../tests/browser/modal-static-theme.spec.ts)
+· [Chromium](../../../tests/browser/modal/modal-static.spec.ts)
+· [Цвета портального окна](../../../tests/browser/modal/modal-static-theme.spec.ts)
 · [SSR и типы](../../../tests/package/modal/modal-static.ssr.test.ts).

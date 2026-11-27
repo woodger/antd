@@ -59,6 +59,6 @@ prefixes исчезают color/cursor. Здесь четыре исходных
 Исходные UMD measurements и public paired-prefix counterpart хранятся раздельно в
 [эталоне](../../../tests/browser/fixtures/ant-design-input-password-prefix-reference.json).
 Проверки — `?fixture=input-password-prefix`,
-[browser](../../../tests/browser/input-password-prefix.spec.ts) и
+[browser](../../../tests/browser/input/input-password-prefix.spec.ts) и
 [SSR](../../../tests/package/input/input-password-prefix.ssr.test.ts).
 

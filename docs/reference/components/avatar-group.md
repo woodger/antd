@@ -145,9 +145,9 @@ Snippet после mount, сохраняя ленивый SSR и последу�
 Приоритеты aliases, count/style и trigger/placement проверяются по
 [20 UMD-эталонам](../../../tests/browser/fixtures/ant-design-avatar-group-max-reference.json),
 [SSR](../../../tests/package/avatar/avatar-group-max.ssr.test.ts) и
-[браузерным сценариям](../../../tests/browser/avatar-group-max.spec.ts).
+[браузерным сценариям](../../../tests/browser/avatar/avatar-group-max.spec.ts).
 Содержимое, controlled/default state, destroy/retain и container getters проверяются по
 [33 UMD-последовательностям](../../../tests/browser/fixtures/ant-design-avatar-group-popover-reference.json),
 [SSR](../../../tests/package/avatar/avatar-group-popover.ssr.test.ts) и
-[browser lifecycle](../../../tests/browser/avatar-group-popover.spec.ts).
+[browser lifecycle](../../../tests/browser/avatar/avatar-group-popover.spec.ts).
 

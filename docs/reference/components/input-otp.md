@@ -76,7 +76,7 @@ Canonical token variables/markers сохраняются. Смена prefix не
 counterpart с вложенным ConfigProvider, согласованным с локальным prefix, сохранены
 раздельно в [эталоне](../../../tests/browser/fixtures/ant-design-input-otp-prefix-reference.json).
 Native сохраняет независимый общий Input namespace. Проверки —
-`?fixture=input-otp-prefix`, [browser](../../../tests/browser/input-otp-prefix.spec.ts),
+`?fixture=input-otp-prefix`, [browser](../../../tests/browser/input/input-otp-prefix.spec.ts),
 [SSR](../../../tests/package/input/input-otp-prefix.ssr.test.ts); дополнительно сравниваются
 стандартный и общий prefix в светлой/тёмной и compact Native theme.
 

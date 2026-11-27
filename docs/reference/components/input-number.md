@@ -127,7 +127,7 @@ Source component tokens и runtime algorithms подключены; native-only 
 [MIT mini-decimal](../../../src/lib/vendor/LICENSE.rc-mini-decimal).
 
 Новые сценарии: `?fixture=input-number-features`,
-[browser](../../../tests/browser/input-number-features.spec.ts) и
+[browser](../../../tests/browser/input-number/input-number-features.spec.ts) и
 [package SSR](../../../tests/package/input-number/input-number-features.ssr.test.ts).
 
 
@@ -140,7 +140,7 @@ selection/focus, callbacks, keyboard и canonical FormData. Source measurements
 снимаются в stringMode; Source FormData хранит редактируемый текст, а Native
 hidden field — каноническое decimal value, как прежде. Проверки —
 `?fixture=input-number-prefix`,
-[browser](../../../tests/browser/input-number-prefix.spec.ts),
+[browser](../../../tests/browser/input-number/input-number-prefix.spec.ts),
 [SSR](../../../tests/package/input-number/input-number-prefix.ssr.test.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-input-number-prefix-reference.json).
 Рецепт input-number-prefix выводит 124 исходных CSS rules без deprecated addons.

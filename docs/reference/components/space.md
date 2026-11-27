@@ -106,7 +106,7 @@ display:inline-block вместо block. Native ограничивает CSS п�
 prefix; [raw](../../../tests/browser/fixtures/ant-design-space-prefix-reference.json) и
 [fresh-page](../../../tests/browser/fixtures/ant-design-space-prefix-isolated.json)
 замеры сохранены для разбора. Prefix проверяют
-[browser](../../../tests/browser/space-prefix.spec.ts),
+[browser](../../../tests/browser/space/space-prefix.spec.ts),
 [SSR](../../../tests/package/space/space-prefix.ssr.test.ts) и fixture `?fixture=space-prefix`.
 
 Фикстура — `?fixture=space-compact`. Unit/SSR/

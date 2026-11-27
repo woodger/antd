@@ -96,5 +96,5 @@ Switch поддерживает local/shared prefixCls для root, checked/load
 local prefix имеет приоритет. Canonical token variables и внешний anticon
 namespace сохраняются. Смена prefix сохраняет DOM/ref, checked, focus/selection
 и native hidden form field. Сверка с UMD — `?fixture=switch-prefix` и
-[browser](../../../tests/browser/switch-prefix.spec.ts).
+[browser](../../../tests/browser/switch/switch-prefix.spec.ts).
 

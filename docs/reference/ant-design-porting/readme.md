@@ -564,7 +564,7 @@ requiredForV1 и известные пробелы при разделении �
 Наследование direction/locale у Select и Modal проверяется через
 `?fixture=config-provider`: [фикстура](../../../tests/browser/fixtures/ConfigProviderFixtures.svelte)
 использует те же BasicFixtures и createControls, что общая страница;
-[сценарий](../../../tests/browser/config-provider.spec.ts) сохраняет проверки controls
+[сценарий](../../../tests/browser/config-provider/config-provider.spec.ts) сохраняет проверки controls
 и dialog. Перед массовыми DOM-операциями тесты ожидают mount ленивой фикстуры:
 evaluateAll сам не ожидает появления элементов.
 
@@ -572,7 +572,7 @@ evaluateAll сам не ожидает появления элементов.
 [фикстура](../../../tests/browser/fixtures/InputSelectFixtures.svelte) объединяет
 BasicFixtures input/select/select-numeric с одной createControls; label/input IDs,
 события и модель общие с прежней страницей. Root IDs имеют префикс для изоляции
-каталога. [Сценарии](../../../tests/browser/input-select.spec.ts) сохраняют проверки
+каталога. [Сценарии](../../../tests/browser/input/input-select.spec.ts) сохраняют проверки
 клавиатуры, поиска, disabled overrides, числового нуля и FormData.
 
 Для полной проверки этапа нужны собственные проверки библиотеки и проверки

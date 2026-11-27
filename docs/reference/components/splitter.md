@@ -95,7 +95,7 @@ aliases и algorithms, cssVar.prefix, undefined, вложенные/reset/siblin
 сохраняют размеры панелей, draft/selection/focus и текущий lazy drag/preview.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-splitter-theme-reference.json),
 [SSR](../../../tests/package/splitter/splitter-theme.ssr.test.ts),
-[browser](../../../tests/browser/splitter-theme.spec.ts), `?fixture=splitter-theme`.
+[browser](../../../tests/browser/splitter/splitter-theme.spec.ts), `?fixture=splitter-theme`.
 RTL-метрики измерены с явным dir=rtl на host; отдельно записано source-наследование
 LTR без этого host. Существующий native direction провайдера сохранён.
 PrefixCls задаёт root/panel/bar/collapse/preview/mask classes. Пустая строка и
@@ -112,7 +112,7 @@ local class и общему namespace; исходные
 [raw](../../../tests/browser/fixtures/ant-design-splitter-prefix-reference.json) и
 [fresh-page](../../../tests/browser/fixtures/ant-design-splitter-prefix-isolated.json)
 замеры сохранены для разбора. Prefix проверяют
-[browser](../../../tests/browser/splitter-prefix.spec.ts),
+[browser](../../../tests/browser/splitter/splitter-prefix.spec.ts),
 [SSR](../../../tests/package/splitter/splitter-prefix.ssr.test.ts) и fixture `?fixture=splitter-prefix`.
 
 Fixture — `?fixture=splitter`. Engine, DOM lifecycle, SSR, package и browser

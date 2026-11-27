@@ -115,7 +115,7 @@ CSS-рецепт breadcrumb-prefix воспроизводит те же 21 пр�
 разделителям. [Эталон](../../../tests/browser/fixtures/ant-design-breadcrumb-prefix-reference.json)
 сохраняет raw classes/geometry и matchedSeparators: публичный classNames.separator
 добавляет Source нужный owner class, без изменения UMD. Проверки:
-[browser](../../../tests/browser/breadcrumb-prefix.spec.ts),
+[browser](../../../tests/browser/breadcrumb/breadcrumb-prefix.spec.ts),
 [SSR](../../../tests/package/breadcrumb/breadcrumb-prefix.ssr.test.ts), `?fixture=breadcrumb-prefix`.
 
 Raw reference сохраняет полный textContent исходника. Сверка текста использует

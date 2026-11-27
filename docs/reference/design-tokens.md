@@ -94,7 +94,7 @@ custom seed, все preset colors, прозрачность, размеры, mot
 - [Unit и boundary cases](../../src/lib/theme/theme.engine.test.ts).
 - [Сверка с официальным UMD](../../src/lib/theme/theme-reference.test.ts).
 - [SSR публичного пакета](../../tests/package/theme/theme-tokens.ssr.test.ts).
-- [Браузерный consumer](../../tests/browser/theme-tokens.spec.ts), маршрут
+- [Браузерный consumer](../../tests/browser/theme/theme-tokens.spec.ts), маршрут
   `?fixture=theme-tokens`.
 
 Лицензии: [Ant Design](../../src/lib/vendor/LICENSE.ant-design),

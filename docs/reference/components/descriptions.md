@@ -60,7 +60,7 @@ Raw UMD замеры сохранены; Native сохраняет expanded-row 
 Для этого случая expectedNative в эталоне меняет только display view и flex table
 на измеренные значения обычного Table context. Полный перенос prefix Table идёт отдельно.
 Сверка: [prefix-эталон](../../../tests/browser/fixtures/ant-design-descriptions-prefix-reference.json),
-[браузер](../../../tests/browser/descriptions-prefix.spec.ts) и
+[браузер](../../../tests/browser/descriptions/descriptions-prefix.spec.ts) и
 [SSR](../../../tests/package/descriptions/descriptions-prefix.ssr.test.ts), `?fixture=descriptions-prefix`.
 
 ConfigProvider.descriptions задаёт class/style и object/function classNames/styles
@@ -70,7 +70,7 @@ semantic слой идёт перед item semantic styles. Явный влож�
 record, включая {}, заменяет родительский; undefined наследует его. Обновления
 сохраняют editor/focus/selection и FormData первой ячейки при смене column/size.
 Фикстура — `?fixture=descriptions-config`,
-[браузерная сверка](../../../tests/browser/descriptions-config.spec.ts) сохраняет raw UMD
+[браузерная сверка](../../../tests/browser/descriptions/descriptions-config.spec.ts) сохраняет raw UMD
 classes/tags/colspan/computed styles; проверка классов учитывает состав и количество.
 
 Callbacks сохраняют прежние native bordered=false, layout=horizontal и colon=true
@@ -89,7 +89,7 @@ itemPaddingBottom/itemPaddingEnd собственными отступами.
 Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-descriptions-tokens-reference.json),
 [варианты и responsive spans](../../../tests/browser/fixtures/ant-design-descriptions-theme-reference.json),
 [SSR](../../../tests/package/descriptions/descriptions-theme.ssr.test.ts) и
-[browser](../../../tests/browser/descriptions-theme.spec.ts), `?fixture=descriptions-theme`.
+[browser](../../../tests/browser/descriptions/descriptions-theme.spec.ts), `?fixture=descriptions-theme`.
 
 Фикстура — `?fixture=descriptions`.
 Unit/SSR/Chromium проверяют раскладку, media, приоритет стилей и вложенность.
@@ -102,7 +102,7 @@ Table expanded-row. Responsive column/span используют глобальн
 [Исходные замеры](../../../tests/browser/fixtures/ant-design-descriptions-breakpoints-reference.json)
 содержат raw stale observer Source при смене токенов и отдельный public fresh mount:
 Native сохраняет реактивное поведение, проверенное по свежей исходной раскладке.
-[Browser](../../../tests/browser/descriptions-breakpoints.spec.ts) проверяет column/span,
+[Browser](../../../tests/browser/descriptions/descriptions-breakpoints.spec.ts) проверяет column/span,
 editor/ref/focus/selection/FormData и cleanup подписок;
 [SSR](../../../tests/package/descriptions/descriptions-breakpoints.ssr.test.ts) — fallback и validation.
 

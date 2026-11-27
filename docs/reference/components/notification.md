@@ -168,6 +168,6 @@ DOM-видимость и фокус — в notice.dom.ts; ими также п�
 callbacks закрытия, несколько placements, смену контейнера и App defaults,
 раскладку стека и ход индикатора времени.
 [Исходные замеры](../../../tests/browser/fixtures/ant-design-notification-api-reference.json) ·
-[Браузерная проверка](../../../tests/browser/notification-api.spec.ts) ·
+[Браузерная проверка](../../../tests/browser/notification/notification-api.spec.ts) ·
 [SSR и типы](../../../tests/package/notification/notification-api.ssr.test.ts)
 

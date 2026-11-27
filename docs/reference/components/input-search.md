@@ -81,6 +81,6 @@ focus хранятся раздельно. Для enterButton=true Source соз
 локальным классом в Inner provider. Данные —
 [эталон UMD](../../../tests/browser/fixtures/ant-design-input-search-prefix-reference.json),
 проверки — `?fixture=input-search-prefix`,
-[browser](../../../tests/browser/input-search-prefix.spec.ts) и
+[browser](../../../tests/browser/input/input-search-prefix.spec.ts) и
 [SSR](../../../tests/package/input/input-search-prefix.ssr.test.ts).
 

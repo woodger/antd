@@ -58,7 +58,7 @@ Playwright собирает текущий пакет и запускает Vite
 
 ```sh
 npm run cli -- test package -- --maxWorkers=1
-npm run cli -- test browser -- --workers=1 tests/browser/typography.spec.ts
+npm run cli -- test browser -- --workers=1 tests/browser/typography/typography.spec.ts
 ```
 
 ### Упаковка

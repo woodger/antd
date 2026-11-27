@@ -88,7 +88,7 @@ yearControlWidth/monthControlWidth задают минимальную шири�
 как в исходном Calendar. Зазор между селекторами задаёт CSS-отступ.
 Границы полей и кнопок в мини-календарях
 300/360px, mobile/RTL и работа dropdown/клавиатуры проверяются в
-[calendar-header](../../../tests/browser/calendar-header.spec.ts).
+[calendar-header](../../../tests/browser/calendar/calendar-header.spec.ts).
 
 `ConfigProvider.theme.components.Calendar` применяет все шесть public tokens,
 alias overrides и global/component algorithms. Общий picker panel helper
@@ -102,7 +102,7 @@ alias overrides и global/component algorithms. Общий picker panel helper
 сверяются в normal/RTL/priority, mini-month — также в variable/nested/reset/sibling/
 outside. Дополнительные замеры сделаны при viewport 400px. Проверяются цвета,
 метрики ячеек и шапки, string/zero/undefined размеры и независимые child themes.
-[Browser-проверки](../../../tests/browser/calendar-theme.spec.ts) защищают фокус/выбор даты,
+[Browser-проверки](../../../tests/browser/calendar/calendar-theme.spec.ts) защищают фокус/выбор даты,
 точные timestamps callbacks, открытые options и DOM input при theme update,
 inherit reset и возврате к оформлению по умолчанию. Декларации сверяются с UMD отдельным
 [unit-набором](../../../src/lib/theme/theme-calendar-tokens-reference.test.ts),
@@ -114,7 +114,7 @@ originNode и `cellRender.info.prefixCls` следуют тому же Picker pr
 шапки сохраняют независимые общие namespaces. Canonical tokens и theme marker
 не переименовываются. Смена префикса сохраняет DOM/ref/IDs, дату и её timestamp,
 выделение текста/focus, открытые options и keyboard navigation.
-[Сверка с официальным UMD](../../../tests/browser/calendar-prefix.spec.ts),
+[Сверка с официальным UMD](../../../tests/browser/calendar/calendar-prefix.spec.ts),
 `?fixture=calendar-prefix`, включает full/mini, month/year, week, RTL,
 aliases/styles, nested/reset и responsive-порог 480/481px.
 Defaults prefix stylesheet не перекрывают Native bridge; тёмный фон и compact

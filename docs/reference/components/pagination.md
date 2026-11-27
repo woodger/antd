@@ -68,7 +68,7 @@ Responsive Pagination читает глобальный `theme.token.screenXSMax
 сохраняет приоритет. Пороги валидируются и при SSR, включая responsive=false,
 как в useBreakpoint исходника. Смена токенов заменяет queries, сохраняя текущую
 страницу и quick-jump draft/selection/focus. Наблюдение stale Source subscriptions
-и fresh public counterpart записаны отдельно. [Browser-проверки](../../../tests/browser/responsive-controls.spec.ts)
+и fresh public counterpart записаны отдельно. [Browser-проверки](../../../tests/browser/config-provider/responsive-controls.spec.ts)
 охватывают также Masonry columns/gutter; [SSR](../../../tests/package/config-provider/responsive-controls.ssr.test.ts)
 сохраняет исходные defaults и проверяет порядок порогов.
 
@@ -137,5 +137,5 @@ bind API и согласованное поведение на XS сохраня
 В теме без `cssVar` активный номер также получает primary-цвет, hover —
 primary-hover, disabled — disabled-цвет. Переменные цветов состояний на
 `styles.item` и inline-цвет custom `itemRender` сохраняют приоритет. Эти состояния
-проверяет [регрессионный тест](../../../tests/browser/pagination-color.spec.ts)
+проверяет [регрессионный тест](../../../tests/browser/pagination/pagination-color.spec.ts)
 в светлой и тёмной теме, LTR и RTL; существующая native-палитра `primary` сохраняется.

@@ -127,7 +127,7 @@ RenderEmpty подключён через ConfigProvider с исходными f
 query, выделение текста, фокус, selection keys и текущую страницу.
 [UMD-эталон](../../../tests/browser/fixtures/ant-design-transfer-prefix-reference.json)
 содержит 20 конфигураций в обычном, вложенном и reset scopes и три live transitions;
-[browser](../../../tests/browser/transfer-prefix.spec.ts) и
+[browser](../../../tests/browser/transfer/transfer-prefix.spec.ts) и
 [SSR](../../../tests/package/transfer/transfer-prefix.ssr.test.ts) проверяют эти границы.
 Существующий native remove font учитывается отдельно, без изменения raw measurements.
 
@@ -150,7 +150,7 @@ fontHeight берётся из `Math.round(fontSize * lineHeight)`, а не из
 В эталоне оставлены стандартный source fallback и отдельный замер с явным
 `locale.notFoundContent`, соответствующим native fallback. Последний применяется
 только для сверки естественной высоты пустой секции с undefined metrics.
-[Browser-проверки темы](../../../tests/browser/transfer-theme.spec.ts) также проверяют
+[Browser-проверки темы](../../../tests/browser/transfer/transfer-theme.spec.ts) также проверяют
 draft/selection/focus, страницы, keyed rows и порядок move callbacks при обновлении.
 В исходном UMD переход вложенного provider к `inherit:false` в конфигурации эталона
 заменяет input и теряет query/focus; raw observation сохранено отдельно.

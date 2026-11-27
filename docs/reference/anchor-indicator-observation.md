@@ -34,7 +34,7 @@ Svelte заменяет атрибут style целиком, включая пр
 
 [Обычная reference matrix](../../tests/browser/fixtures/ant-design-anchor-config-reference.json)
 содержит независимые начальные состояния нового Anchor; их геометрия сравнивается
-с исходником точно. [Browser tests](../../tests/browser/anchor-config.spec.ts)
+с исходником точно. [Browser tests](../../tests/browser/anchor/anchor-config.spec.ts)
 отдельно проверяют корректные обновления provider/local styles у вертикального
 и горизонтального Anchor. Reference не выдаёт исправленные Svelte обновления
 за поведение исходного Ant Design. Изменения размеров от внешнего CSS без

@@ -118,7 +118,7 @@ snippet. Для `null` и `undefined` используется `locale.popconfir
 Disabled скрывает карточку и блокирует её действия, сохраняя open владельца;
 исходный trigger не заменяется и сам по себе не отключается этим prop.
 [Варианты и порядок вызовов в React](../../../tests/browser/fixtures/ant-design-popconfirm-action-content-reference.json)
-· [Проверки Svelte](../../../tests/browser/popconfirm-action-content.spec.ts).
+· [Проверки Svelte](../../../tests/browser/popconfirm/popconfirm-action-content.spec.ts).
 
 С параметром `href` действие рендерит ссылку Button и передаёт ей `target` и
 `rel`. В `onclick` и `onClick` значение `event.currentTarget` имеет тип
@@ -136,7 +136,7 @@ Popconfirm убирает `href` у обеих ссылок,
 исключает их из порядка Tab и переносит фокус в карточку. В React 6.6.8
 обе ссылки во время ожидания сохраняют `href` и `tabindex`.
 [Замеры React](../../../tests/browser/fixtures/ant-design-popconfirm-action-links-reference.json)
-· [Проверки Svelte](../../../tests/browser/popconfirm-action-links.spec.ts).
+· [Проверки Svelte](../../../tests/browser/popconfirm/popconfirm-action-links.spec.ts).
 
 `onPopupClick(event)` получает нативный `MouseEvent` при всплытии до корня панели.
 Обработчики содержимого, в том числе действий подтверждения и отмены,
@@ -144,7 +144,7 @@ Popconfirm убирает `href` у обеих ссылок,
 останавливает его. В общей панели `Tooltip.UniqueProvider` событие получает
 текущий владелец. В Ant Design React 6.6.8 callback общей панели теряется.
 [Замеры React](../../../tests/browser/fixtures/ant-design-popconfirm-popup-click-reference.json)
-· [Проверки Svelte](../../../tests/browser/popconfirm-popup-click.spec.ts).
+· [Проверки Svelte](../../../tests/browser/popconfirm/popconfirm-popup-click.spec.ts).
 
 Карточка получает role=dialog, имя от title и описание от description.
 Trigger сохраняет существующий aria-describedby и связан с карточкой через

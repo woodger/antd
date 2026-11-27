@@ -79,4 +79,4 @@ colors/borders и классы всех потребителей находят�
 [reference matrix](../../tests/browser/fixtures/ant-design-config-variants-reference.json).
 Приоритеты проверяют [unit tests](../../src/lib/config-provider/variant.engine.test.ts), публичный
 SSR — [package tests](../../tests/package/config-provider/config-variants.ssr.test.ts), оформление,
-обновления и изоляцию — [browser tests](../../tests/browser/config-variants.spec.ts).
+обновления и изоляцию — [browser tests](../../tests/browser/config-provider/config-variants.spec.ts).

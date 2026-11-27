@@ -285,7 +285,7 @@ Today/Now показывается в режиме date; при needConfirm кн
 </DatePicker>
 ```
 
-[Проверки render hooks](../../../tests/browser/date-picker-render-hooks.spec.ts) сравнивают
+[Проверки render hooks](../../../tests/browser/picker/date-picker-render-hooks.spec.ts) сравнивают
 аргументы четырёх режимов панели и все 47 полей en_US locale с
 [неизменёнными фактами React](../../../tests/browser/fixtures/ant-design-date-picker-render-hooks-facts.json).
 [Source manifest](../../../tests/browser/fixtures/ant-design-date-picker-render-hooks-source-manifest.json)
@@ -309,11 +309,11 @@ Today/Now показывается в режиме date; при needConfirm кн
 `onPickerValueChange` учитывает время и миллисекунды; date-only сравнивает календарную дату.
 Если выбранное время отсутствует среди строк шага, смена ограничений в закрытой
 панели сохраняет ручную прокрутку колонки. Отдельные проверки
-[шаблона времени и контейнера](../../../tests/browser/date-picker-time-scroll.spec.ts)
-и [значения вне шага](../../../tests/browser/date-picker-offgrid-scroll.spec.ts) используют
+[шаблона времени и контейнера](../../../tests/browser/picker/date-picker-time-scroll.spec.ts)
+и [значения вне шага](../../../tests/browser/picker/date-picker-offgrid-scroll.spec.ts) используют
 независимые замеры React. Для значения вне шага фикстура хранит наблюдения обоих
 прогонов и указывает ревизию с полным архивом.
-[Browser](../../../tests/browser/date-picker-presets.spec.ts) сравнивает состояния, аргументы,
+[Browser](../../../tests/browser/picker/date-picker-presets.spec.ts) сравнивает состояния, аргументы,
 CSS и геометрию; [SSR](../../../tests/package/picker/date-picker-presets.ssr.test.ts) проверяет
 закрытые input и отсутствие browser API.
 
@@ -322,7 +322,7 @@ CSS и геометрию; [SSR](../../../tests/package/picker/date-picker-prese
 ConfigProvider.button, components.Button и Wave; переданная строка локали сохраняет
 Button autoInsertSpace и semantic props. Нативные disabled/type=button, порядок
 подтверждения, точность Dayjs и возврат фокуса сохраняются. Проверки —
-[picker-button](../../../tests/browser/picker-button.spec.ts), `?fixture=picker-button`.
+[picker-button](../../../tests/browser/picker/picker-button.spec.ts), `?fixture=picker-button`.
 
 Точность повторяет rc-picker: panel selection выравнивает все time units, даже
 скрытые; default millisecondStep=100, ближайшее разрешённое значение слева либо
@@ -343,7 +343,7 @@ panel helper. Адаптер не навязывает timezone: календа�
 native правило: Ant Design 6.6.8 для `YYYY-MM-DD [Hours]` ошибочно оставляет только
 часы и секунды. У нас применяется обычный fallback часов/минут/секунд; raw source
 сохранён в [измерениях datetime config](../../../tests/browser/fixtures/ant-design-datetime-config-reference.json),
-отличие проверяется в [browser suite](../../../tests/browser/datetime-config.spec.ts).
+отличие проверяется в [browser suite](../../../tests/browser/picker/datetime-config.spec.ts).
 
 MinDate/maxDate и disabledDate ограничивают календарь; disabledTime возвращает
 запрещённые часы/минуты/секунды/миллисекунды. Size, status, variant, disabled,
@@ -479,7 +479,7 @@ feedback; null/false/пустая строка скрывают suffix цели�
 
 Смена семантического оформления сохраняет DOM поля и открытой панели,
 фокус, выделение и черновик. Приоритеты и слоты сверены с React 6.6.8
-в [браузере](../../../tests/browser/date-picker-provider.spec.ts) и
+в [браузере](../../../tests/browser/picker/date-picker-provider.spec.ts) и
 [SSR](../../../tests/package/picker/date-picker-provider.ssr.test.ts).
 
 Исходный offset до поля — 4 px; координаты при единичном масштабе округляются
@@ -493,7 +493,7 @@ Dayjs/UTC/precision, FormData и порядок подтверждения гр�
 Native панель по-прежнему удаляется при закрытии; custom footer/panel state
 при следующем открытии создаётся заново. Это сохранённое отличие от retained
 popup rc-trigger. Проверки и 54 эталона официального UMD —
-[picker-container](../../../tests/browser/picker-container.spec.ts), `?fixture=picker-container`.
+[picker-container](../../../tests/browser/picker/picker-container.spec.ts), `?fixture=picker-container`.
 
 Component tokens всех четырёх date/time single/range controls задаются через
 `ConfigProvider.theme.components.DatePicker`, как в Ant Design. Input, calendar,
@@ -507,7 +507,7 @@ dark/compact, вложенные provider, `inherit:false` и собственн
 в пикселях, как в исходнике; новое открытие выравнивает выбранное время заново.
 Datetime header показывает выбранное время в panel format; пустое значение
 не подсвечивает время запасной даты. Проверки и 15 UMD-тем —
-[picker-theme](../../../tests/browser/picker-theme.spec.ts), `?fixture=picker-theme`.
+[picker-theme](../../../tests/browser/picker/picker-theme.spec.ts), `?fixture=picker-theme`.
 
 Все четыре date/time single/range controls принимают `prefixCls`: локальный owner
 перекрывает ConfigProvider.prefixCls для поля, календаря, time columns и popup.
@@ -520,14 +520,14 @@ caret/focus и pending datetime. DatePicker/RangePicker синхронизиру
 value или его отображении; обновление контекста без этих изменений не сбрасывает
 draft. Реальное изменение format продолжает обновлять поле. UTC, точность,
 подтверждение границ, формы и порядок callbacks сохраняются.
-[Сверка с официальным UMD](../../../tests/browser/picker-prefix.spec.ts),
+[Сверка с официальным UMD](../../../tests/browser/picker/picker-prefix.spec.ts),
 `?fixture=picker-prefix`, включает 33 варианта в normal/nested/reset scopes
 и live draft transitions всех четырёх controls, а также оформление по умолчанию
 и custom container cleanup.
 Defaults в prefix stylesheet имеют нулевую specificity: canonical Native bridge
 продолжает задавать фон, тень фокуса и размеры без source theme. Сравнение с `ant`
 в light/blue, dark/green и compact/purple —
-[prefix-default-styling](../../../tests/browser/prefix-default-styling.spec.ts).
+[prefix-default-styling](../../../tests/browser/config-provider/prefix-default-styling.spec.ts).
 Служебные snippets/head/popup boundaries не добавляют текст рядом с controls;
 SSR проверяет также defaultOpen, browser — обновление общего префикса.
 
@@ -559,5 +559,5 @@ DatePicker, RangePicker, TimePicker и TimeRangePicker принимают `popup
 Если записи нет, изменение `popupAlign` запускает измерение сразу.
 Класс положения определяется последней измеренной парой точек и текущей
 картой. Замена карты может изменить класс до пересчёта координат.
-С Ant Design 6.6.8 сверены 34 сценария. [Проверки](../../../tests/browser/picker-alignment.spec.ts)
+С Ant Design 6.6.8 сверены 34 сценария. [Проверки](../../../tests/browser/picker/picker-alignment.spec.ts)
 

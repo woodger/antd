@@ -52,7 +52,7 @@ mode/orientation/variant, преобразованными items и прежни
 Undefined наследует timeline-record, любой собственный объект, включая {}, заменяет его.
 Обновление config/props сохраняет ol; соседний provider остаётся изолированным.
 Сверка: [24 исходных случая и 4 обновления](../../../tests/browser/fixtures/ant-design-timeline-config-reference.json),
-[браузер](../../../tests/browser/timeline-config.spec.ts),
+[браузер](../../../tests/browser/timeline/timeline-config.spec.ts),
 [публичные типы и SSR](../../../tests/package/timeline/timeline-config.ssr.test.ts), `?fixture=timeline-config`.
 
 Horizontal сохраняет поведение исходных Steps: ниже xs=576 он получает класс
@@ -71,7 +71,7 @@ prefix сохраняет ol, theme/semantics, titleSpan и назначение
 fallback variables не перекрывают прежние adaptive theme defaults.
 Сверка: [28 исходных случаев и 4 обновления](../../../tests/browser/fixtures/ant-design-timeline-prefix-reference.json),
 [CSS и item classes](../../../src/lib/timeline/timeline-prefix.test.ts),
-[браузер](../../../tests/browser/timeline-prefix.spec.ts),
+[браузер](../../../tests/browser/timeline/timeline-prefix.spec.ts),
 [публичный пакет и SSR](../../../tests/package/timeline/timeline-prefix.ssr.test.ts), `?fixture=timeline-prefix`.
 
 Source `theme.components.Timeline` подготавливает шесть defaults для tail/dot/spacing

@@ -78,7 +78,7 @@ Callback должен быть чистым: он может вычислять�
   [presets](../../src/lib/empty/DefaultRenderEmpty.svelte).
 - [151 официальный сценарий и Select interaction trace](../../tests/browser/fixtures/ant-design-render-empty-reference.json)
   из закреплённого UMD; 149 сценариев сверяются напрямую, два — с native baseline.
-- [Браузерные проверки](../../tests/browser/render-empty.spec.ts) и
+- [Браузерные проверки](../../tests/browser/empty/render-empty.spec.ts) и
   [public package SSR](../../tests/package/empty/render-empty.ssr.test.ts).
 - [Исходный defaultRenderEmpty](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/defaultRenderEmpty.tsx).
 - Переходы фокуса изучены в @rc-component/select 1.10.1 BaseSelect; остальные

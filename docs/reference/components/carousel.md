@@ -73,7 +73,7 @@ keyframes; пустое значение наследует `ConfigProvider.pref
 независимо от локального имени Carousel и namespace theme variables. Смена prefix
 сохраняет текущий слайд, DOM, ref, draft/selection/focus и управление стрелками.
 Сверка: [официальные замеры](../../../tests/browser/fixtures/ant-design-carousel-prefix-reference.json),
-[браузер](../../../tests/browser/carousel-prefix.spec.ts) и
+[браузер](../../../tests/browser/carousel/carousel-prefix.spec.ts) и
 [SSR](../../../tests/package/carousel/carousel-prefix.ssr.test.ts), `?fixture=carousel-prefix`.
 
 ConfigProvider.theme.components.Carousel применяет семь компонентных токенов:
@@ -87,7 +87,7 @@ ConfigProvider.carousel по-прежнему относятся к inner slider
 Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-carousel-tokens-reference.json),
 [геометрия четырёх размещений](../../../tests/browser/fixtures/ant-design-carousel-theme-reference.json),
 [SSR](../../../tests/package/carousel/carousel-theme.ssr.test.ts) и
-[browser](../../../tests/browser/carousel-theme.spec.ts), `?fixture=carousel-theme`.
+[browser](../../../tests/browser/carousel/carousel-theme.spec.ts), `?fixture=carousel-theme`.
 
 SSR выводит исходную процентную либо variable-width геометрию и lazy placeholders
 без DOM, callbacks, timers или media queries. При уничтожении очищаются timers,

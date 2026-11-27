@@ -61,7 +61,7 @@ style, dir, HTML-атрибуты и собственные типизирова
 описывает общие параметры. Для передачи DOM-ref объявите `nativeElement` через
 `$bindable()` и используйте `bind:this` на элементе корня. Корень может вызывать
 `App.useApp()`. Гидратация и обновление префикса сохраняют узлы, фокус и черновик.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/app-custom-root.spec.ts).
+[Сверка с Ant Design 6.6.8](../../../tests/browser/app/app-custom-root.spec.ts).
 
 В SSR App не открывает dialog/popover и не запускает таймеры. Удаление App
 закрывает поверхности, снимает inert/scroll lock и завершает ожидающие Modal
@@ -74,6 +74,6 @@ handles с false. `App.message` дополнительно принимает `r
 
 Основа сверки — [исходные снимки App](../../../tests/browser/fixtures/ant-design-app-reference.json).
 Все девять root-примеров, включая global-prefix, проверяются. Проверки:
-[браузер](../../../tests/browser/app.spec.ts), [SSR и типы](../../../tests/package/app/app.ssr.test.ts),
+[браузер](../../../tests/browser/app/app.spec.ts), [SSR и типы](../../../tests/package/app/app.ssr.test.ts),
 [обновление defaults](../../../src/lib/notice/notice-config.test.ts).
 

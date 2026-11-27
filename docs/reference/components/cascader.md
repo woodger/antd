@@ -129,7 +129,7 @@ canonical tokens и передаёт resolved Cascader prefix в search render c
 [30 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-cascader-prefix-reference.json)
 в normal/nested/reset scopes сверяют single/multiple, Panel, поиск, empty/RTL,
 размеры, variants/status и aliases. Проверки:
-[browser](../../../tests/browser/cascader-prefix.spec.ts),
+[browser](../../../tests/browser/cascader/cascader-prefix.spec.ts),
 [SSR](../../../tests/package/cascader/cascader-prefix.ssr.test.ts).
 
 В Ant Design 6.6.8 локальный prefix меняет Select popup class, а сброс Cascader

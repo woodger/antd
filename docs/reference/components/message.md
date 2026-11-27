@@ -160,5 +160,5 @@ Top по умолчанию 8px: число задаёт px, строка — CS
 сообщения без `onClose` и завершения `then`. При автозакрытии наблюдались оба
 события. Svelte сохраняет завершение handle и `onClose` для программного закрытия.
 [Исходные замеры](../../../tests/browser/fixtures/ant-design-message-api-reference.json) ·
-[Браузерная проверка](../../../tests/browser/message-api.spec.ts) ·
+[Браузерная проверка](../../../tests/browser/message/message-api.spec.ts) ·
 [Проверка SSR и типов](../../../tests/package/message/message-api.ssr.test.ts)

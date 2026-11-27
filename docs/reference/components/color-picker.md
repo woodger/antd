@@ -67,7 +67,7 @@ public component tokens у ColorPicker 6.6.8 нет. Trigger и popup получ
 Обновление темы сохраняет popup DOM/position, цвет, незавершённый HEX input,
 caret/focus и раскрытие пресетов. Локальные и semantic styles сохраняют приоритет;
 popup.root.color меняет внешний popup, содержимое сохраняет исходный colorText
-reset. Проверки и 15 UMD-тем — [color-picker-theme](../../../tests/browser/color-picker-theme.spec.ts),
+reset. Проверки и 15 UMD-тем — [color-picker-theme](../../../tests/browser/color-picker/color-picker-theme.spec.ts),
 `?fixture=color-picker-theme`.
 
 `prefixCls` локально меняет owner ColorPicker и перекрывает общий префикс
@@ -76,7 +76,7 @@ ConfigProvider. Popover, Select/Input/InputNumber, Slider, Divider, Segmented и
 Обновление префикса сохраняет открытый popup, цвет, незавершённый HEX, caret/focus,
 раскрытие пресетов и custom trigger/container. Возврат к оформлению по умолчанию
 также сохраняет эти состояния. Сверка с UMD —
-[color-picker-prefix](../../../tests/browser/color-picker-prefix.spec.ts),
+[color-picker-prefix](../../../tests/browser/color-picker/color-picker-prefix.spec.ts),
 `?fixture=color-picker-prefix`.
 
 В Source кеш style hook при одинаковом локальном owner/theme и изменённом общем
@@ -92,5 +92,5 @@ development/PurePanel API. Native DOM и Svelte snippets заменяют React 
 на [rc-input-number 1.6.2](../../../src/lib/vendor/LICENSE.rc-input-number).
 Проверки: [engine](../../../src/lib/color-picker/color-picker.engine.test.ts),
 [package SSR](../../../tests/package/color-picker/color-picker.ssr.test.ts),
-[browser](../../../tests/browser/color-picker.spec.ts); fixture: `?fixture=color-picker`.
+[browser](../../../tests/browser/color-picker/color-picker.spec.ts); fixture: `?fixture=color-picker`.
 

@@ -59,7 +59,7 @@ Title action проверяет исходный isLeaf: узел без дет�
 Смена expandAction сохраняет DOM, выбранные ключи и внешний draft/focus/selection.
 [22 исходных случая](../../../tests/browser/fixtures/ant-design-tree-expand-action-reference.json),
 [counterpart с завершёнными переходами](../../../tests/browser/fixtures/ant-design-tree-expand-action-settled-reference.json),
-[browser](../../../tests/browser/tree-expand-action.spec.ts) и
+[browser](../../../tests/browser/tree/tree-expand-action.spec.ts) и
 [SSR](../../../tests/package/tree/tree-expand-action.ssr.test.ts) проверяют эти границы.
 
 В rc-tree 1.4.0 быстрый двойной клик с expandAction='click' может свернуть узел,
@@ -142,8 +142,8 @@ direction в rc-tree NodeList, отрицательный offset при scrollWi
 Native ограничивает offset снизу нулём, обновляет оценку без клонирования data,
 сохраняет key=0, валидный ARIA target, наследование и направление обеих осей.
 [28 исходных browser случаев, 12 SSR и шесть наблюдений](../../../tests/browser/fixtures/ant-design-tree-virtual-reference.json),
-[Source browser](../../../tests/browser/tree-virtual.spec.ts),
-[Native browser](../../../tests/browser/tree-virtual-native.spec.ts) и
+[Source browser](../../../tests/browser/tree/tree-virtual.spec.ts),
+[Native browser](../../../tests/browser/tree/tree-virtual-native.spec.ts) и
 [SSR](../../../tests/package/tree/tree-virtual.ssr.test.ts) проверяют эти границы.
 
 Tree и DirectoryTree выводят тип пользовательской записи из `treeData`.
@@ -185,7 +185,7 @@ conduction, lazy load, renderers и диапазоны DirectoryTree.
 замены treeData. Raw observation сохранено вместе с публичным Source counterpart,
 который обновляет оба props. Существующие keys, DOM/ref и active IDs сохраняются.
 [27 raw UMD сценариев и наблюдение](../../../tests/browser/fixtures/ant-design-tree-fields-reference.json),
-[browser](../../../tests/browser/tree-fields.spec.ts),
+[browser](../../../tests/browser/tree/tree-fields.spec.ts),
 [SSR](../../../tests/package/tree/tree-fields.ssr.test.ts) и
 [типизированные записи](../../../tests/browser/fixtures/TreeGenericFields.svelte) проверяют
 aliases, исходные объекты, strict/conduction, lazy load, controlled keys, snippets,
@@ -204,7 +204,7 @@ Node в событии сохраняет исходный `isLeaf` и акту�
 После unmount hover callbacks не вызываются, даже если потребитель удерживает
 удалённый DOM-узел и отправляет ему событие.
 [14 raw UMD сценариев](../../../tests/browser/fixtures/ant-design-tree-node-renderers-reference.json),
-[browser](../../../tests/browser/tree-node-renderers.spec.ts) и
+[browser](../../../tests/browser/tree/tree-node-renderers.spec.ts) и
 [SSR](../../../tests/package/tree/tree-node-renderers.ssr.test.ts) проверяют приоритеты,
 текст/элементы/пустое содержимое, центрирование switcher, pending load, hover,
 RTL/prefix и DirectoryTree. Сброс native button styles сохраняет исходный
@@ -235,7 +235,7 @@ TreeSelect использует тему Select/TreeSelect, независимо
 сохранены в [UMD-эталоне](../../../tests/browser/fixtures/ant-design-tree-theme-reference.json).
 Сверка видимого содержимого охватывает 14 тем / 112 наборов CSS-измерений, включая
 checkbox, disabled/selected/active nodes, RTL и nested/reset/sibling scopes.
-[Browser-проверки](../../../tests/browser/tree-theme.spec.ts) также подтверждают сохранение
+[Browser-проверки](../../../tests/browser/tree/tree-theme.spec.ts) также подтверждают сохранение
 DOM, фокуса, active descendant, отметок и pending load при обновлении токенов;
 [SSR-проверки](../../../tests/package/tree/tree-theme.ssr.test.ts) не запускают загрузку или
 браузерные ресурсы. Декларации сверяются с официальным UMD отдельным
@@ -273,7 +273,7 @@ itemIcon classes/styles при их изменении без смены prefix/
 публичный custom icon. Ошибка не переносится. Snippets остаются непрозрачным
 Svelte-содержимым; CSS относится к существующим wrappers.
 [18 Source случаев и три raw наблюдения](../../../tests/browser/fixtures/ant-design-tree-semantic-reference.json),
-[browser](../../../tests/browser/tree-semantic.spec.ts) и
+[browser](../../../tests/browser/tree/tree-semantic.spec.ts) и
 [SSR](../../../tests/package/tree/tree-semantic.ssr.test.ts) проверяют slots, callbacks/defaults,
 nested/reset/replaced/sibling scopes, DirectoryTree, prefix/RTL, style priorities
 и обновления, включая pending loading и независимый TreeSelect.
@@ -320,8 +320,8 @@ TreeSelect сохраняет прежнее самостоятельное уп
 [12 SSR вариантов](../../../tests/browser/fixtures/ant-design-tree-motion-ssr-reference.json),
 [engine](../../../src/lib/tree/tree-motion.engine.test.ts),
 [lifecycle](../../../src/lib/tree/tree-motion.dom.test.ts),
-[browser](../../../tests/browser/tree-motion.spec.ts),
-[Native browser](../../../tests/browser/tree-motion-native.spec.ts) и
+[browser](../../../tests/browser/tree/tree-motion.spec.ts),
+[Native browser](../../../tests/browser/tree/tree-motion-native.spec.ts) и
 [SSR](../../../tests/package/tree/tree-motion.ssr.test.ts) проверяют фазы, callbacks,
 измерения, virtual, generic aliases/zero/bigint, prefix/RTL, темы и cleanup.
 Ошибка rc-tree1.4.0 со скрытым expanded key сохранена в raw reference: пустой
@@ -367,9 +367,9 @@ DragNode сохраняет state начала drag и исходную data-с�
 [12 Source SSR вариантов без DOM](../../../tests/browser/fixtures/ant-design-tree-drag-ssr-reference.json),
 [engine](../../../src/lib/tree/tree-drag.engine.test.ts),
 [SSR](../../../tests/package/tree/tree-drag.ssr.test.ts) и
-[browser](../../../tests/browser/tree-drag.spec.ts) фиксируют геометрию, snapshots,
+[browser](../../../tests/browser/tree/tree-drag.spec.ts) фиксируют геометрию, snapshots,
 defaults, controlled keys, generic data/fieldNames, icons, prefix/RTL и lifecycle.
-[Native проверки](../../../tests/browser/tree-drag-native.spec.ts) включают реальные
+[Native проверки](../../../tests/browser/tree/tree-drag-native.spec.ts) включают реальные
 mouse drags, виртуальную прокрутку, смену данных и сохранение фокуса/DOM.
 Ошибки rc-tree1.4.0 не воспроизводятся:
 
@@ -423,7 +423,7 @@ lookup отсутствующих constructor/__proto__/toString читает pl
 и возвращает function/Object.prototype вместо DataEntity. Исходное наблюдение
 сохранено; реальные data keys с такими именами поддерживаются.
 [Unit](../../../src/lib/tree/tree-data-model.test.ts),
-[browser](../../../tests/browser/tree-data-model.spec.ts) и
+[browser](../../../tests/browser/tree/tree-data-model.spec.ts) и
 [package/SSR](../../../tests/package/tree/tree-data-model.ssr.test.ts) проверяют модель.
 
 ## DirectoryTree
@@ -462,7 +462,7 @@ Controlled/default keys и `defaultExpandParent` сохраняют Tree-кон�
 
 [Пятнадцать исходных сценариев](../../../tests/browser/fixtures/ant-design-directory-tree-reference.json)
 сверяют выбор/диапазоны, callbacks, раскрытие, иконки и directory tokens.
-[Browser](../../../tests/browser/directory-tree.spec.ts) и
+[Browser](../../../tests/browser/tree/directory-tree.spec.ts) и
 [SSR](../../../tests/package/tree/directory-tree.ssr.test.ts) проверяют Svelte-реализацию.
 При снятии controlled-режима сохраняются последние принятые ключи. Это намеренное
 исправление: Ant Design 6.6.8 / rc-tree 1.4.0 после такого перехода теряет

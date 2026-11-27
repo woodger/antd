@@ -97,7 +97,7 @@ showToday, прямые disabled units, addon/onSelect и второй аргу�
 Проверки: [engine](../../../src/lib/picker/time-picker.engine.test.ts),
 [SSR](../../../src/lib/picker/time-picker.ssr.test.ts),
 [public package](../../../tests/package/picker/time-picker.ssr.test.ts),
-[browser](../../../tests/browser/time-picker.spec.ts) и `?fixture=time-picker`.
+[browser](../../../tests/browser/picker/time-picker.spec.ts) и `?fixture=time-picker`.
 Общие component tokens настраиваются через `components.DatePicker`; подробности
 и правила обновления открытой панели описаны в разделе DatePicker.
 Для собственного типа даты используйте `DatePicker.generatePicker(adapter).TimePicker`.

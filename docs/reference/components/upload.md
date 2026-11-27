@@ -47,7 +47,7 @@ unmount не публикуют изменения. Вложенный upload п
 методы React.Component и saveUploader относятся к привязке React renderer.
 [18 raw случаев](../../../tests/browser/fixtures/ant-design-upload-ref-reference.json),
 [два transport-сценария](../../../tests/browser/fixtures/ant-design-upload-ref-transport-reference.json),
-[browser](../../../tests/browser/upload-ref.spec.ts),
+[browser](../../../tests/browser/upload/upload-ref.spec.ts),
 [SSR](../../../tests/package/upload/upload-ref.ssr.test.ts) и
 [controller](../../../src/lib/upload/upload-controller.engine.test.ts) защищают lifecycle API.
 
@@ -103,7 +103,7 @@ previewFile/isImageUrl настраивают thumbnail. По умолчанию
 генерацию повторно. Замена файла или обработчика сохраняет обычный пересчёт
 миниатюры; результат устаревшего Promise не заменяет актуальную миниатюру.
 [Raw-замеры](../../../tests/browser/fixtures/ant-design-upload-thumbnail-fallback-reference.json),
-[browser](../../../tests/browser/upload-thumbnail-fallback.spec.ts) и
+[browser](../../../tests/browser/upload/upload-thumbnail-fallback.spec.ts) и
 [SSR](../../../tests/package/upload/upload-thumbnail-fallback.ssr.test.ts) проверяют picture/card/circle,
 пустые URL, не-изображения и обновления без потери строки, input и внешнего фокуса.
 
@@ -114,7 +114,7 @@ deadline 2000 ms; возврат того же uid отменяет уход и 
 fileList и отмена транспорта не задерживаются до конца оформления.
 `theme.token.motion=false` и reduced motion завершают переход сразу.
 [Raw-замеры](../../../tests/browser/fixtures/ant-design-upload-motion-reference.json),
-[browser](../../../tests/browser/upload-motion.spec.ts) и
+[browser](../../../tests/browser/upload/upload-motion.spec.ts) и
 [SSR](../../../tests/package/upload/upload-motion.ssr.test.ts) охватывают четыре list types,
 prefixCls, RTL, duration tokens, возврат строки и cleanup.
 
@@ -126,7 +126,7 @@ motion=false, reduced motion и unmount очищают переход и его 
 Fade использует общий `ConfigProvider.prefixCls`, независимо от локального
 Upload prefixCls; duration наследует глобальные и компонентные aliases.
 [Raw-замеры](../../../tests/browser/fixtures/ant-design-upload-progress-motion-reference.json),
-[browser](../../../tests/browser/upload-progress-motion.spec.ts) и
+[browser](../../../tests/browser/upload/upload-progress-motion.spec.ts) и
 [SSR](../../../tests/package/upload/upload-progress-motion.ssr.test.ts) защищают эти границы.
 Во всех raw samples имя полосы задано явно; прежний Native fallback имени сохранён.
 
@@ -138,7 +138,7 @@ Card/circle trigger пропускает начальный appear, сохран
 идёт до пользовательского style; явный pointer-events/display сохраняет приоритет.
 [16 raw случаев структуры](../../../tests/browser/fixtures/ant-design-upload-trigger-structure-reference.json)
 и [шесть motion-сценариев](../../../tests/browser/fixtures/ant-design-upload-trigger-motion-reference.json),
-[browser](../../../tests/browser/upload-trigger.spec.ts) и
+[browser](../../../tests/browser/upload/upload-trigger.spec.ts) и
 [SSR](../../../tests/package/upload/upload-trigger.ssr.test.ts) проверяют controls, identity и cleanup.
 
 В `diffKeys` @rc-component/motion 1.3.3 перестановка `[a, __proto__]` в
@@ -170,7 +170,7 @@ Button, Progress и Tooltip получают свои component tokens. Style о
 Обновления темы сохраняют controller, запросы, fileList, native input и фокус.
 Канонические классы иконок подключают исходные размеры/цвета действий;
 обёртка Tooltip ошибки сохраняет полную высоту карточки. 16 тем официального UMD
-и состояния списка — [upload-theme](../../../tests/browser/upload-theme.spec.ts),
+и состояния списка — [upload-theme](../../../tests/browser/upload/upload-theme.spec.ts),
 `?fixture=upload-theme`; [SSR](../../../tests/package/upload/upload-theme.ssr.test.ts) не запускает
 загрузку и browser timers.
 
@@ -185,7 +185,7 @@ Button, Progress и Tooltip получают свои component tokens. Style о
 response object не подменяет сообщение ошибки. Обновление metadata открытого
 Tooltip сохраняет строку и file input.
 [Десять исходных случаев и четыре transitions](../../../tests/browser/fixtures/ant-design-upload-error-message-reference.json),
-[browser](../../../tests/browser/upload-error-message.spec.ts) и
+[browser](../../../tests/browser/upload/upload-error-message.spec.ts) и
 [SSR](../../../tests/package/upload/upload-error-message.ssr.test.ts) проверяют этот порядок;
 [чистая логика](../../../src/lib/upload/upload.engine.test.ts) также защищает locale fallback.
 
@@ -201,7 +201,7 @@ render function. ReactElement inspection/clone и перенос его onClick 
 не воспроизводятся: собственные handlers вложенного DOM имеют нативный порядок
 событий. Это та же opaque Snippet boundary, что у остальных render hooks.
 [21 исходный вариант, действия и transitions](../../../tests/browser/fixtures/ant-design-upload-action-icons-reference.json),
-[browser](../../../tests/browser/upload-action-icons.spec.ts) и
+[browser](../../../tests/browser/upload/upload-action-icons.spec.ts) и
 [SSR](../../../tests/package/upload/upload-action-icons.ssr.test.ts) проверяют содержимое,
 сохранение controls/input DOM и клавиатурный запуск remove.
 
@@ -218,7 +218,7 @@ Progress объединяется поверх общего объекта по 
 самого Progress. Новый request handler применяется к следующим файлам;
 выполняющийся запрос, fileList и input DOM сохраняются.
 [13 случаев, четыре progress samples и события запросов](../../../tests/browser/fixtures/ant-design-upload-config-reference.json),
-[browser](../../../tests/browser/upload-config.spec.ts) и
+[browser](../../../tests/browser/upload/upload-config.spec.ts) и
 [SSR](../../../tests/package/upload/upload-config.ssr.test.ts) защищают наследование и приоритеты.
 
 В rc-upload 1.1.1 синхронный onSuccess может завершить запрос до его записи во
@@ -240,7 +240,7 @@ Tooltip и originNode itemRender. Обычный style по-прежнему о�
 semantic/style variables имеют приоритет. Смена slots сохраняет controller,
 wrapper/item/trigger/input DOM, внешний draft/focus/selection.
 [16 исходных случаев и пять transitions](../../../tests/browser/fixtures/ant-design-upload-semantic-reference.json),
-[browser](../../../tests/browser/upload-semantic.spec.ts) и
+[browser](../../../tests/browser/upload/upload-semantic.spec.ts) и
 [SSR](../../../tests/package/upload/upload-semantic.ssr.test.ts) защищают эту границу.
 
 `progress` настраивает line Progress в uploading-строке. Без prop применяются
@@ -256,7 +256,7 @@ Percent принадлежит UploadFile; type и deprecated line strokeWidth �
 Показ по-прежнему отложен на 300 ms; SSR не создаёт полосу и browser timer.
 Обновления props/percent сохраняют item/input/progress root и внешний editor.
 [16 исходных случаев и шесть transitions](../../../tests/browser/fixtures/ant-design-upload-progress-reference.json),
-[browser](../../../tests/browser/upload-progress.spec.ts) и
+[browser](../../../tests/browser/upload/upload-progress.spec.ts) и
 [SSR](../../../tests/package/upload/upload-progress.ssr.test.ts) защищают эти границы.
 
 `UploadFile.linkProps` задаёт атрибуты ссылки имени файла: объект либо JSON
@@ -270,7 +270,7 @@ preventDefault(), preview не запускается; return false и stopPropa
 сами по себе preview не отменяют. Невалидный JSON выбрасывает SyntaxError,
 как исходный renderer. Обновления атрибутов сохраняют ссылку и input DOM.
 [19 исходных случаев и пять transitions](../../../tests/browser/fixtures/ant-design-upload-link-props-reference.json),
-[browser](../../../tests/browser/upload-link-props.spec.ts) и
+[browser](../../../tests/browser/upload/upload-link-props.spec.ts) и
 [SSR](../../../tests/package/upload/upload-link-props.ssr.test.ts) сверяют эту границу.
 
 `iconRender` — snippet `(file, listType)`, заменяющий видимую иконку файла
@@ -279,7 +279,7 @@ preventDefault(), preview не запускается; return false и stopPropa
 Без prop работают прежние loading/file/picture/paper-clip defaults.
 Смена renderer сохраняет строку, filename и input DOM, а также фокус editor.
 [25 исходных вариантов](../../../tests/browser/fixtures/ant-design-upload-icon-render-reference.json),
-[browser](../../../tests/browser/upload-icon-render.spec.ts) и
+[browser](../../../tests/browser/upload/upload-icon-render.spec.ts) и
 [SSR](../../../tests/package/upload/upload-icon-render.ssr.test.ts) проверяют видимое содержимое;
 Snippet не воспроизводит side effects вызова React render function.
 
@@ -306,7 +306,7 @@ Snippet непрозрачен для потребителя: ReactElement intro
 Смена renderer может заменить внутренний DOM по выбору renderer; контейнеры,
 file input, порядок файлов и внешний focus/selection сохраняются.
 [19 исходных вариантов и действия](../../../tests/browser/fixtures/ant-design-upload-item-render-reference.json),
-[browser](../../../tests/browser/upload-item-render.spec.ts) и
+[browser](../../../tests/browser/upload/upload-item-render.spec.ts) и
 [SSR](../../../tests/package/upload/upload-item-render.ssr.test.ts) защищают эту границу.
 
 `directory=true` разрешает выбор папки и обход вложенных файлов при drop/paste.
@@ -324,7 +324,7 @@ webkitdirectory как boolean attribute; в браузере сохраняют
 и отдельный public Source sample с оставшимся читаемым файлом сохранены в
 [замерах directory](../../../tests/browser/fixtures/ant-design-upload-directory-reference.json).
 После disable/unmount завершившееся чтение не вызывает beforeUpload.
-[Browser](../../../tests/browser/upload-directory.spec.ts),
+[Browser](../../../tests/browser/upload/upload-directory.spec.ts),
 [SSR](../../../tests/package/upload/upload-directory.ssr.test.ts) и
 [обходчик](../../../src/lib/upload/upload-directory.dom.test.ts) защищают эти границы.
 
@@ -338,7 +338,7 @@ webkitdirectory как boolean attribute; в браузере сохраняют
 Локальный и наследуемый disabled блокируют paste. В исходной 6.6.8 document handler
 не имеет этого guard и всё равно вызывает beforeUpload/onChange; это поведение
 не перенесено. [Raw-замеры](../../../tests/browser/fixtures/ant-design-upload-paste-reference.json)
-сохраняют disabled observation отдельно. [Browser](../../../tests/browser/upload-paste.spec.ts)
+сохраняют disabled observation отдельно. [Browser](../../../tests/browser/upload/upload-paste.spec.ts)
 проверяет callbacks, документ, focus/selection внешнего editor, транспорт и cleanup;
 [SSR](../../../tests/package/upload/upload-paste.ssr.test.ts) не создаёт browser listeners.
 

@@ -37,7 +37,7 @@ canonical component tokens/markers остаются прежними. Смена
 сохраняет IDs, root/textarea/popup DOM, query, focus/selection и FormData.
 Native clear/ARIA/IME и правила поиска/выбора не меняются.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-mentions-prefix-reference.json),
-[browser](../../../tests/browser/mentions-prefix.spec.ts),
+[browser](../../../tests/browser/mentions/mentions-prefix.spec.ts),
 [SSR](../../../tests/package/mentions/mentions-prefix.ssr.test.ts), `?fixture=mentions-prefix`.
 Прежний простой locale.emptyText без renderEmpty сохраняется: raw Source Small
 Empty записан отдельно от nativeEmpty — измерения public notFoundContent с тем
@@ -65,7 +65,7 @@ getMentions(value,{prefix,split}) соответствует Mentions.getMention
 индексу. Повторяющиеся ключи сохраняют отдельные DOM-узлы.
 Подсветка применяется ко всем совпавшим ключам, а `aria-activedescendant`
 указывает на один пункт. [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-option-reference.json)
-· [Браузерные проверки](../../../tests/browser/mentions-option.spec.ts).
+· [Браузерные проверки](../../../tests/browser/mentions/mentions-option.spec.ts).
 
 Up/Down обходят доступные options, Enter выбирает, Escape закрывает. При закрытых
 подсказках Enter вызывает `onPressEnter`, затем `onKeyDown` и нативный
@@ -78,7 +78,7 @@ Up/Down обходят доступные options, Enter выбирает, Escap
 открытый список без выбора. В этих сценариях Ant Design 6.6.8 выбирает вариант.
 При закрытых подсказках во время IME вызывается обычный обработчик клавиши.
 [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-keyboard-reference.json)
-· [Проверки клавиатуры](../../../tests/browser/mentions-keyboard.spec.ts).
+· [Проверки клавиатуры](../../../tests/browser/mentions/mentions-keyboard.spec.ts).
 
 `onFocus` и `onBlur` учитывают переход в popup. Отложенный blur очищается
 при unmount. `readonly` и `disabled` сохраняют нативное поведение поля.
@@ -99,7 +99,7 @@ accessibility tree. Общий popup-механизм сохраняет пре�
 анимации или перехода CSS. Правила `prefers-reduced-motion` для этого CSS
 задаёт потребитель. Закрытие сразу удаляет именованную панель и отменяет
 ожидающие кадры. После завершения появления новое имя применяется при
-следующем открытии. [Браузерная сверка](../../../tests/browser/mentions-lifecycle.spec.ts).
+следующем открытии. [Браузерная сверка](../../../tests/browser/mentions/mentions-lifecycle.spec.ts).
 
 Локальный getPopupContainer выбирает HTMLElement или ShadowRoot. Как Ant Design,
 Mentions не наследует ConfigProvider.getPopupContainer. Тип getter не требует
@@ -135,7 +135,7 @@ getter не вызывается. Стили ShadowRoot размещает по�
 пункте после выбора добавлял перевод строки, пробел оставался без действия,
 а Escape оставлял меню открытым.
 [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-menu-focus-reference.json)
-· [Повторные меню и фокус](../../../tests/browser/mentions-menu-focus.spec.ts).
+· [Повторные меню и фокус](../../../tests/browser/mentions/mentions-menu-focus.spec.ts).
 
 Пользовательское содержимое сохраняет тему и локализацию. Контексты
 status/feedback FormItem и SpaceCompact изолированы, как в исходном
@@ -157,7 +157,7 @@ DOM-контейнера создают `popupRender` заново. Смена g
 ```
 
 [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-menu-reference.json)
-· [Браузерные проверки](../../../tests/browser/mentions-menu.spec.ts)
+· [Браузерные проверки](../../../tests/browser/mentions/mentions-menu.spec.ts)
 · [SSR и типы](../../../tests/package/mentions/mentions-popup.ssr.test.ts).
 
 AutoSize принимает boolean/{minRows,maxRows}, измеряет содержимое с теми же
@@ -196,10 +196,10 @@ textarea, сохраняя её значение. При замене списо
 и в открытых ShadowRoot вдоль цепочки фокуса. Отсоединённые деревья и
 ShadowRoot вне этой цепочки остаются границей переноса.
 [Замеры React при гидратации](../../../tests/browser/fixtures/ant-design-mentions-hydration-reference.json)
-· [Проверки выделения](../../../tests/browser/mentions-hydration.spec.ts).
+· [Проверки выделения](../../../tests/browser/mentions/mentions-hydration.spec.ts).
 
 [Замеры React](../../../tests/browser/fixtures/ant-design-mentions-count-reference.json)
-· [Браузер и hydration](../../../tests/browser/mentions-count.spec.ts)
+· [Браузер и hydration](../../../tests/browser/mentions/mentions-count.spec.ts)
 · [SSR и типы](../../../tests/package/mentions/mentions.ssr.test.ts).
 
 AllowClear — boolean/{clearIcon,disabled}; очистка вызывает change(''), затем
@@ -210,7 +210,7 @@ Focus/blur и bind:nativeElement предоставляют текущий ref A
 `autoFocus` использует нативный автофокус. Явный `autofocus` имеет приоритет.
 CSS-рецепт mentions извлекает 102 правила. Фикстура `?fixture=mentions`; SSR не измеряет DOM и не ставит таймеры.
 24 эталона официального UMD для контейнеров и popupRender —
-[mentions-popup](../../../tests/browser/mentions-popup.spec.ts), `?fixture=mentions-popup`.
+[mentions-popup](../../../tests/browser/mentions/mentions-popup.spec.ts), `?fixture=mentions-popup`.
 
 `ConfigProvider.theme.components.Mentions` применяет shared Input tokens,
 размеры списка, aliases и algorithms к textarea и popup. Подготавливаются 22
@@ -221,7 +221,7 @@ draft, focus/caret и активный option. Native button reset не пере
 hover/active цвета пунктов.
 При нулевом inputFontSize подсказки сохраняются у префикса нулевого размера,
 как в исходном компоненте.
-16 тем официального UMD — [mentions-theme](../../../tests/browser/mentions-theme.spec.ts),
+16 тем официального UMD — [mentions-theme](../../../tests/browser/mentions/mentions-theme.spec.ts),
 `?fixture=mentions-theme`; [SSR](../../../tests/package/mentions/mentions-theme.ssr.test.ts) сохраняет
 native текст формы без popup, измеряющего textarea и timers.
 
@@ -240,6 +240,6 @@ native текст формы без popup, измеряющего textarea и ti
 
 В Ant Design 6.6.8 с RcMentions 1.12.0 обёртка с суффиксом теряет стиль корня,
 а суффикс получает классы без переданного `styles.suffix`. Svelte применяет
-декларации к обоим слотам. [Замеры и проверки](../../../tests/browser/mentions-semantics.spec.ts).
+декларации к обоим слотам. [Замеры и проверки](../../../tests/browser/mentions/mentions-semantics.spec.ts).
 Расширенный API меню остаётся открытой частью переноса.
 

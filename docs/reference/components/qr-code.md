@@ -73,7 +73,7 @@ background cover готовится из colorBgContainer с абсолютно�
 Global/component algorithms, cssVar.prefix и nested/reset/sibling scopes
 сверяются с [UMD](../../../tests/browser/fixtures/ant-design-qrcode-theme-reference.json),
 [SSR](../../../tests/package/qr-code/qrcode-theme.ssr.test.ts) и
-[browser](../../../tests/browser/qrcode-theme.spec.ts), `?fixture=qrcode-theme`.
+[browser](../../../tests/browser/qr-code/qrcode-theme.spec.ts), `?fixture=qrcode-theme`.
 Реактивная смена global colorText перерисовывает прежний canvas и обновляет
 прежний SVG; cover/padding не сбрасывают фокус status snippet или refs.
 
@@ -93,7 +93,7 @@ Fallback-переменная module не перекрывает адаптив�
 Native RTL наследуется, исходное LTR-направление корня хранится в raw reference.
 Сверка: [44 исходных случая и 4 обновления](../../../tests/browser/fixtures/ant-design-qrcode-prefix-reference.json),
 [CSS boundary](../../../src/lib/qr-code/qrcode-prefix.test.ts),
-[браузер](../../../tests/browser/qrcode-prefix.spec.ts),
+[браузер](../../../tests/browser/qr-code/qrcode-prefix.spec.ts),
 [публичный пакет и SSR](../../../tests/package/qr-code/qrcode-prefix.ssr.test.ts), `?fixture=qrcode-prefix`.
 Рецепт qrcode-prefix воспроизводит те же 11 правил CSS data module с проверкой SHA-256.
 Общий ConfigProvider.prefixCls применяется к QRCode, локальный prefix имеет приоритет.

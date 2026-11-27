@@ -70,7 +70,7 @@ FloatButton, Group и BackTop используют [слой владельца]
 42 правила. Глобальный fade адаптирован через WAAPI с исходными длительностями и reduced motion.
 У FloatButtonBackTop fade меняет только opacity по linear-кривой; локальный
 transform сохраняется во время появления и исчезновения. Промежуточные кадры
-официального UMD сверяются в [browser](../../../tests/browser/float-button-motion.spec.ts).
+официального UMD сверяются в [browser](../../../tests/browser/float-button/float-button-motion.spec.ts).
 Wave наследуется через общий Button, включая FloatButtonBackTop и trigger группы.
 
 ```svelte

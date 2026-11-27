@@ -109,6 +109,6 @@ LTR. Native ограничивает root/RTL rules владельцем и со
 Fixture — `?fixture=masonry`. Engine, SSR, DOM lifecycle, package SSR и browser
 проверяют геометрию, breakpoints, fresh/load/error, данные/callbacks, motion,
 focus/selection, semantic/config, темы, RTL и cleanup. Prefix отдельно проверяют
-[browser](../../../tests/browser/masonry-prefix.spec.ts),
+[browser](../../../tests/browser/masonry/masonry-prefix.spec.ts),
 [SSR](../../../tests/package/masonry/masonry-prefix.ssr.test.ts) и fixture `?fixture=masonry-prefix`.
 

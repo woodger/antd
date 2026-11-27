@@ -78,7 +78,7 @@ uncontrolled open сохраняется при обновлении spread prop
 повторное включение может показать уже открытую панель.
 Сверка: [67 UMD-сценариев / 389 кадров и шесть cleanup traces](../../../tests/browser/fixtures/ant-design-popover-actions-reference.json),
 [SSR](../../../tests/package/popover/popover-actions.ssr.test.ts) и
-[browser](../../../tests/browser/popover-actions.spec.ts), `?fixture=popover-actions`.
+[browser](../../../tests/browser/popover/popover-actions.spec.ts), `?fixture=popover-actions`.
 Эталоны включают Popconfirm и передачу настроек через AvatarGroup.max.popover.
 Controlled-сценарии используют getter/setter binding с отклонением записи;
 обычный open продолжает следовать модели Svelte.
@@ -104,7 +104,7 @@ AvatarGroup.max.popover; прежние defaults без новых props сох�
 
 Сверка: [84 UMD-сценария](../../../tests/browser/fixtures/ant-design-popover-align-reference.json),
 [SSR](../../../tests/package/popover/popover-align.ssr.test.ts) и
-[browser](../../../tests/browser/popover-align.spec.ts), `?fixture=popover-align`.
+[browser](../../../tests/browser/popover/popover-align.spec.ts), `?fixture=popover-align`.
 В 6.6.8/rc-trigger 3.10.1 изменение align или существующей записи placements
 само по себе оставляет прежнюю геометрию до forceAlign либо другого события
 выравнивания; состояния до/после forceAlign записаны в эталоне для отдельного
@@ -129,7 +129,7 @@ div; существующий Svelte lifecycle сохраняется. Nullable 
 эти состояния и поддерживают SVG без приведения к HTMLElement.
 Сверка: [восемь UMD-сценариев](../../../tests/browser/fixtures/ant-design-popover-ref-reference.json),
 [SSR](../../../tests/package/popover/popover-ref.ssr.test.ts) и
-[browser](../../../tests/browser/popover-ref.spec.ts), `?fixture=popover-ref`.
+[browser](../../../tests/browser/popover/popover-ref.spec.ts), `?fixture=popover-ref`.
 Bind:ref задаётся непосредственно компоненту; max.popover остаётся объектом PopoverProps.
 
 `id` задаёт ID native dialog; пустая строка использует стабильный generated ID.
@@ -150,7 +150,7 @@ disabled guards и локализация остаются текущими. В�
 правилам Svelte: полная заморозка React.memo здесь не обещается.
 Сверка: [50 UMD-сценария / 399 кадров](../../../tests/browser/fixtures/ant-design-popover-lifecycle-reference.json),
 [SSR](../../../tests/package/popover/popover-lifecycle.ssr.test.ts) и
-[browser](../../../tests/browser/popover-lifecycle.spec.ts), `?fixture=popover-lifecycle`.
+[browser](../../../tests/browser/popover/popover-lifecycle.spec.ts), `?fixture=popover-lifecycle`.
 
 Source-тема подготавливает Tooltip и Popover tokens в исходном порядке:
 maxWidth и стрелку внутреннего Tooltip, затем собственные titleMinWidth,

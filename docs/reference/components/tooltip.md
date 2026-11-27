@@ -71,7 +71,7 @@ placement/arrow/overflow. После изменения разметки выз�
 с binding доступен через `ComponentProps<typeof Tooltip>`. Сверка DOM/ref и layout:
 [четыре UMD-сценария](../../../tests/browser/fixtures/ant-design-tooltip-ref-reference.json),
 [SSR](../../../tests/package/tooltip/tooltip-ref.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip-ref.spec.ts), `?fixture=tooltip-ref`.
+[browser](../../../tests/browser/tooltip/tooltip-ref.spec.ts), `?fixture=tooltip-ref`.
 
 Trigger без component config по умолчанию `['hover', 'focus']`; можно выбрать одно
 событие или передать пустой массив для программного показа. MouseEnterDelay и mouseLeaveDelay
@@ -104,7 +104,7 @@ Native blur без relatedTarget проверяет доступность trigg
 rc-trigger; переход фокуса с relatedTarget сохраняет его исходное время вызова.
 Сверка: [54 UMD-сценария / 310 кадров](../../../tests/browser/fixtures/ant-design-tooltip-actions-reference.json),
 [SSR](../../../tests/package/tooltip/tooltip-actions.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip-actions.spec.ts), `?fixture=tooltip-actions`.
+[browser](../../../tests/browser/tooltip/tooltip-actions.spec.ts), `?fixture=tooltip-actions`.
 
 По умолчанию содержимое скрытой подсказки сохраняется. `fresh=false` фиксирует
 последнее открытое содержимое и semantic class/style внутреннего container;
@@ -134,21 +134,21 @@ ForceRender не открывает popup и не вызывает onOpenChange.
 SSR при destroyOnHidden остаётся lazy, portal getter на сервере не вызывается.
 Сверка: [19 UMD-сценариев и четыре consumer traces](../../../tests/browser/fixtures/ant-design-tooltip-lifecycle-reference.json),
 [SSR](../../../tests/package/tooltip/tooltip-lifecycle.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip-lifecycle.spec.ts), `?fixture=tooltip-lifecycle`.
+[browser](../../../tests/browser/tooltip/tooltip-lifecycle.spec.ts), `?fixture=tooltip-lifecycle`.
 У active range Slider сохраняется существующий один native shell до выбора ручки;
 исходная conditional composition не подменяет его lifecycle.
 
 Жизненный цикл сверяется с
 [44 UMD-сценариями / 224 кадрами](../../../tests/browser/fixtures/ant-design-overlay-lifecycle-reference.json),
 [SSR](../../../tests/package/popup/overlay-lifecycle.ssr.test.ts) и
-[browser](../../../tests/browser/overlay-lifecycle.spec.ts), `?fixture=overlay-lifecycle`.
+[browser](../../../tests/browser/popup/overlay-lifecycle.spec.ts), `?fixture=overlay-lifecycle`.
 Эталоны получены с отключённой motion из runtime CSS официального UMD.
 Исходное lazy mount до первого открытия записано отдельно: существующий native
 SSR и eagerly mounted default content остаются согласованной границей.
 Title/overlay и fresh дополнительно сверяются с
 [24 UMD-сценариями содержимого и 80 кадрами кэша](../../../tests/browser/fixtures/ant-design-tooltip-content-reference.json),
 [SSR](../../../tests/package/tooltip/tooltip-content.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip-content.spec.ts), `?fixture=tooltip-content`.
+[browser](../../../tests/browser/tooltip/tooltip-content.spec.ts), `?fixture=tooltip-content`.
 Остальные delegated props учтены в реестре миграции.
 
 ## Завершение открытия и закрытия
@@ -174,7 +174,7 @@ appear, enter и leave. Пустое имя, `theme.token.motion=false` и
 
 Сверка для Tooltip, Popover и Popconfirm включает 19 сценариев закреплённого
 React UMD, каждый снят дважды. [Эталон](../../../tests/browser/fixtures/ant-design-overlay-motion-reference.json),
-[браузерные сценарии](../../../tests/browser/overlay-motion.spec.ts) и
+[браузерные сценарии](../../../tests/browser/popup/overlay-motion.spec.ts) и
 [SSR-проверка](../../../tests/package/popup/overlay-motion.ssr.test.ts).
 
 ## Общая подсказка для нескольких триггеров
@@ -215,11 +215,11 @@ React UMD, каждый снят дважды. [Эталон](../../../tests/bro
 оставляет на общем фоне цвет `colorBgSpotlight`.
 
 Переходы, задержки и отличия зафиксированы в [снимках React UMD](../../../tests/browser/fixtures/ant-design-tooltip-unique-reference.json).
-Сравнение выполняется в [Chromium](../../../tests/browser/tooltip-unique.spec.ts),
-с отдельными проверками [гидратации](../../../tests/browser/tooltip-unique-hydration.spec.ts)
+Сравнение выполняется в [Chromium](../../../tests/browser/tooltip/tooltip-unique.spec.ts),
+с отдельными проверками [гидратации](../../../tests/browser/tooltip/tooltip-unique-hydration.spec.ts)
 и [публичного API](../../../tests/package/tooltip/tooltip-unique.ssr.test.ts).
 Сценарии с карточками сверяются с [отдельными снимками React UMD](../../../tests/browser/fixtures/ant-design-tooltip-unique-delegates-reference.json)
-в [Chromium](../../../tests/browser/tooltip-unique-delegates.spec.ts).
+в [Chromium](../../../tests/browser/tooltip/tooltip-unique-delegates.spec.ts).
 
 Placement принимает top/bottom/left/right, topLeft/topRight/bottomLeft/bottomRight
 и leftTop/leftBottom/rightTop/rightBottom. Направления физические и не меняются
@@ -259,7 +259,7 @@ semantic styles.arrow и styles.root сохраняют приоритет на�
 Сверка: [38 UMD-сценариев](../../../tests/browser/fixtures/ant-design-tooltip-align-reference.json),
 [числовой движок](../../../src/lib/tooltip/tooltip-align-reference.test.ts),
 [SSR](../../../tests/package/tooltip/tooltip-align.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip-align.spec.ts), `?fixture=tooltip-align`.
+[browser](../../../tests/browser/tooltip/tooltip-align.spec.ts), `?fixture=tooltip-align`.
 Размеры box заданы явно для проверки геометрии; native fixed/top-layer и viewport
 ограничения сохраняются, полный CSS-transform/scroll-container clipping здесь не заявлен.
 
@@ -305,7 +305,7 @@ AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0
 [84 UMD-эталонами](../../../tests/browser/fixtures/ant-design-overlay-options-reference.json),
 [unit](../../../src/lib/tooltip/tooltip-options-reference.test.ts),
 [SSR](../../../tests/package/popup/overlay-options.ssr.test.ts) и
-[browser](../../../tests/browser/overlay-options.spec.ts). Они включают настройки tokens,
+[browser](../../../tests/browser/popup/overlay-options.spec.ts). Они включают настройки tokens,
 обновления открытой карточки, оба режима range Tooltip и сохранение draft/focus.
 Расчёт угловых позиций использует общий
 [движок rc-trigger](../../../src/lib/popup/popup-position.engine.ts). Координаты, CSS стрелки,
@@ -313,7 +313,7 @@ fractional sizes, flip history и смена placement проверяются п
 [99 UMD-эталонам](../../../tests/browser/fixtures/ant-design-overlay-corner-reference.json),
 [unit](../../../src/lib/tooltip/tooltip-corner-reference.test.ts),
 [SSR](../../../tests/package/popup/overlay-corner.ssr.test.ts) и
-[browser](../../../tests/browser/overlay-corner.spec.ts). Явные размеры в части эталонов
+[browser](../../../tests/browser/popup/overlay-corner.spec.ts). Явные размеры в части эталонов
 отделяют позиционирование от layout остальных компонентов.
 
 ## ConfigProvider и semantic slots

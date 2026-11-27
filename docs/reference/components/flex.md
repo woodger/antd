@@ -58,7 +58,7 @@ FlexComponentProps; FlexProps остаётся расширяемым интер
 у upstream нет. PaddingXS/padding/paddingLG меняют preset gaps, а font/color reset не
 добавляется. CSS-variable prefix настраивается независимо от BEM prefix.
 Сверка с 33 официальными UMD-сценариями:
-[browser](../../../tests/browser/flex-source.spec.ts),
+[browser](../../../tests/browser/flex/flex-source.spec.ts),
 [SSR](../../../tests/package/flex/flex-source.ssr.test.ts),
 [эталон](../../../tests/browser/fixtures/ant-design-flex-source-reference.json),
 фикстура `?fixture=flex-source`. Live updates сохраняют custom state, DOM/ref,

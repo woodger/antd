@@ -102,9 +102,9 @@ prefix владельца, сохраняя явный item override. В
 проверяют приоритеты offsets, callbacks/history, анимацию/cleanup, nested items,
 RTL/indicator и production hydration. Source tokens и метрики проверяются
 [по официальному UMD](../../../src/lib/theme/theme-anchor-tokens-reference.test.ts) и
-[в браузере](../../../tests/browser/anchor-theme.spec.ts). CSS-рецепты anchor и anchor-prefix
+[в браузере](../../../tests/browser/anchor/anchor-theme.spec.ts). CSS-рецепты anchor и anchor-prefix
 содержат 22 правила; второй хранит module template для local classes. Prefix
-проверяют [browser](../../../tests/browser/anchor-prefix.spec.ts),
+проверяют [browser](../../../tests/browser/anchor/anchor-prefix.spec.ts),
 [SSR](../../../tests/package/anchor/anchor-prefix.ssr.test.ts) и fixture `?fixture=anchor-prefix`.
 
 Ссылки items используют linkDecoration/linkHoverDecoration/

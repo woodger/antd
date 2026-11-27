@@ -106,9 +106,9 @@ pointerup для фона. Callback уведомляет о запросе и н
 `onClose`, затем доходит до `onclick` секции. Маска вызывает `onClose` своим
 событием. `preventDefault()` в `onkeydown` отменяет закрытие по Escape.
 [Эталон событий и атрибутов](../../../tests/browser/fixtures/ant-design-drawer-dom-reference.json)
-· [Chromium](../../../tests/browser/drawer-dom.spec.ts)
+· [Chromium](../../../tests/browser/drawer/drawer-dom.spec.ts)
 · [SSR](../../../tests/package/drawer/drawer-dom.ssr.test.ts)
-· [Гидратация](../../../tests/browser/drawer-dom-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/drawer/drawer-dom-hydration.spec.ts)
 
 По умолчанию Drawer с маской открывается через `showModal()`. Браузер
 фокусирует первый доступный control или сам dialog, включает inert для
@@ -146,7 +146,7 @@ DOM-черновики в закрытом dialog. ForceRender монтируе�
 
 На границе Drawer сбрасываются статус и индикатор проверки внешнего `Form.Item`.
 Локальный `Form.Item` и явный `status` поля задают оформление внутри панели.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/dialog-form-style.spec.ts).
+[Сверка с Ant Design 6.6.8](../../../tests/browser/dialog/dialog-form-style.spec.ts).
 
 `drawerRender` получает snippet секции и позволяет обернуть или заменить её.
 Маска, выдвижная оболочка и граница resize остаются под управлением Drawer.
@@ -176,9 +176,9 @@ DOM-черновики в закрытом dialog. ForceRender монтируе�
 и экземпляра. `rootClassName` дополняет класс dialog. `rootStyle` применяется
 после `styles.root` и `style`.
 [Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-drawer-panel-reference.json)
-· [Chromium](../../../tests/browser/drawer-panel.spec.ts)
+· [Chromium](../../../tests/browser/drawer/drawer-panel.spec.ts)
 · [SSR](../../../tests/package/drawer/drawer-panel.ssr.test.ts)
-· [Гидратация](../../../tests/browser/drawer-panel-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/drawer/drawer-panel-hydration.spec.ts)
 
 ## Анимация и тема
 
@@ -225,9 +225,9 @@ Drawer остаётся смонтированным. `maskMotion.forceRender` �
 сохранённой после показа маски `leavedClassName` задаёт класс скрытого состояния.
 Жизненный цикл всей панели задают `forceRender` и `destroyOnHidden` самого Drawer.
 [Эталон переходов](../../../tests/browser/fixtures/ant-design-drawer-motion-api-reference.json)
-· [Chromium](../../../tests/browser/drawer-motion-api.spec.ts)
+· [Chromium](../../../tests/browser/drawer/drawer-motion-api.spec.ts)
 · [SSR](../../../tests/package/drawer/drawer-motion-api.ssr.test.ts)
-· [Гидратация](../../../tests/browser/drawer-motion-api-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/drawer/drawer-motion-api-hydration.spec.ts)
 
 ### Тема
 
@@ -257,7 +257,7 @@ Drawer передаёт ему document.body, как Ant wrapper. Getter выз�
 При смене `open` Drawer разрешает контейнер заново после обновления DOM.
 Узел может появиться до открытия или в том же обновлении, по обе стороны Drawer
 в шаблоне. `afterOpenChange(true)` приходит один раз, когда панель открылась в найденном
-узле. [Сверка с Ant Design 6.6.8](../../../tests/browser/drawer-container-timing.spec.ts).
+узле. [Сверка с Ant Design 6.6.8](../../../tests/browser/drawer/drawer-container-timing.spec.ts).
 Смена контейнера пересоздаёт панель и отменяет прежнюю анимацию. Замена функции
 с тем же контейнером сохраняет DOM, состояния и фокус. Для управляемого
 режима стандартный портал перемещает тот же dialog в ближайший диалог или

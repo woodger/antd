@@ -49,7 +49,7 @@
 колонки его не получают. Сортировка, selected/fixed classes и native semantics
 сохраняются. Обновление класса не пересоздаёт ячейку или snippet editor.
 8 состояний официального UMD сверяются в
-[browser](../../../tests/browser/table-column-classes.spec.ts), серверная разметка —
+[browser](../../../tests/browser/table/table-column-classes.spec.ts), серверная разметка —
 в [SSR](../../../tests/package/table/table-column-classes.ssr.test.ts).
 Fixture `?fixture=table-column-classes`.
 
@@ -71,7 +71,7 @@ Fixture `?fixture=table-column-classes`.
 ```
 
 [Эталон](../../../tests/browser/fixtures/ant-design-table-config-reference.json)
-· [Chromium](../../../tests/browser/table-config.spec.ts)
+· [Chromium](../../../tests/browser/table/table-config.spec.ts)
 · [SSR](../../../tests/package/table/table-config.ssr.test.ts)
 
 Скалярная сортировка задаётся через `sorter: { columnKey, order } | null` и
@@ -140,9 +140,9 @@ disabled-строки при расчёте checked/indeterminate и отклю�
 `caption` в семантической таблице и измеряет его высоту для закреплённой шапки.
 С пользовательским телом прокрутки подпись выводится в отдельной видимой шапке.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-dom-attributes-reference.json)
-· [Chromium](../../../tests/browser/table-dom-attributes.spec.ts)
+· [Chromium](../../../tests/browser/table/table-dom-attributes.spec.ts)
 · [SSR](../../../tests/package/table/table-dom-attributes.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
 ## Загрузка
 
@@ -170,7 +170,7 @@ disabled-строки при расчёте checked/indeterminate и отклю�
 ```
 
 [Снимки Ant Design](../../../tests/browser/fixtures/ant-design-table-loading-reference.json)
-· [Chromium](../../../tests/browser/table-loading.spec.ts)
+· [Chromium](../../../tests/browser/table/table-loading.spec.ts)
 · [SSR](../../../tests/package/table/table-loading.ssr.test.ts)
 
 ## Локализация Table
@@ -215,8 +215,8 @@ Empty. Локальный `emptyText` заменяет содержимое яч
 Сопоставлены 52 браузерных состояния и 27 серверных снимков Ant Design 6.6.8.
 Смена словаря сохраняет открытый фильтр, запрос поиска, черновик и фокус.
 [Снимки React](../../../tests/browser/fixtures/ant-design-table-locale-reference.json),
-[Chromium](../../../tests/browser/table-locale.spec.ts),
-[гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+[Chromium](../../../tests/browser/table/table-locale.spec.ts),
+[гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 и [SSR](../../../tests/package/table/table-locale.ssr.test.ts).
 
 ## Настройки пагинации
@@ -263,8 +263,8 @@ Empty. Локальный `emptyText` заменяет содержимое яч
 Ant Design 6.6.8. Гидратация и смена расположения сохраняют редактор строки,
 его черновик и выделение.
 [Снимки React](../../../tests/browser/fixtures/ant-design-table-pagination-reference.json),
-[Chromium](../../../tests/browser/table-pagination.spec.ts),
-[гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+[Chromium](../../../tests/browser/table/table-pagination.spec.ts),
+[гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 и [SSR](../../../tests/package/table/table-pagination.ssr.test.ts).
 
 ## Настройки выбора строк
@@ -318,8 +318,8 @@ Ant Design встречается `undefined`, если соответствую
 сфокусированный input и учитывает принятие и отклонение изменения.
 У Radio с общим `name` при отклонении сохраняется ранее принятая отметка.
 [Снимки эталона](../../../tests/browser/fixtures/ant-design-table-selection-reference.json),
-[браузерные проверки](../../../tests/browser/table-selection.spec.ts) и
-[гидратация](../../../tests/browser/table-selection-hydration.spec.ts).
+[браузерные проверки](../../../tests/browser/table/table-selection.spec.ts) и
+[гидратация](../../../tests/browser/table/table-selection-hydration.spec.ts).
 
 ### Порядок и содержимое служебных колонок
 
@@ -360,9 +360,9 @@ Snippet верхнего уровня получает исходный checkbox
 Строгая гидратация сохраняет фокус и штатный input внутри пользовательской
 ячейки, включая виртуальный span.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-service-columns-reference.json)
-· [Chromium](../../../tests/browser/table-service-columns.spec.ts)
+· [Chromium](../../../tests/browser/table/table-service-columns.spec.ts)
 · [SSR](../../../tests/package/table/table-service-columns.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-service-columns-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-service-columns-hydration.spec.ts)
 
 ## Раскрываемые строки
 
@@ -463,9 +463,9 @@ Ant Design на React оставляет уже открывавшиеся по�
 В эталоне сохранены оба режима React и состояние редактора после повторного
 открытия. Строгая гидратация Svelte сохраняет серверный редактор и фокус кнопки.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-expansion-options-reference.json)
-· [Chromium](../../../tests/browser/table-expansion-options.spec.ts)
+· [Chromium](../../../tests/browser/table/table-expansion-options.spec.ts)
 · [SSR](../../../tests/package/table/table-expansion-options.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-expansion-options-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-expansion-options-hydration.spec.ts)
 
 ## Древовидные данные
 
@@ -502,9 +502,9 @@ Ant Design на React оставляет уже открывавшиеся по�
 В Svelte клик раскрывает строки с массивом потомков. Гидратация сохраняет
 ячейку, фокус и выделение в редакторе.
 [Замеры](../../../tests/browser/fixtures/ant-design-table-tree-reference.json)
-· [Chromium](../../../tests/browser/table-tree.spec.ts)
+· [Chromium](../../../tests/browser/table/table-tree.spec.ts)
 · [SSR](../../../tests/package/table/table-tree.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-tree-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-tree-hydration.spec.ts)
 
 ## Видимость заголовка колонок
 
@@ -518,7 +518,7 @@ Ant Design на React оставляет уже открывавшиеся по�
 измеряются после замены страницы или восстановления пустого набора. Закрепление
 и expanded viewport работают в LTR/RTL. Скрытие шапки удаляет её открытый фильтр;
 содержимое и фокус controls в остающихся body rows сохраняются.
-Сравнение 48 состояний UMD: [browser](../../../tests/browser/table-header.spec.ts),
+Сравнение 48 состояний UMD: [browser](../../../tests/browser/table/table-header.spec.ts),
 [SSR](../../../tests/package/table/table-header.ssr.test.ts), fixture `?fixture=table-header`.
 
 ## Группы колонок
@@ -557,7 +557,7 @@ const columns: TableColumnsType<Person> = [
 
 Структура, события и геометрия групп проверяются по 33 состояниям UMD и девяти
 серверным рендерам Ant Design 6.6.8. Строгая гидратация проверяет, что появление
-группы сохраняет активный редактор и выделение текста. [Браузер](../../../tests/browser/table-columns.spec.ts)
+группы сохраняет активный редактор и выделение текста. [Браузер](../../../tests/browser/table/table-columns.spec.ts)
 и [SSR](../../../tests/package/table/table-columns.ssr.test.ts).
 
 ## Ключи колонок
@@ -588,9 +588,9 @@ Table заполняет общие свойства из `column` перед в
 колонка перед группой вызывает такое же расхождение при сортировке.
 Table применяет критерий к строкам и передаёт тот же результат владельцу.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-column-key-reference.json)
-· [Chromium](../../../tests/browser/table-column-keys.spec.ts)
+· [Chromium](../../../tests/browser/table/table-column-keys.spec.ts)
 · [SSR](../../../tests/package/table/table-column-keys.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
 ## Общие свойства колонок
 
@@ -612,9 +612,9 @@ Table применяет критерий к строкам и передаёт 
 сортировки и фильтров. Обновление `column` само по себе не вызывает `onChange`.
 
 [Эталон](../../../tests/browser/fixtures/ant-design-table-column-defaults-reference.json)
-· [Chromium](../../../tests/browser/table-column-defaults.spec.ts)
+· [Chromium](../../../tests/browser/table/table-column-defaults.spec.ts)
 · [SSR](../../../tests/package/table/table-column-defaults.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 
 ## Заголовки колонок
 
@@ -646,15 +646,15 @@ Table применяет критерий к строкам и передаёт 
 составного заголовка этот атрибут можно вернуть из `onHeaderCell`.
 
 [Эталон](../../../tests/browser/fixtures/ant-design-table-column-title-reference.json)
-· [Chromium](../../../tests/browser/table-column-title.spec.ts)
+· [Chromium](../../../tests/browser/table/table-column-title.spec.ts)
 · [SSR](../../../tests/package/table/table-column-title.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-sorter-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-sorter-hydration.spec.ts)
 
 Составные заголовки, `caption` и команды выбора сверены в 16 браузерных
 и серверных профилях Ant Design 6.6.8. Для пустого массива сохраняются
 доступные имена сортировки, фильтра и области прокрутки.
 [Эталон содержимого](../../../tests/browser/fixtures/ant-design-table-heading-content-reference.json)
-· [Chromium](../../../tests/browser/table-heading-content.spec.ts)
+· [Chromium](../../../tests/browser/table/table-heading-content.spec.ts)
 · [SSR](../../../tests/package/table/table-heading-content.ssr.test.ts)
 
 ## Видимость колонок
@@ -671,7 +671,7 @@ colSpan, минимум 1. Восстановление колонок сохр�
 controls соседних ячеек и expanded editor, focus/selection и FormData.
 Смена hidden не вызывает onChange; controls самой скрытой колонки удаляются.
 
-14 случаев UMD: [browser](../../../tests/browser/table-column-hidden.spec.ts),
+14 случаев UMD: [browser](../../../tests/browser/table/table-column-hidden.spec.ts),
 [SSR](../../../tests/package/table/table-column-hidden.ssr.test.ts), fixture `?fixture=table-column-hidden`.
 Сравниваются видимый текст, структура и selection controls. Raw textContent,
 checkbox counts и colspan attributes сохранены: native TableFilter сохраняет
@@ -701,9 +701,9 @@ Snippet по-прежнему реагирует на обращения к со
 и к строке, заново смонтированной после выхода из виртуального окна. Удаление
 `shouldCellUpdate` возобновляет обычное обновление содержимого.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-cell-update-reference.json)
-· [Chromium](../../../tests/browser/table-cell-update.spec.ts)
+· [Chromium](../../../tests/browser/table/table-cell-update.spec.ts)
 · [SSR](../../../tests/package/table/table-cell-update.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
 `tableLayout` задаёт алгоритм ширин `'auto'` или `'fixed'`. При автоматическом
 выборе закреплённые колонки с горизонтальной прокруткой, закреплённая шапка
@@ -731,9 +731,9 @@ Snippet по-прежнему реагирует на обращения к со
 внутри ячейки, а кнопка сортировки и пользовательский snippet сохраняют
 свои DOM-узлы.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-column-layout-reference.json)
-· [Chromium](../../../tests/browser/table-column-layout.spec.ts)
+· [Chromium](../../../tests/browser/table/table-column-layout.spec.ts)
 · [SSR](../../../tests/package/table/table-column-layout.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 
 ## Атрибуты и объединение ячеек
 
@@ -771,8 +771,8 @@ const teamColumn: TableColumn<Person> = {
 Сверка с 32 состояниями и восемью серверными рендерами Ant Design 6.6.8
 проверяет spans, видимые строки, действия внутри объединений и RTL. Строгая
 гидратация проверяет состояние редактора при смене окна.
-[Браузер](../../../tests/browser/table-spans.spec.ts),
-[гидратация](../../../tests/browser/table-spans-hydration.spec.ts),
+[Браузер](../../../tests/browser/table/table-spans.spec.ts),
+[гидратация](../../../tests/browser/table/table-spans-hydration.spec.ts),
 [SSR](../../../tests/package/table/table-spans.ssr.test.ts).
 
 ## Заголовки строк
@@ -790,7 +790,7 @@ Fixed row headers используют source headerBg поверх прежне
 editor, focus/selection или FormData. Добавление/снятие rowScope меняет тег и
 пересоздаёт содержимое ячейки, как source React.
 
-18 случаев UMD, DOM/CSS и controls: [browser](../../../tests/browser/table-row-scope.spec.ts),
+18 случаев UMD, DOM/CSS и controls: [browser](../../../tests/browser/table/table-row-scope.spec.ts),
 [SSR](../../../tests/package/table/table-row-scope.ssr.test.ts), fixture `?fixture=table-row-scope`.
 
 ## Классы и подсветка строк
@@ -812,7 +812,7 @@ editor, focus/selection или FormData. Добавление/снятие rowSc
 сохранено; native использует CSS guard и очищает paint сразу. Source classes
 HoverContext записаны как диагностика, сравнение с native CSS :hover проверяет
 цвета. Границы и текущие flat-row случаи покрывают
-[browser](../../../tests/browser/table-row-options.spec.ts) и
+[browser](../../../tests/browser/table/table-row-options.spec.ts) и
 [SSR](../../../tests/package/table/table-row-options.ssr.test.ts), fixture `?fixture=table-row-options`.
 
 ## Атрибуты строк
@@ -846,9 +846,9 @@ HoverContext записаны как диагностика, сравнение 
 React. Проверки Svelte также покрывают смещения закреплённой шапки и строгую
 гидратацию редактора.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-row-attributes-reference.json)
-· [Chromium](../../../tests/browser/table-row-attributes.spec.ts)
+· [Chromium](../../../tests/browser/table/table-row-attributes.spec.ts)
 · [SSR](../../../tests/package/table/table-row-attributes.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-row-attributes-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-row-attributes-hydration.spec.ts)
 
 ## Панели title и footer
 
@@ -872,7 +872,7 @@ React. Проверки Svelte также покрывают смещения з
 footerColor, обе панели — padding/font текущего размера и border/radius темы.
 Смена страницы, сортировки, фильтра, loading или темы сохраняет содержимое
 остающихся snippets и не создаёт дополнительных onChange callbacks.
-Source comparison: [browser](../../../tests/browser/table-panels.spec.ts),
+Source comparison: [browser](../../../tests/browser/table/table-panels.spec.ts),
 [SSR](../../../tests/package/table/table-panels.ssr.test.ts), fixture `?fixture=table-panels`.
 
 ## Итоговые строки
@@ -920,8 +920,8 @@ Source comparison: [browser](../../../tests/browser/table-panels.spec.ts),
 и при виртуальном теле с обычным итогом. Эти случаи есть в
 [замерах](../../../tests/browser/fixtures/ant-design-table-summary-reference.json).
 Нативное размещение, доступ с клавиатуры и фокус редактора проверяют
-[браузерные сценарии](../../../tests/browser/table-summary.spec.ts),
-[гидратация](../../../tests/browser/table-summary-hydration.spec.ts) и
+[браузерные сценарии](../../../tests/browser/table/table-summary.spec.ts),
+[гидратация](../../../tests/browser/table/table-summary-hydration.spec.ts) и
 [SSR](../../../tests/package/table/table-summary.ssr.test.ts).
 
 ## Префиксы Table
@@ -942,7 +942,7 @@ counterpart. Svelte сохраняет прежнее оформление сп�
 а private `nested-border-top` следует общему namespace. Source theme, оформление
 по умолчанию, fixed offsets/scroll и нативные controls сохраняются при обновлении
 префикса. Открытый фильтр сохраняет draft/focus/IDs; раскрытая строка — editor,
-выделение текста и FormData. Проверки: [browser](../../../tests/browser/table-prefix.spec.ts)
+выделение текста и FormData. Проверки: [browser](../../../tests/browser/table/table-prefix.spec.ts)
 и [SSR](../../../tests/package/table/table-prefix.ssr.test.ts).
 
 ## Компонентная тема Table
@@ -1004,8 +1004,8 @@ Native default size по-прежнему наследует `componentSize` (`m
 Ant Design 6.6.8. Проверка гидратации сохраняет узел редактора, его значение,
 фокус и выделение при смене оформления.
 [Снимки React](../../../tests/browser/fixtures/ant-design-table-semantic-reference.json),
-[браузерные проверки](../../../tests/browser/table-semantic.spec.ts),
-[гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+[браузерные проверки](../../../tests/browser/table/table-semantic.spec.ts),
+[гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 и [SSR](../../../tests/package/table/table-semantic.ssr.test.ts).
 
 ## Закрепление заголовка и колонок
@@ -1154,9 +1154,9 @@ Snippet размечает строки, задаёт размеры конте�
 
 [Замеры UMD](../../../tests/browser/fixtures/ant-design-table-custom-body-reference.json)
 · [Замеры с видимой полосой](../../../tests/browser/fixtures/ant-design-table-custom-body-gutter-reference.json)
-· [Chromium](../../../tests/browser/table-custom-body.spec.ts)
+· [Chromium](../../../tests/browser/table/table-custom-body.spec.ts)
 · [SSR](../../../tests/package/table/table-custom-body.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
 ### Замена отдельных элементов
 
@@ -1190,9 +1190,9 @@ Snippet получает `tag` штатного элемента, `attributes` �
 ```
 
 [Эталон элементов](../../../tests/browser/fixtures/ant-design-table-element-components-reference.json)
-· [Chromium](../../../tests/browser/table-element-components.spec.ts)
+· [Chromium](../../../tests/browser/table/table-element-components.spec.ts)
 · [SSR](../../../tests/package/table/table-element-components.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-virtual-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
 ## Фильтры колонок
 
@@ -1248,7 +1248,7 @@ Snippet получает `tag` штатного элемента, `attributes` �
 передаётся текст поля. Поиск сохраняет отмеченные значения. Запрос
 очищается при закрытии или сбросе, раскрытие дерева сохраняется.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-filter-content-reference.json)
-· [Chromium](../../../tests/browser/table-filter-content.spec.ts)
+· [Chromium](../../../tests/browser/table/table-filter-content.spec.ts)
 · [SSR](../../../tests/package/table/table-filter-content.ssr.test.ts)
 
 `defaultFilteredValue` задаёт начальный фильтр колонки. Явный ключ в
@@ -1303,12 +1303,12 @@ Space переключает выбранный вариант. В поле по
 [Подписи фильтров](#локализация-table) можно задавать для отдельной таблицы.
 
 [Эталон](../../../tests/browser/fixtures/ant-design-table-filter-state-reference.json)
-· [Chromium](../../../tests/browser/table-filter-state.spec.ts)
+· [Chromium](../../../tests/browser/table/table-filter-state.spec.ts)
 · [SSR](../../../tests/package/table/table-filter-state.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-filter-state-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
 
 [Эталон вариантов и поиска](../../../tests/browser/fixtures/ant-design-table-filter-options-reference.json)
-· [Chromium](../../../tests/browser/table-filter-options.spec.ts)
+· [Chromium](../../../tests/browser/table/table-filter-options.spec.ts)
 · [SSR](../../../tests/package/table/table-filter-options.ssr.test.ts)
 
 ### Пользовательская панель фильтра
@@ -1383,13 +1383,13 @@ Snippet верхнего уровня получает признак актив
 `clearFilters({ confirm: true })`.
 
 [Эталон панели](../../../tests/browser/fixtures/ant-design-table-filter-dropdown-reference.json)
-· [Chromium](../../../tests/browser/table-filter-dropdown.spec.ts)
+· [Chromium](../../../tests/browser/table/table-filter-dropdown.spec.ts)
 · [SSR](../../../tests/package/table/table-filter-dropdown.ssr.test.ts)
 
 [Эталон статической панели и иконки](../../../tests/browser/fixtures/ant-design-table-filter-static-content-reference.json)
-· [Chromium](../../../tests/browser/table-filter-static-content.spec.ts)
+· [Chromium](../../../tests/browser/table/table-filter-static-content.spec.ts)
 · [SSR](../../../tests/package/table/table-filter-static-content.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-filter-state-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
 
 ### Контейнеры выпадающих панелей
 
@@ -1408,9 +1408,9 @@ Snippet верхнего уровня получает признак актив
 сохраняет черновик фильтра.
 
 [Эталон контейнеров](../../../tests/browser/fixtures/ant-design-table-popup-container-reference.json)
-· [Chromium](../../../tests/browser/table-popup-container.spec.ts)
+· [Chromium](../../../tests/browser/table/table-popup-container.spec.ts)
 · [SSR](../../../tests/package/table/table-popup-container.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-filter-state-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
 
 ## Направления и приоритеты сортировки
 
@@ -1446,9 +1446,9 @@ Table читает эти настройки и у скрытых колонок
 Объект сортировки без `compare` передаёт критерий владельцу и сохраняет
 порядок записей.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-sorter-reference.json)
-· [Chromium](../../../tests/browser/table-sorter.spec.ts)
+· [Chromium](../../../tests/browser/table/table-sorter.spec.ts)
 · [SSR](../../../tests/package/table/table-sorter.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table-sorter-hydration.spec.ts)
+· [Гидратация](../../../tests/browser/table/table-sorter-hydration.spec.ts)
 
 ### Подсказка сортировки
 
@@ -1471,7 +1471,7 @@ Tooltip к фокусу этой кнопки.
 Доступное описание кнопки сообщает следующее направление при закрытой подсказке.
 Открытая подсказка заголовка описывает кнопку своим содержимым.
 [Эталон](../../../tests/browser/fixtures/ant-design-table-sorter-tooltip-reference.json)
-· [Chromium](../../../tests/browser/table-sorter-tooltip.spec.ts)
+· [Chromium](../../../tests/browser/table/table-sorter-tooltip.spec.ts)
 · [SSR](../../../tests/package/table/table-sorter-tooltip.ssr.test.ts)
 
 ## Серверный режим

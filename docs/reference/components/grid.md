@@ -52,7 +52,7 @@ fontSize/fontFamily, вложенные provider и custom cssVar prefix. Соб
 локальный style сохраняет приоритет. Обновления сохраняют Row/Col refs, slots,
 редактируемое значение, focus/selection и responsive layout.
 14 тем / 140 CSS-состояний UMD сверяются в
-[browser](../../../tests/browser/grid-theme.spec.ts), declarations —
+[browser](../../../tests/browser/grid/grid-theme.spec.ts), declarations —
 в [unit](../../../src/lib/theme/theme-grid-tokens-reference.test.ts), серверная граница —
 в [SSR](../../../tests/package/grid/grid-theme.ssr.test.ts). Fixture `?fixture=grid-theme`.
 
@@ -64,8 +64,8 @@ fontSize/fontFamily, вложенные provider и custom cssVar prefix. Соб
 изолированы, включая одинаковый cssVar.key и hashed=false. Стандартный режим
 и createBreakpoint().connect(window) без явных queries сохраняют прежние пороги.
 5 конфигураций / 126 состояний на свежих pages эталона сверяются в
-[browser](../../../tests/browser/grid-breakpoints.spec.ts); загрузка CSS в обоих порядках
-без JavaScript — [отдельно](../../../tests/browser/grid-breakpoints-ssr.spec.ts).
+[browser](../../../tests/browser/grid/grid-breakpoints.spec.ts); загрузка CSS в обоих порядках
+без JavaScript — [отдельно](../../../tests/browser/grid/grid-breakpoints-ssr.spec.ts).
 Source не обновляет Row/Col layout при смене глобальных порогов после mount,
 хотя публичные tokens уже изменились. [Наблюдение](../../../tests/browser/fixtures/ant-design-grid-breakpoints-update-observation.json)
 сохранено; Svelte обновляет обе части без потери DOM и состояния slot input.
@@ -75,7 +75,7 @@ Row.prefixCls задаёт корень и состояния wrap/align/justify
 приоритет. Canonical Grid marker и gutter context сохраняются. Смена prefix
 сохраняет Row/children DOM, refs, draft/selection/focus и FormData.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-grid-row-prefix-reference.json),
-[browser](../../../tests/browser/grid-row-prefix.spec.ts),
+[browser](../../../tests/browser/grid/grid-row-prefix.spec.ts),
 [SSR](../../../tests/package/grid/grid-row-prefix.ssr.test.ts), `?fixture=grid-row-prefix`.
 Рецепт grid-row-prefix извлекает 16 Row rules без Col/media scopes.
 Col.prefixCls подключает полный scoped template из 1027 rules: base/xs и все
@@ -97,7 +97,7 @@ measurements сохранены раздельно. В custom-media случая
 prefixes и media.
 Проверки: `?fixture=grid-col-prefix`,
 [UMD](../../../tests/browser/fixtures/ant-design-grid-col-prefix-reference.json),
-[browser](../../../tests/browser/grid-col-prefix.spec.ts),
+[browser](../../../tests/browser/grid/grid-col-prefix.spec.ts),
 [SSR](../../../tests/package/grid/grid-col-prefix.ssr.test.ts). Row reference по-прежнему
 использует официальный Col с public prefixCls=ant-col для своего сравнения.
 В CSS-variable режиме эталон записывает components.Grid.screen*Min в CSS variables,

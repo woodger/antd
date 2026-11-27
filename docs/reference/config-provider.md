@@ -32,7 +32,7 @@ InputNumber, Form/FormItem/FormList/FormErrorList, Rate, Listy, Tour и Mentions
 корней компонентов, включая обычные и grid media styles ConfigProvider.
 Пользовательские пробелы и текст внутри controls/snippets сохраняются.
 Это защищают [SSR-проверки границ](../../tests/package/config-provider/prefix-text-boundaries.ssr.test.ts)
-и [браузерный сценарий](../../tests/browser/prefix-text-boundaries.spec.ts),
+и [браузерный сценарий](../../tests/browser/config-provider/prefix-text-boundaries.spec.ts),
 `?fixture=prefix-text-boundaries`.
 Остальные семейства подключаются отдельно. Например,
 ConfigProvider prefixCls="suite" создаёт suite-app, suite-layout,
@@ -51,20 +51,20 @@ selection и focus; соседние и вложенные scopes независ
 markers и --ant-* bridge сохраняются. В SSR классы и исходные variables доступны
 до hydration.
 Сверка: [13 UMD случаев и три перехода](../../tests/browser/fixtures/ant-design-config-prefix-reference.json),
-[browser](../../tests/browser/config-prefix.spec.ts),
+[browser](../../tests/browser/config-provider/config-prefix.spec.ts),
 [SSR](../../tests/package/config-provider/config-prefix.ssr.test.ts),
 [приоритет namespace](../../src/lib/theme/theme-prefix.test.ts).
 
 Statistic/Timer, QRCode, Timeline и Steps проверяются также по
 [девяти исходным примерам и трём переходам](../../tests/browser/fixtures/ant-design-widget-prefix-reference.json):
-[browser](../../tests/browser/widget-prefix.spec.ts),
+[browser](../../tests/browser/config-provider/widget-prefix.spec.ts),
 [SSR](../../tests/package/config-provider/widget-prefix.ssr.test.ts), `?fixture=widget-prefix`.
 При сравнении родительские typography/direction совпадают с DOM-провайдером Svelte;
 текущее время Timer не участвует в снимках.
 
 Divider, Flex и Segmented сверяются с
 [девятью исходными примерами и тремя переходами](../../tests/browser/fixtures/ant-design-core-prefix-reference.json):
-[browser](../../tests/browser/core-prefix.spec.ts),
+[browser](../../tests/browser/config-provider/core-prefix.spec.ts),
 [SSR](../../tests/package/config-provider/core-prefix.ssr.test.ts), `?fixture=core-prefix`.
 Смена prefix сохраняет выбранную опцию, radio DOM, callbacks, FormData и фокус.
 Raw замеры отдельно фиксируют существующее поведение Segmented: radio не имеет
@@ -73,7 +73,7 @@ value-атрибута и отправляет "on"; типизированно�
 Avatar/Group, Badge/Ribbon, Tag/CheckableTag/Group, Empty, Skeleton и его пять primitives,
 Spin, Progress и Result сверяются с
 [исходными замерами 17 вариантов](../../tests/browser/fixtures/ant-design-status-prefix-reference.json):
-[browser](../../tests/browser/status-prefix.spec.ts),
+[browser](../../tests/browser/config-provider/status-prefix.spec.ts),
 [SSR](../../tests/package/config-provider/status-prefix.ssr.test.ts), `?fixture=status-prefix`.
 Raw данные сохраняют React-результат. Сравнение отдельно учитывает прежний отступ
 AvatarGroup, default-класс Tag и RTL-класс CheckableTag. Native Skeleton host/status,
@@ -83,7 +83,7 @@ AvatarGroup, default-класс Tag и RTL-класс CheckableTag. Native Skele
 
 Alert, Collapse и активный Affix сверяются по
 [девяти исходным примерам и трём переходам](../../tests/browser/fixtures/ant-design-structure-prefix-reference.json):
-[browser](../../tests/browser/structure-prefix.spec.ts),
+[browser](../../tests/browser/config-provider/structure-prefix.spec.ts),
 [SSR](../../tests/package/config-provider/structure-prefix.ssr.test.ts), `?fixture=structure-prefix`.
 Affix использует отдельные scroll targets; в SSR остаётся незакреплённым, как source.
 Обновление prefix сохраняет fixed node и редактор раскрытой панели Collapse,
@@ -91,7 +91,7 @@ Affix использует отдельные scroll targets; в SSR остаё�
 
 Tooltip, Popover, Popconfirm и single/range Slider сверяются по
 [45 исходным примерам и 15 переходам](../../tests/browser/fixtures/ant-design-popup-prefix-reference.json):
-[browser](../../tests/browser/popup-prefix.spec.ts),
+[browser](../../tests/browser/popup/popup-prefix.spec.ts),
 [SSR](../../tests/package/popup/popup-prefix.ssr.test.ts), `?fixture=popup-prefix`.
 Открытые подсказки Slider отдельно наследуют Tooltip prefix; локальный Slider prefix
 задаёт только owner class. Prefix Popconfirm не меняет prefix внешнего Popover.
@@ -114,7 +114,7 @@ SSR передаёт nonce в разметке `<style>`. При смене nonc
 Ant Design React 6.6.8 сохраняет nonce у уже закэшированных стилей.
 Таблицы стилей сборщика и политика для атрибутов `style` настраиваются
 приложением. [Замеры React](../../tests/browser/fixtures/ant-design-config-provider-csp-reference.json)
-· [Проверки CSP и гидратации в Chromium](../../tests/browser/config-provider-csp.spec.ts).
+· [Проверки CSP и гидратации в Chromium](../../tests/browser/config-provider/config-provider-csp.spec.ts).
 
 ## Глобальные настройки статических вызовов
 

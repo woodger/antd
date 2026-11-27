@@ -47,7 +47,7 @@ Reduced motion отключает переходы. Прежний numeric offse
 18 последовательностей и 68 кадров закреплены в
 [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-digit-motion-reference.json),
 проверки — [engine](../../../src/lib/badge/badge-digit.engine.test.ts),
-[browser](../../../tests/browser/badge-digit-motion.spec.ts) и
+[browser](../../../tests/browser/badge/badge-digit-motion.spec.ts) и
 [SSR](../../../tests/package/badge/badge-digit-motion.ssr.test.ts), фикстура — `?fixture=badge-digit-motion`.
 
 Появление и исчезновение следуют CSSMotion: начальный видимый count не анимируется,
@@ -62,7 +62,7 @@ title продолжает обновляться. Собственный animat
 таймеры и слушатели. Description и descriptionId скрываются сразу, независимо
 от сохраняемого декоративного индикатора. 17 последовательностей/87 кадров и SSR
 закреплены в [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-zoom-reference.json),
-проверки — [browser](../../../tests/browser/badge-zoom.spec.ts) и
+проверки — [browser](../../../tests/browser/badge/badge-zoom.spec.ts) и
 [SSR](../../../tests/package/badge/badge-zoom.ssr.test.ts), фикстура — `?fixture=badge-zoom`.
 
 ```svelte
@@ -166,19 +166,19 @@ HTMLSpanElement и очищается при unmount. Нативные span attr
 корню; onclick имеет приоритет над React-compatible onClick. Изменение props/config
 сохраняет DOM, состояние, selection и фокус. 49 вариантов и реактивные обновления
 закреплены в [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-api-reference.json),
-проверки — [browser](../../../tests/browser/badge-api.spec.ts) и
+проверки — [browser](../../../tests/browser/badge/badge-api.spec.ts) и
 [SSR](../../../tests/package/badge/badge-api.ssr.test.ts), фикстура — `?fixture=badge-api`.
 
 46 вариантов count закреплены в
 [официальных UMD-снимках](../../../tests/browser/fixtures/ant-design-badge-count-reference.json),
-проверки — [browser](../../../tests/browser/badge-count.spec.ts) и
+проверки — [browser](../../../tests/browser/badge/badge-count.spec.ts) и
 [SSR](../../../tests/package/badge/badge-count.ssr.test.ts), фикстура — `?fixture=badge-count`.
 У прежнего числового режима без нового API сохранены native normalization, BadgeContext,
 root style и оформление standalone/non-status text; эти границы отличаются от React.
 
 58 вариантов text/offset/size и обратимые обновления закреплены в
 [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-values-reference.json),
-проверки — [browser](../../../tests/browser/badge-values.spec.ts),
+проверки — [browser](../../../tests/browser/badge/badge-values.spec.ts),
 [engine](../../../src/lib/badge/badge.engine.test.ts) и
 [SSR](../../../tests/package/badge/badge-values.ssr.test.ts), фикстура — `?fixture=badge-values`.
 
@@ -196,8 +196,8 @@ Reduced motion цифр не зависит от prefix.
 31 вариант классов/styles/геометрии и шесть zoom-последовательностей/30 кадров
 закреплены в [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-prefix-reference.json)
 и [motion-эталонах](../../../tests/browser/fixtures/ant-design-badge-prefix-motion-reference.json).
-Проверки — [browser](../../../tests/browser/badge-prefix.spec.ts),
-[motion](../../../tests/browser/badge-prefix-motion.spec.ts),
+Проверки — [browser](../../../tests/browser/badge/badge-prefix.spec.ts),
+[motion](../../../tests/browser/badge/badge-prefix-motion.spec.ts),
 [SSR](../../../tests/package/badge/badge-prefix.ssr.test.ts) и
 [motion SSR](../../../tests/package/badge/badge-prefix-motion.ssr.test.ts).
 Фикстуры — `?fixture=badge-prefix` и `?fixture=badge-prefix-motion`.

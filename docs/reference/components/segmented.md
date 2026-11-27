@@ -31,7 +31,7 @@ generated name и defaults disabled/block/vertical; size остаётся лок
 value/options и не меняет выбор значения.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-segmented-config-reference.json),
 [SSR](../../../tests/package/segmented/segmented-config.ssr.test.ts),
-[browser](../../../tests/browser/segmented-config.spec.ts), `?fixture=segmented-config`.
+[browser](../../../tests/browser/segmented/segmented-config.spec.ts), `?fixture=segmented-config`.
 
 ConfigProvider.theme.components.Segmented применяет все восемь компонентных
 токенов: padding/фон track, обычный/selected/hover текст и фоны selected/hover/active.
@@ -44,7 +44,7 @@ ConfigProvider.theme.components.Segmented применяет все восемь
 Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-segmented-tokens-reference.json),
 [размеры и pseudo states](../../../tests/browser/fixtures/ant-design-segmented-theme-reference.json),
 [SSR](../../../tests/package/segmented/segmented-theme.ssr.test.ts) и
-[browser](../../../tests/browser/segmented-theme.spec.ts), `?fixture=segmented-theme`.
+[browser](../../../tests/browser/segmented/segmented-theme.spec.ts), `?fixture=segmented-theme`.
 
 Value поддерживает binding, defaultValue читается при создании; без него выбран
 первый option, даже disabled. Внешняя смена value не вызывает onChange(value).
@@ -90,6 +90,6 @@ label остаётся flex-item для block и измерений thumb. По�
 размеры, block/round, vertical/RTL, disabled, semantic styles и option Tooltip.
 Сверка: [UMD](../../../tests/browser/fixtures/ant-design-segmented-prefix-reference.json),
 [SSR](../../../tests/package/segmented/segmented-prefix.ssr.test.ts),
-[browser](../../../tests/browser/segmented-prefix.spec.ts), `?fixture=segmented-prefix`.
+[browser](../../../tests/browser/segmented/segmented-prefix.spec.ts), `?fixture=segmented-prefix`.
 Segmented наследует ConfigProvider.prefixCls; непустой локальный prefix имеет приоритет.
 

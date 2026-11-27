@@ -65,7 +65,7 @@ Scoped template повторяет 61 source CSS rule. Смена prefix сох�
 теряет margins кнопок из-за CSS-кэша первого namespace. Raw результаты сохранены;
 freshNested измерен с новым public local class. Svelte изолирует CSS по обоим
 prefixes. Сверка — [UMD](../../../tests/browser/fixtures/ant-design-tour-prefix-reference.json),
-[browser](../../../tests/browser/tour-prefix.spec.ts),
+[browser](../../../tests/browser/tour/tour-prefix.spec.ts),
 [SSR](../../../tests/package/tour/tour-prefix.ssr.test.ts), `?fixture=tour-prefix`.
 
 По умолчанию mask/placeholder/popup находятся в body. GetPopupContainer=false
@@ -87,7 +87,7 @@ Button сохраняет независимую тему; local step/semantic s
 CSS Tour подключён перед Button, как в исходном runtime: при наведении на Next
 в primary panel Button задаёт цвет текста и рамки, Tour — фон.
 Обновления темы сохраняют шаг, portal DOM, focus/caret и пользовательский input.
-Проверки и 15 UMD-тем — [tour-theme](../../../tests/browser/tour-theme.spec.ts), `?fixture=tour-theme`.
+Проверки и 15 UMD-тем — [tour-theme](../../../tests/browser/tour/tour-theme.spec.ts), `?fixture=tour-theme`.
 
 Панель и маска используют слой Tour. В корне без явного `zIndex` это 1001,
 даже при другом CSS-токене `zIndexPopup` или `zIndexPopupBase`.
@@ -99,7 +99,7 @@ CSS Tour подключён перед Button, как в исходном runtim
 
 Проверки: [engine](../../../src/lib/tour/tour.engine.test.ts),
 [public package SSR](../../../tests/package/tour/tour.ssr.test.ts),
-[browser](../../../tests/browser/tour.spec.ts) и `?fixture=tour`.
+[browser](../../../tests/browser/tour/tour.spec.ts) и `?fixture=tour`.
 [61 исходное CSS-правило](../../../src/lib/vendor/tour.css) воспроизводится
 [рецептом](../../../tools/ant-design-css-recipes.json). Перенесённая логика снабжена
 MIT-лицензиями [rc-tour](../../../src/lib/vendor/LICENSE.rc-tour),

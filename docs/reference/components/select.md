@@ -82,11 +82,11 @@ Native label/NFKD search и disabled cache проверяются
 теряет mapped aria-selected: [парное наблюдение](../../../tests/browser/fixtures/ant-design-select-data-aria-reference.json.gz)
 сохраняет этот результат, Native использует корректное mapped состояние. Multiple token
 lookup использует mapped value; Source при том же вводе читает literal value и теряет выбор.
-Полные [браузерные проверки](../../../tests/browser/select-data.spec.ts),
-[атрибуты](../../../tests/browser/select-data-attributes.spec.ts),
-[диагностические границы](../../../tests/browser/select-data-diagnostics.spec.ts),
+Полные [браузерные проверки](../../../tests/browser/select/select-data.spec.ts),
+[атрибуты](../../../tests/browser/select/select-data-attributes.spec.ts),
+[диагностические границы](../../../tests/browser/select/select-data-diagnostics.spec.ts),
 [SSR](../../../tests/package/select/select-data.ssr.test.ts) и
-[строгая hydration](../../../tests/browser/select-data-hydration.spec.ts) проверяют эти контракты.
+[строгая hydration](../../../tests/browser/select/select-data-hydration.spec.ts) проверяют эти контракты.
 
 ## Выбранные labels и labelInValue
 
@@ -133,9 +133,9 @@ maxTagTextLength усекает только строку/число. FormData �
 [SSR](../../../tests/browser/fixtures/ant-design-select-value-ssr-reference.json.gz) и
 [public owner disabled cache](../../../tests/browser/fixtures/ant-design-select-value-cache-native-reference.json)
 сохраняют независимые наблюдения оригинала. Проверки:
-[browser](../../../tests/browser/select-value.spec.ts), [hydration](../../../tests/browser/select-value-hydration.spec.ts),
+[browser](../../../tests/browser/select/select-value.spec.ts), [hydration](../../../tests/browser/select/select-value-hydration.spec.ts),
 [SSR/type contracts](../../../tests/package/select/select-value.ssr.test.ts) и
-[фактическая прозрачность label](../../../tests/browser/select-value-opacity.spec.ts).
+[фактическая прозрачность label](../../../tests/browser/select/select-value-opacity.spec.ts).
 Native сохраняет скалярный текст закрытого input и его caret, текущий query владельца,
 различие 0/"0" и disabled cache удалённого option. Searchable required проверяет наличие raw выбора, независимо от rich/пустой
 отрисованной подписи. Rich содержимое остаётся DOM/Snippet;
@@ -149,7 +149,7 @@ Variant поддерживает outlined/filled/borderless/underlined в single
 по умолчанию outlined. Явный variant имеет приоритет над настройками Form и provider. Смена оформления сохраняет DOM,
 поисковый текст, выделение, фокус и выбранные значения формы. Классы и computed
 styles сверены с официальным UMD 6.6.8 в
-[браузерных проверках](../../../tests/browser/select-variants.spec.ts).
+[браузерных проверках](../../../tests/browser/select/select-variants.spec.ts).
 Общие [ConfigProvider.variant/Form.variant и Select config](../control-variants.md)
 применяются после локальных props.
 
@@ -163,7 +163,7 @@ undefined наследует `ConfigProvider.prefixCls`. CSS scope раздел�
 в обычной, вложенной и reset областях сверяют single/multiple/tags, размеры,
 варианты, status, aliases и открытые options. Дополнительный native compact bridge
 сохраняет геометрию внешнего container. Проверки:
-[browser](../../../tests/browser/select-prefix.spec.ts), [SSR](../../../tests/package/select/select-prefix.ssr.test.ts).
+[browser](../../../tests/browser/select/select-prefix.spec.ts), [SSR](../../../tests/package/select/select-prefix.ssr.test.ts).
 
 ```svelte
 <script lang="ts">
@@ -197,7 +197,7 @@ bottomLeft либо bottomRight в RTL. Getter не вызывается при 
 ShadowRoot требует собственных стилей; смена функции с тем же контейнером
 сохраняет DOM списка, поиск и выделение. Закрытие Select удаляет его список;
 AutoComplete сохраняет смонтированный popup до unmount. Проверки обоих компонентов —
-[select-container](../../../tests/browser/select-container.spec.ts), `?fixture=select-container`;
+[select-container](../../../tests/browser/select/select-container.spec.ts), `?fixture=select-container`;
 32 сценария сверены с официальным UMD Ant Design 6.6.8.
 
 `popupMatchSelectWidth` выбирает ширину списка: `true` берёт ширину поля,
@@ -320,7 +320,7 @@ SSR всегда выводит aria-expanded=false без popup и без вы�
 После mount применяется актуальное состояние. Source React откладывает закрытие
 через MessageChannel; прежнее немедленное Native закрытие сохранено.
 Эталоны: [25 client/React SSR сценариев](../../../tests/browser/fixtures/ant-design-select-open-reference.json).
-Проверки: [браузер](../../../tests/browser/select-open.spec.ts),
+Проверки: [браузер](../../../tests/browser/select/select-open.spec.ts),
 [SSR и публичные типы](../../../tests/package/select/select-open.ssr.test.ts).
 
 ## Содержимое пунктов Select
@@ -357,7 +357,7 @@ query, selection и focus. В закрытом SSR optionRender не вызыв�
 Native value keys и оформление пунктов сохранены. Groups/fieldNames и raw option attrs
 подключены общим data pipeline; semantic slots описаны ниже.
 Основа — [16 исходных случаев](../../../tests/browser/fixtures/ant-design-select-option-render-reference.json),
-[браузерные проверки](../../../tests/browser/select-option-render.spec.ts) и
+[браузерные проверки](../../../tests/browser/select/select-option-render.spec.ts) и
 [SSR/типизация](../../../tests/package/select/select-option-render.ssr.test.ts).
 
 ## Popup и семантическое оформление
@@ -487,9 +487,9 @@ OnInputKeyDown получает input event после исходного preven
 Пользовательские иконки сохраняют mousedown/click и фокус editor при выборе;
 это также проверяется с обычными декларативными обработчиками Svelte.
 
-[Браузерная сверка](../../../tests/browser/select-icons.spec.ts) охватывает 15 React owners
+[Браузерная сверка](../../../tests/browser/select/select-icons.spec.ts) охватывает 15 React owners
 и 195 действий, [SSR](../../../tests/package/select/select-icons.ssr.test.ts) — 142 состояния.
-[Дополнительные проверки](../../../tests/browser/select-icons-edges.spec.ts) фиксируют
+[Дополнительные проверки](../../../tests/browser/select/select-icons-edges.spec.ts) фиксируют
 closed tags submit, maxCount и keyboard hooks. Полные Original записи сохранены
 без потерь в gzip; [manifest](../../../tests/browser/fixtures/ant-design-select-icons-source-manifest.json)
 содержит хеши и независимые повторы, включая реальный дополнительный pure-menu pass.
@@ -545,7 +545,7 @@ Generated attrs root перекрывают собственные `props`, вн
 
 [Эталон и manifest](../../../tests/browser/fixtures/ant-design-select-components-source-manifest.json)
 содержат 13 независимо повторённых owners, 138 действий и 51 SSR-состояние
-для single Select и combobox. [Отдельная SSR→hydration сверка](../../../tests/browser/select-components-hydration.spec.ts)
+для single Select и combobox. [Отдельная SSR→hydration сверка](../../../tests/browser/select/select-components-hydration.spec.ts)
 добавляет 6 owners и 34 действия: pre-hydration draft/caret, defaultValue,
 textarea/composite refs, DOM identity при hydrate и replacement, события и cleanup.
 [Original manifest](../../../tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json)
@@ -568,7 +568,7 @@ model, events и producer ledgers сверяются с исходным Source.
 применяет CSS без нового измерения. CSSOM сохраняет историю logical props отдельно
 от ширины, очищенной измерением. [Composite probe](../../../tests/browser/fixtures/ant-design-select-components-modes-composite-reference.json.gz)
 сохраняет отдельный Source CSR TypeError при чтении handle.style и одно успешное SSR-состояние.
-[Два Native safety-случая](../../../tests/browser/select-components-modes-composite-safe.spec.ts)
+[Два Native safety-случая](../../../tests/browser/select/select-components-modes-composite-safe.spec.ts)
 измеряют физический typed textarea за composite handle без style/scrollWidth shim.
 [Original-корпус own style AutoComplete](../../../tests/browser/fixtures/ant-design-select-components-ac-style-source-manifest.json)
 содержит 2 owners, 20 действий и 16 SSR-состояний: при syncWidth=false own width
@@ -608,7 +608,7 @@ DOM-строка `context.attributes.style` и CSS-string API сохранены
 React layout commit и Svelte onMount, SyntheticEvent/native DOM event и deprecated
 getter свободной AutoComplete option сверяются через отдельные точные границы;
 оба полных raw снимка сохраняются.
-[20 Native-регрессий обновления редактора](../../../tests/browser/select-components-controlled-removal.spec.ts)
+[20 Native-регрессий обновления редактора](../../../tests/browser/select/select-components-controlled-removal.spec.ts)
 проверяют own `undefined`/`null`, value/defaultValue, checked/defaultChecked и тело textarea.
 Начальная гидратация следует измеренной семантике React; последующие setters сохраняют
 прежнее поведение Svelte, включая отдельные правила defaults для CSR и гидратации.
@@ -642,10 +642,10 @@ Svelte style-attribute hoist у responsive wrappers. Две точные пус�
 При components.input закрытие custom tag откладывается через MessageChannel,
 поэтому onOpenChange(false) следует после удаления. Оба ports закрываются
 после вызова или отмены; удаление компонента отменяет pending callback.
-[Три проверки ресурсов](../../../tests/browser/select-components-tag-close-safety.spec.ts)
+[Три проверки ресурсов](../../../tests/browser/select/select-components-tag-close-safety.spec.ts)
 закрепляют обычное закрытие, отмену через Escape и немедленный unmount.
 [Отдельный Source counter](../../../tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-source-manifest.json)
-и [три клавиатурные регрессии](../../../tests/browser/select-components-tag-close-key.spec.ts)
+и [три клавиатурные регрессии](../../../tests/browser/select/select-components-tag-close-key.spec.ts)
 проверяют отмену pending close при уже открытом меню: ArrowDown отменяет задачу,
 ArrowUp и Ctrl+ArrowDown позволяют ей завершиться. Оба Source-повтора сохраняются
 полностью; совпадает измеренная key/open/event-name проекция, полное равенство
@@ -669,12 +669,12 @@ disabled guards сохранены. Полные аргументы, descriptors
 tagRender, но не монтирует его body/DOM. Неисполняемый Svelte Snippet не имитирует
 эти вызовы; Source-only rest records сохранены с точной проверкой семи полей
 и отсутствия body/DOM.
-[Browser](../../../tests/browser/select-components-tag-close-handles.spec.ts) и
+[Browser](../../../tests/browser/select/select-components-tag-close-handles.spec.ts) и
 [SSR](../../../tests/package/select/select-components-tag-close-handles.ssr.test.ts) закрепляют этот объём;
 [negative guards](../../../tests/package/select/select-components-tag-close-handles-boundaries.test.ts)
 отклоняют потерянные поля, изменённые aliases и поддельные rest-вызовы.
 Прочие сочетания callbacks и renderer API остаются partial.
-[Browser](../../../tests/browser/select-components.spec.ts) и
+[Browser](../../../tests/browser/select/select-components.spec.ts) и
 [SSR](../../../tests/package/select/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete
 ещё не завершён: оставшиеся callback/search и motion возможности отмечены в реестре.

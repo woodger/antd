@@ -42,7 +42,7 @@ orientationMargin и verticalMarginInline, локальные alias-токены
 обновляется без замены DOM и предшествует semantic styles и пользовательскому style.
 Нули, CSS-единицы, явный undefined и собственный cssVar.prefix сохраняются.
 Проверки: [SSR](../../../tests/package/divider/divider-theme.ssr.test.ts),
-[browser](../../../tests/browser/divider-theme.spec.ts),
+[browser](../../../tests/browser/divider/divider-theme.spec.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-divider-theme-reference.json),
 фикстура `?fixture=divider-theme`.
 
@@ -60,7 +60,7 @@ Callbacks получают прежние нормализованные props �
 Prefix/config updates сохраняют nativeElement, DOM, фокус и состояние соседних полей;
 строчный vertical Divider не добавляет пробелы. Проверки:
 [SSR](../../../tests/package/divider/divider-config.ssr.test.ts),
-[browser](../../../tests/browser/divider-config.spec.ts),
+[browser](../../../tests/browser/divider/divider-config.spec.ts),
 [эталон UMD](../../../tests/browser/fixtures/ant-design-divider-config-reference.json),
 фикстура `?fixture=divider-config`. Общий prefix ConfigProvider поддержан;
 React development warnings ещё не перенесены.

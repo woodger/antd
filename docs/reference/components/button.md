@@ -32,7 +32,7 @@ spinner; смена delay/отмена/удаление очищают deadline.
 гидратации уже видимый индикатор остаётся на месте. Завершение ухода удаляет
 иконку, а состояние загрузки и доступность кнопки меняются сразу.
 Токен theme.token.motion=false и prefers-reduced-motion отключают переход.
-[Сверка с React 6.6.8](../../../tests/browser/button-loading-motion.spec.ts).
+[Сверка с React 6.6.8](../../../tests/browser/button/button-loading-motion.spec.ts).
 
 Согласованный v1 native button во время loading остаётся disabled и aria-busy;
 это сохраняет существующее отличие от React click guard. Для ссылки loading
@@ -43,7 +43,7 @@ Native button сохраняет htmlType/button/submit/reset и form-атриб
 
 При гидратации сфокусированная кнопка или ссылка сохраняет DOM-узел и фокус.
 Enter вызывает обработчик на том же нативном элементе.
-[Сверка с React 6.6.8](../../../tests/browser/button-hydration.spec.ts).
+[Сверка с React 6.6.8](../../../tests/browser/button/button-hydration.spec.ts).
 
 ClassNames/styles — объект или функция от {props}; слоты root/icon/content.
 Классы объединяются. Стилевые слои: context.styles → context.style(root) →

@@ -36,7 +36,7 @@ statistic-record, любой собственный объект, включая
 
 Реактивная смена config и callback props сохраняет DOM корня, вложенные и соседние
 провайдеры изолированы. Сверка: [26 исходных случаев и 4 обновления](../../../tests/browser/fixtures/ant-design-statistic-config-reference.json),
-[браузерные метрики](../../../tests/browser/statistic-config.spec.ts),
+[браузерные метрики](../../../tests/browser/statistic/statistic-config.spec.ts),
 [публичные типы и SSR](../../../tests/package/statistic/statistic-config.ssr.test.ts), `?fixture=statistic-config`.
 Прежние Svelte defaults, native RTL direction и доступный loading Skeleton сохранены.
 
@@ -47,7 +47,7 @@ statistic-record, любой собственный объект, включая
 включая prefix, совпадающий с ant-statistic-content или ant-statistic-css-var.
 Смена prefix сохраняет DOM корня, semantic styles, темы и native compact defaults.
 Сверка: [22 исходных случая и 4 смены prefix](../../../tests/browser/fixtures/ant-design-statistic-prefix-reference.json),
-[браузер](../../../tests/browser/statistic-prefix.spec.ts),
+[браузер](../../../tests/browser/statistic/statistic-prefix.spec.ts),
 [CSS boundary](../../../src/lib/statistic/statistic-prefix.test.ts),
 [публичный пакет и SSR](../../../tests/package/statistic/statistic-prefix.ssr.test.ts), `?fixture=statistic-prefix`.
 Общий ConfigProvider.prefixCls применяется также к Timer; локальный prefix имеет приоритет.
@@ -72,7 +72,7 @@ Svelte сохраняет существующий dir=rtl и LTR value; наб�
 Сверка: [официальные CSS tokens](../../../tools/fixtures/ant-design-statistic-tokens-reference.json),
 [оформление normal/loading/Timer countup/countdown](../../../tests/browser/fixtures/ant-design-statistic-theme-reference.json),
 [SSR](../../../tests/package/statistic/statistic-theme.ssr.test.ts) и
-[browser](../../../tests/browser/statistic-theme.spec.ts), `?fixture=statistic-theme`.
+[browser](../../../tests/browser/statistic/statistic-theme.spec.ts), `?fixture=statistic-theme`.
 
 Фикстура — `?fixture=statistic`. Unit/SSR/Chromium
 проверяют форматирование, loading, snippets, semantic styles, темы, RTL и фокус.
