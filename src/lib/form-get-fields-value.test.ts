@@ -51,6 +51,22 @@ describe('createForm getFieldsValue', () => {
     expect(filter).not.toHaveBeenCalled();
   });
 
+  it('reads each registered name once when selecting a named field', () => {
+    const initialValues = { first: 1, second: 2, third: 3 };
+    const form = createForm({ initialValues });
+    const hooks = getFormHooks(form)!;
+    const readName = vi.fn((name: string) => name);
+    for (const name of Object.keys(initialValues)) {
+      hooks.registerField({ get name() { return readName(name); } });
+    }
+    readName.mockClear();
+
+    const selected = form.getFieldsValue(['second']);
+
+    expect(selected).toEqual({ second: 2 });
+    expect(readName).toHaveBeenCalledTimes(3);
+  });
+
   it('passes null to the filter for explicit unknown paths and includes model-owned rules', () => {
     const form = createForm({ initialValues: { name: 'Anna', unbound: 'Hidden' }, rules: {
       name: [{ required: true }]

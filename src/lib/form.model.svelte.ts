@@ -155,6 +155,54 @@ interface StoredField {
   run: number;
 }
 
+interface FieldSelection {
+  path: (string | number)[];
+  field?: StoredField;
+}
+
+type FieldBinding = FieldSelection & { field: StoredField; };
+
+/** Preserves numeric path segments, including infinities and the strict equality rule for NaN. */
+function fieldSelectionKey(path: FieldSelection['path']): string | symbol {
+  if (path.some(part => typeof part === 'number' && Number.isNaN(part))) {
+    return Symbol();
+  }
+
+  return JSON.stringify(path.map(part => typeof part === 'number' ? [String(part)] : part));
+}
+
+/** Selects the exact binding before descendants, or the unregistered path itself. */
+function selectFieldPath(name: NamePath, bindings: ReadonlyMap<string | symbol, FieldBinding>) {
+  const path = formNamePath(name);
+  if (!path.length) {
+    return [{ path }];
+  }
+
+  const selected: FieldSelection[] = [];
+  const exact = bindings.get(fieldSelectionKey(path));
+  if (exact) {
+    selected.push(exact);
+  }
+  for (const binding of bindings.values()) {
+    if (binding.path.length > path.length && containsFormPath(path, binding.path)) {
+      selected.push(binding);
+    }
+  }
+
+  return selected.length ? selected : [{ path }];
+}
+
+/** The last registration wins for each path at the first registration's position. */
+function selectNamedFields(names: readonly NamePath[], bindings: readonly FieldBinding[]) {
+  const byPath = new Map<string | symbol, FieldBinding>();
+  for (const binding of bindings) {
+    const key = fieldSelectionKey(binding.path);
+    byPath.set(key, binding);
+  }
+
+  return names.flatMap(name => selectFieldPath(name, byPath));
+}
+
 /**
  * Creates an isolated reactive form model. Plain objects and arrays are copied. Stale asynchronous
  * validation cannot replace errors for newer values.
@@ -263,9 +311,7 @@ export function createForm<Values extends FormValues>({
     ensureField(name).persistent = true;
   }
 
-  function fieldRules(field: StoredField) {
-    const path = fieldPath(field);
-
+  function fieldRules(field: StoredField, path = fieldPath(field)) {
     return field.registration?.rules
       ?? (path.length === 1 && Object.hasOwn(rules, path[0])
         ? rules[path[0] as keyof typeof rules] : undefined)
@@ -321,6 +367,56 @@ export function createForm<Values extends FormValues>({
       && (!names || names.some((name) => sameFormPath(name, fieldPath(field)))));
   }
 
+  // Read the current names once, including names updated when a FormList row moves.
+  function fieldBindings(): FieldBinding[] {
+    const bindings: FieldBinding[] = [];
+    for (const field of fields) {
+      const path = fieldPath(field);
+      if (path.length && (field.registration || fieldRules(field, path).length)) {
+        bindings.push({ path, field });
+      }
+    }
+
+    return bindings.sort(
+      (first, second) => (first.field.registrationOrder ?? 0) - (second.field.registrationOrder ?? 0)
+    );
+  }
+
+  // Filter callbacks can change the store. Read each value only after its filter runs.
+  function projectFieldValues(selected: readonly FieldSelection[], filter?: FormFilterFunc) {
+    const lists: NamePath[] = [];
+    let result: unknown = {};
+
+    for (const { path, field } of selected) {
+      if (field?.registration?.isList) {
+        lists.push(path);
+        continue;
+      }
+
+      const meta: FormFieldMeta | null = field ? {
+        touched: field.touched,
+        validating: field.validating,
+        errors: [...(field.errors ?? [])],
+        warnings: [...(field.warnings ?? [])],
+        name: [...path],
+        validated: field.validated
+      } : null;
+      if (!filter || filter(meta)) {
+        const currentValue = getFormValue(values, path);
+        result = setFormValue(result, path, currentValue);
+      }
+    }
+
+    for (const path of lists) {
+      if (!getFormValue(result, path)) {
+        result = setFormValue(result, path, []);
+      }
+    }
+
+    // The dynamic paths above copy only the selected parts of the store.
+    return result as FormValueProjection<Values>;
+  }
+
   function getFieldsValue(all: true | readonly [readonly []], filter?: undefined): Values;
   function getFieldsValue(
     namesOrConfig?: readonly NamePath[] | true | FormGetFieldsValueConfig,
@@ -342,62 +438,10 @@ export function createForm<Values extends FormValues>({
 
     const select = names || namesOrConfig === true
       ? filter : (namesOrConfig as FormGetFieldsValueConfig | undefined)?.filter;
-    // The order UI bindings does not depend on pre-created containers initialValues.
-    const bindings = fields.filter((field) => fieldPath(field).length > 0
-      && (field.registration || fieldRules(field).length))
-      .sort((first, second) => (first.registrationOrder ?? 0) - (second.registrationOrder ?? 0));
-    // The named query selects the last of each way, keeping the order of names.
-    const unique: StoredField[] = [];
-    if (names) {
-      for (const field of bindings) {
-        const index = unique.findIndex((entry) => sameFormPath(fieldPath(entry), fieldPath(field)));
-        if (index < 0) {
-          unique.push(field);
-        }
-        else {
-          unique[index] = field;
-        }
-      }
-    }
-    const selected: { path: (string | number)[]; field?: StoredField }[] = names
-      ? names.flatMap((name) => {
-        const path = formNamePath(name);
-        const exact = unique.find((field) => sameFormPath(path, fieldPath(field)));
-        const matches = path.length ? [
-          ...(exact ? [exact] : []),
-          ...unique.filter((field) => containsFormPath(path, fieldPath(field))
-            && !sameFormPath(path, fieldPath(field)))
-        ] : [];
+    const bindings = fieldBindings();
+    const selected = names ? selectNamedFields(names, bindings) : bindings;
 
-        return matches.length
-          ? matches.map((field) => ({ path: fieldPath(field), field })) : [{ path }];
-      })
-      : bindings.map((field) => ({ path: fieldPath(field), field }));
-    const lists: NamePath[] = [];
-    let result: unknown = {};
-
-    for (const { path, field } of selected) {
-      if (field?.registration?.isList) {
-        lists.push(path);
-        continue;
-      }
-
-      const meta: FormFieldMeta | null = field ? {
-        touched: field.touched, validating: field.validating,
-        errors: [...(field.errors ?? [])], warnings: [...(field.warnings ?? [])],
-        name: [...path], validated: field.validated
-      } : null;
-      if (!select || select(meta)) {
-        result = setFormValue(result, path, getFormValue(values, path));
-      }
-    }
-
-    for (const path of lists) {
-      if (!getFormValue(result, path)) result = setFormValue(result, path, []);
-    }
-
-    // The dynamic paths above copy only the selected parts of the store.
-    return result as FormValueProjection<Values>;
+    return projectFieldValues(selected, select);
   }
 
   // Confirms that for the field there was and the expectation of debounce was canceled.
