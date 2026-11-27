@@ -13,171 +13,203 @@
 </Tooltip>
 ```
 
-Title принимает строку, число, boolean, пассивный Snippet, вложенные массивы или null.
-Legacy `overlay` приоритетнее title, кроме title=0; falsy overlay использует title.
-Boolean не создаёт текст: true и пустой массив позволяют открыть пустую подсказку,
-false и NaN без fallback отключают её. Snippet рендерится внутри изолированного
-popup-контекста; его пустоту компонент не определяет заранее. Пустая строка,
-пробелы, undefined и null сохраняют native подавление показа и связи описания;
-это отличается от whitespace и controlled empty title upstream. Число 0 отображается.
-Текст экранируется.
-Children — snippet с одним основным DOM-элементом, например Button, Input или
-нативной кнопкой. Этот элемент служит anchor и получает aria-describedby.
-Wrapper сохраняет обработчики дочернего элемента и не добавляет остановку Tab;
-для клавиатурного доступа используйте фокусируемый дочерний элемент.
-Hover работает и вокруг disabled Button; disabled ConfigProvider не отключает
-объясняющую подсказку.
+`title` accepts a string, number, boolean, passive Snippet, nested
+arrays, or `null`. Legacy `overlay` takes precedence except when
+`title=0`. Falsy `overlay` falls back to `title`. Booleans produce no
+text. `true` and an empty array allow an empty tooltip to open.
+`false` and `NaN` without a fallback disable it. A Snippet renders
+inside an isolated popup context. Tooltip cannot determine in
+advance whether it is empty. An empty string, whitespace,
+`undefined`, and `null` retain native suppression of display and
+the description link, which differs from upstream whitespace and
+controlled empty titles. Numeric zero renders. Text is escaped.
 
-`bind:open` передаёт видимость владельцу; без привязки компонент хранит её сам.
-DefaultOpen задаёт начальное состояние. `onOpenChange(open)` вызывается при
-пользовательском открытии/закрытии; внешнее изменение open и начальное состояние
-не вызывают callback. Как и другие bindable props модуля, open следует модели
-Svelte; для синхронизации владельца используйте bind:open.
+`children` is a Snippet with one main DOM element such as Button,
+Input, or a native button. It acts as the anchor and receives
+`aria-describedby`. The wrapper preserves child handlers and adds
+no Tab stop. Use a focusable child for keyboard access. Hover also
+works around a disabled Button. ConfigProvider disabled state
+leaves explanatory tooltips available.
 
-`disabled` скрывает подсказку и её open class, сохраняя raw open. Trigger-события
-и ожидающий mouseEnterDelay продолжают менять это состояние и вызывать
-onOpenChange, как в rc-trigger. Изменение самого disabled не вызывает callback;
-повторное включение может показать уже открытую подсказку. ConfigProvider.disabled
-по-прежнему не отключает объясняющий Tooltip.
+`bind:open` shares visibility with the owner. Without binding,
+Tooltip stores it locally. `defaultOpen` sets the initial state.
+`onOpenChange(open)` runs on user opening and closing. External
+`open` changes and initial state leave the callback uncalled. As
+with other bindable props in the module, `open` follows Svelte
+semantics. Use `bind:open` to synchronize with the owner.
 
-`id` задаёт ID popup; пустая строка использует стабильный автоматически созданный
-fallback. При fresh=false скрытый ID кэшируется вместе с содержимым и обновляется
-при открытии. Существующая native связь aria-describedby сохраняется также при
-закрытии; disabled снимает только собственную связь Tooltip. Описания владельца
-не удаляются при смене ID или отключении.
+`disabled` hides the tooltip and open class and retains raw
+`open`. Trigger events and pending `mouseEnterDelay` continue
+updating that state and calling `onOpenChange` as in rc-trigger.
+Changing `disabled` itself does not call the callback. Re-enabling
+can reveal an already open tooltip. `ConfigProvider.disabled`
+keeps explanatory Tooltip available.
 
-`zIndex` задаёт inline z-index popup, включая 0 и отрицательные значения.
-Provider root styles и local styles.root идут после него. Без prop уровень
-берётся из контекста или тематического `zIndexPopup`. Настройки передаются single/range
-Slider и ellipsis Tooltip Typography. В Typography disabled вычисляет сам ellipsis
-и перекрывает значение из tooltip options, как в upstream.
-[Уровни вложенных панелей](../theme-context.md#layering-nested-panels)
+`id` sets the popup ID. The empty string uses a stable generated
+fallback. With `fresh=false`, the hidden ID is cached with the
+content and updates on opening. The existing native
+`aria-describedby` link persists when closed. Disabled removes
+only Tooltip's own link. Owner descriptions survive ID changes
+and disabling.
 
-`bind:ref` выдаёт TooltipRef после mount и очищает его при unmount. NativeElement
-указывает на основной DOM trigger, включая SVG; popupElement — на существующий
-native span shell. Getters отражают замену trigger и перенос popup в контейнер.
-Shell доступен также до первого открытия и при destroyOnHidden: исходный lazy div
-и его удаление не подменяют согласованный native lifecycle.
+`zIndex` sets inline popup `z-index`, including zero and negative
+values. Provider root styles and local `styles.root` follow it.
+When omitted, the layer comes from context or theme
+`zIndexPopup`. Settings pass to single and range Slider and
+Typography's ellipsis Tooltip. In Typography, ellipsis calculates
+`disabled` and overrides tooltip options, as upstream.
+[Nested popup layers](../theme-context.md#layering-nested-panels)
 
-`tooltipRef?.forceAlign()` пересчитывает открытый popup текущим контроллером
-placement/arrow/overflow. После изменения разметки вызовите его после `await tick()`
-либо в `$effect`. Метод не создаёт дополнительный animation loop, не открывает
-закрытый или уничтоженный popup и не вызывает onOpenChange; DOM, ввод, фокус и
-выделение сохраняются. Прежнее автоматическое отслеживание anchor продолжает работать.
-Вызовы в одном turn объединяются в одну microtask, как в rc-trigger; возвращаемое
-значение — void. Императивный вызов не подписывает `$effect` на внутреннее состояние Tooltip.
+`bind:ref` supplies a `TooltipRef` after mount and clears on
+unmount. `nativeElement` refers to the main DOM trigger, including
+SVG. `popupElement` is the existing native `span` shell. Getters
+reflect trigger replacement and popup container moves. The shell
+is available before first open and with `destroyOnHidden`.
+The original lazy `div` and its removal are independent of this
+native lifecycle.
 
-Как в исходном interface, TooltipProps не содержит ref; полный тип Svelte-компонента
-с binding доступен через `ComponentProps<typeof Tooltip>`. Сверка DOM/ref и layout:
-[четыре UMD-сценария](../../../tests/browser/fixtures/ant-design-tooltip-ref-reference.json),
-[SSR](../../../tests/package/tooltip/tooltip-ref.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip/tooltip-ref.spec.ts), `?fixture=tooltip-ref`.
+`tooltipRef?.forceAlign()` recalculates an open popup using the
+current placement, arrow, and overflow controller. After changing
+markup, call it after `await tick()` or in `$effect`. The method
+creates no additional animation loop, leaves a closed or destroyed
+popup closed, and leaves `onOpenChange` uncalled. DOM, input, focus,
+and selection persist. Existing automatic anchor tracking
+continues. Calls in one turn are combined into one microtask, as
+in rc-trigger, and return `void`. The imperative call does not
+subscribe `$effect` to internal Tooltip state.
 
-Trigger без component config по умолчанию `['hover', 'focus']`; можно выбрать одно
-событие или передать пустой массив для программного показа. MouseEnterDelay и mouseLeaveDelay
-задаются в секундах, по умолчанию 0.1. Фокус открывает подсказку сразу. Pointer
-с типом touch не имитирует hover. На подсказку можно перевести указатель, она
-остаётся видимой; клик по ней сохраняет фокус. Escape и нажатие снаружи закрывают
-её. После Escape она остаётся скрытой до нового наведения/фокуса. В Modal первый
-Escape закрывает Tooltip, следующий — Modal.
+As in the upstream interface, `TooltipProps` excludes the ref.
+The full Svelte component type with its binding is
+`ComponentProps<typeof Tooltip>`. DOM, ref, and layout comparisons
+use `?fixture=tooltip-ref`. [Four UMD scenarios](../../../tests/browser/fixtures/ant-design-tooltip-ref-reference.json) ·
+[SSR tests](../../../tests/package/tooltip/tooltip-ref.ssr.test.ts) · [Browser tests](../../../tests/browser/tooltip/tooltip-ref.spec.ts)
 
-`showAction` и `hideAction` независимо заменяют события открытия и закрытия из
-trigger, в том числе при trigger=[]. Undefined возвращает соответствующий набор
-trigger; пустой массив отключает только выбранное направление. `focusDelay` и
-`blurDelay` задаются в секундах, по умолчанию 0, независимо от mouse delays.
-Если событие закрытия отключено, blur/leave не отменяет ожидающее открытие;
-сама замена списка событий также не сбрасывает уже запущенную задержку.
+Without component configuration, `trigger` defaults to
+`['hover', 'focus']`. Choose one event or pass an empty array
+for programmatic visibility. `mouseEnterDelay` and
+`mouseLeaveDelay` are in seconds and default to 0.1. Focus opens
+immediately. Touch pointers do not simulate hover. Moving the
+pointer onto the tooltip keeps it visible, and clicking it
+preserves focus. Escape and outside click close it. After
+Escape it stays hidden until another hover or focus. Inside
+Modal, the first Escape closes Tooltip and the next closes Modal.
 
-При явных action overrides hover без click добавляет touch отдельно для каждого
-направления, как в rc-trigger. Touchstart переключает разрешённое направление,
-последующие hover-события подавляются до обработанного click. Source config
-также использует этот touch fallback; прежний native default без новых actions
-сохраняет подавление touch hover. Для явных overrides закрытие снаружи происходит
-по mousedown/contextmenu и только при hide click/contextMenu либо неявном touch;
-hideAction=[] отключает его. Escape продолжает закрывать открытую подсказку.
-Настройки работают также в ellipsis Tooltip Typography; его видимость по-прежнему
-зависит от измеренного усечения, а onOpenChange сообщает raw open.
-Controlled-сверка использует getter/setter binding с отклонением записи владельцем;
-обычный open сохраняет прежнюю Svelte-семантику, описанную выше.
-Native blur без relatedTarget проверяет доступность trigger в следующей microtask,
-чтобы удаление focused DOM не вызывало callback. Это граница синхронного callback
-rc-trigger; переход фокуса с relatedTarget сохраняет его исходное время вызова.
-Сверка: [54 UMD-сценария / 310 кадров](../../../tests/browser/fixtures/ant-design-tooltip-actions-reference.json),
-[SSR](../../../tests/package/tooltip/tooltip-actions.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip/tooltip-actions.spec.ts), `?fixture=tooltip-actions`.
+`showAction` and `hideAction` independently replace open and
+close actions from `trigger`, including with `trigger=[]`.
+`undefined` restores the corresponding trigger actions.
+An empty array disables only that direction. `focusDelay` and
+`blurDelay` are in seconds and default to 0 independently
+of mouse delays. With the close action disabled, blur or leave
+does not cancel pending opening. Replacing the action list
+also leaves an ongoing delay intact.
 
-По умолчанию содержимое скрытой подсказки сохраняется. `fresh=false` фиксирует
-последнее открытое содержимое и semantic class/style внутреннего container;
-`fresh=true` обновляет их также при закрытом popup. При открытии всегда применяется
-текущее значение. Массивы сохраняются снимком, включая вложенные значения.
-Внешние root/arrow styles и наследуемые CSS-переменные продолжают обновляться.
-Кэш фиксирует выбранный Snippet, но реактивные значения и эффекты внутри него
-продолжают работать по правилам Svelte: полный React.memo для opaque captures
-не воспроизводится. Политика fresh передаётся в ellipsis Tooltip Typography
-и single/range Slider; Typography сохраняет поддержку bigint и whitespace.
+With explicit action overrides, hover without click adds touch
+for each direction independently, as in rc-trigger. Touchstart
+toggles the enabled direction, and later hover events are
+suppressed until a handled click. Upstream component
+configuration also uses touch fallback. The existing native
+default without new actions keeps touch hover suppressed.
+With explicit overrides, outside dismissal uses mousedown or
+contextmenu and requires hide click, hide contextMenu, or
+implicit touch. `hideAction=[]` disables it. Escape still closes
+an open tooltip. These settings also apply to Typography
+ellipsis. Measured truncation still gates visibility, and
+`onOpenChange` reports raw `open`. Controlled comparisons use
+a getter and setter binding with rejected writes. Ordinary
+`open` follows the existing Svelte semantics above.
 
-DestroyOnHidden=true без forceRender удаляет содержимое при закрытии и создаёт заново при открытии:
-DOM-состояние и состояние вложенного
-компонента сбрасываются. Смена destroyOnHidden у открытой подсказки сохраняет
-её DOM, ввод и фокус; включение удаления у закрытой без forceRender сразу очищает содержимое.
-При включённом удалении SSR не вызывает title snippet, включая начальный open/defaultOpen.
-Прежний скрытый native shell и его ID/ARIA сохраняются; default SSR остаётся eager.
-Это также работает в ellipsis Tooltip Typography и подсказках Slider.
-У Tooltip и Typography содержимое удаляется после завершения закрытия.
-Подсказки Slider по-прежнему используют собственный немедленный lifecycle.
+Native blur without `relatedTarget` checks trigger availability
+in the next microtask so removing focused DOM does not call
+the callback. This differs from rc-trigger's synchronous
+callback timing. Focus transitions with `relatedTarget` keep
+the upstream timing. The fixture is `?fixture=tooltip-actions`.
+[54 UMD scenarios and 310 frames](../../../tests/browser/fixtures/ant-design-tooltip-actions-reference.json) · [SSR tests](../../../tests/package/tooltip/tooltip-actions.ssr.test.ts)
+· [Browser tests](../../../tests/browser/tooltip/tooltip-actions.spec.ts)
 
-`forceRender=true` заранее монтирует скрытое содержимое после hydration и вызывает
-getPopupContainer, даже без открытия и при disabled. При destroyOnHidden=true оно
-сохраняет скрытое содержимое; выключение forceRender у закрытой подсказки удаляет
-его. Новый force mount получает текущий payload, затем действует fresh cache.
-ForceRender не открывает popup и не вызывает onOpenChange. Native shell сохраняется;
-SSR при destroyOnHidden остаётся lazy, portal getter на сервере не вызывается.
-Сверка: [19 UMD-сценариев и четыре consumer traces](../../../tests/browser/fixtures/ant-design-tooltip-lifecycle-reference.json),
-[SSR](../../../tests/package/tooltip/tooltip-lifecycle.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip/tooltip-lifecycle.spec.ts), `?fixture=tooltip-lifecycle`.
-У active range Slider сохраняется существующий один native shell до выбора ручки;
-исходная conditional composition не подменяет его lifecycle.
+Hidden tooltip content is kept by default. `fresh=false` holds
+the last displayed content and the inner container's semantic
+class and style. `fresh=true` updates them with the popup
+closed. Opening always takes the current value. Arrays are
+snapshotted, including nested values. Outer root and arrow
+styles and inherited CSS variables keep updating. The cache
+retains the chosen Snippet, whose reactive values and effects
+continue under Svelte semantics. Opaque captures retain their
+reactivity beyond what React.memo freezes. The `fresh` policy
+passes to Typography ellipsis and single and range Slider.
+Typography retains bigint and whitespace support.
 
-Жизненный цикл сверяется с
-[44 UMD-сценариями / 224 кадрами](../../../tests/browser/fixtures/ant-design-overlay-lifecycle-reference.json),
-[SSR](../../../tests/package/popup/overlay-lifecycle.ssr.test.ts) и
-[browser](../../../tests/browser/popup/overlay-lifecycle.spec.ts), `?fixture=overlay-lifecycle`.
-Эталоны получены с отключённой motion из runtime CSS официального UMD.
-Исходное lazy mount до первого открытия записано отдельно: существующий native
-SSR и eagerly mounted default content остаются согласованной границей.
-Title/overlay и fresh дополнительно сверяются с
-[24 UMD-сценариями содержимого и 80 кадрами кэша](../../../tests/browser/fixtures/ant-design-tooltip-content-reference.json),
-[SSR](../../../tests/package/tooltip/tooltip-content.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip/tooltip-content.spec.ts), `?fixture=tooltip-content`.
-Остальные delegated props учтены в реестре миграции.
+Without `forceRender`, `destroyOnHidden=true` removes content
+on close and recreates it on open, resetting DOM and child
+state. Toggling `destroyOnHidden` on an open tooltip preserves
+DOM, input, and focus. Enabling it on a closed tooltip without
+`forceRender` clears content immediately. With destruction
+enabled, SSR skips the title Snippet even with initial
+`open` or `defaultOpen`. The existing hidden native shell and
+its ID and ARIA stay in place. Default SSR remains eager.
+The same applies to Typography ellipsis and Slider tooltips.
+Tooltip and Typography remove contents after closing finishes.
+Slider tooltips keep their own immediate lifecycle.
 
-## Завершение открытия и закрытия
+`forceRender=true` mounts hidden content after hydration and
+calls `getPopupContainer`, even before opening or while disabled.
+It retains hidden content with `destroyOnHidden=true`. Turning it
+off on a closed tooltip removes that content. A subsequent
+forced mount gets the current payload, after which the `fresh`
+cache applies. `forceRender` leaves the popup closed and
+`onOpenChange` uncalled. The native shell remains. SSR with
+`destroyOnHidden` stays lazy and does not call the portal getter.
+The active range Slider retains one native shell before thumb
+selection. Upstream's conditional composition is recorded
+separately from that lifecycle. The fixture is
+`?fixture=tooltip-lifecycle`.
+[19 UMD scenarios and four consumer traces](../../../tests/browser/fixtures/ant-design-tooltip-lifecycle-reference.json) ·
+[SSR tests](../../../tests/package/tooltip/tooltip-lifecycle.ssr.test.ts) · [Browser tests](../../../tests/browser/tooltip/tooltip-lifecycle.spec.ts)
 
-`onOpenChange(open)` сообщает о запросе от trigger. `afterOpenChange(open)` вызывается
-после применения видимости и завершения анимации, включая начальный `defaultOpen`,
-внешнее изменение `open` и скрытие через `disabled`. В режиме без анимации вызов
-следует за обновлением DOM. Отклонённый владельцем запрос через `bind:open` не меняет
-видимость. При прерывании анимации callback получает только завершённое состояние.
-`forceRender` подготавливает скрытое содержимое без вызова `afterOpenChange`.
+Lifecycle comparisons use official runtime UMD CSS with motion
+disabled. Upstream lazy mount before first opening is recorded
+separately. The agreed native SSR and eagerly mounted default
+content remain. The fixture is `?fixture=overlay-lifecycle`.
+[44 UMD scenarios and 224 frames](../../../tests/browser/fixtures/ant-design-overlay-lifecycle-reference.json) ·
+[SSR tests](../../../tests/package/popup/overlay-lifecycle.ssr.test.ts) · [Browser tests](../../../tests/browser/popup/overlay-lifecycle.spec.ts)
 
-По умолчанию Tooltip использует CSSMotion `zoom-big-fast` с длительностью темы
-(100 мс по умолчанию). Префикс классов движения берётся из ConfigProvider.
-`motion={{ motionName: 'my-motion' }}` применяет пользовательские классы фаз
-appear, enter и leave. Пустое имя, `theme.token.motion=false` и
-`prefers-reduced-motion: reduce` отключают движение. При отсутствии события
-завершения для пользовательского имени действует deadline в 1000 мс.
+`title`, `overlay`, and `fresh` have additional comparisons at
+`?fixture=tooltip-content`. The registry tracks the remaining
+delegated props. [24 UMD content scenarios and 80 cache frames](../../../tests/browser/fixtures/ant-design-tooltip-content-reference.json)
+· [SSR tests](../../../tests/package/tooltip/tooltip-content.ssr.test.ts) · [Browser tests](../../../tests/browser/tooltip/tooltip-content.spec.ts)
 
-Панель при уходе остаётся в top layer вне порядка фокуса. В
-`afterOpenChange(false)` она уже скрыта, но её содержимое доступно через
-`popupElement`. При `destroyOnHidden` без `forceRender` snippet удаляется
-после callback, а скрытый native shell и ID сохраняются.
+## Opening and closing completion
 
-Сверка для Tooltip, Popover и Popconfirm включает 19 сценариев закреплённого
-React UMD, каждый снят дважды. [Эталон](../../../tests/browser/fixtures/ant-design-overlay-motion-reference.json),
-[браузерные сценарии](../../../tests/browser/popup/overlay-motion.spec.ts) и
-[SSR-проверка](../../../tests/package/popup/overlay-motion.ssr.test.ts).
+`onOpenChange(open)` reports a trigger request.
+`afterOpenChange(open)` runs after visibility takes effect and
+animation completes, including initial `defaultOpen`, external
+`open` changes, and hiding through `disabled`. With no animation,
+it follows the DOM update. A request rejected by the owner
+through `bind:open` leaves visibility intact. If animation is
+interrupted, the callback receives only the completed state.
+`forceRender` prepares hidden content without
+`afterOpenChange`.
 
-## Общая подсказка для нескольких триггеров
+By default, Tooltip uses CSSMotion `zoom-big-fast` with the
+theme duration (100ms by default). The motion class prefix
+comes from ConfigProvider.
+`motion={{ motionName: 'my-motion' }}` supplies custom classes
+for appear, enter, and leave. An empty name,
+`theme.token.motion=false`, or `prefers-reduced-motion: reduce`
+disables motion. A custom name without a completion event has
+a 1000ms deadline.
+
+The exiting panel stays in the top layer outside focus order.
+In `afterOpenChange(false)`, it is hidden and its contents are
+available through `popupElement`. With `destroyOnHidden` and
+no `forceRender`, the Snippet is removed after the callback.
+The hidden native shell and ID remain.
+
+Tooltip, Popover, and Popconfirm have 19 scenarios from the
+pinned React UMD, each measured twice.
+[Reference](../../../tests/browser/fixtures/ant-design-overlay-motion-reference.json) · [Browser scenarios](../../../tests/browser/popup/overlay-motion.spec.ts) ·
+[SSR test](../../../tests/package/popup/overlay-motion.ssr.test.ts)
+
+## Shared tooltip for multiple triggers
 
 ```svelte
 <Tooltip.UniqueProvider>
@@ -186,113 +218,140 @@ React UMD, каждый снят дважды. [Эталон](../../../tests/bro
 </Tooltip.UniqueProvider>
 ```
 
-Ближайший провайдер показывает одну общую панель без стрелки. При смене
-триггера панель сохраняет DOM-узел, а её фон плавно меняет позицию и размер.
-Фон и содержимое находятся в одной нативной popover-поверхности.
-При запросе во время анимации открытия группа применяет последнюю цель после
-завершения этой фазы. Если указатель успевает уйти с обеих целей, группа
-отменяет перенос и закрывает панель. Группа использует тему и префиксы
-активного владельца. Popover и Popconfirm присоединяются при явном
-`unique={true}`. При переходе между Tooltip и карточкой тот же `div` меняет
-роль с `tooltip` на `dialog` и получает имя и ID нового владельца.
-`unique={false}` оставляет Tooltip самостоятельным. Настройка доступна также
-в `Slider.tooltip` и в объекте `Typography.ellipsis.tooltip`.
+The nearest provider shows one shared panel without an arrow.
+When the trigger changes, the panel retains its DOM node while
+the background animates to the new position and size. The
+background and contents share one native popover surface.
+When requested during opening motion, the group uses the last
+target after that phase completes. If the pointer leaves both
+targets, the group cancels the move and closes the panel. The
+group uses the active owner's theme and prefixes. Popover and
+Popconfirm join with explicit `unique={true}`. When switching
+between a Tooltip and a card, the same `div` changes role from
+`tooltip` to `dialog` and takes the new owner's name and ID.
+`unique={false}` keeps a standalone Tooltip. The option is also
+available in `Slider.tooltip` and `Typography.ellipsis.tooltip`.
 
-Участник получает `onOpenChange` на обычном этапе обработки триггера. Группа
-затем применяет свои `mouseEnterDelay` и `mouseLeaveDelay`, как в Ant Design
-6.6.8. У общей панели собственные lifecycle и выравнивание. Пользовательские
-`afterOpenChange` и `onPopupAlign` относятся к самостоятельной панели.
-Группа сохраняет скрытую оболочку после первого открытия и выбирает контейнер
-в `body` или открытом нативном диалоге. `getPopupContainer`, `forceRender`
-и `destroyOnHidden` управляют самостоятельной панелью через `unique={false}`.
+A member receives `onOpenChange` at the usual trigger handling
+stage. The group then applies its own `mouseEnterDelay` and
+`mouseLeaveDelay`, as in Ant Design 6.6.8. The shared panel owns
+its lifecycle and alignment. Custom `afterOpenChange` and
+`onPopupAlign` apply to a standalone panel. The group retains
+a hidden shell after first open and selects a container in
+`body` or an open native dialog. `getPopupContainer`, `forceRender`,
+and `destroyOnHidden` control the standalone panel when using
+`unique={false}`.
 
-В Svelte `popupElement` возвращает общую панель текущего владельца, а
-`aria-describedby` ссылается на её фактический ID. У Tooltip внутри Popover
-своя панель и свой Escape. При удалении активного триггера общая панель
-освобождается. Фон переносит preset color выбранного Tooltip.
-В закреплённом React UMD это три отдельных расхождения. Вложенный Tooltip
-пропускает показ, удалённый триггер оставляет прежнюю панель, а `color="blue"`
-оставляет на общем фоне цвет `colorBgSpotlight`.
+In Svelte, `popupElement` returns the shared panel for the
+current owner, and `aria-describedby` references its actual ID.
+A Tooltip within Popover has its own panel and handles its
+own Escape. Removing the active trigger releases the shared
+panel. The background takes the active Tooltip's preset color.
+The pinned React UMD differs in these three cases: its nested
+tooltip skips display, a removed trigger leaves the old panel,
+and `color="blue"` leaves `colorBgSpotlight` on the shared
+background.
 
-Переходы, задержки и отличия зафиксированы в [снимках React UMD](../../../tests/browser/fixtures/ant-design-tooltip-unique-reference.json).
-Сравнение выполняется в [Chromium](../../../tests/browser/tooltip/tooltip-unique.spec.ts),
-с отдельными проверками [гидратации](../../../tests/browser/tooltip/tooltip-unique-hydration.spec.ts)
-и [публичного API](../../../tests/package/tooltip/tooltip-unique.ssr.test.ts).
-Сценарии с карточками сверяются с [отдельными снимками React UMD](../../../tests/browser/fixtures/ant-design-tooltip-unique-delegates-reference.json)
-в [Chromium](../../../tests/browser/tooltip/tooltip-unique-delegates.spec.ts).
+The snapshots record transitions, delays, and differences.
+Chromium comparisons include separate hydration and public
+API tests. [React UMD snapshots](../../../tests/browser/fixtures/ant-design-tooltip-unique-reference.json) · [Chromium](../../../tests/browser/tooltip/tooltip-unique.spec.ts)
+· [Hydration](../../../tests/browser/tooltip/tooltip-unique-hydration.spec.ts) · [Public API](../../../tests/package/tooltip/tooltip-unique.ssr.test.ts)
 
-Placement принимает top/bottom/left/right, topLeft/topRight/bottomLeft/bottomRight
-и leftTop/leftBottom/rightTop/rightBottom. Направления физические и не меняются
-при RTL. Arrow=false скрывает стрелку. Arrow={{ pointAtCenter: true }} привязывает
-tip стрелки к центру trigger. Угловые варианты с pointAtCenter=false или arrow={{}}
-сохраняют исходную привязку к краю. Локальные object arrow и object autoAdjustOverflow включают исходный
-расчёт всех 12 направлений, включая shift центральных вариантов. Без object props
-у четырёх прежних вариантов сохраняются
-переворот в сторону с большим местом и сдвиг внутри viewport.
-Угловые варианты используют исходные points, visibleFirst и flip по обеим осям
-без сдвига вдоль края. Выбранный flip сохраняется до закрытия; после открытия
-расчёт начинается заново. AutoAdjustOverflow=false отключает переворот и сдвиг.
-Положение обновляется при прокрутке, resize и перемещении anchor, пока подсказка
-открыта. Class и style относятся к wrapper.
+Card scenarios have their own snapshots and Chromium comparison.
+[React UMD snapshots](../../../tests/browser/fixtures/ant-design-tooltip-unique-delegates-reference.json) · [Chromium](../../../tests/browser/tooltip/tooltip-unique-delegates.spec.ts)
 
-`align` накладывается поверх выбранной записи placements; вложенный `overflow`
-заменяется целиком. `builtinPlacements` заменяет всю автоматическую карту, включая
-пустой объект. Points задают точки popup/target; offset считается относительно popup,
-targetOffset — относительно target. Поддержаны числа, проценты и строки через
-parseFloat, включая исходную трактовку `5px` как числа 5. TooltipAlignConfig также
-содержит htmlRegion, dynamicInset/_experimental.dynamicInset и autoArrow.
-UseCssRight/useCssBottom/useCssTransform/ignoreShake сохраняются в metadata,
-но rc-trigger 3.10.1 их не использует.
+`placement` accepts `top`, `bottom`, `left`, `right`,
+`topLeft`, `topRight`, `bottomLeft`, `bottomRight`,
+`leftTop`, `leftBottom`, `rightTop`, and `rightBottom`.
+Directions are physical and stay the same in RTL.
+`arrow=false` hides the arrow. `arrow={{ pointAtCenter: true }}`
+anchors the tip to the trigger center. Corner placements
+with `pointAtCenter=false` or `arrow={{}}` keep the upstream edge
+anchor. Local object `arrow` and object `autoAdjustOverflow`
+enable the upstream calculation for all 12 placements,
+including shifting centered positions. Without object props,
+the four existing placements retain flipping toward more
+space and shifting within the viewport. Corners use upstream
+points, `visibleFirst`, and flipping on both axes without
+shifting along the edge. The chosen flip persists until
+close. The next open recalculates from scratch.
+`autoAdjustOverflow=false` disables flipping and shifting.
+The position updates on scroll, resize, and anchor movement
+while open. `class` and `style` apply to the wrapper.
 
-Класс placement выбирается по первому совпадению points в текущей карте: возможен
-пользовательский ключ или отсутствие класса. Стрелка использует итоговые points;
-semantic styles.arrow и styles.root сохраняют приоритет над координатами.
-Новые align/builtinPlacements/onPopupAlign включают исходную геометрию и gap также
-без source-настроек; прежние defaults без этих props сохраняются.
+`align` is applied over the chosen placement entry. Nested
+`overflow` is replaced in full. `builtinPlacements` replaces the
+entire automatic map, including when empty. `points` sets the
+popup and target points. `offset` is relative to the popup and
+`targetOffset` to the target. It supports numbers, percentages,
+and strings through `parseFloat`, including the upstream
+interpretation of `5px` as 5. `TooltipAlignConfig` also includes
+`htmlRegion`, `dynamicInset` and `_experimental.dynamicInset`,
+and `autoArrow`. `useCssRight`, `useCssBottom`, `useCssTransform`,
+and `ignoreShake` remain in metadata and are unused by
+rc-trigger 3.10.1.
 
-`onPopupAlign(node, info)` получает реальный popup и итоговые points после flip,
-до применения новых координат. Он вызывается при открытии, фактическом изменении
-геометрии и явном forceAlign; запросы forceAlign в одном turn объединяются.
-Прежнее native отслеживание anchor продолжает работать, callback не вызывается
-на каждом неизменившемся animation frame. SSR и закрытый popup не вызывают callback.
-Настройки передаются Typography и single/active range/pinned range Slider.
-Сверка: [38 UMD-сценариев](../../../tests/browser/fixtures/ant-design-tooltip-align-reference.json),
-[числовой движок](../../../src/lib/tooltip/tooltip-align-reference.test.ts),
-[SSR](../../../tests/package/tooltip/tooltip-align.ssr.test.ts) и
-[browser](../../../tests/browser/tooltip/tooltip-align.spec.ts), `?fixture=tooltip-align`.
-Размеры box заданы явно для проверки геометрии; native fixed/top-layer и viewport
-ограничения сохраняются, полный CSS-transform/scroll-container clipping здесь не заявлен.
+The placement class uses the first matching `points` in the
+current map. It can have a custom key or no class. The
+arrow uses the final points. Semantic `styles.arrow` and
+`styles.root` take precedence over coordinates. Supplying
+`align`, `builtinPlacements`, or `onPopupAlign` enables upstream
+geometry and gap even without upstream theme settings.
+Existing defaults apply when these props are omitted.
 
-При source-настройках ConfigProvider панель использует Tooltip tokens: maxWidth,
-zIndexPopup, offsets и форму стрелки, включая component aliases/algorithm.
-Отступ от anchor рассчитывается по глобальным sizePopupArrow и marginXXS, как
-в исходном Tooltip: обычно 12px со стрелкой и 4px без неё. Угловые варианты
-используют эти source defaults и без source-настроек; у четырёх прежних вариантов
-в native-темах сохраняется отступ 8px. Object arrow/autoAdjustOverflow используют
-source gap и глобальный borderRadius даже без source-настроек. Component aliases
-меняют оформление стрелки, но не её исходную привязку. Подробности — в
-[описании темы](../theme-context.md#popup-tokens).
+`onPopupAlign(node, info)` receives the actual popup and final
+points after flipping, before new coordinates apply. It runs
+on opening, actual geometry changes, and explicit `forceAlign`.
+Calls to `forceAlign` in the same turn combine. Existing
+native anchor tracking continues without callbacks on
+unchanged animation frames. SSR and closed popups skip the
+callback. Settings pass to Typography and single, active
+range, and pinned range Slider. Box dimensions are explicit
+in geometry comparisons. Native fixed top-layer and viewport
+limits apply. Full CSS-transform and scroll-container
+clipping are outside this comparison. The fixture uses
+`?fixture=tooltip-align`. [38 UMD scenarios](../../../tests/browser/fixtures/ant-design-tooltip-align-reference.json) ·
+[Numeric engine tests](../../../src/lib/tooltip/tooltip-align-reference.test.ts) · [SSR tests](../../../tests/package/tooltip/tooltip-align.ssr.test.ts) ·
+[Browser tests](../../../tests/browser/tooltip/tooltip-align.spec.ts)
 
-Поверхность использует нативный `popover="manual"` в верхнем слое браузера.
-Без container getter DOM остаётся на месте: overflow не обрезает её, контекст темы и
-модальность dialog сохраняются. Нужен браузер с Popover API, как для фильтров Table.
-Скрытый или находящийся за пределами viewport anchor скрывает поверхность;
-при возвращении anchor внешний open сохраняется. В SSR поверхность скрыта,
-позиционирование и aria-describedby подключаются после гидратации. Добавление
-описания сохраняет существующие ID и отслеживает их изменения; cleanup удаляет
-только ID Tooltip.
+With upstream ConfigProvider theme settings, the panel uses
+Tooltip tokens including `maxWidth`, `zIndexPopup`, arrow offsets
+and shape, and component aliases and algorithm. The anchor gap
+uses global `sizePopupArrow` and `marginXXS` as upstream,
+typically 12px with an arrow and 4px without. Corners use
+these defaults without an upstream theme. The four existing
+placements retain an 8px gap in native themes. Object
+`arrow` and `autoAdjustOverflow` use the upstream gap and global
+`borderRadius` even without upstream settings. Component aliases
+style the arrow while preserving its upstream anchoring.
+[Theme reference](../theme-context.md#popup-tokens)
 
-Контейнер выбирается через getPopupContainer → ConfigProvider.getPopupContainer. Undefined сохраняет fallback; функция получает
-исходный DOM trigger, включая SVG, и вызывается только в браузере после открытия.
-Смена функции с тем же контейнером сохраняет DOM, state, focus и selection.
-Portal переносит наследуемые variables и сохраняет приоритет собственных component tokens.
-Вложенные popup сохраняют собственные координаты и цвет стрелки.
+The surface uses native `popover="manual"` in the browser's
+top layer. Without a container getter, the DOM stays in place.
+Container overflow leaves it visible, and theme context and
+dialog modality persist. It requires a browser with the Popover
+API, as Table filters do. A hidden or offscreen anchor hides
+the surface. Returning the anchor preserves external `open`.
+During SSR the surface is hidden. Positioning and
+`aria-describedby` connect after hydration. Adding the
+description retains existing IDs and tracks changes. Cleanup
+removes only the Tooltip ID.
 
-Поддерживаются строки, числа и rich snippets.
-Общая панель настраивается через [Tooltip.UniqueProvider](#общая-подсказка-для-нескольких-триггеров).
-AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0 | 1 }`.
-Числовой 0 тоже разрешает flip, как в rc-trigger; отключение обеих коррекций
-задаётся boolean false.
+The container resolves from `getPopupContainer` and then
+`ConfigProvider.getPopupContainer`. `undefined` retains the
+fallback. The getter receives the original DOM trigger,
+including SVG, and runs only in the browser after opening.
+A new function returning the same container preserves DOM,
+state, focus, and selection. The portal carries inherited
+variables and preserves precedence of its own component
+tokens. Nested popups keep their own coordinates and arrow
+color.
+
+Strings, numbers, and rich Snippets are supported. Use the
+provider for a shared panel. `autoAdjustOverflow` also accepts
+`{ adjustX?: 0 | 1, adjustY?: 0 | 1 }`. Numeric 0 still allows
+flipping, as in rc-trigger. Boolean `false` disables both
+adjustments. [Tooltip.UniqueProvider](#shared-tooltip-for-multiple-triggers)
 
 ```svelte
 <Tooltip title="Подсказка" placement="topLeft"
@@ -301,33 +360,36 @@ AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0
 </Tooltip>
 ```
 
-Локальные arrow/overflow настройки сверяются с
-[84 UMD-эталонами](../../../tests/browser/fixtures/ant-design-overlay-options-reference.json),
-[unit](../../../src/lib/tooltip/tooltip-options-reference.test.ts),
-[SSR](../../../tests/package/popup/overlay-options.ssr.test.ts) и
-[browser](../../../tests/browser/popup/overlay-options.spec.ts). Они включают настройки tokens,
-обновления открытой карточки, оба режима range Tooltip и сохранение draft/focus.
-Расчёт угловых позиций использует общий
-[движок rc-trigger](../../../src/lib/popup/popup-position.engine.ts). Координаты, CSS стрелки,
-fractional sizes, flip history и смена placement проверяются по
-[99 UMD-эталонам](../../../tests/browser/fixtures/ant-design-overlay-corner-reference.json),
-[unit](../../../src/lib/tooltip/tooltip-corner-reference.test.ts),
-[SSR](../../../tests/package/popup/overlay-corner.ssr.test.ts) и
-[browser](../../../tests/browser/popup/overlay-corner.spec.ts). Явные размеры в части эталонов
-отделяют позиционирование от layout остальных компонентов.
+Local arrow and overflow comparisons cover token settings,
+updates to an open card, both range Tooltip modes, and
+retained drafts and focus. [84 UMD references](../../../tests/browser/fixtures/ant-design-overlay-options-reference.json) ·
+[Unit tests](../../../src/lib/tooltip/tooltip-options-reference.test.ts) · [SSR tests](../../../tests/package/popup/overlay-options.ssr.test.ts) · [Browser tests](../../../tests/browser/popup/overlay-options.spec.ts)
 
-## ConfigProvider и semantic slots
+Corner positions use the shared rc-trigger engine.
+[rc-trigger engine](../../../src/lib/popup/popup-position.engine.ts)
 
-ConfigProvider.tooltip/popover/popconfirm задают class/style, classNames/styles,
-arrow, trigger и hover delays. Отсутствующий объект наследуется; явный объект,
-включая {}, заменяет родительский целиком. Локальные trigger и delays приоритетнее;
-0 сохраняется, undefined наследует следующий слой. При trigger=[] события hover,
-focus, click и contextMenu на trigger и popup не открывают и не закрывают панель.
-Это работает и без component config: уход указателя и blur не закрывают панель
-и не вызывают onOpenChange. События содержимого работают, contextmenu не подавляется.
-Escape и нажатие снаружи закрывают панель по прежним native правилам.
-Правило для trigger=[] работает также в Popconfirm, Typography ellipsis Tooltip
-и AvatarGroup.max.popover.
+Coordinates, arrow CSS, fractional sizes, flip history, and
+placement changes are tested. Explicit sizes in some
+references isolate positioning from other components'
+layout. [99 UMD references](../../../tests/browser/fixtures/ant-design-overlay-corner-reference.json) · [Unit tests](../../../src/lib/tooltip/tooltip-corner-reference.test.ts) ·
+[SSR tests](../../../tests/package/popup/overlay-corner.ssr.test.ts) · [Browser tests](../../../tests/browser/popup/overlay-corner.spec.ts)
+
+## ConfigProvider and semantic slots
+
+`ConfigProvider.tooltip`, `popover`, and `popconfirm` supply
+`class`, `style`, `classNames`, `styles`, `arrow`, `trigger`, and
+hover delays. An omitted object inherits. An explicit object,
+including `{}`, replaces its parent. Local trigger and delays
+take precedence. Zero is preserved and `undefined` inherits
+the next layer. With `trigger=[]`, hover, focus, click,
+and context menu events on the trigger and popup leave
+visibility unchanged. This also works without component
+configuration. Pointer leave and blur leave the panel open
+and do not call `onOpenChange`. Content events still work,
+and the context menu is not suppressed. Escape and outside
+click close by the existing native rules. The empty trigger
+rule also applies to Popconfirm, Typography ellipsis Tooltip,
+and `AvatarGroup.max.popover`.
 
 ```svelte
 <ConfigProvider tooltip={{ trigger: 'click', arrow: { pointAtCenter: true },
@@ -336,54 +398,69 @@ Escape и нажатие снаружи закрывают панель по п�
 </ConfigProvider>
 ```
 
-Новая component config включает исходные defaults: hover для Tooltip/Popover,
-click для Popconfirm и source geometry всех 12 направлений. В обычной теме это
-12px со стрелкой, 4px без неё. Без component config сохраняются прежние
-hover/focus и native gap/flip/shift четырёх центральных направлений с boolean
-arrow/overflow. Локальный arrow boolean меняет видимость, сохраняя унаследованный
-pointAtCenter; объект
-перекрывает только свои поля. Настройки tooltip не попадают в Popover/Popconfirm.
-Popover defaults участвуют в наружной поверхности Popconfirm; его собственные
-trigger/delays и видимость стрелки приоритетнее.
+Component configuration enables upstream defaults:
+`hover` for Tooltip and Popover, `click` for Popconfirm,
+and upstream geometry for all 12 placements. In the
+regular theme, the gap is 12px with an arrow and 4px without.
+Without configuration, the existing hover and focus
+defaults and native gap, flip, and shift for four
+centered placements with boolean arrow and overflow remain.
+A local boolean `arrow` controls visibility and preserves
+inherited `pointAtCenter`. An object overrides only its
+fields. Tooltip settings are separate from Popover and
+Popconfirm. Popover defaults contribute to Popconfirm's outer
+surface. Popconfirm's own trigger, delays, and arrow
+visibility take precedence.
 
-Поддерживаются hover, focus, click и contextMenu, а также их массивы. Повторный
-contextMenu переключает видимость; обычный click закрывает такую поверхность.
-Browser context menu подавляется только при включённом contextMenu. Положение
-привязывается к trigger, как в исходном Tooltip без alignPoint.
-В source config события действуют независимо: hover leave закрывает панель,
-открытую click/focus, если hover тоже включён. События, отсутствующие в trigger,
-не закрывают программно открытую поверхность.
+Hover, focus, click, context menu, and arrays of these are
+supported. A repeated context menu toggles visibility, and
+an ordinary click closes that surface. The browser context
+menu is suppressed only with `contextMenu` enabled.
+Positioning anchors to the trigger as in upstream Tooltip
+without `alignPoint`. With upstream configuration, actions
+are independent. An enabled hover can close a panel on leave
+even if it was opened by click or focus. Events omitted from
+`trigger` leave a programmatically opened surface unchanged.
 
-Class/style provider относятся к popup. Прежние локальные class/style относятся
-к wrapper trigger; rootClassName задаёт дополнительный класс popup. ClassNames
-и styles принимают slot records либо callback({ props }); стили задаются CSS-строками.
-Tooltip имеет root/container/arrow, Popover добавляет title/content, Popconfirm —
-icon. У Popconfirm title/content оформляют заголовок и описание подтверждения.
-Callbacks видят разрешённые trigger и delays, у Popover/Popconfirm — placement,
-у Tooltip — исходные builtinPlacements и container getter.
-Open в callback — исходный prop владельца; неконтролируемое открытие не подставляет
-в него внутреннее состояние.
-Callbacks выполняются и при SSR, когда DOM ещё недоступен.
+Provider `class` and `style` apply to the popup. Existing local
+`class` and `style` apply to the trigger wrapper.
+`rootClassName` adds a popup class. `classNames` and `styles`
+accept slot records or `({ props })` callbacks. Styles are
+CSS strings. Tooltip supports `root`, `container`, and
+`arrow`. Popover adds `title` and `content`, and Popconfirm
+adds `icon`. Popconfirm title and content style the confirmation
+heading and description. Callbacks see resolved trigger and
+delays. Popover and Popconfirm also get placement, and Tooltip
+gets original `builtinPlacements` and container getter.
+In callbacks, `open` is the owner's original prop even when
+uncontrolled visibility changes. Callbacks also run during
+SSR before DOM is available.
 
-Классы слоёв накапливаются. Порядок CSS: context styles → context style(root) →
-local styles. Цветовой слой color применяется после semantic container styles.
-Класс popup задаётся через rootClassName и classNames.root.
-Root styles имеют приоритет над вычисленными координатами, как в rc-trigger;
-их обновление не сбрасывает variables темы, DOM, ввод, selection и focus.
-Настройки наследуются также подсказками Slider, overflow AvatarGroup и ellipsis
-Tooltip Typography. У Typography без config сохраняется исходный hover trigger;
-его Tooltip создаётся лениво после DOM-измерения и не вызывает semantic callbacks при SSR.
+Classes accumulate. CSS applies as context `styles`, context
+`style` on the root, then local `styles`. The `color` layer
+follows semantic container styles. The popup class comes
+from `rootClassName` and `classNames.root`. Root styles have
+precedence over calculated coordinates as in rc-trigger.
+Updating them retains theme variables, DOM, input, selection,
+and focus. Settings also reach Slider tooltips, AvatarGroup
+overflow, and Typography ellipsis Tooltip. Without
+configuration, Typography retains the upstream hover
+trigger. It mounts its Tooltip lazily after DOM measurement
+and skips semantic callbacks during SSR.
 
-Границы fresh cache для Snippet и CSS-transform/clipping описаны выше.
+The limits of the `fresh` cache for Snippets and of CSS transforms
+and clipping are described above.
 
-## Цвет Tooltip, Popover и Popconfirm
+## Tooltip, Popover, and Popconfirm colors
 
-`color` принимает 13 preset-имён Ant Design либо CSS background. Имена чувствительны
-к регистру: `blue` использует палитру Ant Design, `Blue` — CSS named color. Имена
-`*-inverse` получают исходный класс, но у Tooltip/Popover 6.6.8 для них нет цветовой
-заливки. Preset CSS использует текущие `--ant-<color>-6`, включая component aliases
-и algorithm. Прежние native-темы сохраняют свои палитры; source-тема использует
-исходные tokens Ant Design.
+`color` accepts 13 Ant Design preset names or a CSS
+background. Names are case-sensitive. `blue` uses the
+Ant Design palette, and `Blue` uses the CSS named color.
+`*-inverse` names get the upstream class, but Tooltip and
+Popover 6.6.8 provide no fill for them. Preset CSS uses
+current `--ant-<color>-6` values, including component
+aliases and algorithm. Existing native themes keep their
+palettes. The upstream theme uses original Ant Design tokens.
 
 ```svelte
 <Tooltip title="Сохранено" color="#fadb14">
@@ -392,34 +469,43 @@ Tooltip Typography. У Typography без config сохраняется исхо�
 <Slider defaultValue={40} tooltip={{ color: 'purple' }} />
 ```
 
-У пользовательского background Tooltip выбирает чёрный или белый текст по исходной
-RGB luminance с порогом 0.5; alpha не участвует. Color parser не разрешает CSS
-variables перед расчётом контраста, хотя browser использует их при отрисовке.
-Popover и Popconfirm сохраняют собственные цвета title/content, как upstream.
-Semantic `color` текста может их переопределить.
+With a custom background, Tooltip chooses black or white
+text using upstream RGB luminance at a threshold of 0.5.
+Alpha is ignored. The parser leaves CSS variables unresolved
+when calculating contrast, while the browser uses them
+for rendering. Popover and Popconfirm keep their upstream
+title and content colors. Semantic text `color` can override
+them.
 
-Цветовой background следует после container styles. Root styles
-могут переопределить цвет стрелки; у preset Tooltip variable задана на самой стрелке,
-поэтому для неё используется styles.arrow. Raw background передаётся одним CSS value,
-а не списком declarations. Реактивное невалидное значение может сохранить прежний
-background, как React style setter; удаление shorthand сохраняет исходный style diff.
+The color background applies after container styles. Root
+styles can override arrow color. For a preset Tooltip, the
+variable is set on the arrow and can be changed with
+`styles.arrow`. The raw background is one CSS value. A
+reactive invalid value can retain the old background as
+in React's style setter. Removing the shorthand preserves
+upstream style diffing.
 
-Цвет работает также в `AvatarGroup.max.popover` и обоих режимах Slider Tooltip.
-Обновление открытой панели сохраняет DOM, ввод, выделение и фокус. Private contrast
-родительской панели не копируется в body portal и изолирован у вложенного native
-Tooltip без getter. Явный контейнер внутри родительской панели наследует его,
-как исходный getPopupContainer.
+Color also applies to `AvatarGroup.max.popover` and both
+Slider Tooltip modes. Updating an open panel preserves
+DOM, input, selection, and focus. The parent panel's internal
+contrast value is left out of body portals and isolated in a
+nested native Tooltip without a getter. An explicit container
+within the parent panel inherits it as in upstream
+`getPopupContainer`.
 
-## Локальные префиксы и классы открытого trigger
+## Local prefixes and open trigger classes
 
-`prefixCls` меняет классы Tooltip/Popover, их slots, placements и preset colors.
-Без локального prefix используется ConfigProvider.prefixCls; пустая строка также
-наследует его. По умолчанию это ant-tooltip и ant-popover.
-У Popconfirm default `ant-popconfirm`: его локальный prefix меняет только классы
-подтверждения. Наружный Popover отдельно наследует общий prefix, как upstream.
-CSS variables и глобальные `.anticon` сохраняют имена. Это отдельная настройка
-от `theme.cssVar.prefix`; совместимые aliases и существующие native markers/hash
-остаются частью Svelte-адаптации.
+`prefixCls` changes Tooltip and Popover classes for slots,
+placements, and preset colors. Without a local prefix or with
+an empty string, it inherits `ConfigProvider.prefixCls`.
+The defaults are `ant-tooltip` and `ant-popover`.
+Popconfirm defaults to `ant-popconfirm`. Its local prefix
+changes only confirmation classes, while the outer Popover
+inherits the shared prefix independently, as upstream. CSS
+variables and global `.anticon` keep their names. This setting
+is independent of `theme.cssVar.prefix`. Compatible aliases
+and existing native markers and hash remain part of the
+Svelte adaptation.
 
 ```svelte
 <Popover prefixCls="project-card" title="Настройки" content="Сохранены">
@@ -427,17 +513,20 @@ CSS variables и глобальные `.anticon` сохраняют имена. 
 </Popover>
 ```
 
-`openClassName` задаёт класс открытого trigger, включая несколько tokens. Без него
-или при пустой строке используется `${prefixCls}-open`; у Popconfirm это по умолчанию
-`ant-popover-open`. Класс добавляется к фактическому DOM trigger после hydration.
-Собственные классы ребёнка сохраняются, при закрытии и unmount удаляются только
-добавленные компонентом tokens. Обновление caller class во время показа не снимает
-open class. SSR не клонирует непрозрачный children snippet; скрытый shell, стабильные
-ID, native wrapper и ARIA-поведение сохраняются.
+`openClassName` supplies the open trigger class and can contain
+multiple tokens. Omission or an empty string defaults to
+`${prefixCls}-open`, or `ant-popover-open` for Popconfirm.
+The class is added to the actual DOM trigger after hydration.
+The child's own classes are retained. Closing and unmount
+remove only tokens added by the component. Updating the caller
+class during display preserves the open class. SSR leaves the
+opaque children Snippet intact and retains the hidden shell,
+stable IDs, native wrapper, and ARIA.
 
-Настройки работают также в AvatarGroup.max.popover, Slider.tooltip и ellipsis Tooltip
-Typography. Последний передаёт color и semantic styles общему popup.
-Смена prefix сохраняет DOM, ввод, выделение и фокус; stylesheet удаляется вместе
-с владельцем. Portal и native ограничения viewport остаются прежними, включая
-заголовок Popover на узком экране и восстановление фокуса AvatarGroup.
-
+Settings also apply to `AvatarGroup.max.popover`, `Slider.tooltip`,
+and Typography ellipsis Tooltip. The last passes color and
+semantic styles to the shared popup. Changing prefix preserves
+DOM, input, selection, and focus. The stylesheet is removed
+with its owner. Portal and native viewport limits remain,
+including the Popover title on a narrow screen and AvatarGroup
+focus restoration.

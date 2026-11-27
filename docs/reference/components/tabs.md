@@ -23,128 +23,159 @@
 />
 ```
 
-`items` принимает readonly-массив TabsItem: строковый key, label (строку, число,
-boolean/null или пассивный Snippet), необязательные children (Snippet), icon, disabled,
-forceRender, destroyOnHidden, closable и closeIcon. Ключи идентифицируют панели при перестановке;
-содержимое и его фокус сохраняются.
-Пустой строковый ключ допустим; при повторении используется первое вхождение.
-Icon декоративный. Label должен давать вкладке доступное имя; интерактивные
-элементы внутри label не поддерживаются. `aria-label` или `aria-labelledby`
-именует список вкладок. Id/class/style относятся к корневому контейнеру.
+`items` accepts a readonly array of `TabsItem`: a string `key`,
+`label` (string, number, boolean, `null`, or passive Snippet),
+optional `children` (a Snippet), `icon`, `disabled`, `forceRender`,
+`destroyOnHidden`, `closable`, and `closeIcon`. Keys identify panels
+across reordering, preserving content and focus. The empty string
+is valid. The first occurrence of a duplicate key wins. Icons
+are decorative. Labels must give tabs accessible names and contain
+no interactive elements. `aria-label` or `aria-labelledby` names the
+tab list. `id`, `class`, and `style` apply to the root.
 
-`items[].className` и `items[].style` относятся к соответствующему tabpanel,
-а не к заголовку. Классы добавляются после classNames.content. CSS-строки применяются
-в порядке styles.content → item.style → motion style; у каждой панели свои overrides.
-Например: `{ key: 'profile', label: 'Профиль', children: profile, className: 'profile-panel', style: 'padding-inline:12px' }`.
-Живое обновление оформления сохраняет DOM, local state, draft, selection и focus.
+`items[].className` and `items[].style` apply to the corresponding
+tabpanel. Classes are appended after `classNames.content`. CSS
+strings apply in order: `styles.content`, `item.style`, and motion
+style. Each panel has its own overrides. For example,
+`{ key: 'profile', label: 'Profile', children: profile, className: 'profile-panel', style: 'padding-inline:12px' }`.
+Live style updates preserve DOM, local state, drafts, selection,
+and focus.
 
-`bind:activeKey` хранит выбранный ключ. DefaultActiveKey читается при создании;
-без ключа выбирается первая доступная вкладка. Для binding задавайте начальное
-значение у владельца без defaultActiveKey. При неизвестном, удалённом или
-отключённом ключе отображается первая доступная панель. Внешнее значение при
-этом сохраняется: его восстановление снова выберет соответствующую вкладку.
-Если доступных вкладок нет, ни одна панель не выбрана, а фокус может получить
-сам tablist. Пустой items показывает ConfigProvider.locale.emptyText.
+`bind:activeKey` holds the selected key. `defaultActiveKey` is read
+at creation. Without a key, the first available tab is selected.
+With a binding, set the initial value in the owner and omit
+`defaultActiveKey`. An unknown, removed, or disabled key displays
+the first available panel. The external value is retained, so
+restoring that key's tab selects it again. With no available tabs,
+no panel is selected and the tablist can receive focus. Empty
+`items` displays `ConfigProvider.locale.emptyText`.
 
-`onTabClick(key, MouseEvent)` вызывается и по клику, и при нативной активации
-Enter/Space, включая уже выбранную вкладку. PreventDefault отменяет смену
-панели. Затем обновляется binding и вызывается onChange(key), если выбранная
-вкладка действительно изменилась. Обновления владельцем, изменение defaults,
-fallback при удалении/disabled и перемещение фокуса не вызывают onChange.
-После onTabClick доступность пункта проверяется повторно: обработчик может
-удалить или отключить вкладку.
+`onTabClick(key, MouseEvent)` runs on click and native Enter or
+Space activation, including on the selected tab. `preventDefault`
+cancels the panel change. The binding then updates and
+`onChange(key)` runs if the selected tab changed. Owner updates,
+default changes, fallback on removal or disabling, and focus
+movement leave `onChange` uncalled. Availability is rechecked
+after `onTabClick` because the handler can remove or disable
+the tab.
 
-Клавиатура использует ручную активацию. Стрелки перемещают фокус по кругу,
-пропуская disabled; Home/End выбирают первый/последний доступный заголовок.
-В горизонтальном списке действуют Left/Right с учётом RTL, в вертикальном —
-Up/Down. Enter и Space активируют сфокусированную вкладку. Заголовки добавляют
-одну остановку Tab; после выхода повторный вход возвращает фокус к выбранной
-вкладке. В line/card Tab из списка переходит к именованной активной панели, затем к её
-полям и кнопкам. При скрытии сфокусированной панели или удалении/disabled
-сфокусированного заголовка фокус переходит на доступный заголовок либо tablist.
-Изменения при фокусе снаружи Tabs не перемещают его внутрь.
+Keyboard navigation uses manual activation. Arrow keys cycle
+focus, skipping disabled tabs. Home and End focus the first and
+last available headers. Horizontal lists use Left and Right with
+RTL support, and vertical lists use Up and Down. Enter and Space
+activate the focused tab. Headers contribute one Tab stop.
+Returning to the list focuses the selected tab. In line and
+card modes, Tab moves from the list to the named active panel,
+then to its fields and buttons. Hiding a focused panel or
+removing or disabling a focused header moves focus to an
+available header or tablist. Changes while focus is outside Tabs
+leave it outside.
 
-Содержимое ленивое: впервые монтируется при активации и по умолчанию сохраняется
-в скрытой панели, включая локальный state дочерних компонентов и DOM-черновики.
-DestroyOnHidden=true удаляет содержимое при скрытии, а при анимации панели — после
-завершения leave; следующий визит создаёт
-новый экземпляр. После уничтожения отключение destroyOnHidden само по себе
-не монтирует панель заново. Значение на отдельном item переопределяет общее,
-включая явное false. Это сохранённый контракт native v1: rc-tabs 1.13.0 отдаёт
-приоритет явно заданному общему destroyOnHidden. ForceRender=true монтирует содержимое сразу и сохраняет
-его даже вместе с destroyOnHidden. Удаление key всегда уничтожает панель.
-Состояние, которое владелец хранит снаружи Tabs, уничтожение панели не сбрасывает.
+Content is lazy. It first mounts on activation and is retained
+in the hidden panel by default, including child local state
+and DOM drafts. `destroyOnHidden=true` removes it on hiding, or
+after leave when panel motion is active. The next visit mounts
+a new instance. Turning off `destroyOnHidden` after destruction
+does not remount a panel by itself. The item setting overrides
+the shared one, including explicit `false`. This retains the
+native v1 contract. rc-tabs 1.13.0 gives explicit shared
+`destroyOnHidden` precedence. `forceRender=true` mounts content
+immediately and keeps it even with `destroyOnHidden`. Removing a
+key always destroys its panel. Panel removal preserves state
+held outside Tabs.
 
-Фикстура `?fixture=tabs-destroy` сопоставляет восемь актуальных сценариев официального
-UMD: шесть совпадают с upstream, два фиксируют сохранённый приоритет item.
+`?fixture=tabs-destroy` compares eight current official UMD
+scenarios. Six match upstream, and two record retained item
+precedence.
 
-Сохранённая скрытая панель остаётся в DOM; её таймеры и подписки продолжают
-работать. Поля посещённых/forceRender-панелей участвуют в нативной FormData,
-даже когда скрыты; ещё не смонтированных или уничтоженных полей в FormData нет.
-Tabs не является полем формы и не наследует disabled от Form/ConfigProvider:
-доступность навигации задаётся disabled отдельных items. Заголовки используют
-button type=button и не отправляют окружающую форму.
+Retained hidden panels stay in the DOM and their timers and
+subscriptions keep running. Fields in visited or force-rendered
+panels participate in native FormData even when hidden. Fields
+that have yet to mount or were destroyed are absent. Tabs
+does not act as a form field. Each item's `disabled` controls
+navigation independently of Form and ConfigProvider disabled
+state. Headers use `type=button` and do not submit the surrounding
+form.
 
-Type поддерживает line/card/editable-card, tabPlacement — top, bottom, start, end.
-Start/end разрешаются относительно RTL. На экране шириной до 575px вертикальный
-список переходит наверх. Переполнение прокручивается; навигация показывает
-сфокусированный заголовок без прокрутки всей страницы. Size использует общий
-ComponentSize: small/medium/large;
-по умолчанию используется ConfigProvider.componentSize. Явный medium имеет
-приоритет над размером провайдера.
-Тема, compact, RTL и reduced motion применяются через существующие токены.
+`type` supports `line`, `card`, and `editable-card`.
+`tabPlacement` supports `top`, `bottom`, `start`, and `end`.
+Start and end are relative to RTL. On viewports up to 575px,
+a vertical list moves to the top. Overflow scrolls. Navigation
+reveals the focused header without scrolling the whole page.
+`size` uses shared `ComponentSize` values `small`, `medium`,
+and `large`, defaulting to `ConfigProvider.componentSize`.
+Explicit `medium` overrides provider size. Theme, compact mode,
+RTL, and reduced motion use existing tokens.
 
-Source-тема применяет `theme.components.Tabs`: 26 исходных defaults, aliases и
-component algorithms. Высоты карточек участвуют в вычислении padding до наложения
-явных overrides; zero и undefined сохраняют исходное поведение. More popup наследует
-тот же scope, включая CSS-variable prefix и hash. Стандартные native-темы сохраняют
-прежнее оформление; source-тема допускает шапку ниже native минимума 32px.
-Фикстура `?fixture=tabs-theme` сверяет 15 тем, 10 вариантов в LTR/RTL и popup
-с официальным UMD; смена темы сохраняет DOM, черновики, выделение и фокус.
+The upstream theme applies `theme.components.Tabs` with 26
+upstream defaults, aliases, and component algorithms. Card
+heights contribute to calculated padding before explicit
+overrides. Zero and `undefined` retain upstream behavior. The
+More popup inherits the same scope, including CSS variable
+prefix and hash. Native themes keep existing styling.
+The upstream theme allows a header below the native 32px
+minimum. `?fixture=tabs-theme` compares 15 themes and 10 variants
+in LTR and RTL and the popup with the official UMD. Theme
+changes preserve DOM, drafts, selection, and focus.
 
-`animated` по умолчанию равен `{ inkBar: true, tabPane: false }`. False отключает обе
-анимации, true включает обе без initial appear панели. Объект задаёт переключатели
-независимо. `tabPane=true` заменяет весь переданный tabPaneMotion стандартным
-`ant-tabs-switch`, включая его callbacks, как в 6.6.8.
+`animated` defaults to `{ inkBar: true, tabPane: false }`.
+`false` turns both animations off. `true` enables both without
+initial panel appear. An object configures each independently.
+`tabPane=true` replaces the supplied `tabPaneMotion`, including
+callbacks, with the default `ant-tabs-switch`, as in 6.6.8.
 
-Для собственного перехода передайте `animated={{ tabPaneMotion: motion }}` без
-tabPane: rc-tabs включает его автоматически. Явное tabPane=false сохраняет motion,
-но отключает body animated class. MotionName принимает строку с suffix фаз либо
-объект имён. Поддержаны appear/enter/leave flags, leaveImmediately, deadline в ms,
-visible/forceRender/removeOnLeave overrides, leavedClassName и lifecycle callbacks.
-EventProps.className/style применяются в стабильном состоянии; CSS-фазы перекрывают
-их. У скрытой forceRender-панели motion задаёт display:none, у сохранённой панели
-leavedClassName перекрывает eventProps.className, как в исходном CSSMotion.
-Собственный motionName требует CSS для перехода; положительный motionDeadline
-завершает его без CSS end event. Prepare может вернуть Promise и работает даже
-при `theme.token.motion=false`. Start/active получают native div и event=null,
-возвращают CSS-строку после content styles; end получает native event либо
-`{ deadline: true }`. Возврат false из end оставляет переход незавершённым.
-Prepare/start читают DOM с prepare classes, active — со start classes.
+For a custom transition, pass
+`animated={{ tabPaneMotion: motion }}` and omit `tabPane`.
+rc-tabs enables it automatically. Explicit `tabPane=false`
+keeps motion but removes the body's animated class.
+`motionName` accepts a string with phase suffixes or a map of
+names. It supports appear, enter, and leave flags, immediate
+leave, a deadline in milliseconds, `visible`, `forceRender`,
+and `removeOnLeave` overrides, `leavedClassName`, and lifecycle
+callbacks. `eventProps.className` and `eventProps.style` apply
+in steady state. CSS phases override them. Motion sets
+`display:none` for a hidden force-rendered panel. As upstream
+CSSMotion, `leavedClassName` overrides `eventProps.className` on
+a retained panel. A custom `motionName` needs transition CSS.
+Positive `motionDeadline` finishes it without a CSS end event.
+Prepare can return a Promise and also runs at
+`theme.token.motion=false`. Start and active receive a native
+`div` and `event=null` and return a CSS string applied after
+content styles. End receives a native event or
+`{ deadline: true }`. Returning `false` from end keeps the
+transition active. Prepare and start read DOM with prepare
+classes. Active reads it with start classes.
 
-Во время leave сохраняются DOM, local state и FormData уходящей панели. Aria-hidden
-и inert сразу исключают её из навигации; owned focus переходит к новому заголовку.
-Быстрое возвращение отменяет уничтожение. OnVisibleChanged вызывается после DOM
-commit; первый невидимый mount не вызывает callback. Независимые deadline timers
-не задают порядок между панелями, в том числе в upstream.
-Native prefers-reduced-motion и живое отключение motion завершают CSS-переходы;
-unmount отменяет frames, timers и продолжения prepare. Пустые native panel shells
-и согласованный приоритет item destroy сохраняются.
+During leave, the outgoing panel retains DOM, local state,
+and FormData. `aria-hidden` and `inert` immediately remove it
+from navigation. Focus within the panel moves to the new header.
+Quick return cancels destruction. `onVisibleChanged` runs after
+DOM commit. An initial hidden mount produces no callback.
+Independent deadline timers imply no ordering between panels,
+as upstream. Native `prefers-reduced-motion` and disabling
+motion live finish CSS transitions. Unmount cancels frames,
+timers, and prepare continuations. Empty native panel shells
+and item destruction precedence are retained.
 
-`classNames` и `styles` принимают объект либо чистую функцию `({ props }) => slots`.
-Доступны root/item/remove/indicator/body/content/header и popup.root; строка popup
-сокращает запись popup.root. Styles используют CSS-строки. Remove применяется
-к кнопкам удаления и в заголовках, и в More. Callback получает source size:
-undefined без явного размера у компонента/провайдера, физический tabPlacement до
-mobile fallback и items с нормализованным destroyOnHidden.
-Остальные поля сохраняют переданные Svelte props; bind:activeKey остаётся живым.
+`classNames` and `styles` accept an object or pure function
+`({ props }) => slots`. Slots are `root`, `item`, `remove`,
+`indicator`, `body`, `content`, `header`, and `popup.root`.
+A `popup` string is shorthand for `popup.root`. Styles use CSS
+strings. `remove` applies to remove buttons in headers and More.
+Callbacks receive upstream size semantics: `undefined` without
+a size on the component or provider, physical `tabPlacement`
+before mobile fallback, and items with normalized
+`destroyOnHidden`. Other fields retain supplied Svelte props,
+and `bind:activeKey` stays live.
 
-`ConfigProvider.tabs` задаёт class/style, semantic slots, add/remove/more icons и
-indicator. Отсутствующий record наследуется; явно переданный объект
-во вложенном провайдере заменяет его целиком, как в Ant Design. Классы провайдера
-и компонента накапливаются. Порядок root CSS: provider styles.root → provider style
-→ local styles.root → local style; tabBarStyle идёт после styles.header.
-Semantic indicator styles идут после вычисленной геометрии линии.
+`ConfigProvider.tabs` supplies `class`, `style`, semantic slots,
+add, remove, and more icons, and `indicator`. Omission inherits
+the record. An explicit object in a nested provider replaces
+it in full, as in Ant Design. Provider and component classes
+accumulate. Root CSS applies in order: provider `styles.root`,
+provider `style`, local `styles.root`, and local `style`.
+`tabBarStyle` follows `styles.header`. Semantic indicator
+styles follow calculated line geometry.
 
 ```svelte
 <ConfigProvider tabs={{
@@ -156,73 +187,91 @@ Semantic indicator styles идут после вычисленной геоме�
 </ConfigProvider>
 ```
 
-У More сохраняется исходный порядок: локальное more.icon, затем глобальные
-tabs.more.icon ?? tabs.moreIcon, затем локальное moreIcon. Явное локальное
-more.icon, включая null/false/undefined, перекрывает fallback. Глобальный tabs.more
-использует только icon, как в 6.6.8; trigger и остальные параметры задаются локально.
-Собственные поля more.overlayClassName/overlayStyle перекрывают semantic popup.root, даже при явном undefined.
+More icon precedence is local `more.icon`, then global
+`tabs.more.icon ?? tabs.moreIcon`, then local `moreIcon`.
+Explicit local `more.icon`, including `null`, `false`, and
+`undefined`, overrides the fallback. Global `tabs.more` uses
+only `icon` as in 6.6.8. Set trigger and other options locally.
+Own `more.overlayClassName` and `more.overlayStyle` fields override
+semantic `popup.root`, even with explicit `undefined`.
 
-`rootClassName` добавляет класс корню; нативные title/data-атрибуты и обработчики
-передаются HTMLDivElement. `bind:nativeElement` предоставляет сам корневой div
-после mount и очищается при unmount; SSR его не заполняет. Это Svelte binding,
-без React ref wrapper. Aria-label/aria-labelledby сохраняют прежнее назначение:
-именуют tablist. Обновления config/semantic styles сохраняют DOM, draft и фокус.
+`rootClassName` adds a class to the root. Native title and data
+attributes and handlers pass to the `HTMLDivElement`.
+`bind:nativeElement` supplies the root `div` after mount and
+clears on unmount. It is unassigned in SSR. The binding
+returns the node directly. `aria-label` and `aria-labelledby`
+retain their role naming the tablist. Configuration and semantic
+style updates preserve DOM, drafts, and focus.
 
-`indicator={{ size: 12.5, align: 'center' }}` задаёт длину и выравнивание линии.
-Size также принимает чистую функцию `(origin) => origin - 20`: origin — полная
-ширина горизонтального или высота вертикального заголовка с дробной точностью.
-По умолчанию используется полный размер и align=center; start/end учитывают RTL.
-Нули и отрицательные значения передаются в CSS без ограничения. Nullish
-indicator.size наследует ConfigProvider.tabs.indicator.size.
-Align наследуется отдельно.
-Формулы, включая
-end transform в RTL, повторяют rc-tabs 1.13.0. Измерение выполняется после mount;
-SSR не вызывает size callbacks. Обновление откладывается на кадр, а сравнение
-округлённых значений подавляет дрожание индикатора. Смена indicator не сбрасывает
-прокрутку и не меняет фокус, выбранную вкладку или состояние панели.
+`indicator={{ size: 12.5, align: 'center' }}` sets indicator length
+and alignment. Size accepts a pure function such as
+`(origin) => origin - 20`. `origin` is the entire horizontal
+header width or vertical header height with fractional precision.
+Full size and `align=center` are the defaults. Start and end
+account for RTL. Zero and negative values pass to CSS without
+clamping. Nullish `indicator.size` inherits
+`ConfigProvider.tabs.indicator.size`. Align inherits separately.
+The formulas, including end transform in RTL, follow
+rc-tabs 1.13.0. Measurement runs after mount. SSR does not call
+size callbacks. Updates are scheduled on a frame, with
+rounded value comparisons suppressing indicator jitter.
+Indicator updates preserve scroll, focus, selected tab, and
+panel state.
 
-OnTabScroll получает `{ direction: 'left' | 'right' | 'top' | 'bottom' }` при
-изменении native scroll заголовков на текущей оси. Направления физические,
-в том числе в RTL; фокусировка заголовка тоже может вызвать прокрутку.
-Повторные scroll events при прежней позиции не вызывают callback. Браузер
-может объединять соседние изменения в одно native событие; согласованная
-прокрутка остаётся нативной, вместо transform/wheel/touch механизма React.
-Смена callback не сбрасывает позицию, listener удаляется при unmount.
+`onTabScroll` receives
+`{ direction: 'left' | 'right' | 'top' | 'bottom' }` on native
+header scroll changes along the current axis. Directions are
+physical, including in RTL. Focusing a header can also scroll.
+Repeated scroll events at the same position leave the callback
+uncalled. Browsers can combine neighboring changes into one
+native event. Scrolling remains native, while React uses
+transforms, wheel, and touch. Replacing the callback retains
+position. The listener clears on unmount.
 
-Centered=true центрирует горизонтальный список заголовков, пока хватает места.
-Как в исходной реализации, вертикальный список растягивается по высоте, а
-заголовки остаются сверху. TabBarGutter
-задаёт отступ в px перед всеми заголовками, кроме первого, и перед кнопкой
-добавления, если список не пуст. Нулевое значение убирает исходный отступ;
-дробные и отрицательные значения сохраняются. По горизонтали используется
-margin-inline-start с учётом RTL, по вертикали — margin-top; при мобильном
-переходе наверх меняется и ось отступа. TabBarStyle принимает CSS-строку для
-всей панели заголовков, включая extra content. Корневой style действует отдельно.
-Например: `<Tabs {items} centered tabBarGutter={12} tabBarStyle="margin-bottom:8px" />`.
+`centered=true` centers a horizontal header list while space
+allows. As upstream, a vertical list stretches in height
+and keeps headers at the top. `tabBarGutter` sets a pixel gap
+before all headers except the first and before Add when the
+list is nonempty. Zero removes the default gap. Fractions and
+negative values are kept. Horizontal uses `margin-inline-start`
+with RTL, while vertical uses `margin-top`. Moving to the top
+on mobile changes the gap axis. `tabBarStyle` accepts a CSS
+string for the entire header including extra content. Root
+`style` applies separately. For example,
+`<Tabs {items} centered tabBarGutter={12} tabBarStyle="margin-bottom:8px" />`.
 
-TabBarExtraContent задаёт правый слот либо { left, right }: string/number/boolean/
-Snippet. Слоты находятся вне tablist и допускают нативные интерактивные controls;
-они не участвуют в навигации стрелками. Как @rc-component/tabs 1.13.0, falsy extra
-(включая 0) не создаёт wrapper; числовой label=0 при этом отображается.
+`tabBarExtraContent` sets the right slot or `{ left, right }`
+with a string, number, boolean, or Snippet. These slots sit
+outside the tablist and allow native interactive controls.
+Arrow navigation excludes them. As in `@rc-component/tabs`
+1.13.0, falsy extra content including 0 creates no wrapper.
+Numeric `label=0` still renders.
 
-В editable-card `onEdit(target, action)` запрашивает изменение у владельца:
-add получает native click event, remove — строковый key, включая пустой.
-Items и activeKey меняет владелец; edit сам по себе не вызывает onChange/onTabClick.
-HideAdd=true скрывает добавление. Disabled и closable=false запрещают удаление;
-closeIcon=null/false скрывают кнопку только при не заданном closable.
-Closable=true сохраняет кнопку и использует fallback иконки. Приоритет —
-truthy closeIcon, removeIcon, затем «×»; nullish removeIcon использует CloseOutlined.
-Falsy addIcon использует PlusOutlined. Boolean true создаёт пустую иконку,
-сохраняя доступное имя кнопки. Иконки — пассивные TabsContent/Snippet.
+In editable-card mode, `onEdit(target, action)` requests a change
+from the owner. Add receives a native click event and remove
+receives a string key, including the empty string. The owner
+changes `items` and `activeKey`. Edit alone leaves `onChange` and
+`onTabClick` uncalled. `hideAdd=true` hides Add. Disabled and
+`closable=false` prevent removal. `closeIcon=null` or `false`
+hides the button only when `closable` is omitted. `closable=true`
+keeps the button with the fallback icon. Precedence is a
+truthy `closeIcon`, then `removeIcon`, then `×`. Nullish
+`removeIcon` uses CloseOutlined. Falsy `addIcon` uses
+PlusOutlined. Boolean `true` leaves an empty icon and retains
+the button's accessible name. Icons are passive TabsContent
+or Snippets.
 
-Delete/Backspace и средняя кнопка мыши запрашивают удаление и перемещают фокус
-вперёд, а для последней доступной вкладки — назад; disabled пропускаются.
-Это происходит и при отказе владельца менять items. Обычный click на close
-не активирует вкладку. Фокус, явно заданный владельцем снаружи Tabs, сохраняется.
-Close выбранной вкладки и Add доступны через Tab; остальные close имеют tabindex=-1.
-Locale.addAriaLabel/removeAriaLabel задают имена с defaults «Add tab»/«remove».
-Locale.dropdownAriaLabel именует listbox скрытых вкладок, по умолчанию «expanded dropdown»;
-явная пустая строка сохраняется.
+Delete, Backspace, and middle-click request removal and move
+focus forward, or backward for the last available tab, skipping
+disabled tabs. This still happens if the owner rejects the
+change to items. Clicking close leaves tab activation untouched.
+Explicit focus chosen outside Tabs is preserved. The selected
+tab's close and Add are in Tab order. Other close buttons have
+`tabindex=-1`. `locale.addAriaLabel` and `locale.removeAriaLabel`
+supply names, defaulting to `Add tab` and `remove`.
+`locale.dropdownAriaLabel` names the hidden tab listbox and
+defaults to `expanded dropdown`. An explicit empty string is
+preserved.
 
 ```svelte
 <script lang="ts">
@@ -244,71 +293,98 @@ Locale.dropdownAriaLabel именует listbox скрытых вкладок, �
   }} />
 ```
 
-При переполнении More показывает вкладки вне видимого диапазона, включая частично
-обрезанные и disabled. Native scroll сохраняется; Add переходит в блок операций
-с сохранением DOM-узла, фокуса и исходного card gutter. Определение мобильного
-устройства повторяет default is-mobile 5.0.0, отдельно от breakpoint расположения:
-на мобильном user agent More скрыт, прокрутка и Add остаются доступны.
+On overflow, More shows tabs outside the visible range,
+including partly clipped and disabled tabs. Native scrolling
+remains. Add moves to the operations area, retaining its DOM
+node, focus, and card gutter. Mobile detection follows the
+is-mobile 5.0.0 default independently of the placement breakpoint.
+For a mobile user agent, More is hidden while scrolling and
+Add remain available.
 
-Непустой `prefixCls` задаёт классы Tabs, навигации, панелей и More; пустое значение
-наследует `ConfigProvider.prefixCls`. Имена switch используют локальный Tabs prefix,
-default More slide — общий prefix, независимо от cssVar.prefix. Canonical theme
-markers и shared keyframes сохраняются. Смена prefix сохраняет активную панель,
-DOM/ref, draft/selection/focus и открытый popup с его редактором.
-Внутренние запросы фокуса используют стабильные атрибуты. Editable/custom cells
-прокручиваются целиком, включая кнопку удаления, чтобы активная вкладка не
-попадала в More из-за видимого только текста.
-Сверка: [официальный prefix-эталон](../../../tests/browser/fixtures/ant-design-tabs-prefix-reference.json),
-[браузер](../../../tests/browser/tabs/tabs-prefix.spec.ts) и
-[SSR](../../../tests/package/tabs/tabs-prefix.ssr.test.ts), `?fixture=tabs-prefix`.
+A nonempty `prefixCls` supplies classes for Tabs, navigation,
+panels, and More. An empty value inherits
+`ConfigProvider.prefixCls`. Switch names use the local Tabs
+prefix, and default More slide uses the shared prefix
+independently of `cssVar.prefix`. Canonical theme markers and
+shared keyframes are preserved. A prefix change retains the
+active panel, DOM and refs, drafts, selection, focus, and an
+open popup and its editor. Internal focus requests use stable
+attributes. Editable and custom cells scroll fully into view,
+including the remove button, so the active tab does not appear
+in More when only its text is visible. The fixture is
+`?fixture=tabs-prefix`. [Official prefix reference](../../../tests/browser/fixtures/ant-design-tabs-prefix-reference.json) ·
+[Browser tests](../../../tests/browser/tabs/tabs-prefix.spec.ts) · [SSR tests](../../../tests/package/tabs/tabs-prefix.ssr.test.ts)
 
-More открывается через hover с задержками 0.1/0.1 секунды. `more.trigger` также
-поддерживает click, focus, contextMenu и массив событий. `showAction` и `hideAction`
-раздельно заменяют действия открытия и закрытия; пустой массив отключает сторону.
-У contextMenu исходное закрытие — click. Hover без click получает touch toggle;
-после touch hover игнорируется до следующего обработанного click.
-Закрывающий focus срабатывает на blur кнопки, включая переход внутрь popup,
-как в исходном Trigger.
-ArrowDown/Enter/Space на
-кнопке открывают список без выбора; Up/Down затем меняют активный пункт, пропуская
-disabled. Первый Up сохраняет исходный выбор предпоследнего enabled-пункта.
-Tab переносит фокус в список; его стрелки/Home/End двигают фокус по native options.
-Выбор с кнопки More при hover оставляет список открытым, клик по option закрывает.
-Клавиатурный выбор использует native click: публичный onTabClick по-прежнему получает
-MouseEvent, включая его подтип PointerEvent. Close вызывает только onEdit, не закрывая
-список; items меняет владелец. Escape сначала закрывает вложенную поверхность,
-затем More, затем содержащий Modal.
+More opens by hover with 0.1s enter and leave delays.
+`more.trigger` also supports click, focus, context menu, and
+an array of events. `showAction` and `hideAction` replace open
+and close actions separately. An empty array disables that
+side. The upstream context-menu close action is click.
+Hover without click gets touch toggling. After touch, hover
+is ignored until the next handled click. A close action
+of `focus` fires on button blur even when focus enters the
+popup, as in upstream Trigger.
 
-`more.icon` перекрывает исторический moreIcon, включая null/false/0 и пустую строку.
-Без них используется исходный EllipsisOutlined; явно заданный more.icon=undefined
-даёт строку «More», как rc-tabs. У пустой декоративной кнопки остаётся native имя
-«ellipsis». More принимает placement, mouseEnterDelay/mouseLeaveDelay, autoFocus,
-minOverlayWidthMatchTrigger, overlayClassName/overlayStyle, onOverlayClick и
-getPopupContainer; CSS styles задаются строкой. Корневой getPopupContainer
-также поддерживается; одноимённый more override имеет приоритет,
-включая явно заданный undefined. Portal сохраняет тему и собственные CSS variables popup.
-ConfigProvider.getPopupContainer наследуется, если корневой prop Tabs отсутствует.
-Явный root getPopupContainer=undefined выключает provider, как исходный spread props.
-More имеет следующий приоритет, включая собственный undefined. Эти правила сохраняются
-в props стандартной панели при renderTabBar; semantic callbacks получают raw props.
+ArrowDown, Enter, and Space on the button open the list
+without selecting. Up and Down then change the active item,
+skipping disabled items. The first Up retains the upstream
+choice of the second-to-last enabled item. Tab moves focus
+into the list, where arrows, Home, and End move among native
+options. Selection from the More button with hover keeps
+the list open. Clicking an option closes it. Keyboard
+selection uses a native click, so public `onTabClick`
+continues to receive a MouseEvent, including its PointerEvent
+subtype. Close calls only `onEdit` and keeps the list open.
+The owner updates items. Escape closes a nested surface
+first, then More, then the enclosing Modal.
 
-Выравнивание More повторяет rc-dropdown/rc-trigger 3.10.1. `placements` заменяет
-таблицу целиком, `builtinPlacements` имеет приоритет; его явный undefined даёт пустую
-таблицу Trigger. `align` неглубоко перекрывает выбранный placement, в том числе весь
-overflow. Points физические и не отражаются в RTL. Offset и targetOffset принимают
-числа или проценты от popup и target соответственно. Поддержаны flip/shift, исходное
-значение adjust=0, области htmlRegion visible/scroll/visibleFirst и dynamicInset
-для right/bottom, включая legacy _experimental.dynamicInset. Старые useCssRight,
-useCssBottom, useCssTransform и ignoreShake исходный 3.10.1 не использует.
+`more.icon` overrides legacy `moreIcon`, including `null`,
+`false`, 0, and the empty string. When both are omitted,
+the upstream EllipsisOutlined is used. Explicit
+`more.icon=undefined` gives the string `More` as in rc-tabs.
+An empty decorative button retains the native name
+`ellipsis`. More accepts `placement`, `mouseEnterDelay`,
+`mouseLeaveDelay`, `autoFocus`, `minOverlayWidthMatchTrigger`,
+`overlayClassName`, `overlayStyle`, `onOverlayClick`, and
+`getPopupContainer`. CSS styles are strings. Root
+`getPopupContainer` is supported, with the More override
+taking precedence, including explicit `undefined`. The
+portal retains theme and the popup's own CSS variables.
 
-`alignPoint` использует последнюю client-точку click/hover/contextMenu. Без точки
-keyboard/touch используют кнопку. В point mode default stretch выключен;
-minOverlayWidthMatchTrigger=true включает его, собственный undefined выключает.
-Point menu с click-hide закрывается при scroll/resize; hover сохраняет точку,
-включая уход кнопки за viewport. `onPopupAlign` получает popup и фактический align
-после flip, перед записью offsets. Количество вызовов не фиксируется; idle frames
-не создают callback loop. При нулевом scale выравнивание/callback пропускается.
-CSS overlayStyle имеет приоритет над offsets и arrow variables.
+`ConfigProvider.getPopupContainer` is inherited when the
+Tabs root prop is omitted. Explicit root
+`getPopupContainer=undefined` disables provider inheritance
+as in upstream prop spreading. More takes further
+precedence, including its own `undefined`. These rules
+also apply to default tab bar props in `renderTabBar`.
+Semantic callbacks receive raw props.
+
+More alignment follows rc-dropdown and rc-trigger 3.10.1.
+`placements` replaces the entire map. `builtinPlacements`
+takes precedence, and explicit `undefined` gives Trigger an
+empty map. `align` shallowly overrides the selected placement,
+including the full `overflow`. Points are physical and
+unchanged in RTL. `offset` and `targetOffset` accept numbers
+or percentages of the popup and target respectively. It
+supports flipping and shifting, upstream `adjust=0`, the
+`htmlRegion` values `visible`, `scroll`, and `visibleFirst`,
+and `dynamicInset` for right and bottom including legacy
+`_experimental.dynamicInset`. Upstream 3.10.1 ignores old
+`useCssRight`, `useCssBottom`, `useCssTransform`, and
+`ignoreShake`.
+
+`alignPoint` uses the latest client coordinate from click,
+hover, or context menu. Without one, keyboard and touch use
+the button. Point mode disables default stretch.
+`minOverlayWidthMatchTrigger=true` enables it, and an own
+`undefined` disables it. A point menu that hides on click
+closes on scroll or resize. Hover retains the point even if
+the button leaves the viewport. `onPopupAlign` receives the
+popup and actual alignment after flipping and before offsets
+are written. The call count is unspecified, and idle frames
+do not produce a callback loop. Alignment and callback are
+skipped at zero scale. CSS `overlayStyle` overrides offsets
+and arrow variables.
 
 ```svelte
 <Tabs {items} more={{
@@ -318,43 +394,52 @@ CSS overlayStyle имеет приоритет над offsets и arrow variables
 }} />
 ```
 
-`arrow=true` добавляет div-arrow и show-arrow class низкоуровневого Dropdown.
-Tabs upstream не задаёт стили этому div; потребитель может оформить его через
-semantic popup.root. AutoFocus/Tab работают с overlay, пропуская div-arrow.
-AutoFocus запускается при открытии; обновление align/размеров внутри сеанса
-сохраняет фокус в пользовательском поле. Смена getPopupContainer callback с тем же
-DOM-контейнером сохраняет portal и выделение текста. Flip переключает CSS insets даже тогда,
-когда числовые координаты остаются теми же.
-Native popover остаётся в fixed top layer и отслеживает изменения layout;
-клиппинг предков участвует в расчёте доступной области. Сохраняется измерение
-реального border box при пользовательском box-sizing:content-box.
-Исходная логика сопровождается MIT-лицензиями
-[rc-dropdown](../../../src/lib/vendor/LICENSE.rc-dropdown) и
-[rc-trigger](../../../src/lib/vendor/LICENSE.rc-trigger).
+`arrow=true` adds low-level Dropdown's arrow div and show-arrow
+class. Upstream Tabs supplies no styles to the div. Use
+`popup.root` to style it. AutoFocus and Tab work with the
+overlay and skip the arrow div. Autofocus runs on open.
+Alignment and size updates in the same session preserve
+focus in a custom field. An updated `getPopupContainer` with
+the same DOM container preserves the portal and text
+selection. Flipping switches CSS insets even with identical
+coordinates. The native popover remains fixed in the top
+layer and tracks layout changes. Ancestor clipping contributes
+to the available area. Measurement uses the real border box
+with custom `box-sizing:content-box`. The upstream logic's MIT
+licenses are included. [rc-dropdown](../../../src/lib/vendor/LICENSE.rc-dropdown) · [rc-trigger](../../../src/lib/vendor/LICENSE.rc-trigger)
 
-`more.visible` со значением true/false перекрывает внутренние запросы и onClose.
-Как в rc-tabs,
-more.onVisibleChange заменяет внутренний pointer/dismiss callback; для controlled
-режима передавайте оба поля. Клавиатурное открытие и aria-expanded используют
-внутренний флаг OperationNode. Явный more.visible=undefined включает отдельный
-uncontrolled Trigger: pointer actions управляют popup, а keyboard/onClose меняют
-только флаг OperationNode. В этой ветке Dropdown не добавляет open class и не
-переносит фокус по autoFocus/Tab. Изменение visible сбрасывает внутреннее значение
-Trigger, как useControlledState исходника.
+`more.visible` with `true` or `false` overrides internal
+requests and `onClose`. As in rc-tabs, `more.onVisibleChange`
+replaces the internal pointer and dismissal callback. Pass
+both fields for controlled mode. Keyboard opening and
+`aria-expanded` use the internal OperationNode flag.
+Explicit `more.visible=undefined` enables a separate
+uncontrolled Trigger. Pointer actions control the popup,
+while keyboard and `onClose` only change the OperationNode
+flag. In this branch, Dropdown omits the open class and
+does not move focus via autofocus or Tab. Changing
+`visible` resets Trigger's internal value as in upstream
+`useControlledState`.
 
-PopupRender получает menu Snippet и { restTabs, onClose }; `more.overlay` — Snippet,
-который заменяет и menu, и popupRender. Клавиатурный выбор с More работает даже
-без исходного menu DOM. Содержимое ленивое и сохраняется после
-первого открытия. `autoDestroy=true` удаляет его вместе с popup после leave end;
-повторное открытие во время leave сохраняет DOM/state. Уходящая поверхность остаётся
-aria-hidden/inert и не перехватывает Escape у следующего popup/Modal.
+`popupRender` receives the menu Snippet and
+`{ restTabs, onClose }`. `more.overlay` is a Snippet replacing
+both menu and `popupRender`. Keyboard selection from More
+works without the original menu DOM. Content is lazy and
+retained after first opening. `autoDestroy=true` removes
+content and popup at leave end. Reopening during leave
+retains DOM and state. The exiting surface stays
+`aria-hidden` and `inert`, leaving Escape to the next popup
+or Modal.
 
-По умолчанию More использует ant-slide-up с placement overrides. `transitionName`
-задаёт другой CSS motion prefix; пустая строка отключает motion. Непустой animation
-имеет приоритет и добавляет префикс ant-tabs-dropdown-. CSS для собственного имени
-задаёт потребитель. Theme motion=false и reduced motion завершают переход;
-`openClassName` заменяет класс открытой кнопки, пустая строка убирает его.
-Прежний native SSR shell сохраняется без содержимого; при autoDestroy=true его нет.
+By default More uses `ant-slide-up` with placement overrides.
+`transitionName` supplies another CSS motion prefix. An empty
+string disables motion. A nonempty `animation` takes
+precedence and gets the `ant-tabs-dropdown-` prefix. The
+consumer supplies CSS for a custom name. Theme motion off
+and reduced motion finish transitions. `openClassName`
+replaces the open button's class, with an empty string
+removing it. The existing native SSR shell is retained
+without content, unless `autoDestroy=true`.
 
 ```svelte
 <script lang="ts">
@@ -374,8 +459,9 @@ aria-hidden/inert и не перехватывает Escape у следующе�
 <Tabs {items} aria-label="Разделы" more={{ trigger: 'click', popupRender: popup }} />
 ```
 
-`renderTabBar` получает разрешённые props навигации и Snippet стандартной панели.
-Он может обернуть её, заменить props или построить собственную шапку:
+`renderTabBar` receives resolved navigation props and a
+Snippet for the default bar. It can wrap the bar, override
+its props, or build a custom header.
 
 ```svelte
 <script lang="ts">
@@ -392,69 +478,100 @@ aria-hidden/inert и не перехватывает Escape у следующе�
 <Tabs {items} renderTabBar={bar} />
 ```
 
-Стандартной панели передают полный набор props через spread. Её overrides меняют
-только навигацию: например, activeKey управляет выделением заголовка, а активная
-панель остаётся под управлением Tabs. Переданный onTabClick выполняет native выбор;
-его можно заменить или вызвать из своего обработчика. KeyboardEvent из полностью
-пользовательской шапки преобразуется в MouseEvent для публичного onTabClick,
-сохраняя modifiers, target/currentTarget и отмену события.
-Callback-ref `ref` предоставляет DOM-узел стандартной панели и получает null
-при замене ref или unmount; во время SSR он не вызывается.
+Spread the full prop set onto the default bar. Its overrides
+affect navigation only. For example, `activeKey` highlights
+a header while Tabs still owns the active panel. The
+supplied `onTabClick` runs native selection and can be
+replaced or called from a custom handler. KeyboardEvent
+from a fully custom bar is converted to MouseEvent for
+public `onTabClick`, preserving modifiers, target and
+currentTarget, and cancellation. Callback ref `ref` receives
+the default bar's DOM node and gets `null` when replaced or
+on unmount. SSR does not call it.
 
-Сохраняется native наследование темы popup. В исходном UMD замена
-more.overlayClassName может удалить служебный CSS-variable scope и сбросить цвет
-текста до browser default; native portal продолжает наследовать тему Tabs.
+Native popup theme inheritance is preserved. In the original
+UMD, replacing `more.overlayClassName` can remove the internal
+CSS variable scope and reset text color to the browser
+default. The native portal keeps inheriting the Tabs theme.
 
-`children` стандартной панели — Snippet `(node, item, attributes)`. Он оборачивает
-каждый заголовок; `node(overrides)` дополняет или заменяет его исходные DOM attributes.
-Attributes позволяют сохранить class/style/handlers и добавить Svelte attachments.
-Как в исходном TabNode, внешний узел отделён от нативной кнопки tab: её клик
-останавливает всплытие до внешнего onclick. Для перехвата выбора всей шапки
-используйте props.onTabClick. Перестановка items и интеграция с drag-and-drop
-остаются у владельца, как в официальном примере.
+The default bar's `children` is a Snippet
+`(node, item, attributes)` wrapping each header.
+`node(overrides)` supplements or replaces its original DOM
+attributes. Use `attributes` to retain class, style, and
+handlers and add Svelte attachments. As in upstream TabNode,
+the outer node is separate from the native tab button.
+The button's click stops bubbling before the outer
+`onclick`. Use `props.onTabClick` for bar-wide selection
+handling. The owner handles item reordering and drag and
+drop, as in the official example.
 
-Собственная шапка отвечает за клавиатуру и ARIA. Публичный
-`getTabsItemId(props.id, key, 'tab' | 'panel')` связывает её controls с native
-панелями, включая пустые и Unicode keys. Панели, их состояние и корневой ref
-не пересоздаются при обновлении или замене renderer'а. Точные типы находятся в
-[tabs-nav.types.ts](../../../src/lib/tabs/tabs-nav.types.ts).
-Поля tabPosition/popupClassName стандартной панели следуют текущему интерфейсу
-TabNavList закреплённого rc-tabs; они независимы от удалённых корневых props Tabs.
+A custom bar owns keyboard behavior and ARIA.
+`getTabsItemId(props.id, key, 'tab' | 'panel')` links its
+controls to native panels, including for empty and Unicode
+keys. Panels, state, and root ref survive renderer updates
+and replacement. The default bar's `tabPosition` and
+`popupClassName` follow the pinned rc-tabs TabNavList
+interface, independently of the removed Tabs root props.
+[Tab navigation types](../../../src/lib/tabs/tabs-nav.types.ts)
 
-Фикстура `?fixture=tabs-editable` сверяет truthiness, иконки и размеры с Ant Design
-6.6.8 и @rc-component/tabs 1.13.0. Проверяются callbacks, принятие/отказ владельца,
-фокус, FormData, layout/RTL и сохранение панелей. Фикстура `?fixture=tabs-layout`
-сравнивает centered/gutter/header style с 31 эталоном официального UMD, включая
-все типы и положения в LTR/RTL, нулевой отступ и пустой editable список.
-Здесь же проверяются medium, наследование размера и сохранение панелей
-при смене расположения.
-Фикстура `?fixture=tabs-overflow` сверяет 35 эталонов More из официального UMD:
-скрытые вкладки, CSS метрики, SVG, icon precedence, RTL и locale. Проверяются также
-keyboard, control/owner callbacks, popupRender, portal, вложенные поверхности и focus.
-Фикстура `?fixture=tabs-more-runtime` сверяет lifecycle, overlay precedence,
-раздельные actions/touch, visible=undefined и motion phases с 33 эталонами UMD.
-Здесь же проверяются autoDestroy после leave, reversal, смена motion и cleanup portal.
-Фикстура `?fixture=tabs-more-position` сверяет 51 эталон геометрии официального UMD:
-placements, offsets, overflow/regions, point targeting, arrow, callback payload и
-container. Живые проверки защищают DOM/state/draft/selection/focus, callback loop,
-scroll/resize, уход anchor за viewport и cleanup. Общий числовой engine проверяется
-также прежними сценариями Tour.
-Фикстура `?fixture=tabs-indicator` сверяет 52 эталона indicator из
-официального UMD и направления onTabScroll в восьми сочетаниях RTL/placement.
-Здесь же проверяются сохранение DOM, focus, More, прокрутки и cleanup кадров/listeners.
-Фикстура `?fixture=tabs-semantic` сравнивает 22 эталона semantic slots, CSS-слоёв,
-callback props, provider inheritance и icon precedence с официальным UMD.
-Проверяются native attrs/events/ref и живое обновление открытого popup.
-Фикстура `?fixture=tabs-motion` сверяет 41 UMD-эталон фаз, CSS, callbacks,
-приоритетов, RTL и lifecycle; дополнительно проверяются незавершённые переходы,
-FormData, focus, reversal, end=false, async prepare, reduced motion и cleanup.
-Восемь сценариев задают per-item class/style, semantic/motion precedence, hidden
-forceRender и RTL; живое обновление проверяется также во время перехода.
-Фикстура `?fixture=tabs-render` сверяет 35 UMD-эталонов props, overrides,
-per-tab wrappers/attributes, callbacks, More, RTL и пустого editable набора.
-Проверяются также SSR, native keyboard/cancellation, attachments и обновления
-шапки без потери DOM/state/draft/selection/focus и открытого More.
-Приоритет уничтожения панелей сохраняет native v1. Остальные low-level
-Dropdown/Trigger возможности More требуют отдельного аудита; перенесённые
-arrow, align/alignPoint, placements, actions, callbacks, overlay и motion описаны выше.
+`?fixture=tabs-editable` compares truthiness, icons, and sizes
+with Ant Design 6.6.8 and `@rc-component/tabs` 1.13.0.
+It checks callbacks, acceptance and rejection by the owner,
+focus, FormData, layout and RTL, and preserved panels.
 
+`?fixture=tabs-layout` compares centering, gutter, and header
+styles with 31 official UMD references covering all types
+and placements in LTR and RTL, zero gap, and an empty
+editable list. It also checks medium, size inheritance, and
+panel retention on placement changes.
+
+`?fixture=tabs-overflow` compares 35 official UMD More
+references for hidden tabs, CSS metrics, SVG, icon
+precedence, RTL, and locale. It covers the keyboard,
+controlled ownership and callbacks, `popupRender`, the portal,
+nested surfaces, and focus.
+
+`?fixture=tabs-more-runtime` checks lifecycle, overlay
+precedence, independent actions and touch, `visible=undefined`,
+and motion phases against 33 UMD references. It also checks
+`autoDestroy` after leave, reversal, motion updates, and
+portal cleanup.
+
+`?fixture=tabs-more-position` compares 51 official UMD
+geometry references for placements, offsets, overflow
+and regions, point targeting, arrow, callback payload, and
+container. Live checks cover DOM, state, drafts, selection,
+focus, callback loops, scroll and resize, the anchor leaving
+the viewport, and cleanup. Existing Tour scenarios also
+cover the shared numeric engine.
+
+`?fixture=tabs-indicator` compares 52 official UMD indicator
+references and `onTabScroll` directions across eight RTL and
+placement combinations. It also checks DOM, focus, More,
+scroll preservation, and frame and listener cleanup.
+
+`?fixture=tabs-semantic` compares 22 official UMD references
+for semantic slots, CSS layers, callback props, provider
+inheritance, and icon precedence. It checks native
+attributes, events, ref, and live updates to an open popup.
+
+`?fixture=tabs-motion` compares 41 UMD references for phases,
+CSS, callbacks, precedence, RTL, and lifecycle. It also
+checks unfinished transitions, FormData, focus, reversal,
+`end=false`, async prepare, reduced motion, and cleanup.
+Eight scenarios cover per-item class and style, semantic
+and motion precedence, hidden force render, and RTL,
+including live updates during transition.
+
+`?fixture=tabs-render` compares 35 UMD references for props,
+overrides, per-tab wrappers and attributes, callbacks, More,
+RTL, and an empty editable set. It also checks SSR, native
+keyboard and cancellation, attachments, and bar updates
+that preserve DOM, state, drafts, selection, focus, and
+open More.
+
+Panel destruction retains native v1 precedence. Remaining
+low-level Dropdown and Trigger options for More need a
+separate audit. The ported arrow, alignment and point
+alignment, placements, actions, callbacks, overlay, and
+motion are described above.

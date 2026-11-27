@@ -1,4 +1,4 @@
-# Tag, CheckableTag и CheckableTagGroup
+# Tag, CheckableTag, and CheckableTagGroup
 
 ```svelte
 <script lang="ts">
@@ -19,116 +19,144 @@
 </ConfigProvider>
 ```
 
-Tag показывает метку с обязательным children Snippet. Icon и пользовательский
-closeIcon принимают Snippet; closeIcon также принимает текст и числа.
-Содержимое — короткая phrasing-разметка
-без вложенных controls, кроме ссылки. Иконки декоративные, aria-hidden/inert.
-Без непустого href корень — span и Tag не создаёт остановок Tab или live-region.
-Именование через aria-label/aria-labelledby добавляет span роль group; переданный
-role имеет приоритет. Непустой href выбирает native anchor с target и естественным
-Tab/Enter. Disabled оставляет anchor, убирает href и добавляет aria-disabled.
-Закрытие ссылки предотвращает навигацию; отмена закрытия сохраняет её содержимое.
-У ссылки в children сохраняется собственный href; disabled Tag меняет её стиль
-и pointer-events, как upstream.
+Tag shows a label with a required `children` Snippet. `icon` and a
+custom `closeIcon` accept Snippets. `closeIcon` also accepts text and
+numbers. Keep contents to short phrasing markup without nested
+controls other than a link. Icons are decorative, `aria-hidden`,
+and `inert`. With no nonempty `href`, the root is a `span` and
+adds no Tab stop or live region. `aria-label` or `aria-labelledby`
+gives the `span` a group role. A supplied `role` takes precedence.
+A nonempty `href` uses a native anchor with `target`, Tab, and Enter.
+Disabled retains the anchor, removes `href`, and adds
+`aria-disabled`. Closing a link prevents navigation. Canceling
+the close preserves its contents. A child link retains its
+own `href`. As upstream, a disabled Tag changes that link's style
+and pointer events.
 
-HTMLAttributes, data-/aria-атрибуты и нативные события относятся к корню; локальный
-dir имеет приоритет над context. Bind:nativeElement даёт текущий span/anchor,
-обновляется при смене типа корня и очищается при закрытии/unmount. В SSR ref пуст.
-Hydration сохраняет существующий DOM и фокус. Явные a/span branches избегают
-повторной вставки корня, которая сбрасывает фокус дочерней кнопки.
+HTML, data, and ARIA attributes and native events apply to the
+root. Local `dir` takes precedence over context. `bind:nativeElement`
+supplies the current span or anchor, updates when the root type
+changes, and clears on close or unmount. The ref is empty during
+SSR. Hydration preserves existing DOM and focus. Separate anchor
+and span branches avoid reinserting the root and losing focus on
+a child button.
 
-OnClick/onclick получают нативный click корневого span; onclick имеет приоритет.
-Callback или единственная прямая ссылка включают [Wave](../wave.md).
-Закрытие сохраняет stopPropagation и не вызывает onClick метки.
+`onClick` and `onclick` receive the root span's native click.
+`onclick` takes precedence. A callback or one direct link enables
+Wave. Closing stops propagation and leaves the tag's `onClick`
+uncalled. [Wave](../wave.md)
 
-Variant: filled (по умолчанию), outlined, solid. Прежний default class сохраняется;
-semantic callbacks получают исходный undefined color, кроме default для solid.
-Статусы — success/processing/error/default/warning. Предустановленные цвета:
-blue/purple/cyan/green/magenta/pink/red/orange/yellow/volcano/geekblue/lime/gold.
-Pink и magenta используют соответствующие токены Ant Design. Статусный цвет не добавляет
-role=status и не запускает анимацию/объявление. TagColor, TagPresetColor,
-TagStatusColor и TagVariant экспортируются через index.ts.
+`variant` supports `filled` (default), `outlined`, and `solid`. The
+previous default class is preserved. Semantic callbacks receive
+the original undefined color except for the `solid` default.
+Statuses are `success`, `processing`, `error`, `default`, and `warning`.
+Preset colors are `blue`, `purple`, `cyan`, `green`, `magenta`,
+`pink`, `red`, `orange`, `yellow`, `volcano`, `geekblue`, `lime`,
+and `gold`. Pink and magenta use their respective Ant Design
+tokens. A status color adds no `role=status`, animation, or
+announcement. `TagColor`, `TagPresetColor`, `TagStatusColor`, and
+`TagVariant` are exported through `index.ts`.
 
-Color также принимает CSS-строки. Solid задаёт background-color; filled и outlined
-вычисляют светлый фон через исходный FastColor/HSL с lightness 0.95, сохраняя alpha.
-Outlined добавляет border-color. CSS variables используются как исходная строка
-foreground/border; FastColor не вычисляет их значение. Disabled убирает рассчитанные
-цвета, но сохраняет явно переданные styles/style.
+`color` also accepts CSS strings. `solid` sets `background-color`.
+`filled` and `outlined` calculate a light background using upstream
+FastColor and HSL lightness 0.95, preserving alpha. `outlined`
+adds `border-color`. CSS variables are used as supplied for
+foreground and border. FastColor leaves their value unresolved.
+Disabled removes calculated colors and preserves explicit
+`styles` and `style`.
 
-Приоритет variant: локальный prop, ConfigProvider.tag.variant, затем filled.
+Variant precedence is local prop, `ConfigProvider.tag.variant`,
+then `filled`.
 
-ConfigProvider.tag наследуется при отсутствии; явный объект, включая {}, заменяет
-родительский record. Поддерживаются class, style, variant, classNames, styles,
-closable и closeIcon.
-TagSlots/TagSemantic задают root, icon, content и close строками CSS или classes;
-callback получает props с разрешёнными color, variant и disabled. Root styles:
-рассчитанный CSS-цвет, context styles.root, context style, local styles.root, local style.
-RootClassName дополняет class. Изменения shorthand/longhand повторяют style diff
-upstream; CSS-строки сохраняют нативный приоритет !important.
+`ConfigProvider.tag` inherits when omitted. An explicit object,
+including `{}`, replaces the parent record. It supports `class`,
+`style`, `variant`, `classNames`, `styles`, `closable`, and
+`closeIcon`. `TagSlots` and `TagSemantic` define `root`, `icon`,
+`content`, and `close` as CSS or class strings. Callbacks see
+resolved `color`, `variant`, and `disabled`. Root style order is
+calculated CSS color, context `styles.root`, context `style`,
+local `styles.root`, and local `style`. `rootClassName` supplements
+`class`. Shorthand and longhand updates follow upstream style
+diffing. CSS strings preserve native `!important` precedence.
 
-Icon styles/classes применяются к существующей декоративной wrapper-границе Snippet,
-close — к нативной кнопке. Content semantic slot действует при наличии icon, как
-upstream; прежняя private content-обёртка и описание кнопки закрытия сохраняются.
-CheckableTag читает только context class/style и локальный style имеет приоритет;
-semantic настройки и variant Tag к нему не применяются.
+Icon classes and styles apply to the Snippet's existing decorative
+wrapper. The close slot applies to the native button. As upstream,
+the content semantic slot applies when an icon is present. The
+existing internal content wrapper and description for the close
+button are retained. CheckableTag reads only context `class` and
+`style`, with local `style` taking precedence. Tag semantic settings
+and variant do not apply to CheckableTag.
 
-Без local/context close config кнопка скрыта. CloseIcon=true включает default Icon
-close; текст/число и Snippet заменяют изображение внутри той же нативной кнопки.
-Пустая строка и 0 сохраняют control. Отсутствие props наследует context;
-closable=false скрывает кнопку независимо от icon. CloseIcon=false/null скрывает её,
-если closable не включён. Явный closable=true сохраняет inherited icon или default.
+The close button is hidden without local or context close settings.
+`closeIcon=true` selects the default close Icon. Text, numbers, and
+Snippets replace its graphic inside the same native button. An
+empty string and 0 keep the control. Omitted props inherit context.
+`closable=false` hides the button regardless of icon. `closeIcon=false`
+or `null` hides it unless `closable` is enabled. Explicit
+`closable=true` retains the inherited or default icon.
 
-Closable принимает также object config с closeIcon и ARIA-атрибутами. В этом объекте
-closeIcon=null убирает control, а boolean оставляет пустое изображение. Undefined
-не стирает context field. Передаются только ARIA-атрибуты, как в useClosable;
-disabled/afterClose этого объекта Tag не использует. Блокировкой управляет Tag.disabled.
-CloseLabel имеет приоритет над closable['aria-label'], затем используется locale.closeText.
-По умолчанию описание кнопки ссылается на содержимое метки; closable['aria-describedby']
-может его заменить, поэтому одинаковое «Закрыть» сохраняет контекст.
-Disabled наследует ConfigProvider.componentDisabled; false явно снимает его.
-Disabled запрещает закрытие и callbacks, не удаляя содержимое.
+`closable` also accepts an object with `closeIcon` and ARIA attributes.
+Inside this object, `closeIcon=null` hides the control and booleans
+leave its graphic empty. `undefined` preserves the context field.
+Only ARIA attributes pass through, as in `useClosable`. Tag uses
+`Tag.disabled` for blocking and leaves this object's `disabled` and
+`afterClose` unused. `closeLabel` takes precedence over
+`closable['aria-label']`, followed by `locale.closeText`. By default,
+the button description references tag content. It can be overridden
+with `closable['aria-describedby']` so buttons with the same
+“Close” label keep their context. `disabled` inherits
+`ConfigProvider.componentDisabled` and explicit `false` overrides it.
+Disabled blocks closing and callbacks while leaving content intact.
 
-OnClose получает нативный MouseEvent; event.preventDefault() синхронно отменяет
-закрытие. Возвращаемое значение и Promise не ожидаются. Повторный вход из callback
-не вызывает onClose ещё раз. Прямой DOM listener останавливает всплытие клика;
-Enter и Space обрабатываются при keydown через кнопку type=button; repeat и уже
-отменённое событие игнорируются. Форма не отправляется. Callback может удалить
-весь компонент или выбрать фокус.
+`onClose` receives a native `MouseEvent`. `event.preventDefault()`
+cancels the close synchronously. Return values and Promises are
+ignored. Reentering from the callback does not repeat `onClose`.
+A direct DOM listener stops the click from bubbling. Enter and
+Space are handled at keydown on the `type=button` button. Repeat
+and canceled events are ignored. The button does not submit the
+form. The callback can remove the whole component or choose focus.
 
-После принятого закрытия содержимое удаляется из DOM. Изменение props не
-открывает тот же экземпляр заново: для восстановления нужен новый экземпляр/key.
-Tag не изменяет коллекцию владельца; при удалении записи или отмене onClose
-владелец синхронизирует свою модель. Фокус из закрытой/удалённой кнопки переходит
-на следующий доступный control текущего dialog/документа, затем предыдущий.
-При скрытии closeIcon механизм также восстанавливает фокус. Явный выбор
-владельца сохраняется; закрытие не создаёт дополнительных объявлений.
+An accepted close removes content from the DOM. Prop changes leave
+the instance closed. To show it again, create a new instance or
+key. Tag leaves the owner's collection intact. When removing an
+item or canceling `onClose`, the owner synchronizes its model.
+Focus from a closed or removed button moves to the next accessible
+control in the current dialog or document, then to the previous
+one. Hiding `closeIcon` also restores focus. Explicit focus chosen
+by the owner is preserved. Closing produces no additional
+announcement.
 
-CheckableTag — отдельный export с обязательным children и декоративным icon.
-Это нативный button type=button с aria-pressed, а не поле формы. Checked по
-умолчанию false и полностью управляется владельцем. OnChange сообщает !checked;
-компонент не присваивает checked и не поддерживает bind:checked/defaultChecked.
-Внешнее обновление checked не вызывает callback. При disabled остаются значение
-и содержимое, но кнопка исключается из Tab и не меняет состояние.
+CheckableTag is a separate export with required `children` and a
+decorative icon. It uses a native `type=button` button with
+`aria-pressed`. It does not act as a form field. `checked` defaults
+to `false` and is fully owner-controlled. `onChange` reports
+`!checked`. The owner sets the value, and there is no
+`bind:checked` or `defaultChecked`. External `checked` changes do not
+call the callback. Disabled preserves the value and contents while
+removing the button from the Tab order and blocking toggling.
 
-CheckableTag поддерживает Enter/Space и естественный Tab; при удалении кнопки
-фокус восстанавливается рядом, сохраняя выбор владельца. OnClick вызывается
-после onChange; отмена click внутри него не отменяет уже отправленное значение.
-OnKeyDown вызывается первым: preventDefault отменяет переключение. Space
-переключает при keydown, игнорирует repeat и не вызывает onClick; нативный Enter
-создаёт click. Lowercase onclick/onkeydown имеют приоритет над соответствующими
-callbacks. Уже отменённый click не вызывает переключение или onClick.
+CheckableTag supports Enter, Space, and native Tab. Removing the
+button restores focus nearby, respecting the owner's choice.
+`onClick` runs after `onChange`. Canceling click inside it leaves the
+reported value intact. `onKeyDown` runs first, and
+`preventDefault` cancels toggling. Space toggles at keydown, ignores
+repeat, and skips `onClick`. Native Enter generates a click. Lowercase
+`onclick` and `onkeydown` override their corresponding callbacks.
+An already canceled click triggers neither toggling nor `onClick`.
 
-Id/class/style, title, data-/aria-атрибуты и остальные HTMLAttributes относятся
-к кнопке. Dir наследуется при отсутствии локального значения. Bind:nativeElement
-даёт ту же кнопку при обновлениях и очищается при unmount; SSR не создаёт ref.
-Type=button и aria-pressed остаются собственными атрибутами компонента. Выбранные
-фильтры, их объединение и связь с Form/Table принадлежат владельцу; скрытых
-полей FormData и автоматической интеграции с FormItem нет.
+`id`, `class`, `style`, `title`, data and ARIA attributes, and other
+HTML attributes apply to the button. `dir` inherits when omitted.
+`bind:nativeElement` keeps the button across updates and clears on
+unmount, and SSR creates no ref. The component owns `type=button`
+and `aria-pressed`. The owner manages selected filters, combining
+them, and integrating with Form and Table. There are no hidden
+FormData fields or automatic FormItem integration.
 
-CheckableTagGroup — отдельный export, соответствующий Tag.CheckableTagGroup.
-Options принимает строки, числа или records с value, label, className и style;
-label также принимает Snippet. Значения сохраняют тип и должны быть уникальными
-стабильными ключами. Группа без options пуста; children не подменяют options.
+CheckableTagGroup is a separate export corresponding to
+`Tag.CheckableTagGroup`. `options` accepts strings, numbers, or
+records with `value`, `label`, `className`, and `style`. `label` also
+accepts a Snippet. Values preserve type and must be unique stable
+keys. Without options, the group is empty regardless of children.
 
 ```svelte
 <script lang="ts">
@@ -141,53 +169,64 @@ label также принимает Snippet. Значения сохраняют
   value={selected} onChange={next => { selected = next; }} />
 ```
 
-Без multiple повторное нажатие выбранной метки возвращает null. В multiple
-callback получает массив: добавление сохраняет порядок текущих значений,
-удаление сохраняет остальные, включая значения вне options. Value полностью
-управляется владельцем; отказ принять callback сохраняет checked. Без value
-состояние хранится внутри, defaultValue читается только при создании. Смена
-value на undefined сбрасывает внутреннее значение, как useControlledState upstream;
-callback при внешнем обновлении не вызывается. Bind:value не поддерживается.
+Without `multiple`, clicking a selected tag again returns `null`.
+In multiple mode, the callback receives an array. Adding keeps
+existing value order, and removing keeps the remaining values,
+including values outside `options`. The owner controls `value` and
+can reject the callback to keep `checked`. Without `value`, state is
+local and `defaultValue` is read only at creation. Switching `value`
+to `undefined` resets local state as in upstream `useControlledState`.
+External updates do not call the callback. `bind:value` is unsupported.
 
-ClassNames/styles задают root/item объектом или callback с raw props группы.
-Приоритет root styles: context styles.root, context style, local styles.root,
-local style. Item получает context style CheckableTag, context styles.item,
-local styles.item и option.style. Context class относится к группе и меткам;
-local class/rootClassName — к группе, option.className — к метке. Общие callbacks
-ConfigProvider.tag получают props текущего компонента; тип context остаётся Tag,
-как upstream. Для типизированных group callbacks используйте локальные props.
+`classNames` and `styles` set `root` and `item` with an object or
+callback receiving raw group props. Root style order is context
+`styles.root`, context `style`, local `styles.root`, and local
+`style`. Each item receives context CheckableTag `style`, context
+`styles.item`, local `styles.item`, and `option.style`. Context
+`class` applies to the group and tags. Local `class` and
+`rootClassName` apply to the group, and `option.className` applies to
+the tag. Shared `ConfigProvider.tag` callbacks receive the current
+component's props. As upstream, the context type remains Tag.
+Use local props for typed group callbacks.
 
-Корень — div без автоматической group/radiogroup роли. Передаются id, role,
-data-/aria-атрибуты; остальные HTML props отбрасываются, как upstream. Bind:nativeElement
-даёт div после mount и очищается при unmount. Disabled группы передаётся меткам;
-undefined наследует componentDisabled, false явно снимает блокировку. Class disabled
-группы отражает локальный prop. Flex-wrap и gap используют исходный paddingXS.
-Метками остаются native toggle-кнопки CheckableTag: Enter/Space, aria-pressed,
-focus recovery и отсутствие FormData сохраняются. Это осознанная граница с React span.
+The root is a `div` without an automatic group or radiogroup role.
+It receives `id`, `role`, data and ARIA attributes. Other HTML props
+are omitted as upstream. `bind:nativeElement` supplies the `div`
+after mount and clears on unmount. Group disabled state passes to
+tags. `undefined` inherits `componentDisabled`, and `false`
+overrides it. The group disabled class reflects the local prop.
+Flex wrapping and gap use upstream `paddingXS`. Tags remain native
+CheckableTag toggle buttons with Enter, Space, `aria-pressed`,
+focus recovery, and no FormData entries. React uses a span.
 
-Tag, CheckableTag и CheckableTagGroup принимают локальный prefixCls. Отсутствие
-или пустая строка наследуют ConfigProvider.prefixCls (по умолчанию ant-tag);
-root/modifier/close classes следуют префиксу. У группы меняются group/item classes,
-но вложенные CheckableTag отдельно наследуют общий prefix,
-как в закреплённом upstream. PrefixCls не передаётся HTML-атрибутом и не меняет
-имена CSS variables. Приватные content/icon wrappers и native dark class сохраняются.
+Tag, CheckableTag, and CheckableTagGroup accept a local `prefixCls`.
+Omission or the empty string inherits `ConfigProvider.prefixCls`
+(`ant-tag` by default). Root, modifier, and close classes follow the
+prefix. The group and item classes change with the group prefix.
+Nested CheckableTags inherit the shared prefix independently, as
+in the pinned upstream. `prefixCls` neither becomes an HTML attribute
+nor renames CSS variables. The internal content and icon wrappers
+and native dark class are preserved.
 
-Для нестандартного prefix используется шаблон из 90 исходных CSS rules. Он
-попадает в SSR head и обновляется вместе с props; смена prefix не заменяет root,
-close control или элементы группы. Удаление/закрытие экземпляра освобождает его
-stylesheet, сохраняя стили соседей. Стандартный prefix использует прежний vendor CSS
-без дополнительного head style. Native wrapping, hit target, focus и dark/compact
-theme сохраняются; источник semantic styles и component tokens не меняется.
+A custom prefix uses a template of 90 upstream CSS rules. It is
+emitted in the SSR head and updates with props. Prefix changes
+keep the root, close control, and group items mounted. Removing or
+closing an instance releases its stylesheet and preserves nearby
+styles. The default prefix uses existing vendor CSS without an
+extra head style. Native wrapping, hit target, focus, and dark and
+compact themes are preserved. Semantic styles and component tokens
+retain their source.
 
-Компоненты наследуют тему, primary, compact и RTL. Для тёмной темы Tag связывает
-обычный цвет текста с токенами и адаптирует фон/границу preset/status меток
-через color-mix и локальные токены палитры. Solid сохраняет исходный цвет;
-обычный solid в тёмной теме использует светлый фон и тёмный текст.
-Эта прежняя адаптация действует в native theme; source token/algorithm theme
-использует исходные Tag aliases, component overrides и палитры алгоритма.
-Текст переносится на узком экране; close control не сжимается. Reduced motion
-отключает встроенные transitions; ресурсы пользовательского Snippet принадлежат
-его владельцу. Новая локаль не нужна: closeText уже входит в ruRU/enUS.
+The components inherit theme, primary color, compact mode, and RTL.
+In the dark theme, Tag uses tokens for ordinary text color and
+adapts preset and status backgrounds and borders through
+`color-mix` and local palette tokens. Solid keeps the supplied
+color. A plain solid tag in dark mode uses a light background and
+dark text. This adaptation applies to the native theme. The
+upstream token and algorithm theme uses original Tag aliases,
+component overrides, and algorithm palettes. Text wraps on
+narrow screens and the close control does not shrink. Reduced
+motion disables built-in transitions. The owner manages resources
+in custom Snippets. `closeText` is already part of `ruRU` and `enUS`.
 
-Drag-and-drop и внешняя анимация остаются ответственностью владельца.
-
+The owner handles drag-and-drop and external animation.

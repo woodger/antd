@@ -121,7 +121,7 @@ selection, and focus. The ellipsis tooltip uses the nearest
 `Tooltip.UniqueProvider`. `ellipsis.tooltip.unique=false` keeps its own
 panel. Tooltip also defines the animation and lifecycle, the limits of
 `fresh` for opaque Snippets, and the behavior with CSS transforms and
-scroll containers. [Tooltip contract](tooltip.md#общая-подсказка-для-нескольких-триггеров)
+scroll containers. [Tooltip contract](tooltip.md#shared-tooltip-for-multiple-triggers)
 
 Upstream Ellipsis memoization overlooks prefix changes. Inside a nested
 provider, copy and edit buttons can retain old classes and lose their

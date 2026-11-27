@@ -16,54 +16,61 @@
 <Badge status="processing" text="Сервис работает" />
 ```
 
-Badge принимает count и необязательный children Snippet. Count может быть числом,
-строкой, boolean/null или Snippet. Без children
-индикатор остаётся в потоке. По умолчанию overflowCount=99, showZero=false,
-dot=false и size=medium; размер не наследуется от componentSize. Значение выше
-предела отображается как `99+`. Конечные отрицательные и дробные числа сохраняются;
-NaN/Infinity считаются отсутствующим count. Отрицательный или нечисловой предел
-заменяется на 99; конечный неотрицательный overflowCount, включая 0, допустим.
-Входные значения владельца компонент не изменяет.
+Badge accepts `count` and an optional children Snippet. `count`
+can be a number, string, boolean, `null`, or Snippet. Without
+children, the indicator stays in flow. Defaults are
+`overflowCount=99`, `showZero=false`, `dot=false`, and `size=medium`.
+Size is independent of `componentSize`. A value over the limit
+displays as `99+` by default. Finite negative and fractional
+numbers are preserved. `NaN` and infinity count as absent.
+A negative or nonnumeric overflow limit uses 99. A finite
+nonnegative `overflowCount`, including 0, is valid. Input values
+are left intact.
 
-Строки сохраняют исходное написание, включая ведущие нули, отрицательные числа
-и пробелы. Overflow использует числовое сравнение, как upstream: `'100'` даёт
-`99+`, `'001'` остаётся `001`. Только точная строка `'0'` включает правило нуля;
-`'00'` и `'0.0'` видимы. Числовые строки с целым значением выводятся исходными
-символьными slots ScrollNumber. Пустая строка и false не
-создают счётчик без text/dot; null означает отсутствие count. Boolean true
-отображается как `true`, как в исходном ScrollNumber. Полные строки сохраняются
-в title и доступном описании, независимо от overflow.
+Strings retain their original spelling, including leading
+zeros, negative numbers, and spaces. Overflow uses numeric
+comparison as upstream. `'100'` gives `99+`, and `'001'` stays
+`001`. Only the exact string `'0'` triggers the zero rule.
+`'00'` and `'0.0'` are visible. Integer-valued numeric strings
+render through ScrollNumber's original character slots. The
+empty string and `false` produce no count without text or dot.
+`null` means no count. Boolean `true` displays as `true` as in
+upstream ScrollNumber. Full strings stay in the title and
+accessible description even on overflow.
 
-Целые числа и числовые строки прокручиваются по исходному алгоритму SingleNumber.
-Направление следует изменению абсолютного count; переходы 9/0 и смена длины
-сохраняют разряды по позиции справа. Знаки и нечисловые символы остаются статичными.
-Быстрые изменения используют сохранённые previous value/count, как upstream;
-неизменная цифра сама по себе не обновляет предыдущий count.
-Transitionend завершает путь; если событие не пришло, работает fallback 1000 ms.
-Таймер очищается при смене числового значения разряда и при его удалении. SSR выводит
-начальные settled units без таймеров; browser mount не пересоздаёт их DOM.
-Reduced motion отключает переходы. Прежний numeric offset без нового API меняется мгновенно;
-это сохранённая native-граница внешнего ScrollNumber, независимо от движения цифр.
-18 последовательностей и 68 кадров закреплены в
-[UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-digit-motion-reference.json),
-проверки — [engine](../../../src/lib/badge/badge-digit.engine.test.ts),
-[browser](../../../tests/browser/badge/badge-digit-motion.spec.ts) и
-[SSR](../../../tests/package/badge/badge-digit-motion.ssr.test.ts), фикстура — `?fixture=badge-digit-motion`.
+Integers and numeric strings scroll using the original
+SingleNumber algorithm. Direction follows changes in the
+absolute count. Transitions between 9 and 0 and changes in
+length retain digits by position from the right. Signs and
+nonnumeric characters stay static. Rapid changes use the
+previous value and count as upstream. An unchanged digit on its
+own does not update the previous count. `transitionend` finishes
+the move, with a 1000ms fallback if the event does not arrive.
+The timer is cleared when a digit's numeric value changes or
+the digit is removed. SSR renders initial settled units without
+timers. Browser mount retains their DOM. Reduced motion disables
+transitions. With the existing numeric API, offset changes
+immediately. The native outer ScrollNumber offset is independent
+of digit motion. The fixture is `?fixture=badge-digit-motion`.
+[18 UMD sequences and 68 frames](../../../tests/browser/fixtures/ant-design-badge-digit-motion-reference.json) · [Engine tests](../../../src/lib/badge/badge-digit.engine.test.ts) ·
+[Browser tests](../../../tests/browser/badge/badge-digit-motion.spec.ts) · [SSR tests](../../../tests/package/badge/badge-digit-motion.ssr.test.ts)
 
-Появление и исчезновение следуют CSSMotion: начальный видимый count не анимируется,
-последующие изменения проходят start/active, а повторный показ прерывает выход.
-У индикатора на время выхода сохраняются последние видимые count, dot и title; явно заданный
-title продолжает обновляться. Собственный animationend/transitionend завершает
-анимацию, события внутренних цифр игнорируются. Fallback срабатывает через
-1000 ms после active. Ранний end сохраняет предыдущую разметку до activated,
-как в исходнике. Самостоятельный status обходит этот lifecycle.
-`theme.token.motion=false` и reduced motion отключают новые анимации;
-включение reduced motion завершает текущую. Удаление компонента отменяет RAF,
-таймеры и слушатели. Description и descriptionId скрываются сразу, независимо
-от сохраняемого декоративного индикатора. 17 последовательностей/87 кадров и SSR
-закреплены в [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-zoom-reference.json),
-проверки — [browser](../../../tests/browser/badge/badge-zoom.spec.ts) и
-[SSR](../../../tests/package/badge/badge-zoom.ssr.test.ts), фикстура — `?fixture=badge-zoom`.
+Entry and exit follow CSSMotion. The initial visible count does
+not animate. Subsequent changes go through start and active,
+and showing the count again interrupts exit. The indicator
+retains its last visible count, dot, and title during exit. An
+explicit title keeps updating. The indicator's own
+`animationend` or `transitionend` finishes the animation.
+Events from inner digits are ignored. The fallback fires 1000ms
+after active. An early end preserves previous markup until
+activation, as upstream. Standalone status bypasses this
+lifecycle. `theme.token.motion=false` and reduced motion disable
+new animations. Enabling reduced motion finishes the current
+animation. Unmount cancels frames, timers, and listeners.
+The description and `descriptionId` disappear immediately,
+independently of the retained decorative indicator. The fixture
+is `?fixture=badge-zoom`. [17 UMD sequences, 87 frames, and SSR](../../../tests/browser/fixtures/ant-design-badge-zoom-reference.json)
+· [Browser tests](../../../tests/browser/badge/badge-zoom.spec.ts) · [SSR tests](../../../tests/package/badge/badge-zoom.ssr.test.ts)
 
 ```svelte
 <script lang="ts">
@@ -74,136 +81,155 @@ title продолжает обновляться. Собственный animat
 <Badge count={clock}><a href="/messages">Сообщения</a></Badge>
 ```
 
-Count Snippet получает BadgeCountContext с class/style. Примените их к своему
-корневому элементу; при собственном оформлении объедините классы массивом,
-а CSS-строку контекста поставьте перед собственной. Это явная
-замена React.cloneElement: Svelte не анализирует и не клонирует непрозрачный
-Snippet. Дополнительной обёртки нет; если атрибуты не применены, автоматического
-позиционирования не будет. Style содержит offset, ConfigProvider.badge.style и
-Badge.style; собственный style корня имеет приоритет. Dot не заменяет готовый
-count точкой, как upstream.
-Пустой Snippet остаётся заданным count и не выбирает status вместо себя.
-Доступность и интерактивность принадлежат Snippet; Badge не скрывает его controls
-и не добавляет общее описание «Есть обновления». Смена offset/темы сохраняет его
-DOM, состояние и фокус. При скрытии count содержимое сохраняется на время выхода.
-Классы zoom передаются через контекст; как у исходного custom count без DOM-ref
-CSSMotion, завершение использует deadline. Кеш сохраняет ссылку на Snippet,
-а его собственные реактивные зависимости продолжают обновляться.
+A count Snippet receives `BadgeCountContext` with `class` and
+`style`. Apply both to its root. With custom styling, merge
+classes in an array and put the context CSS string before your
+own. This replaces `React.cloneElement` with explicit attributes
+for the opaque Snippet. There is no extra wrapper, so automatic
+positioning requires these attributes. `style` contains offset,
+`ConfigProvider.badge.style`, and `Badge.style`. The Snippet's
+root style takes precedence. As upstream, dot leaves custom
+count content intact.
 
-Нулевой count скрыт, пока не включён showZero. Как в Ant Design 6.6.8,
-dot с count=0 скрыт, а с showZero отображается число 0; без count dot виден.
-Самостоятельный status виден и без count, и при скрытом нуле. При наличии
-children для статусной точки нужен dot или отображаемый count/text. Видимый
-числовой count имеет приоритет над оформлением status. Строка text='0' и число
-text=0 участвуют в общем правиле нуля, в том числе при ненулевом count.
-Snippet считается содержимым независимо от его результата.
+An empty Snippet still counts as supplied and prevents status
+fallback. The Snippet owns its accessibility and interactivity.
+Badge leaves the controls accessible and adds no generic
+“Updates available” description. Offset and theme changes retain
+the Snippet's DOM, state, and focus. Hiding count retains content
+for the exit. Zoom classes pass through context. As with an
+upstream custom count without a CSSMotion DOM ref, completion
+uses a deadline. The cache retains the Snippet reference and
+its own reactive dependencies continue updating.
 
-Поддерживаются success, processing, default, error, warning и 13 preset цветов:
-blue, purple, cyan, green, magenta, pink, red, orange, yellow, volcano, geekblue,
-lime, gold. Также поддерживаются CSS-цвета, CSS variables и background gradients.
-У обычного индикатора custom color задаёт background; у самостоятельной статусной
-точки — background и color. Preset color имеет приоритет над status.
-Text принимает string/number/boolean/null или Snippet. Число не становится count
-или BadgeContext.count. True учитывается как присутствующее значение, но подпись
-не выводит; false/null считаются пустыми. Text=0 выводится только с showZero.
-Размеры Badge — small и medium.
+A zero count is hidden unless `showZero` is on. As in Ant Design
+6.6.8, dot with `count=0` is hidden and with `showZero` displays
+the number 0. Dot is visible without a count. Standalone status
+is visible with a missing or hidden zero count. With children,
+a status dot needs `dot` or a visible count or text. A visible
+numeric count takes precedence over status styling.
+`text='0'` and `text=0` follow the zero rule even with a nonzero
+count. A Snippet counts as content regardless of output.
 
-Offset — readonly-пара [x, y] из number|string: y задаёт margin-top,
-положительный x сдвигает от логического конца наружу, в RTL направление зеркально.
-Неконечная числовая координата заменяется на 0 независимо от второй координаты.
-Строковый x использует parseFloat: '10.5px' даёт 10.5, '1e2' — 100; строковый y
-сохраняет CSS units, включая em, %, calc и var. Строка '20' не превращается в 20px.
-У обычного индикатора и самостоятельного статуса raw offset задаётся отдельными
-DOM-свойствами: невалидное новое значение оставляет прежнюю координату, как React.
-У custom count offset остаётся частью CSS-строки BadgeCountContext.
-Компонент наследует тему и RTL; native compact сохраняет собственные размеры Badge.
+Statuses are `success`, `processing`, `default`, `error`, and
+`warning`. The 13 preset colors are `blue`, `purple`, `cyan`,
+`green`, `magenta`, `pink`, `red`, `orange`, `yellow`, `volcano`,
+`geekblue`, `lime`, and `gold`. CSS colors, variables, and background
+gradients are supported. A custom color sets the background
+on a regular indicator and both background and color on a
+standalone status dot. Preset color takes precedence over
+status. `text` accepts a string, number, boolean, `null`, or
+Snippet. A number is independent of `count` and
+`BadgeContext.count`. `true` counts as present without rendering a
+label. `false` and `null` are empty. `text=0` displays only with
+`showZero`. Badge sizes are `small` and `medium`.
 
-Source `theme.components.Badge` применяет исходные размеры count/dot/status,
-шрифты и padding. Defaults пересчитываются из global/компонентных aliases и
-algorithm; тень использует colorBorderBg. Числовые indicatorZIndex/textFontWeight
-сериализуются с px, как в Ant Design 6.6.8; безразмерные значения задаются строками.
-Настройки доступны при SSR, custom cssVar.prefix и реактивных обновлениях.
-Подробнее см. [Токены темы в ConfigProvider](../theme-context.md).
+`offset` is a readonly `[x, y]` pair of numbers or strings.
+`y` sets `margin-top`. Positive `x` shifts outward from the
+logical end and mirrors in RTL. A non-finite numeric coordinate
+uses 0 independently of the other coordinate. String `x` uses
+`parseFloat`, so `'10.5px'` gives 10.5 and `'1e2'` gives 100.
+String `y` retains CSS units including em, %, calc, and var.
+`'20'` stays unitless. A regular indicator and standalone
+status apply raw offset as individual DOM properties. An
+invalid new value leaves the old coordinate intact, as in
+React. Custom count retains offset in the BadgeCountContext
+CSS string. Badge inherits theme and RTL. Native compact mode
+keeps its own Badge sizes.
 
-Обычный числовой/строковый индикатор скрыт от screen reader. Рядом расположен скрытый
-текст с полным значением, в том числе при `99+` и dot. Children получает
-BadgeContext с нормализованным числовым count и descriptionId, которым владелец может
-описать кнопку, ссылку или другой control. Для строки/Snippet count остаётся
-undefined; Snippet также не получает автоматического descriptionId.
-При скрытии индикатора descriptionId
-становится undefined. Children остаётся в DOM при изменении count: его фокус,
-состояние и нативные события сохраняются. Сам Badge не создаёт остановок Tab,
-live-region или автоматических объявлений. Aria-label/aria-labelledby именуют
-необязательную группу; aria-describedby относится к корню. Подписи полного
-значения/статусов переводятся через locale.badge с частичным наследованием.
-Title по умолчанию содержит полный count; false/null убирают нативную подсказку,
-строка заменяет её. Class/style относятся к корню, offset — к индикатору;
-для самостоятельного статуса offset применяется к корню, как в исходнике.
+Upstream `theme.components.Badge` applies the original count,
+dot, and status sizes, font, and padding. Defaults are
+recalculated from global and component aliases and algorithms.
+The shadow uses `colorBorderBg`. Numeric `indicatorZIndex` and
+`textFontWeight` are serialized with `px`, as in 6.6.8. Use
+strings for unitless values. Settings apply during SSR, with
+custom `cssVar.prefix`, and during reactive updates.
+[ConfigProvider theme tokens](../theme-context.md)
 
-ConfigProvider.badge задаёт class/style и semantic classNames/styles. Class и
-rootClassName относятся к корню. ClassNames и styles принимают object либо
-callback({props}) с разрешёнными size, overflowCount, dot и showZero; slots —
-root и indicator. Контекстные и локальные классы объединяются. Для обычного
-индикатора порядок стилей: offset → context indicator → context style → local
-indicator → custom color. Border-color создаёт inset shadow ScrollNumber,
-перекрывая заданный box-shadow. У самостоятельного статуса context style относится
-к root, цвет status text берётся из semantic root/context style, а custom color
-перекрывает оба цвета точки. Custom count получает только legacy context style
-и offset через BadgeCountContext; semantic indicator к нему не применяется,
-как в исходном ScrollNumber. Пустой ConfigProvider.badge заменяет родительский config.
+A regular numeric or string indicator is hidden from screen
+readers. A nearby hidden text node provides the full value,
+including for `99+` and dot. The children Snippet receives
+`BadgeContext` with a normalized numeric `count` and
+`descriptionId`, which the owner can use to describe a button,
+link, or other control. String and Snippet counts give
+`count=undefined`. A Snippet count receives no automatic
+`descriptionId`. Hiding the indicator clears `descriptionId`
+to `undefined`. Children stay in the DOM as count changes,
+retaining focus, state, and native events. Badge adds no Tab
+stops, live region, or automatic announcements.
+`aria-label` or `aria-labelledby` names an optional group.
+`aria-describedby` applies to the root. Full value and status
+labels are translated through partially inherited
+`locale.badge`. `title` defaults to the full count. `false`
+and `null` remove the native tooltip, and a string replaces it.
+`class` and `style` apply to the root. Offset applies to the
+indicator, or to the root for standalone status, as upstream.
+
+`ConfigProvider.badge` supplies `class`, `style`, and semantic
+`classNames` and `styles`. `class` and `rootClassName` apply to the
+root. `classNames` and `styles` accept an object or function of
+`{ props }` with resolved `size`, `overflowCount`, `dot`, and
+`showZero`. Slots are `root` and `indicator`. Context and local
+classes combine. Regular indicator style order is offset,
+context indicator, context `style`, local indicator, and
+custom color. `border-color` creates an inset ScrollNumber
+shadow overriding `box-shadow`. For standalone status, context
+`style` applies to the root. Status text color comes from
+semantic root and context `style`. Custom color overrides both
+dot colors. Custom count receives only legacy context style
+and offset via `BadgeCountContext`. It leaves the semantic
+indicator unused, as upstream ScrollNumber. An empty
+`ConfigProvider.badge` replaces the parent configuration.
 
 ```svelte
 <Badge count="12" color="#2db7f5"
   styles={{ root: 'margin-inline:8px', indicator: 'border-color:#fff' }} />
 ```
 
-Badge.style по-прежнему применяется к корню и не переносится
-на обычный индикатор; для него используйте styles.indicator. Для custom count
-Badge.style остаётся частью BadgeCountContext. Прежний числовой layout без нового
-API сохраняется; ConfigProvider.badge, semantic props, rootClassName и custom
-CSS color, новые scalar text и строковый offset включают исходный layout. Bind:nativeElement предоставляет корневой
-HTMLSpanElement и очищается при unmount. Нативные span attrs/events передаются
-корню; onclick имеет приоритет над React-compatible onClick. Изменение props/config
-сохраняет DOM, состояние, selection и фокус. 49 вариантов и реактивные обновления
-закреплены в [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-api-reference.json),
-проверки — [browser](../../../tests/browser/badge/badge-api.spec.ts) и
-[SSR](../../../tests/package/badge/badge-api.ssr.test.ts), фикстура — `?fixture=badge-api`.
+`Badge.style` still applies to the root. Use `styles.indicator`
+for regular indicators. `Badge.style` also stays part of
+`BadgeCountContext` for custom count. The existing numeric
+layout without new APIs is preserved. `ConfigProvider.badge`,
+semantic props, `rootClassName`, custom CSS color, and new scalar
+text and string offset enable the upstream layout.
+`bind:nativeElement` supplies the root `HTMLSpanElement` and
+clears on unmount. Native span attributes and events pass to
+the root. `onclick` takes precedence over React-compatible
+`onClick`. Prop and config updates preserve DOM, state, selection,
+and focus. The fixture is `?fixture=badge-api`. [49 UMD variants and updates](../../../tests/browser/fixtures/ant-design-badge-api-reference.json)
+· [Browser tests](../../../tests/browser/badge/badge-api.spec.ts) · [SSR tests](../../../tests/package/badge/badge-api.ssr.test.ts)
 
-46 вариантов count закреплены в
-[официальных UMD-снимках](../../../tests/browser/fixtures/ant-design-badge-count-reference.json),
-проверки — [browser](../../../tests/browser/badge/badge-count.spec.ts) и
-[SSR](../../../tests/package/badge/badge-count.ssr.test.ts), фикстура — `?fixture=badge-count`.
-У прежнего числового режима без нового API сохранены native normalization, BadgeContext,
-root style и оформление standalone/non-status text; эти границы отличаются от React.
+The count fixture is `?fixture=badge-count`. The existing numeric
+mode without new APIs keeps native normalization, BadgeContext,
+root style, and standalone and non-status text styling, which
+differ from React. [46 official UMD snapshots](../../../tests/browser/fixtures/ant-design-badge-count-reference.json) ·
+[Browser tests](../../../tests/browser/badge/badge-count.spec.ts) · [SSR tests](../../../tests/package/badge/badge-count.ssr.test.ts)
 
-58 вариантов text/offset/size и обратимые обновления закреплены в
-[UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-values-reference.json),
-проверки — [browser](../../../tests/browser/badge/badge-values.spec.ts),
-[engine](../../../src/lib/badge/badge.engine.test.ts) и
-[SSR](../../../tests/package/badge/badge-values.ssr.test.ts), фикстура — `?fixture=badge-values`.
+The value fixture is `?fixture=badge-values`.
+[58 UMD variants and reversible updates](../../../tests/browser/fixtures/ant-design-badge-values-reference.json) ·
+[Browser tests](../../../tests/browser/badge/badge-values.spec.ts) · [Engine tests](../../../src/lib/badge/badge.engine.test.ts) · [SSR tests](../../../tests/package/badge/badge-values.ssr.test.ts)
 
-PrefixCls меняет классы Badge, status/text и zoom; пустая строка наследует
-ConfigProvider.prefixCls (по умолчанию ant-badge).
-Для локального префикса Badge выводит в head stylesheet из закреплённого CSS template.
-Стили обновляются вместе с префиксом и удаляются при unmount; root, digits и caller
-controls сохраняются. ScrollNumberPrefixCls меняет классы sup/custom count и разрядов,
-иначе он наследует ConfigProvider.prefixCls (по умолчанию ant-scroll-number).
-Как в исходнике, Badge CSS использует общий prefix для scroll-number:
-произвольный scrollNumberPrefixCls сам по себе не создаёт CSS
-для новых классов. Эта связь влияет на standalone positioning, overflow и стили
-разрядов. Общий prefix применяется также к count/digit classes и CSS.
-Reduced motion цифр не зависит от prefix.
-31 вариант классов/styles/геометрии и шесть zoom-последовательностей/30 кадров
-закреплены в [UMD-эталонах](../../../tests/browser/fixtures/ant-design-badge-prefix-reference.json)
-и [motion-эталонах](../../../tests/browser/fixtures/ant-design-badge-prefix-motion-reference.json).
-Проверки — [browser](../../../tests/browser/badge/badge-prefix.spec.ts),
-[motion](../../../tests/browser/badge/badge-prefix-motion.spec.ts),
-[SSR](../../../tests/package/badge/badge-prefix.ssr.test.ts) и
-[motion SSR](../../../tests/package/badge/badge-prefix-motion.ssr.test.ts).
-Фикстуры — `?fixture=badge-prefix` и `?fixture=badge-prefix-motion`.
+`prefixCls` changes Badge, status and text, and zoom classes.
+The empty string inherits `ConfigProvider.prefixCls`
+(`ant-badge` by default). For a local prefix, Badge emits a head
+stylesheet from the pinned CSS template. Styles update with
+the prefix and clear on unmount, preserving the root, digits,
+and caller controls. `scrollNumberPrefixCls` changes classes of
+the `sup`, custom count, and digits. Otherwise it inherits
+`ConfigProvider.prefixCls` (`ant-scroll-number` by default).
+Badge CSS uses the shared prefix for ScrollNumber as upstream.
+An arbitrary `scrollNumberPrefixCls` alone generates no CSS
+for its classes, affecting standalone positioning, overflow,
+and digit styles. The shared prefix applies to count and digit
+classes and CSS. Digit reduced motion is independent of prefix.
 
-Processing использует исходную
-CSS-пульсацию, которая отключается при reduced motion. Экспортируются BadgeProps,
-BadgeStatus, BadgeColor, BadgeSize, BadgeText, BadgeOffset, BadgeCount, BadgeCountContext,
-BadgeContext, BadgeConfig, BadgeSlots, BadgeSemantic и BadgeLocale.
+The prefix fixtures are `?fixture=badge-prefix` and
+`?fixture=badge-prefix-motion`. [31 UMD class, style, and geometry variants](../../../tests/browser/fixtures/ant-design-badge-prefix-reference.json)
+· [Six zoom sequences and 30 frames](../../../tests/browser/fixtures/ant-design-badge-prefix-motion-reference.json) ·
+[Browser tests](../../../tests/browser/badge/badge-prefix.spec.ts) · [Motion tests](../../../tests/browser/badge/badge-prefix-motion.spec.ts) ·
+[SSR tests](../../../tests/package/badge/badge-prefix.ssr.test.ts) · [Motion SSR tests](../../../tests/package/badge/badge-prefix-motion.ssr.test.ts)
 
+`processing` uses the original CSS pulse, disabled under reduced
+motion. Exports are `BadgeProps`, `BadgeStatus`, `BadgeColor`,
+`BadgeSize`, `BadgeText`, `BadgeOffset`, `BadgeCount`,
+`BadgeCountContext`, `BadgeContext`, `BadgeConfig`, `BadgeSlots`,
+`BadgeSemantic`, and `BadgeLocale`.

@@ -675,8 +675,8 @@ form.setFields([{ name: ['profile', 'name'], errors: ['Это имя уже за
 ```
 
 An empty message array or explicit undefined clears errors and warnings.
-Value: undefined writes a missing value, and an omitted value leaves the model
-intact. Values can be changed without UI elements. State for an unregistered
+`value: undefined` writes an absent value. Omitting `value` leaves the field
+value intact. Values can be changed without UI elements. State for an unregistered
 path is ignored without deferring it until registration. CreateForm rule
 fields work without UI. An explicit validated field leaves the computed flag
 alone. Validating: false sets validated: true without running rules. Undefined

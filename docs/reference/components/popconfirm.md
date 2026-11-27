@@ -91,7 +91,7 @@ outer Popover. `motion.motionName` overrides its default `zoom-big`.
 Duration, reduced motion, and content removal order follow Tooltip.
 Setting `disabled` on an open Popconfirm closes the card under the
 Svelte contract and calls `afterOpenChange(false)` after closing.
-[Tooltip contract](tooltip.md#завершение-открытия-и-закрытия)
+[Tooltip contract](tooltip.md#opening-and-closing-completion)
 
 While the Promise is pending, confirm shows loading and both buttons
 are disabled. Repeat activation, Escape, outside click, another

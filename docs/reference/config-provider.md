@@ -135,4 +135,4 @@ The snippet receives the standard content and can render it inside its own
 provider. The provider can set RTL, a shared prefix, locale, or `modal` button
 options. `iconPrefixCls` sets the class for the standard confirmation icon.
 Ordinary providers continue using their own context. Global call settings are
-stored only in the browser. [Global confirmations](components/modal.md#глобальные-подтверждения)
+stored only in the browser. [Global confirmations](components/modal.md#global-confirmations)
