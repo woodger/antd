@@ -1,8 +1,8 @@
-# Общий префикс ConfigProvider
+# Shared ConfigProvider prefix
 
-`ConfigProvider.prefixCls` меняет начало имён CSS-классов. По умолчанию библиотека
-использует `ant`. Вложенный провайдер наследует префикс родителя, а локальный
-`prefixCls` компонента задаёт его собственный класс.
+`ConfigProvider.prefixCls` changes the beginning of CSS class names. The library
+defaults to `ant`. A nested provider inherits its parent's prefix. A component's
+local `prefixCls` specifies its own class.
 
 ```svelte
 <script lang="ts">
@@ -14,121 +14,125 @@
 </ConfigProvider>
 ```
 
-Кнопка получит класс `suite-btn`. Если передать самой кнопке
-`prefixCls="save-button"`, её классом станет `save-button`.
+The button gets the class `suite-btn`. If you pass `prefixCls="save-button"` to
+the button itself, it gets the class `save-button`.
 
-## Компоненты и наследование
+## Components and inheritance
 
-Сейчас общий prefix подключён к App, Layout, LayoutSider,
-LayoutHeader/Content/Footer, Statistic/Timer, QRCode, Timeline, Steps, Divider, Flex,
-Segmented, Avatar/AvatarGroup, Badge/BadgeRibbon, Tag/CheckableTag/CheckableTagGroup,
-Empty, Skeleton с primitives, Spin, Progress, Result, Alert, Collapse, Affix,
-Tooltip, Popover, Popconfirm, Slider, BorderBeam, Masonry, Splitter, Anchor и
-Space/SpaceCompact/SpaceAddon, Breadcrumb, Row/Col, Typography, Carousel, Descriptions, Tabs,
-Card с Grid/Meta, Button, FloatButton/Group/BackTop, Radio/RadioButton/RadioGroup,
-Checkbox/CheckboxGroup, Switch, Input, TextArea, InputPassword, InputSearch, InputOTP,
-InputNumber, Form/FormItem/FormList/FormErrorList, Rate, Listy, Tour и Mentions.
-Подключаемые prefix/theme styles остаются в head и не добавляют текст вокруг
-корней компонентов, включая обычные и grid media styles ConfigProvider.
-Пользовательские пробелы и текст внутри controls/snippets сохраняются.
-Это защищают [SSR-проверки границ](../../tests/package/config-provider/prefix-text-boundaries.ssr.test.ts)
-и [браузерный сценарий](../../tests/browser/config-provider/prefix-text-boundaries.spec.ts),
-`?fixture=prefix-text-boundaries`.
-Остальные семейства подключаются отдельно. Например,
-ConfigProvider prefixCls="suite" создаёт suite-app, suite-layout,
-suite-layout-sider и suite-layout-header без изменения имён Svelte-компонентов.
+The shared prefix applies to App, Layout, LayoutSider, LayoutHeader, LayoutContent,
+LayoutFooter, Statistic and its Timer, QRCode, Timeline, Steps, Divider, Flex,
+Segmented, Avatar, AvatarGroup, Badge, BadgeRibbon, Tag, CheckableTag,
+CheckableTagGroup, Empty, Skeleton and its primitives, Spin, Progress, Result,
+Alert, Collapse, Affix, Tooltip, Popover, Popconfirm, Slider, BorderBeam, Masonry,
+Splitter, Anchor, Space, SpaceCompact, SpaceAddon, Breadcrumb, Row, Col, Typography,
+Carousel, Descriptions, Tabs, Card with Grid and Meta, Button, FloatButton with
+Group and BackTop, Radio, RadioButton, RadioGroup, Checkbox, CheckboxGroup, Switch,
+Input, TextArea, InputPassword, InputSearch, InputOTP, InputNumber, Form, FormItem,
+FormList, FormErrorList, Rate, Listy, Tour, and Mentions.
 
-Для source theme базовый prefix задаёт fallback namespace CSS-переменных.
-Унаследованный theme.cssVar.prefix имеет приоритет над новой настройкой провайдера,
-локальный cssVar.prefix — над обоими. Явный undefined удаляет унаследованное значение
-и возвращает fallback текущего провайдера, даже при inherit=false. Без локальной
-темы сохраняется родительский theme scope и namespace. Legacy режим без source
-theme сохраняет прежние переменные/цвета: useToken.cssVar пока использует ant namespace
-вместо source fallback к class prefix. Это отличие записано отдельно в реестре.
+The generated prefix and theme styles stay in the head, including ConfigProvider's
+ordinary styles and grid media styles. They add no text around component roots.
+User-provided spaces and text inside controls and snippets are preserved. The browser
+fixture is `?fixture=prefix-text-boundaries`. [SSR boundary checks](../../tests/package/config-provider/prefix-text-boundaries.ssr.test.ts) ·
+[Browser scenario](../../tests/browser/config-provider/prefix-text-boundaries.spec.ts)
 
-Живая смена prefix не пересоздаёт Layout/controls, сохраняет refs, collapse, draft,
-selection и focus; соседние и вложенные scopes независимы. Canonical Native
-markers и --ant-* bridge сохраняются. В SSR классы и исходные variables доступны
-до hydration.
-Сверка: [13 UMD случаев и три перехода](../../tests/browser/fixtures/ant-design-config-prefix-reference.json),
-[browser](../../tests/browser/config-provider/config-prefix.spec.ts),
-[SSR](../../tests/package/config-provider/config-prefix.ssr.test.ts),
-[приоритет namespace](../../src/lib/theme/theme-prefix.test.ts).
+Remaining families are connected separately. For example, ConfigProvider with
+`prefixCls="suite"` creates `suite-app`, `suite-layout`, `suite-layout-sider`, and
+`suite-layout-header` while keeping the public Svelte component names.
 
-Statistic/Timer, QRCode, Timeline и Steps проверяются также по
-[девяти исходным примерам и трём переходам](../../tests/browser/fixtures/ant-design-widget-prefix-reference.json):
-[browser](../../tests/browser/config-provider/widget-prefix.spec.ts),
-[SSR](../../tests/package/config-provider/widget-prefix.ssr.test.ts), `?fixture=widget-prefix`.
-При сравнении родительские typography/direction совпадают с DOM-провайдером Svelte;
-текущее время Timer не участвует в снимках.
+For the upstream theme, the base prefix supplies the fallback CSS variable
+namespace. An inherited `theme.cssVar.prefix` takes precedence over a new provider
+prefix. A local `cssVar.prefix` takes precedence over both. Explicit undefined
+removes the inherited value and restores the current provider fallback, even
+with `inherit=false`. In the absence of a local theme, the parent theme scope
+and namespace stay in effect. Legacy mode without the upstream theme keeps
+its previous variables and colors. Its `useToken.cssVar` uses the ant namespace.
+The registry records this difference from upstream's fallback to the class prefix.
 
-Divider, Flex и Segmented сверяются с
-[девятью исходными примерами и тремя переходами](../../tests/browser/fixtures/ant-design-core-prefix-reference.json):
-[browser](../../tests/browser/config-provider/core-prefix.spec.ts),
-[SSR](../../tests/package/config-provider/core-prefix.ssr.test.ts), `?fixture=core-prefix`.
-Смена prefix сохраняет выбранную опцию, radio DOM, callbacks, FormData и фокус.
-Raw замеры отдельно фиксируют существующее поведение Segmented: radio не имеет
-value-атрибута и отправляет "on"; типизированное значение передаётся через value/onChange.
+Changing the prefix at runtime preserves Layout and control DOM, refs, collapse
+state, drafts, selection, and focus. Adjacent and nested scopes remain independent.
+Canonical native markers and the --ant-* bridge stay in place. SSR exposes the
+classes and upstream variables before hydration. [13 UMD cases and three transitions](../../tests/browser/fixtures/ant-design-config-prefix-reference.json) ·
+[Browser tests](../../tests/browser/config-provider/config-prefix.spec.ts) ·
+[SSR tests](../../tests/package/config-provider/config-prefix.ssr.test.ts) ·
+[Namespace precedence](../../src/lib/theme/theme-prefix.test.ts)
 
-Avatar/Group, Badge/Ribbon, Tag/CheckableTag/Group, Empty, Skeleton и его пять primitives,
-Spin, Progress и Result сверяются с
-[исходными замерами 17 вариантов](../../tests/browser/fixtures/ant-design-status-prefix-reference.json):
-[browser](../../tests/browser/config-provider/status-prefix.spec.ts),
-[SSR](../../tests/package/config-provider/status-prefix.ssr.test.ts), `?fixture=status-prefix`.
-Raw данные сохраняют React-результат. Сравнение отдельно учитывает прежний отступ
-AvatarGroup, default-класс Tag и RTL-класс CheckableTag. Native Skeleton host/status,
-имена CSS variables и canonical markers сохраняются. Badge ScrollNumber использует
-общий prefix независимо от локального Badge.prefixCls; CSS Ribbon также следует
-общему prefix. Изменение префикса сохраняет все 17 корней, draft, focus и selection.
+Statistic and Timer, QRCode, Timeline, and Steps are also checked against nine
+upstream examples and three transitions at `?fixture=widget-prefix`. The comparison
+matches the parent typography and direction of the Svelte DOM provider. Timer's
+current time is excluded from snapshots. [Reference data](../../tests/browser/fixtures/ant-design-widget-prefix-reference.json) ·
+[Browser tests](../../tests/browser/config-provider/widget-prefix.spec.ts) ·
+[SSR tests](../../tests/package/config-provider/widget-prefix.ssr.test.ts)
 
-Alert, Collapse и активный Affix сверяются по
-[девяти исходным примерам и трём переходам](../../tests/browser/fixtures/ant-design-structure-prefix-reference.json):
-[browser](../../tests/browser/config-provider/structure-prefix.spec.ts),
-[SSR](../../tests/package/config-provider/structure-prefix.ssr.test.ts), `?fixture=structure-prefix`.
-Affix использует отдельные scroll targets; в SSR остаётся незакреплённым, как source.
-Обновление prefix сохраняет fixed node и редактор раскрытой панели Collapse,
-его значение, focus/selection и состояние остальных панелей.
+Divider, Flex, and Segmented are compared with nine upstream examples and three
+transitions at `?fixture=core-prefix`. A prefix change preserves the selected
+option, radio DOM, callbacks, FormData, and focus. Raw measurements also record
+Segmented's existing behavior. A radio without a value attribute submits "on".
+The typed value is available through value and onChange. [Reference data](../../tests/browser/fixtures/ant-design-core-prefix-reference.json) ·
+[Browser tests](../../tests/browser/config-provider/core-prefix.spec.ts) ·
+[SSR tests](../../tests/package/config-provider/core-prefix.ssr.test.ts)
 
-Tooltip, Popover, Popconfirm и single/range Slider сверяются по
-[45 исходным примерам и 15 переходам](../../tests/browser/fixtures/ant-design-popup-prefix-reference.json):
-[browser](../../tests/browser/popup/popup-prefix.spec.ts),
-[SSR](../../tests/package/popup/popup-prefix.ssr.test.ts), `?fixture=popup-prefix`.
-Открытые подсказки Slider отдельно наследуют Tooltip prefix; локальный Slider prefix
-задаёт только owner class. Prefix Popconfirm не меняет prefix внешнего Popover.
-Смена общего prefix сохраняет trigger/control, popup DOM, draft/focus/selection и
-клавиатуру Slider. Проверка программно меняет контекст, как raw UMD transitions;
-внешний pointerdown проверяется отдельно и сохраняет прежнее Native dismiss behavior.
-Raw textContent сохранён; сравниваются непустые текстовые узлы без пробелов между
-Svelte slots. В SSR остаются прежние hidden shells, без открытия popup и DOM containers.
+Avatar and AvatarGroup, Badge and Ribbon, Tag and CheckableTag and its group, Empty,
+Skeleton and its five primitives, Spin, Progress, and Result are compared with 17
+upstream cases at `?fixture=status-prefix`. Raw data keeps the React result. The
+comparison accounts separately for the previous AvatarGroup spacing, the default
+Tag class, and the RTL class of CheckableTag. Native Skeleton host and status,
+CSS variable names, and canonical markers stay in place. Badge ScrollNumber uses
+the shared prefix independently of local `Badge.prefixCls`. Ribbon CSS also uses
+the shared prefix. A prefix change preserves all 17 roots, drafts, focus, and
+selection. [Reference measurements](../../tests/browser/fixtures/ant-design-status-prefix-reference.json) ·
+[Browser tests](../../tests/browser/config-provider/status-prefix.spec.ts) ·
+[SSR tests](../../tests/package/config-provider/status-prefix.ssr.test.ts)
 
-## Nonce для стилей
+Alert, Collapse, and active Affix are compared with nine upstream examples and
+three transitions at `?fixture=structure-prefix`. Affix uses separate scroll
+targets and remains unfixed in SSR, as upstream does. A prefix update preserves
+the fixed node, the editor in the expanded Collapse panel, its value, focus and
+selection, and the state of the other panels. [Reference data](../../tests/browser/fixtures/ant-design-structure-prefix-reference.json) ·
+[Browser tests](../../tests/browser/config-provider/structure-prefix.spec.ts) ·
+[SSR tests](../../tests/package/config-provider/structure-prefix.ssr.test.ts)
 
-Передайте `csp={{ nonce }}` в `ConfigProvider`, чтобы созданные библиотекой
-стили темы, префиксов и блокировки прокрутки в ShadowRoot получили nonce из
-политики документа. Вложенный провайдер с `csp={undefined}` наследует настройку,
-а явный объект заменяет её целиком. `csp={{}}` сбрасывает унаследованный nonce.
-Тип `CSPConfig` доступен из пакета.
+Tooltip, Popover, Popconfirm, and single and range Slider are compared with 45
+upstream examples and 15 transitions at `?fixture=popup-prefix`. Open Slider
+tooltips inherit the Tooltip prefix separately. A local Slider prefix only
+sets the owner class. A Popconfirm prefix leaves the enclosing Popover's prefix
+intact.
 
-SSR передаёт nonce в разметке `<style>`. При смене nonce браузер получает
-новые style-элементы, а элементы управления сохраняют DOM и фокус.
-Ant Design React 6.6.8 сохраняет nonce у уже закэшированных стилей.
-Таблицы стилей сборщика и политика для атрибутов `style` настраиваются
-приложением. [Замеры React](../../tests/browser/fixtures/ant-design-config-provider-csp-reference.json)
-· [Проверки CSP и гидратации в Chromium](../../tests/browser/config-provider/config-provider-csp.spec.ts).
+Changing the shared prefix preserves the trigger or control, popup DOM, drafts,
+focus, selection, and Slider keyboard interaction. The check changes context
+programmatically, as the raw UMD transitions do. Outside pointerdown is checked
+separately and retains the existing native dismiss behavior. Raw textContent is
+preserved. The comparison uses nonempty text nodes and omits whitespace between
+Svelte slots. SSR keeps the existing hidden shells without opening popups or
+creating DOM containers. [Reference data](../../tests/browser/fixtures/ant-design-popup-prefix-reference.json) ·
+[Browser tests](../../tests/browser/popup/popup-prefix.spec.ts) ·
+[SSR tests](../../tests/package/popup/popup-prefix.ssr.test.ts)
 
-## Глобальные настройки статических вызовов
+## Style nonce
 
-`ConfigProvider.config({ prefixCls, iconPrefixCls, theme, holderRender })`
-задаёт настройки отдельных корней статического Modal. Префиксы и тема читаются
-при отложенном рендере, а snippet `holderRender` закрепляется в момент вызова
-`Modal.confirm()` или другого статического метода. Передайте
-`holderRender: undefined`, чтобы снять обёртку у будущих вызовов. Пустая строка
-возвращает префикс к default.
+Pass `csp={{ nonce }}` to ConfigProvider to apply the document policy nonce to
+library-generated styles for themes, prefixes, and scroll locking inside ShadowRoot.
+A nested provider with `csp={undefined}` inherits the setting. An explicit object
+replaces it in full. `csp={{}}` clears the inherited nonce. The `CSPConfig` type is
+available from the package.
 
-Snippet получает штатное содержимое и может отрисовать его под своим
-провайдером. Такой провайдер задаёт, например, RTL, общий префикс, локаль
-или параметры кнопок `modal`. `iconPrefixCls` управляет классом штатной
-иконки подтверждения. Обычные провайдеры продолжают использовать свой
-контекст. Настройки глобального вызова хранятся только в браузере.
-[Глобальные подтверждения](components/modal.md#глобальные-подтверждения)
+SSR includes the nonce on `<style>` elements. A nonce change gives the browser
+new style elements and preserves control DOM and focus. Ant Design React 6.6.8
+retains the nonce on previously cached styles. The application configures
+bundler-generated stylesheets and the policy for `style` attributes.
+[React measurements](../../tests/browser/fixtures/ant-design-config-provider-csp-reference.json) ·
+[CSP and hydration checks in Chromium](../../tests/browser/config-provider/config-provider-csp.spec.ts)
 
+## Global settings for static calls
+
+`ConfigProvider.config({ prefixCls, iconPrefixCls, theme, holderRender })` configures
+the separate roots used by static Modal methods. The deferred render reads prefixes
+and theme. The call to `Modal.confirm()` or another static method captures
+`holderRender`. Pass `holderRender: undefined` to remove the wrapper from future
+calls. An empty prefix string restores the default.
+
+The snippet receives the standard content and can render it inside its own
+provider. The provider can set RTL, a shared prefix, locale, or `modal` button
+options. `iconPrefixCls` sets the class for the standard confirmation icon.
+Ordinary providers continue using their own context. Global call settings are
+stored only in the browser. [Global confirmations](components/modal.md#глобальные-подтверждения)

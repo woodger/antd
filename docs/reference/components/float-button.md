@@ -1,77 +1,81 @@
-# FloatButton, FloatButtonGroup и FloatButtonBackTop
+# FloatButton, FloatButtonGroup, and FloatButtonBackTop
 
-FloatButton сохраняет native Button/href, type=default|primary, shape=circle|square,
-icon и content. Текст, число,
-boolean и Snippet заменяют ReactNode; число 0 не включает default icon. Без
-renderable content/icon используется FileTextOutlined из закреплённого icons-svg.
-Кнопка имеет размер 40px и fixed-положение: inline-end 24px, bottom 48px.
-Размер стандартной иконки — fontSizeIcon × 1.5 = 18px. Shape группы имеет
-приоритет над shape детей. Native htmlType/disabled/события сохраняют Button API.
+FloatButton keeps native Button and href behavior, type=default or primary,
+shape=circle or square, icon, and content. Text, numbers, booleans, and snippets
+represent content. The number 0 keeps the fallback icon inactive. Without
+renderable content or an icon, it uses FileTextOutlined from the pinned icons-svg.
+The button is 40px and fixed at inline-end 24px and bottom 48px. The standard icon
+is fontSizeIcon × 1.5, or 18px. Group shape takes priority over child shape.
+Native htmlType, disabled, and events use the Button API.
 
-Tooltip принимает scalar/Snippet либо props существующего Tooltip; 0 показывает
-подсказку. Badge принимает props существующего Badge без status/text/title/children;
-этот набор исключается и в runtime. Semantic classNames/styles root/icon/content
-принимают объект или callback { props }, включая undefined result. Group context
-сливается перед локальными slots, style кнопки имеет последний приоритет.
+Tooltip accepts scalars, snippets, or Tooltip props. Zero displays a tooltip.
+Badge accepts Badge props except status, text, title, and children. The runtime
+also excludes those props. Semantic classNames and styles for root, icon, and
+content accept an object or a { props } callback that may return undefined.
+Group context merges before local slots, and the button's style is last.
 
-FloatButtonGroup принимает children Snippet либо items=[{ key, children: Snippet }].
-Items создают отдельные Compact slots и имеют приоритет над children. Для opaque
-Snippet геометрия квадратных краёв определяется CSS siblings, без точного
-воспроизведения Compact edge classes. Circle использует Flex, square — Compact.
-Trigger click/hover включает меню; без trigger показывается список без trigger.
-FloatButton/Group/BackTop поддерживают local/shared prefixCls. У Group это базовый
-prefix кнопки без суффикса -group. Дочерние кнопки наследуют owner prefix при
-undefined; непустое локальное значение имеет приоритет, пустое выбирает общий
-ConfigProvider. Button/Badge/Tooltip/Compact сохраняют собственные namespaces;
-progress и параметры анимации используют общий prefix независимо от local class.
-Смена prefix сохраняет DOM/ref, открытое меню, scroll/progress, draft/selection/focus.
+FloatButtonGroup accepts a children snippet or items=[{ key, children: Snippet }].
+Items create separate Compact slots and take priority over children. An opaque
+snippet uses CSS sibling geometry for square edges, with the exact Compact edge
+classes outside that contract. Circle uses Flex and square uses Compact.
+Click or hover trigger enables a menu. Omitting trigger renders the list directly.
 
-В Ant Design Group не передаёт local prefix детям и trigger. Raw UMD замеры
-сохранены отдельно от matched public child prefixes и trigger semantic aliases/
-styles. В Svelte owner prefix наследуется. Shared local class в nested provider
-также обнаружил Source cache defect: BackTop теряет progress background. Fresh
-Inner measurement сохранён отдельно; Native изолирует class и global namespace.
+FloatButton, Group, and BackTop support local and shared prefixCls. The Group
+value is the base button prefix without -group. Child buttons inherit the owner
+prefix when undefined. A nonempty local value takes priority, and an empty
+value selects shared ConfigProvider. Button, Badge, Tooltip, and Compact keep
+their own namespaces. Progress and animation parameters use the shared prefix
+independently of the local class. Changing the prefix preserves DOM, refs, an
+open menu, scroll and progress, drafts, selection, and focus.
 
-Placement top/bottom/left/right остаётся физическим и при RTL. Open + onOpenChange
-дают controlled mode: владелец может отклонить запрос; без open состояние внутреннее.
-Disabled блокирует переключение меню, но сам по себе не отключает детей.
-Клик вне группы закрывает меню, клик элемента сохраняет его открытым.
-CloseIcon и semantic slots root/list/item/itemIcon/itemContent/trigger/triggerIcon/
-triggerContent доступны локально и через ConfigProvider.floatButtonGroup.
+Upstream Group leaves its local prefix out of children and the trigger. Raw UMD
+measurements stay separate from matched public child prefixes and trigger
+semantic aliases and styles. Svelte inherits the owner prefix. A shared local
+class in a nested provider also exposed an upstream cache defect that drops
+the BackTop progress background. The reference keeps the fresh Inner measurement
+separate. The native implementation isolates the class and global namespace.
 
-FloatButtonBackTop принимает target={() => window|document|element|null},
-visibilityHeight (400), duration (450ms), showProgress. На SSR виден только при
-visibilityHeight=0, target не вызывается. После mount scroll обновляет видимость
-и progress; resize обновляет только progress. Click запускает cubic scroll к 0
-перед пользовательским callback. При reduced motion прокрутка мгновенная;
-собственные RAF/listeners отменяются при unmount. NativeElement с bind доступен
-у кнопки/FloatButtonBackTop, у Group указывает на div группы.
+Placement stays physical for top, bottom, left, and right, including in RTL.
+Open with onOpenChange is controlled, so the owner can decline a request.
+Without open, the group owns state. Disabled blocks menu toggling and leaves
+children's disabled state alone. Clicking outside closes the menu. Clicking an
+item keeps it open. CloseIcon and semantic root, list, item, itemIcon,
+itemContent, trigger, triggerIcon, and triggerContent slots are available locally
+and through ConfigProvider.floatButtonGroup.
 
-ConfigProvider.floatButton.backTopIcon задаёт иконку FloatButtonBackTop. Как в исходной 6.6.8,
-FloatButton не потребляет объявленные в глобальном floatButton config class/style/
-semantic slots; локальные props работают. Config вложенного provider наследуется
-при undefined и заменяется целиком при заданном объекте.
+FloatButtonBackTop accepts target={() => window | document | element | null},
+visibilityHeight (400), duration (450ms), and showProgress. SSR displays it only
+with visibilityHeight=0 and defers target until the browser. After mount, scroll
+updates visibility and progress, and resize updates progress alone. Click starts
+a cubic scroll to 0 before the user callback. Reduced motion makes it instant.
+Unmount cancels its animation frames and listeners. Bind:nativeElement is
+available on FloatButton and FloatButtonBackTop and exposes the group div on Group.
 
-`theme.components.FloatButton` применяет alias overrides и algorithms к кнопкам,
-Group и FloatButtonBackTop. Собственных component tokens у закреплённого FloatButton нет:
-размер задаёт controlHeightLG, иконку — fontSizeIcon, отступы — paddingXXS,
-marginXXL/marginLG и padding группы. Button сохраняет свои component tokens;
-его config style, semantic styles и локальный style имеют приоритет над темой.
-Вложенные и соседние providers изолированы, поддержаны custom cssVar prefix,
-реактивные изменения и возврат к legacy defaults.
+ConfigProvider.floatButton.backTopIcon supplies the FloatButtonBackTop icon. As in
+upstream 6.6.8, FloatButton's global class, style, and semantic slots are declared
+but unused. Local props apply. A nested provider inherits its config when
+undefined and replaces it as a whole when given an object.
 
-FloatButton, Group и BackTop используют [слой владельца](../theme-context.md#уровни-вложенных-панелей).
-Явный CSS в `styles.root` и `style` сохраняет приоритет. Кнопки внутри Group
-читают тот же контекст владельца, что и сама группа.
-В React 6.6.8 явный слой задаётся через `style.zIndex`. Поле `styles.root.zIndex`
-в замере перекрывалось расчётом. Svelte сохраняет заданный CSS в этом слоте.
+`theme.components.FloatButton` applies alias overrides and algorithms to buttons,
+Group, and FloatButtonBackTop. The pinned FloatButton has no component tokens of
+its own. ControlHeightLG sets size, fontSizeIcon sets the icon, and paddingXXS,
+marginXXL, marginLG, and group padding set spacing. Button keeps its own component
+tokens. Its config style, semantic styles, and local style take priority over the
+theme. Nested and adjacent providers stay isolated, with support for a custom
+CSS variable prefix, reactive changes, and returning to legacy defaults.
 
-Сохраняются прежние ограничения Button, Badge и Tooltip. CSS-рецепт воспроизводит
-42 правила. Глобальный fade адаптирован через WAAPI с исходными длительностями и reduced motion.
-У FloatButtonBackTop fade меняет только opacity по linear-кривой; локальный
-transform сохраняется во время появления и исчезновения. Промежуточные кадры
-официального UMD сверяются в [browser](../../../tests/browser/float-button/float-button-motion.spec.ts).
-Wave наследуется через общий Button, включая FloatButtonBackTop и trigger группы.
+FloatButton, Group, and BackTop use the owner layer. Explicit CSS in `styles.root`
+and `style` takes priority. Buttons in Group read the same owner context as the
+group. React 6.6.8 sets an explicit layer through `style.zIndex`. Its computed layer
+overrode `styles.root.zIndex` in the measurement. Svelte preserves explicit CSS in
+that slot. [Owner layer](../theme-context.md#layering-nested-panels)
+
+Button, Badge, and Tooltip keep their existing limitations. The CSS recipe
+reproduces 42 rules. The global fade uses WAAPI with upstream durations and
+reduced motion. FloatButtonBackTop changes only opacity with linear easing and
+preserves local transform during entry and exit. The browser checks compare
+intermediate frames with the official UMD. Wave is inherited through the
+shared Button, including BackTop and the group trigger. [Browser](../../../tests/browser/float-button/float-button-motion.spec.ts)
 
 ```svelte
 <FloatButton tooltip="Помощь" aria-label="Помощь" onclick={showHelp} />
@@ -80,4 +84,3 @@ Wave наследуется через общий Button, включая FloatBu
   <FloatButtonBackTop visibilityHeight={0} aria-label="К началу" />
 </FloatButtonGroup>
 ```
-

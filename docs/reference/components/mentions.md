@@ -1,7 +1,7 @@
 # Mentions
 
 Mentions предлагает варианты упоминаний при вводе текста.
-Вложенный список наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Вложенный список наследует [слой владельца](../theme-context.md#layering-nested-panels).
 
 ```svelte
 <script lang="ts">

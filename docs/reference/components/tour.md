@@ -95,7 +95,7 @@ CSS Tour подключён перед Button, как в исходном runtim
 
 Вложенный Tour прибавляет 100 к уровню владельца. `zIndex` задаёт слой явно,
 включая 0. Потомки получают рассчитанный уровень из
-[общего контекста](../theme-context.md#уровни-вложенных-панелей).
+[общего контекста](../theme-context.md#layering-nested-panels).
 
 Проверки: [engine](../../../src/lib/tour/tour.engine.test.ts),
 [public package SSR](../../../tests/package/tour/tour.ssr.test.ts),

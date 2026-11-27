@@ -1,14 +1,14 @@
-# Темы и локализация
+# Themes and localization
 
-`ConfigProvider` задаёт оформление и язык компонентов внутри него. Поместите его
-в корневой компонент, чтобы применить настройки ко всему приложению, или оберните
-им отдельную часть страницы.
+`ConfigProvider` sets appearance and language for the components it contains.
+Place it in the root component to configure the whole application, or wrap a
+section of the page to configure that section.
 
-## Выбор темы
+## Choosing a theme
 
-По умолчанию компоненты используют светлую тему (`light`) и синий основной цвет.
-Чтобы включить тёмную тему с фиолетовым акцентом, задайте `mode` и `primary`.
-Кнопка с `type="primary"` использует выбранный цвет.
+Components use the light theme (`light`) and a blue primary color by default.
+Set `mode` and `primary` for a dark theme with a purple accent. A button with
+`type="primary"` uses the selected color.
 
 ```svelte
 <script lang="ts">
@@ -20,22 +20,20 @@
 </ConfigProvider>
 ```
 
-Для `primary` доступны `blue`, `purple` и `green`. Для собственного цвета задайте,
-например, `theme={{ mode: 'dark', token: { colorPrimary: '#0f766e' } }}`.
-Значение `token.colorPrimary` имеет приоритет над `primary`.
-Настройки отдельных компонентов и чтение текущих цветов через `theme.useToken()`
-описаны в справочнике [Токены темы в ConfigProvider](theme-context.md).
+The `primary` options are `blue`, `purple`, and `green`. For a custom color, use a
+setting such as `theme={{ mode: 'dark', token: { colorPrimary: '#0f766e' } }}`.
+`token.colorPrimary` takes priority over `primary`. See how to configure individual
+components and read current colors with `theme.useToken()`. [Theme context](theme-context.md)
 
-## Размер и плотность
+## Size and density
 
-`componentSize` задаёт размер вложенных компонентов, например кнопок и полей ввода.
-Доступны `small`, `medium` и `large`, по умолчанию используется `medium`.
-Если нужно изменить размер одной кнопки, задайте ей собственный `size`.
+`componentSize` sets the size of nested components, such as buttons and text fields.
+The options are `small`, `medium`, and `large`, with `medium` as the default.
+Set `size` on an individual button to override it.
 
-`theme.compact` меняет плотность оформления, в том числе интервалы между
-элементами, высоту полей и метрики текста. В примере кнопка «Создать» использует
-обычный размер. Вложенный провайдер уменьшает кнопки панели и расстояние между
-ними, сохраняя тёмную тему родителя.
+`theme.compact` changes layout density, including spacing, field height, and text metrics.
+In the example, the Create button uses the regular size. The nested provider reduces
+the size of the panel buttons and the gap between them while inheriting the dark theme.
 
 ```svelte
 <script lang="ts">
@@ -54,11 +52,11 @@
 </ConfigProvider>
 ```
 
-## Язык интерфейса
+## Interface language
 
-По умолчанию библиотека использует русскую локаль `ruRU`. Передайте `enUS`
-в `locale`, чтобы переключить встроенные подписи на английский. Например,
-у кнопок пагинации появятся подсказки «Previous page» и «Next page».
+The library defaults to the Russian locale `ruRU`. Pass `enUS` as `locale` to
+switch built-in labels to English. For example, the pagination button tooltips
+become “Previous page” and “Next page”.
 
 ```svelte
 <script lang="ts">
@@ -70,11 +68,10 @@
 </ConfigProvider>
 ```
 
-Все 73 словаря Ant Design 6.6.8 доступны как отдельные импорты
-`@woodger/antd/locale/<код>`. Словари сохраняют форму `AntDesignLocale`
-с разделами `DatePicker`, `Calendar`, `Pagination` и другими. Для разделов,
-которые опущены в пользовательском словаре этой формы, используются
-английские подписи Ant Design.
+All 73 Ant Design 6.6.8 dictionaries are available as separate imports from
+`@woodger/antd/locale/<code>`. The dictionaries follow the `AntDesignLocale` shape,
+with sections such as `DatePicker`, `Calendar`, and `Pagination`. Sections omitted
+from a custom dictionary of that shape use the English Ant Design labels.
 
 ```svelte
 <script lang="ts">
@@ -88,13 +85,13 @@
 </ConfigProvider>
 ```
 
-Day.js отдельно поставляет названия месяцев и правила календарной недели.
-Подключите его локаль для нужного языка, как в примере. Направление интерфейса
-задаётся через `direction`, в том числе для арабской и еврейской локалей.
+Day.js supplies month names and calendar week rules separately. Import its locale
+for the desired language, as shown in the example. Use `direction` to set the
+interface direction, including for Arabic and Hebrew.
 
-Чтобы изменить одну подпись, укажите её во вложенном провайдере.
-В этом примере подсказка кнопки перехода вперёд станет «Next chapter»,
-а подпись «Previous page» и остальные строки пагинации останутся английскими.
+To change one label, set it in a nested provider. In this example, the forward
+button's tooltip becomes “Next chapter”. “Previous page” and the other pagination
+strings stay in English.
 
 ```svelte
 <script lang="ts">
@@ -108,6 +105,5 @@ Day.js отдельно поставляет названия месяцев и 
 </ConfigProvider>
 ```
 
-Общие тексты ошибок формы задаются через `validateMessages`, а текст отдельного
-правила — через `message`. Примеры приведены в разделе
-[«Шаблоны сообщений»](forms.md#шаблоны-сообщений).
+Set shared form error messages through `validateMessages` and the message for
+an individual rule through `message`. [Message templates](forms.md#шаблоны-сообщений)

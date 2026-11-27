@@ -1,147 +1,138 @@
-# Политика документации
+# Documentation policy
 
-> Type: Policy. Этот документ задаёт роли Markdown-документов, структуру `docs`
-> и правила их сопровождения.
+> Type: Policy. This document defines Markdown document roles, the structure of `docs`,
+> and how to maintain the documentation.
 
-## Назначение
+## Purpose
 
-Документация должна быть понятной, актуальной и связанной с описываемой частью
-проекта.
+Documentation must be clear, current, and connected to the part of the project it describes.
 
-## Роли документов
+## Document roles
 
-| Type | Отвечает на вопрос | Характер |
+| Type | Question it answers | Role |
 | --- | --- | --- |
-| `Navigation` | Что читать дальше? | карта без собственного system contract |
-| `Policy` | Какие правила обязательны? | нормативный living document |
-| `Reference` | Какой формат или behavior действует? | точное текущее описание |
-| `Overview` | Как связаны части системы? | высокоуровневая текущая карта |
-| `Design Note` | Как устроена конкретная boundary и почему? | focused living document |
-| `Deployment` | Как развернуть runtime? | воспроизводимая инструкция |
-| `ADR` | Почему было принято долгосрочное решение? | историческая запись |
-| `Roadmap` | Какой согласованный scope отложен? | будущее, не runtime contract |
+| `Navigation` | What should I read next? | Map with no system contract of its own |
+| `Policy` | Which rules are mandatory? | Living document that defines rules |
+| `Reference` | What format or behavior applies? | Precise description of the current contract |
+| `Overview` | How do the parts of the system fit together? | Current high-level map |
+| `Design Note` | How does a particular boundary work, and why? | Focused living document |
+| `Deployment` | How do I deploy the runtime? | Reproducible instructions |
+| `ADR` | Why did we make a long-term decision? | Historical record |
+| `Roadmap` | What agreed scope is deferred? | Future work outside the runtime contract |
 
-Один документ должен иметь одну основную роль. ADR или roadmap не заменяет
-current policy/reference.
+Give each document one primary role. Current policies and references remain authoritative
+when an ADR or roadmap also covers the topic.
 
-Architecture-документ может явно нормативно закреплять долгоживущие границы и
-направление зависимостей, оставаясь архитектурным документом по основной роли.
-Это не делает его владельцем operational или machine-verifiable контрактов.
+An architecture document can define lasting boundaries and dependency direction while
+retaining architecture as its primary role. Operational and machine-verifiable contracts
+remain with their respective owners.
 
-## Источники точных контрактов
+## Sources of exact contracts
 
-Markdown объясняет поведение и ведёт к проверяемому источнику; он не создаёт
-второе определение интерфейса.
+Use Markdown to explain behavior and direct readers to a verifiable source. Keep a single
+definition of each interface.
 
-| Контракт | Источник точной формы |
+| Contract | Source of the exact definition |
 | --- | --- |
-| Props, callbacks, snippets и refs | Исходные объявления в `src/lib`; публикуемые декларации производны от них |
-| Публичные входы, зависимости и метаданные пакета | [package.json](../../package.json) |
-| Покрытие переноса и upstream pin | [registry.json](../reference/ant-design-porting/registry.json) |
-| Извлечение vendor CSS | [CSS-рецепты](../../tools/ant-design-css-recipes.json) |
-| Пути, параметры и справка служебного CLI | [Определения команд](../../tools/cli-core.mjs) и runtime help |
+| Props, callbacks, snippets, and refs | Source declarations in `src/lib`, which produce the published declarations |
+| Public entry points, dependencies, and package metadata | [package.json](../../package.json) |
+| Porting coverage and the pinned upstream version | [registry.json](../reference/ant-design-porting/registry.json) |
+| Vendored CSS extraction | [CSS recipes](../../tools/ant-design-css-recipes.json) |
+| Development CLI command paths, options, and help | [Command definitions](../../tools/cli-core.mjs) and runtime help |
 
-При изменении публичного API обновляются исходные типы, JSDoc, примеры и
-затронутые тесты. README описывает использование и ограничения без копирования
-полного списка типов и Props. Новые правила оформления не требуют массовой
-переработки существующей документации.
+When the public API changes, update its source types, JSDoc, examples, and affected tests.
+Use the README to describe usage and limitations. Keep the full list of types and props
+in the source. Apply new formatting rules without a mass rewrite of existing documentation.
 
-Для CLI актуальная справка вызывается через `npm run cli -- --help` и
-`npm run cli -- <command> --help`. При изменении команды одновременно обновляются
-определения, help и parser/help tests. Markdown объясняет workflow и ведёт к
-help; отдельный полный каталог всех параметров не создаётся.
+Use `npm run cli -- --help` and `npm run cli -- <command> --help` for current CLI help.
+When a command changes, update its definitions, help, and parser and help tests together.
+Use Markdown to explain the workflow and link to help, where the full option list lives.
 
-## Структура проекта
+## Project structure
 
 ```text
-readme.md                 быстрый старт и основные ссылки
-CHANGELOG.md              история заметных изменений
-docs/README.md            карта документации
-docs/architecture/        текущие system boundaries
-docs/reference/           точные форматы и configuration
+readme.md                 quick start and main links
+CHANGELOG.md              history of notable changes
+docs/README.md            documentation map
+docs/architecture/        current system boundaries
+docs/reference/           exact formats and configuration
 docs/deployment/          deployment guides
-docs/policy/              нормативные правила разработки
+docs/policy/              binding development rules
 ```
 
-Корневой файл намеренно называется `readme.md`. Отдельный `CONTRIBUTING.md` не
-используется: полный набор правил находится в `docs/policy`, а readme и
-`docs/README.md` ссылаются на policy index.
+The root file is intentionally named `readme.md`. The full set of contribution rules lives
+in `docs/policy`. The root readme and `docs/README.md` point to the policy index in place
+of a separate `CONTRIBUTING.md`.
 
-Новая верхнеуровневая категория `docs` создаётся только для новой устойчивой
-роли документа, а не ради одного файла.
+Create a top-level category in `docs` only for a new, lasting document role. A single
+file is insufficient reason to add a category.
 
-## Документ модуля
+## Module documentation
 
-Для устойчивого reusable или feature-модуля документ обычно содержит:
+Documentation for a stable reusable or feature module typically includes the following.
 
-1. Назначение и границы ответственности.
-2. Source location и public entrypoint.
-3. Минимальный пример.
-4. Public behavior и важные invariants.
-5. Accessibility для UI.
-6. State/side effects, если они являются частью contract.
-7. Тесты и live showcase.
-8. Ограничения и связанные документы.
+1. Purpose and responsibility boundaries.
+2. Source location and public entry point.
+3. A minimal example.
+4. Public behavior and important invariants.
+5. Accessibility for UI.
+6. State and side effects when they are part of the contract.
+7. Tests and the live showcase.
+8. Limitations and related documents.
 
-Не нужно перечислять каждую private function или повторять все TypeScript types.
+Keep the reference focused on the contract. Private functions and full TypeScript type
+definitions belong in the source.
 
 ## UI showcase
 
-Нельзя импортировать Markdown content в приложение или production styles из
-showcase ради синхронизации документации.
+Keep Markdown content out of application imports and production styles out of the
+showcase when synchronizing documentation.
 
-Проект пока использует plain Markdown и не имеет обязательного docs build.
-VitePress или другой движок добавляется только отдельной задачей при реальной
-потребности в публикации, поиске или versioning.
+The project uses plain Markdown without a mandatory documentation build. Add VitePress
+or another engine only in a separate task that addresses a real publishing, search,
+or versioning need.
 
 ## Policies
 
-- Policy описывает текущее обязательное правило, а не историю его появления.
-- Изменение policy должно быть минимальным и связано с изменением проектного
-  правила или устранением чужого/устаревшего контекста.
-- `docs/policy/index.md` остаётся полной навигацией по policy set.
+- A policy describes the current binding rule. Record its history elsewhere.
+- Keep a policy change minimal and tied to a project rule change or removal of unrelated
+  or obsolete context.
+- Keep `docs/policy/index.md` as the complete navigation for the policy set.
 
 ## Architecture Decision Records
 
-ADR нужен, когда есть несколько реалистичных альтернатив и решение трудно
-отменить, влияет на несколько модулей или задаёт долгосрочное ограничение.
+Write an ADR when there are several realistic alternatives and the decision is hard
+to reverse, affects several modules, or sets a long-term constraint.
 
-ADR не нужен для списка props, структуры каталога, текущего data flow,
-deployment steps или реализации одного компонента. Если первый ADR потребуется,
-каталог и index создаются в той же явно согласованной задаче.
+Use living documentation for prop lists, directory structure, current data flow,
+deployment steps, and individual component implementations. If the first ADR is needed,
+create its directory and index in the same explicitly agreed task.
 
-Принятый ADR не переписывается вслед за системой. Новое решение оформляется
-новым ADR, а living docs обновляются отдельно.
+Preserve accepted ADRs as historical records. Record a new decision in a new ADR and
+update the living documentation separately.
 
-## Когда обновлять документацию
+## When to update documentation
 
-Документация обновляется вместе с кодом, если меняются:
+Update documentation alongside code when any of the following changes.
 
-- public component API или accessibility behavior;
-- URL/query/storage/date formats;
-- module ownership или dependency direction;
-- environment, scripts, build или deployment;
-- поддерживаемый workflow;
-- policy.
+- Public component API or accessibility behavior
+- URL, query, storage, or date formats
+- Module ownership or dependency direction
+- Environment, scripts, build, or deployment
+- A supported workflow
+- A policy
 
-Временный implementation detail не требует отдельной страницы.
+A temporary implementation detail can stay with its implementation.
 
-## Ссылки и примеры
+## Links and examples
 
-- Используйте относительные Markdown links, а не путь в backticks, когда читатель
-  должен перейти к другому документу.
-- Пример должен быть минимальным и соответствовать текущему API.
-- Не используйте renderer-specific syntax без настроенного docs renderer.
-- Не копируйте секреты, локальные credentials или mutable output.
-- После перемещения документа обновите все входящие ссылки в том же изменении.
+- Use relative Markdown links to documents the reader should open.
+- Keep each example minimal and aligned with the current API.
+- Use renderer-specific syntax only when the corresponding documentation renderer is configured.
+- Keep secrets, local credentials, and mutable output out of the documentation.
+- Update every incoming link in the same change that moves a document.
 
-## Проверка
+## Validation
 
-После изменения docs проверяются:
-
-- локальные ссылки;
-- один H1 и корректная hierarchy headings;
-- закрытые code fences;
-- отсутствие старых путей;
-- соответствие source/tests;
-- `git diff --check`.
+After editing documentation, check local links, a single H1, heading hierarchy, closed
+code fences, current paths, and agreement with source code and tests. Run `git diff --check`.

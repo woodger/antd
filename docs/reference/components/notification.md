@@ -108,7 +108,7 @@ Actions находятся на уровне корня, как в эталон�
 section — только для пары title/description. Legacy grid сохраняет прежние отступы
 и расположение. Source flow-root сохраняет высоту float actions
 при native relative positioning; тема переключается без пересоздания controls.
-[Сверка и проверки](../theme-context.md#проверки-диалогов-и-уведомлений).
+[Сверка и проверки](../theme-context.md#dialog-and-notification-checks).
 
 Явные status backgrounds применяются и при равенстве global alias, и при другом
 cssVar prefix. В 6.6.8 такие настройки иногда теряются: [исходные замеры](../../../tests/browser/fixtures/ant-design-notification-background-observation.json).

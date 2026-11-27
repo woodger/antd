@@ -1,261 +1,246 @@
-# Политика стиля кода
+# Code style policy
 
-> Type: Policy. Документ фиксирует правила визуальной структуры, именования и
-> комментариев в TypeScript, Svelte, CSS и тестах без изменения поведения.
+> Type: Policy. This document defines visual structure, naming, and comment conventions
+> for TypeScript, Svelte, CSS, and tests while preserving behavior.
 
-## Основной принцип
+## Main principle
 
-Стиль должен делать логические границы видимыми и соответствовать соседнему
-коду. Массовое форматирование выполняется только по явной задаче. Style policy
-не заменяет архитектурные решения.
+Style should make logical boundaries visible and match the surrounding code. Reformat
+code in bulk only when the task explicitly calls for it. Architecture decisions
+continue to govern structure.
 
-В hand-written implementation files `src` основной TypeScript/Svelte style —
-два пробела для вложенности, точки с запятой и single quotes в TypeScript.
-Конфигурационные, declaration- и generated-файлы сохраняют собственный
-существующий формат.
+Handwritten implementation files in `src` use two-space indentation, semicolons,
+and single quotes in TypeScript and Svelte scripts. Keep the established format
+of configuration, declaration, and generated files.
 
-## Длина строк и визуальная структура
+## Line length and visual structure
 
-Для TypeScript, JavaScript, `<script>` и тестов ориентир ширины — 100 символов
-с учётом отступов. Длинные URL, пути, регулярные выражения и строковые literals
-не разбиваются на вычисления или конкатенации ради ширины.
+Aim for 100 characters including indentation in TypeScript, JavaScript, `<script>`
+blocks, and tests. Keep long URLs, paths, regular expressions, and string literals
+intact when a line exceeds the target.
 
-Самостоятельная инструкция выполняет один смысловой шаг и записывается на
-отдельной строке. Не совмещайте в выражении построение ключа, поиск записи,
-проверку результата и извлечение поля. Называйте промежуточные значения по их
-роли. Несколько вызовов допустимы, если вместе составляют одну очевидную
-операцию. Простые `?.` и `??` сохраняют различие между отсутствием значения и
-допустимыми `0`, `false`, `''`. Не заменяйте проверку оператором `!` или cast
-без основания. Не объединяйте объявления состояния, side effects или
-assertions через несколько `;` в строке.
-Разворачивайте проверки данных, обработку ошибок, вложенные и многострочные
-ветки, циклы, callbacks и lifecycle с несколькими действиями. Для очевидного
-локального действия допустима короткая запись.
+Put one independent logical step on each line. Give key construction, lookup,
+validation, and field extraction their own statements. Name intermediate values
+for their role. Multiple calls are fine when they form one clear operation.
+Simple `?.` and `??` preserve the distinction between a missing value and valid
+`0`, `false`, or `''`. Use a check when needed and justify any non-null assertion
+or cast. Keep state declarations, side effects, and assertions on separate lines
+instead of combining statements with semicolons.
 
-Сигнатуру по возможности записывайте в одну строку, если она помещается в
-ориентир ширины. Длинные сигнатуры, destructuring, объекты и вызовы раскрываются
-так, чтобы каждое поле или аргумент начиналось с отдельной строки. Короткие
-наглядные literals и аргументы остаются компактными. Простые тернарные выражения
-допустимы; сложный выбор не должен скрываться внутри длинного выражения.
+Expand data checks, error handling, nested or multiline branches, loops, callbacks,
+and lifecycle blocks with several actions. A short form is fine for an obvious local action.
 
-`else`, `else if` и `catch` начинаются на следующей строке после закрывающей
-скобки блока с тем же отступом. Это правило относится к синтаксису кода.
+Keep a signature on one line when it fits the target width. In long signatures,
+destructuring patterns, objects, and calls, start each field or argument on a
+separate line. Keep short, clear literals and arguments compact. Simple ternaries
+are allowed. Make complex choices visible in separate statements or branches.
 
-Разбиение вычисления на переменные, вынос функции и изменение ветвления являются
-рефакторингом. Они не включаются в задачу только про пробелы и переносы строк.
-Порядок вычислений, short-circuit и границы Svelte-реактивности сохраняются.
+Start `else`, `else if`, and `catch` on the line after the previous closing brace,
+at the same indentation. This rule applies to code syntax.
 
-Для Svelte markup учитываются текстовые узлы и значимые пробелы между элементами.
-Не переносите текст и snippet boundaries механически. CSS и существующие
-конфигурационные файлы сохраняют собственный формат.
+Introducing intermediate variables, extracting a function, and changing a branch
+are refactoring. Keep a whitespace-only task limited to spaces and line breaks.
+Preserve evaluation order, short-circuit behavior, and Svelte reactivity boundaries.
 
-## Границы функций
+Account for text nodes and significant spaces between Svelte elements. Preserve
+the placement of text and snippet boundaries where it matters. CSS and existing
+configuration files keep their own format.
 
-Основная функция показывает последовательность действий и состав результата.
-Детали самостоятельной операции, включая нужные только ей переменные, можно
-выделить в именованную локальную функцию даже при одном вызове. При сложной
-сборке коллекции разделяйте создание записи и обход. Явный цикл уместен, если
-несколько вложенных преобразований скрывают проверки или side effects.
-Простые преобразования оставляйте компактными. Цепочки тривиальных функций,
-универсальные механизмы и новые слои не нужны ради сокращения метода.
+## Function boundaries
 
-В пределах одной функции или кода уровня модуля не вкладывайте `try` внутрь
-`try`, `catch` или `finally`. Выделяйте операцию с собственной обработкой ошибок
-в именованную функцию, сохраняя границы перехвата, проброс исключений, порядок
-действий и cleanup.
+The main function should show the sequence of actions and the parts of the result.
+An independent operation and its local variables may move into a named local function
+even when there is only one caller. For complex collection construction, separate
+building an entry from traversing the collection. Use an explicit loop when nested
+transformations hide checks or side effects. Keep simple transformations compact.
+Avoid chains of trivial functions, generic mechanisms, and new layers added solely
+to shorten a method.
 
-## Вертикальные отступы
+Within a function or at module scope, keep `try` blocks out of another `try`, `catch`,
+or `finally` block. Extract an operation with its own error handling into a named
+function. Preserve the catch boundary, exception propagation, operation order,
+and cleanup.
 
-Самостоятельные логические шаги внутри функции разделяются одной пустой строкой.
-Многострочный вызов, объект или state declaration образуют визуальный блок.
+## Vertical spacing
 
-Разделяйте по смыслу:
+Separate independent logical steps within a function with one blank line.
+A multiline call, object, or state declaration forms a visual block.
 
-- получение или подготовку состояния;
-- validation и guard clauses;
-- преобразование данных;
-- side effect или внешний вызов;
-- обработку результата;
-- return.
+Use spacing to separate these steps where they exist.
 
-Не добавляйте пустую строку между проверкой и немедленным действием, если они
-образуют одну операцию.
+- Reading or preparing state
+- Validation and guard clauses
+- Data transformation
+- Side effects or external calls
+- Result handling
+- Returning the result
+
+Keep a check adjacent to its immediate action when they form one operation.
 
 ## TypeScript
 
-- Предпочитайте ясные типы на module boundary и inference внутри небольшой
-  реализации.
-- Не добавляйте декоративные type aliases, которые только повторяют выражение.
-- Используйте `unknown` и narrowing для внешнего input; не заменяйте проверку
-  безусловным cast.
-- Guard clause предпочтительнее глубокой вложенности, если не скрывает lifecycle.
-- Один class определяется в одном файле.
-- По возможности присваивайте экземпляр, создаваемый через `new`, именованной
-  переменной перед передачей в вызов, сравнением или обращением к методу.
-  Имя выражает роль экземпляра. Сохраняйте порядок и условия его создания.
-  Прямой `throw new Error(...)` допустим.
-- Не меняйте порядок side effects ради визуальной симметрии.
+- Prefer clear types at module boundaries and inference inside small implementations.
+- Avoid decorative type aliases that only restate an expression.
+- Use `unknown` and narrowing for external inputs. Use casts only when they have adequate justification.
+- Prefer guard clauses to deep nesting when they keep the lifecycle visible.
+- Define each class in one file.
+- When practical, assign an instance created with `new` to a named variable before
+  passing it into a call, comparing it, or invoking a method on it. Name the variable
+  for the instance's role. Preserve the order and conditions of construction.
+  A direct `throw new Error(...)` is allowed.
+- Preserve side-effect order when adjusting the layout of code.
 
 ## Svelte 5
 
-Проект работает в rune mode.
+The project uses rune mode.
 
-- Props объявляются через `$props` и типизируются рядом с component boundary.
-- Bindable state используется только когда двусторонняя связь является частью
-  API компонента.
-- `$derived` выражает вычисляемое значение без side effects.
-- `$effect` используется для синхронизации с runtime или внешним состоянием, а
-  не вместо обычного вычисления.
-- Cleanup listener, timer, Worker и другого ресурса обязателен в соответствующем
-  lifecycle.
-- Не переносите feature orchestration в markup expressions.
-- При выделении вычислений сохраняйте реактивные чтения, зависимости `$derived`
-  и `$effect`, момент вычисления, identity объектов и bindings.
+- Declare props with `$props` and type them at the component boundary.
+- Use bindable state only when two-way binding is part of the component API.
+- Use `$derived` for computed values without side effects.
+- Use `$effect` to synchronize with runtime or external state. Use ordinary
+  computation for values that require no synchronization.
+- Clean up listeners, timers, Workers, and other resources in the corresponding lifecycle.
+- Keep feature orchestration out of markup expressions.
+- Preserve reactive reads, `$derived` and `$effect` dependencies, evaluation timing,
+  object identity, and bindings when extracting computations.
 
-Локальные функции и замыкания допустимы для состояния экземпляра и управления
-ресурсами. Их не выносят в class или module scope ради стиля. `bind`, `call` и
-`apply` допустимы, если сохраняют receiver нативного DOM API или иной необходимый
-контракт; неочевидная причина фиксируется рядом с вызовом.
+Use local functions and closures for instance state and resource management.
+Keep them in scope when the only reason to move them is formatting. Use `bind`,
+`call`, and `apply` when they preserve a native DOM API receiver or another required
+contract. Explain a non-obvious reason beside the call.
 
-Внутри `.svelte` следуйте локальному порядку `script`, `style`, markup. Не
-переставляйте крупные блоки только ради единообразия в несвязанной задаче.
+Follow the local order of `script`, `style`, and markup within each `.svelte` file.
+Preserve the order of large blocks in unrelated tasks.
 
-## Markup и accessibility
+## Markup and accessibility
 
-- Используйте нативный элемент по его назначению до добавления ARIA.
-- Интерактивный `div` не заменяет `button`, `a`, `input` или другой control.
-- Label, accessible name, focus state и keyboard behavior являются частью
-  реализации, а не необязательной документацией.
-- Декоративная SVG-иконка скрывается от accessibility tree; имя задаётся
-  интерактивному control.
-- Не удаляйте focus outline без эквивалентного `:focus-visible` состояния.
+- Use the appropriate native element before adding ARIA.
+- Use `button`, `a`, `input`, or another native control for its intended interaction.
+- Treat labels, accessible names, focus state, and keyboard behavior as part of the implementation.
+- Hide decorative SVG icons from the accessibility tree and name the interactive control.
+- When removing a focus outline, provide an equivalent `:focus-visible` state.
 
-## CSS и layout
+## CSS and layout
 
-- На одной строке размещается не более одного объявления CSS-свойства.
-- Component-specific styles остаются scoped внутри компонента.
-- `:global` используется только для сознательной границы с child component или
-  document-level стилем.
-- Повторяемые theme values передаются существующими CSS variables/config, если
-  это действительно общая ответственность.
-- Responsive правила проверяются рядом с затронутым breakpoint.
-- Фиксированный размер допустим для известного control или canvas contract, но
-  не должен случайно ломать узкий viewport.
-- Не переписывайте весь style block ради локального визуального изменения.
+- Put at most one CSS property declaration on each line.
+- Keep component-specific styles scoped to the component.
+- Use `:global` only for an explicit boundary with a child component or document-level styling.
+- Share recurring theme values through existing CSS variables or configuration when they
+  genuinely represent shared behavior.
+- Check responsive rules near the affected breakpoint.
+- Use a fixed size when it is part of a known control or canvas contract. Check that it
+  works in narrow viewports.
+- Limit a local visual change to the affected part of the style block.
 
-## Тесты
+## Tests
 
-Arrange, Act и Assert разделяются пустыми строками, если это действительно
-разные фазы. Связанные assertions одного результата остаются одним блоком.
+Separate Arrange, Act, and Assert with blank lines when they are distinct phases.
+Keep related assertions for one result together.
 
-Тестовый код следует тем же правилам TypeScript, но может использовать локальные
-минимальные fixtures и mocks ради ясного сценария.
+Test code follows the same TypeScript rules. Small local fixtures and mocks are
+allowed when they make a scenario clear.
 
-## Именование
+## Naming
 
-Имя выражает роль и устойчивый vocabulary проекта, не создавая ложный
-архитектурный или runtime-сигнал.
+Choose names that express roles using established project terminology and reflect
+actual architectural or runtime behavior.
 
-- `camelCase` используется для переменных, функций, callbacks и exported
-  constants;
-- `PascalCase` — для types, interfaces, classes, Svelte components и файлов
-  компонентов;
-- `kebab-case` — для обычных module files, URL segments, CSS classes и
-  project-owned runtime keys;
-- `SCREAMING_SNAKE_CASE` — для внешних contracts, прежде всего environment
-  variables и стабильных external symbolic values.
+- Use `camelCase` for variables, functions, callbacks, and exported constants.
+- Use `PascalCase` for types, interfaces, classes, Svelte components, and component files.
+- Use `kebab-case` for ordinary module files, URL segments, CSS classes, and
+  project-owned runtime keys.
+- Use `SCREAMING_SNAKE_CASE` for external contracts, primarily environment variables
+  and stable external symbolic values.
 
-Имена внешнего контракта, SvelteKit filenames и framework exports сохраняются
-дословно. Уже опубликованные props, callbacks и exports, включая
-`UPLOAD_LIST_IGNORE` и `TREE_SELECT_SHOW_*`, не переименовываются ради нотации.
-Generated declarations не переименовываются ради локального стиля;
-при необходимости внешний тип преобразуется в project-owned type на границе.
+Keep external contract names, SvelteKit filenames, and framework exports verbatim.
+Preserve the names of published props, callbacks, and exports, including
+`UPLOAD_LIST_IGNORE` and `TREE_SELECT_SHOW_*`, when changing style. Keep names in
+generated declarations. Adapt external types to project-owned types at the boundary
+when needed.
 
-Для компонентов и функций действуют следующие соглашения:
+Use these conventions for components and functions.
 
-- component называется существительным, например `DateTimePicker`;
-- DOM handler получает префикс `handle`, callback prop — `on`;
-- boolean prop/state по возможности начинается с `is`, `has`, `can` либо прямо
-  выражает состояние без отрицания;
-- `parse`, `format`, `resolve`, `normalize`, `build`, `create`, `get`, `is`,
-  `has` и `can` используются в соответствии с фактическим contract функции;
-- общие имена `process`, `data`, `item` и `helper` допустимы только когда
-  context делает их однозначными.
+- Name a component with a noun, such as `DateTimePicker`.
+- Prefix DOM handlers with `handle` and callback props with `on`.
+- Prefer `is`, `has`, or `can` for a boolean prop or state, or name the state directly
+  in positive terms.
+- Use `parse`, `format`, `resolve`, `normalize`, `build`, `create`, `get`, `is`,
+  `has`, and `can` according to the function's contract.
+- Use generic names such as `process`, `data`, `item`, and `helper` only when the
+  context makes their meaning unambiguous.
 
-Различайте локальными именами идентификаторы записей, индексы, ревизии запросов,
-контроллеры отмены и состояние, если они участвуют в одной операции.
+Use distinct local names for record IDs, indexes, request revisions, cancellation
+controllers, and state when they occur in the same operation.
 
-Role suffix должен соответствовать содержимому: `*.engine.ts` содержит чистую
-нетривиальную логику, `*.model.svelte.ts` — rune-based presentation model,
-`*.draw.ts` — Canvas rendering layer, `*.test.ts` — Vitest tests. Не создавайте
-`utils.ts`, `helpers.ts` или `common.ts` без ясной cohesive responsibility.
+A role suffix must match the file's contents. Use `*.engine.ts` for nontrivial
+pure logic, `*.model.svelte.ts` for rune-based presentation models, `*.draw.ts` for
+Canvas rendering, and `*.test.ts` for Vitest tests. Create `utils.ts`, `helpers.ts`,
+or `common.ts` only for a clear, cohesive responsibility.
 
-Имена URL- и storage-ключей, serialized fields и Worker messages являются
-compatibility-sensitive и не меняются как обычный cleanup. В коде и
-документации сохраняются устойчивые термины используемых API.
+URL and storage keys, serialized fields, and Worker messages are compatibility-sensitive.
+Treat changes to them as contract changes. Keep established API terms in code and documentation.
 
-Эта policy не является основанием для массового переименования. При необходимом
-переименовании проверяются imports, exports, tests, docs, CSS selectors,
-storage/URL keys и dynamic references.
+Use this policy for necessary renames. Check imports, exports, tests, docs, CSS
+selectors, storage and URL keys, and dynamic references.
 
-## Комментарии
+## Comments
 
-Комментарий объясняет причину, инвариант, lifecycle или внешнее ограничение,
-которые нельзя достаточно ясно выразить именем и структурой кода. Он не должен
-пересказывать следующую строку, объяснять синтаксис или хранить историю
-рефакторинга.
+Explain a reason, invariant, lifecycle constraint, or external limitation that
+names and code structure cannot make clear on their own. Keep comments focused on
+the current code. Leave syntax explanations, summaries of obvious lines, and
+refactoring history outside code comments.
 
-Комментарий уместен для SSR/browser boundary, timezone или serialization
-contract, stale-request protection, Canvas/Worker invariant, accessibility или
-browser workaround, compatibility fallback и намеренно отсутствующего side
-effect. Вне утилитарных модулей очевидные handlers не требуют комментария.
-Не комментируйте очевидные guards, присваивания state, markup и CSS declarations.
+Comments are appropriate for SSR and browser boundaries, time zone and
+serialization contracts, stale request protection, Canvas and Worker invariants,
+accessibility and browser workarounds, compatibility fallbacks, and an
+intentional absence of a side effect. Obvious handlers outside utility modules,
+simple guards, state assignments, markup, and CSS declarations usually speak for themselves.
 
-В начале нетривиального production-модуля опишите его ответственность,
-границы и существенные инварианты. Простым реэкспортам, очевидным типам и
-тривиальной композиции без собственной логики такой блок не требуется.
+At the top of a nontrivial production module, describe its responsibility,
+boundaries, and essential invariants. Simple re-exports, obvious types, and
+trivial composition can omit the module comment.
 
-Публикуемые Props и component config получают короткий JSDoc о назначении
-контракта. У неочевидных полей, callbacks и методов описываются defaults,
-приоритет локальных и наследуемых значений, controlled/default поведение,
-события, ограничения refs и отличия от Ant Design API. Комментарии пишутся у
-исходных объявлений и попадают в декларации пакета; реэкспорты их не дублируют.
+Give published props and component configuration a short JSDoc comment describing
+their purpose. Document non-obvious fields, callbacks, and methods, including
+defaults, priority between local and inherited values, controlled and default
+behavior, events, ref constraints, and differences from the Ant Design API.
+Write these comments on the original declarations so they appear in the package
+declarations. Keep that single source when re-exporting them.
 
-В утилитарных модулях, инструментах и вспомогательных тестовых модулях
-комментируйте перед объявлением каждую функцию и метод, включая локальные
-операции, возвращаемые обработчики и методы объектов. Объясняйте назначение,
-ограничение, side effect или локальное состояние. Роль следует из назначения
-модуля. Для остальных exported и внутренних API JSDoc нужен, если types и имя
-не выражают ограничения input, side effects, ошибки, lifecycle или гарантию.
-Очевидные внутренние типы и helpers вне утилитарных модулей не требуют
-шаблонного комментария.
-Комментарий в Svelte markup или CSS добавляется только для неочевидной
-accessibility, layout либо browser boundary.
+In utility modules, tools, and test support modules, document every function
+and method before its declaration, including local operations, returned handlers,
+and object methods. Explain the purpose, constraints, side effects, or local state.
+Use the module's purpose to determine its role. For other exported and internal APIs,
+add JSDoc when names and types leave input limits, side effects, errors, lifecycle,
+or a guarantee unclear. Obvious internal types and helpers outside utility modules
+can omit formulaic comments.
 
-TODO обязан называть текущее ограничение и условие возврата. Комментарии пишутся
-на английском. Generated code не редактируется и не комментируется вручную.
+Add a Svelte markup or CSS comment only for a non-obvious accessibility, layout,
+or browser boundary.
 
-После изменения behavior комментарии в затронутой области проверяются на
-актуальность. История изменения остаётся в Git, changelog или ADR.
+A TODO must name the current limitation and the condition for revisiting it.
+Write comments in English. Regenerate generated code and its comments from their sources.
 
-## Исключения
+After a behavior change, verify that comments in the affected area are still current.
+Keep change history in Git, the changelog, or an ADR.
 
-Не форматируются механически:
+## Exceptions
 
-- generated code;
-- declaration-файлы с существующим framework style;
-- большие строковые literals и expected text output;
-- data matrices и fixtures, где форма важна тесту;
-- существующий config-файл с отличающимся локальным стилем;
-- пользовательские изменения вне scope.
+Exclude the following from mechanical formatting.
 
-Другое отступление обоснуйте комментарием рядом с кодом. Укажите правило и
-причину, по которой его соблюдение здесь ухудшает код или нарушает контракт.
-Для случаев, прямо разрешённых правилом, отдельное обоснование не требуется.
+- Generated code
+- Declaration files with an established framework style
+- Large string literals and expected text output
+- Data matrices and fixtures whose shape matters to a test
+- Existing configuration files with a distinct local style
+- User changes outside the task's scope
 
-## Style-only изменения
+Explain any other deviation in a comment near the code. Name the rule and the reason
+following it here would make the code worse or break a contract. Cases a rule already
+allows need no separate justification.
 
-Style-only задача не меняет имена, imports, порядок инструкций, типы или
-поведение. Механическое оформление и структурный рефакторинг фиксируются
-отдельными коммитами. В feature-задаче форматируется только непосредственно
-изменяемый участок.
+## Style-only changes
+
+A style-only task preserves names, imports, statement order, types, and behavior.
+Commit mechanical formatting separately from structural refactoring. In a feature
+task, format only the code directly involved in the change.

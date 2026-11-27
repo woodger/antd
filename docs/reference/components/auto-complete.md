@@ -27,7 +27,7 @@ value без учёта регистра, без trim/Unicode folding. Совп�
 всех детей; иначе проверяются дети. Predicate получает поверхностную копию raw option/group.
 ShowSearch object настраивает filterOption/onSearch; прежние top-level props удалены.
 Класс popup задаётся через classNames.popup.root; popupClassName удалён.
-Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Вложенная панель наследует [слой владельца](../theme-context.md#layering-nested-panels).
 PopupRender, prefix, semantic classNames/styles и общий ConfigProvider.select
 описаны в [разделе Select](select.md#popup-и-семантическое-оформление). У AutoComplete нет
 slots suffix/item/itemContent/itemRemove.

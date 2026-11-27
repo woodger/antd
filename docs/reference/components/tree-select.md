@@ -281,7 +281,7 @@ props и разрешённые `size`, `disabled`, `status` и `variant`. `open
 и `popup.itemSwitcher` относятся к узлу дерева, заголовку и переключателю.
 Панель получает `styles.root`, затем `styles.popup.root`. Слой поля задаётся
 отдельно. Панель берёт `z-index` из `styles.popup.root` или
-[контекста владельца](../theme-context.md#уровни-вложенных-панелей).
+[контекста владельца](../theme-context.md#layering-nested-panels).
 Числовой `popupMatchSelectWidth` имеет приоритет над `width` в стилях. По умолчанию
 панель берёт ширину поля. При `false` она подстраивается под содержимое с шириной
 поля в качестве минимума. Локальный prop имеет приоритет над `ConfigProvider.popupMatchSelectWidth`.

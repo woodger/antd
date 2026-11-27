@@ -186,7 +186,7 @@ undefined наследует `ConfigProvider.prefixCls`. CSS scope раздел�
 стрелку и очистку. Поддерживаются component algorithm, custom CSS prefix, нули и
 явный undefined. Смена темы сохраняет DOM поля/списка, ввод, выделение, фокус и
 FormData. Native-only темы сохраняют прежнее оформление; style относится к внешней
-обёртке. Подробности — в [описании темы](../theme-context.md#токены-select).
+обёртке. Подробности — в [описании темы](../theme-context.md#select-tokens).
 
 GetPopupContainer получает внутренний корень `.ant-select`. Локальная функция
 перекрывает ConfigProvider.getPopupContainer; undefined наследует provider.
@@ -362,7 +362,7 @@ Native value keys и оформление пунктов сохранены. Gro
 
 ## Popup и семантическое оформление
 
-Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Вложенная панель наследует [слой владельца](../theme-context.md#layering-nested-panels).
 
 `popupRender` — обычная чистая функция, получающая origin-menu Snippet. Она
 может вернуть его, scalar/array или Snippet с origin-menu аргументом:

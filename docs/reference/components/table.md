@@ -962,7 +962,7 @@ Native default size по-прежнему наследует `componentSize` (`m
 `stickyScrollBarBg` и `stickyScrollBarBorderRadius` оформляют бегунок
 дополнительной полосы. Итоговые ячейки наследуют цвета и отступы таблицы.
 Сравнение с эталоном, границы покрытия и наблюдение root style описаны в
-[справочнике темы](../theme-context.md#тема-table).
+[справочнике темы](../theme-context.md#table-theme).
 
 ## Семантическое оформление
 
@@ -1368,7 +1368,7 @@ Snippet верхнего уровня получает операции пане
 `popupRender` получает snippet исходного содержимого.
 
 Встроенная панель и пользовательская панель фильтра наследуют
-[слой Dropdown](../theme-context.md#уровни-вложенных-панелей).
+[слой Dropdown](../theme-context.md#layering-nested-panels).
 
 `filterIcon` принимает строку, число, snippet или вложенный массив.
 Snippet верхнего уровня получает признак активного фильтра.

@@ -1,12 +1,13 @@
 # Timeline
 
-Timeline использует общий renderer Steps с type=dot, как Ant Design.
-По умолчанию orientation=vertical, variant=outlined, mode=start. Корень —
-пассивный ol/li без кнопок выбора, current-step ARIA и локализованных статусов
-Steps. Class/rootClassName, нативные атрибуты и bind:nativeElement относятся к ol.
-Title и content допускают блоковые Snippet; input/links внутри content сохраняют
-нативную клавиатуру. При keyed reverse сохраняются тот же DOM, value и фокус;
-при unmount активный control освобождает фокус к соседнему доступному элементу.
+Timeline uses the shared Steps renderer with type=dot, as in Ant Design. The
+defaults are orientation=vertical, variant=outlined, and mode=start. The root
+is a passive ol and li structure without selection buttons, current-step ARIA,
+or localized Steps statuses. Class, rootClassName, native attributes, and
+bind:nativeElement apply to the ol. Title and content accept block snippets.
+Inputs and links inside content retain native keyboard behavior. Keyed
+reversal preserves DOM, value, and focus. On unmount, focus from the active
+control moves to an available neighbor.
 
 ```svelte
 <Timeline titleSpan="80px" items={[
@@ -16,74 +17,70 @@ Title и content допускают блоковые Snippet; input/links вну
 ]} />
 ```
 
-Items поддерживают key/title/content/icon/loading/color/placement, class/style и
-локальные semantic classNames/styles. Title/content/icon принимают текст, число,
-boolean или Snippet. Ноль отображается; boolean создаёт присутствующий пустой
-контент. React Timeline.Item был только JSX sugar без
-собственного runtime; в Svelte данные задаются items, отдельный пустой компонент
-не экспортируется. Для контроля сохранения state используйте стабильные key.
+Items support key, title, content, icon, loading, color, placement, class,
+style, and local semantic classNames and styles. Title, content, and icon
+accept text, numbers, booleans, or snippets. Zero is visible, and a boolean is
+present but empty. React Timeline.Item served as JSX shorthand without its
+own runtime. In Svelte, supply items directly. Use stable keys to control
+state preservation.
 
-Mode=start/end/alternate; item.placement имеет приоритет над mode.
-Alternate назначает сторону до reverse. Даже при mode=start/end
-vertical использует двухколоночный layout, если есть хотя бы один truthy title;
-число 0 само по себе этот layout не включает. TitleSpan — число долей из 24 либо
-строка CSS (100px/25%); в mode=alternate игнорируется. Его вычисленная переменная
-имеет приоритет над тем же ключом в styles.root/style, как в upstream.
+Mode accepts start, end, or alternate. Item.placement takes precedence over mode.
+Alternate assigns sides before reverse. In vertical orientation, at least
+one truthy title selects a two-column layout even in start or end mode.
+Zero alone leaves the single-column layout. TitleSpan accepts a number out of 24
+or a CSS string such as 100px or 25%. Alternate mode ignores it. Its computed
+variable takes priority over the same key in styles.root or style as upstream does.
 
-Loading задаёт process и добавляет spinner только при falsy icon;
-остальные элементы имеют finish. Ожидание показывается отдельным loading-элементом
-в items. Reverse разворачивает весь массив событий.
-В reverse линия наследует статус предыдущего события, иначе — следующего.
+Loading sets process and adds a spinner only when icon is falsy. Other items
+use finish. Show a pending event through a separate loading item. Reverse reverses
+the whole events array. The rail inherits the previous event's status with
+reverse, and the next event's status otherwise.
 
-Preset colors — blue/red/green/gray; произвольный CSS color задаёт переменную
-item icon, item.style перекрывает её. ClassNames/styles имеют root/item/itemWrapper/
-itemIcon/itemSection/itemHeader/itemTitle/itemContent/itemRail; принимают объект
-или функцию от {props} с преобразованными items. Локальные item.classNames/styles
-используют имена root/wrapper/icon/section/header/title/content/rail. Общие стили
-перекрываются локальными, item.style — последний; корневой style перекрывает
-styles.root до применения titleSpan. Tail/dot/spacing связаны с токенами темы,
-включая dark/compact и RTL.
+Preset colors are blue, red, green, and gray. A custom CSS color sets the item
+icon variable. Item.style can override it. ClassNames and styles use root,
+item, itemWrapper, itemIcon, itemSection, itemHeader, itemTitle, itemContent,
+and itemRail. They accept an object or a function of { props } with transformed
+items. Local item.classNames and styles use root, wrapper, icon, section, header,
+title, content, and rail. Local styles override shared styles, with item.style
+last. Root style overrides styles.root before titleSpan applies. Tail, dot,
+and spacing use theme tokens, including dark and compact modes and RTL.
 
-ConfigProvider.timeline задаёт общие class/style/classNames/styles. Классы config
-и local накапливаются; root styles идут в порядке config.styles.root → config.style
-→ local styles.root → local style, затем применяется titleSpan. Item-specific
-styles сохраняют приоритет. Callbacks используют те же native props с разрешёнными
-mode/orientation/variant, преобразованными items и прежним reverse=false.
-Undefined наследует timeline-record, любой собственный объект, включая {}, заменяет его.
-Обновление config/props сохраняет ol; соседний provider остаётся изолированным.
-Сверка: [24 исходных случая и 4 обновления](../../../tests/browser/fixtures/ant-design-timeline-config-reference.json),
-[браузер](../../../tests/browser/timeline/timeline-config.spec.ts),
-[публичные типы и SSR](../../../tests/package/timeline/timeline-config.ssr.test.ts), `?fixture=timeline-config`.
+ConfigProvider.timeline sets shared class, style, classNames, and styles. Provider
+and local classes accumulate. Root style order is config.styles.root, config.style,
+local styles.root, local style, then titleSpan. Item-specific styles retain
+their priority. Callbacks receive the same native props, resolved mode,
+orientation, and variant, transformed items, and the existing reverse=false.
+Undefined inherits the timeline record. Any local object, including {}, replaces
+it. Configuration and prop updates preserve the ol, and sibling providers stay
+isolated. The fixture is `?fixture=timeline-config`. [24 upstream cases and four updates](../../../tests/browser/fixtures/ant-design-timeline-config-reference.json) ·
+[Browser](../../../tests/browser/timeline/timeline-config.spec.ts) · [Public types and SSR](../../../tests/package/timeline/timeline-config.ssr.test.ts)
 
-Horizontal сохраняет поведение исходных Steps: ниже xs=576 он получает класс
-ant-steps-vertical, но явный ant-timeline-horizontal остаётся. Это отличается от
-согласованного v1-порога самостоятельного Steps (532px); базовые Steps не меняются.
-SSR не измеряет DOM/viewport и оставляет объявленную ориентацию.
+Horizontal preserves upstream Steps behavior. Below xs=576, it gets
+ant-steps-vertical while keeping the explicit ant-timeline-horizontal class.
+Standalone Steps keeps its agreed v1 threshold of 532px. SSR preserves the
+declared orientation and defers DOM and viewport measurements.
 
-Локальный prefixCls меняет root и Timeline item/state/color classes; пустая строка
-наследует ConfigProvider.prefixCls (по умолчанию ant-timeline). Вложенный Steps
-отдельно наследует общий prefix; локальный Timeline.prefixCls на него не влияет.
-CSS variables
-Timeline/Steps и marker сохраняют прежние имена. Соседние показатели изолированы,
-включая совпадение prefix с ant-timeline-item/ant-timeline-css-var. Обновление
-prefix сохраняет ol, theme/semantics, titleSpan и назначение placement до reverse.
-Рецепт timeline-prefix воспроизводит 43 исходных правила CSS data module;
-fallback variables не перекрывают прежние adaptive theme defaults.
-Сверка: [28 исходных случаев и 4 обновления](../../../tests/browser/fixtures/ant-design-timeline-prefix-reference.json),
-[CSS и item classes](../../../src/lib/timeline/timeline-prefix.test.ts),
-[браузер](../../../tests/browser/timeline/timeline-prefix.spec.ts),
-[публичный пакет и SSR](../../../tests/package/timeline/timeline-prefix.ssr.test.ts), `?fixture=timeline-prefix`.
+Local prefixCls changes the root and Timeline item, state, and color classes.
+An empty string inherits ConfigProvider.prefixCls, giving ant-timeline by
+default. Nested Steps inherits the shared prefix independently of the local
+Timeline prefix. Timeline and Steps CSS variable names and markers stay in
+place. Neighboring timelines stay isolated, including prefix collisions with
+ant-timeline-item or ant-timeline-css-var. A prefix change preserves the ol,
+theme, semantics, titleSpan, and placement assignment before reverse.
+Timeline-prefix reproduces the 43 upstream rules as a CSS data module.
+Fallback variables preserve earlier adaptive theme defaults. The fixture is
+`?fixture=timeline-prefix`. [28 upstream cases and four updates](../../../tests/browser/fixtures/ant-design-timeline-prefix-reference.json) ·
+[CSS and item classes](../../../src/lib/timeline/timeline-prefix.test.ts) · [Browser](../../../tests/browser/timeline/timeline-prefix.spec.ts) · [Public package and SSR](../../../tests/package/timeline/timeline-prefix.ssr.test.ts)
 
-Source `theme.components.Timeline` подготавливает шесть defaults для tail/dot/spacing
-и поддерживает aliases, отдельные algorithms, CSS prefix/hash и нули/undefined.
-На общем корне aliases Timeline применяются после Steps, как в upstream;
-размеры иконок Steps и размеры точек Timeline сохраняют отдельные переменные.
-Styles.root/style перекрывают tokens, а titleSpan по-прежнему применяется последним.
-Эталонные метрики обеих ориентаций и обновления темы проверяются также в
-`?fixture=steps-theme`.
+Upstream `theme.components.Timeline` prepares six defaults for tail, dot, and
+spacing and supports aliases, separate algorithms, CSS prefixes and hashes,
+and zero and undefined values. On the shared root, Timeline aliases apply after
+Steps as in upstream. Icon sizes in Steps and dot sizes in Timeline retain
+separate variables. Styles.root and style override tokens, and titleSpan remains
+last. The `?fixture=steps-theme` checks reference metrics for both orientations
+and theme updates.
 
-Фикстура — ?fixture=timeline. Engine/SSR/Chromium
-проверяют aliases, порядок/статусы, геометрию titleSpan, темы/RTL, сохранение поля
-и фокуса, а также production hydration. Рецепт timeline воспроизводит 43 правила
-из того же закреплённого CSS-архива; общие Steps не дублируются.
-
+The main fixture is `?fixture=timeline`. Engine, SSR, and Chromium checks cover
+aliases, order and statuses, titleSpan geometry, themes and RTL, preserved field
+state and focus, and production hydration. The timeline recipe reproduces 43
+rules from the pinned CSS archive and shares the existing Steps rules.

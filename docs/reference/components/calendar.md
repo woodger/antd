@@ -52,7 +52,7 @@ CalendarCellRenderInfo — Svelte snippet исходного rc-picker inner. Da
 
 Locale берётся из ConfigProvider.locale.calendar, независимо от DatePicker.
 Встроенные enUS/ruRU и словари Ant Design включают Calendar. По умолчанию
-действует ruRU. [Подключение локали](../themes.md#язык-интерфейса)
+действует ruRU. [Подключение локали](../themes.md#interface-language)
 Словарь Calendar в ConfigProvider заменяется целиком, как DatePicker. Локальный
 Calendar.locale объединяет поля lang с базовым словарём и контекстом. Загрузка
 остальных Day.js locales остаётся у потребителя.

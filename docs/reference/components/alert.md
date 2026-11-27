@@ -85,7 +85,7 @@ showIcon/boolean closable. Root style priority: provider.styles.root → provide
 root, включая отсоединённый узел после закрытия; nativeElement отражает текущий DOM.
 Обновления оформления сохраняют DOM, поля, focus и selection.
 
-Все четыре [токена Alert](../theme-context.md#токены-alert), aliases и
+Все четыре [токена Alert](../theme-context.md#alert-tokens), aliases и
 component algorithm применяются перед semantic/user styles. Source theme использует
 fitted viewBox статусных иконок из icons-svg 4.6.0; legacy сохраняет прежний viewport.
 На ширине

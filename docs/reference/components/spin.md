@@ -93,7 +93,7 @@ PrefixCls меняет BEM classes; undefined/пустая строка насл
 (по умолчанию ant-spin). CSS template из
 35 правил закреплённого архива сохраняет namespace переменных и изолирует root defaults.
 Настройки токенов, алиасов, алгоритма и CSS-переменных описаны в разделе
-[Токены Spin](../theme-context.md#токены-spin).
+[Токены Spin](../theme-context.md#spin-tokens).
 Сверка 49 Source-профилей и auto timeline принадлежит библиотеке; примеры потребителя
 не заменяют эти проверки. Сохранённые native delay/inert/focus/ARIA и reduced motion — явные
 отличия от React. Общий ConfigProvider prefix поддержан; React development warnings

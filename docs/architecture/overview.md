@@ -1,51 +1,47 @@
-# Архитектура @woodger/antd
+# @woodger/antd architecture
 
-Самостоятельный репозиторий библиотеки Ant Design для Svelte 5 и TypeScript.
-Исходники приложения-потребителя для разработки и проверки библиотеки не нужны.
+This repository contains a standalone Ant Design library for Svelte 5 and TypeScript.
+You can develop and test the library independently of the consuming application.
 
-## Структура
+## Structure
 
 ```text
-src/lib/       компоненты и общие подсистемы библиотеки
-tests/package/ SSR-проверки публичного собранного пакета
-tests/browser/ браузерные проверки компонентов и собственные фикстуры
-tests/reference/ общие эталонные данные для тестов
-tools/         реестр покрытия и извлечение CSS
-docs/          документация, политики и данные реестра
-dist/          результат svelte-package; не хранится в Git
-.upstream/     локальный эталон Ant Design и npm-архивы; не хранится в Git
+src/lib/        library components and shared subsystems
+tests/package/  SSR checks for the built public package
+tests/browser/  component browser checks and their fixtures
+tests/reference/ shared reference data for tests
+tools/          coverage registry and CSS extraction
+docs/           documentation, policies, and registry data
+dist/           svelte-package output, excluded from Git
+.upstream/      local Ant Design reference and npm archives, excluded from Git
 ```
 
-Рядом с Svelte-компонентами лежат их типы, внутренние модули и unit-тесты.
-Компоненты `DatePicker`, `RangePicker`, `TimePicker` и
-`TimeRangePicker` делят ввод и панели в `picker/`. Общие механизмы с несколькими
-потребителями находятся в каталогах по назначению, например `theme/`, `popup/`
-и `virtual-list/`.
+Svelte components sit alongside their types, internal modules, and unit tests.
+`DatePicker`, `RangePicker`, `TimePicker`, and `TimeRangePicker` share input and panel
+implementations in `picker/`. Modules used by multiple components live in directories
+named for their role, such as `theme/`, `popup/`, and `virtual-list/`.
 
-Проверки в `tests/package` и спеки в `tests/browser` тоже сгруппированы по
-компонентам и подсистемам. Корнем браузерного Vite-стенда служит
-`tests/browser/fixtures`.
+Package checks in `tests/package` and browser specs in `tests/browser` also follow component
+and subsystem boundaries. The browser Vite test app uses `tests/browser/fixtures` as its root.
 
-В `package.json` объявлены корневой вход компонентов и типов, словари `locale/*`
-и `styles.css`. Реестр переноса хранится в репозитории для CLI и проверок.
-Компоненты не используют API SvelteKit, маршруты или прикладные модели.
+`package.json` declares the root entry point for components and types, the `locale/*` dictionaries,
+and `styles.css`. The porting registry lives in this repository for CLI commands and checks.
+Library components are independent of SvelteKit APIs, application routes, and application models.
 
-В Tabs разделение соответствует исходным Tabs/TabNavList: `Tabs.svelte` владеет
-выбором и панелями, `TabsNav.svelte` — заголовками, индикатором, overflow и
-клавиатурой. Приватный API навигации позволяет вернуть фокус из скрываемой панели
-в заголовок; само содержимое панелей не зависит от экземпляра навигации.
+Tabs follows upstream's split between Tabs and TabNavList. `Tabs.svelte` owns selection and panels,
+and `TabsNav.svelte` owns headers, the indicator, overflow, and keyboard interaction. The private
+navigation API lets callers restore focus from a panel being hidden to its header. Panel content stays
+independent of the navigation instance.
 
-Реестр проверяет локальные файлы относительно этого репозитория. Стабильные
-ссылки `integration:` описывают подтверждения, принадлежащие потребителю;
-их конкретные пути и каталог браузерных фикстур принадлежат его репозиторию.
-Потребитель проверяет эти ссылки через метаданные установленного npm-пакета.
-Это не подтверждает запуск тестов; тестовые команды выполняются отдельно.
+The registry resolves local files relative to this repository. Stable `integration:` references
+identify evidence owned by consumers. Their file paths and browser fixture directories belong to
+the consumer's repository. Consumers validate these references against the installed npm package
+metadata. Test execution is checked separately.
 
-Поведение компонентов в браузере проверяется собственным Playwright/Vite-стендом
-библиотеки. Он импортирует публичный собранный пакет и собственные test fixtures.
-Прикладные модели, галерея и её сценарии остаются у потребителя. Границы импортов
-тестового стенда защищает `tools/test-boundaries.test.mjs`.
+The library tests component behavior in its own Playwright and Vite test app, which imports the
+built public package and its own fixtures. The consumer owns application models, the gallery,
+and its scenarios. `tools/test-boundaries.test.mjs` enforces the test app's import boundaries.
 
-`src/lib/architecture.test.ts` защищает независимость runtime-импортов.
-Направление зависимостей описано в [UI Architecture](ui.md), команды —
-в [readme](../../readme.md), правила — в [политиках](../policy/index.md).
+`src/lib/architecture.test.ts` enforces the runtime import boundaries. See
+[UI architecture](ui.md) for dependency direction, the [readme](../../readme.md) for commands,
+and the [development policies](../policy/index.md) for repository rules.

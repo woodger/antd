@@ -1,7 +1,7 @@
 # TimePicker
 
 TimePicker позволяет выбрать время.
-Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Вложенная панель наследует [слой владельца](../theme-context.md#layering-nested-panels).
 
 ```svelte
 <script lang="ts">
@@ -109,7 +109,7 @@ Mask format, React diagnostics и полный rc-trigger/
 motion API пока не перенесены. Настройки `popupAlign` и `builtinPlacements`
 общие для пикеров даты и времени. [Положение панели](./date-picker.md#положение-панели)
 Подписи и формат времени берутся из словаря в `ConfigProvider.locale`.
-[Подключение локали](../themes.md#язык-интерфейса)
+[Подключение локали](../themes.md#interface-language)
 Диапазон экспортируется как TimeRangePicker.
 Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream.
 

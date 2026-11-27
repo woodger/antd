@@ -1,42 +1,44 @@
-# Индикатор Anchor после изменения стилей
+# Anchor indicator after a style change
 
-> Type: Reference. Наблюдение Ant Design 6.6.8 для отдельного разбора upstream behavior.
+> Type: Reference. This Ant Design 6.6.8 observation records upstream behavior
+> for independent analysis.
 
-Эталон — commit 984592267de88fbf9cdaecc96a56629e721c709d и неизменённый
-`package/dist/antd.min.js` из закреплённого npm-архива. SHA-256 и фактические
-замеры сохранены в [raw observation](../../tests/browser/fixtures/ant-design-anchor-config-layout-observation.json).
-React и ReactDOM — 18.3.1; theme.cssVar включён, motion выключен.
+The reference uses commit 984592267de88fbf9cdaecc96a56629e721c709d and the unchanged
+`package/dist/antd.min.js` from the pinned npm archive. The raw observation
+records the SHA-256 and actual measurements. React and ReactDOM are at 18.3.1.
+`theme.cssVar` is enabled and motion is disabled. [Raw observation](../../tests/browser/fixtures/ant-design-anchor-config-layout-observation.json)
 
-У вертикального Anchor два пункта, affix=false, showInkInFixed=true. Массив items
-и функция getCurrentAnchor, возвращающая второй href, остаются теми же.
-Меняется только ConfigProvider.anchor.styles.itemTitle: paddingTop/paddingBottom
-с 4px на 20px.
+The vertical Anchor has two items, `affix=false`, and `showInkInFixed=true`.
+The items array and the getCurrentAnchor function that returns the second href
+stay the same. Only ConfigProvider.anchor.styles.itemTitle changes, moving
+paddingTop and paddingBottom from 4px to 20px.
 
-| Замер | Padding 4px | Padding 20px |
+| Measurement | Padding 4px | Padding 20px |
 | --- | --- | --- |
-| clientHeight активной ссылки | 30px | 62px |
-| offsetTop активной ссылки | 42px | 74px |
-| Computed height индикатора | 30px | 30px |
-| Computed top индикатора | 57px | 57px |
+| Active link clientHeight | 30px | 62px |
+| Active link offsetTop | 42px | 74px |
+| Computed indicator height | 30px | 30px |
+| Computed indicator top | 57px | 57px |
 
-Правильные новые размеры по собственному алгоритму Anchor — height=62px и
-top=105px. Upstream effect, вызывающий updateInk, зависит от direction,
-getCurrentAnchor, зарегистрированных href и activeLink; изменения styles или
-classNames не запускают его. Это дефект синхронизации, а не правило приоритета
-стилей. Исходные результаты оставлены без исправления.
+Anchor's own algorithm gives an updated height of 62px and top of 105px.
+The upstream effect that calls updateInk depends on direction, getCurrentAnchor,
+registered hrefs, and activeLink. A styles or classNames change leaves the
+effect idle, so the indicator stays out of sync. The raw reference preserves the
+original result.
 
-Svelte пересчитывает top/height или left/width после изменения semantic styles
-и classes. Это также сохраняет координаты при обновлении CSS-строки indicator:
-Svelte заменяет атрибут style целиком, включая прежние императивные координаты.
-Эти четыре координаты принадлежат runtime, как в исходном updateInk; цвет и
-остальное оформление остаются пользовательскими. DOM ссылок и индикатора,
-фокус, href/history и callbacks сохраняются.
+Svelte recomputes top and height or left and width after a change to semantic
+styles and classes. It also preserves the coordinates when the indicator's
+CSS string changes. Svelte replaces the whole style attribute, including the
+previously assigned imperative coordinates. As in upstream updateInk, the
+runtime owns these four coordinates. The color and other styles remain
+user-controlled. Link and indicator DOM, focus, href and history, and callbacks
+keep their behavior.
 
-[Обычная reference matrix](../../tests/browser/fixtures/ant-design-anchor-config-reference.json)
-содержит независимые начальные состояния нового Anchor; их геометрия сравнивается
-с исходником точно. [Browser tests](../../tests/browser/anchor/anchor-config.spec.ts)
-отдельно проверяют корректные обновления provider/local styles у вертикального
-и горизонтального Anchor. Reference не выдаёт исправленные Svelte обновления
-за поведение исходного Ant Design. Изменения размеров от внешнего CSS без
-изменения semantic props, а также resize не входят в это исправление;
-ResizeObserver не добавляется.
+The standard reference matrix contains independent initial states for new Anchor
+instances and compares their geometry exactly with upstream. Browser tests
+separately check provider and local style updates for vertical and horizontal
+Anchor. The recorded upstream behavior stays separate from the corrected updates.
+This fix covers semantic prop changes. Size changes from external CSS with
+unchanged semantic props and window resize remain outside its scope, and it
+adds no ResizeObserver. [Reference matrix](../../tests/browser/fixtures/ant-design-anchor-config-reference.json) ·
+[Browser tests](../../tests/browser/anchor/anchor-config.spec.ts)

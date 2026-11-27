@@ -3,7 +3,7 @@
 Cascader позволяет выбрать путь в иерархическом списке; CascaderPanel показывает
 те же варианты без всплывающей панели. Публичные типы и значения по умолчанию —
 в [cascader.types.ts](../../../src/lib/cascader/cascader.types.ts).
-Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Вложенная панель наследует [слой владельца](../theme-context.md#layering-nested-panels).
 
 ```svelte
 <script lang="ts">

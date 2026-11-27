@@ -10,37 +10,36 @@
 </BadgeRibbon>
 ```
 
-BadgeRibbon — отдельный Svelte export для Badge.Ribbon 6.6.8. Обёртка содержит
-children, затем абсолютную ленту с text и декоративным уголком. Placement по
-умолчанию end; start/end следуют RTL. Color принимает 13 preset colors или
-произвольный CSS-цвет. Для preset лента и уголок используют палитру темы;
-произвольный color задаёт background ленты и color уголка независимо от style.
-Поэтому изменение фона через style не перекрашивает уголок.
+BadgeRibbon is the separate Svelte export for Badge.Ribbon in 6.6.8. The wrapper
+contains children followed by the absolutely positioned ribbon with text and a
+decorative corner. Placement defaults to end. Start and end follow RTL. Color
+accepts 13 preset colors or an arbitrary CSS color. A preset uses the theme palette
+for the ribbon and its corner. A custom color sets the ribbon background and corner
+color independently of style. Overriding the background through style leaves the
+corner color in place.
 
-Text и children принимают строку, число, null/boolean или Snippet; boolean не
-выводится, 0 сохраняется. Snippets передаются без дополнительной обёртки и
-сохраняют свои controls и события. Изменение placement/color/темы не пересоздаёт
-их DOM, состояние и фокус. Собственных остановок Tab, live-region или
-автоматического фокуса Ribbon не добавляет.
+Text and children accept a string, number, null, boolean, or snippet. Booleans
+render no content and 0 remains visible. Snippets render without an extra wrapper
+and retain their controls and events. Placement, color, and theme updates preserve
+their DOM, state, and focus. Ribbon adds no Tab stops, live region, or autofocus.
 
-Class/style относятся к индикатору ленты, rootClassName — к обёртке.
-ClassNames/styles принимают slots root/content/indicator либо callback
-`({ props }) => slots`; props содержит разрешённый placement. CSS styles
-задаются строками. ConfigProvider.ribbon наследует class/style/classNames/styles;
-локальный объект настройки во вложенном provider заменяет родительский.
-При первом выводе indicator действуют: color → context styles.indicator → context style →
-local styles.indicator → local style. Остальные slots объединяют context и local.
-Затем, как React, Ribbon меняет только изменившиеся CSS-свойства. Например,
-обновление color переписывает background, не применяя заново неизменённый
-background-color из semantic styles. То же правило действует при удалении свойств.
-Настройки `theme.components.Badge` применяются также к Ribbon, включая aliases,
-algorithm, compact/dark и custom cssVar.prefix.
+Class and style apply to the ribbon indicator, and rootClassName applies to the
+wrapper. ClassNames and styles accept root, content, and indicator slots or a
+`({ props }) => slots` callback with resolved placement. Styles are CSS strings.
+ConfigProvider.ribbon inherits class, style, classNames, and styles. A local
+configuration object on a nested provider replaces the parent.
 
-`bind:nativeElement` возвращает div обёртки вместо React RibbonRef и очищается
-при unmount. Локальный prefixCls меняет DOM-классы и shared reset; геометрия,
-как в исходнике, привязана к ConfigProvider.prefixCls. Общий prefix меняет также
-wrapper/indicator/content/corner selectors; локальный prefix отдельно эту связь не меняет.
-44 эталона — [официальный UMD](../../../tests/browser/fixtures/ant-design-badge-ribbon-reference.json),
-проверки — [browser](../../../tests/browser/badge/badge-ribbon.spec.ts) и
-[SSR](../../../tests/package/badge/badge-ribbon.ssr.test.ts), фикстура — `?fixture=badge-ribbon`.
+The indicator's initial style order is color, provider styles.indicator,
+provider style, local styles.indicator, then local style. Other slots merge
+provider and local settings. Subsequent updates affect only changed CSS properties,
+as in React. For example, changing color replaces background while leaving an
+unchanged semantic background-color out of the update. The same rule applies to
+property removal. Ribbon also applies `theme.components.Badge`, including aliases,
+algorithms, compact and dark themes, and a custom cssVar.prefix.
 
+`bind:nativeElement` exposes the wrapper div and clears on unmount. This is the
+Svelte counterpart to React RibbonRef. Local prefixCls changes DOM classes and
+the shared reset. Geometry follows ConfigProvider.prefixCls as in upstream. The
+shared prefix also changes wrapper, indicator, content, and corner selectors.
+A local prefix keeps that relationship in place. The fixture is `?fixture=badge-ribbon`.
+[44 official UMD cases](../../../tests/browser/fixtures/ant-design-badge-ribbon-reference.json) · [Browser tests](../../../tests/browser/badge/badge-ribbon.spec.ts) · [SSR tests](../../../tests/package/badge/badge-ribbon.ssr.test.ts)

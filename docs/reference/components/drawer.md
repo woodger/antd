@@ -90,7 +90,7 @@ top/bottom. Начальный `defaultSize` применяется, пока в
 
 `zIndex` задаёт слой панели и базу для вложенных диалогов и popup.
 Явный 0 применяется к Drawer.
-[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+[Уровни вложенных панелей](../theme-context.md#layering-nested-panels)
 
 Пользовательское закрытие сначала записывает open=false в binding, затем
 вызывает onClose(Event) один раз: click для кнопки, cancel для Escape,
@@ -238,7 +238,7 @@ Button и Input внутри сохраняют собственные tokens. �
 задаёт толщину границы для изменения размера.
 Обновление темы и inherit reset сохраняют модальность, DOM, draft, selection
 и focus, в том числе после переноса через getContainer. Оформление по умолчанию
-сохраняется. [Сверка с UMD и проверки](../theme-context.md#проверки-диалогов-и-уведомлений)
+сохраняется. [Сверка с UMD и проверки](../theme-context.md#dialog-and-notification-checks)
 учитывают типографику внешнего ConfigProvider: в React она задана на статическом
 host через публичный theme.useToken(), в Svelte — на DOM-контейнере provider.
 

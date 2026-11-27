@@ -1,93 +1,90 @@
-# Политика скриптов и сборки
+# Scripts and build policy
 
-> Type: Policy. Этот документ задаёт ограничения на npm scripts, SvelteKit/Vite
-> config, test pipeline и сборку npm-пакета.
+> Type: Policy. This document defines constraints for npm scripts, SvelteKit and Vite
+> configuration, the test pipeline, and building the npm package.
 
-## Поддерживаемый контур
+## Supported commands
 
-Команды определены в локальном `package.json`:
+The local `package.json` defines these commands.
 
-- `npm run build` — сборка npm-пакета в `dist` через `svelte-package`;
-- `npm run dev` — watch-сборка пакета;
-- `npm run lint` — Oxlint для исходников, инструментов и конфигурации;
-- `npm run check` — Svelte/TypeScript check;
-- `npm test` — Vitest для компонентов и инструментов;
-- `npm run cli -- ...` — служебный CLI через `icore`.
+- `npm run build` uses `svelte-package` to build the npm package into `dist`.
+- `npm run dev` builds the package in watch mode.
+- `npm run lint` runs Oxlint on source code, tools, and configuration.
+- `npm run check` checks Svelte and TypeScript.
+- `npm test` runs Vitest for components and tools.
+- `npm run cli -- ...` runs the development CLI through `icore`.
 
-В CLI собраны проверки собранного пакета и инструменты переноса.
+The CLI provides package checks and porting tools.
 
-- `npm run cli -- check tests` — Svelte/TypeScript check тестов и фикстур;
-- `npm run cli -- test package` — сборка и SSR-проверки публичного пакета;
-- `npm run cli -- test browser` — Playwright на Vite-стенде.
+- `npm run cli -- check tests` checks Svelte and TypeScript in tests and fixtures.
+- `npm run cli -- test package` builds the public package and runs its SSR checks.
+- `npm run cli -- test browser` runs Playwright against the Vite test app.
 
-Типизация фикстур, package-тесты и браузерный стенд читают текущий `dist`.
-Их команды собирают пакет
-перед проверкой; это зависимые шаги. Стенд работает на порту `4175`, не требует
-homepage и не входит в npm-архив. Playwright, его lifecycle и browser artifacts
-настраиваются в `playwright.config.ts`.
+Fixture type checking, package tests, and the browser test app read the current `dist`.
+Their commands build the package before running checks that depend on it. The test app
+runs on port `4175` independently of the homepage. The npm archive excludes the test app.
+`playwright.config.ts` configures Playwright, its lifecycle, and its browser artifacts.
 
-`registry check`, `registry report`, `registry show <component>` и `css`
-обслуживают реестр и vendor CSS.
-`npm run cli -- --help` выводит команды и параметры. Их формат описан в
-[справочнике переноса](../reference/ant-design-porting/readme.md).
-Для этих команд не нужны исходники приложения-потребителя.
+`registry check`, `registry report`, `registry show <component>`, and `css` maintain the
+registry and vendored CSS. `npm run cli -- --help` lists commands and options. These commands
+run independently of the consuming application's source code. [Porting reference](../reference/ant-design-porting/readme.md)
 
-## Изменение scripts
+## Changing scripts
 
-Scripts и config меняются только когда задача прямо требует новый workflow или
-существующий workflow не может корректно выполнить свой contract.
+Change scripts or configuration only when a task explicitly requires a new workflow
+or the existing workflow cannot meet its contract.
 
-Без явного основания запрещено:
+The following require explicit justification.
 
-- добавлять `pre*`/`post*` hooks;
-- менять порядок существующих шагов;
-- объединять независимые проверки через `&&`;
-- добавлять автоматическое удаление `build`, `.svelte-kit` или других каталогов;
-- менять test environment или include pattern;
-- отключать SSR, diagnostics или assertion requirements;
-- заменять JavaScript/framework behavior shell-specific workaround;
-- добавлять OS-specific command в поддерживаемый script.
+- Adding `pre*` or `post*` hooks
+- Changing the order of existing steps
+- Joining independent checks with `&&`
+- Automatically deleting `build`, `.svelte-kit`, or other directories
+- Changing the test environment or include pattern
+- Disabling SSR, diagnostics, or assertion requirements
+- Replacing JavaScript or framework behavior with a shell-specific workaround
+- Adding an OS-specific command to a supported script
 
-Новый script должен иметь стабильную developer/CI ответственность, а не быть
-одноразовым alias локальной команды.
+Add a new script only for a stable responsibility in development or CI. Use a local
+command for a one-time task.
 
-## Generated и build output
+## Generated files and build output
 
-- `.svelte-kit` создаётся SvelteKit tooling и не является source.
-- `dist` создаётся `svelte-package` и не редактируется вручную.
-- Stale artifact не исправляется изменением исходного кода или постоянным
-  `clean` hook без доказанной причины.
-- Проверка изменённого source не опирается на старый `build`.
+- SvelteKit tooling generates `.svelte-kit`.
+- `svelte-package` generates `dist`. Regenerate it to make changes.
+- Address stale artifacts at their source. Changes to project code or a permanent
+  `clean` hook require a demonstrated cause.
+- Use a fresh build to validate changed source.
 
-Удаление конкретного generated output допустимо как явная локальная операция,
-когда это требуется диагностикой, но не должно незаметно становиться частью
-package script.
+When diagnostics require removing a specific generated output, do so as an explicit
+local operation. Adding that operation to a package script requires an explicit change.
 
-## Конфигурационные файлы
+## Configuration files
 
-`svelte.config.js`, `vite.config.ts`, `tsconfig.json` и package metadata являются
-runtime/build wiring. Изменение alias, adapter, rune mode, test environment,
-compiler option или plugin рассматривается как compatibility-sensitive.
+`svelte.config.js`, `vite.config.ts`, `tsconfig.json`, and package metadata connect
+the runtime and build. Changes to aliases, adapters, rune mode, test environments,
+compiler options, or plugins are compatibility-sensitive.
 
-Нельзя менять config для подавления ошибки приложения или проблемы окружения.
+Resolve application or environment issues at their source. Keep configuration changes
+tied to their intended contract.
 
 ## Environment
 
-Build-time и runtime variables не подменяются package scripts. Их contract
-задают `.env.example`, SvelteKit env imports и deployment environment.
+`.env.example`, SvelteKit environment imports, and the deployment environment define
+build-time and runtime variables. Package scripts must respect those contracts.
 
-Секрет нельзя записывать в script, command example с реальным значением или
-публичную environment variable.
+Keep secrets out of scripts, command examples that contain real values, and public
+environment variables.
 
-## Проверка
+## Validation
 
-При изменении scripts/config нужно выполнить каждый затронутый command отдельно
-и проверить:
+After changing scripts or configuration, run each affected command separately and
+verify the following.
 
-- exit status;
-- отсутствие новых side effects;
-- SSR/build output;
-- совместимость local и production workflows;
-- отсутствие случайного расширения lint/test scope.
+- Exit status
+- Whether it introduces new side effects
+- SSR and build output
+- Compatibility with local and production workflows
+- Whether lint or test scope expanded unintentionally
 
-Если команда не запускалась, это указывается явно.
+Explicitly identify any command that you did not run.

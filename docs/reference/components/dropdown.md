@@ -151,7 +151,7 @@ placement. `offset` и `targetOffset` принимают числа и проц�
 Поверхность использует native popover, сохраняет контекст темы и работает внутри Modal.
 Слой вложенной панели берётся из контекста, а целочисленный `z-index` в
 `styles.root` задаёт явное значение.
-[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+[Уровни вложенных панелей](../theme-context.md#layering-nested-panels)
 GetPopupContainer выбирает локальную функцию или ConfigProvider fallback;
 undefined наследует provider. Функция вызывается с первого открытия либо при
 подготовке скрытой панели через `forceRender`.

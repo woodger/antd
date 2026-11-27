@@ -1,9 +1,8 @@
-# Пустые состояния ConfigProvider
+# ConfigProvider empty states
 
-`ConfigProvider.renderEmpty` задаёт общее содержимое для пустых списков и таблиц.
-Функция получает имя компонента. Верните строку для простого сообщения или
-Svelte-сниппет, если нужна разметка. Все допустимые типы результата перечислены
-в [RenderEmptyContent](../../src/lib/types.ts).
+`ConfigProvider.renderEmpty` sets shared content for empty lists and tables.
+The function receives the component name. Return a string for a plain message or
+a Svelte snippet for markup. [RenderEmptyContent return types](../../src/lib/types.ts)
 
 ```svelte
 <script lang="ts">
@@ -17,69 +16,73 @@ Svelte-сниппет, если нужна разметка. Все допуст
 </ConfigProvider>
 ```
 
-## Потребители и приоритеты
+## Consumers and precedence
 
-| Потребитель | Имя callback | Локальное переопределение | Fallback результата callback |
+| Consumer | Callback name | Local override | Callback result fallback |
 | --- | --- | --- | --- |
-| Select | Select | notFoundContent !== undefined | `||`, simple small Empty |
-| TreeSelect | TreeSelect | notFoundContent !== undefined | `||`, simple small Empty |
-| Cascader / CascaderPanel | Cascader | notFoundContent !== undefined | `||`, simple small Empty |
-| Mentions | Mentions | notFoundContent !== undefined | `||`, simple small Empty |
-| Transfer | Transfer | locale.notFoundContent после вычисления default | `||`, simple small Empty |
-| Table | Table | Существующий empty Snippet | `||`, simple Empty |
-| Фильтр Table | Table.filter | — | `??`, локализованный Empty с image height=24px |
-| AutoComplete | Не вызывается | notFoundContent | Как в upstream combobox, глобальный renderer не используется |
+| Select | Select | notFoundContent !== undefined | `||`, small Empty with simple image |
+| TreeSelect | TreeSelect | notFoundContent !== undefined | `||`, small Empty with simple image |
+| Cascader / CascaderPanel | Cascader | notFoundContent !== undefined | `||`, small Empty with simple image |
+| Mentions | Mentions | notFoundContent !== undefined | `||`, small Empty with simple image |
+| Transfer | Transfer | locale.notFoundContent after computing the default | `||`, small Empty with simple image |
+| Table | Table | Existing empty snippet | `||`, Empty with simple image |
+| Table filter | Table.filter | — | `??`, localized Empty with image height=24px |
+| AutoComplete | — | notFoundContent | Uses the local result as in the upstream combobox |
 
-В Select/TreeSelect/Cascader/Mentions локальные null, пустая строка и 0 не вызывают
-глобальный callback. Table сохраняет свой native empty Snippet
-вместо ещё не перенесённого полного `locale.emptyText` API.
+In Select, TreeSelect, Cascader, and Mentions, local null, an empty string, and 0 take
+precedence without calling the global callback. Table retains its native empty
+snippet. The full `locale.emptyText` API is outside the current port.
 
-Для большинства потребителей глобальные null/undefined/false/0/пустая строка выбирают
-исходный preset. True и пустой массив являются truthy и не рисуют содержимое, не включая
-preset. У Table.filter только null/undefined выбирают fallback; false/пустая строка
-оставляют пустой блок, 0 выводится текстом. Отдельный DefaultRenderEmpty для имени
-Table.filter возвращает null; сам фильтр задаёт изображение 24px и описание
-Locale.table.filterEmptyText. Фильтр доступен и для явно переданных filters=[] при
-поддерживаемом native client/server режиме колонки.
+For most consumers, a global callback result of null, undefined, false, 0, or an
+empty string selects the upstream preset. True and an empty array are truthy and
+render no content while bypassing the preset. For Table.filter, only null and
+undefined select the fallback. False and an empty string leave an empty block,
+and 0 renders as text. `DefaultRenderEmpty` returns null for Table.filter. The filter
+sets the image height to 24px and the description to `Locale.table.filterEmptyText`.
+The filter is also available when `filters=[]` is passed explicitly in the supported
+native client or server column mode.
 
-Transfer сначала вычисляет общий renderer, затем применяет props.locale, включая
-явный notFoundContent=undefined/null. Массив верхнего уровня выбирает содержимое по
-направлению списка, как в исходнике; вложенные массивы выбранной стороны отображаются
-рекурсивно. Общий callback не вызывается повторно отдельно для каждой стороны.
+Transfer computes the shared renderer first and then applies `props.locale`, including
+explicit `notFoundContent=undefined` or `notFoundContent=null`. A top-level array selects
+content by list direction as upstream does. Nested arrays on the selected side
+render recursively. Both sides share the result of one global callback.
 
-Вложенный ConfigProvider наследует renderEmpty при undefined. Собственная функция
-заменяет родительскую: её falsy результат выбирает preset, а не родительский callback.
-ConfigProvider.empty применяется к получившемуся Empty, но локальное preset image=simple
-имеет приоритет над context image.
+A nested ConfigProvider inherits `renderEmpty` when it is undefined. A local function
+replaces the parent function and uses the preset if it returns a falsy result.
+`ConfigProvider.empty` applies to the resulting Empty. A local preset with
+`image=simple` takes priority over the contextual image.
 
-## Сохраняемые native contracts
+## Native contracts
 
-Без настроенного renderEmpty сохраняются прежние локализованные тексты, loading и
-разметка пустых состояний. Исходные presets подключаются при наличии callback и его
-falsy результате. Local notFoundContent=0 у Select/TreeSelect по-прежнему показывает 0:
-у upstream popup в этих случаях скрыт. Это отдельно сверяется со свежей сборкой
-[8847e8d](../../tests/browser/fixtures/render-empty-native-reference.json).
+Without a `renderEmpty` setting, the localized empty text, loading behavior, and
+empty-state markup stay the same. When a configured callback returns a falsy value,
+the upstream presets apply. Local `notFoundContent=0` still displays 0 in Select and
+TreeSelect. The upstream popup is hidden for those cases. This is checked separately
+against a fresh build of the native baseline. [Baseline 8847e8d](../../tests/browser/fixtures/render-empty-native-reference.json)
 
-Содержимое не получает дополнительный DOM-wrapper. Стабильный возвращаемый Snippet
-сохраняет DOM/state при замене функции producer. Select допускает фокус в controls
-пустого содержимого; выход наружу закрывает список. Native input blur-callback и
-закрытие popup по Tab из combobox сохраняются. Для действия, которое должно оставить
-фокус в поисковом поле, предотвращайте pointerdown default.
+The content renders without an extra DOM wrapper. A stable returned snippet keeps
+its DOM and state when the function that produces it changes. Select allows focus
+in controls within the empty content. Moving focus outside closes the list. The
+native input blur callback and closing the popup with Tab from the combobox retain
+their behavior. To keep focus in the search field during an action, prevent the
+default pointerdown behavior.
 
-Callback должен быть чистым: он может вычисляться при SSR и создании скрытого popup.
-В Svelte он вычисляется по потреблению пустой ветки; Transfer получает его при расчёте
-локали. Число вызовов React render не переносится как контракт. AutoComplete не вызывает
-глобальный renderer. Общий prefixCls ConfigProvider, полный React DOM и остальные
-незавершённые API потребителей этим этапом не добавлены.
+Keep the callback pure because it can run during SSR and when creating a hidden
+popup. Svelte evaluates it when the empty branch consumes it. Transfer evaluates
+it while calculating the locale. React render counts are outside the Svelte
+contract. AutoComplete uses the local empty state. The shared ConfigProvider
+`prefixCls`, full React DOM, and other unfinished consumer APIs remain outside
+this porting stage.
 
-## Проверки и источники
+## Checks and sources
 
-- [Общий renderer](../../src/lib/empty/RenderEmpty.svelte) и
-  [presets](../../src/lib/empty/DefaultRenderEmpty.svelte).
-- [151 официальный сценарий и Select interaction trace](../../tests/browser/fixtures/ant-design-render-empty-reference.json)
-  из закреплённого UMD; 149 сценариев сверяются напрямую, два — с native baseline.
-- [Браузерные проверки](../../tests/browser/empty/render-empty.spec.ts) и
-  [public package SSR](../../tests/package/empty/render-empty.ssr.test.ts).
-- [Исходный defaultRenderEmpty](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/defaultRenderEmpty.tsx).
-- Переходы фокуса изучены в @rc-component/select 1.10.1 BaseSelect; остальные
-  приоритеты принадлежат закреплённым Ant Design wrappers, Transfer и FilterDropdown.
+- The shared renderer and its presets. [RenderEmpty](../../src/lib/empty/RenderEmpty.svelte) ·
+  [DefaultRenderEmpty](../../src/lib/empty/DefaultRenderEmpty.svelte)
+- The pinned UMD reference has 151 official scenarios and a Select interaction trace.
+  The checks compare 149 scenarios directly and two against the native baseline.
+  [Reference data](../../tests/browser/fixtures/ant-design-render-empty-reference.json)
+- [Browser checks](../../tests/browser/empty/render-empty.spec.ts) ·
+  [Public package SSR](../../tests/package/empty/render-empty.ssr.test.ts)
+- [Upstream defaultRenderEmpty](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/config-provider/defaultRenderEmpty.tsx)
+- Focus transitions come from BaseSelect in @rc-component/select 1.10.1. The pinned
+  Ant Design wrappers, Transfer, and FilterDropdown define the remaining precedence rules.

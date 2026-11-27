@@ -51,7 +51,7 @@ Provider root styles и local styles.root идут после него. Без p
 берётся из контекста или тематического `zIndexPopup`. Настройки передаются single/range
 Slider и ellipsis Tooltip Typography. В Typography disabled вычисляет сам ellipsis
 и перекрывает значение из tooltip options, как в upstream.
-[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+[Уровни вложенных панелей](../theme-context.md#layering-nested-panels)
 
 `bind:ref` выдаёт TooltipRef после mount и очищает его при unmount. NativeElement
 указывает на основной DOM trigger, включая SVG; popupElement — на существующий
@@ -271,7 +271,7 @@ zIndexPopup, offsets и форму стрелки, включая component alia
 в native-темах сохраняется отступ 8px. Object arrow/autoAdjustOverflow используют
 source gap и глобальный borderRadius даже без source-настроек. Component aliases
 меняют оформление стрелки, но не её исходную привязку. Подробности — в
-[описании темы](../theme-context.md#токены-всплывающих-панелей).
+[описании темы](../theme-context.md#popup-tokens).
 
 Поверхность использует нативный `popover="manual"` в верхнем слое браузера.
 Без container getter DOM остаётся на месте: overflow не обрезает её, контекст темы и

@@ -141,7 +141,7 @@
         },
         {
           "id": "cjk-snippet",
-          "title": "Автопробел для двух китайских символов",
+          "title": "Automatic spacing for two Chinese characters",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -478,7 +478,7 @@
         },
         {
           "id": "prefix-owner-cache-observations",
-          "title": "Source Group owner omission и shared-local-class BackTop progress cache",
+          "title": "Upstream Group owner omission and BackTop progress cache shared by local classes",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -508,7 +508,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -736,7 +736,7 @@
         },
         {
           "id": "opaque-snippets",
-          "title": "Границы ReactNode и непрозрачных Svelte snippets",
+          "title": "ReactNode and opaque Svelte snippet boundaries",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -747,7 +747,7 @@
         },
         {
           "id": "advanced-source-api",
-          "title": "Расширенные delegated Tooltip props",
+          "title": "Additional delegated Tooltip props",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -954,7 +954,7 @@
         },
         {
           "id": "prefix-action-memo-observation",
-          "title": "Исходные stale action classes при смене prefix",
+          "title": "Stale upstream action classes after a prefix change",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -1108,7 +1108,7 @@
         },
         {
           "id": "source-extras",
-          "title": "Общий ConfigProvider prefix и React development diagnostics",
+          "title": "Shared ConfigProvider prefix and React development diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -1725,7 +1725,7 @@
         },
         {
           "id": "native-standalone-sections",
-          "title": "Собственные variables standalone Header/Content/Footer",
+          "title": "Standalone Header, Content, and Footer variables",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -1797,7 +1797,7 @@
         },
         {
           "id": "native-style-shorthand-reset",
-          "title": "Сохранение shorthand после удаления локального longhand",
+          "title": "Preservation of shorthand after removing a local longhand",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -1831,7 +1831,7 @@
         },
         {
           "id": "native-prefix-style-collisions",
-          "title": "Исходные коллизии prefix, CSS-кэш и оформление секций",
+          "title": "Upstream prefix collisions, CSS cache, and section styling",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -1991,7 +1991,7 @@
         },
         {
           "id": "native-source-scope-marker",
-          "title": "Сохранённый native CSS marker вместо пропуска source",
+          "title": "Native CSS marker retained where upstream omits it",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2003,7 +2003,7 @@
         },
         {
           "id": "native-zero-duration-completion",
-          "title": "Завершение CSS phase без собственной браузерной анимации",
+          "title": "Completion of the CSS phase without a browser animation of its own",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2039,7 +2039,7 @@
         },
         {
           "id": "source-rtl-prefix-alias",
-          "title": "Изоляция локального prefix, совпавшего со стандартным RTL class",
+          "title": "Isolation when a local prefix matches the standard RTL class",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2073,7 +2073,7 @@
         },
         {
           "id": "native-responsive-token-updates",
-          "title": "Актуальные queries вместо stale Source observer после смены tokens",
+          "title": "Current queries after token changes with stale upstream observers recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2267,7 +2267,7 @@
         },
         {
           "id": "remaining-controls",
-          "title": "Compact-адаптеры ещё не перенесённых controls",
+          "title": "Compact adapters for controls that have yet to be ported",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -2293,7 +2293,7 @@
         },
         {
           "id": "source-shared-class-badge-cache",
-          "title": "Изоляция Badge selector при shared local Space class",
+          "title": "Badge selector isolation when the local Space class is shared",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2439,7 +2439,7 @@
         },
         {
           "id": "react-panel-api",
-          "title": "Адаптация React Panel declarations к Svelte items/snippets",
+          "title": "Adapting React Panel declarations to Svelte items and snippets",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2475,7 +2475,7 @@
         },
         {
           "id": "native-direction-inheritance",
-          "title": "Наследование CSS direction через native ConfigProvider",
+          "title": "CSS direction inheritance through native ConfigProvider",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2514,7 +2514,7 @@
         },
         {
           "id": "source-shared-class-cache",
-          "title": "Изоляция preview при общем local class и разных namespace",
+          "title": "Preview isolation across namespaces that share a local class",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2717,7 +2717,7 @@
         },
         {
           "id": "upstream-indicator-style-updates",
-          "title": "Пересчёт indicator после стилей вместо stale Source geometry",
+          "title": "Indicator recalculation after style changes with stale upstream geometry recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2730,7 +2730,7 @@
         },
         {
           "id": "source-local-item-prefix",
-          "title": "Наследование local owner prefix ссылками вместо исходного пропуска",
+          "title": "Local owner prefix inheritance by links where upstream omits it",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -2858,7 +2858,7 @@
         },
         {
           "id": "global-config",
-          "title": "Полный Menu API",
+          "title": "Full Menu API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -2940,7 +2940,7 @@
         },
         {
           "id": "source-local-separator-prefix",
-          "title": "Наследование local owner prefix разделителями",
+          "title": "Local owner prefix inheritance by separators",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -3494,7 +3494,7 @@
         },
         {
           "id": "overflow-motion",
-          "title": "Анимации inline и popup с сохранённой Svelte-навигацией",
+          "title": "Inline and popup animations with Svelte navigation preserved",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -3890,7 +3890,7 @@
         },
         {
           "id": "advanced-api",
-          "title": "Полные Select props, React-specific API",
+          "title": "Full Select props and React-specific API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
@@ -3997,7 +3997,7 @@
         },
         {
           "id": "native-responsive-token-updates",
-          "title": "Актуальные queries вместо stale Source observer после смены tokens",
+          "title": "Current queries after token changes with stale upstream observers recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -4471,7 +4471,7 @@
         },
         {
           "id": "overflow",
-          "title": "Меню скрытых вкладок more",
+          "title": "More menu for hidden tabs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -4627,7 +4627,7 @@
         },
         {
           "id": "tab-scroll",
-          "title": "OnTabScroll с физическими направлениями и native scroll",
+          "title": "OnTabScroll with physical directions and native scrolling",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -4642,7 +4642,7 @@
         },
         {
           "id": "legacy-destroy",
-          "title": "DestroyOnHidden и приоритет панели",
+          "title": "DestroyOnHidden and panel precedence",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -4761,7 +4761,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Framework-specific children/ref и native adapters",
+          "title": "Framework-specific children and refs, and native adapters",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -4997,7 +4997,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Оставшиеся render hooks и semantic/config API",
+          "title": "Remaining render hooks and semantic and configuration APIs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [],
@@ -5337,7 +5337,7 @@
         },
         {
           "id": "native-semantic-popup-contracts",
-          "title": "Сохранённые Native DOM, CSS-string и Svelte semantic boundaries",
+          "title": "Preserved native DOM, CSS string, and Svelte semantic boundaries",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -5424,7 +5424,7 @@
         },
         {
           "id": "component-renderers",
-          "title": "Components.root/input с Svelte snippets, native descriptors и composite refs",
+          "title": "Components.root and components.input with Svelte snippets, native descriptors, and composite refs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -5772,7 +5772,7 @@
         },
         {
           "id": "advanced-api",
-          "title": "Полный portal/React-specific API и generic ValueField inference",
+          "title": "Full portal and React-specific API and generic ValueField inference",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
@@ -5853,7 +5853,7 @@
         },
         {
           "id": "native-tag-text-unicode",
-          "title": "Сохранение Unicode пары при усечении текста tag",
+          "title": "Unicode pair preservation when truncating tag text",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -5870,7 +5870,7 @@
         },
         {
           "id": "native-full-fit-responsive-tags",
-          "title": "Показ всех помещающихся responsive tags при длинном rest",
+          "title": "Display of all responsive tags that fit alongside a long remainder label",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -5910,7 +5910,7 @@
         },
         {
           "id": "source-local-popup-padding",
-          "title": "Source local prefix оставляет базовый Select popup padding",
+          "title": "Upstream local prefix leaves the base Select popup padding in place",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -5924,7 +5924,7 @@
         },
         {
           "id": "native-panel-root-direction",
-          "title": "Native Panel задаёт dir на корне, Source RTL ограничен внутренними колонками",
+          "title": "Native Panel sets dir on the root, while upstream RTL applies to the inner columns",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -6150,7 +6150,7 @@
         },
         {
           "id": "native-boundary",
-          "title": "Сохраняемые Svelte/native contracts вместо React conventions",
+          "title": "Preserved Svelte and native contracts with React conventions tracked separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -6182,7 +6182,7 @@
         },
         {
           "id": "advanced-theme",
-          "title": "Source themes/Wave и React diagnostics/statics",
+          "title": "Upstream themes and Wave, and React diagnostics and statics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -6237,7 +6237,7 @@
         },
         {
           "id": "source-prefix-cache-observation",
-          "title": "Source shared-local-class cache и nested Row namespace",
+          "title": "Upstream cache for shared local classes and nested Row namespace",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -6447,7 +6447,7 @@
         },
         {
           "id": "native-boundary",
-          "title": "Native trigger/popup и граница React nodes/events",
+          "title": "Native trigger and popup, and the React node and event boundary",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -6462,7 +6462,7 @@
         },
         {
           "id": "advanced-trigger-theme",
-          "title": "Полный rc-trigger/motion и diagnostics",
+          "title": "Full rc-trigger, motion, and diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -6566,7 +6566,7 @@
         },
         {
           "id": "source-cached-child-prefix",
-          "title": "Source кеш child selectors при одинаковом local owner/theme и изменении общего prefix",
+          "title": "Upstream child selector cache with a shared local owner and theme after a provider prefix change",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -7129,7 +7129,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Режим времени и оставшиеся события",
+          "title": "Time mode and remaining events",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -7167,7 +7167,7 @@
         },
         {
           "id": "global-parity",
-          "title": "Исходные popup motion и lifecycle",
+          "title": "Upstream popup motion and lifecycle",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -7332,7 +7332,7 @@
         },
         {
           "id": "datetime-format-literals",
-          "title": "Сохранённое native исключение literals при выводе datetime units; дефект Source",
+          "title": "Native exclusion of literals in datetime unit output and the upstream defect",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -7874,7 +7874,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -7882,7 +7882,7 @@
         },
         {
           "id": "gap-1",
-          "title": "Полный API Form и настройки полей",
+          "title": "Full Form API and field configuration",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -8197,7 +8197,7 @@
         },
         {
           "id": "dom-methods",
-          "title": "GetFieldInstance, focusField и scrollToField",
+          "title": "GetFieldInstance, focusField, and scrollToField",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -8897,7 +8897,7 @@
         },
         {
           "id": "feedback-icons",
-          "title": "HasFeedback/feedbackIcons, scopes и renderers полей",
+          "title": "HasFeedback and feedbackIcons, scopes, and field renderers",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -9174,7 +9174,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -9304,7 +9304,7 @@
         },
         {
           "id": "input-remaining",
-          "title": "Input prefixCls, token engine и React value/ref conventions",
+          "title": "Input prefixCls, token engine, and React value and ref conventions",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -9322,7 +9322,7 @@
         },
         {
           "id": "textarea-remaining",
-          "title": "TextArea prefixCls, token engine и React value/ref conventions",
+          "title": "TextArea prefixCls, token engine, and React value and ref conventions",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -9684,7 +9684,7 @@
         },
         {
           "id": "native-boundary",
-          "title": "Native Svelte contracts и отличия обычного числового режима",
+          "title": "Native Svelte contracts and differences in normal numeric mode",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -9695,7 +9695,7 @@
         },
         {
           "id": "advanced-theme",
-          "title": "Общий token/prefix engine, точная compact/focus тема и React diagnostics",
+          "title": "Shared token and prefix engine, precise compact and focus themes, and React diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -10047,7 +10047,7 @@
         },
         {
           "id": "editor-hydration",
-          "title": "Выделение и первый ввод при гидратации textarea",
+          "title": "Text selection and first input during textarea hydration",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -10359,7 +10359,7 @@
         },
         {
           "id": "native-boundary",
-          "title": "Svelte/native contracts вместо React state/event/ref conventions",
+          "title": "Svelte and native contracts with React state, event, and ref conventions tracked separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -10389,7 +10389,7 @@
         },
         {
           "id": "advanced-theme",
-          "title": "Source themes/Wave и React diagnostics/statics",
+          "title": "Upstream themes and Wave, and React diagnostics and statics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -10445,7 +10445,7 @@
         },
         {
           "id": "source-wrapper-badge-observations",
-          "title": "Source defaultChecked wrapper и неэффективный horizontal Badge selector",
+          "title": "Upstream defaultChecked wrapper and ineffective horizontal Badge selector",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -10602,7 +10602,7 @@
         },
         {
           "id": "native-structured-transform",
-          "title": "CSSObject/array transform и сохранённый native hover fallback",
+          "title": "CSSObject and array transforms and the retained native hover fallback",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -10641,7 +10641,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Полный upstream Tooltip API",
+          "title": "Full upstream Tooltip API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -11317,7 +11317,7 @@
         },
         {
           "id": "native-empty-zero-and-close",
-          "title": "Видимый numeric empty content и Native немедленное закрытие",
+          "title": "Visible numeric empty content and immediate native closing",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11337,7 +11337,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Оставшиеся render/semantic/config и motion API",
+          "title": "Remaining render, semantic, configuration, and motion APIs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11348,7 +11348,7 @@
         },
         {
           "id": "native-whitespace-tag",
-          "title": "Отсечение нового whitespace-only tag",
+          "title": "Rejection of a new whitespace-only tag",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11377,7 +11377,7 @@
         },
         {
           "id": "native-disabled-token",
-          "title": "Запрет добавления disabled option через multiple token separators",
+          "title": "Rejection of disabled options through multiple-mode token separators",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11391,7 +11391,7 @@
         },
         {
           "id": "native-controlled-count-limit",
-          "title": "Запрет обхода maxCount через controlled query submit",
+          "title": "Enforcing maxCount on controlled query submission",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11410,7 +11410,7 @@
         },
         {
           "id": "native-tag-text-unicode",
-          "title": "Сохранение Unicode пары при усечении текста tag",
+          "title": "Unicode pair preservation when truncating tag text",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11427,7 +11427,7 @@
         },
         {
           "id": "native-nan-tag-count",
-          "title": "Сохранение selected tags при NaN maxTagCount",
+          "title": "Preservation of selected tags for NaN maxTagCount",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11446,7 +11446,7 @@
         },
         {
           "id": "native-full-fit-responsive-tags",
-          "title": "Показ всех помещающихся responsive tags при длинном rest",
+          "title": "Display of all responsive tags that fit alongside a long remainder label",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11463,7 +11463,7 @@
         },
         {
           "id": "native-disabled-custom-tag-open",
-          "title": "Запрет onOpenChange при клике disabled custom tag",
+          "title": "Suppression of onOpenChange on a disabled custom tag click",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11555,7 +11555,7 @@
         },
         {
           "id": "native-controlled-search-close",
-          "title": "Сохранение controlled search при закрытии без onSearch",
+          "title": "Preservation of controlled search when closing without onSearch",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11723,7 +11723,7 @@
         },
         {
           "id": "native-selected-value-contracts",
-          "title": "Native selected input/caret, reactive labels и distinct string/number values",
+          "title": "Native selected input and caret, reactive labels, and distinct string and number values",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11797,7 +11797,7 @@
         },
         {
           "id": "native-semantic-popup-contracts",
-          "title": "Сохранённые Native DOM, CSS-string и Svelte semantic boundaries",
+          "title": "Preserved native DOM, CSS string, and Svelte semantic boundaries",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11852,7 +11852,7 @@
         },
         {
           "id": "component-renderers",
-          "title": "Components.root/input с Svelte snippets, native descriptors и composite refs",
+          "title": "Components.root and components.input with Svelte snippets, native descriptors, and composite refs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -12234,7 +12234,7 @@
         },
         {
           "id": "native-adapter",
-          "title": "Граница native controls и React event/instance API",
+          "title": "Boundary between native controls and the React event and instance API",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -12250,7 +12250,7 @@
         },
         {
           "id": "range-tooltip",
-          "title": "Текущий SliderTooltipConfig и полный исходный Tooltip API",
+          "title": "Current SliderTooltipConfig and full upstream Tooltip API",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -12310,7 +12310,7 @@
         },
         {
           "id": "single-source-api",
-          "title": "Полный исходный scalar lifecycle и diagnostics",
+          "title": "Full upstream scalar lifecycle and diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -12737,7 +12737,7 @@
         },
         {
           "id": "native-boundary",
-          "title": "Сохраняемые Svelte state/event/form и accessibility contracts",
+          "title": "Preserved Svelte state, event, form, and accessibility contracts",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -12767,7 +12767,7 @@
         },
         {
           "id": "advanced-theme",
-          "title": "Source themes/Wave и React diagnostics/statics",
+          "title": "Upstream themes and Wave, and React diagnostics and statics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -13107,7 +13107,7 @@
         },
         {
           "id": "advanced-api",
-          "title": "Полный trigger/locale API и diagnostics",
+          "title": "Full trigger and locale API and diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
@@ -13184,7 +13184,7 @@
         },
         {
           "id": "native-unit-double-click",
-          "title": "Стабильный выбор первого пункта при double click; наблюдение дефекта upstream",
+          "title": "Stable selection of the first option on double click and the upstream defect observation",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -13505,7 +13505,7 @@
         },
         {
           "id": "native-remove-font",
-          "title": "Native remove button наследует шрифт строки вместо browser default",
+          "title": "Native remove button inherits the row font, with the browser default recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -13518,7 +13518,7 @@
         },
         {
           "id": "native-empty-fallback",
-          "title": "Прежний native simple Empty без source ant-empty-small",
+          "title": "Existing native simple Empty without upstream ant-empty-small",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -13532,7 +13532,7 @@
         },
         {
           "id": "source-inheritance-reset-remount",
-          "title": "Source remount/search/focus loss при reset inherited theme",
+          "title": "Upstream remount and loss of search and focus when resetting the inherited theme",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -13937,7 +13937,7 @@
         },
         {
           "id": "native-checkable-mode-identity",
-          "title": "Существующие Native refs и focus при смене checkable режима",
+          "title": "Existing native refs and focus when changing checkable mode",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -13953,7 +13953,7 @@
         },
         {
           "id": "native-strict-only-checkbox",
-          "title": "Существующий Native checkbox inner в strict-only режиме",
+          "title": "Existing native checkbox inner element in strict-only mode",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14027,7 +14027,7 @@
         },
         {
           "id": "virtual-motion",
-          "title": "Виртуализация и scrollTo с сохранёнными Native границами",
+          "title": "Virtualization and scrollTo with native boundaries preserved",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14147,7 +14147,7 @@
         },
         {
           "id": "source-local-tree-prefix-style",
-          "title": "Source local prefix: style hook и delegated tree используют разные classes",
+          "title": "Upstream local prefix yields different classes in the style hook and delegated tree",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14163,7 +14163,7 @@
         },
         {
           "id": "source-simple-input-mutation",
-          "title": "Source simple mode дописывает flat children во входной массив",
+          "title": "Upstream simple mode appends flat children to the input array",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14176,7 +14176,7 @@
         },
         {
           "id": "source-raw-renderer-data",
-          "title": "Source raw renderer сначала получает labeled value вместо data node",
+          "title": "Upstream raw renderer initially receives a labeled value in place of the data node",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14209,7 +14209,7 @@
         },
         {
           "id": "source-title-load-repeat",
-          "title": "Source title expansion запускает один lazy узел дважды",
+          "title": "Upstream title expansion starts one lazy node twice",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14246,7 +14246,7 @@
         },
         {
           "id": "source-single-limit",
-          "title": "Source maxCount блокирует смену single value",
+          "title": "Upstream maxCount prevents changing a single value",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14259,7 +14259,7 @@
         },
         {
           "id": "source-stale-limit-cache",
-          "title": "Source disabled cache родителя устаревает при новых детях",
+          "title": "Upstream disabled cache for a parent goes stale when it gets new children",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14303,7 +14303,7 @@
         },
         {
           "id": "source-tag-text-unicode",
-          "title": "Source tag text разрывает UTF-16 surrogate pair",
+          "title": "Upstream tag text splits a UTF-16 surrogate pair",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14316,7 +14316,7 @@
         },
         {
           "id": "source-tag-count-nan",
-          "title": "Source NaN tag count скрывает весь выбранный список",
+          "title": "Upstream NaN tag count hides all selected items",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14329,7 +14329,7 @@
         },
         {
           "id": "source-responsive-rest-reservation",
-          "title": "Source oversized summary скрывает помещающиеся теги",
+          "title": "Upstream oversized summary hides tags that would fit",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14341,7 +14341,7 @@
         },
         {
           "id": "native-rich-tag-tooltip",
-          "title": "Прежние Native tooltip и accessible remove names для rich labels",
+          "title": "Existing native tooltip and accessible remove names for rich labels",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14385,7 +14385,7 @@
         },
         {
           "id": "source-stale-title-renderer",
-          "title": "Source использует прежний treeTitleRender после смены prop",
+          "title": "Upstream uses the previous treeTitleRender after the prop changes",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14432,7 +14432,7 @@
         },
         {
           "id": "source-empty-popup-escape",
-          "title": "Source оставляет пустую пользовательскую панель открытой по Escape",
+          "title": "Upstream leaves an empty custom panel open on Escape",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14514,7 +14514,7 @@
         },
         {
           "id": "native-trigger-event-boundary",
-          "title": "Native DOM event boundary и идемпотентное открытие Space",
+          "title": "Native DOM event boundary and idempotent opening with Space",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14624,7 +14624,7 @@
         },
         {
           "id": "native-multiple-search-default",
-          "title": "Native default multiple search и raw readonly observation",
+          "title": "Native default multiple search and raw readonly observation",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14639,7 +14639,7 @@
         },
         {
           "id": "native-closed-search-input",
-          "title": "Native closed single input и удержанный controlled query",
+          "title": "Native closed single input and retained controlled query",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14737,7 +14737,7 @@
         },
         {
           "id": "native-component-event-boundary",
-          "title": "Native DOM cancellation и connected blur при удалении composite",
+          "title": "Native DOM cancellation and connected blur when removing a composite",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14755,7 +14755,7 @@
         },
         {
           "id": "native-component-aria",
-          "title": "Custom editor с существующими Native Tree ARIA связями",
+          "title": "Custom editor with existing native Tree ARIA relationships",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14771,7 +14771,7 @@
         },
         {
           "id": "source-component-composite-measurement",
-          "title": "Source multiple composite ref без style выбрасывает TypeError",
+          "title": "Upstream multiple composite ref throws TypeError without style",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14831,7 +14831,7 @@
         },
         {
           "id": "native-component-overflow-layout",
-          "title": "Native SSR measuring shell и portal CSS для custom responsive",
+          "title": "Native SSR measurement shell and portal CSS for custom responsive mode",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14974,7 +14974,7 @@
         },
         {
           "id": "native-popup-motion-frame",
-          "title": "Native fixed popup и публичные WAAPI clocks проецируемых transitions",
+          "title": "Native fixed popup and public WAAPI clocks for projected transitions",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -14991,7 +14991,7 @@
         },
         {
           "id": "native-popup-motion-cache",
-          "title": "Существующие Svelte refs, реактивный opaque popup и context identity",
+          "title": "Existing Svelte refs, reactive opaque popup, and context identity",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15008,7 +15008,7 @@
         },
         {
           "id": "native-dir-owner",
-          "title": "Существующий Native HTML dir на root/editor",
+          "title": "Existing native HTML dir on the root and editor",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15243,7 +15243,7 @@
         },
         {
           "id": "zero-card-overlap",
-          "title": "Наблюдение upstream: наложение действий при нулевом pictureCardSize",
+          "title": "Upstream action overlap when pictureCardSize is zero",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15254,7 +15254,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Полный rc-upload ref/internal API и ReactElement event forwarding",
+          "title": "Full rc-upload ref and internal API and ReactElement event forwarding",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15343,7 +15343,7 @@
         },
         {
           "id": "native-disabled-paste",
-          "title": "Disabled блокирует вставку вместо пропущенного Source guard",
+          "title": "Paste is blocked while disabled, where upstream omits the guard",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15380,7 +15380,7 @@
         },
         {
           "id": "native-file-read-errors",
-          "title": "Завершение ошибки чтения файла вместо зависшей Source очереди",
+          "title": "File read failures settle, with the upstream stalled queue recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15517,7 +15517,7 @@
         },
         {
           "id": "native-synchronous-request-completion",
-          "title": "Наблюдение Source: abort завершённого синхронного customRequest",
+          "title": "Upstream observation of abort on a completed synchronous customRequest",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15623,7 +15623,7 @@
         },
         {
           "id": "native-motion-key-names",
-          "title": "Наблюдение Source: дубликаты prototype-named uid в diffKeys",
+          "title": "Upstream observation of duplicate prototype-named uid values in diffKeys",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -15706,7 +15706,7 @@
         },
         {
           "id": "native-batch-disposal",
-          "title": "Остановка batch после синхронного unmount внутри onChange",
+          "title": "Batch stops after synchronous unmount inside onChange",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -16015,7 +16015,7 @@
         },
         {
           "id": "advanced-api",
-          "title": "Оставшийся AvatarGroup API",
+          "title": "Remaining AvatarGroup API",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -16417,7 +16417,7 @@
         },
         {
           "id": "source-fresh-cache",
-          "title": "Fresh/cache supported props и opaque Snippet boundary",
+          "title": "Fresh and cached supported props and the opaque snippet boundary",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -16714,7 +16714,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Существующие native numeric/style/a11y contracts и ReactNode boundary",
+          "title": "Existing native numeric, style, and accessibility contracts and the ReactNode boundary",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17024,7 +17024,7 @@
         },
         {
           "id": "theme-prefix-diagnostics",
-          "title": "React diagnostics и границы композиции",
+          "title": "React diagnostics and composition boundaries",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
@@ -17077,7 +17077,7 @@
         },
         {
           "id": "native-header-nowrap",
-          "title": "Сохранённая Native шапка без переноса отдельных кнопок режима",
+          "title": "Preserved native header without wrapping the individual mode buttons",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17243,7 +17243,7 @@
         },
         {
           "id": "global-config",
-          "title": "Полный React Tabs API",
+          "title": "Full React Tabs API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -17292,7 +17292,7 @@
         },
         {
           "id": "semantic-native-defaults",
-          "title": "Сохраняемые native defaults в semantic callback props",
+          "title": "Preserved native defaults in semantic callback props",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17332,7 +17332,7 @@
         },
         {
           "id": "prefix-owner-cache-observations",
-          "title": "Source child prefix omission и cache selectors для shared local Card class",
+          "title": "Upstream child prefix omission and selector cache for a shared local Card class",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17490,7 +17490,7 @@
         },
         {
           "id": "svelte-content-refs",
-          "title": "Граница React children/instance и Svelte snippets/typed refs",
+          "title": "React children and instance boundary and Svelte snippets with typed refs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17633,7 +17633,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохраняемые native DOM, управление, extra, icons и SSR",
+          "title": "Preserved native DOM, control, extra content, icons, and SSR",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17657,7 +17657,7 @@
         },
         {
           "id": "shared-config",
-          "title": "Глобальный prefixCls и React diagnostics",
+          "title": "Global prefixCls and React diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17673,7 +17673,7 @@
         },
         {
           "id": "item-dom-api",
-          "title": "Item HTML attributes, events, headerClass и callback refs",
+          "title": "Item HTML attributes, events, headerClass, and callback refs",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17871,7 +17871,7 @@
         },
         {
           "id": "semantic-native-defaults",
-          "title": "Сохраняемые native defaults в semantic callback props",
+          "title": "Preserved native defaults in semantic callback props",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17910,7 +17910,7 @@
         },
         {
           "id": "prefix-table-observation",
-          "title": "Исходный пропуск local Descriptions prefix в Table expanded-row CSS",
+          "title": "Upstream expanded-row Table CSS omits the local Descriptions prefix",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -17923,7 +17923,7 @@
         },
         {
           "id": "native-responsive-token-updates",
-          "title": "Смена breakpoint queries вместо stale Source subscriptions",
+          "title": "Breakpoint queries update instead of keeping stale upstream subscriptions",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -18029,7 +18029,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохраняемые Svelte/native contracts",
+          "title": "Preserved Svelte and native contracts",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -18041,7 +18041,7 @@
         },
         {
           "id": "shared-config",
-          "title": "Общий prefix и diagnostics",
+          "title": "Shared prefix and diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -18236,7 +18236,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Progress placeholder, полный semantic/config/icons API, container и motion",
+          "title": "Progress placeholder, full semantic, configuration, and icon API, container, and motion",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
@@ -18320,7 +18320,7 @@
       "features": [
         {
           "id": "deprecated-excluded",
-          "title": "Deprecated List вне целевой библиотеки",
+          "title": "Deprecated List is outside the target library",
           "state": "missing",
           "requiredForV1": true,
           "evidence": [],
@@ -18487,7 +18487,7 @@
         },
         {
           "id": "advanced-theme",
-          "title": "React-specific API и development diagnostics",
+          "title": "React-specific API and development diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
@@ -18513,7 +18513,7 @@
         },
         {
           "id": "source-stale-virtual-estimate",
-          "title": "Source stale estimate при неизменной измеренной высоте строк",
+          "title": "Stale upstream estimate while measured row height stays unchanged",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -18731,7 +18731,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -18739,7 +18739,7 @@
         },
         {
           "id": "gap-1",
-          "title": "Остальные исходные Popover настройки",
+          "title": "Remaining upstream Popover settings",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [],
@@ -19143,7 +19143,7 @@
         },
         {
           "id": "source-fresh-cache",
-          "title": "Fresh/cache supported props и opaque Snippet boundary",
+          "title": "Fresh and cached supported props and the opaque snippet boundary",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -19411,7 +19411,7 @@
         },
         {
           "id": "theme-prefix-diagnostics",
-          "title": "Глобальный prefixCls и React development warnings",
+          "title": "Global prefixCls and React development warnings",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -19649,7 +19649,7 @@
         },
         {
           "id": "native-semantic-props",
-          "title": "Существующие native defaults в semantic callback props",
+          "title": "Existing native defaults in semantic callback props",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -19853,7 +19853,7 @@
         },
         {
           "id": "source-theme-boundaries",
-          "title": "Native RTL direction и обёртки Skeleton",
+          "title": "Native RTL direction and Skeleton wrappers",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -20044,7 +20044,7 @@
         },
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -20275,7 +20275,7 @@
         },
         {
           "id": "component-theme",
-          "title": "Component tokens, aliases/algorithms и реактивная тема Table",
+          "title": "Table component tokens, aliases and algorithms, and reactive theming",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -21099,7 +21099,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохранённые native controls, DOM и Snippet boundaries",
+          "title": "Preserved native controls, DOM, and snippet boundaries",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -21513,7 +21513,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -21832,7 +21832,7 @@
         },
         {
           "id": "fresh-cache",
-          "title": "Fresh cache внутреннего container и Svelte Snippet boundary",
+          "title": "Fresh cache for the internal container and the Svelte snippet boundary",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22274,7 +22274,7 @@
         },
         {
           "id": "source-shared-class-button-cache",
-          "title": "Source shared local-class cache и потеря Button margins вложенного provider",
+          "title": "Upstream shared local-class cache and loss of Button margins under a nested provider",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22589,7 +22589,7 @@
         },
         {
           "id": "native-style-placement",
-          "title": "Прежний native Tree.style оформляет внешний корень",
+          "title": "Existing native Tree.style applies to the outer root",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22625,7 +22625,7 @@
         },
         {
           "id": "native-nonselectable-selection",
-          "title": "Заданный initial selection при selectable=false",
+          "title": "Explicit initial selection with selectable=false",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22662,7 +22662,7 @@
         },
         {
           "id": "native-rapid-expand-callbacks",
-          "title": "Каждый быстрый title-переход получает onExpand вместо пропущенного Source callback",
+          "title": "Each rapid title transition calls onExpand where upstream drops a callback",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22699,7 +22699,7 @@
         },
         {
           "id": "native-directory-control-release",
-          "title": "Безопасный Shift selection после снятия controlled-режима",
+          "title": "Safe Shift selection after leaving controlled mode",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22751,7 +22751,7 @@
         },
         {
           "id": "native-model-missing-prototype-key",
-          "title": "GetPath неизвестных prototype keys возвращает пустой путь",
+          "title": "GetPath returns an empty path for unknown prototype keys",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22793,7 +22793,7 @@
         },
         {
           "id": "native-field-names-refresh",
-          "title": "Смена только fieldNames обновляет UI вместо stale Source cache",
+          "title": "Updating only fieldNames refreshes the UI despite a stale upstream cache",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22834,7 +22834,7 @@
         },
         {
           "id": "native-semantic-icon-refresh",
-          "title": "Default icon обновляет semantic styles вместо stale Source memo",
+          "title": "Default icon updates semantic styles despite stale upstream memoization",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22910,7 +22910,7 @@
         },
         {
           "id": "native-virtual-estimate-refresh",
-          "title": "Оценка virtual окна обновляется без клонирования data",
+          "title": "Virtual window estimate updates without cloning the data",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22923,7 +22923,7 @@
         },
         {
           "id": "native-virtual-rtl",
-          "title": "Virtual list и scrollbar получают направление Tree",
+          "title": "Virtual list and scrollbar inherit the Tree direction",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22936,7 +22936,7 @@
         },
         {
           "id": "native-virtual-active",
-          "title": "Active key=0 и валидный aria-activedescendant виртуального дерева",
+          "title": "Active key=0 and valid aria-activedescendant in the virtual tree",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22949,7 +22949,7 @@
         },
         {
           "id": "native-virtual-inheritance",
-          "title": "Undefined local virtual наследует общий provider",
+          "title": "Undefined local virtual inherits the provider setting",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22962,7 +22962,7 @@
         },
         {
           "id": "native-virtual-horizontal-range",
-          "title": "Horizontal offset остаётся нулём при содержимом уже viewport",
+          "title": "Horizontal offset stays zero when content is narrower than the viewport",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22976,7 +22976,7 @@
         },
         {
           "id": "native-drag-allow-refresh",
-          "title": "Drop учитывает актуальный allowDrop",
+          "title": "Drop uses the latest allowDrop",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -22990,7 +22990,7 @@
         },
         {
           "id": "native-drag-descendants",
-          "title": "Drop запрещён в потомка, добавленного после dragstart",
+          "title": "Drop rejects a descendant added after dragstart",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23004,7 +23004,7 @@
         },
         {
           "id": "native-drag-end",
-          "title": "Оконный dragend сохраняет валидный source node",
+          "title": "Window dragend keeps a valid source node",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23018,7 +23018,7 @@
         },
         {
           "id": "native-drag-cleanup",
-          "title": "Unmount отменяет отложенное drag раскрытие",
+          "title": "Unmount cancels deferred drag expansion",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23032,7 +23032,7 @@
         },
         {
           "id": "native-drag-zero-container",
-          "title": "Drop container сохраняет нулевой key",
+          "title": "Drop container preserves a key of zero",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23046,7 +23046,7 @@
         },
         {
           "id": "native-drag-handle-prefix",
-          "title": "Drag handle обновляет namespace при смене prefix",
+          "title": "Drag handle updates its namespace when the prefix changes",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23060,7 +23060,7 @@
         },
         {
           "id": "native-motion-hidden-key",
-          "title": "Скрытый expanded key не блокирует видимые ветки",
+          "title": "A hidden expanded key leaves visible branches available",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23073,7 +23073,7 @@
         },
         {
           "id": "native-pointer-keyboard-continuity",
-          "title": "Активная клавиатурная строка после pointer действий отдельного Tree",
+          "title": "Active keyboard row after pointer actions in a separate Tree",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23201,7 +23201,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохраняемые native motion, close presentation, ARIA/focus и layout",
+          "title": "Preserved native motion, close presentation, ARIA and focus, and layout",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23230,7 +23230,7 @@
         },
         {
           "id": "shared-config",
-          "title": "Общий ConfigProvider prefix и React diagnostics",
+          "title": "Shared ConfigProvider prefix and React diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23485,7 +23485,7 @@
         },
         {
           "id": "popup-container",
-          "title": "Локальный getContainer и ConfigProvider fallback",
+          "title": "Local getContainer and ConfigProvider fallback",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23783,7 +23783,7 @@
         },
         {
           "id": "source-programmatic-completion",
-          "title": "Наблюдение upstream: программное удаление оставляет PromiseLike handle незавершённым",
+          "title": "Upstream observation of an unsettled PromiseLike handle after programmatic removal",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23818,7 +23818,7 @@
         },
         {
           "id": "source-long-word-overflow",
-          "title": "Наблюдение upstream: горизонтальное переполнение длинного слова",
+          "title": "Upstream horizontal overflow with a long word",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -23857,7 +23857,7 @@
         },
         {
           "id": "source-stale-prefix-status",
-          "title": "Status classes уже показанного сообщения при смене prefix",
+          "title": "Status classes on visible messages after a prefix change",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24241,7 +24241,7 @@
         },
         {
           "id": "source-modal-motion-missing-rules",
-          "title": "Наблюдение upstream: имя без CSS-правил удерживает оболочку Modal",
+          "title": "Upstream observation of a Modal shell retained by a name with no CSS rules",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24253,7 +24253,7 @@
         },
         {
           "id": "source-confirm-null-autofocus",
-          "title": "Наблюдение upstream: autoFocusButton null выбирает OK",
+          "title": "Upstream observation of autoFocusButton null selecting OK",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24323,7 +24323,7 @@
         },
         {
           "id": "native-zero-title",
-          "title": "Отображение числового title=0",
+          "title": "Numeric title=0 is displayed",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24339,7 +24339,7 @@
         },
         {
           "id": "native-explicit-aria",
-          "title": "Применение явных ARIA-имён к dialog",
+          "title": "Explicit ARIA names on the dialog",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24355,7 +24355,7 @@
         },
         {
           "id": "native-destroy-result",
-          "title": "Завершение await при destroy контекстного подтверждения",
+          "title": "Await settles when a contextual confirmation is destroyed",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24399,7 +24399,7 @@
         },
         {
           "id": "native-confirm-header-prefix",
-          "title": "Один заголовок Confirm при локальном prefixCls",
+          "title": "One Confirm heading with a local prefixCls",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24412,7 +24412,7 @@
         },
         {
           "id": "source-prefix-footer-cache",
-          "title": "Shared-class cache и footer Button namespace",
+          "title": "Shared-class cache and footer Button namespace",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24559,7 +24559,7 @@
         },
         {
           "id": "source-status-background-observation",
-          "title": "Наблюдение upstream: потеря равных alias и status background другого prefix",
+          "title": "Upstream observation of lost equal aliases and the status background from another prefix",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24573,7 +24573,7 @@
         },
         {
           "id": "source-width-observation",
-          "title": "Наблюдение upstream: недоступный close при undefined width и zero actions overflow",
+          "title": "Upstream observation of an inaccessible close control with undefined width and zero actions overflow",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24602,7 +24602,7 @@
         },
         {
           "id": "source-notification-fifo-close",
-          "title": "Наблюдение upstream: FIFO удаляет запись без onClose",
+          "title": "Upstream observation of FIFO removing an entry without calling onClose",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24641,7 +24641,7 @@
         },
         {
           "id": "source-stale-prefix-status",
-          "title": "Status classes показанной карточки при смене prefix",
+          "title": "Status classes on a visible card after a prefix change",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24795,7 +24795,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -25182,7 +25182,7 @@
         },
         {
           "id": "source-fresh-cache",
-          "title": "Fresh/cache supported props и opaque Snippet boundary",
+          "title": "Fresh and cached supported props and the opaque snippet boundary",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -25479,7 +25479,7 @@
         },
         {
           "id": "global-prefix-warnings",
-          "title": "Общий prefix и React diagnostics",
+          "title": "Shared prefix and React diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -25495,7 +25495,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохраняемые Svelte/native contracts",
+          "title": "Preserved Svelte and native contracts",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -25626,7 +25626,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохраняемые Svelte/native contracts",
+          "title": "Preserved Svelte and native contracts",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -25638,7 +25638,7 @@
         },
         {
           "id": "shared-config",
-          "title": "Общий prefix ConfigProvider и React diagnostics",
+          "title": "Shared ConfigProvider prefix and React diagnostics",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -25794,7 +25794,7 @@
         },
         {
           "id": "native-boundaries",
-          "title": "Сохраняемые native contracts и общий ConfigProvider prefix",
+          "title": "Preserved native contracts and shared ConfigProvider prefix",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -26441,7 +26441,7 @@
         },
         {
           "id": "native-context-lifecycle",
-          "title": "Стабильные Native API и завершение await при удалении holder",
+          "title": "Stable native APIs and settled awaits when a holder is removed",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -26597,7 +26597,7 @@
         },
         {
           "id": "react-ref",
-          "title": "Автоматическое клонирование children с составным React ref",
+          "title": "Automatic cloning of children with a composed React ref",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -26663,7 +26663,7 @@
         },
         {
           "id": "source-shared-class-cache",
-          "title": "Исходный CSS-кэш shared class и namespace вложенного BorderBeam",
+          "title": "Upstream CSS cache for a shared class and nested BorderBeam namespace",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -27091,7 +27091,7 @@
         },
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],
@@ -27099,7 +27099,7 @@
         },
         {
           "id": "gap-1",
-          "title": "Применение всех source component tokens и style hooks к DOM/CSS",
+          "title": "Applying all upstream component tokens and style hooks to DOM and CSS",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -27530,7 +27530,7 @@
         },
         {
           "id": "popup-container",
-          "title": "Наследование getPopupContainer и подключение потребителей",
+          "title": "getPopupContainer inheritance and consumer integration",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -27858,7 +27858,7 @@
         },
         {
           "id": "native-target-shadow-root",
-          "title": "Window/HTMLElement вместо неработающего Source ShadowRoot target",
+          "title": "Window and HTMLElement targets with the nonworking upstream ShadowRoot case recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -27870,7 +27870,7 @@
         },
         {
           "id": "native-target-reconfiguration",
-          "title": "Немедленная смена Affix target вместо stale Source geometry",
+          "title": "Immediate Affix target change with stale upstream geometry recorded separately",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -28138,7 +28138,7 @@
         },
         {
           "id": "shared-prefix",
-          "title": "Наследуемый prefixCls и подключение компонентов",
+          "title": "Inherited prefixCls and component integration",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -28360,7 +28360,7 @@
         },
         {
           "id": "native-legacy-prefix-namespace",
-          "title": "Сохранённый namespace оформления по умолчанию без source config",
+          "title": "Preserved default styling namespace without upstream configuration",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -28409,7 +28409,7 @@
         },
         {
           "id": "virtual-list-default",
-          "title": "ConfigProvider.virtual для Tree/DirectoryTree, TreeSelect, Listy, Select и AutoComplete",
+          "title": "ConfigProvider.virtual for Tree and DirectoryTree, TreeSelect, Listy, Select, and AutoComplete",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -28532,7 +28532,7 @@
       "features": [
         {
           "id": "core-v1",
-          "title": "Подробный аудит согласованного API v1",
+          "title": "Detailed audit of the agreed v1 API",
           "state": "unreviewed",
           "requiredForV1": true,
           "evidence": [],

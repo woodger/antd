@@ -1,73 +1,70 @@
-# Политика зависимостей
+# Dependency policy
 
-> Type: Policy. Этот документ задаёт критерии добавления и обновления npm
-> dependencies проекта.
+> Type: Policy. This document defines when to add or update the project's npm dependencies.
 
-## Основной принцип
+## Main principle
 
-Dependency добавляется только когда она решает нетривиальную устойчивую задачу
-лучше локальной реализации и оправдывает стоимость сопровождения.
+Add a dependency only when it solves a recurring, nontrivial problem better than a local
+implementation and justifies its maintenance cost.
 
-Единственный поддерживаемый package manager — npm. `package-lock.json`
-этого репозитория обеспечивает воспроизводимую установку и обновляется вместе
-с `package.json`.
+The project supports npm as its only package manager. Its `package-lock.json`
+makes installation reproducible and must be updated alongside `package.json`.
 
 ## Decision gate
 
-Перед добавлением проверьте:
+Review the following before adding a dependency.
 
-1. Нет ли нужной возможности в платформе, SvelteKit или существующем пакете.
-2. Нужна ли библиотека runtime или только development contour.
-3. Совместима ли она с текущими Svelte, Vite, SSR и Node versions.
-4. Попадёт ли она в browser bundle и каков bundle/runtime cost.
-5. Поддерживается ли пакет, понятна ли license и security history.
-6. Можно ли локализовать внешний API за project-owned facade.
+1. Whether the platform, SvelteKit, or an existing package already provides the feature.
+2. Whether the package belongs to the runtime or only to development.
+3. Compatibility with the current Svelte, Vite, SSR, and Node versions.
+4. Whether the package enters the browser bundle and what it costs in bundle size and runtime.
+5. Whether the package is maintained and has a clear license and security history.
+6. Whether a project-owned facade can contain the external API.
 
-## Допустимые зависимости
+## Appropriate dependencies
 
-- maintained library для сложной accessibility/format/protocol задачи;
-- официальный framework adapter или plugin, необходимый runtime/build;
-- typed client для поддерживаемого внешнего contract;
-- UI icon set, скрытый за локальным facade;
-- test/tooling package для явно принятого нового validation contour.
+- A maintained library for a complex accessibility, format, or protocol problem
+- An official framework adapter or plugin required at runtime or build time
+- A typed client for a supported external contract
+- A UI icon set behind a local facade
+- A testing or tooling package for a newly approved validation workflow
 
-## Нежелательные зависимости
+## Dependencies to avoid
 
-- пакет ради одной простой функции;
-- wrapper над нативным browser/Node API без новой ответственности;
-- второй инструмент, дублирующий существующий lint/test/build tool;
-- крупный UI framework ради одного control;
-- browser package без SSR support, если изоляция не спроектирована;
-- пакет только ради более короткого синтаксиса;
-- dependency «на будущее» без текущего consumer.
+- A package for a single simple function
+- A wrapper over a native browser or Node API with no new responsibility
+- A second tool that duplicates an existing lint, test, or build tool
+- A large UI framework for one control
+- A browser package without SSR support or a designed isolation boundary
+- A package whose only benefit is shorter syntax
+- A dependency for future use with no current consumer
 
 ## Runtime boundary
 
-Внешний API локализуется, когда это защищает проектный contract:
+Contain an external API when doing so protects a project contract. In particular,
+keep provider-owned types from spreading through reusable UI without a defined boundary.
 
-- provider-owned types не должны бесконтрольно распространяться по reusable UI.
+Add a facade when a dependency has several consumers or its API should stay outside
+the project's own contract. A facade is optional for other dependencies.
 
-Facade не нужен механически для каждого пакета. Он оправдан, если dependency
-имеет несколько consumers или её API не должен стать project contract.
+## Updates
 
-## Обновления
+Apply patch and minor updates in a separate task after reviewing the release notes,
+peer ranges, and actual dependency graph. Apply major updates separately and explicitly
+check the migration guide and runtime and build behavior.
 
-Patch/minor update допустим отдельной задачей после изучения release notes,
-peer ranges и фактического dependency graph. Major update выполняется отдельно
-с явной проверкой migration guide и runtime/build behavior.
+Combine a dependency update with a feature or visual change only when that change
+requires the update.
 
-Не смешивайте dependency update с feature или визуальной задачей, если update не
-необходим для неё.
+Check the following after updating dependencies.
 
-После изменения зависимостей проверяются:
+- `npm install` and lockfile consistency
+- `npm run lint`
+- `svelte-check`
+- `npm test`
+- `npm run build`
+- A relevant runtime smoke test
+- `npm audit` at the agreed audit level
 
-- `npm install`/lockfile consistency;
-- `npm run lint`;
-- `svelte-check`;
-- `npm test`;
-- `npm run build`;
-- релевантный runtime smoke;
-- `npm audit` в согласованном audit level.
-
-`overrides` используется только для конкретного compatibility/security случая.
-Он не должен скрывать несовместимый major graph без объяснения и проверки.
+Use `overrides` for a specific compatibility or security case. Explain and verify any
+override that affects incompatible major versions in the dependency graph.

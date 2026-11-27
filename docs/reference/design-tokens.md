@@ -1,8 +1,8 @@
-# Статический расчёт design tokens
+# Static design token calculation
 
-`theme.getDesignToken(config)` вычисляет итоговые цвета, размеры и отступы по заданной
-теме. Его можно вызвать и на сервере. Чтобы получить значения от ближайшего
-`ConfigProvider` внутри компонента, используйте [`theme.useToken()`](theme-context.md#прочитать-токены-в-своём-компоненте).
+`theme.getDesignToken(config)` computes the final colors, sizes, and spacing for a
+theme. You can call it on the server. Inside a component, call `theme.useToken()`
+to read values from the nearest `ConfigProvider`. [Reading tokens in a component](theme-context.md#read-tokens-in-a-component)
 
 ```ts
 import { theme, type DesignTokenConfig } from '@woodger/antd';
@@ -18,32 +18,32 @@ const token = theme.getDesignToken(config);
 // token.controlHeight === 28
 ```
 
-## Seed, map и alias
+## Seed, map, and alias tokens
 
-`defaultSeed` — исходные значения Ant Design. `defaultAlgorithm(seed)` возвращает
-MapToken с палитрами, размерами, шрифтами, радиусами и motion durations.
-`darkAlgorithm(seed, previousMap?)` и `compactAlgorithm(seed, previousMap?)`
-продолжают цепочку; без previousMap сначала используют defaultAlgorithm.
+`defaultSeed` contains the initial Ant Design values. `defaultAlgorithm(seed)`
+returns a MapToken with palettes, sizes, fonts, radii, and motion durations.
+`darkAlgorithm(seed, previousMap?)` and `compactAlgorithm(seed, previousMap?)`
+continue the chain. Without previousMap, they first use defaultAlgorithm.
 
-`getDesignToken(config?)` копирует defaultSeed и config.token, выполняет алгоритмы
-по порядку и возвращает новый AliasToken. В стандартном результате 536 полей,
-с текущими ключами палитр `blue1`. Расчёт сохраняет исходные округления,
-формулы и строки теней. Явные нули и отрицательные числовые значения не заменяются
-дополнительными defaults библиотеки.
+`getDesignToken(config?)` copies defaultSeed and config.token, runs the algorithms
+in order, and returns a new AliasToken. The standard result contains 536 fields
+and uses current palette keys such as `blue1`. Computation preserves upstream rounding,
+formulas, and shadow strings. Explicit zeros and negative numbers are retained.
 
-Seed overrides подаются алгоритмам. Остальные overrides применяются перед
-расчётом aliases и повторно в конце. Например, fontSizeLG/lineHeightLG влияют на
-fontHeightLG; явно переданный controlItemBgActive сохраняет своё значение.
-`motion: false` обнуляет расчётные durations, `focusOutline: false` — lineWidthFocus;
-явный финальный alias override может перекрыть эти значения, как в эталоне.
+Algorithms receive seed overrides. The other overrides apply before computing
+aliases and again at the end. For example, fontSizeLG and lineHeightLG influence
+fontHeightLG, while an explicit controlItemBgActive retains its value.
+`motion: false` sets calculated durations to zero and `focusOutline: false` sets
+lineWidthFocus to zero. An explicit final alias override can replace those values,
+as in the reference.
 
-## Пользовательские алгоритмы
+## Custom algorithms
 
-MappingAlgorithm получает тот же объект seed на каждом шаге и MapToken
-предыдущего шага либо undefined на первом. Функции выполняются синхронно;
-исключение передаётся вызывающему коду без замены. Цепочка использует reduce,
-как исходный cssinjs: добавление callback в массив во время расчёта не запускает
-его в текущем проходе.
+MappingAlgorithm receives the same seed object at each step, together with the
+MapToken from the previous step or undefined at the first step. The functions run
+synchronously and propagate their exceptions to the caller. The chain uses reduce
+like upstream cssinjs, so adding a callback to the array during calculation leaves
+it for a later pass.
 
 ```ts
 import { theme, type MappingAlgorithm } from '@woodger/antd';
@@ -58,50 +58,47 @@ const token = theme.getDesignToken({
 });
 ```
 
-Входной объект overrides не меняется. Ссылка на него фиксируется до вызова
-алгоритмов, как в исходном getComputedToken. Пустой массив алгоритмов бросает
-TypeError; это наблюдаемое поведение закреплённого cssinjs 2.1.2, а не выбор
-алгоритма по умолчанию.
+The overrides input is left intact. Its reference is captured before invoking
+the algorithms, as in upstream getComputedToken. An empty array of algorithms
+throws a TypeError, matching the pinned cssinjs 2.1.2.
 
-## Граница текущего этапа
+## Current scope
 
-Статический расчёт не меняет оформление компонентов и не вычисляет component
-overrides. Runtime token/algorithm/components, наследование, useToken и глобальные
-CSS variables описаны в справочнике [Токены темы в ConfigProvider](theme-context.md).
-Применение всех component tokens к CSS и Wave ещё переносится.
-DesignTokenConfig описывает статические token/algorithm; getDesignToken также
-принимает полный [ThemeConfig](../../src/lib/types.ts), игнорируя runtime поля.
+Static calculation leaves component styles intact and skips component overrides.
+Theme context covers runtime token, algorithm, and components settings, inheritance,
+useToken, and global CSS variables. Application of all component tokens to CSS and
+Wave is still in progress. DesignTokenConfig describes static token and algorithm
+settings. getDesignToken also accepts a full ThemeConfig and ignores runtime
+fields. [Theme context](theme-context.md) · [ThemeConfig](../../src/lib/types.ts)
 
-Исходные модули seed/map/alias не зависят от Svelte runtime. Поля textDecoration
-в AliasToken представлены CSS-строками вместо React.CSSProperties.
+The seed, map, and alias source modules are independent of the Svelte runtime.
+The AliasToken textDecoration fields use CSS strings.
 
-## Эталон и проверки
+## Reference and checks
 
-Перенос сверяется с закреплёнными
-[getDesignToken](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/theme/getDesignToken.ts),
-algorithms и alias formatter Ant Design 6.6.8. Изучены @ant-design/colors 8.0.1,
-@ant-design/cssinjs 2.1.2 и @ant-design/fast-color 3.0.1. Их runtime dependencies
-не добавлены в пакет.
+The port follows Ant Design 6.6.8 getDesignToken, algorithms, and alias formatter.
+It also draws on @ant-design/colors 8.0.1, @ant-design/cssinjs 2.1.2, and
+@ant-design/fast-color 3.0.1, with no runtime dependency on those packages.
+[Upstream getDesignToken](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/theme/getDesignToken.ts)
 
-[Эталонные данные](../../tests/reference/ant-design-theme-reference.json) получены
-из официального `package/dist/antd.min.js` после проверки SHA-256 npm-архива.
-Они содержат текущие map/alias поля для 24 настроек: цепочки алгоритмов,
-custom seed, все preset colors, прозрачность, размеры, motion/focus, overrides
-и ошибки. Encoding сохраняет undefined, NaN, infinities и negative zero;
-он не нормализует результаты. Тесты проверяют также порядок ключей.
-Для запуска сохранённого эталона локальный upstream или сеть не нужны.
+The reference data comes from the official `package/dist/antd.min.js` after
+SHA-256 verification of the npm archive. It records current map and alias
+fields for 24 configurations, including algorithm chains, a custom seed, all
+preset colors, transparency, sizes, motion and focus, overrides, and errors.
+The encoding preserves undefined, NaN, infinities, and negative zero as raw
+results. Tests also check key order. The saved reference runs offline without
+the upstream checkout. [Reference data](../../tests/reference/ant-design-theme-reference.json)
 
-- [Unit и boundary cases](../../src/lib/theme/theme.engine.test.ts).
-- [Сверка с официальным UMD](../../src/lib/theme/theme-reference.test.ts).
-- [SSR публичного пакета](../../tests/package/theme/theme-tokens.ssr.test.ts).
-- [Браузерный consumer](../../tests/browser/theme/theme-tokens.spec.ts), маршрут
-  `?fixture=theme-tokens`.
+- [Unit tests and boundary cases](../../src/lib/theme/theme.engine.test.ts)
+- [Comparison with the official UMD](../../src/lib/theme/theme-reference.test.ts)
+- [Public package SSR](../../tests/package/theme/theme-tokens.ssr.test.ts)
+- Consumer in the browser at `?fixture=theme-tokens`. [Browser tests](../../tests/browser/theme/theme-tokens.spec.ts)
 
-Лицензии: [Ant Design](../../src/lib/vendor/LICENSE.ant-design),
+Licenses for [Ant Design](../../src/lib/vendor/LICENSE.ant-design),
 [colors](../../src/lib/vendor/LICENSE.ant-design-colors),
-[cssinjs](../../src/lib/vendor/LICENSE.cssinjs) и
+[cssinjs](../../src/lib/vendor/LICENSE.cssinjs), and
 [FastColor](../../src/lib/vendor/LICENSE.fast-color).
 
-Deprecated seed pink, controlTmpOutline и ключи палитр вида blue-1 удалены.
-Preset-цвет pink и текущие pink1…pink10 сохранены; CSS-переменная --ant-blue-1
-по-прежнему соответствует текущему blue1.
+The deprecated pink seed, controlTmpOutline, and palette keys such as blue-1
+have been removed. The pink preset color and current pink1 through pink10 keys
+remain available. The CSS variable --ant-blue-1 still maps to the current blue1.

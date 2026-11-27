@@ -128,7 +128,7 @@ Escape скрывает подсказку, сохраняя фокус и чи�
 фокус и callbacks; локальные root/semantic styles сохраняют приоритет.
 Фокус native input оформляет видимый handle по source-токенам. Native-only темы
 и интерактивные области input сохраняют прежнее поведение.
-Подробнее: [токены Slider](../theme-context.md#токены-slider),
+Подробнее: [токены Slider](../theme-context.md#slider-tokens),
 [SSR](../../../tests/package/slider/slider-theme.ssr.test.ts),
 [browser](../../../tests/browser/slider/slider-theme.spec.ts), маршрут `?fixture=slider-theme`.
 

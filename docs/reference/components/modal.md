@@ -39,7 +39,7 @@ counterpart скрывает этот header; Native сохраняет один
 для них записан отдельный React-вариант через публичные button props.
 
 `zIndex` задаёт числовой слой Modal, включая 0. Слой наследуют вложенные
-диалоги и popup. [Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+диалоги и popup. [Уровни вложенных панелей](../theme-context.md#layering-nested-panels)
 
 `theme.components.Modal` настраивает header/content/footer background, title color,
 font size/line height, внутренние отступы и wireframe. Поддерживаются aliases,
@@ -47,7 +47,7 @@ component algorithms, CSS lengths и custom prefix; Button/Input внутри с
 собственные tokens. Source close wrapper задаёт размер иконки; legacy-размер сохранён.
 Тема обновляется без потери модальности, DOM, draft, selection и focus, включая
 getContainer. Нативное центрирование и резерв места title под close сохранены.
-[Сверка с официальным UMD](../theme-context.md#проверки-диалогов-и-уведомлений) не означает
+[Сверка с официальным UMD](../theme-context.md#dialog-and-notification-checks) не означает
 поддержку полного render/config API. Контекстные подтверждения описаны ниже.
 
 GetContainer принимает DOM-узел, DocumentFragment (включая ShadowRoot), CSS-селектор,
@@ -379,7 +379,7 @@ loading, а отклонение оставляет окно доступным 
 CSS-переменные своего провайдера. При обновлении темы цвета открытой панели
 следуют за настройками. Смонтированные провайдеры `locale` участвуют в выборе
 подписей кнопок статического Modal.
-[ConfigProvider.config](../config-provider.md#глобальные-настройки-статических-вызовов)
+[ConfigProvider.config](../config-provider.md#global-settings-for-static-calls)
 
 [21 профиль Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-static-reference.json)
 · [Chromium](../../../tests/browser/modal/modal-static.spec.ts)

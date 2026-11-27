@@ -1,44 +1,42 @@
-# Всплывающие элементы
+# Popups
 
-## Контейнер
+## Container
 
-`ConfigProvider.getPopupContainer` задаёт функцию, которая выбирает DOM-контейнер
-для всплывающего элемента. Функция получает элемент, открывающий панель, или
-`undefined` и возвращает `HTMLElement` или `ShadowRoot`. Она вызывается в браузере.
-Если выбран `ShadowRoot`, подключите стили внутри него.
+`ConfigProvider.getPopupContainer` sets a function that selects a DOM container
+for a popup. The function receives the element that opens the panel, or
+`undefined`, and returns an `HTMLElement` or `ShadowRoot`. It runs in the browser.
+If you choose a `ShadowRoot`, load the styles inside it.
 
-Вложенный провайдер наследует функцию родителя. Без настройки каждый компонент
-использует свой стандартный контейнер. Например, у `Select` локальная функция
-имеет приоритет над общей. У `Tabs` явно переданный `getPopupContainer={undefined}`
-отключает настройку провайдера, а у `Tour` и `Mentions` контейнер задаётся только
-на самом компоненте.
+A nested provider inherits its parent's function. Each component uses its default
+container in the absence of a setting. For `Select`, for example, a local function
+takes priority over the provider's function. In `Tabs`, an explicit
+`getPopupContainer={undefined}` disables the provider setting. In `Tour` and
+`Mentions`, set the container on the component itself.
 
-Общий контейнер также используют подсказки, выпадающие меню, компоненты выбора
-цвета и даты, `Modal` и `Drawer`. Если новая функция возвращает тот же DOM-элемент,
-открытая панель сохраняет состояние и фокус.
+Tooltips, dropdown menus, color and date pickers, `Modal`, and `Drawer` also use
+the shared container. If a new function returns the same DOM element, an open panel
+keeps its state and focus.
 
-## Размещение списка
+## List placement
 
-`ConfigProvider.popupOverflow` задаёт область, относительно которой `Select`,
-`TreeSelect`, `Cascader` и `AutoComplete` размещают выпадающий список.
-По умолчанию используется видимая область окна (`'viewport'`). Значение
-`'scroll'` учитывает прокручиваемую область документа. При вертикальном
-сдвиге списка учитывается и видимая область окна. Изменение настройки вступает
-в силу при следующем открытии списка, прокрутке или изменении размеров окна.
+`ConfigProvider.popupOverflow` defines the area that `Select`, `TreeSelect`,
+`Cascader`, and `AutoComplete` use to place their dropdown lists. The default is
+the window viewport (`'viewport'`). The `'scroll'` setting uses the document's
+scrollable area and also accounts for the visible viewport when shifting a list
+vertically. A setting change takes effect the next time the list opens, the page
+scrolls, or the window resizes.
 
-## Ширина списка
+## List width
 
-`ConfigProvider.popupMatchSelectWidth` задаёт ширину выпадающего списка для
-`Select`, `AutoComplete` и `TreeSelect`. По умолчанию (`true`) ширина совпадает
-с шириной поля. При `false` она зависит от содержимого, а число задаёт ширину
-в пикселях. В обоих случаях ширина поля служит минимумом.
+`ConfigProvider.popupMatchSelectWidth` sets the dropdown width for `Select`,
+`AutoComplete`, and `TreeSelect`. The default `true` matches the field width.
+With `false`, width depends on the contents. A number sets a width in pixels.
+Both cases use the field width as the minimum.
 
-Вложенный провайдер наследует эту настройку. Для одного списка её можно
-переопределить на компоненте. У `Cascader` ширина задаётся локально. Встроенные
-списки `Calendar` наследуют ширину провайдера и открываются внутри заголовка.
-У `Pagination` список размеров страницы по умолчанию использует `false`.
-Чтобы задать ему другую ширину, передайте `popupMatchSelectWidth` в объекте
-`showSizeChanger`. У `ColorPicker` список форматов цвета имеет собственную ширину.
+A nested provider inherits this setting. Set it locally to override the width of a
+specific list. `Cascader` sets its width locally. Calendar's built-in lists inherit
+the provider width and open inside the header. Pagination defaults its page-size
+selector to `false`. Pass `popupMatchSelectWidth` in the `showSizeChanger` object to
+choose a different width. The color format selector in `ColorPicker` has its own width.
 
-Особенности изменения ширины и виртуализации описаны в
-[справочнике Select](components/select.md#оформление-и-состояние).
+See how width changes interact with virtualization. [Select appearance and state](components/select.md#оформление-и-состояние)

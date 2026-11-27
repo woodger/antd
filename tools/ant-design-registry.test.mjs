@@ -157,8 +157,8 @@ describe('Ant Design registry', () => {
     const result = renderReport(data, 1);
 
     expect(result).toBe(renderReport(structuredClone(data), 1));
-    expect(result).toContain('покрыт у **1**');
-    expect(result).toContain('результаты тестов учитываются отдельно');
+    expect(result).toContain('**1** cover the reviewed v1 scope');
+    expect(result).toContain('test results are tracked separately');
     expect(result).toContain(`/tree/${revision}/components/avatar`);
   });
   it(

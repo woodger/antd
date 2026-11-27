@@ -5,67 +5,60 @@
 <Divider orientation="vertical" />
 ```
 
-Divider сохраняет структуру Ant Design 6.6.8: корневой div с role=separator,
-две rail и inner-text для горизонтальной подписи. Children принимает строку,
-число или Snippet; 0 отображается, null/false/пустая строка дают линию без подписи.
-Переданный Snippet считается подписью, даже если он выводит пустое содержимое.
-Вертикальный Divider не монтирует подпись. Aria-orientation отражает направление;
-компонент не добавляет tabindex и не меняет фокус.
+Divider preserves the Ant Design 6.6.8 structure. The root is a div with
+role=separator, two rails, and inner-text for a horizontal label. Children accepts
+a string, number, or snippet. Zero renders as text. Null, false, and an empty
+string give an unlabeled line. A passed snippet counts as a label even if it
+renders empty content. Vertical Divider leaves the label unmounted. Aria-orientation
+reports direction. Divider adds no tabindex and leaves focus alone.
 
-Orientation=horizontal/vertical имеет приоритет над boolean vertical.
-TitlePlacement задаёт положение подписи: start/end зависят от RTL,
-left/right сохраняют физическую сторону, default=center. Отступ подписи
-задаётся через styles.content.
+Orientation=horizontal or vertical takes priority over the vertical boolean.
+TitlePlacement positions the label. Start and end follow RTL, left and right
+use physical sides, and the default is center. Use styles.content for label spacing.
 
-Variant=solid/dashed/dotted, dashed alias и plain повторяют классы эталона.
-Size=small/medium/large наследуется от явно заданного componentSize в ConfigProvider,
-включая вложенные провайдеры. Без явного
-размера Divider сохраняет стандартный отступ 24px без подписи и 16px с подписью.
-В semantic callbacks size в этом случае undefined. Без подписи large имеет
-отступ 24px, medium — 16px, small — 8px;
-с подписью large использует 16px, как upstream. Размеры действуют горизонтально.
-Темы, compact, RTL и componentDisabled не скрывают разделитель.
+Variant=solid, dashed, or dotted, the dashed alias, and plain follow the reference
+classes. Size=small, medium, or large inherits an explicitly set componentSize
+from ConfigProvider, including nested providers. Without an explicit size,
+Divider keeps a 24px gap without a label and 16px with a label. Semantic callbacks
+get undefined for size in that case. Without a label, large uses 24px, medium 16px,
+and small 8px. With a label, large uses 16px as upstream does. Sizes apply
+horizontally. Themes, compact mode, RTL, and componentDisabled leave Divider visible.
 
-Class/style и нативные атрибуты/события передаются корню. Bind:nativeElement
-даёт HTMLDivElement после mount. RootClassName добавляет корневой класс.
-ClassNames/styles принимают объект со слотами root/rail/content либо callback
-({ props }) с нормализованными orientation/titlePlacement/size. Значения styles —
-CSS-строки, как style остальных Svelte-компонентов. Root style имеет приоритет
-над styles.root; без подписи styles.rail также применяется к корню.
+Class, style, and native attributes and events pass to the root. Bind:nativeElement
+exposes the HTMLDivElement after mount. RootClassName adds a root class. ClassNames
+and styles accept objects with root, rail, and content slots or a `({ props })`
+callback with normalized orientation, titlePlacement, and size. Styles are CSS
+strings like other Svelte component styles. Root style takes precedence over
+styles.root. Without a label, styles.rail also applies to the root.
 
-Фикстура — `?fixture=divider`.
-SSR и Chromium-проверки покрывают aliases, ноль, snippets, варианты, размеры,
-semantic slots, геометрию размещения, темы, RTL и узкий экран.
-`ConfigProvider.theme.components.Divider` поддерживает textPaddingInline,
-orientationMargin и verticalMarginInline, локальные alias-токены и algorithm.
-Токен orientationMargin задаёт долю ширины rail. Тема применяется уже при SSR,
-обновляется без замены DOM и предшествует semantic styles и пользовательскому style.
-Нули, CSS-единицы, явный undefined и собственный cssVar.prefix сохраняются.
-Проверки: [SSR](../../../tests/package/divider/divider-theme.ssr.test.ts),
-[browser](../../../tests/browser/divider/divider-theme.spec.ts),
-[эталон UMD](../../../tests/browser/fixtures/ant-design-divider-theme-reference.json),
-фикстура `?fixture=divider-theme`.
+SSR and Chromium checks for `?fixture=divider` cover aliases, zero, snippets,
+variants, sizes, semantic slots, placement geometry, themes, RTL, and narrow
+viewports. `ConfigProvider.theme.components.Divider` supports textPaddingInline,
+orientationMargin, verticalMarginInline, local alias tokens, and an algorithm.
+OrientationMargin is a fraction of the rail width. The theme applies during SSR,
+updates without replacing DOM, and precedes semantic and user styles. Zero values,
+CSS units, explicit undefined, and a custom cssVar.prefix are preserved.
+The theme fixture is `?fixture=divider-theme`. [SSR](../../../tests/package/divider/divider-theme.ssr.test.ts) ·
+[Browser](../../../tests/browser/divider/divider-theme.spec.ts) · [UMD reference](../../../tests/browser/fixtures/ant-design-divider-theme-reference.json)
 
-Локальный prefixCls меняет BEM-классы корня, вариантов и потомков; пустой prefix
-наследует ConfigProvider.prefixCls (по умолчанию ant-divider).
-CSS variables и общий marker сохраняют прежние имена.
-Собственный stylesheet из 27 правил добавляется при SSR и очищается при unmount.
-Defaults ограничены владельцем, включая prefix, совпадающий с общим marker.
+Local prefixCls changes BEM classes for the root, variants, and children. An empty
+prefix inherits ConfigProvider.prefixCls, which defaults to ant-divider for Divider.
+CSS variable names and the shared marker stay in place. The 27-rule stylesheet
+is emitted during SSR and removed on unmount. Defaults are scoped to the owner,
+including a prefix that matches the shared marker.
 
-ConfigProvider.divider задаёт class/style и object/function classNames/styles.
-Undefined наследует родительский record; явный объект, включая {}, заменяет его
-целиком. Приоритет root styles: provider styles.root → provider style → local
-styles.root → local style. Без подписи merged styles.rail идёт перед local style.
-Callbacks получают прежние нормализованные props и могут вернуть undefined.
-Prefix/config updates сохраняют nativeElement, DOM, фокус и состояние соседних полей;
-строчный vertical Divider не добавляет пробелы. Проверки:
-[SSR](../../../tests/package/divider/divider-config.ssr.test.ts),
-[browser](../../../tests/browser/divider/divider-config.spec.ts),
-[эталон UMD](../../../tests/browser/fixtures/ant-design-divider-config-reference.json),
-фикстура `?fixture=divider-config`. Общий prefix ConfigProvider поддержан;
-React development warnings ещё не перенесены.
+ConfigProvider.divider sets class and style and supports object or function
+classNames and styles. Undefined inherits the parent record. An explicit object,
+including {}, replaces it in full. Root style order is provider styles.root,
+provider style, local styles.root, then local style. In an unlabeled Divider, merged
+styles.rail comes before local style. Callbacks receive the same normalized props
+and may return undefined. Prefix and configuration updates preserve nativeElement,
+DOM, focus, and neighboring field state. An inline vertical Divider adds no spaces.
+The shared ConfigProvider prefix is supported. React development warnings are
+still outside the port. The fixture is `?fixture=divider-config`.
+[SSR](../../../tests/package/divider/divider-config.ssr.test.ts) · [Browser](../../../tests/browser/divider/divider-config.spec.ts) · [UMD reference](../../../tests/browser/fixtures/ant-design-divider-config-reference.json)
 
-Vendor/divider.css содержит 27 правил из закреплённого архива; рецепт divider
-исключает интеграцию ColorPicker и воспроизводится через `npm run cli -- css`.
-Рецепт divider-prefix выводит CSS data module для локального prefix из тех же правил.
-
+Vendor/divider.css contains 27 rules from the pinned archive. The divider recipe
+excludes the ColorPicker integration and can be regenerated with
+`npm run cli -- css`. The divider-prefix recipe generates a CSS data module for
+the local prefix from the same rules.

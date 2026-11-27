@@ -137,7 +137,7 @@ Bind:ref задаётся непосредственно компоненту; m
 без потери caller IDREF tokens, включая совпадение нового ID с существующим token.
 `zIndex`, включая 0 и отрицательные числа, задаёт явный слой перед semantic
 root styles. Без prop уровень наследуется из контекста или CSS-токена темы.
-[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+[Уровни вложенных панелей](../theme-context.md#layering-nested-panels)
 
 `forceRender=true` прогревает скрытое содержимое и portal после mount/hydration,
 также при disabled и destroyOnHidden. Выключение forceRender у закрытой панели
