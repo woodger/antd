@@ -2,6 +2,26 @@
 import type { SelectInputRegistration, SelectRootRegistration } from './select-components.types';
 import { mergeTreeSelectComponentAttributes } from './tree-select-components.engine';
 
+const inputDefaultAttributes = new Map([['defaultvalue', 'value'], ['defaultchecked', 'checked']]);
+
+/** Dynamic input elements need HTML defaults in SSR. Explicit attributes win regardless of case. */
+export function selectInputSsrAttributes(attributes: Record<string, unknown>) {
+  const entries = Object.entries(attributes);
+  const names = new Set(entries.map(([name]) => name.toLowerCase()));
+  const htmlEntries: [string, unknown][] = [];
+
+  for (const [name, value] of entries) {
+    const alias = inputDefaultAttributes.get(name.toLowerCase());
+    if (alias && names.has(alias)) {
+      continue;
+    }
+
+    htmlEntries.push([alias ?? name, value]);
+  }
+
+  return Object.fromEntries(htmlEntries);
+}
+
 export function mergeSelectComponentAttributes<Attributes extends object>(
   target: Attributes,
   generated: object,

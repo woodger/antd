@@ -1,6 +1,7 @@
 <script lang="ts" generics="Element extends HTMLElement = HTMLDivElement">
   import { createRawSnippet, untrack, type Snippet } from 'svelte';
   import { createSelectComponentHydration } from './select-component-hydration.dom';
+  import { selectInputSsrAttributes } from './select-components.engine';
   import { isSelectComponentHydration, selectComponentHydrationAttributes, takeSelectComponentHydration } from './select-components-hydration.dom';
   type Context = { attributes: object; register: (registration: Element) => () => void };
   type Intrinsic = { element: string; ref?: (node: Element | null) => void };
@@ -25,6 +26,11 @@
   const initializedInputs = new WeakSet<HTMLInputElement>();
   let attributes = $derived(context.attributes);
   type InputValue = string | number | string[] | null | undefined;
+  type InputAttributes = Record<string, unknown> & {
+    value?: InputValue;
+    defaultValue?: InputValue;
+    defaultvalue?: InputValue;
+  };
   let retainedInputDefaultValue = $state<InputValue>(untrack(() => {
     const attrs = context.attributes as { defaultValue?: InputValue; defaultvalue?: InputValue };
     return attrs.defaultValue ?? attrs.defaultvalue;
@@ -38,37 +44,30 @@
     else if (value != null) retainedInputDefaultValue = value;
   });
   let input = $derived.by(() => {
-    const { value, defaultValue, defaultvalue, ...attributes } = context.attributes as {
-      value?: string | number | string[] | null;
-      defaultValue?: string | number | string[] | null;
-      defaultvalue?: string | number | string[] | null;
-      [key: string]: unknown
-    };
+    const { value, defaultValue, defaultvalue, ...attributes } = context.attributes as InputAttributes;
+    const serverEditor = !root && typeof document === 'undefined';
+    const clientEditor = !root && !serverEditor;
     // The controller applies editor styles before calling the public ref.
-    if (!root && typeof document !== 'undefined') delete attributes.style;
+    if (clientEditor) {
+      delete attributes.style;
+    }
+
     // React retains the last defaultValue on the existing uncontrolled DOM input.
     const initialValue = defaultValue ?? defaultvalue ?? retainedInputDefaultValue;
-    const result = { ...attributes, ...(value != null ? { value,
-      ...(!root && typeof document !== 'undefined' ? { defaultValue: value } : {}) }
-      : initialValue != null ? { defaultValue: initialValue } : {}) };
-    if (root || typeof document !== 'undefined') {
-      return result;
+    if (value != null) {
+      attributes.value = value;
+      if (clientEditor) {
+        attributes.defaultValue = value;
+      }
     }
-    // A dynamic input lacks the compiler's input flag for SSR defaults.
-    const entries = Object.entries(result);
-    return Object.fromEntries(entries.flatMap(([name, value]) => {
-      const lower = name.toLowerCase();
-      const alias = lower === 'defaultvalue' ? 'value' : lower === 'defaultchecked' ? 'checked' : undefined;
-      return alias && entries.some(([key]) => key.toLowerCase() === alias) ? [] : [[alias ?? name, value]];
-    })) as typeof result;
+    else if (initialValue != null) {
+      attributes.defaultValue = initialValue;
+    }
+
+    return serverEditor ? selectInputSsrAttributes(attributes) : attributes;
   });
   let textarea = $derived.by(() => {
-    const { value, defaultValue, defaultvalue, ...attributes } = context.attributes as {
-      value?: string | number | string[] | null;
-      defaultValue?: string | number | string[] | null;
-      defaultvalue?: string | number | string[] | null;
-      [key: string]: unknown
-    };
+    const { value, defaultValue, defaultvalue, ...attributes } = context.attributes as InputAttributes;
     if (!root && typeof document !== 'undefined') delete attributes.style;
     return { attributes, value: value ?? defaultValue ?? defaultvalue };
   });

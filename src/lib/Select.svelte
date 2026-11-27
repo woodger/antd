@@ -1308,52 +1308,78 @@
     event.preventDefault();
   }
 
+  type SelectionChoice = {
+    hasOption: boolean;
+    chosenValue: RawValue | undefined;
+    data: OptionType | undefined;
+    usesCustomComponent: boolean;
+  };
 
   function choose(option: Row | undefined) {
     if (resolvedDisabled || option && (option.group || option.value === undefined
       || isSelectOptionDisabled(option.data.disabled, selectedKeys.has(option.value), countReached))) {
       return;
     }
-    const componentPath = Boolean(rootSlot || inputSlot);
-
+    const usesCustomComponent = Boolean(rootSlot || inputSlot);
     const chosenValue = option?.value;
     const data = chosenValue === undefined ? undefined : optionData(chosenValue);
+    const choice = { hasOption: Boolean(option), chosenValue, data, usesCustomComponent };
 
     if (multiple) {
-      const next = new Set(selectedValues);
-      const clearQuery = tagMode && !option && Boolean(search);
-      const onClearSearch = clearQuery ? searchCallback : undefined;
-      const removing = chosenValue !== undefined && next.has(chosenValue);
-
-      if (chosenValue !== undefined) {
-        if (removing) {
-          next.delete(chosenValue);
-        }
-        else {
-          next.add(chosenValue);
-        }
-      }
-      else {
-        if (!next.size && !clearQuery) {
-          return;
-        }
-        onClear?.();
-        next.clear();
-      }
-
-      if (option || selectedValues.length) changeMultiple([...next]);
-      if (chosenValue !== undefined) notifySelect(chosenValue, data, !removing);
-      if (!option || autoClearSearch) internalSearch = '';
-      onClearSearch?.('');
-      if (!componentPath) control?.focus();
+      chooseMultiple(choice);
       return;
     }
 
+    chooseSingle(choice);
+  }
+
+  function chooseMultiple({ hasOption, chosenValue, data, usesCustomComponent }: SelectionChoice) {
+    const next = new Set(selectedValues);
+    const clearQuery = tagMode && !hasOption && Boolean(search);
+    const onClearSearch = clearQuery ? searchCallback : undefined;
+    const removing = chosenValue !== undefined && next.has(chosenValue);
+
+    if (chosenValue !== undefined) {
+      if (removing) {
+        next.delete(chosenValue);
+      }
+      else {
+        next.add(chosenValue);
+      }
+    }
+    else {
+      if (!next.size && !clearQuery) {
+        return;
+      }
+      onClear?.();
+      next.clear();
+    }
+
+    if (hasOption || selectedValues.length) {
+      changeMultiple([...next]);
+    }
+    if (chosenValue !== undefined) {
+      notifySelect(chosenValue, data, !removing);
+    }
+
+    if (!hasOption || autoClearSearch) {
+      internalSearch = '';
+    }
+    onClearSearch?.('');
+    if (!usesCustomComponent) {
+      control?.focus();
+    }
+  }
+
+  function chooseSingle({ hasOption, chosenValue, data, usesCustomComponent }: SelectionChoice) {
     const changed = chosenValue !== selectedRaw;
     const callback = onChange as
       ((value: unknown, option: OptionSnapshot | undefined) => void) | undefined;
     const rawOption = chosenValue === undefined ? undefined : copySelectData(data);
-    if (!option && selected) onClear?.();
+    if (!hasOption && selected) {
+      onClear?.();
+    }
+
     useDefault = false;
     const labeled = convertSelectValues(
       chosenValue === undefined ? [] : [chosenValue],
@@ -1368,19 +1394,26 @@
       value = output as typeof value;
     }
     (onValueChange as ((value: unknown) => void) | undefined)?.(keepSupplied ? value : output);
-    if (changed) callback?.(output, rawOption);
-    if (chosenValue !== undefined) notifySelect(chosenValue, data, true);
+    if (changed) {
+      callback?.(output, rawOption);
+    }
+    if (chosenValue !== undefined) {
+      notifySelect(chosenValue, data, true);
+    }
+
     internalSearch = '';
     // Keep the public producer's search-clear pass before the popup closes.
-    if (componentPath) void semantics;
+    if (usesCustomComponent) {
+      void semantics;
+    }
     void resolvedSuffix;
-    if (componentPath) {
+    if (usesCustomComponent) {
       scheduleComponentClose();
     }
     else {
       setOpen(false);
+      control?.focus();
     }
-    if (!componentPath) control?.focus();
   }
 
   function remove(item: RawValue, focusEditor = true) {
