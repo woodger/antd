@@ -63,7 +63,8 @@ export const selectSurfaceContextSSRReference = reference<{
   reference: SourceHeader; cases: SelectSurfaceContextSSRCase[];
 }>('ant-design-select-surface-context-ssr-reference.json',
   'a7877ee736fc894f9579fa404901e8bc939bd9621238fd27793bbbdbd3ce309e');
-guard(hash(readFileSync(new URL('./select-surface-context-metrics.mjs', import.meta.url)))
+const fixtureUrl = new URL('./select-surface-context-metrics.mjs', import.meta.url);
+guard(hash(readFileSync(fixtureUrl))
   === '4a74679476eae1968a3ea46eb51f7fcfb3ee55f7273e561ffe755608c7c43926', 'portable original observer');
 for (const source of [selectSurfaceContextReference, selectSurfaceContextSSRReference]) {
   const header = source.reference;

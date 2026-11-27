@@ -72,7 +72,8 @@ function dateSnapshot(value: DatePickerPresetValue) {
   assert.equal(value.temporal.isDayjs, true);
   assert.equal(value.temporal.valid, true);
   assert(Number.isFinite(value.temporal.epoch));
-  assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
+  const date = new Date(value.temporal.epoch);
+  assert.equal(date.toISOString(), value.temporal.iso);
   // JSON writes -0 as 0; both values denote the same UTC-offset.
   assert(value.temporal.utcOffset === 0);
   assert.equal(value.temporal.fields.length, 7);

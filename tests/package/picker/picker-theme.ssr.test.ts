@@ -16,7 +16,8 @@ describe('DatePicker and TimePicker theme public package SSR', () => {
   for (const sample of reference.cases) {
     it(`renders ${sample.name} in all four controls without browser effects`, () => {
       vi.useFakeTimers();
-      vi.setSystemTime(new Date(reference.reference.now));
+      const systemTime = new Date(reference.reference.now);
+      vi.setSystemTime(systemTime);
       try {
         const { body } = render(PickerThemeCase, { props: { sample } });
 
@@ -39,7 +40,8 @@ describe('DatePicker and TimePicker theme public package SSR', () => {
   for (const header of reference.headerCases) {
     it(`renders the ${header.name} datetime header without creating scroll resources`, () => {
       vi.useFakeTimers();
-      vi.setSystemTime(new Date(reference.reference.now));
+      const systemTime = new Date(reference.reference.now);
+      vi.setSystemTime(systemTime);
       try {
         const { body } = render(PickerThemeCase, { props: {
           sample: reference.cases[0], header: header.name, opened: 'datetime'

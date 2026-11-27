@@ -65,8 +65,10 @@ test(
   'Tooltip respects enter and leave delays, remains hoverable and keeps focus on its trigger',
   async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T00:00:01Z');
+    await page.clock.pauseAt(pauseTime);
 
     const button = trigger(page);
 
@@ -276,7 +278,8 @@ for (const placement of ['top', 'bottom', 'left', 'right']) {
 
     const tip = tooltip(page);
 
-    await expect(tip).toHaveClass(new RegExp(`ant-tooltip-placement-${placement}`));
+    const classPattern = new RegExp(`ant-tooltip-placement-${placement}`);
+    await expect(tip).toHaveClass(classPattern);
 
     await expect.poll(async () => {
       const target = (await button.boundingBox())!;
@@ -402,8 +405,10 @@ for (const action of ['F3', 'F5', 'F6']) {
       ? 'clearing its title'
       : action === 'F5' ? 'unmounting' : 'replacing its trigger'}`,
     async ({ page }) => {
-      await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-      await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+      const clockStart = new Date('2026-01-01T00:00:00Z');
+      await page.clock.install({ time: clockStart });
+      const pauseTime = new Date('2026-01-01T00:00:01Z');
+      await page.clock.pauseAt(pauseTime);
       await trigger(page).hover();
       await page.clock.runFor(100);
       await page.keyboard.press(action);

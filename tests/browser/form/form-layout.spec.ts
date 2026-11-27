@@ -31,7 +31,8 @@ test('Form changes layout and local overrides while keeping its native control, 
       }, layout
     );
     const form = page.locator('[data-layout-root] form');
-    await expect(form).toHaveClass(new RegExp(`ant-form-${layout}`));
+    const classPattern = new RegExp(`ant-form-${layout}`);
+    await expect(form).toHaveClass(classPattern);
     await expect(field).toBeFocused();
     await expect(field).toHaveValue('Draft role');
     await expect(field).toHaveAccessibleDescription('Role error Role note');

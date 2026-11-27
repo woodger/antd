@@ -1,7 +1,8 @@
 import { test, expect } from '../test';
 
 test('quarter native buttons preserve keyboard focus when the model is in the middle month', async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+  const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/date-picker-quarter-keyboard.html');
   const input = page.locator('#quarter-keyboard');
   const originalInput = await input.elementHandle();

@@ -82,8 +82,9 @@ assert(
 assert.deepEqual(reference.errors, [], 'original browser errors');
 assert.deepEqual(reference.diagnostics, [], 'original diagnostics');
 for (const [path, pin] of Object.entries(reference.inputPins)) if (!path.startsWith('.upstream/')) {
+  const fixtureUrl = new URL(`../../${path}`, import.meta.url);
   assert.equal(
-    hash(readFileSync(new URL(`../../${path}`, import.meta.url))),
+    hash(readFileSync(fixtureUrl)),
     pin,
     `frozen edge input ${path}`
   );

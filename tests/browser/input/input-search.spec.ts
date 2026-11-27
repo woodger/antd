@@ -399,7 +399,8 @@ test(
     for (const size of ['small', 'medium', 'large']) {
       await page.getByRole('combobox', { name: 'Search size', exact: true }).selectOption(size);
 
-      await expect(root).toHaveClass(new RegExp(`ant-input-search-${size}`));
+      const classPattern = new RegExp(`ant-input-search-${size}`);
+      await expect(root).toHaveClass(classPattern);
       await root.evaluate(async element => {
         await Promise.all(element.getAnimations({ subtree: true })
           .filter(animation => animation.effect?.getComputedTiming().endTime !== Infinity)

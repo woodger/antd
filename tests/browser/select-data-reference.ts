@@ -120,10 +120,11 @@ guard(labelCounterpart.counterpart?.kind === 'actual-public-source-native-label-
   'complete actual public Source Native label-filter counterpart');
 const cacheCounterpart = selectDataCacheNativeReference.cases[0];
 const cachePrimary = selectDataReference.cases.find(entry => entry.id === cacheCounterpart.id)!;
-const baselineBytes = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/select-data-cache-native-baseline.json',
   import.meta.url
-));
+);
+const baselineBytes = readFileSync(referenceUrl);
 guard(createHash('sha256').update(baselineBytes).digest('hex')
   === 'df17c7c639f66cf438161b7b098bc9c0d1724c7b9cc96294d063526b0737bff1',
   'historical Native removed-disabled baseline');

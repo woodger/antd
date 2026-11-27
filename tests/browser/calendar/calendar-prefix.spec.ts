@@ -5,7 +5,8 @@ import { snapshotCalendarPrefix } from '../calendar-prefix-metrics';
 
 test.use({ viewport: reference.reference.viewport });
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-09-15T03:00:00.000Z'));
+  const fixedTime = new Date('2024-09-15T03:00:00.000Z');
+  await page.clock.setFixedTime(fixedTime);
 });
 
 for (const entry of reference.cases) {

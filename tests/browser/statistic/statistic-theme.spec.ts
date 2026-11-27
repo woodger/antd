@@ -67,8 +67,10 @@ test('Statistic theme updates preserve snippets, focus and independent provider 
 });
 
 test('Statistic Timer countup and countdown keep ticking through component token changes', async ({ page }) => {
-  await page.clock.install({ time: new Date('2026-11-05T12:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-11-05T12:00:01Z'));
+  const clockStart = new Date('2026-11-05T12:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-11-05T12:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=statistic-theme');
   const timers = page.locator('[data-statistic-theme="timer"], [data-statistic-theme="countdown"]');
   const values = timers.locator('.ant-statistic-content-value');

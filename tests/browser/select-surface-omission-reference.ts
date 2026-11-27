@@ -145,10 +145,11 @@ for (const [original, portable] of [
   ['.upstream/artifacts/select-surface-omission-reader.mjs', 'select-surface-omission-metrics.mjs'],
 ]) assert.equal(hash(readFileSync(new URL(`./${portable}`, import.meta.url))),
   selectSurfaceOmissionReference.reference.inputPins[original], `byte-identical portable ${portable}`);
-assert.equal(hash(readFileSync(new URL(
+const fixtureUrl = new URL(
   './select-surface-omission-default-cases.mjs',
   import.meta.url
-))),
+);
+assert.equal(hash(readFileSync(fixtureUrl)),
   selectSurfaceOmissionDefaultReference.reference.inputPins['.upstream/artifacts/select-surface-omission-default-cases.mjs'],
   'byte-identical default-origin public owners/actions');
 for (const entry of [...selectSurfaceOmissionReference.cases, ...selectSurfaceOmissionWidthReference.cases,

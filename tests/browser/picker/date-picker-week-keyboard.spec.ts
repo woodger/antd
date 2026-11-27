@@ -1,7 +1,8 @@
 import { test, expect } from '../test';
 
 test('week native buttons keep a seven-day keyboard grid across the GB week-year boundary', async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+  const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/date-picker-week-keyboard.html');
   const input = page.locator('#week-keyboard');
   const originalInput = await input.elementHandle();
@@ -40,7 +41,8 @@ test('week native buttons keep a seven-day keyboard grid across the GB week-year
 
 
 test('week controlled pickerValue rejection restores the original focused day', async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+  const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/date-picker-week-keyboard.html?controlled');
   const input = page.locator('#week-keyboard');
   const originalInput = await input.elementHandle();

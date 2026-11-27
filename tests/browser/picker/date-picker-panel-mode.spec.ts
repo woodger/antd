@@ -10,7 +10,8 @@ const rootSelector = '[data-mode-owner] > .ant-picker';
 
 /** Mounts the same initial dates with public props and fixed local time. */
 async function openFixture(page: Page, profile: PickerModeProfile) {
-  await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
+  const fixedTime = new Date('2024-06-19T16:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto(`/?fixture=date-picker-panel-mode&profile=${encodeURIComponent(JSON.stringify(profile))}`);
 
   const owner = page.locator(rootSelector);

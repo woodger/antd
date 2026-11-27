@@ -24,10 +24,11 @@ import {
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 function actualPart(name: keyof typeof proof.parts): unknown {
   const pin = proof.parts[name];
-  const compressed = readFileSync(new URL(
+  const fixtureUrl = new URL(
     '../../browser/fixtures/' + pin.compressed.file,
     import.meta.url
-  ));
+  );
+  const compressed = readFileSync(fixtureUrl);
   assert.equal(compressed.length, pin.compressed.bytes);
   assert.equal(hash(compressed), pin.compressed.sha256);
   const raw = gunzipSync(compressed);
@@ -168,7 +169,8 @@ it('accepts the actual precise returned preset alias and rejects a later identit
   const milliseconds = structuredClone(value);
   milliseconds.temporal!.epoch++;
   milliseconds.temporal!.fields[6]++;
-  milliseconds.temporal!.iso = new Date(milliseconds.temporal!.epoch).toISOString();
+  const changedDate = new Date(milliseconds.temporal!.epoch);
+  milliseconds.temporal!.iso = changedDate.toISOString();
 
   expect(() => verifyDatePickerPresetTransitionDate(milliseconds, original,
     createDatePickerPresetTransitionProof(), 'milliseconds')).toThrow();

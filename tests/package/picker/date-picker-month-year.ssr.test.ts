@@ -48,7 +48,8 @@ for (const picker of ['month', 'year'] as const) {
       defaultOpen: true, showTime: true, locale: enUS.datePicker } }).body;
 
     expect(body).toMatch(/role="dialog"[^>]*hidden/);
-    expect(body.match(new RegExp(`class="[^"]*\\bant-picker-${picker}-panel\\b`, 'g'))).toHaveLength(2);
+    const classPattern = new RegExp(`class="[^"]*\\bant-picker-${picker}-panel\\b`, 'g');
+    expect(body.match(classPattern)).toHaveLength(2);
     expect(body).not.toContain('ant-picker-time-panel');
     expect(body).not.toContain('class="ant-picker-ok"');
   });

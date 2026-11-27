@@ -16,13 +16,14 @@ interface AffixTokenCase {
   config: ThemeTokenReferenceConfig;
   variables: Record<string, string>;
 }
+const referenceUrl = new URL(
+  '../../../tests/reference/ant-design-affix-tokens-reference.json',
+  import.meta.url
+);
 const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: AffixTokenCase[];
-} = JSON.parse(readFileSync(
-  new URL('../../../tests/reference/ant-design-affix-tokens-reference.json', import.meta.url),
-  'utf8'
-));
+} = JSON.parse(readFileSync(referenceUrl, 'utf8'));
 
 describe('Ant Design 6.6.8 official UMD Affix CSS-token conformance', () => {
   it('pins declarations from the official archive', () => {

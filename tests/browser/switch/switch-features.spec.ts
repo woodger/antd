@@ -290,8 +290,10 @@ test(
 test(
   'Switch cancels a scheduled native reset when removed before its timer runs',
   async ({ page }) => {
-    await page.clock.install({ time: new Date('2026-01-01T11:59:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T12:00:00Z'));
+    const clockStart = new Date('2026-01-01T11:59:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T12:00:00Z');
+    await page.clock.pauseAt(pauseTime);
     await page.getByRole('switch', { name: 'Source switch', exact: true }).click();
     await page.getByRole('button', { name: 'Clear source switch events', exact: true }).click();
 

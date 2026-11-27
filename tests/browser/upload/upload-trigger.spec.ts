@@ -15,8 +15,10 @@ for (const [index, entry] of structure.cases.entries()) {
 
 for (const [index, entry] of motion.cases.entries()) {
   test(`Upload trigger motion matches Source for ${entry.sample.id}`, async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-    await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+    const clockStart = new Date('2024-09-15T03:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2024-09-15T03:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await page.goto('/?fixture=upload-trigger');
     await page.getByRole('combobox', { name: 'Upload trigger sample', exact: true })
       .selectOption(`motion:${index}`);
@@ -60,8 +62,10 @@ for (const [index, entry] of motion.cases.entries()) {
 
 test('Upload retains the selected native file and outside focus through a hidden trigger',
   async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-    await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+    const clockStart = new Date('2024-09-15T03:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2024-09-15T03:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await page.goto('/?fixture=upload-trigger');
     await page.getByRole('combobox', { name: 'Upload trigger sample', exact: true })
       .selectOption('motion:0');
@@ -121,8 +125,10 @@ for (const listType of ['picture-card', 'picture-circle']) {
 }
 
 test('Upload cancels trigger motion after unmount and preserves outside focus', async ({ page }) => {
-  await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-  await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+  const clockStart = new Date('2024-09-15T03:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2024-09-15T03:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=upload-trigger');
   await page.getByRole('combobox', { name: 'Upload trigger sample', exact: true })
     .selectOption('motion:0');

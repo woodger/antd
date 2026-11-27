@@ -97,7 +97,10 @@ test(
     for (const scenario of cases) {
       await page.setViewportSize({ width: scenario.width, height: 900 });
 
-      await expect(root).toHaveClass(new RegExp(`context-columns-${scenario.count} local-columns-${scenario.count}`));
+      const classPattern = new RegExp(
+        `context-columns-${scenario.count} local-columns-${scenario.count}`
+      );
+      await expect(root).toHaveClass(classPattern);
       await expect(root).toHaveCSS('height', `${scenario.height}px`);
     }
   }

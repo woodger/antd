@@ -397,8 +397,10 @@ test(
 
     await expect(first).not.toBeFocused();
 
-    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T00:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await page.getByRole('button', { name: 'Clear OTP selections', exact: true }).click();
     await first.focus();
     await page.getByLabel('Mount OTP', { exact: true }).uncheck();

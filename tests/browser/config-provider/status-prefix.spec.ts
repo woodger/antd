@@ -83,8 +83,10 @@ test('Local group prefixes keep inherited Avatar and CheckableTag prefixes indep
   });
 
 test('Prefixed badge digits keep reduced motion while the count changes', async ({ page }) => {
-  await page.clock.install({ time: new Date('2026-11-08T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-11-08T00:01:00Z'));
+  const clockStart = new Date('2026-11-08T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-11-08T00:01:00Z');
+  await page.clock.pauseAt(pauseTime);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/?fixture=status-prefix');
   await page.getByRole('combobox', { name: 'Status prefix sample', exact: true })

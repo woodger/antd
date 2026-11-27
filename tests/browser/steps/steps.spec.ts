@@ -121,8 +121,9 @@ for (const [status, label] of [
     async ({ page }) => {
       await setting(page, 'status', status);
 
-      await expect(host(page).locator('[data-steps-key="review"]').first())
-        .toHaveClass(new RegExp(`ant-steps-item-${status}`));
+      const reviewItem = host(page).locator('[data-steps-key="review"]').first();
+      const statusPattern = new RegExp(`ant-steps-item-${status}`);
+      await expect(reviewItem).toHaveClass(statusPattern);
       await expect(step(page, 'Step review'))
         .toHaveAccessibleDescription(`${label} Check details`);
       await expect(host(page).locator('[data-steps-key="data"]').first())

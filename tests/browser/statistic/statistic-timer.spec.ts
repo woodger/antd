@@ -1,8 +1,10 @@
 import { test, expect } from '../test';
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+  const clockStart = new Date('2026-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=statistic-timer');
 
   await expect(page.locator('#fixture-timer .ant-statistic-content-value')).toHaveText('00:00:10');

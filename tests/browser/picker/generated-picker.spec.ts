@@ -13,7 +13,8 @@ const profiles = [...source.passes[0], ...supplement.passes[0], ...rootTime.pass
 
 test.describe('generatePicker RangePicker manual time input', () => {
   test.beforeEach(async ({ page }) => {
-    await page.clock.setFixedTime(new Date('2026-11-24T12:00:00Z'));
+    const fixedTime = new Date('2026-11-24T12:00:00Z');
+    await page.clock.setFixedTime(fixedTime);
   });
 
   test('keeps the saved date for the edited start in a controlled range', async ({ page }) => {

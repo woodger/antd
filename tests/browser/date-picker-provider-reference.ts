@@ -63,7 +63,8 @@ interface ServerReference extends Pick<ReactSource, 'revision' | 'archiveSha256'
 /** Decompresses the exact JSON for one mode, retaining both React passes. */
 function readReference<T>(mode: 'browser' | 'ssr'): T {
   const path = `./fixtures/ant-design-date-picker-provider-${mode}-reference.json.gz`;
-  const bytes = readFileSync(new URL(path, import.meta.url));
+  const fixtureUrl = new URL(path, import.meta.url);
+  const bytes = readFileSync(fixtureUrl);
   return JSON.parse(gunzipSync(bytes).toString('utf8'));
 }
 

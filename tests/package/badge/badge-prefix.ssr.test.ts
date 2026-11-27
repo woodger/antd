@@ -36,14 +36,17 @@ describe('Badge local prefixes SSR', () => {
         const classes = (markup: string | undefined) =>
           (/\bclass="([^"]*)"/.exec(markup ?? '')?.[1].split(/\s+/) ?? [])
             .filter(name => name.startsWith('case-')).sort();
+        const dotPattern = new RegExp(`class="[^"]*${prefix}-status-dot`, 'g');
+        const labelPattern = new RegExp(
+          `<span\\b[^>]*class="[^"]*${prefix}-status-text[^"]*"[^>]*>([\\s\\S]*?)<\\/span>`
+        );
 
         expect({
           roots: [...body.matchAll(/data-api-root="badge"/g)].length,
           sup: [...body.matchAll(/<sup\b/g)].length,
           custom: [...body.matchAll(/\sdata-api-custom(?:\s|=|>)/g)].length,
-          status: (body.match(new RegExp(`class="[^"]*${prefix}-status-dot`, 'g')) ?? []).length,
-          text: new RegExp(`<span\\b[^>]*class="[^"]*${prefix}-status-text[^"]*"[^>]*>([\\s\\S]*?)<\\/span>`)
-            .exec(body)?.[1].replace(/<[^>]*>/g, '') ?? null,
+          status: (body.match(dotPattern) ?? []).length,
+          text: labelPattern.exec(body)?.[1].replace(/<[^>]*>/g, '') ?? null,
           classes: { root: classes(root), indicator: classes(indicator) }
         }).toEqual(sample.ssr);
         expect(vi.getTimerCount()).toBe(0);

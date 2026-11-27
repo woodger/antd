@@ -3,10 +3,11 @@ import { createHash } from 'node:crypto';
 import { selectDataAriaReference, type SelectDataView } from './select-data-reference';
 import type { SelectDataSample } from './fixtures/select-data-cases';
 
-const queryBytes = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/select-virtual-query-native-baseline.json',
   import.meta.url
-));
+);
+const queryBytes = readFileSync(referenceUrl);
 if (createHash('sha256').update(queryBytes).digest('hex') !== '1c91bc9788bb65152c14011977abfdf178d74cd6e387c5bd35958ee379bf0228') {
   throw Error('Historical Native controlled-query baseline changed');
 }

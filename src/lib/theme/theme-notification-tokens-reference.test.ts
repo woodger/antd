@@ -17,13 +17,14 @@ interface NotificationTokenCase {
   config: ThemeTokenReferenceConfig;
   variables: Record<string, string>;
 }
+const referenceUrl = new URL(
+  '../../../tests/reference/ant-design-notification-tokens-reference.json',
+  import.meta.url
+);
 const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: NotificationTokenCase[];
-} = JSON.parse(readFileSync(
-  new URL('../../../tests/reference/ant-design-notification-tokens-reference.json', import.meta.url),
-  'utf8'
-));
+} = JSON.parse(readFileSync(referenceUrl, 'utf8'));
 
 describe('Ant Design 6.6.8 official UMD Notification CSS-token conformance', () => {
   it('keeps explicitly supplied status backgrounds when they equal global aliases', () => {

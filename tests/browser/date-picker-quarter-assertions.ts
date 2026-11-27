@@ -106,7 +106,8 @@ function bindIdentity(
 }
 function validateDate(value: QuarterSourceDate, owner: QuarterSourceOwner) {
   assert.equal(value.temporal.valid, true);
-  assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
+  const inputDate = new Date(value.temporal.epoch);
+  assert.equal(inputDate.toISOString(), value.temporal.iso);
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(object(object(value.raw).root).ref, value.identity);
   assert.deepEqual(['$y', '$M', '$D', '$H', '$m', '$s', '$ms']

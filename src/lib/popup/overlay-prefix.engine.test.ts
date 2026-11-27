@@ -27,7 +27,8 @@ describe('Overlay prefix stylesheets', () => {
       }
       else {
         expect(css).toContain(`.tenant-${kind}:where(.ant-${kind}-css-var)`);
-        expect(css).not.toMatch(new RegExp(`(?:^|\n)\\.ant-${kind}-css-var[\\s:{]`));
+        const classPattern = new RegExp(`(?:^|\n)\\.ant-${kind}-css-var[\\s:{]`);
+        expect(css).not.toMatch(classPattern);
         expect(css).toContain(`.tenant-${kind}.tenant-${kind}-blue`);
         expect(css).toContain(`.tenant-${kind}-placement-topRight`);
       }

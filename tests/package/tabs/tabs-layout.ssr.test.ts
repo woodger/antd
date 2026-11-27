@@ -54,7 +54,9 @@ describe('Tabs layout SSR', () => {
         ? 'margin-inline-start' : 'margin-top';
 
       expect(body).toContain('ant-tabs-centered');
-      expect(headerControls(body).match(new RegExp(`${margin}:0px`, 'g'))).toHaveLength(3);
+      const controls = headerControls(body);
+      const marginPattern = new RegExp(`${margin}:0px`, 'g');
+      expect(controls.match(marginPattern)).toHaveLength(3);
       expect(body).toMatch(/data-tabs-cell=""[^>]*class="[^"]*\bant-tabs-tab\b/);
       expect(body).not.toMatch(/data-tabs-cell=""[^>]*\bstyle=/);
       expect(body).toMatch(/aria-selected="true"[^>]*tabindex="0"/);

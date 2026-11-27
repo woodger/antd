@@ -76,7 +76,8 @@ test('Divider preserves logical and physical placements in both directions', asy
       const logical = placement === 'left'
         ? rtl ? 'end' : 'start'
         : placement === 'right' ? rtl ? 'start' : 'end' : placement;
-      await expect(divider).toHaveClass(new RegExp(`ant-divider-with-text-${logical}`));
+      const classPattern = new RegExp(`ant-divider-with-text-${logical}`);
+      await expect(divider).toHaveClass(classPattern);
       const bounds = (await divider.boundingBox())!;
       const content = (await title.boundingBox())!;
       const physicalLeft = logical === 'start' ? !rtl : logical === 'end' ? rtl : undefined;

@@ -5,7 +5,8 @@ afterEach(() => vi.useRealTimers());
 
 function setupDrag(initial: Partial<SplitterDragOptions> = {}) {
   vi.useFakeTimers({ toFake: ['Date'] });
-  vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+  const systemTime = new Date('2026-01-01T00:00:00Z');
+  vi.setSystemTime(systemTime);
   const view = new EventTarget();
   const node = Object.assign(new EventTarget(), { ownerDocument: { defaultView: view } });
   const state: SplitterDragOptions = {

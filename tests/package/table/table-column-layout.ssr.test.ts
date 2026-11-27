@@ -11,13 +11,19 @@ type SourceCell = Pick<
 
 /** Extracts a cell style or attribute from the static fixture HTML. */
 function attribute(markup: string, name: string) {
-  return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`(?:^|\\s)${name}="([^"]*)"`);
+  return markup.match(attributePattern)?.[1] ?? null;
 }
 
 /** Reads inline CSS before the browser measures columns. */
 function styleValue(markup: string, name: string) {
   const style = attribute(markup, 'style');
-  return style?.match(new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`))?.[1].trim() ?? '';
+  if (style === null) {
+    return '';
+  }
+
+  const propertyPattern = new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`);
+  return style.match(propertyPattern)?.[1].trim() ?? '';
 }
 
 /** Matches a single header definition or cell text without CSSOM. */

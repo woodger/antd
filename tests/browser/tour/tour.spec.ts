@@ -587,7 +587,9 @@ for (const placement of ['top', 'bottom', 'left', 'right', 'topLeft', 'topRight'
     await page.getByRole('combobox', { name: 'Tour placement', exact: true }).selectOption(placement);
     await button(page, 'Open Tour owner').click();
 
-    await expect(popup(page)).toHaveClass(new RegExp(`ant-tour-placement-${placement}(?: |$)`));
+    const tourPopup = popup(page);
+    const placementPattern = new RegExp(`ant-tour-placement-${placement}(?: |$)`);
+    await expect(tourPopup).toHaveClass(placementPattern);
     const panel = (await popup(page).boundingBox())!;
     const target = (await button(page, 'Tour first target').boundingBox())!;
     const gap = 18;

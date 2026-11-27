@@ -7,7 +7,8 @@ export function readTreeSelectMotionSSR(html: string, selectPrefix = 'ant-select
     if (!tag) {
       return null;
     }
-    const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`, 'i').exec(tag);
+    const attributePattern = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`, 'i');
+    const match = attributePattern.exec(tag);
     return match ? decode(match[1] ?? '') : null;
   };
   const root = tags.find(tag => attribute(tag, 'data-motion-root') !== null)
@@ -19,14 +20,15 @@ export function readTreeSelectMotionSSR(html: string, selectPrefix = 'ant-select
   const editor = tags.find(tag => /^(?:<input|<textarea)\b/i.test(tag)
     && (attribute(tag, 'data-motion-editor') !== null || attribute(tag, 'role') === 'combobox'));
   const style = (tag: string | undefined, name: string) => {
-    const match = new RegExp(`(?:^|;)\\s*${name}\\s*:\\s*([^;]+)`)
-      .exec(attribute(tag, 'style') ?? '');
+    const propertyPattern = new RegExp(`(?:^|;)\\s*${name}\\s*:\\s*([^;]+)`);
+    const match = propertyPattern.exec(attribute(tag, 'style') ?? '');
     return match?.[1].trim() ?? null;
   };
   const output = (name: string) => {
-    const match = new RegExp(
+    const outputPattern = new RegExp(
       `<output(?=[^>]*\\bdata-motion-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`
-    ).exec(html);
+    );
+    const match = outputPattern.exec(html);
     return match ? JSON.parse(decode(match[1].replace(/<!--[\s\S]*?-->/g, ''))) : null;
   };
   const classes = (tag: string) => attribute(tag, 'class')?.split(/\s+/) ?? [];

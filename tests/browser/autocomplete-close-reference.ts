@@ -65,10 +65,11 @@ interface Header {
 }
 // Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-const compressed = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/ant-design-autocomplete-close-reference.json.gz',
   import.meta.url
-));
+);
+const compressed = readFileSync(referenceUrl);
 assert.equal(compressed.length, 1097585);
 assert.equal(hash(compressed), '667b940d4008f19067a0d17eae9e79dab5c8171d5b9ff15a4063f5a7c231ccbf');
 const decoded = gunzipSync(compressed);

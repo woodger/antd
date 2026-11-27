@@ -22,7 +22,8 @@ async function chooseMonth(page: Page, name: string) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.install({ time: new Date('2024-09-15T03:00:00.000Z') });
+  const clockStart = new Date('2024-09-15T03:00:00.000Z');
+  await page.clock.install({ time: clockStart });
   await page.goto('/?fixture=calendar');
 
   await expect(cell(page, '2024-09-15')).toHaveAttribute('aria-selected', 'true');

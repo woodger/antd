@@ -9,7 +9,8 @@ import { expectedTableConfig } from '../../browser/fixtures/table-config-referen
 /** Reads one CSS property from the server style attribute. */
 function inlineValue(attributes: string, name: 'max-height' | 'width' | 'min-width' | 'table-layout') {
   const style = attributes.match(/\sstyle="([^"]*)"/)?.[1] ?? '';
-  return style.match(new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`))?.[1].trim() ?? '';
+  const stylePattern = new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`);
+  return style.match(stylePattern)?.[1].trim() ?? '';
 }
 
 it('pins the provider observations to the supported Ant Design archive', () => {

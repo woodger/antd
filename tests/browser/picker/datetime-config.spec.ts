@@ -3,7 +3,8 @@ import reference from '../fixtures/ant-design-datetime-config-reference.json' wi
 import { snapshotDatetimeConfig } from '../datetime-config-metrics';
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date(reference.reference.now));
+  const fixedTime = new Date(reference.reference.now);
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/?fixture=datetime-config');
 });
 

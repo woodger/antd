@@ -61,10 +61,11 @@ function guard(condition: unknown, message: string): asserts condition {
 }
 // Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 function sha256(bytes: Uint8Array) { return createHash('sha256').update(bytes).digest('hex'); }
-const stored = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/ant-design-select-surface-reference.json.gz',
   import.meta.url
-));
+);
+const stored = readFileSync(referenceUrl);
 guard(
   sha256(stored) === '836623978050d863893226a864f3f6b23b0daf6cfcf2614b2a6381ce6c4b3cd1',
   'gzip storage bytes'
@@ -102,7 +103,8 @@ for (const source of [selectSurfaceReference, selectSurfaceSSRReference]) {
   );
   for (const [path, hash] of Object.entries(header.inputPins)) {
     if (path.startsWith('.upstream/')) continue;
-    guard(sha256(readFileSync(new URL(`../../${path}`, import.meta.url))) === hash, path);
+    const fixtureUrl = new URL(`../../${path}`, import.meta.url);
+    guard(sha256(readFileSync(fixtureUrl)) === hash, path);
   }
 }
 guard(isDeepStrictEqual(selectSurfaceReference.reference.errors, []), 'browser errors');

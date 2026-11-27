@@ -73,7 +73,8 @@ function expectedEvents(sample: Sample, state: ClockState) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.install({ time: new Date(reference.reference.now) });
+  const clockStart = new Date(reference.reference.now);
+  await page.clock.install({ time: clockStart });
   await page.goto('/?fixture=picker-clock-options');
 });
 

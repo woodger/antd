@@ -333,7 +333,8 @@ export function readSelectComponentsResponsiveTagPrefixManifest() {
   }
   for (const input of manifest.portableInputs) {
     assert.equal(input.byteEqual, true);
-    const bytes = readFileSync(new URL(input.path, import.meta.url));
+    const fixtureUrl = new URL(input.path, import.meta.url);
+    const bytes = readFileSync(fixtureUrl);
     assert.equal(bytes.length, input.bytes);
     assert.equal(hash(bytes), input.sha256);
     assert.deepEqual(

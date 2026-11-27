@@ -90,7 +90,8 @@ test('FormErrorList retains Item/noStyle fallback and the existing List prefix p
   ]) {
     const errors = page.locator(`[data-prefix-errors="${owner}"] [data-ant-form-error-list]`);
 
-    await expect(errors).toHaveClass(new RegExp(`${prefix}-item-explain`));
+    const classPattern = new RegExp(`${prefix}-item-explain`);
+    await expect(errors).toHaveClass(classPattern);
     await expect(errors).toHaveText(text);
     await expect(errors.locator('[data-ant-form-error-message]'))
       .toHaveCSS('color', 'rgb(255, 77, 79)');

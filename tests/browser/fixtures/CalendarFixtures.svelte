@@ -39,7 +39,8 @@
   let events = $state<string[]>([]);
   let embedded = $state(0);
   let externalText = $state('2024-02-29T23:45:12.345Z');
-  let generatedValue = $state(new Date('2024-02-29T12:34:56.789Z'));
+  const inputDate = new Date('2024-02-29T12:34:56.789Z');
+  let generatedValue = $state(inputDate);
   let generatedMode = $state<CalendarMode>('month');
   let generatedRef = $state<HTMLDivElement>();
   let generatedMounted = $state(true);

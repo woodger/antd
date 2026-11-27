@@ -122,8 +122,10 @@ test('Notification inheritance reset preserves the focused action and removes pa
   });
 
 test('Notification token updates do not restart a running duration timer', async ({ page }) => {
-  await page.clock.install({ time: new Date('2030-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2030-01-01T00:00:01Z'));
+  const clockStart = new Date('2030-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2030-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.reload();
   await page.getByRole('button', { name: 'Open timed themed notification', exact: true })
     .dispatchEvent('click');

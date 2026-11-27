@@ -14,7 +14,8 @@ test.use({ viewport: { width: 1280, height: 720 }, timezoneId: 'UTC', locale: 'e
 
 /** Installs the assembled package from the props independent standard. */
 async function mountProfile(page: Page, profile: MultiplePickerProfile) {
-  await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
+  const fixedTime = new Date('2024-06-19T16:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
   const search = new URLSearchParams({ fixture: 'date-picker-multiple', profile: JSON.stringify(profile) });
   await page.goto('/?' + search.toString());
   await expect(page.locator('[data-date-owner]')).toHaveAttribute('data-ref', 'true');
@@ -199,7 +200,8 @@ test('multiple supports a real label, keyboard entry, confirmation and tag remov
 });
 
 test('DatePicker switches multiple without resetting its accepted list', async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
+  const fixedTime = new Date('2024-06-19T16:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/?fixture=date-picker-multiple-mode');
   const root = page.locator(rootSelector);
   const input = root.locator('input');

@@ -87,8 +87,9 @@ for (const [r, mode] of [[autocompleteLabelTitleReference, 'csr'], [autocomplete
 }
 for (const [file, source] of [['autocomplete-render-label-title-cases.mjs', '.upstream/artifacts/autocomplete-render-label-title-cases.mjs'],
   ['autocomplete-render-label-title-metrics.mjs', '.upstream/artifacts/autocomplete-render-label-title-reader.mjs']]) {
+  const fixtureUrl = new URL('./' + file, import.meta.url);
   assert.equal(
-    hash(readFileSync(new URL('./' + file, import.meta.url))),
+    hash(readFileSync(fixtureUrl)),
     autocompleteLabelTitleReference.reference.inputPins[source],
     file
   );

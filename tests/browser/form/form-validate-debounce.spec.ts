@@ -15,8 +15,10 @@ async function snapshot(page: Page) {
 }
 
 async function freeze(page: Page) {
-  await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+  const clockStart = new Date('2026-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=form-validate-debounce');
 }
 

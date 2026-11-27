@@ -434,7 +434,8 @@ test('More autofocus waits for the popup and cancels pending focus after unmount
 
   await expect(menu).toBeHidden();
   await page.clock.install();
-  await page.clock.pauseAt(new Date());
+  const pauseTime = new Date();
+  await page.clock.pauseAt(pauseTime);
   await more.press('ArrowDown');
   const outside = page.getByRole('textbox', { name: 'Overflow outside', exact: true });
   await outside.focus();

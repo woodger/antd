@@ -10,7 +10,10 @@ import TreeSelectLabelsScope from '../../browser/fixtures/TreeSelectLabelsScope.
 
 const decode = (value: string) => value.replace(/&(?:quot|amp|lt|gt|#39);/g,
   entity => ({ '&quot;': '"', '&amp;': '&', '&lt;': '<', '&gt;': '>', '&#39;': "'" })[entity]!);
-const attr = (tag: string, name: string) => decode(new RegExp(`\\s${name}="([^"]*)"`).exec(tag)?.[1] ?? '');
+const attr = (tag: string, name: string) => {
+  const attributePattern = new RegExp(`\\s${name}="([^"]*)"`);
+  return decode(attributePattern.exec(tag)?.[1] ?? '');
+};
 
 function readServerLabels(html: string) {
   const records = [...html.matchAll(/<span\b[^>]*\sdata-renderer-record="([^"]+)"[^>]*>\s*<span\b[^>]*\sdata-record-label[^>]*>([\s\S]*?)<\/span>/g)];

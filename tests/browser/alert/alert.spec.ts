@@ -61,7 +61,9 @@ test(
 
     for (const type of ['success', 'info', 'warning', 'error']) {
       await setting(page, 'type', type);
-      await expect(message(page)).toHaveClass(new RegExp(`ant-alert-${type}`));
+      const alertMessage = message(page);
+      const classPattern = new RegExp(`ant-alert-${type}`);
+      await expect(alertMessage).toHaveClass(classPattern);
       backgrounds.add(
         await message(page).evaluate((element) => getComputedStyle(element).backgroundColor)
       );

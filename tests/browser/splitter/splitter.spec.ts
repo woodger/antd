@@ -44,7 +44,8 @@ async function pseudoColor(element: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2026-01-01T12:00:00Z'));
+  const fixedTime = new Date('2026-01-01T12:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/?fixture=splitter');
   await expectSizes(page, [300, 300]);
 });

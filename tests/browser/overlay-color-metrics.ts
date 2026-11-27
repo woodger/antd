@@ -17,7 +17,12 @@ export function snapshotOverlayColors(component: string) {
     const arrow = root.querySelector<HTMLElement>(`.${prefix}-arrow`);
 
     return {
-      colorClass: [...root.classList].find(name => new RegExp(`^${prefix}-(?:blue|purple|cyan|green|magenta|pink|red|orange|yellow|volcano|geekblue|lime|gold)(?:-inverse)?$`).test(name)) ?? null,
+      colorClass: [...root.classList].find(name => {
+        const pattern = new RegExp(
+          `^${prefix}-(?:blue|purple|cyan|green|magenta|pink|red|orange|yellow|volcano|geekblue|lime|gold)(?:-inverse)?$`
+        );
+        return pattern.test(name);
+      }) ?? null,
       arrowVariable: root.style.getPropertyValue('--ant-tooltip-arrow-background-color'),
       foregroundVariable: container.style.getPropertyValue('--ant-tooltip-overlay-color'),
       container: {

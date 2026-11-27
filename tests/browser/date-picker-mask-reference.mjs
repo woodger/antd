@@ -53,7 +53,8 @@ assert.deepEqual(protocol.samples, samples);
 assert.deepEqual(protocol.counts, counts);
 assert.deepEqual(protocol.storage, storage);
 for (const entry of [metadata.sharedCases, metadata.sharedSchema]) {
-  const raw = fs.readFileSync(new URL('./' + entry.file, import.meta.url));
+  const fixtureUrl = new URL('./' + entry.file, import.meta.url);
+  const raw = fs.readFileSync(fixtureUrl);
   assert.equal(raw.length, entry.bytes);
   assert.equal(sha(raw), entry.sha256);
 }
@@ -285,8 +286,9 @@ function dateSnapshot(value, authored) {
   }
   assert.equal(property(value.raw, value.identity, '$L'), value.temporal.locale);
   if (value.temporal.valid) {
+    const date = new Date(value.temporal.epoch);
     assert.equal(
-      new Date(value.temporal.epoch).toISOString(),
+      date.toISOString(),
       value.temporal.iso
     );
   }

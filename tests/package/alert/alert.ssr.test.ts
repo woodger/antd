@@ -13,7 +13,8 @@ describe('Alert public package SSR', () => {
     } }).body.replace(/<!--[\s\S]*?-->/g, '');
 
     for (const part of ['title', 'description', 'actions', 'icon']) {
-      expect(numeric).toMatch(new RegExp(`data-ant-alert-part="${part}"[^>]*>\\s*0`));
+      const outputPattern = new RegExp(`data-ant-alert-part="${part}"[^>]*>\\s*0`);
+      expect(numeric).toMatch(outputPattern);
     }
     expect(arrays).toContain('First0Last');
     expect(arrays).toContain('ant-alert-with-description');

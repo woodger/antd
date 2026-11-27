@@ -21,7 +21,8 @@ import {
 
 test.use({ viewport: datePickerPresetGeometry.viewport });
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-09-15T03:00:00.000Z'));
+  const fixedTime = new Date('2024-09-15T03:00:00.000Z');
+  await page.clock.setFixedTime(fixedTime);
 });
 for (const sample of datePickerPresetTransitionSamples) {
   test(`DatePicker preset transitions match Source ${sample.id}`, async ({ page }, testInfo) => {

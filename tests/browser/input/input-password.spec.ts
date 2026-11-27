@@ -396,7 +396,8 @@ test(
 
     await expect(input).toHaveAttribute('value', 'secret');
     await page.clock.install();
-    await page.clock.pauseAt(new Date());
+    const pauseTime = new Date();
+    await page.clock.pauseAt(pauseTime);
     await page.locator('.password-field .ant-input-password-icon').click();
     await page.getByLabel('Mount password', { exact: true }).uncheck();
     await page.clock.runFor(100);

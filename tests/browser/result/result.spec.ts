@@ -52,12 +52,13 @@ for (const [status, color, pathStart, glyph] of [
 ]) test(`Result displays the official ${status} icon and theme color`, async ({ page }) => {
   await setting(page, 'status', status);
 
-  await expect(host(page)).toHaveClass(new RegExp(`ant-result-${status}`));
+  const result = host(page);
+  const statusPattern = new RegExp(`ant-result-${status}`);
+  await expect(result).toHaveClass(statusPattern);
   await expect(icon(page)).toHaveCSS('color', color);
-  await expect(icon(page).locator('path')).toHaveAttribute(
-    'd',
-    new RegExp(`^${pathStart.replace('.', '\\.')}`)
-  );
+  const iconPath = icon(page).locator('path');
+  const pathPattern = new RegExp(`^${pathStart.replace('.', '\\.')}`);
+  await expect(iconPath).toHaveAttribute('d', pathPattern);
   expect(await icon(page).locator('path').getAttribute('d')).toContain(glyph);
   await expect(icon(page).locator('.anticon')).toHaveCSS('font-size', '72px');
 });
@@ -71,7 +72,9 @@ for (const [status, width] of [['403', '251'], ['404', '252'], ['500', '254']])
       const svg = icon(page).locator('svg');
 
       await expect(svg).toHaveAttribute('viewBox', `0 0 ${width} 294`);
-      await expect(host(page)).toHaveClass(new RegExp(`ant-result-${status}`));
+      const result = host(page);
+      const statusPattern = new RegExp(`ant-result-${status}`);
+      await expect(result).toHaveClass(statusPattern);
 
       const geometry = await svg.locator('path')
         .evaluateAll(nodes => nodes.map(node => node.getAttribute('d')));

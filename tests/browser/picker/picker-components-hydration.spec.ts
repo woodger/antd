@@ -22,7 +22,8 @@ async function verifyEditorHydration(page: Page, nativeSlot: boolean) {
     const entry = fileURLToPath(new URL('../fixtures/picker-components-hydration.server.ts', import.meta.url));
     const { renderEditorFixture } = await server.ssrLoadModule(entry);
     const { body, head } = renderEditorFixture(nativeSlot);
-    await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
+    const fixedTime = new Date('2024-06-19T16:00:00Z');
+    await page.clock.setFixedTime(fixedTime);
     const route = '/select-components-hydration.html';
     await page.goto(nativeSlot ? `${route}?native-slot` : route);
     await page.evaluate(({ body, head }) => {

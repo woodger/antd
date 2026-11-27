@@ -65,9 +65,10 @@ for (const field of ['input', 'text-area', 'multiple-select']) {
               node.dispatchEvent(new Event('change', { bubbles: true }));
             }, variant);
 
-          await expect(root).toHaveClass(new RegExp(
+          const classPattern = new RegExp(
             `${prefix}-${variant === 'inherit' ? 'outlined' : variant}`
-          ));
+          );
+          await expect(root).toHaveClass(classPattern);
           await expect(input).toHaveValue(value);
           await expect(input).toBeFocused();
           expect(await input.evaluate((node, old) => node === old, original)).toBe(true);

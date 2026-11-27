@@ -8,7 +8,8 @@ const references = [readPickerPanelsReference(), readPickerPanelsReference('pane
 
 async function openFixture(page: Page, profile: PickerPanelProfile) {
   const query = new URLSearchParams({ fixture: 'picker-panels', profile: JSON.stringify(profile) });
-  await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
+  const fixedTime = new Date('2024-06-19T16:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto(`/?${query}`);
 }
 

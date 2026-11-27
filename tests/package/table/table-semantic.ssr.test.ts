@@ -7,7 +7,8 @@ import { expectedTableSemantics } from '../../browser/fixtures/table-semantic-re
 
 /** Reads the last declaration of the measured CSS property from the inline style. */
 function slotValue(style: string, name: '--observed-slot' | '--observed-provider-slot') {
-  const values = Array.from(style.matchAll(new RegExp('(?:^|;)\\s*' + name + ':\\s*([^;]+)', 'g')));
+  const stylePattern = new RegExp('(?:^|;)\\s*' + name + ':\\s*([^;]+)', 'g');
+  const values = Array.from(style.matchAll(stylePattern));
   return values.at(-1)?.[1].trim() ?? '';
 }
 

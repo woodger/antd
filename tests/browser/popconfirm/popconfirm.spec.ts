@@ -420,7 +420,9 @@ for (const placement of ['top', 'bottom', 'left', 'right']) {
       .selectOption(placement);
     await trigger(page).click();
 
-    await expect(card(page)).toHaveClass(new RegExp(`ant-popover-placement-${placement}`));
+    const popconfirm = card(page);
+    const placementPattern = new RegExp(`ant-popover-placement-${placement}`);
+    await expect(popconfirm).toHaveClass(placementPattern);
     await expect(card(page).locator('.ant-popover-arrow')).toBeVisible();
   });
 }

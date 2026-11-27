@@ -32,7 +32,8 @@ export async function settleWeek(page: Page) {
 }
 export async function openWeek(page: Page, sample: WeekSample) {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+  const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/date-picker-week.html?owner=' + sample.id);
   await page.waitForFunction(() => window.nativeWeek?.ready === true);
   await page.evaluate(() => document.fonts.ready);

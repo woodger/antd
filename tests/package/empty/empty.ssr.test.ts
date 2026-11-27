@@ -29,7 +29,8 @@ describe('Empty public package SSR', () => {
     const boolean = render(Empty, { props: { image: true, description: true, children: true } }).body;
 
     for (const part of ['image', 'description', 'footer']) {
-      expect(numeric).toMatch(new RegExp(`data-ant-empty-part="${part}"[^>]*>\\s*0`));
+      const outputPattern = new RegExp(`data-ant-empty-part="${part}"[^>]*>\\s*0`);
+      expect(numeric).toMatch(outputPattern);
       expect(boolean).toContain(`data-ant-empty-part="${part}"`);
     }
     expect(boolean).not.toContain('>true<');

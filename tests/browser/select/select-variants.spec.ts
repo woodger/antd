@@ -40,7 +40,8 @@ for (const mode of ['single', 'multiple']) {
             node.dispatchEvent(new Event('change', { bubbles: true }));
           }, variant);
 
-        await expect(root).toHaveClass(new RegExp(`ant-select-${variant}`));
+        const classPattern = new RegExp(`ant-select-${variant}`);
+        await expect(root).toHaveClass(classPattern);
         await expect(input).toHaveValue('gam');
         await expect(input).toBeFocused();
         await expect(input).toHaveAttribute('aria-expanded', 'true');

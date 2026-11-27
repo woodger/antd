@@ -4,8 +4,10 @@ import { treeMotionSamples, type TreeMotionAction } from '../fixtures/tree-motio
 import { readTreeMotion } from '../tree-motion-metrics';
 
 for (const sample of reference.cases) test(`Tree motion matches Source for ${sample.id}`, async ({ page }) => {
-  await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-11-10T12:00:01Z'));
+  const clockStart = new Date('2026-11-10T12:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-11-10T12:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=tree-motion');
   await page.getByLabel('Tree motion case').selectOption(sample.id);
   await page.clock.runFor(32);

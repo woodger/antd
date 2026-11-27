@@ -11,7 +11,8 @@ dayjs.extend(utc);
 describe('Calendar SSR', () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2024, 8, 15, 12, 34, 56, 789));
+    const systemTime = new Date(2024, 8, 15, 12, 34, 56, 789);
+    vi.setSystemTime(systemTime);
   });
 
   afterEach(() => {

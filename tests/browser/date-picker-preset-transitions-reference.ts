@@ -169,8 +169,11 @@ function readMetadata() {
       'byte-exact complete Source module; no import or function-body rewrites');
     assert.deepEqual({ bytes: copy.source.bytes, sha256: copy.source.sha256 },
       protocol.inputPins[copy.source.file]);
-    const bytes = readFileSync(new URL('./' + copy.target.slice('tests/browser/'.length),
-      import.meta.url));
+    const fixtureUrl = new URL(
+      './' + copy.target.slice('tests/browser/'.length),
+      import.meta.url
+    );
+    const bytes = readFileSync(fixtureUrl);
     assert.equal(bytes.length, copy.source.bytes);
     assert.equal(hash(bytes), copy.source.sha256);
   }

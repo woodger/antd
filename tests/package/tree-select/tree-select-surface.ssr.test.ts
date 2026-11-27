@@ -10,7 +10,10 @@ import TreeSelectSurfaceScope from '../../browser/fixtures/TreeSelectSurfaceScop
 
 const decode = (value: string) => value.replace(/&(?:quot|amp|lt|gt|#39);/g,
   entity => ({ '&quot;': '"', '&amp;': '&', '&lt;': '<', '&gt;': '>', '&#39;': "'" })[entity]!);
-const attr = (tag: string, name: string) => decode(new RegExp(`\\s${name}="([^"]*)"`).exec(tag)?.[1] ?? '');
+const attr = (tag: string, name: string) => {
+  const attributePattern = new RegExp(`\\s${name}="([^"]*)"`);
+  return decode(attributePattern.exec(tag)?.[1] ?? '');
+};
 
 function slots(html: string, tag: 'div' | 'button', name: string) {
   const pattern = new RegExp(

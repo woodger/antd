@@ -200,10 +200,11 @@ interface BlurBaseline {
   cases: Array<{ id: string; before: unknown[][]; synchronous: {
     during: Array<{ connected: boolean; focused: boolean; ledger: unknown[][] }>; after: unknown[][] } }>;
 }
-const blurBytes = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/select-virtual-blur-native-baseline.json',
   import.meta.url
-));
+);
+const blurBytes = readFileSync(referenceUrl);
 assert(createHash('sha256').update(blurBytes).digest('hex')
   === 'cad4507fabb6b212358679645e71d0459ae7eadc57055a558e5f20a6613ad873', 'historical connected blur baseline SHA256');
 export const selectVirtualBlurNativeBaseline = JSON.parse(blurBytes.toString('utf8')) as BlurBaseline;
@@ -235,10 +236,11 @@ interface QueryBaseline {
   cases: Array<{ id: string; trace: Array<{ action: { query?: string; open?: boolean }; query: string;
     events: unknown[][]; editor: { value: string; caret: number[]; focused: boolean }; open: boolean }> }>;
 }
-const queryBytes = readFileSync(new URL(
+const fixtureUrl = new URL(
   './fixtures/select-virtual-query-native-baseline.json',
   import.meta.url
-));
+);
+const queryBytes = readFileSync(fixtureUrl);
 assert(createHash('sha256').update(queryBytes).digest('hex')
   === '1c91bc9788bb65152c14011977abfdf178d74cd6e387c5bd35958ee379bf0228', 'historical controlled query baseline SHA256');
 export const selectVirtualQueryNativeBaseline = JSON.parse(queryBytes.toString('utf8')) as QueryBaseline;
@@ -264,10 +266,11 @@ for (const entry of selectVirtualQueryNativeBaseline.cases) {
     frame({ open: false }, initialQuery, false), frame({ query: '09' }, '09', false),
     frame({ open: true }, '09', true)]), `${entry.id} complete historical query trace`);
 }
-const caretBytes = readFileSync(new URL(
+const sourceUrl = new URL(
   './fixtures/select-virtual-query-caret-native-baseline.json',
   import.meta.url
-));
+);
+const caretBytes = readFileSync(sourceUrl);
 assert(createHash('sha256').update(caretBytes).digest('hex')
   === 'f5fd52af94151ea1feddecc37552ca62ee85830e307faa28c1854b228e13fdec', 'historical caret close/reopen baseline SHA256');
 export const selectVirtualQueryCaretNativeBaseline = JSON.parse(caretBytes.toString('utf8')) as QueryBaseline;

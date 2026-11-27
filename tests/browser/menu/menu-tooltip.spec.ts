@@ -150,7 +150,8 @@ test('resolves semantic slots and passes the actual li to the custom portal', as
 
   await expect(popup).toHaveText(source.popup.text);
   for (const className of source.popup.classes) {
-    await expect(popup).toHaveClass(new RegExp(`\\b${className}\\b`));
+    const classPattern = new RegExp(`\\b${className}\\b`);
+    await expect(popup).toHaveClass(classPattern);
   }
   await expect(popup).not.toHaveClass(/\btooltip-plain\b/);
   await expect(popup).toHaveCSS('padding-top', source.popup.paddingTop);

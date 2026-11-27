@@ -7,10 +7,11 @@ import { settleSelectValue, verifySelectValue } from '../select-value-assertions
 import { selectValueSamples } from '../fixtures/select-value-cases';
 import { selectValueReference } from '../select-value-reference';
 
-const bytes = readFileSync(new URL(
+const referenceUrl = new URL(
   '../fixtures/ant-design-select-value-opacity-reference.json',
   import.meta.url
-));
+);
+const bytes = readFileSync(referenceUrl);
 if (createHash('sha256').update(bytes).digest('hex') !== 'e6ada4d37004ee45bef3b7c77cf632765d5b3b3ffd7301671fff5d9b90fd07bd') {
   throw Error('Original selected-label paint reference changed');
 }

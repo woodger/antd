@@ -263,7 +263,9 @@ test(
       'gold'
     ]) {
       await setting(page, 'color', color);
-      await expect(indicator(page)).toHaveClass(new RegExp(`ant-badge-color-${color}`));
+      const badgeIndicator = indicator(page);
+      const colorPattern = new RegExp(`ant-badge-color-${color}`);
+      await expect(badgeIndicator).toHaveClass(colorPattern);
       colors.set(
         color,
         await indicator(page).evaluate(node => getComputedStyle(node).backgroundColor)

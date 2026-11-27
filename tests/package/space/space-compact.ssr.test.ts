@@ -5,7 +5,8 @@ import { SpaceAddon } from '@woodger/antd';
 import Fixtures from '../../browser/fixtures/SpaceCompactFixtures.svelte';
 
 function inputTag(body: string, label: string) {
-  return body.match(new RegExp(`<input[^>]*aria-label="${label}"[^>]*>`))?.[0] ?? '';
+  const pattern = new RegExp(`<input[^>]*aria-label="${label}"[^>]*>`);
+  return body.match(pattern)?.[0] ?? '';
 }
 
 describe('Space Compact SSR', () => {

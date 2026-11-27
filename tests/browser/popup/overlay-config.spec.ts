@@ -61,8 +61,10 @@ for (const component of ['tooltip', 'popover', 'popconfirm']) {
     await select(page, `${component}-callback-layers`);
     const anchor = page.locator('[data-config-anchor]');
     const prefix = component === 'tooltip' ? 'ant-tooltip' : 'ant-popover';
-    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T00:00:01Z');
+    await page.clock.pauseAt(pauseTime);
 
     await anchor.hover();
     await page.mouse.move(0, 0);
@@ -96,8 +98,10 @@ for (const sample of reference.interactions as OverlayConfigInteraction[]) {
   test(`Overlay trigger configuration preserves source event timing for ${sample.name}`, async ({ page }) => {
     await select(page, sample.name);
     await page.getByLabel('Interactive config', { exact: true }).check();
-    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T00:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     const anchor = page.locator('[data-config-anchor]');
 
     for (const step of sample.steps) {

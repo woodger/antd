@@ -6,7 +6,8 @@ import source from '../../browser/fixtures/ant-design-table-expansion-options-re
 
 /** The fixture's SSR attribute values are snapshot inputs. */
 function attribute(markup: string, name: string) {
-  return markup.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`\\b${name}="([^"]*)"`);
+  return markup.match(attributePattern)?.[1] ?? null;
 }
 
 /** Reads ordinary and detail tr elements before client effects run. */

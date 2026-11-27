@@ -28,20 +28,16 @@ interface OriginalState {
 }
 interface OriginalReference { cases: Array<{ id: string; states: OriginalState[] }> }
 type Capture = NonNullable<ComponentProps<typeof SelectSurfaceOmissionCase>['capture']>;
-const original = JSON.parse(readFileSync(
-  new URL(
-    '../../browser/fixtures/ant-design-select-surface-omission-ssr-reference.json',
-    import.meta.url
-  ),
-  'utf8'
-)) as OriginalReference;
-const width = JSON.parse(readFileSync(
-  new URL(
-    '../../browser/fixtures/ant-design-select-surface-omission-width-ssr-reference.json',
-    import.meta.url
-  ),
-  'utf8'
-)) as OriginalReference;
+const referenceUrl = new URL(
+  '../../browser/fixtures/ant-design-select-surface-omission-ssr-reference.json',
+  import.meta.url
+);
+const original = JSON.parse(readFileSync(referenceUrl, 'utf8')) as OriginalReference;
+const fixtureUrl = new URL(
+  '../../browser/fixtures/ant-design-select-surface-omission-width-ssr-reference.json',
+  import.meta.url
+);
+const width = JSON.parse(readFileSync(fixtureUrl, 'utf8')) as OriginalReference;
 const samples: readonly NativeSelectSurfaceOmissionSample[] = [...omissionSamples,
   ...selectSurfaceOmissionNativeSamples.filter(sample => sample.initialOpen)];
 const states = [...original.cases, ...width.cases].flatMap(entry => entry.states.map(state => ({

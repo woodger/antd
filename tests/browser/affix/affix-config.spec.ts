@@ -35,7 +35,8 @@ for (const preset of ['tenant', 'source-theme', 'native-light', 'native-dark', '
       const initial = preset === 'tenant' ? 'tenant-affix'
         : preset === 'source-theme' ? 'source-affix' : 'native-affix';
 
-      await expect(content).toHaveClass(new RegExp(`\\b${initial}\\b`));
+      const classPattern = new RegExp(`\\b${initial}\\b`);
+      await expect(content).toHaveClass(classPattern);
       const oldContent = await content.elementHandle();
       const oldRoot = await root.elementHandle();
       const input = root.getByRole('textbox', { name: 'Affix themed draft normal', exact: true });

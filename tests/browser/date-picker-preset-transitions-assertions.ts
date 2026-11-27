@@ -558,7 +558,8 @@ function timeRows(point: NativePoint | SourcePoint, prefix: string, native: bool
         else {
           const label = attr(button, 'aria-label');
           assert(label);
-          const match = new RegExp('^' + type + ' ([0-9]+)$').exec(label);
+          const pattern = new RegExp('^' + type + ' ([0-9]+)$');
+          const match = pattern.exec(label);
           assert(match);
           value = String(Number(match[1]));
         }

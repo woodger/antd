@@ -30,15 +30,14 @@
     }
   };
   const Picker = DatePicker.generatePicker(adapter);
-  const profile = new URLSearchParams(globalThis.location?.search).get('profile');
+  const query = new URLSearchParams(globalThis.location?.search);
+  const profile = query.get('profile');
   const masked = profile === 'overnight-mask';
   const format = masked ? { format: 'HH:mm', type: 'mask' } as const
     : profile === 'format-list' ? ['YYYY-MM-DD HH:mm', 'HH:mm'] : 'HH:mm';
-  const initial: RangePickerValue<Date> = masked ? [
-    new Date('2026-10-15T23:45:58.123Z'), new Date('2026-10-16T01:30:22.456Z')
-  ] : [
-    new Date('2026-10-15T09:00:00Z'), new Date('2026-10-15T18:00:00Z')
-  ];
+  const start = new Date(masked ? '2026-10-15T23:45:58.123Z' : '2026-10-15T09:00:00Z');
+  const end = new Date(masked ? '2026-10-16T01:30:22.456Z' : '2026-10-15T18:00:00Z');
+  const initial: RangePickerValue<Date> = [start, end];
   let value = $state.raw<RangePickerValue<Date> | null>(initial);
   let changes = $state.raw<unknown[]>([]);
 </script>

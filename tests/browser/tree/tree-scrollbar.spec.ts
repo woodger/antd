@@ -5,7 +5,8 @@ import type { TreeScrollbarAction } from '../fixtures/tree-scrollbar-cases';
 import { readTreeScrollbar } from '../tree-scrollbar-metrics';
 const field = (page: Page) => page.getByRole('combobox', { name: 'Scrollbar field', exact: true });
 async function mount(page: Page, id: string) {
-  await page.clock.install({ time: new Date('2026-11-11T00:00:00Z') });
+  const clockStart = new Date('2026-11-11T00:00:00Z');
+  await page.clock.install({ time: clockStart });
   await page.goto('/?fixture=tree-scrollbar');
   await page.getByRole('combobox', { name: 'Tree scrollbar sample', exact: true }).selectOption(id);
   await expect(page.locator('[data-tree-scrollbar-ref]')).toHaveAttribute(

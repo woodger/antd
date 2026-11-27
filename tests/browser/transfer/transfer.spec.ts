@@ -734,7 +734,9 @@ test(
     await expect(rows(page).first()).toHaveCSS('min-height', '28px');
     for (const status of ['success', 'validating']) {
       await control(page, 'Transfer status').selectOption(status);
-      await expect(root(page)).toHaveClass(new RegExp(`ant-transfer-status-${status}`));
+      const transfer = root(page);
+      const statusPattern = new RegExp(`ant-transfer-status-${status}`);
+      await expect(transfer).toHaveClass(statusPattern);
     }
     await control(page, 'Transfer status').selectOption('error');
 

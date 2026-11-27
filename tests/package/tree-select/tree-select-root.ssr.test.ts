@@ -62,7 +62,8 @@ it.each(reference.ssr)('renders $id root replacement without default content or 
         expect(field).toContain(`${key}="${value}"`);
       }
       else {
-        expect(field).not.toMatch(new RegExp(`\\s${key}(?:=|\\s|>)`));
+        const expectedPattern = new RegExp(`\\s${key}(?:=|\\s|>)`);
+        expect(field).not.toMatch(expectedPattern);
       }
     }
     expect(/\sdisabled(?:=|\s|>)/.test(field)).toBe(entry.view.disabled === true);

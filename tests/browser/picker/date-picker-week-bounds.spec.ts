@@ -12,7 +12,8 @@ function weekPage(kind: PickerKind, dates: Record<string, string>) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-06-11T12:00:00Z'));
+  const fixedTime = new Date('2024-06-11T12:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
 });
 
 for (const kind of ['DatePicker', 'RangePicker'] as const) {

@@ -52,7 +52,8 @@ function guard(condition: unknown, message: string): asserts condition {
 }
 
 const filename = 'ant-design-select-value-reference.json.gz';
-const stored = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+const fixtureUrl = new URL(`./fixtures/${filename}`, import.meta.url);
+const stored = readFileSync(fixtureUrl);
 const bytes = gunzipSync(stored);
 guard(createHash('sha256').update(stored).digest('hex')
   === '340d3d8d3f4b20943238bc25cfc19fdd054505561ed2528110514a50274b8347', 'compressed SHA256');

@@ -3,8 +3,10 @@ import { test, expect } from '../test';
 
 async function mount(page: Page, id = 'default', clock = true) {
   if (clock) {
-    await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-11-10T12:00:01Z'));
+    const clockStart = new Date('2026-11-10T12:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-11-10T12:00:01Z');
+    await page.clock.pauseAt(pauseTime);
   }
   await page.goto('/?fixture=tree-motion');
   await page.getByLabel('Tree motion case').selectOption(id);
@@ -232,8 +234,10 @@ test('Tree dragend clears the collapse group and its old motion deadline', async
 });
 
 test('Tree motion keeps generic aliases, zero/bigint keys and an outside opaque draft', async ({ page }) => {
-  await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-11-10T12:00:01Z'));
+  const clockStart = new Date('2026-11-10T12:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-11-10T12:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=tree-motion-generic');
   const root = await page.getByRole('tree').elementHandle();
   const sibling = await row(page, 'outside').elementHandle();

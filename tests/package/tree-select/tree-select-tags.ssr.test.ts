@@ -44,7 +44,8 @@ function readHeader(html: string, prefix: string, single: boolean) {
     return true;
   };
   const attribute = (node: Span, name: string) => {
-    const found = new RegExp(`\\s${name}="([^"]*)"`).exec(node.attrs)?.[1];
+    const attributePattern = new RegExp(`\\s${name}="([^"]*)"`);
+    const found = attributePattern.exec(node.attrs)?.[1];
     return found === undefined ? null : decode(found);
   };
   const child = (node: Span, marker: string) => spans.find(item =>

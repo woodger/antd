@@ -76,7 +76,8 @@ describe('Custom picker panels package SSR', () => {
     const timer = vi.spyOn(globalThis, 'setTimeout');
     try {
       const { body } = render(PickerPanelFixtures, { props: { profile, server: true } });
-      const panels = body.match(new RegExp(`data-custom-panel="${profile.slots[0]}"`, 'g'));
+      const outputPattern = new RegExp(`data-custom-panel="${profile.slots[0]}"`, 'g');
+      const panels = body.match(outputPattern);
       expect(panels).toHaveLength(profile.range && !profile.time ? 2 : 1);
       expect(body).toContain('data-picker-popup');
       expect(body).not.toMatch(/<input\b[^>]*\b(components|nexticon)=/);

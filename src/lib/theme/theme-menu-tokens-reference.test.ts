@@ -12,12 +12,14 @@ interface ReferenceCase {
   config: ThemeReferenceConfig;
   variables: Record<string, string>;
 }
+const referenceUrl = new URL(
+  '../../../tests/reference/ant-design-menu-tokens-reference.json',
+  import.meta.url
+);
 const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: ReferenceCase[];
-} = JSON.parse(readFileSync(
-  new URL('../../../tests/reference/ant-design-menu-tokens-reference.json', import.meta.url), 'utf8'
-));
+} = JSON.parse(readFileSync(referenceUrl, 'utf8'));
 
 describe('Ant Design 6.6.8 official UMD Menu CSS-token conformance', () => {
   it('uses scoped declarations from the pinned official artifact', () => {

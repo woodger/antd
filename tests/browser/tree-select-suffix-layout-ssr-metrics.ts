@@ -37,7 +37,8 @@ export function readTreeSelectSuffixLayoutSSR(html: string) {
     if (!node) {
       return null;
     }
-    const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s>]))`).exec(node.opening);
+    const pattern = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s>]))`);
+    const match = pattern.exec(node.opening);
     return match ? decode(match[1] ?? '') : null;
   };
   const marked = (node: HtmlNode, marker: string) => attribute(node, marker) !== null;

@@ -6,7 +6,8 @@ import source from '../../browser/fixtures/ant-design-table-pagination-reference
 
 /** Reads an opening tag's attribute independently of serialization order. */
 function attribute(tag: string, name: string) {
-  const match = tag.match(new RegExp('\\s' + name + '="([^"]*)"'));
+  const attributePattern = new RegExp('\\s' + name + '="([^"]*)"');
+  const match = tag.match(attributePattern);
   return match?.[1];
 }
 

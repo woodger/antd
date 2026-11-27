@@ -43,7 +43,8 @@ async function command(page: Page, name: string) {
 
 for (const { sample, initial, modal, popconfirm, changed } of reference.cases) {
   test(`published ${sample.code} locale renders labels from Ant Design`, async ({ page }) => {
-    await page.clock.setFixedTime(new Date(reference.reference.now));
+    const fixedTime = new Date(reference.reference.now);
+    await page.clock.setFixedTime(fixedTime);
     await page.goto('/locale-catalog.html?code=' + sample.code);
 
     await expect(page.locator('#probe-calendar thead th')).toHaveCount(7);

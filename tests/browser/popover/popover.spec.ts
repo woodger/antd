@@ -148,8 +148,10 @@ test(
   'Popover hover delays are cancellable and hovering or focusing its content keeps it open',
   async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T00:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await mode(page, 'hover');
 
     const before = page.getByRole('button', { name: 'Before Popover', exact: true });
@@ -428,8 +430,10 @@ for (const action of ['F3', 'F5', 'F6']) {
       ? 'clearing content'
       : action === 'F5' ? 'unmounting' : 'replacing its trigger'}`,
     async ({ page }) => {
-      await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-      await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+      const clockStart = new Date('2026-01-01T00:00:00Z');
+      await page.clock.install({ time: clockStart });
+      const pauseTime = new Date('2026-01-01T00:00:01Z');
+      await page.clock.pauseAt(pauseTime);
       await mode(page, 'hover');
       await trigger(page).hover();
       await page.clock.runFor(100);
@@ -455,7 +459,8 @@ for (const placement of ['top', 'bottom', 'left', 'right']) {
 
       const popup = card(page);
 
-      await expect(popup).toHaveClass(new RegExp(`ant-popover-placement-${placement}`));
+      const classPattern = new RegExp(`ant-popover-placement-${placement}`);
+      await expect(popup).toHaveClass(classPattern);
 
       await expect.poll(async () => {
         const target = (await trigger(page).boundingBox())!;

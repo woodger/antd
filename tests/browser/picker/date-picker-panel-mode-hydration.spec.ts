@@ -21,7 +21,8 @@ test('RangePicker mode hydrates both editors and preserves an active draft', asy
     const entry = new URL('../fixtures/date-picker-panel-mode-hydration.server.ts', import.meta.url);
     const { renderPanelModeFixture } = await server.ssrLoadModule(fileURLToPath(entry));
     const { body, head } = renderPanelModeFixture();
-    await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
+    const fixedTime = new Date('2024-06-19T16:00:00Z');
+    await page.clock.setFixedTime(fixedTime);
     await page.goto('/select-components-hydration.html');
     await page.evaluate(({ body, head }) => {
       const root = document.getElementById('root');

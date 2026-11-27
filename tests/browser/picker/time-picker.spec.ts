@@ -11,7 +11,8 @@ const unit = (page: Page, name: string) => popup(page)
   .getByRole('button', { name, exact: true });
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
+  const clockStart = new Date('2024-09-15T12:34:56.789Z');
+  await page.clock.install({ time: clockStart });
   await page.goto('/?fixture=time-picker');
 
   await expect(input(page)).toHaveValue('10:23:44');
@@ -423,7 +424,8 @@ test('TimePicker integrates with Form validation, labels and reset without seria
 
 test('TimePicker uses Now without OK and aligns the source millisecond step', async ({ page }) => {
   // Now reads the fixed date; the page load is not limited to four seconds.
-  await page.clock.setFixedTime(new Date('2024-09-15T12:35:00.789Z'));
+  const fixedTime = new Date('2024-09-15T12:35:00.789Z');
+  await page.clock.setFixedTime(fixedTime);
   await input(page).click();
   await unit(page, 'Сейчас').click();
 
@@ -433,7 +435,8 @@ test('TimePicker uses Now without OK and aligns the source millisecond step', as
 });
 
 test('TimePicker selects the nearest enabled unit after manual scrolling settles', async ({ page }) => {
-  await page.clock.pauseAt(new Date('2024-09-15T12:36:00.000Z'));
+  const pauseTime = new Date('2024-09-15T12:36:00.000Z');
+  await page.clock.pauseAt(pauseTime);
   await control(page, 'Change time on scroll').check();
   await control(page, 'Restricted time').check();
   await input(page).click();
@@ -458,7 +461,8 @@ test('TimePicker selects the nearest enabled unit after manual scrolling settles
 });
 
 test('TimePicker cancels delayed scroll selection when its value changes or it unmounts', async ({ page }) => {
-  await page.clock.pauseAt(new Date('2024-09-15T12:36:00.000Z'));
+  const pauseTime = new Date('2024-09-15T12:36:00.000Z');
+  await page.clock.pauseAt(pauseTime);
   await control(page, 'Change time on scroll').check();
   await input(page).click();
   const column = popup(page).locator('[data-type="hour"]');

@@ -24,7 +24,10 @@ const reference = JSON.parse(bytes.toString('utf8')) as {
   cases: SourceCase[];
 };
 function output(body: string, name: string) {
-  const match = body.match(new RegExp(`<output[^>]*data-select-data-${name}[^>]*>([\\s\\S]*?)<\\/output>`));
+  const outputPattern = new RegExp(
+    `<output[^>]*data-select-data-${name}[^>]*>([\\s\\S]*?)<\\/output>`
+  );
+  const match = body.match(outputPattern);
   if (!match) {
     throw Error(`Missing SSR producer output ${name}`);
   }

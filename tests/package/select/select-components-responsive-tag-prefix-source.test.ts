@@ -204,10 +204,11 @@ it('rejects nonzero actual SSR resources and altered raw HTML', () => {
 });
 
 it('rejects a changed decoded SHA even when the decoded length stays exact', () => {
-  const bytes = gunzipSync(readFileSync(new URL(
+  const referenceUrl = new URL(
     '../../browser/fixtures/ant-design-select-components-responsive-tag-prefix-ssr-reference.json.gz',
     import.meta.url
-  )));
+  );
+  const bytes = gunzipSync(readFileSync(referenceUrl));
 
   expect(() => verifyResponsiveTagPrefixDecodedBytes(bytes, 'ssr', 'first')).not.toThrow();
   const changed = Buffer.from(bytes);

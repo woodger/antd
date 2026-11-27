@@ -51,7 +51,8 @@ function readReference<Pass>(
   kind: string, sha256: string
 ) {
   const path = `./fixtures/ant-design-generated-picker-${kind}-reference.json.gz`;
-  const capture = gunzipSync(readFileSync(new URL(path, import.meta.url)));
+  const fixtureUrl = new URL(path, import.meta.url);
+  const capture = gunzipSync(readFileSync(fixtureUrl));
   const hash = createHash('sha256').update(capture).digest('hex');
   if (hash !== sha256) {
     throw Error(`Unexpected Ant Design generatePicker capture ${kind}: ${hash}`);

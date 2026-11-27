@@ -73,7 +73,8 @@ describe('DatePicker provider public package SSR', () => {
   for (const { profile, mode, html } of source.passes[0].packets) {
     it(`renders ${profile.id} with ${mode} configuration without DOM or timers`, () => {
       vi.useFakeTimers();
-      vi.setSystemTime(new Date('2024-06-19T12:00:00Z'));
+      const systemTime = new Date('2024-06-19T12:00:00Z');
+      vi.setSystemTime(systemTime);
       try {
         const { body } = render(DatePickerProviderFixtures, {
           props: { profile, initialMode: mode, openOnMount: false, verifyServer: true }

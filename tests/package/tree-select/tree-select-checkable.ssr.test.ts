@@ -12,7 +12,10 @@ const sourceWarning = 'Warning: [antd: TreeSelect] `multiple` will always be `tr
 const decode = (value: string) => value.replace(/&(?:amp|lt|gt|quot|#39|#x27);/g, entity =>
   ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);
 function output(body: string, name: string) {
-  const value = new RegExp(`<output(?=[^>]*\\bdata-checkable-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`).exec(body)![1];
+  const pattern = new RegExp(
+    `<output(?=[^>]*\\bdata-checkable-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`
+  );
+  const value = pattern.exec(body)![1];
   return JSON.parse(decode(value.replace(/<!--[\s\S]*?-->/g, '')));
 }
 

@@ -8,7 +8,8 @@ export async function mountTreeDrag(page: Page, id: string) {
   if (index < 0) {
     throw new Error(`Unknown drag fixture: ${id}`);
   }
-  await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
+  const clockStart = new Date('2026-11-10T12:00:00Z');
+  await page.clock.install({ time: clockStart });
   await page.goto('/?fixture=tree-drag');
   await page.getByRole('combobox', { name: 'Tree drag sample', exact: true }).selectOption(String(index));
 }

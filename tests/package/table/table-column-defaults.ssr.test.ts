@@ -6,13 +6,19 @@ import source from '../../browser/fixtures/ant-design-table-column-defaults-refe
 
 /** Extracts an attribute from a single fixture opening tag. */
 function attribute(markup: string, name: string) {
-  return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`(?:^|\\s)${name}="([^"]*)"`);
+  return markup.match(attributePattern)?.[1] ?? null;
 }
 
 /** Reads server-written inline styles before browser measurements. */
 function styleValue(markup: string, name: string) {
   const style = attribute(markup, 'style');
-  return style?.match(new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`))?.[1].trim() ?? null;
+  if (style === null) {
+    return null;
+  }
+
+  const propertyPattern = new RegExp(`(?:^|;)\\s*${name}:\\s*([^;]+)`);
+  return style.match(propertyPattern)?.[1].trim() ?? null;
 }
 
 /** Matches SSR cells to the reference data and excludes the closed filter menu. */

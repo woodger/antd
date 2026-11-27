@@ -64,7 +64,8 @@ guard(
   isDeepStrictEqual(header.errors, []) && isDeepStrictEqual(header.diagnostics, []),
   'all actual original diagnostics'
 );
-guard(hash(readFileSync(new URL('./select-surface-hydration-metrics.mjs', import.meta.url)))
+const fixtureUrl = new URL('./select-surface-hydration-metrics.mjs', import.meta.url);
+guard(hash(readFileSync(fixtureUrl))
   === '23a77b1bb8aad544b0f65ca4470c658588384488e5acbf6b6a8c54d78c95ecca', 'byte-identical parsed/hydrated observer');
 for (const [path, sha256] of Object.entries(header.inputPins)) {
   if (!path.startsWith('.upstream/')) guard(

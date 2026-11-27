@@ -18,7 +18,8 @@ test.use({ viewport: { width: 1280, height: 900 }, timezoneId: 'UTC' });
 
 /** Opens the assembled package with public props of the selected source profile. */
 async function openProfile(page: Page, profile: PickerProviderProfile) {
-  await page.clock.setFixedTime(new Date('2024-06-19T12:00:00Z'));
+  const fixedTime = new Date('2024-06-19T12:00:00Z');
+  await page.clock.setFixedTime(fixedTime);
   const params = new URLSearchParams({
     fixture: 'date-picker-provider', profile: JSON.stringify(profile)
   });

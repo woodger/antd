@@ -9,7 +9,8 @@ for (const component of ['date', 'range', 'time', 'time-range', 'calendar', 'col
   for (const theme of ['light-blue', 'dark-green', 'compact-purple']) {
     test(`${component} retains canonical ${theme} default styling with a shared prefix`,
       async ({ page }) => {
-        await page.clock.setFixedTime(new Date('2024-09-15T03:00:00.000Z'));
+        const fixedTime = new Date('2024-09-15T03:00:00.000Z');
+        await page.clock.setFixedTime(fixedTime);
         await page.goto('/?fixture=prefix-default-styling');
         await page.getByRole('combobox', { name: 'Default styling component', exact: true })
           .selectOption(component);

@@ -22,9 +22,12 @@ describe('CheckableTag callbacks and DOM SSR', () => {
         const { body } = render(CheckableTagApiCase, { props: { sample } });
         const root = [...body.matchAll(/<button\b(?:[^>"']|"[^"]*"|'[^']*')*>/g)]
           .find(match => match[0].includes('data-checkable-root="api"'))![0];
-        const output = (name: string) => new RegExp(
-          `<output[^>]*aria-label="Checkable API ${name}">([\\s\\S]*?)<\\/output>`
-        ).exec(body)![1].replace(/<!--[\s\S]*?-->/g, '');
+        const output = (name: string) => {
+          const pattern = new RegExp(
+            `<output[^>]*aria-label="Checkable API ${name}">([\\s\\S]*?)<\\/output>`
+          );
+          return pattern.exec(body)![1].replace(/<!--[\s\S]*?-->/g, '');
+        };
 
         expect(root).toContain('type="button"');
         expect(root).toContain(`aria-pressed="${sample.checked ?? false}"`);

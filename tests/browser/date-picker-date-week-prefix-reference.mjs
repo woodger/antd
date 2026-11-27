@@ -49,7 +49,8 @@ assert.equal(protocol.source.react, '18.3.1');
 assert.deepEqual(protocol.samples, samples);
 assert.deepEqual(protocol.counts, counts);
 for (const entry of [metadata.sharedCases, metadata.sharedSchema]) {
-  const bytes = fs.readFileSync(new URL('./' + entry.file, import.meta.url));
+  const fixtureUrl = new URL('./' + entry.file, import.meta.url);
+  const bytes = fs.readFileSync(fixtureUrl);
   assert.equal(bytes.length, entry.bytes);
   assert.equal(sha(bytes), entry.sha256);
 }
@@ -81,7 +82,8 @@ function scope(kind, variant) {
 // these checks.
 function decodeStored(entry, stored) {
   const original = entry.original;
-  assert.match(entry.fixture, new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$'));
+  const expectedPattern = new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$');
+  assert.match(entry.fixture, expectedPattern);
   assert.equal(entry.originalStoredGzipBytesCopiedExactly, true);
   assert.equal(stored.length, original.gzipBytes);
   assert.equal(sha(stored), original.gzipSHA256);
@@ -246,7 +248,8 @@ function dateSnapshot(value, authored) {
   );
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(value.temporal.valid, true);
-  assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
+  const date = new Date(value.temporal.epoch);
+  assert.equal(date.toISOString(), value.temporal.iso);
   assert.deepEqual(Object.keys(value.sameAsAuthored), authoredNames);
   for (const name of authoredNames) {
     assert.equal(value.sameAsAuthored[name], value.identity === authored[name].identity);

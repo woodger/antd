@@ -229,7 +229,9 @@ test(
       'gold'
     ]) {
       await setting(page, 'color', color);
-      await expect(host(page)).toHaveClass(new RegExp(`ant-tag-${color}`));
+      const tag = host(page);
+      const colorPattern = new RegExp(`ant-tag-${color}`);
+      await expect(tag).toHaveClass(colorPattern);
       await expect(host(page)).toContainText('Frontend');
       colors.set(
         color,
@@ -251,7 +253,9 @@ for (const variant of ['filled', 'outlined', 'solid'])
       await setting(page, 'variant', variant);
       await setting(page, 'color', 'success');
 
-      await expect(host(page)).toHaveClass(new RegExp(`ant-tag-${variant}`));
+      const tag = host(page);
+      const variantPattern = new RegExp(`ant-tag-${variant}`);
+      await expect(tag).toHaveClass(variantPattern);
 
       if (variant === 'solid') {
         await expect(host(page)).toHaveCSS('background-color', 'rgb(82, 196, 26)');

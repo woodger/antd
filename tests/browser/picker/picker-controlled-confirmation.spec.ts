@@ -61,7 +61,8 @@ function expectedState(profile: Sample['profile'], state: RecordedState) {
 
 for (const { profile, steps } of reference.cases) {
   test(`Keeps the Source confirmation sequence for ${profile.id}`, async ({ page }) => {
-    await page.clock.setFixedTime(new Date(reference.reference.now));
+    const fixedTime = new Date(reference.reference.now);
+    await page.clock.setFixedTime(fixedTime);
     await page.goto('/?fixture=picker-controlled-confirmation&profile=' + profile.id);
 
     for (const { action, state } of steps) {

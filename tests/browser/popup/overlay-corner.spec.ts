@@ -51,9 +51,11 @@ test('Popover corner updates preserve the draft, selection, focus and DOM', asyn
   for (let index = 0; index < 4; index++) {
     await next(page);
 
-    await expect(page.locator('.ant-popover:popover-open')).toHaveClass(new RegExp(
+    const popover = page.locator('.ant-popover:popover-open');
+    const placementPattern = new RegExp(
       `ant-popover-placement-${sample.snapshots[index + 1]!.placement}(?:\\s|$)`
-    ));
+    );
+    await expect(popover).toHaveClass(placementPattern);
     await expect(input).toHaveValue('Placement draft');
     await expect(input).toBeFocused();
     expect(await input.evaluate((node: HTMLInputElement) => [node.selectionStart, node.selectionEnd]))

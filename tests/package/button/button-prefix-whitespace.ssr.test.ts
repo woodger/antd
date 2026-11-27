@@ -10,8 +10,10 @@ describe('Button native text boundaries', () => {
         const body = rendered.body.replace(/<!--[\s\S]*?-->/g, '');
         const tag = href ? 'a' : 'button';
 
-        expect(body).toMatch(new RegExp(`^<${tag}\\b`));
-        expect(body).toMatch(new RegExp(`</${tag}>$`));
+        const attributePattern = new RegExp(`^<${tag}\\b`);
+        expect(body).toMatch(attributePattern);
+        const markupPattern = new RegExp(`</${tag}>$`);
+        expect(body).toMatch(markupPattern);
         expect(body).toContain('>Action<');
       });
     }

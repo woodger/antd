@@ -6,13 +6,19 @@ import source from '../../browser/fixtures/ant-design-table-row-attributes-refer
 
 /** Extracts an SSR row attribute, including an empty value. */
 function attribute(markup: string, name: string) {
-  return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`(?:^|\\s)${name}="([^"]*)"`);
+  return markup.match(attributePattern)?.[1] ?? null;
 }
 
 /** Reads the row's custom CSS variable value. */
 function color(markup: string, part: 'head' | 'row') {
   const style = attribute(markup, 'style');
-  return style?.match(new RegExp(`--fixture-${part}-color:\\s*([^;]+)`))?.[1].trim() ?? null;
+  if (style === null) {
+    return null;
+  }
+
+  const colorPattern = new RegExp(`--fixture-${part}-color:\\s*([^;]+)`);
+  return style.match(colorPattern)?.[1].trim() ?? null;
 }
 
 /** Captures only rows styled through public callbacks. */

@@ -29,8 +29,9 @@ it('reads all independent CSR full parts without assembling or caching an owner 
         logicalPoints++;
         fullParts++;
         if (previousOpen && !step.actual.owner.open) {
-          expect(entry.closed![closedIndex].rawJSONPart.file)
-            .toMatch(new RegExp('-closed-' + index + '\\.json$'));
+          const actualFile = entry.closed![closedIndex].rawJSONPart.file;
+          const closedFilePattern = new RegExp('-closed-' + index + '\\.json$');
+          expect(actualFile).toMatch(closedFilePattern);
           closedIndex++;
         }
         previousOpen = step.actual.owner.open;

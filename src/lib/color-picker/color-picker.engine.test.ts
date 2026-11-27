@@ -82,7 +82,10 @@ describe('AggregationColor', () => {
     expect(single.equals(generateColor('red'))).toBe(true);
     expect(single.equals(gradient)).toBe(false);
     expect(gradient.equals(generateColor([{ percent: 1, color: '#f00' }]))).toBe(false);
-    expect(gradient.equals(new AggregationColor(gradient))).toBe(true);
+
+    const copiedGradient = new AggregationColor(gradient);
+
+    expect(gradient.equals(copiedGradient)).toBe(true);
     expect(single.equals(null)).toBe(false);
   });
 });
@@ -90,10 +93,10 @@ describe('AggregationColor', () => {
 describe('ColorPicker transitions', () => {
   it('fills cleared hue/alpha controls with visible color and preserves picker alpha precision', () => {
     const current = generateColor(null);
-    const hue = fillPickerColor(current, 'single', 0,
-      new ColorCore({ h: 120, s: 0, b: 0, a: 0 }), { type: 'hue', value: 120 });
-    const alpha = fillPickerColor(current, 'single', 0,
-      new ColorCore({ h: 0, s: 0, b: 0, a: .3 }), { type: 'alpha', value: 30 });
+    const hueInput = new ColorCore({ h: 120, s: 0, b: 0, a: 0 });
+    const hue = fillPickerColor(current, 'single', 0, hueInput, { type: 'hue', value: 120 });
+    const alphaInput = new ColorCore({ h: 0, s: 0, b: 0, a: .3 });
+    const alpha = fillPickerColor(current, 'single', 0, alphaInput, { type: 'alpha', value: 30 });
 
     expect(hue.toHexString()).toBe('#00ff00');
     expect(alpha.toHexString()).toBe('#ff00004d');

@@ -30,7 +30,8 @@ describe('Upload imperative ref SSR', () => {
 
       expect(body.match(/type="file"/g) ?? []).toHaveLength(1);
       for (const name of ['before', 'requests', 'callbacks']) {
-        const output = new RegExp(`<output[^>]*data-ref-${name}[^>]*>(.*?)</output>`).exec(body);
+        const outputPattern = new RegExp(`<output[^>]*data-ref-${name}[^>]*>(.*?)</output>`);
+        const output = outputPattern.exec(body);
         expect(output?.[1].replace(/<!--[\s\S]*?-->/g, '')).toBe('0');
       }
       expect(vi.getTimerCount()).toBe(0);

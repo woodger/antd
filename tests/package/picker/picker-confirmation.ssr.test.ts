@@ -23,7 +23,8 @@ for (const sample of reference.cases) {
 
   it(`renders the initial OK state for ${sample.profile.id} without browser effects`, () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(reference.reference.now));
+    const systemTime = new Date(reference.reference.now);
+    vi.setSystemTime(systemTime);
     try {
       const { body } = render(PickerConfirmationFixtures, {
         props: { preset: sample.profile.id, open: true }

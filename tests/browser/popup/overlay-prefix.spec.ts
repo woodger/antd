@@ -126,12 +126,14 @@ for (const component of ['tooltip', 'popover', 'popconfirm']) {
             fontSize: style.fontSize, lineHeight: style.lineHeight, padding: style.padding };
         });
 
-      await expect(popup).toHaveClass(new RegExp(`(?:^|\\s)${prefix}(?:\\s|$)`));
+      const classPattern = new RegExp(`(?:^|\\s)${prefix}(?:\\s|$)`);
+      await expect(popup).toHaveClass(classPattern);
       const before = await paint();
 
       await next(page);
 
-      await expect(popup).toHaveClass(new RegExp(`tenant-native-${component}`));
+      const classNamePattern = new RegExp(`tenant-native-${component}`);
+      await expect(popup).toHaveClass(classNamePattern);
       await expect.poll(paint).toEqual(before);
     });
   }

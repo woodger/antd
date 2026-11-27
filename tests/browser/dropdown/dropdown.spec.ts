@@ -15,8 +15,10 @@ async function mode(page: Page, value: string) {
 }
 
 async function freeze(page: Page) {
-  await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+  const clockStart = new Date('2026-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
 }
 
 test('Dropdown retains unbound visibility, menu DOM and focus when spread props refresh', async ({ page }) => {
@@ -598,7 +600,8 @@ for (const placement of ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', '
 
       const popup = menu(page).locator('..');
 
-      await expect(popup).toHaveClass(new RegExp(`ant-dropdown-placement-${placement}(?: |$)`));
+      const classPattern = new RegExp(`ant-dropdown-placement-${placement}(?: |$)`);
+      await expect(popup).toHaveClass(classPattern);
 
       // We measure the placement after the starting scale(0) of CSSMotion.
       await expect(async () => {

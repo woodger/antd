@@ -310,7 +310,8 @@ test(
     const box = (await up.boundingBox())!;
     const time = new Date('2026-11-01T00:00:00Z');
     // Clock goes between install and pauseAt, so let's start before the stop point.
-    await page.clock.install({ time: new Date(time.getTime() - 60_000) });
+    const clockStart = new Date(time.getTime() - 60_000);
+    await page.clock.install({ time: clockStart });
     await page.clock.pauseAt(time);
 
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -346,7 +347,8 @@ test(
     await up.hover();
     const box = (await up.boundingBox())!;
     const time = new Date('2026-11-01T00:00:00Z');
-    await page.clock.install({ time: new Date(time.getTime() - 60_000) });
+    const clockStart = new Date(time.getTime() - 60_000);
+    await page.clock.install({ time: clockStart });
     await page.clock.pauseAt(time);
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.down();
@@ -375,7 +377,8 @@ test(
     await up.hover();
     const box = (await up.boundingBox())!;
     const time = new Date('2026-11-01T00:00:00Z');
-    await page.clock.install({ time: new Date(time.getTime() - 60_000) });
+    const clockStart = new Date(time.getTime() - 60_000);
+    await page.clock.install({ time: clockStart });
     await page.clock.pauseAt(time);
 
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -469,7 +472,8 @@ for (const variant of ['outlined', 'filled', 'borderless', 'underlined']) {
       await page.getByLabel('Source number variant', { exact: true }).selectOption(variant);
       const root = input.locator('..');
 
-      await expect(root).toHaveClass(new RegExp(`ant-input-number-${variant}`));
+      const classPattern = new RegExp(`ant-input-number-${variant}`);
+      await expect(root).toHaveClass(classPattern);
       await expect(root).toHaveCSS('height', '32px');
       await expect(root).toHaveCSS(
         'border-left-width',

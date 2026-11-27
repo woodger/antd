@@ -9,7 +9,8 @@ export function readTreeSelectAlignSSR(html: string) {
     if (!tag) {
       return null;
     }
-    const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`, 'i').exec(tag);
+    const attributePattern = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`, 'i');
+    const match = attributePattern.exec(tag);
     return match ? decode(match[1] ?? '') : null;
   };
   const root = tags.find(tag => attribute(tag, 'data-align-root') !== null)
@@ -20,11 +21,15 @@ export function readTreeSelectAlignSSR(html: string) {
   const editor = tags.find(tag => /^(?:<input|<textarea)\b/i.test(tag)
     && (attribute(tag, 'data-align-editor') !== null || attribute(tag, 'role') === 'combobox'));
   const style = (tag: string | undefined, name: string) => {
-    const match = new RegExp(`(?:^|;)\\s*${name}\\s*:\\s*([^;]+)`).exec(attribute(tag, 'style') ?? '');
+    const attributePattern = new RegExp(`(?:^|;)\\s*${name}\\s*:\\s*([^;]+)`);
+    const match = attributePattern.exec(attribute(tag, 'style') ?? '');
     return match?.[1].trim() ?? null;
   };
   const output = (name: string) => {
-    const match = new RegExp(`<output(?=[^>]*\\bdata-align-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`).exec(html);
+    const pattern = new RegExp(
+      `<output(?=[^>]*\\bdata-align-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`
+    );
+    const match = pattern.exec(html);
     return match ? JSON.parse(decode(match[1].replace(/<!--[\s\S]*?-->/g, ''))) : null;
   };
   const classes = (tag: string) => attribute(tag, 'class')?.split(/\s+/) ?? [];

@@ -10,8 +10,10 @@ for (const [index, entry] of cases.entries()) {
   test(`Tree title expansion matches Source for ${entry.sample.id}`, async ({ page }) => {
     const sample = entry.sample;
     if (sample.action === 'settledDoubleClick') {
-      await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-      await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+      const clockStart = new Date('2024-09-15T03:00:00Z');
+      await page.clock.install({ time: clockStart });
+      const pauseTime = new Date('2024-09-15T03:00:01Z');
+      await page.clock.pauseAt(pauseTime);
     }
     await page.goto('/?fixture=tree-expand-action');
     await page.getByRole('combobox', { name: 'Tree expansion sample', exact: true })

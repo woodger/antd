@@ -14,12 +14,14 @@ interface ReferenceCase {
   };
   variables: Record<StyledComponent, Record<string, string>>;
 }
+const referenceUrl = new URL(
+  '../../../tests/reference/ant-design-control-tokens-reference.json',
+  import.meta.url
+);
 const reference: {
   reference: { version: string; revision: string; archiveSha256: string; source: string; };
   cases: ReferenceCase[];
-} = JSON.parse(readFileSync(
-  new URL('../../../tests/reference/ant-design-control-tokens-reference.json', import.meta.url), 'utf8'
-));
+} = JSON.parse(readFileSync(referenceUrl, 'utf8'));
 
 function config(input: ReferenceCase['config']): ThemeConfig {
   const { algorithm, components, ...rest } = input;

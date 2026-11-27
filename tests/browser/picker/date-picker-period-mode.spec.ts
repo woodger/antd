@@ -2,7 +2,8 @@ import { test, expect } from '../test';
 
 for (const kind of ['single', 'range'] as const) {
   test(`live ${kind} picker changes reset panel mode without replacing the field or model`, async ({ page }) => {
-    await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+    const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+    await page.clock.setFixedTime(fixedTime);
     await page.goto('/date-picker-period-mode.html');
     const input = page.locator('#period-mode-' + kind);
     const original = await input.elementHandle();
@@ -36,7 +37,8 @@ for (const kind of ['single', 'range'] as const) {
 for (const kind of ['single', 'range'] as const) {
   for (const initialPicker of ['month', 'year', 'quarter', 'week'] as const) {
     test(`live ${kind} ${initialPicker} to date restores date and clock panels without replacing the owner`, async ({ page }) => {
-      await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+      const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+      await page.clock.setFixedTime(fixedTime);
       await page.goto('/date-picker-period-mode.html');
       // The real owner-buttons change props without transferring the focus to another element.
       if (initialPicker === 'year') {

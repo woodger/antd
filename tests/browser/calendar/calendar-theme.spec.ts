@@ -5,7 +5,8 @@ import { snapshotCalendarTheme } from '../calendar-theme-metrics';
 
 test.use({ viewport: reference.viewport });
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date(reference.reference.now));
+  const fixedTime = new Date(reference.reference.now);
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/?fixture=calendar-theme');
 });
 

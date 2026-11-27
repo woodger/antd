@@ -34,7 +34,8 @@ describe('sameFormValue', () => {
     const date = new Date('2026-01-01');
 
     expect(sameFormValue(date, date)).toBe(true);
-    expect(sameFormValue(date, new Date('2026-01-01'))).toBe(false);
+    const inputDate = new Date('2026-01-01');
+    expect(sameFormValue(date, inputDate)).toBe(false);
     expect(sameFormValue(new Map(), new Map())).toBe(false);
   });
 });

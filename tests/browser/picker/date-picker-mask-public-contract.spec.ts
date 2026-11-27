@@ -7,7 +7,8 @@ type Scenario = 'mouse' | 'reject-open' | 'plain-switch' | 'cancel-key' | 'rejec
 test.use({ locale: 'en-US', timezoneId: 'UTC', viewport: { width: 1440, height: 1000 } });
 
 async function open(page: Page, owner: Owner, scenario: Scenario) {
-  await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+  const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/date-picker-mask-public-contract.html?owner=' + owner + '&scenario=' + scenario);
   const input = page.locator('#contract-start');
   await expect(input).toBeVisible();

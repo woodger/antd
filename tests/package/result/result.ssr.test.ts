@@ -31,7 +31,8 @@ describe('Result public package SSR', () => {
     } }).body.replace(/<!--[\s\S]*?-->/g, '');
 
     for (const part of ['title', 'subTitle', 'extra', 'body', 'icon']) {
-      expect(numeric).toMatch(new RegExp(`data-ant-result-part="${part}"[^>]*>\\s*0`));
+      const outputPattern = new RegExp(`data-ant-result-part="${part}"[^>]*>\\s*0`);
+      expect(numeric).toMatch(outputPattern);
       expect(boolean).toContain(`data-ant-result-part="${part}"`);
     }
     expect(boolean).not.toContain('>true<');

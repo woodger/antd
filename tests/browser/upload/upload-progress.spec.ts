@@ -56,8 +56,10 @@ test('Upload progress updates preserve the item, input, progress root and outsid
   });
 
 test('Upload progress keeps the 300ms delay and cancels the timer on unmount', async ({ page }) => {
-  await page.clock.install({ time: new Date('2030-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2030-01-01T00:00:01Z'));
+  const clockStart = new Date('2030-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2030-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=upload-progress');
   const progress = page.getByRole('progressbar', { name: 'File transfer', exact: true });
 

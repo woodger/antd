@@ -3,7 +3,10 @@ export function readSelectDataSSR(html: string) {
   const decode = (text: string) => text.replace(/&#x27;/g, "'").replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
   const output = (name: string) => {
-    const match = html.match(new RegExp(`<output[^>]*data-select-data-${name}(?:="[^"]*")?[^>]*>([\\s\\S]*?)<\\/output>`));
+    const outputPattern = new RegExp(
+      `<output[^>]*data-select-data-${name}(?:="[^"]*")?[^>]*>([\\s\\S]*?)<\\/output>`
+    );
+    const match = html.match(outputPattern);
     return match ? JSON.parse(decode(match[1].replace(/<!--[^]*?-->/g, ''))) : null;
   };
   const attributes = [...html.matchAll(/\s(virtual|listheight|listitemheight|showscrollbar|onactive|fieldnames|optionrender|labelinvalue)=/gi)]

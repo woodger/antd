@@ -68,20 +68,22 @@ interface Header {
 interface Reference<Case> { reference: Header; cases: Case[] }
 // Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-const csrStorage = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/ant-design-select-surface-input-width-own-reference.json.gz',
   import.meta.url
-));
+);
+const csrStorage = readFileSync(referenceUrl);
 assert.equal(csrStorage.length, 175688);
 assert.equal(hash(csrStorage), '7e6e4a9bf0fa6e5d0e26563d819607d205cfa6eda3c96e1653081a6c34b5d8de');
 const csr = gunzipSync(csrStorage);
 assert.equal(csr.length, 3598030);
 assert.equal(hash(csr), '6b4e039c923c996594bbe99c1e3923b8fc83693ebc8f141fb1a65b1a6fede00c');
 export const selectSurfaceInputWidthOwnReference = JSON.parse(csr.toString('utf8')) as Reference<SelectSurfaceInputWidthOwnSourceCase>;
-const ssr = readFileSync(new URL(
+const fixtureUrl = new URL(
   './fixtures/ant-design-select-surface-input-width-own-ssr-reference.json',
   import.meta.url
-));
+);
+const ssr = readFileSync(fixtureUrl);
 assert.equal(ssr.length, 125257);
 assert.equal(hash(ssr), 'dc323b41357fb52b0d3ace7ca08988abf133bb9e3153ac2674708279c90c1a05');
 export const selectSurfaceInputWidthOwnSSRReference = JSON.parse(ssr.toString('utf8')) as Reference<SelectSurfaceInputWidthOwnSSRCase>;

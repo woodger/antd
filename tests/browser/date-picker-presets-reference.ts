@@ -342,7 +342,8 @@ function dateValue(value: unknown) {
   assert.equal(temporal.valid, true);
   assert(typeof temporal.epoch === 'number');
   assert(Number.isFinite(temporal.epoch));
-  assert.equal(new Date(temporal.epoch).toISOString(), temporal.iso);
+  const date = new Date(temporal.epoch);
+  assert.equal(date.toISOString(), temporal.iso);
   assert.equal(array(temporal.fields).length, 7);
   assert.equal(temporal.utcOffset, 0);
   assert.equal(snapshot.identity, datePickerPresetsRawRoot(snapshot.raw).id);

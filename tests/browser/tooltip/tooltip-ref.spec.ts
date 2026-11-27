@@ -70,11 +70,13 @@ for (const source of [false, true]) {
 
     test(`Tooltip forceAlign moves pinned ${sample.name} geometry with animation frames paused in ${source ? 'source' : 'native'} config`,
       async ({ page }) => {
-        await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
+        const clockStart = new Date('2026-01-01T00:00:00Z');
+        await page.clock.install({ time: clockStart });
         await page.goto('/?fixture=tooltip-ref');
         await page.getByLabel('Source ref config', { exact: true }).setChecked(source);
         await page.getByLabel('Tooltip ref case', { exact: true }).selectOption(sample.name);
-        await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 1000));
+        const pauseTime = new Date(await page.evaluate(() => Date.now()) + 1000);
+        await page.clock.pauseAt(pauseTime);
         const root = page.locator('#tooltip-ref-case');
         await root.getByRole('button', { name: 'Next ref step', exact: true })
           .evaluate(node => (node as HTMLButtonElement).click());

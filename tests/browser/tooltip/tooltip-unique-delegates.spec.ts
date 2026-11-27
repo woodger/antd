@@ -81,7 +81,9 @@ for (const { profile, snapshots } of reference.cases) {
           ? 'rgb(22, 119, 255)' : frame.backgrounds[0].background;
         await expect(page.locator(background)).toHaveCSS('background-color', expectedBackground);
         for (const name of frame.backgrounds[0].className) {
-          await expect(page.locator(background)).toHaveClass(new RegExp(`(?:^| )${name}(?: |$)`));
+          const surface = page.locator(background);
+          const classPattern = new RegExp(`(?:^| )${name}(?: |$)`);
+          await expect(surface).toHaveClass(classPattern);
         }
         if (original) {
           await sameNode(page.locator(shell), original.shell);

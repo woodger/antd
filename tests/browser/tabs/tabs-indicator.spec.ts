@@ -190,7 +190,8 @@ test('empty and unavailable active headers hide the indicator and pending frames
 
     await expect(ink(page)).toBeVisible();
     await page.clock.install();
-    await page.clock.pauseAt(new Date());
+    const pauseTime = new Date();
+    await page.clock.pauseAt(pauseTime);
     await sample(page, 'rtl-top-end-function');
     const outside = page.getByRole('textbox', { name: 'Indicator outside', exact: true });
     await outside.focus();

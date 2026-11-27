@@ -101,9 +101,11 @@ test('Progress circle respects reduced motion and cleans refs and popup on unmou
 });
 
 test('Progress circle matches source transition durations for rapid and spaced updates', async ({ page }) => {
-  await page.clock.install({ time: new Date('2030-01-01T00:00:00Z') });
+  const clockStart = new Date('2030-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
   // install continues the course of hours; pauseAt separates the application intervals from the delays DOM/CDP.
-  await page.clock.pauseAt(new Date('2030-01-01T00:00:01Z'));
+  const pauseTime = new Date('2030-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   const select = page.getByRole('combobox', { name: 'Progress circle case', exact: true });
   await select.selectOption('empty');
   await select.selectOption('quarter');

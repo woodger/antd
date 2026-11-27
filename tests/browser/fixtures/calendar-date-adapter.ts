@@ -81,11 +81,13 @@ export const calendarDateAdapter: CalendarGenerateConfig<Date> = {
   locale: {
     getWeekFirstDay: locale => locale === 'ru_RU' ? 1 : 0,
     getWeekFirstDate: startOfWeek,
-    getWeek: (locale, value) => Math.floor(
-      (startOfWeek(locale, value).getTime()
-        - startOfWeek(locale, new Date(`${value.getUTCFullYear()}-01-01T00:00:00Z`)).getTime())
-        / 604800000
-    ) + 1,
+    getWeek: (locale, value) => {
+      const weekTime = startOfWeek(locale, value).getTime();
+      const yearStart = new Date(`${value.getUTCFullYear()}-01-01T00:00:00Z`);
+      const firstWeekTime = startOfWeek(locale, yearStart).getTime();
+
+      return Math.floor((weekTime - firstWeekTime) / 604800000) + 1;
+    },
     getShortWeekDays: () => weekdays,
     getShortMonths: () => months,
     format: (_locale, value, format) => format.replace(/YYYY|MMM|MM|DD|D/g, part => {

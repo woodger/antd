@@ -6,7 +6,8 @@ import source from '../../browser/fixtures/ant-design-table-service-columns-refe
 
 /** Finds an attribute value in a fixture's server-rendered cell. */
 function readAttribute(markup: string, name: string) {
-  return markup.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`\\b${name}="([^"]*)"`);
+  return markup.match(attributePattern)?.[1] ?? null;
 }
 
 /** Reads physical cell order and attributes without running browser effects. */

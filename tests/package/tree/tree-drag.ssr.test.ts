@@ -53,7 +53,8 @@ describe('Tree drag SSR', () => {
       });
 
       expect(nodes).toEqual(entry.result.nodes);
-      expect([...html.matchAll(new RegExp(`class="${prefix}-draggable-icon"`, 'g'))])
+      const handlePattern = new RegExp(`class="${prefix}-draggable-icon"`, 'g');
+      expect([...html.matchAll(handlePattern)])
         .toHaveLength(entry.result.handleCount);
       expect([...html.matchAll(/class="[^"]*anticon-holder[^"]*"/g)])
         .toHaveLength(entry.result.defaultIconCount);

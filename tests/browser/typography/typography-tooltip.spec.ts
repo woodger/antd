@@ -23,8 +23,10 @@ async function prepare(page: Page, name: string) {
   if (!name.startsWith('controlled-')) {
     await page.getByLabel('Interactive Typography tooltip', { exact: true }).dispatchEvent('click');
   }
-  await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+  const clockStart = new Date('2026-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2026-01-01T00:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.clock.runFor(100);
 
   // Native CSS ellipsis is measured at mouseenter, separately from Tooltip trigger.
@@ -228,8 +230,10 @@ for (const action of ['Copy text', 'Edit text']) {
     test(`Typography ${action} Tooltip inherits the ${trigger} trigger and delays`, async ({ page }) => {
       await select(page, `provider-${trigger}`);
       await page.getByLabel('Typography action tooltips', { exact: true }).dispatchEvent('click');
-      await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-      await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+      const clockStart = new Date('2026-01-01T00:00:00Z');
+      await page.clock.install({ time: clockStart });
+      const pauseTime = new Date('2026-01-01T00:00:01Z');
+      await page.clock.pauseAt(pauseTime);
       const button = page.getByRole('button', { name: action, exact: true });
       const popup = page.getByRole('tooltip');
 
@@ -254,7 +258,8 @@ for (const action of ['Copy text', 'Edit text']) {
 
       await expect(popup).toBeVisible();
       await expect(popup).toHaveText(action);
-      await expect(popup).toHaveClass(new RegExp(`(?:^|\\s)cb-trigger-${trigger}(?:\\s|$)`));
+      const classPattern = new RegExp(`(?:^|\\s)cb-trigger-${trigger}(?:\\s|$)`);
+      await expect(popup).toHaveClass(classPattern);
       await expect(popup).toHaveClass(/(?:^|\s)cb-enter-0.2(?:\s|$)/);
       await expect(popup).toHaveClass(/(?:^|\s)cb-leave-0.3(?:\s|$)/);
       await expect(page.getByLabel('Typography action events', { exact: true })).toBeEmpty();

@@ -80,7 +80,8 @@ async function remeasure(page: Page, sample: ReferenceCase['sample']) {
 for (const { sample, initial, updated, resized } of reference.cases) {
   test(`Picker alignment matches Ant Design for ${sample.id}`, async ({ page }) => {
     await page.setViewportSize({ width: sample.narrow ? 320 : 1440, height: 1000 });
-    await page.clock.setFixedTime(new Date(reference.reference.now));
+    const fixedTime = new Date(reference.reference.now);
+    await page.clock.setFixedTime(fixedTime);
     await page.goto('/?fixture=picker-alignment&profile=' + sample.id);
     const popup = page.locator(surface);
 

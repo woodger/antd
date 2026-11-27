@@ -17,7 +17,8 @@ describe('Calendar theme public package SSR', () => {
     it(`renders ${sample.name} with native date cells and intrinsic fields without browser effects`,
       () => {
         vi.useFakeTimers();
-        vi.setSystemTime(new Date(reference.reference.now));
+        const systemTime = new Date(reference.reference.now);
+        vi.setSystemTime(systemTime);
         try {
           const { body } = render(CalendarThemeCase, { props: { sample } });
 

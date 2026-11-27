@@ -161,8 +161,9 @@ function validateDate(date: MaskSourceDate, owner: MaskSourceOwner) {
   }
   assert.equal(rawAt(date.raw, ['$L']), date.temporal.locale);
   if (date.temporal.valid) {
+    const inputDate = new Date(date.temporal.epoch!);
     assert.equal(
-      new Date(date.temporal.epoch!).toISOString(),
+      inputDate.toISOString(),
       date.temporal.iso
     );
   }

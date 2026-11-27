@@ -25,10 +25,11 @@ interface ThemeReference {
   cases: ReferenceCase[];
 }
 
-const reference: ThemeReference = JSON.parse(readFileSync(
-  new URL('../../../tests/reference/ant-design-theme-reference.json', import.meta.url),
-  'utf8'
-));
+const referenceUrl = new URL(
+  '../../../tests/reference/ant-design-theme-reference.json',
+  import.meta.url
+);
+const reference: ThemeReference = JSON.parse(readFileSync(referenceUrl, 'utf8'));
 
 // JSON does not save undefined, NaN and -0; the encoding standard restores them without normalization.
 function decode(value: unknown): unknown {

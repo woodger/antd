@@ -88,7 +88,8 @@ assert.equal(
   '8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa'
 );
 for (const input of manifest.portableInputs) {
-  const bytes = readFileSync(new URL('../../' + input.path, import.meta.url));
+  const fixtureUrl = new URL('../../' + input.path, import.meta.url);
+  const bytes = readFileSync(fixtureUrl);
   assert.equal(input.byteEqual, true);
   assert.equal(bytes.length, input.bytes);
   assert.equal(componentsHydrationHash(bytes), input.sha256);

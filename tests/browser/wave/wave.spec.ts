@@ -313,7 +313,8 @@ test('changing Button to an unbordered variant cancels its pending Wave without 
 for (const kind of ['handler', 'link']) {
   test(`removing a Tag ${kind} cleans its active Wave and keeps the native root`, async ({ page }) => {
     await page.clock.install();
-    await page.clock.pauseAt(new Date(Date.now() + 100));
+    const pauseTime = new Date(Date.now() + 100);
+    await page.clock.pauseAt(pauseTime);
     const tag = page.locator(kind === 'handler' ? '#wave-tag' : '#wave-link-tag');
     const previous = await tag.elementHandle();
     await tag.click();

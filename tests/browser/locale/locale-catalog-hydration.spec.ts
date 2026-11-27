@@ -23,7 +23,8 @@ test('hydrates the imported German dictionary with the original focused field', 
     const { renderLocaleFixture } = await server.ssrLoadModule(entry);
     const { body, head } = renderLocaleFixture('de_DE');
 
-    await page.clock.setFixedTime(new Date('2024-06-19T15:14:15Z'));
+    const fixedTime = new Date('2024-06-19T15:14:15Z');
+    await page.clock.setFixedTime(fixedTime);
     await page.goto('/select-components-hydration.html?code=de_DE');
     await page.evaluate(({ body, head }) => {
       const root = document.getElementById('root');

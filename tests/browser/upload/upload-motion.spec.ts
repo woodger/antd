@@ -87,8 +87,10 @@ test('Upload reuses a leaving row on return and keeps the input, draft and focus
   const oldInput = await page.locator('input[type=file]').elementHandle();
   await editor.fill('Retained draft');
   await editor.evaluate((node: HTMLInputElement) => node.setSelectionRange(1, 5, 'backward'));
-  await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-  await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+  const clockStart = new Date('2024-09-15T03:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2024-09-15T03:00:01Z');
+  await page.clock.pauseAt(pauseTime);
 
   await page.getByRole('button', { name: 'Remove alpha', exact: true })
     .evaluate((node: HTMLButtonElement) => node.click());
@@ -117,8 +119,10 @@ test('Upload reuses a leaving row on return and keeps the input, draft and focus
 
 test('Upload finishes a retained row at the deadline when no CSS end event arrives', async ({ page }) => {
   await page.goto('/?fixture=upload-motion');
-  await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-  await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+  const clockStart = new Date('2024-09-15T03:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2024-09-15T03:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.getByRole('button', { name: 'Remove alpha', exact: true }).click();
   await page.clock.runFor(80);
   await page.locator('.ant-upload-list-item-container').evaluate(node => {
@@ -214,8 +218,10 @@ test('Upload remounts a hidden list without replaying initial item motion', asyn
 
 test('Upload cancels pending motion on unmount without changing outside focus', async ({ page }) => {
   await page.goto('/?fixture=upload-motion');
-  await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-  await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+  const clockStart = new Date('2024-09-15T03:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2024-09-15T03:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.getByRole('button', { name: 'Remove alpha', exact: true }).click();
   await page.getByRole('checkbox', { name: 'Mount Upload', exact: true }).uncheck();
   const editor = page.getByRole('textbox', { name: 'Upload motion editor', exact: true });

@@ -214,8 +214,10 @@ test('Tooltip waits for a custom motion deadline when the popup has no CSS end e
       profile.family === 'Tooltip' && profile.mode === 'custom');
     await selectCase(page, index);
     await page.addStyleTag({ content: '.study-pulse { animation: none !important; }' });
-    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2026-01-01T00:00:01Z');
+    await page.clock.pauseAt(pauseTime);
 
     await ownerAction(page, 'Open from owner');
     await page.clock.runFor(200);

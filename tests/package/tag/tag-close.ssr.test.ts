@@ -26,7 +26,10 @@ describe('Tag source links and closable SSR', () => {
           /<button\b((?:[^>"']|"[^"]*"|'[^']*')*)>([\s\S]*?)<\/button>/g
         )].find(match => /\bclass="[^"]*\bant-tag-close-icon\b/.test(match[1]));
         const attribute = (text: string, key: string) =>
-          new RegExp(`(?:^|\\s)${key}="([^"]*)"`).exec(text)?.[1] ?? null;
+          {
+            const pattern = new RegExp(`(?:^|\\s)${key}="([^"]*)"`);
+            return pattern.exec(text)?.[1] ?? null;
+          };
 
         expect({
           tag: root[1].toUpperCase(),

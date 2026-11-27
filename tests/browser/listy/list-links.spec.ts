@@ -45,7 +45,8 @@ for (const source of [false, true]) {
         await link.focus();
         await link.press('Enter');
 
-        await expect(page).toHaveURL(new RegExp(`#${kind}$`));
+        const pattern = new RegExp(`#${kind}$`);
+        await expect(page).toHaveURL(pattern);
         await expect(page.getByLabel('List link clicks', { exact: true }))
           .toHaveText(String(index + 1));
         await expect(link).toBeFocused();

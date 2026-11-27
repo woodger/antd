@@ -61,7 +61,8 @@ describe('DatePicker multiple package SSR', () => {
   it('initializes a controlled empty single picker panel independently of its default value', () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     try {
-      vi.setSystemTime(new Date('2026-06-19T12:00:00Z'));
+      const systemTime = new Date('2026-06-19T12:00:00Z');
+      vi.setSystemTime(systemTime);
       const { body } = render(DatePicker, {
         props: { open: true, value: null, defaultValue: dayjs('2001-02-03') }
       });

@@ -49,7 +49,8 @@ async function doubleClickWhileScrolling(page: Page, selected: number, next: num
 for (const custom of [false, true]) {
   test(`TimePicker confirms its first unit when scrolling retargets double click, custom=${custom}`,
     async ({ page }) => {
-      await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
+      const clockStart = new Date('2024-09-15T12:34:56.789Z');
+      await page.clock.install({ time: clockStart });
       await page.goto('/?fixture=time-picker');
       if (custom) await page.getByLabel('Custom time cells', { exact: true }).check();
       await page.getByLabel('Meeting time', { exact: true }).click();
@@ -69,7 +70,8 @@ for (const custom of [false, true]) {
 
 test('TimeRangePicker confirms each first unit when the second click lands on its column',
   async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
+    const clockStart = new Date('2024-09-15T12:34:56.789Z');
+    await page.clock.install({ time: clockStart });
     await page.goto('/?fixture=time-range-picker');
     await page.getByLabel('Interval start', { exact: true }).click();
     await observeColumn(page);
@@ -93,7 +95,8 @@ test('TimeRangePicker confirms each first unit when the second click lands on it
 
 test('TimePicker does not confirm a previous unit on a new double click in column whitespace',
   async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
+    const clockStart = new Date('2024-09-15T12:34:56.789Z');
+    await page.clock.install({ time: clockStart });
     await page.goto('/?fixture=time-picker');
     await page.getByLabel('Meeting time', { exact: true }).click();
     await observeColumn(page);

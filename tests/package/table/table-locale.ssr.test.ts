@@ -8,7 +8,8 @@ import { expectedTableLocale } from '../../browser/fixtures/table-locale-referen
 
 /** Reads an attribute from a tag. The scenarios use simple strings and numeric keys. */
 function attribute(tag: string, name: string) {
-  const match = tag.match(new RegExp('\\s' + name + '="([^"]*)"'));
+  const attributePattern = new RegExp('\\s' + name + '="([^"]*)"');
+  const match = tag.match(attributePattern);
   return match?.[1] ?? null;
 }
 

@@ -26,10 +26,11 @@ interface EdgeReference {
     cleanup: { rootConnected: boolean; anchorConnected: boolean; editorConnected: boolean; popupConnected: boolean;
       callbacks: unknown[][]; offsets: unknown[] } }>;
 }
-const bytes = readFileSync(new URL(
+const referenceUrl = new URL(
   '../fixtures/ant-design-select-virtual-edge-reference.json',
   import.meta.url
-));
+);
+const bytes = readFileSync(referenceUrl);
 if (bytes.length !== 468644 || createHash('sha256').update(bytes).digest('hex')
   !== 'd24d994e056eca0b2f3901f050f948474c36ce3135caf4d324395c93f984097a') {
   throw Error('Frozen actual Source virtual edge capture changed');

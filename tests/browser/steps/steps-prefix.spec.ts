@@ -56,8 +56,9 @@ test('Steps prefix updates keep keyboard focus, selection and Icon context', asy
     expect(await host.locator('ol').getAttribute('id')).toBe(id);
     expect(await first.evaluate((node, previous) => node === previous, original)).toBe(true);
     const prefix = entry.sample.prefixCls || 'ant-steps';
-    await expect(host.getByTestId('prefix-step-icon').first())
-      .toHaveClass(new RegExp(`(^| )${prefix}-item-icon( |$)`));
+    const stepIcon = host.getByTestId('prefix-step-icon').first();
+    const iconClassPattern = new RegExp(`(^| )${prefix}-item-icon( |$)`);
+    await expect(stepIcon).toHaveClass(iconClassPattern);
   }
 });
 

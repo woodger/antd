@@ -9,7 +9,8 @@ for (const entry of reference.cases) {
     const index = treeDragSamples.findIndex(sample => sample.id === entry.sample.id);
     const sample = treeDragSamples[index];
     const prefix = sample.localPrefix ?? `${sample.prefix ?? 'ant'}-tree`;
-    await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
+    const clockStart = new Date('2026-11-10T12:00:00Z');
+    await page.clock.install({ time: clockStart });
     await page.goto('/?fixture=tree-drag');
     await page.getByRole('combobox', { name: 'Tree drag sample', exact: true }).selectOption(String(index));
 

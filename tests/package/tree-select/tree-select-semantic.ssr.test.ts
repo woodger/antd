@@ -9,7 +9,10 @@ import TreeSelectSemanticScope from '../../browser/fixtures/TreeSelectSemanticSc
 
 const decode = (value: string) => value.replace(/&(?:quot|amp|lt|gt|#39);/g,
   entity => ({ '&quot;': '"', '&amp;': '&', '&lt;': '<', '&gt;': '>', '&#39;': "'" })[entity]!);
-const attr = (markup: string, name: string) => decode(new RegExp(`\\s${name}="([^"]*)"`).exec(markup)?.[1] ?? '');
+const attr = (markup: string, name: string) => {
+  const attributePattern = new RegExp(`\\s${name}="([^"]*)"`);
+  return decode(attributePattern.exec(markup)?.[1] ?? '');
+};
 const classes = (markup: string) => attr(markup, 'class').split(/\s+/);
 
 function project(markup: string | undefined) {

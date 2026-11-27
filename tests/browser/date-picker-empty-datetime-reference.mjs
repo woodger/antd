@@ -32,7 +32,8 @@ assert.equal(metadata.serialization.wholeManifestOrAfterCallByteEqualityClaimed,
 // Checks the dimensions and hashes of compressed and original bytes. Unpacking takes place between
 // these checks.
 function decodeStored(entry, stored) {
-  assert.match(entry.fixture, new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$'));
+  const expectedPattern = new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$');
+  assert.match(entry.fixture, expectedPattern);
   assert.equal(stored.length, entry.stored.bytes, 'Stored gzip byte count');
   assert.equal(sha(stored), entry.stored.sha256, 'Stored gzip SHA256');
   assert.equal(entry.fixture, prefix + 'parts/' + entry.stored.sha256 + '.json.gz');
@@ -54,10 +55,11 @@ assert.equal(protocol.status, 'Root-reviewed-frozen-before-empty-datetime-Source
 assert.equal(protocol.source.environment.fixedDate, '2024-06-10T08:23:45.678Z');
 assert.deepEqual(protocol.samples, samples);
 assert.deepEqual(protocol.counts, counts);
-const sharedBytes = fs.readFileSync(new URL(
+const fixtureUrl = new URL(
   './date-picker-empty-datetime-cases.mjs',
   import.meta.url
-));
+);
+const sharedBytes = fs.readFileSync(fixtureUrl);
 assert.equal(sha(sharedBytes), protocol.inputPins[source + 'cases.mjs'].sha256);
 assert.equal(sharedBytes.length, protocol.inputPins[source + 'cases.mjs'].bytes);
 const scope = variant => {
@@ -174,7 +176,8 @@ export function verifyEmptyDatetimeSourcePoint(point) {
         date.temporal.fields
       );
       assert.equal(date.temporal.valid, true);
-      assert.equal(new Date(date.temporal.epoch).toISOString(), date.temporal.iso);
+      const inputDate = new Date(date.temporal.epoch);
+      assert.equal(inputDate.toISOString(), date.temporal.iso);
       assert.equal(
         date.sameAsAuthored.panel,
         date.identity === point.owner.authoredDates.panel.identity

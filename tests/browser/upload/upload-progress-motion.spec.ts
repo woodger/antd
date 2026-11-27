@@ -4,8 +4,10 @@ import { readUploadProgressMotion } from '../upload-progress-motion-metrics';
 
 for (const [index, entry] of reference.cases.entries()) {
   test(`Upload progress motion matches Source for ${entry.sample.id}`, async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-    await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+    const clockStart = new Date('2024-09-15T03:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2024-09-15T03:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await page.goto('/?fixture=upload-progress-motion');
     await page.getByRole('combobox', { name: 'Upload progress motion sample', exact: true })
       .selectOption(String(index));
@@ -59,8 +61,10 @@ for (const [index, entry] of reference.cases.entries()) {
 
 test('Upload progress returns during fade without replacing the bar, input or outside focus',
   async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-    await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+    const clockStart = new Date('2024-09-15T03:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2024-09-15T03:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await page.goto('/?fixture=upload-progress-motion');
     await page.clock.runFor(380);
     const progress = page.locator('.ant-upload-list-item-progress');
@@ -97,8 +101,10 @@ test('Upload progress returns during fade without replacing the bar, input or ou
   });
 
 test('Upload progress cancels pending timers and fade on unmount', async ({ page }) => {
-  await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-  await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+  const clockStart = new Date('2024-09-15T03:00:00Z');
+  await page.clock.install({ time: clockStart });
+  const pauseTime = new Date('2024-09-15T03:00:01Z');
+  await page.clock.pauseAt(pauseTime);
   await page.goto('/?fixture=upload-progress-motion');
   await page.clock.runFor(380);
   await page.getByRole('button', { name: 'Complete upload', exact: true }).click();
@@ -112,8 +118,10 @@ test('Upload progress cancels pending timers and fade on unmount', async ({ page
 
 test('Upload progress isolates the shared fade namespace and tokens for the same local prefix',
   async ({ page }) => {
-    await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-    await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+    const clockStart = new Date('2024-09-15T03:00:00Z');
+    await page.clock.install({ time: clockStart });
+    const pauseTime = new Date('2024-09-15T03:00:01Z');
+    await page.clock.pauseAt(pauseTime);
     await page.goto('/?fixture=upload-progress-motion');
     await page.getByRole('checkbox', { name: 'Paired progress scopes', exact: true }).check();
 
@@ -126,7 +134,8 @@ test('Upload progress isolates the shared fade namespace and tokens for the same
 
     for (const [prefix, duration] of [['acme', 450], ['beta', 700]] as const) {
       const node = page.locator(`[data-progress-scope=${prefix}] .files-list-item-progress`);
-      await expect(node).toHaveClass(new RegExp(`${prefix}-fade-appear-active`));
+      const classPattern = new RegExp(`${prefix}-fade-appear-active`);
+      await expect(node).toHaveClass(classPattern);
       expect(await node.evaluate(element => element.getAnimations()
         .map(animation => animation.effect!.getTiming().duration))).toEqual([duration]);
     }
@@ -135,8 +144,10 @@ test('Upload progress isolates the shared fade namespace and tokens for the same
 for (const reduced of [false, true]) {
   test(`Upload progress finishes its pending fade after motion is disabled reduced=${reduced}`,
     async ({ page }) => {
-      await page.clock.install({ time: new Date('2024-09-15T03:00:00Z') });
-      await page.clock.pauseAt(new Date('2024-09-15T03:00:01Z'));
+      const clockStart = new Date('2024-09-15T03:00:00Z');
+      await page.clock.install({ time: clockStart });
+      const pauseTime = new Date('2024-09-15T03:00:01Z');
+      await page.clock.pauseAt(pauseTime);
       await page.goto('/?fixture=upload-progress-motion');
       await page.clock.runFor(380);
       await page.locator('.ant-upload-list-item-progress').evaluate(node => {

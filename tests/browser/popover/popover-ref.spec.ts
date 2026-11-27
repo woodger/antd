@@ -92,12 +92,14 @@ for (const source of [false, true]) {
     for (const observe of [false, true]) {
       test(`Popover forceAlign moves pinned ${sample.name} with frames paused and callback ${observe} in ${source ? 'source' : 'native'} config`,
         async ({ page }) => {
-          await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
+          const clockStart = new Date('2026-01-01T00:00:00Z');
+          await page.clock.install({ time: clockStart });
           await page.goto('/?fixture=popover-ref');
           await page.getByLabel('Source ref config', { exact: true }).setChecked(source);
           await page.getByLabel('Popover ref case', { exact: true }).selectOption(sample.name);
           await page.getByLabel('Observe ref alignment', { exact: true }).setChecked(observe);
-          await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 1000));
+          const pauseTime = new Date(await page.evaluate(() => Date.now()) + 1000);
+          await page.clock.pauseAt(pauseTime);
           const root = page.locator('#popover-ref-case');
           await root.getByRole('button', { name: 'Next ref step', exact: true })
             .evaluate(node => (node as HTMLButtonElement).click());

@@ -46,10 +46,11 @@ interface Header { mode: 'csr' | 'ssr'; version: string; react: string; revision
   archives: Array<{ sha256: string; archiveSha256: string; byteEqual: boolean }> }
 // Returns SHA-256 in hexadecimal form for the reconciliation of the recorded data.
 const hash = (b: Uint8Array) => createHash('sha256').update(b).digest('hex');
-const compressed = readFileSync(new URL(
+const referenceUrl = new URL(
   './fixtures/ant-design-autocomplete-render-reference.json.gz',
   import.meta.url
-));
+);
+const compressed = readFileSync(referenceUrl);
 assert.equal(compressed.length, 986923);
 assert.equal(hash(compressed), '78333e2cd394d73aad39acc4a94b055e0f37aff53947ae55930a06d8e91849dc');
 const csr = gunzipSync(compressed);
@@ -93,8 +94,9 @@ for (const [reference, mode] of [[autocompleteRenderReference, 'csr'], [autocomp
 }
 for (const [path, source] of [['autocomplete-render-cases.mjs', '.upstream/artifacts/autocomplete-render-cases.mjs'],
   ['autocomplete-render-metrics.mjs', '.upstream/artifacts/autocomplete-render-reader.mjs']]) {
+  const fixtureUrl = new URL('./' + path, import.meta.url);
   assert.equal(
-    hash(readFileSync(new URL('./' + path, import.meta.url))),
+    hash(readFileSync(fixtureUrl)),
     autocompleteRenderReference.reference.inputPins[source],
     path
   );

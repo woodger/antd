@@ -19,8 +19,13 @@ for (const rootTheme of ['light', 'dark']) {
     const leaf = popups.nth(1).getByRole('menuitem', { name: 'Leaf', exact: true });
 
     await expect(popups).toHaveCount(2);
-    await expect(popups.nth(0)).toHaveClass(new RegExp(`ant-menu-${parentTheme}`));
-    await expect(popups.nth(1)).toHaveClass(new RegExp(`ant-menu-${rootTheme}`));
+    const parentPopup = popups.nth(0);
+    const parentThemePattern = new RegExp(`ant-menu-${parentTheme}`);
+    await expect(parentPopup).toHaveClass(parentThemePattern);
+
+    const rootPopup = popups.nth(1);
+    const rootThemePattern = new RegExp(`ant-menu-${rootTheme}`);
+    await expect(rootPopup).toHaveClass(rootThemePattern);
     await expect(leaf).toHaveCSS('color', rootTheme === 'light'
       ? 'rgba(0, 0, 0, 0.88)' : 'rgba(255, 255, 255, 0.65)');
     await expect(popups.nth(1).locator(':scope > ul')).toHaveCSS('background-color',

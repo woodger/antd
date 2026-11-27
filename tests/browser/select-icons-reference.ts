@@ -127,12 +127,14 @@ function load<Value>(name: string, mode: string, sync = false): Source<Value> {
   );
   assert(h.archives.every(archive => archive.byteEqual));
   if (!inputsVerified) {
+    const fixtureUrl = new URL('./select-icons-cases.mjs', import.meta.url);
     assert.equal(
-      hash(readFileSync(new URL('./select-icons-cases.mjs', import.meta.url))),
+      hash(readFileSync(fixtureUrl)),
       'bd6a9d5d9b3f4a5042c435138ef850bc366dc3df8ddb4c50a1f2ac3a8122f6bd'
     );
+    const sourceUrl = new URL('./select-icons-metrics.mjs', import.meta.url);
     assert.equal(
-      hash(readFileSync(new URL('./select-icons-metrics.mjs', import.meta.url))),
+      hash(readFileSync(sourceUrl)),
       'be5eac174349176ce535c5a1bb164f2c48f5c91e93e11263a20f230d34f92cdb'
     );
     for (const [path, pin] of Object.entries(h.inputPins)) {

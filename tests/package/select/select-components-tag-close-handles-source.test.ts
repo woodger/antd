@@ -174,10 +174,11 @@ it('rejects changed provenance headers, partial actions, unknown owners and alte
     ...csr,
     cases: [{ ...csr.cases[0], steps: [] }, csr.cases[1]]
   })).toThrow();
-  const decoded = gunzipSync(readFileSync(new URL(
+  const referenceUrl = new URL(
     '../../browser/fixtures/ant-design-select-components-tag-close-handles-ssr-reference.json.gz',
     import.meta.url
-  )));
+  );
+  const decoded = gunzipSync(readFileSync(referenceUrl));
 
   expect(() => verifySelectTagCloseHandlesDecodedBytes(decoded, 'ssr')).not.toThrow();
   const changed = Buffer.from(decoded);

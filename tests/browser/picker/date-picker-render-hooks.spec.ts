@@ -100,7 +100,8 @@ for (const owner of owners) {
   const range = owner.startsWith('range'), datetime = owner.endsWith('datetime');
   const source = sourceFacts.cases.find(item => item.id === owner)!.first;
   test(`DatePicker render hooks expose cell info and the full layout ${owner}`, async ({ page }) => {
-    await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+    const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+    await page.clock.setFixedTime(fixedTime);
     await open(page, owner);
     await assertSourceCells(page, source.firstwrap);
     const panel = popup(page).locator('[data-hook-panel]');
@@ -152,7 +153,8 @@ for (const owner of owners) {
       await expect(popup(page).locator('[data-hook-cell][data-hook-range="start"]')).toHaveCount(0);
       await expect(popup(page).locator('[data-hook-cell][data-hook-range="end"]').first()).toBeVisible();
     }
-    await page.clock.setFixedTime(new Date('2024-06-11T09:24:46.789Z'));
+    const clockTime = new Date('2024-06-11T09:24:46.789Z');
+    await page.clock.setFixedTime(clockTime);
     await control(page, 'repaint');
     await control(page, 'cell-replace');
 
@@ -162,7 +164,8 @@ for (const owner of owners) {
       .toHaveClass(/ant-picker-cell-today/);
     await expect(popup(page).locator('td[title="2024-06-10"]'))
       .not.toHaveClass(/ant-picker-cell-today/);
-    await page.clock.setFixedTime(new Date('2024-06-12T10:25:47.890Z'));
+    const fixedDate = new Date('2024-06-12T10:25:47.890Z');
+    await page.clock.setFixedTime(fixedDate);
     await control(page, 'prefix');
 
     await expect(popup(page)).toHaveClass(/hook-picker-dropdown/);

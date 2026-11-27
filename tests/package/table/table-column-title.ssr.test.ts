@@ -6,7 +6,8 @@ import source from '../../browser/fixtures/ant-design-table-column-title-referen
 
 /** Reads an attribute value from the serialized header. */
 function attribute(markup: string, name: string) {
-  return markup.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`(?:^|\\s)${name}="([^"]*)"`);
+  return markup.match(attributePattern)?.[1] ?? null;
 }
 
 /** Reads metadata visible before hydration and the snippet input. */

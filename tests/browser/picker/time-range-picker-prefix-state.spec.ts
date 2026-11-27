@@ -59,7 +59,8 @@ async function release(prior: Retained) {
 
 test.use({ viewport: { width: 1280, height: 900 } });
 test.beforeEach(async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-09-15T12:34:56.789Z'));
+  const fixedTime = new Date('2024-09-15T12:34:56.789Z');
+  await page.clock.setFixedTime(fixedTime);
 });
 
 for (const controlled of [true, false]) {

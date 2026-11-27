@@ -11,7 +11,8 @@ import {
 
 /** Reads one attribute from an opening tag in the server fixture. */
 function attribute(tag: string, name: string) {
-  return tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1] ?? null;
+  const attributePattern = new RegExp(`\\s${name}="([^"]*)"`);
+  return tag.match(attributePattern)?.[1] ?? null;
 }
 
 /** Retains missing attribute names to compare where those attributes appear. */

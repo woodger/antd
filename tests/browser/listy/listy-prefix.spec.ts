@@ -85,7 +85,8 @@ test('Listy prefix updates retain virtual scroll, sticky header and the edited k
     await setPrefix(page, prefix, local);
     const resolved = local ? prefix : `${prefix}-listy`;
 
-    await expect(root).toHaveClass(new RegExp(resolved));
+    const classPattern = new RegExp(resolved);
+    await expect(root).toHaveClass(classPattern);
     expect(await root.evaluate((node, old) => node === old, oldList)).toBe(true);
     expect(await editor.evaluate((node, old) => node === old, oldEditor)).toBe(true);
     await expect(editor).toHaveValue('virtual draft');

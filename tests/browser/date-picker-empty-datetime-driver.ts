@@ -34,7 +34,8 @@ export async function settleEmptyDatetime(page: Page) {
 
 export async function openEmptyDatetime(page: Page, sample: { id: EmptyDatetimeOwner }) {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
+  const fixedTime = new Date('2024-06-10T08:23:45.678Z');
+  await page.clock.setFixedTime(fixedTime);
   await page.goto('/date-picker-empty-datetime.html?owner=' + sample.id);
   await page.waitForFunction(() => window.nativeEmptyDatetime?.ready === true);
   await page.evaluate(() => document.fonts.ready);

@@ -93,7 +93,8 @@ it('accepts the actual returned Dayjs object and rejects a substituted alias', (
 it('rejects changing full preset milliseconds or the recorded lazy return relation', () => {
   const source = sourceReturn(), changed = structuredClone(nativeReturn);
   changed.temporal!.epoch += 1;
-  changed.temporal!.iso = new Date(changed.temporal!.epoch).toISOString();
+  const changedDate = new Date(changed.temporal!.epoch);
+  changed.temporal!.iso = changedDate.toISOString();
   changed.temporal!.fields[6] += 1;
 
   expect(() => verifyDatePickerPresetsReturnedDate(changed, source,

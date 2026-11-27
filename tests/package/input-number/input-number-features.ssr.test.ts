@@ -12,7 +12,8 @@ describe('InputNumber source package features', () => {
     expect(body).toContain(`aria-valuenow="${value}"`);
     expect(body).toContain(`value="${value}"`);
     expect(body.match(/name="amount"/g)).toHaveLength(1);
-    expect(body).toMatch(new RegExp(`<input[^>]*type="hidden"[^>]*value="${value}"`));
+    const expectedPattern = new RegExp(`<input[^>]*type="hidden"[^>]*value="${value}"`);
+    expect(body).toMatch(expectedPattern);
   });
 
   it('keeps numeric props and their callback parameter compatible by default', () => {

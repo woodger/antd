@@ -31,7 +31,8 @@ describe('datetime configuration public package SSR', () => {
   for (const sample of reference.cases) {
     it(`renders the ${sample.name} format and columns without browser effects`, () => {
       vi.useFakeTimers();
-      vi.setSystemTime(new Date(reference.reference.now));
+      const systemTime = new Date(reference.reference.now);
+      vi.setSystemTime(systemTime);
       try {
         const { body } = render(DatetimeConfigFixtures, { props: { preset: sample.name } });
         const columns = body.match(/class="ant-picker-time-panel-column"/g) ?? [];
@@ -62,7 +63,8 @@ describe('merged clock settings in the public package', () => {
   for (const sample of layered.cases) {
     it(`renders ${sample.profile.id} with resolved clock settings and no browser effects`, () => {
       vi.useFakeTimers();
-      vi.setSystemTime(new Date(layered.reference.now));
+      const systemTime = new Date(layered.reference.now);
+      vi.setSystemTime(systemTime);
       try {
         const { body } = render(PickerClockOptionsFixtures, {
           props: { preset: sample.profile.id, defaultOpen: true }

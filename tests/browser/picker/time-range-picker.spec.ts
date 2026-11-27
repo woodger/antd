@@ -13,7 +13,8 @@ const unit = (page: Page, name: string) => popup(page)
 const initial = '2024-09-15T10:23:44.567Z,2024-09-15T17:45:56.789Z';
 
 test.beforeEach(async ({ page }) => {
-  await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
+  const clockStart = new Date('2024-09-15T12:34:56.789Z');
+  await page.clock.install({ time: clockStart });
   await page.goto('/?fixture=time-range-picker');
 
   await expect(start(page)).toHaveValue('10:23:44');
@@ -181,7 +182,8 @@ for (const format of ['short', 'mask']) {
   test(
     `TimeRangePicker manual input with ${format} format keeps the saved interval date`,
     async ({ page }) => {
-      await page.clock.setSystemTime(new Date('2024-10-19T12:34:56.789Z'));
+      const systemTime = new Date('2024-10-19T12:34:56.789Z');
+      await page.clock.setSystemTime(systemTime);
       await control(page, 'Interval format').selectOption(format);
 
       if (format === 'mask') {
@@ -208,7 +210,8 @@ test.describe('TimeRangePicker daylight-saving input', () => {
   for (const format of ['short', 'mask']) {
     for (const endpoint of ['start', 'end']) {
       test(`accepts a saved date's valid ${endpoint} time with ${format} format`, async ({ page }) => {
-        await page.clock.setSystemTime(new Date('2026-03-08T16:00:00Z'));
+        const systemTime = new Date('2026-03-08T16:00:00Z');
+        await page.clock.setSystemTime(systemTime);
         await button(page, 'Set local interval for 2026-03-07').click();
         await control(page, 'Interval format').selectOption(format);
         const input = endpoint === 'start' ? start(page) : end(page);
@@ -239,7 +242,8 @@ test.describe('TimeRangePicker daylight-saving input', () => {
   }
 
   test('rejects a missing hour on the saved date even when today has that hour', async ({ page }) => {
-    await page.clock.setSystemTime(new Date('2026-03-09T16:00:00Z'));
+    const systemTime = new Date('2026-03-09T16:00:00Z');
+    await page.clock.setSystemTime(systemTime);
     await button(page, 'Set local interval for 2026-03-08').click();
     await control(page, 'Interval format').selectOption('short');
 
@@ -503,8 +507,10 @@ test('TimeRangePicker presets submit immediately and snippets keep mode and rang
 });
 
 test('TimeRangePicker Now confirms one field and applies current time restrictions without onOk', async ({ page }) => {
-  await page.clock.setSystemTime(new Date('2024-09-15T12:34:00.700Z'));
-  await page.clock.pauseAt(new Date('2024-09-15T12:35:00.700Z'));
+  const systemTime = new Date('2024-09-15T12:34:00.700Z');
+  await page.clock.setSystemTime(systemTime);
+  const pauseTime = new Date('2024-09-15T12:35:00.700Z');
+  await page.clock.pauseAt(pauseTime);
   await control(page, 'Show interval Now').check();
   await start(page).click();
   await unit(page, 'Сейчас').click();
@@ -622,7 +628,8 @@ test('TimeRangePicker Form validates null, submits Dayjs pairs and resets both f
 });
 
 test('TimeRangePicker scroll selection remains a draft and cancels timers and refs on unmount', async ({ page }) => {
-  await page.clock.pauseAt(new Date('2024-09-15T12:36:00.000Z'));
+  const pauseTime = new Date('2024-09-15T12:36:00.000Z');
+  await page.clock.pauseAt(pauseTime);
   await control(page, 'Change interval on scroll').check();
   await start(page).click();
   const column = popup(page).locator('[data-type="hour"]');
@@ -666,7 +673,8 @@ test('TimeRangePicker controlled pickerValue supplies empty panel templates and 
 });
 
 test('TimeRangePicker cancels a pending strong focus transition when it unmounts', async ({ page }) => {
-  await page.clock.pauseAt(new Date('2024-09-15T12:36:00.000Z'));
+  const pauseTime = new Date('2024-09-15T12:36:00.000Z');
+  await page.clock.pauseAt(pauseTime);
   await start(page).click();
   await unit(page, 'hour 13').click();
   await unit(page, 'ОК').click();

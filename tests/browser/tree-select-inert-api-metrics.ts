@@ -51,18 +51,25 @@ export function readTreeSelectInertApiSSR(html: string) {
     if (!tag) {
       return null;
     }
-    const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`).exec(tag);
+    const attributePattern = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`);
+    const match = attributePattern.exec(tag);
     return match ? decode(match[1] ?? '') : null;
   };
   const root = tags.find(tag => attr(tag, 'data-inert-api-root') !== null)
     ?? tags.find(tag => attr(tag, 'class')?.split(/\s+/).includes('ant-select'))!;
   const editor = tags.find(tag => /^(?:<input|<textarea)\b/.test(tag) && attr(tag, 'role') === 'combobox');
   const output = (name: string) => {
-    const match = new RegExp(`<output(?=[^>]*\\bdata-inert-api-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`).exec(html);
+    const pattern = new RegExp(
+      `<output(?=[^>]*\\bdata-inert-api-${name}(?:[=\\s>]))[^>]*>([\\s\\S]*?)<\\/output>`
+    );
+    const match = pattern.exec(html);
     return match ? JSON.parse(decode(match[1].replace(/<!--[\s\S]*?-->/g, ''))) : null;
   };
   const leakedAttributes = tags.flatMap(tag => ['onPopupVisibleChange', 'popupStyle', 'choiceTransitionName', 'direction']
-    .filter(name => new RegExp(`\\s${name}(?:=|[\\s/>])`, 'i').test(tag)).map(name => ({
+    .filter(name => {
+      const attributePattern = new RegExp(`\\s${name}(?:=|[\\s/>])`, 'i');
+      return attributePattern.test(tag);
+    }).map(name => ({
       tag: tag.slice(1).split(/[\s>]/)[0],
       name
     })));

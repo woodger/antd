@@ -44,13 +44,15 @@ test('Popconfirm follows the pinned action link order and native navigation', as
   await expect(cancel).toBeFocused();
   expect(await readLinks(popup)).toEqual(sample.initial);
   await cancel.press('Enter');
-  await expect(page).toHaveURL(new RegExp(sample.cancelHash + '$'));
+  const pattern = new RegExp(sample.cancelHash + '$');
+  await expect(page).toHaveURL(pattern);
   await expect(popup).toBeHidden();
 
   await opener.click();
   await ok.click();
 
-  await expect(page).toHaveURL(new RegExp(sample.hash + '$'));
+  const matchPattern = new RegExp(sample.hash + '$');
+  await expect(page).toHaveURL(matchPattern);
   await expect(popup).toBeHidden();
   await expect(events).toHaveText(JSON.stringify(sample.events));
 });
