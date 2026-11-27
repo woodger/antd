@@ -3,8 +3,12 @@ import type { AliasToken } from '../theme/theme-token.types';
 
 /** Source empty/utils.getAsSolidColor: CSS variables are not composed in advance. */
 function solidColor(color: string, background: string) {
-  return color?.startsWith('var(') || background?.startsWith('var(')
-    ? color : new FastColor(color).onBackground(background).toHexString();
+  if (color?.startsWith('var(') || background?.startsWith('var(')) {
+    return color;
+  }
+
+  const fill = new FastColor(color);
+  return fill.onBackground(background).toHexString();
 }
 
 /** Built-in SVGs use global tokens regardless of Empty component aliases. */

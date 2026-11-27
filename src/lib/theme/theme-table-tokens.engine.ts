@@ -3,12 +3,12 @@ import type { AliasToken } from './theme-token.types';
 
 /** Component defaults Table 6.6.8 including opaque substrates and expand icon metrics. */
 export function prepareTableTokens(token: AliasToken) {
-  const fillAlter = new FastColor(token.colorFillAlter)
-    .onBackground(token.colorBgContainer).toHexString();
-  const fillSecondary = new FastColor(token.colorFillSecondary)
-    .onBackground(token.colorBgContainer).toHexString();
-  const fillContent = new FastColor(token.colorFillContent)
-    .onBackground(token.colorBgContainer).toHexString();
+  const alterColor = new FastColor(token.colorFillAlter);
+  const fillAlter = alterColor.onBackground(token.colorBgContainer).toHexString();
+  const secondaryColor = new FastColor(token.colorFillSecondary);
+  const fillSecondary = secondaryColor.onBackground(token.colorBgContainer).toHexString();
+  const contentColor = new FastColor(token.colorFillContent);
+  const fillContent = contentColor.onBackground(token.colorBgContainer).toHexString();
   const icon = new FastColor(token.colorIcon);
   const iconHover = new FastColor(token.colorIconHover);
   const expandIconHalfInner = token.controlInteractiveSize / 2 - token.lineWidth;

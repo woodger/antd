@@ -4,11 +4,15 @@ import { FastColor } from '../color/fast-color.engine';
 import { isBrightColor } from '../color-picker/color-picker.engine';
 
 export function prepareTagTokens(token: AliasToken) {
+  const fill = new FastColor(token.colorFillTertiary);
+  const defaultBg = fill.onBackground(token.colorBgContainer).toHexString();
+  const defaultColor = token.colorText;
+  const solidBackground = new AggregationColor(token.colorBgSolid);
+
   return {
-    defaultBg: new FastColor(token.colorFillTertiary)
-      .onBackground(token.colorBgContainer).toHexString(),
-    defaultColor: token.colorText,
-    solidTextColor: isBrightColor(new AggregationColor(token.colorBgSolid), '#fff') ? '#000' : '#fff'
+    defaultBg,
+    defaultColor,
+    solidTextColor: isBrightColor(solidBackground, '#fff') ? '#000' : '#fff'
   };
 }
 

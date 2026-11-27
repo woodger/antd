@@ -44,7 +44,8 @@ export function createStatisticTimerModel(
         }
 
         const time = clock.now();
-        const target = new Date(request.value as StatisticValue).getTime();
+        const targetDate = new Date(request.value as StatisticValue);
+        const target = targetDate.getTime();
         const down = request.type === 'countdown';
         now = time;
         callbacks().onChange?.(down ? target - time : time - target);

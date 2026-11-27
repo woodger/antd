@@ -132,7 +132,10 @@ export function getColorText(color: AggregationColor, format: ColorFormat | unde
 export function isBrightColor(color: AggregationColor, background: string): boolean {
   const { r, g, b, a } = color.toRgb();
   if (a <= .5) {
-    return new ColorCore(color.toRgbString()).onBackground(background).toHsv().v > .5;
+    const foreground = new ColorCore(color.toRgbString());
+    const composited = foreground.onBackground(background);
+
+    return composited.toHsv().v > .5;
   }
   return r * .299 + g * .587 + b * .114 > 192;
 }

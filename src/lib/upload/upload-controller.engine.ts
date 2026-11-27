@@ -86,11 +86,9 @@ export function createUploadController<T = unknown>(
         publish(items[index], list);
       }
       else {
-        const clone = Object.assign(
-          new File([item.file], item.file.name, { type: item.file.type }),
-          { uid: item.file.uid }
-        );
-        publish(clone, list);
+        const clone = new File([item.file], item.file.name, { type: item.file.type });
+        const uploadFile = Object.assign(clone, { uid: item.file.uid });
+        publish(uploadFile, list);
       }
     });
   };
@@ -132,9 +130,15 @@ export function createUploadController<T = unknown>(
     const data = typeof props.data === 'function' ? await props.data(file) : props.data ?? {};
     // Line beforeUpload in Ant wrapper does not replace the file; Blob/File is replaced.
     const transformed = result && typeof result === 'object' ? result : file;
-    const parsed = transformed instanceof File
-      ? transformed as UploadRcFile
-      : Object.assign(new File([transformed], file.name, { type: file.type }), { uid: file.uid });
+    let parsed: UploadRcFile;
+    if (transformed instanceof File) {
+      parsed = transformed as UploadRcFile;
+    }
+    else {
+      const replacement = new File([transformed], file.name, { type: file.type });
+      parsed = Object.assign(replacement, { uid: file.uid });
+    }
+
     parsed.uid = file.uid;
     return { origin: file, parsed, ignored: false, action, data };
   }

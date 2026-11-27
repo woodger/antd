@@ -10,7 +10,8 @@ export function getTooltipColor(color: TooltipColor | undefined, prefix: string)
   const overlayStyle: (readonly [string, string])[] = [];
 
   if (color && !internal) {
-    const { r, g, b } = new AggregationColor(color).toRgb();
+    const overlayColor = new AggregationColor(color);
+    const { r, g, b } = overlayColor.toRgb();
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
     overlayStyle.push(
       ['background', color],

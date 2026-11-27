@@ -50,10 +50,10 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
   // Decodes the answer only if the corresponding callback is installed.
   xhr.onload = () => {
     if (xhr.status < 200 || xhr.status >= 300) {
-      const error = Object.assign(
-        new Error(`cannot ${option.method} ${option.action} ${xhr.status}'`),
-        { status: xhr.status, method: option.method, url: option.action }
-      );
+      const transportError = new Error(`cannot ${option.method} ${option.action} ${xhr.status}'`);
+      const error = Object.assign(transportError, {
+        status: xhr.status, method: option.method, url: option.action
+      });
       option.onError?.(error, readResponse());
     }
     else {

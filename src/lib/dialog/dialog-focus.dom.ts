@@ -120,7 +120,8 @@ export function connectDialogFocus(
 
     if (event.key === 'Escape') {
       event.preventDefault();
-      dialog.dispatchEvent(new view.Event('cancel', { cancelable: true }));
+      const cancelEvent = new view.Event('cancel', { cancelable: true });
+      dialog.dispatchEvent(cancelEvent);
     }
     else if (event.key === 'Tab' && getInteraction().trap) {
       moveTab(event, focused);

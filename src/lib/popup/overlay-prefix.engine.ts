@@ -9,7 +9,9 @@ export function getOverlayPrefixCss(
     return undefined;
   }
 
+  const componentSelector = new RegExp(`\\.${original}(?!-css-var\\b)`, 'g');
+
   return template
-    .replace(new RegExp(`\\.${original}(?!-css-var\\b)`, 'g'), () => `.${prefix}`)
+    .replace(componentSelector, () => `.${prefix}`)
     .replace(/<\/style/gi, '<\\/style');
 }

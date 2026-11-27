@@ -26,15 +26,18 @@ export type GenerateNeutralColorMap = (
 ) => ColorNeutralMapToken;
 
 function getAlphaColor(baseColor: string, alpha: number) {
-  return new FastColor(baseColor).setA(alpha).toRgbString();
+  const color = new FastColor(baseColor);
+  return color.setA(alpha).toRgbString();
 }
 
 function getLightSolidColor(baseColor: string, brightness: number) {
-  return new FastColor(baseColor).darken(brightness).toHexString();
+  const color = new FastColor(baseColor);
+  return color.darken(brightness).toHexString();
 }
 
 function getDarkSolidColor(baseColor: string, brightness: number) {
-  return new FastColor(baseColor).lighten(brightness).toHexString();
+  const color = new FastColor(baseColor);
+  return color.lighten(brightness).toHexString();
 }
 
 export const generateLightColorPalettes: GenerateColorMap = (baseColor: string) => {
@@ -178,9 +181,9 @@ export function genColorMapToken(
   const colorLink = seed.colorLink || seed.colorInfo;
   const linkColors = generateColorPalettes(colorLink);
 
-  const colorErrorBgFilledHover = new FastColor(errorColors[1])
-    .mix(new FastColor(errorColors[3]), 50)
-    .toHexString();
+  const errorBackground = new FastColor(errorColors[1]);
+  const errorBorder = new FastColor(errorColors[3]);
+  const colorErrorBgFilledHover = errorBackground.mix(errorBorder, 50).toHexString();
 
   const presetColorTokens: Record<string, string> = {};
   presetColors.forEach((colorKey) => {

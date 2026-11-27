@@ -25,7 +25,8 @@
       return '-';
     }
 
-    const target = new Date(formatValue).getTime();
+    const targetDate = new Date(formatValue);
+    const target = targetDate.getTime();
     const now = Date.now();
     return formatStatisticTime(
       Math.max(type === 'countdown' ? target - now : now - target, 0),

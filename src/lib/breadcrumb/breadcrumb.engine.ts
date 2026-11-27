@@ -19,8 +19,11 @@ export function breadcrumbName(
   }
 
   const keys = Object.keys(params).join('|');
-  return String(title).replace(
-    new RegExp(`:(${keys})`, 'g'),
+  const text = String(title);
+  const parameterPattern = new RegExp(`:(${keys})`, 'g');
+
+  return text.replace(
+    parameterPattern,
     (replacement, key: string) => String(params[key] || replacement)
   );
 }

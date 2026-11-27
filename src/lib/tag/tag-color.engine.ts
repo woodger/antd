@@ -18,9 +18,11 @@ export function getTagColor(
       style.push(['background-color', props.color!]);
     }
     else {
-      const hsl = new FastColor(color).toHsl();
+      const inputColor = new FastColor(color);
+      const hsl = inputColor.toHsl();
       hsl.l = 0.95;
-      style.push(['background-color', new FastColor(hsl).toHexString()], ['color', props.color!]);
+      const background = new FastColor(hsl);
+      style.push(['background-color', background.toHexString()], ['color', props.color!]);
       if (variant === 'outlined') style.push(['border-color', props.color!]);
     }
   }

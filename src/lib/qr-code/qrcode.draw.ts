@@ -42,7 +42,9 @@ export function drawQRCode(
   let supportsPath = false;
 
   try {
-    new view.Path2D().addPath(new view.Path2D());
+    const probePath = new view.Path2D();
+    const appendedPath = new view.Path2D();
+    probePath.addPath(appendedPath);
     supportsPath = true;
   }
   catch {
@@ -50,7 +52,8 @@ export function drawQRCode(
   }
 
   if (supportsPath) {
-    context.fill(new view.Path2D(qrCodePath(cellsToDraw, margin)));
+    const qrPath = new view.Path2D(qrCodePath(cellsToDraw, margin));
+    context.fill(qrPath);
   }
   else {
     // In fallback the standard draws the original modules without excavation; maintain this difference of ways.

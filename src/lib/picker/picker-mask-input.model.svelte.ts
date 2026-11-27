@@ -167,7 +167,8 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     if (shared(event, { mask: true, text: before.text, enterValid }) === false) {
       return true;
     }
-    const year = new Date().getFullYear();
+    const today = new Date();
+    const year = today.getFullYear();
     const next = editPickerMask(mask, before, event.key, year, options.helped);
     index = next.index;
     cache = next.cache;

@@ -14,7 +14,8 @@ export function prepareButtonTokens(token: AliasToken & Partial<ButtonComponentT
   const contentFontSize = token.contentFontSize ?? token.fontSize;
   const contentFontSizeSM = token.contentFontSizeSM ?? token.fontSize;
   const contentFontSizeLG = token.contentFontSizeLG ?? token.fontSizeLG;
-  const solidTextColor = isBrightColor(new AggregationColor(token.colorBgSolid), '#fff')
+  const solidBackground = new AggregationColor(token.colorBgSolid);
+  const solidTextColor = isBrightColor(solidBackground, '#fff')
     ? '#000' : '#fff';
   const shadows: Record<string, string> = {};
   for (const color of presetColors) {

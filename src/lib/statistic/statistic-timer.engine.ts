@@ -20,10 +20,9 @@ export function formatStatisticTime(duration: number, format: string): string {
 
     const value = Math.floor(remaining / unit);
     remaining -= value * unit;
-    return text.replace(
-      new RegExp(`${name}+`, 'g'),
-      token => value.toString().padStart(token.length, '0')
-    );
+    const tokenPattern = new RegExp(`${name}+`, 'g');
+
+    return text.replace(tokenPattern, token => value.toString().padStart(token.length, '0'));
   }, template);
   let index = 0;
   return result.replace(escapeRegex, () => literals[index++]);
