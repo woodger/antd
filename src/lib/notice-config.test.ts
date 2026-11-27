@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createMessage, messageHolderKey } from './message.model.svelte.js';
+import { createMessage, messageHolderKey } from './message/message.model.svelte.js';
 import {
   createNotification,
   notificationHolderKey,
   notificationOptionsKey
-} from './notification.model.svelte.js';
+} from './notification/notification.model.svelte.js';
 import type { NoticeClock } from './notice-queue.model.svelte.js';
 
 const clock: NoticeClock = {

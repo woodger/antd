@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import Avatar from './Avatar.svelte';
-  import Popover from '../Popover.svelte';
+  import Popover from '../popover/Popover.svelte';
   import { useConfig } from '../config-context';
   import { ruRU } from '../types';
   import type { AvatarGroupItem, AvatarGroupMax } from './avatar-group.types';

@@ -15,7 +15,7 @@
   import Button from '../button/Button.svelte';
   import UploadIcon from './UploadIcon.svelte';
   import UploadProgress from './UploadProgress.svelte';
-  import Tooltip from '../Tooltip.svelte';
+  import Tooltip from '../tooltip/Tooltip.svelte';
   let {
     prefixCls,
     file,

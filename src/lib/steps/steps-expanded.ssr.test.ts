@@ -2,7 +2,7 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import Steps from './Steps.svelte';
-import Tooltip from '../Tooltip.svelte';
+import Tooltip from '../tooltip/Tooltip.svelte';
 import type { StepsIconInfo } from './steps-expanded.types';
 import type { Snippet } from 'svelte';
 

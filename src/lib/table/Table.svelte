@@ -49,7 +49,7 @@
     getTableFilters
   } from './table.engine';
   import { flattenTableRows, type TableRow } from './table-tree.engine';
-  import type { SpinSemanticInfo } from '../spin.types';
+  import type { SpinSemanticInfo } from '../spin/spin.types';
   import type { RenderEmptyContent } from '../types';
   import type {
     TableChange,
@@ -75,7 +75,7 @@
   import TableSelectionControl from './TableSelectionControl.svelte';
   import TableSelectionMenu from './TableSelectionMenu.svelte';
   import TableStickyScrollbar from './TableStickyScrollbar.svelte';
-  import Spin from '../Spin.svelte';
+  import Spin from '../spin/Spin.svelte';
   import Empty from '../empty/Empty.svelte';
   import RenderContent from '../RenderContent.svelte';
   import RenderEmpty from '../empty/RenderEmpty.svelte';

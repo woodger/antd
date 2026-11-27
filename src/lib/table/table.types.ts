@@ -7,11 +7,11 @@ import type {
 import type { PaginationProps } from '../pagination/Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from '../checkbox/checkbox.types';
 import type { DropdownProps } from '../dropdown/dropdown.types';
-import type { SpinProps } from '../spin.types';
+import type { SpinProps } from '../spin/spin.types';
 import type { GridBreakpoint } from '../grid/grid.types';
 import type { PaginationSlots } from '../pagination/pagination.types';
 import type { RadioChangeEvent } from '../radio/radio.types';
-import type { TooltipProps } from '../tooltip.types';
+import type { TooltipProps } from '../tooltip/tooltip.types';
 import type { ComponentSize, RenderEmptyContent, TableLocale } from '../types';
 
 export type TableKey = string | number;

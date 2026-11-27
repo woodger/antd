@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Tooltip from '../Tooltip.svelte';
+  import Tooltip from '../tooltip/Tooltip.svelte';
   import RenderContent from '../RenderContent.svelte';
   import { useConfig } from '../config-context';
   import type { FormTooltipProps } from './form.types';
-  import type { TooltipTrigger } from '../tooltip.types';
+  import type { TooltipTrigger } from '../tooltip/tooltip.types';
 
   let { options, formPrefix, formScope }: {
     options: FormTooltipProps;

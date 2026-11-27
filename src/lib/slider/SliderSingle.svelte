@@ -24,7 +24,7 @@
   import { sliderSemantics } from './slider-semantic.engine';
   import { getSliderPrefixCss } from './slider-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import TooltipPopup from '../TooltipPopup.svelte';
+  import TooltipPopup from '../tooltip/TooltipPopup.svelte';
 
   interface Interaction {
     kind: 'pointer' | 'key' | 'native';

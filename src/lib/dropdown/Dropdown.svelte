@@ -13,14 +13,14 @@
   import { getPopupArrowStyle, getPopupPlacements } from '../popup-position.engine';
   import { createDropdownPosition, dropdownFitVariables } from './dropdown-position.dom';
   import { createPopupContainer } from '../popup-container.model.svelte.js';
-  import { connectPopoverTrigger, focusPopover } from '../popover.dom';
-  import { connectTooltipOpenClass } from '../tooltip.dom';
+  import { connectPopoverTrigger, focusPopover } from '../popover/popover.dom';
+  import { connectTooltipOpenClass } from '../tooltip/tooltip.dom';
   import { useComponentTheme } from '../theme-component.svelte';
   import { connectInlineStyle } from '../inline-style.dom';
   import { serializeInlineStyleLayers } from '../inline-style.engine';
   import { getInlineZIndex, provideZIndex, useZIndex } from '../z-index-context.svelte';
   import { useDesignTokenContext } from '../theme-context.svelte';
-  import { getTooltipDelay, type TooltipPosition } from '../tooltip.engine';
+  import { getTooltipDelay, type TooltipPosition } from '../tooltip/tooltip.engine';
   import {
     dropdownSemantics, getDropdownMatch, getDropdownMotionName, isDropdownMenuKey
   } from './dropdown.engine';

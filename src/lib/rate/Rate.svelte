@@ -10,7 +10,7 @@
   import { getRatePrefixCss } from './rate-prefix.engine';
   import type { RateCharacterInfo, RateProps } from './rate.types';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import Tooltip from '../Tooltip.svelte';
+  import Tooltip from '../tooltip/Tooltip.svelte';
 
   let {
     prefixCls: customizePrefixCls,

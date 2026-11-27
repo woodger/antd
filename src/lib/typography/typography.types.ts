@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
 import type { TextAreaProps } from '../input/textarea.types';
-import type { TooltipProps } from '../tooltip.types';
+import type { TooltipProps } from '../tooltip/tooltip.types';
 
 /** Scalar/array content preserves text boundaries for JS ellipsis; snippet is a whole node. */
 export type TypographyContent = string | number | bigint | boolean | null | undefined

@@ -2,7 +2,7 @@ import type { Snippet } from 'svelte';
 import type {
   MenuClickInfo, MenuDivider, MenuGroup, MenuItem, MenuProps, MenuSubMenu
 } from '../menu/menu.types';
-import type { AdjustOverflow, TooltipAlignConfig, TooltipPlacement } from '../tooltip.types';
+import type { AdjustOverflow, TooltipAlignConfig, TooltipPlacement } from '../tooltip/tooltip.types';
 
 /** Physical aspects and angles, including lateral placement. */
 export type DropdownPlacement = TooltipPlacement;

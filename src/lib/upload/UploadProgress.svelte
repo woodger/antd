@@ -4,7 +4,7 @@
   import { createUploadMotion, type UploadItemMotionState } from './upload-motion.dom';
   import { useConfig } from '../config-context';
   import { useToken } from '../theme-context.svelte';
-  import Progress from '../Progress.svelte';
+  import Progress from '../progress/Progress.svelte';
 
   let {
     file,

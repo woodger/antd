@@ -1,6 +1,6 @@
 // Resolves Drawer and Modal masks and focus. Local fields inherit ConfigProvider component
 // settings, with a separate fallback for closable.
-import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
+import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer/drawer.types';
 
 /** A boolean changes only mask visibility. */
 export function normalizeDialogMask(value: DrawerMask | undefined): DrawerMaskConfig {

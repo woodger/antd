@@ -3,8 +3,8 @@
   import { useMenu } from './menu-context';
   import type { MenuItem } from './menu.types';
   import RenderContent from '../RenderContent.svelte';
-  import Tooltip, { provideTooltipAnchor } from '../Tooltip.svelte';
-  import type { TooltipSemanticProps } from '../tooltip.types';
+  import Tooltip, { provideTooltipAnchor } from '../tooltip/Tooltip.svelte';
+  import type { TooltipSemanticProps } from '../tooltip/tooltip.types';
 
   let { element, item, firstLevel, connectClick }: {
     element?: HTMLElement;

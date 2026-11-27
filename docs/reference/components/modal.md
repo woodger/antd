@@ -341,7 +341,7 @@ Destroy и удаление holder завершают ожидающие handles
 исключение записано и не воспроизводится. Асинхронный rejection использует
 поведение исходного await-режима, без unhandled rejection. Прежние Native
 подписи кнопок из locale.okText/cancelText сохранены.
-[модель](../../../src/lib/modal.model.test.ts),
+[модель](../../../src/lib/modal/modal.model.test.ts),
 [браузер](../../../tests/browser/modal-controller.spec.ts),
 [SSR и декларации](../../../tests/package/modal-controller.ssr.test.ts).
 

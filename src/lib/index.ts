@@ -1,6 +1,6 @@
 export { default as ImagePreviewGroup } from './image/ImagePreviewGroup.svelte';
-export { default as App } from './app.component';
-export { useApp } from './app-context';
+export { default as App } from './app/app.component';
+export { useApp } from './app/app-context';
 export type {
   AppProps,
   AppRootProps,
@@ -10,9 +10,9 @@ export type {
   AppMessageConfig,
   AppNotificationConfig,
   AppInstance
-} from './app.types';
-export { default as ModalHolder } from './ModalHolder.svelte';
-export { createModal } from './modal.model.svelte.js';
+} from './app/app.types';
+export { default as ModalHolder } from './modal/ModalHolder.svelte';
+export { createModal } from './modal/modal.model.svelte.js';
 export type {
   ModalConfirmType,
   ModalConfirmAction,
@@ -23,7 +23,7 @@ export type {
   ModalConfirmHandle,
   ModalInstance,
   ModalHolderProps
-} from './modal-confirm.types';
+} from './modal/modal-confirm.types';
 export { getTableData } from './table/table.engine';
 export { getPaginationState } from './pagination/pagination.engine';
 export type {
@@ -417,28 +417,28 @@ export type {
   ColorPickerContent, ColorPickerPlacement, ColorPickerSlots, ColorPickerStyles,
   ColorPickerSemantic
 } from './color-picker/color-picker.types';
-export { default as Tooltip } from './tooltip.component';
-export { default as Popover } from './Popover.svelte';
-export { default as Popconfirm } from './popconfirm.component';
+export { default as Tooltip } from './tooltip/tooltip.component';
+export { default as Popover } from './popover/Popover.svelte';
+export { default as Popconfirm } from './popconfirm/popconfirm.component';
 export { default as Dropdown } from './dropdown/Dropdown.svelte';
 export { default as Tabs } from './tabs/Tabs.svelte';
 export { default as Collapse } from './collapse/Collapse.svelte';
-export { default as Drawer } from './Drawer.svelte';
+export { default as Drawer } from './drawer/Drawer.svelte';
 export { default as Alert } from './alert/alert.component';
-export { default as MessageHolder } from './MessageHolder.svelte';
-export { createMessage } from './message.model.svelte.js';
-export { default as NotificationHolder } from './NotificationHolder.svelte';
-export { createNotification } from './notification.model.svelte.js';
-export { default as Progress } from './Progress.svelte';
-export { default as Spin } from './spin.component';
-export { default as Skeleton } from './skeleton.component';
-export { default as SkeletonAvatar } from './SkeletonAvatar.svelte';
-export { default as SkeletonButton } from './SkeletonButton.svelte';
-export { default as SkeletonInput } from './SkeletonInput.svelte';
-export { default as SkeletonImage } from './SkeletonImage.svelte';
-export { default as SkeletonNode } from './SkeletonNode.svelte';
+export { default as MessageHolder } from './message/MessageHolder.svelte';
+export { createMessage } from './message/message.model.svelte.js';
+export { default as NotificationHolder } from './notification/NotificationHolder.svelte';
+export { createNotification } from './notification/notification.model.svelte.js';
+export { default as Progress } from './progress/Progress.svelte';
+export { default as Spin } from './spin/spin.component';
+export { default as Skeleton } from './skeleton/skeleton.component';
+export { default as SkeletonAvatar } from './skeleton/SkeletonAvatar.svelte';
+export { default as SkeletonButton } from './skeleton/SkeletonButton.svelte';
+export { default as SkeletonInput } from './skeleton/SkeletonInput.svelte';
+export { default as SkeletonImage } from './skeleton/SkeletonImage.svelte';
+export { default as SkeletonNode } from './skeleton/SkeletonNode.svelte';
 export { default as Empty } from './empty/empty.component';
-export { default as Result } from './result.component';
+export { default as Result } from './result/result.component';
 export { default as Steps } from './steps/Steps.svelte';
 export { default as Tag } from './tag/Tag.svelte';
 export { default as CheckableTag } from './tag/CheckableTag.svelte';
@@ -521,7 +521,7 @@ export { default as Switch } from './switch/Switch.svelte';
 export { default as Pagination } from './pagination/Pagination.svelte';
 export { default as Table } from './table/table.component';
 export { default as Select } from './select/Select.svelte';
-export { default as Modal } from './modal.component';
+export { default as Modal } from './modal/modal.component';
 export { default as Form } from './form/Form.svelte';
 export { default as FormItem } from './form/FormItem.svelte';
 export { default as FormList } from './form/FormList.svelte';
@@ -592,7 +592,7 @@ export type {
   TooltipSemanticProps,
   TooltipConfig,
   SliderTooltipConfig
-} from './tooltip.types';
+} from './tooltip/tooltip.types';
 export type {
   PopoverProps,
   PopoverRef,
@@ -603,14 +603,14 @@ export type {
   PopoverSemantic,
   PopoverSemanticProps,
   PopoverConfig
-} from './popover.types';
+} from './popover/popover.types';
 export type {
   PopconfirmProps,
   PopconfirmSlots,
   PopconfirmSemantic,
   PopconfirmSemanticProps,
   PopconfirmConfig
-} from './popconfirm.types';
+} from './popconfirm/popconfirm.types';
 export type {
   DropdownProps,
   DropdownConfig,
@@ -685,7 +685,7 @@ export type {
   DrawerContent, DrawerCloseIcon, DrawerClosable, DrawerClosableConfig,
   DrawerSemantic, DrawerSemanticSlots,
   DrawerMotionConfig, DrawerMotionName, DrawerMotionEvent, DrawerMotionStyle
-} from './drawer.types';
+} from './drawer/drawer.types';
 export type {
   AlertProps,
   AlertType,
@@ -715,7 +715,7 @@ export type {
   MessageHandle,
   MessageInstance,
   MessageHolderProps
-} from './message.types';
+} from './message/message.types';
 export type {
   NotificationType,
   NotificationPlacement,
@@ -734,7 +734,7 @@ export type {
   NotificationOptions,
   NotificationInstance,
   NotificationHolderProps
-} from './notification.types';
+} from './notification/notification.types';
 export type {
   ProgressProps,
   ProgressType,
@@ -750,12 +750,12 @@ export type {
   ProgressSemanticSlots,
   ProgressSemanticInfo,
   ProgressConfig
-} from './progress.types';
+} from './progress/progress.types';
 export type { ProgressLocale } from './types';
 export type {
   SpinProps, SpinSize, SpinContent, SpinConfig, SpinIndicator, SpinIndicatorInfo,
   SpinSemanticSlots, SpinSemanticInfo, SpinRef
-} from './spin.types';
+} from './spin/spin.types';
 export type { SpinLocale } from './types';
 export type {
   SkeletonProps,
@@ -771,10 +771,10 @@ export type {
   SkeletonTitleProps,
   SkeletonParagraphProps,
   SkeletonWidth
-} from './skeleton.types';
+} from './skeleton/skeleton.types';
 export type {
   SkeletonConfig, SkeletonSemanticSlots, SkeletonSemanticInfo, SkeletonRef, SkeletonPartProps
-} from './skeleton.types';
+} from './skeleton/skeleton.types';
 export type { SkeletonLocale } from './types';
 export type { EmptyProps, EmptyImage, EmptyDescription } from './empty/empty.types';
 export type {
@@ -783,7 +783,7 @@ export type {
 export type {
   ResultProps, ResultStatus, ResultContent, ResultSemanticSlots, ResultSemanticInfo,
   ResultSemantic, ResultRef, ResultConfig
-} from './result.types';
+} from './result/result.types';
 export type {
   StepsProps,
   StepsConfig,
@@ -1034,7 +1034,7 @@ export type {
   ModalMousePosition, ModalButtonProps, ModalOkType, ModalFooterButtons, ModalFooter,
   ModalClosableConfig, ModalClosable, ModalSemanticName, ModalSemanticSlots, ModalSemantic,
   ModalWrapProps, ModalPartProps, ModalSurfaceProps
-} from './modal.types';
+} from './modal/modal.types';
 export type { ConfigProviderProps } from './ConfigProvider.svelte';
 export type { GlobalConfigProps } from './config-provider-global';
 export type {
@@ -1220,7 +1220,7 @@ export type {
   CarouselConfig,
   CarouselLocale
 } from './carousel/carousel.types';
-export { default as Tour } from './Tour.svelte';
+export { default as Tour } from './tour/Tour.svelte';
 export type {
   TourProps,
   TourStepProps,
@@ -1240,7 +1240,7 @@ export type {
   TourConfig,
   TourLocale,
   TourAlign
-} from './tour.types';
+} from './tour/tour.types';
 export { default as Typography } from './typography/Typography.svelte';
 export { default as TypographyText } from './typography/TypographyText.svelte';
 export { default as TypographyTitle } from './typography/TypographyTitle.svelte';

@@ -1,11 +1,11 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { useConfig } from '../config-context';
-  import { getTooltipActions, getTooltipDelay } from '../tooltip.engine';
+  import { getTooltipActions, getTooltipDelay } from '../tooltip/tooltip.engine';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
-  import TooltipPopup from '../TooltipPopup.svelte';
+  import TooltipPopup from '../tooltip/TooltipPopup.svelte';
   import type { TypographyContent as Content } from './typography.types';
-  import type { TooltipContent, TooltipProps, TooltipTrigger } from '../tooltip.types';
+  import type { TooltipContent, TooltipProps, TooltipTrigger } from '../tooltip/tooltip.types';
 
   let { target, title, enabled = true, options = {} }: {
     target?: HTMLElement;

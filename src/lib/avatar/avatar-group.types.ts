@@ -1,5 +1,5 @@
 import type { AvatarProps, AvatarShape, AvatarSize } from './avatar.types';
-import type { PopoverProps } from '../popover.types';
+import type { PopoverProps } from '../popover/popover.types';
 
 export type AvatarGroupKey = string | number;
 export interface AvatarGroupItem extends Omit<AvatarProps, 'nativeElement'> {

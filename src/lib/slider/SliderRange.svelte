@@ -25,7 +25,7 @@
   import { getSliderPrefixCss } from './slider-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
   import type { SliderRangeProps } from './slider-range.types';
-  import TooltipPopup from '../TooltipPopup.svelte';
+  import TooltipPopup from '../tooltip/TooltipPopup.svelte';
 
   let { value = $bindable(), ref = $bindable(), nativeElement = $bindable(), ...props }:
     SliderRangeProps = $props();

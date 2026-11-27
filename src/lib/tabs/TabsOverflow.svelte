@@ -6,7 +6,7 @@
   import { encodeDomIdKey } from '../dom-id';
   import { connectPopup, getPopupActiveElement } from '../popup.dom';
   import { connectPopupPortal } from '../popup-portal.dom';
-  import { getTooltipDelay } from '../tooltip.engine';
+  import { getTooltipDelay } from '../tooltip/tooltip.engine';
   import { getPopupPlacement, type PopupFlipCache } from '../popup-position.engine';
   import { getTabsMoreActions, getTabsMorePlacements } from './tabs-more.engine';
   import {

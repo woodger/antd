@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tooltip from '../Tooltip.svelte';
+  import Tooltip from '../tooltip/Tooltip.svelte';
   import Icon from '../Icon.svelte';
   import StepIcon from './StepIcon.svelte';
   import { setStepsIcon } from './steps-icon-context';

@@ -3,7 +3,7 @@ import type { InlineStyleLayer } from '../inline-style.engine';
 import type { SelectStyle } from './select.types';
 import { resolveSelectStyleFrame, type SelectStyleFrame } from './select-style.engine';
 import { copySelectStyle, createSelectStyleWriter } from './select-style.dom';
-import type { TooltipPosition } from '../tooltip.engine';
+import type { TooltipPosition } from '../tooltip/tooltip.engine';
 
 const ssrAttribute = 'data-ant-native-select-style-ssr';
 /** Only: missing client key preserves SSR marker to public attachment. */

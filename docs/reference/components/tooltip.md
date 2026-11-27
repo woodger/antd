@@ -257,7 +257,7 @@ semantic styles.arrow и styles.root сохраняют приоритет на�
 на каждом неизменившемся animation frame. SSR и закрытый popup не вызывают callback.
 Настройки передаются Typography и single/active range/pinned range Slider.
 Сверка: [38 UMD-сценариев](../../../tests/browser/fixtures/ant-design-tooltip-align-reference.json),
-[числовой движок](../../../src/lib/tooltip-align-reference.test.ts),
+[числовой движок](../../../src/lib/tooltip/tooltip-align-reference.test.ts),
 [SSR](../../../tests/package/tooltip-align.ssr.test.ts) и
 [browser](../../../tests/browser/tooltip-align.spec.ts), `?fixture=tooltip-align`.
 Размеры box заданы явно для проверки геометрии; native fixed/top-layer и viewport
@@ -303,7 +303,7 @@ AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0
 
 Локальные arrow/overflow настройки сверяются с
 [84 UMD-эталонами](../../../tests/browser/fixtures/ant-design-overlay-options-reference.json),
-[unit](../../../src/lib/tooltip-options-reference.test.ts),
+[unit](../../../src/lib/tooltip/tooltip-options-reference.test.ts),
 [SSR](../../../tests/package/overlay-options.ssr.test.ts) и
 [browser](../../../tests/browser/overlay-options.spec.ts). Они включают настройки tokens,
 обновления открытой карточки, оба режима range Tooltip и сохранение draft/focus.
@@ -311,7 +311,7 @@ AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0
 [движок rc-trigger](../../../src/lib/popup-position.engine.ts). Координаты, CSS стрелки,
 fractional sizes, flip history и смена placement проверяются по
 [99 UMD-эталонам](../../../tests/browser/fixtures/ant-design-overlay-corner-reference.json),
-[unit](../../../src/lib/tooltip-corner-reference.test.ts),
+[unit](../../../src/lib/tooltip/tooltip-corner-reference.test.ts),
 [SSR](../../../tests/package/overlay-corner.ssr.test.ts) и
 [browser](../../../tests/browser/overlay-corner.spec.ts). Явные размеры в части эталонов
 отделяют позиционирование от layout остальных компонентов.

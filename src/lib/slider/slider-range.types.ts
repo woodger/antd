@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes } from 'svelte/elements';
-import type { SliderTooltipConfig } from '../tooltip.types';
+import type { SliderTooltipConfig } from '../tooltip/tooltip.types';
 import type { SliderSingleProps } from './slider.types';
 
 /** The starting settings of several points; editable takes precedence over draggableTrack. */

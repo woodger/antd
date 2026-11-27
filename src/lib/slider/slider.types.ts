@@ -1,5 +1,5 @@
 import type { HTMLInputAttributes } from 'svelte/elements';
-import type { SliderTooltipConfig } from '../tooltip.types';
+import type { SliderTooltipConfig } from '../tooltip/tooltip.types';
 import type {
   SliderClassNames,
   SliderMarks,

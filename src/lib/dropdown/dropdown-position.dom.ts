@@ -1,7 +1,7 @@
 // Saves the absolute panel sizes React inside the native top layer. The calculation receives the
 // dimensions at the beginning of the container, and the browser selects the final width in free
 // space.
-import type { TooltipPosition } from '../tooltip.engine';
+import type { TooltipPosition } from '../tooltip/tooltip.engine';
 
 const rightInset = '--ant-dropdown-fit-right';
 const bottomInset = '--ant-dropdown-fit-bottom';

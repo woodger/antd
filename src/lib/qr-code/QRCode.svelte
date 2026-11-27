@@ -18,7 +18,7 @@
   import { qrCodeRuRU } from './qrcode.locale';
   import type { QRCodeProps, QRCodeSemantic, StatusRenderInfo } from './qrcode.types';
   import Button from '../button/Button.svelte';
-  import Spin from '../Spin.svelte';
+  import Spin from '../spin/Spin.svelte';
 
   let {
     value,

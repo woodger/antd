@@ -1,6 +1,6 @@
 import { connectInlineStyle } from './inline-style.dom';
 import { getInlineStyleDeclarations, serializeInlineStyleLayers, type InlineStyleLayer } from './inline-style.engine';
-import type { TooltipPosition } from './tooltip.engine';
+import type { TooltipPosition } from './tooltip/tooltip.engine';
 import { createSelectOverlayStyle, type SelectOverlayStyleOptions } from './select/select-style.model.svelte';
 
 /** Root styles are followed after coordinates of rc-trigger, without resending variables themes and portal. */

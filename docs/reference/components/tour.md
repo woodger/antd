@@ -1,7 +1,7 @@
 # Tour
 
 Tour проводит пользователя по шагам интерфейса. Props и snippets описаны
-в [tour.types.ts](../../../src/lib/tour.types.ts).
+в [tour.types.ts](../../../src/lib/tour/tour.types.ts).
 
 ```svelte
 <script lang="ts">
@@ -97,7 +97,7 @@ CSS Tour подключён перед Button, как в исходном runtim
 включая 0. Потомки получают рассчитанный уровень из
 [общего контекста](../theme-context.md#уровни-вложенных-панелей).
 
-Проверки: [engine](../../../src/lib/tour.engine.test.ts),
+Проверки: [engine](../../../src/lib/tour/tour.engine.test.ts),
 [public package SSR](../../../tests/package/tour.ssr.test.ts),
 [browser](../../../tests/browser/tour.spec.ts) и `?fixture=tour`.
 [61 исходное CSS-правило](../../../src/lib/vendor/tour.css) воспроизводится

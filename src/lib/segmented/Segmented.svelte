@@ -7,7 +7,7 @@
   import { animateSegmentedThumb } from './segmented.dom';
   import { getSegmentedPrefixCss } from './segmented-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import Tooltip from '../Tooltip.svelte';
+  import Tooltip from '../tooltip/Tooltip.svelte';
   import type {
     SegmentedOption, SegmentedProps, SegmentedValue, SegmentedSemanticSlots
   } from './segmented.types';

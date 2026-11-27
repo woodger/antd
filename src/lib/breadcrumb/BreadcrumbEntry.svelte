@@ -2,7 +2,7 @@
   import Dropdown from '../dropdown/Dropdown.svelte';
   import Icon from '../Icon.svelte';
   import { breadcrumbAttributes } from './breadcrumb.engine';
-  import { focusPopover } from '../popover.dom';
+  import { focusPopover } from '../popover/popover.dom';
   import type { breadcrumbEntries } from './breadcrumb.engine';
   import type { BreadcrumbContent, BreadcrumbProps, BreadcrumbSlots } from './breadcrumb.types';
   import type { DropdownMenuProps } from '../dropdown/dropdown.types';

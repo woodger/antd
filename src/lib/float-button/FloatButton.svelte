@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '../button/Button.svelte';
   import Badge from '../badge/Badge.svelte';
-  import Tooltip from '../Tooltip.svelte';
+  import Tooltip from '../tooltip/Tooltip.svelte';
   import FloatButtonIcon from './FloatButtonIcon.svelte';
   import { buttonHasContent, buttonText } from '../button/button.engine';
   import { useConfig } from '../config-context';
@@ -12,7 +12,7 @@
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import type { BadgeProps } from '../badge/badge.types';
-  import type { TooltipProps } from '../tooltip.types';
+  import type { TooltipProps } from '../tooltip/tooltip.types';
   import type { FloatButtonContent, FloatButtonProps } from './float-button.types';
   let {
     type = 'default',

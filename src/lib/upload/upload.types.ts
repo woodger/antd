@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
-import type { ProgressProps } from '../progress.types';
+import type { ProgressProps } from '../progress/progress.types';
 export interface UploadRcFile extends File {
   uid: string;
   lastModifiedDate?: Date;

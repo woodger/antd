@@ -7,7 +7,7 @@
   import { mergeComponentSemantics } from '../semantic-style.engine';
   import { getStatisticPrefixCss } from './statistic-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import Skeleton from '../Skeleton.svelte';
+  import Skeleton from '../skeleton/Skeleton.svelte';
   import type {
     StatisticContent, StatisticProps, StatisticSemanticInfo, StatisticSemanticSlots
   } from './statistic.types';

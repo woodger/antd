@@ -9,9 +9,9 @@
   import { cardHasContent, cardTabItems } from './card.engine';
   import { cardSemantics } from './card-semantic.engine';
   import { connectCardGrid } from './card.dom';
-  import { createSkeletonFocus } from '../skeleton.dom';
+  import { createSkeletonFocus } from '../skeleton/skeleton.dom';
   import { connectFeedbackFocus } from '../feedback.dom';
-  import Skeleton from '../Skeleton.svelte';
+  import Skeleton from '../skeleton/Skeleton.svelte';
   import Tabs from '../tabs/Tabs.svelte';
   import type { CardContent, CardProps } from './card.types';
 

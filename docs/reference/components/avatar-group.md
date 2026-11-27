@@ -141,7 +141,7 @@ Avatar и настройки исходного Popover, ещё отсутств
 Id/forceRender/fresh/zIndex передаются; forceRender прогревает также скрытый
 Snippet после mount, сохраняя ленивый SSR и последующий destroy/retain lifecycle.
 Точный текущий тип max.popover производен от
-[PopoverProps](../../../src/lib/popover.types.ts), а не дублирует отдельный список props.
+[PopoverProps](../../../src/lib/popover/popover.types.ts), а не дублирует отдельный список props.
 Приоритеты aliases, count/style и trigger/placement проверяются по
 [20 UMD-эталонам](../../../tests/browser/fixtures/ant-design-avatar-group-max-reference.json),
 [SSR](../../../tests/package/avatar-group-max.ssr.test.ts) и

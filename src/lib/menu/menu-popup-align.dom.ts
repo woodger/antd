@@ -1,7 +1,7 @@
 // Stores the geometry and history of coups within a single opening of the substitution. As
 // rc-trigger with the named position, applies changes to the settings at a new measurement.
 import type { getMenuPopupAlignment } from './menu-popup-align.engine';
-import { getTooltipPosition, type TooltipPosition, type TooltipRect } from '../tooltip.engine';
+import { getTooltipPosition, type TooltipPosition, type TooltipRect } from '../tooltip/tooltip.engine';
 
 /** Returns the position calculation for the current pair trigger and popup. */
 export function createMenuPopupPosition(

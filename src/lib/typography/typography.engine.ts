@@ -4,7 +4,7 @@ import type {
   TypographyEllipsisConfig,
   TypographyTextProps
 } from './typography.types';
-import type { TooltipProps } from '../tooltip.types';
+import type { TooltipProps } from '../tooltip/tooltip.types';
 
 function isTooltipConfig(
   value: TypographyEllipsisConfig['tooltip']

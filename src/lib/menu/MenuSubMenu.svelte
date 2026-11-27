@@ -16,8 +16,8 @@
   import { connectInlineStyle } from '../inline-style.dom';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../inline-style.engine';
   import { useZIndex } from '../z-index-context.svelte';
-  import type { TooltipPosition } from '../tooltip.engine';
-  import type { TooltipPlacement } from '../tooltip.types';
+  import type { TooltipPosition } from '../tooltip/tooltip.engine';
+  import type { TooltipPlacement } from '../tooltip/tooltip.types';
   import { getMenuMotionStyle } from './menu-motion.dom';
   import { getMenuPopupMotion } from './menu-motion.engine';
   import { useMenuMotion } from './menu-motion.svelte';

@@ -2,7 +2,7 @@
   // Attaches the shared Tooltip to an existing sort control. The anchor context belongs to this
   // tooltip alone.
   import { untrack } from 'svelte';
-  import Tooltip, { provideTooltipAnchor } from '../Tooltip.svelte';
+  import Tooltip, { provideTooltipAnchor } from '../tooltip/Tooltip.svelte';
   import type { TableSorterTooltipProps } from './table.types';
 
   let { anchor, description, disabled, options, connectClick, connectDescription }: {

@@ -5,9 +5,9 @@ import {
   type TooltipPosition,
   type TooltipRect,
   type TooltipSourcePlacement
-} from './tooltip.engine';
+} from './tooltip/tooltip.engine';
 import type { PopupFlipCache, PopupSourceAlign } from './popup-position.engine';
-import type { AdjustOverflow, TooltipPlacement } from './tooltip.types';
+import type { AdjustOverflow, TooltipPlacement } from './tooltip/tooltip.types';
 
 const openPopups = new WeakMap<Document, HTMLElement[]>();
 const popupConnections = new WeakMap<HTMLElement, { anchor: Element; }>();

@@ -11,8 +11,8 @@ import {
 } from './tree-select-align-surface.dom';
 import { getPopupScrollers } from '../popup-geometry.dom';
 import type { InlineStyleLayer } from '../inline-style.engine';
-import type { TooltipPlacement } from '../tooltip.types';
-import type { TooltipPosition, TooltipRect } from '../tooltip.engine';
+import type { TooltipPlacement } from '../tooltip/tooltip.types';
+import type { TooltipPosition, TooltipRect } from '../tooltip/tooltip.engine';
 import type { PopupOverflow } from '../types';
 import type {
   TreeSelectMotionFrameState, TreeSelectMotionTransitionEnd

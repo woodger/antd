@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from '../types';
-import type { TooltipProps } from '../tooltip.types';
+import type { TooltipProps } from '../tooltip/tooltip.types';
 
 export interface RateCharacterInfo {
   index: number;
