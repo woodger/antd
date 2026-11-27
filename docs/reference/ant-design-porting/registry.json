@@ -5102,7 +5102,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-autocomplete-reference.json",
             "tests/browser/form-feedback-autocomplete-metrics.ts",
             "tests/browser/form-feedback-autocomplete.spec.ts",
-            "tests/package/form-feedback-autocomplete.ssr.test.ts",
+            "tests/package/form/form-feedback-autocomplete.ssr.test.ts",
             "tests/browser/fixtures/ant-design-form-feedback-autocomplete-clear-reference.json"
           ],
           "note": "Pinned Antd6.6.8 Select-based feedback: has-feedback/show-arrow/in-form-item, status mask и feedback-only suffix. Native input/textarea дают один значок; custom Antd Input/TextArea дают два, как реально наблюдается в official UMD. Opaque Snippet не интроспектируется и не получает новый suppress API. Scoped opacity adapter компенсирует retained native popup sibling, сохраняя Source hover hiding при clear. Pointer-clear откладывает close через MessageChannel после clear/change/search; click-only не закрывает, controlled owner может отклонить false request. 34UMD cases/55actions/9DOM-freeSSR плюс3 raw callback traces; strict hydration для default/Input/TextArea. Native values/events/refs/ARIA и clear callback order сохранены."
@@ -5951,7 +5951,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-cascader-reference.json",
             "tests/browser/form-feedback-cascader-metrics.ts",
             "tests/browser/form-feedback-cascader.spec.ts",
-            "tests/package/form-feedback-cascader.ssr.test.ts"
+            "tests/package/form/form-feedback-cascader.ssr.test.ts"
           ],
           "note": "Pinned Antd6.6.8: has-feedback/in-form-item и public status mask; Form icon сохраняет собственный namespace независимо от select/cascader prefix. Generated/custom suffixIcon предшествует feedback; null/false убирают стрелку, сохраняя feedback. Custom trigger/standalone Panel не получают selector suffix. PopupRender сбрасывает feedback/status/binding по Source ContextIsolator. 35UMD cases/29actions/11DOM-freeSSR, metadata/noStyle/Form/OTP/prefix/RTL/loading/multiple, async reset/disposal и строгая гидратация. Native path/value/keyboard/ref/ARIA contracts сохранены."
         },
@@ -7416,7 +7416,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-picker-reference.json",
             "tests/browser/form-feedback-picker-metrics.ts",
             "tests/browser/form-feedback-picker.spec.ts",
-            "tests/package/form-feedback-picker.ssr.test.ts"
+            "tests/package/form/form-feedback-picker.ssr.test.ts"
           ],
           "note": "Pinned Antd6.6.8 Date/Range используют has-feedback без in-form-item, public Form status mask и общий Form renderer. Новый текущий suffixIcon prop и ConfigProvider.datePicker.suffixIcon: local !==undefined перекрывает config, true/undefined дают calendar+feedback, null/false/empty string скрывают suffix, 0/text/snippet заменяют generated suffix/feedback. RangePicker наследует prop и datePicker config; rangePicker config не расширялся. С TimePicker66UMD cases/66actions/16DOM-freeSSR, live suffix swaps с сохранением input/focus, scopes/prefixes/async reset/disposal и4 strict hydration. Dayjs/value/form/ARIA/ref/confirmation contracts сохранены."
         }
@@ -7514,7 +7514,7 @@
         "tests/browser/fixtures/FormThemeFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-theme-reference.json",
         "tests/browser/form-theme.spec.ts",
-        "tests/package/form-theme.ssr.test.ts",
+        "tests/package/form/form-theme.ssr.test.ts",
         "docs/reference/control-variants.md",
         "src/lib/config-provider/variant.engine.ts",
         "src/lib/config-provider/variant.svelte.ts",
@@ -7536,7 +7536,7 @@
         "tests/browser/form-paths.spec.ts",
         "tests/browser/fixtures/FormPathsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-name-paths-observation.json",
-        "tests/package/form-paths.ssr.test.ts",
+        "tests/package/form/form-paths.ssr.test.ts",
         "src/lib/form/FormList.svelte",
         "src/lib/form/form-list.types.ts",
         "src/lib/form/form-list.engine.ts",
@@ -7548,7 +7548,7 @@
         "tests/browser/fixtures/FormListDefaultsFixtures.svelte",
         "tests/browser/fixtures/FormListNestedFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-list-observation.json",
-        "tests/package/form-list.ssr.test.ts",
+        "tests/package/form/form-list.ssr.test.ts",
         "tests/browser/fixtures/FormValuesView.svelte",
         "tests/browser/fixtures/FormListSparseFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-sparse-list-observation.json",
@@ -7558,7 +7558,7 @@
         "tests/browser/form-warnings.spec.ts",
         "tests/browser/fixtures/FormWarningsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-warning-observation.json",
-        "tests/package/form-warnings.ssr.test.ts",
+        "tests/package/form/form-warnings.ssr.test.ts",
         "src/lib/form/FormErrorList.svelte",
         "src/lib/form/form-error-list.types.ts",
         "src/lib/form/form-error-list.engine.ts",
@@ -7570,36 +7570,36 @@
         "tests/browser/form-error-list.spec.ts",
         "tests/browser/fixtures/FormErrorListFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-error-list-observation.json",
-        "tests/package/form-error-list.ssr.test.ts",
+        "tests/package/form/form-error-list.ssr.test.ts",
         "tests/browser/fixtures/ant-design-form-warning-lifecycle-observation.json",
         "src/lib/form/form-validation-options.test.ts",
         "tests/browser/form-validation-options.spec.ts",
         "tests/browser/fixtures/FormValidationOptionsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-validation-options-observation.json",
         "tests/browser/fixtures/ant-design-form-validation-concurrency-observation.json",
-        "tests/package/form-validation-options.ssr.test.ts",
-        "tests/package/form-touched-paths.ssr.test.ts",
+        "tests/package/form/form-validation-options.ssr.test.ts",
+        "tests/package/form/form-touched-paths.ssr.test.ts",
         "tests/browser/fixtures/ant-design-form-touched-paths-observation.json",
         "src/lib/form/form-aggregate.test.ts",
-        "tests/package/form-aggregate.ssr.test.ts",
+        "tests/package/form/form-aggregate.ssr.test.ts",
         "tests/browser/form-aggregate.spec.ts",
         "tests/browser/fixtures/FormAggregateFixtures.svelte",
         "tests/browser/fixtures/FormValidatingAggregateFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-aggregate-touched-observation.json",
         "tests/browser/fixtures/ant-design-form-aggregate-validating-observation.json",
         "src/lib/form/form-get-fields-value.test.ts",
-        "tests/package/form-get-fields-value.ssr.test.ts",
+        "tests/package/form/form-get-fields-value.ssr.test.ts",
         "tests/browser/form-get-fields-value.spec.ts",
         "tests/browser/fixtures/FormGetFieldsValueFixtures.svelte",
         "tests/browser/fixtures/form-value-projection.ts",
         "tests/browser/fixtures/ant-design-form-get-fields-value-observation.json",
         "src/lib/form/form-set-fields.test.ts",
-        "tests/package/form-set-fields.ssr.test.ts",
+        "tests/package/form/form-set-fields.ssr.test.ts",
         "tests/browser/form-set-fields.spec.ts",
         "tests/browser/fixtures/FormSetFieldsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-set-fields-observation.json",
         "src/lib/form/form-reset-fields.test.ts",
-        "tests/package/form-reset-fields.ssr.test.ts",
+        "tests/package/form/form-reset-fields.ssr.test.ts",
         "tests/browser/form-reset-fields.spec.ts",
         "tests/browser/fixtures/FormResetFieldsFixtures.svelte",
         "tests/browser/fixtures/FormResetControl.svelte",
@@ -7611,13 +7611,13 @@
         "src/lib/form/form-internal.ts",
         "src/lib/form/form.types.ts",
         "src/lib/form/form-dom.test.ts",
-        "tests/package/form-dom.ssr.test.ts",
+        "tests/package/form/form-dom.ssr.test.ts",
         "tests/browser/form-dom.spec.ts",
         "tests/browser/fixtures/FormDomFixtures.svelte",
         "tests/browser/fixtures/FormDomScrollFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-dom-observation.json",
         "src/lib/form/form-validate-first.test.ts",
-        "tests/package/form-validate-first.ssr.test.ts",
+        "tests/package/form/form-validate-first.ssr.test.ts",
         "tests/browser/form-validate-first.spec.ts",
         "tests/browser/fixtures/FormValidateFirstFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-validate-first-observation.json",
@@ -7625,16 +7625,16 @@
         "tests/browser/form-layout-metrics.ts",
         "tests/browser/fixtures/FormLayoutFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-layout-reference.json",
-        "tests/package/form-layout.ssr.test.ts",
+        "tests/package/form/form-layout.ssr.test.ts",
         "tests/browser/form-hidden.spec.ts",
         "tests/browser/fixtures/FormHiddenFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-hidden-reference.json",
-        "tests/package/form-hidden.ssr.test.ts",
+        "tests/package/form/form-hidden.ssr.test.ts",
         "tests/browser/form-extra.spec.ts",
         "tests/browser/form-extra-metrics.ts",
         "tests/browser/fixtures/FormExtraFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-extra-reference.json",
-        "tests/package/form-extra.ssr.test.ts",
+        "tests/package/form/form-extra.ssr.test.ts",
         "src/lib/config-provider/ConfigProvider.svelte",
         "src/lib/config-provider/config-context.ts",
         "src/lib/index.ts",
@@ -7642,18 +7642,18 @@
         "tests/browser/form-labels-metrics.ts",
         "tests/browser/fixtures/FormLabelsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-labels-reference.json",
-        "tests/package/form-labels.ssr.test.ts",
+        "tests/package/form/form-labels.ssr.test.ts",
         "src/lib/types.ts",
         "tests/browser/form-required-mark.spec.ts",
         "tests/browser/form-required-mark-metrics.ts",
         "tests/browser/fixtures/FormRequiredMarkFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-required-mark-reference.json",
-        "tests/package/form-required-mark.ssr.test.ts",
+        "tests/package/form/form-required-mark.ssr.test.ts",
         "src/lib/form/form-validate-debounce.test.ts",
         "tests/browser/form-validate-debounce.spec.ts",
         "tests/browser/fixtures/FormValidateDebounceFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-debounce-observation.json",
-        "tests/package/form-validate-debounce.ssr.test.ts",
+        "tests/package/form/form-validate-debounce.ssr.test.ts",
         "src/lib/form/NoFormItemColumns.svelte",
         "src/lib/grid/Row.svelte",
         "src/lib/grid/Col.svelte",
@@ -7661,13 +7661,13 @@
         "tests/browser/form-columns-metrics.ts",
         "tests/browser/fixtures/FormColumnsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-columns-reference.json",
-        "tests/package/form-columns.ssr.test.ts",
+        "tests/package/form/form-columns.ssr.test.ts",
         "src/lib/form/form-columns.engine.ts",
         "src/lib/form/form-columns.engine.test.ts",
         "tests/browser/form-label-presence.spec.ts",
         "tests/browser/fixtures/FormLabelPresenceFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-label-presence-reference.json",
-        "tests/package/form-label-presence.ssr.test.ts",
+        "tests/package/form/form-label-presence.ssr.test.ts",
         "src/lib/radio/RadioGroup.svelte",
         "src/lib/checkbox/CheckboxGroup.svelte",
         "src/lib/input/InputOTP.svelte",
@@ -7680,29 +7680,29 @@
         "tests/browser/fixtures/FormLabelCounter.svelte",
         "tests/browser/fixtures/FormRichLabelControls.svelte",
         "tests/browser/fixtures/ant-design-form-rich-labels-reference.json",
-        "tests/package/form-rich-labels.ssr.test.ts",
+        "tests/package/form/form-rich-labels.ssr.test.ts",
         "tests/browser/form-root.spec.ts",
         "tests/browser/form-root-metrics.ts",
         "tests/browser/fixtures/FormRootFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-root-reference.json",
-        "tests/package/form-root.ssr.test.ts",
+        "tests/package/form/form-root.ssr.test.ts",
         "src/lib/style/semantic-style.engine.ts",
         "tests/browser/form-semantic.spec.ts",
         "tests/browser/form-semantic-metrics.ts",
         "tests/browser/fixtures/FormSemanticFixtures.svelte",
         "tests/browser/fixtures/form-semantic-settings.ts",
         "tests/browser/fixtures/ant-design-form-semantic-reference.json",
-        "tests/package/form-semantic.ssr.test.ts",
+        "tests/package/form/form-semantic.ssr.test.ts",
         "tests/browser/form-size.spec.ts",
         "tests/browser/form-size-metrics.ts",
         "tests/browser/fixtures/FormSizeFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-size-reference.json",
-        "tests/package/form-size.ssr.test.ts",
+        "tests/package/form/form-size.ssr.test.ts",
         "tests/browser/form-scroll-first.spec.ts",
         "tests/browser/form-scroll-first-metrics.ts",
         "tests/browser/fixtures/FormScrollFirstFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-scroll-first-reference.json",
-        "tests/package/form-scroll-first.ssr.test.ts",
+        "tests/package/form/form-scroll-first.ssr.test.ts",
         "src/lib/form/FormItemTooltip.svelte",
         "src/lib/form/form-tooltip.engine.ts",
         "src/lib/form/form-tooltip.engine.test.ts",
@@ -7710,35 +7710,35 @@
         "tests/browser/form-tooltip-metrics.ts",
         "tests/browser/fixtures/FormTooltipFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-tooltip-reference.json",
-        "tests/package/form-tooltip.ssr.test.ts",
+        "tests/package/form/form-tooltip.ssr.test.ts",
         "tests/browser/form-explanation-reset.spec.ts",
         "tests/browser/fixtures/FormExplanationResetFixtures.svelte",
         "tests/browser/fixtures/FormExplanationCounter.svelte",
         "tests/browser/fixtures/ant-design-form-explanation-reset-reference.json",
-        "tests/package/form-explanation-reset.ssr.test.ts",
+        "tests/package/form/form-explanation-reset.ssr.test.ts",
         "src/lib/form/NoFormItemBinding.svelte",
         "tests/browser/form-slot-context.spec.ts",
         "tests/browser/form-slot-context-metrics.ts",
         "tests/browser/fixtures/FormSlotContextFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-slot-context-reference.json",
-        "tests/package/form-slot-context.ssr.test.ts",
+        "tests/package/form/form-slot-context.ssr.test.ts",
         "src/lib/RenderContent.svelte",
         "tests/browser/form-help.spec.ts",
         "tests/browser/form-help-metrics.ts",
         "tests/browser/fixtures/FormHelpFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-help-reference.json",
-        "tests/package/form-help.ssr.test.ts",
+        "tests/package/form/form-help.ssr.test.ts",
         "src/lib/form/FormItemBinding.svelte",
         "tests/browser/form-nameless.spec.ts",
         "tests/browser/form-nameless-metrics.ts",
         "tests/browser/fixtures/FormNamelessFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-nameless-reference.json",
-        "tests/package/form-nameless.ssr.test.ts",
+        "tests/package/form/form-nameless.ssr.test.ts",
         "tests/browser/form-disabled.spec.ts",
         "tests/browser/form-disabled-metrics.ts",
         "tests/browser/fixtures/FormDisabledFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-disabled-reference.json",
-        "tests/package/form-disabled.ssr.test.ts",
+        "tests/package/form/form-disabled.ssr.test.ts",
         "src/lib/form/form-status.engine.ts",
         "src/lib/form/form-status.engine.test.ts",
         "src/lib/form/form-status.test.ts",
@@ -7748,7 +7748,7 @@
         "tests/browser/fixtures/FormStatusFixtures.svelte",
         "tests/browser/fixtures/FormStatusControls.svelte",
         "tests/browser/fixtures/ant-design-form-status-reference.json",
-        "tests/package/form-status.ssr.test.ts",
+        "tests/package/form/form-status.ssr.test.ts",
         "src/lib/transfer/Transfer.svelte",
         "src/lib/form/form-initial-value.test.ts",
         "tests/browser/form-initial.spec.ts",
@@ -7756,14 +7756,14 @@
         "tests/browser/fixtures/FormInitialFixtures.svelte",
         "tests/browser/fixtures/FormInitialCase.svelte",
         "tests/browser/fixtures/ant-design-form-initial-reference.json",
-        "tests/package/form-initial.ssr.test.ts",
+        "tests/package/form/form-initial.ssr.test.ts",
         "src/lib/form/form-item-status.ts",
         "src/lib/form/FormItemStatusProvider.svelte",
         "tests/browser/form-use-status.spec.ts",
         "tests/browser/fixtures/FormUseStatusFixtures.svelte",
         "tests/browser/fixtures/FormStatusReadout.svelte",
         "tests/browser/fixtures/ant-design-form-use-status-reference.json",
-        "tests/package/form-use-status.ssr.test.ts",
+        "tests/package/form/form-use-status.ssr.test.ts",
         "src/lib/form/form-meta-events.test.ts",
         "tests/browser/fixtures/ant-design-form-no-style-reference.json",
         "src/lib/form/form-item-meta-context.ts",
@@ -7774,21 +7774,21 @@
         "tests/browser/fixtures/FormNoStyleFixtures.svelte",
         "tests/browser/fixtures/FormNoStyleCase.svelte",
         "tests/browser/fixtures/FormNoStyleCompositionFixtures.svelte",
-        "tests/package/form-no-style.ssr.test.ts",
+        "tests/package/form/form-no-style.ssr.test.ts",
         "src/lib/form/form-transform.test.ts",
         "tests/browser/form-transform.spec.ts",
         "tests/browser/fixtures/FormTransformCase.svelte",
         "tests/browser/fixtures/FormTransformFixtures.svelte",
         "tests/browser/fixtures/form-transform-cases.ts",
         "tests/browser/fixtures/ant-design-form-transform-reference.json",
-        "tests/package/form-transform.ssr.test.ts",
+        "tests/package/form/form-transform.ssr.test.ts",
         "src/lib/form/form-constraints.test.ts",
         "tests/browser/form-constraints.spec.ts",
         "tests/browser/fixtures/FormConstraintsCase.svelte",
         "tests/browser/fixtures/FormConstraintsFixtures.svelte",
         "tests/browser/fixtures/form-constraints-cases.ts",
         "tests/browser/fixtures/ant-design-form-constraints-reference.json",
-        "tests/package/form-constraints.ssr.test.ts",
+        "tests/package/form/form-constraints.ssr.test.ts",
         "src/lib/form/validation-type.engine.ts",
         "src/lib/form/form-rule-types.test.ts",
         "src/lib/vendor/LICENSE.rc-async-validator",
@@ -7797,7 +7797,7 @@
         "tests/browser/fixtures/FormRuleTypesFixtures.svelte",
         "tests/browser/fixtures/form-rule-types-cases.ts",
         "tests/browser/fixtures/ant-design-form-rule-types-reference.json",
-        "tests/package/form-rule-types.ssr.test.ts",
+        "tests/package/form/form-rule-types.ssr.test.ts",
         "src/lib/form/validation-format.engine.ts",
         "src/lib/form/form-rule-formats.test.ts",
         "tests/browser/form-rule-formats.spec.ts",
@@ -7805,14 +7805,14 @@
         "tests/browser/fixtures/FormRuleFormatsFixtures.svelte",
         "tests/browser/fixtures/form-rule-formats-cases.ts",
         "tests/browser/fixtures/ant-design-form-rule-formats-reference.json",
-        "tests/package/form-rule-formats.ssr.test.ts",
+        "tests/package/form/form-rule-formats.ssr.test.ts",
         "src/lib/form/form-rule-factories.test.ts",
         "tests/browser/form-rule-factories.spec.ts",
         "tests/browser/fixtures/FormRuleFactoriesCase.svelte",
         "tests/browser/fixtures/FormRuleFactoriesFixtures.svelte",
         "tests/browser/fixtures/form-rule-factories-cases.ts",
         "tests/browser/fixtures/ant-design-form-rule-factories-reference.json",
-        "tests/package/form-rule-factories.ssr.test.ts",
+        "tests/package/form/form-rule-factories.ssr.test.ts",
         "src/lib/form/validation-nested.engine.ts",
         "src/lib/form/form-nested-rules.test.ts",
         "tests/browser/form-nested-rules.spec.ts",
@@ -7820,7 +7820,7 @@
         "tests/browser/fixtures/FormNestedRulesFixtures.svelte",
         "tests/browser/fixtures/form-nested-rules-cases.ts",
         "tests/browser/fixtures/ant-design-form-nested-rules-reference.json",
-        "tests/package/form-nested-rules.ssr.test.ts",
+        "tests/package/form/form-nested-rules.ssr.test.ts",
         "src/lib/form/validation-message.engine.ts",
         "src/lib/form/form-message-variables.test.ts",
         "tests/browser/form-message-variables.spec.ts",
@@ -7828,7 +7828,7 @@
         "tests/browser/fixtures/FormMessageVariablesFixtures.svelte",
         "tests/browser/fixtures/form-message-variables-cases.ts",
         "tests/browser/fixtures/ant-design-form-message-variables-reference.json",
-        "tests/package/form-message-variables.ssr.test.ts",
+        "tests/package/form/form-message-variables.ssr.test.ts",
         "src/lib/form/validation-messages.types.ts",
         "src/lib/form/form-validate-messages.test.ts",
         "tests/browser/form-validate-messages.spec.ts",
@@ -7838,7 +7838,7 @@
         "tests/browser/fixtures/FormValidateMessagesLifecycle.svelte",
         "tests/browser/fixtures/form-validate-messages-cases.ts",
         "tests/browser/fixtures/ant-design-form-validate-messages-reference.json",
-        "tests/package/form-validate-messages.ssr.test.ts",
+        "tests/package/form/form-validate-messages.ssr.test.ts",
         "src/lib/grid/grid.types.ts",
         "src/lib/grid/grid.engine.ts",
         "src/lib/grid/grid.engine.test.ts",
@@ -7866,7 +7866,7 @@
         "tests/browser/fixtures/ant-design-form-prefix-reference.json",
         "tests/browser/form-prefix-metrics.ts",
         "tests/browser/form-prefix.spec.ts",
-        "tests/package/form-prefix.ssr.test.ts",
+        "tests/package/form/form-prefix.ssr.test.ts",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
         "tests/browser/prefix-text-boundaries.spec.ts"
@@ -7896,7 +7896,7 @@
             "tests/browser/form-paths.spec.ts",
             "tests/browser/fixtures/FormPathsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-name-paths-observation.json",
-            "tests/package/form-paths.ssr.test.ts",
+            "tests/package/form/form-paths.ssr.test.ts",
             "src/lib/form/FormList.svelte",
             "src/lib/form/form-list.types.ts",
             "src/lib/form/form-list.engine.ts",
@@ -7908,7 +7908,7 @@
             "tests/browser/fixtures/FormListDefaultsFixtures.svelte",
             "tests/browser/fixtures/FormListNestedFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-list-observation.json",
-            "tests/package/form-list.ssr.test.ts",
+            "tests/package/form/form-list.ssr.test.ts",
             "tests/browser/fixtures/FormValuesView.svelte",
             "tests/browser/fixtures/FormListSparseFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-sparse-list-observation.json",
@@ -7918,7 +7918,7 @@
             "tests/browser/form-warnings.spec.ts",
             "tests/browser/fixtures/FormWarningsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-warning-observation.json",
-            "tests/package/form-warnings.ssr.test.ts",
+            "tests/package/form/form-warnings.ssr.test.ts",
             "src/lib/form/FormErrorList.svelte",
             "src/lib/form/form-error-list.types.ts",
             "src/lib/form/form-error-list.engine.ts",
@@ -7930,13 +7930,13 @@
             "tests/browser/form-error-list.spec.ts",
             "tests/browser/fixtures/FormErrorListFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-error-list-observation.json",
-            "tests/package/form-error-list.ssr.test.ts",
+            "tests/package/form/form-error-list.ssr.test.ts",
             "src/lib/form/form-validation-options.test.ts",
             "tests/browser/form-validation-options.spec.ts",
             "tests/browser/fixtures/FormValidationOptionsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-validation-options-observation.json",
             "tests/browser/fixtures/ant-design-form-validation-concurrency-observation.json",
-            "tests/package/form-validation-options.ssr.test.ts"
+            "tests/package/form/form-validation-options.ssr.test.ts"
           ],
           "note": "NamePath и FormList core перенесены: массивы, add/remove/move, stable keys, вложенный prefix, initialValue/reset и custom validators, warningOnly и FormErrorList с prefixCls списка, validateOnly/recursive/dirty. Полный API остаётся partial: полный набор правил и field lifecycle, field adapters и остальные настройки Form ещё не перенесены."
         },
@@ -7967,7 +7967,7 @@
             "tests/browser/fixtures/FormThemeFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-theme-reference.json",
             "tests/browser/form-theme.spec.ts",
-            "tests/package/form-theme.ssr.test.ts"
+            "tests/package/form/form-theme.ssr.test.ts"
           ],
           "note": "Все 11 исходных declarations, включая internal verticalLabelHeight, подтверждены UMD; labelHeight override участвует в vertical default. Сверены 17 тем / 170 CSS-наборов: labels/required/colon/control/extra, horizontal/vertical/standalone, zero/undefined/CSS lengths, custom prefix и nested/reset/sibling scopes. Внутренний Row сбрасывает generic aliases как исходные Row/Col, сохраняя Form variables. Source direction-only оставляет физический LTR у Form/Item: raw observation сохранено в артефакте; сравнение использует явный DOM dir, соответствующий прежнему native ConfigProvider. Reactive updates сохраняют native store, values/errors/validation, labels/ARIA, DOM/focus/selection, FormData и submit/reset. Inline layout и inlineItemMarginBottom проверены в отдельной feature layouts. Общий аудит Form v1 остаётся незавершённым."
         },
@@ -8007,7 +8007,7 @@
             "tests/browser/form-paths.spec.ts",
             "tests/browser/fixtures/FormPathsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-name-paths-observation.json",
-            "tests/package/form-paths.ssr.test.ts",
+            "tests/package/form/form-paths.ssr.test.ts",
             "tests/browser/fixtures/FormValuesView.svelte"
           ],
           "note": "Проверены буквальные dotted keys, numeric/string segments, новые поля вне initialValues, nested merge/array replacement, reset, snapshots/Dayjs, native labels/names/errors/focus, смена пути и удаление с pending validation. getFieldsError/errorFields сохраняют сегменты; прежний errors остаётся проекцией верхнего уровня. Источник — неизменённый UMD 6.6.8, отдельно изучен rc-form 1.8.6. Это частичный этап текущего Form API. Сохранена реактивность values, переданных дочернему компоненту по сохранённой ссылке; native reset использует отдельную identity. При смене name обычного FormItem metadata остаётся у имени модели; модельные правила сохраняют errors/touched и pending validation без UI, локальные правила снимаются. В FormList metadata следует за key."
@@ -8029,13 +8029,13 @@
             "tests/browser/fixtures/FormListDefaultsFixtures.svelte",
             "tests/browser/fixtures/FormListNestedFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-list-observation.json",
-            "tests/package/form-list.ssr.test.ts",
+            "tests/package/form/form-list.ssr.test.ts",
             "tests/browser/fixtures/FormListSparseFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-sparse-list-observation.json",
             "tests/browser/form-warnings.spec.ts",
             "tests/browser/fixtures/FormWarningsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-warning-observation.json",
-            "tests/package/form-warnings.ssr.test.ts",
+            "tests/package/form/form-warnings.ssr.test.ts",
             "src/lib/form/FormErrorList.svelte",
             "tests/browser/form-error-list.spec.ts"
           ],
@@ -8058,7 +8058,7 @@
             "tests/browser/form-warnings.spec.ts",
             "tests/browser/fixtures/FormWarningsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-warning-observation.json",
-            "tests/package/form-warnings.ssr.test.ts",
+            "tests/package/form/form-warnings.ssr.test.ts",
             "tests/browser/fixtures/ant-design-form-warning-lifecycle-observation.json"
           ],
           "note": "Встроенные и custom warningOnly rules собираются отдельно; getFieldWarning/getFieldsError/FormList meta сохраняют предупреждения. Ошибки имеют приоритет в status, errorFields содержит warnings ошибочного поля. Warning-only required не задаёт required mark/attribute, aria-invalid и не блокирует submit. Сброс, запись и снятие локального поля отменяют устаревшие результаты; сохраняется прежняя сигнатура validator(value, values). Сверено с неизменённым UMD Ant Design 6.6.8. Предыдущие warnings очищаются сразу при запуске новой validation; состояния до, во время и после async validator сверены с отдельным raw reference UMD."
@@ -8080,7 +8080,7 @@
             "tests/browser/form-error-list.spec.ts",
             "tests/browser/fixtures/FormErrorListFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-error-list-observation.json",
-            "tests/package/form-error-list.ssr.test.ts"
+            "tests/package/form/form-error-list.ssr.test.ts"
           ],
           "note": "Текущие errors/warnings, non-null help (включая false/0/пустую строку), helpStatus, fieldId и callback видимости; class заменяет React className, snippets заменяют ReactNode. Вложенный FormList задаёт prefixCls без изменения соседних FormItem. Темы Form, opacity/height motion, CSS easing, deadline 500 ms, debounce очистки 10 ms, disabled/reduced motion и cleanup перенесены. Порядок leaving rows сверён с неизменённым diffKeys @rc-component/motion 1.3.3; в поставке есть MIT-лицензия. Обычные сообщения сохраняют key при перестановке, дубликаты получают уникальные keys. Дефект неизменённого UMD 6.6.8 с текстом toString зафиксирован: после обновления остаются 7 DOM-сообщений вместо переданных 5; здесь лишние строки не сохраняются. Help/helpItem наследуют Form semantics. Native List prefix сохраняет приоритет; без списка используется ближайший styled Item через noStyle, затем ConfigProvider. Canonical media-scoped explain styles подключены."
         },
@@ -8099,7 +8099,7 @@
             "tests/browser/fixtures/FormValidationOptionsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-validation-options-observation.json",
             "tests/browser/fixtures/ant-design-form-validation-concurrency-observation.json",
-            "tests/package/form-validation-options.ssr.test.ts"
+            "tests/package/form/form-validation-options.ssr.test.ts"
           ],
           "note": "Обе текущие перегрузки и сочетания флагов. ValidateOnly не меняет errors/warnings/touched/validating и историю dirty; recursive выбирает зарегистрированных потомков один раз с различием number/string; dirty включает заданные defaults (кроме undefined), обычную validation, touched и записи, reset очищает историю. Сохранены полный snapshot, правила touched createForm и защита после изменения/reset/unregister. Обычные и тихие запросы разделяют latest-request outOfDate, не отменяя UI metadata друг друга; сверено с неизменённым UMD 6.6.8 и rc-form 1.8.6. Подтверждённый дефект Source validateFields(undefined, options) не повторяется: второй аргумент применяется. Plain values для merge сравниваются по own content с поддержкой cycles/holes; opaque instances сохраняют identity contract. Полные rules, field adapters и semantic config остаются вне этапа."
         },
@@ -8110,7 +8110,7 @@
           "requiredForV1": false,
           "evidence": [
             "src/lib/form/form.model.svelte.ts",
-            "tests/package/form-touched-paths.ssr.test.ts",
+            "tests/package/form/form-touched-paths.ssr.test.ts",
             "tests/browser/fixtures/ant-design-form-touched-paths-observation.json",
             "tests/browser/fixtures/FormValidationOptionsFixtures.svelte",
             "tests/browser/form-validation-options.spec.ts"
@@ -8125,7 +8125,7 @@
           "evidence": [
             "src/lib/form/form.model.svelte.ts",
             "src/lib/form/form-aggregate.test.ts",
-            "tests/package/form-aggregate.ssr.test.ts",
+            "tests/package/form/form-aggregate.ssr.test.ts",
             "tests/browser/form-aggregate.spec.ts",
             "tests/browser/form-list.spec.ts",
             "tests/browser/fixtures/FormAggregateFixtures.svelte",
@@ -8144,7 +8144,7 @@
             "src/lib/form/form.model.svelte.ts",
             "src/lib/index.ts",
             "src/lib/form/form-get-fields-value.test.ts",
-            "tests/package/form-get-fields-value.ssr.test.ts",
+            "tests/package/form/form-get-fields-value.ssr.test.ts",
             "tests/browser/form-get-fields-value.spec.ts",
             "tests/browser/fixtures/FormGetFieldsValueFixtures.svelte",
             "tests/browser/fixtures/form-value-projection.ts",
@@ -8161,7 +8161,7 @@
             "src/lib/form/form.model.svelte.ts",
             "src/lib/index.ts",
             "src/lib/form/form-set-fields.test.ts",
-            "tests/package/form-set-fields.ssr.test.ts",
+            "tests/package/form/form-set-fields.ssr.test.ts",
             "tests/browser/form-set-fields.spec.ts",
             "tests/browser/fixtures/FormSetFieldsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-set-fields-observation.json"
@@ -8179,7 +8179,7 @@
             "src/lib/form/FormItem.svelte",
             "src/lib/form/FormList.svelte",
             "src/lib/form/form-reset-fields.test.ts",
-            "tests/package/form-reset-fields.ssr.test.ts",
+            "tests/package/form/form-reset-fields.ssr.test.ts",
             "tests/browser/form-reset-fields.spec.ts",
             "tests/browser/fixtures/FormResetFieldsFixtures.svelte",
             "tests/browser/fixtures/FormResetControl.svelte",
@@ -8191,7 +8191,7 @@
             "tests/browser/fixtures/FormExplanationResetFixtures.svelte",
             "tests/browser/fixtures/FormExplanationCounter.svelte",
             "tests/browser/fixtures/ant-design-form-explanation-reset-reference.json",
-            "tests/package/form-explanation-reset.ssr.test.ts"
+            "tests/package/form/form-explanation-reset.ssr.test.ts"
           ],
           "note": "Опциональный readonly список NamePath: values восстанавливаются по пути, metadata выбирается точно; родитель не очищает metadata потомков сам по себе. Empty selection — no-op; [] как один путь восстанавливает store без выбора всех именованных bindings; неизвестный путь получает own undefined. Literal/numeric/string имена различаются, дубликаты не повторяют reset. Выбранный FormItem пересоздаёт children, полный reset также очищает локальное состояние обычных controls. Reset List пересоздаёт строки с сохранением key manager; Form defaults выше live root List initialValue, nested defaults не подставляются адресным reset; конфликт нескольких List defaults не выбирает произвольный. Соседние DOM/локальные черновики/фокус/выделение и standalone rules сохраняются. Строгая защита snapshot исключает поздние ошибки; disjoint validation остаётся текущей при отсутствии изменений store. Сверены 22 состояния неизменённого UMD после двух кадров и отдельный конфликт List. Подтверждённый stale input после reset родителя/typed alias сохранён в observations: source store уже новый, видимое значение старое; Svelte показывает актуальное. SSR не создаёт браузерных ресурсов. Прежний native focus/selection связанного контрола восстанавливается после remount внутри живого владельца, если фокус не переведён пользователем; InputNumber same-value draft reset сохраняет существующий контракт. Content extra теперь пересоздаётся по reset key выбранного поля вместе с label/tooltip/control; постоянный extra container/id и соседи сохраняются. Локальный state counters сверён по пяти снимкам неизменённого UMD: initial, incremented, selected, repeated и all. Прежний extra сохранял локальный state вместо source reset; поправлен только lifecycle content extra. Браузерные тесты проверяют удаление старого selected extra DOM и сохранение соседнего control/slot DOM, value, focus и selection; источник и package SSR приложены."
         },
@@ -8209,7 +8209,7 @@
             "src/lib/form/form-internal.ts",
             "src/lib/form/form.types.ts",
             "src/lib/form/form-dom.test.ts",
-            "tests/package/form-dom.ssr.test.ts",
+            "tests/package/form/form-dom.ssr.test.ts",
             "tests/browser/form-dom.spec.ts",
             "tests/browser/fixtures/FormDomFixtures.svelte",
             "tests/browser/fixtures/FormDomScrollFixtures.svelte",
@@ -8228,7 +8228,7 @@
             "src/lib/form/form-internal.ts",
             "src/lib/form/FormItem.svelte",
             "src/lib/form/form-validate-first.test.ts",
-            "tests/package/form-validate-first.ssr.test.ts",
+            "tests/package/form/form-validate-first.ssr.test.ts",
             "tests/browser/form-validate-first.spec.ts",
             "tests/browser/fixtures/FormValidateFirstFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-validate-first-observation.json"
@@ -8249,7 +8249,7 @@
             "tests/browser/form-layout-metrics.ts",
             "tests/browser/fixtures/FormLayoutFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-layout-reference.json",
-            "tests/package/form-layout.ssr.test.ts"
+            "tests/package/form/form-layout.ssr.test.ts"
           ],
           "note": "Form.layout принимает inline с исходным flex/wrap, margin-inline-end и inlineItemMarginBottom; существующий default vertical сохранён. FormItem.layout horizontal/vertical имеет приоритет над ближайшим Form, undefined возвращает наследование. Используется существующий vendor CSS без новых правил и изменения прежних horizontal/vertical layouts. Сверены 36 случаев неизменённого UMD 6.6.8: viewport 1280/320, контейнер 640/272, LTR/RTL с явным native direction, default/compact/custom/zero tokens, local overrides и три parent layouts. Метрики включают относительные bounds, размеры/отступы labels/colon/input, flow и перенос; допуски не расширены. Реактивные переключения сохраняют DOM, фокус/выделение, values/errors/warnings; native FormData/validation/submit/reset и изоляция соседей сохранены. Component=false передаёт layout context без wrapper и без автоматического flex container; SSR публикует классы без браузерных side effects. Полный Form semantic/config/field API остаётся за пределами этого этапа."
         },
@@ -8264,7 +8264,7 @@
             "tests/browser/form-hidden.spec.ts",
             "tests/browser/fixtures/FormHiddenFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-hidden-reference.json",
-            "tests/package/form-hidden.ssr.test.ts"
+            "tests/package/form/form-hidden.ssr.test.ts"
           ],
           "note": "Hidden false/default сохраняет прежний markup; true добавляет исходный ant-form-item-hidden без размонтирования children или снятия регистрации. Сохраняются DOM/native ref, значение, errors/warnings/touched и локальные черновики; hidden fields продолжают участвовать в validation/submit и native FormData. CSS display:none исключает controls из Tab и accessibility tree, focusField скрытого control не перехватывает фокус. Сброс скрытого поля по-прежнему пересоздаёт children/ref и восстанавливает defaults; показ возвращает сохранённое доступное описание. Семь состояний неизменённого UMD 6.6.8, три layouts и native submit/keyboard сверены отдельно; SSR сохраняет содержимое и class без DOM side effects. Условное удаление binding, preserve и прочий field lifecycle этим этапом не расширены."
         },
@@ -8281,12 +8281,12 @@
             "tests/browser/form-extra-metrics.ts",
             "tests/browser/fixtures/FormExtraFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-extra-reference.json",
-            "tests/package/form-extra.ssr.test.ts",
+            "tests/package/form/form-extra.ssr.test.ts",
             "tests/browser/form-explanation-reset.spec.ts",
             "tests/browser/fixtures/FormExplanationResetFixtures.svelte",
             "tests/browser/fixtures/FormExplanationCounter.svelte",
             "tests/browser/fixtures/ant-design-form-explanation-reset-reference.json",
-            "tests/package/form-explanation-reset.ssr.test.ts"
+            "tests/package/form/form-explanation-reset.ssr.test.ts"
           ],
           "note": "Постоянное extra отображается вместе с errors/warnings и получает собственный _extra id в описании встроенного control. Общий RenderEmptyContent/RenderContent сохраняет strings, numbers, 0, arrays и Svelte snippets вместо ReactNode. Изучена isReactRenderable @rc-component/util 1.14.0: null/undefined/false/пустая строка отсутствуют, true/[]/opaque snippets оставляют контейнер. Четырнадцать состояний неизменённого UMD сверяют literal extra text, container color/font-size/line-height/display, порядок ARIA targets и нормализованный видимый текст описания; исходные DOM-пробелы сообщений сохранены. Изменение content/snippet/ARIA не заменяет input, values, focus или selection; внешние пользовательские aria-describedby остаются перед Form targets. Прежние native help priority и layout сообщений сохранены; полный upstream FormItem help override/additional motion и generic field adapters этим этапом не перенесены. SSR сохраняет caption/id/association без DOM API; dependencies/lockfile не меняются. Content extra теперь пересоздаётся по reset key выбранного поля вместе с label/tooltip/control; постоянный extra container/id и соседи сохраняются. Локальный state counters сверён по пяти снимкам неизменённого UMD: initial, incremented, selected, repeated и all. Прежний extra сохранял локальный state вместо source reset; поправлен только lifecycle content extra. Браузерные тесты проверяют удаление старого selected extra DOM и сохранение соседнего control/slot DOM, value, focus и selection; источник и package SSR приложены."
         },
@@ -8307,7 +8307,7 @@
             "tests/browser/form-labels-metrics.ts",
             "tests/browser/fixtures/FormLabelsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-labels-reference.json",
-            "tests/package/form-labels.ssr.test.ts"
+            "tests/package/form/form-labels.ssr.test.ts"
           ],
           "note": "Form принимает colon/labelAlign/labelWrap и наследует ConfigProvider.form; локальные FormItem.colon/labelAlign выше Form. True восстанавливает colon поверх parent false, vertical скрывает добавленный colon независимо от computedColon, который управляет no-colon class. Последний ASCII/fullwidth colon с whitespace удаляется только при добавленном colon, title остаётся исходным. Label alignment/wrap используют существующий CSS, logical start/end и alias scopes. FormConfig содержит эти настройки и отдельно описанный requiredMark; undefined record наследуется, {} или иной object заменяет родительский. Вложенный Form читает собственные props/config, а не label context внешнего. Сверены 32 состояния неизменённого UMD в LTR/RTL: приоритеты props/config, reset/replacement, width-constrained wrap, три layouts, nested Form и punctuation. Реактивные обновления сохраняют input/value/metadata/focus/selection и native label click. Прежние vertical default и raw variant context сохранены; прочий global/semantic Form config не объявлен."
         },
@@ -8328,7 +8328,7 @@
             "tests/browser/form-required-mark-metrics.ts",
             "tests/browser/fixtures/FormRequiredMarkFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-required-mark-reference.json",
-            "tests/package/form-required-mark.ssr.test.ts"
+            "tests/package/form/form-required-mark.ssr.test.ts"
           ],
           "note": "Form.requiredMark принимает true/false/optional и Svelte snippet вместо React render function; local prop → ConfigProvider.form → true. False скрывает только звёздочку; optional/custom используют исходные mark classes. Snippet получает label content после обработки строкового colon и required boolean, заменяет label children; исходный title и native label association сохраняются. Поле required и validation не зависят от визуальной отметки. Locale.Form.optional поддерживает RU/EN/custom и исходную замену всей группы: {} или пустой optional дают английский fallback, undefined locale наследует. Вложенный Form сбрасывает внешний mark к своим props/config. Сверены 18 UMD-состояний: modes, callbacks, fullwidth/ASCII colon, provider replacement/priority, locale fallback и nested Form. Live updates сохраняют native input, values, errors/warnings/touched, focus/selection; submit по-прежнему проверяет required и сериализует native values. Rich label описана отдельной feature rich-labels; прочие global Form settings остаются отдельными пробелами; semantic slots описаны отдельно в semantic-styles; deprecated hideRequiredMark API не добавлен."
         },
@@ -8345,7 +8345,7 @@
             "tests/browser/form-validate-debounce.spec.ts",
             "tests/browser/fixtures/FormValidateDebounceFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-debounce-observation.json",
-            "tests/package/form-validate-debounce.ssr.test.ts"
+            "tests/package/form/form-validate-debounce.ssr.test.ts"
           ],
           "note": "FormItem.validateDebounce задаёт задержку в ms для автоматической validation; undefined/0 сохраняют немедленный запуск. Pending входит в validating; новый автоматический/обычный запрос отменяет прежний timer. Rules/validateFirst/delay и snapshot значения фиксируются до ожидания; props действуют на следующий запуск. ValidateFields/submit обходят задержку, validateOnly выполняется сразу и не отменяет видимую попытку. Сохранены прежние native blur/touched triggers, повторная проверка touched bindings при записи, model-owned rules, ручная ruleless metadata, полный snapshot и защита outOfDate. Reset/setFields value/validating, unmount и смена list path исключают устаревшие validators. Таймеры очищаются при field cleanup; уже запущенные Promise не заменяют свежие сообщения. 35 raw UMD-состояний с управляемыми часами подтверждают burst, explicit/silent/submit, reset, изменения delay и нулевой режим. Отдельно записан дефект source: validator стартует после unmount; Svelte отменяет такую работу. Browser проверяет реальный input/blur, ARIA, FormData, focus/selection, remount; unit покрывает независимые задержки, rules snapshots и model lifecycle. SSR не регистрирует browser field и не запускает validation. Полный validateTrigger/event adapter API пока не перенесён."
         },
@@ -8366,7 +8366,7 @@
             "tests/browser/form-columns-metrics.ts",
             "tests/browser/fixtures/FormColumnsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-columns-reference.json",
-            "tests/package/form-columns.ssr.test.ts"
+            "tests/package/form/form-columns.ssr.test.ts"
           ],
           "note": "Form и FormItem принимают labelCol/wrapperCol по существующим ColProps: span/offset/order/push/pull/flex, responsive размеры, native class и строковый style. Локальный Item object заменяет соответствующий Form object целиком; {} сбрасывает его. Разметка использует Row/Col; control subtree сбрасывает только колонки FormContext, сохраняя getters модели, labels/validation/variant и прочие defaults. Вложенный Item может задать собственные колонки, вложенный Form использует свои props/defaults. 42 UMD-состояния сверяют классы, computed display/flex/max-width/margins/order/padding, относительные boxes и RTL: три layouts, styles/flex, offsets, span=0, nested Item/Form и границы 576/768/992px. Private CSS-var/hash markers исключены, display:none не имеет координат; значения видимой геометрии сохранены без допусков. Реактивные настройки сохраняют DOM, model values/errors/warnings/touched, focus/selection, FormData и label click. SSR использует те же scopes и Col classes без DOM API. Необязательная текстовая label/null и автоматический wrapper offset описаны отдельной feature label-presence; rich content описан в rich-labels. Default vertical и прежние native contracts сохранены, FormConfig не получает отсутствующие в upstream global col props."
         },
@@ -8384,7 +8384,7 @@
             "tests/browser/form-columns-metrics.ts",
             "tests/browser/fixtures/FormLabelPresenceFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-label-presence-reference.json",
-            "tests/package/form-label-presence.ssr.test.ts"
+            "tests/package/form/form-label-presence.ssr.test.ts"
           ],
           "note": "FormItem поддерживает отсутствие label, пустую строку и null. Undefined/пустая строка убирают label, whitespace сохраняет контейнер; null дополнительно выводит wrapper offsets из Form.labelCol для span<24. Local labelCol/wrapperCol, включая {}, отключают расчёт; существующий offset, включая 0/undefined, сохраняется. Root/responsive размеры независимы, caller col objects не изменяются. Числовой responsive shorthand нормализуется в ColSize и сохраняет span/offset как эквивалентный object. В raw UMD записаны два подтверждённых source-дефекта: numeric label span не участвует в offset, numeric wrapper span теряется при записи offset; Svelte их не повторяет. 42 UMD-состояния сверяют label absence/whitespace, scope/priority, offsets, full/zero spans, shorthand, responsive и RTL. Для numeric случаев native результат сравнивается с реально измеренной эквивалентной object-конфигурацией. Вставка/удаление label сохраняют control DOM/value/metadata/focus/selection/FormData; unlabelled control поддерживает явные aria-label/labelledby, required и validation/error focus. SSR не использует DOM. Общее содержимое label расширено в rich-labels; Nameless layout перенесён отдельно в nameless-layout; noStyle остаётся отдельной возможностью."
         },
@@ -8410,7 +8410,7 @@
             "tests/browser/fixtures/FormLabelCounter.svelte",
             "tests/browser/fixtures/FormRichLabelControls.svelte",
             "tests/browser/fixtures/ant-design-form-rich-labels-reference.json",
-            "tests/package/form-rich-labels.ssr.test.ts"
+            "tests/package/form/form-rich-labels.ssr.test.ts"
           ],
           "note": "FormItem.label использует общий RenderEmptyContent/RenderContent: strings/numbers/booleans/nullish/nested arrays/Svelte snippets вместо ReactNode. Undefined/null/false/пустая строка скрывают label; null сохраняет выравнивание columns. 0 отображается, true/[]/opaque snippets оставляют контейнер. Только строка получает title и удаление последнего colon; requiredMark получает исходный content после этой обработки и required boolean. Bivariant snippet renderer сохраняет типосовместимость прежних строковых snippets при строковых label; rich renderer принимает RenderEmptyContent. Reset пересоздаёт content подписи/вложенные компоненты вместе с выбранным control, сбрасывая локальное состояние; DOM label и прежние native contracts сохраняются. Rich label получает стабильный id для RadioGroup/CheckboxGroup/InputOTP/Slider/стандартного trigger ColorPicker; явные aria-label/aria-labelledby и per-handle labels приоритетнее. Caption updates и переход к строкам сохраняют доступное имя, DOM/value/metadata/focus/selection и label click. 42 состояния неизменённого UMD плюс counter/reset lifecycle подтверждают content, literal text, title/classes/CSS, renderer value kind/required и native label association. React elements нормализованы в rich kind Svelte snippet, scalar/array kinds сохранены. SSR и публичные типы проверяются без DOM; прежние native field roles/HTML и explicit ARIA policy сохранены. Form semantic slots описаны в semantic-styles; Rich help и nameless layout описаны отдельно; полный help override/motion остаётся пробелом."
         },
@@ -8428,7 +8428,7 @@
             "tests/browser/form-root-metrics.ts",
             "tests/browser/fixtures/FormRootFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-root-reference.json",
-            "tests/package/form-root.ssr.test.ts"
+            "tests/package/form/form-root.ssr.test.ts"
           ],
           "note": "Form/FormItem принимают rootClassName, FormItem.style — CSS string. FormConfig включает native class/style для корня Form: context class → local class → rootClassName; inline component theme → config.style → local style. Field style идёт после компонентных токенов и позволяет локальные CSS variable overrides. Config root settings не копируются в FormItem; component=false сохраняет только контекст без root DOM/attrs/styles. Undefined record наследуется, {} и иной object заменяют его. 12 состояний неизменённого UMD подтверждают owner classes/computed color/outline/padding/margin/font-size, config replacement/local priority, field tokens и отсутствие wrapper. Live updates сохраняют input/value/errors/warnings/touched, focus/selection; SSR не forward-ит rootClassName в HTML attrs. В raw reference отдельно записан source-дефект: FormConfig.variant объявлен, но не передаётся в VariantContext и оставляет Input outlined. Этот неработающий global prop не заявлен в публичном FormConfig; действующие local Form.variant/global ConfigProvider.variant сохранены. Semantic classNames/styles перенесены в semantic-styles; прочие global Form settings остаются отдельными пробелами."
         },
@@ -8450,7 +8450,7 @@
             "tests/browser/fixtures/FormSemanticFixtures.svelte",
             "tests/browser/fixtures/form-semantic-settings.ts",
             "tests/browser/fixtures/ant-design-form-semantic-reference.json",
-            "tests/package/form-semantic.ssr.test.ts"
+            "tests/package/form/form-semantic.ssr.test.ts"
           ],
           "note": "Form.classNames/styles и ConfigProvider.form.classNames/styles принимают object/callback с root/label/content/help/helpItem/extra. Root относится к Form; прочие slots передаются FormItem/FormErrorList через reactive FormContext. Context/local classes накапливаются; CSS root следует component theme → config.styles.root → config.style → local.styles.root → local style, прочие slots context → local. Callbacks получают native props с разрешёнными layout/disabled/requiredMark и merged colon/labelAlign/labelWrap; последние остаются undefined до внутренних label/CSS defaults. Callback может вернуть undefined. Generic callback работает с native FormProps любого Values; прежние handlers/model contracts сохранены. Nested Item наследует slots, nested Form применяет собственные props/config; component=false сохраняет slots полей без root DOM. Field extra и messages/help имеют раздельные slots; legacy help priority, доступные role/id/description и control refs/values/metadata сохранены. Лишний error class контейнера удалён, class/status/colors каждого сообщения остаются source. Для styled legacy helpItem добавлен собственный узел без изменения прежнего DOM при отсутствии slot. ErrorList внутри FormList получает help/helpItem; ранее выбранные native цвета bare standalone ErrorList сохранены, source вне FormItem наследует обычный цвет формы — raw observation приложено. 16 UMD-состояний подтверждают все слои/classes/CSS, normalized callback props, undefined return, disabled overrides, nested/reset/false scopes и ErrorList; reactive updates сохраняют input/focus/selection/metadata. Shared semantic helper расширен только типами nullable style и callback undefined, runtime остальных компонентов не меняется. Размеры описаны в size-context; root prefix, полный help override/motion и другие Form settings остаются отдельными пробелами."
         },
@@ -8467,7 +8467,7 @@
             "tests/browser/form-size-metrics.ts",
             "tests/browser/fixtures/FormSizeFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-size-reference.json",
-            "tests/package/form-size.ssr.test.ts"
+            "tests/package/form/form-size.ssr.test.ts"
           ],
           "note": "Form.size принимает актуальные small/medium/large; undefined наследует nearest Form/ConfigProvider, без явного контекста сохраняет implicit medium controls и undefined semantic props.size. Локальные control props и Compact size приоритетнее; nested Form без size наследует, локальные provider/inner Form могут переопределить, соседние controls изолированы. Small/large root classes задают исходные label height/control min-height; component=false передаёт размер без wrapper. ConfigContext сохраняет все прочие reactive getters и различие explicit/implicit size для Divider/Compact. FormConfig.size не добавлен: у source нет такого global record prop. 25 неизменённых UMD-состояний сверяют реальные CSS/высоты Input/InputNumber/Select/DatePicker/Button/Switch/Compact/Divider, label containers, nested/sibling scopes, semantic callback normalization, local overrides, три layouts, RTL и compact/component theme. Смена размера сохраняет DOM/focus/selection, values/errors/warnings/touched и native FormData; SSR публикует size classes и не forward-ит size в form attribute. Native Form default vertical и остальные form/model contracts сохранены; tooltip описан в label-tooltips; prefix и другие Form settings остаются отдельными пробелами."
         },
@@ -8485,7 +8485,7 @@
             "tests/browser/form-scroll-first-metrics.ts",
             "tests/browser/fixtures/FormScrollFirstFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-scroll-first-reference.json",
-            "tests/package/form-scroll-first.ssr.test.ts"
+            "tests/package/form/form-scroll-first.ssr.test.ts"
           ],
           "note": "Form.scrollToFirstError принимает boolean/FormScrollOptions; local prop целиком заменяет ConfigProvider.form.scrollToFirstError. True вызывает публичный scrollToField первого errorFields.name с block nearest; options заменяют defaults, включая focus/behavior. False отключает и прокрутку, и фокус. OnFinishFailed вызывается перед действием; после tick проверяются active/model owner, outOfDate не вызывает DOM работу. В отсутствие обоих settings сохранён прежний native автофокус первой ошибки, включая config record reset {}; source 6.6.8 без настройки не фокусирует. Это явное сохранение существующего Svelte контракта, raw source reset-state приложен. 15 неизменённых UMD-сценариев подтверждают argument/options identity, callback order, фактические scrollTop/target bounds и focus, nested NamePath, второе ошибочное поле после valid first, уже видимый control, config inherit/replace/reset и local priority. Native browser сверяет source requests/order во всех случаях, source focus/geometry при явном setting; config-reset отдельно проверяет native default focus. Reactive props сохраняют control/value/focus/selection; reset, replace/unmount во время validation и непосредственно в onFinishFailed не вызывают поздний scroll. SSR/types не требуют DOM, prop не уходит в form attrs. Используются существующие scroll/focus/ref механизмы; согласованное исключение source scroll-margin bug сохранено."
         },
@@ -8507,7 +8507,7 @@
             "tests/browser/form-tooltip-metrics.ts",
             "tests/browser/fixtures/FormTooltipFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-tooltip-reference.json",
-            "tests/package/form-tooltip.ssr.test.ts"
+            "tests/package/form/form-tooltip.ssr.test.ts"
           ],
           "note": "FormItem.tooltip принимает RenderEmptyContent или FormTooltipProps; Form.tooltip и ConfigProvider.form.tooltip задают defaults, без local Item tooltip значок отсутствует. Options объединяются по ключам config → Form → Item; {} включает наследованный title, undefined/null/false/пустая строка отключают tooltip, 0/true/arrays/snippets renderable. Icon — Svelte snippet/null, fallback children → QuestionCircleOutlined. RequiredMark renderer получает составной label+tooltip snippet, обычные подписи без tooltip сохраняют прежние аргументы. Приватный consumer использует текущий Tooltip: source hover default/явные actions, задержки/цвет/placement/options, отмену label click без блокировки click-trigger. Табуляция пропускает tabindex=-1 icon; popup в body, local getPopupContainer → global → body, общий ShadowRoot остаётся в config. Display contents native shell сохраняет исходные flex/inline размеры; source SVG из pinned UMD покрыт существующей MIT license Ant Design Icons, без новой npm зависимости. 31 UMD-состояние подтверждает content/icon presence, per-key priority, record reset/replacement, nested Form reset, custom/optional mark, label/title и точные icon offsets/dimensions/CSS, popup content/colors/placement, hover/click и cancelable label events, compact/dark/RTL. DOM dir одинаков в обеих матрицах, raw config-only RTL capture сохранён отдельно. Исходные 6.6.8/revision из reference имеют две подтверждённые неточности: isPlainObject ошибочно принимает массив за options без title; default SVG role img с aria-label question-circle входит в доступное имя поля. Svelte выводит массив как content, совпадая с измеренным title-array equivalent, и скрывает декоративный SVG от accessibility. Raw array/default icon/accessible name сохранены для последующего разбора. Native Tooltip whitespace/cache/SSR/motion/ref contracts сохранены. Reactive props сохраняют input/focus/selection, values/errors/warnings/touched и FormData; публичные типы и SSR не читают DOM. Полный help/motion, feedback, prefix и другие Form возможности остаются отдельными пробелами."
         },
@@ -8525,7 +8525,7 @@
             "tests/browser/form-slot-context-metrics.ts",
             "tests/browser/fixtures/FormSlotContextFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-slot-context-reference.json",
-            "tests/package/form-slot-context.ssr.test.ts"
+            "tests/package/form/form-slot-context.ssr.test.ts"
           ],
           "note": "Приватный NoFormItemBinding очищает FormFieldContext только в label (включая его tooltip) и extra; основной children/controlRef продолжают принадлежать полю. Сохраняется FormContext и reactive ConfigContext со всеми getters, componentDisabled берётся из Form.disabled, чтобы unbound widgets сохраняли global/Form disabled и прежний submitting contract. Size/variant/theme/locale не меняются. Inputs/selects пояснений не получают id/name, required, error/warning status/ARIA, description основного поля и не регистрируют себя в его ref. Explicit helper props приоритетнее. Helper input/blur не меняет main value/touched, native FormData содержит единственное main значение, getFieldInstance указывает на основной Input. Семь неизменённых UMD-состояний фиксируют Input extra/popup и Select: default, required, errors, disabled, small, filled и explicit owner props; source helper blur и ref ownership приложены. Scoped helper contexts не добавляют DOM, selected reset/lifecycle и внешний вид labels/slots сохраняются. Package SSR проверяет отсутствие скопированных field attributes у helpers и сохранение errors/name основного control; source default native HTML name основного поля по-прежнему заменён согласованной Svelte FormData association."
         },
@@ -8542,7 +8542,7 @@
             "tests/browser/form-help-metrics.ts",
             "tests/browser/fixtures/FormHelpFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-help-reference.json",
-            "tests/package/form-help.ssr.test.ts"
+            "tests/package/form/form-help.ssr.test.ts"
           ],
           "note": "FormItem.help расширен со string до RenderEmptyContent: numbers, nested arrays, booleans/nullish и Svelte snippets. Undefined/null/false/пустая строка скрывают fallback help, whitespace/0/true/arrays/snippets сохраняют source content semantics. Сохранены прежние native error/warning priority и контейнер ant-form-item-extra для fallback help; semantic help/helpItem и доступные сообщения работают как прежде. Source 6.6.8 explicit help перекрывает errors, включая false; это намеренно не меняет существующий Svelte контракт, raw observations приложены. Help=0 отображается и входит в description; source проверяет truthiness и теряет aria-describedby для числового нуля. Native zero сопоставляется с реально измеренным source string-zero, исходный zero snapshot сохранён для разбора. Пятнадцать UMD-состояний сверяют scalar/array/rich content, description relations, helper input attributes и lifecycle; counter после selected reset пересоздаётся. Help content живёт под тем же resetKey и NoFormItemBinding: вспомогательные controls не получают name/id/required/error binding текущего поля. Изменение help сохраняет основной input/selection/focus, value и FormData. Package SSR публикует rich help type и description для нуля без DOM. Это перенос content/lifecycle; source help override и полный message motion остаются отдельными пробелами."
         },
@@ -8560,7 +8560,7 @@
             "tests/browser/form-nameless-metrics.ts",
             "tests/browser/fixtures/FormNamelessFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-nameless-reference.json",
-            "tests/package/form-nameless.ssr.test.ts"
+            "tests/package/form/form-nameless.ssr.test.ts"
           ],
           "note": "FormItem.name стал optional; undefined/null runtime означают отсутствие binding, непустые/пустые допустимые NamePath по-прежнему считаются именованными. В nameless режиме layout/labels/columns/help/extra/theme и Form disabled/size/variant сохраняются, local rules игнорируются, автоматические errors/required/status/id/name/description/ref model-поля не передаются controls. Required управляет только mark; htmlFor и owner input id сохраняют явную label association. Вычисление и регистрация model name/prefix/rules выполняются только для hasName; NoFormItemBinding очищает association и сохраняет Form settings; отдельный status context поддерживает ручной validateStatus без model binding. Именованный layout получает прежний reactive FieldContext через приватный FormItemBinding, getters продолжают читать props/model. Смена hasName переключает render branch и пересоздаёт control, как source; name→name сохраняет прежний lifecycle. Reset модели не пересоздаёт unbound local draft и сохраняет focus/selection/DOM. Восемь UMD-состояний подтверждают отсутствие attributes/binding, ignored rules, визуальный required, manual htmlFor, disabled/small/filled, отдельный named reference; raw named id/name отличаются по согласованным native Svelte/FormData контрактам, они сохранены. Source reset и обе ownership transitions проверяются по node identity, value/store/bindings/ref. Публичные optional types и SSR не требуют DOM. NoStyle, dependencies, feedback и остальные Field API остаются отдельными пробелами."
         },
@@ -8577,7 +8577,7 @@
             "tests/browser/form-disabled-metrics.ts",
             "tests/browser/fixtures/FormDisabledFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-disabled-reference.json",
-            "tests/package/form-disabled.ssr.test.ts"
+            "tests/package/form/form-disabled.ssr.test.ts"
           ],
           "note": "Form передаёт disabled через reactive ConfigContext, включая controls без FormItem; undefined наследует ближайший Form/ConfigProvider, false разрешает controls поверх внешнего true. Вложенный ConfigProvider.componentDisabled переопределяет Form для своего поддерева, локальный prop control приоритетнее. Приватные useForm/useFormField читают disabled текущего ConfigContext вместо захваченного внешнего; отдельный submitting getter сохраняет прежнюю блокировку связанных controls и Form-aware widgets при async onFinish. Настройки соседей и остальные getters/регистрация/metadata не меняются. Двенадцать неизменённых UMD-состояний фиксируют defaults, global/Form true/false, nested Form, child ConfigProvider и local props для свободных/связанных Input, Select, Button и Tag. Динамическая смена сохраняет DOM/input selection/value и выбранную option; native submitting и explicit disabled=false проверяются отдельно. Публичный пакет рендерит disabled scope при SSR без DOM. Полный Form API и остальные Field возможности остаются отдельными пробелами."
         },
@@ -8603,7 +8603,7 @@
             "tests/browser/fixtures/FormStatusFixtures.svelte",
             "tests/browser/fixtures/FormStatusControls.svelte",
             "tests/browser/fixtures/ant-design-form-status-reference.json",
-            "tests/package/form-status.ssr.test.ts",
+            "tests/package/form/form-status.ssr.test.ts",
             "src/lib/transfer/Transfer.svelte"
           ],
           "note": "Используется существующий публичный FormValidateStatus: success/warning/error/validating/пустая строка. Явный prop приоритетнее metadata, включая явный пустой статус; автоматический порядок — validating, errors, warnings, touched либо hasFeedback+validated success, pristine без статуса. Приватный getFieldMeta читает точный binding, сохраняя публичную aggregate семантику isFieldTouched. Отсутствие meta не создаёт binding; правила/triggers/touched/reset модели не меняются. Двадцать девять неизменённых UMD-состояний фиксируют root/control classes, border colors и messages при metadata overrides, explicit empty, pending с прежней ошибкой, touched/validated, nameless, local control status и dark/compact/RTL. В nameless режиме передаётся только visual status: нет id/name/required/description/ref и model registration. Отдельный invalid в private context сохраняет доступность model errors при визуальном success/validating/empty и local status control; scoped child contexts передают этот флаг без association. InputOTP передаёт ячейкам visual status через private context, не расширяя публичный status Input/OTP; Cascader semantic props отражают разрешённые Form statuses. У Input/Select прежняя native политика aria-invalid для visual error без model errors сохранена: source не задаёт такой attribute, raw значения приложены. Реактивная смена сохраняет DOM/draft/focus/selection; pending validation, touched success и reset проверяются отдельно. Transfer root получает model aria-invalid/description независимо от visual status; пять отдельных UMD-состояний подтверждают connected description при default/success/warning/validating/empty. Package SSR выводит named/nameless/manual/automatic statuses и Transfer error association без DOM. HasFeedback/feedbackIcons имеют отдельную feature; остальной Field API остаётся в очереди."
@@ -8625,7 +8625,7 @@
             "tests/browser/fixtures/FormInitialFixtures.svelte",
             "tests/browser/fixtures/FormInitialCase.svelte",
             "tests/browser/fixtures/ant-design-form-initial-reference.json",
-            "tests/package/form-initial.ssr.test.ts"
+            "tests/package/form/form-initial.ssr.test.ts"
           ],
           "note": "FormItem.initialValue заполняет undefined до render children, включая SSR; name отсутствует — default игнорируется. Существующее значение store приоритетнее, включая null/false/0/пустую строку. Явный setFieldValue undefined перед поздним mount допускает local default, как source, даже если раньше в модели был Form default. Изменение prop не перезаписывает current value; reset читает текущий getter и исходные defaults модели по точному NamePath. Начальная инициализация не меняет touched и не запускает validators, но initialValue участвует в dirty validation. Plain mutable containers копируются, opaque values сохраняют identity согласно прежнему native контракту. Регистрация хранит unknown initialValue, не расширяя FormList.initialValue array API. Существующие projection/ref/callback registrationOrder сохранены; отдельный initialValueOrder следует фактическому mount, как React Field. Symbol mountKey сохраняет identity через Svelte proxies. Двадцать два неизменённых UMD-сценария проверяют scalar/object/array/default priorities, nested/literal/numeric paths, duplicate defaults, nameless и FormList с selected/full reset. Дополнительные snapshots фиксируют prop update/добавленный позже default, пять поздних mounts со store и parent/child overlap при статическом и позднем mount. При duplicate initialValue source первый mount заполняет store, reset не выбирает default; при overlap reset использует mount order. ListField локальный default применяется при создании, но selected child reset его не восстанавливает; полный reset списка пересоздаёт строки с defaults. Сохранены native keyed list lifecycle, guards stale validation и явная Svelte value binding. Package SSR выводит initial control value и store без DOM. Dependencies/preserve/feedback и остальные Field возможности остаются отдельными пробелами."
         },
@@ -8644,7 +8644,7 @@
             "tests/browser/fixtures/FormUseStatusFixtures.svelte",
             "tests/browser/fixtures/FormStatusReadout.svelte",
             "tests/browser/fixtures/ant-design-form-use-status-reference.json",
-            "tests/package/form-use-status.ssr.test.ts"
+            "tests/package/form/form-use-status.ssr.test.ts"
           ],
           "note": "Export useFormItemStatus и FormItemStatus type переносят публичный Form.Item.useStatus через getter-object, как существующий useToken. Функция вызывается при инициализации; status/errors/warnings читаются реактивно, destructuring фиксирует snapshot, массивы сообщений readonly по native контракту модели. Отдельный context и приватный Provider окружает только main controls, без DOM: label/extra читают внешний scope, вложенный Item — собственный, вне Item status undefined и пустые сообщения. Pristine Item status пустая строка. Root Form повторяет Source NoFormStyle status: сбрасывает только visual status, errors/warnings ближайшего внешнего Item остаются; InputOTP переопределяет status своим prop и сохраняет сообщения. Четырнадцать UMD-состояний проверяют raw context shapes, named/nameless/manual/metadata statuses, scopes outside/form-only/label/extra/inner/inner-form и OTP custom status. Live getter reads не регистрируют control и сохраняют input/ref/DOM/value/focus/selection; reset очищает metadata. Hook не меняет существующий native binding context и правила ошибок. Source default context не содержит массивов, fallback arrays принадлежат конкретному hook result. Публичный импорт и SSR работают без DOM. Feedback context и TreeSelect renderer перенесены отдельно; остальные consumers и Form возможности остаются в очереди."
         },
@@ -8668,7 +8668,7 @@
             "tests/browser/fixtures/FormNoStyleFixtures.svelte",
             "tests/browser/fixtures/FormNoStyleCase.svelte",
             "tests/browser/fixtures/FormNoStyleCompositionFixtures.svelte",
-            "tests/package/form-no-style.ssr.test.ts",
+            "tests/package/form/form-no-style.ssr.test.ts",
             "tests/browser/fixtures/ant-design-form-no-style-reference.json"
           ],
           "note": "FormItem.noStyle убирает ItemHolder/layout, label/help/extra/class/style, сохраняя native binding, registration, initialValue, validation, controlRef и reset. Hidden имеет приоритет и сохраняет скрытый ItemHolder. Private onMetaChange activates collectors в порядке первых metadata events; parent list: own errors/warnings, затем children с dedup по typed NamePath. Parent visual status и useFormItemStatus остаются собственными, как source; noStyle без собственного status/metadata наследует visual status ближайшего Item. Вложенные noStyle передают сообщения ближайшему styled Item; FormList live paths/keyed metadata следуют move/insert/remove, очистка и async unmount освобождают отчёт. Help=false отключает report. Двадцать raw UMD-состояний и event-order/transition observations закреплены на 6.6.8; hidden/nameless/standalone, inherited/explicit statuses и parent-owned hook metadata сопоставлены с source. Native обязательность сохраняет required вместо исходного aria-required; visual error сохраняет прежний aria-invalid. Source defects не повторены: dangling собственные help/extra descriptions заменены реальным parent list или отсутствуют; dynamic noStyle/help не оставляют stale parent messages. Смена render branch/remount и reset сохраняют значения/metadata; native focus/selection восстанавливаются через field ref без DOM wrapper, caller-moved focus приоритетнее. SSR собирает model-owned errors и connected parent description, публичные типы не требуют DOM. Прежние native model-owned metadata/reset/trigger semantics не изменены. Полный feedback, dependencies и field adapters остаются отдельными пробелами."
@@ -8686,7 +8686,7 @@
             "tests/browser/fixtures/FormTransformFixtures.svelte",
             "tests/browser/fixtures/form-transform-cases.ts",
             "tests/browser/fixtures/ant-design-form-transform-reference.json",
-            "tests/package/form-transform.ssr.test.ts"
+            "tests/package/form/form-transform.ssr.test.ts"
           ],
           "note": "Синхронный transform применяется отдельно для каждого правила до native required/min/max/pattern/custom validator. Результат не заменяет value в модели, FormData, обычном submit payload и reset defaults; validator(value, values) сохраняет прежний native signature и original snapshot values. Разные правила получают исходный input, validateFirst/warningOnly/validateOnly и latest-request-wins сохраняются. Пятнадцать неизменённых UMD-сценариев 6.6.8 фиксируют trim/required/min/pattern, default/null/undefined, custom callbacks, независимость правил, serial/all и warnings; изучены rc-form 1.8.6 validateUtil и async-validator 6.0.0 (npm archive SHA-256 02177b46469af6612ddb674a5987638492a0587039f252cf37c48e82fc99b9a3), без установки зависимостей. Source defect: thrown transform попадает в catch без errors и даёт success; raw transform-throw сохранён, Svelte возвращает message/Error.message/fallback как ошибку правила, warningOnly остаётся предупреждением. Прежняя защита plain snapshot copies и identity opaque Date сохраняется; in-place mutation snapshot внутри callback не изменяет store, но общий snapshot текущей validation остаётся прежним native контрактом. Public types и SSR не запускают transform при render. Другие настройки Form остаются отдельными пробелами."
         },
@@ -8703,7 +8703,7 @@
             "tests/browser/fixtures/FormConstraintsFixtures.svelte",
             "tests/browser/fixtures/form-constraints-cases.ts",
             "tests/browser/fixtures/ant-design-form-constraints-reference.json",
-            "tests/package/form-constraints.ssr.test.ts"
+            "tests/package/form/form-constraints.ssr.test.ts"
           ],
           "note": "Len проверяет точное числовое значение, число Unicode code points строки или элементов массива в прежнем implicit native API. Числовой len имеет приоритет над min/max, включая 0; pattern/custom validator продолжаются после успешной длины. Отсутствующие optional null/undefined/пустая строка пропускаются, но [] имеет длину 0 и whitespace в непустой строке считается; required по-прежнему отклоняет native пустые массивы/строки/пробелы. Whitespace=true запрещает непустую строку только из whitespace, false/undefined сохраняют прежние проверки, zero-width space не считается whitespace. Transform применяется раньше, warningOnly/validateFirst/validateOnly/reset и исходный store сохраняются; новые defaults сообщений следуют существующим русским native сообщениям, rule.message приоритетнее. Тридцать пять raw UMD-сценариев 6.6.8/rc-form 1.8.6/async-validator 6.0.0 сравнивают Unicode, len/min/max precedence, pattern, trim, пустые строки/массивы, массивы с 0/false, числовой ноль, отрицательный/дробный len и whitespace/warnings. Source numeric/array samples явно содержат sourceType=number/array; Svelte сохраняет прежнее implicit определение типов по value, явный primitive Rule.type покрыт отдельной feature. Новые props не меняют прежние rules без len/whitespace. Публичные типы и SSR не запускают validation при render."
         },
@@ -8723,7 +8723,7 @@
             "tests/browser/fixtures/FormRuleTypesFixtures.svelte",
             "tests/browser/fixtures/form-rule-types-cases.ts",
             "tests/browser/fixtures/ant-design-form-rule-types-reference.json",
-            "tests/package/form-rule-types.ssr.test.ts"
+            "tests/package/form/form-rule-types.ssr.test.ts"
           ],
           "note": "Базовая часть ValidationRuleType: string/number/integer/float/boolean/array/object/date/regexp/method/any. Явный type включает source-specific empty/required и dispatch: string range/pattern/whitespace, numeric/array range/len, date Date parsing+timestamp range; остальные primitive types только presence/type. Number empty string normalizes to undefined для проверки; integer/float empty string rejected, string whitespace allowed unless whitespace=true, array empty range/required и any presence следуют source. Typed custom validator заменяет built-ins, сохраняя native value/values signature и transform-before-validator; normalization не записывается в store. Прежние implicit rules без type не меняют native empty, first-error/default Russian messages и constraint/custom порядок. Шаблоны сообщений, messageVariables и validateMessages поддерживаются отдельными features с native default messages. Триста шестьдесят шесть unmodified UMD-сценариев 6.6.8/rc-form 1.8.6/async-validator 6.0.0 фиксируют 11 типов, scalar/object/array/Date/RegExp/function, NaN/Infinity/BigInt/Symbol, required и constraints/custom dispatch. Raw source diagnostics сохранены: numeric/Date coercion BigInt/Symbol валидирует с ошибкой, но также выводит console errors и бросает page errors. Native guards дают те же validation errors без console/page exceptions. Source parseInt ошибочно отклоняет integer 1e21 и принимает его как float; Native Number.isInteger исправляет эти две классификации, raw значения сохранены для разбора. MIT license async-validator включена, новых npm зависимостей нет. SSR публикует type union и не запускает validation."
         },
@@ -8743,7 +8743,7 @@
             "tests/browser/fixtures/FormRuleFormatsFixtures.svelte",
             "tests/browser/fixtures/form-rule-formats-cases.ts",
             "tests/browser/fixtures/ant-design-form-rule-formats-reference.json",
-            "tests/package/form-rule-formats.ssr.test.ts"
+            "tests/package/form/form-rule-formats.ssr.test.ts"
           ],
           "note": "ValidationRuleType содержит все 17 исходных значений; эта feature добавляет enum/email/url/hex/tel/pattern. Enum readonly unknown[] использует strict indexOf без coercion/NaN equivalence, nil optional skips, empty string participates, отсутствие type=enum не включает constraint. Pattern: RegExp или string; explicit type=pattern пропускает прочие constraints и допускает исходный ToString arrays/objects, legacy implicit pattern сохраняет прежний scalar/String contract. Caller RegExp lastIndex не меняется, invalid string pattern возвращает validation error без source console/page exceptions. Email<=320, tel<=32, URL<=2048, hex 3/6 digits с optional #, форматы проверяют только required/type, custom validator по-прежнему приоритетнее typed built-ins. Сто восемьдесят восемь unmodified UMD-сценариев фиксируют primitives/empty/required, strict enum, format limits и ignored constraints, string/global/malformed patterns. Raw URL source defects сохранены: отвергает bracketed IPv6/one-digit port, принимает bare IPv6/out-of-range port. Native URL parser проверяет адрес, включая brackets и допустимые порты; source protocol/schema-relative/www/domain policy и length cap сохраняются, линейные domain labels заменяют неоднозначные вложенные source repetitions. No store normalization, прежние native Russian defaults и first-error messages сохраняются; общие шаблоны поддерживаются feature validate-messages с native defaults. Runtime использует только встроенные RegExp/URL; MIT source license включена, npm dependencies не добавлены. Public types и SSR не запускают validation. Static source observation: rc-form 1.8.6 declarations contain 15 types without any/pattern and pattern:RegExp; Form docs delegate other types to async-validator, official UMD accepts all 17 and string patterns. Svelte exposes this verified runtime surface; narrower React declarations are recorded in reactDeclarations reference."
         },
@@ -8766,7 +8766,7 @@
             "tests/browser/fixtures/FormRuleFactoriesFixtures.svelte",
             "tests/browser/fixtures/form-rule-factories-cases.ts",
             "tests/browser/fixtures/ant-design-form-rule-factories-reference.json",
-            "tests/package/form-rule-factories.ssr.test.ts"
+            "tests/package/form/form-rule-factories.ssr.test.ts"
           ],
           "note": "FormRules/createForm и FormItem.rules принимают readonly FormRule[]: прежний ValidationRule object или синхронную ValidationRuleFactory(form)=>ValidationRule. Existing ValidationRule interface сохранён; typed factory получает FormInstance<Values> с текущими values/methods, generic inference сохранён. Native аргумент — сама текущая модель; source rc-form getRules передаёт context wrapper с теми же публичными store methods, identity copy записана в raw reference. Read-only metadata/value queries проверяют raw rule presence и не вызывают callbacks; required query/label разрешают factory отдельно, включая SSR до регистрации. Model validation разрешает все factories до validateFirst и debounce; resolved outputs фиксируются для запуска, следующий запрос вычисляет свежие constraints/warnings/transform. Object-only arrays сохраняют прежние identity/capture semantics. Исключение factory при validation отклоняет Promise и снимает свой validating token, не затрагивая более свежий/silent запрос; normal retry работает. Warning-only factory required не включает native required. Четырнадцать unmodified UMD-состояний сопоставляют dynamic required/min/enum/compare/transform, mixed order, validateFirst и обновлённый minimum. Прежние native validator(value, values), setter/touched/revalidation/reset/copy semantics сохранены; React callback adapters не добавлены. Standalone Item без Form не выполняет factories для required, explicit required/plain rules сохраняются. Rule factories должны быть чистыми и возвращать object; другие Form API остаются отдельными пробелами. Новых npm dependencies нет, SSR не требует DOM."
         },
@@ -8784,7 +8784,7 @@
             "tests/browser/fixtures/FormNestedRulesFixtures.svelte",
             "tests/browser/fixtures/form-nested-rules-cases.ts",
             "tests/browser/fixtures/ant-design-form-nested-rules-reference.json",
-            "tests/package/form-nested-rules.ssr.test.ts"
+            "tests/package/form/form-nested-rules.ssr.test.ts"
           ],
           "note": "Fields readonly Record literal keys=>ValidationRule/readonly ValidationRule[] для object/array; defaultField single rule проверяет все существующие array indices после explicit fields при отсутствии parent/explicit errors. Object defaultField применяется к own keys без explicit override, как измеренный delegated runtime. Optional отсутствующий parent пропускает схему; errors/warnings принадлежат root binding, child registrations не создаются. Child validator сохраняет native value/full readonly form snapshot; root transform применяется до children без store normalization, nested schema shallow-captured перед async parent validator. Own primitive errors и explicit fields errors агрегируются как source; fields order следует completion, array default order сохраняет index. Child warningOnly сохраняет warnings; root warningOnly преобразует всю свою схему в warnings. ValidateFirst выбирает root rule outcomes, все child rules внутри root собираются; nested warnings не опережают более поздний blocking root в serial/parallel. Тридцать unmodified UMD-наблюдений фиксируют nested objects/arrays/overrides/multiple child rules, literal dots, async order и source defects. Исправлены source false failures/acceptance: child warnings игнорируются и блокируют; array defaultField использует исходный массив после root transform; nested required 0 ошибочно получает string type; toString series-map collision даёт console/page errors и success; sparse array defaultField теряет ошибку. Native own-property Map и present-index traversal устраняют inherited-name/sparse false pass, implicit required 0 сохраняет прежний native contract. Ancestor pair schema/value останавливает cycles без ложных ошибок shared siblings; cycle behavior Source не замерялся. Native message defaults/validator signature и leaf rules без nested props сохраняются, stale/reset/validateOnly guards модели действуют на весь root job. Fields/defaultField принимают object rules, factories остаются на root rule list. MessageVariables/validateMessages поддерживаются отдельными features, другие Form возможности ещё не перенесены; runtime React и новые npm dependencies не добавлены."
         },
@@ -8806,7 +8806,7 @@
             "tests/browser/fixtures/FormMessageVariablesFixtures.svelte",
             "tests/browser/fixtures/form-message-variables-cases.ts",
             "tests/browser/fixtures/ant-design-form-message-variables-reference.json",
-            "tests/package/form-message-variables.ssr.test.ts"
+            "tests/package/form/form-message-variables.ssr.test.ts"
           ],
           "note": "Строковые rule.message и результаты native validator поддерживают однократную подстановку ${label}/${name}, rule aliases min/max/len/type/required/pattern/enum и messageVariables readonly Record<string,string>. Строковый label используется без normalization, иначе String(name); programmatic model без Item использует dot path. Name вложенного правила включает literal child key, aliases принадлежат child rule; label и явные variables наследуются от Item. Явные own variables перекрывают defaults/aliases, unknown даёт undefined, backslash экранирует placeholder; replacement не обрабатывается повторно. Контекст фиксируется до debounce/async и обновляется при следующей validation. Native ordinary messages, русские defaults/first-error, validator(value,values), metadata setFields и submit errors сохранены; manual errors остаются literal. Двадцать два unmodified UMD-состояния фиксируют aliases, rich/empty/null/numeric labels, array/zero NamePath, enum/pattern, escaping, nested object/array и inherited names. Source ошибочно теряет label имени 0, использует inherited constructor/toString и параметры root rule для object child; Native исправляет эти случаи, raw errors сохранены. Reactive props, async/debounce capture, warning channels, nested cycles и публичный SSR проверяются; ValidateMessages поддерживается отдельной feature. Новых npm dependencies и runtime React нет."
         },
@@ -8833,7 +8833,7 @@
             "tests/browser/fixtures/FormValidateMessagesLifecycle.svelte",
             "tests/browser/fixtures/form-validate-messages-cases.ts",
             "tests/browser/fixtures/ant-design-form-validate-messages-reference.json",
-            "tests/package/form-validate-messages.ssr.test.ts"
+            "tests/package/form/form-validate-messages.ssr.test.ts"
           ],
           "note": "ValidateMessages/ValidateMessage публично экспортированы; Form.validateMessages, ConfigProvider.form.validateMessages и locale.Form.defaultValidateMessages принимают partial string/function templates required/enum/whitespace/types/string/number/array/pattern и source date/default shape. Locale/config объединяют группы, local Form заменяет заданные top-level группы; ConfigProvider.form сохраняет whole-record replacement, {} не наследует родительские Form overrides. Rule.message выше общего template, native русские defaults и first-error/implicit rules сохранены; встроенные ruRU/enUS не меняют прежние сообщения. Function и printf %s/%d/%j/%% получают source field/constraint args, затем выполняется однократная ${variables}; explicit rule.message не применяет printf. Date validation использует types.date и number timestamp range, date.format/parse/invalid приняты в типах без выдуманных constraints. Default перекрывает native custom rejection fallback без Error.message, готовые validator strings/manual metadata приоритетны. Контекст фиксируется перед debounce, следующие проверки читают reactive props, старые ошибки сами не переписываются. Private scoped provider привязан к mounted Form, освобождается при unmount/model replacement; отдельные модели изолированы. Пятьдесят два unmodified UMD-сценария фиксируют constraints, enums, 14 type-message groups, printf/function args, scopes, locale/config/local priorities, nested object/array и warnings. Native default differences двух cases и исправленный child context записаны отдельно. Source undefined template и function exception дают console/page diagnostics; Native использует обычную ошибку constraint без false success, raw failures и четыре diagnostics сохранены. SSR не запускает validation, standalone model сохраняет прежние defaults. Новых dependencies, React runtime и script/config changes нет."
         },
@@ -8890,8 +8890,8 @@
             "tests/browser/fixtures/ant-design-form-prefix-reference.json",
             "tests/browser/form-prefix-metrics.ts",
             "tests/browser/form-prefix.spec.ts",
-            "tests/package/FormPrefixTransparentSSRFixture.svelte",
-            "tests/package/form-prefix.ssr.test.ts"
+            "tests/package/form/FormPrefixTransparentSSRFixture.svelte",
+            "tests/package/form/form-prefix.ssr.test.ts"
           ],
           "note": "Form/Item/List разрешают local prefix независимо: nonempty local wins, empty/undefined наследуют ConfigProvider. Input/Row/Col/Tooltip namespaces остаются самостоятельными. 99 Source CSS rules изолируют parts через scope с global namespace и screenXSMax/SMMax/MDMax/LGMax; canonical defaults, component tokens/semantic priority, Col metadata и native motion сохранены. Scoped canonical CSS не получает default media rules. Raw 26 configurations/5 widths записаны до fresh public local-class counterparts: Inner private/cache и media observations сохранены. Source sibling media pollution отделена сравнением с измеренным исходным default sibling. Native List prefix приоритетнее промежуточного Item; вне списка styled Item/noStyle fallback и общий prefix. Model/store/validation, register/ref, values/errors, native forms/labels, callbacks, selection/focus и submit/reset не меняются. React diagnostics/full renderer и прочие Field API остаются вне объёма."
         },
@@ -8924,7 +8924,7 @@
             "tests/browser/fixtures/form-feedback-hydration.server.ts",
             "tests/browser/fixtures/form-feedback-hydration.client.ts",
             "tests/browser/tree-select-surface-hydration.spec.ts",
-            "tests/package/form-feedback.ssr.test.ts",
+            "tests/package/form/form-feedback.ssr.test.ts",
             "docs/reference/forms.md",
             "src/lib/input/Input.svelte",
             "src/lib/input/TextArea.svelte",
@@ -8939,7 +8939,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-control-reference.json",
             "tests/browser/form-feedback-control-metrics.ts",
             "tests/browser/form-feedback-control.spec.ts",
-            "tests/package/form-feedback-control.ssr.test.ts",
+            "tests/package/form/form-feedback-control.ssr.test.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.server.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.client.ts",
             "src/lib/input/InputPassword.svelte",
@@ -8959,25 +8959,25 @@
             "tests/browser/fixtures/ant-design-form-feedback-cascader-reference.json",
             "tests/browser/form-feedback-cascader-metrics.ts",
             "tests/browser/form-feedback-cascader.spec.ts",
-            "tests/package/form-feedback-cascader.ssr.test.ts",
+            "tests/package/form/form-feedback-cascader.ssr.test.ts",
             "tests/browser/fixtures/FormFeedbackAutoCompleteCase.svelte",
             "tests/browser/fixtures/form-feedback-autocomplete-cases.ts",
             "tests/browser/fixtures/ant-design-form-feedback-autocomplete-reference.json",
             "tests/browser/form-feedback-autocomplete-metrics.ts",
             "tests/browser/form-feedback-autocomplete.spec.ts",
-            "tests/package/form-feedback-autocomplete.ssr.test.ts",
+            "tests/package/form/form-feedback-autocomplete.ssr.test.ts",
             "tests/browser/fixtures/FormFeedbackMentionsCase.svelte",
             "tests/browser/fixtures/form-feedback-mentions-cases.ts",
             "tests/browser/fixtures/ant-design-form-feedback-mentions-reference.json",
             "tests/browser/form-feedback-mentions-metrics.ts",
             "tests/browser/form-feedback-mentions.spec.ts",
-            "tests/package/form-feedback-mentions.ssr.test.ts",
+            "tests/package/form/form-feedback-mentions.ssr.test.ts",
             "tests/browser/fixtures/FormFeedbackPickerCase.svelte",
             "tests/browser/fixtures/form-feedback-picker-cases.ts",
             "tests/browser/fixtures/ant-design-form-feedback-picker-reference.json",
             "tests/browser/form-feedback-picker-metrics.ts",
             "tests/browser/form-feedback-picker.spec.ts",
-            "tests/package/form-feedback-picker.ssr.test.ts",
+            "tests/package/form/form-feedback-picker.ssr.test.ts",
             "tests/browser/form-feedback-cascader-hydration.spec.ts",
             "tests/browser/fixtures/form-feedback-cascader-hydration.client.ts",
             "tests/browser/fixtures/form-feedback-cascader-hydration.server.ts",
@@ -9488,7 +9488,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-control-reference.json",
             "tests/browser/form-feedback-control-metrics.ts",
             "tests/browser/form-feedback-control.spec.ts",
-            "tests/package/form-feedback-control.ssr.test.ts",
+            "tests/package/form/form-feedback-control.ssr.test.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.server.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.client.ts",
             "tests/browser/tree-select-surface-hydration.spec.ts",
@@ -9790,7 +9790,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-control-reference.json",
             "tests/browser/form-feedback-control-metrics.ts",
             "tests/browser/form-feedback-control.spec.ts",
-            "tests/package/form-feedback-control.ssr.test.ts",
+            "tests/package/form/form-feedback-control.ssr.test.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.server.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.client.ts",
             "tests/browser/tree-select-surface-hydration.spec.ts",
@@ -10164,7 +10164,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-mentions-reference.json",
             "tests/browser/form-feedback-mentions-metrics.ts",
             "tests/browser/form-feedback-mentions.spec.ts",
-            "tests/package/form-feedback-mentions.ssr.test.ts"
+            "tests/package/form/form-feedback-mentions.ssr.test.ts"
           ],
           "note": "Pinned Antd6.6.8/RcMentions использует has-suffix/affix-wrapper, не has-feedback. Общие Form status mask и feedback-only suffix сохраняют native clear glyph/handlers. При feedback transition с изменением effective affix заменяются textarea/mirror, закрывается popup и теряется focus, как в Source; при постоянном clear-wrapper или совместном swap affixes editor сохраняется. Pending choose/tick проверяет исходный editor и не фокусирует замену. Status/icon/prefix updates сохраняют editor; root/nativeElement остаётся DIV. С Transfer49UMD cases/42actions/11DOM-freeSSR, scopes/metadata/selection/clear/async/reset/disposal. Source fixtures явно типизируют array/string rules, без нецелевой default type ошибки."
         }
@@ -11520,7 +11520,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-control-reference.json",
             "tests/browser/form-feedback-control-metrics.ts",
             "tests/browser/form-feedback-control.spec.ts",
-            "tests/package/form-feedback-control.ssr.test.ts",
+            "tests/package/form/form-feedback-control.ssr.test.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.server.ts",
             "tests/browser/fixtures/form-feedback-control-hydration.client.ts",
             "tests/browser/tree-select-surface-hydration.spec.ts",
@@ -13291,7 +13291,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-picker-reference.json",
             "tests/browser/form-feedback-picker-metrics.ts",
             "tests/browser/form-feedback-picker.spec.ts",
-            "tests/package/form-feedback-picker.ssr.test.ts"
+            "tests/package/form/form-feedback-picker.ssr.test.ts"
           ],
           "note": "Pinned Antd6.6.8 Time/TimeRange используют has-feedback без in-form-item, public Form status mask и calendar/clock generated suffix composition. Существующий local suffixIcon перекрывает ConfigProvider.timePicker: true/undefined показывают clock+feedback; null/false/empty string скрывают suffix, custom content заменяет generated feedback. Date/Range используют отдельный datePicker config. С DatePicker66UMD cases/66actions/16DOM-freeSSR,4 strict hydration и pending disposal. Существующие UTC/Dayjs/precision/value/event/ref и readonly contracts сохранены."
         }
@@ -13368,7 +13368,7 @@
         "tests/browser/form-status.spec.ts",
         "tests/browser/fixtures/FormStatusControls.svelte",
         "tests/browser/fixtures/ant-design-form-status-reference.json",
-        "tests/package/form-status.ssr.test.ts",
+        "tests/package/form/form-status.ssr.test.ts",
         "src/lib/transfer/transfer-prefix.engine.ts",
         "src/lib/transfer/transfer-prefix.engine.test.ts",
         "src/lib/vendor/transfer-prefix.css.js",
@@ -13553,7 +13553,7 @@
             "tests/browser/form-status.spec.ts",
             "tests/browser/fixtures/FormStatusControls.svelte",
             "tests/browser/fixtures/ant-design-form-status-reference.json",
-            "tests/package/form-status.ssr.test.ts"
+            "tests/package/form/form-status.ssr.test.ts"
           ],
           "note": "Корень Transfer получает model aria-invalid и объединяет description владельца с FormItem description. Explicit FormItem success/warning/validating/empty не скрывают сохранённую ошибку от accessibility. Это не новый status prop Transfer: локальный status остаётся error/warning и сохраняет оформление; поле модели не регистрируется у служебных controls. Пять неизменённых UMD-состояний подтверждают root invalid и существующий error description при default/manual statuses. Общая Form matrix проверяет live updates/reset; package SSR проверяет association без DOM."
         },
@@ -13595,7 +13595,7 @@
             "tests/browser/fixtures/ant-design-form-feedback-mentions-reference.json",
             "tests/browser/form-feedback-mentions-metrics.ts",
             "tests/browser/form-feedback-mentions.spec.ts",
-            "tests/package/form-feedback-mentions.ssr.test.ts"
+            "tests/package/form/form-feedback-mentions.ssr.test.ts"
           ],
           "note": "Pinned Antd6.6.8 Transfer читает Form hasFeedback для root has-feedback, без отдельного root icon. Оба внутренних search Input наследуют Form feedback/status; при showSearch=false иконок нет. Public status mask сохраняет nested Form reset. Metadata/noStyle/local override, global/local prefixes, RTL/size, поиск/move/async/reset и2 search icons проверены независимым UMD вместе с Mentions49cases/42actions/11DOM-freeSSR. Native targetKeys/selection/callback order/field association и ARIA contracts не меняются."
         }
@@ -14554,7 +14554,7 @@
             "tests/browser/fixtures/form-feedback-hydration.server.ts",
             "tests/browser/fixtures/form-feedback-hydration.client.ts",
             "tests/browser/tree-select-surface-hydration.spec.ts",
-            "tests/package/form-feedback.ssr.test.ts",
+            "tests/package/form/form-feedback.ssr.test.ts",
             "docs/reference/components/tree-select.md"
           ],
           "note": "HasFeedback/feedbackIcons берутся из отдельного Form context. Root/Item flags, Source SVGs/цвета/размеры, custom snippets и callback metadata, validated success, false suppression и falsy defaults повторяют Source. Значок следует статусу FormItem, local status TreeSelect меняет только control. SuffixIcon=null сохраняет feedback-only wrapper; пользовательский suffix перекрывает generated arrow/feedback. NoStyle и nested Form/OTP/popup boundaries сверены; class namespace значка принадлежит FormItem независимо от TreeSelect prefix. SSR без timers/validation, strict hydration на существующем поле/custom icon, async reset/remount и pending unmount проверяют lifecycle. Native readonly messages, raw FormData, reset contracts, доступные имена и reduced-motion spinner сохраняются."
@@ -26986,33 +26986,33 @@
         "tests/browser/form-labels-metrics.ts",
         "tests/browser/fixtures/FormLabelsFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-labels-reference.json",
-        "tests/package/form-labels.ssr.test.ts",
+        "tests/package/form/form-labels.ssr.test.ts",
         "src/lib/form/Form.svelte",
         "src/lib/form/FormItem.svelte",
         "tests/browser/form-required-mark.spec.ts",
         "tests/browser/form-required-mark-metrics.ts",
         "tests/browser/fixtures/FormRequiredMarkFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-required-mark-reference.json",
-        "tests/package/form-required-mark.ssr.test.ts",
+        "tests/package/form/form-required-mark.ssr.test.ts",
         "tests/browser/form-root.spec.ts",
         "tests/browser/form-root-metrics.ts",
         "tests/browser/fixtures/FormRootFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-root-reference.json",
-        "tests/package/form-root.ssr.test.ts",
+        "tests/package/form/form-root.ssr.test.ts",
         "src/lib/form/FormErrorList.svelte",
         "tests/browser/form-semantic.spec.ts",
         "tests/browser/form-semantic-metrics.ts",
         "tests/browser/fixtures/FormSemanticFixtures.svelte",
         "tests/browser/fixtures/form-semantic-settings.ts",
         "tests/browser/fixtures/ant-design-form-semantic-reference.json",
-        "tests/package/form-semantic.ssr.test.ts",
+        "tests/package/form/form-semantic.ssr.test.ts",
         "src/lib/form/form.model.svelte.ts",
         "src/lib/form/form-field.dom.ts",
         "tests/browser/form-scroll-first.spec.ts",
         "tests/browser/form-scroll-first-metrics.ts",
         "tests/browser/fixtures/FormScrollFirstFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-scroll-first-reference.json",
-        "tests/package/form-scroll-first.ssr.test.ts",
+        "tests/package/form/form-scroll-first.ssr.test.ts",
         "src/lib/form/FormItemTooltip.svelte",
         "src/lib/form/form-tooltip.engine.ts",
         "src/lib/form/form-tooltip.engine.test.ts",
@@ -27020,7 +27020,7 @@
         "tests/browser/form-tooltip-metrics.ts",
         "tests/browser/fixtures/FormTooltipFixtures.svelte",
         "tests/browser/fixtures/ant-design-form-tooltip-reference.json",
-        "tests/package/form-tooltip.ssr.test.ts",
+        "tests/package/form/form-tooltip.ssr.test.ts",
         "src/lib/theme/theme-prefix.test.ts",
         "tests/browser/fixtures/ConfigPrefixScope.svelte",
         "tests/browser/fixtures/ConfigPrefixFixtures.svelte",
@@ -28031,7 +28031,7 @@
             "tests/browser/form-labels-metrics.ts",
             "tests/browser/fixtures/FormLabelsFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-labels-reference.json",
-            "tests/package/form-labels.ssr.test.ts"
+            "tests/package/form/form-labels.ssr.test.ts"
           ],
           "note": "Новый FormConfig/record form содержит colon, labelAlign, labelWrap и отдельно описанный requiredMark; undefined наследует ближайший record, object и {} заменяют его. Локальные props Form/Item приоритетнее; реактивные изменения и scope reset подтверждены Form source labels reference. Root class/style описаны в form-root-defaults; semantic config перенесён в form-semantic-defaults; прочие global Form settings остаются отдельными пробелами."
         },
@@ -28052,7 +28052,7 @@
             "tests/browser/form-required-mark-metrics.ts",
             "tests/browser/fixtures/FormRequiredMarkFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-required-mark-reference.json",
-            "tests/package/form-required-mark.ssr.test.ts"
+            "tests/package/form/form-required-mark.ssr.test.ts"
           ],
           "note": "Form defaults включают современный requiredMark: boolean/optional/Svelte snippet. Undefined form наследует record, object/{} заменяют его; local Form prop выше config. Locale.Form повторяет source replacement/fallback вместо нового deep merge: undefined group наследуется, {} и пустой optional выбирают английский fallback. Native default RU сохранён. Class/content/renderer/locale подтверждены Form required-mark reference; root class/style описаны в form-root-defaults; прочие настройки FormConfig остаются отдельными пробелами."
         },
@@ -28070,7 +28070,7 @@
             "tests/browser/form-root-metrics.ts",
             "tests/browser/fixtures/FormRootFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-root-reference.json",
-            "tests/package/form-root.ssr.test.ts"
+            "tests/package/form/form-root.ssr.test.ts"
           ],
           "note": "FormConfig принимает class/style по native соглашению библиотеки. Настройки применяются только к native корню Form: context class, local class и rootClassName накапливаются; CSS config.style предшествует local style и следует component theme. Undefined наследует record, {} и object заменяют его; component=false не создаёт wrapper. 12 UMD-состояний, reactive native lifecycle и package SSR отражены в Form root-appearance. Source объявляет FormConfig.variant, но его Form читает только local variant; raw observation сохранено, неработающий API не объявлен. Семантические slots описаны в form-semantic-defaults; остальные global settings остаются отдельными пробелами."
         },
@@ -28092,7 +28092,7 @@
             "tests/browser/fixtures/FormSemanticFixtures.svelte",
             "tests/browser/fixtures/form-semantic-settings.ts",
             "tests/browser/fixtures/ant-design-form-semantic-reference.json",
-            "tests/package/form-semantic.ssr.test.ts"
+            "tests/package/form/form-semantic.ssr.test.ts"
           ],
           "note": "FormConfig включает classNames/styles как object/callback для шести source slots. Local Form settings приоритетнее; context class/style слои и record replacement следуют прежнему контракту. Callbacks видят native merged FormProps, могут вернуть undefined; slots передаются полям/ErrorList, nested Form сбрасывает outer local maps к props/config. Полные source layers и callback normalization подтверждены Form semantic-styles fixture/reference; native help/standalone ErrorList policies сохранены. Прочие global Form settings остаются отдельными пробелами."
         },
@@ -28110,7 +28110,7 @@
             "tests/browser/form-scroll-first-metrics.ts",
             "tests/browser/fixtures/FormScrollFirstFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-scroll-first-reference.json",
-            "tests/package/form-scroll-first.ssr.test.ts"
+            "tests/package/form/form-scroll-first.ssr.test.ts"
           ],
           "note": "FormConfig включает scrollToFirstError boolean/FormScrollOptions. Undefined record наследует, object/{} заменяют config record целиком. Local Form prop заменяет весь setting, включая false, true не наследует focus/block из config options. Source requests, callback order, реальная прокрутка/focus и native отсутствие late actions подтверждены Form scroll-first-error. При сброшенной или отсутствующей настройке сохраняется существующий native autofocus, source отсутствие autofocus записано как согласованное отличие."
         },
@@ -28132,7 +28132,7 @@
             "tests/browser/form-tooltip-metrics.ts",
             "tests/browser/fixtures/FormTooltipFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-tooltip-reference.json",
-            "tests/package/form-tooltip.ssr.test.ts"
+            "tests/package/form/form-tooltip.ssr.test.ts"
           ],
           "note": "FormConfig включает FormTooltipProps. Config/form/Item options объединяются по ключам; целый form record наследуется при undefined и заменяется object/{}. Настройка defaults сама по себе не показывает значок без Item.tooltip; вложенный Form сбрасывает outer local options к props/config. Local icon/title, children fallback, options reset, nested scope, native tooltip/ref/field lifecycle, source array/accessibility observations подтверждены Form label-tooltips. Icon и rich React nodes заменены Svelte snippets, существующий Tooltip переиспользован без npm изменений."
         },
