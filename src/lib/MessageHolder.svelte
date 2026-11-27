@@ -13,6 +13,7 @@
   import { messageHolderKey } from './message.model.svelte.js';
   import { resolveMessageHolder } from './message-semantic.engine';
   import { createNoticeContainer } from './notice-container.model.svelte';
+  import { createNoticeClock } from './notice.dom';
   import type { MessageHolderProps } from './message.types';
 
   let {
@@ -79,14 +80,8 @@
   }
 
   function connectHost(node: HTMLSpanElement) {
-    const view = node.ownerDocument.defaultView!;
-    return runtime.connect({
-      now: () => view.performance.now(),
-      schedule(callback, milliseconds) {
-        const timer = view.setTimeout(callback, milliseconds);
-        return () => view.clearTimeout(timer);
-      }
-    });
+    const clock = createNoticeClock(node);
+    return runtime.connect(clock);
   }
 
   function setListHover(next: boolean) {

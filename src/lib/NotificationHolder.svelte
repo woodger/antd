@@ -11,6 +11,7 @@
   import { serializeInlineStyleLayers, type InlineStyleLayer } from './inline-style.engine';
   import { notificationHolderKey, notificationPlacements } from './notification.model.svelte.js';
   import { createNoticeContainer } from './notice-container.model.svelte';
+  import { createNoticeClock } from './notice.dom';
   import { resolveNoticeAppearance } from './notice-semantic.engine';
   import type {
     NotificationHolderProps, NotificationSemanticName, NotificationSemanticProps
@@ -81,14 +82,8 @@
   }
 
   function connectHost(node: HTMLSpanElement) {
-    const view = node.ownerDocument.defaultView!;
-    return runtime.connect({
-      now: () => view.performance.now(),
-      schedule(callback, milliseconds) {
-        const timer = view.setTimeout(callback, milliseconds);
-        return () => view.clearTimeout(timer);
-      }
-    });
+    const clock = createNoticeClock(node);
+    return runtime.connect(clock);
   }
 
   $effect(() => {

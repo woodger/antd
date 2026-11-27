@@ -1,6 +1,24 @@
 // It only sends the focus to an accessible neighbor, when the notification still owned it. Manages
 // the popup surface of notifications, its motion and focus return. The monitoring is tied to the
 // owner's document.
+import type { NoticeClock } from './notice-queue.model.svelte';
+
+/** Binds the queue's clock to the browsing context of the mounted host. */
+export function createNoticeClock(host: HTMLElement): NoticeClock {
+  const view = host.ownerDocument.defaultView!;
+
+  return {
+    /** Uses the same monotonic clock for start times and remaining durations. */
+    now: () => view.performance.now(),
+    /** Schedules on the host window and returns its matching cancellation. */
+    schedule(callback, milliseconds) {
+      const timer = view.setTimeout(callback, milliseconds);
+      /** Releases the timer from the window that created it. */
+      return () => view.clearTimeout(timer);
+    }
+  };
+}
+
 export function focusAfterNotice(root: HTMLElement, ownedFocus: boolean) {
   if (!ownedFocus) {
     return;
