@@ -3,7 +3,7 @@
   // the modal state ends. Loading replaces content independently of visibility.
   import { flushSync, tick, untrack, type Snippet } from 'svelte';
   import { on } from 'svelte/events';
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from './space/NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
   import { useConfig } from './config-context';

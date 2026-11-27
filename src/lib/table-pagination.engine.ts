@@ -1,6 +1,6 @@
 // Defines the sides of pagers and page lines. Conditions and events remain in Table.
-import type { PaginationState } from './pagination.engine';
-import type { PaginationProps } from './pagination.types';
+import type { PaginationState } from './pagination/pagination.engine';
+import type { PaginationProps } from './pagination/pagination.types';
 import type { TableMode, TablePaginationPlacement } from './table.types';
 import type { ComponentSize } from './types';
 

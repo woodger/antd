@@ -19,7 +19,7 @@
 <script lang="ts">
   // Coordinates Tooltip opening delays with trigger events. The popup receives the accepted
   // visibility state.
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from './space/NoCompactStyle.svelte';
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';

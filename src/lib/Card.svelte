@@ -12,7 +12,7 @@
   import { createSkeletonFocus } from './skeleton.dom';
   import { connectFeedbackFocus } from './feedback.dom';
   import Skeleton from './Skeleton.svelte';
-  import Tabs from './Tabs.svelte';
+  import Tabs from './tabs/Tabs.svelte';
   import type { CardContent, CardProps } from './card.types';
 
   let {

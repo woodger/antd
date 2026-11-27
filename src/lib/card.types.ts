@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
-import type { TabsContent, TabsExtraContent, TabsItem, TabsProps } from './tabs.types';
+import type { TabsContent, TabsExtraContent, TabsItem, TabsProps } from './tabs/tabs.types';
 
 export type CardContent = TabsContent;
 /** Card settings. An explicit nested record replaces the parent's record in full. */

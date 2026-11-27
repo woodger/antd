@@ -2,7 +2,7 @@
   // Presents the draft as a list, nested Menu, or Tree. TableFilter owns the values passed to Table
   // and the confirmation timing.
   import { untrack } from 'svelte';
-  import { takeDropdownMenu } from './dropdown-menu-context';
+  import { takeDropdownMenu } from './dropdown/dropdown-menu-context';
   import {
     getTableFilterMenu, getTableFilterNodes, matchesTableFilterText, walkTableFilterNodes,
     type TableFilterNode
@@ -10,14 +10,14 @@
   import type {
     TableFilterMode, TableFilterOption, TableFilterSearch, TableFilterValue
   } from './table.types';
-  import type { MenuItemIconInfo, MenuProps, MenuSelectInfo } from './menu.types';
+  import type { MenuItemIconInfo, MenuProps, MenuSelectInfo } from './menu/menu.types';
   import type { TreeCheckedKeys, TreeCheckInfo, TreeEventNode, TreeKey } from './tree.types';
   import type { TableFilterLocale } from './table-locale.engine';
   import Checkbox from './checkbox/Checkbox.svelte';
   import Empty from './Empty.svelte';
   import Icon from './Icon.svelte';
   import Input from './input/Input.svelte';
-  import Menu from './Menu.svelte';
+  import Menu from './menu/Menu.svelte';
   import NoFormItemBinding from './form/NoFormItemBinding.svelte';
   import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';

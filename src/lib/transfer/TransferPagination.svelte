@@ -3,10 +3,10 @@
   // change row selection.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { getPaginationPrefixCss } from '../pagination-prefix.engine';
+  import { getPaginationPrefixCss } from '../pagination/pagination-prefix.engine';
   import { useConfig } from '../config-context';
   import { useComponentTheme } from '../theme-component.svelte';
-  import { getPaginationState, getPageSizeOptions } from '../pagination.engine';
+  import { getPaginationState, getPageSizeOptions } from '../pagination/pagination.engine';
   import { transferPaginationItems } from './transfer.engine';
   import { ruRU } from '../types';
   import Icon from '../Icon.svelte';

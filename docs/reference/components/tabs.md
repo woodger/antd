@@ -417,7 +417,7 @@ Attributes позволяют сохранить class/style/handlers и доб�
 `getTabsItemId(props.id, key, 'tab' | 'panel')` связывает её controls с native
 панелями, включая пустые и Unicode keys. Панели, их состояние и корневой ref
 не пересоздаются при обновлении или замене renderer'а. Точные типы находятся в
-[tabs-nav.types.ts](../../../src/lib/tabs-nav.types.ts).
+[tabs-nav.types.ts](../../../src/lib/tabs/tabs-nav.types.ts).
 Поля tabPosition/popupClassName стандартной панели следуют текущему интерфейсу
 TabNavList закреплённого rc-tabs; они независимы от удалённых корневых props Tabs.
 

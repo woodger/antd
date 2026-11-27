@@ -62,8 +62,8 @@
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
   import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { connectPopup, getPopupActiveElement } from '../popup.dom';
   import { createPopupContainer } from '../popup-container.model.svelte.js';
   import { createOverlayStyle } from '../overlay-style.model.svelte';
@@ -74,7 +74,7 @@
   import Tree from '../Tree.svelte';
   import TreeTitle from '../TreeTitle.svelte';
   import Icon from '../Icon.svelte';
-  import NoCompactStyle from '../NoCompactStyle.svelte';
+  import NoCompactStyle from '../space/NoCompactStyle.svelte';
   let {
     nativeElement = $bindable(),
     inputElement = $bindable(),

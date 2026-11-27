@@ -1,7 +1,7 @@
 // Calculate layout FormItem. An indentation of an empty label arises when using the general
 // labelCol and wrapperCol.
-import type { ColProps, ColSize, GridBreakpoint } from '../grid.types';
-import { gridBreakpoints } from '../grid.engine';
+import type { ColProps, ColSize, GridBreakpoint } from '../grid/grid.types';
+import { gridBreakpoints } from '../grid/grid.engine';
 import type { RenderEmptyContent } from '../types';
 
 // Normalizes the numerical span into an object suitable for calculating offset.

@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { getTooltipActions, getTooltipDelay } from './tooltip.engine';
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from './space/NoCompactStyle.svelte';
   import TooltipPopup from './TooltipPopup.svelte';
   import type { TypographyContent as Content } from './typography.types';
   import type { TooltipContent, TooltipProps, TooltipTrigger } from './tooltip.types';

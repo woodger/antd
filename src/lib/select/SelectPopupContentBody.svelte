@@ -4,7 +4,7 @@
   import { provideFormField } from '../form/form-context';
   import { provideFormItemStatus, useFormItemStatusContext } from '../form/form-item-status';
   import { provideFormFeedback } from '../form/form-feedback-context';
-  import { provideCompact } from '../space-compact-context';
+  import { provideCompact } from '../space/space-compact-context';
 
   let { value, origin, isolate }: { value: SelectPopupContent; origin: Snippet; isolate: boolean } = $props();
   // The parent changes the key when a transition between origin and ContextIsolator is accepted.

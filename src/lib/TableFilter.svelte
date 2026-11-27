@@ -7,7 +7,7 @@
   import { useDesignTokenContext } from './theme-context.svelte';
   import { componentThemeVariables } from './theme-component-style.engine';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
-  import type { DropdownOpenChangeInfo, DropdownProps } from './dropdown.types';
+  import type { DropdownOpenChangeInfo, DropdownProps } from './dropdown/dropdown.types';
   import {
     areTableFilterOptionsEqual, snapshotTableFilterOptions
   } from './table-filter-options.engine';
@@ -18,7 +18,7 @@
     TableFilterMode, TableFilterOption, TableFilterResetOptions, TableFilterSearch, TableFilterValue
   } from './table.types';
   import Button from './button/Button.svelte';
-  import Dropdown from './Dropdown.svelte';
+  import Dropdown from './dropdown/Dropdown.svelte';
   import Icon from './Icon.svelte';
   import RenderContent from './RenderContent.svelte';
   import TableFilterCustomContent from './TableFilterCustomContent.svelte';

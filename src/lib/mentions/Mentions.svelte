@@ -26,12 +26,12 @@
   import { mergeComponentSemantics } from '../semantic-style.engine';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from '../inline-style.engine';
   import { createOverlayStyle } from '../overlay-style.model.svelte';
-  import { useMenuMotion } from '../menu-motion.svelte';
+  import { useMenuMotion } from '../menu/menu-motion.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
   import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
-  import { useCompact } from '../space-compact-context';
+  import { useCompact } from '../space/space-compact-context';
   import { connectPopup, getPopupActiveElement, type PopupConnection } from '../popup.dom';
   import { createPopupContainer } from '../popup-container.model.svelte.js';
   import MentionsListbox, {

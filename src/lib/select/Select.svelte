@@ -25,8 +25,8 @@
   import { createOverlayStyle } from '../overlay-style.model.svelte';
   import { serializeInlineStyleLayers } from '../inline-style.engine';
   import { createPopupContainer } from '../popup-container.model.svelte.js';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';

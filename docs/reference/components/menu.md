@@ -180,7 +180,7 @@ Inline-список раскрывается по высоте с изменен
 у боковых и вложенных — `zoom-big`. Первое открытие лениво смонтированного popup
 проходит фазу `appear`, последующие открытия — `enter`.
 
-`motion` принимает [`MenuMotion`](../../../src/lib/menu-motion.types.ts) и заменяет
+`motion` принимает [`MenuMotion`](../../../src/lib/menu/menu-motion.types.ts) и заменяет
 встроенную настройку для всех подменю. Входной `defaultMotions` замещается
 встроенной картой Ant Design. Обработчики получают элемент поверхности.
 `on*Prepare` может вернуть Promise, а `on*Start` и `on*Active` — CSS-строку или

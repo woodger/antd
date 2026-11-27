@@ -2,7 +2,7 @@
 // sorting keys and filters. Service columns occupy a physical sheet of the mesh only in the modes
 // of selection and disclosure of details. Ant Design 6.6.8, rc-table 1.11.1. MIT,
 // vendor/LICENSE.ant-design.
-import type { GridScreenMap } from './grid.types';
+import type { GridScreenMap } from './grid/grid.types';
 import type {
   TableColumn, TableColumnDefaults, TableColumnInput, TableColumnsType, TableFixed, TableKey
 } from './table.types';

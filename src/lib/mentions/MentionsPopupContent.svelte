@@ -4,7 +4,7 @@
   import { provideFormField } from '../form/form-context';
   import { provideFormItemStatus, useFormItemStatusContext } from '../form/form-item-status';
   import { provideFormFeedback } from '../form/form-feedback-context';
-  import { provideCompact } from '../space-compact-context';
+  import { provideCompact } from '../space/space-compact-context';
 
   let { popupRender, menu, info }: {
     popupRender: MentionsPopupRender;

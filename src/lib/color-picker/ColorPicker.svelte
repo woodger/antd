@@ -8,8 +8,8 @@
   import { provideZIndex, useZIndex } from '../z-index-context.svelte';
   import { useDesignTokenContext } from '../theme-context.svelte';
   import { useForm, useFormField } from '../form/form-context';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { connectPopup, getPopupActiveElement } from '../popup.dom';
   import { connectPopupPortal } from '../popup-portal.dom';
   import { getPopupAlignment, getPopupArrowStyle, type PopupFlipCache } from '../popup-position.engine';

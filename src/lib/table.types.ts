@@ -4,12 +4,12 @@ import type {
   AriaAttributes, HTMLAttributes, HTMLInputAttributes, HTMLTableAttributes, HTMLTdAttributes,
   HTMLThAttributes
 } from 'svelte/elements';
-import type { PaginationProps } from './Pagination.svelte';
+import type { PaginationProps } from './pagination/Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox/checkbox.types';
-import type { DropdownProps } from './dropdown.types';
+import type { DropdownProps } from './dropdown/dropdown.types';
 import type { SpinProps } from './spin.types';
-import type { GridBreakpoint } from './grid.types';
-import type { PaginationSlots } from './pagination.types';
+import type { GridBreakpoint } from './grid/grid.types';
+import type { PaginationSlots } from './pagination/pagination.types';
 import type { RadioChangeEvent } from './radio/radio.types';
 import type { TooltipProps } from './tooltip.types';
 import type { ComponentSize, RenderEmptyContent, TableLocale } from './types';

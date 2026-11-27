@@ -2,7 +2,7 @@
 // does not change the owner of the dialog or its contents.
 import { hashTokenString } from './theme-hash.engine';
 import type { AliasToken } from './theme-token.types';
-import type { GridBreakpoint } from './grid.types';
+import type { GridBreakpoint } from './grid/grid.types';
 import type { ModalWidth } from './modal.types';
 import type { InlineStyleLayer } from './inline-style.engine';
 

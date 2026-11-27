@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
-import type { GridResponsive } from './grid.types';
+import type { GridResponsive } from './grid/grid.types';
 
 export type DescriptionsContent = string | number | boolean | null | Snippet;
 export type DescriptionsCellSlots = Partial<Record<'label' | 'content', string>>;

@@ -1,7 +1,7 @@
 <script lang="ts">
   // Manages the Popover trigger and content. Focus, hover, and dismissal use the current open
   // state.
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from './space/NoCompactStyle.svelte';
   import { getAllContexts, onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';

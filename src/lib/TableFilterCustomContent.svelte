@@ -1,6 +1,6 @@
 <script lang="ts">
   // A custom Menu can select values while preserving Dropdown's focus and portal.
-  import { provideDropdownMenu, takeDropdownMenu } from './dropdown-menu-context';
+  import { provideDropdownMenu, takeDropdownMenu } from './dropdown/dropdown-menu-context';
   import type { TableColumn, TableFilterDropdownProps } from './table.types';
   import RenderContent from './RenderContent.svelte';
 

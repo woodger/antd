@@ -6,10 +6,10 @@
   // Adds a search button and event to Input. Search uses the field's current text.
   import Input from './Input.svelte';
   import Button from '../button/Button.svelte';
-  import SpaceCompact from '../SpaceCompact.svelte';
+  import SpaceCompact from '../space/SpaceCompact.svelte';
   import { useConfig } from '../config-context';
   import { useVariant } from '../variant.svelte';
-  import { useCompact } from '../space-compact-context';
+  import { useCompact } from '../space/space-compact-context';
   import { useForm, useFormField } from '../form/form-context';
   import { useComponentTheme } from '../theme-component.svelte';
   import { getInputSearchPrefixCss } from './input-search-prefix.engine';

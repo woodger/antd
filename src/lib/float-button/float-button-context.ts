@@ -1,0 +1,17 @@
+import { getContext, setContext } from 'svelte';
+import type { ButtonSlots } from '../button/button.types';
+import type { FloatButtonShape } from './float-button.types';
+export interface FloatButtonContext {
+  readonly prefixCls?: string;
+  readonly shape: FloatButtonShape;
+  readonly individual: boolean;
+  readonly classNames: ButtonSlots;
+  readonly styles: ButtonSlots;
+}
+const key = Symbol('ant-float-button');
+export function provideFloatButton(context: FloatButtonContext) {
+  setContext(key, context);
+}
+export function useFloatButton() {
+  return getContext<FloatButtonContext | undefined>(key);
+}

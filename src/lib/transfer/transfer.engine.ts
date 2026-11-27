@@ -2,7 +2,7 @@
 import type {
   TransferDirection, TransferKey, TransferRenderedItem, TransferRenderResult
 } from './transfer.types';
-import { getPaginationItems } from '../pagination.engine';
+import { getPaginationItems } from '../pagination/pagination.engine';
 
 // Receives only supported keys and reports no rowKey for the rest of the records.
 export function transferKey(record: object): TransferKey {

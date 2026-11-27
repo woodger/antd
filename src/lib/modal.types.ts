@@ -2,7 +2,7 @@ import type { Snippet } from 'svelte';
 import type { AriaAttributes, AriaRole, HTMLAttributes } from 'svelte/elements';
 import type { ButtonElementProps, ButtonType } from './button/button.types';
 import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
-import type { GridResponsive } from './grid.types';
+import type { GridResponsive } from './grid/grid.types';
 import type { GetContainer } from './types';
 
 export type ModalContent = string | number | boolean | null | Snippet;

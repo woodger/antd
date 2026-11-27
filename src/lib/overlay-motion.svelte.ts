@@ -2,8 +2,8 @@
 // owner, and changing the open or destroying the component cancels the outdated notification.
 import { tick } from 'svelte';
 import { on } from 'svelte/events';
-import { useMenuMotion } from './menu-motion.svelte';
-import type { MenuMotionEvent } from './menu-motion.types';
+import { useMenuMotion } from './menu/menu-motion.svelte';
+import type { MenuMotionEvent } from './menu/menu-motion.types';
 
 interface OverlayMotionInput {
   visible: boolean;

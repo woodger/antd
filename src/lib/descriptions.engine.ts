@@ -1,5 +1,5 @@
-import { gridResponsiveValue } from './grid.engine';
-import type { GridScreenMap } from './grid.types';
+import { gridResponsiveValue } from './grid/grid.engine';
+import type { GridScreenMap } from './grid/grid.types';
 import type { DescriptionsItem, DescriptionsProps } from './descriptions.types';
 
 export interface ResolvedDescriptionsItem extends Omit<DescriptionsItem, 'span'> {

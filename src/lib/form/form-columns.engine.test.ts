@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { resolveFormWrapperCol } from './form-columns.engine';
-import type { ColProps } from '../grid.types';
+import type { ColProps } from '../grid/grid.types';
 
 describe('resolveFormWrapperCol', () => {
   it.each([undefined, '', 'Name'])('keeps the configured columns for label=%s', (label) => {

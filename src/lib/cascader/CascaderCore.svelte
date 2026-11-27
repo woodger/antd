@@ -43,8 +43,8 @@
   import { useFormFeedback } from '../form/form-feedback-context';
   import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
   import CascaderPopupContent from './CascaderPopupContent.svelte';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { getSelectTagText } from '../select/select-tag-text.engine';
   import { connectPopup, getPopupActiveElement } from '../popup.dom';
   import { createPopupContainer } from '../popup-container.model.svelte.js';
@@ -57,7 +57,7 @@
   import RenderEmpty from '../RenderEmpty.svelte';
   import Empty from '../Empty.svelte';
   import Icon from '../Icon.svelte';
-  import NoCompactStyle from '../NoCompactStyle.svelte';
+  import NoCompactStyle from '../space/NoCompactStyle.svelte';
 
   let {
     panel = false,

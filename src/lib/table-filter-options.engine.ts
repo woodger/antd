@@ -1,6 +1,6 @@
 // Converts filter options to Menu items and nodes Tree. The representation keys are separated from
 // the filter values, including 0, '0' and false.
-import type { MenuItemType } from './menu.types';
+import type { MenuItemType } from './menu/menu.types';
 import type { TableFilterOption } from './table.types';
 
 export interface TableFilterNode {

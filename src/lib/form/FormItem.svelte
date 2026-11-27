@@ -18,10 +18,10 @@
   import { getFormFieldElement } from './form-field.dom';
   import { enUS, type RenderEmptyContent } from '../types';
   import RenderContent from '../RenderContent.svelte';
-  import Row from '../Row.svelte';
-  import Col from '../Col.svelte';
+  import Row from '../grid/Row.svelte';
+  import Col from '../grid/Col.svelte';
   import NoFormItemColumns from './NoFormItemColumns.svelte';
-  import type { ColProps } from '../grid.types';
+  import type { ColProps } from '../grid/grid.types';
   import { resolveFormWrapperCol } from './form-columns.engine';
   import type { FormFeedbackIcons, FormItemTooltip as FormItemTooltipContent } from './form.types';
   import type { FormValidateStatus } from './form-error-list.types';

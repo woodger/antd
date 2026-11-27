@@ -25,7 +25,7 @@ export type {
   ModalHolderProps
 } from './modal-confirm.types';
 export { getTableData } from './table.engine';
-export { getPaginationState } from './pagination.engine';
+export { getPaginationState } from './pagination/pagination.engine';
 export type {
   ImagePreviewGroupProps,
   ImagePreviewGroupConfig,
@@ -68,7 +68,7 @@ export type {
   AutoCompleteStyles,
   AutoCompleteSemanticInfo
 } from './auto-complete/auto-complete.types';
-export { default as Menu } from './Menu.svelte';
+export { default as Menu } from './menu/Menu.svelte';
 export type {
   MenuProps,
   MenuItemType,
@@ -97,8 +97,8 @@ export type {
   MenuHoverEventHandler,
   MenuClickInfo,
   MenuSelectInfo
-} from './menu.types';
-export type { MenuMotion, MenuMotionEvent, MenuMotionStyle } from './menu-motion.types';
+} from './menu/menu.types';
+export type { MenuMotion, MenuMotionEvent, MenuMotionStyle } from './menu/menu-motion.types';
 export { default as TreeSelect } from './tree-select/tree-select.component.js';
 export { default as TreeSelectTreeNode } from './tree-select/TreeSelectTreeNode.svelte';
 export {
@@ -276,9 +276,9 @@ export type {
   TextAreaSemantic,
   TextAreaChangeEvent
 } from './input/textarea.types';
-export { default as FloatButton } from './FloatButton.svelte';
-export { default as FloatButtonGroup } from './FloatButtonGroup.svelte';
-export { default as FloatButtonBackTop } from './FloatButtonBackTop.svelte';
+export { default as FloatButton } from './float-button/FloatButton.svelte';
+export { default as FloatButtonGroup } from './float-button/FloatButtonGroup.svelte';
+export { default as FloatButtonBackTop } from './float-button/FloatButtonBackTop.svelte';
 export type {
   FloatButtonProps,
   FloatButtonGroupProps,
@@ -292,7 +292,7 @@ export type {
   BackTopTarget,
   FloatButtonConfig,
   FloatButtonGroupConfig
-} from './float-button.types';
+} from './float-button/float-button.types';
 export { default as Timeline } from './Timeline.svelte';
 export type {
   TimelineProps,
@@ -303,7 +303,7 @@ export type {
   TimelinePlacement,
   TimelineSlots
 } from './timeline.types';
-export { default as Anchor } from './Anchor.svelte';
+export { default as Anchor } from './anchor/Anchor.svelte';
 export type {
   AnchorProps,
   AnchorItem,
@@ -313,13 +313,13 @@ export type {
   AnchorSlots,
   AnchorSemantic,
   AnchorConfig
-} from './anchor.types';
-export { default as Affix } from './Affix.svelte';
-export type { AffixProps, AffixConfig, AffixTarget, AffixUpdatePosition } from './affix.types';
-export { default as SpaceCompact } from './SpaceCompact.svelte';
-export { default as SpaceAddon } from './SpaceAddon.svelte';
-export type { SpaceCompactProps, SpaceCompactSize, SpaceAddonProps } from './space-compact.types';
-export { default as Space } from './Space.svelte';
+} from './anchor/anchor.types';
+export { default as Affix } from './affix/Affix.svelte';
+export type { AffixProps, AffixConfig, AffixTarget, AffixUpdatePosition } from './affix/affix.types';
+export { default as SpaceCompact } from './space/SpaceCompact.svelte';
+export { default as SpaceAddon } from './space/SpaceAddon.svelte';
+export type { SpaceCompactProps, SpaceCompactSize, SpaceAddonProps } from './space/space-compact.types';
+export { default as Space } from './space/Space.svelte';
 export type {
   SpaceProps,
   SpaceItem,
@@ -330,8 +330,8 @@ export type {
   SpaceSemanticInfo,
   SpaceSemantic,
   SpaceConfig
-} from './space.types';
-export { default as Breadcrumb } from './Breadcrumb.svelte';
+} from './space/space.types';
+export { default as Breadcrumb } from './breadcrumb/Breadcrumb.svelte';
 export type {
   BreadcrumbProps,
   BreadcrumbItem,
@@ -340,7 +340,7 @@ export type {
   BreadcrumbSlots,
   BreadcrumbSemantic,
   BreadcrumbConfig
-} from './breadcrumb.types';
+} from './breadcrumb/breadcrumb.types';
 export { default as Card } from './Card.svelte';
 export { default as CardGrid } from './CardGrid.svelte';
 export { default as CardMeta } from './CardMeta.svelte';
@@ -356,7 +356,7 @@ export type {
   CardMetaConfig,
   CardTabItem
 } from './card.types';
-export type { TabsContent, TabsExtraContent } from './tabs.types';
+export type { TabsContent, TabsExtraContent } from './tabs/tabs.types';
 export { default as Descriptions } from './Descriptions.svelte';
 export type {
   DescriptionsProps,
@@ -420,8 +420,8 @@ export type {
 export { default as Tooltip } from './tooltip.component';
 export { default as Popover } from './Popover.svelte';
 export { default as Popconfirm } from './popconfirm.component';
-export { default as Dropdown } from './Dropdown.svelte';
-export { default as Tabs } from './Tabs.svelte';
+export { default as Dropdown } from './dropdown/Dropdown.svelte';
+export { default as Tabs } from './tabs/Tabs.svelte';
 export { default as Collapse } from './Collapse.svelte';
 export { default as Drawer } from './Drawer.svelte';
 export { default as Alert } from './alert/alert.component';
@@ -439,7 +439,7 @@ export { default as SkeletonImage } from './SkeletonImage.svelte';
 export { default as SkeletonNode } from './SkeletonNode.svelte';
 export { default as Empty } from './empty.component';
 export { default as Result } from './result.component';
-export { default as Steps } from './Steps.svelte';
+export { default as Steps } from './steps/Steps.svelte';
 export { default as Tag } from './Tag.svelte';
 export { default as CheckableTag } from './CheckableTag.svelte';
 export { default as CheckableTagGroup } from './CheckableTagGroup.svelte';
@@ -447,17 +447,17 @@ export { default as Badge } from './Badge.svelte';
 export { default as BadgeRibbon } from './BadgeRibbon.svelte';
 export { default as Avatar } from './Avatar.svelte';
 export { default as AvatarGroup } from './AvatarGroup.svelte';
-export { default as Divider } from './Divider.svelte';
-export { default as Flex } from './Flex.svelte';
+export { default as Divider } from './divider/Divider.svelte';
+export { default as Flex } from './flex/Flex.svelte';
 export { default as Statistic } from './Statistic.svelte';
 export { default as Segmented } from './segmented/Segmented.svelte';
-export { default as Row } from './Row.svelte';
-export { default as Col } from './Col.svelte';
-export { default as Layout } from './Layout.svelte';
-export { default as LayoutHeader } from './LayoutHeader.svelte';
-export { default as LayoutContent } from './LayoutContent.svelte';
-export { default as LayoutFooter } from './LayoutFooter.svelte';
-export { default as LayoutSider } from './LayoutSider.svelte';
+export { default as Row } from './grid/Row.svelte';
+export { default as Col } from './grid/Col.svelte';
+export { default as Layout } from './layout/Layout.svelte';
+export { default as LayoutHeader } from './layout/LayoutHeader.svelte';
+export { default as LayoutContent } from './layout/LayoutContent.svelte';
+export { default as LayoutFooter } from './layout/LayoutFooter.svelte';
+export { default as LayoutSider } from './layout/LayoutSider.svelte';
 export type {
   LayoutProps,
   LayoutConfig,
@@ -465,9 +465,9 @@ export type {
   LayoutSiderProps,
   LayoutCollapseType,
   LayoutSiderSemanticSlots
-} from './layout.types';
+} from './layout/layout.types';
 export type { LayoutLocale } from './types';
-export { createBreakpoint } from './grid-breakpoint.model.svelte.js';
+export { createBreakpoint } from './grid/grid-breakpoint.model.svelte.js';
 export type {
   RowProps,
   ColProps,
@@ -479,7 +479,7 @@ export type {
   GridResponsive,
   GridGutter,
   GridGap
-} from './grid.types';
+} from './grid/grid.types';
 export type {
   SegmentedProps,
   SegmentedValue,
@@ -503,7 +503,7 @@ export type {
   StatisticSemanticInfo
 } from './statistic.types';
 export type { FlexProps, FlexComponentProps, FlexRootProps, FlexConfig, FlexAlign, FlexJustify, FlexGap }
-  from './flex.types';
+  from './flex/flex.types';
 export type {
   DividerProps,
   DividerConfig,
@@ -512,13 +512,13 @@ export type {
   DividerSize,
   DividerSemanticSlots,
   DividerSemanticInfo
-} from './divider.types';
+} from './divider/divider.types';
 export { default as Checkbox } from './checkbox/Checkbox.svelte';
 export { default as CheckboxGroup } from './checkbox/CheckboxGroup.svelte';
 export { default as Radio } from './radio/Radio.svelte';
 export { default as RadioGroup } from './radio/RadioGroup.svelte';
 export { default as Switch } from './switch/Switch.svelte';
-export { default as Pagination } from './Pagination.svelte';
+export { default as Pagination } from './pagination/Pagination.svelte';
 export { default as Table } from './table.component';
 export { default as Select } from './select/Select.svelte';
 export { default as Modal } from './modal.component';
@@ -627,7 +627,7 @@ export type {
   DropdownArrowOptions,
   DropdownSlots,
   DropdownSemantic
-} from './dropdown.types';
+} from './dropdown/dropdown.types';
 export type {
   TabsProps,
   TabsItem,
@@ -649,8 +649,8 @@ export type {
   TabsSlots,
   TabsSemantic,
   TabsSemanticProps
-} from './tabs.types';
-export { getTabsItemId } from './tabs.engine';
+} from './tabs/tabs.types';
+export { getTabsItemId } from './tabs/tabs.engine';
 export type {
   TabsEditableConfig,
   TabsTabAttributes,
@@ -658,13 +658,13 @@ export type {
   TabsTabBarProps,
   TabsDefaultTabBar,
   TabsRenderTabBar
-} from './tabs-nav.types';
+} from './tabs/tabs-nav.types';
 export type {
   TabsAnimatedConfig,
   TabsPaneMotion,
   TabsMotionEvent,
   TabsMotionName
-} from './tabs-motion.types';
+} from './tabs/tabs-motion.types';
 export type {
   CollapseProps,
   CollapseItemEvents,
@@ -792,7 +792,7 @@ export type {
   StepsOrientation,
   StepsSize,
   StepsContent
-} from './steps.types';
+} from './steps/steps.types';
 export type {
   StepsDataItem,
   StepsDataContent,
@@ -801,7 +801,7 @@ export type {
   StepsType,
   StepsIconInfo,
   StepsIconRender
-} from './steps-expanded.types';
+} from './steps/steps-expanded.types';
 export type { StepsLocale } from './types';
 export type {
   TagProps,
@@ -909,7 +909,7 @@ export type {
   SwitchSemantic,
   SwitchConfig
 } from './switch/switch.types';
-export type { PaginationProps } from './Pagination.svelte';
+export type { PaginationProps } from './pagination/Pagination.svelte';
 export type {
   PaginationComponentConfig,
   PaginationContent,
@@ -919,7 +919,7 @@ export type {
   PaginationItemInfo,
   PaginationSizeChangerInfo,
   PaginationSizeChangerProps
-} from './pagination.types';
+} from './pagination/pagination.types';
 export type {
   TableProps,
   TableColumn,
@@ -1107,7 +1107,7 @@ export type {
   BorderBeamColor,
   BorderBeamGradient
 } from './border-beam.types';
-export { default as Masonry } from './Masonry.svelte';
+export { default as Masonry } from './masonry/Masonry.svelte';
 export type {
   MasonryProps,
   MasonryItemType,
@@ -1117,8 +1117,8 @@ export type {
   MasonryConfig,
   MasonrySemantic,
   MasonrySemanticSlots
-} from './masonry.types';
-export { default as Splitter } from './Splitter.svelte';
+} from './masonry/masonry.types';
+export { default as Splitter } from './splitter/Splitter.svelte';
 export type {
   SplitterProps,
   SplitterPanelProps,
@@ -1130,7 +1130,7 @@ export type {
   SplitterSemantic,
   SplitterClassSlots,
   SplitterStyleSlots
-} from './splitter.types';
+} from './splitter/splitter.types';
 export { default as QRCode } from './QRCode.svelte';
 export { default as RadioButton } from './radio/RadioButton.svelte';
 export type { RadioButtonProps } from './radio/radio.types';

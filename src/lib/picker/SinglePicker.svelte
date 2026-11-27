@@ -29,15 +29,15 @@
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';
   import FormFeedbackIcon from '../form/FormFeedbackIcon.svelte';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { getPopupActiveElement } from '../popup.dom';
   import {
     createPickerPopup, focusPickerPanel, keepPickerEditorFocus,
     preservePickerPanelFocus, retainPickerReplacementFocus
   } from './picker-popup.model.svelte.js';
   import { connectPickerPopup } from './picker-popup.dom';
-  import NoCompactStyle from '../NoCompactStyle.svelte';
+  import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import PickerConfirmButton from './PickerConfirmButton.svelte';
   import PickerEditor from './PickerEditor.svelte';
   import PickerPanelReplacement from './PickerPanelReplacement.svelte';

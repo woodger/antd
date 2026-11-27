@@ -1,7 +1,7 @@
 # Masonry
 
 Masonry размещает элементы в колонках с учётом их высоты. Props, semantic
-callbacks и тип данных описаны в [исходных объявлениях](../../../src/lib/masonry.types.ts).
+callbacks и тип данных описаны в [исходных объявлениях](../../../src/lib/masonry/masonry.types.ts).
 
 ```svelte
 <script lang="ts">

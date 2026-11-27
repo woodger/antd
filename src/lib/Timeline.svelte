@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Steps from './Steps.svelte';
-  import { setStepsComposition } from './steps-composition-context';
+  import Steps from './steps/Steps.svelte';
+  import { setStepsComposition } from './steps/steps-composition-context';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { mergeComponentSemantics } from './semantic-style.engine';
   import { getTimelinePrefixCss } from './timeline-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { timelineItems, timelineLayoutAlternate, timelineMode } from './timeline.engine';
-  import type { StepsProps } from './steps.types';
+  import type { StepsProps } from './steps/steps.types';
   import type { TimelineProps, TimelineSlots } from './timeline.types';
   let {
     items = [],

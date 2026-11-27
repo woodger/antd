@@ -1,5 +1,5 @@
 import type { CardContent, CardProps } from './card.types';
-import type { TabsItem } from './tabs.types';
+import type { TabsItem } from './tabs/tabs.types';
 
 // Keeps 0 as Card content and drops empty values.
 export function cardHasContent(value: CardContent | undefined): boolean {

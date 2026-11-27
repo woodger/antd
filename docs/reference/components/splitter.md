@@ -2,7 +2,7 @@
 
 Splitter поддерживает размеры панелей, drag/lazy, collapse и оформление Ant Design.
 Точные Props и callbacks — в
-[исходных объявлениях](../../../src/lib/splitter.types.ts).
+[исходных объявлениях](../../../src/lib/splitter/splitter.types.ts).
 
 ```svelte
 <script lang="ts">

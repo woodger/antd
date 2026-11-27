@@ -2,7 +2,7 @@
   // The new owner mounts its own Snippet with its logical context. The surface stays shared.
   import { setContext, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
-  import { provideCompact } from './space-compact-context';
+  import { provideCompact } from './space/space-compact-context';
   import { isolateTooltipUnique } from './tooltip-unique.model.svelte';
   import type { TooltipContent } from './tooltip.types';
 

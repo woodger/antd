@@ -7,8 +7,8 @@
   import { useComponentTheme } from '../theme-component.svelte';
   import { getInputNumberPrefixCss } from './input-number-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { useForm, useFormField } from '../form/form-context';
   import { useFormItemStatusContext } from '../form/form-item-status';
   import { useFormFeedback } from '../form/form-feedback-context';

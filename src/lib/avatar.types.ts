@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { GridResponsive } from './grid.types';
+import type { GridResponsive } from './grid/grid.types';
 
 export type AvatarShape = 'circle' | 'square';
 /** The map uses the largest matching breakpoint. With no match, CSS defaults apply. */

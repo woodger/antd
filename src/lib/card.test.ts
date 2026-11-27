@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import Card from './Card.svelte';
 import CardGrid from './CardGrid.svelte';
 import CardMeta from './CardMeta.svelte';
-import Tabs from './Tabs.svelte';
+import Tabs from './tabs/Tabs.svelte';
 import { cardTabItems } from './card.engine';
 
 describe('Card SSR', () => {

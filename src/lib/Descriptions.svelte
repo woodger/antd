@@ -3,10 +3,10 @@
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
-  import { getGridMediaQueries } from './grid.engine';
+  import { getGridMediaQueries } from './grid/grid.engine';
   import { getDescriptionsPrefixCss } from './descriptions-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import { createBreakpoint } from './grid-breakpoint.model.svelte.js';
+  import { createBreakpoint } from './grid/grid-breakpoint.model.svelte.js';
   import { descriptionsColumn, descriptionsItems, descriptionsRows } from './descriptions.engine';
   import { descriptionsSemantics } from './descriptions-semantic.engine';
   import DescriptionsCell from './DescriptionsCell.svelte';

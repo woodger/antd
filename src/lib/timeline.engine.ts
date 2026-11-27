@@ -1,4 +1,4 @@
-import type { StepsDataItem } from './steps-data.engine';
+import type { StepsDataItem } from './steps/steps-data.engine';
 import type { TimelineContent, TimelineItem, TimelineMode } from './timeline.types';
 export function timelineMode(mode?: TimelineMode): 'start' | 'end' | 'alternate' {
   return mode === 'alternate' || mode === 'end' ? mode : 'start';

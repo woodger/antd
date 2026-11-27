@@ -8,9 +8,9 @@
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
-  import { createBreakpoint } from './grid-breakpoint.model.svelte';
-  import { getGridMediaQueries } from './grid.engine';
-  import { getPaginationState } from './pagination.engine';
+  import { createBreakpoint } from './grid/grid-breakpoint.model.svelte';
+  import { getGridMediaQueries } from './grid/grid.engine';
+  import { getPaginationState } from './pagination/pagination.engine';
   import {
     getTableColumnLayout, getTableColumnOrder, resolveTableColumns, type TableHeading, type TableLeaf,
     type TableServiceColumn
@@ -69,7 +69,7 @@
     TableSortOrder
   } from './table.types';
   import Icon from './Icon.svelte';
-  import Pagination from './Pagination.svelte';
+  import Pagination from './pagination/Pagination.svelte';
   import TableFilter from './TableFilter.svelte';
   import TableSortButton from './TableSortButton.svelte';
   import TableSelectionControl from './TableSelectionControl.svelte';

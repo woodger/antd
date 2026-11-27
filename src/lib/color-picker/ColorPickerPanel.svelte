@@ -2,11 +2,11 @@
   import { provideFormField } from '../form/form-context';
   import { provideFormItemStatus, useFormItemStatusContext } from '../form/form-item-status';
   import { provideFormFeedback } from '../form/form-feedback-context';
-  import { provideCompact } from '../space-compact-context';
+  import { provideCompact } from '../space/space-compact-context';
   import type { ColorPickerPanelProps } from './color-picker.types';
   import ColorPickerPicker from './ColorPickerPicker.svelte';
   import ColorPickerPresets from './ColorPickerPresets.svelte';
-  import Divider from '../Divider.svelte';
+  import Divider from '../divider/Divider.svelte';
 
   let { activeIndex = $bindable(0), dragging = $bindable(false), ...props }:
     ColorPickerPanelProps = $props();

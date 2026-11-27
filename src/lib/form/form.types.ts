@@ -2,7 +2,7 @@ import type { Snippet } from 'svelte';
 import type { HTMLFormAttributes } from 'svelte/elements';
 import type { FormValidationError } from './FormValidationError';
 import type { FormInstance } from './form.model.svelte.js';
-import type { ColProps } from '../grid.types';
+import type { ColProps } from '../grid/grid.types';
 import type { FormValues } from './validation.engine';
 import type { ComponentSize, RenderEmptyContent, Variant } from '../types';
 import type { Options, ScrollAction } from '../vendor/compute-scroll-into-view';

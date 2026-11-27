@@ -3,7 +3,7 @@ import type { FormFieldRegistration } from './form-internal';
 import type { FormFeedbackIcons, FormRequiredMark, FormSemanticSlots, FormTooltipProps } from './form.types';
 import type { FormValidateStatus } from './form-error-list.types';
 import type { FormFieldMeta } from './form.model.svelte';
-import type { ColProps } from '../grid.types';
+import type { ColProps } from '../grid/grid.types';
 import type { NamePath } from './form-store.engine';
 import type { Variant } from '../types';
 import { useConfig } from '../config-context';

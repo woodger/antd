@@ -7,8 +7,8 @@
   import { useConfig } from '../config-context';
   import { useComponentTheme } from '../theme-component.svelte';
   import { useWave } from '../wave.svelte';
-  import { useCompact } from '../space-compact-context';
-  import { compactClasses } from '../space-compact.engine';
+  import { useCompact } from '../space/space-compact-context';
+  import { compactClasses } from '../space/space-compact.engine';
   import { useForm } from '../form/form-context';
   import { buttonAppearance, buttonHasContent, buttonLoading, buttonText } from './button.engine';
   import { connectButtonText } from './button.dom';

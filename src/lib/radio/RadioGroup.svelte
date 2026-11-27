@@ -6,7 +6,7 @@
   import { useForm, useFormField } from '../form/form-context';
   import { provideRadioGroup } from './radio-context';
   import { getRadioOptions } from './radio.engine';
-  import { spaceOrientation } from '../space.engine';
+  import { spaceOrientation } from '../space/space.engine';
   import { getRadioPrefixCss } from './radio-prefix.engine';
   import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
   import type { RadioChangeEvent, RadioGroupProps, RadioValue } from './radio.types';

@@ -1,15 +1,15 @@
 <script lang="ts" generics="RecordType extends object">
   import { untrack } from 'svelte';
   import type { Snippet } from 'svelte';
-  import type { DropdownItem } from '../dropdown.types';
+  import type { DropdownItem } from '../dropdown/dropdown.types';
   import type {
     TransferListProps, TransferListBodyProps, TransferSearchOption, TransferContent
   } from './transfer.types';
   import { transferDisabled, transferKey, transferRender } from './transfer.engine';
-  import { getPaginationState } from '../pagination.engine';
+  import { getPaginationState } from '../pagination/pagination.engine';
   import TransferCheckbox from './TransferCheckbox.svelte';
   import TransferPagination from './TransferPagination.svelte';
-  import Dropdown from '../Dropdown.svelte';
+  import Dropdown from '../dropdown/Dropdown.svelte';
   import Input from '../input/Input.svelte';
   import Icon from '../Icon.svelte';
   import RenderContent from '../RenderContent.svelte';

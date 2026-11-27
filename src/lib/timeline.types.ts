@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'svelte/elements';
-import type { StepsDataContent, StepsItemSlots, StepsSemanticSlots } from './steps-data.engine';
+import type { StepsDataContent, StepsItemSlots, StepsSemanticSlots } from './steps/steps-data.engine';
 export type TimelineContent = StepsDataContent;
 export type TimelinePlacement = 'start' | 'end';
 export type TimelineMode = TimelinePlacement | 'alternate';

@@ -1,7 +1,7 @@
 <script lang="ts">
   // Coordinates Drawer's native dialog, mask, and content visibility. Close requests go through the
   // owner's callbacks.
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from './space/NoCompactStyle.svelte';
   import DrawerPanel from './DrawerPanel.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getDrawerPrefixCss } from './drawer-prefix.engine';

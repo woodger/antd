@@ -20,7 +20,7 @@
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useZIndex } from './z-index-context.svelte';
-  import NoCompactStyle from './NoCompactStyle.svelte';
+  import NoCompactStyle from './space/NoCompactStyle.svelte';
   import ImagePreviewIcon from './ImagePreviewIcon.svelte';
 
   let {
