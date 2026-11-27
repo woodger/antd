@@ -7,6 +7,7 @@ import type {
 import type { PickerModeFooter } from './picker-components.types';
 import type { PickerLocale } from './picker-locale.types';
 import type { InputContent } from './input.types';
+import type { TimeRangePickerProps } from './time-range-picker.types';
 
 export type TimePickerUnit = 'hour' | 'minute' | 'second' | 'millisecond';
 export type TimePickerColumnType = TimePickerUnit | 'meridiem';
@@ -56,16 +57,23 @@ export interface TimePickerSlots {
 export type TimePickerSemantic<DateType extends object = Dayjs> = TimePickerSlots
   | ((info: { props: TimePickerProps<'time', DateType>; }) => TimePickerSlots | undefined);
 
-/**
- * The component config object is replaced entirely in nested ConfigProvider. The overall semantic
- * callback gets range props at TimeRangePicker runtime as upstream.
- */
+type TimePickerOwnerProps<DateType extends object> =
+  | TimePickerProps<'time', DateType>
+  | TimePickerMultipleProps<DateType>
+  | TimeRangePickerProps<'time', DateType>;
+
+/** A provider can serve single, multiple and range pickers using different date adapters. */
+type TimePickerConfigSemantic = TimePickerSlots | (<DateType extends object>(
+  info: { props: TimePickerOwnerProps<DateType> }
+) => TimePickerSlots | undefined);
+
+/** A nested ConfigProvider replaces this object. Each picker passes its own props to callbacks. */
 export interface TimePickerConfig {
   class?: string;
   style?: string;
   variant?: DatePickerProps['variant'];
-  classNames?: TimePickerSemantic;
-  styles?: TimePickerSemantic;
+  classNames?: TimePickerConfigSemantic;
+  styles?: TimePickerConfigSemantic;
   suffixIcon?: TimePickerContent | true;
   allowClear?: boolean | { clearIcon?: TimePickerContent; };
 }

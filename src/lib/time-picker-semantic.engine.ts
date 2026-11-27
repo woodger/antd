@@ -35,17 +35,24 @@ export function mergePickerSlots(values: (TimePickerSlots | undefined)[], separa
 type SlotOptions<Props extends object> = TimePickerSlots
   | ((info: { props: Props; }) => TimePickerSlots | undefined);
 
-/** Reads the owner's provider and slots with one shot of props. */
+interface AppearanceConfig<Props extends object> {
+  classNames?: SlotOptions<Props>;
+  styles?: SlotOptions<Props>;
+  style?: string;
+}
+
+/** Merges the provider and local slots against the props of the picker being rendered. */
 function mergeTimePickerAppearance<Props extends object>(
-  props: Props, config: TimePickerConfig | undefined,
-  localClasses: SlotOptions<Props> | undefined, localStyles: SlotOptions<Props> | undefined
+  props: Props,
+  config: AppearanceConfig<NoInfer<Props>> | undefined,
+  localClasses: SlotOptions<Props> | undefined,
+  localStyles: SlotOptions<Props> | undefined
 ) {
-  /** Performs callback on the actual props with the date type of the current adapter. */
+  /** Each callback receives the same props for this pass through the style layers. */
   const resolve = (value: SlotOptions<Props> | undefined) =>
     typeof value === 'function' ? value({ props }) : value;
-  // The provider is divided between pickers of different adapters and sizes of choice.
-  const providerClasses = config?.classNames as SlotOptions<Props> | undefined;
-  const providerStyles = config?.styles as SlotOptions<Props> | undefined;
+  const providerClasses = config?.classNames;
+  const providerStyles = config?.styles;
 
   return {
     classes: mergePickerSlots([resolve(providerClasses), resolve(localClasses)], ' '),

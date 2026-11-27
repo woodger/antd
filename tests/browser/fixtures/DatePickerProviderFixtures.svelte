@@ -46,7 +46,7 @@
     class?: string;
     allowClear?: DatePickerAllowClear;
     value?: unknown;
-    defaultValue?: Dayjs | null | readonly (Dayjs | null | undefined)[];
+    defaultValue?: unknown;
   };
 
   // Parameter URL transmits the profile of independent measurement to the browser stand.
@@ -79,6 +79,15 @@
   let changes = $state(0);
   let nativeElement = $state<HTMLDivElement>();
 
+  // The fixture mounts Dayjs pickers. An unexpected adapter value must fail the observation.
+  function formatDefaultDate(value: unknown): string | null {
+    if (value == null) return null;
+    if (!dayjs.isDayjs(value)) {
+      throw new TypeError('Expected a Dayjs default value in the provider fixture');
+    }
+    return value.format();
+  }
+
   // Retains different public arguments for a single transition, excluding call repetitions.
   function record(owner: AppearanceOwner, role: 'classNames' | 'styles', props: ReportedProps) {
     const fields = ['size', 'disabled', 'status', 'variant', 'picker', 'class', 'allowClear'] as const;
@@ -90,8 +99,9 @@
       return [key, { own: Object.hasOwn(props, field), value: normalized }];
     }));
     const initial = props.defaultValue;
-    const value = dayjs.isDayjs(initial) ? initial.format()
-      : initial?.map(date => date?.format() ?? null) ?? null;
+    const value = Array.isArray(initial)
+      ? initial.map(formatDefaultDate)
+      : formatDefaultDate(initial);
     const event = { owner, role, props: entries, hasValue: Object.hasOwn(props, 'value'), value };
 
     events.set(JSON.stringify(event), event);

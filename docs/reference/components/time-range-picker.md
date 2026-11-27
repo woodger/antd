@@ -57,9 +57,11 @@ icons/allowClear и semantic classNames/styles; ConfigProvider.rangePicker да�
 variant, separator, class и обычный style. TimePicker.style/class/variant
 на range-обёртку не переносятся. Вложенный rangePicker config заменяется целиком.
 Semantic callback выполняется в одном слое с разрешёнными size/disabled и исходным
-variant. Локальный callback типизирован TimeRangePickerProps; общий timePicker
-callback получает range props в runtime, как в upstream, поэтому перед работой
-с value в нём нужна проверка Array.isArray. Приоритет root styles: timePicker
+variant. Локальный callback типизирован TimeRangePickerProps. Общие `classNames`
+и `styles` получают props одиночного пикера, диапазона или множественного выбора.
+Проверяйте массив через `Array.isArray`. Если нужны методы Dayjs, проверьте
+саму дату через `dayjs.isDayjs`, поскольку фабрика может использовать другой адаптер.
+Приоритет root styles: timePicker
 styles.root → rangePicker style → local styles.root → local style.
 
 Prefix/icons, cellRender с info.range и originNode, panelRender, presets и footer
