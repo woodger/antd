@@ -13,129 +13,154 @@
 </Pagination>
 ```
 
-`total` по умолчанию равен 0. `current` и `pageSize` поддерживают привязку;
-для отдельных controls доступны `defaultCurrent=1` и `defaultPageSize=10`.
-Начальные значения читаются один раз. При привязке задавайте их у владельца.
+`total` defaults to 0. `current` and `pageSize` support binding.
+Standalone controls can use `defaultCurrent=1` and
+`defaultPageSize=10`. Initial values are read once. With binding, set
+them in the owner.
 
-Переход вызывает `onChange(page, pageSize)`. Повторное нажатие текущей страницы
-не вызывает событие. Смена размера сначала вызывает
-`onShowSizeChange(previousCurrent, pageSize)`, затем
-`onChange(clampedCurrent, pageSize)`, сохраняя номер страницы в допустимых пределах.
-Callback получает номера с учётом отображаемого диапазона.
+Navigating calls `onChange(page, pageSize)`. Clicking the current
+page again emits no event. Changing the size calls
+`onShowSizeChange(previousCurrent, pageSize)` first and then
+`onChange(clampedCurrent, pageSize)`, keeping the page within bounds.
+Callbacks receive page numbers that account for the displayed range.
 
-Отображаемая страница ограничена диапазоном `1…ceil(total / pageSize)`.
-Изменение props, включая уменьшение `total`, само не записывает исправленное
-значение владельцу и не вызывает callbacks. Для пустой коллекции отображается
-страница 1 и диапазон `[0, 0]`; `hideOnSinglePage` скрывает навигацию.
-У пустой коллекции числовая кнопка отключена и не помечена active, как в upstream.
-Дробные значения округляются вниз, total ограничен снизу нулём, current и
-pageSize — единицей, все значения — сверху `Number.MAX_SAFE_INTEGER`.
-Для NaN и бесконечных значений используются defaults 0, 1 и 10.
-Список номеров и переходов содержит не более девяти элементов независимо от total.
-Расчёт окон и jump boundaries перенесён из @rc-component/pagination 1.4.0:
-при двух jump-кнопках между ними остаются три числовые кнопки, включая текущую.
-`showLessItems` уменьшает buffer и шаг jump с 5 до 3; `showPrevNextJumpers` скрывает jumps.
+The displayed page is clamped to `1…ceil(total / pageSize)`. Prop
+updates, including a reduced `total`, do not write the corrected value
+back to the owner or call callbacks. An empty collection displays page
+1 and range `[0, 0]`. `hideOnSinglePage` hides navigation. In the empty
+case the number button is disabled and not marked active, as in
+upstream. Fractions are rounded down. `total` has a minimum of 0,
+`current` and `pageSize` have a minimum of 1, and all three are capped
+at `Number.MAX_SAFE_INTEGER`. `NaN` and infinite values use defaults of
+0, 1, and 10 respectively. The page and navigation list contains at
+most nine items regardless of `total`. The page windows and jump
+boundaries come from `@rc-component/pagination` 1.4.0. With two jump
+buttons, three number buttons remain between them, including the
+current page. `showLessItems` reduces the buffer and jump step from 5 to
+3. `showPrevNextJumpers` controls jump visibility.
 
-Выбор размера автоматически показывается при `total > 50`; это меняется через
-`showSizeChanger`. `pageSizeOptions` по умолчанию равен `[10, 20, 50, 100]`.
-Допустимы положительные целые безопасные числа; дубликаты удаляются, варианты
-сортируются, текущий размер добавляется в список. `showTotal` получает
-нормализованный total и диапазон записей с нумерацией от 1.
-На узком экране элементы переносятся на следующую строку, а выбор размера
-остаётся доступным.
+The size changer appears automatically at `total > 50` and can be
+overridden by `showSizeChanger`. `pageSizeOptions` defaults to
+`[10, 20, 50, 100]`. Positive safe integers are accepted. Duplicates
+are removed, options are sorted, and the current size is added.
+`showTotal` receives normalized `total` and the 1-based item range.
+On a narrow screen, items wrap and the size changer stays available.
 
-`simple=true` показывает редактируемый current/total. Enter и blur подтверждают ввод,
-ArrowUp уменьшает страницу, ArrowDown увеличивает. Объект `{ readOnly: true }`
-сохраняет counter без input. Для пустой коллекции simple counter равен 1/0,
-как в закреплённой версии. Незавершённый ввод сохраняется при внешнем изменении
-total/pageSize, пока отображаемая current не изменилась. Выбор размера сбрасывает
-draft к отображаемой странице. `showQuickJumper=true` добавляет ввод цифр: Enter и blur
-за пределами paging controls переходят на указанную страницу. Объект
-`{ goButton: true }` добавляет подтверждение и отключает переход по blur.
-Вместо true у goButton допустим текст/snippet. Quick jumper доступен и в simple mode.
-Его кнопка сначала подтверждает simple input, затем значение quick jumper; blur
-simple input сохраняет исходное поведение подтверждения. Для одной страницы
-quick jumper и его кнопка скрыты. Вложенный в quick jumper React li заменён на span
-с тем же классом, чтобы сохранить валидную HTML-структуру; подтверждение — native button.
+`simple=true` shows an editable current/total counter. Enter and blur
+commit the input. ArrowUp decreases the page, and ArrowDown increases
+it. `{ readOnly: true }` retains the counter without an input. With an
+empty collection, the simple counter is 1/0 as in the pinned version.
+Draft input survives external `total` and `pageSize` changes as long
+as the displayed current page is unchanged. Selecting a size resets
+the draft to the displayed page. `showQuickJumper=true` adds a numeric
+input. Enter and blur outside the paging controls navigate to the
+entered page. `{ goButton: true }` adds confirmation and disables
+navigation on blur. `goButton` also accepts text or a Snippet. The quick
+jumper is available in simple mode. Its button commits the simple
+input first and then the quick-jump value. Blurring the simple input
+retains its usual commit behavior. The quick jumper and its button
+are hidden for a single page. The nested React `li` in the jumper is
+a `span` with the same class in Svelte for valid HTML, and confirmation
+uses a native button.
 
-`align` принимает start/center/end. `showTitle=false` убирает tooltip titles,
-сохраняя доступные имена. `responsive` на XS добавляет class mini при
-отсутствии явного size. В CSS Ant Design 6.6.8 этот класс сам не меняет высоту:
-её меняет size=small. Это поведение проверено на исходной React-сборке и сохранено.
-`size` и ConfigProvider.componentSize по-прежнему задают реальные размеры.
+`align` accepts `start`, `center`, and `end`. `showTitle=false` removes
+tooltip titles while retaining accessible names. At XS, `responsive`
+adds the `mini` class if there is no explicit size. In Ant Design 6.6.8
+CSS, height changes come from `size=small`. The `mini` class alone leaves
+height unchanged. This was verified against the original React build
+and preserved. `size` and `ConfigProvider.componentSize` still control
+the actual dimensions.
 
-Responsive Pagination читает глобальный `theme.token.screenXSMax`; явный size
-сохраняет приоритет. Пороги валидируются и при SSR, включая responsive=false,
-как в useBreakpoint исходника. Смена токенов заменяет queries, сохраняя текущую
-страницу и quick-jump draft/selection/focus. Наблюдение stale Source subscriptions
-и fresh public counterpart записаны отдельно. [Browser-проверки](../../../tests/browser/config-provider/responsive-controls.spec.ts)
-охватывают также Masonry columns/gutter; [SSR](../../../tests/package/config-provider/responsive-controls.ssr.test.ts)
-сохраняет исходные defaults и проверяет порядок порогов.
+Responsive Pagination reads the global `theme.token.screenXSMax`.
+Explicit size takes precedence. Breakpoint order is validated during
+SSR even with `responsive=false`, as in upstream `useBreakpoint`.
+Token changes replace queries while preserving the current page and
+quick-jump draft, selection, and focus. The stale upstream subscription
+and fresh public comparison are recorded separately. Browser tests
+also cover Masonry columns and gutters, and SSR preserves the original
+defaults and checks threshold order. [Browser tests](../../../tests/browser/config-provider/responsive-controls.spec.ts) ·
+[SSR tests](../../../tests/package/config-provider/responsive-controls.ssr.test.ts)
 
-`itemRender` — snippet с `(page, type, originalElement, info)`. OriginalElement
-рисует готовый native button; info содержит disabled/active/label/title/onClick
-для собственного native control. Это замена ReactNode и cloneElement/LI click.
-`prevIcon/nextIcon/jumpPrevIcon/jumpNextIcon` принимают текст или декоративный snippet.
-Стандартные jump/ellipsis icons перенесены из @ant-design/icons-svg 4.6.0
-под существующей [MIT-лицензией](../../../src/lib/vendor/LICENSE.ant-design-icons).
+`itemRender` is a Snippet receiving
+`(page, type, originalElement, info)`. `originalElement` renders a ready
+native button. `info` holds `disabled`, `active`, `label`, `title`, and
+`onClick` for a custom native control. This replaces ReactNode and
+`cloneElement` or list item click handling. `prevIcon`, `nextIcon`,
+`jumpPrevIcon`, and `jumpNextIcon` accept text or a decorative Snippet.
+The default jump and ellipsis icons come from `@ant-design/icons-svg`
+4.6.0 under the existing license. [MIT license](../../../src/lib/vendor/LICENSE.ant-design-icons)
 
-`showSizeChanger` допускает boolean или поддержанные Select props. Собственный
-onChange вызывается после onShowSizeChange и основного onChange Pagination.
-Размер Pagination имеет приоритет над size из Select props.
-`components.sizeChanger` получает snippet с value/disabled/class/options/onChange.
-Не все расширенные React Select props уже существуют у Svelte Select.
+`showSizeChanger` accepts a boolean or supported Select props. Its
+custom `onChange` runs after `onShowSizeChange` and Pagination's main
+`onChange`. Pagination's size takes precedence over size in Select
+props. `components.sizeChanger` receives a Snippet with `value`,
+`disabled`, `class`, `options`, and `onChange`. Some advanced React
+Select props are still pending in Svelte Select.
 
-ConfigProvider.pagination задаёт class/style, semantic classNames/styles,
-showSizeChanger и totalBoundaryShowSizeChanger. Локальные настройки имеют приоритет.
-Semantic callbacks получают исходные props и явный resolved size; внутренние
-default values не подставляются вместо отсутствующих исходных props.
-Semantic root соответствует native nav; прежний class остаётся на ul.
-Root style перекрывает styles.root; classNames.item/styles.item относятся к страницам,
-prev/next и simple counter, исключая jump controls, как в upstream.
-`locale` принимает исходные snake_case aliases; locale.page задаёт suffix quick jumper.
-Существующий config.locale.pagination.page остаётся доступным именем страницы.
+`ConfigProvider.pagination` sets `class`, `style`, semantic
+`classNames` and `styles`, `showSizeChanger`, and
+`totalBoundaryShowSizeChanger`. Local settings take precedence.
+Semantic callbacks receive the original props and explicit resolved
+size. Omitted original props stay omitted. The semantic root is the
+native `nav`, and the existing `class` stays on the `ul`. Root
+`style` overrides `styles.root`. `classNames.item` and `styles.item` apply
+to pages, previous and next, and the simple counter, excluding jump
+controls as upstream. `locale` accepts the original snake_case aliases.
+`locale.page` sets the quick jumper suffix.
+`config.locale.pagination.page` remains the accessible page name.
 
-Сохранены отличия прежнего Svelte API: bind:current/pageSize, нормализация чисел,
-сортировка/удаление повторов размеров и доступный size changer на XS. Новые строковые
-pageSizeOptions сначала преобразуются в числа. В React options могут сохранять
-исходный порядок, а вся options area скрывается на XS. Quick jumper следует
-исходному CSS и скрывается на XS. Для controlled compositing с отказом владельца
-используйте functional bindings с getter и обработчики onChange.
+The existing Svelte API retains `bind:current` and `bind:pageSize`,
+number normalization, sorted and deduplicated sizes, and an accessible
+size changer at XS. String `pageSizeOptions` are converted to numbers
+first. React options can retain their input order and the entire
+options area is hidden at XS. The quick jumper follows upstream CSS
+and is hidden at XS. Use function bindings with a getter and
+`onChange` handlers for controlled composition that can reject updates.
 
-PrefixCls задаёт локальный namespace Pagination; пустая строка наследует
-ConfigProvider.prefixCls. 111 исходных правил styles/media изолированы по local/global
-prefix, без четырёх общих Input Group rules. Частные item-size-actual и
-item-spacing-actual следуют общему namespace с исходным удалением точек;
-публичные token variables сохраняются. Смена префикса сохраняет current/pageSize,
-DOM активного пункта и jumper, его draft/focus/selection и callbacks.
-Пункты сохраняют `border-box` и размер темы, включая 28px для medium в native compact.
-Source button Arial и [public itemRender counterparts с fontFamily:inherit](../../../tests/browser/fixtures/ant-design-pagination-prefix-reference.json)
-разделены: прежняя Native typography, active colors и wireframe сохранены.
+`prefixCls` sets the local Pagination namespace. The empty string
+inherits `ConfigProvider.prefixCls`. The 111 original CSS and media
+rules are scoped to the local or global prefix, excluding four shared
+Input Group rules. Private `item-size-actual` and `item-spacing-actual`
+variables follow the shared namespace with dots removed as upstream.
+Public token variables retain their names. Changing the prefix
+preserves `current`, `pageSize`, the active item's DOM, the jumper
+and its draft, focus and selection, and callbacks. Items keep
+`border-box` and the theme size, including 28px for medium in native
+compact mode. Comparisons record the upstream button's Arial font
+separately from the public example using inherited font. The existing
+native typography, active colors, and wireframe style are preserved.
+[Public itemRender comparison with fontFamily:inherit](../../../tests/browser/fixtures/ant-design-pagination-prefix-reference.json)
 
-Генерация CSS selectPrefixCls и React-specific components/dev warnings остаются
-в следующих этапах. `selectPrefixCls` доступен custom size changer info;
-штатный Select сохраняет свои классы. Обычный disabled, навигация native кнопками,
-возврат focus после отключения next и SSR без DOM/media/timers сохранены.
+CSS generation for `selectPrefixCls`, React-specific components, and
+development warnings remain pending. `selectPrefixCls` is available
+in the custom size changer info. The default Select keeps its own
+classes. Regular disabled behavior, native button navigation, focus
+restoration when next becomes disabled, and SSR without DOM, media
+queries, or timers are preserved.
 
-Source `theme.components.Pagination` использует 12 собственных defaults и общий
-расчёт 18 Input defaults для quick jumper. Поддержаны component algorithms,
-aliases, нули/undefined, runtime CSS lengths и CSS prefix/hash. Токены находятся
-на native nav, styled ul наследует их, поэтому styles.root/style сохраняют
-приоритет. Внутренний Select получает собственный scope; Input overrides
-не подменяют quick jumper. MiniOptionsSizeChangerTop сериализуется, но исходный
-CSS 6.6.8 его не использует.
+Upstream `theme.components.Pagination` uses 12 of its own defaults
+and the shared calculation for 18 Input defaults for the quick
+jumper. Component algorithms, aliases, zero and undefined values,
+runtime CSS lengths, and CSS prefix and hash are supported. Tokens
+are on the native `nav` and inherited by the styled `ul`, preserving
+`styles.root` and `style` precedence. The internal Select gets its own
+scope. Input overrides leave quick-jumper tokens independent.
+`miniOptionsSizeChangerTop` is serialized but unused by the original
+6.6.8 CSS.
 
-Глобальный token.wireframe включает bordered, независимо от одноимённого
-component override. Дополнительные правила перенесены из исходного
-pagination/style/bordered.ts: в закреплённом dist/antd.css их нет. Цвета и padding
-номеров применяются к сохранённым native buttons. Кнопки prev/next сохраняют
-source line-height: normal, в том числе при неопределённой высоте item.
-Метрики трёх размеров, disabled/simple и variants, hover/focus и обновления темы
-проверяются с официальным UMD в `?fixture=pagination-theme`. Native-only темы,
-bind API и согласованное поведение на XS сохраняются.
+Global `token.wireframe` enables bordered styling independently of the
+component override of the same name. Additional rules are ported from
+`pagination/style/bordered.ts` since the pinned `dist/antd.css` omits
+them. Number colors and padding apply to the existing native buttons.
+Previous and next buttons keep the upstream `line-height: normal`,
+including with undefined item height. Metrics for the three sizes,
+disabled and simple modes, variants, hover, focus, and theme updates
+are compared with the official UMD in `?fixture=pagination-theme`.
+Native-only themes, bindings, and the agreed XS behavior are retained.
 
-В теме без `cssVar` активный номер также получает primary-цвет, hover —
-primary-hover, disabled — disabled-цвет. Переменные цветов состояний на
-`styles.item` и inline-цвет custom `itemRender` сохраняют приоритет. Эти состояния
-проверяет [регрессионный тест](../../../tests/browser/pagination/pagination-color.spec.ts)
-в светлой и тёмной теме, LTR и RTL; существующая native-палитра `primary` сохраняется.
+Without `cssVar`, the active number still receives the primary color,
+hover receives the primary hover color, and disabled receives the
+disabled color. State color variables in `styles.item` and the inline
+color of a custom `itemRender` retain precedence. The regression
+test covers light and dark themes in LTR and RTL. The existing native
+`primary` palette is preserved. [Regression test](../../../tests/browser/pagination/pagination-color.spec.ts)

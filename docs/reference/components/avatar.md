@@ -12,118 +12,135 @@
 <Avatar src={photo} size={64} alt="Анна Новикова" />
 ```
 
-Avatar отображает изображение, icon или инициалы участника. Src принимает строку
-или Snippet; пустая строка и отсутствующий src выбирают fallback.
-Изображение имеет приоритет над icon Snippet, затем children Snippet.
-При ошибке загрузки строки src onError вызывается один раз
-для текущего изображения; false сохраняет его и отменяет fallback. Остальные
-результаты выбирают icon или children. Смена src/srcSet разрешает новую загрузку,
-в том числе возврат к ранее ошибочному адресу. Изменение только обработчика
-ошибки не повторяет загрузку. SrcSet сам по себе не включает режим изображения.
-Поддерживаются нативные draggable и crossOrigin.
+Avatar displays an image, icon, or member initials. `src` accepts a string
+or a Snippet. An empty or omitted `src` uses the fallback. An image takes
+precedence, followed by the `icon` Snippet and then the `children`
+Snippet. When a string `src` fails to load, `onError` runs once for the
+current image. Returning `false` keeps the image and cancels fallback.
+Other results select the icon or children. Changing `src` or `srcSet`
+allows a new load, including a return to a previously failed address.
+Changing only the error handler leaves the load untouched. `srcSet`
+alone does not enable image mode. Native `draggable` and `crossOrigin` are
+supported.
 
-Src Snippet отображается напрямую, даже если он пуст, и имеет приоритет над
-icon/children. Его DOM, атрибуты, события и интерактивность принадлежат вызывающему
-коду: Avatar не передаёт внутрь srcSet, draggable, crossOrigin и onError.
-В частности, Image сохраняет собственные fallback и preview. Изменение размера,
-темы и атрибутов Avatar сохраняет состояние Snippet; смена вида src удаляет
-прежнее содержимое. При SSR Snippet выводится без обращения к browser API.
+A `src` Snippet renders directly, even when empty, and takes precedence
+over icon and children. Its DOM, attributes, events, and interactivity
+belong to the caller. Avatar leaves `srcSet`, `draggable`, `crossOrigin`,
+and `onError` outside the Snippet. In particular, Image retains its
+own fallback and preview. Changes in Avatar size, theme, and attributes
+preserve the Snippet's state. Changing the kind of `src` removes the
+previous content. SSR renders the Snippet without accessing browser APIs.
 
-Ошибка привязана к версии пары src/srcSet. Позднее событие старого изображения
-игнорируется; обработчик может синхронно заменить src, и новый источник
-сохраняется. После гидратации также проверяется уже завершившаяся ошибочная
-загрузка, чтобы fallback работал с изображениями из SSR. Listeners удаляются
-при замене изображения и unmount. Компонент не загружает изображения вручную
-и не вводит таймеров или повторных сетевых запросов поверх нативного img.
+An error belongs to the current revision of `src` and `srcSet`. Late
+events from an old image are ignored. The handler can synchronously
+replace `src`, and the new source is preserved. After hydration, a
+load that has already failed is also checked so fallback works with
+SSR images. Listeners are removed when the image is replaced or the
+component unmounts. The native `img` manages image loading without
+additional timers or network retries from Avatar.
 
-Shape по умолчанию circle; доступен square. Размер наследуется от
-ConfigProvider.componentSize. Именованные размеры
-small/medium/large равны 24/32/40 px. Явный size переопределяет контекст;
-числовой size принимает положительное конечное число, включая дробное.
-Неположительное/неконечное число заменяется размером из контекста. Для числового
-размера шрифт текста равен 18 px, иконки — size/2, как в исходнике.
-Class/rootClassName/style относятся к корню. ConfigProvider.avatar задаёт class/style
-для каждого Avatar; отсутствующий record наследуется, явный объект, включая {},
-заменяет родительский целиком. Context style перекрывает числовые/адаптивные размеры,
-локальный style — context style. AvatarGroup не применяет этот config к своему корню,
-но его видимые, счётчик и скрытые аватары читают общий config.
-Темы и RTL наследуются, native compact сохраняет собственные размеры Avatar.
+`shape` defaults to `circle` and also accepts `square`. Size inherits
+`ConfigProvider.componentSize`. Named sizes `small`, `medium`, and
+`large` are 24, 32, and 40px. Explicit `size` overrides the context.
+A numeric size can be any positive finite number, including a
+fraction. Nonpositive or non-finite numbers use the context size.
+With numeric size, text font size is 18px and icon font size is
+half the supplied size, as upstream.
 
-Size также принимает карту `{ xs, sm, md, lg, xl, xxl, xxxl }` с числовыми значениями:
-например, `<Avatar size={{ xs: 24, md: 40, xxl: 100 }}>АВ</Avatar>`.
-Выбирается самый крупный совпавший breakpoint с заданным значением; пропуски и
-undefined позволяют использовать меньший совпавший. Размер xxl сохраняется на
-xxxl, если xxxl не задан. Если совпадений нет, inline-размеры снимаются и действуют
-обычные Avatar tokens; componentSize не заменяет явно заданную карту. Значение 0
-останавливает поиск, но не задаёт inline-геометрию, как upstream. Шрифт адаптивных
-icon/children равен size/2; без них — 18px. Локальный style сохраняет приоритет.
+`class`, `rootClassName`, and `style` apply to the root.
+`ConfigProvider.avatar` sets `class` and `style` for each Avatar. An
+omitted record inherits. An explicit object, including `{}`, replaces
+its parent in full. Context `style` overrides numeric and responsive
+sizes. Local `style` overrides the context. AvatarGroup's root is
+independent of this configuration. Its visible avatars, count, and
+hidden avatars read the shared record. Theme and RTL inherit, and
+native compact mode retains its own Avatar sizes.
 
-Пороги берутся из source screen* tokens с исходной проверкой порядка границ.
-Карта media queries фиксируется при подписке: как useBreakpoint 6.6.8, изменение
-порогов темы начинает действовать после выхода из responsive mode и возврата в него.
-SSR не обращается к window и оставляет карту без совпадений; после mount размеры
-обновляются без пересоздания Avatar, изображения и фокусируемого владельца.
-Подгонка текста пересчитывается, listeners очищаются при unmount.
-Эталонные 20 вариантов и 274 набора измерений закреплены в
-[UMD-снимках](../../../tests/browser/fixtures/ant-design-avatar-responsive-reference.json),
-проверки — [browser](../../../tests/browser/avatar/avatar-responsive.spec.ts) и
-[SSR](../../../tests/package/avatar/avatar-responsive.ssr.test.ts), фикстура — `?fixture=avatar-responsive`.
+`size` also accepts a numeric breakpoint map
+`{ xs, sm, md, lg, xl, xxl, xxxl }`, for example
+`<Avatar size={{ xs: 24, md: 40, xxl: 100 }}>AB</Avatar>`. The largest
+matching breakpoint with a defined value wins. Omitted or
+`undefined` entries let smaller matching breakpoints apply. The
+`xxl` size continues at `xxxl` if `xxxl` is omitted. When no value
+matches, inline sizes are removed and ordinary Avatar tokens apply.
+`componentSize` leaves an explicit map intact. Zero stops the lookup
+without setting inline geometry as upstream. Responsive icons or
+children use half the size as their font size. Without them the
+font size is 18px. Local `style` retains precedence.
 
-Source `theme.components.Avatar` подготавливает container/text/icon sizes по
-исходным правилам, включая отдельный algorithm и aliases. При стандартном
-compactAlgorithm именованные small/medium/large имеют 21/28/35px; числовой size
-сохраняет собственные размеры и font-size. Локальный style остаётся последним.
-Общие токены применяются также к AvatarGroup и аватарам в overflow.
+Thresholds use upstream `screen*` tokens with the original order
+validation. The media query map is captured at subscription. As in
+6.6.8 `useBreakpoint`, updates to theme thresholds take effect after
+leaving and re-entering responsive mode. SSR avoids `window` and
+leaves the map without matches. After mount, sizes update without
+recreating Avatar, its image, or the focusable owner. Text fitting
+is recalculated, and listeners are cleared on unmount. The fixture is
+`?fixture=avatar-responsive`. It has 20 upstream variants and 274
+measurement sets. [UMD snapshots](../../../tests/browser/fixtures/ant-design-avatar-responsive-reference.json) · [Browser tests](../../../tests/browser/avatar/avatar-responsive.spec.ts)
+· [SSR tests](../../../tests/package/avatar/avatar-responsive.ssr.test.ts)
 
-Gap задаёт свободное место по краям текста, по умолчанию 4 px. Конечное
-неотрицательное значение сохраняется, иначе используется 4. Длинный текст
-уменьшается через transform без изменения содержимого; короткий не увеличивается.
-Если gap занимает всю ширину или элемент скрыт, scale остаётся 1 до следующего
-измерения. ResizeObserver следит за корнем и текстом: изменение размера,
-шрифта, children и появление скрытого элемента пересчитывают масштаб. При замене
-fallback или unmount observer отключается. На SSR инициалы видимы без измерения;
-подгонка выполняется после mount. Собственной анимации нет.
+Upstream `theme.components.Avatar` prepares container, text, and icon
+sizes using the original rules, including a separate algorithm and
+aliases. With the standard `compactAlgorithm`, the named sizes
+`small`, `medium`, and `large` are 21, 28, and 35px. Numeric size keeps
+its own dimensions and `font-size`. Local `style` applies last.
+Shared tokens also apply to AvatarGroup and overflow avatars.
 
-Для строки src, icon и children Alt, aria-label или aria-labelledby задают
-полное имя корню с role=img;
-оно сохраняется при смене изображения на fallback. Aria-describedby описывает
-этот корень. Внутренний img строки src и icon/children скрыты от screen reader,
-icon/children также inert. Без имени или
-с aria-hidden=true весь Avatar декоративный. Для действия оберните Avatar
-нативной кнопкой/ссылкой, задайте ей имя и при необходимости скройте повторяющий
-его Avatar. Без явно переданных props компонент не добавляет остановок Tab,
-live-region, автоматического фокуса и root click handler. Title задаёт нативную подсказку.
+`gap` sets space on either side of text, defaulting to 4px. Finite
+nonnegative values are kept, and other values use 4. Long text is
+scaled down with a transform that leaves the content intact. Short
+text is never enlarged. If the gap takes the full width or the
+element is hidden, scale stays at 1 until the next measurement. A
+ResizeObserver watches root and text. Changes to size, font, or
+children and revealing a hidden element recompute the scale. The
+observer is disconnected when replacing the fallback or unmounting.
+SSR displays initials without measuring. Fitting takes place after
+mount. Avatar adds no animation.
 
-HTMLAttributes, data-/aria-атрибуты и нативные события передаются корневому span.
-OnClick/onclick получают нативный MouseEvent; onclick имеет приоритет. Уже
-отменённый click также передаётся владельцу. Enter/Space не синтезируют click:
-keyboard behavior принадлежит владельцу. Локальные dir/role имеют приоритет над
-контекстом и автоматической ролью; согласованные правила именования сохраняются.
-Bind:nativeElement даёт текущий span, сохраняется при обновлениях config/props/
-содержимого и очищается при unmount. SSR не создаёт ref или browser resources.
+For string `src`, icon, and children, `alt`, `aria-label`, or
+`aria-labelledby` names the root with `role=img`. The name survives a
+switch from image to fallback. `aria-describedby` describes this
+root. The inner image of a string `src` and the icon and children
+are hidden from screen readers. The icon and children are also
+`inert`. Without a name or with `aria-hidden=true`, the whole Avatar
+is decorative. For an action, wrap Avatar in a native named button
+or link and hide the duplicate Avatar name if needed. Without
+explicit props, Avatar adds no Tab stop, live region, automatic
+focus, or root click handler. `title` supplies the native tooltip.
 
-Для src Snippet именованный корень имеет role=group и сохраняет доступность
-вложенных изображений и controls. Без имени содержимое использует собственные
-подписи. Явный aria-hidden=true скрывает такой Avatar и делает его inert.
-Не оборачивайте интерактивный Snippet ещё одной кнопкой или ссылкой.
-Эталонные 14 вариантов закреплены в
-[UMD-снимках](../../../tests/browser/fixtures/ant-design-avatar-source-reference.json),
-проверки — [browser](../../../tests/browser/avatar/avatar-source.spec.ts) и
-[SSR](../../../tests/package/avatar/avatar-source.ssr.test.ts), фикстура — `?fixture=avatar-source`.
+`HTMLAttributes`, data and ARIA attributes, and native events pass
+to the root `span`. `onClick` and `onclick` receive a native
+`MouseEvent`. `onclick` takes precedence. A click already canceled
+still reaches the owner. Enter and Space leave click behavior to
+the owner. Local `dir` and `role` override context direction and the
+automatic role, with the same naming rules. `bind:nativeElement`
+supplies the current `span`, survives configuration, prop, and content
+updates, and clears on unmount. SSR creates no ref or browser
+resources.
 
-AvatarProps, AvatarShape, AvatarSize и AvatarConfig экспортируются через index.ts.
-Локальный prefixCls меняет root/modifier/string classes; отсутствие и пустая строка
-наследуют ConfigProvider.prefixCls (по умолчанию ant-avatar).
-Имена CSS variables, Image и anticon остаются общими.
-Шаблон из 24 исходных правил ограничен текущим prefix и сохраняет шрифты/aliases
-соседних стандартных Avatar. Смена prefix сохраняет root, img, text fit, src Snippet,
-focus и ref; stylesheet живёт вместе с экземпляром и выводится также в SSR head.
-Semantic classNames/styles исходный Avatar 6.6.8 не объявляет. Config/DOM/ref проверяются по
-[UMD-эталонам](../../../tests/browser/fixtures/ant-design-avatar-api-reference.json),
-[browser](../../../tests/browser/avatar/avatar-api.spec.ts) и
-[SSR](../../../tests/package/avatar/avatar-api.ssr.test.ts); фикстура — `?fixture=avatar-api`.
-Префиксы закреплены в
-[UMD-эталонах](../../../tests/browser/fixtures/ant-design-avatar-prefix-reference.json),
-[browser](../../../tests/browser/avatar/avatar-prefix.spec.ts) и
-[SSR](../../../tests/package/avatar/avatar-prefix.ssr.test.ts); фикстура — `?fixture=avatar-prefix`.
+With a `src` Snippet, a named root uses `role=group` and keeps nested
+images and controls accessible. Without a group name, the content
+uses its own labels. Explicit `aria-hidden=true` hides the Avatar
+and makes it `inert`. Keep an interactive Snippet out of another
+button or link. The fixture `?fixture=avatar-source` has 14 pinned
+variants. [UMD snapshots](../../../tests/browser/fixtures/ant-design-avatar-source-reference.json) · [Browser tests](../../../tests/browser/avatar/avatar-source.spec.ts) ·
+[SSR tests](../../../tests/package/avatar/avatar-source.ssr.test.ts)
 
+`AvatarProps`, `AvatarShape`, `AvatarSize`, and `AvatarConfig` are
+exported through `index.ts`. Local `prefixCls` changes root, modifier,
+and string classes. Omission or an empty string inherits
+`ConfigProvider.prefixCls` (`ant-avatar` by default). CSS variable,
+Image, and `anticon` names stay shared. The template from 24 original
+rules is scoped to the current prefix and preserves fonts and aliases
+for nearby default Avatars. Prefix changes preserve root, image,
+text fitting, the `src` Snippet, focus, and refs. The stylesheet
+lives with the instance and is also emitted in the SSR head.
+
+Upstream Avatar 6.6.8 has no semantic `classNames` or `styles`
+declarations. The configuration, DOM, and ref fixture is
+`?fixture=avatar-api`. [UMD references](../../../tests/browser/fixtures/ant-design-avatar-api-reference.json) ·
+[Browser tests](../../../tests/browser/avatar/avatar-api.spec.ts) · [SSR tests](../../../tests/package/avatar/avatar-api.ssr.test.ts)
+
+The prefix fixture is `?fixture=avatar-prefix`.
+[UMD references](../../../tests/browser/fixtures/ant-design-avatar-prefix-reference.json) · [Browser tests](../../../tests/browser/avatar/avatar-prefix.spec.ts) ·
+[SSR tests](../../../tests/package/avatar/avatar-prefix.ssr.test.ts)

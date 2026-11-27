@@ -1,8 +1,8 @@
 # Calendar
 
-Calendar по умолчанию показывает полный месяц с шестью строками дат;
-`fullscreen={false}` включает мини-календарь. Режим year показывает 12 месяцев
-и сохраняется после выбора месяца.
+Calendar defaults to a full month with six rows of dates. Set
+`fullscreen={false}` for a mini calendar. Year mode shows 12 months and
+remains active after a month is selected.
 
 ```svelte
 <script lang="ts">
@@ -19,115 +19,136 @@ Calendar по умолчанию показывает полный месяц с
 </Calendar>
 ```
 
-Без value используются defaultValue или getNow(); defaultValue читается один
-раз. Заданные value и mode управляются владельцем через callbacks, без
-bind:value/mode. Отказ обновить prop сохраняет выбор и режим. Как PickerPanel,
-сама панель сдвигает отображаемый месяц при клике соседней даты даже при
-отклонённом value; заголовок продолжает показывать выбранное значение.
-При удалении controlled prop локальное значение очищается, без возврата к
-defaultValue/month: это поведение useControlledState изученной версии.
+Without `value`, Calendar uses `defaultValue` or `getNow()`.
+`defaultValue` is read once. The owner controls supplied `value` and
+`mode` through callbacks, without `bind:value` or `bind:mode`. Keeping
+the prop unchanged preserves the selection and mode. As in PickerPanel,
+clicking a neighboring date moves the panel's visible month even when the
+owner rejects the new `value`. The header still shows the selected
+value. Removing a controlled prop clears the local value without
+returning to `defaultValue` or `month`, following the studied
+`useControlledState` implementation.
 
-Порядок выбора — onPanelChange при смене месяца/года панели, затем onChange
-при смене календарного дня, затем onSelect. Повторный выбор дня вызывает только
-onSelect. CalendarSelectInfo.source различает date, month, year и customize. Переключатель
-режима вызывает только onPanelChange. Компонент использует общий Dayjs adapter
-без прикладной сериализации или нормализации; проверены UTC, timezone offset,
-время и milliseconds.
+The selection order is `onPanelChange` when the panel month or year
+changes, `onChange` when the calendar day changes, then `onSelect`.
+Selecting the same day again calls only `onSelect`.
+`CalendarSelectInfo.source` distinguishes `date`, `month`, `year`,
+and `customize`. The mode switch calls only `onPanelChange`. Calendar
+uses the shared Day.js adapter without application-level serialization
+or normalization. UTC, timezone offset, time, and milliseconds are
+covered by tests.
 
-`validRange` сравнивает полные timestamps включительно, до вызова disabledDate.
-Month disabled вычисляется по первому и последнему дню месяца с сохранённым
-временем; содержимое месяца не сканируется. Поэтому диапазон внутри одного
-месяца может отключить весь этот месяц, как в rc-picker. Годы/месяцы заголовка
-ограничиваются validRange, но его действия не проходят disabledDate и не
-ограничивают день месяца границами диапазона.
+`validRange` compares full timestamps inclusively before calling
+`disabledDate`. Whether a month is disabled is calculated from its
+first and last days with their time preserved. Dates within the month
+are not scanned. A range inside one month can therefore disable the
+entire month, as in rc-picker. Years and months in the header are
+limited by `validRange`. Header actions bypass `disabledDate` and do
+not clamp the day of the month to the range boundaries.
 
-`headerRender` получает value/type/onChange/onTypeChange и полностью заменяет
-заголовок. `fullCellRender` заменяет содержимое ячейки; cellRender добавляет
-содержимое в стандартный date-content. FullCellRender имеет приоритет
-над cellRender. OriginNode в
-CalendarCellRenderInfo — Svelte snippet исходного rc-picker inner. Date info.locale
-содержит filled formats, month info.locale — исходный lang. `showWeek` добавляет
-отдельные ячейки без render snippets; они выбирают начало строки с source=date.
-Ячейки сохраняются по позиции строки/столбца, как в upstream.
+`headerRender` receives `value`, `type`, `onChange`, and
+`onTypeChange` and replaces the entire header. `fullCellRender` replaces
+the cell contents and takes precedence over `cellRender`, which adds
+content to the standard date content. `originNode` in
+`CalendarCellRenderInfo` is a Svelte Snippet for the original rc-picker
+inner content. For a date, `info.locale` contains the completed formats.
+For a month, it contains the original `lang`. `showWeek` adds separate
+cells without rendering Snippets. They select the start of the row with
+`source=date`. Cells are preserved by row and column position as
+upstream.
 
-Locale берётся из ConfigProvider.locale.calendar, независимо от DatePicker.
-Встроенные enUS/ruRU и словари Ant Design включают Calendar. По умолчанию
-действует ruRU. [Подключение локали](../themes.md#interface-language)
-Словарь Calendar в ConfigProvider заменяется целиком, как DatePicker. Локальный
-Calendar.locale объединяет поля lang с базовым словарём и контекстом. Загрузка
-остальных Day.js locales остаётся у потребителя.
+Locale comes from `ConfigProvider.locale.calendar`, independent of
+DatePicker. The built-in `enUS` and `ruRU` and Ant Design dictionaries
+include Calendar. The default is `ruRU`. The Calendar dictionary in
+ConfigProvider replaces the previous one in full, as for DatePicker. A
+local `Calendar.locale` merges its `lang` fields with the base
+dictionary and context. The consumer loads other Day.js locales.
+[Locale setup](../themes.md#interface-language)
 
-`classNames`/`styles` принимают объекты или callbacks для root/header/body/content/
-item/itemContent. Callback props сохраняют переданные mode/showWeek, fullscreen
-получает default true. Приоритет root styles после компонентной темы: context styles.root → context
-style → local styles.root → local style. Вложенный ConfigProvider.calendar
-заменяет component config целиком. `bind:nativeElement` возвращает root div и
-очищается при unmount. Календарь не добавляет скрытое поле с сериализованной
-датой; внутренние controls заголовка не получают name/id/required FormItem.
+`classNames` and `styles` accept objects or callbacks for `root`,
+`header`, `body`, `content`, `item`, and `itemContent`. Callback props
+preserve the supplied `mode` and `showWeek`, with `fullscreen`
+defaulting to `true`. After the component theme, root styles apply in
+this order: context `styles.root`, context `style`, local `styles.root`,
+and local `style`. Nested `ConfigProvider.calendar` replaces the
+component configuration in full. `bind:nativeElement` returns the root
+`div` and clears on unmount. Calendar adds no hidden serialized date
+field. Its header controls do not receive FormItem's `name`, `id`, or
+`required`.
 
-`generateCalendar(adapter)` — отдельный экспорт вместо React-статики
-Calendar.generateCalendar. Фабрика возвращает Svelte component с теми же Props,
-реактивными value/mode и bind:nativeElement; CalendarGenerateConfig описывает
-исходные операции над датой. Типы и defaults находятся в
-[calendar.types.ts](../../../src/lib/calendar/calendar.types.ts).
+`generateCalendar(adapter)` is a separate export in place of React's
+static `Calendar.generateCalendar`. The factory returns a Svelte
+component with the same props, reactive `value` and `mode`, and
+`bind:nativeElement`. `CalendarGenerateConfig` defines the upstream date
+operations. [Types and defaults](../../../src/lib/calendar/calendar.types.ts)
 
-Адаптация доступности: table имеет роль grid, ячейки — gridcell с selected,
-disabled, today и одним tab stop. Стрелки/Home/End перемещают только фокус,
-Enter/Space выбирают. В standalone rc-picker эти keyboard handlers отсутствуют.
-Вложенные inputs/buttons сохраняют свою клавиатуру; stopPropagation у custom
-control предотвращает выбор родительской ячейки. В заголовке используются
-существующие native Select/RadioGroup с доступными именами.
+For accessibility, the table has `role=grid`. Its cells have
+`role=gridcell`, selected, disabled, and today states, and one Tab stop.
+Arrow keys, Home, and End move focus only. Enter and Space select. Standalone
+rc-picker omits these keyboard handlers. Nested inputs and buttons
+retain their own keyboard behavior. `stopPropagation` on a custom
+control prevents selection of its parent cell. The header uses the
+existing native Select and RadioGroup with accessible names.
 
-Из архива извлечены 123 CSS-правила Calendar, включая full/mini, week и mobile
-header. Темы, primary, compact и RTL используют текущие tokens библиотеки.
-В desktop-шапке без source theme обёртки Select сохраняют ширины 80/70px. При source theme
-yearControlWidth/monthControlWidth задают минимальную ширину, как upstream;
-скрытый текстовый sizer сохраняет intrinsic размер readonly input даже при 0/10px.
-Переключатель режима не переносит отдельные кнопки.
-При viewport до 480px год и месяц располагаются рядом, переключатель — ниже,
-как в исходном Calendar. Зазор между селекторами задаёт CSS-отступ.
-Границы полей и кнопок в мини-календарях
-300/360px, mobile/RTL и работа dropdown/клавиатуры проверяются в
-[calendar-header](../../../tests/browser/calendar/calendar-header.spec.ts).
+The pinned bundle provides 123 Calendar CSS rules, including full and
+mini modes, week cells, and the mobile header. Themes, primary color,
+compact mode, and RTL use the library's current tokens. On desktop,
+without an upstream theme, the header's Select wrappers retain their
+80px and 70px widths. With an upstream theme,
+`yearControlWidth` and `monthControlWidth` set minimum widths as
+upstream. A hidden text sizer preserves the readonly input's intrinsic
+size even at 0px or 10px. The mode switch keeps individual buttons
+from wrapping. In viewports up to 480px, the year and month controls
+sit side by side above the mode switch, as in upstream Calendar. A
+CSS margin sets the gap between selectors. The header test covers field
+and button bounds in 300px and 360px mini calendars, mobile and RTL
+layouts, the dropdown, and keyboard behavior. [Calendar header test](../../../tests/browser/calendar/calendar-header.spec.ts)
 
-`ConfigProvider.theme.components.Calendar` применяет все шесть public tokens,
-alias overrides и global/component algorithms. Общий picker panel helper
-воспроизводит 21 внутренний default; это не добавляет TimePicker/multiple API
-в Calendar. Локальные CSS variables и config/semantic/local styles сохраняют
-приоритет. Внутренние Select/Radio используют свои темы; intrinsic sizing
-включён только для source-шапки Calendar, public default Select остаётся прежним.
+`ConfigProvider.theme.components.Calendar` applies all six public
+tokens, alias overrides, and global and component algorithms. The
+shared picker panel helper reproduces 21 internal defaults without
+exposing TimePicker or multiple selection APIs in Calendar. Local CSS
+variables and configuration, semantic, and local styles retain
+precedence. The internal Select and Radio use their own themes.
+Intrinsic sizing is enabled only for the upstream-styled Calendar
+header. The public Select default is unchanged.
 
-[UMD-эталон](../../../tests/browser/fixtures/ant-design-calendar-theme-reference.json)
-содержит 17 тем / 136 наборов для восьми scopes: full/mini month/year панели
-сверяются в normal/RTL/priority, mini-month — также в variable/nested/reset/sibling/
-outside. Дополнительные замеры сделаны при viewport 400px. Проверяются цвета,
-метрики ячеек и шапки, string/zero/undefined размеры и независимые child themes.
-[Browser-проверки](../../../tests/browser/calendar/calendar-theme.spec.ts) защищают фокус/выбор даты,
-точные timestamps callbacks, открытые options и DOM input при theme update,
-inherit reset и возврате к оформлению по умолчанию. Декларации сверяются с UMD отдельным
-[unit-набором](../../../src/lib/theme/theme-calendar-tokens-reference.test.ts),
-[SSR](../../../tests/package/calendar/calendar-theme.ssr.test.ts) не создаёт browser resources.
+The reference covers 17 themes and 136 sets for eight scopes. Full and
+mini month and year panels are compared in normal, RTL, and priority
+scopes. Mini month is also compared in variable, nested, reset, sibling,
+and outside scopes. Additional measurements use a 400px viewport.
+Comparisons cover colors, cell and header metrics, string, zero, and
+undefined sizes, and independent child themes. [UMD reference](../../../tests/browser/fixtures/ant-design-calendar-theme-reference.json)
 
-Calendar принимает локальный `prefixCls` для Picker и добавляет `-calendar` к
-корневому классу; без override использует ConfigProvider.prefixCls. Ячейки,
-originNode и `cellRender.info.prefixCls` следуют тому же Picker prefix, а Select/Radio
-шапки сохраняют независимые общие namespaces. Canonical tokens и theme marker
-не переименовываются. CSS-селекторы экранируют символы префикса вроде `+`.
-DOM-классы и `cellRender.info.prefixCls` используют исходное значение.
-Смена префикса сохраняет DOM/ref/IDs, дату и её timestamp,
-выделение текста/focus, открытые options и keyboard navigation.
-[Сверка с официальным UMD](../../../tests/browser/calendar/calendar-prefix.spec.ts),
-`?fixture=calendar-prefix`, включает full/mini, month/year, week, RTL,
-aliases/styles, nested/reset и responsive-порог 480/481px.
-Defaults prefix stylesheet не перекрывают Native bridge; тёмный фон и compact
-метрики сохраняются при переходе от канонического `ant` к общему префиксу.
+Browser tests cover focus and date selection, exact callback timestamps,
+open options and input DOM on theme change, inheritance reset, and
+return to default styling. Unit tests compare declarations against
+the UMD. SSR tests ensure rendering creates no browser resources.
+[Browser tests](../../../tests/browser/calendar/calendar-theme.spec.ts) · [Unit tests](../../../src/lib/theme/theme-calendar-tokens-reference.test.ts) · [SSR tests](../../../tests/package/calendar/calendar-theme.ssr.test.ts)
 
-Существующий запрет переноса отдельных кнопок режима сохраняется. Raw Source
-при увеличенных токенах в 320px переносит кнопки и растягивает controls до 48px.
-Для трёх высот шапки отдельно записан public counterpart с `style.width=400px`;
-остальные метрики сравниваются с raw 320px. Native readonly Select показывает
-подпись года в input, Source — рядом с пустым search input; значение и выделение
-Native input проверяются по собственному существующему контракту.
+Calendar accepts a local Picker `prefixCls` and appends `-calendar` to
+the root class. Without an override, it uses `ConfigProvider.prefixCls`.
+Cells, `originNode`, and `cellRender.info.prefixCls` use the same Picker
+prefix. Header Select and Radio retain their independent shared
+namespaces. Canonical tokens and the theme marker keep their names. CSS
+selectors escape characters such as `+` in the prefix. DOM classes and
+`cellRender.info.prefixCls` use the original value. Changing the prefix
+preserves DOM, refs, IDs, the date and timestamp, text selection, focus,
+open options, and keyboard navigation. The official UMD comparison at
+`?fixture=calendar-prefix` covers full and mini, month and year, week, RTL,
+aliases and styles, nested and reset scopes, and the 480px and 481px
+responsive boundary. Prefix stylesheet defaults leave the native bridge
+in effect. Dark backgrounds and compact metrics persist when switching
+from the canonical `ant` prefix to a shared prefix. [Official UMD comparison](../../../tests/browser/calendar/calendar-prefix.spec.ts)
 
-React warnings и неперенесённые возможности используемых Select/Radio остаются
-за пределами подтверждённого объёма этого этапа.
+The existing rule keeping individual mode buttons from wrapping is
+preserved. With enlarged tokens at 320px, the raw upstream layout wraps
+buttons and stretches controls to 48px. For three header heights, there
+is a separate comparison with public `style.width=400px`. Other metrics
+are compared with the raw 320px layout. The native readonly Select shows
+the year label in the input. Upstream places it next to an empty search
+input. Native input value and selection are checked against their existing
+contract.
+
+React warnings and Select and Radio features yet to be ported are outside
+the verified scope of this stage.

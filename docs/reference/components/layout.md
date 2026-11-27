@@ -1,7 +1,7 @@
 # Layout
 
-`Layout` объединяет разделы страницы. Если боковая панель видна сразу, задайте
-`hasSider` у окружающего её контейнера, чтобы колонки заняли свои места уже при SSR.
+`Layout` groups sections of a page. If the sidebar is visible from the start, set
+`hasSider` on the enclosing Layout so the columns are in place during SSR.
 
 ```svelte
 <script lang="ts">
@@ -17,94 +17,116 @@
 </Layout>
 ```
 
-Layout, LayoutHeader, LayoutContent, LayoutFooter и LayoutSider соответствуют
-Layout и его секциям Header/Content/Footer/Sider. Они сохраняют div/header/main/
-footer/aside без дополнительных контейнеров. Children — Snippet, нативные props,
-class/rootClassName/style и bind:nativeElement относятся к корню.
+`Layout`, `LayoutHeader`, `LayoutContent`, `LayoutFooter`, and `LayoutSider`
+correspond to Layout and its Header, Content, Footer, and Sider sections. They
+keep the `div`, `header`, `main`, `footer`, and `aside` elements without
+extra wrappers. Children are a Snippet. Native props, `class`,
+`rootClassName`, `style`, and `bind:nativeElement` apply to the root.
 
-Layout.hasSider явно задаёт наличие sidebar; false отключает автоматическое
-определение. На клиенте Sider регистрируется в ближайшем Layout; вложенные
-Layout независимы. Snippet нельзя проинспектировать как React children до SSR,
-поэтому автоматический SSR-ряд определяется CSS :has(> .ant-layout-sider),
-а класс ant-layout-has-sider появляется после mount. Для серверного класса
-передавайте hasSider=true. Это сохраняет геометрию до hydration и не вызывает
-предварительного исполнения children. Явный false отключает CSS fallback.
+`Layout.hasSider` explicitly indicates that a sidebar is present. `false`
+disables automatic detection. On the client, Sider registers with the nearest
+Layout, and nested layouts are independent. Svelte cannot inspect a Snippet
+before SSR the way React inspects children. The automatic SSR row therefore
+uses CSS `:has(> .ant-layout-sider)`, and `ant-layout-has-sider` appears after
+mount. Pass `hasSider=true` to include the class on the server. This preserves
+geometry before hydration without evaluating children in advance. Explicit
+`false` disables the CSS fallback.
 
-Sider: width=200, collapsedWidth=80, defaultCollapsed=false, collapsible=false,
-theme=dark. Число или числовая строка ширины получают px, другие CSS-строки
-сохраняются. Calculated flex/max-width/min-width/width перекрывают style, как
-в upstream; semantic styles.root идёт перед style, styles.body — на children.
-ClassNames/styles принимают root/body, объект либо callback ({ props }).
-Collapsed поддерживает binding; onCollapse(next, source) вызывается при клике
-или responsive изменении с source=clickTrigger/responsive. Черновики/DOM children
-сохраняются. Trigger — пассивный string/number/Snippet внутри нативной кнопки;
-null скрывает кнопку. Для собственного интерактивного trigger используйте null
-и внешний control, меняющий bind:collapsed. ReverseArrow меняет стрелку и сторону
-zero-width trigger. CollapsedWidth=0 создаёт специальный переключатель; при
-нулевой фактической ширине children становятся inert, фокус из них переносится
-на trigger либо соседний доступный control. Это Svelte-адаптация доступности;
-React Sider не блокирует невидимые focus targets через inert.
+Sider defaults to `width=200`, `collapsedWidth=80`, `defaultCollapsed=false`,
+`collapsible=false`, and `theme=dark`. Numbers and numeric strings receive a
+`px` unit. Other CSS strings are preserved. Calculated `flex`, `max-width`,
+`min-width`, and `width` override `style` as upstream. Semantic `styles.root`
+precedes `style`, and `styles.body` applies to the children. `classNames` and
+`styles` accept a `root`/`body` object or a callback receiving `{ props }`.
 
-Breakpoint подписывает один MediaQueryList, сообщает начальное/изменённое
-состояние через onBreakpoint и при необходимости вызывает onCollapse. Listener
-очищается при смене breakpoint/unmount, запоздалые события игнорируются.
-Порог берётся из Sider.tsx: xs=479.98, sm=575.98, md=767.98, lg=991.98,
-xl=1199.98, xxl=1599.98, xxxl=1839.98px. Последнее значение отличается от
-таблицы upstream docs (1920); эталоном оставлен код. Ни SSR, ни первый hydration
-render не вычисляют media. Ручное раскрытие ниже порога сохраняется до следующего
-media change. ComponentDisabled не отключает навигационный trigger.
+`collapsed` supports binding. `onCollapse(next, source)` is called on a click
+or responsive change with `source` set to `clickTrigger` or `responsive`.
+The children's DOM and drafts persist. `trigger` accepts a passive string,
+number, or Snippet inside the native button. `null` hides the button. Use
+`null` and an external control that updates `bind:collapsed` for a custom
+interactive trigger. `reverseArrow` reverses the arrow and changes the side
+of the zero-width trigger. `collapsedWidth=0` creates a special toggle. At
+an actual width of zero, the children become `inert`, and focus moves from
+them to the trigger or a nearby accessible control. This is a Svelte
+accessibility adaptation. React Sider leaves hidden focus targets active.
 
-Темы sidebar light/dark независимы от общей темы; light наследует container/text
-токены текущего режима, dark сохраняет #001529. Compact использует меньшие control
-tokens. Trigger поддерживает Enter/Space, aria-expanded/controls и locale.layout
-expand/collapse, с expandLabel/collapseLabel override. Reduced motion отключает
-переходы. Фикстура — `?fixture=layout`; unit/SSR/
-Chromium покрывают структуру, SSR без JS, callbacks, размеры, breakpoint/cleanup,
-фокус, locale и темы. Рецепт layout извлекает 35 правил, включая Menu-интеграции.
-ConfigProvider.theme.components.Layout поддерживает 16 актуальных токенов. Aliases, отдельный
-algorithm и cssVar prefix/key применяются к Layout/Sider; секции внутри Layout
-наследуют его переменные, включая CSS overrides в style. Semantic styles.root
-идут перед style, вычисляемая
-ширина Sider — последней. Смена темы сохраняет collapse, DOM, refs, фокус и черновики.
-Отдельные Header/Content/Footer получают собственные переменные: в закреплённом
-upstream standalone-секции остаются без Layout variables. Наблюдение и выбранное
-поведение записаны в реестре; это отличие не переносится в Svelte.
-ConfigProvider.layout задаёт общие class/style только для контейнеров Layout.
-Классы config и local накапливаются; локальный style перекрывает общий, оба идут
-после переменных темы. Undefined наследует родительский record; собственный объект,
-включая {}, заменяет его целиком. Header/Content/Footer/Sider напрямую этот record
-не получают. Обновление config сохраняет DOM, черновики, выделение/фокус и collapse.
-Самостоятельные секции сохраняют native variables/RTL; исходные отличия записаны
-в raw reference и учтены явно при сравнении.
-В эталоне также зафиксирован сброс неизменившегося padding после удаления
-локального paddingTop при React update; native строка стилей сохраняет отступ.
+`breakpoint` subscribes to one `MediaQueryList`, reports the initial and
+updated state through `onBreakpoint`, and calls `onCollapse` when needed.
+The listener is cleaned up when the breakpoint changes or the component
+unmounts, and late events are ignored. The thresholds come from
+`Sider.tsx`: `xs=479.98`, `sm=575.98`, `md=767.98`, `lg=991.98`,
+`xl=1199.98`, `xxl=1599.98`, and `xxxl=1839.98px`. The last value uses
+the source code, where it differs from the upstream documentation table
+(1920). SSR and the initial hydration render leave media queries unevaluated.
+Manually expanding below the threshold persists until the next media change.
+`componentDisabled` leaves the navigation trigger enabled.
 
-Layout.prefixCls и LayoutSider.prefixCls независимы; пустая строка использует
-prefix ближайшего ConfigProvider (ant по умолчанию). Классы состояний, children и trigger следуют своему
-prefix; namespace --ant-layout-* и общий marker ant-layout-css-var сохраняются.
-Рецепт layout-prefix извлекает 35 правил, runtime выбирает свою группу Layout/Sider.
-Native SSR-определение прямого Sider использует внутренние атрибуты; смена prefix
-сохраняет DOM, ids/aria-controls, collapse, черновики, выделение и фокус.
-Восстановление фокуса использует фактический DOM body и сохраняет явный выбор владельца.
-LayoutHeader/LayoutContent/LayoutFooter принимают собственный literal prefixCls:
-он задаёт полный класс секции, без добавления suffix. Пустая строка возвращает
-класс из ConfigProvider. Префикс контейнера не меняет префиксы секций.
-Общий ConfigProvider.prefixCls применяется к Layout и всем его секциям; локальный
-literal prefix имеет приоритет. Остальные правила CSS/SSR/фокуса сохранены.
+The `light` and `dark` sidebar themes are independent of the overall theme.
+`light` inherits the container and text tokens of the active mode, while
+`dark` retains `#001529`. Compact mode uses smaller control tokens. The trigger
+supports Enter, Space, `aria-expanded`, `aria-controls`, and the expand and
+collapse labels in `locale.layout`, with `expandLabel` and `collapseLabel`
+overrides. Reduced motion disables transitions. The fixture is
+`?fixture=layout`. Unit, SSR, and Chromium tests cover structure, SSR without
+JavaScript, callbacks, sizing, breakpoint cleanup, focus, locale, and themes.
+The `layout` recipe extracts 35 rules, including Menu integrations.
 
-Исходные коллизии prefix с Layout/Sider/variable classes и сохранённым CSS-кэшем
-записаны в [raw reference](../../../tests/browser/fixtures/ant-design-layout-prefix-reference.json).
-Native markers защищают измеренные роли и соседние scopes; expected corrections
-ограничены фоном, position и flex-direction известных alias cases. Замеры каждого
-варианта получены в новом документе, transitions — отдельно в одном документе.
-У секций upstream [свой дефект prefix](../../../tests/browser/fixtures/ant-design-layout-section-prefix-observation.json):
-Header/Content/Footer получают оформление контейнера; наблюдение сохранено для отдельного разбора.
-Svelte сохраняет оформление своей секции, включая explicit default/shared prefix.
-В [парных замерах](../../../tests/browser/fixtures/ant-design-layout-section-prefix-reference.json)
-raw custom-prefix сравнивается с обычной секцией в независимом документе upstream.
-Текстовый контейнер эталона берёт font/color/line-height из его getDesignToken
-для сверки с текстовым контекстом native provider.
-Standalone fallback variables и border-box доступны до hydration, включая legacy
-dark/compact; внутри Layout новые variables не объявляются и parent style наследуется.
-Локальные style сохраняют приоритет; обновление prefix не заменяет controls и их drafts/selection.
+`ConfigProvider.theme.components.Layout` supports 16 current tokens. Aliases,
+a separate algorithm, and the `cssVar` prefix and key apply to Layout and
+Sider. Sections inside Layout inherit its variables, including CSS overrides
+in `style`. Semantic `styles.root` precede `style`, and Sider's calculated
+width comes last. Theme changes preserve collapse state, DOM, refs, focus,
+and drafts. Standalone Header, Content, and Footer receive their own variables
+in Svelte. The pinned upstream leaves standalone sections without Layout
+variables. The registry records this observation and the behavior chosen for
+Svelte.
 
+`ConfigProvider.layout` provides shared `class` and `style` for Layout
+containers. Configuration and local classes accumulate. Local styles
+override shared styles, and both follow theme variables. `undefined` inherits
+the parent record. An explicit object, including `{}`, replaces it in full.
+Header, Content, Footer, and Sider do not receive this record directly.
+Configuration updates preserve the DOM, drafts, selection, focus, and
+collapse state. Standalone sections retain native variables and RTL. The raw
+reference records the original differences, and comparisons account for them
+explicitly. The reference also records that React clears unchanged padding
+when a local `paddingTop` is removed on update. The native style string
+preserves that padding.
+
+`Layout.prefixCls` and `LayoutSider.prefixCls` are independent. An empty
+string uses the nearest ConfigProvider prefix (`ant` by default). State,
+children, and trigger classes follow their owners' prefixes. The
+`--ant-layout-*` namespace and shared `ant-layout-css-var` marker are
+preserved. The `layout-prefix` recipe extracts 35 rules, and the runtime
+chooses the group for Layout or Sider. Native SSR detection of a direct
+Sider uses internal attributes. Changing the prefix preserves DOM, IDs,
+`aria-controls`, collapse state, drafts, selection, and focus. Focus restoration
+uses the actual DOM body and respects the owner's explicit choice.
+
+`LayoutHeader`, `LayoutContent`, and `LayoutFooter` accept their own literal
+`prefixCls`, which supplies the full section class without an appended
+suffix. An empty string falls back to the class from ConfigProvider. The
+container prefix leaves the section prefixes independent. The shared
+`ConfigProvider.prefixCls` applies to Layout and all sections. A literal local
+prefix takes precedence. The remaining CSS, SSR, and focus rules also apply.
+
+Original prefix collisions involving Layout, Sider, variable classes, and
+the retained CSS cache are recorded in the [raw reference](../../../tests/browser/fixtures/ant-design-layout-prefix-reference.json).
+Native markers protect the measured roles and neighboring scopes. Expected
+corrections are limited to the background, position, and flex direction for
+known alias cases. Each variant is measured in a fresh document. Transitions
+are measured separately in one document.
+
+Upstream sections have a [prefix defect](../../../tests/browser/fixtures/ant-design-layout-section-prefix-observation.json) that applies container
+styling to Header, Content, and Footer. The observation is retained for
+separate analysis. Svelte preserves each section's styling, including with
+an explicit default or shared prefix. The raw custom prefix is compared with
+an ordinary section in a separate upstream document. The reference text
+container gets its font, color, and line height from `getDesignToken` for
+comparison with the native provider's text context. [Paired measurements](../../../tests/browser/fixtures/ant-design-layout-section-prefix-reference.json)
+
+Standalone fallback variables and `border-box` are available before
+hydration, including in legacy dark and compact modes. Inside Layout, the
+sections inherit the parent style without declaring new variables. Local
+`style` takes precedence. Updating the prefix preserves controls and their
+draft values and selection.

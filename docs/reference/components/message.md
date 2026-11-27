@@ -1,7 +1,7 @@
 # Message
 
-Создавайте экземпляр у владельца, чтобы компоненты и SSR-запросы не разделяли
-очередь. Один экземпляр поддерживает один смонтированный MessageHolder:
+Create the instance in its owner so components and SSR requests have
+independent queues. Each instance supports one mounted MessageHolder.
 
 ```svelte
 <script lang="ts">
@@ -28,137 +28,152 @@
 <Button onclick={save}>Сохранить</Button>
 ```
 
-`open` принимает `MessageConfig` с обязательным `content`. Методы
-`info`, `success`, `warning`, `error` и `loading` принимают скалярное значение,
-пассивный Snippet или объект с `content`. Числа, включая 0, выводятся текстом.
-Булевы значения и null дают пустое содержимое. После первого аргумента можно
-передать `duration` и `onClose` либо сразу `onClose`. Позиционные параметры
-имеют приоритет над полями объекта.
+`open` accepts `MessageConfig` with required `content`. `info`,
+`success`, `warning`, `error`, and `loading` accept a scalar value, a
+passive Snippet, or an object with `content`. Numbers, including 0, render
+as text. Booleans and `null` yield empty content. After the first
+argument, pass `duration` and `onClose` or just `onClose`. Positional
+arguments override object fields.
 
-Типизированный метод задаёт свой `type`. У `open` по умолчанию тип `info`.
-`type: null` даёт нейтральное сообщение. `icon` принимает декоративный Snippet
-или скалярное значение. Без своей иконки у статуса используется штатная
-иконка, а у `loading` она вращается. `onClick` получает нативное событие
-с корнем сообщения в `currentTarget`. В Snippet содержимого и иконки используйте
-пассивные элементы.
+A typed method sets its own `type`. `open` defaults to `info`.
+`type: null` gives a neutral message. `icon` accepts a decorative
+Snippet or scalar. Without a custom icon, the type uses its standard
+icon, which spins for `loading`. `onClick` receives a native event
+with the message root in `currentTarget`. Use passive elements in
+content and icon Snippets.
 
-Duration задаётся в секундах, по умолчанию 3; 0 отключает автоудаление.
-CreateMessage фиксирует defaults duration, pauseOnHover=true и maxCount;
-конфигурация сообщения может переопределить duration/pauseOnHover.
-Невалидная duration использует default. MaxCount ограничивает активные сообщения
-по FIFO, положительное конечное значение округляется вниз; без допустимого
-значения ограничения нет. Уходящие сообщения остаются в DOM до конца анимации
-и не занимают активные места. Hover сохраняет оставшееся время, уход указателя
-возобновляет отсчёт. На touch hover-пауза не включается.
+`duration` is in seconds and defaults to 3. Zero disables automatic
+removal. `createMessage` captures default `duration`,
+`pauseOnHover=true`, and `maxCount`. A message can override
+`duration` and `pauseOnHover`. Invalid duration uses the default.
+`maxCount` limits active messages in FIFO order. Positive finite
+values round down, and without a valid value there is no limit.
+Exiting messages stay in the DOM until the animation ends and do
+not count as active. Hover preserves the remaining time, and the
+countdown resumes when the pointer leaves. Touch does not pause
+on hover.
 
-Key — string или number; 0 и пустая строка являются допустимыми ключами.
-Повтор активного ключа обновляет содержимое на том же месте, перезапускает
-duration и заменяет onClose. Все handles этого активного сообщения ждут одно
-завершение. Уходящий ключ можно открыть заново: это отдельное сообщение,
-старый handle его не закроет. Destroy(key) закрывает ключ, destroy() — всю
-очередь экземпляра. Другие экземпляры независимы.
+Keys are strings or numbers. Zero and the empty string are valid.
+Reusing an active key updates content in place, restarts the
+duration, and replaces `onClose`. All handles for that active message
+wait for the same completion. An exiting key can reopen as a
+separate message, which the old handle cannot close. `destroy(key)`
+closes a key. `destroy()` closes the instance's entire queue. Other
+instances are independent.
 
-Возвращаемый MessageHandle можно вызвать для закрытия или ожидать через await/
-then. OnClose вызывается один раз при запросе закрытия, включая timer и FIFO;
-handle завершается true после анимации и фактического удаления DOM. Уходящий
-контент получает inert/aria-hidden. При reduced motion уход завершается сразу,
-включение этого режима завершает уже запущенную анимацию. Ошибка onClose не
-мешает закрытию остальных сообщений destroy(), после обработки она передаётся
-вызывающему коду.
+Call the returned `MessageHandle` to close it, or wait for it with
+`await` or `then`. `onClose` runs once when close is requested,
+including for timers and FIFO removal. The handle resolves to
+`true` after animation and actual DOM removal. Exiting content
+gets `inert` and `aria-hidden`. Under reduced motion, exit finishes
+immediately. Enabling it finishes an ongoing animation. An
+`onClose` error does not interrupt closure of other messages in
+`destroy()`. It propagates to the caller after processing.
 
-До первого монтирования сообщения можно поставить в очередь: SSR выводит
-скрытую поверхность без таймеров и callbacks. Отсчёт начинается после показа.
-Удаление holder или замена его message отменяет таймеры/анимации, очищает очередь
-без onClose и завершает ожидающие handles false. Поздние вызовы такого экземпляра
-возвращают false без постановки в очередь; повторное монтирование разрешает
-новые сообщения. Для последовательных действий проверяйте результат await,
-чтобы не продолжать сценарий после удаления holder.
+Messages can be queued before the first mount. SSR renders a hidden
+surface without timers or callbacks. The countdown starts after
+display. Removing the holder or changing its `message` cancels timers
+and animation, clears the queue without `onClose`, and resolves
+pending handles to `false`. Later calls on that instance return
+`false` without enqueueing. Remounting allows new messages. For
+sequential actions, check the result of `await` to stop if the
+holder was removed.
 
-Holder наследует тему, compact и направление ближайшего ConfigProvider.
-`rtl` явно переопределяет направление. Настройки поверхности можно задать
-в `createMessage` либо отдельными props `MessageHolder`, у которых приоритет.
-При использовании App те же настройки задаются через `App.message`.
-`MessageHolder.prefixCls` меняет namespace списка и всех сообщений; пустая строка
-наследует ConfigProvider.prefixCls.
-Canonical tokens и native popover/viewport/motion не зависят от публичных классов;
-private Notification metrics используют общий namespace отдельно от local prefix.
-[Raw замеры](../../../tests/browser/fixtures/ant-design-message-prefix-reference.json)
-фиксируют исходную потерю status-классов у уже показанной иконки при смене prefix.
-Отдельный public same-key refresh counterpart возвращает цвет. Native обновляет
-классы без повторного открытия, сохраняя очередь, handles, deadlines и внешний фокус.
+The holder inherits theme, compact mode, and direction from the
+nearest ConfigProvider. `rtl` overrides direction explicitly. Set
+surface options in `createMessage` or individual `MessageHolder`
+props, which take precedence. With App, set the same options
+through `App.message`.
 
-`theme.components.Message` настраивает zIndexPopup, contentBg и contentPadding,
-aliases и component algorithms. Отступ по умолчанию вычисляется без округления.
-Style сообщения и Holder сохраняют приоритет; локальные component variables
-другого cssVar prefix разрешаются на самом сообщении. Обновления меняют отдельные
-CSS declarations, сохраняя native viewport styles, очередь, handles и deadline
-таймеров. В теме Ant Design контейнер иконки повторяет исходную высоту строки;
-legacy-оформление сохраняется. [Проверки и исходные замеры](../theme-context.md#dialog-and-notification-checks).
+`MessageHolder.prefixCls` changes the list and message namespace.
+The empty string inherits `ConfigProvider.prefixCls`. Canonical
+tokens and native popover, viewport, and motion behavior are
+independent of public classes. Private Notification metrics use
+the shared namespace independently of the local prefix. Raw
+measurements record the upstream loss of status classes on an
+already visible icon when the prefix changes. A separate public
+same-key refresh restores its color. Svelte updates classes without
+reopening while preserving the queue, handles, deadlines, and
+external focus. [Raw measurements](../../../tests/browser/fixtures/ant-design-message-prefix-reference.json)
 
-Прежние min-width:0/overflow-wrap:anywhere у title сохранены. В официальной
-6.6.8 длинное неразрывное слово дало scrollWidth 3871px при карточке 1352px;
-это [отдельное наблюдение upstream](../../../tests/browser/fixtures/ant-design-message-wrap-observation.json).
-Raw CSS эталона не изменены; browser-сравнение явно учитывает только это отличие переноса.
+`theme.components.Message` sets `zIndexPopup`, `contentBg`,
+`contentPadding`, aliases, and component algorithms. Default padding
+is calculated without rounding. Message and holder styles retain
+precedence. Local component variables with another `cssVar` prefix
+resolve on the message itself. Updates change individual CSS
+declarations while preserving native viewport styles, queue,
+handles, and timer deadlines. In the Ant Design theme, the icon
+container matches the upstream line height. Legacy styling remains.
+[Tests and upstream measurements](../theme-context.md#dialog-and-notification-checks)
 
-Нативный manual popover показывает список по центру сверху. Свежие сообщения
-располагаются выше остальных.
-Top по умолчанию 8px: число задаёт px, строка — CSS-длину. Id/class/style
-относятся к поверхности списка. Фокус и клавиши Tab/Escape остаются у страницы;
-сообщение использует role=status, aria-atomic=true и декоративную иконку.
-Для срочного объявления можно явно задать role=alert. ConfigProvider.disabled
-не отключает обратную связь.
+The existing `min-width:0` and `overflow-wrap:anywhere` for the title
+are preserved. In official 6.6.8, a long unbroken word yielded
+`scrollWidth` of 3871px on a 1352px card. The raw reference CSS is
+unchanged. The browser comparison explicitly accounts for this
+one porting difference. [Upstream observation](../../../tests/browser/fixtures/ant-design-message-wrap-observation.json)
 
-Внутри Modal/Drawer размещайте holder в содержимом нужного dialog. При закрытом,
-скрытом или перекрытом другим модальным окном контексте поверхность скрыта,
-таймеры приостановлены; после возврата продолжается оставшееся время.
-При скрытии вкладки отсчёт также приостанавливается.
-Фоновые holders также ждут закрытия верхнего dialog. Отдельный holder нужен
-для сообщений другого контекста.
+A native manual popover displays the list at the top center. Newer
+messages appear above older ones. `top` defaults to 8px. A number is
+in pixels, while a string is a CSS length. `id`, `class`, and `style`
+apply to the list surface. Focus, Tab, and Escape stay with the page.
+A message uses `role=status`, `aria-atomic=true`, and a decorative
+icon. For an urgent announcement, set `role=alert` explicitly.
+`ConfigProvider.disabled` leaves feedback enabled.
 
-## Размещение и стек
+Inside a Modal or Drawer, place the holder in the intended dialog's
+content. If its context is closed, hidden, or covered by another
+modal, the surface stays hidden and timers pause. On return, the
+remaining time resumes. A hidden tab also pauses the countdown.
+Background holders wait for the top dialog to close. Use a separate
+holder for a different context.
 
-`getContainer` переносит поверхность в заданный DOM-узел. Getter вызывается
-в браузере без аргументов. При пустом результате учитывается
-`ConfigProvider.getPopupContainer`, затем `document.body`. Когда оба getter
-отсутствуют, поверхность остаётся в DOM-контексте holder. Смена целевого узла
-пересоздаёт поверхность и сохраняет очередь, handles, сроки и фокус за её пределами.
+## Placement and stack
 
-`stack: true` сворачивает список, когда активных сообщений больше трёх.
-`stack: { threshold: 2 }` задаёт свой порог. В свёрнутом стеке видна самая
-свежая карточка. Наведение мышью раскрывает список и приостанавливает отсчёт
-у записей с `pauseOnHover`. При уходе указателя продолжается оставшееся время.
+`getContainer` moves the surface to a DOM node. The getter runs in
+the browser without arguments. An empty result falls back to
+`ConfigProvider.getPopupContainer`, then `document.body`. When both
+getters are absent, the surface stays in the holder's DOM context.
+Changing the target recreates the surface and preserves the queue,
+handles, deadlines, and focus outside it.
 
-`transitionName` задаёт имя CSS-фаз `appear`, `enter` и `leave` у holder.
-Пустая строка отключает движение. Без настройки используется штатная анимация.
-Учитываются токен `motion` и системная настройка reduced motion.
+`stack: true` collapses the list once there are more than three active
+messages. `stack: { threshold: 2 }` sets a custom threshold. The
+latest card stays visible in the collapsed stack. Hover expands the
+list and pauses entries with `pauseOnHover`. The remaining time
+resumes when the pointer leaves.
 
-## Семантическое оформление
+`transitionName` names the holder's CSS `appear`, `enter`, and
+`leave` phases. An empty string disables motion. Without a value,
+the default animation applies. The `motion` token and system
+reduced-motion setting also apply.
 
-`classNames` и `styles` принимают объект слотов либо функцию с аргументом
-`{ props }`. Стили задаются строками inline CSS. `list` и `listContent`
-оформляют список, а `root`, `wrapper`, `icon` и `title` относятся к записи.
-Настройки списка можно задать в `ConfigProvider.message`, при создании очереди
-или в `MessageHolder`. Оформление отдельной записи также можно передать в
-`open` или типизированный метод.
+## Semantic styling
 
-Классы складываются. Стили применяются в порядке от `ConfigProvider.message`
-через настройки holder к записи. Явный `style` записи применяется последним.
-Для списка учитываются настройки поверхности, для записи функция получает
-поля `createMessage` и текущей записи.
+`classNames` and `styles` accept a slot object or a function receiving
+`{ props }`. Styles use inline CSS strings. `list` and `listContent`
+style the list. `root`, `wrapper`, `icon`, and `title` style an entry.
+List options can be set in `ConfigProvider.message`, when creating
+the queue, or in `MessageHolder`. Entry styles can also be passed to
+`open` or a typed method.
 
-## Сверка с Ant Design 6.6.8
+Classes accumulate. Styles apply from `ConfigProvider.message` through
+holder options to the entry. Explicit entry `style` applies last.
+List callbacks use surface options. Entry callbacks receive fields
+from `createMessage` and the current entry.
 
-`createMessage` с `MessageHolder` соответствует контекстному `message.useMessage`.
-В закреплённой документации Ant Design глобальные методы `message` обозначены
-как deprecated. Контекстный API доступен также через `App.useApp().message`.
-[Исходный справочник](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/message/index.en-US.md#examples)
+## Comparison with Ant Design 6.6.8
 
-Эталон использует `role="alert"`, нейтральный вид по умолчанию у `open` и
-приоритет полей объекта в типизированных вызовах. Svelte сохраняет
-`role="status"`, тип `info` и приоритет позиционных параметров. В двух прогонах
-исходной сборки удаление по ключу, вызов handle и вытеснение по FIFO убирали
-сообщения без `onClose` и завершения `then`. При автозакрытии наблюдались оба
-события. Svelte сохраняет завершение handle и `onClose` для программного закрытия.
-[Исходные замеры](../../../tests/browser/fixtures/ant-design-message-api-reference.json) ·
-[Браузерная проверка](../../../tests/browser/message/message-api.spec.ts) ·
-[Проверка SSR и типов](../../../tests/package/message/message-api.ssr.test.ts)
+`createMessage` with `MessageHolder` corresponds to contextual
+`message.useMessage`. The pinned Ant Design docs mark global
+`message` methods deprecated. The contextual API is also available
+as `App.useApp().message`. [Upstream reference](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/message/index.en-US.md#examples)
+
+The upstream reference uses `role="alert"`, a neutral default for
+`open`, and object field precedence in typed calls. Svelte retains
+`role="status"`, `info`, and positional argument precedence. In two
+runs of the original build, closing by key, calling a handle, and
+FIFO eviction removed messages without `onClose` or completion
+of `then`. Automatic close produced both events. Svelte retains
+handle completion and `onClose` for programmatic close.
+[Upstream measurements](../../../tests/browser/fixtures/ant-design-message-api-reference.json) · [Browser test](../../../tests/browser/message/message-api.spec.ts) ·
+[SSR and type tests](../../../tests/package/message/message-api.ssr.test.ts)

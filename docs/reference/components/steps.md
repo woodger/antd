@@ -13,131 +13,159 @@
 ]} />
 ```
 
-Steps показывает этапы процесса. Current управляется владельцем и отсчитывается
-от нуля; onChange сообщает запрошенный индекс, не меняя current самостоятельно.
-Владелец может проверить поля перед принятием перехода. Повторный выбор текущего
-шага, disabled и внешние обновления не вызывают callback. Без onChange список
-пассивный и не создаёт остановок Tab. Привязка bind:current не используется.
+Steps shows the stages of a process. The owner controls the zero-based
+`current` index. `onChange` reports the requested index and leaves
+`current` to the owner, which can validate fields before accepting the
+transition. Selecting the current step again, disabled steps, and
+external updates leave the callback uncalled. Without `onChange`, the
+list is passive and adds no Tab stops. There is no `bind:current`.
 
-Существующий тип StepsItem сохраняет стабильные строковые key и title.
-StepsDataItem дополнительно принимает необязательные/numeric key и title;
-для отсутствующих ключей используются позиции. При повторении string key
-остаётся первое вхождение; индексы относятся к этому нормализованному списку.
-Пустой список допустим. Конечное current округляется вниз и ограничивается
-диапазоном 0..items.length; NaN/Infinity дают 0. Current=items.length отмечает
-все автоматические шаги завершёнными без aria-current. Нормализация не
-перезаписывает значение владельца и не генерирует callbacks.
+The existing `StepsItem` type retains a stable string `key` and a
+`title`. `StepsDataItem` also accepts an optional or numeric key and
+optional title. Missing keys use positions. The first occurrence of a
+repeated string key wins, and indices refer to this normalized list.
+An empty list is valid. Finite `current` is rounded down and clamped to
+`0..items.length`. `NaN` and `Infinity` give 0.
+`current=items.length` marks all automatic steps complete without an
+`aria-current` step. Normalization leaves the owner's value and callbacks
+untouched.
 
-Автоматические статусы: finish до current, process на current, wait после него.
-Status меняет состояние текущего шага на wait/process/finish/error;
-items.status имеет приоритет над вычисленным состоянием. Disabled ограничивает
-выбор и не меняет статус или current. Корневой disabled наследует
-ConfigProvider.componentDisabled; false явно снимает его, сохраняя items.disabled.
+Automatic statuses are `finish` before `current`, `process` at `current`,
+and `wait` after it. `status` sets the current step to `wait`, `process`,
+`finish`, or `error`. `items.status` overrides the calculated status.
+`disabled` prevents selection while preserving status and `current`.
+Root `disabled` inherits `ConfigProvider.componentDisabled`. Explicit
+`false` overrides that while preserving `items.disabled`.
 
-Существующий StepsItem принимает string или Snippet в title/subTitle/content;
-новый StepsDataItem также принимает number/boolean/null. Ноль отображается,
-boolean не создаёт текст. Icon может быть текстом, числом или декоративным Snippet.
-Строки экранируются. Заголовок и подзаголовок находятся в нативной кнопке выбора
-и должны содержать только текст/phrasing-разметку без вложенных controls.
-Content находится отдельно и допускает блочную разметку; панели с полями
-и действиями остаются у владельца. Иконки и линии
-aria-hidden; icon также inert. Check/close используют существующий Icon.
-Выбранный шаг помечен aria-current="step"; доступное описание кнопки содержит
-локализованный статус и content. Собственных live-region и автофокуса нет.
+The existing `StepsItem` accepts strings or Snippets for `title`,
+`subTitle`, and `content`. `StepsDataItem` also accepts numbers,
+booleans, and `null`. Zero is displayed and booleans produce no text.
+`icon` can be text, a number, or a decorative Snippet. Strings are
+escaped. Title and subtitle are inside the native selection button.
+Use only text or phrasing content without nested controls for them.
+`content` is separate and accepts block markup. The owner handles
+panels with fields and actions. Icons and lines are `aria-hidden`,
+and the icon is also `inert`. Check and close use the existing Icon.
+The selected step has `aria-current="step"`. Its button's accessible
+description includes the localized status and content. Steps adds
+no live region or autofocus.
 
-Список использует ol/list, кнопки — естественные Tab/Shift+Tab, Enter и Space.
-Это не tablist: содержимое и переходы принадлежат владельцу. При удалении или
-отключении сфокусированного шага фокус переходит на следующий доступный шаг,
-затем предыдущий. Keyed-перестановка сохраняет сфокусированную кнопку.
-Если шагов/кнопок больше нет или Steps размонтирован, выбирается доступный
-сосед текущего dialog/документа. Явный выбор владельца сохраняется.
+The list uses `ol` with list semantics. Buttons use native Tab,
+Shift+Tab, Enter, and Space. The owner controls content and transitions,
+and the list has no tablist role. When the focused step is removed or
+disabled, focus moves to the next enabled step or the previous one.
+Keyed reordering preserves the focused button. If there are no steps
+or buttons left or Steps unmounts, focus moves to an accessible neighbor
+in the current dialog or document. Focus explicitly chosen by the
+owner is preserved.
 
-Orientation: horizontal/vertical, по умолчанию horizontal. Responsive=true
-переключает горизонтальный список в вертикальный при ширине viewport меньше
-532px; SSR до гидратации не измеряет viewport и использует orientation.
-При responsive=false сохраняется горизонтальная ориентация с внутренней
-прокруткой при нехватке места. Size: medium/small; отсутствующий size наследует
-small из ConfigProvider, остальные общие размеры дают medium.
-Темы, compact, primary и RTL используют токены. Reduced motion отключает
-встроенные transitions. Id/class/style и aria-describedby относятся к ol;
-aria-label/aria-labelledby задают имя, по умолчанию locale.steps.label.
+`orientation` accepts `horizontal` and `vertical`, defaulting to
+`horizontal`. `responsive=true` switches a horizontal list to vertical
+below a viewport width of 532px. Before hydration, SSR uses
+`orientation` without measuring the viewport. With
+`responsive=false`, the list remains horizontal with internal
+scrolling when space is limited. `size` is `medium` or `small`. An
+omitted size inherits `small` from ConfigProvider and uses `medium`
+for other shared sizes. Theme, compact mode, primary color, and
+RTL use tokens. Reduced motion disables built-in transitions.
+`id`, `class`, `style`, and `aria-describedby` apply to the `ol`.
+`aria-label` or `aria-labelledby` supplies the name, which defaults
+to `locale.steps.label`.
 
-Locale.steps содержит label/wait/process/finish/error. RuRU и enUS предоставляют
-все строки; вложенные частичные переводы сохраняют значения родительского
-ConfigProvider. Отсутствующие значения дополняются ruRU. Тексты items задаёт владелец.
+`locale.steps` contains `label`, `wait`, `process`, `finish`, and
+`error`. `ruRU` and `enUS` supply all strings. Nested partial
+translations retain values from the parent ConfigProvider. Any
+remaining missing value uses `ruRU`. The owner supplies item text.
 
-Type поддерживает default/dot/inline/navigation/panel, variant — filled/outlined.
-Panel всегда горизонтальный. Dot/inline используют вертикальные заголовки в
-горизонтальном списке; navigation сохраняет горизонтальные заголовки.
-Orientation задаёт направление списка, titlePlacement — размещение заголовков.
-Inline скрывает content в строке и показывает его в Tooltip по hover/focus;
-Snippet title сохраняет rich content, Escape закрывает tooltip без смены фокуса.
-Wrapper Tooltip находится внутри li, сохраняя нативную ol/li-семантику.
+`type` supports `default`, `dot`, `inline`, `navigation`, and `panel`.
+`variant` is `filled` or `outlined`. Panel is always horizontal.
+Dot and inline use vertical title placement in a horizontal list.
+Navigation retains horizontal titles. `orientation` controls list
+direction, and `titlePlacement` controls title placement. Inline
+hides content in the row and shows it in a Tooltip on hover or focus.
+A title Snippet preserves rich content. Escape closes the tooltip
+without moving focus. The Tooltip wrapper sits inside the `li` to
+preserve native list semantics.
 
-Initial сдвигает нумерацию, current и onChange в исходное пространство индексов;
-согласованная нормализация current и first-wins keys сохранена. MaxCount>=3
-ограничивает число реальных видимых шагов: первый, последний, текущий и ближайшие
-соседи по исходному приоритету. Разрывы заменяются disabled ellipsis; сами ellipsis
-не входят в maxCount. Номер и callback относятся к исходному item. Status ellipsis
-сохраняет error скрытого диапазона либо finish/wait по current. Ellipsis=true
-отдельно включает CSS-обрезку текста; offset задаёт начальную inline flex-cell.
+`initial` shifts numbering, `current`, and `onChange` into the upstream
+index space. Existing normalization of `current` and first-wins keys
+is preserved. `maxCount>=3` limits the actual visible steps. It keeps
+the first, last, current, and closest neighboring steps in upstream
+priority order. Disabled ellipses fill gaps and do not count toward
+`maxCount`. The number and callback refer to the original item.
+An ellipsis status preserves `error` in the hidden range or uses
+`finish` or `wait` based on `current`. `ellipsis=true` separately
+enables CSS truncation. `offset` sets an initial inline flex cell.
 
-Percent добавляет SVG progressbar к process-номеру, с исходной формулой dasharray;
-в inline percent игнорируется. Progressbar доступен assistive technology,
-декоративные иконки и стрелки panel скрыты. Новая ellipsis-иконка — точный SVG
-@ant-design/icons-svg 4.6.0 (git 7f2516ac91226d2b41f93b35cb5197c8d94f7189),
-MIT-лицензия уже включена в vendor/LICENSE.ant-design-icons.
+`percent` adds an SVG progressbar to the `process` number using the
+upstream dash array formula. Inline mode ignores it. The progressbar
+is exposed to assistive technology. Decorative icons and panel arrows
+are hidden. The new ellipsis icon is the exact SVG from
+`@ant-design/icons-svg` 4.6.0 (git
+`7f2516ac91226d2b41f93b35cb5197c8d94f7189`).
+The MIT license is included in `vendor/LICENSE.ant-design-icons`.
 
-ClassNames/styles принимают объект или функцию от {props}; root и item* слоты
-совпадают с upstream. Item classNames/styles используют root/wrapper/icon/section/
-header/title/subtitle/content/rail; локальные слои перекрывают общие, item.style
-перекрывает styles.root. Root style имеет приоритет над styles.root. Стрелки navigation наследуют
-colorTextDisabled активной темы; прямой --ant-steps-nav-arrow-color имеет приоритет.
-Item.onClick вызывается перед onChange, включая повторный выбор current;
-в disabled оба callback подавлены. Содержимое шага задаётся через content.
+`classNames` and `styles` accept an object or a function of `{ props }`.
+Root and `item*` slots match upstream. Item `classNames` and `styles`
+use `root`, `wrapper`, `icon`, `section`, `header`, `title`,
+`subtitle`, `content`, and `rail`. Local layers override shared
+layers, and `item.style` overrides `styles.root`. Root `style` takes
+precedence over `styles.root`. Navigation arrows inherit
+`colorTextDisabled` from the active theme. A direct
+`--ant-steps-nav-arrow-color` takes precedence. `item.onClick` runs
+before `onChange`, including when the current step is selected
+again. Both callbacks are suppressed when disabled. Supply step
+content through `content`.
 
-ConfigProvider.steps задаёт общие class/style/classNames/styles для десяти slots.
-Классы config и local накапливаются. Root styles идут в порядке config.styles.root
-→ config.style → local styles.root → local style; item-specific слои сохраняют приоритет.
-Callbacks получают прежние native props с вычисленными layout/type/titlePlacement
-и percent; текущие defaults/status/size и правила current не меняются.
-Undefined наследует steps-record, любой собственный объект, включая {}, заменяет его.
-В композиции Timeline, как в Source InternalContext, действуют только plain class/style:
-semantic classNames/styles Steps не применяются и их callbacks не вызываются.
+`ConfigProvider.steps` sets shared `class`, `style`, `classNames`, and
+`styles` for ten slots. Configuration and local classes accumulate.
+Root styles apply in order: `config.styles.root`, `config.style`,
+local `styles.root`, and local `style`. Item layers retain precedence.
+Callbacks receive the existing native props with calculated layout,
+`type`, `titlePlacement`, and `percent`. The current defaults, status,
+size, and `current` rules apply. `undefined` inherits the steps record.
+Any explicit object, including `{}`, replaces it. When composed in
+Timeline, as with upstream `InternalContext`, only plain `class` and
+`style` apply. The semantic `classNames` and `styles` for Steps are
+unused and their callbacks stay uncalled.
 
-Локальный prefixCls меняет классы root, layout, item и progress; пустая строка
-наследует ConfigProvider.prefixCls (по умолчанию ant-steps). CSS извлечён из закреплённого архива отдельным рецептом
-steps-prefix. Namespace --ant-steps-* / --ant-cmp-steps-* и общий marker
-ant-steps-css-var сохраняются. Смена prefix не пересоздаёт ol или кнопки, не меняет
-их ids, выбор и фокус. Components.Icon из iconRender наследует тот же prefix;
-восстановление фокуса при удалении шага от классов не зависит. Соседние Steps
-изолированы, локальные/semantic styles и компонентные токены сохраняют приоритет.
-Общий prefix ConfigProvider применяется и внутри Timeline.
-Настройки самого ConfigProvider.timeline и локальные Timeline слои сохраняют приоритет.
-Сверка: [36 исходных случаев и 4 обновления](../../../tests/browser/fixtures/ant-design-steps-config-reference.json),
-[браузер](../../../tests/browser/steps/steps-config.spec.ts),
-[публичные типы и SSR](../../../tests/package/steps/steps-config.ssr.test.ts), `?fixture=steps-config`.
+Local `prefixCls` changes root, layout, item, and progress classes.
+The empty string inherits `ConfigProvider.prefixCls` (`ant-steps` by
+default). The `steps-prefix` recipe extracts CSS from the pinned
+bundle. The `--ant-steps-*` and `--ant-cmp-steps-*` namespaces and
+the shared `ant-steps-css-var` marker are preserved. Prefix changes
+keep the `ol` and buttons, their IDs, selection, and focus.
+`components.Icon` in `iconRender` inherits the same prefix. Focus
+recovery after removing a step is independent of classes. Neighboring
+Steps are isolated. Local and semantic styles and component tokens
+retain precedence. The shared ConfigProvider prefix also applies
+inside Timeline. `ConfigProvider.timeline` settings and local Timeline
+layers retain precedence. The fixture is `?fixture=steps-config`.
+[36 upstream cases and four updates](../../../tests/browser/fixtures/ant-design-steps-config-reference.json) · [Browser tests](../../../tests/browser/steps/steps-config.spec.ts)
+· [Public types and SSR](../../../tests/package/steps/steps-config.ssr.test.ts)
 
-IconRender — Snippet<[originalIcon, info]>, где info содержит index/active/item/
-components.Icon. Можно отрендерить исходный Snippet или использовать переданный
-Svelte Icon-компонент.
-Bind:nativeElement возвращает ol; rootClassName добавляется к его class.
+`iconRender` is a `Snippet<[originalIcon, info]>`. `info` contains
+`index`, `active`, `item`, and `components.Icon`. Render the original
+Snippet or the supplied Svelte Icon component. `bind:nativeElement`
+returns the `ol`. `rootClassName` joins its class.
 
-Сохранены согласованные отличия v1 от React: нативные кнопки внутри именованного
-списка, keyed focus recovery, clamp current, responsive-порог 532px (исходный
-useBreakpoint версии 6.6.8 использует xs), componentDisabled и locale.steps.
-Произвольный prefixCls пока не перенесён.
-Wave работает для доступных items при общем onChange.
-Новые сценарии находятся в ?fixture=steps-variants и втором примере #steps;
-unit/SSR/Chromium проверяют layouts, collapse/index mapping, render Snippets,
-rich tooltip и доступность процента.
+The agreed v1 differences from React remain: native buttons in a
+named list, keyed focus recovery, a clamped `current`, the 532px
+responsive threshold (upstream 6.6.8 uses `xs` in `useBreakpoint`),
+`componentDisabled`, and `locale.steps`. Support for arbitrary
+`prefixCls` remains pending. Wave runs for enabled items when a
+shared `onChange` is supplied. New scenarios are in
+`?fixture=steps-variants` and the second `#steps` example. Unit,
+SSR, and Chromium tests cover layouts, collapsing and index mapping,
+rendering Snippets, rich tooltips, and accessible percentages.
 
-Source `theme.components.Steps` применяет исходные defaults, aliases и отдельные
-algorithms к размерам иконок/точек, шрифтам, цветам и navigation. Поддержаны
-CSS prefix/hash, нули/undefined и переданные во время выполнения CSS lengths.
-Semantic root styles и plain style сохраняют приоритет. CustomIconSize/customIconTop
-и iconTop создают переменные, но не меняют оформление,
-как в 6.6.8; то же относится к legacy waitIcon*/finishIcon* defaults.
-Метрики вариантов и композиции Timeline сверяются с официальным UMD в
-`?fixture=steps-theme`; native-only темы сохраняют прежнее оформление.
-
+Upstream `theme.components.Steps` applies source defaults, aliases,
+and separate algorithms to icon and dot sizes, fonts, colors, and
+navigation. CSS prefix and hash, zero and undefined values, and
+runtime CSS lengths are supported. Semantic root styles and plain
+`style` retain precedence. `customIconSize`, `customIconTop`, and
+`iconTop` produce variables without affecting visuals, as in 6.6.8.
+The same applies to legacy `waitIcon*` and `finishIcon*` defaults.
+Variant and Timeline composition metrics are compared with the
+official UMD in `?fixture=steps-theme`. Native-only themes retain
+their styling.

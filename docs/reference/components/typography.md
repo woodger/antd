@@ -1,10 +1,9 @@
 # Typography
 
-`Typography` — нативный `article` с типографическими стилями; `component` меняет
-его тег. `TypographyText`, `TypographyTitle`, `TypographyParagraph` и
-`TypographyLink` соответствуют Text/Title/Paragraph/Link Ant Design и
-добавляют операции над текстом. Точные контракты находятся в
-[typography.types.ts](../../../src/lib/typography/typography.types.ts).
+`Typography` is a native `article` with typography styles. `component`
+changes its tag. `TypographyText`, `TypographyTitle`, `TypographyParagraph`,
+and `TypographyLink` correspond to Ant Design's Text, Title, Paragraph, and
+Link and add text operations. [Type declarations](../../../src/lib/typography/typography.types.ts)
 
 ```svelte
 <script lang="ts">
@@ -22,111 +21,130 @@
 <TypographyLink href="/articles" target="_blank">Все статьи</TypographyLink>
 ```
 
-Text рендерит `span`, Title — `h1`–`h5` (по умолчанию `h1`), Paragraph — `div`,
-Link — `a`. У Link с `target="_blank"` и не заданным `rel` добавляется
-`noopener noreferrer`. `disabled` меняет оформление; кнопки copy/edit/expand
-сохраняют интерактивность, как в upstream. Decorations оборачивают текст вместе
-с действиями; `actions.placement` переносит панель в начало или конец.
+Text renders a `span`, Title an `h1` through `h5` (default `h1`),
+Paragraph a `div`, and Link an `a`. For a Link with `target="_blank"` and
+no `rel`, `noopener noreferrer` is added. `disabled` changes the styling.
+Copy, edit, and expand buttons stay interactive, as in upstream. Decorations
+wrap the text and actions together. `actions.placement` moves the action
+bar to the start or end.
 
-`copyable` принимает настройки text, format, icon, tooltips, tabIndex и onCopy.
-Async producer вызывается по клику; пустой text использует исходный children
-fallback. HTML копируется как `text/html` и `text/plain`; при отказе Clipboard API
-применяется document copy fallback. Успешное состояние сбрасывается через три
-секунды. Уже начатая операция и callback завершаются после unmount без нового
-таймера. Для богатого содержимого указывайте `copyable.text`: исходный array
-fallback объединяет верхний уровень, а узлы элементов превращает в
-`[object Object]`.
+`copyable` accepts `text`, `format`, `icon`, `tooltips`, `tabIndex`, and
+`onCopy`. Clicking calls an async producer. Empty `text` uses the upstream
+children fallback. HTML is copied as `text/html` and `text/plain`. When
+the Clipboard API fails, the document copy fallback is used. Success state
+resets after three seconds. A copy already in progress and its callback
+can finish after unmount without starting a new timer. Supply
+`copyable.text` for rich content. The upstream array fallback joins the
+top level and converts element nodes to `[object Object]`.
 
-`editable` управляет режимом через editing; callbacks сами не заменяют children.
-Редактор получает editable.text или строковые children. Ввод удаляет CR/LF,
-сохранение применяет trim. Enter вызывает onChange и onEnd, Escape — onCancel,
-blur — только onChange; IME и модификаторы Enter учитываются. Поддержаны
-triggerType, maxLength, autoSize, tooltip, icon и tabIndex. `enterIcon={null}`
-скрывает подтверждение; custom enterIcon snippet получает CSS class первым
-аргументом вместо React cloneElement. При закрытии фокус возвращается к edit icon.
-Редактор не становится control внешнего FormItem. При blur без relatedTarget
-проверка connected выполняется после Svelte tick: удаление focused DOM не должно
-сохранять draft. `bind:nativeElement` отсутствует во время editing и очищается
-при unmount.
+`editable.editing` controls edit mode. The owner updates children from
+the callbacks. The editor receives `editable.text` or string children.
+Input removes CR and LF, and saving trims whitespace. Enter calls
+`onChange` and `onEnd`, Escape calls `onCancel`, and blur calls only
+`onChange`. IME and Enter modifiers are taken into account.
+`triggerType`, `maxLength`, `autoSize`, `tooltip`, `icon`, and `tabIndex`
+are supported. `enterIcon={null}` hides the confirmation icon. A custom
+`enterIcon` Snippet receives the CSS class as its first argument in place
+of React's `cloneElement`. Closing returns focus to the edit icon. The
+editor is independent of an enclosing FormItem. On blur without
+`relatedTarget`, the connection check runs after Svelte's `tick` so
+removing a focused element discards the draft. `bind:nativeElement` is
+absent while editing and cleared on unmount.
 
-Без действий и других настроек ellipsis использует native CSS. JS-ветка измеряет
-строки и операции, ищет границу по UTF-16, сохраняет suffix и полный aria-label.
-Поддержаны rows, expandable/collapsible, symbol, defaultExpanded, expanded,
-onExpand, onEllipsis и tooltip. DefaultExpanded читается один раз. Text исключает
-rows/expandable/onExpand; для responsive ширины Text задайте style. Link принимает
-boolean ellipsis. Tooltip измеряет native overflow при наведении и скрывается
-над панелью действий. Его trigger и hover delays наследуют ConfigProvider.tooltip;
-локальные options приоритетнее, включая 0 и trigger=[]. Вложенный tooltip record
-заменяет родительский целиком. Без настроек trigger=hover и обе задержки равны 0.1s.
-Поддержаны focus/click/contextMenu и массивы событий; source config разделяет
-их действия, поэтому hover leave может закрыть подсказку, открытую click/focus.
-Повторный contextMenu переключает видимость, обычный click её закрывает.
-Локальные showAction/hideAction независимо заменяют эти действия; focusDelay и
-blurDelay не наследуют mouse delays. Их приоритет, touch fallback и поведение
-внешнего закрытия описаны в [Tooltip](tooltip.md#tooltip).
-Подсказки copy/edit наследуют те же настройки; копирование, success title и вход
-в редактор сохраняют свои обычные действия.
-Ellipsis Tooltip также принимает destroyOnHidden:
-при закрытии удаляется его содержимое, измерение текста и native shell сохраняются.
-Как в upstream, onOpenChange сообщает raw open даже для текста без усечения,
-но сама подсказка остаётся скрытой. Для native CSS ellipsis сначала требуется
-измерение при наведении; JS ellipsis измеряется независимо от Tooltip trigger.
+With no actions or other options, ellipsis uses native CSS. The JavaScript
+path measures lines and actions, finds the boundary in UTF-16, and
+preserves the suffix and full `aria-label`. It supports `rows`,
+`expandable`/`collapsible`, `symbol`, `defaultExpanded`, `expanded`,
+`onExpand`, `onEllipsis`, and `tooltip`. `defaultExpanded` is read once.
+Text excludes `rows`, `expandable`, and `onExpand`. Set a `style` width
+for responsive Text. Link accepts boolean `ellipsis`.
 
-Scalar children и массивы передают точные границы текста до SSR. В массиве snippet
-остаётся атомом. Обычный текстовый children snippet распознаётся после mount через
-DOM; при JS truncation и editing исходный snippet остаётся в скрытом `span`, чтобы
-получать обновления. Его полный текст поэтому остаётся в textContent, а видимый обрезанный
-текст доступен через innerText. Для точного initial SSR editing используйте
-scalar children или editable.text. Богатый snippet не разбирается как React tree.
+Tooltip measures native overflow on hover and hides over the action bar.
+It inherits the trigger and hover delays from `ConfigProvider.tooltip`.
+Local options take precedence, including `0` and `trigger=[]`. A nested
+tooltip record replaces the parent's record in full. By default,
+`trigger=hover` and both delays are 0.1s. It supports `focus`, `click`,
+`contextMenu`, and arrays of events. Upstream configuration treats their
+actions independently, so leaving hover can close a tooltip opened by
+click or focus. Another context-menu event toggles it. An ordinary click
+closes it. Local `showAction` and `hideAction` override these actions
+independently. `focusDelay` and `blurDelay` are independent of the mouse
+delays. The Tooltip reference covers their precedence, touch fallback, and
+outside dismissal. [Tooltip](tooltip.md#tooltip)
 
-ConfigProvider.typography задаёт class/style и semantic root/actions/action/textarea;
-локальные слои имеют приоритет. Callback видит разрешённые prefixCls/direction и
-фактический component. Locale.typography и исходный locale.Text задают подписи
-действий; Text имеет приоритет при совместном использовании. Сохранены dark,
-compact, RTL, native focus и исходные heading margins.
+Copy and edit tooltips inherit the same configuration. Copying, the
+success title, and entering edit mode retain their normal behavior.
+The ellipsis tooltip also accepts `destroyOnHidden`. Closing removes its
+content while preserving text measurement and the native shell. As in
+upstream, `onOpenChange` reports the raw open state even for text without
+truncation, while the tooltip itself stays hidden. Native CSS ellipsis
+first needs a hover measurement. JavaScript ellipsis is measured
+independently of the Tooltip trigger.
 
-Все варианты Typography используют локальный `prefixCls` либо наследуют общий
-`ConfigProvider.prefixCls`; пустое значение выбирает наследование. Prefix охватывает
-заголовки, decorations, ellipsis, actions и отдельный editor root. Смена prefix
-сохраняет DOM, draft/selection/focus и состояние копирования. Namespace theme
-variables и prefix вложенного Tooltip остаются независимыми.
+Scalar children and arrays provide exact text boundaries for SSR. A
+Snippet in an array remains an atomic item. A plain-text children Snippet
+is detected through the DOM after mount. During JavaScript truncation and
+editing, the original Snippet stays in a hidden `span` to receive updates.
+Its full text stays in `textContent`, while the visible truncated text is
+available through `innerText`. For precise editing on the initial server
+render, use scalar children or `editable.text`. Rich Snippets are opaque
+to Typography.
 
-`theme.components.Typography` применяет `titleMarginTop`/`titleMarginBottom`,
-alias overrides и algorithms к обычному тексту и редактору. Global tokens,
-вложенные/reset/sibling scopes и отдельный CSS-variable prefix следуют source;
-semantic и локальный style сохраняют приоритет. Смена темы сохраняет DOM,
-draft/selection/focus редактора и ожидающее async-копирование. Без source theme
-сохраняются прежние CSS defaults.
+`ConfigProvider.typography` supplies `class`, `style`, and the semantic
+`root`, `actions`, `action`, and `textarea` slots. Local layers take
+precedence. A callback sees the resolved `prefixCls` and `direction` and
+the actual `component`. `locale.typography` and upstream's `locale.Text`
+provide action labels. `Text` takes precedence when both are used. Dark
+mode, compact mode, RTL, native focus, and original heading margins are
+preserved.
 
-Tooltip использует общий native popover внутри корня вместо React body portal.
-Доступны общие 12 placement, container getters, color, локальные popup prefixCls и
-openClassName и semantic styles. Callbacks получают разрешённые trigger/delays
-и входной open владельца. Изменение config сохраняет popup DOM, ввод, выделение
-и фокус. Ellipsis Tooltip участвует в ближайшем `Tooltip.UniqueProvider`.
-`ellipsis.tooltip.unique=false` сохраняет отдельную панель. Анимации и lifecycle
-следуют [контракту Tooltip](tooltip.md#общая-подсказка-для-нескольких-триггеров).
-Границы fresh для opaque Snippet и геометрии CSS-transform/scroll-container
-описаны в Tooltip.
-В исходном Ellipsis memoization не учитывает смену prefix: во вложенном provider
-кнопки copy/edit могут сохранить старые классы и потерять оформление. Raw live
-замеры и fresh mount с теми же public props сохранены в
-[prefix-эталоне](../../../tests/browser/fixtures/ant-design-typography-prefix-reference.json).
-Native обновляет классы действий вместе с корнем; этот дефект не перенесён.
-Проверки prefix: [браузер](../../../tests/browser/typography/typography-prefix.spec.ts) и
-[SSR](../../../tests/package/typography/typography-prefix.ssr.test.ts), `?fixture=typography-prefix`.
+Every Typography variant uses a local `prefixCls` or inherits
+`ConfigProvider.prefixCls`. An empty value inherits it. The prefix covers
+headings, decorations, ellipsis, actions, and the separate editor root.
+Changing it preserves DOM, drafts, selection, focus, and copy state. The
+theme variable namespace and nested Tooltip prefix remain independent.
 
-Ширина actions сверяется с
-[DOM/CSS-снимком Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-typography-actions-reference.json)
-в изолированном ShadowRoot. Так сравнение использует одинаковые шрифты текущего
-браузера в Chromium и Headless Shell; точность и границы двухстрочного текста сохранены.
+`theme.components.Typography` applies `titleMarginTop`, `titleMarginBottom`,
+alias overrides, and algorithms to regular text and the editor. Global
+tokens, nested, reset, and sibling scopes, and a separate CSS variable
+prefix follow upstream. Semantic and local styles keep their precedence.
+Theme changes preserve the DOM, editor draft, selection, focus, and any
+pending async copy. Without the upstream theme, the previous CSS defaults
+apply.
 
-Ellipsis Tooltip defaults, semantic callbacks и события сверяются с
-[23 UMD-сценариями / 29 кадрами и 21 event trace](../../../tests/browser/fixtures/ant-design-typography-tooltip-reference.json):
-[SSR](../../../tests/package/typography/typography-tooltip.ssr.test.ts),
-[browser](../../../tests/browser/typography/typography-tooltip.spec.ts), `?fixture=typography-tooltip`.
-Эталон использует runtime CSS официального UMD без статического antd.css;
-native overflow измеряется под trigger=[] до записи последовательностей событий.
-[73 исходных CSS rules](../../../src/lib/vendor/typography.css) воспроизводятся
-[рецептом](../../../tools/ant-design-css-recipes.json). Иконки взяты из
-@ant-design/icons-svg 4.6.0 под существующей
-[MIT-лицензией](../../../src/lib/vendor/LICENSE.ant-design-icons).
+Tooltip uses the shared native popover inside the root in place of a
+React portal to the body. It supports the 12 shared placements, container
+getters, color, local popup `prefixCls` and `openClassName`, and semantic
+styles. Callbacks receive the resolved trigger and delays and the owner's
+input `open` value. Configuration updates preserve popup DOM, input,
+selection, and focus. The ellipsis tooltip uses the nearest
+`Tooltip.UniqueProvider`. `ellipsis.tooltip.unique=false` keeps its own
+panel. Tooltip also defines the animation and lifecycle, the limits of
+`fresh` for opaque Snippets, and the behavior with CSS transforms and
+scroll containers. [Tooltip contract](tooltip.md#общая-подсказка-для-нескольких-триггеров)
+
+Upstream Ellipsis memoization overlooks prefix changes. Inside a nested
+provider, copy and edit buttons can retain old classes and lose their
+styles. The prefix reference records raw live measurements and a fresh
+mount with the same public props. The Svelte implementation updates
+action classes with the root. The prefix fixture is
+`?fixture=typography-prefix`. [Prefix reference](../../../tests/browser/fixtures/ant-design-typography-prefix-reference.json) ·
+[Browser tests](../../../tests/browser/typography/typography-prefix.spec.ts) · [SSR tests](../../../tests/package/typography/typography-prefix.ssr.test.ts)
+
+Action width is checked against a DOM and CSS snapshot of Ant Design
+6.6.8 in an isolated ShadowRoot. This uses the current browser's fonts
+for both sides in Chromium and Headless Shell and preserves the precision
+and boundaries of two-line text. [Snapshot](../../../tests/browser/fixtures/ant-design-typography-actions-reference.json)
+
+Ellipsis Tooltip defaults, semantic callbacks, and events are compared
+against official UMD scenarios. The reference uses the official UMD's
+runtime CSS without static `antd.css`. Native overflow is measured under
+`trigger=[]` before recording event sequences. The fixture is
+`?fixture=typography-tooltip`. [23 UMD scenarios, 29 frames, and 21 event traces](../../../tests/browser/fixtures/ant-design-typography-tooltip-reference.json)
+· [SSR tests](../../../tests/package/typography/typography-tooltip.ssr.test.ts) · [Browser tests](../../../tests/browser/typography/typography-tooltip.spec.ts)
+
+The recipe reproduces 73 upstream CSS rules. [Upstream CSS](../../../src/lib/vendor/typography.css) ·
+[Recipe](../../../tools/ant-design-css-recipes.json)
+
+Icons come from `@ant-design/icons-svg` 4.6.0 under the existing MIT
+license. [MIT license](../../../src/lib/vendor/LICENSE.ant-design-icons)

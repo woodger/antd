@@ -12,108 +12,129 @@
 </Skeleton>
 ```
 
-Skeleton показывает структуру будущего содержимого при первой загрузке.
-Loading по умолчанию true; active и round — false, avatar — false,
-title и paragraph — true. При loading=true children не монтируются;
-при переходе к false монтируется Snippet children. Повторный переход к true
-размонтирует содержимое и уничтожает его локальное состояние и нативные черновики.
-Данные, которые должны переживать такую замену, хранит владелец. Для обновления
-уже показанной формы используйте Spin с сохранёнными children.
+Skeleton shows the structure of content that is loading for the first
+time. `loading` defaults to `true`. `active`, `round`, and `avatar`
+default to `false`. `title` and `paragraph` default to `true`. While
+`loading=true`, children remain unmounted. Changing it to `false`
+mounts the children Snippet. Switching back to `true` unmounts the
+content and discards its local state and native drafts. Store data that
+must survive the swap in the owner. For an update to a form that is
+already visible, use Spin to keep its children mounted.
 
-Avatar принимает boolean или объект с shape=circle/square и size=small/medium/
-large либо числом в px. По умолчанию составной Skeleton использует large:
-40px, compact — 36px. Small/medium соответствуют control-height-sm/control-height;
-ConfigProvider.componentSize не меняет выбранный размер. Без paragraph, но с
-title автоматическая форма square, в остальных случаях circle. Числовой размер
-0 допустим; отрицательный или неконечный размер использует large.
+`avatar` accepts a boolean or an object with `shape=circle/square` and
+`size=small/medium/large` or a size in pixels. The main Skeleton uses
+`large` by default, at 40px or 36px in compact mode. `small` and
+`medium` correspond to `control-height-sm` and `control-height`.
+`ConfigProvider.componentSize` leaves the selected size intact. With
+`title` and no `paragraph`, the automatic shape is `square`. Otherwise
+it is `circle`. A numeric size of 0 is valid. Negative or non-finite
+sizes use `large`.
 
-Title принимает boolean или { width }; paragraph — boolean или { rows, width }.
-Ширина — неотрицательное число в px или CSS-строка. Для title по умолчанию
-используется 38% без avatar и 50% с avatar при наличии paragraph; без paragraph
-заголовок занимает полную ширину. Paragraph по умолчанию содержит три строки
-без avatar при наличии title, в остальных сочетаниях — две.
-Скалярная ширина задаёт последнюю строку; массив задаёт ширину каждой строки.
-Пропущенные элементы массива используют обычные CSS-правила, включая стандартные
-61% для последней строки из трёх и более. Без avatar или title последняя строка
-также получает 61%. Rows округляется вниз и ограничивается 1000; 0 допустим,
-отрицательные/NaN/Infinity используют рассчитанное число строк по умолчанию.
-Пустые строки и некорректные числовые ширины используют значения по умолчанию.
+`title` accepts a boolean or `{ width }`. `paragraph` accepts a boolean
+or `{ rows, width }`. Width is a nonnegative number in pixels or a CSS
+string. With a paragraph, title width defaults to 38% without an avatar
+or 50% with one. Without a paragraph, the title fills the width. The
+paragraph defaults to three rows with a title and no avatar, and two
+rows in the other combinations. A scalar width sets the final row. An
+array sets each row's width. Missing array elements use ordinary CSS
+rules, including the default 61% for the last row when there are at least
+three. The final row also gets 61% when the avatar or title is absent.
+`rows` is rounded down and capped at 1000. Zero is valid. Negative,
+`NaN`, and infinite values use the calculated default row count. Empty
+strings and invalid numeric widths use defaults.
 
-Round скругляет title и строки paragraph. Active включает CSS-анимацию;
-prefers-reduced-motion отключает её динамически. Каркас наследует цвета,
-плотность и направление из ConfigProvider. Аватар основного каркаса сохраняет пропорцию 1:1;
-большие размеры и ширины ограничены доступным контейнером. Компонент не
-выполняет запросов, не создаёт таймеров и не измеряет DOM для разметки.
-SSR сразу выводит каркас или готовое содержимое согласно loading.
+`round` rounds the title and paragraph rows. `active` enables CSS
+animation. `prefers-reduced-motion` disables it dynamically. The skeleton
+inherits colors, density, and direction from ConfigProvider. The main
+avatar keeps a 1:1 aspect ratio. Large sizes and widths are constrained
+by the available container. Skeleton performs no requests, creates no
+timers, and needs no DOM measurements for its markup. SSR renders the
+skeleton or ready content immediately according to `loading`.
 
-Корень — постоянная именованная group; id/class/style и aria-label/labelledby/
-describedby относятся к ней. Busy-контейнер получает aria-busy; отдельный
-status вне него объявляет Locale.skeleton.loadingText с polite/atomic.
-Плейсхолдеры декоративные, без доступных заголовков, controls и остановок Tab.
-Ru/en-тексты — «Загрузка…»/«Loading…»; отсутствующие поля locale.skeleton
-используют ruRU. Для статического превью aria-hidden скрывает всю группу и
-подавляет status. ConfigProvider.disabled не скрывает обратную связь.
+The root is a persistent named group. `id`, `class`, `style`,
+`aria-label`, `aria-labelledby`, and `aria-describedby` apply to it.
+The busy container receives `aria-busy`. A separate status outside it
+announces `locale.skeleton.loadingText` with polite, atomic updates.
+Placeholders are decorative, without accessible headings, controls, or
+Tab stops. Russian and English texts are `Загрузка…` and `Loading…`.
+Missing fields in `locale.skeleton` fall back to `ruRU`. For a static
+preview, `aria-hidden` hides the whole group and suppresses the status.
+`ConfigProvider.disabled` leaves the feedback visible.
 
-ConfigProvider.skeleton задаёт class/style и object/function classNames/styles.
-Вложенный record заменяется целиком; undefined наследует родительский.
-Semantic slots root/header/section/avatar/title/paragraph объединяются с локальными;
-callbacks получают defaults avatar=false, title=true, paragraph=true и исходные
-optional props, включая отсутствующие active/loading.
-Root styles применяются в порядке context styles.root → context style → local styles.root.
-Существующие локальные class/style остаются на постоянной group. Новые rootClassName,
-context class/style и semantic root относятся к декоративному каркасу и отсутствуют
-при loading=false. Это сохраняет прежний native контракт без дублирования padding.
+`ConfigProvider.skeleton` sets `class`, `style`, and object or function
+`classNames` and `styles`. A nested record replaces the full parent
+record. `undefined` inherits it. The `root`, `header`, `section`,
+`avatar`, `title`, and `paragraph` semantic slots are combined with
+local values. Callbacks receive `avatar=false`, `title=true`, and
+`paragraph=true` by default, along with original optional props including
+omitted `active` or `loading`. Root styles apply in the order context
+`styles.root`, context `style`, and local `styles.root`. Existing local
+`class` and `style` stay on the persistent group. The new `rootClassName`,
+context `class` and `style`, and semantic root relate to the decorative
+skeleton and are absent when `loading=false`. This preserves the native
+contract and avoids duplicated padding.
 
-Локальный prefixCls меняет BEM-классы каркаса; иначе он наследует ConfigProvider
-(по умолчанию ant-skeleton);
-переменные темы сохраняют свой namespace. Вложенные avatar/title/paragraph принимают
-class и prefixCls, которые заменяют соответствующие semantic class и default prefix,
-как при spread в исходнике. Их style заменяется объединённым semantic style;
-для оформления этих частей используйте styles.avatar/title/paragraph.
-Bind:nativeElement указывает на div каркаса, при loading=false и unmount очищается
-до undefined. Bind:ref даёт объект с nativeElement, равным null без каркаса;
-при unmount сам ref очищается до undefined. Refs не присваиваются при SSR.
+A local `prefixCls` changes the skeleton's BEM classes. Otherwise it
+inherits ConfigProvider's prefix (`ant-skeleton` by default). Theme
+variables retain their namespace. Nested avatar, title, and paragraph
+accept `class` and `prefixCls`, which replace the corresponding
+semantic class and default prefix as with the spread in the upstream
+implementation. The combined semantic style replaces their `style`.
+Use `styles.avatar`, `styles.title`, and `styles.paragraph` to style
+those parts. `bind:nativeElement` points to the skeleton's `div` and
+clears to `undefined` when `loading=false` or on unmount. `bind:ref`
+gives an object whose `nativeElement` is `null` without the skeleton.
+The ref itself clears to `undefined` on unmount. Refs are unassigned
+during SSR.
 
-Если loading удаляет сфокусированные children, фокус предварительно переходит
-на постоянную group с tabindex=-1. Он остаётся там после завершения; Tab входит
-в новое содержимое. Skeleton не фокусирует новые controls автоматически и не
-меняет фокус, выбранный снаружи. При unmount припаркованный фокус переходит к
-доступному сохранённому соседу в текущем dialog/документе. Escape остаётся
-у содержащего Modal/Drawer.
+If `loading` removes focused children, focus first moves to the
+persistent group with `tabindex=-1`. It stays there when loading ends,
+and Tab enters the new content. Skeleton leaves new controls unfocused
+and respects focus chosen outside. When unmounting with focus on the
+group, focus moves to an accessible saved neighbor in the current
+dialog or document. The containing Modal or Drawer handles Escape.
 
-Самостоятельные `Skeleton.Avatar`, `Skeleton.Button`, `Skeleton.Input`, `Skeleton.Image`
-и `Skeleton.Node` доступны также как SkeletonAvatar/Button/Input/Image/Node. Это одни
-и те же Svelte-компоненты. Avatar/Button/Input наследуют componentSize; локальный size
-имеет приоритет, включая 0 у Avatar. Поддержаны small/medium/large;
-Avatar принимает числовой размер. У основного Skeleton default avatar остаётся large.
+The standalone `Skeleton.Avatar`, `Skeleton.Button`, `Skeleton.Input`,
+`Skeleton.Image`, and `Skeleton.Node` are also exported as
+`SkeletonAvatar`, `SkeletonButton`, `SkeletonInput`, `SkeletonImage`,
+and `SkeletonNode`. These are the same Svelte components. Avatar,
+Button, and Input inherit `componentSize`. A local size takes
+precedence, including 0 for Avatar. They support `small`, `medium`, and
+`large`. Avatar also accepts a number. The main Skeleton's avatar
+still defaults to `large`.
 
-Button принимает circle/square/round/default и block; Input поддерживает block.
-Это span-плейсхолдеры, которые не добавляют button/input, live status или остановку Tab.
-Image выводит исходный декоративный SVG; Node рисует пустую область либо Svelte children
-snippet и сохраняет её состояние при изменении темы/размера/prefix. Active анимирует
-placeholder; reduced motion отключает его анимацию.
-Node поддерживает исходный internalClassName: он заменяет стандартный content class.
-При reduced motion фон сохраняется, а загрузочная анимация останавливается.
+Button accepts `circle`, `square`, `round`, `default`, and `block`.
+Input supports `block`. These are `span` placeholders without a
+button, input, live status, or Tab stop. Image renders the original
+decorative SVG. Node renders an empty area or a Svelte children Snippet
+and preserves its state across theme, size, and prefix changes.
+`active` animates the placeholder. Reduced motion stops the animation
+while keeping the background. Node supports the original
+`internalClassName`, which replaces the default content class.
 
-У primitives object classNames/styles задают root/content. Class/rootClassName относятся
-к внешнему div, styles.root применяется к нему после component variables. Style относится
-к content и имеет приоритет над styles.content и числовым размером Avatar. Локальный
-prefixCls меняет BEM-классы; иначе он наследует ConfigProvider (по умолчанию ant-skeleton).
-Переменные темы сохраняют namespace.
-Primitives повторяют исходную изоляцию от ConfigProvider.skeleton: используют размер,
-тему и prefix, а component record основного Skeleton к ним не применяется.
+On the primitives, object `classNames` and `styles` set `root` and
+`content`. `class` and `rootClassName` apply to the outer `div`.
+`styles.root` applies there after component variables. `style` applies
+to the content and takes precedence over `styles.content` and the
+numeric Avatar size. A local `prefixCls` changes the BEM classes.
+Otherwise the component inherits the ConfigProvider prefix
+(`ant-skeleton` by default). Theme variables retain their namespace.
+As upstream, the primitives are independent of `ConfigProvider.skeleton`.
+They use the shared size, theme, and prefix without applying the main
+Skeleton record.
 
-Тема Skeleton подготавливает шесть текущих tokens для основного каркаса и primitives,
-поддерживает gradientFromColor/gradientToColor, overrides, aliases/algorithm и
-CSS-variable prefix/key/hash. Основной Skeleton сохраняет native host/status/focus,
-размеры и normalization. Основной Skeleton и primitives наследуют общий
-ConfigProvider prefix; React development warnings остаются следующим этапом.
+The Skeleton theme supplies six current tokens for the main Skeleton
+and the primitives. It supports `gradientFromColor`, `gradientToColor`,
+overrides, aliases, an algorithm, and the CSS variable prefix, key, and
+hash. The main Skeleton keeps its native host, status, focus behavior,
+sizes, and normalization. The main Skeleton and the primitives inherit
+the shared ConfigProvider prefix. Porting React development warnings
+remains pending.
 
-[98 UMD-сценариев](../../../tests/browser/fixtures/ant-design-skeleton-element-reference.json)
-сверяют каждый primitive с Ant Design 6.6.8 в стандартном режиме браузера, с одинаковой
-унаследованной typography/color из global design tokens.
-[34 сценария основного Skeleton](../../../tests/browser/fixtures/ant-design-skeleton-main-reference.json)
-сверяют классы, объявленные slot styles, наследование и вложенные props.
-Постоянная группа, title/div, flex/responsive layout и нормализация сохраняют
-native поведение и не выдаются за исходную React-разметку.
-
+The primitive scenarios compare each primitive with Ant Design 6.6.8
+in standards mode with matching inherited typography and color from
+global design tokens. The main Skeleton scenarios check classes,
+declared slot styles, inheritance, and nested props. The persistent
+group, title `div`, flex and responsive layout, and normalization are
+specific to the native implementation. [98 UMD primitive scenarios](../../../tests/browser/fixtures/ant-design-skeleton-element-reference.json)
+· [34 main Skeleton scenarios](../../../tests/browser/fixtures/ant-design-skeleton-main-reference.json)
