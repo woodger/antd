@@ -192,9 +192,9 @@ export function getPopupPosition(input: PopupAlignmentGeometry & {
   const initial = input.align;
   const visibleRegion = input.visible;
   const visibleFirst = initial.htmlRegion === 'visibleFirst';
-  const visible = initial.htmlRegion === 'scroll' || visibleFirst
+  const scoreArea = initial.htmlRegion === 'scroll' || visibleFirst
     ? input.scroll ?? visibleRegion : visibleRegion;
-  const adjustArea = visibleFirst ? visibleRegion : visible;
+  const flipBoundary = visibleFirst ? visibleRegion : scoreArea;
   const target = {
     width: input.target.width,
     height: input.target.height,
@@ -212,140 +212,159 @@ export function getPopupPosition(input: PopupAlignmentGeometry & {
   let y = targetPoint.y - sourcePoint.y + offsetY;
   const flips = { ...input.flips };
 
-  // Assesses the entry of the position into the area used by the current overflow strategy.
-  function area(left: number, top: number, region = visible) {
-    const l = Math.max(popup.left + left, region.left);
-    const t = Math.max(popup.top + top, region.top);
-    const r = Math.min(popup.left + left + popup.width, region.right);
-    const b = Math.min(popup.top + top + popup.height, region.bottom);
-    return Math.max(0, (r - l) * (b - t));
-  }
-
-  const originalArea = area(x, y);
-  const originalRecommend = area(x, y, visibleRegion);
-  // With the same area, visibleFirst compares the remaining visible area.
-  const prefer = (left: number, top: number) => {
-    const next = area(left, top);
-    return next > originalArea || next === originalArea
-      && (!visibleFirst || area(left, top, visibleRegion) >= originalRecommend);
-  };
-  const sourceTL = getPoint(popup, 'tl');
-  const sourceBR = getPoint(popup, 'br');
-  const targetTL = getPoint(target, 'tl');
-  const targetBR = getPoint(target, 'br');
-  const originalX = popup.left + x;
-  const originalY = popup.top + y;
-  const overflow = initial.overflow ?? {};
-  // Reserves numerical restrictions, including the allowable zero value.
-  const supports = (value: boolean | number | undefined) =>
-    typeof value === 'boolean' ? value : value !== undefined && value >= 0;
-
-  if (supports(overflow.adjustY) && source[0] === 't'
-    && (originalY + popup.height > adjustArea.bottom || flips.bt)) {
-    const next = source[0] === destination[0]
-      ? y - popup.height + target.height : targetTL.y - sourceBR.y - offsetY;
-    flips.bt = prefer(x, next);
-    if (flips.bt) {
-      y = next;
-      offsetY = -offsetY;
-      resultPoints = [reverse(resultPoints[0], 0), reverse(resultPoints[1], 0)];
-    }
-  }
-  if (supports(overflow.adjustY) && source[0] === 'b'
-    && (originalY < adjustArea.top || flips.tb)) {
-    const next = source[0] === destination[0]
-      ? y + popup.height - target.height : targetBR.y - sourceTL.y - offsetY;
-    flips.tb = prefer(x, next);
-    if (flips.tb) {
-      y = next;
-      offsetY = -offsetY;
-      resultPoints = [reverse(resultPoints[0], 0), reverse(resultPoints[1], 0)];
-    }
-  }
-  if (supports(overflow.adjustX) && source[1] === 'l'
-    && (originalX + popup.width > adjustArea.right || flips.rl)) {
-    const next = source[1] === destination[1]
-      ? x - popup.width + target.width : targetTL.x - sourceBR.x - offsetX;
-    flips.rl = prefer(next, y);
-    if (flips.rl) {
-      x = next;
-      offsetX = -offsetX;
-      resultPoints = [reverse(resultPoints[0], 1), reverse(resultPoints[1], 1)];
-    }
-  }
-  if (supports(overflow.adjustX) && source[1] === 'r'
-    && (originalX < adjustArea.left || flips.lr)) {
-    const next = source[1] === destination[1]
-      ? x + popup.width - target.width : targetBR.x - sourceTL.x - offsetX;
-    flips.lr = prefer(next, y);
-    if (flips.lr) {
-      x = next;
-      offsetX = -offsetX;
-      resultPoints = [reverse(resultPoints[0], 1), reverse(resultPoints[1], 1)];
-    }
-  }
-
-  const left = popup.left + x;
-  const top = popup.top + y;
-  const right = left + popup.width;
-  const bottom = top + popup.height;
-  const shiftX = overflow.shiftX === true ? 0 : overflow.shiftX;
-  if (typeof shiftX === 'number') {
-    if (left < visibleRegion.left) {
-      x -= left - visibleRegion.left - offsetX;
-      if (target.left + target.width < visibleRegion.left + shiftX) {
-        x += target.left - visibleRegion.left + target.width - shiftX;
-      }
-    }
-    if (right > visibleRegion.right) {
-      x -= right - visibleRegion.right - offsetX;
-      if (target.left > visibleRegion.right - shiftX) x += target.left - visibleRegion.right + shiftX;
-    }
-  }
-  const shiftY = overflow.shiftY === true ? 0 : overflow.shiftY;
-  if (typeof shiftY === 'number') {
-    if (top < visibleRegion.top) {
-      y -= top - visibleRegion.top - offsetY;
-      if (target.top + target.height < visibleRegion.top + shiftY) {
-        y += target.top - visibleRegion.top + target.height - shiftY;
-      }
-    }
-    if (bottom > visibleRegion.bottom) {
-      y -= bottom - visibleRegion.bottom - offsetY;
-      if (target.top > visibleRegion.bottom - shiftY) y += target.top - visibleRegion.bottom + shiftY;
-    }
-  }
-
-  const popupLeft = popup.left + x;
-  const popupTop = popup.top + y;
-  const arrowX = ((Math.max(popupLeft, target.left)
-    + Math.min(popupLeft + popup.width, target.left + target.width)) / 2 - popupLeft) / scaleX;
-  const arrowY = ((Math.max(popupTop, target.top)
-    + Math.min(popupTop + popup.height, target.top + target.height)) / 2 - popupTop) / scaleY;
-  let rightOffset = input.mirror.right - popup.left - x - popup.width;
-  let bottomOffset = input.mirror.bottom - popup.top - y - popup.height;
-  if (scaleX === 1) {
-    x = Math.floor(x);
-    rightOffset = Math.floor(rightOffset);
-  }
-  if (scaleY === 1) {
-    y = Math.floor(y);
-    bottomOffset = Math.floor(bottomOffset);
-  }
-
+  adjustOverflow();
+  const offsets = resolveOffsets();
   const align = { ...initial, points: resultPoints };
   const placement = getPopupPlacement(placements, align, input.alignPoint);
-  return {
-    x: x / scaleX,
-    y: y / scaleY,
-    right: rightOffset / scaleX,
-    bottom: bottomOffset / scaleY,
-    arrowX,
-    arrowY,
-    align,
-    placement,
-    flips
-  };
+
+  return { ...offsets, align, placement, flips };
+
+  // Flip candidates are scored against the original position. Vertical flips run first.
+  function adjustOverflow() {
+    // Scores the overlap in the region used by the current overflow strategy.
+    function overlap(x: number, y: number, region = scoreArea) {
+      const left = Math.max(popup.left + x, region.left);
+      const top = Math.max(popup.top + y, region.top);
+      const right = Math.min(popup.left + x + popup.width, region.right);
+      const bottom = Math.min(popup.top + y + popup.height, region.bottom);
+      return Math.max(0, (right - left) * (bottom - top));
+    }
+
+    const originalArea = overlap(x, y);
+    const originalViewportArea = overlap(x, y, visibleRegion);
+    // With the same area, visibleFirst compares the remaining visible area.
+    const prefer = (left: number, top: number) => {
+      const next = overlap(left, top);
+      return next > originalArea || next === originalArea
+        && (!visibleFirst || overlap(left, top, visibleRegion) >= originalViewportArea);
+    };
+    const sourceTL = getPoint(popup, 'tl');
+    const sourceBR = getPoint(popup, 'br');
+    const targetTL = getPoint(target, 'tl');
+    const targetBR = getPoint(target, 'br');
+    const originalX = popup.left + x;
+    const originalY = popup.top + y;
+    const overflow = initial.overflow ?? {};
+    // Reserves numerical restrictions, including the allowable zero value.
+    const supports = (value: boolean | number | undefined) =>
+      typeof value === 'boolean' ? value : value !== undefined && value >= 0;
+
+    if (supports(overflow.adjustY) && source[0] === 't'
+      && (originalY + popup.height > flipBoundary.bottom || flips.bt)) {
+      const next = source[0] === destination[0]
+        ? y - popup.height + target.height : targetTL.y - sourceBR.y - offsetY;
+      flips.bt = prefer(x, next);
+      if (flips.bt) {
+        y = next;
+        offsetY = -offsetY;
+        resultPoints = [reverse(resultPoints[0], 0), reverse(resultPoints[1], 0)];
+      }
+    }
+    if (supports(overflow.adjustY) && source[0] === 'b'
+      && (originalY < flipBoundary.top || flips.tb)) {
+      const next = source[0] === destination[0]
+        ? y + popup.height - target.height : targetBR.y - sourceTL.y - offsetY;
+      flips.tb = prefer(x, next);
+      if (flips.tb) {
+        y = next;
+        offsetY = -offsetY;
+        resultPoints = [reverse(resultPoints[0], 0), reverse(resultPoints[1], 0)];
+      }
+    }
+    if (supports(overflow.adjustX) && source[1] === 'l'
+      && (originalX + popup.width > flipBoundary.right || flips.rl)) {
+      const next = source[1] === destination[1]
+        ? x - popup.width + target.width : targetTL.x - sourceBR.x - offsetX;
+      flips.rl = prefer(next, y);
+      if (flips.rl) {
+        x = next;
+        offsetX = -offsetX;
+        resultPoints = [reverse(resultPoints[0], 1), reverse(resultPoints[1], 1)];
+      }
+    }
+    if (supports(overflow.adjustX) && source[1] === 'r'
+      && (originalX < flipBoundary.left || flips.lr)) {
+      const next = source[1] === destination[1]
+        ? x + popup.width - target.width : targetBR.x - sourceTL.x - offsetX;
+      flips.lr = prefer(next, y);
+      if (flips.lr) {
+        x = next;
+        offsetX = -offsetX;
+        resultPoints = [reverse(resultPoints[0], 1), reverse(resultPoints[1], 1)];
+      }
+    }
+
+    shiftWithinViewport(overflow);
+  }
+
+  // Shift within the visible viewport using the edges measured before either shift.
+  function shiftWithinViewport(overflow: NonNullable<PopupSourceAlign['overflow']>) {
+    const left = popup.left + x;
+    const top = popup.top + y;
+    const right = left + popup.width;
+    const bottom = top + popup.height;
+    const shiftX = overflow.shiftX === true ? 0 : overflow.shiftX;
+    if (typeof shiftX === 'number') {
+      if (left < visibleRegion.left) {
+        x -= left - visibleRegion.left - offsetX;
+        if (target.left + target.width < visibleRegion.left + shiftX) {
+          x += target.left - visibleRegion.left + target.width - shiftX;
+        }
+      }
+      if (right > visibleRegion.right) {
+        x -= right - visibleRegion.right - offsetX;
+        if (target.left > visibleRegion.right - shiftX) {
+          x += target.left - visibleRegion.right + shiftX;
+        }
+      }
+    }
+    const shiftY = overflow.shiftY === true ? 0 : overflow.shiftY;
+    if (typeof shiftY === 'number') {
+      if (top < visibleRegion.top) {
+        y -= top - visibleRegion.top - offsetY;
+        if (target.top + target.height < visibleRegion.top + shiftY) {
+          y += target.top - visibleRegion.top + target.height - shiftY;
+        }
+      }
+      if (bottom > visibleRegion.bottom) {
+        y -= bottom - visibleRegion.bottom - offsetY;
+        if (target.top > visibleRegion.bottom - shiftY) {
+          y += target.top - visibleRegion.bottom + shiftY;
+        }
+      }
+    }
+  }
+
+  // The arrow uses the unrounded geometry. CSS insets are rounded independently on each axis.
+  function resolveOffsets() {
+    const popupLeft = popup.left + x;
+    const popupTop = popup.top + y;
+    const arrowX = ((Math.max(popupLeft, target.left)
+      + Math.min(popupLeft + popup.width, target.left + target.width)) / 2 - popupLeft) / scaleX;
+    const arrowY = ((Math.max(popupTop, target.top)
+      + Math.min(popupTop + popup.height, target.top + target.height)) / 2 - popupTop) / scaleY;
+    let rightOffset = input.mirror.right - popup.left - x - popup.width;
+    let bottomOffset = input.mirror.bottom - popup.top - y - popup.height;
+    let leftOffset = x;
+    let topOffset = y;
+    if (scaleX === 1) {
+      leftOffset = Math.floor(leftOffset);
+      rightOffset = Math.floor(rightOffset);
+    }
+    if (scaleY === 1) {
+      topOffset = Math.floor(topOffset);
+      bottomOffset = Math.floor(bottomOffset);
+    }
+
+    return {
+      x: leftOffset / scaleX,
+      y: topOffset / scaleY,
+      right: rightOffset / scaleX,
+      bottom: bottomOffset / scaleY,
+      arrowX,
+      arrowY
+    };
+  }
 }
 
 // Restores the placement name by points, given the reference mode to the coordinate.
