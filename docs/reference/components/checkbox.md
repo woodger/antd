@@ -9,47 +9,48 @@
 </script>
 
 <Checkbox bind:checked bind:indeterminate name="notifications" value="enabled">
-  Получать уведомления
+  Receive notifications
 </Checkbox>
 ```
 
-`checked` поддерживает привязку и callback `onCheckedChange(checked)`.
-Для отдельного control можно задать `defaultChecked`; с привязкой задавайте
-начальное значение у владельца. Нативный reset формы возвращает `defaultChecked`
-и обновляет привязку. Сброс и внешние обновления props не вызывают
-`onCheckedChange`; нативный `onchange` также доступен.
+`checked` supports a binding and the `onCheckedChange(checked)` callback.
+Use `defaultChecked` for a standalone control. With a binding, set the initial
+value in the owner. Native form reset restores `defaultChecked` and updates the
+binding. Reset and external prop updates leave `onCheckedChange` untouched.
+The native `onchange` event is available separately.
 
-`indeterminate` задаёт смешанное состояние, поддерживает привязку и сбрасывается
-при пользовательском переключении. Оно не меняет `checked` и значение FormData.
-Отмеченный checkbox передаёт `name=value` (по умолчанию value равен `on`),
-неотмеченный или disabled checkbox не включается в FormData.
+`indeterminate` sets the mixed state, supports binding, and clears on a user
+toggle. It leaves `checked` and FormData intact. A checked checkbox submits
+`name=value`, with `on` as the default value. FormData excludes unchecked or
+disabled checkboxes.
 
-В FormItem передавайте `checked={form.values.accepted}` и
-`onCheckedChange={(value) => form.setFieldValue('accepted', value)}`. Для модели
-с boolean задайте тип явно: `createForm<{ accepted: boolean }>(...)`.
-Чтобы требовать именно `true`, используйте
-`validator: (value) => value === true ? undefined : 'Подтвердите согласие.'`.
-Встроенное правило `required` проверяет наличие значения, и `false` считается
-заданным значением. `form.resetFields()` возвращает значение из `initialValues`.
+In FormItem, pass `checked={form.values.accepted}` and
+`onCheckedChange={(value) => form.setFieldValue('accepted', value)}`. Explicitly
+type a model with a boolean, for example `createForm<{ accepted: boolean }>(...)`.
+To require `true`, use
+`validator: (value) => value === true ? undefined : 'Please confirm your consent.'`.
+The built-in `required` rule checks whether a value is present and accepts
+`false` as present. `form.resetFields()` restores the value from `initialValues`.
 
-OnChange получает `{ target, nativeEvent, stopPropagation, preventDefault }` с
-типизированными target.checked/value. Нативный onchange остаётся отдельным DOM
-событием. Callback Checkbox вызывается до Group.onChange; прежний onCheckedChange
-и сброс indeterminate при пользовательском переключении сохранены. NativeEvent —
-DOM change, а не React MouseEvent. Label/input используют исходный click bubble
-lock; наружу приходит один click на активацию подписи.
+`onChange` receives `{ target, nativeEvent, stopPropagation, preventDefault }`
+with typed target.checked and target.value. The lowercase onchange remains a
+separate DOM event. The Checkbox callback runs before Group.onChange. A user
+toggle still calls onCheckedChange and resets indeterminate. NativeEvent is
+the DOM change event. The label and input use the upstream click bubble lock,
+so one click bubbles out when the label is activated.
 
-ConfigProvider.checkbox задаёт class/style и semantic root/icon/label, в том числе
-для вариантов Group и вложенного provider. Локальные classNames/styles принимают
-объекты или функции от фактических checked/indeterminate/disabled props. Приоритет
-root style: config.styles.root, config.style, styles.root, style. Title относится
-к внутреннему span, как в исходном Checkbox; class/rootClassName/style — к label.
-PrefixCls меняет классы; CSS для произвольного префикса предоставляет потребитель.
+ConfigProvider.checkbox sets class, style, and semantic root, icon, and label
+slots, including Group variants and nested providers. Local classNames and styles
+accept objects or callbacks over resolved checked, indeterminate, and disabled
+props. Root style order is config.styles.root, config.style, styles.root, and
+style. Title applies to the inner span as in upstream. Class, rootClassName, and
+style apply to the label. PrefixCls changes the classes. Consumers supply CSS
+for arbitrary prefixes.
 
-Bind:inputElement и bind:nativeElement возвращают input и внутренний span;
-bind:ref — `{ input, nativeElement, focus(options?), blur() }`. Ссылки очищаются при
-unmount. Focus/blur есть и у bind:this. AutoFocus вызывает native focus один раз
-при mount; lowercase autofocus сохраняет HTML-поведение. TabIndex — alias tabindex.
-OnFocus/onBlur/onKeyDown/onKeyPress работают на input, onMouseEnter/onMouseLeave —
-на label. Нативные lowercase handlers сохраняются.
-
+`bind:inputElement` and `bind:nativeElement` expose the input and inner span.
+`bind:ref` exposes `{ input, nativeElement, focus(options?), blur() }`.
+Refs clear on unmount. `bind:this` also exposes focus and blur. AutoFocus calls
+native focus once on mount, and lowercase autofocus follows HTML behavior.
+TabIndex aliases tabindex. OnFocus, onBlur, onKeyDown, and onKeyPress run on the
+input. OnMouseEnter and onMouseLeave run on the label. Lowercase native handlers
+remain available.

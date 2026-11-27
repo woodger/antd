@@ -1,18 +1,20 @@
 # Menu
 
-Menu отображает команды, группы и подменю с поддержкой клавиатуры.
+Menu displays commands, groups, and submenus with keyboard support.
 
-PrefixCls задаёт локальный namespace Menu, его пунктов, групп, Divider и подменю.
-Пустая строка наследует ConfigProvider.prefixCls. Popup и inline-списки сохраняют
-тот же префикс; Typography selectors используют независимый общий namespace.
-Canonical variables/link reset и @scope границы тем сохранены. Шаблоны содержат
-201 базовое и 77 scoped theme rules. Правила анимаций поставляются отдельно.
-Смена префикса сохраняет root/item/title DOM, selection/open state, refs, IDs и фокус.
+`prefixCls` sets the local namespace for Menu, items, groups, dividers,
+and submenus. The empty string inherits `ConfigProvider.prefixCls`.
+Popup and inline lists keep the same prefix. Typography selectors
+use their own shared namespace. Canonical variables, the link reset,
+and theme `@scope` boundaries are preserved. The templates contain
+201 base rules and 77 scoped theme rules. Motion rules are provided
+separately. Prefix changes preserve root, item, and title DOM,
+selection and open state, refs, IDs, and focus.
 
-У upstream dashed Divider пропускает локальный префикс владельца. [Raw измерения и
-public per-divider prefixCls counterparts](../../../tests/browser/fixtures/ant-design-menu-prefix-reference.json)
-сохранены отдельно; Svelte наследует согласованный prefix Menu и сохраняет dashed.
-Независимый prefixCls для отдельного Divider не поддерживается.
+The upstream dashed Divider omits its owner's local prefix. Svelte
+inherits the resolved Menu prefix and retains dashed styling.
+An individual Divider has no independent `prefixCls`.
+[Raw measurements and public per-divider prefixCls comparisons](../../../tests/browser/fixtures/ant-design-menu-prefix-reference.json)
 
 ```svelte
 <script lang="ts">
@@ -21,248 +23,277 @@ public per-divider prefixCls counterparts](../../../tests/browser/fixtures/ant-d
   let opened = $state<string[]>(['guides']);
   const items: MenuItemType[] = [
     { key: 'overview', label: overview },
-    { key: 'guides', label: 'Руководства', children: [
-      { key: 'setup', label: 'Подключение' },
-      { key: 'forms', label: 'Формы' }
+    { key: 'guides', label: 'Guides', children: [
+      { key: 'setup', label: 'Setup' },
+      { key: 'forms', label: 'Forms' }
     ] }
   ];
 </script>
 
-{#snippet overview()}<a href="/overview">Обзор</a>{/snippet}
+{#snippet overview()}<a href="/overview">Overview</a>{/snippet}
 <Menu {items} mode="inline" selectedKeys={selected} openKeys={opened}
   onSelect={info => { selected = info.selectedKeys; }}
   onDeselect={info => { selected = info.selectedKeys; }}
-  onOpenChange={keys => { opened = keys; }} aria-label="Навигация" />
+  onOpenChange={keys => { opened = keys; }} aria-label="Navigation" />
 ```
 
-Items принимает MenuItemType: обычный пункт, подменю с children,
-`type='group'` с label/children, `type='divider'` с dashed либо null.
-У пунктов и подменю обязательны стабильные key. Числовой key нормализуется в
-строку для selection/open/events; исходное значение остаётся в itemData.
-Поле `label` пункта, группы и подменю принимает строки, числа, snippets и
-вложенные массивы. `null`, `undefined` и булево значение дают пустую подпись.
-`extra` принимает строку, число или snippet. `icon` принимает snippet. Поддержаны
-item.disabled/danger/title, class/style; у подменю также theme/popupClassName
-и onTitleClick. Группы не добавляют уровень отступа и не входят в keyPath.
-Пользовательские `data-*` пункта передаются его `li`. Служебные маркеры Menu
-имеют приоритет. Направление меню задаёт `ConfigProvider.direction` независимо
-от унаследованного из rc-menu параметра `direction`.
-Theme подменю меняет только его popup; следующее подменю без собственного theme
-использует тему корневого Menu. Для native popover правила light/dark дополнительно
-ограничены CSS @scope: тема родителя не переходит во вложенный popup. Базовые
-нескопированные правила сохранены для браузеров без поддержки @scope.
+`items` accepts `MenuItemType`: an ordinary item, a submenu with
+`children`, `type='group'` with `label` and `children`, `type='divider'`
+with `dashed`, or `null`. Items and submenus need stable keys.
+Numeric keys are converted to strings for selection, expansion, and
+events, and the original value stays in `itemData`. The `label` of
+an item, group, or submenu accepts strings, numbers, Snippets, and
+nested arrays. `null`, `undefined`, and booleans produce an empty
+label. `extra` takes a string, number, or Snippet, and `icon` takes a
+Snippet. Items support `disabled`, `danger`, `title`, `class`, and
+`style`. Submenus also support `theme`, `popupClassName`, and
+`onTitleClick`. Groups add no indentation level and are excluded
+from `keyPath`. Item `data-*` attributes pass to its `li`, with
+internal Menu markers taking precedence. `ConfigProvider.direction`
+sets direction independently of the rc-menu `direction` prop.
 
-## Стили и значки
+A submenu's `theme` affects only its own popup. A deeper submenu
+without a theme uses root Menu's theme. For native popovers, CSS
+`@scope` further limits light and dark rules so the parent theme
+does not spill into a nested popup. Base unscoped rules remain for
+browsers without `@scope`.
 
-`ConfigProvider.menu` задаёт общие `class`, `style`, `classNames`, `styles` и
-`expandIcon`. Вложенный провайдер наследует эту настройку при `undefined`.
-Собственный объект, включая `{}`, заменяет её целиком.
+## Styles and icons
 
-`classNames` и `styles` принимают объект или callback с `{ props }`. Поле
-`props.theme` по умолчанию равно `light`, а `props.inlineCollapsed` учитывает
-состояние LayoutSider. Доступны следующие части Menu.
+`ConfigProvider.menu` supplies shared `class`, `style`,
+`classNames`, `styles`, and `expandIcon`. In a nested provider,
+`undefined` inherits the settings. An explicit object, including
+`{}`, replaces them in full.
 
-- `root` — корневой список. Семантические классы корня и `rootClassName`
-  также применяются к поверхностям popup.
-- `item`, `itemIcon`, `itemContent` — пункт первого уровня, иконка и содержимое.
-- `itemTitle`, `list` — заголовок и список группы первого уровня.
-- `subMenu` — те же части пунктов и групп внутри подменю. Иконка заголовка
-  раскрываемой ветки использует общий `itemIcon` на любой глубине.
-- `popup.root` — поверхность всплывающего подменю. Для класса можно записать
-  `classNames={{ popup: 'navigation-popup' }}`.
+`classNames` and `styles` accept an object or a callback receiving
+`{ props }`. `props.theme` defaults to `light`, and
+`props.inlineCollapsed` accounts for LayoutSider. Menu has the
+following slots.
 
-Классы провайдера и экземпляра объединяются. Стили корня применяются в порядке
-`provider.styles.root` → `provider.style` → `styles.root` → `style`. У пунктов
-локальный `item.style` имеет приоритет над семантическим стилем. Локальные
-строки `subMenu.*` и `popup.root` целиком заменяют строки того же slot провайдера.
-Стили поверхности `styles.popup.root` накладываются после `popupStyle` ветки.
+- `root` styles the root list. Semantic root classes and
+  `rootClassName` also apply to popup surfaces.
+- `item`, `itemIcon`, and `itemContent` style the first-level item,
+  icon, and content.
+- `itemTitle` and `list` style a first-level group title and list.
+- `subMenu` provides the same slots for items and groups within a
+  submenu. An expandable branch's title icon uses the shared
+  `itemIcon` at any depth.
+- `popup.root` styles the submenu popup surface. For classes,
+  `classNames={{ popup: 'navigation-popup' }}` is also accepted.
+
+Provider and instance classes combine. Root styles apply in order:
+`provider.styles.root`, `provider.style`, `styles.root`, and `style`.
+Local `item.style` overrides the semantic item style. Local
+`subMenu.*` and `popup.root` strings replace the matching provider
+slot in full. Surface `styles.popup.root` applies after the branch's
+`popupStyle`.
 
 ```svelte
 <script lang="ts">
   import { ConfigProvider, Menu, type MenuExpandIconInfo, type MenuItemType } from '@woodger/antd';
 
   const items: MenuItemType[] = [
-    { key: 'docs', label: 'Документация', children: [{ key: 'api', label: 'API' }] }
+    { key: 'docs', label: 'Documentation', children: [{ key: 'api', label: 'API' }] }
   ];
 </script>
 
 {#snippet expand(info: MenuExpandIconInfo)}{info.isOpen ? '−' : '+'}{/snippet}
 <ConfigProvider menu={{ classNames: { item: 'navigation-item' }, expandIcon: expand }}>
   <Menu {items} mode="inline" styles={{ subMenu: { item: 'font-weight: 600' } }}
-    aria-label="Разделы документации" />
+    aria-label="Documentation sections" />
 </ConfigProvider>
 ```
 
-`expandIcon` принимает snippet с данными ветки, её `eventKey` и `isOpen`.
-Приоритет у настройки ветки, затем у Menu и провайдера. `false` или `null`
-скрывают значок. В горизонтальном режиме заголовок первого уровня без значка
-раскрытия. [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-config-reference.json).
+`expandIcon` accepts a Snippet with branch data, `eventKey`, and
+`isOpen`. The branch setting takes precedence, followed by Menu
+and provider settings. `false` or `null` hides the icon. In horizontal
+mode, the first-level title has no expand icon.
+[Ant Design 6.6.8 measurements](../../../tests/browser/fixtures/ant-design-menu-config-reference.json)
 
-## Выбор и клавиатура
+## Selection and keyboard navigation
 
-SelectedKeys/openKeys задают controlled state; defaultSelectedKeys/defaultOpenKeys
-читаются при создании для uncontrolled state. По умолчанию выбран один пункт,
-selectable=true, multiple=false. OnClick пункта, его подменю от ближайшего к корню
-и Menu вызываются до onSelect/onDeselect. Info содержит key, keyPath от листа
-к корню, domEvent и itemData — поверхностную копию исходного пункта. Select info
-добавляет selectedKeys. Устаревший React instance info.item отсутствует.
-Повторная активация выбранного single-пункта сохраняет `[key]`, но вызывает
-onDeselect: это поведение rc-menu 1.5.0. В multiple выбранный key удаляется.
-Selectable=false сохраняет onClick и закрытие popup без изменения selection.
+`selectedKeys` and `openKeys` set controlled state.
+`defaultSelectedKeys` and `defaultOpenKeys` are read at creation for
+uncontrolled state. Selection defaults to single, with
+`selectable=true` and `multiple=false`. `onClick` runs on the item,
+its submenus from nearest to root, and Menu before `onSelect` or
+`onDeselect`. The event info contains `key`, leaf-to-root `keyPath`,
+`domEvent`, and `itemData`, a shallow copy of the original item.
+Selection info adds `selectedKeys`. The deprecated React instance
+`info.item` is absent. Reactivating a selected single item keeps
+`[key]` and calls `onDeselect`, as in rc-menu 1.5.0. Multiple mode
+removes the selected key. `selectable=false` keeps `onClick` and
+popup dismissal without changing selection.
 
-### Наведение
+### Hover
 
-`onMouseEnter` и `onMouseLeave` обычного пункта относятся к строке. У подменю
-они относятся ко всей ветке, включая списки в отдельных popup-контейнерах.
-`onTitleMouseEnter` и `onTitleMouseLeave` относятся только к кнопке заголовка.
-Отключение пункта или заголовка отключает его обработчики. События всей ветки
-доступны и у отключённого подменю.
+`onMouseEnter` and `onMouseLeave` on an ordinary item apply to the
+row. On a submenu, they apply to the entire branch, including
+lists in separate popup containers. `onTitleMouseEnter` and
+`onTitleMouseLeave` apply only to the title button. Disabling an
+item or title disables its handlers. Branch-wide events remain
+available on a disabled submenu.
 
-Обработчик получает `{ key, domEvent }`. Ключ всегда строковый. `domEvent` —
-нативный `MouseEvent`, его `currentTarget` на время вызова указывает на строку
-или кнопку заголовка. Переход из заголовка в собственное подменю сохраняет
-наведение на ветку, включая открытый ShadowRoot. [Замеры React 6.6.8](../../../tests/browser/fixtures/ant-design-menu-hover-portal-reference.json).
+The handler receives `{ key, domEvent }`. The key is always a string.
+`domEvent` is a native `MouseEvent`, with `currentTarget` pointing
+to the row or title button during the call. Moving from the title
+to its submenu preserves branch hover, including with an open
+ShadowRoot. [React 6.6.8 measurements](../../../tests/browser/fixtures/ant-design-menu-hover-portal-reference.json)
 
-Mode по умолчанию vertical; поддержаны horizontal и inline. Hover открывает
-popup-подменю; triggerSubMenuAction='click' переключает их по клику. Inline
-раскрывается по клику независимо от этого prop. SubMenuOpenDelay и
-subMenuCloseDelay — секунды, обе задержки по умолчанию 0.1, как runtime rc-menu
-1.5.0 (таблица Ant Design указывает open delay=0). OnTitleClick относится к
-клику заголовка; keyboard opening меняет openKeys без этого callback.
-Single selection закрывает все popup-подменю, multiple сохраняет их.
-Закрытие inline-подменю сохраняет descendant openKeys; закрытие popup удаляет их.
+`mode` defaults to `vertical` and supports `horizontal` and
+`inline`. Hover opens popup submenus.
+`triggerSubMenuAction='click'` toggles them by click. Inline
+expands on click regardless of this prop. `subMenuOpenDelay` and
+`subMenuCloseDelay` are in seconds and both default to 0.1 as in
+rc-menu 1.5.0 at runtime. Ant Design's table lists an open delay
+of 0. `onTitleClick` applies to title clicks. Opening with the
+keyboard updates `openKeys` without that callback. A single
+selection closes all popup submenus, while multiple selection
+keeps them open. Closing an inline submenu preserves descendant
+`openKeys`, and closing a popup removes them.
 
-### Горизонтальное переполнение
+### Horizontal overflow
 
-В режиме `horizontal` Menu оставляет в строке помещающиеся пункты. Кнопка
-с многоточием открывает остальные в исходном порядке. Изменение ширины,
-пунктов или размеров индикатора пересчитывает состав строки. `disabledOverflow`
-выключает это поведение.
+In `horizontal` mode, Menu keeps items that fit in the row. An
+ellipsis button opens the rest in their original order. Changes
+in width, items, or indicator size recalculate the row.
+`disabledOverflow` disables this behavior.
 
-`overflowedIndicator` принимает текст, число или snippet. При отсутствии prop
-используется значок Ant Design, явный `undefined` выводит `...`, а `null`
-и `false` оставляют кнопку без видимого содержимого. Для оформления поверхности
-подменю служит `overflowedIndicatorPopupClassName`.
+`overflowedIndicator` accepts text, a number, or a Snippet. An
+omitted prop uses the Ant Design icon. Explicit `undefined`
+renders `...`, and `null` and `false` leave its button without visible
+content. `overflowedIndicatorPopupClassName` styles the submenu
+surface.
 
-В `openKeys` подменю имеет ключ `rc-menu-more`. При выборе вынесенного
-пункта его `keyPath` заканчивается этим ключом. При коллизии ключ пользователя
-сохраняется, к служебному ключу добавляется дефис до получения свободного ключа.
-Вынесенный пункт первого уровня использует семантические стили первого уровня.
+The overflow submenu key in `openKeys` is `rc-menu-more`. A moved
+item's `keyPath` ends with that key. On collision, the user key
+is kept and a hyphen is appended to the internal key until it
+is free. A moved first-level item uses first-level semantic styles.
 
-При SSR все пункты остаются в строке, индикатор скрыт до измерения. После
-измерения невместившиеся строки остаются смонтированными для замеров и
-исключаются из навигации. Когда сужение скрывает пункт под фокусом, Menu
-переводит фокус в открытое подменю или на его кнопку. При расширении фокус
-возвращается к тому же пункту в строке. При очень малой ненулевой ширине
-подменю сохраняет все пункты. [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-overflow-reference.json).
+During SSR, all items stay in the row and the indicator stays
+hidden until measurement. Once measured, items that do not
+fit remain mounted for measurement and are excluded from
+navigation. When narrowing hides a focused item, Menu moves
+focus to the open submenu or its button. When space increases,
+focus returns to the same item in the row. At very small positive
+widths, the submenu keeps all items.
+[Ant Design 6.6.8 measurements](../../../tests/browser/fixtures/ant-design-menu-overflow-reference.json)
 
-InlineIndent по умолчанию 24 px. InlineCollapsed переводит inline в vertical;
-при отсутствии prop учитывается LayoutSider.collapsed. Возврат в inline
-восстанавливает кэш uncontrolled openKeys. Controlled openKeys остаются у владельца:
-если он принял `[]` при сворачивании, компонент не заменяет этот массив кэшем.
-Пункт первого уровня без icon сокращается до первого символа и сохраняет полное
-доступное имя.
+`inlineIndent` defaults to 24px. `inlineCollapsed` changes inline
+mode to vertical. If omitted, `LayoutSider.collapsed` is used.
+Returning to inline restores cached uncontrolled `openKeys`.
+Controlled `openKeys` remain with the owner. If it accepted `[]`
+when collapsing, Menu leaves that array as supplied. A first-level
+item without an icon shows its first character and retains its
+full accessible name.
 
-Закрытые подменю монтируются при первом открытии; forceSubMenuRender монтирует
-их заранее, сохраняя закрытые popup скрытыми в том числе в horizontal mode.
-Inline скрывает сохранённый DOM через hidden, popup использует native
-popover и общий механизм позиционирования. Боковое подменю выравнивается по верху
-заголовка, horizontal popup — по нижнему левому краю, в RTL по правому; поверхность
-переворачивается/сдвигается в пределах viewport. Outside click закрывает её;
-Escape внутри popup закрывает текущий уровень и возвращает фокус к родителю.
-Таймеры, listeners и animation frames очищаются при unmount.
+Submenus mount on first opening. `forceSubMenuRender` mounts
+them ahead of time, keeping closed popups hidden in horizontal
+mode as well. Inline mode hides retained DOM through `hidden`.
+Popups use a native popover and shared positioning. A side submenu
+aligns to the top of its title. A horizontal popup aligns to
+the bottom left, or bottom right in RTL. The surface flips or
+shifts within the viewport. Outside click closes it. Escape
+inside a popup closes the current level and returns focus to
+the parent. Unmount clears timers, listeners, and animation
+frames.
 
-### Анимации подменю
+### Submenu motion
 
-Inline-список раскрывается по высоте с изменением прозрачности. Начальное
-открытое inline-подменю сразу занимает полную высоту. У всплывающих подменю
-первого уровня горизонтального Menu и списка переполнения используется `slide-up`,
-у боковых и вложенных — `zoom-big`. Первое открытие лениво смонтированного popup
-проходит фазу `appear`, последующие открытия — `enter`.
+Inline lists expand with height and opacity transitions. An
+initially open inline submenu occupies its full height immediately.
+First-level horizontal and overflow popups use `slide-up`.
+Side and nested popups use `zoom-big`. The first open of a lazy
+popup goes through `appear`, and later openings use `enter`.
 
-`motion` принимает [`MenuMotion`](../../../src/lib/menu/menu-motion.types.ts) и заменяет
-встроенную настройку для всех подменю. Входной `defaultMotions` замещается
-встроенной картой Ant Design. Обработчики получают элемент поверхности.
-`on*Prepare` может вернуть Promise, а `on*Start` и `on*Active` — CSS-строку или
-объект стилей. Подготовкой всплывающей панели в `appear` и `enter` управляет
-позиционирование. `motionDeadline` задаёт срок завершения после начала активной
-фазы. Возврат `false` из `on*End` позволяет дождаться следующего события.
+`motion` accepts `MenuMotion` and replaces default motion for
+all submenus. The Ant Design map overrides input
+`defaultMotions`. Handlers receive the surface element.
+`on*Prepare` can return a Promise, while `on*Start` and
+`on*Active` can return a CSS string or style object. Positioning
+manages popup preparation for `appear` and `enter`.
+`motionDeadline` sets a deadline from the start of the active
+phase. Returning `false` from `on*End` waits for another event.
+[MenuMotion type](../../../src/lib/menu/menu-motion.types.ts)
 
-При закрытии список остаётся в DOM до конца `leave` и выходит из клавиатурной
-навигации. Смена режима сохраняет прежнюю геометрию закрывающейся поверхности.
-`theme.token.motion=false` и `prefers-reduced-motion: reduce` отключают CSS-фазы.
-При быстром повторном открытии и размонтировании ожидающие кадры и результаты
-прежней подготовки теряют силу.
-[Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-motion-reference.json),
-[проверки в браузере](../../../tests/browser/menu/menu-motion.spec.ts).
+On close, the list remains in the DOM until `leave` ends and
+is excluded from keyboard navigation. Mode changes preserve
+the geometry of an exiting surface. `theme.token.motion=false`
+and `prefers-reduced-motion: reduce` disable CSS phases. Quick
+reopening and unmount invalidate pending frames and previous
+preparation results.
+[Ant Design 6.6.8 measurements](../../../tests/browser/fixtures/ant-design-menu-motion-reference.json) · [Browser tests](../../../tests/browser/menu/menu-motion.spec.ts)
 
-### Подсказки в свёрнутом меню
+### Tooltips in collapsed menus
 
-Свёрнутое Menu показывает Tooltip при наведении на пункт. В LTR подсказка
-открывается справа, в RTL — слева. У пункта первого уровня она содержит
-подпись и `extra`. У вложенного пункта содержимое задают `title` или
-`tooltip.title`. Строковый `title` также становится HTML-атрибутом строки.
-`title={false}` убирает подсказку конкретного пункта, если Menu не задаёт
-общее содержимое. `tooltip={false}` отключает подсказки всех пунктов.
+Collapsed Menu shows a Tooltip on item hover. The tooltip opens
+on the right in LTR and on the left in RTL. A first-level item
+shows its label and `extra`. A nested item's content comes from
+`title` or `tooltip.title`. A string `title` also becomes the row's
+HTML attribute. `title={false}` removes an item's tooltip if Menu
+has no shared content. `tooltip={false}` disables tooltips for all
+items.
 
-Объект `tooltip` принимает настройки [Tooltip](tooltip.md), включая события
-открытия, `placement`, `open`, слоты и `getPopupContainer`. Getter получает
-сам `li`. Класс Menu добавляется к семантическому корню подсказки. В свёрнутом
-LayoutSider подсказки работают и у Menu с `inlineCollapsed={false}`.
+A `tooltip` object takes Tooltip settings including trigger events,
+`placement`, `open`, slots, and `getPopupContainer`. The getter receives
+the `li` itself. The Menu class is added to the tooltip's semantic
+root. Inside a collapsed LayoutSider, tooltips also work with
+`inlineCollapsed={false}`. [Tooltip](tooltip.md)
 
-При разворачивании открытая подсказка скрывается, а ожидающий hover отменяется.
-Режим `forceRender` сохраняет скрытую поверхность без подписи. Клик сначала
-запрашивает видимость Tooltip, затем вызывает обработчики Menu. Svelte отправляет
-один запрос закрытия при уходе указателя с управляемой подсказки. React 6.6.8
-отправляет два из `pointerleave` и `mouseleave`.
-[Основные замеры](../../../tests/browser/fixtures/ant-design-menu-tooltip-reference.json),
-[замеры настроек](../../../tests/browser/fixtures/ant-design-menu-tooltip-options-reference.json).
+Expanding hides the open tooltip and cancels pending hover.
+`forceRender` retains the hidden surface without a label. Click
+first requests Tooltip visibility, then calls Menu handlers.
+Svelte sends one close request when the pointer leaves a controlled
+tooltip. React 6.6.8 sends two, via `pointerleave` and `mouseleave`.
+[Basic measurements](../../../tests/browser/fixtures/ant-design-menu-tooltip-reference.json) · [Configuration measurements](../../../tests/browser/fixtures/ant-design-menu-tooltip-options-reference.json)
 
-### Размещение всплывающего подменю
+### Submenu popup placement
 
-Всплывающее подменю прибавляет 50 к унаследованному слою. `popupStyle`
-и `styles.popup.root` могут задать свой `z-index`.
-[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+A popup submenu adds 50 to its inherited layer. `popupStyle` and
+`styles.popup.root` can set a custom `z-index`.
+[Nested popup layers](../theme-context.md#layering-nested-panels)
 
-`builtinPlacements` на Menu заменяет встроенные позиции по имени. У подменю
-первого уровня в горизонтальном меню и у списка переполнения используется
-`bottomLeft`, у боковых и вложенных подменю — `rightTop`. В RTL боковые точки
-отражаются.
-Каждая переданная запись заменяет соответствующую позицию целиком. В ней можно
-задать пару `points`, смещения `offset` и `targetOffset` в пикселях или
-процентах и правила `overflow` для переворота и сдвига у края.
+`builtinPlacements` on Menu replaces built-in positions by name.
+First-level horizontal submenus and overflow use `bottomLeft`.
+Side and nested submenus use `rightTop`. RTL mirrors side points.
+Each supplied entry replaces the position in full. It can set a
+pair of `points`, `offset` and `targetOffset` in pixels or
+percentages, and `overflow` rules for flipping and shifting at
+the edge.
 
-`popupOffset` на ветке задаёт массив смещений `[x, y]` в пикселях и заменяет
-только `offset` выбранной позиции. Пропущенная координата равна нулю, пустой
-массив сбрасывает оба смещения. Явные координаты из `popupStyle` или
-`styles.popup.root` имеют приоритет. Эти настройки действуют также в
-свёрнутом меню. Для раскрытия списка внутри inline-дерева они не используются.
+`popupOffset` on a branch supplies a pixel pair `[x, y]` and
+overrides only the chosen placement's `offset`. An omitted
+coordinate is zero. An empty array resets both. Explicit coordinates
+from `popupStyle` or `styles.popup.root` take precedence. These
+options also apply to collapsed menus. They are unused for
+expanding a list within an inline tree.
 
-Если задана карта или смещение, Menu применяет расчёт Ant Design к размерам
-своего заголовка и панели. При обновлении открытого подменю новая карта сразу
-определяет класс по последним точкам. Координаты пересчитываются при следующем
-изменении геометрии, прокрутке, изменении размера окна или новом открытии.
-[Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-popup-alignment-reference.json).
+With a map or offset, Menu uses Ant Design's calculation for the
+dimensions of its own title and panel. When an open submenu
+updates, the new map immediately selects the class from the latest
+points. Coordinates are recalculated on the next geometry change,
+scroll, resize, or opening. [Ant Design 6.6.8 measurements](../../../tests/browser/fixtures/ant-design-menu-popup-alignment-reference.json)
 
-### Значок в конце строки
+### Trailing item icon
 
-`itemIcon` задаёт содержимое после подписи и `extra`. На уровне Menu
-настройка действует для всех пунктов, в том числе в списке переполнения.
-У подменю она действует на его потомков. `undefined` и `null` наследуют
-настройку родителя, а `false` отключает значок в этой ветке. На самом пункте
-пустое значение, включая `false` и `0`, использует настройку ветки.
+`itemIcon` supplies content after the label and `extra`. At Menu
+level it applies to all items, including overflow items. On a
+submenu it applies to descendants. `undefined` and `null` inherit
+the parent setting. `false` disables the icon in a branch. An empty
+item value, including `false` and 0, uses the branch setting.
 
-Можно передать строку, число или snippet с `MenuItemIconInfo`. Snippet
-получает данные пункта, его строковый `eventKey` и текущее `isSelected`.
-`icon` остаётся значком перед подписью, а `expandIcon` относится к заголовку
-подменю. [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-item-icon-reference.json).
+Supply a string, number, or Snippet with `MenuItemIconInfo`. The
+Snippet receives item data, its string `eventKey`, and current
+`isSelected`. `icon` remains before the label, and `expandIcon`
+applies to the submenu title. [Ant Design 6.6.8 measurements](../../../tests/browser/fixtures/ant-design-menu-item-icon-reference.json)
 
-### Содержимое всплывающего подменю
+### Submenu popup content
 
-`popupRender` на Menu определяет содержимое всплывающих веток, включая многоточие.
-`popupRender` конкретной ветки имеет приоритет для этой ветки. Вложенные ветки
-выбирают собственную настройку или настройку Menu. Раскрытие обычного inline-списка
-сохраняет штатную разметку. При `inlineCollapsed` применяется настройка popup.
+`popupRender` on Menu supplies popup branch content, including
+overflow. A branch's `popupRender` takes precedence for that branch.
+Nested branches use their own setting or Menu's setting. Ordinary
+inline expansion keeps the default markup. `inlineCollapsed` uses
+the popup setting.
 
 ```svelte
 <script lang="ts">
@@ -278,73 +309,89 @@ LayoutSider подсказки работают и у Menu с `inlineCollapsed={
 {/snippet}
 
 <Menu popupRender={popup} items={[
-  { key: 'projects', label: 'Проекты', children: [{ key: 'new', label: 'Новый проект' }] }
+  { key: 'projects', label: 'Projects', children: [{ key: 'new', label: 'New project' }] }
 ]} />
 ```
 
-`info.keys` содержит путь от корня до ветки. `info.item` содержит данные ветки,
-её `eventKey` и непосредственные строки в `children`. Чтобы задать порядок строк,
-можно передать в `origin(rows)` snippet, выводящий их через
-`{@render info.renderItem(child)}`. При полной замене списка те же строки можно
-поместить непосредственно в свой `ul`. Пустой snippet оставляет popup без строк.
+`info.keys` contains the root-to-branch path. `info.item` contains
+branch data, its `eventKey`, and immediate rows in `children`. To
+change row order, pass `origin(rows)` a Snippet that renders them
+via `{@render info.renderItem(child)}`. A full replacement can put
+those rows in its own `ul`. An empty Snippet leaves a popup without
+rows.
 
-Строки сохраняют роли, выбор, пути событий и `findItem`. Клавиши входа в подменю,
-Up/Down и Home/End учитывают порядок отрисованных строк. Поля и кнопки рядом со
-списком сохраняют обычную обработку клавиш. `aria-controls` указывает на поверхность
-пользовательского popup. Содержимое создаётся при монтировании поверхности
-и сохраняется после закрытия. `forceSubMenuRender` включает предварительное
-монтирование. [Исходные замеры](../../../tests/browser/fixtures/ant-design-menu-popup-render-reference.json).
+Rows retain roles, selection, event paths, and `findItem`. Submenu
+entry keys, Up and Down, and Home and End follow the rendered row
+order. Fields and buttons beside the list retain normal key
+handling. `aria-controls` points to the custom popup surface.
+Content mounts with that surface and persists after close.
+`forceSubMenuRender` mounts it ahead of time.
+[Upstream measurements](../../../tests/browser/fixtures/ant-design-menu-popup-render-reference.json)
 
-GetPopupContainer задаёт HTMLElement или ShadowRoot для popup каждого подменю.
-Без локального prop используется ConfigProvider.getPopupContainer; собственный
-`getPopupContainer={undefined}` отключает это наследование, как Ant wrapper.
-Getter получает native button заголовка (в React это div). Без getter сохраняется
-прежнее native-размещение. Обычный inline не вызывает getter; при
-forceSubMenuRender с getter создаются также скрытые popup-копии inline-подменю,
-которые не заменяют refs основного списка. Getter с объявленным параметром ждёт
-DOM-заголовок; zero-arity getter при force render может сначала получить undefined.
-SSR getter не вызывает. Смена функции с тем же контейнером сохраняет DOM, draft,
-выделение и фокус; смена самого контейнера пересоздаёт popup contents, как React portal.
-Вынесенные подменю сохраняют клавиатуру, hover-задержки, callbacks и theme variables.
-Стили внутри ShadowRoot подключает потребитель. Сверка включает обычные подменю
-и список переполнения. Фикстура — `?fixture=menu-container`.
+`getPopupContainer` sets an `HTMLElement` or `ShadowRoot` for each
+submenu popup. Omitting the local prop uses
+`ConfigProvider.getPopupContainer`. An explicit
+`getPopupContainer={undefined}` disables inheritance as in the
+Ant wrapper. The getter receives the native title button. React
+passes a `div`. Without a getter, native placement applies.
+Ordinary inline lists skip the getter. With `forceSubMenuRender`
+and a getter, hidden popup copies of inline submenus are also
+created without replacing main list refs. A getter declaring a
+parameter waits for the DOM title. With forced rendering, a
+zero-arity getter can first receive `undefined`. SSR skips the
+getter. A new function returning the same container preserves
+DOM, drafts, selection, and focus. A different container recreates
+popup content as with a React portal. Moved submenus retain
+keyboard behavior, hover delays, callbacks, and theme variables.
+The consumer supplies styles in ShadowRoot. Comparisons include
+ordinary and overflow submenus in `?fixture=menu-container`.
 
-Структура — ul/li с role=menu/menuitem/group/separator. Заголовки подменю используют
-native button, a[href] в label остаётся настоящей ссылкой. Menu не перехватывает
-переход, модификаторы, target/rel; native Enter на ссылке запускает callback
-один раз через click вместо дублирования legacy React keydown/click.
-Ссылки label и групп используют исходный link reset во всех режимах Menu,
-включая inline/popup-подменю и отдельный popup container, без зависимости от cssVar.
-LinkDecoration/linkHoverDecoration/linkFocusDecoration и inline styles сохраняют
-приоритет; ссылки вне Menu не меняются. Рецепт menu-link-reset извлекает 14 общих
-правил из закреплённого CSS. Сверка:
-[39 UMD-сценариев](../../../tests/browser/fixtures/ant-design-menu-link-decoration-reference.json) и
-[browser](../../../tests/browser/menu/menu-link-decoration.spec.ts), `?fixture=menu-link-decoration`.
+The structure uses `ul` and `li` with `menu`, `menuitem`, `group`,
+and `separator` roles. Submenu titles use native buttons, and
+`a[href]` in a label stays a real link. Navigation, modifiers,
+`target`, and `rel` keep native behavior. Native Enter on a link
+runs its callback once through click in place of the duplicate
+legacy React keydown and click. Label and group links use the
+upstream reset in all modes, including inline and popup
+submenus and separate popup containers, independently of
+`cssVar`. `linkDecoration`, `linkHoverDecoration`,
+`linkFocusDecoration`, and inline styles retain priority. The
+reset is scoped to Menu links. The `menu-link-reset` recipe
+extracts 14 shared rules from the pinned CSS. The fixture is
+`?fixture=menu-link-decoration`. [39 UMD scenarios](../../../tests/browser/fixtures/ant-design-menu-link-decoration-reference.json) ·
+[Browser tests](../../../tests/browser/menu/menu-link-decoration.spec.ts)
 
-Inline Up/Down обходят все видимые доступные пункты, Enter переключает подменю.
-Horizontal Left/Right меняют пункты первого уровня с учётом RTL, Down/Enter входят
-в popup. В popup Up/Down обходят текущий уровень, Left/Right входят/возвращаются
-с учётом RTL. Home/End переходят к границам текущего списка; в inline — всего
-видимого дерева. Disabled пропускается. Space не активирует пункты/подменю, как
-upstream. Ref.focus(options) предпочитает ссылку в пункте; findItem({key}) возвращает
-смонтированный элемент пункта/заголовка, bind:nativeElement — корневой ul.
+In inline mode, Up and Down traverse all visible enabled items,
+and Enter toggles a submenu. In horizontal mode, Left and Right
+move among first-level items with RTL support, and Down and
+Enter enter the popup. In a popup, Up and Down traverse the
+current level, and Left and Right enter or return with RTL
+support. Home and End move to the bounds of the current list,
+or of the visible tree in inline mode. Disabled items are skipped.
+As upstream, Space does not activate items or submenus.
+`ref.focus(options)` prefers a link within an item.
+`findItem({key})` returns the mounted item or title element.
+`bind:nativeElement` gives the root `ul`.
 
-Theme='light' по умолчанию независимо от алгоритма страницы; theme='dark' задаёт
-тёмную палитру Menu с фоном #001529. Глобальные primary/compact/RTL наследуются.
-При source-настройках темы `components.Menu` получает исходные defaults и aliases:
-размеры пунктов/иконок/групп, отступы, active bar и light/dark цвета. Отдельные
-component algorithms, CSS prefix и hash поддержаны. Устаревшие имена токенов
-сопоставляются после расчёта defaults, как upstream; явно переданные нули сохраняются.
-Вложенные inline-списки наследуют переменные корневого Menu, popup получает
-собственный scope. Его переменные обновляются без потери позиции и фокуса.
-Plain style имеет приоритет на корневом меню; popup использует component tokens,
-как отдельная поверхность upstream. Native-only темы сохраняют прежнее оформление.
-Source compact использует itemHeight=35px и collapsedWidth=70px.
-Как Ant wrapper, Menu учитывает только свой disabled и disabled пунктов:
-Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
-Фикстура — `?fixture=menu`.
+`theme='light'` is the default regardless of the page algorithm.
+`theme='dark'` uses the Menu dark palette with a `#001529`
+background. Global primary color, compact mode, and RTL inherit.
+With an upstream theme, `components.Menu` receives source defaults
+and aliases for item, icon, and group sizes, spacing, the active
+bar, and light and dark colors. Separate component algorithms,
+CSS prefix, and hash are supported. Deprecated token names are
+mapped after defaults are calculated, as upstream. Explicit zeros
+are preserved. Nested inline lists inherit root Menu variables.
+Each popup has its own scope, with variable updates preserving
+position and focus. Plain `style` takes precedence on root Menu.
+The popup uses component tokens as a separate surface, as upstream.
+Native-only themes retain their styling. Upstream compact mode
+uses `itemHeight=35px` and `collapsedWidth=70px`. As in the Ant
+wrapper, Menu uses only its own disabled state and item disabled
+state. `Form.disabled` and `ConfigProvider.componentDisabled`
+leave navigation available. The fixture is `?fixture=menu`.
 
-Deprecated
-Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
-задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.
-
+Use `items` in place of the deprecated `Menu.Item`, `SubMenu`,
+`ItemGroup`, and `Divider` children wrappers, which are outside the
+port. Standalone Menu does not yet extend the existing Dropdown
+contract.

@@ -1,6 +1,6 @@
 # AutoComplete
 
-AutoComplete позволяет вводить произвольный текст и выбирать подсказки из списка.
+AutoComplete accepts free text and offers suggestions from a list.
 
 ```svelte
 <script lang="ts">
@@ -14,113 +14,119 @@ AutoComplete позволяет вводить произвольный текс
   showSearch={{ onSearch: next => { search = next; } }} aria-label="Email" />
 ```
 
-Value/defaultValue — произвольная строка; совпадение с options не требуется.
-Выбор показывает option.value, label — string/number/Snippet только в списке.
-Options также принимает группы `{label, options}`; disabled пункты пропускаются.
-OnChange(value,option) вызывается при изменении ввода/выборе, onSelect(value,option)
-при каждом выборе, onSearch(text) при поисковом вводе, но не при выборе пункта.
-Для свободного значения второй аргумент onChange — пустой объект, при очистке
-списка значений — undefined; React option.props wrapper не переносится.
+Value and defaultValue are arbitrary strings and need no match in options.
+A selection displays option.value. Label accepts a string, number, or snippet
+and appears only in the list. Options also accepts { label, options } groups.
+Disabled entries are skipped. OnChange(value, option) runs on input or selection
+changes. OnSelect(value, option) runs on every selection. OnSearch(text) runs
+on search input and is skipped on selection. A free value passes an empty
+object as the second onChange argument. Clearing the value list passes undefined.
+The Svelte API omits the React option.props wrapper.
 
-FilterOption по умолчанию false, как runtime combobox rc-select. True фильтрует
-value без учёта регистра, без trim/Unicode folding. Совпавшая группа сохраняет
-всех детей; иначе проверяются дети. Predicate получает поверхностную копию raw option/group.
-ShowSearch object настраивает filterOption/onSearch; прежние top-level props удалены.
-Класс popup задаётся через classNames.popup.root; popupClassName удалён.
-Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
-PopupRender, prefix, semantic classNames/styles и общий ConfigProvider.select
-описаны в [разделе Select](select.md#popup-и-семантическое-оформление). У AutoComplete нет
-slots suffix/item/itemContent/itemRemove.
-Загрузку данных, debounce и защиту от старых ответов выполняет потребитель.
+FilterOption defaults to false, matching rc-select combobox runtime. True
+matches value case-insensitively and preserves whitespace and Unicode forms.
+A matching group keeps all its children. Other groups filter their children.
+A predicate gets a shallow copy of the raw option or group. The showSearch
+object sets filterOption and onSearch. The old top-level props are removed.
+Use classNames.popup.root for the popup class. PopupClassName has been removed.
+A nested panel inherits the owner layer. PopupRender, prefix, semantic classNames
+and styles, and shared ConfigProvider.select follow Select except for the
+suffix, item, itemContent, and itemRemove slots, which are absent in AutoComplete.
+Consumers own data loading, debounce, and stale-response protection.
+[Owner layer](../theme-context.md#layering-nested-panels) · [Select reference](select.md#popup-and-semantic-styling)
 
-Open/defaultOpen задают controlled/uncontrolled popup. Без options и непустого
-notFoundContent popup скрыт даже при open=true. SSR оставляет его закрытым до
-mount, как rc-select useOpen. OnOpenChange получает запрос на смену открытого
-состояния, включая отклонённый controlled open=false запрос.
-PopupMatchSelectWidth — boolean/число; отсутствующий prop и `undefined` наследуют
-`ConfigProvider.popupMatchSelectWidth`. ListHeight ограничивает viewport списка
-и по умолчанию равен 256; padding и border popup добавляются снаружи.
-OnPopupScroll передаёт native scroll event внутреннего holder; currentTarget и this
-указывают на этот div. Поверхность — native popover с сохранением фокуса input,
-outside/Escape и cleanup. Virtual, listItemHeight, showScrollBar, scrollTo и
-onActive работают так же, как [в Select](select.md#select). DefaultActiveFirstOption у
-AutoComplete по умолчанию false.
+Open and defaultOpen control popup visibility. Without options or nonempty
+notFoundContent, it stays hidden even with open=true. SSR leaves it closed
+until mount like rc-select useOpen. OnOpenChange reports requested changes,
+including a request declined by controlled open=false. PopupMatchSelectWidth
+accepts a boolean or number. Omitted and undefined values inherit
+ConfigProvider.popupMatchSelectWidth. ListHeight limits the viewport and
+defaults to 256. Popup padding and border are added outside it. OnPopupScroll
+passes the inner holder's native scroll event. CurrentTarget and this point to
+that div. The surface uses a native popover with input focus preservation,
+outside and Escape dismissal, and cleanup. Virtual, listItemHeight,
+showScrollBar, scrollTo, and onActive follow Select. DefaultActiveFirstOption
+defaults to false. [Select list behavior](select.md#select)
 
-GetPopupContainer получает корневой элемент Select, включая custom input/textarea.
-Локальная функция перекрывает ConfigProvider.getPopupContainer; undefined наследует
-provider. Getter выполняется в браузере после открытия. При переносе сохраняются
-Select tokens, поиск, фокус и FormData. ShadowRoot требует собственных стилей.
-Замена функции с тем же DOM-контейнером сохраняет поле и список.
+GetPopupContainer receives the Select root, including with a custom input
+or textarea. A local function overrides ConfigProvider.getPopupContainer.
+Undefined inherits it. The getter runs in the browser after opening.
+Moving the popup preserves Select tokens, search, focus, and FormData.
+ShadowRoot needs its own styles. Replacing a function with one that returns
+the same container preserves the field and list.
 
-Стрелки обходят доступные options, Enter/Tab выбирают активный пункт; IME Enter
-не выбирает. Backfill меняет только видимый текст до подтверждения. По runtime
-rc-select defaultActiveFirstOption=false, хотя таблица Ant Design указывает true;
-для непустого текста отдельно активируется первое prefix match. Home/End остаются
-у нативного input. AllowClear поддерживает boolean/{clearIcon,label}. Для непустого
-текста rc-select выполняет два пути: onClear, change(undefined), change(''),
-search(''); этот порядок сохранён. Обработчик controlled value обычно нормализует
-undefined в пустую строку. OnInputKeyDown, onFocus/onBlur и focus/blur доступны.
+Arrow keys skip unavailable options. Enter or Tab selects the active option,
+and IME Enter skips selection. Backfill temporarily changes display text
+until confirmation. Rc-select runtime defaults defaultActiveFirstOption to
+false, although the Ant Design table says true. A nonempty query can still
+activate the first prefix match. Home and End remain native input keys.
+AllowClear accepts a boolean or { clearIcon, label }. For nonempty text,
+rc-select calls onClear, change(undefined), change(''), and search('') in that
+order. The port keeps that order. A controlled handler commonly normalizes
+undefined to an empty string. OnInputKeyDown, onFocus, onBlur, focus, and
+blur are available.
 
-Custom input задаётся `children(control)` Snippet:
+Provide an editor through a children(control) snippet.
 
 ```svelte
-<AutoComplete options={[{ value: 'example' }]} aria-label="Подсказки">
+<AutoComplete options={[{ value: 'example' }]} aria-label="Suggestions">
   {#snippet children(control)}
     <textarea {...control.attributes} use:control.register rows="3"></textarea>
   {/snippet}
 </AutoComplete>
 ```
 
-Attributes/register связывают value, ARIA, события и native ref; собственные
-class/style/rows сохраняются. InputElement и nativeElement доступны через bind.
-Native name/required/disabled/readonly, FormItem/status/reset, размеры, variants,
-Compact, темы и RTL поддержаны. Фикстура
-`?fixture=auto-complete`. При custom input его native constraints задаются на нём.
+Attributes and register connect value, ARIA, events, and the native ref.
+The editor keeps its own class, style, and rows. InputElement and nativeElement
+are bindable. Native name, required, disabled, and readonly, FormItem,
+status, reset, size, variants, Compact, themes, and RTL are supported.
+Set native constraints on the custom editor itself. The main fixture is
+`?fixture=auto-complete`.
 
-Source theme использует `components.Select` и общий Select token scope, как
-upstream AutoComplete: размеры options/groups, отступы, цвета, clear и focus.
-Custom Input сохраняет собственные `components.Input` и размеры; оболочка не
-навязывает ему controlHeight Select. Токены доступны при SSR; смена темы
-сохраняет native editor, option content, выделение, фокус, FormData и положение
-открытого popup. Native-only темы сохраняют прежнее оформление.
+The upstream theme uses components.Select and a shared Select token scope for
+option and group sizes, padding, colors, clear, and focus. A custom Input keeps
+its components.Input and dimensions. The wrapper leaves its height independent
+of Select controlHeight. Tokens are available in SSR. Theme changes preserve
+the native editor, option content, selection, focus, FormData, and open popup
+position. Native-only themes retain their appearance.
 
-`prefixCls` использует namespace Select, как upstream AutoComplete: непустое
-локальное значение перекрывает `ConfigProvider.prefixCls`, пустое наследует его.
-Control/content/clear/groups/options/popup получают соответствующие классы и CSS;
-вложенный Input/TextArea сохраняет собственный общий namespace. Служебные Select
-variables отделены от canonical theme tokens. Смена префикса сохраняет editor,
-popup/options, generated IDs, refs, query, text selection, focus, FormData и callbacks.
-[28 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-auto-complete-prefix-reference.json)
-в normal/nested/reset scopes включают custom Input/TextArea, filled и disabled Input;
-[browser](../../../tests/browser/auto-complete/auto-complete-prefix.spec.ts) и
-[SSR](../../../tests/package/auto-complete/auto-complete-prefix.ssr.test.ts) проверяют эти границы.
+PrefixCls follows the Select namespace as in upstream AutoComplete. A nonempty
+local value overrides ConfigProvider.prefixCls, and empty inherits it. Control,
+content, clear, groups, options, and popup get corresponding classes and CSS.
+Nested Input and TextArea keep their shared namespace. Internal Select variables
+are separate from canonical theme tokens. Prefix changes preserve the editor,
+popup and options, generated IDs, refs, query, text selection, focus, FormData,
+and callbacks. The 28 UMD configurations cover normal, nested, and reset
+scopes, custom Input and TextArea, and filled and disabled Input.
+[UMD configurations](../../../tests/browser/fixtures/ant-design-auto-complete-prefix-reference.json) · [Browser](../../../tests/browser/auto-complete/auto-complete-prefix.spec.ts) · [SSR](../../../tests/package/auto-complete/auto-complete-prefix.ssr.test.ts)
 
-FieldNames и generic `AutoCompleteProps<OptionType>` используют
-[общий слой данных](select.md#данные-options-и-fieldnames). Значение свободного ввода остаётся string;
-raw OptionType не требует literal value/label и не получает добавленных canonical полей.
-`optionRender` — Snippet с flattened option и `{ index }`, как у Select. Index
-абсолютный, включая заголовки групп и строки вне текущего virtual window.
-Renderer меняет содержимое пункта, сохраняя raw option, выбранный label, title и
-фильтрацию. После посещения закрытый список применяет новый renderer к сохранённым
-options; следующее открытие принимает актуальные данные. SSR не вызывает optionRender.
+FieldNames and generic AutoCompleteProps<OptionType> use the shared data layer.
+Free text stays a string. Raw OptionType needs no literal value or label and
+gets no added canonical fields. OptionRender is a snippet receiving a flattened
+option and { index }, as in Select. Index is absolute, including group
+headings and entries outside the virtual window. The renderer changes option
+content while preserving raw option, selected label, title, and filtering.
+After the list has been opened, a closed list applies a new renderer to cached
+options. Its next opening takes current options. SSR leaves optionRender
+inactive. [Shared option data](select.md#option-data-and-fieldnames)
 
-`labelRender` — чистая функция с metadata Select; null/undefined возвращают raw value.
-Она работает и при SSR. Стандартный editor сохраняет строковое value и прозрачный
-display DOM; custom input подавляет этот DOM, сохраняя вызовы producer.
-Title сначала берётся из literal title/label текущего raw option, затем из display
-item; внешний title имеет приоритет. Переданный `tagRender` остаётся в semantic
-metadata, но combobox его не вызывает.
+LabelRender is a pure function with Select metadata. Null and undefined fall
+back to raw value. It also works in SSR. The standard editor keeps a string
+value and transparent display DOM. A custom input suppresses that DOM while
+the producer still runs. Title uses the current raw option's literal title or
+label, then the display item. An outer title takes precedence. A passed
+tagRender stays in semantic metadata and the combobox leaves it unused.
 
-Suffix, suffixIcon, loadingIcon, showSearch.searchIcon, menuItemSelectedIcon и
-allowClear описаны в [общем разделе иконок](select.md#иконки-и-очистка-select).
-`components.root/input` используют [общий API замены поля](select.md#замена-root-и-input-select).
-`children(control)` сохраняет приоритет над `components.input`; `components.root`
-полностью заменяет поле и не вызывает оба editor renderers. Исходный motion пока отсутствует.
-Generic numeric/object values не поддерживаются.
+Suffix, suffixIcon, loadingIcon, showSearch.searchIcon, menuItemSelectedIcon,
+and allowClear follow the shared icon rules. Components.root and
+components.input follow the shared replacement API. Children(control) takes
+precedence over components.input. Components.root replaces the whole field
+and bypasses both editor renderers. Upstream motion and generic numeric
+and object values remain outside the port. [Icon settings](select.md#icons-and-clearing) ·
+[Field replacement API](select.md#replacing-the-root-and-input)
 
-С `components.input` оболочка редактора сохраняет минимум одну строку после
-ввода и при начальном непустом значении. `styles.content.minHeight` позволяет
-задать другой минимум. В React 6.6.8 абсолютный редактор без этой настройки
-сжимался до 0 px. В [замерах React](../../../tests/browser/fixtures/ant-design-auto-complete-editor-height-reference.json)
-записаны исходный сбой и вариант с `styles.content.minHeight = '1lh'`.
-
+With components.input, the editor wrapper keeps at least one text line of
+height after typing and for a nonempty initial value. Set styles.content.minHeight
+for a different minimum. In React 6.6.8, an absolute editor without that setting
+collapsed to 0px. The reference records both the failure and
+styles.content.minHeight = '1lh'. [React measurements](../../../tests/browser/fixtures/ant-design-auto-complete-editor-height-reference.json)

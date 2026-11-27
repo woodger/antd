@@ -1,83 +1,91 @@
-# Radio и RadioGroup
+# Radio and RadioGroup
 
-Radio использует нативный input[type=radio], поддерживает bind:checked,
-defaultChecked и `onCheckedChange(checked)`. Содержимое передаётся snippet,
-как у Checkbox. Варианты с одинаковым непустым name в одной форме и одном
-DOM-корне образуют нативную группу. Выбор одного снимает соседний; bind:checked
-соседа тоже обновляется. Его callback при этом не вызывается: нативный change
-получает выбранный radio. Внешнее обновление checked синхронизирует соседей без
-callbacks. Нативный onchange также доступен. Без name отдельные Radio независимы.
+Radio uses native `input[type=radio]` and supports `bind:checked`,
+`defaultChecked`, and `onCheckedChange(checked)`. As with Checkbox, content
+comes from a Snippet. Options with the same nonempty name in the same
+form and DOM root form a native group. Selecting one deselects its
+neighbor and updates the neighbor's `bind:checked`. The native change
+event and callback go only to the selected radio. External `checked`
+updates synchronize neighbors without callbacks. Native `onchange` is
+also available. Without `name`, standalone Radios are independent.
 
-Для общего типизированного значения используйте RadioGroup.
-`RadioGroupProps<Value>` и `RadioOption<Value>` принимают string, number и
-boolean. Options содержит примитивы или `{ value, label, disabled?, id?, title?,
-className?, style?, required?, onChange? }`. Label принимает строку, число или
-snippet; style остаётся CSS-строкой, как в остальных Svelte-компонентах.
-Повторяющиеся значения отображаются один раз, с первой подписью и disabled.
+Use RadioGroup for a shared typed value. `RadioGroupProps<Value>` and
+`RadioOption<Value>` accept strings, numbers, and booleans. `options`
+contains primitives or
+`{ value, label, disabled?, id?, title?, className?, style?, required?, onChange? }`.
+`label` accepts a string, number, or Snippet. `style` remains a CSS
+string as in the other Svelte components. Duplicate values render
+once with the first option's label and disabled state.
 
 ```svelte
 <script lang="ts">
   import { RadioGroup } from '@woodger/antd';
 
   const options = [
-    { value: 0, label: 'Базовый' },
-    { value: 1, label: 'Командный' },
-    { value: 2, label: 'Архивный', disabled: true }
+    { value: 0, label: 'Basic' },
+    { value: 1, label: 'Team' },
+    { value: 2, label: 'Archived', disabled: true }
   ];
   let plan = $state<number | undefined>(0);
 </script>
 
-<RadioGroup {options} bind:value={plan} name="plan" aria-label="Тариф" orientation="vertical" />
+<RadioGroup {options} bind:value={plan} name="plan" aria-label="Plan" orientation="vertical" />
 ```
 
-Пользовательский выбор обновляет bind:value и вызывает onValueChange(value)
-один раз, только при смене значения. Числовой 0 и boolean false остаются
-полноценными выбранными значениями и отличаются от строк "0" и "false".
-Для внешней очистки присвойте undefined. Изменение props не вызывает callbacks
-и не переписывает значение владельца. Если выбранный вариант исчезает,
-в группе нет отмеченного input; после возвращения option выбор восстанавливается.
+User selection updates `bind:value` and calls `onValueChange(value)`
+once, when the value changes. Numeric 0 and boolean `false` are valid
+selected values and distinct from the strings `"0"` and `"false"`. To
+clear externally, assign `undefined`. Prop changes leave the owner
+value and callbacks untouched. If the selected option disappears,
+the group has no checked input. Returning that option restores
+selection.
 
-Без name и FormItem.name RadioGroup назначает уникальное нативное имя,
-чтобы соседние группы не снимали выбор друг друга. Это имя также используется
-в FormData; для стабильного имени поля задавайте name явно. Одинаковое имя
-в разных формах не объединяет варианты. Внутри одной формы для независимых
-групп используйте разные имена.
+Without `name` or `FormItem.name`, RadioGroup assigns a unique native
+name so neighboring groups remain independent. The name is also
+used in `FormData`. Set `name` explicitly for a stable field name.
+Equal names in separate forms remain separate groups. Within one
+form, use distinct names for independent groups.
 
-Стрелки переключают нативный выбор и фокус, пропуская disabled options;
-Space выбирает сфокусированный вариант, Tab выходит из группы. Orientation
-по умолчанию horizontal; vertical располагает варианты столбцом. Boolean alias
-vertical применяется, когда orientation не задан. Явный orientation имеет приоритет. Группа
-наследует disabled из Form/FormItem и ConfigProvider. Явный disabled=false
-переопределяет наследование, disabled группы блокирует все options.
+Arrows update native selection and focus, skipping disabled options.
+Space selects the focused option, and Tab leaves the group.
+`orientation` defaults to `horizontal`. `vertical` places the options
+in a column. The boolean alias `vertical` applies only when
+`orientation` is omitted. The group inherits disabled state from
+Form, FormItem, and ConfigProvider. Explicit `disabled=false`
+overrides inheritance. Disabling the group disables all options.
 
-Для отдельного Radio defaultChecked, а для RadioGroup defaultValue
-фиксируются при создании. С привязкой задавайте начальное значение у владельца
-без defaults. Нативный reset восстанавливает начальные значения и обновляет
-привязки в следующей задаче после события, без callbacks. Отменённый reset
-сохраняет текущий выбор. Атрибут form связывает controls с внешней формой.
-Form сбрасывает значения через модель resetFields.
+`defaultChecked` for a standalone Radio and `defaultValue` for RadioGroup
+are captured at creation. With bindings, set initial values in the
+owner and omit defaults. Native reset restores initial values and
+updates bindings in the next task after the event without callbacks.
+A canceled reset keeps the current selection. The `form` attribute
+associates controls with an external form. Form resets model values
+through `resetFields`.
 
-Выбранный доступный radio передаёт в FormData строку под своим name.
-`new FormData(form).get('plan')` возвращает, например, '0' или 'false';
-при отсутствии выбранного доступного варианта — null.
-Required использует нативное правило группы: нужен один
-выбранный вариант среди её input. Для пустого списка options используйте
-правила Form, поскольку нативного input в такой группе нет.
+The selected enabled radio contributes a string to `FormData` under
+its name. For example, `new FormData(form).get('plan')` returns
+`'0'` or `'false'`, and returns `null` if no enabled option is selected.
+`required` uses the native group rule, which requires one selected
+input. For empty `options`, use Form rules because the group has
+no native input.
 
-В Form передавайте `value={form.values.plan}` и
-`onValueChange={(value) => form.setFieldValue('plan', value)}`. Правило required
-проверяет значение поля и принимает 0/false. Для отдельного Radio с boolean
-используйте checked/onCheckedChange; если требуется именно true, задайте
-custom validator, как в примере Checkbox.
+In Form, pass `value={form.values.plan}` and
+`onValueChange={(value) => form.setFieldValue('plan', value)}`.
+A required rule checks the field value and accepts 0 and `false`.
+For a standalone boolean Radio, use `checked` and `onCheckedChange`.
+Use a custom validator if it must be `true`, as in the Checkbox
+example.
 
-RadioGroup получает из FormItem имя, подпись, required и описание ошибки.
-Fieldset с ролью radiogroup сообщает required/invalid; отдельные Radio связаны
-с описанием ошибки. Нажатие подписи FormItem и ошибка формы переводят фокус
-к выбранному доступному варианту либо первому доступному. Пустая группа может
-получить фокус сама, без дополнительного шага Tab.
+RadioGroup gets its name, label, required state, and error description
+from FormItem. A `fieldset` with `role=radiogroup` reports required and
+invalid states. Individual Radios reference the error description.
+Clicking the FormItem label or focusing a form error targets the
+selected enabled option or the first enabled one. An empty group can
+receive focus without an additional Tab stop.
 
-RadioGroup также принимает children со вложенными Radio и RadioButton.
-Непустые options имеют приоритет, пустой массив оставляет children:
+RadioGroup also accepts `children` with nested Radio and RadioButton.
+Nonempty `options` take precedence. An empty array leaves `children`
+in place.
 
 ```svelte
 <script lang="ts">
@@ -86,80 +94,99 @@ RadioGroup также принимает children со вложенными Radi
   let mode = $state('month');
 </script>
 
-<RadioGroup bind:value={mode} name="mode" aria-label="Режим календаря" size="small">
-  <RadioButton value="month">Месяц</RadioButton>
-  <RadioButton value="year">Год</RadioButton>
+<RadioGroup bind:value={mode} name="mode" aria-label="Calendar mode" size="small">
+  <RadioButton value="month">Month</RadioButton>
+  <RadioButton value="year">Year</RadioButton>
 </RadioGroup>
 ```
 
-RadioButton соответствует React Radio.Button и добавляет только кнопочный
-option context, без новой DOM-обёртки. Input остаётся radio: работают native
-keyboard, name/FormData, required и существующий reset/bind контракт Radio.
-`optionType="button"` у группы меняет все дочерние Radio; явный `optionType="default"`
-перекрывает кнопочный контекст RadioButton. Без optionType каждый дочерний control
-сохраняет собственный вид. Привязка value и checked использует прежний Svelte API.
+RadioButton corresponds to React's `Radio.Button` and adds a button
+option context without a new DOM wrapper. The input stays a radio
+with native keyboard behavior, name and FormData, required state,
+and the existing Radio reset and binding contract. The group's
+`optionType="button"` changes all child Radios. Explicit
+`optionType="default"` overrides RadioButton's button context.
+Without `optionType`, each child control keeps its own appearance.
+`value` and `checked` bindings use the existing Svelte API.
 
-`buttonStyle` выбирает outline (default) или solid. `size` наследует componentSize;
-локальный small/medium/large имеет приоритет. Block растягивает группу и делит
-ширину между вариантами; vertical сохраняет стыки и радиусы кнопок. Темы, primary,
-compact и RTL используют текущие настройки библиотеки. Нативный fieldset и
-существующий приоритет disabled группы сохранены.
+`buttonStyle` selects `outline` (default) or `solid`. `size` inherits
+`componentSize`. Local `small`, `medium`, and `large` take precedence.
+`block` stretches the group and divides width among the options.
+Vertical mode retains button joins and corner radii. Theme, primary
+color, compact mode, and RTL use the library's current settings.
+The native fieldset and existing group disabled precedence are
+preserved.
 
-`bind:nativeElement` у Radio/RadioButton возвращает внутренний span RcCheckbox,
-bind:inputElement — input для focus()/blur(). Обе ссылки очищаются при unmount.
-Bind:ref возвращает `{ input, nativeElement, focus(options?), blur() }`; focus/blur
-доступны также через bind:this. У RadioGroup bind:nativeElement возвращает fieldset.
-AutoFocus переводит фокус на input при mount; lowercase autofocus сохраняет нативное
-поведение. TabIndex — alias нативного tabindex.
-`rootClassName`, как class/style, относится к label. Точные объявления — в
-[radio.types.ts](../../../src/lib/radio/radio.types.ts).
+`bind:nativeElement` on Radio and RadioButton returns the inner
+RcCheckbox `span`. `bind:inputElement` returns the input for
+`focus()` and `blur()`. Both clear on unmount. `bind:ref` returns
+`{ input, nativeElement, focus(options?), blur() }`. Focus and blur
+are also available via `bind:this`. On RadioGroup,
+`bind:nativeElement` returns the fieldset. `autoFocus` focuses the
+input on mount. Lowercase `autofocus` retains native behavior.
+`tabIndex` is an alias for native `tabindex`. `rootClassName`, `class`,
+and `style` apply to the label. [Type declarations](../../../src/lib/radio/radio.types.ts)
 
-Рецепт radio-button воспроизводит 70 правил эталона для кнопок, размеров,
-vertical/block и Badge; прежний vendor/radio.css сохранён. Проверки —
-`?fixture=radio-button`, SSR/public package и browser, включая существующие Radio.
-Включены width:auto и отрицательный margin для Badge в vertical Group: обёртка
-и кнопка растягиваются по ширине группы, соседние границы перекрываются на 1px,
-в том числе со стандартным prefix.
-Счётчик Badge внутри Group получает исходный z-index:1.
+The `radio-button` recipe reproduces 70 upstream rules for buttons,
+sizes, vertical and block layouts, and Badge. The existing
+`vendor/radio.css` is retained. `?fixture=radio-button`, SSR and public
+package tests, and browser tests include existing Radios. For Badge
+in a vertical group, `width:auto` and a negative margin stretch the
+wrapper and button to the group width and overlap neighboring
+borders by 1px, including with the default prefix. The Badge count
+inside the group receives the upstream `z-index:1`.
 
-ClassNames/styles у Radio и RadioButton задают root/icon/label объектом или
-функцией от `{ props }`. Props содержат фактические checked, disabled, value и name;
-checked учитывает локальное состояние Svelte. ConfigProvider.radio задаёт общие
-class/style и semantic slots, в том числе для Radio из options и вложенного provider.
-Приоритет root style: config.styles.root, config.style, styles.root, style.
-Настройки применяются к каждому Radio, как в исходной реализации; Group сохраняет
-собственные class/style. PrefixCls задаёт базовое имя Radio без -button; непустой
-локальный prefix имеет приоритет, empty/undefined наследуют ConfigProvider.
-Radio/RadioButton/RadioGroup подключают CSS для local/shared prefix, включая
-независимый общий Badge namespace. У Group prefix передаётся в options; children
-выбирают свой отдельно. Canonical token markers и native layout сохраняются.
-Смена prefix сохраняет input/group DOM, выбор, refs, focus, selection и FormData.
+`classNames` and `styles` on Radio and RadioButton set `root`, `icon`,
+and `label` using an object or a function of `{ props }`. The props
+contain actual `checked`, `disabled`, `value`, and `name`.
+`checked` includes local Svelte state. `ConfigProvider.radio` provides
+shared `class`, `style`, and semantic slots, including for Radios
+from `options` and a nested provider. Root styles apply as
+`config.styles.root`, `config.style`, `styles.root`, and `style`.
+Settings apply to each Radio as upstream, and the group keeps its
+own class and style.
 
-В Source defaultChecked выбирает standalone input без wrapper-checked класса;
-у RadioButton выбранные цвета не применяются. Raw UMD замеры сохранены отдельно
-от matched public checked=true. Native отражает фактическое checked состояние,
-как прежде. Неэффективный Source Badge selector с button-wrapper исключён из
-нового CSS template; прежняя геометрия остаётся для отдельного разбора.
+`prefixCls` sets the Radio base name without `-button`. A nonempty
+local prefix takes precedence. Empty and undefined values inherit
+ConfigProvider. Radio, RadioButton, and RadioGroup include CSS for
+local or shared prefixes and the independent shared Badge namespace.
+Group passes its prefix to options, while `children` choose theirs
+individually. Canonical token markers and native layout are
+preserved. Prefix changes preserve input and group DOM, selection,
+refs, focus, text selection, and FormData.
 
-OnChange получает `{ target, nativeEvent, stopPropagation, preventDefault }`;
-target.value сохраняет исходный тип. NativeEvent — DOM change, а не React MouseEvent.
-Callback option/Radio вызывается до Group.onChange; Group.onChange — перед
-onValueChange. Нативный onchange остаётся на input. Label/input clicks защищены от
-повторного внешнего всплытия. OnClick/onFocus/onBlur/onKeyDown/onKeyPress работают
-на input; onMouseEnter/onMouseLeave — на label. У Group onFocus/onBlur получают
-всплывающие focusin/focusout дочерних controls. Для отклонения выбора владельцем
-группы используйте function binding с getter/setter; native checked восстанавливается
-по типизированным значениям, включая различие 0 и '0'.
+Upstream `defaultChecked` selects a standalone input without the
+wrapper checked class, so selected colors are absent on RadioButton.
+Raw UMD measurements are retained separately from the comparison
+with public `checked=true`. Svelte continues to reflect the actual
+checked state. The ineffective upstream Badge selector with
+`button-wrapper` is omitted from the new CSS template. Earlier
+geometry is retained for separate analysis.
 
-Сохраняются прежние native fieldset, defaults/reset, required и disabled группы,
-уникальные имена, примитивные типы и удаление повторных options. Эти границы
-отличаются от React any-value/controlled-state и приоритета disabled дочернего Radio.
-Source Radio tokens и отдельные theme algorithms применяются к Radio, RadioButton
-и RadioGroup; native-only темы сохраняют прежнее оформление. Local/shared prefix CSS
-и Wave подключены; React diagnostics/statics и вложенные Form NamePath остаются неперенесёнными.
-Дополнительные сценарии — `?fixture=radio-features`,
-[browser](../../../tests/browser/radio/radio-features.spec.ts) и
-[package SSR](../../../tests/package/radio/radio-features.ssr.test.ts).
-Сверка prefix с официальным UMD — `?fixture=radio-prefix` и
-[browser](../../../tests/browser/radio/radio-prefix.spec.ts).
+`onChange` receives
+`{ target, nativeEvent, stopPropagation, preventDefault }`.
+`target.value` preserves its original type. `nativeEvent` is a DOM
+change event, distinct from React's MouseEvent. The option or Radio
+callback runs before `Group.onChange`, which runs before
+`onValueChange`. Native `onchange` remains on the input. Label and
+input clicks are guarded against repeated bubbling to the outside.
+`onClick`, `onFocus`, `onBlur`, `onKeyDown`, and `onKeyPress` act
+on the input. `onMouseEnter` and `onMouseLeave` act on the label.
+Group `onFocus` and `onBlur` receive bubbling `focusin` and `focusout`
+from children. Use a function binding with a getter and setter to
+let the owner reject a selection. Native checked state is restored
+from typed values, including the distinction between 0 and `'0'`.
 
+The existing native fieldset, defaults and reset, required and group
+disabled rules, unique names, primitive types, and option deduplication
+are preserved. These differ from React's arbitrary values, controlled
+state, and child Radio disabled precedence. Upstream Radio tokens
+and separate theme algorithms apply to Radio, RadioButton, and
+RadioGroup. Native-only themes keep their styling. Local and shared
+prefix CSS and Wave are included. React diagnostics and statics and
+nested Form `NamePath` support remain pending. The additional
+fixture is `?fixture=radio-features`. [Browser tests](../../../tests/browser/radio/radio-features.spec.ts) ·
+[Package SSR tests](../../../tests/package/radio/radio-features.ssr.test.ts)
+
+`?fixture=radio-prefix` compares prefixes with the official UMD.
+[Browser test](../../../tests/browser/radio/radio-prefix.spec.ts)

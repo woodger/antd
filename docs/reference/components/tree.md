@@ -1,114 +1,131 @@
 # Tree
 
-Tree отображает иерархические данные и поддерживает раскрытие, выбор и отметку
-узлов.
+Tree displays hierarchical data with expansion, selection, and checking.
 
 ```svelte
 <script lang="ts">
   import { Tree, type TreeKey, type TreeCheckedKeys } from '@woodger/antd';
-  const nodes = [{key:'docs',title:'Документы',children:[{key:'intro',title:'Введение'}]}];
+  const nodes = [{key:'docs',title:'Documents',children:[{key:'intro',title:'Introduction'}]}];
   let expanded = $state<TreeKey[]>(['docs']);
   let checked = $state<TreeKey[] | TreeCheckedKeys>([]);
 </script>
-<Tree treeData={nodes} aria-label="Документы" checkable expandedKeys={expanded}
+<Tree treeData={nodes} aria-label="Documents" checkable expandedKeys={expanded}
   checkedKeys={checked} onExpand={keys => { expanded = keys; }}
   onCheck={keys => { checked = keys; }} />
 ```
 
-TreeData — массив узлов со стабильным уникальным key (string/number/bigint), title
-(текст, число, пустое содержимое, массив или snippet) и children. Ключи должны быть уникальны и
-после String(key), как в upstream entity index. Поддержаны disabled,
-disableCheckbox, checkable, selectable, isLeaf, icon и локальные class/style.
-ExpandedKeys/selectedKeys/checkedKeys/loadedKeys — controlled props; default-пары
-инициализируют внутреннее состояние. Владелец может отклонить callback. Массивы
-ключей и treeData обновляются новым значением, как в исходном controlled API.
+`treeData` is an array of nodes with a stable unique string, number,
+or bigint `key`, a `title` (text, number, empty content, array, or
+Snippet), and `children`. Keys must stay unique after `String(key)`,
+as in the upstream entity index. Nodes support `disabled`,
+`disableCheckbox`, `checkable`, `selectable`, `isLeaf`, `icon`, and
+local `class` and `style`. `expandedKeys`, `selectedKeys`,
+`checkedKeys`, and `loadedKeys` are controlled. Their default props
+initialize local state. The owner can reject a callback. Assign new
+arrays for keys and `treeData`, following the upstream controlled API.
 
-DefaultExpandParent=true раскрывает родителей начальных expanded keys до disabled
-границы. AutoExpandParent=false по умолчанию; true повторяет раскрытие родителей
-при изменении controlled keys. Чтобы разрешить сворачивание предка при сохранённом
-ключе потомка, отключите autoExpandParent. DefaultExpandAll применяется только
-при инициализации к узлам с детьми; данные, поступившие позже, сами по себе не
-расширяют этот начальный набор.
+`defaultExpandParent=true` expands ancestors of the initial expanded
+keys up to a disabled boundary. `autoExpandParent` defaults to
+`false`. `true` repeats ancestor expansion on controlled key changes.
+Turn it off to allow an ancestor to collapse while retaining a
+descendant key. `defaultExpandAll` applies only at initialization to
+nodes with children. Data arriving later leaves this initial set intact.
 
-Выбор строки независим от checkbox. Multiple переключает отдельные ключи без
-обязательного Ctrl и не добавляет range selection. Selectable=false переводит
-клик заголовка на отметку. Node.selectable перекрывает tree selectable. В обычном
-checkable-режиме отметки распространяются вниз и вверх; disabled,
-disableCheckbox и checkable=false останавливают conduction. Disabled-потомки
-не мешают полноте отметки разрешённого родителя. Снятие отметки использует исходный
-fill/clean algorithm; дети, добавленные в отмеченного родителя, получают отметку.
-CheckStrictly=true разрывает связи и onCheck возвращает {checked,halfChecked}.
-Без него onCheck возвращает массив и info.halfCheckedKeys/checkedNodesPositions.
-CheckedKeys в strict режиме принимает также объект с halfChecked.
+Row selection is independent of the checkbox. `multiple` toggles keys
+individually without requiring Ctrl or adding range selection.
+`selectable=false` directs title clicks to checking. A node's
+`selectable` overrides the tree setting. In normal checkable mode,
+checks propagate down and up. `disabled`, `disableCheckbox`, and
+`checkable=false` stop propagation. Disabled descendants do not
+prevent a full check on an enabled ancestor. Unchecking uses the
+upstream fill and clean algorithm. Children added to a checked parent
+become checked. `checkStrictly=true` breaks these links and has
+`onCheck` return `{checked,halfChecked}`. Otherwise, `onCheck` returns
+an array with `info.halfCheckedKeys` and `checkedNodesPositions`.
+In strict mode, `checkedKeys` also accepts the object with `halfChecked`.
 
-OnExpand(keys,{expanded,node,nativeEvent}), onSelect(keys,{event,selected,node,
-selectedNodes,nativeEvent}), onCheck(keys,{event,checked,node,checkedNodes,...})
-сохраняют отдельные события. Node включает исходные данные, pos и flags
-expanded/selected/checked/halfChecked/loaded/loading/active. Mouse callback содержит
-нативный event; keyboard callbacks соответствуют внутреннему пути rc-tree и могут
-не иметь nativeEvent. Дополнительно поддержаны onClick/onDoubleClick/onRightClick
-и onActiveChange. Состояние node в callback относится к узлу до действия.
+`onExpand(keys,{expanded,node,nativeEvent})`,
+`onSelect(keys,{event,selected,node,selectedNodes,nativeEvent})`, and
+`onCheck(keys,{event,checked,node,checkedNodes,...})` remain distinct
+events. The node includes source data, `pos`, and `expanded`,
+`selected`, `checked`, `halfChecked`, `loaded`, `loading`, and
+`active` flags. Mouse callbacks include a native event. Keyboard
+callbacks follow rc-tree's internal path and can omit `nativeEvent`.
+`onClick`, `onDoubleClick`, `onRightClick`, and `onActiveChange` are
+also supported. Callback node state is the snapshot before the action.
 
-`expandAction` включает раскрытие заголовком: false по умолчанию, 'click' или
-'doubleClick'. Ctrl/Meta/Shift оставляют выбор без раскрытия. При click-expansion
-onExpand предшествует onClick и последующему onSelect/onCheck; флаги node остаются
-снимком до действия, даже если callback синхронно обновил controlled selection.
-Заголовок может свернуть pending-ветку; прежний pointer switcher ждёт загрузку.
-Title action проверяет исходный isLeaf: узел без детей сохраняет expanded keys,
-чтобы показать детей после обновления данных, и обрабатывает действие при поиске.
-Смена expandAction сохраняет DOM, выбранные ключи и внешний draft/focus/selection.
-[22 исходных случая](../../../tests/browser/fixtures/ant-design-tree-expand-action-reference.json),
-[counterpart с завершёнными переходами](../../../tests/browser/fixtures/ant-design-tree-expand-action-settled-reference.json),
-[browser](../../../tests/browser/tree/tree-expand-action.spec.ts) и
-[SSR](../../../tests/package/tree/tree-expand-action.ssr.test.ts) проверяют эти границы.
+`expandAction` enables title expansion. It defaults to `false` and
+accepts `'click'` or `'doubleClick'`. Ctrl, Meta, and Shift retain
+selection without expanding. With click expansion, `onExpand`
+precedes `onClick` and subsequent `onSelect` or `onCheck`. Node
+flags remain the before-action snapshot even when a callback
+updates controlled selection synchronously. A title can collapse a
+pending branch. The existing pointer switcher waits for loading.
+The title action checks the original `isLeaf`. A node without children
+keeps expanded keys to show children when data arrives, and handles
+the action during search. Changing `expandAction` preserves DOM,
+selected keys, and external drafts, focus, and selection.
+[22 upstream cases](../../../tests/browser/fixtures/ant-design-tree-expand-action-reference.json) · [Comparison with completed transitions](../../../tests/browser/fixtures/ant-design-tree-expand-action-settled-reference.json)
+· [Browser tests](../../../tests/browser/tree/tree-expand-action.spec.ts) · [SSR tests](../../../tests/package/tree/tree-expand-action.ssr.test.ts)
 
-В rc-tree 1.4.0 быстрый двойной клик с expandAction='click' может свернуть узел,
-оставив только первый onExpand(expanded=true): предварительное обновление keys
-обходит guard listChanging. Raw observation сохранён в случае click-double.
-Native сообщает каждый фактический переход, как Source при двух завершённых
-кликах. Полный list motion остаётся отдельным неперенесённым объёмом.
+In rc-tree 1.4.0, a rapid double click with `expandAction='click'` can
+collapse the node with only the first `onExpand(expanded=true)`.
+The preliminary key update bypasses the `listChanging` guard.
+The `click-double` case retains the raw observation. Svelte reports
+each actual transition, as upstream does for two completed clicks.
+Full list motion remains outside this comparison.
 
-LoadData(node) возвращает PromiseLike. Дети добавляются потребителем в treeData;
-компонент их не выдумывает. Loading дедуплицируется по ключу; pointer switcher ждёт завершения загрузки,
-но клавиатура позволяет свернуть pending-ветку. OnLoad(keys,{event:'load',
-node}) вызывается до внутреннего обновления loadedKeys. При controlled loadedKeys
-владелец принимает новый набор сам. Загрузка запускается и для изначально раскрытой
-видимой незагруженной ветки. Узел с уже имеющимися детьми не загружается повторно;
-isLeaf=true запрещает загрузку, isLeaf=false сохраняет switcher даже у пустой
-загруженной ветки. Rejection снимает loading и сворачивает uncontrolled ветку,
-не вызывая onLoad; повторное раскрытие позволяет retry. После 10 неудачных попыток
-загрузка прекращается, ключ помечается загруженным без успешного onLoad. Отдельного
-onError/публичного error-state в исходном Tree нет: обработка ошибки остаётся в
-loadData потребителя. Результаты после unmount не меняют состояние и callbacks.
+`loadData(node)` returns a `PromiseLike`. The consumer adds children
+to `treeData`. Loading is deduplicated by key. The pointer switcher
+waits for completion, while the keyboard can collapse a pending
+branch. `onLoad(keys,{event:'load',node})` runs before local
+`loadedKeys` updates. The owner accepts new controlled `loadedKeys`.
+Loading also starts for an initially expanded, visible, unloaded
+branch. A node with children does not load again. `isLeaf=true`
+prevents loading. `isLeaf=false` retains the switcher even on an
+empty loaded branch. Rejection clears loading and collapses the
+uncontrolled branch without `onLoad`. Expanding again allows retry.
+After 10 failures, loading stops and the key is marked loaded
+without a successful `onLoad`. As upstream, the consumer handles
+errors in `loadData`, with no separate `onError` or public error
+state. Results after unmount leave state and callbacks untouched.
 
-Клавиатура использует один tab stop на role=tree и aria-activedescendant. Up/Down
-перемещаются циклически по видимым строкам, Home/End — к краям. Left сворачивает
-либо переходит к родителю, Right раскрывает либо переходит к первому ребёнку;
-эти действия не инвертируются в RTL, как в rc-tree. Enter раскрывает ветку либо
-однократно выбирает/отмечает лист; Space переключает отметку, а без checkable —
-выбор. Disabled-строки остаются в навигации. Disabled блокирует выбор/отметки,
-но switcher допускает раскрытие мышью, как upstream; global disabled отключает
-клавиатурную обработку. Native buttons имеют tabindex=-1; роли treeitem/checkbox
-и level/posinset/setsize отражают логическое дерево. Bind:nativeElement даёт root;
-bind:this предоставляет focus(options)/blur()/scrollTo(config).
+Keyboard navigation uses one Tab stop on `role=tree` and
+`aria-activedescendant`. Up and Down cycle visible rows. Home and End
+move to the endpoints. Left collapses or moves to the parent.
+Right expands or moves to the first child. These directions stay
+the same in RTL as in rc-tree. Enter expands a branch or selects
+or checks a leaf once. Space toggles a check, or selection when
+checkable is off. Disabled rows remain navigable. Node disabled
+state blocks selection and checking, while its pointer switcher
+can expand as upstream. Global disabled state blocks keyboard
+handling. Native buttons use `tabindex=-1`. Treeitem and checkbox
+roles and level, position, and set size describe the logical
+tree. `bind:nativeElement` gives the root. `bind:this` provides
+`focus(options)`, `blur()`, and `scrollTo(config)`.
 
-BlockNode, showLine и showLine={{showLeafIcon:true}}, showIcon, icon,
-switcherIcon/switcherLoadingIcon, titleRender и filterTreeNode поддержаны.
-Иконки и заголовки задаются snippets с node-аргументом; filterTreeNode подсвечивает
-узел и не удаляет его из дерева. RU/EN подписи switcher берутся из Locale.tree;
-темы, compact, RTL, ConfigProvider/Form disabled наследуют существующие контексты.
-Height ограничивает viewport и включает виртуальное окно. Без height либо при
-height=0 выводятся все раскрытые строки без ограничения высоты, как в Source.
-Virtual=false оставляет native scroll со всеми строками. Undefined наследует
-ConfigProvider.virtual; по умолчанию Tree включает виртуализацию, Listy — выключает.
-SSR использует начальную оценку окна без DOM-измерений, загрузки и timers.
+Tree supports `blockNode`, `showLine`, `showLine={{showLeafIcon:true}}`,
+`showIcon`, `icon`, `switcherIcon`, `switcherLoadingIcon`,
+`titleRender`, and `filterTreeNode`. Icon and title Snippets receive
+the node. `filterTreeNode` highlights matching nodes and keeps them
+in the tree. Russian and English switcher labels use `locale.tree`.
+Theme, compact mode, RTL, and ConfigProvider and Form disabled
+state inherit their existing contexts. `height` bounds the viewport
+and enables a virtual window. Without height, or with `height=0`,
+all expanded rows render without a height limit, as upstream.
+`virtual=false` keeps native scrolling with all rows. `undefined`
+inherits `ConfigProvider.virtual`. Virtualization defaults on for
+Tree and off for Listy. SSR uses an initial window estimate
+without DOM measurement, loading, or timers.
 
-Оценка строки следует Tree tokens: paddingXS/2 + (titleHeight || controlHeightSM).
-ItemHeight переопределяет её; itemHeight=0 отключает виртуальное окно. После mount
-измеряются реальные строки с margins, cache сохраняется по ключам до unmount.
-Границы окна и overscan следуют virtual-list 1.5.1. ScrollWidth включает
-горизонтальную прокрутку, включая fitting dataset; колесо, Shift+wheel, touch,
-перетаскивание и клики scrollbar поддерживают обе оси и RTL.
+The row estimate follows Tree tokens:
+`paddingXS/2 + (titleHeight || controlHeightSM)`. `itemHeight`
+overrides it, and `itemHeight=0` disables the virtual window.
+After mount, actual rows are measured with margins and cached
+by key until unmount. Window boundaries and overscan follow
+virtual-list 1.5.1. `scrollWidth` enables horizontal scrolling
+even when data fits. Wheel, Shift+wheel, touch, dragging, and
+scrollbar clicks support both axes and RTL.
 
 ```svelte
 <script lang="ts">
@@ -122,35 +139,41 @@ ItemHeight переопределяет её; itemHeight=0 отключает в
 <button onclick={() => tree?.scrollTo({ key: 80, align: 'top', offset: 8 })}>Show node</button>
 ```
 
-ScrollTo принимает число, {top,left}, key либо index с align='top'/'bottom'/'auto'.
-Left — неотрицательная логическая позиция и в RTL. Offset бывает числом или
-функцией ({getSize,align}) => number; getSize(startKey,endKey?) читает измеренные
-либо оценённые top/bottom, неизвестный endKey даёт bottom=undefined. NaN/Infinity
-offset заменяются нулём. Измерение и выравнивание повторяются до десяти проходов;
-более поздний запрос отменяет предыдущий. Неизвестный key сохраняет позицию.
-Null/undefined показывают scrollbar. AutoExpand у key-запроса добавляет только
-целевой ключ в uncontrolled expandedKeys, без раскрытия предков или onExpand.
-ItemScrollOffset задаёт отступ автоматической прокрутки активного узла.
-OnScroll (либо native onscroll) получает событие holder; root ref остаётся прежним.
-DirectoryTree предоставляет те же методы. Загрузка изначально раскрытых узлов
-начинается при их попадании в смонтированное окно; результаты после unmount игнорируются.
+`scrollTo` accepts a number, `{top,left}`, or a key or index with
+`align='top'/'bottom'/'auto'`. `left` is a nonnegative logical
+position in RTL as well. `offset` can be a number or a function
+`({getSize,align}) => number`. `getSize(startKey,endKey?)` reads
+measured or estimated top and bottom. An unknown end key gives
+`bottom=undefined`. `NaN` and `Infinity` offsets become 0.
+Measurement and alignment repeat up to ten passes. A later request
+cancels the earlier one. An unknown key leaves position intact.
+`null` and `undefined` show the scrollbar. `autoExpand` on a key
+request adds only that key to uncontrolled `expandedKeys`, with no
+ancestor expansion or `onExpand`. `itemScrollOffset` sets the
+active node's autoscroll offset. `onScroll` or native `onscroll`
+receives the holder event, and the root ref stays in place.
+DirectoryTree exposes the same methods. Initially expanded nodes
+load when they enter the mounted window. Results after unmount
+are ignored.
 
-Шесть ошибок Source сохранены как raw observations и не переносятся: stale estimate
-при смене itemHeight/theme, потеря active key=0, ссылка aria-activedescendant на
-отсутствующий DOM, local virtual=undefined поверх global false и пропущенный
-direction в rc-tree NodeList, отрицательный offset при scrollWidth меньше viewport.
-Native ограничивает offset снизу нулём, обновляет оценку без клонирования data,
-сохраняет key=0, валидный ARIA target, наследование и направление обеих осей.
-[28 исходных browser случаев, 12 SSR и шесть наблюдений](../../../tests/browser/fixtures/ant-design-tree-virtual-reference.json),
-[Source browser](../../../tests/browser/tree/tree-virtual.spec.ts),
-[Native browser](../../../tests/browser/tree/tree-virtual-native.spec.ts) и
-[SSR](../../../tests/package/tree/tree-virtual.ssr.test.ts) проверяют эти границы.
+The raw observations record six upstream issues: stale estimates
+when `itemHeight` or theme changes, losing active key 0, an
+`aria-activedescendant` that points outside the DOM, local
+`virtual=undefined` overriding global `false`, missing
+`direction` in rc-tree NodeList, and negative offset when
+`scrollWidth` is smaller than the viewport. Svelte clamps offset
+to zero, updates estimates without cloning data, and preserves
+key 0, valid ARIA targets, inheritance, and direction on both axes.
+[28 upstream browser cases, 12 SSR cases, and six observations](../../../tests/browser/fixtures/ant-design-tree-virtual-reference.json)
+· [Upstream browser tests](../../../tests/browser/tree/tree-virtual.spec.ts) · [Svelte browser tests](../../../tests/browser/tree/tree-virtual-native.spec.ts)
+· [SSR tests](../../../tests/package/tree/tree-virtual.ssr.test.ts)
 
-Tree и DirectoryTree выводят тип пользовательской записи из `treeData`.
-`fieldNames={{ key: 'id', title: 'caption', children: 'items' }}` задаёт имена полей;
-пустые имена используют стандартные key/title/children. Поля с прежними именами
-не подменяют выбранную схему. Настройка действует на раскрытие, leaf state,
-conduction, lazy load, renderers и диапазоны DirectoryTree.
+Tree and DirectoryTree infer record types from `treeData`.
+`fieldNames={{ key: 'id', title: 'caption', children: 'items' }}`
+sets field names. Empty names use `key`, `title`, and `children`.
+Fields with the old names remain independent of the chosen
+schema. The setting applies to expansion, leaf state, check
+propagation, lazy loading, renderers, and DirectoryTree ranges.
 
 ```svelte
 <script lang="ts">
@@ -162,92 +185,105 @@ conduction, lazy load, renderers и диапазоны DirectoryTree.
     priority: number;
     items?: Entry[];
   }
-  const entries: Entry[] = [{ id: 0, caption: 'Документ', priority: 2 }];
+  const entries: Entry[] = [{ id: 0, caption: 'Document', priority: 2 }];
 </script>
 
 <Tree treeData={entries} fieldNames={{ key: 'id', title: 'caption', children: 'items' }}
   onSelect={(_keys, info) => console.log(info.node.priority, info.selectedNodes)} />
 ```
 
-`TreeProps<Data>`, `DirectoryTreeProps<Data>`, `TreeEventNode<Data>` и
-`TreeCheckInfo<Data>` сохраняют тип payload, включая discriminated unions;
-`TreeFieldDataNode<Payload, ChildName>`
-помогает объявить рекурсивные записи с общими flags и snippets. `info.node` содержит
-исходные поля, но canonical key и state flags перекрываются состоянием дерева.
-`selectedNodes`, `checkedNodes` и позиции отметок сохраняют исходные объекты,
-включая прежний raw key. `titleRender` получает исходную запись; snippet в самом
-поле title имеет приоритет над общим renderer, как в Source. При titleRender
-поле заголовка может содержать произвольный payload, который читает этот snippet.
+`TreeProps<Data>`, `DirectoryTreeProps<Data>`, `TreeEventNode<Data>`,
+and `TreeCheckInfo<Data>` preserve the payload type, including
+discriminated unions. `TreeFieldDataNode<Payload, ChildName>`
+helps declare recursive records with shared flags and Snippets.
+`info.node` includes original fields, with canonical key and
+flags overridden by Tree state. `selectedNodes`, `checkedNodes`,
+and checked positions retain original objects, including raw keys.
+`titleRender` receives the original record. As upstream, a
+Snippet in the title field overrides the shared renderer.
+With `titleRender`, the title field can contain any payload that
+the Snippet reads.
 
-Новые ссылки на `treeData` или `fieldNames` обновляют индекс без замены компонента.
-Смена только fieldNames также обновляет заголовки и дочерние поля. Это исправляет
-явную ошибку cache в rc-tree 1.4.0: Source оставляет старые flatten entities до
-замены treeData. Raw observation сохранено вместе с публичным Source counterpart,
-который обновляет оба props. Существующие keys, DOM/ref и active IDs сохраняются.
-[27 raw UMD сценариев и наблюдение](../../../tests/browser/fixtures/ant-design-tree-fields-reference.json),
-[browser](../../../tests/browser/tree/tree-fields.spec.ts),
-[SSR](../../../tests/package/tree/tree-fields.ssr.test.ts) и
-[типизированные записи](../../../tests/browser/fixtures/TreeGenericFields.svelte) проверяют
-aliases, исходные объекты, strict/conduction, lazy load, controlled keys, snippets,
-DirectoryTree, RTL/prefix и смену схемы.
+New `treeData` or `fieldNames` references update the index
+without replacing the component. Updating only `fieldNames` also
+refreshes titles and child fields. In rc-tree 1.4.0, old flattened
+entities remain cached until `treeData` is replaced. The raw
+observation and a public upstream comparison updating both props
+are retained. Existing keys, DOM and refs, and active IDs are
+preserved. Tests cover aliases, original objects, strict checks
+and propagation, lazy load, controlled keys, Snippets, DirectoryTree,
+RTL and prefix, and schema changes.
+[27 raw UMD scenarios and an observation](../../../tests/browser/fixtures/ant-design-tree-fields-reference.json) ·
+[Browser tests](../../../tests/browser/tree/tree-fields.spec.ts) · [SSR tests](../../../tests/package/tree/tree-fields.ssr.test.ts) · [Typed records](../../../tests/browser/fixtures/TreeGenericFields.svelte)
 
-`TreeDataNode.switcherIcon` задаёт switcher конкретного узла, включая лист,
-и имеет приоритет над общим renderer, линиями и loading icon. Общий
-`switcherIcon` применяется к веткам после loading; `showLine.showLeafIcon`
-принимает также snippet. Рендереры получают вычисленный `isLeaf`; пустой snippet
-оставляет существующий native switcher без содержимого. Snippets сохраняют своё
-содержимое и классы вместо клонирования React elements.
-`onMouseEnter`/`onMouseLeave` получают `{event,node}` при входе/уходе с содержимого
-строки, включая disabled. Наведение на switcher не является событием содержимого.
-Node в событии сохраняет исходный `isLeaf` и актуальные selected/expanded/loading;
-вычисленный флаг рендерера не подменяет исходные данные.
-После unmount hover callbacks не вызываются, даже если потребитель удерживает
-удалённый DOM-узел и отправляет ему событие.
-[14 raw UMD сценариев](../../../tests/browser/fixtures/ant-design-tree-node-renderers-reference.json),
-[browser](../../../tests/browser/tree/tree-node-renderers.spec.ts) и
-[SSR](../../../tests/package/tree/tree-node-renderers.ssr.test.ts) проверяют приоритеты,
-текст/элементы/пустое содержимое, центрирование switcher, pending load, hover,
-RTL/prefix и DirectoryTree. Сброс native button styles сохраняет исходный
-`text-align: center` у switcher; наследуемое выравнивание остаётся у содержимого строки.
+`TreeDataNode.switcherIcon` sets the switcher for a node, including a
+leaf, and takes precedence over the shared renderer, lines, and
+loading icon. The shared `switcherIcon` applies to branches after
+loading. `showLine.showLeafIcon` also accepts a Snippet. Renderers
+receive calculated `isLeaf`. An empty Snippet leaves the native
+switcher without content. Snippet classes and content are kept
+without cloning React elements. `onMouseEnter` and `onMouseLeave`
+receive `{event,node}` when entering or leaving row content,
+including disabled rows. Hovering the switcher is outside the row
+content. The event node keeps the original `isLeaf` and current
+selected, expanded, and loading flags. The renderer's computed
+flag does not replace source data. After unmount, hover callbacks
+stay uncalled even if the consumer retains the removed DOM node
+and dispatches an event to it.
 
-`prefixCls` меняет namespace дерева, nodes, checkbox, switcher и линий; пустая
-строка наследует ConfigProvider.prefixCls. Canonical Tree tokens и generated IDs
-сохранены; общий Row selector независим от local prefix. Шаблон tree-prefix
-воспроизводит 98 исходных правил с изоляцией root/RTL/line scopes.
-[Raw замеры](../../../tests/browser/fixtures/ant-design-tree-prefix-reference.json)
-отделены от public root-style и readonly-selection counterparts. Прежний Native
-Tree сохраняет заданный selection при selectable=false; React при initial render
-его отбрасывает. Отдельный public вариант запрещает selection на каждом узле.
-Смена prefix сохраняет DOM/ref, active descendant, focus, checked/selected state
-и pending load. Внутренний TreeSelect пока использует canonical Tree namespace
-своего существующего CSS-адаптера; его собственный prefix API переносится отдельно.
+Tests cover precedence, text, elements, empty content, switcher
+centering, pending load, hover, RTL and prefix, and DirectoryTree.
+Native button reset keeps upstream `text-align: center` for the
+switcher. Row content retains inherited alignment.
+[14 raw UMD scenarios](../../../tests/browser/fixtures/ant-design-tree-node-renderers-reference.json) · [Browser tests](../../../tests/browser/tree/tree-node-renderers.spec.ts)
+· [SSR tests](../../../tests/package/tree/tree-node-renderers.ssr.test.ts)
 
-`ConfigProvider.theme.components.Tree` подключён к общему механизму компонентной
-темы: метрики title/switcher/indent, hover/selected colors, alias overrides,
-global/component algorithms и custom cssVar prefix. Локальные CSS variables и
-`style` сохраняют приоритет. DirectoryTree использует те же настройки и отдельные
-directoryNodeSelectedBg/directoryNodeSelectedColor. Внутреннее дерево
-TreeSelect использует тему Select/TreeSelect, независимо от `components.Tree`.
-Отдельный UMD-замер проверяет одновременные конфликтующие настройки трёх компонентов.
+`prefixCls` sets the namespace for the tree, nodes, checkbox,
+switcher, and lines. The empty string inherits
+`ConfigProvider.prefixCls`. Canonical Tree tokens and generated
+IDs remain. The shared Row selector is independent of the local
+prefix. The `tree-prefix` template reproduces 98 upstream rules
+scoped to root, RTL, and lines. Raw measurements are separate from
+public root-style and readonly selection cases. The existing
+native Tree preserves supplied selection with `selectable=false`.
+React drops it on initial render. A separate public case disables
+selection per node. Prefix changes preserve DOM, refs, active
+descendant, focus, checked and selected state, and pending load.
+Internal TreeSelect still uses the canonical Tree namespace of
+its CSS adapter. Its own prefix API is tracked separately.
+[Raw measurements](../../../tests/browser/fixtures/ant-design-tree-prefix-reference.json)
 
-Сохранён прежний native contract: `Tree.style` оформляет внешний корень. В React
-этот prop относится к внутреннему `.ant-tree-list`; исходные замеры обоих слоёв
-сохранены в [UMD-эталоне](../../../tests/browser/fixtures/ant-design-tree-theme-reference.json).
-Сверка видимого содержимого охватывает 14 тем / 112 наборов CSS-измерений, включая
-checkbox, disabled/selected/active nodes, RTL и nested/reset/sibling scopes.
-[Browser-проверки](../../../tests/browser/tree/tree-theme.spec.ts) также подтверждают сохранение
-DOM, фокуса, active descendant, отметок и pending load при обновлении токенов;
-[SSR-проверки](../../../tests/package/tree/tree-theme.ssr.test.ts) не запускают загрузку или
-браузерные ресурсы. Декларации сверяются с официальным UMD отдельным
-[unit-набором](../../../src/lib/theme/theme-tree-tokens-reference.test.ts).
+`ConfigProvider.theme.components.Tree` uses the shared component
+theme for title, switcher, and indent metrics, hover and selected
+colors, alias overrides, global and component algorithms, and a
+custom `cssVar` prefix. Local CSS variables and `style` keep
+precedence. DirectoryTree uses the same settings plus
+`directoryNodeSelectedBg` and `directoryNodeSelectedColor`.
+TreeSelect's internal tree uses the Select and TreeSelect theme
+independently of `components.Tree`. The UMD reference includes a
+case with conflicting settings for all three components.
 
-`classNames` и `styles` настраивают пять частей: root, item, itemIcon, itemTitle
-и itemSwitcher. Они принимают объект или `({props}) => slots`; props сохраняют
-тип данных и входные Native props. Подставляются defaults Ant wrapper для
-showIcon/blockNode/checkable/selectable/disabled, остальные внутренние defaults
-дерева не подменяют отсутствующие входные значения. Общий `ConfigProvider.tree`
-принимает class/style и те же semantic slots. Отсутствующий record наследуется,
-любой собственный объект, включая `{}`, заменяет родительский целиком.
+In the retained native contract, `Tree.style` styles the outer
+root. In React it applies to the inner `.ant-tree-list`. The
+reference keeps measurements of both layers. Visible content
+comparisons cover 14 themes and 112 CSS measurement sets, including
+checkbox, disabled, selected, and active nodes, RTL, and nested,
+reset, and sibling scopes. [UMD reference](../../../tests/browser/fixtures/ant-design-tree-theme-reference.json)
+
+Browser tests also check preservation of DOM, focus, active
+descendant, checks, and pending load on token updates. SSR tests
+ensure loading and browser resources stay inactive. Unit tests
+compare declarations with the official UMD.
+[Browser tests](../../../tests/browser/tree/tree-theme.spec.ts) · [SSR tests](../../../tests/package/tree/tree-theme.ssr.test.ts) · [Unit tests](../../../src/lib/theme/theme-tree-tokens-reference.test.ts)
+
+`classNames` and `styles` support five slots: `root`, `item`,
+`itemIcon`, `itemTitle`, and `itemSwitcher`. They accept an object
+or `({props}) => slots`. Props retain data types and native inputs.
+Ant wrapper defaults are provided for `showIcon`, `blockNode`,
+`checkable`, `selectable`, and `disabled`. Other omitted inputs stay
+omitted. `ConfigProvider.tree` accepts `class`, `style`, and the
+same semantic slots. An omitted record inherits. Any explicit
+object, including `{}`, replaces it in full.
 
 ```svelte
 <ConfigProvider tree={{ styles: { itemTitle: 'font-weight:600' } }}>
@@ -256,136 +292,161 @@ showIcon/blockNode/checkable/selectable/disabled, остальные внутр�
 </ConfigProvider>
 ```
 
-Классы provider и local накапливаются. Внешний root использует слои
-provider styles.root → provider style → local styles.root → local style после
-theme variables. Прежний `Tree.style` остаётся на внешнем корне; `tree.style`
-следует той же Native границе. В React обычные style/context style относятся к
-inner list. Raw наблюдения и публичные Source counterparts через styles.root
-сохранены отдельно; это отличие не выдаётся за одинаковую структуру.
-На строке `styles.item` перекрывает node.style, как Source. Switcher slots
-действуют также на листья; itemIcon существует у pending загрузки при showIcon=false.
-TreeSelect сохраняет собственную конфигурацию внутреннего дерева и не читает tree record.
+Provider and local classes accumulate. After theme variables,
+the outer root applies provider `styles.root`, provider `style`,
+local `styles.root`, then local `style`. `Tree.style` and context
+`tree.style` keep the outer native root. React applies ordinary and
+context style to the inner list. Raw observations and public
+comparisons using `styles.root` are recorded separately.
+`styles.item` overrides `node.style` as upstream. Switcher slots
+also apply to leaves. `itemIcon` exists during pending load with
+`showIcon=false`. TreeSelect keeps its own internal tree settings
+and is independent of the tree record.
 
-Смена slots сохраняет DOM/ref, выбор и active IDs, фокус и pending load.
-Native обновляет также default icon: rc-tree 1.4.0 ошибочно кэширует прежние
-itemIcon classes/styles при их изменении без смены prefix/expanded/loading.
-Исходный stale-cache сохранён отдельно; корректный Source counterpart использует
-публичный custom icon. Ошибка не переносится. Snippets остаются непрозрачным
-Svelte-содержимым; CSS относится к существующим wrappers.
-[18 Source случаев и три raw наблюдения](../../../tests/browser/fixtures/ant-design-tree-semantic-reference.json),
-[browser](../../../tests/browser/tree/tree-semantic.spec.ts) и
-[SSR](../../../tests/package/tree/tree-semantic.ssr.test.ts) проверяют slots, callbacks/defaults,
-nested/reset/replaced/sibling scopes, DirectoryTree, prefix/RTL, style priorities
-и обновления, включая pending loading и независимый TreeSelect.
+Slot changes preserve DOM, refs, selection, active IDs, focus,
+and pending load. Svelte also updates the default icon. In
+rc-tree 1.4.0, changing `itemIcon` classes or styles without
+changing prefix, expanded state, or loading leaves the old values
+cached. The raw cache observation is separate from the upstream
+comparison with a public custom icon. Snippets remain opaque
+Svelte content and CSS applies to existing wrappers. Tests cover
+slots, callbacks and defaults, nested, reset, replaced, and
+sibling scopes, DirectoryTree, prefix and RTL, style priorities,
+and updates including pending load and independent TreeSelect.
+[18 upstream cases and three raw observations](../../../tests/browser/fixtures/ant-design-tree-semantic-reference.json) ·
+[Browser tests](../../../tests/browser/tree/tree-semantic.spec.ts) · [SSR tests](../../../tests/package/tree/tree-semantic.ssr.test.ts)
 
-Deprecated `TreeNode` children не входят в перенос: rc-tree 1.4.0 прямо помечает
-`Tree.children` как deprecated и предлагает `treeData`.
+Deprecated `TreeNode` children are outside the port. rc-tree 1.4.0
+marks `Tree.children` deprecated in favor of `treeData`.
 
 ## Collapse motion
 
-`motion` принимает Native CSSMotion config или `false`. Undefined/null выбирают
-исходный Ant collapse object: `${rootPrefixCls}-motion-collapse`, измеряемые
-height/opacity и deadline 500 ms. Пустой объект отключает CSS phases, сохраняя
-самостоятельный custom config. Semantic callbacks получают этот итоговый object;
-пользовательский config сохраняет identity.
+`motion` accepts a native CSSMotion config or `false`. `undefined`
+and `null` select the Ant collapse object, with
+`${rootPrefixCls}-motion-collapse`, measured height and opacity,
+and a 500ms deadline. An empty object disables CSS phases as a
+custom config. Semantic callbacks receive the resolved object.
+A supplied config retains its identity.
 
-Начальные defaultExpandedKeys/expandedKeys и SSR не анимируются. При изменении
-одного expanded key его видимые потомки временно переходят в motion group:
-раскрытие использует `appear`, сворачивание — `leave`. Tree перезаписывает
-motionAppear по направлению перехода; custom `motionAppear: false` не отключает
-раскрытие. При нескольких изменённых keys список обновляется сразу.
+Initial `defaultExpandedKeys` and `expandedKeys` and SSR do
+not animate. When one expanded key changes, visible descendants
+temporarily move into a motion group. Expansion uses `appear`
+and collapse uses `leave`. Tree overrides `motionAppear` by
+transition direction, so custom `motionAppear: false` still
+allows expansion. Multiple changed keys update the list
+immediately.
 
-`motionName` поддерживает строку и object с именами фаз. Prepare hooks могут
-возвращать Promise; start/active hooks получают DOM группы и event=null и
-возвращают CSS-строку. End hooks получают нативный transition/animation event
-или `{deadline:true}`; false оставляет группу активной. Default collapse игнорирует
-opacity end и завершается по height либо deadline. События потомков не завершают
-группу. Ant Tree удерживает собственный onVisibleChanged; этот унаследованный
-callback, React children/internalRef не добавлены в Svelte API.
+`motionName` accepts a string or an object of phase names.
+Prepare hooks may return a Promise. Start and active hooks
+receive the group DOM and `event=null` and return a CSS string.
+End hooks receive a native transition or animation event or
+`{deadline:true}`. `false` keeps the group active. Default collapse
+ignores opacity end and finishes on height end or deadline.
+Descendant events leave the group active. Ant Tree owns its
+`onVisibleChanged`. That inherited callback, React children,
+and `internalRef` are outside the Svelte API.
 
-`theme.token.motion=false` отключает CSS phases, но сохраняет prepare. Native
-также учитывает prefers-reduced-motion и его изменение во время перехода.
-Другие expand действия ждут окончания motion; selection/check остаются доступны.
-Смена данных, motion=false, завершение drag и unmount очищают удержанную группу
-и отменяют старые RAF, prepare completions, deadlines и DOM listeners.
+`theme.token.motion=false` disables CSS phases and retains
+preparation. Svelte also observes `prefers-reduced-motion` and
+its changes during a transition. Other expansion actions wait
+for motion to finish. Selection and checking remain available.
+Data changes, `motion=false`, drag completion, and unmount
+release the held group and cancel old frames, prepare
+completions, deadlines, and DOM listeners.
 
-При virtual list группа содержит первые ceil(height/itemHeight)+1 потомков;
-сам virtual placeholder сохраняет исходную оценку itemHeight. Virtual=false или
-отсутствие height сохраняют весь диапазон. Соседние keyed строки, tree-root,
-refs и opaque controls вне диапазона сохраняют DOM. Узлы самого диапазона
-монтируются в группе и затем возвращаются в плоский список, как Source.
-TreeSelect сохраняет прежнее самостоятельное управление раскрытием.
+With a virtual list, the group holds the first
+`ceil(height/itemHeight)+1` descendants. The virtual placeholder
+retains the original `itemHeight` estimate. `virtual=false`
+or no height retains the full range. Neighboring keyed rows,
+the tree root, refs, and opaque controls outside the range
+retain DOM. Nodes in the range mount in the group and then
+return to the flat list as upstream. TreeSelect retains its
+own expansion behavior.
 
-[23 Source сценария и raw наблюдение](../../../tests/browser/fixtures/ant-design-tree-motion-reference.json),
-[12 SSR вариантов](../../../tests/browser/fixtures/ant-design-tree-motion-ssr-reference.json),
-[engine](../../../src/lib/tree/tree-motion.engine.test.ts),
-[lifecycle](../../../src/lib/tree/tree-motion.dom.test.ts),
-[browser](../../../tests/browser/tree/tree-motion.spec.ts),
-[Native browser](../../../tests/browser/tree/tree-motion-native.spec.ts) и
-[SSR](../../../tests/package/tree/tree-motion.ssr.test.ts) проверяют фазы, callbacks,
-измерения, virtual, generic aliases/zero/bigint, prefix/RTL, темы и cleanup.
-Ошибка rc-tree1.4.0 со скрытым expanded key сохранена в raw reference: пустой
-motion range блокирует видимые ветки до deadline. Native пропускает пустые
-и невидимые диапазоны, сохраняя доступное раскрытие.
+Tests cover phases, callbacks, measurement, virtualization,
+generic aliases and zero and bigint keys, prefix and RTL,
+theming, and cleanup. The raw reference records the rc-tree
+1.4.0 error where a hidden expanded key produces an empty
+range that blocks visible branches until the deadline. Svelte
+skips empty and invisible ranges and keeps expansion available.
+[23 upstream scenarios and a raw observation](../../../tests/browser/fixtures/ant-design-tree-motion-reference.json) ·
+[12 SSR variants](../../../tests/browser/fixtures/ant-design-tree-motion-ssr-reference.json) · [Engine tests](../../../src/lib/tree/tree-motion.engine.test.ts) ·
+[Lifecycle tests](../../../src/lib/tree/tree-motion.dom.test.ts) · [Browser tests](../../../tests/browser/tree/tree-motion.spec.ts) ·
+[Svelte browser tests](../../../tests/browser/tree/tree-motion-native.spec.ts) · [SSR tests](../../../tests/package/tree/tree-motion.ssr.test.ts)
 
 ## Drag/drop
 
-`draggable` включает HTML5 drag/drop в Tree и DirectoryTree. Принимаются boolean,
-predicate исходного data-узла или `{ nodeDraggable, icon }`. Predicate=false
-отключает и начало drag, и drop handlers строки, как в Source. По умолчанию
-показывается Holder icon; `icon: false` убирает handle, snippet заменяет его
-содержимое, включая пустой результат. Интерактивное содержимое handle сохраняет
-свои DOM controls и фокус. Клик обычного handle возвращает фокус tree-root;
-draggable строки имеют tabindex=-1 и не добавляют tree tab stops.
+`draggable` enables HTML5 drag and drop in Tree and DirectoryTree.
+It takes a boolean, a predicate of the original data node, or
+`{ nodeDraggable, icon }`. A false predicate disables the row's
+drag start and drop handlers as upstream. The default is the
+Holder icon. `icon: false` removes the handle, and a Snippet
+replaces its content even when empty. Interactive handle
+content retains its controls and focus. Clicking a regular
+handle returns focus to the tree root. Draggable rows have
+`tabindex=-1` and add no tree Tab stops.
 
-`allowDrop({ dragNode, dropNode, dropPosition })` получает исходные data-объекты
-и относительную позицию -1/0/1. Позиция зависит от вертикальной половины
-event.target, горизонтального смещения, раскрытых веток и indent; поддержаны
-переходы между уровнями, RTL и виртуальные окна. Disabled запрещает начать drag,
-но сам по себе не исключает drop target: при необходимости проверяйте
-`dropNode.disabled` в allowDrop. Индикатор фиксирован Ant wrapper, который также
-перезаписывает унаследованный rc `dropIndicatorRender`.
+`allowDrop({ dragNode, dropNode, dropPosition })` receives original
+data objects and relative position -1, 0, or 1. Position depends
+on the vertical half of `event.target`, horizontal movement,
+expanded branches, and indent. Level transitions, RTL, and
+virtual windows are supported. Disabled nodes cannot start a
+drag and can still be drop targets. Check `dropNode.disabled`
+in `allowDrop` when needed. The Ant wrapper fixes the indicator
+and overrides inherited rc `dropIndicatorRender`.
 
-`onDragStart`, `onDragEnter`, `onDragOver`, `onDragLeave` и `onDragEnd` получают
-`{event,node}` с нативным DragEvent и canonical key/state. OnDragEnter добавляет
-expandedKeys до отложенного раскрытия. Через 800 ms приходит onExpand с
-expanded=true; key добавляется при наличии детей. Для листа набор может остаться
-прежним; hover сам по себе не загружает lazy children. Uncontrolled Tree сворачивает
-source при dragstart без onExpand; DirectoryTree сохраняет своё управление
-expandedKeys и не сворачивает source этим действием.
+`onDragStart`, `onDragEnter`, `onDragOver`, `onDragLeave`, and
+`onDragEnd` receive `{event,node}` with a native DragEvent and
+canonical key and state. `onDragEnter` adds `expandedKeys` before
+the delayed expansion. After 800ms, `onExpand` receives
+`expanded=true`, with the key added if the node has children.
+A leaf can leave the set unchanged. Hover alone does not load
+lazy children. Uncontrolled Tree collapses the source on
+dragstart without `onExpand`. DirectoryTree owns its expanded
+keys and keeps the source as it was.
 
-`onDrop` добавляет dragNode, dragNodesKeys, dropToGap и dropPosition. Последний
-равен sibling index dropNode плюс -1/0/1. DropNode может быть предком строки,
-над которой находится индикатор; dragOver flags относятся к строке индикатора.
-DragNode сохраняет state начала drag и исходную data-ссылку: изменения свойств
-этого объекта видны onDrop, а замена узла новым объектом не меняет сохранённую
-ссылку. DragNodesKeys содержит source и всех его потомков на начало drag,
-включая свёрнутые ветки. Перестановка treeData остаётся у потребителя;
-проверки не меняют выбор, checkbox, native refs и существующую клавиатуру.
+`onDrop` adds `dragNode`, `dragNodesKeys`, `dropToGap`, and
+`dropPosition`. The last is the drop node's sibling index
+plus -1, 0, or 1. The drop node can be an ancestor of the
+indicator row. Drag-over flags apply to the indicator row.
+`dragNode` keeps the drag-start state and original data
+reference. Mutating that object is visible to `onDrop`, while
+replacing the node object leaves the retained reference intact.
+`dragNodesKeys` contains the source and all descendants at
+drag start, including collapsed branches. The consumer reorders
+`treeData`. Drop checks preserve selection, checkboxes, native
+refs, and keyboard behavior.
 
-[38 независимых Source сценариев и шесть raw наблюдений](../../../tests/browser/fixtures/ant-design-tree-drag-reference.json),
-[12 Source SSR вариантов без DOM](../../../tests/browser/fixtures/ant-design-tree-drag-ssr-reference.json),
-[engine](../../../src/lib/tree/tree-drag.engine.test.ts),
-[SSR](../../../tests/package/tree/tree-drag.ssr.test.ts) и
-[browser](../../../tests/browser/tree/tree-drag.spec.ts) фиксируют геометрию, snapshots,
-defaults, controlled keys, generic data/fieldNames, icons, prefix/RTL и lifecycle.
-[Native проверки](../../../tests/browser/tree/tree-drag-native.spec.ts) включают реальные
-mouse drags, виртуальную прокрутку, смену данных и сохранение фокуса/DOM.
-Ошибки rc-tree1.4.0 не воспроизводятся:
+Comparisons cover geometry, snapshots, defaults, controlled
+keys, generic data and `fieldNames`, icons, prefix and RTL,
+and lifecycle. Svelte browser tests include real mouse drags,
+virtual scrolling, data changes, and retained focus and DOM.
+[38 independent upstream scenarios and six raw observations](../../../tests/browser/fixtures/ant-design-tree-drag-reference.json) ·
+[12 upstream SSR cases without DOM](../../../tests/browser/fixtures/ant-design-tree-drag-ssr-reference.json) · [Engine tests](../../../src/lib/tree/tree-drag.engine.test.ts)
+· [SSR tests](../../../tests/package/tree/tree-drag.ssr.test.ts) · [Browser tests](../../../tests/browser/tree/tree-drag.spec.ts) ·
+[Svelte tests](../../../tests/browser/tree/tree-drag-native.spec.ts)
 
-- allowDrop проверяется перед drop; запрет в dragover очищает прежний target.
-- Проверяется текущее дерево потомков, включая добавленных после dragstart.
-- Оконный dragend сохраняет source node, даже когда его DOM вышел из окна.
-- Unmount отменяет таймер раскрытия и listeners; поздних callbacks нет.
-- Drop container сохраняет key=0, а handle обновляет namespace при смене prefix.
+Svelte handles the recorded rc-tree 1.4.0 cases as follows.
+
+- `allowDrop` is checked before drop, and a rejected dragover
+  clears the previous target.
+- The current descendant tree is checked, including nodes added
+  after dragstart.
+- Window dragend retains the source node even if its DOM has left
+  the virtual window.
+- Unmount cancels the expansion timer and listeners and prevents
+  late callbacks.
+- The drop container keeps key 0, and the handle updates its
+  namespace when the prefix changes.
 
 ## Data utilities
 
-`createTree` соответствует React `Tree.useTree`. Модель предоставляет стабильный
-`getPath(key)`: массив entities от корня до найденного узла включительно.
-Entity содержит `key`, `pos`, `level`, `index`, исходный `node`, путь исходных
-объектов `nodes`, `parent` и `children` при наличии потомков. Lookup по string,
-number и bigint использует исходное строковое сопоставление ключей.
+`createTree` corresponds to React's `Tree.useTree`. The model
+exposes a stable `getPath(key)` returning entities from the root
+through the matching node, inclusive. An entity has `key`, `pos`,
+`level`, `index`, the original `node`, the source object path
+`nodes`, `parent`, and `children` if it has descendants. String,
+number, and bigint lookup follows upstream string key matching.
 
 ```svelte
 <script lang="ts">
@@ -396,8 +457,8 @@ number и bigint использует исходное строковое соп
     caption: string;
     items?: Item[];
   }
-  let items = $state.raw<Item[]>([{ id: 'root', caption: 'Корень', items: [
-    { id: 'leaf', caption: 'Лист' }
+  let items = $state.raw<Item[]>([{ id: 'root', caption: 'Root', items: [
+    { id: 'leaf', caption: 'Leaf' }
   ] }]);
   let fields = $state<TreeFieldNames>({ key: 'id', title: 'caption', children: 'items' });
   const model = createTree(() => items, { get fieldNames() { return fields; } });
@@ -407,66 +468,73 @@ number и bigint использует исходное строковое соп
 <output>{path.join(' / ')}</output>
 ```
 
-Getter data и getter `config.fieldNames` читаются при каждом lookup; новая ссылка
-на data или schema перестраивает индекс. Для изменений используйте новый массив
-и новый объект fieldNames. Сохранённая функция `getPath` читает актуальные inputs,
-включая вызов через `$derived`. Статический массив также принимается.
-Модель работает без DOM, effects и timers, в том числе при SSR. Generic payload
-и identity исходных объектов сохраняются; title не переименовывается в raw node.
-UI-компоненты Tree/DirectoryTree принимают ту же схему полей через prop fieldNames;
-модель передаёт её отдельно через config.
+Data and `config.fieldNames` getters are read on every lookup.
+A new data or schema reference rebuilds the index. Use a new
+array and fieldNames object for changes. A retained `getPath`
+reads current inputs, including through `$derived`. A static
+array is also accepted. The model works without DOM, effects,
+or timers, including in SSR. Source object identity and generic
+payloads are retained. The raw node's title field is left as
+supplied. Tree and DirectoryTree take the same schema through
+`fieldNames`. The model takes it through config.
 
-[Исходный UMD-эталон](../../../tests/browser/fixtures/ant-design-tree-data-model-reference.json)
-фиксирует entities, aliases, positional fallback и обновления data/schema.
-Неизвестный ключ возвращает `[]`. Это исправляет явную ошибку rc-tree 1.4.0:
-lookup отсутствующих constructor/__proto__/toString читает plain object prototype
-и возвращает function/Object.prototype вместо DataEntity. Исходное наблюдение
-сохранено; реальные data keys с такими именами поддерживаются.
-[Unit](../../../src/lib/tree/tree-data-model.test.ts),
-[browser](../../../tests/browser/tree/tree-data-model.spec.ts) и
-[package/SSR](../../../tests/package/tree/tree-data-model.ssr.test.ts) проверяют модель.
+The UMD reference records entities, aliases, positional
+fallback, and data and schema updates. An unknown key returns
+`[]`. In rc-tree 1.4.0, looking up an absent `constructor`,
+`__proto__`, or `toString` reads the plain object prototype
+and returns a function or Object.prototype instead of a
+DataEntity. The observation is retained. Actual data keys
+with those names are supported. [Upstream UMD reference](../../../tests/browser/fixtures/ant-design-tree-data-model-reference.json)
+· [Unit tests](../../../src/lib/tree/tree-data-model.test.ts) · [Browser tests](../../../tests/browser/tree/tree-data-model.spec.ts) ·
+[Package and SSR tests](../../../tests/package/tree/tree-data-model.ssr.test.ts)
 
 ## DirectoryTree
 
-Отдельный экспорт `DirectoryTree` соответствует React `Tree.DirectoryTree` и
-использует существующий Tree. По умолчанию `expandAction='click'`, `showIcon=true`
-и `blockNode=true`; эти props можно переопределить. Лист получает file icon,
-ветка — закрытую или открытую папку. Snippet `icon` заменяет стандартную иконку.
+The separate `DirectoryTree` export corresponds to React's
+`Tree.DirectoryTree` and uses the existing Tree. Defaults are
+`expandAction='click'`, `showIcon=true`, and `blockNode=true`.
+These props can be overridden. A leaf gets a file icon and
+a branch gets an open or closed folder. An `icon` Snippet
+replaces the default icon.
 
 ```svelte
 <script lang="ts">
   import { DirectoryTree } from '@woodger/antd';
 
-  const nodes = [{ key: 'docs', title: 'Документы', children: [
-    { key: 'intro', title: 'Введение', isLeaf: true },
+  const nodes = [{ key: 'docs', title: 'Documents', children: [
+    { key: 'intro', title: 'Introduction', isLeaf: true },
     { key: 'api', title: 'API', isLeaf: true }
   ] }];
 </script>
 
-<DirectoryTree treeData={nodes} multiple defaultExpandAll aria-label="Файлы" />
+<DirectoryTree treeData={nodes} multiple defaultExpandAll aria-label="Files" />
 ```
 
-Обычный клик выбирает только строку и не снимает её выбор повторным кликом.
-При `multiple` Ctrl/Meta переключает отдельный ключ, Shift добавляет диапазон
-между текущей строкой и последним обычным/Ctrl/Meta выбором. Диапазон идёт по
-видимому дереву, не включает скрытых потомков и пропускает промежуточные
-disabled/nonselectable узлы. Первый Shift без такого выбора не создаёт диапазон.
-`onSelect` сообщает `selected=true`, включая снятие ключа через Ctrl/Meta;
-`selectedNodes` содержит исходные узлы в порядке полного дерева.
+A regular click selects just the row, and another click keeps it
+selected. With `multiple`, Ctrl or Meta toggles individual keys.
+Shift adds a range between the current row and the last ordinary,
+Ctrl, or Meta selection. The range follows the visible tree,
+excludes hidden descendants, and skips intermediate disabled or
+nonselectable nodes. The first Shift click without an anchor
+creates no range. `onSelect` reports `selected=true`, including
+when Ctrl or Meta removes the key. `selectedNodes` contains source
+nodes in complete tree order.
 
-Controlled/default keys и `defaultExpandParent` сохраняют Tree-контракты.
-В отличие от обычного Tree, DirectoryTree при `defaultExpandAll` включает
-в начальный набор также ключи листьев, как upstream. Lazy load, checkbox,
-клавиатура, темы Tree, RTL, prefix, focus/blur/scrollTo и `bind:nativeElement` используют
-существующий компонент. Расширенные неперенесённые Tree API перечислены выше.
+Controlled and default keys and `defaultExpandParent` retain
+Tree contracts. DirectoryTree also includes leaf keys in the
+initial set with `defaultExpandAll`, as upstream. Lazy loading,
+checkboxes, keyboard interaction, Tree themes, RTL, prefix,
+focus, blur, scrolling, and `bind:nativeElement` use the
+existing component. Advanced Tree APIs outside the port are
+listed above.
 
-[Пятнадцать исходных сценариев](../../../tests/browser/fixtures/ant-design-directory-tree-reference.json)
-сверяют выбор/диапазоны, callbacks, раскрытие, иконки и directory tokens.
-[Browser](../../../tests/browser/tree/directory-tree.spec.ts) и
-[SSR](../../../tests/package/tree/directory-tree.ssr.test.ts) проверяют Svelte-реализацию.
-При снятии controlled-режима сохраняются последние принятые ключи. Это намеренное
-исправление: Ant Design 6.6.8 / rc-tree 1.4.0 после такого перехода теряет
-безопасные массивы, и следующий Shift-клик падает на `undefined.includes`.
-[Оба исходных наблюдения](../../../tests/browser/fixtures/ant-design-directory-tree-control-release-observation.json)
-сохранены отдельно; ошибка не переносится в Svelte.
+The upstream cases compare selection and ranges, callbacks,
+expansion, icons, and directory tokens.
+[15 upstream scenarios](../../../tests/browser/fixtures/ant-design-directory-tree-reference.json) · [Browser tests](../../../tests/browser/tree/directory-tree.spec.ts)
+· [SSR tests](../../../tests/package/tree/directory-tree.ssr.test.ts)
 
+Leaving controlled mode preserves the last accepted keys.
+Ant Design 6.6.8 with rc-tree 1.4.0 loses safe arrays on this
+transition and the next Shift click fails on
+`undefined.includes`. Both original observations are kept
+separately. [Upstream observations](../../../tests/browser/fixtures/ant-design-directory-tree-control-release-observation.json)

@@ -7,12 +7,12 @@
   interface Person { id: number; name: string; score: number }
 
   const people: Person[] = [
-    { id: 0, name: 'Анна', score: 30 },
-    { id: 1, name: 'Борис', score: 10 }
+    { id: 0, name: 'Anna', score: 30 },
+    { id: 1, name: 'Boris', score: 10 }
   ];
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Имя', render: personName },
-    { key: 'score', title: 'Баллы', dataIndex: 'score', sorter: (left, right) => left.score - right.score }
+    { key: 'name', title: 'Name', render: personName },
+    { key: 'score', title: 'Score', dataIndex: 'score', sorter: (left, right) => left.score - right.score }
   ];
   let current = $state(1);
   let pageSize = $state(10);
@@ -26,7 +26,7 @@
   dataSource={people}
   {columns}
   rowKey="id"
-  caption="Участники"
+  caption="Members"
   bind:current
   bind:pageSize
   bind:sorter
@@ -36,33 +36,33 @@
 />
 ```
 
-По умолчанию используется `mode="client"`: фильтрация, сортировка и разбиение
-на страницы выполняются локально; переданный `total` в этом режиме игнорируется.
-`dataSource` и `columns` принимают readonly-массивы. Колонка данных может иметь
-явный `key` и `title`. `dataIndex` принимает ключ
-`keyof Row` или массив сегментов пути. `null` и `undefined` дают пустую ячейку,
-остальные значения отображаются текстом. `render(record, index, value)` заменяет
-содержимое ячейки типизированным snippet. Index начинается с 0 среди соседних
-записей текущей страницы или ветки. Колонка принимает `width`, `align` и
-`className`. Это поле дополняет классы заголовка и ячеек данных своей колонки.
-Служебные selection/expand
-колонки его не получают. Сортировка, selected/fixed classes и native semantics
-сохраняются. Обновление класса не пересоздаёт ячейку или snippet editor.
-8 состояний официального UMD сверяются в
-[browser](../../../tests/browser/table/table-column-classes.spec.ts), серверная разметка —
-в [SSR](../../../tests/package/table/table-column-classes.ssr.test.ts).
-Fixture `?fixture=table-column-classes`.
+`mode="client"` is the default. Filtering, sorting, and pagination
+run locally, and a supplied `total` is ignored in this mode.
+`dataSource` and `columns` accept readonly arrays. A data column can
+have an explicit `key` and `title`. `dataIndex` accepts a `keyof Row`
+or an array of path segments. `null` and `undefined` give an empty
+cell, and other values render as text. `render(record, index, value)`
+replaces cell content with a typed Snippet. The index starts at 0
+among siblings on the current page or branch.
 
-`rowKey` задаёт поле или функцию получения ключа, по умолчанию используется
-поле `key`. Ключ должен быть уникальной строкой или конечным числом; `0`
-поддерживается. Отсутствующие/повторные ключи строк, повторные явные ключи колонок и
-пустой список колонок вызывают явную ошибку. Позиции строк не используются как
-идентификаторы выбора.
+Columns accept `width`, `align`, and `className`. The class supplements
+the header and data cells of that column. Service columns for
+selection and expansion are independent. Sorting, selected and
+fixed classes, and native semantics are preserved. Class changes
+retain cell and Snippet editor DOM. Browser tests compare eight
+official UMD states at `?fixture=table-column-classes`. SSR tests
+cover the server markup. [Browser tests](../../../tests/browser/table/table-column-classes.spec.ts) · [SSR tests](../../../tests/package/table/table-column-classes.ssr.test.ts)
 
-`ConfigProvider.table` задаёт общие `rowKey` и `scroll`. Локальный `rowKey`
-имеет приоритет. Локальный `scroll` заменяет объект провайдера целиком,
-включая пустой объект `{}`. Вложенный провайдер использует родительский
-объект `table`, пока не получит собственный.
+`rowKey` supplies a key field or function and defaults to `key`.
+Keys must be unique strings or finite numbers, including 0.
+Missing or duplicate row keys, duplicate explicit column keys,
+and an empty column list raise explicit errors. Row position is
+independent of selection identity.
+
+`ConfigProvider.table` supplies shared `rowKey` and `scroll`. Local
+`rowKey` takes precedence. Local `scroll` replaces the full provider
+object, including `{}`. A nested provider uses the parent `table`
+object until it supplies its own.
 
 ```svelte
 <ConfigProvider table={{ rowKey: 'id', scroll: { x: true, y: 320 } }}>
@@ -70,308 +70,306 @@ Fixture `?fixture=table-column-classes`.
 </ConfigProvider>
 ```
 
-[Эталон](../../../tests/browser/fixtures/ant-design-table-config-reference.json)
-· [Chromium](../../../tests/browser/table/table-config.spec.ts)
-· [SSR](../../../tests/package/table/table-config.ssr.test.ts)
+[Reference](../../../tests/browser/fixtures/ant-design-table-config-reference.json) · [Chromium](../../../tests/browser/table/table-config.spec.ts) · [SSR](../../../tests/package/table/table-config.ssr.test.ts)
 
-Скалярная сортировка задаётся через `sorter: { columnKey, order } | null` и
-поддерживает привязку. Нажатие заголовка по умолчанию переключает
-`ascend → descend → null`. Плоские данные фильтруются перед сортировкой,
-а номер страницы сохраняется. Равные записи сохраняют исходный порядок.
-[Направления и приоритеты сортировки](#направления-и-приоритеты-сортировки)
+Single-column sorting uses `sorter: { columnKey, order } | null`
+and supports binding. A header click defaults to cycling through
+`ascend → descend → null`. Flat data is filtered before sorting,
+and the current page is retained. Equal records keep source order.
+[Sort directions and priorities](#sort-directions-and-priorities)
 
-По умолчанию пейджер расположен снизу у логического конца таблицы. Страница
-начинается с 1, размер страницы равен 10. `current` и `pageSize` поддерживают
-привязку. `pagination={false}` показывает все записи.
-[Настройки пагинации](#настройки-пагинации)
+The pager defaults to the bottom at the logical end. Pages start
+at 1 and the page size defaults to 10. `current` and `pageSize`
+support binding. `pagination={false}` shows all records.
+[Pagination settings](#pagination-settings)
 
-`rowSelection` включает Checkbox-колонку; объект
-`{ getCheckboxProps: (record) => ({ disabled, 'aria-label': ... }) }` позволяет
-отключить отдельные строки и изменить их доступное имя. `selectedRowKeys`
-поддерживает привязку. Выбор всех строк затрагивает только доступные строки
-текущей страницы и сохраняет ключи с других страниц. Заголовок игнорирует
-disabled-строки при расчёте checked/indeterminate и отключается, если доступных
-строк нет. При выключенной пагинации выбор всех относится ко всему набору.
-Выбранные ключи сохраняются после замены или удаления записей, пока владелец
-или пользователь не изменит выбор.
+`rowSelection` enables the Checkbox column. Use
+`{ getCheckboxProps: (record) => ({ disabled, 'aria-label': ... }) }`
+to disable individual rows or change their accessible names.
+`selectedRowKeys` supports binding. Select all affects only enabled
+rows on the current page and retains keys from other pages.
+The header excludes disabled rows from checked and indeterminate
+calculations and is disabled when no row is enabled. Without
+pagination, select all covers the entire set. Selected keys
+survive record replacement or removal until the owner or user
+updates selection.
 
-`onChange({ action, pagination, sorter, currentDataSource, filters })` вызывается
-при пользовательской сортировке, фильтрации или смене страницы/размера.
-`action` равен `sort`, `filter` или `paginate`, pagination содержит
-`{ current, pageSize, total }`, а currentDataSource в клиентском режиме — весь отфильтрованный и
-отсортированный набор до разбиения на страницы. Filters передаётся при наличии
-фильтруемых колонок.
-`onSelectionChange(keys, records, { type })` вызывается отдельно; type равен
-`single` или `all`. По умолчанию records содержат только известные записи
-текущего `dataSource`, включая скрытые фильтром, в порядке выбранных ключей.
-Полный набор методов выбора доступен через `rowSelection.onChange`.
-Внешние изменения props, данных и колонок не вызывают эти callbacks.
+`onChange({ action, pagination, sorter, currentDataSource, filters })`
+runs on user sorting, filtering, or page and size changes.
+`action` is `sort`, `filter`, or `paginate`, and `pagination` contains
+`{ current, pageSize, total }`. Client-mode `currentDataSource`
+is the entire filtered and sorted set before pagination.
+`filters` is present with filterable columns.
 
-Для отдельных таблиц доступны начальные `defaultCurrent`, `defaultPageSize`,
-`defaultSorter`, `defaultSelectedRowKeys`, которые читаются один раз. При
-привязке задавайте начальные значения у владельца. Для сброса присвойте
-`sorter=null`, `selectedRowKeys=[]` и нужную страницу.
+`onSelectionChange(keys, records, { type })` runs separately.
+`type` is `single` or `all`. By default, `records` contains only
+known current `dataSource` records in selected-key order, including
+records hidden by filters. The full selection method set is
+available through `rowSelection.onChange`. External props, data,
+and column updates leave these callbacks uncalled.
 
-`disabled` наследуется из ConfigProvider и может быть явно переопределён.
-`empty` заменяет текст пустого состояния snippet.
-Размер наследуется из `componentSize`. Доступны `bordered`, `class` и `style`.
-Число или CSS-строка в `scroll.x` задаёт
-минимальную ширину таблицы. При `scroll.x: true` ширина автоматическая с
-минимумом 100% ширины контейнера. Горизонтальная прокрутка остаётся внутри
-фокусируемой области.
+Standalone tables support `defaultCurrent`, `defaultPageSize`,
+`defaultSorter`, and `defaultSelectedRowKeys`, read once. With
+bindings, initialize the owner. To reset, assign `sorter=null`,
+`selectedRowKeys=[]`, and the desired page.
 
-## Подпись и DOM-атрибуты
+`disabled` inherits from ConfigProvider and can be overridden.
+The `empty` Snippet replaces empty-state text. Size inherits
+`componentSize`. `bordered`, `class`, and `style` are available.
+A number or CSS string in `scroll.x` sets the table's minimum
+width. `scroll.x: true` uses automatic width with a minimum
+of 100% of the container. Horizontal scrolling stays inside the
+focusable region.
 
-`id` и `data-*` добавляются к внутреннему контейнеру с классом `ant-table`
-или заданным `prefixCls`. `bind:nativeElement` предоставляет внешний wrapper.
-`role` и `aria-*` передаются семантическим элементам `table`, включая
-отдельные таблицы шапки и закреплённых итогов. Значения `0`, `false` и `''`
-сохраняются. Явные `aria-rowcount` и `aria-busy` имеют приоритет над
-вычисленным числом строк и состоянием загрузки.
+## Caption and DOM attributes
 
-`caption` принимает строку, число, snippet или вложенный массив и создаёт
-`<caption>` с классом `${prefixCls}-caption`. Пустая строка, пустой массив
-и булево значение дают пустую подпись без отступов. `null` и `undefined`
-пропускают элемент.
-Имя области прокрутки берётся из `aria-labelledby`, подписи или `aria-label`,
-в этом порядке. Когда эти значения пропущены, используется локализованное имя.
-Для подписи со snippet или содержимым массива область ссылается на её ID,
-который сохраняется при гидратации. Штатное виртуальное окно сохраняет
-`caption` в семантической таблице и измеряет его высоту для закреплённой шапки.
-С пользовательским телом прокрутки подпись выводится в отдельной видимой шапке.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-dom-attributes-reference.json)
-· [Chromium](../../../tests/browser/table/table-dom-attributes.spec.ts)
-· [SSR](../../../tests/package/table/table-dom-attributes.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
+`id` and `data-*` apply to the inner `ant-table` container or
+its configured `prefixCls`. `bind:nativeElement` exposes the outer
+wrapper. `role` and `aria-*` pass to semantic `table` elements,
+including separate header and fixed summary tables. `0`, `false`,
+and `''` are preserved. Explicit `aria-rowcount` and `aria-busy`
+override calculated row count and loading state.
 
-## Загрузка
+`caption` accepts a string, number, Snippet, or nested array and
+creates a `<caption>` with class `${prefixCls}-caption`. An empty
+string, empty array, or boolean gives an empty caption without
+padding. `null` and `undefined` omit the element. The scrolling
+region's name comes from `aria-labelledby`, caption, then
+`aria-label`. If all are omitted, it uses a localized name. For a
+Snippet or array caption, the region references its ID, which
+persists on hydration. The built-in virtual window keeps the
+caption in the semantic table and measures its height for the
+fixed header. With a custom scroll body, the caption renders
+in the separate visible header. [Reference](../../../tests/browser/fixtures/ant-design-table-dom-attributes-reference.json) ·
+[Chromium](../../../tests/browser/table/table-dom-attributes.spec.ts) · [SSR](../../../tests/package/table/table-dom-attributes.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
-`loading={true}` выставляет `aria-busy`, показывает отдельный локализованный
-статус и блокирует сортировку, выбор и пагинацию. В этом режиме интерактивное
-содержимое своих snippets отключает владелец.
+## Loading
 
-Объект в `loading` передаёт параметры вложенному [Spin](./spin.md), включая
+`loading={true}` sets `aria-busy`, displays a separate localized
+status, and blocks sorting, selection, and pagination. The owner
+disables interactive content in its own Snippets.
+
+An object in `loading` passes options to nested Spin, including
 `delay`, `description`, `indicator`, `percent`, `size`, `fullscreen`,
-`classNames` и `styles`. По умолчанию `spinning` включён. Пока он включён,
-таблица и пейджеры внутри Spin становятся `inert`. `delay` откладывает
-индикатор. При выходе из ожидания Spin восстанавливает фокус редактора,
-если пользователь оставил фокус на Spin. Пейджеры и таблица остаются соседями
-в одном контейнере Spin во всех режимах `loading`. Токены Table из темы и
-`styles.root` действуют внутри этого контейнера.
+`classNames`, and `styles`. `spinning` defaults on. While spinning,
+the table and pagers inside Spin become `inert`. `delay` defers the
+indicator. When loading ends, Spin restores editor focus if the user
+left focus on Spin. Pagers and the table remain siblings in the
+same Spin container in every loading mode. Table theme tokens and
+`styles.root` apply within the container. [Spin](./spin.md)
 
-При объектном `loading` и отсутствующем или равном `null` `dataSource`
-пустая ячейка остаётся без подписи до окончания загрузки. Явный пустой
-массив сохраняет пустое состояние под индикатором. `loading={true}` скрывает
-подпись пустой ячейки и для пустого массива.
+With object `loading` and omitted or `null` `dataSource`, the empty
+cell has no label until loading completes. An explicit empty array
+retains its empty state under the indicator. `loading={true}` also
+hides the empty cell label for an empty array.
 
 ```svelte
 <Table {columns} {dataSource}
-  loading={{ spinning: pending, delay: 150, description: 'Загрузка данных…' }} />
+  loading={{ spinning: pending, delay: 150, description: 'Loading data…' }} />
 ```
 
-[Снимки Ant Design](../../../tests/browser/fixtures/ant-design-table-loading-reference.json)
-· [Chromium](../../../tests/browser/table/table-loading.spec.ts)
-· [SSR](../../../tests/package/table/table-loading.ssr.test.ts)
+[Ant Design snapshots](../../../tests/browser/fixtures/ant-design-table-loading-reference.json) · [Chromium](../../../tests/browser/table/table-loading.spec.ts) · [SSR](../../../tests/package/table/table-loading.ssr.test.ts)
 
-## Локализация Table
+## Table locale
 
-`locale` задаёт подписи одной таблицы. Пропущенные поля наследуются из
+`locale` sets labels for one table. Omitted fields inherit from
 `ConfigProvider.locale`.
 
-| Назначение | Поля |
+| Purpose | Fields |
 | --- | --- |
-| Действия и состояние фильтра | `filterConfirm`, `filterReset`, `filterEmptyText`, `filterCheckAll`, `filterSearchPlaceholder` |
-| Следующее действие сортировки | `triggerAsc`, `triggerDesc`, `cancelSort` |
-| Подписи кнопок раскрытия | `expand`, `collapse` |
-| Команды выбора | `selectionAll`, `selectInvert`, `selectNone` |
-| Нативные подписи и доступные имена | `label`, `loadingText`, `filterTitle`, `selectAll`, `selectRow`, `selectionMenu`, `expandColumn` |
+| Filter actions and state | `filterConfirm`, `filterReset`, `filterEmptyText`, `filterCheckAll`, `filterSearchPlaceholder` |
+| Next sort action | `triggerAsc`, `triggerDesc`, `cancelSort` |
+| Expansion button labels | `expand`, `collapse` |
+| Selection commands | `selectionAll`, `selectInvert`, `selectNone` |
+| Native labels and accessible names | `label`, `loadingText`, `filterTitle`, `selectAll`, `selectRow`, `selectionMenu`, `expandColumn` |
 
-Нативные имена `filterApply`, `sortAscending`, `sortDescending`, `expandRow`
-и `collapseRow` также действуют. Поля Ant Design имеют приоритет, если
-заданы обе формы. Подписи кнопок фильтра и команд выбора принимают строки,
-числа, snippets и вложенные массивы содержимого. Явные пустые значения
-позволяют вывести кнопку или команду без текста. `filterEmptyText` задаёт
-описание внутри Empty. При `undefined` описание берётся из словаря Empty.
+Native names `filterApply`, `sortAscending`, `sortDescending`,
+`expandRow`, and `collapseRow` also work. When both forms are
+supplied, Ant Design fields take precedence. Filter button and
+selection command labels accept strings, numbers, Snippets, and
+nested content arrays. Explicit empty values allow buttons or
+commands without text. `filterEmptyText` supplies the description
+inside Empty. `undefined` uses the Empty dictionary.
 
-Приоритет содержимого пустой ячейки идёт от snippet `empty` к
-`locale.emptyText`, затем к `ConfigProvider.renderEmpty('Table')` и простому
-Empty. Локальный `emptyText` заменяет содержимое ячейки целиком и может быть
-строкой, числом, snippet или вложенным массивом. `0` выводится как текст.
-`null`, `false`, `''` и `[]` оставляют ячейку пустой. `undefined` передаёт
-выбор следующему источнику. Отображение пустой ячейки при ожидании зависит от
-[режима загрузки](#загрузка) и наличия `dataSource`.
+Empty cell content resolves from the `empty` Snippet, then
+`locale.emptyText`, then `ConfigProvider.renderEmpty('Table')` and
+simple Empty. Local `emptyText` replaces the full cell contents
+and can be a string, number, Snippet, or nested array. `0` renders
+as text. `null`, `false`, `''`, and `[]` leave the cell empty.
+`undefined` falls through. Empty cell display while waiting
+depends on loading mode and whether `dataSource` is supplied.
+[Loading](#loading)
 
 ```svelte
-{#snippet emptyRows()}<span>Для этих условий записей нет.</span>{/snippet}
+{#snippet emptyRows()}<span>No records match these criteria.</span>{/snippet}
 
 <Table {columns} {dataSource}
-  locale={{ emptyText: emptyRows, filterConfirm: 'Применить условия' }} />
+  locale={{ emptyText: emptyRows, filterConfirm: 'Apply filters' }} />
 ```
 
-Для фильтров `renderEmpty('Table.filter')` может вернуть `0` или `false`.
-При `null` и `undefined` используется Empty с описанием `filterEmptyText`.
-[RenderEmpty](../render-empty.md)
+For filters, `renderEmpty('Table.filter')` can return `0` or
+`false`. `null` and `undefined` use Empty with
+`filterEmptyText` as the description. [RenderEmpty](../render-empty.md)
 
-Сопоставлены 52 браузерных состояния и 27 серверных снимков Ant Design 6.6.8.
-Смена словаря сохраняет открытый фильтр, запрос поиска, черновик и фокус.
-[Снимки React](../../../tests/browser/fixtures/ant-design-table-locale-reference.json),
-[Chromium](../../../tests/browser/table/table-locale.spec.ts),
-[гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
-и [SSR](../../../tests/package/table/table-locale.ssr.test.ts).
+The comparison covers 52 browser states and 27 server snapshots
+from Ant Design 6.6.8. Locale updates preserve the open filter,
+search query, draft, and focus. [React snapshots](../../../tests/browser/fixtures/ant-design-table-locale-reference.json) ·
+[Chromium](../../../tests/browser/table/table-locale.spec.ts) · [Hydration](../../../tests/browser/table/table-column-layout-hydration.spec.ts) · [SSR](../../../tests/package/table/table-locale.ssr.test.ts)
 
-## Настройки пагинации
+## Pagination settings
 
-`pagination.placement` принимает `topStart`, `topCenter`, `topEnd`,
-`bottomStart`, `bottomCenter`, `bottomEnd` и `none`. Верхний пейджер
-появляется перед панелью `title`, нижний после `footer`. Для каждой
-стороны используется первый заданный вариант. Start и end учитывают RTL.
-Пустой массив и `['none']` скрывают навигацию с сохранением разбиения строк.
-При нулевом total пейджеры скрыты.
+`pagination.placement` accepts `topStart`, `topCenter`, `topEnd`,
+`bottomStart`, `bottomCenter`, `bottomEnd`, and `none`. The top
+pager comes before `title` and the bottom pager after `footer`.
+The first supplied placement for each side wins. Start and end
+follow RTL. An empty array or `['none']` hides navigation while rows
+are still paginated. Zero total hides pagers.
 
 ```svelte
 <Table {dataSource} {columns}
   pagination={{ placement: ['topStart', 'bottomEnd'], defaultPageSize: 20 }} />
 ```
 
-Вложенные `pagination.current` и `pagination.pageSize` задают управляемое
-состояние. Смена страницы или размера передаёт запрос владельцу. Оба пейджера
-и строки используют принятые значения. `current` и `pageSize` на самом Table,
-включая привязки, имеют приоритет над соответствующими вложенными полями.
-Начальные значения читаются при создании таблицы. `defaultCurrent` и
-`defaultPageSize` на Table имеют приоритет над вложенными defaults.
-Внешнее уменьшение total ограничивает показываемую страницу, сохраняя номер
-у владельца.
+Nested `pagination.current` and `pagination.pageSize` set controlled
+state. Page and size changes send requests to the owner. Both
+pagers and the rows use accepted values. Table's own `current`
+and `pageSize`, including bindings, take precedence over their
+nested equivalents. Initial values are read at creation. Table's
+`defaultCurrent` and `defaultPageSize` override nested defaults.
+An external reduction in total clamps the displayed page while
+preserving the owner's number.
 
-Размер, локаль, `simple`, `showQuickJumper`, `showSizeChanger` и прочие параметры
-[Pagination](./pagination.md) передаются обоим пейджерам. При явно заданном
-размере таблицы `medium` или `small` применяется компактный пейджер, если
-`pagination.size` не задан. Каждый редактор быстрого перехода хранит свой
-текст. При смене размера сначала вызывается `pagination.onShowSizeChange`,
-затем `pagination.onChange` и `Table.onChange`. Применённый фильтр передаёт
-в `pagination.onChange` страницу 1 перед событием `Table.onChange`.
-При смене страницы `Table.onChange` получает строки и total на момент
-запроса, даже если обработчик пейджера сразу заменил данные. Изменение
-расположения или внешних props само по себе событий не вызывает.
+Size, locale, `simple`, `showQuickJumper`, `showSizeChanger`, and other
+Pagination options pass to both pagers. An explicit Table size
+of `medium` or `small` uses a compact pager if `pagination.size` is
+omitted. Each quick-jump editor keeps its own text. A size change
+calls `pagination.onShowSizeChange`, then `pagination.onChange`, then
+`Table.onChange`. Applying a filter passes page 1 to
+`pagination.onChange` before `Table.onChange`. On page changes,
+`Table.onChange` receives the rows and total at request time even
+if a pager handler immediately replaces the data. Placement changes
+and external prop updates alone emit no events.
+[Pagination](./pagination.md)
 
-По умолчанию total в клиентском режиме равен числу корневых записей после
-фильтрации. Положительный `pagination.total` задаёт общее число записей.
-Если загружено меньше этого числа и набор помещается в страницу по её
-размеру, Table показывает загруженную страницу целиком.
-[Серверный режим](#серверный-режим) сохраняет приоритет отдельного `total`.
+Client total defaults to the root record count after filtering.
+Positive `pagination.total` specifies the overall record count.
+If fewer records have loaded and they fit within one page, Table
+shows the loaded page in full. Server mode retains precedence of
+the separate `total`. [Server mode](#server-mode)
 
-Порядок, выравнивание и состояние проверены по 58 состояниям и 24 SSR-снимкам
-Ant Design 6.6.8. Гидратация и смена расположения сохраняют редактор строки,
-его черновик и выделение.
-[Снимки React](../../../tests/browser/fixtures/ant-design-table-pagination-reference.json),
-[Chromium](../../../tests/browser/table/table-pagination.spec.ts),
-[гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
-и [SSR](../../../tests/package/table/table-pagination.ssr.test.ts).
+Order, alignment, and state are checked against 58 states and 24
+SSR snapshots from Ant Design 6.6.8. Hydration and placement updates
+keep the row editor, draft, and selection.
+[React snapshots](../../../tests/browser/fixtures/ant-design-table-pagination-reference.json) · [Chromium](../../../tests/browser/table/table-pagination.spec.ts) ·
+[Hydration](../../../tests/browser/table/table-column-layout-hydration.spec.ts) · [SSR](../../../tests/package/table/table-pagination.ssr.test.ts)
 
-## Настройки выбора строк
+## Row selection settings
 
-`rowSelection.type` выбирает Checkbox или Radio. В режиме `radio` отображается
-первый выбранный ключ, а действие пользователя оставляет одну отметку.
-В режиме Checkbox Shift переключает диапазон между соседними действиями в
-порядке текущей страницы, пропуская недоступные строки. При `checkStrictly: false`
-действие применяет связи родителей и потомков.
+`rowSelection.type` chooses Checkbox or Radio. In `radio` mode, the
+first selected key is displayed and user action leaves one checked
+row. In Checkbox mode, Shift toggles the range between successive
+actions in current page order, skipping disabled rows. With
+`checkStrictly: false`, selection applies parent and descendant
+relationships.
 
-`rowSelection.selectedRowKeys` управляет отображаемыми ключами через настройки
-колонки. Новое значение принимает владелец в `rowSelection.onChange`.
-Приоритет имеет `rowSelection.selectedRowKeys`, затем корневой
-`bind:selectedRowKeys`. Начальный локальный набор задаёт
-`rowSelection.defaultSelectedRowKeys` с запасным вариантом
-`defaultSelectedRowKeys` на Table.
+`rowSelection.selectedRowKeys` controls displayed keys through
+column settings. The owner accepts new values in
+`rowSelection.onChange`. `rowSelection.selectedRowKeys` takes
+precedence over root `bind:selectedRowKeys`. Local initialization
+uses `rowSelection.defaultSelectedRowKeys`, with Table
+`defaultSelectedRowKeys` as fallback.
 
-`rowSelection.onSelect(record, checked, records, nativeEvent)` вызывается
-перед `onChange` при действии на одной строке. `rowSelection.onChange` передаёт
-ключи, записи и `info.type`. Значения `single` и `multiple` относятся к
-действиям на строках, `all`, `invert` и `none` — к заголовку и меню.
-Корневой `onSelectionChange` сохраняет тип события `single` для действий
-на строках и `all` для действий в заголовке.
+`rowSelection.onSelect(record, checked, records, nativeEvent)` runs
+before `onChange` for a single row action. `rowSelection.onChange`
+receives keys, records, and `info.type`. `single` and `multiple`
+describe row actions. `all`, `invert`, and `none` describe header and
+menu actions. Root `onSelectionChange` keeps `single` for row
+actions and `all` for header actions.
 
-`preserveSelectedRowKeys: true` запоминает выбранные записи при смене
-`dataSource`. При повторной загрузке той же строки используется её актуальный
-объект. Вложенные связи сохраняются для запомненных веток. Ключ передаётся даже
-при отсутствии записи, а массив records содержит известные записи. В замерах
-Ant Design встречается `undefined`, если соответствующая запись никогда
-не загружалась.
-При использовании вложенных ключей, callbacks или явного выключения
-`preserveSelectedRowKeys` отсутствующие ключи отбрасываются при следующем
-действии, если сохранение записей выключено. Корневой выбор сохраняет ключи
-с других серверных страниц.
+`preserveSelectedRowKeys: true` remembers selected records when
+`dataSource` changes. Reloading a row uses its current object.
+Cached branches retain their relationships. A key is passed even
+with no record, and the records array contains known records.
+Ant Design measurements include `undefined` when the matching
+record was never loaded. When nested keys or callbacks are used,
+or preservation is explicitly disabled, missing keys are dropped
+on the next action if record preservation is off. Root selection
+keeps keys from other server pages.
 
-`selections: true` добавляет меню выбора всех обработанных данных, инверсии
-текущей страницы и сброса доступных отметок. В массиве можно сочетать
-`Table.SELECTION_ALL`, `Table.SELECTION_INVERT`, `Table.SELECTION_NONE` и
-пользовательские пункты `{ key, text, onSelect }`. Поле `text` принимает строку,
-число, snippet или вложенный массив. Callback пункта получает
-доступные ключи текущей страницы. `hideSelectAll` скрывает меню и checkbox
-в заголовке. У Radio заголовочный checkbox и меню отсутствуют.
+`selections: true` adds a menu to select all processed data, invert
+the current page, and clear available selections. An array can mix
+`Table.SELECTION_ALL`, `Table.SELECTION_INVERT`, `Table.SELECTION_NONE`,
+and custom items `{ key, text, onSelect }`. `text` accepts a string,
+number, Snippet, or nested array. The item callback gets available
+keys on the current page. `hideSelectAll` hides the header menu
+and checkbox. Radio has neither header control.
 
-`getCheckboxProps` и `getTitleCheckboxProps` задают атрибуты и callbacks
-контролов. Их `onChange` получает DOM `change` после событий Table.
-`columnWidth`, `align` и `fixed` задают ширину, выравнивание и закрепление
-служебной колонки. Меню доступно с клавиатуры и возвращает фокус на кнопку.
+`getCheckboxProps` and `getTitleCheckboxProps` set control
+attributes and callbacks. Their `onChange` receives the DOM `change`
+after Table events. `columnWidth`, `align`, and `fixed` set the
+service column's width, alignment, and fixed position. The menu
+supports keyboard interaction and restores focus to its button.
 
-Сверка охватывает 79 состояний и 13 серверных снимков Ant Design 6.6.8.
-Строгая гидратация проверяет, что управляемый Checkbox или Radio сохраняет
-сфокусированный input и учитывает принятие и отклонение изменения.
-У Radio с общим `name` при отклонении сохраняется ранее принятая отметка.
-[Снимки эталона](../../../tests/browser/fixtures/ant-design-table-selection-reference.json),
-[браузерные проверки](../../../tests/browser/table/table-selection.spec.ts) и
-[гидратация](../../../tests/browser/table/table-selection-hydration.spec.ts).
+The comparison covers 79 states and 13 server snapshots from
+Ant Design 6.6.8. Strict hydration checks that a controlled
+Checkbox or Radio retains the focused input and respects accepted
+and rejected changes. Radios with a shared `name` retain the
+previously accepted choice on rejection.
+[Reference snapshots](../../../tests/browser/fixtures/ant-design-table-selection-reference.json) · [Browser tests](../../../tests/browser/table/table-selection.spec.ts) ·
+[Hydration](../../../tests/browser/table/table-selection-hydration.spec.ts)
 
-### Порядок и содержимое служебных колонок
+### Order and content of service columns
 
-Разместите `Table.SELECTION_COLUMN` и `Table.EXPAND_COLUMN` на верхнем уровне
-`columns`. Они задают позиции выбора и раскрытия подробностей среди колонок
-данных. Учитывается первый маркер каждого вида. Маркер без активного
-`rowSelection` или `expandable.expandedRowRender` пропускается.
+Place `Table.SELECTION_COLUMN` and `Table.EXPAND_COLUMN` at the top
+level of `columns`. They set selection and detail expansion
+positions within data columns. The first marker of each kind
+wins. A marker without active `rowSelection` or
+`expandable.expandedRowRender` is skipped.
 
 ```ts
 const columns: TableColumn<Person>[] = [
-  { key: 'name', title: 'Имя', dataIndex: 'name' },
+  { key: 'name', title: 'Name', dataIndex: 'name' },
   Table.SELECTION_COLUMN,
-  { key: 'score', title: 'Баллы', dataIndex: 'score' },
+  { key: 'score', title: 'Score', dataIndex: 'score' },
   Table.EXPAND_COLUMN
 ];
 ```
 
-Без маркеров кнопки подробностей идут первыми, а выбор размещается после них.
-Если колонка раскрытия расположена дальше, стандартная колонка выбора идёт
-первой. `rowSelection.fixed` по умолчанию наследуется у следующей видимой
-колонки верхнего уровня, затем у предыдущей. Если у предшествующей колонки
-раскрытия сторона ещё не определена, она получает сторону выбора. Явное
-`fixed: false` выключает закрепление. Порядок учитывается в шапке, spans,
-виртуальном окне и физических индексах `Table.Summary.Cell`.
+Without markers, details come first and selection follows. If
+the expansion column is placed later, the default selection
+column comes first. `rowSelection.fixed` defaults to the next
+visible top-level column's setting, then the previous one's.
+A preceding expansion column with no resolved side takes the
+selection side. Explicit `fixed: false` disables fixing. The
+order applies to the header, spans, virtual window, and physical
+`Table.Summary.Cell` indices.
 
-`rowSelection.columnTitle` принимает строку, число, вложенный массив или
-snippet. Значения `0`, `''`, `false`, `null` и `undefined` оставляют штатный
-заголовок. Массив заменяет его целиком, в том числе когда он пуст.
-Snippet верхнего уровня получает исходный checkbox и может вывести его при
-`hideSelectAll: true`. В режиме Radio аргумент равен `undefined`.
-`renderCell(checked, record, index, origin)` заменяет содержимое ячейки. Вызов
-`{@render origin()}` выводит штатный контрол со всеми его обработчиками.
-`index` отсчитывается среди соседей. `rowSelection.onCell(record, index)`
-получает индекс во всей раскрытой странице и задаёт атрибуты, события, `colSpan`
-и `rowSpan` через тот же контракт, что и `columns.onCell`.
+`rowSelection.columnTitle` accepts a string, number, nested array,
+or Snippet. `0`, `''`, `false`, `null`, and `undefined` keep the
+default header. An array replaces it in full, including when
+empty. A top-level Snippet receives the original checkbox and can
+render it even with `hideSelectAll: true`. In Radio mode, the
+argument is `undefined`. `renderCell(checked, record, index, origin)`
+replaces cell content. `{@render origin()}` renders the default
+control and all handlers. `index` is relative to siblings.
+`rowSelection.onCell(record, index)` receives the index across the
+expanded page and supplies attributes, events, `colSpan`, and
+`rowSpan` through the same contract as `columns.onCell`.
 
-Эталон Ant Design 6.6.8 включает 47 браузерных состояний и 16 серверных снимков.
-Строгая гидратация сохраняет фокус и штатный input внутри пользовательской
-ячейки, включая виртуальный span.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-service-columns-reference.json)
-· [Chromium](../../../tests/browser/table/table-service-columns.spec.ts)
-· [SSR](../../../tests/package/table/table-service-columns.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-service-columns-hydration.spec.ts)
+The Ant Design 6.6.8 reference has 47 browser states and 16 server
+snapshots. Strict hydration preserves focus and the built-in input
+within a custom cell, including a virtual span.
+[Reference](../../../tests/browser/fixtures/ant-design-table-service-columns-reference.json) · [Chromium](../../../tests/browser/table/table-service-columns.spec.ts) · [SSR](../../../tests/package/table/table-service-columns.ssr.test.ts) ·
+[Hydration](../../../tests/browser/table/table-service-columns-hydration.spec.ts)
 
-## Раскрываемые строки
+## Expandable rows
 
-`expandable.expandedRowRender` включает отдельную колонку с кнопками раскрытия.
-`expandedRowRender(record, index, indent, expanded)` получает запись, индекс
-среди строк текущей страницы, глубину строки подробностей и состояние раскрытия.
-Snippet может объявить только нужные ему параметры.
-`rowExpandable(record)` позволяет скрыть кнопку и подробности отдельных строк.
-По умолчанию раскрытие доступно для каждой переданной записи.
+`expandable.expandedRowRender` creates a separate column with
+expand buttons. `expandedRowRender(record, index, indent, expanded)`
+receives the record, current-page row index, detail row depth, and
+expanded state. The Snippet can declare just the parameters it
+needs. `rowExpandable(record)` can hide the button and details for
+individual rows. Every supplied record can expand by default.
 
 ```svelte
 <script lang="ts">
@@ -379,380 +377,394 @@ Snippet может объявить только нужные ему парам�
 
   interface Person { key: number; name: string; email: string; active: boolean }
   const people: Person[] = [
-    { key: 0, name: 'Анна', email: 'anna@example.com', active: true },
-    { key: 1, name: 'Борис', email: 'boris@example.com', active: false }
+    { key: 0, name: 'Anna', email: 'anna@example.com', active: true },
+    { key: 1, name: 'Boris', email: 'boris@example.com', active: false }
   ];
-  const columns: TableColumn<Person>[] = [{ key: 'name', title: 'Имя', dataIndex: 'name', width: 200 }];
+  const columns: TableColumn<Person>[] = [{ key: 'name', title: 'Name', dataIndex: 'name', width: 200 }];
   let expanded = $state<TableKey[]>([0]);
 </script>
 
 {#snippet details(person: Person, index: number)}<p>{index + 1}. {person.name}: {person.email}</p>{/snippet}
-<Button onclick={() => { expanded = []; }}>Свернуть все</Button>
-<Table dataSource={people} {columns} caption="Участники"
+<Button onclick={() => { expanded = []; }}>Collapse all</Button>
+<Table dataSource={people} {columns} caption="Members"
   expandable={{ expandedRowRender: details, rowExpandable: (person) => person.active,
     fixed: true, expandedRowKeys: expanded, onExpandedRowsChange: next => { expanded = next; } }} />
 ```
 
-`expandable.expandedRowKeys` управляется владельцем через
-`expandable.onExpandedRowsChange`. Для локального состояния доступны
-`expandable.defaultExpandedRowKeys`, которые читаются один раз. `[]` сворачивает все строки.
-`expandable.defaultExpandAllRows` раскрывает записи начальной страницы, если
-`defaultExpandedRowKeys` отсутствует.
-Раскрытие использует тот же rowKey, что и выбор; числовой `0` и строковый `"0"`
-различаются. Ключи сохраняются при сортировке, фильтрации, смене страниц,
-замене/удалении данных, выключении expandable и изменении rowExpandable.
-Подробности отображаются только для доступных строк текущего dataSource и страницы;
-кэша записей нет. Возвращённая запись с сохранённым ключом снова раскрывается.
+The owner controls `expandable.expandedRowKeys` through
+`expandable.onExpandedRowsChange`. For local state, the component
+reads `expandable.defaultExpandedRowKeys` once. `[]` collapses all
+rows. `expandable.defaultExpandAllRows` expands the initial page's
+records when `defaultExpandedRowKeys` is omitted. Expansion and
+selection share `rowKey`. Numeric `0` and string `"0"` are distinct.
+Keys survive sorting, filtering, pagination, data replacement or
+removal, disabling `expandable`, and changes to `rowExpandable`.
+Details appear for eligible rows in the current data source and
+page. Records are uncached. A returning record with a retained key
+expands again.
 
-Пользовательское переключение обновляет внутренние ключи и вызывает
-`expandable.onExpand(expanded, record)`, затем `expandable.onExpandedRowsChange(keys)`.
-Управляемые ключи обновляет владелец; callbacks сами не меняют его массив.
-[Замер официального UMD](../../../tests/reference/ant-design-current-table-expansion-observation.json)
-фиксирует отказ владельца, принятие новых ключей и порядок callbacks.
-Keys содержит все раскрытые ключи, включая отсутствующие на текущей странице.
-Внешние изменения props не вызывают эти callbacks. Раскрытие не меняет выбор
-или пагинацию и не вызывает общий onChange. currentDataSource и total считают
-только записи, строки подробностей в них не входят.
+User toggling updates local keys and calls
+`expandable.onExpand(expanded, record)`, then
+`expandable.onExpandedRowsChange(keys)`. The owner updates
+controlled keys. Callbacks preserve its array. The UMD measurement
+covers rejected and accepted keys and callback order. `keys` includes
+all expanded keys, including those off the current page. External
+prop changes skip these callbacks. Expansion leaves selection and
+pagination intact and skips shared `onChange`. `currentDataSource`
+and `total` count records only, excluding detail rows.
+[Official UMD measurement](../../../tests/reference/ant-design-current-table-expansion-observation.json)
 
-`expandable.columnWidth` принимает число или CSS-ширину; default без source-темы —
-48px, в теме Ant Design ширина выводится из глобальных метрик.
-`expandable.columnTitle` задаёт видимый заголовок строкой, числом, snippet или
-вложенным массивом. `0` отображается как число. По умолчанию используется
-локализованное доступное имя. `fixed: true` закрепляет колонку у начала строки,
-включая RTL.
-`fixed: 'end'` без маркера размещает её у логического конца. Смещения и colspan
-учитывают раскрытие, выбор и данные. При горизонтальной прокрутке содержимое
-подробностей остаётся в ширине видимой области. Ширины колонок данных сохраняются.
+`expandable.columnWidth` accepts a number or CSS width. Without an
+upstream theme, the default is 48px. With it, width derives from
+global metrics. `expandable.columnTitle` sets a visible header as
+a string, number, Snippet, or nested array. Zero renders as a
+number. The default is a localized accessible name.
+`fixed: true` fixes the column at the row start, with RTL support.
+`fixed: 'end'` without a marker places it at the logical end.
+Offsets and colspan account for expansion, selection, and data.
+On horizontal scroll, details fit within the visible width. Data
+column widths are retained.
 
-Кнопка имеет type=button и aria-expanded. В раскрытом состоянии aria-controls
-ссылается на существующий блок подробностей с уникальным ID. Enter и Space
-переключают состояние и сохраняют фокус на кнопке. Loading и disabled блокируют
-переключение, disabled наследуется из ConfigProvider. Подписи задаются через
-`locale.table.expandColumn`, `expandRow`, `collapseRow`.
+The button has `type=button` and `aria-expanded`. When expanded,
+`aria-controls` points to the existing details block with a unique
+ID. Enter and Space toggle and keep button focus. Loading and
+disabled block toggling. Disabled inherits ConfigProvider. Labels
+come from `locale.table.expandColumn`, `expandRow`, and `collapseRow`.
 
-`expandable.expandIcon(info, origin)` заменяет кнопку раскрытия подробностей
-или ветки. `{@render origin()}` выводит штатный переключатель или отступ
-для листа. Для собственной кнопки доступны `info.record`, `prefixCls`,
-`expanded`, `expandable`, `disabled` и `ariaControls`. Передайте событие
-в `info.onExpand(event)`, чтобы переключить эту строку и остановить всплытие
-к обработчику раскрытия по клику на строку.
+`expandable.expandIcon(info, origin)` replaces a detail or branch
+toggle. `{@render origin()}` renders the default toggle or a leaf
+indent. A custom button can use `info.record`, `prefixCls`,
+`expanded`, `expandable`, `disabled`, and `ariaControls`. Pass the
+event to `info.onExpand(event)` to toggle the row and stop bubbling
+to its row-click expansion handler.
 
-Локальный snippet имеет приоритет над `ConfigProvider.table.expandable.expandIcon`.
-Провайдер без `table` наследует родительскую настройку. `table={{}}` сбрасывает
-её в дочернем дереве. Общий snippet получает `record` как `object`, поскольку
-провайдер может обслуживать таблицы с разными типами записей.
+The local Snippet overrides
+`ConfigProvider.table.expandable.expandIcon`. A provider without
+`table` inherits the parent setting. `table={{}}` resets it for
+children. The common Snippet receives `record` as `object` because
+its provider can serve tables with different record types.
 
-`expandable.expandRowByClick` включает раскрытие нажатием на строку. Элементы
-управления внутри ячеек обрабатывают свои нажатия. `expandable.showExpandColumn=false`
-выключает автоматическую колонку подробностей и встроенные переключатели дерева.
-Явный `Table.EXPAND_COLUMN` сохраняет колонку подробностей.
+`expandable.expandRowByClick` expands when a row is clicked.
+Controls inside cells handle their own clicks.
+`expandable.showExpandColumn=false` disables the automatic detail
+column and built-in tree toggles. Explicit `Table.EXPAND_COLUMN`
+retains the detail column.
 
-`expandable.expandedRowClassName` добавляет классы к строке подробностей
-и вложенным строкам дерева. У callback `(record, index, indent)` индекс
-относится ко всей раскрытой странице, а `indent` задаёт глубину записи.
+`expandable.expandedRowClassName` adds classes to the detail row
+and nested tree rows. For `(record, index, indent)`, the index is
+relative to the whole expanded page and `indent` is record depth.
 
-`expandable.forceRender: true` создаёт подробности до первого открытия и
-сохраняет их DOM после сворачивания. Скрытая строка не занимает высоту и
-исключается из Tab-порядка. При виртуализации подробности создаются для строк
-текущего DOM-окна, которые могут раскрываться. Выход строки из окна, фильтрация,
-смена страницы или запрет `rowExpandable` удаляют её подробности.
-SSR сразу выводит раскрытые и принудительно смонтированные скрытые строки.
+`expandable.forceRender: true` mounts details before first opening
+and preserves their DOM on collapse. A hidden row takes no height
+and is excluded from Tab. In virtual mode, details are created
+for expandable rows in the current DOM window. Leaving the
+window, filtering, page changes, or `rowExpandable` becoming false
+removes their details. SSR renders expanded and force-rendered
+hidden rows immediately.
 
-По умолчанию Svelte освобождает подробности при сворачивании. В обычном режиме
-Ant Design на React оставляет уже открывавшиеся подробности смонтированными.
-В эталоне сохранены оба режима React и состояние редактора после повторного
-открытия. Строгая гидратация Svelte сохраняет серверный редактор и фокус кнопки.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-expansion-options-reference.json)
-· [Chromium](../../../tests/browser/table/table-expansion-options.spec.ts)
-· [SSR](../../../tests/package/table/table-expansion-options.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-expansion-options-hydration.spec.ts)
+Svelte removes details on collapse by default. Ant Design React
+normally keeps previously opened details mounted. The reference
+retains both React modes and editor state after reopening. Strict
+Svelte hydration preserves the server editor and button focus.
+[Reference](../../../tests/browser/fixtures/ant-design-table-expansion-options-reference.json) · [Chromium](../../../tests/browser/table/table-expansion-options.spec.ts) · [SSR](../../../tests/package/table/table-expansion-options.ssr.test.ts) ·
+[Hydration](../../../tests/browser/table/table-expansion-options-hydration.spec.ts)
 
-## Древовидные данные
+## Tree data
 
-Массив `children` включает раскрытие веток в первом видимом листе сетки.
-При включённом выборе кнопки находятся во втором листе, поэтому их позиция
-учитывает порядок `Table.SELECTION_COLUMN`. `Table.EXPAND_COLUMN` относится
-к подробностям. Имя поля можно поменять через `expandable.childrenColumnName`. Ключи
-уникальны на всех уровнях. Пустой массив тоже задаёт раскрываемую ветку и подходит
-для заполнения потомков после `onExpand`. Вложенность отображается с шагом
-`expandable.indentSize` в пикселях, по умолчанию 15. `expandedRowRender` включает
-режим подробностей, в котором `rowExpandable` задаёт доступные строки.
+A `children` array enables branch toggles in the first visible leaf
+column. With selection, toggles are in the second leaf and their
+position accounts for `Table.SELECTION_COLUMN` order.
+`Table.EXPAND_COLUMN` applies to details. Set another child field
+with `expandable.childrenColumnName`. Keys are unique across
+levels. An empty array also makes an expandable branch and can
+be populated after `onExpand`. Nesting uses pixel
+`expandable.indentSize`, defaulting to 15. `expandedRowRender`
+enables detail mode, where `rowExpandable` identifies eligible rows.
 
-В client mode сортировка действует среди соседних записей на каждом уровне.
-При первом критерии родитель получает потомков, прошедших все активные
-фильтры. Следующие колонки проверяют родителя с тем же составом ветки.
-Если родитель отфильтрован, ветка исчезает целиком. Пагинация делит только
-корневые записи. `title`, `footer` и `onChange.currentDataSource` получают
-дерево со вложенными записями. В server mode порядок и состав веток определяет
-владелец.
+In client mode, sorting applies among siblings at each level.
+For the first filter, a parent receives descendants that passed
+all active filters. Later columns evaluate the parent with the
+same branch contents. If the parent is filtered out, its whole
+branch disappears. Pagination divides root records only.
+`title`, `footer`, and `onChange.currentDataSource` receive the tree
+with nested records. In server mode, the owner determines branch
+order and contents.
 
-На свёрнутом дереве из 127 подходящих записей четыре активных фильтра с одним
-выбранным значением в каждом вызывают `onFilter` 508 раз за SSR. Ant Design
-6.6.8 в этом сценарии делает 1 198 372 вызова. В обеих реализациях видна
-одна корневая строка. [Проверка SSR](../../../tests/package/table/table-tree.ssr.test.ts)
+On a collapsed tree of 127 matching records, four active filters
+with one selected value each call `onFilter` 508 times during SSR.
+Ant Design 6.6.8 makes 1,198,372 calls in this scenario. One root
+row is visible in both implementations. [SSR regression](../../../tests/package/table/table-tree.ssr.test.ts)
 
-Флажок заголовка выбирает доступных потомков корней текущей страницы, включая
-свёрнутые ветки. По умолчанию флажки строк независимы. При
-`rowSelection.checkStrictly=false` выбор распространяется на доступных детей,
-а родитель показывает частичную отметку. Отключённый флажок разрывает связь.
-`onSelectionChange` получает исходные записи в порядке выбранных ключей.
+The header checkbox selects enabled descendants of roots on the
+current page, including collapsed branches. Row checkboxes are
+independent by default. With `rowSelection.checkStrictly=false`,
+checking propagates to enabled children and the parent shows a
+partial check. A disabled checkbox breaks the relationship.
+`onSelectionChange` receives original records in selected-key order.
 
-Девять профилей Ant Design 6.6.8 покрывают раскрытие, пагинацию, фильтры,
-сортировку, выбор, RTL и обработчики. UMD добавляет ключ листа при клике по строке.
-В Svelte клик раскрывает строки с массивом потомков. Гидратация сохраняет
-ячейку, фокус и выделение в редакторе.
-[Замеры](../../../tests/browser/fixtures/ant-design-table-tree-reference.json)
-· [Chromium](../../../tests/browser/table/table-tree.spec.ts)
-· [SSR](../../../tests/package/table/table-tree.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-tree-hydration.spec.ts)
+Nine Ant Design 6.6.8 profiles cover expansion, pagination,
+filters, sorting, selection, RTL, and handlers. The UMD adds a
+leaf key on row click. Svelte expands rows with a child array.
+Hydration retains the cell and editor focus and selection.
+[Measurements](../../../tests/browser/fixtures/ant-design-table-tree-reference.json) · [Chromium](../../../tests/browser/table/table-tree.spec.ts) · [SSR](../../../tests/package/table/table-tree.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-tree-hydration.spec.ts)
 
-## Видимость заголовка колонок
+## Column header visibility
 
-`showHeader` по умолчанию true. False удаляет `thead`, сохраняя caption, title/footer,
-данные, сортировку и выбор строк. Внешние изменения видимости не вызывают onChange.
-Пустой title snippet сохраняет панель. Класс ant-table-no-header применяется
-при отсутствии title и showHeader=false; в bordered-таблице CSS скругляет
-верхние углы первой строки body по исходным правилам.
+`showHeader` defaults to `true`. `false` removes `thead` and retains
+caption, title and footer, data, sorting, and selection. External
+visibility changes skip `onChange`. An empty title Snippet keeps
+the panel. `ant-table-no-header` applies with no title and
+`showHeader=false`. In a bordered table, CSS rounds upper corners
+of the first body row using upstream rules.
 
-Без шапки ширины fixed columns берутся из первой обычной строки tbody и заново
-измеряются после замены страницы или восстановления пустого набора. Закрепление
-и expanded viewport работают в LTR/RTL. Скрытие шапки удаляет её открытый фильтр;
-содержимое и фокус controls в остающихся body rows сохраняются.
-Сравнение 48 состояний UMD: [browser](../../../tests/browser/table/table-header.spec.ts),
-[SSR](../../../tests/package/table/table-header.ssr.test.ts), fixture `?fixture=table-header`.
+Without a header, fixed column widths come from the first
+regular `tbody` row and are remeasured after changing pages or
+restoring a nonempty set. Fixed columns and the expanded viewport
+work in LTR and RTL. Hiding the header removes its open filter
+while preserving content and focus in remaining body controls.
+`?fixture=table-header` compares 48 UMD states.
+[Browser tests](../../../tests/browser/table/table-header.spec.ts) · [SSR tests](../../../tests/package/table/table-header.ssr.test.ts)
 
-## Группы колонок
+## Column groups
 
-Задайте `children` у колонки, чтобы добавить уровень заголовка. Группа занимает
-ширину своих видимых листьев. Заголовок листа занимает все оставшиеся строки
-шапки. Чекбоксы выбора и кнопки раскрытия получают заголовки на полную высоту.
-Ключ колонки уникален в дереве. Для описания колонок доступны `TableColumnsType<Row>`,
-`TableColumnGroupType<Row>` и `TableColumnType<Row>`.
+Set `children` on a column to add a header level. A group spans
+its visible leaf columns. A leaf header spans all remaining
+header rows. Select checkboxes and expansion buttons get
+full-height headers. Column keys are unique across the tree.
+Use `TableColumnsType<Row>`, `TableColumnGroupType<Row>`, and
+`TableColumnType<Row>` to describe columns.
 
 ```ts
 const columns: TableColumnsType<Person> = [
-  { key: 'name', title: 'Имя', dataIndex: 'name' },
+  { key: 'name', title: 'Name', dataIndex: 'name' },
   {
-    key: 'metrics', title: 'Показатели', children: [
-      { key: 'score', title: 'Баллы', dataIndex: 'score' },
-      { key: 'tasks', title: 'Задачи', dataIndex: 'tasks' }
+    key: 'metrics', title: 'Metrics', children: [
+      { key: 'score', title: 'Score', dataIndex: 'score' },
+      { key: 'tasks', title: 'Tasks', dataIndex: 'tasks' }
     ]
   }
 ];
 ```
 
-Листья наследуют `fixed` группы. У дочерней колонки своё значение имеет
-приоритет, в том числе `false`. Заголовок группы закрепляется, если оба
-крайних листа закреплены к одной стороне. При вертикальной прокрутке строки
-шапки закрепляются одна под другой с учётом их высот.
+Leaf columns inherit group `fixed`. A child value takes
+precedence, including `false`. A group header is fixed when
+both outer leaf columns are fixed to the same side. During
+vertical scroll, header rows stick below one another according
+to their heights.
 
-`hidden` у группы скрывает её поддерево. Если скрыты все дочерние колонки,
-видимая группа остаётся отдельной колонкой. Сортировка и фильтры внутри
-скрытой группы продолжают обрабатывать данные.
+Group `hidden` hides the subtree. If all children are hidden,
+the visible group remains a separate column. Sort and filter
+criteria in a hidden group still process data.
 
-`responsive` у колонки верхнего уровня содержит допустимые breakpoints Grid.
-Колонка появляется при совпадении любого из них. У группы настройка управляет
-видимостью всего поддерева, пустой список скрывает колонку. Сервер выводит
-колонки без `responsive`, а браузер уточняет видимость по теме и `matchMedia`.
+A top-level column's `responsive` contains allowed Grid
+breakpoints. The column appears when any matches. On a group,
+it controls the whole subtree, and an empty list hides the
+column. The server renders columns without `responsive`. The
+browser resolves visibility using the theme and `matchMedia`.
 
-Структура, события и геометрия групп проверяются по 33 состояниям UMD и девяти
-серверным рендерам Ant Design 6.6.8. Строгая гидратация проверяет, что появление
-группы сохраняет активный редактор и выделение текста. [Браузер](../../../tests/browser/table/table-columns.spec.ts)
-и [SSR](../../../tests/package/table/table-columns.ssr.test.ts).
+Group structure, events, and geometry are checked against
+33 UMD states and nine Ant Design 6.6.8 server renders.
+Strict hydration checks that showing a group preserves the
+active editor and selection. [Browser tests](../../../tests/browser/table/table-columns.spec.ts) ·
+[SSR tests](../../../tests/package/table/table-columns.ssr.test.ts)
 
-## Ключи колонок
+## Column keys
 
-`columns` принимает определения `TableColumnInput<Row>`, включая вложенные
-`children`. Явный `key` может быть строкой или конечным числом. Число
-преобразуется в строку, поэтому `key: 0` даёт ключ `'0'`. Пустая строка
-тоже считается явным ключом.
+`columns` accepts `TableColumnInput<Row>` definitions, including
+nested `children`. An explicit `key` can be a string or finite
+number. Numbers convert to strings, so `key: 0` gives `'0'`.
+The empty string is also an explicit key.
 
-Table заполняет общие свойства из `column` перед выводом ключа. При
-пропущенном `key` используется `dataIndex`. Путь `['metrics', 'rank']`
-даёт `'metrics.rank'`. Для колонки без поля, а также для `dataIndex: 0`
-и `dataIndex: ''`, ключ берётся из позиции в полном дереве. Например,
-первый лист группы на третьей позиции имеет ключ `'2-0'`. Чтение значения ячейки
-использует переданный `dataIndex`.
+Table fills shared properties from `column` before deriving
+a key. Without a supplied `key`, it uses `dataIndex`. The path
+`['metrics', 'rank']` gives `'metrics.rank'`. For a column
+without a field or with `dataIndex: 0` or `dataIndex: ''`,
+the key uses its position in the full tree. For example, the
+first leaf of a group in third position has key `'2-0'`.
+Cell value lookup still uses the supplied `dataIndex`.
 
-Явные ключи резервируются во всём дереве. При совпадении к вычисленному ключу добавляется
-`_next` до получения свободного ключа. Повтор явного ключа после приведения
-к строке вызывает ошибку. Ключ определяется до применения `hidden` и
-`responsive`, поэтому скрытие соседней колонки сохраняет активный критерий.
+Explicit keys are reserved across the tree. For a collision,
+`_next` is appended to a derived key until it is available.
+Repeated explicit keys after string conversion raise an error.
+Keys are resolved before `hidden` and `responsive` apply, so
+hiding a neighbor keeps the active criterion.
 
-`sorter.columnKey`, ключи `filters` и определения `TableColumn<Row>` в
-`onHeaderCell` и `onHeaderRow` используют один разрешённый строковый ключ.
-Для позиционного ключа учитывается порядок входных определений.
+`sorter.columnKey`, `filters` keys, and `TableColumn<Row>`
+definitions in `onHeaderCell` and `onHeaderRow` use the same
+resolved string. A positional key follows the order of input
+definitions.
 
-В эталоне Ant Design 6.6.8 фильтр вложенной колонки с позиционным ключом
-возвращает новые строки в `onChange`, а DOM сохраняет прежние строки. Скрытая
-колонка перед группой вызывает такое же расхождение при сортировке.
-Table применяет критерий к строкам и передаёт тот же результат владельцу.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-column-key-reference.json)
-· [Chromium](../../../tests/browser/table/table-column-keys.spec.ts)
-· [SSR](../../../tests/package/table/table-column-keys.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
+In the Ant Design 6.6.8 reference, filtering a nested column
+with a positional key returns new rows in `onChange`, while
+the DOM keeps old rows. A hidden column before a group causes
+the same mismatch on sort. Svelte applies the criterion to
+the rows and reports the same result to the owner.
+[Reference](../../../tests/browser/fixtures/ant-design-table-column-key-reference.json) · [Chromium](../../../tests/browser/table/table-column-keys.spec.ts) · [SSR](../../../tests/package/table/table-column-keys.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
-## Общие свойства колонок
+## Shared column properties
 
-`column` задаёт общие свойства групп и листьев. Например, эти настройки
-применятся к каждой колонке, пока она не задаст собственное значение.
+`column` sets shared properties for groups and leaves. Each
+column uses these values unless it supplies its own.
 
 ```svelte
 <Table {columns} {dataSource} column={{ align: 'center', ellipsis: true, width: 160 }} />
 ```
 
-Отсутствующее свойство и `undefined` наследуют общее значение. `false`, `0`,
-пустая строка и `null` сохраняются как явные переопределения. Массивы и объекты
-заменяются целиком. Каждая колонка в группе получает тот же общий набор.
+Omitted and `undefined` properties inherit. `false`, `0`, the
+empty string, and `null` remain explicit overrides. Arrays
+and objects are replaced in full. Each column in a group
+receives the same defaults.
 
-`TableColumnDefaults<Row>` содержит необязательные свойства отдельной колонки.
-Дерево групп и обязательные ключи `key` задаются в `columns`.
-Служебные колонки используют свои параметры `rowSelection` и `expandable`.
-Общий `column` учитывается при выборе видимых колонок, чтении данных и обработке
-сортировки и фильтров. Обновление `column` само по себе не вызывает `onChange`.
+`TableColumnDefaults<Row>` contains optional properties of a
+single column. Define the group tree and required `key` values
+in `columns`. Selection and expansion columns use their own
+`rowSelection` and `expandable` settings. Shared `column` applies
+to visible column selection, reading data, sorting, and
+filtering. Updating it alone leaves `onChange` uncalled.
+[Reference](../../../tests/browser/fixtures/ant-design-table-column-defaults-reference.json) · [Chromium](../../../tests/browser/table/table-column-defaults.spec.ts) · [SSR](../../../tests/package/table/table-column-defaults.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 
-[Эталон](../../../tests/browser/fixtures/ant-design-table-column-defaults-reference.json)
-· [Chromium](../../../tests/browser/table/table-column-defaults.spec.ts)
-· [SSR](../../../tests/package/table/table-column-defaults.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
+## Column titles
 
-## Заголовки колонок
-
-`column.title` принимает строку, число, Svelte snippet или вложенный массив.
-Отсутствующее значение, `null` и boolean оставляют заголовок пустым. Snippets
-в массиве вызываются без аргументов. Snippet верхнего уровня получает
-`TableColumnTitleProps<Row>` в группе и в листе. В `sortColumns` находятся определения
-колонок и направления в порядке состояния. `order: null` обозначает неактивный
-критерий. `filters` содержит применённые критерии, включая значения владельца
-в управляемом режиме.
+`column.title` accepts a string, number, Svelte Snippet, or
+nested array. Omission, `null`, and booleans leave it empty.
+Snippets inside arrays are called without arguments. A
+top-level Snippet receives `TableColumnTitleProps<Row>` on
+a group or leaf. `sortColumns` holds column definitions and
+directions in state order. `order: null` indicates an inactive
+criterion. `filters` contains applied criteria, including
+the owner's controlled values.
 
 ```svelte
 {#snippet scoreHeading(info: TableColumnTitleProps<Row>)}
-  Баллы
+  Score
   {#if info.filters.score?.length}
     <span>({info.filters.score.length})</span>
   {/if}
 {/snippet}
 ```
 
-Передайте `scoreHeading` в `column.title`. У сортируемой колонки клик по заголовку
-меняет направление.
-Кнопки, ссылки и поля внутри snippet сохраняют свои действия. Нативная кнопка
-сортировки поддерживает Enter и Space. Фильтр и сортировка используют доступное
-имя заголовка. Для snippet с одной иконкой задайте `aria-label` в
-`onHeaderCell`.
+Pass `scoreHeading` to `column.title`. Clicking a sortable
+header changes direction. Buttons, links, and fields within
+the Snippet keep their own actions. The native sort button
+supports Enter and Space. Sort and filter use the header's
+accessible name. For an icon-only Snippet, supply
+`aria-label` in `onHeaderCell`.
 
-При `ellipsis` строка или число задают нативный `title` ячейки. Для
-составного заголовка этот атрибут можно вернуть из `onHeaderCell`.
+With `ellipsis`, a string or number supplies the native
+cell `title`. For rich headers, return it from `onHeaderCell`.
+[Reference](../../../tests/browser/fixtures/ant-design-table-column-title-reference.json) · [Chromium](../../../tests/browser/table/table-column-title.spec.ts) · [SSR](../../../tests/package/table/table-column-title.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-sorter-hydration.spec.ts)
 
-[Эталон](../../../tests/browser/fixtures/ant-design-table-column-title-reference.json)
-· [Chromium](../../../tests/browser/table/table-column-title.spec.ts)
-· [SSR](../../../tests/package/table/table-column-title.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-sorter-hydration.spec.ts)
-
-Составные заголовки, `caption` и команды выбора сверены в 16 браузерных
-и серверных профилях Ant Design 6.6.8. Для пустого массива сохраняются
-доступные имена сортировки, фильтра и области прокрутки.
-[Эталон содержимого](../../../tests/browser/fixtures/ant-design-table-heading-content-reference.json)
-· [Chromium](../../../tests/browser/table/table-heading-content.spec.ts)
+Rich titles, `caption`, and selection commands were compared
+in 16 Ant Design 6.6.8 browser and server profiles. Empty
+arrays retain accessible names for sort, filter, and the
+scroll region. [Content reference](../../../tests/browser/fixtures/ant-design-table-heading-content-reference.json) · [Chromium](../../../tests/browser/table/table-heading-content.spec.ts)
 · [SSR](../../../tests/package/table/table-heading-content.ssr.test.ts)
 
-## Видимость колонок
+## Column visibility
 
-`TableColumn.hidden` по умолчанию false. True убирает col/header/body cells
-колонки и её controls из DOM. Сортировка и активные фильтры этой колонки
-продолжают обрабатывать данные, как InternalTable перед rc-table. Переданный
-список columns остаётся непустым.
+`TableColumn.hidden` defaults to `false`. `true` removes the
+column's col, header, body cells, and controls from the DOM.
+Its sort and active filters still process data, as in
+InternalTable before rc-table. The supplied column list
+remains nonempty.
 
-При отсутствии видимых колонок данных остаются selection/expand cells.
-Без них таблица показывает одну пустую ячейку на запись и пустой заголовок;
-colgroup в этом случае отсутствует. Empty и expanded cells получают актуальный
-colSpan, минимум 1. Восстановление колонок сохраняет выбранные/раскрытые строки,
-controls соседних ячеек и expanded editor, focus/selection и FormData.
-Смена hidden не вызывает onChange; controls самой скрытой колонки удаляются.
+Without visible data columns, selection and expansion cells
+remain. Without those, the table renders one empty cell per
+record and an empty header, without a colgroup. Empty and
+expanded cells receive the current `colSpan`, with a minimum
+of 1. Restoring columns preserves selection, expansion,
+neighboring controls, the expanded editor, focus, selection,
+and FormData. Changing `hidden` skips `onChange` and removes
+the hidden column's own controls.
 
-14 случаев UMD: [browser](../../../tests/browser/table/table-column-hidden.spec.ts),
-[SSR](../../../tests/package/table/table-column-hidden.ssr.test.ts), fixture `?fixture=table-column-hidden`.
-Сравниваются видимый текст, структура и selection controls. Raw textContent,
-checkbox counts и colspan attributes сохранены: native TableFilter сохраняет
-закрытый popover в DOM, а colSpan=1 может быть явным атрибутом.
+`?fixture=table-column-hidden` compares visible text, structure,
+and selection controls in 14 UMD cases. Raw `textContent`,
+checkbox counts, and colspan attributes are retained.
+Native TableFilter keeps a closed popover in the DOM, and
+`colSpan=1` can be an explicit attribute.
+[Browser tests](../../../tests/browser/table/table-column-hidden.spec.ts) · [SSR tests](../../../tests/package/table/table-column-hidden.ssr.test.ts)
 
-## Значения, ширина и обрезка колонок
+## Column values, widths, and ellipsis
 
-Строка `dataIndex: 'person.name'` читает буквальный ключ с точкой.
-`dataIndex: ['person', 'name']` читает вложенное поле, а `['items', 0, 'name']`
-обращается к элементу массива. Отсутствующий сегмент даёт `undefined`.
-Третий аргумент `render` получает исходное значение как `unknown`. Пустой путь
-или отсутствие `dataIndex` передают snippet саму запись. При обычном
-отображении пустой путь оставляет ячейку пустой. Snippet может по-прежнему
-объявлять только `record` и `index`.
+`dataIndex: 'person.name'` reads the literal dotted key.
+`dataIndex: ['person', 'name']` reads a nested field, and
+`['items', 0, 'name']` accesses an array item. A missing
+segment gives `undefined`. The third `render` argument holds
+the raw value as `unknown`. An empty path or missing
+`dataIndex` passes the record itself to the Snippet. With
+default rendering, an empty path leaves the cell empty.
+A Snippet can still declare just `record` and `index`.
 
-`shouldCellUpdate(record, previousRecord)` сравнивает текущую запись с
-последней принятой для конкретной ячейки. Например, для записей с ревизией
-можно указать `shouldCellUpdate: (record, previous) => record.revision !== previous.revision`.
-При `false` ячейка сохраняет текст либо выбранный snippet и его аргументы.
-`onCell` получает текущую запись, а настройки объединения ячеек и `ellipsis`
-применяются сразу. Автоматический `title` соответствует отображённому тексту.
-Snippet по-прежнему реагирует на обращения к собственному состоянию.
-Записи передаются по ссылке. Чтобы сравнить две ревизии, заменяйте изменившуюся
-запись новым объектом.
+`shouldCellUpdate(record, previousRecord)` compares the
+current record with the last accepted one for that cell.
+For records with revisions, use
+`shouldCellUpdate: (record, previous) => record.revision !== previous.revision`.
+Returning `false` retains text or the selected Snippet and its
+arguments. `onCell` gets the current record, and spans and
+`ellipsis` apply immediately. Automatic `title` follows the
+displayed text. A Snippet still reacts to its own state.
+Records are passed by reference. Replace a changed record
+with a new object to compare two revisions.
 
-Первый вывод использует текущую запись без вызова предиката. Это относится
-и к строке, заново смонтированной после выхода из виртуального окна. Удаление
-`shouldCellUpdate` возобновляет обычное обновление содержимого.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-cell-update-reference.json)
-· [Chromium](../../../tests/browser/table/table-cell-update.spec.ts)
-· [SSR](../../../tests/package/table/table-cell-update.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
+First render uses the current record without calling the
+predicate, including when a row remounts after leaving the
+virtual window. Removing `shouldCellUpdate` resumes normal
+content updates. [Reference](../../../tests/browser/fixtures/ant-design-table-cell-update-reference.json) · [Chromium](../../../tests/browser/table/table-cell-update.spec.ts) ·
+[SSR](../../../tests/package/table/table-cell-update.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
-`tableLayout` задаёт алгоритм ширин `'auto'` или `'fixed'`. При автоматическом
-выборе закреплённые колонки с горизонтальной прокруткой, закреплённая шапка
-или `ellipsis` у видимой колонки включают `fixed`. Закреплённые колонки с
-`scroll.x="max-content"` выбирают `auto`, чтобы таблица выросла до ширины
-содержимого. Числовой `minWidth` задаёт минимум в пикселях при `auto`.
-В режиме `fixed` обычная таблица использует `width`. `align` поддерживает
-логические стороны `start` и `end`, физические стороны, `center`, `justify`
-и `match-parent`.
+`tableLayout` selects `'auto'` or `'fixed'`. When chosen
+automatically, fixed columns with horizontal scrolling, a
+fixed header, or `ellipsis` on a visible column select
+`fixed`. Fixed columns with `scroll.x="max-content"` use
+`auto` so the table can grow to its content width.
+Numeric `minWidth` sets a pixel minimum with `auto`. In
+`fixed`, an ordinary table uses `width`. `align` supports
+logical `start` and `end`, physical directions, `center`,
+`justify`, and `match-parent`.
 
-`ellipsis` обрезает длинный текст в заголовке и ячейках колонки. Значение
-`true` добавляет нативный `title` для строк и чисел. Объект
-`{ showTitle: false }` убирает автоматически созданный `title` в теле.
-`onCell` и `onHeaderCell` могут задать свой `title`, в том числе пустую строку.
-Для результата пользовательского snippet используйте явный `title` из
-`onCell`. При смене обрезки сохраняются DOM редактора и фокус.
+`ellipsis` truncates long text in a column's header and cells.
+`true` adds a native `title` for strings and numbers.
+`{ showTitle: false }` skips the generated body title.
+`onCell` and `onHeaderCell` can supply a title, including an
+empty string. For custom Snippet content, set `title` in
+`onCell`. Ellipsis changes preserve editor DOM and focus.
 
-У активного виртуального окна общие фиксированные ширины заголовков и ячеек.
-Они учитывают `minWidth` при любом значении `tableLayout`.
-`virtual` без `scroll.y` сохраняет фиксированную раскладку закреплённых
-колонок по умолчанию. Явное `tableLayout` задаёт алгоритм для этого случая.
-В эталоне React тело учитывает минимум отдельно от шапки. В профиле
-`virtual-min` первый заголовок равен 120 px, а ячейка равна 316 px. В Svelte
-общая колонка равна 316 px. Обрезка закреплённого обычного текста выполняется
-внутри ячейки, а кнопка сортировки и пользовательский snippet сохраняют
-свои DOM-узлы.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-column-layout-reference.json)
-· [Chromium](../../../tests/browser/table/table-column-layout.spec.ts)
-· [SSR](../../../tests/package/table/table-column-layout.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
+The active virtual window has shared fixed widths for headers
+and cells. They honor `minWidth` with any `tableLayout`.
+`virtual` without `scroll.y` retains the default fixed column
+layout. Explicit `tableLayout` selects the algorithm in that
+case. In the React reference, body minimum width is independent
+of the header. In `virtual-min`, the first header is 120px
+and its cell is 316px. Svelte uses a common 316px column.
+Plain text in a fixed column is truncated inside the cell.
+The sort button and custom Snippet keep their DOM.
+[Reference](../../../tests/browser/fixtures/ant-design-table-column-layout-reference.json) · [Chromium](../../../tests/browser/table/table-column-layout.spec.ts) · [SSR](../../../tests/package/table/table-column-layout.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
 
-## Атрибуты и объединение ячеек
+## Cell attributes and spans
 
-`colSpan` и `rowSpan` колонки задают размер её заголовка. `onHeaderCell(column)`
-возвращает атрибуты заголовка и может переопределить оба размера. Ноль скрывает
-ячейку. Скрытый заголовок сохраняет колонку данных.
+Column `colSpan` and `rowSpan` size its header.
+`onHeaderCell(column)` returns header attributes and can override
+both spans. Zero hides the cell. A hidden header retains
+the data column.
 
-Для ячеек тела используйте `onCell(record, index)`. Индекс относится к раскрытой
-текущей странице, включая видимых потомков. `column.render(record, index, value)`
-получает индекс среди соседних записей. Оба колбэка для атрибутов могут
-возвращать `TableCellProps` с `class`, строковым `style`, `data-*`, `aria-*` и
-обработчиками Svelte, например `onclick`. CSS-класс дополняет классы колонки,
-содержимое ячейки задаётся через `render`, а `scope` определяется шапкой и
-`rowScope` колонки.
+Use `onCell(record, index)` for body cells. Its index refers
+to the current expanded page, including visible descendants.
+`column.render(record, index, value)` gets a sibling index.
+Both attribute callbacks can return `TableCellProps` with
+`class`, CSS string `style`, `data-*`, `aria-*`, and Svelte
+handlers such as `onclick`. The class supplements column
+classes. `render` controls content, and `scope` comes from
+the header or column `rowScope`.
 
 ```ts
 const teamColumn: TableColumn<Person> = {
   key: 'team',
-  title: 'Команда',
+  title: 'Team',
   dataIndex: 'team',
   onCell: (_record, index) => ({
     rowSpan: index === 0 ? 2 : index === 1 ? 0 : 1
@@ -760,133 +772,142 @@ const teamColumn: TableColumn<Person> = {
 };
 ```
 
-Виртуальное окно показывает объединённую ячейку и после того, как её исходная
-строка уходит за пределы окна. Высота учитывает измеренные строки и раскрытые
-подробности, а граница объединения ограничена концом текущей страницы.
-Совместные `colSpan` и `rowSpan` сохраняют положение соседних колонок.
-В обычном режиме используются нативные `colspan` и `rowspan`. В виртуальном
-режиме строка объединения размещается над потоком строк с сохранением
-нативных ячеек и DOM-событий.
+The virtual window shows a spanning cell even when its
+origin row leaves the window. Height includes measured
+rows and expanded details, and the span stops at the end of
+the current page. Combined `colSpan` and `rowSpan` preserve
+neighboring column positions. Ordinary mode uses native
+`colspan` and `rowspan`. Virtual mode positions the span row
+over the row flow and retains native cells and DOM events.
 
-Сверка с 32 состояниями и восемью серверными рендерами Ant Design 6.6.8
-проверяет spans, видимые строки, действия внутри объединений и RTL. Строгая
-гидратация проверяет состояние редактора при смене окна.
-[Браузер](../../../tests/browser/table/table-spans.spec.ts),
-[гидратация](../../../tests/browser/table/table-spans-hydration.spec.ts),
-[SSR](../../../tests/package/table/table-spans.ssr.test.ts).
+The comparison uses 32 states and eight Ant Design 6.6.8
+server renders for spans, visible rows, actions within merged
+cells, and RTL. Strict hydration checks editor state when
+the window changes. [Browser tests](../../../tests/browser/table/table-spans.spec.ts) ·
+[Hydration](../../../tests/browser/table/table-spans-hydration.spec.ts) · [SSR tests](../../../tests/package/table/table-spans.ssr.test.ts)
 
-## Заголовки строк
+## Row headers
 
-`TableColumn.rowScope` принимает `'row'` или `'rowgroup'`: ячейки данных этой
-колонки становятся `th` с соответствующим scope, как в Ant Design 6.6.8.
-Без настройки используются `td`. Заголовки колонок, selection/expand cells и
-строки раскрытого содержимого сохраняют свою семантику. RowScope не объединяет
-записи. У заголовков строк используются headerBg/headerColor/fontWeightStrong;
-выделение строки и rowHoverable сохраняют исходные цвета.
+`TableColumn.rowScope` accepts `'row'` or `'rowgroup'`. Its
+data cells become `th` with the corresponding scope, as in
+Ant Design 6.6.8. Omission uses `td`. Column headers,
+selection and expand cells, and expanded content rows keep
+their semantics. `rowScope` leaves records independent. Row
+headers use `headerBg`, `headerColor`, and `fontWeightStrong`.
+Selection and `rowHoverable` keep their colors.
 
-Fixed row headers используют source headerBg поверх прежней непрозрачной
-подложки native sticky cells. Это отдельные CSS-слои; raw UMD computed CSS
-сохранён без подмены значений. Row → rowgroup обновляет scope без замены ячейки,
-editor, focus/selection или FormData. Добавление/снятие rowScope меняет тег и
-пересоздаёт содержимое ячейки, как source React.
+Fixed row headers use upstream `headerBg` over the existing
+opaque background of native sticky cells. The raw UMD
+computed CSS is kept without substituted values for these
+layers. Changing `row` to `rowgroup` updates scope while
+preserving the cell, editor, focus, selection, and FormData.
+Adding or removing `rowScope` changes the tag and remounts cell
+content as in React. `?fixture=table-row-scope` covers 18 UMD
+cases with DOM, CSS, and controls. [Browser tests](../../../tests/browser/table/table-row-scope.spec.ts)
+· [SSR tests](../../../tests/package/table/table-row-scope.ssr.test.ts)
 
-18 случаев UMD, DOM/CSS и controls: [browser](../../../tests/browser/table/table-row-scope.spec.ts),
-[SSR](../../../tests/package/table/table-row-scope.ssr.test.ts), fixture `?fixture=table-row-scope`.
+## Row classes and hover highlighting
 
-## Классы и подсветка строк
+`rowClassName` accepts a string or
+`(record, index, indent) => string` and adds to base row and
+selection classes. The index starts at 0 in current-page
+visible order. `indent` is nesting depth. Updating the
+callback or its reactive dependencies changes classes while
+preserving the row and controls.
 
-`rowClassName` принимает строку или `(record, index, indent) => string` и добавляет
-классы к основным классам строки и selection. Index начинается с 0 на текущей
-странице в порядке видимых строк; indent равен глубине вложенности.
-Изменение callback или его реактивных зависимостей обновляет классы без замены
-строки и её controls.
+`rowHoverable` defaults to `true` and controls built-in hover
+highlighting. The upstream theme uses `rowHoverBg` and
+`rowSelectedHoverBg`. Native-only themes retain their styling.
+`false` clears highlighting immediately, even with the pointer
+inside the row, and preserves selection, sorting, focus, and
+keyboard controls. The prop leaves custom row and input
+events available.
 
-`rowHoverable` по умолчанию true и управляет встроенной подсветкой при наведении.
-В source-теме используются rowHoverBg/rowSelectedHoverBg; native-only темы
-сохраняют прежние стили. False снимает подсветку сразу, включая курсор внутри
-строки, и сохраняет выбранное состояние, сортировку, focus и keyboard controls.
-Проп не блокирует обработку пользовательских событий строки или inputs.
+In the pinned UMD, switching from true to false leaves
+HoverContext highlighting even after pointer leave. The raw
+observation is kept, and Svelte clears paint immediately
+using a CSS guard. The reference records upstream HoverContext
+classes for diagnosis. The native CSS `:hover` comparison checks
+colors. Browser and SSR tests cover these boundaries and
+current flat rows at `?fixture=table-row-options`.
+[Observation](../../../tests/browser/fixtures/ant-design-table-hover-observation.json) · [Browser tests](../../../tests/browser/table/table-row-options.spec.ts) ·
+[SSR tests](../../../tests/package/table/table-row-options.ssr.test.ts)
 
-В закреплённом UMD после true → false HoverContext сохраняет подсветку даже
-после ухода курсора. Raw [наблюдение](../../../tests/browser/fixtures/ant-design-table-hover-observation.json)
-сохранено; native использует CSS guard и очищает paint сразу. Source classes
-HoverContext записаны как диагностика, сравнение с native CSS :hover проверяет
-цвета. Границы и текущие flat-row случаи покрывают
-[browser](../../../tests/browser/table/table-row-options.spec.ts) и
-[SSR](../../../tests/package/table/table-row-options.ssr.test.ts), fixture `?fixture=table-row-options`.
+## Row attributes
 
-## Атрибуты строк
+`onRow(record, index)` returns `TableRowProps` for a data row.
+The index starts at 0 on the expanded page after filtering,
+sorting, and pagination. The virtual window passes the same
+index. Empty, summary, and detail rows skip the callback.
 
-`onRow(record, index)` возвращает `TableRowProps` для строки данных. Индекс
-начинается с 0 в раскрытой странице после фильтрации, сортировки и пагинации.
-Виртуальное окно передаёт тот же индекс. Пустые строки, итоги и подробности
-в callback не входят.
+`onHeaderRow(columns, index)` receives column definitions for
+that header level, including visibility, groups, and selection
+and expansion positions. If the header has only an empty cell,
+the callback gets a definition with empty `key` and `title`.
+`showHeader={false}` skips the callback.
 
-`onHeaderRow(columns, index)` получает определения колонок данного уровня
-шапки. В них учтены видимость, группы и позиции служебных колонок. Если шапка
-содержит только пустую ячейку, callback получает определение с пустыми
-`key` и `title`. При `showHeader={false}` callback пропускается.
+The returned object can contain `class`, CSS string `style`,
+`data-*`, `aria-*`, and native Svelte handlers. The data row class
+supplements `rowClassName`. Row-click expansion updates keys and
+calls `onExpand` and `onExpandedRowsChange` before `onRow`'s
+`onclick`. Built-in expand buttons handle their own clicks.
+`onRow` can receive an editor click without expanding the row.
 
-В возвращаемом объекте можно задать `class`, строковый `style`, `data-*`,
-`aria-*` и нативные Svelte-обработчики. Класс строки данных
-дополняет `rowClassName`. Раскрытие по клику обновляет ключи и вызывает
-`onExpand` и `onExpandedRowsChange` до `onclick` из `onRow`. Штатные кнопки
-раскрытия обрабатывают клик сами. Клик по редактору внутри строки можно
-получить в `onRow` без раскрытия строки.
+Table owns `data-row-key` and computed virtual `aria-rowindex`.
+A custom ID on a nested row is used in the expansion button's
+`aria-controls`. When a virtual row has two representations,
+`id` and `tabindex` stay on the ordinary row. The spanning-cell
+layer retains attributes, class, style, and handlers for the
+same record.
 
-`data-row-key` и вычисляемые виртуальные `aria-rowindex` принадлежат таблице.
-Пользовательский `id` вложенной строки используется в `aria-controls`
-кнопки раскрытия. При двух представлениях виртуальной строки `id` и
-`tabindex` остаются у обычной строки. Слой объединённой ячейки сохраняет
-атрибуты, класс, стиль и обработчики той же записи.
+In Ant Design 6.6.8, `HeaderRow` overwrites the returned
+`className` and `style` with semantic DOM values. Svelte applies
+`class` and `style` from `onHeaderRow` to the header row. The
+reference retains the React result. Svelte tests also cover
+fixed header offsets and strict editor hydration.
+[Reference](../../../tests/browser/fixtures/ant-design-table-row-attributes-reference.json) · [Chromium](../../../tests/browser/table/table-row-attributes.spec.ts) · [SSR](../../../tests/package/table/table-row-attributes.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-row-attributes-hydration.spec.ts)
 
-В Ant Design 6.6.8 `HeaderRow` перезаписывает возвращённые `className` и
-`style` значениями semantic DOM. В Svelte `class` и `style` из
-`onHeaderRow` применяются к строке шапки. Эталон сохраняет исходный результат
-React. Проверки Svelte также покрывают смещения закреплённой шапки и строгую
-гидратацию редактора.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-row-attributes-reference.json)
-· [Chromium](../../../tests/browser/table/table-row-attributes.spec.ts)
-· [SSR](../../../tests/package/table/table-row-attributes.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-row-attributes-hydration.spec.ts)
+## Title and footer panels
 
-## Панели title и footer
-
-`title` и `footer` принимают snippets с readonly-массивом записей текущей страницы.
-В client mode он уже отфильтрован, отсортирован и ограничен пагинацией; без
-пагинации передаётся весь обработанный набор. Server mode передаёт полученный
-`dataSource` без повторного разбиения. Для пустого набора передаётся `[]`.
+`title` and `footer` take Snippets with a readonly array of
+current page records. In client mode, it is already filtered,
+sorted, and paginated. Without pagination, it is the full
+processed set. Server mode passes the supplied `dataSource`
+without repagination. An empty set passes `[]`.
 
 ```svelte
-<Table dataSource={people} {columns} caption="Участники">
-  {#snippet title(currentPage)}На странице: {currentPage.length}{/snippet}
-  {#snippet footer(currentPage)}Всего баллов на странице:
+<Table dataSource={people} {columns} caption="Members">
+  {#snippet title(currentPage)}On this page: {currentPage.length}{/snippet}
+  {#snippet footer(currentPage)}Total score on this page:
     {currentPage.reduce((sum, person) => sum + person.score, 0)}
   {/snippet}
 </Table>
 ```
 
-Панели находятся внутри `.ant-table` до и после scroll container. Caption
-сохраняет нативную подпись таблицы. Переданный пустой snippet сохраняет панель
-и её отступы; отсутствие snippet убирает панель. Footer использует footerBg и
-footerColor, обе панели — padding/font текущего размера и border/radius темы.
-Смена страницы, сортировки, фильтра, loading или темы сохраняет содержимое
-остающихся snippets и не создаёт дополнительных onChange callbacks.
-Source comparison: [browser](../../../tests/browser/table/table-panels.spec.ts),
-[SSR](../../../tests/package/table/table-panels.ssr.test.ts), fixture `?fixture=table-panels`.
+Panels are inside `.ant-table` before and after the scroll
+container. Caption remains the native table caption. A supplied
+empty Snippet keeps the panel and its padding. Omitting the
+Snippet removes the panel. Footer uses `footerBg` and
+`footerColor`. Both panels use the current size's padding and
+font and the theme's border and radius. Page, sort, filter,
+loading, and theme changes preserve remaining Snippet content
+and emit no extra `onChange`. The comparison uses
+`?fixture=table-panels`. [Browser tests](../../../tests/browser/table/table-panels.spec.ts) · [SSR tests](../../../tests/package/table/table-panels.ssr.test.ts)
 
-## Итоговые строки
+## Summary rows
 
-`summary` получает тот же readonly-массив записей текущей страницы, что
-`title` и `footer`. В виртуальном режиме это вся страница. Snippet рендерится
-в секции `tfoot` общей таблицы. `Table.Summary` группирует строки,
-`Table.Summary.Row` передаёт атрибуты и события элементу `tr`.
+`summary` receives the same readonly page records as `title`
+and `footer`. In virtual mode, it receives the whole page.
+The Snippet renders in `tfoot` of the shared table.
+`Table.Summary` groups rows, and `Table.Summary.Row` passes
+attributes and events to its `tr`.
 
 ```svelte
 {#snippet totals(page: readonly Person[])}
   <Table.Summary>
     <Table.Summary.Row>
-      <Table.Summary.Cell index={0}>Всего</Table.Summary.Cell>
+      <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
       <Table.Summary.Cell index={1} align="right">
         {page.reduce((total, person) => total + person.score, 0)}
       </Table.Summary.Cell>
@@ -898,137 +919,153 @@ Source comparison: [browser](../../../tests/browser/table/table-panels.spec.ts),
   scroll={{ y: 320 }} summary={{ fixed: 'bottom', render: totals }} />
 ```
 
-`Table.Summary.Cell` принимает `colSpan`, `rowSpan`, `align` и HTML-атрибуты
-ячейки. `index` отсчитывается с нуля среди видимых колонок, включая колонки
-выделения и раскрытия. Объединённая ячейка закрепляется с той стороны,
-на которой закреплены обе крайние колонки её `colSpan`.
+`Table.Summary.Cell` accepts `colSpan`, `rowSpan`, `align`, and
+HTML cell attributes. `index` is zero-based among visible columns
+including selection and expansion. A spanning cell is fixed to
+the side shared by both outer columns of its `colSpan`.
 
-Передайте `summary={totals}` для обычного итога после строк или
-`summary={{ fixed: 'top', render: totals }}` для закрепления под шапкой.
-`fixed: true` равнозначно `'bottom'`. Закрепление действует при `scroll.y`
-или `sticky`. Конфигурация передаётся таблице, чтобы разместить секцию уже
-при SSR. При скрытой шапке верхний итог остаётся видимым. Обычный итог
-виртуальной таблицы доступен после последней строки.
+Use `summary={totals}` for a regular summary after rows or
+`summary={{ fixed: 'top', render: totals }}` to fix it below
+the header. `fixed: true` is equivalent to `'bottom'`. Fixing
+applies with `scroll.y` or `sticky`. Table receives the
+configuration so SSR can place the section. A top summary
+stays visible with the header hidden. A regular virtual table
+summary is available after the last row.
 
-Если при гидратации закреплённые колонки перекрывают редактор, который уже
-в фокусе, таблица прокручивается к нему по горизонтали при наличии места между
-колонками. DOM-узел, значение и выделение сохраняются. Исходное перекрытие
-зафиксировано в [замере гидратации](../../../tests/browser/fixtures/ant-design-table-summary-focus-reference.json).
+If fixed columns cover an already focused editor during
+hydration, Table scrolls to it horizontally when there is
+space between the columns. DOM, value, and selection remain.
+The original overlap is recorded in the measurement.
+[Hydration measurement](../../../tests/browser/fixtures/ant-design-table-summary-focus-reference.json)
 
-Сохранены 27 состояний Ant Design 6.6.8 и девять серверных снимков.
-В двух исходных случаях итог исчезает при `showHeader={false}` с `fixed: 'top'`
-и при виртуальном теле с обычным итогом. Эти случаи есть в
-[замерах](../../../tests/browser/fixtures/ant-design-table-summary-reference.json).
-Нативное размещение, доступ с клавиатуры и фокус редактора проверяют
-[браузерные сценарии](../../../tests/browser/table/table-summary.spec.ts),
-[гидратация](../../../tests/browser/table/table-summary-hydration.spec.ts) и
-[SSR](../../../tests/package/table/table-summary.ssr.test.ts).
+The reference retains 27 Ant Design 6.6.8 states and nine
+server snapshots. Upstream loses the summary in two cases:
+`showHeader={false}` with `fixed: 'top'`, and virtual body with
+an ordinary summary. Tests check native placement, keyboard
+access, and editor focus. [Measurements](../../../tests/browser/fixtures/ant-design-table-summary-reference.json) ·
+[Browser scenarios](../../../tests/browser/table/table-summary.spec.ts) · [Hydration](../../../tests/browser/table/table-summary-hydration.spec.ts) ·
+[SSR](../../../tests/package/table/table-summary.ssr.test.ts)
 
-## Префиксы Table
+## Table prefixes
 
-`prefixCls` задаёт локальные классы Table; без непустого значения используется
-`ConfigProvider.prefixCls + '-table'`. Checkbox, Pagination, Button и shell фильтра
-разрешают общий prefix независимо от владельца таблицы. `dropdownPrefixCls`
-задаёт префикс списка фильтров (`-menu`), как в исходном FilterDropdown;
-он не меняет общий namespace shell и controls.
+`prefixCls` sets local Table classes. Without a nonempty value,
+it uses `ConfigProvider.prefixCls + '-table'`. Checkbox,
+Pagination, Button, and the filter shell resolve the shared
+prefix independently of the table. `dropdownPrefixCls` sets
+the filter list prefix (`-menu`) as in upstream FilterDropdown.
+The shared shell and controls keep their namespace.
 
-В upstream собственный dropdownPrefixCls оставляет filter Menu без соответствующих
-CSS selectors; raw прозрачный фон сохранён отдельно от public inherited-prefix
-counterpart. Svelte сохраняет прежнее оформление списка; только menu background
-сравнивается с counterpart, остальные свойства — с raw Source.
+Upstream custom `dropdownPrefixCls` leaves the filter Menu
+without matching CSS selectors. Its raw transparent background
+is recorded separately from a public inherited-prefix
+comparison. Svelte retains the list styling. Only menu
+background uses that comparison, and other properties use
+raw upstream results.
 
-187 правил закреплённого CSS изолированы по паре owner/shared prefix.
-Публичные component tokens и marker `ant-table-css-var` сохраняют canonical имена,
-а private `nested-border-top` следует общему namespace. Source theme, оформление
-по умолчанию, fixed offsets/scroll и нативные controls сохраняются при обновлении
-префикса. Открытый фильтр сохраняет draft/focus/IDs; раскрытая строка — editor,
-выделение текста и FormData. Проверки: [browser](../../../tests/browser/table/table-prefix.spec.ts)
-и [SSR](../../../tests/package/table/table-prefix.ssr.test.ts).
+The 187 pinned CSS rules are scoped to the pair of owner and
+shared prefixes. Public component tokens and the
+`ant-table-css-var` marker keep canonical names. Private
+`nested-border-top` follows the shared namespace. Upstream
+theme, default styling, fixed offsets and scroll, and native
+controls survive prefix updates. An open filter retains
+draft, focus, and IDs. An expanded row keeps its editor,
+selection, and FormData. [Browser tests](../../../tests/browser/table/table-prefix.spec.ts) ·
+[SSR tests](../../../tests/package/table/table-prefix.ssr.test.ts)
 
-## Компонентная тема Table
+## Table component theme
 
-`ConfigProvider.theme.components.Table` применяет исходные component tokens и
-aliases к ячейкам, границам, сортировке, hover/selection, expand controls и фильтрам.
-Поддержаны algorithms, custom cssVar prefix, вложенные provider и обновления
-после mount. Local `style` сохраняет приоритет. Смена темы не пересоздаёт строки,
-не меняет выбор/сортировку и не сбрасывает draft/focus в раскрытом snippet.
+`ConfigProvider.theme.components.Table` applies upstream
+component tokens and aliases to cells, borders, sorting,
+hover and selection, expansion controls, and filters. It
+supports algorithms, custom `cssVar` prefix, nested providers,
+and updates after mount. Local `style` keeps precedence.
+Theme changes retain rows, selection, sorting, and drafts
+and focus in an expanded Snippet.
 
-Native default size по-прежнему наследует `componentSize` (`medium` без настройки).
-В теме Ant Design ширина selection column берётся из `selectionColumnWidth`,
-а expand column — из исходной формулы `controlInteractiveSize + padding × 2`;
-явный `expandable.columnWidth` имеет приоритет. Без source-темы обе колонки
-сохраняют default 48px. Для fixed cells сохраняется непрозрачная подложка.
+The native default size still inherits `componentSize` and
+falls back to `medium`. In the Ant Design theme, selection
+width comes from `selectionColumnWidth`. Expansion width
+uses the upstream `controlInteractiveSize + padding × 2`
+formula. Explicit `expandable.columnWidth` wins. Without an
+upstream theme, both columns default to 48px. Fixed cells
+retain an opaque background.
 
-`stickyScrollBarBg` и `stickyScrollBarBorderRadius` оформляют бегунок
-дополнительной полосы. Итоговые ячейки наследуют цвета и отступы таблицы.
-Сравнение с эталоном, границы покрытия и наблюдение root style описаны в
-[справочнике темы](../theme-context.md#тема-table).
+`stickyScrollBarBg` and `stickyScrollBarBorderRadius` style the
+additional scrollbar thumb. Summary cells inherit Table
+colors and padding. The theme reference covers comparisons,
+coverage limits, and the root style observation.
+[Theme reference](../theme-context.md#table-theme)
 
-## Семантическое оформление
+## Semantic styling
 
-`Table` и `ConfigProvider.table` принимают `classNames` и `styles` как объект
-или функцию от `{ props }`. Функция получает свойства таблицы с учётом явно
-заданного размера провайдера. `styles` принимает строки CSS.
+`Table` and `ConfigProvider.table` accept `classNames` and
+`styles` as an object or function of `{ props }`. The function
+receives Table props with any explicit provider size. Styles
+are CSS strings.
 
-| Слот | Элемент |
+| Slot | Element |
 | --- | --- |
-| `root` | Внешний контейнер таблицы |
-| `section` | Контейнер вокруг области прокрутки |
-| `content` | Область прокрутки в обычном режиме без закреплённой шапки |
-| `title`, `footer` | Панели над таблицей и под ней |
-| `header.wrapper`, `header.row`, `header.cell` | `thead`, строка и ячейка заголовка |
-| `body.wrapper`, `body.row`, `body.cell` | `tbody`, строка данных и ячейка |
-| `pagination.root`, `pagination.item` | `nav` Pagination и его пункты |
+| `root` | Outer Table container |
+| `section` | Container around the scroll region |
+| `content` | Scroll region in ordinary mode without a fixed header |
+| `title`, `footer` | Panels above and below the table |
+| `header.wrapper`, `header.row`, `header.cell` | `thead`, header row, and header cell |
+| `body.wrapper`, `body.row`, `body.cell` | `tbody`, data row, and cell |
+| `pagination.root`, `pagination.item` | Pagination `nav` and its items |
 
-`classNames.header` и `classNames.body` в виде строки оформляют соответствующий
-`wrapper`. Строка `classNames.pagination` добавляется к корню Pagination.
-Слот `body.wrapper` действует для обычного и пустого тела таблицы. Для окна
-виртуальных строк действуют `body.row` и `body.cell`.
-Слоты ячеек включают колонки выбора и раскрытия. Строка пустого состояния и
-отдельная строка подробностей используют собственное оформление.
+String `classNames.header` and `classNames.body` style their
+respective `wrapper`. A string `classNames.pagination` adds to
+the Pagination root. `body.wrapper` applies to ordinary and
+empty bodies. Virtual rows use `body.row` and `body.cell`.
+Cell slots include selection and expansion columns. Empty and
+separate detail rows use their own styling.
 
-Классы провайдера и таблицы складываются. `rootClassName` добавляется к
-внешнему контейнеру и открытым панелям фильтра. Атрибуты строк и ячеек из
-`onHeaderRow`, `onRow`, `onHeaderCell` и `onCell` сохраняются, их CSS дополняется
-соответствующим слотом. На корне последовательно применяются стили темы,
-`ConfigProvider.table.styles.root`, `ConfigProvider.table.style`,
-`Table.styles.root` и `Table.style`.
+Provider and Table classes accumulate. `rootClassName` is
+added to the outer container and open filter panels. Attributes
+from `onHeaderRow`, `onRow`, `onHeaderCell`, and `onCell` are
+preserved, and matching slots supplement their CSS. The root
+applies theme styles, `ConfigProvider.table.styles.root`,
+`ConfigProvider.table.style`, `Table.styles.root`, and
+`Table.style` in order.
 
-В группах `header`, `body` и `pagination` экземпляр наследует пропущенный слот
-от провайдера. Переданный слот заменяет его целиком. Явный `undefined` снимает
-унаследованный стиль группы. Для Pagination классы из `Table.classNames.pagination`
-добавляются перед классами `pagination.classNames`. Стили таблицы применяются
-после `pagination.styles`.
+In `header`, `body`, and `pagination`, an omitted instance slot
+inherits the provider slot. A supplied slot replaces it in
+full. Explicit `undefined` clears inherited group styling.
+Pagination classes from `Table.classNames.pagination` precede
+`pagination.classNames`. Table styles follow
+`pagination.styles`.
 
-Порядок слоёв и элементы сверены с 17 состояниями и 13 серверными снимками
-Ant Design 6.6.8. Проверка гидратации сохраняет узел редактора, его значение,
-фокус и выделение при смене оформления.
-[Снимки React](../../../tests/browser/fixtures/ant-design-table-semantic-reference.json),
-[браузерные проверки](../../../tests/browser/table/table-semantic.spec.ts),
-[гидратация](../../../tests/browser/table/table-column-layout-hydration.spec.ts)
-и [SSR](../../../tests/package/table/table-semantic.ssr.test.ts).
+Layer order and elements were compared against 17 states
+and 13 Ant Design 6.6.8 server snapshots. Hydration tests
+preserve editor DOM, value, focus, and selection through style
+changes. [React snapshots](../../../tests/browser/fixtures/ant-design-table-semantic-reference.json) · [Browser tests](../../../tests/browser/table/table-semantic.spec.ts)
+· [Hydration](../../../tests/browser/table/table-column-layout-hydration.spec.ts) · [SSR](../../../tests/package/table/table-semantic.ssr.test.ts)
 
-## Закрепление заголовка и колонок
+## Fixed header and columns
 
-В обычном режиме `scroll.y` задаёт максимальную высоту прокручиваемой области
-вместе с caption и заголовком. Число означает пиксели, строка — CSS-длину, например `"20rem"` или
-`"calc(100vh - 240px)"`. Заголовок остаётся сверху при вертикальной прокрутке;
-Pagination находится снаружи этой области. При закреплённом итоге `scroll.y`
-относится к телу таблицы, а высоты шапки, caption и итога добавляются после
-измерения. Без `scroll.y` высота следует за содержимым.
+In ordinary mode, `scroll.y` sets the maximum height of the
+scroll region including caption and header. A number means
+pixels, and a string is a CSS length such as `"20rem"` or
+`"calc(100vh - 240px)"`. The header stays at the top during
+vertical scrolling. Pagination is outside that region. With
+a fixed summary, `scroll.y` applies to the body, and measured
+header, caption, and summary heights are added. Without
+`scroll.y`, height follows content.
 
-`sticky` закрепляет шапку при прокрутке окна и показывает дополнительную
-горизонтальную полосу, когда тело шире области и продолжается ниже видимой
-части окна. `sticky={{ offsetHeader: 48, offsetSummary: 12, offsetScroll: 8 }}`
-задаёт отступы в пикселях для шапки, нижнего итога и полосы. По умолчанию
-смещения равны нулю. `getContainer` может вернуть прокручиваемый элемент
-и вычисляется после появления DOM. Шапка, тело, итоги и дополнительная полоса
-прокручиваются по горизонтали вместе.
+`sticky` fixes the header during window scroll and shows an
+additional horizontal scrollbar when the body is wider than
+the region and extends below the viewport.
+`sticky={{ offsetHeader: 48, offsetSummary: 12, offsetScroll: 8 }}`
+sets pixel offsets for the header, bottom summary, and bar.
+Offsets default to zero. `getContainer` can return a scrollable
+element and resolves after DOM is available. Header, body,
+summary, and the additional bar scroll horizontally together.
 
-`column.fixed` принимает `true` (то же, что `"start"`), `"start"`, `"end"` или
-`false`. Start закрепляет колонку у начала строки, end — у конца; в RTL стороны
-меняются автоматически. `rowSelection={{ fixed: true }}` закрепляет колонку
-выбора у начала строки. По умолчанию колонки не закреплены.
+`column.fixed` accepts `true` (same as `"start"`), `"start"`,
+`"end"`, or `false`. Start fixes a column to the row start and
+end to the row end, with automatic RTL mirroring.
+`rowSelection={{ fixed: true }}` fixes selection to the start.
+Columns are unfixed by default.
 
 ```svelte
 <script lang="ts">
@@ -1036,98 +1073,105 @@ Pagination находится снаружи этой области. При з�
 
   interface Person { key: number; name: string; team: string; tasks: number }
   const people: Person[] = Array.from({ length: 30 }, (_, index) => ({
-    key: index, name: `Участник ${index + 1}`, team: 'Разработка', tasks: index
+    key: index, name: `Member ${index + 1}`, team: 'Engineering', tasks: index
   }));
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Участник', dataIndex: 'name', width: 200, fixed: true },
-    { key: 'team', title: 'Команда', dataIndex: 'team', width: '24rem' },
-    { key: 'tasks', title: 'Задачи', dataIndex: 'tasks', width: 100, fixed: 'end' }
+    { key: 'name', title: 'Member', dataIndex: 'name', width: 200, fixed: true },
+    { key: 'team', title: 'Team', dataIndex: 'team', width: '24rem' },
+    { key: 'tasks', title: 'Tasks', dataIndex: 'tasks', width: 100, fixed: 'end' }
   ];
 </script>
 
-<Table dataSource={people} {columns} caption="Участники"
+<Table dataSource={people} {columns} caption="Members"
   rowSelection={{ fixed: true }} scroll={{ x: 1000, y: 320 }} pagination={false} />
 ```
 
-Несколько колонок с одной стороны получают смещения по фактической ширине
-ячеек, включая закреплённую колонку выбора. Ширина пересчитывается при resize,
-изменении содержимого и состава колонок. Можно использовать числовые и CSS-ширины;
-для предсказуемого макета задавайте width и scroll.x. Если суммарная ширина
-закреплённых колонок не меньше ширины области, горизонтальное закрепление
-временно отключается. Все колонки доступны через прокрутку, заголовок остаётся
-закреплённым. При расширении области закрепление восстанавливается.
+Multiple columns on one side receive offsets from actual
+cell widths, including a fixed selection column. Width is
+remeasured on resize, content changes, and column changes.
+Both numeric and CSS widths work. Use `width` and `scroll.x`
+for a predictable layout. When the combined fixed width
+equals or exceeds the region, horizontal fixing is temporarily
+disabled. All columns remain reachable by scrolling, and the
+header stays fixed. Widening the region restores fixing.
 
-Используется одна нативная таблица с CSS sticky. Порядок фокуса и snippets
-сохраняется; отступы прокрутки учитывают закреплённые области. Фильтры используют
-верхний слой popover и обновляют положение при прокрутке и изменении ширин.
-Закреплённые ячейки имеют непрозрачный фон с учётом темы, сортировки и выбора.
-ResizeObserver отключается при изменении конфигурации и unmount.
+One native table uses CSS sticky. Focus order and Snippets
+are preserved. Scroll padding accounts for fixed regions.
+Filters use top-layer popovers and update position on scroll
+and width changes. Fixed cells have an opaque background
+accounting for theme, sort, and selection. ResizeObserver
+disconnects on configuration changes and unmount.
 
-SSR обычной таблицы выводит все строки страницы и CSS-закрепление заголовка. Горизонтальное
-закрепление активируется после измерения ширин в браузере; до гидратации
-колонки доступны обычной прокруткой. Изменения layout не вызывают onChange или
-onSelectionChange. Фильтрация, сортировка, выбор и пагинация сохраняют поведение
-в обоих режимах данных.
+Ordinary SSR emits all page rows and a CSS-sticky header.
+Horizontal fixing activates after browser width measurements.
+Before hydration, columns are available through ordinary
+scrolling. Layout changes leave `onChange` and
+`onSelectionChange` uncalled. Filtering, sorting, selection,
+and pagination retain their behavior in both data modes.
 
-## Виртуальные строки и прокрутка
+## Virtual rows and scrolling
 
-`virtual` включает окно строк при заданном `scroll.y` и наличии данных. Числовой
-`scroll.y` ограничивает высоту тела. Заголовок и caption закрепляются над ним
-в одном контейнере прокрутки. Закреплённые итоги занимают отдельную полосу,
-обычные прокручиваются после строк. Как в Ant Design 6.6.8, виртуальный режим использует
-числовые `scroll.x` и `scroll.y`. Запасные значения равны 1 и 500 px соответственно.
-Процентная ширина колонки рассчитывается от `scroll.x`, а свободная ширина
-распределяется между колонками с учётом фактической ширины контейнера.
+`virtual` enables a row window when `scroll.y` is supplied and
+data exists. Numeric `scroll.y` limits body height. The header
+and caption stay above it within the same scroll container.
+Fixed summaries occupy a separate band, and ordinary summaries
+scroll after rows. As in Ant Design 6.6.8, virtual mode uses
+numeric `scroll.x` and `scroll.y`, with fallbacks of 1 and 500px
+respectively. Percentage column width uses `scroll.x`. Free
+width is distributed across columns based on actual container
+width.
 
-Таблица рендерит семантические `table`, `thead`, `tbody` и окно строк.
-Раскрытые подробности входят в измеренную высоту своей строки. Выбор учитывает
-всю страницу, в том числе строки вне окна и потомков свёрнутых веток. При выходе
-из окна обычные строки и их snippets размонтируются. Объединённые ячейки
-сохраняются, пока пересекают окно. SSR выводит первое окно по оценочной
-высоте, а после гидратации таблица уточняет высоты по DOM.
+Table renders semantic `table`, `thead`, and `tbody` with the row
+window. Expanded details are included in their row's measured
+height. Selection covers the whole page, including off-window
+rows and descendants of collapsed branches. Ordinary rows
+and their Snippets unmount outside the window. Spanning cells
+remain while they intersect it. SSR renders the first window
+using estimated height. After hydration, Table measures heights
+from the DOM.
 
-`bind:this` предоставляет `TableRef.scrollTo({ top, key, index, align, offset })`.
-`bind:nativeElement` даёт корневой `HTMLDivElement`. `top` задаёт абсолютную
-вертикальную позицию и имеет приоритет над остальными полями. По `key` или `index`
-метод адресует раскрытые строки текущей страницы. В обоих режимах доступны
-`start`, `end` и `nearest`. `center` поддерживает обычная таблица. В виртуальном
-режиме `offset` по умолчанию оставляет зазор сверху перед целевой строкой.
-При `align="end"` зазор остаётся под строкой.
+`bind:this` exposes `TableRef.scrollTo({ top, key, index, align, offset })`.
+`bind:nativeElement` gives the root `HTMLDivElement`. `top` sets
+absolute vertical position and takes precedence. A `key` or
+`index` addresses expanded rows of the current page. Both modes
+support `start`, `end`, and `nearest`. Ordinary Table supports
+`center`. In virtual mode, `offset` normally leaves a gap above
+the target row. With `align="end"`, the gap is below the row.
 
-`onScroll` сообщает о прокрутке контейнера. В виртуальном режиме событие
-относится к вертикальной оси. После пользовательской сортировки, фильтрации
-или пагинации виртуальная таблица прокручивает к началу. Передайте
-`scrollToFirstRowOnChange: false` в `scroll`, чтобы сохранить позицию,
-или `true`, чтобы включить сброс и в обычном режиме.
+`onScroll` reports container scrolling, on the vertical axis
+in virtual mode. User sorting, filtering, or pagination scrolls
+virtual Table to the top. Use `scrollToFirstRowOnChange: false`
+in `scroll` to retain position, or `true` to reset ordinary
+Table as well.
 
-Геометрия окна, RTL, выбор за его пределами и публичная прокрутка сверяются
-с [замерами UMD](../../../tests/browser/fixtures/ant-design-table-virtual-reference.json).
-Если часть строк переменной высоты ещё не измерена, точный `scrollTop` после
-перехода по ключу зависит от оценок высоты. Сверка проверяет положение целевой
-строки относительно видимой области.
-Нативные клавиатура, caption, фокус и гидратация проверяются в Chromium.
+UMD measurements compare window geometry, RTL, selection outside
+the window, and public scrolling. If some variable-height rows
+are not measured, exact `scrollTop` after a key jump depends on
+estimates. The comparison checks the target row relative to the
+visible region. Chromium tests cover native keyboard behavior,
+caption, focus, and hydration. [UMD measurements](../../../tests/browser/fixtures/ant-design-table-virtual-reference.json)
 
-### Пользовательское тело прокрутки
+### Custom scroll body
 
-`components.body` в форме snippet получает корневые записи текущей страницы
-после сортировки и фильтрации. Table использует его при `scroll.y` или
-`sticky`. При штатной виртуализации работает встроенное окно строк.
-Snippet размечает строки, задаёт размеры контейнера и обеспечивает их
-доступность. Для общей сетки укажите числовые ширины колонок.
+A `components.body` Snippet receives current-page root records
+after sorting and filtering. Table uses it with `scroll.y` or
+`sticky`. Built-in virtualization uses its own row window.
+The Snippet renders rows, sets container size, and provides
+accessibility. Set numeric column widths for the shared grid.
 
 ```svelte
 <script lang="ts">
   import { Table, type TableBodyRenderInfo, type TableColumn } from '@woodger/antd';
 
   interface Person { key: number; name: string; }
-  const people: Person[] = [{ key: 1, name: 'Анна' }];
+  const people: Person[] = [{ key: 1, name: 'Anna' }];
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Имя', dataIndex: 'name', width: 640 }
+    { key: 'name', title: 'Name', dataIndex: 'name', width: 640 }
   ];
 </script>
 
 {#snippet body(page: readonly Person[], info: TableBodyRenderInfo)}
-  <div role="region" aria-label="Участники" style="max-height:240px;overflow:auto"
+  <div role="region" aria-label="Members" style="max-height:240px;overflow:auto"
     {@attach info.ref} onscroll={info.onScroll}>
     <div style="width:640px">
       {#each page as person (person.key)}
@@ -1140,44 +1184,45 @@ Snippet размечает строки, задаёт размеры конте�
 <Table dataSource={people} {columns} components={{ body }} scroll={{ x: 640, y: 240 }} />
 ```
 
-`info.ref` как attachment регистрирует DOM-контейнер. `scrollTo({ key })` ищет
-`data-row-key`, а `scrollTo({ index })` берёт ключ записи текущей страницы.
-`info.onScroll` передаёт горизонтальное положение шапке и закреплённым
-итогам. Пользовательское событие прокрутки обрабатывается в самом snippet.
-`info.scrollbarSize` содержит ширину вертикальной полосы в пикселях и
-равен нулю при SSR. Итоги внутри тела можно вывести в том же snippet.
+The `info.ref` attachment registers the DOM container.
+`scrollTo({ key })` looks up `data-row-key`, while
+`scrollTo({ index })` uses the current-page record's key.
+`info.onScroll` sends horizontal position to the header and fixed
+summaries. The Snippet handles custom scroll events.
+`info.scrollbarSize` contains vertical scrollbar width in pixels
+and is zero during SSR. Body summaries can render in the same
+Snippet.
 
-Внешний виртуализатор может передать в `info.ref` объект с физическим
-`scrollLeft` и методом `scrollTo`. Table передаёт методу исходный запрос.
-Вызов `info.onScroll({ scrollLeft })` синхронизирует положение. Cleanup,
-который вернул `info.ref`, освобождает регистрацию.
+An external virtualizer can pass `info.ref` an object with
+physical `scrollLeft` and `scrollTo`. Table forwards the original
+request. `info.onScroll({ scrollLeft })` synchronizes position.
+Cleanup returned by `info.ref` releases registration.
+[UMD measurements](../../../tests/browser/fixtures/ant-design-table-custom-body-reference.json) · [Visible scrollbar measurements](../../../tests/browser/fixtures/ant-design-table-custom-body-gutter-reference.json)
+· [Chromium](../../../tests/browser/table/table-custom-body.spec.ts) · [SSR](../../../tests/package/table/table-custom-body.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
-[Замеры UMD](../../../tests/browser/fixtures/ant-design-table-custom-body-reference.json)
-· [Замеры с видимой полосой](../../../tests/browser/fixtures/ant-design-table-custom-body-gutter-reference.json)
-· [Chromium](../../../tests/browser/table/table-custom-body.spec.ts)
-· [SSR](../../../tests/package/table/table-custom-body.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
+### Replacing individual elements
 
-### Замена отдельных элементов
+`components.table` sets the main table. With `scroll.y` or
+`sticky`, replacing the table places the header and fixed
+summaries in separate bands. Set their tables through
+`components.header.table`. Horizontal scrolling and column widths
+are synchronized across bands and body. Keyboard navigation
+brings the full header button into view if it fits between
+fixed columns. Header, body, and summary scroll together.
 
-`components.table` задаёт основную таблицу. При `scroll.y` или `sticky`
-замена таблицы выносит шапку и закреплённые итоги в отдельные полосы.
-Их таблицы настраивает `components.header.table`. Горизонтальная прокрутка
-и ширины колонок синхронизируются между полосами и телом.
-При клавиатурном переходе видна вся кнопка в шапке, если она помещается
-между закреплёнными колонками. Шапка, тело и итог прокручиваются вместе.
+`components.header` and object `components.body` accept
+`wrapper`, `row`, and `cell`. Set an element with an HTML tag
+name or Snippet. In the virtual window, the built-in list
+renders the main body. Its replaceable elements retain
+`tbody`, `tr`, `td`, and `th` semantics. An empty virtual table
+uses the default body.
 
-`components.header` и объект `components.body` принимают `wrapper`, `row`
-и `cell`. Каждый элемент можно задать именем HTML-тега или snippet. В
-виртуальном окне основное тело отрисовывает встроенный список. Его
-заменяемые элементы сохраняют семантику `tbody`, `tr`, `td` и `th`.
-Пустая виртуальная таблица использует штатное тело.
-
-Snippet получает `tag` штатного элемента, `attributes` с уже собранными
-атрибутами и обработчиками, `children` и attachment `ref`. Передайте их
-соответствующему HTML-элементу, чтобы Table могла измерять строки и сохранять
-клавиатурное управление. Например, свойство для CSS можно добавить в snippet
-и передать его как `components={{ body: { row: editableRow } }}`.
+A Snippet receives the default `tag`, assembled `attributes`
+and handlers, `children`, and the `ref` attachment. Pass them to
+the matching HTML element so Table can measure rows and retain
+keyboard behavior. For example, add a CSS property in a
+Snippet and pass it as
+`components={{ body: { row: editableRow } }}`.
 
 ```svelte
 <script lang="ts">
@@ -1189,17 +1234,16 @@ Snippet получает `tag` штатного элемента, `attributes` �
 {/snippet}
 ```
 
-[Эталон элементов](../../../tests/browser/fixtures/ant-design-table-element-components-reference.json)
-· [Chromium](../../../tests/browser/table/table-element-components.spec.ts)
-· [SSR](../../../tests/package/table/table-element-components.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-virtual-hydration.spec.ts)
+[Element reference](../../../tests/browser/fixtures/ant-design-table-element-components-reference.json) · [Chromium](../../../tests/browser/table/table-element-components.spec.ts) ·
+[SSR](../../../tests/package/table/table-element-components.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-virtual-hydration.spec.ts)
 
-## Фильтры колонок
+## Column filters
 
-В клиентском режиме колонка задаёт варианты `filters: [{ text, value }]` и предикат
-`onFilter(value, record)`. Значения string, number и boolean сохраняют тип, включая
-числовой `0` и `false`. Несколько выбранных значений одной колонки объединяются
-через OR, фильтры разных колонок — через AND.
+In client mode, a column supplies `filters: [{ text, value }]`
+and an `onFilter(value, record)` predicate. String, number,
+and boolean values keep their types, including numeric `0`
+and `false`. Values within one column combine with OR, and
+filters from different columns combine with AND.
 
 ```svelte
 <script lang="ts">
@@ -1208,124 +1252,129 @@ Snippet получает `tag` штатного элемента, `attributes` �
   interface Person { key: number; name: string; active: boolean }
 
   const people: Person[] = [
-    { key: 0, name: 'Анна', active: true },
-    { key: 1, name: 'Борис', active: false }
+    { key: 0, name: 'Anna', active: true },
+    { key: 1, name: 'Boris', active: false }
   ];
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Имя', dataIndex: 'name' },
+    { key: 'name', title: 'Name', dataIndex: 'name' },
     {
-      key: 'active', title: 'Статус', dataIndex: 'active', filterMultiple: false,
-      filters: [{ text: 'Активен', value: true }, { text: 'Приостановлен', value: false }],
+      key: 'active', title: 'Status', dataIndex: 'active', filterMultiple: false,
+      filters: [{ text: 'Active', value: true }, { text: 'Paused', value: false }],
       onFilter: (value, person) => person.active === value
     }
   ];
   let filters = $state<TableFilters>({});
 </script>
 
-<Table dataSource={people} {columns} bind:filters caption="Участники" />
+<Table dataSource={people} {columns} bind:filters caption="Members" />
 ```
 
-`filters` таблицы — объект, где ключ соответствует `column.key`, а значение
-содержит массив выбранных значений. Для отдельной таблицы доступен `defaultFilters`,
-который читается один раз; при привязке задавайте начальное состояние у владельца.
-`filterMultiple` по умолчанию разрешает несколько выбранных значений.
-При `false` остаётся один вариант, а плоский список использует нативные radio.
+Table `filters` maps each `column.key` to an array of selected
+values. Standalone tables read `defaultFilters` once. With
+binding, initialize state in its owner. `filterMultiple`
+allows multiple selected values by default. `false` leaves
+one option and uses native radios in a flat list.
 
-Дочерние варианты задаются через `children`. При `filterMode: 'menu'` они
-открываются как подменю. `filterMode: 'tree'` показывает раскрываемое дерево.
-В режиме множественного выбора флажок ветки включает потомков, а общий флажок
-выбирает все варианты. У ветвей и листьев сохраняются исходные значения.
+`children` sets nested options. `filterMode: 'menu'` opens
+them as submenus. `filterMode: 'tree'` shows an expandable
+tree. In multiple mode, a branch checkbox includes
+descendants, and the shared checkbox selects all options.
+Branches and leaves keep their original values.
 
-`filters[].text` принимает строку, число, snippet или вложенный массив
-подписей. `0` отображается как число. Булево значение и `null` дают пустую
-подпись, а `undefined` в дереве отображается как `---`. Критерий фильтра
-по-прежнему задаёт поле `value`.
+`filters[].text` accepts a string, number, Snippet, or
+nested label array. `0` renders as a number. A boolean or
+`null` leaves an empty label. `undefined` in the tree
+displays `---`. The filter criterion still comes from `value`.
 
-`filterSearch: true` сопоставляет строки и числа. Меню скрывает неподходящие
-пункты, а дерево выделяет совпадения. Предикат `filterSearch(input, option)`
-получает исходный вариант вместе со snippet или массивом в `text`. В меню
-запрос приводится к нижнему регистру и обрезается по краям, в дереве
-передаётся текст поля. Поиск сохраняет отмеченные значения. Запрос
-очищается при закрытии или сбросе, раскрытие дерева сохраняется.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-filter-content-reference.json)
-· [Chromium](../../../tests/browser/table/table-filter-content.spec.ts)
-· [SSR](../../../tests/package/table/table-filter-content.ssr.test.ts)
+`filterSearch: true` matches strings and numbers. A menu
+hides nonmatching items, and a tree highlights matches.
+`filterSearch(input, option)` receives the original option,
+including a Snippet or array in `text`. Menu search lowercases
+and trims the query. Tree search passes field text as
+entered. Search retains checks. The query clears on close
+or reset, and tree expansion persists.
+[Reference](../../../tests/browser/fixtures/ant-design-table-filter-content-reference.json) · [Chromium](../../../tests/browser/table/table-filter-content.spec.ts) · [SSR](../../../tests/package/table/table-filter-content.ssr.test.ts)
 
-`defaultFilteredValue` задаёт начальный фильтр колонки. Явный ключ в
-`defaultFilters` таблицы имеет приоритет. `filteredValue` управляет колонкой,
-включая пустое состояние через `null` или `[]`. При снятии управления через
-`undefined` возвращается локальный критерий. При наличии `filteredValue`
-таблица использует управляемые критерии колонок. Если задан `filters` или
-начальный `defaultFilters` таблицы, её карта дополняет состояние остальных колонок.
-`bind:filters` передаёт сделанный пользователем выбор, даже когда колонка
-ожидает обновления `filteredValue` от владельца.
+`defaultFilteredValue` sets the column's initial filter. An
+explicit key in Table `defaultFilters` takes precedence.
+`filteredValue` controls a column, including an empty state
+with `null` or `[]`. Removing control with `undefined` returns
+to the local criterion. With `filteredValue`, Table uses
+controlled column criteria. A supplied Table `filters` or
+initial `defaultFilters` map supplies state for the remaining
+columns. `bind:filters` reports user selection even when a
+column awaits the owner's update to `filteredValue`.
 
-Критерии скрытых и адаптивных колонок участвуют в обработке данных.
-`filtered` включает подсветку кнопки фильтра отдельно от критериев.
+Hidden and responsive columns still apply their criteria.
+`filtered` highlights the filter button independently of
+criteria.
 
-Пункты меню меняют черновик. «Применить» подтверждает его и закрывает меню.
-«Сбросить» очищает черновик или возвращает `defaultFilteredValue` при
-`filterResetToDefaultFilteredValue`. Для применения сброса нажмите «Применить». Escape,
-нажатие снаружи и уход фокуса отменяют неподтверждённые изменения. Повторное
-открытие начинает с применённого состояния. Изменение применённых значений колонки,
-вариантов, режима выбора, disabled/loading или удаление колонки закрывают
-устаревшее меню.
-Изменение элемента массива подписи закрывает панель с прежним списком.
-Реактивное содержимое того же snippet обновляется в открытой панели и
-сохраняет черновик и фокус.
+Menu options update a draft. Apply commits it and closes
+the menu. Reset clears the draft or restores
+`defaultFilteredValue` with `filterResetToDefaultFilteredValue`.
+Use Apply to commit the reset. Escape, outside click, and
+focus leaving discard uncommitted changes. Reopening starts
+with applied state. Changes in applied values, options,
+selection mode, disabled or loading state, or column
+removal close the stale menu. Updating a label array
+element closes the panel with the old list. Reactive
+content of the same Snippet updates in an open panel and
+preserves draft and focus.
 
-Пользовательское применение изменившегося фильтра задаёт `current=1` и вызывает
-один `onChange` с `action='filter'`. Неизменившийся набор значений не вызывает
-callback и не сбрасывает страницу. Если настроены фильтруемые колонки,
-`onChange` также получает `filters` с нормализованными активными критериями;
-без таких колонок формат прежних событий сохраняется. В типе `TableChange`
-поле `filters` опционально. В клиентском режиме `currentDataSource` содержит
-обработанные строки до пагинации по запрошенным критериям. Управляемая колонка
-показывает строки по `filteredValue` владельца. `pagination.total` соответствует
-отображаемой выборке до пагинации.
+Applying a changed filter sets `current=1` and calls
+`onChange` once with `action='filter'`. Identical values
+leave the callback and page unchanged. With filterable
+columns, `onChange` also receives `filters` with normalized
+active criteria. Without them, the existing event shape
+is preserved. `TableChange.filters` is optional. In client
+mode, `currentDataSource` contains processed rows before
+pagination under the requested criteria. A controlled
+column displays rows from the owner's `filteredValue`.
+`pagination.total` is the displayed result count before
+pagination.
 
-Внешние изменения filters, dataSource и columns не вызывают callbacks и не
-переписывают страницу владельца. Дубликаты значений удаляются. Встроенный фильтр
-игнорирует неизвестные варианты, удалённые колонки и колонки без списка или
-предиката в клиентском режиме. При одиночном выборе применяется первое допустимое
-значение.
-Состояние владельца сохраняется, поэтому возвращённая колонка может снова
-применить свой фильтр. Выбранные строки сохраняют ключи при скрытии фильтром;
-«выбрать всё» затрагивает только доступные строки видимой страницы.
+External changes to `filters`, `dataSource`, or `columns`
+leave callbacks and the owner's page untouched. Duplicate
+values are removed. In client mode, the built-in filter
+ignores unknown choices, removed columns, and columns
+without an option list or predicate. Single selection uses
+the first valid value. Owner state is retained, so a
+returning column can reapply its filter. Selected keys
+persist when filters hide rows. Select all affects only
+enabled rows on the visible page.
 
-Меню использует нативный popover поверх прокручиваемой таблицы. Tab перемещает
-фокус между controls, Space переключает Checkbox, стрелки меняют radio,
-а Enter на нативном поле выбора подтверждает фильтр. В подменю и дереве
-Space переключает выбранный вариант. В поле поиска Enter оставляет черновик
-открытым. Escape возвращает фокус из подменю к его заголовку и из основной
-панели к кнопке фильтра.
-Меню остаётся в границах viewport и наследует тему и RTL.
-[Подписи фильтров](#локализация-table) можно задавать для отдельной таблицы.
+The menu uses a native popover above the scrolling table.
+Tab moves among controls, Space toggles Checkbox, arrows
+change radio selection, and Enter on a native selection
+input applies the filter. In submenus and trees, Space
+toggles the option. In the search field, Enter keeps the
+draft open. Escape returns focus from a submenu to its
+title and from the main panel to its filter button. The
+menu stays within the viewport and inherits theme and RTL.
+Configure filter labels per table. [Filter labels](#table-locale)
 
-[Эталон](../../../tests/browser/fixtures/ant-design-table-filter-state-reference.json)
-· [Chromium](../../../tests/browser/table/table-filter-state.spec.ts)
-· [SSR](../../../tests/package/table/table-filter-state.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
+[Reference](../../../tests/browser/fixtures/ant-design-table-filter-state-reference.json) · [Chromium](../../../tests/browser/table/table-filter-state.spec.ts) · [SSR](../../../tests/package/table/table-filter-state.ssr.test.ts)
+· [Hydration](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
 
-[Эталон вариантов и поиска](../../../tests/browser/fixtures/ant-design-table-filter-options-reference.json)
-· [Chromium](../../../tests/browser/table/table-filter-options.spec.ts)
+[Options and search reference](../../../tests/browser/fixtures/ant-design-table-filter-options-reference.json) · [Chromium](../../../tests/browser/table/table-filter-options.spec.ts)
 · [SSR](../../../tests/package/table/table-filter-options.ssr.test.ts)
 
-### Пользовательская панель фильтра
+### Custom filter panel
 
-`filterDropdown` принимает строку, число, snippet или вложенный массив.
-`0`, `''`, `false`, `null` и `undefined` используют штатный список вариантов.
-`true` и пустой массив выводят пустую пользовательскую панель.
-Snippets внутри массива вызываются без аргументов.
+`filterDropdown` accepts a string, number, Snippet, or nested array.
+`0`, `''`, `false`, `null`, and `undefined` use the default option
+list. `true` and an empty array render an empty custom panel.
+Snippets inside arrays are called without arguments.
 
-Snippet верхнего уровня получает операции панели. `selectedKeys` содержит
-черновик. `setSelectedKeys` обновляет его и принимает string, number и boolean.
-Пользовательская панель сама определяет допустимые значения и их количество.
-Критерии пользовательской панели без `onFilter` сохраняются в состоянии
-и событии `onChange`. Для отбора строк используются предикаты остальных колонок.
-`filters` в аргументе snippet доступен как список предложенных вариантов.
-Выбор пункта `Menu` внутри snippet оставляет панель открытой. Callback
-`onSelect` может передать новые ключи в `setSelectedKeys`.
+A top-level Snippet receives the panel controls. `selectedKeys`
+holds the draft. `setSelectedKeys` updates it and accepts strings,
+numbers, and booleans. The custom panel decides which values
+and how many are allowed. Criteria from a custom panel without
+`onFilter` remain in state and `onChange`. Other columns'
+predicates still filter rows. The Snippet argument's `filters`
+contains the suggested options. Selecting a `Menu` item within
+the Snippet leaves the panel open. Its `onSelect` can pass new
+keys to `setSelectedKeys`.
 
 ```svelte
 <script lang="ts">
@@ -1336,7 +1385,7 @@ Snippet верхнего уровня получает операции пане
   const columns: TableColumn<Row>[] = [{
     key: 'team',
     dataIndex: 'team',
-    title: 'Команда',
+    title: 'Team',
     filterDropdown: teamFilter,
     onFilter: (key, row) => key === row.team
   }];
@@ -1344,170 +1393,176 @@ Snippet верхнего уровня получает операции пане
 
 {#snippet teamFilter(filter: TableFilterDropdownProps)}
   <button type="button" onclick={() => filter.setSelectedKeys(['core'])}>
-    Основная команда
+    Core team
   </button>
-  <button type="button" onclick={() => filter.confirm()}>Применить</button>
+  <button type="button" onclick={() => filter.confirm()}>Apply</button>
 {/snippet}
 
 <Table {columns} {dataSource} pagination={false} />
 ```
 
-`confirm()` запрашивает закрытие панели перед применением. Вызов
-`confirm({ closeDropdown: false })` применяет условия, сохраняя панель открытой.
-`close()` закрывает её без изменений. `clearFilters()` возвращает начальный
-черновик. При `filterResetToDefaultFilteredValue` это `defaultFilteredValue`.
-Опция `confirm: true` снимает применённый фильтр, а `closeDropdown: true`
-запрашивает закрытие после этого. Открытая панель синхронизирует черновик
-при изменениях применённых значений владельца.
+`confirm()` requests closing before applying the draft.
+`confirm({ closeDropdown: false })` applies criteria and leaves
+the panel open. `close()` closes without changes. `clearFilters()`
+restores the initial draft. With
+`filterResetToDefaultFilteredValue`, it uses
+`defaultFilteredValue`. `confirm: true` applies the reset, and
+`closeDropdown: true` then requests close. An open panel
+synchronizes its draft when the owner's applied values change.
 
-`filterDropdownProps` передаёт параметры в Dropdown. `open` управляет
-видимостью, а `onOpenChange(open)` сообщает о запросе от триггера или API
-фильтра. Выбор в Menu внутри фильтра сохраняет панель открытой до отдельного
-запроса закрытия. `placement`, `trigger`, `getPopupContainer`,
-`destroyOnHidden` и `forceRender` используют правила Dropdown.
-`popupRender` получает snippet исходного содержимого.
+`filterDropdownProps` passes options to Dropdown. `open` controls
+visibility, and `onOpenChange(open)` reports requests from the
+trigger or filter API. Selection in Menu keeps the panel open
+until a separate close request. `placement`, `trigger`,
+`getPopupContainer`, `destroyOnHidden`, and `forceRender` follow
+Dropdown rules. `popupRender` receives the original content
+Snippet.
 
-Встроенная панель и пользовательская панель фильтра наследуют
-[слой Dropdown](../theme-context.md#уровни-вложенных-панелей).
+Built-in and custom filter panels inherit the Dropdown layer.
+[Dropdown layer](../theme-context.md#layering-nested-panels)
 
-`filterIcon` принимает строку, число, snippet или вложенный массив.
-Snippet верхнего уровня получает признак активного фильтра.
-`0`, `''`, `false`, `null` и `undefined` используют штатную иконку.
-`true` и пустой массив оставляют кнопку без декоративного содержимого.
-Доступное имя кнопки берётся из заголовка колонки и локали.
+`filterIcon` accepts a string, number, Snippet, or nested array.
+A top-level Snippet gets the active-filter flag. `0`, `''`,
+`false`, `null`, and `undefined` use the default icon. `true`
+and an empty array leave the button without decorative content.
+Its accessible name comes from the column title and locale.
 
-Встроенная панель по умолчанию отменяет черновик при закрытии. При
-`filterOnClose: true` действия пользователя, закрывающие панель, применяют
-черновик. Обновление `open` владельцем переключает видимость. Snippet
-пользовательской панели применяет условия через `confirm` или
+The built-in panel discards the draft on close by default.
+With `filterOnClose: true`, user actions that close the panel
+apply the draft. Owner updates to `open` change visibility.
+A custom panel applies its criteria through `confirm` or
 `clearFilters({ confirm: true })`.
 
-[Эталон панели](../../../tests/browser/fixtures/ant-design-table-filter-dropdown-reference.json)
-· [Chromium](../../../tests/browser/table/table-filter-dropdown.spec.ts)
-· [SSR](../../../tests/package/table/table-filter-dropdown.ssr.test.ts)
+[Panel reference](../../../tests/browser/fixtures/ant-design-table-filter-dropdown-reference.json) · [Chromium](../../../tests/browser/table/table-filter-dropdown.spec.ts) · [SSR](../../../tests/package/table/table-filter-dropdown.ssr.test.ts)
 
-[Эталон статической панели и иконки](../../../tests/browser/fixtures/ant-design-table-filter-static-content-reference.json)
-· [Chromium](../../../tests/browser/table/table-filter-static-content.spec.ts)
-· [SSR](../../../tests/package/table/table-filter-static-content.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
+[Static panel and icon reference](../../../tests/browser/fixtures/ant-design-table-filter-static-content-reference.json) · [Chromium](../../../tests/browser/table/table-filter-static-content.spec.ts)
+· [SSR](../../../tests/package/table/table-filter-static-content.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
 
-### Контейнеры выпадающих панелей
+### Popup containers
 
-`Table.getPopupContainer(trigger)` получает DOM-элемент, который открывает
-панель фильтра, её подменю или меню команд выбора строк. Функция возвращает
-контейнер, в который подключается соответствующая панель. При отсутствии
-функции в таблице используется `ConfigProvider.getPopupContainer`. Встроенный
-фильтр без настройки контейнера остаётся в шапке таблицы.
+`Table.getPopupContainer(trigger)` receives the DOM element
+that opens a filter panel, its submenu, or the row selection
+command menu. It returns the container for that surface.
+Without a Table function, `ConfigProvider.getPopupContainer`
+is used. With no configured container, the built-in filter
+stays in the header.
 
-`column.filterDropdownProps.getPopupContainer` имеет приоритет для внешней
-панели данной колонки. Вложенное меню использует настройку таблицы или
-провайдера. Контейнер подсказки сортировки задаётся через
-`showSorterTooltip.getPopupContainer` и `ConfigProvider`.
+`column.filterDropdownProps.getPopupContainer` takes precedence
+for that column's outer panel. Its nested menu uses Table or
+provider settings. Sort tooltip containers come from
+`showSorterTooltip.getPopupContainer` and ConfigProvider.
 
-Контейнер рассчитывается в браузере. Смена контейнера открытой панели
-сохраняет черновик фильтра.
+Container resolution takes place in the browser. Moving an
+open panel preserves the filter draft.
+[Container reference](../../../tests/browser/fixtures/ant-design-table-popup-container-reference.json) · [Chromium](../../../tests/browser/table/table-popup-container.spec.ts) ·
+[SSR](../../../tests/package/table/table-popup-container.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
 
-[Эталон контейнеров](../../../tests/browser/fixtures/ant-design-table-popup-container-reference.json)
-· [Chromium](../../../tests/browser/table/table-popup-container.spec.ts)
-· [SSR](../../../tests/package/table/table-popup-container.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-filter-state-hydration.spec.ts)
+## Sort directions and priorities
 
-## Направления и приоритеты сортировки
+`column.sorter` accepts `(left, right, order) => number` or
+`{ compare, multiple }`. Table passes the active direction
+to the comparator and applies the direction's sign to its
+result. Comparators run in descending `multiple` order,
+including zero and negative priorities. Equal priorities
+use criterion order. Records equal under every criterion
+retain source order. Tree sorting compares siblings at
+each level.
 
-`column.sorter` принимает компаратор `(left, right, order) => number` или объект
-`{ compare, multiple }`. Table передаёт активное направление компаратору и
-применяет знак направления к его результату. Компараторы исполняются от большего
-`multiple` к меньшему, включая нулевой и отрицательные приоритеты. При равных
-приоритетах используется порядок критериев. При равенстве по всем критериям
-сохраняется исходный порядок записей. В дереве сравниваются соседи каждого уровня.
+Table `sortDirections` sets the cycle. A column's own list
+takes precedence. The click after the final direction clears
+sorting. `['ascend', 'descend', 'ascend']` cycles between both
+directions without clearing. The list also controls which
+arrows appear. `sortIcon` replaces them with a decorative
+Snippet and receives `{ sortOrder }`, with `null` for no
+direction. Name and focus stay with the header button.
 
-`sortDirections` таблицы задаёт цикл. Свой список колонки имеет приоритет.
-После последнего направления следующий клик очищает сортировку. Цикл
-`['ascend', 'descend', 'ascend']` переключает два направления без очистки.
-Стрелки появляются для направлений этого списка. `sortIcon` заменяет их
-декоративным snippet и получает `{ sortOrder }`, где отсутствие направления
-представлено `null`. Название и фокус остаются у кнопки заголовка.
+`column.sortOrder` controls the displayed direction, including
+explicit `null`. Hidden columns also supply this setting.
+On click, `onChange` gets requested criteria and the resulting
+`currentDataSource`. Displayed rows adopt that order when
+the owner updates the column. Without controlled columns,
+a supplied root `sorter` sets one criterion. For initial
+state, `defaultSorter` takes precedence over
+`column.defaultSortOrder`. Both are read at table creation.
+A removed criterion is skipped while its column is absent.
 
-`column.sortOrder` управляет отображаемым направлением, включая явный `null`.
-Table читает эти настройки и у скрытых колонок. При клике `onChange` получает
-запрошенные критерии и рассчитанный по ним `currentDataSource`. Отображаемые
-строки переходят в этот порядок после обновления колонки владельцем.
-Без управляемых колонок заданный корневой `sorter` задаёт один критерий.
-Для начального состояния `defaultSorter` имеет приоритет над
-`column.defaultSortOrder`. Оба значения читаются при создании таблицы.
-Удалённый критерий пропускается, пока колонка отсутствует.
+For sorting multiple columns, set a numeric `multiple` in
+their configuration. Selecting a single-sort column replaces
+the list. Selecting a multi-sort column moves its criterion
+to the end. `onChange` still passes the first active criterion
+or `null` as scalar `sorter`. With configured `multiple` or
+multiple active criteria, it also passes `sorters` with the
+full active list in state order. A sort object without
+`compare` reports the criterion to the owner and keeps data
+order. [Reference](../../../tests/browser/fixtures/ant-design-table-sorter-reference.json) · [Chromium](../../../tests/browser/table/table-sorter.spec.ts) ·
+[SSR](../../../tests/package/table/table-sorter.ssr.test.ts) · [Hydration](../../../tests/browser/table/table-sorter-hydration.spec.ts)
 
-Для нескольких колонок задавайте числовой `multiple` в их конфигурации.
-Выбор одиночной колонки заменяет список. При выборе совмещаемой колонки
-её критерий переносится в конец списка. В `onChange` скалярный `sorter`
-по-прежнему передаёт первый активный критерий или `null`. При настроенном
-`multiple` или нескольких активных критериях событие дополнительно
-передаёт `sorters` с полным списком активных критериев в порядке состояния.
-Объект сортировки без `compare` передаёт критерий владельцу и сохраняет
-порядок записей.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-sorter-reference.json)
-· [Chromium](../../../tests/browser/table/table-sorter.spec.ts)
-· [SSR](../../../tests/package/table/table-sorter.ssr.test.ts)
-· [Гидратация](../../../tests/browser/table/table-sorter-hydration.spec.ts)
+### Sort tooltip
 
-### Подсказка сортировки
+`showSorterTooltip` defaults on and shows the next direction
+in the sort cycle. Column settings replace Table settings in
+full. `false` turns the tooltip off and keeps the sort button
+available.
 
-`showSorterTooltip` включён по умолчанию и показывает следующее направление
-из цикла сортировки. Настройка колонки целиком перекрывает настройку таблицы.
-Значение `false` отключает подсказку и оставляет кнопку сортировки доступной.
+By default, hovering the header triggers the tooltip. In a
+filterable column, sorting has its own hover area.
+`{ target: 'sorter-icon' }` limits it to the icon. One button
+handles direction selection with Enter and Space. The icon
+stays decorative. Header `trigger: 'focus'` attaches Tooltip
+to button focus.
 
-По умолчанию срабатывает наведение на заголовок. В колонке с фильтром
-у сортировки своя область наведения. `{ target: 'sorter-icon' }` ограничивает
-её иконкой. За выбор направления отвечает одна кнопка с Enter и Space,
-а иконка остаётся декоративной. `trigger: 'focus'` у заголовка подключает
-Tooltip к фокусу этой кнопки.
+A `showSorterTooltip` object uses Tooltip options including
+`title`, `placement`, `trigger`, `open`, `onOpenChange`,
+`getPopupContainer`, `prefixCls`, `classNames`, and `styles`.
+Explicit `title` replaces the localized direction, including
+an empty string or numeric 0. Changing the target area or
+disabling Tooltip cancels pending opening. The button keeps
+its DOM, focus, and direction. Its accessible description
+reports the next direction when closed. An open header
+tooltip describes it with the tooltip content.
+[Tooltip](./tooltip.md) · [Reference](../../../tests/browser/fixtures/ant-design-table-sorter-tooltip-reference.json) ·
+[Chromium](../../../tests/browser/table/table-sorter-tooltip.spec.ts) · [SSR](../../../tests/package/table/table-sorter-tooltip.ssr.test.ts)
 
-Объект `showSorterTooltip` использует параметры [Tooltip](./tooltip.md),
-включая `title`, `placement`, `trigger`, `open`, `onOpenChange`,
-`getPopupContainer`, `prefixCls`, `classNames` и `styles`. Явный `title`
-заменяет локализованное направление, включая пустую строку и число `0`.
-При смене области или отключении Tooltip отменяет ожидающее открытие.
-Кнопка сохраняет DOM, фокус и текущее направление.
-Доступное описание кнопки сообщает следующее направление при закрытой подсказке.
-Открытая подсказка заголовка описывает кнопку своим содержимым.
-[Эталон](../../../tests/browser/fixtures/ant-design-table-sorter-tooltip-reference.json)
-· [Chromium](../../../tests/browser/table/table-sorter-tooltip.spec.ts)
-· [SSR](../../../tests/package/table/table-sorter-tooltip.ssr.test.ts)
+## Server mode
 
-## Серверный режим
+`mode="server"` displays the supplied `dataSource` page in
+full and in source order. Table leaves filtering, sorting,
+and pagination to the owner, even with local `sorter` or
+`onFilter` or when the row count differs from `pageSize`.
+The API response's `total` defines the Pagination range.
+If omitted, Table uses positive `pagination.total` or the
+length of `dataSource`. Normalization follows Pagination.
+`pagination={false}` hides navigation and keeps all supplied
+rows.
 
-`mode="server"` показывает переданную страницу `dataSource` целиком и в исходном
-порядке. Table не фильтрует, не сортирует и не разрезает её повторно, даже если
-переданы локальные `sorter`/`onFilter` или число строк отличается от pageSize.
-Передаваемый из ответа API `total` определяет диапазон Pagination. Если
-отдельный `total` отсутствует, используется положительный `pagination.total`
-или длина dataSource. Нормализация совпадает с Pagination.
-`pagination={false}` скрывает навигацию и сохраняет все переданные строки.
+For remote sorting, set `column.sorter: true` or an object
+with `multiple` for combined criteria. For filtering,
+`column.filters` is enough without `onFilter`.
+`sorter: true` is used in server mode. A comparator runs in
+client mode. Filter normalization, single selection, and
+the sort cycle are preserved. Sorting keeps the page,
+and applying a changed filter sets page 1.
 
-Для удалённой сортировки задавайте `column.sorter: true` или объект с
-`multiple` для совмещения критериев. Для фильтра достаточно `column.filters`
-без `onFilter`. Значение `sorter: true` используется в серверном режиме,
-а компаратор исполняется в клиентском. Правила нормализации фильтров, одиночного
-выбора и цикл сортировки сохраняются. Сортировка сохраняет страницу, применение
-изменившегося фильтра задаёт страницу 1.
+`onChange` receives current `pagination`, `sorter`, `filters`,
+and the action. In server mode, `currentDataSource` contains
+only the supplied page, and `pagination.total` is external.
+Rows stay as supplied until the owner replaces `dataSource`.
+External prop updates leave the callback and owner state
+untouched, including `current` when `total` falls. If the
+current page is outside the new range, the owner requests
+a valid page. Table performs no requests.
 
-`onChange` получает текущие `pagination`, `sorter`, `filters` и причину действия.
-В серверном режиме `currentDataSource` содержит только переданную страницу,
-а `pagination.total` — внешний total. Строки остаются прежними до замены
-dataSource владельцем. Внешние обновления props не вызывают callback и не
-переписывают состояние владельца, включая current при уменьшении total.
-Владелец должен запросить допустимую страницу, если текущая больше нового
-диапазона; Table сам запросов не выполняет.
+`selectedRowKeys` persists across page replacement.
+`onSelectionChange` passes all selected keys, and records
+contains only selected records present in current
+`dataSource`. There is no record cache from other pages.
+Select all affects enabled rows of the loaded page.
 
-`selectedRowKeys` сохраняет ключи между заменами страниц. `onSelectionChange`
-передаёт все выбранные ключи, но records содержит только выбранные записи,
-присутствующие в текущем dataSource. Кэш записей других страниц отсутствует.
-Выбор всех действует на доступные строки загруженной страницы.
-
-В примере сервер принимает параметры `page` и `pageSize` и возвращает JSON
-с массивом `rows` и общим количеством записей `total`. Подставьте адрес своего
-API. Когда пользователь меняет страницу, привязки обновляют параметры запроса.
-При смене страницы или удалении компонента предыдущий запрос отменяется.
+In the example, the server takes `page` and `pageSize` and
+returns JSON with a `rows` array and overall `total`.
+Use your API URL. A user-driven page change updates the
+query parameters through bindings. Changing the page or
+unmounting cancels the previous request.
 
 ```svelte
 <script lang="ts">
@@ -1519,7 +1574,7 @@ API. Когда пользователь меняет страницу, прив
   }
 
   const columns: TableColumn<Member>[] = [
-    { key: 'name', title: 'Участник', dataIndex: 'name' }
+    { key: 'name', title: 'Member', dataIndex: 'name' }
   ];
   let current = $state(1);
   let pageSize = $state(10);
@@ -1541,7 +1596,7 @@ API. Когда пользователь меняет страницу, прив
         const response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok) {
-          throw new Error(`Ошибка загрузки (HTTP ${response.status})`);
+          throw new Error(`Load failed (HTTP ${response.status})`);
         }
 
         const page: { rows: Member[]; total: number } = await response.json();
@@ -1553,7 +1608,7 @@ API. Когда пользователь меняет страницу, прив
       }
       catch (cause) {
         if (!controller.signal.aborted) {
-          error = cause instanceof Error ? cause.message : 'Не удалось загрузить страницу';
+          error = cause instanceof Error ? cause.message : 'Could not load the page';
         }
       }
       finally {
@@ -1582,6 +1637,6 @@ API. Когда пользователь меняет страницу, прив
   {loading}
   bind:current
   bind:pageSize
-  caption="Участники"
+  caption="Members"
 />
 ```

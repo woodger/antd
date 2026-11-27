@@ -1,430 +1,502 @@
 # TreeSelect
 
-TreeSelect позволяет выбирать значения в иерархическом списке. Состояние
-флажков рассчитывается по полному дереву, включая скрытые фильтром узлы.
+TreeSelect selects values from a hierarchy. Checkbox state is
+calculated across the full tree, including nodes hidden by filters.
 
 ```svelte
 <script lang="ts">
   import { TreeSelect } from '@woodger/antd';
-  const data = [{value:'docs',title:'Документы',children:[{value:'intro',title:'Введение'}]}];
+  const data = [{value:'docs',title:'Documents',children:[{value:'intro',title:'Introduction'}]}];
   let value = $state<string[]>([]);
 </script>
 <TreeSelect treeData={data} {value} treeCheckable treeDefaultExpandAll
   showSearch={{treeNodeFilterProp:'title'}} onChange={next => { value = next; }} />
 ```
 
-Узел содержит уникальный value (string/number), title/label, children,
-disabled/disableCheckbox/checkable/selectable/isLeaf. Внутренняя идентичность —
-value, как в upstream fieldNames; key можно не задавать. Значения должны быть
-уникальны также после String(value). Title/label принимают string/number, boolean,
-null, Snippet и вложенные массивы этих значений. Boolean/null не создают текст;
-отсутствующий заголовок панели использует fallback Tree. TreeTitleRender принимает
-snippet с исходным типом записи и задаёт заголовки панели и выбранных значений.
+A node has a unique string or numeric `value`, `title` or `label`,
+`children`, and `disabled`, `disableCheckbox`, `checkable`,
+`selectable`, and `isLeaf` flags. Internal identity uses `value` as in
+upstream `fieldNames`. `key` is optional. Values must be unique after
+`String(value)`. `title` and `label` accept strings, numbers, booleans,
+`null`, Snippets, and nested arrays of these. Booleans and `null`
+produce no text. An omitted panel title uses the Tree fallback.
+`treeTitleRender` accepts a Snippet typed to the source record and
+provides titles for the panel and selected values.
 
-`fieldNames={{value:'code',label:'caption',children:'nodes'}}` подключает другую
-схему без предварительного преобразования. Пустые имена возвращают стандартные
-поля; без label используется первый определённый title/label, включая null.
-Generic `TreeSelectProps<ValueType, Data>` выводит Data из treeData без index
-signature. OnSelect/onDeselect и filterTreeNode получают shallow copy исходной
-записи, treeTitleRender — исходную запись; вложенный payload сохраняет ссылки.
-LoadData получает те же пользовательские поля с вычисленными key/state, как Tree.
-Пользовательское поле props сохраняется; deprecated React wrapper не создаётся.
+`fieldNames={{value:'code',label:'caption',children:'nodes'}}` uses a
+different schema without preprocessing. Empty names use standard
+fields. Without a label mapping, the first defined title or label
+wins, including `null`. Generic `TreeSelectProps<ValueType, Data>`
+infers `Data` from `treeData` without an index signature. `onSelect`,
+`onDeselect`, and `filterTreeNode` receive a shallow copy of the source
+record, and `treeTitleRender` receives the original. Nested payload
+references are preserved. `loadData` gets the same custom fields
+with computed key and state as in Tree. A custom `props` field stays
+intact without the deprecated React wrapper.
 
-`TreeSelect.TreeNode` объявляет узлы через вложенный `children` snippet. Компонент
-также доступен как `TreeSelectTreeNode`, тип его props — `TreeSelectTreeNodeProps`.
-`TreeSelectNode` описывает запись данных. `treeData`, включая пустой массив,
-имеет приоритет над объявлениями. Simple mode применяется к `treeData`.
+`TreeSelect.TreeNode` declares nodes in a nested `children` Snippet.
+It is also exported as `TreeSelectTreeNode`, with props type
+`TreeSelectTreeNodeProps`. `TreeSelectNode` describes a data record.
+`treeData` takes precedence over declarations, including an empty
+array. Simple mode applies to `treeData`.
 
 ```svelte
 <TreeSelect defaultValue={0} treeDefaultExpandAll treeIcon>
-  <TreeSelect.TreeNode value="docs" title="Документы">
-    <TreeSelect.TreeNode value={0} title="Введение" icon="📄" />
+  <TreeSelect.TreeNode value="docs" title="Documents">
+    <TreeSelect.TreeNode value={0} title="Introduction" icon="📄" />
   </TreeSelect.TreeNode>
 </TreeSelect>
 ```
 
-Объявления собираются до рендера поля. Скрытый контейнер и элементы `template`
-позволяют получить выбранный label и раскрытые ветки при SSR, а также отслеживать
-порядок keyed-списков, добавление и удаление узлов. Изменение объявлений сохраняет
-DOM поля, фокус и связанные refs. Для пользовательского payload в декларативной
-форме используются `TreeSelectProps<ValueType, Data>` и `TreeSelectTreeNodeProps<Data>`.
+Declarations are collected before the field renders. A hidden
+container and `template` elements provide the selected label and
+expanded branches during SSR and track keyed list order, additions,
+and removals. Declaration updates preserve field DOM, focus, and
+refs. For custom payload in declarative nodes, use
+`TreeSelectProps<ValueType, Data>` and `TreeSelectTreeNodeProps<Data>`.
 
-`icon` и `switcherIcon` узла принимают содержимое или
-`Snippet<[TreeEventNode<Data>]>`. Состояние и пользовательские поля передаются
-как в Tree. Switcher дополнительно получает вычисленный `isLeaf`. Собственный
-switcher перекрывает общий renderer и загрузочный значок. `treeIcon` включает
-ячейки значков, содержимое берётся из `icon` узла. Как в wrapper React 6.6.8,
-функция в `treeIcon` используется как флаг.
+A node's `icon` and `switcherIcon` accept content or a
+`Snippet<[TreeEventNode<Data>]>`. They receive state and custom
+fields as in Tree. The switcher also receives calculated `isLeaf`.
+A local switcher overrides the shared renderer and loading icon.
+`treeIcon` enables icon cells, with content from the node's `icon`.
+As in the React 6.6.8 wrapper, a function in `treeIcon` acts as a flag.
 
-`className` узла задаёт класс строки, локальный `class` имеет приоритет.
-`style` принимает CSS-строку. Атрибуты `data-*` и `aria-*` применяются к строке,
-включая её доступное имя. `styles.popup.item` перекрывает собственные стили узла.
-Реактивный title snippet продолжает читать свой контекст и после передачи через
-callback labels. В эталоне этому соответствует React-компонент с Context.
-[Сверка узлов](../../../tests/browser/tree-select/tree-select-nodes.spec.ts) охватывает объявления,
-данные, aliases, renderers, порядок, загрузку и обновления.
+A node's `className` sets its row class. Local `class` wins.
+`style` is a CSS string. `data-*` and `aria-*` attributes apply to
+the row, including its accessible name. `styles.popup.item` overrides
+node styles. A reactive title Snippet keeps reading its context when
+passed through callback labels. The reference uses a React component
+with Context for this case. The comparison covers declarations,
+data, aliases, renderers, order, loading, and updates.
+[Node comparison](../../../tests/browser/tree-select/tree-select-nodes.spec.ts)
 
-`treeDataSimpleMode` строит дерево из плоского списка id/pId. Объект настраивает
-имена id/pId и rootPId; по умолчанию rootPId=null оставляет все узлы без найденного
-родителя корнями. Другое значение, включая 0, сравнивается строго. Порядок
-определяется первым появлением id, повторный id заменяет запись. Как Source,
-simple mode всегда создаёт canonical children независимо от fieldNames.children;
-для такой иерархии имя children следует оставить стандартным. Исходные записи и
-массивы children не меняются, readonly данные допустимы.
+`treeDataSimpleMode` builds a tree from flat `id` and `pId` records.
+An object configures field names and `rootPId`. The default
+`rootPId=null` makes all nodes whose parent cannot be found
+roots. Other values, including 0, are compared strictly. The
+first occurrence of an ID sets its position, and a repeated ID
+replaces the record. As upstream, simple mode always creates
+canonical `children` regardless of `fieldNames.children`. Keep the
+default child field name for this hierarchy. Source records and
+children arrays are left intact. Readonly inputs are supported.
 
-Value/defaultValue принимают scalar, массив или {value,label?,halfChecked?}.
-Null очищает; undefined включает внутреннее состояние. Value/open/showSearch.searchValue —
-controlled props с callbacks, без автоматического переписывания владельца.
-При отказе владельца принять onSearch поле восстанавливается из searchValue.
-`showAction={['focus']}` дополнительно открывает панель при фокусе, перед `onFocus`.
-Пустой массив и `['click']` сохраняют обычное открытие указателем. Смена showAction
-при уже установленном фокусе сама панель не открывает. `autoFocus` и `tabIndex`
-задают autofocus/tabindex поля; явные native `autofocus` и `tabindex` приоритетнее.
-Как в Source TreeSelect, `maxLength` не ограничивает поисковый ввод; native
-`maxlength` задаёт ограничение браузера.
+`value` and `defaultValue` accept a scalar, array, or
+`{value,label?,halfChecked?}`. `null` clears, and `undefined` enables
+local state. `value`, `open`, and `showSearch.searchValue` are
+controlled through callbacks. The owner retains control of them.
+When the owner rejects `onSearch`, the field restores `searchValue`.
+`showAction={['focus']}` also opens on focus before `onFocus`.
+An empty array and `['click']` retain ordinary pointer opening.
+Changing `showAction` while focused does not open by itself.
+`autoFocus` and `tabIndex` set field autofocus and tabindex.
+Explicit native `autofocus` and `tabindex` take precedence. As in
+upstream TreeSelect, `maxLength` leaves search input unrestricted.
+Native `maxlength` sets the browser limit.
 
-Повторное нажатие на readonly single control закрывает панель. Single с поиском
-сохраняет её открытой; multiple закрывается при нажатии вне input, а нажатие
-на сам input сохраняет панель. Prefix, suffix и выбранная подпись следуют тем же
-правилам. Закрытие выполняется после click callbacks; очистка single закрывает
-панель, multiple оставляет открытой. Касание использует события мыши браузера:
-отменённое касание и свайп не переключают панель. При `showAction={['focus']}`
-первое нажатие может сообщить об открытии дважды, как React: при фокусе и затем
-при mousedown. [Сверка pointer API](../../../tests/browser/tree-select/tree-select-pointer.spec.ts).
+Clicking a readonly single control again closes the panel. Single
+selection with search keeps it open. Multiple mode closes on a
+click outside the input and stays open on the input itself. Prefix,
+suffix, and selected label follow the same rules. Closing happens
+after click callbacks. Clearing single closes the panel, while
+multiple keeps it open. Touch uses the browser's mouse events.
+Canceled touch and swipes do not toggle. With
+`showAction={['focus']}`, the first press can report opening twice
+as in React, first on focus and then on mousedown.
+[Pointer API comparison](../../../tests/browser/tree-select/tree-select-pointer.spec.ts)
 
-`onInputKeyDown` получает событие input. `onKeyDown`, `onKeyUp`, `onFocus`,
-`onBlur`, `onMouseDown`, `onMouseEnter`, `onMouseLeave` и `onClick` относятся
-к DOM-корню control. Нативные lowercase handlers сохраняют input currentTarget.
-Сначала вызывается native onkeydown, затем onInputKeyDown, внутренняя обработка
-и root onKeyDown. Как в Source, preventDefault в onInputKeyDown не отменяет выбор;
-для отмены внутренней обработки используется native onkeydown. StopPropagation
-в input hook останавливает root handler, но сохраняет открытие разрешённой клавишей.
-Удерживаемый Enter выбирает один раз до keyup или blur. Закрытие клавиатурой
-и нажатием снаружи откладывается, чтобы root key/blur callback получил событие первым.
-Enter/Space кнопки очистки запускают её click и не передаются в root onKeyDown.
-Focus hooks получают реальные focusin/focusout; popup portal имеет собственную
-DOM-границу событий. SSR не запускает autofocus, callbacks или timers; гидратация
-сохраняет фокус другого control. [Сверка trigger API](../../../tests/browser/tree-select/tree-select-trigger.spec.ts).
+`onInputKeyDown` receives the input event. `onKeyDown`, `onKeyUp`,
+`onFocus`, `onBlur`, `onMouseDown`, `onMouseEnter`, `onMouseLeave`,
+and `onClick` apply to the control's DOM root. Native lowercase
+handlers keep the input as `currentTarget`. Native `onkeydown`
+runs first, then `onInputKeyDown`, internal handling, and root
+`onKeyDown`. As upstream, `preventDefault` in `onInputKeyDown`
+does not cancel selection. Use native `onkeydown` to cancel internal
+handling. `stopPropagation` in the input hook stops the root handler
+while allowing a supported key to open. Holding Enter selects once
+until keyup or blur. Keyboard and outside-click dismissal are
+deferred so the root key or blur callback receives the event first.
+Enter and Space on clear trigger its click and bypass root
+`onKeyDown`. Focus hooks receive actual focusin and focusout. The
+popup portal has its own DOM event boundary. SSR skips autofocus,
+callbacks, and timers. Hydration preserves focus on another
+control. [Trigger API comparison](../../../tests/browser/tree-select/tree-select-trigger.spec.ts)
 
-Space открывает readonly-поле с одним onOpenChange(true). В raw наблюдении
-React 6.6.8 один keydown вызывает два одинаковых callbacks до перерендера;
-Svelte сохраняет прежнее идемпотентное открытие. Native Escape отменяет default
-и всплытие; ArrowUp/Left/Right сохраняют открытие закрытого поля.
-Enter игнорирует активный узел, удалённый из treeData; выбранные отсутствующие
-значения по-прежнему можно удалить через теги.
-Multiple включает массивы. TreeCheckable включает checkbox и multiple;
-treeCheckStrictly также включает checkbox/multiple и принудительно labelInValue.
-`treeCheckable` принимает `TreeSelectCheckableContent`: прежние boolean, текст,
-числа, bigint, Snippet, вложенные массивы/iterable и Promise. Используется только
-JavaScript truthiness: пустые массивы и iterable, любой Snippet и Promise включают
-стандартные checkbox; false/null/undefined, пустая строка, ±0, NaN и 0n не включают.
-Содержимое не выводится, snippet не вызывается, iterable не обходится и Promise
-не ожидается. `classNames`/`styles` получают исходное значение и его reference,
-включая отсутствие prop и явно переданное undefined. Типы отображаемых подписей
-не расширяются. Явное `multiple=false` не выключает truthy `treeCheckable`;
-исходное development-предупреждение Ant Design не воспроизводится.
-При смене режима Native сохраняет прежние root/editor и публичные методы,
-а также фокус; React Source при такой смене может пересоздать editor.
-При `treeCheckStrictly` с falsy `treeCheckable` Native сохраняет прежний
-внутренний элемент checkbox; в Source его нет.
-Параметр типа TreeSelectProps<ValueType, Data> сохраняет конкретный тип callback value;
-режим и переданный тип должны соответствовать друг другу, как в upstream.
+Space opens a readonly field with one `onOpenChange(true)`. In the
+raw React 6.6.8 observation, one keydown fires two identical
+callbacks before rerender. Svelte retains idempotent opening.
+Native Escape cancels default behavior and bubbling. ArrowUp,
+Left, and Right retain opening behavior for a closed field.
+Enter ignores an active node removed from `treeData`. Missing
+selected values can still be removed through tags.
 
-OnChange(value,labels,extra) получает scalar либо массив; при labelInValue/strict
-это объекты с value/label/halfChecked/disabled, а labels=null. При полной очистке
-single возвращается undefined, multiple — []; labels=[] в raw mode. Extra включает
-triggerValue; deprecated preValue/checked/selected удалены.
-OnSelect/onDeselect(value,node) вызываются для конкретного узла; clear вызывает
-onClear/onChange без onDeselect для каждого тега. Deprecated React getters
-triggerNode/allCheckedNodes и wrappers node.props исключены из переноса.
+`multiple` enables arrays. `treeCheckable` enables checkboxes and
+multiple selection. `treeCheckStrictly` also enables both and forces
+`labelInValue`. `treeCheckable` accepts `TreeSelectCheckableContent`:
+booleans, text, numbers, bigint, Snippets, nested arrays and
+iterables, and Promises. It uses JavaScript truthiness. Empty arrays
+and iterables and any Snippet or Promise enable standard checkboxes.
+`false`, `null`, `undefined`, the empty string, ±0, `NaN`, and `0n`
+do not. The content is never rendered, called, iterated, or awaited.
+`classNames` and `styles` receive the original value and reference,
+preserving omission and explicit `undefined`. Display label types
+are unchanged. Explicit `multiple=false` still allows truthy
+`treeCheckable`. Ant Design's development warning is outside the
+port. Svelte keeps root, editor, public methods, and focus when
+switching modes. React may recreate the editor. With
+`treeCheckStrictly` and falsy `treeCheckable`, Svelte retains the
+existing internal checkbox and upstream omits it.
+`TreeSelectProps<ValueType, Data>` preserves the concrete callback
+value type. As upstream, the mode and supplied type must agree.
 
-В checkbox-режиме исходная conduction уважает disabled/disableCheckbox/checkable
-границы. ShowCheckedStrategy по умолчанию SHOW_CHILD; отдельные экспорты
-TREE_SELECT_SHOW_CHILD/SHOW_PARENT/SHOW_ALL соответствуют константам React TreeSelect.
-Они также доступны как `TreeSelect.SHOW_CHILD`, `TreeSelect.SHOW_PARENT` и
-`TreeSelect.SHOW_ALL`.
-Стратегия влияет и на теги, и на onChange при conduction. Внутренние полные отметки
-сохраняются отдельно: снятие потомка или удаление тега корректирует родителей.
-Без treeCheckable стратегия равна SHOW_ALL, включая independent strict mode.
-HalfChecked объекты в strict value не показываются отдельными тегами, но
-сохраняются в callback до явной отметки этого значения.
+`onChange(value,labels,extra)` receives a scalar or array.
+With `labelInValue` or strict mode, values are objects with `value`,
+`label`, `halfChecked`, and `disabled`, and `labels=null`. Clearing
+all returns `undefined` in single mode or `[]` in multiple mode.
+Raw mode returns `labels=[]`. Extra includes `triggerValue`.
+Deprecated `preValue`, `checked`, and `selected` are omitted.
+`onSelect` and `onDeselect` receive `(value,node)` for a single node.
+Clearing calls `onClear` and `onChange` without per-tag `onDeselect`.
+Deprecated React getters `triggerNode` and `allCheckedNodes` and
+`node.props` wrappers are outside the port.
 
-Missing values не удаляются при смене treeData. Подпись отсутствующего узла
-сохраняется из labeled value либо внутреннего labeled состояния; raw controlled
-value без подписи отображается самим значением. Индивидуальный тег disabled узла
-не удаляется, но clear очищает весь набор, как в upstream.
+In checkbox mode, upstream check propagation respects `disabled`,
+`disableCheckbox`, and `checkable` boundaries.
+`showCheckedStrategy` defaults to `SHOW_CHILD`. Named exports
+`TREE_SELECT_SHOW_CHILD`, `TREE_SELECT_SHOW_PARENT`, and
+`TREE_SELECT_SHOW_ALL` correspond to the React constants. They
+are also available as `TreeSelect.SHOW_CHILD`,
+`TreeSelect.SHOW_PARENT`, and `TreeSelect.SHOW_ALL`. The strategy
+affects tags and `onChange` during propagation. Full checks
+are stored separately. Unchecking a child or removing a tag
+adjusts its parents. Without `treeCheckable`, the strategy is
+`SHOW_ALL`, including independent strict mode. `halfChecked`
+objects in strict values are omitted from tags but retained
+in the callback until that value is explicitly checked.
 
-`maxCount` ограничивает multiple selection, включая checkbox/strict mode и missing
-values. Начальный или controlled набор не обрезается. Ant wrapper отключает
-ненулевой limit при явно заданном SHOW_PARENT и при SHOW_ALL без treeCheckStrictly,
-включая plain multiple; без явной стратегии plain multiple сохраняет limit.
-Нулевой maxCount остаётся активным, как в Source, и запрещает новые значения.
-Ограничения панели вычисляются по полному дереву, отдельно от raw disabled/state
-данных. Для SHOW_CHILD исходная оценка родителя учитывает его прямых доступных
-детей; окончательный guard проверяет число display values после conduction.
-Набор сверх ненулевого limit не публикуется: onSelect/onDeselect может сообщить
-попытку без onChange, как в Source. Clear остаётся доступен для начального набора
-сверх limit. Смена limit/data сохраняет query, caret, refs/focus/active IDs и FormData.
+Missing values survive `treeData` changes. The missing node's label
+comes from the labeled value or local labeled state. A controlled
+raw value without a label displays its value. An individual
+disabled tag cannot be removed, while clear removes the whole set
+as upstream.
 
-[33 UMD-сценария](../../../tests/browser/fixtures/ant-design-tree-select-max-count-reference.json)
-проверяют правила wrapper/rc-tree-select и порядок callbacks в
-[browser](../../../tests/browser/tree-select/tree-select-max-count.spec.ts).
-[35 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-max-count-ssr-reference.json)
-проверяются в [package SSR](../../../tests/package/tree-select/tree-select-max-count.ssr.test.ts), без
-callbacks, timers и обрезания начальных значений. Два дефекта Source записаны
-отдельно: maxCount блокирует смену single value, а disabled cache родителя не
-обновляется при новых детях с тем же remaining count. Native игнорирует limit в
-single и пересчитывает ограничения при смене данных; public counterparts — single
-без limit и свежее дерево с теми же финальными props.
+`maxCount` limits multiple selection, including checkbox and
+strict modes and missing values. An initial or controlled set
+is not truncated. The Ant wrapper disables a nonzero limit
+with explicit `SHOW_PARENT`, or with `SHOW_ALL` without
+`treeCheckStrictly`, including plain multiple. In plain multiple
+mode without an explicit strategy, the limit applies. Zero remains
+active as upstream and blocks new values. Panel limits use the
+full tree separately from raw disabled and state data. For
+`SHOW_CHILD`, upstream estimates a parent using directly enabled
+children. The final check counts display values after propagation.
+A set above a nonzero limit is withheld. As upstream, `onSelect`
+or `onDeselect` can report the attempt without `onChange`. Clear
+stays available for an over-limit initial set. Limit and data
+updates preserve query, caret, refs, focus, active IDs, and FormData.
 
-`maxTagTextLength` сокращает только string/number labels multiple-тегов; полный
-label остаётся в tooltip, callbacks и данных. Arrays/snippets остаются opaque.
-`maxTagCount` ограничивает видимые теги, сохраняя все display values в FormData,
-Backspace, clear и check strategies. Число использует исходный slice; NaN сохраняет
-все теги, как Native Select. `maxTagCount="responsive"` использует общий измеритель
-Select и учитывает input/rest/custom tags. Summary не резервирует место, когда
-все теги помещаются. Скрытие focused remove передаёт focus input, сохраняя явный
-внешний focus. SSR responsive-теги скрыты до измерения; hydration сохраняет DOM,
-фокус и поля формы. Закрытый multiple очищает необработанный pre-hydration query,
-как React-эталон; независимый внешний draft сохраняется.
+UMD scenarios cover wrapper and rc-tree-select rules and
+browser callback order. SSR renders without callbacks, timers,
+or initial value truncation. Two upstream defects are recorded
+separately: `maxCount` blocks changes to single selection, and
+a parent's disabled cache stays stale for new children with the
+same remaining count. Svelte ignores the single-mode limit and
+recalculates limits on data changes. Public comparisons use a
+single field without a limit and a freshly mounted tree with
+the same final props.
+[33 UMD scenarios](../../../tests/browser/fixtures/ant-design-tree-select-max-count-reference.json) · [Browser tests](../../../tests/browser/tree-select/tree-select-max-count.spec.ts) ·
+[35 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-max-count-ssr-reference.json) · [Package SSR tests](../../../tests/package/tree-select/tree-select-max-count.ssr.test.ts)
 
-`maxTagPlaceholder` принимает literal/array или snippet с omitted records
-`{value,label,halfChecked?,disabled?}`. Labels не усечены, synthetic key не добавляется;
-null/undefined выбирают `+ N ...`. `tagRender` принимает snippet с
-`TreeSelectTagInfo`: label — bound snippet, value/index/disabled — данные тега,
-closable и onClose(event?) — закрытие. Summary имеет isMaxTag=true и не имеет
-value/index/onClose. Ant wrapper включает renderer через multiple/treeCheckable;
-strict-only без этих flags сохраняет обычные теги. Custom mousedown переключает
-popup, false откладывается MessageChannel до close/change callbacks; новый open
-и unmount отменяют pending close. Пользовательский child может остановить mousedown.
+`maxTagTextLength` truncates only string and number labels of
+multiple tags. The full label stays in the tooltip, callbacks,
+and data. Arrays and Snippets are opaque. `maxTagCount` limits
+visible tags while keeping all display values for FormData,
+Backspace, clear, and check strategies. A number uses upstream
+slice behavior. `NaN` retains all tags as in Svelte Select.
+`maxTagCount="responsive"` uses the shared Select measurement
+for input, summary, and custom tags. Summary takes no space
+when all tags fit. Hiding a focused remove button moves focus
+to the input and respects explicit external focus. Responsive
+SSR tags stay hidden until measurement. Hydration preserves
+DOM, focus, and form fields. As in the React reference, a closed
+multiple control clears an unprocessed pre-hydration query.
+An independent external draft remains intact.
 
-[49 UMD-сценариев](../../../tests/browser/fixtures/ant-design-tree-select-tags-reference.json),
-[55 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-tags-ssr-reference.json),
-[browser](../../../tests/browser/tree-select/tree-select-tags.spec.ts),
-[native lifecycle](../../../tests/browser/tree-select/tree-select-tags-native.spec.ts),
-[SSR](../../../tests/package/tree-select/tree-select-tags.ssr.test.ts) и
-[hydration](../../../tests/browser/tree-select/tree-select-tags-hydration.spec.ts) проверяют tag API.
-Source разрывает Unicode pair, скрывает весь список при NaN и резервирует oversized
-summary даже для помещающихся тегов. Native сохраняет принятые Select исправления;
-для последнего случая public counterpart меняет только неиспользуемый placeholder
-при той же ширине 320px. Прежние Native tooltip для literal arrays и treeTitleRender
-сохранены, в том числе accessible remove names после изменения выбора.
+`maxTagPlaceholder` accepts a literal, array, or Snippet with
+omitted records `{value,label,halfChecked?,disabled?}`. Labels are
+untruncated and get no synthetic key. `null` and `undefined`
+choose `+ N ...`. `tagRender` receives `TreeSelectTagInfo`.
+`label` is a bound Snippet, `value`, `index`, and `disabled` are tag
+data, and `closable` and `onClose(event?)` control closing. The
+summary has `isMaxTag=true` and omits `value`, `index`, and
+`onClose`. The Ant wrapper enables the renderer through
+`multiple` or `treeCheckable`. Strict mode alone keeps ordinary
+tags. Custom mousedown toggles the popup. A `false` request is
+deferred through MessageChannel to follow close and change
+callbacks. Opening again or unmount cancels pending close.
+Custom children can stop mousedown.
 
-Для известного узла `treeTitleRender` задаёт label в `onChange` и в записях
-`maxTagPlaceholder`, даже если `value` при labelInValue уже содержит label. Без labelInValue
-snippets приходят в массиве labels; в labelInValue и strict-режиме они находятся
-в записях значения, а второй аргумент `onChange` равен null. Для отсутствующего
-узла сохраняется переданная или ранее полученная подпись. Поля value, halfChecked,
-disabled и данные onSelect/onDeselect сохраняют свои значения.
+Tag tests cover browser, lifecycle, SSR, and hydration. Upstream
+splits a Unicode pair, hides the whole list for `NaN`, and
+reserves oversized summary space even when tags fit. Svelte
+uses the established Select corrections. For the last case,
+the public comparison changes only the unused placeholder
+at the same 320px width. Existing native tooltips for literal
+arrays and `treeTitleRender` are preserved, including accessible
+remove names after selection changes.
+[49 UMD scenarios](../../../tests/browser/fixtures/ant-design-tree-select-tags-reference.json) · [55 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-tags-ssr-reference.json)
+· [Browser tests](../../../tests/browser/tree-select/tree-select-tags.spec.ts) · [Native lifecycle](../../../tests/browser/tree-select/tree-select-tags-native.spec.ts) ·
+[SSR tests](../../../tests/package/tree-select/tree-select-tags.ssr.test.ts) · [Hydration](../../../tests/browser/tree-select/tree-select-tags-hydration.spec.ts)
 
-Label связывает renderer и исходную запись. Его можно сохранить и затем вывести
-через `{@render label()}` после проверки `typeof label === 'function'`, в том
-числе после unmount TreeSelect. Содержимое использует контекст места рендера;
-создание label не запускает его lifecycle. SSR включает `<head>` и IDs. Hydration
-сохраняет DOM, фокус и черновики вложенных полей. Summary связывает labels внутри
-своего рендера без вложенного mount или дополнительного DOM-элемента.
+For a known node, `treeTitleRender` supplies labels in
+`onChange` and `maxTagPlaceholder` even if the `labelInValue`
+value already has a label. Without `labelInValue`, Snippets
+are in the labels array. In `labelInValue` and strict mode,
+they appear in value records, and the second `onChange` argument
+is `null`. Missing nodes retain a supplied or previously resolved
+label. `value`, `halfChecked`, `disabled`, and data sent to
+`onSelect` and `onDeselect` are preserved.
 
-[28 браузерных сценариев и два наблюдения](../../../tests/browser/fixtures/ant-design-tree-select-labels-reference.json),
-[30 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-labels-ssr-reference.json),
-[рендер возвращённых labels](../../../tests/browser/tree-select/tree-select-labels.spec.ts),
-[SSR](../../../tests/package/tree-select/tree-select-labels.ssr.test.ts) и
-[hydration](../../../tests/browser/tree-select/tree-select-labels-hydration.spec.ts) проверяют этот API.
-В Source замена или снятие renderer оставляет старый renderer в summary и следующем
-onChange. Native обновляет новые labels сразу; сохранённые ранее snippets
-остаются связанными с прежним renderer и записью.
+A label binds the renderer and source record. After checking
+`typeof label === 'function'`, retain and render it with
+`{@render label()}`, including after TreeSelect unmount.
+Content uses the render site's context. Creating a label
+does not start its lifecycle. SSR includes `<head>` and IDs.
+Hydration preserves DOM, focus, and nested field drafts.
+The summary binds labels within its render without a nested
+mount or extra DOM node.
 
-`prefix` выводит содержимое перед полем. `suffixIcon` заменяет стандартный
-значок, а `suffixIcon={null}` скрывает его. Стандартный значок учитывает загрузку
-и открытую панель с явно включённым поиском. `suffix` имеет приоритет над
-`suffixIcon`. Значения `null` и `undefined` возвращают выбор к `suffixIcon`.
-`suffix` принимает содержимое или
-`Snippet<[TreeSelectSuffixInfo]>` с `searchValue`, `open`, `focused`, `showSearch`
-и `loading`. Последние два поля могут быть `undefined`, объект `showSearch`
-даёт `true`. Для переданного snippet сохраняется обёртка, даже если он пуст.
+Replacing or removing a renderer upstream leaves the old one
+in the summary and next `onChange`. Svelte refreshes new labels
+immediately, and saved Snippets stay bound to their earlier
+renderer and record. [28 browser scenarios and two observations](../../../tests/browser/fixtures/ant-design-tree-select-labels-reference.json)
+· [30 DOM-free SSR renders](../../../tests/browser/fixtures/ant-design-tree-select-labels-ssr-reference.json) · [Rendering returned labels](../../../tests/browser/tree-select/tree-select-labels.spec.ts)
+· [SSR tests](../../../tests/package/tree-select/tree-select-labels.ssr.test.ts) · [Hydration](../../../tests/browser/tree-select/tree-select-labels-hydration.spec.ts)
 
-`allowClear` принимает boolean или объект с `clearIcon` и `label`. `true` выводит
-стандартный значок, объект без значка использует `×`. По умолчанию кнопка получает
-локализованное имя. Очистка вызывает `onClear`, `onChange` и `onSearch('')`, если
-в поле был поисковый запрос. Клик закрывает single popup, клавиатурная активация
-кнопки сохраняет открытое состояние. `removeIcon` меняет содержимое кнопки
-обычного тега, `null` использует `×`. `tagRender` задаёт своё содержимое целиком.
+`prefix` renders content before the field. `suffixIcon` replaces the
+default icon, and `suffixIcon={null}` hides it. The default follows
+loading and an open panel with search explicitly enabled. `suffix`
+takes precedence over `suffixIcon`. `null` and `undefined` fall back
+to `suffixIcon`. `suffix` accepts content or
+`Snippet<[TreeSelectSuffixInfo]>` with `searchValue`, `open`, `focused`,
+`showSearch`, and `loading`. The last two may be `undefined`, and
+a `showSearch` object gives `true`. A supplied Snippet keeps its
+wrapper even when empty.
 
-`popupRender` принимает `Snippet<[Snippet]>`. Чтобы оставить дерево или empty
-state в пользовательской панели, вызовите `{@render menu()}` внутри snippet.
-Вложенные поля можно фокусировать. Клик по фону сохраняет открытую панель и запрос.
-Граница панели сбрасывает привязку и статус внешнего FormItem и контекст
-Space.Compact. Содержимое монтируется при первом открытии и сохраняет состояние
-между открытиями. Escape закрывает также панель с заменённым или пустым меню.
-При исходном `open` или `defaultOpen` Svelte рендерит скрытую панель на сервере и
-при hydration переносит тот же DOM в `getPopupContainer`.
+`allowClear` accepts a boolean or an object with `clearIcon` and
+`label`. `true` uses the default icon, while an object without an
+icon uses `×`. The button defaults to a localized name. Clearing
+calls `onClear`, `onChange`, and `onSearch('')` if there was a search
+query. Clicking closes a single popup. Keyboard activation of
+clear preserves visibility. `removeIcon` changes a regular tag's
+remove content, and `null` uses `×`. `tagRender` supplies the entire
+custom content.
 
-Порядок слотов, приоритеты, callbacks и lifecycle сверены по 29 UMD-сценариям и
-29 серверным рендерам. React 6.6.8 оставляет пустую панель открытой после Escape и
-создаёт DOM открытой панели после запуска клиента. Отдельная иконка feedback
-Form.Item остаётся частью переноса Form.
-[UMD](../../../tests/browser/fixtures/ant-design-tree-select-surface-reference.json),
-[Source SSR](../../../tests/browser/fixtures/ant-design-tree-select-surface-ssr-reference.json),
-[browser](../../../tests/browser/tree-select/tree-select-surface.spec.ts),
-[SSR](../../../tests/package/tree-select/tree-select-surface.ssr.test.ts),
-[hydration](../../../tests/browser/tree-select/tree-select-surface-hydration.spec.ts).
+`popupRender` accepts `Snippet<[Snippet]>`. Call
+`{@render menu()}` within your Snippet to keep the tree or empty
+state in the panel. Nested fields can receive focus. Clicking the
+background keeps the panel and query. The panel boundary clears
+outer FormItem binding and status and Space.Compact context.
+Content mounts on first open and retains state between openings.
+Escape also closes the panel with a replaced or empty menu. With
+initial `open` or `defaultOpen`, Svelte renders a hidden panel in SSR
+and moves that same DOM to `getPopupContainer` at hydration.
 
-`classNames` и `styles` принимают объект слотов или функцию с
-`TreeSelectSemanticInfo<ValueType, Data>`. В `info.props` передаются исходные
-props и разрешённые `size`, `disabled`, `status` и `variant`. `open` отражает
-значение владельца. Стили задаются CSS-строками. Слоты поля охватывают
-`root`, `prefix`, `input`, `suffix`, `clear`, `content`, `placeholder`, `item`,
-`itemContent` и `itemRemove`. Слоты тегов применяются к обычным тегам и счётчику
-скрытых тегов. `tagRender` задаёт собственную разметку.
+The comparisons cover slot order, precedence, callbacks, and
+lifecycle in 29 UMD scenarios and 29 server renders. React 6.6.8
+keeps an empty panel open after Escape and creates the open panel
+DOM on the client. The separate Form.Item feedback icon remains
+part of the Form port. [UMD reference](../../../tests/browser/fixtures/ant-design-tree-select-surface-reference.json) · [Upstream SSR](../../../tests/browser/fixtures/ant-design-tree-select-surface-ssr-reference.json)
+· [Browser tests](../../../tests/browser/tree-select/tree-select-surface.spec.ts) · [SSR tests](../../../tests/package/tree-select/tree-select-surface.ssr.test.ts) ·
+[Hydration](../../../tests/browser/tree-select/tree-select-surface-hydration.spec.ts)
 
-Строка `classNames.popup` задаёт класс `popup.root`. Классы `rootClassName`
-и `classNames.root` применяются к полю и панели. `popup.item`, `popup.itemTitle`
-и `popup.itemSwitcher` относятся к узлу дерева, заголовку и переключателю.
-Панель получает `styles.root`, затем `styles.popup.root`. Слой поля задаётся
-отдельно. Панель берёт `z-index` из `styles.popup.root` или
-[контекста владельца](../theme-context.md#уровни-вложенных-панелей).
-Числовой `popupMatchSelectWidth` имеет приоритет над `width` в стилях. По умолчанию
-панель берёт ширину поля. При `false` она подстраивается под содержимое с шириной
-поля в качестве минимума. Локальный prop имеет приоритет над `ConfigProvider.popupMatchSelectWidth`.
-Стили могут задавать границы ширины. Смена стилей открытой панели сохраняет DOM,
-фокус и черновики вложенных полей.
+`classNames` and `styles` accept a slot object or function with
+`TreeSelectSemanticInfo<ValueType, Data>`. `info.props` contains
+the original props and resolved `size`, `disabled`, `status`,
+and `variant`. `open` reflects the owner's value. Styles use CSS
+strings. Field slots include `root`, `prefix`, `input`, `suffix`,
+`clear`, `content`, `placeholder`, `item`, `itemContent`, and
+`itemRemove`. Tag slots apply to ordinary tags and the hidden
+tag count. `tagRender` supplies its own markup.
 
-`ConfigProvider.treeSelect` задаёт `variant`, `classNames`, `styles` и
-`switcherIcon`. Вложенный объект заменяет ближайшую запись целиком, `{}`
-сбрасывает её. Классы слотов объединяются с локальными. Локальная CSS-строка
-в `styles.popup` заменяет одноимённый слот провайдера. Оформление из провайдера
-задаётся через `classNames` и `styles`. Поля `class` и `style` записи принимаются
-для совместимости с типом Ant Design 6.6.8.
+A string `classNames.popup` sets `popup.root`. `rootClassName`
+and `classNames.root` apply to field and panel. `popup.item`,
+`popup.itemTitle`, and `popup.itemSwitcher` style the tree node,
+its title, and its switcher. The panel receives `styles.root`,
+then `styles.popup.root`. The field's layer is separate. Panel
+`z-index` comes from `styles.popup.root` or the owner's context.
+Numeric `popupMatchSelectWidth` overrides style `width`. The panel
+defaults to field width. With `false`, it sizes to content with
+field width as the minimum. The local prop takes precedence over
+`ConfigProvider.popupMatchSelectWidth`. Styles can constrain width.
+Changing an open panel's styles preserves DOM, focus, and nested
+field drafts. [Owner context](../theme-context.md#layering-nested-panels)
 
-`placeholder` принимает текст, число, массив или snippet. Текстовый placeholder
-также доступен через нативный атрибут поля. Локальный `switcherIcon` имеет
-приоритет над настройкой провайдера. `null` и `undefined` используют
-провайдер, `false` оставляет пустой переключатель, `0` выводит число.
-`treeLine.showLeafIcon` принимает boolean, содержимое или snippet с состоянием
-узла. Во время загрузки ветки показывается индикатор загрузки. Классы внутри
-snippet задаёт его владелец.
+`ConfigProvider.treeSelect` supplies `variant`, `classNames`,
+`styles`, and `switcherIcon`. A nested object replaces the
+nearest record in full and `{}` resets it. Slot classes combine
+with local classes. A local CSS string in `styles.popup` replaces
+the matching provider slot. Use provider `classNames` and
+`styles` for styling. The record accepts `class` and `style` for
+Ant Design 6.6.8 type compatibility.
 
-24 UMD-сценария и 24 серверных рендера фиксируют слоты, порядок стилей,
-размеры панели, область конфигурации и переключатели узлов.
-[UMD](../../../tests/browser/fixtures/ant-design-tree-select-semantic-reference.json),
-[Source SSR](../../../tests/browser/fixtures/ant-design-tree-select-semantic-ssr-reference.json),
-[browser](../../../tests/browser/tree-select/tree-select-semantic.spec.ts),
-[SSR](../../../tests/package/tree-select/tree-select-semantic.ssr.test.ts).
+`placeholder` accepts text, a number, array, or Snippet. A text
+placeholder is also available via the native field attribute.
+Local `switcherIcon` takes precedence over the provider.
+`null` and `undefined` use the provider. `false` leaves an empty
+switcher, and 0 renders. `treeLine.showLeafIcon` accepts a
+boolean, content, or node-state Snippet. A branch shows the
+loading indicator while loading. The owner sets classes inside
+its Snippet.
 
-ShowSearch по умолчанию false для single и true для multiple. Объект showSearch
-поддерживает searchValue/onSearch, autoClearSearchValue, filterTreeNode и
-treeNodeFilterProp. Одноимённые deprecated top-level props удалены.
-Этот default multiple сохраняет существующий Svelte-контракт и соответствует
-документации Ant Design. Raw React 6.6.8 при undefined оставляет multiple input
-readonly; независимые наблюдения и counterpart с явным true записаны отдельно.
-Default filter prop — буквальное value даже при fieldNames.value='code'; для другой
-схемы задаётся treeNodeFilterProp. Поиск без учёта регистра сохраняет предков
-совпадения и всех потомков совпавшего родителя. FilterTreeNode=false сохраняет
-всё дерево; callback задаёт predicate. Отметка фильтрованного родителя всё равно
-считается по полному дереву. AutoClearSearchValue=true очищает внутренний search
-после выбора; controlled search очищает владелец. Само автоматическое очищение
-не вызывает onSearch. Загрузка узлов во время поиска отключена.
+24 UMD scenarios and 24 server renders record slots, style order,
+panel size, configuration scope, and switchers.
+[UMD reference](../../../tests/browser/fixtures/ant-design-tree-select-semantic-reference.json) · [Upstream SSR](../../../tests/browser/fixtures/ant-design-tree-select-semantic-ssr-reference.json) ·
+[Browser tests](../../../tests/browser/tree-select/tree-select-semantic.spec.ts) · [SSR tests](../../../tests/package/tree-select/tree-select-semantic.ssr.test.ts)
 
-`tokenSeparators` принимает массив разделителей или функцию, возвращающую массив
-строк. Как в закреплённом TreeSelect, успешное разбиение очищает поиск и отложенно
-закрывает панель, сохраняя выбранные значения без onChange/onSelect/onDeselect.
-MaxCount не ограничивает обработку токенов. IME откладывает разбиение до окончания
-композиции; переносы строк при вставке сохраняются для соответствующих разделителей
-и функций. OnSearch вызывается при изменении запроса. Закрытие single также
-очищает поиск; functional splitter получает пустую строку при mount и после
-закрытия. При initial open=true выполняется тот же клиентский сброс поиска,
-что и в React. SSR не вызывает splitter или callbacks.
-Закрытое single поле сохраняет прежнее нативное представление выбранной подписи;
-удержанный владельцем query возвращается при открытии. Raw React хранит query
-в отдельном input рядом с выбранной подписью; это отличие представления сохранено
-в эталоне и проверяется отдельно.
-[Сверка token API](../../../tests/browser/tree-select/tree-select-token.spec.ts).
+`showSearch` defaults to `false` for single and `true` for multiple.
+The object supports `searchValue`, `onSearch`,
+`autoClearSearchValue`, `filterTreeNode`, and `treeNodeFilterProp`.
+Deprecated top-level props with those names are removed. The
+multiple default retains the Svelte contract and matches Ant
+Design docs. Raw React 6.6.8 with `undefined` leaves the multiple
+input readonly. Independent observations and a case with explicit
+`true` are recorded separately.
 
-LoadData(node), treeLoadedKeys/onTreeLoad и treeExpandedKeys/onTreeExpand
-используют механизмы Tree; children добавляет потребитель. TreeDefaultExpandAll
-и treeDefaultExpandedKeys задают начальное раскрытие. В TreeSelect раскрытие
-панели хранится снаружи Tree: после load rejection раскрытая ветка может повторять
-загрузку до исходного лимита Tree. Отдельного error callback/слота нет. Закрытый
-popup не начинает новых загрузок; уже начатый Promise может завершиться и вызвать
-onTreeLoad. После unmount результаты игнорируются.
+The default filter prop is literal `value`, even with
+`fieldNames.value='code'`. For a custom schema, set
+`treeNodeFilterProp`. Case-insensitive search retains ancestors of
+matches and all children of a matching parent. `filterTreeNode=false`
+keeps the whole tree. A callback supplies a predicate. Checking a
+filtered parent still uses the full tree. `autoClearSearchValue=true`
+clears local search after selection, and the owner clears controlled
+search. Automatic clearing does not call `onSearch`. Node loading is
+disabled during search.
 
-`treeExpandAction=false | 'click' | 'doubleClick'` включает раскрытие заголовком
-через существующий Tree; default=false. В click-режиме onTreeExpand вызывается
-перед onChange/onSelect. В multiple настоящий double click сначала выполняет два
-обычных выбора, затем dblclick раскрывает ветку. Ctrl/Meta/Shift подавляют раскрытие
-заголовком; выбор остаётся самостоятельным действием. Узел с явным isLeaf=true не раскрывается,
-disabled узел может раскрываться заголовком, но не выбирается, как в Source.
-Switcher, checkbox и keyboard сохраняют свои действия. Controlled expanded keys
-принимает владелец; смена action сохраняет DOM, refs, input focus и active IDs.
-[28 UMD-сценариев](../../../tests/browser/fixtures/ant-design-tree-select-expand-action-reference.json)
-сверяют видимое дерево и порядок callbacks в
-[browser](../../../tests/browser/tree-select/tree-select-expand-action.spec.ts).
-Отдельное raw наблюдение фиксирует два вызова loadData для одного pending узла
-в React. Native сохраняет существующую защиту Tree: один Promise на узел и
-отсутствие callbacks после unmount. [SSR](../../../tests/package/tree-select/tree-select-expand-action.ssr.test.ts)
-не вызывает загрузку и не создаёт timers, включая первоначально открытый shell.
+`tokenSeparators` accepts an array of delimiters or a function
+returning an array of strings. As in the pinned TreeSelect,
+successful tokenization clears search and defers closing. It
+keeps selected values without `onChange`, `onSelect`, or
+`onDeselect`. `maxCount` does not limit token processing. IME
+defers tokenization until composition ends. Pasted line breaks
+are preserved for relevant delimiters and functions.
+`onSearch` runs when the query changes. Closing single also
+clears search. A splitter function receives the empty string
+on mount and after closing. Initial `open=true` uses the same
+client search reset as React. SSR calls neither splitter nor
+callbacks. A closed single control retains its native selection
+label. A query retained by the owner returns on open. Raw React
+keeps the query in a separate input beside the label. The
+reference records and tests that display separately.
+[Token API comparison](../../../tests/browser/tree-select/tree-select-token.spec.ts)
 
-Native combobox удерживает фокус при действиях в панели. Arrows перемещаются/
-раскрывают дерево через его keyboard engine; Enter выбирает активный узел, а не
-переключает раскрытие. Escape/Tab закрывают popup; Backspace удаляет последний
-доступный тег при пустом search. Single закрывает popup после выбора, multiple
-оставляет его открытым. `listHeight` ограничивает viewport дерева, по умолчанию
-до 256px. `onPopupScroll` получает событие этого viewport. `virtual` наследуется
-из `ConfigProvider.virtual` и по умолчанию включён. `popupMatchSelectWidth={false}`
-оставляет все строки в DOM. `listItemHeight` задаёт начальную оценку, по умолчанию
-`controlHeightSM + paddingXXS`. Нулевая оценка отключает виртуализацию, а `listHeight={0}`
-снимает ограничение высоты. `listItemScrollOffset` добавляет отступ при переходе к
-активному узлу. Прокрутка сохраняет активный ключ, а `aria-activedescendant`
-указывает на узел, пока его строка в DOM.
-Движение мыши по строке сбрасывает активный клавиатурный узел, как в `rc-tree`.
+`loadData(node)`, `treeLoadedKeys` and `onTreeLoad`, and
+`treeExpandedKeys` and `onTreeExpand` use Tree's logic. The
+consumer adds children. `treeDefaultExpandAll` and
+`treeDefaultExpandedKeys` set initial expansion. TreeSelect
+stores panel expansion outside Tree. After load rejection,
+an expanded branch can retry up to Tree's upstream limit.
+There is no separate error callback or slot. A closed popup
+starts no new loads. An existing Promise can finish and call
+`onTreeLoad`. Results after unmount are ignored.
 
-`bind:nativeElement` и `bind:inputElement` дают DOM. `bind:this` предоставляет
-`TreeSelectRef` с `focus(options)`, `blur()` и `scrollTo(config)`. `TreeScrollConfig`
-принимает пиксели, координаты, key или index с `align` и `offset`. Для открытой
-пустой панели и отсутствующего ключа вызов безопасен. В закрытой панели
-прокрутка сохраняет прежнюю позицию. `autoExpand` добавляет
-целевой ключ в собственное раскрытие внутреннего дерева до первой пользовательской
-смены `expandedKeys`, если ключи раскрытия не заданы в props.
-[Сверка React 6.6.8](../../../tests/browser/tree-select/tree-select-virtual.spec.ts) охватывает
-границы окна, ширину, измерения строк, прокрутку, поиск и повторное открытие.
+`treeExpandAction=false | 'click' | 'doubleClick'` enables title
+expansion through the existing Tree and defaults to `false`.
+In click mode, `onTreeExpand` precedes `onChange` and
+`onSelect`. In multiple mode, a real double-click first performs
+two ordinary selections, then expands on `dblclick`. Ctrl, Meta,
+and Shift suppress title expansion. Selection is independent.
+Explicit `isLeaf=true` prevents expansion. A disabled node can
+expand through its title and cannot be selected, as upstream.
+Switcher, checkbox, and keyboard keep their actions. The owner
+accepts controlled expanded keys. Changing the action preserves
+DOM, refs, input focus, and active IDs. Tests compare visible
+tree and callback order. A separate raw observation records
+two React `loadData` calls for one pending node. Svelte keeps
+Tree's one-Promise-per-node guard and skips callbacks after
+unmount. SSR starts no load or timers, even with an initially
+open shell. [28 UMD scenarios](../../../tests/browser/fixtures/ant-design-tree-select-expand-action-reference.json) · [Browser tests](../../../tests/browser/tree-select/tree-select-expand-action.spec.ts)
+· [SSR tests](../../../tests/package/tree-select/tree-select-expand-action.ssr.test.ts)
 
-Унаследованный `showScrollBar` принимает true, false и 'optional', но не меняет
-прокрутку TreeSelect: закреплённый rc-tree-select не передаёт его внутреннему Tree.
-Полоса по-прежнему появляется при взаимодействии и скрывается после простоя;
-при отсутствии переполнения или virtual=false её нет.
-[Сверка с React и контрольным Select](../../../tests/browser/tree/tree-scrollbar.spec.ts).
+The native combobox retains focus during panel actions. Arrow
+keys navigate and expand through Tree's keyboard engine. Enter
+selects the active node. Escape and Tab close the popup.
+Backspace removes the last available tag in empty search.
+Single closes after selection and multiple stays open.
+`listHeight` bounds the tree viewport, defaulting to 256px.
+`onPopupScroll` receives viewport scroll events. `virtual`
+inherits `ConfigProvider.virtual` and defaults on.
+`popupMatchSelectWidth={false}` keeps all rows in the DOM.
+`listItemHeight` sets the initial estimate, which defaults to
+`controlHeightSM + paddingXXS`. A zero estimate disables
+virtualization and `listHeight={0}` removes the height limit.
+`listItemScrollOffset` adds space when moving to the active
+node. Scroll preserves the active key. `aria-activedescendant`
+points to the node while its row is mounted. Pointer movement
+on a row clears the active keyboard node as in rc-tree.
 
-Поддержаны placement, size/status/variant, treeLine/treeIcon/switcherIcon,
-notFoundContent/loading, RTL, темы, Compact и ConfigProvider/Form disabled.
+`bind:nativeElement` and `bind:inputElement` expose the DOM.
+`bind:this` provides `TreeSelectRef` with `focus(options)`,
+`blur()`, and `scrollTo(config)`. `TreeScrollConfig` accepts
+pixels, coordinates, or a key or index with `align` and
+`offset`. It is safe to call with an open empty panel or a
+missing key. Calling with a closed panel leaves the position
+unchanged. `autoExpand` adds the target key to the inner
+tree's local expansion until the first user change to
+`expandedKeys`, if expansion keys are omitted in props. The
+comparison covers window bounds, width, row measurement,
+scroll, search, and reopening. [React 6.6.8 comparison](../../../tests/browser/tree-select/tree-select-virtual.spec.ts)
 
-Name/FormItem создают hidden inputs с raw values для native FormData. Form model
-хранит raw scalar/массивы, поддерживает required/submit/reset; библиотека не меняет
-объектный контракт labelInValue ради ограничений Form v1. Его общий object store
-остаётся отдельным этапом. SSR не запускает loadData, popover или browser APIs.
+Inherited `showScrollBar` accepts `true`, `false`, and
+`'optional'`. It leaves scrolling unchanged because the
+pinned rc-tree-select does not pass it to the inner Tree.
+The scrollbar still appears on interaction and hides after
+idle. It is absent without overflow or with `virtual=false`.
+[React and Select comparison](../../../tests/browser/tree/tree-scrollbar.spec.ts)
 
-Source theme объединяет `components.Select` и `components.TreeSelect` в исходном
-порядке: aliases TreeSelect могут менять также поле. Select оформляет теги,
-стрелку/clear и focus, TreeSelect — размеры/отступы узлов, цвета и checkbox панели.
-Настройки `components.Tree` не меняют дерево внутри TreeSelect. Токены доступны
-при SSR; смена темы сохраняет DOM, поиск, выделение, focus, raw FormData и позицию
-открытой панели. В source compact высота узла — 21px. Native-only темы сохранены.
+It supports placement, size, status, variant, `treeLine`,
+`treeIcon`, `switcherIcon`, `notFoundContent`, loading, RTL,
+themes, Compact, and ConfigProvider and Form disabled state.
 
-GetPopupContainer получает фактический корень: стандартный `.ant-select` либо
-зарегистрированный `components.root`. Локальная функция перекрывает
-ConfigProvider.getPopupContainer, undefined наследует provider. Getter не вызывается
-на сервере и до первого открытия. Перенос в HTMLElement/ShadowRoot сохраняет
-Select/TreeSelect tokens, поиск, keyboard engine, lazy load и native FormData.
-Зазор до поля — исходные 4 px. При замене функции с тем же контейнером сохраняются
-DOM панели, фокус и выделение; ShadowRoot требует собственных стилей. Сверка
-TreeSelect/Cascader с 40 сценариями официального UMD —
-[choice-container](../../../tests/browser/popup/choice-container.spec.ts), `?fixture=choice-container`.
+`name` and FormItem create hidden inputs with raw values for
+native FormData. The Form model stores raw scalars and arrays
+and supports required validation, submit, and reset. TreeSelect
+keeps the object contract for `labelInValue`. Form v1's general
+object store remains pending. SSR starts no `loadData`, popover,
+or browser APIs.
 
-`components.input` заменяет редактор внутри стандартного selector. Выбранная
-подпись, теги, prefix/suffix, очистка и Form feedback сохраняются. React component,
-tag и element из `components` переносятся в Svelte snippet; объект
-`{render, props}` дополнительно задаёт собственные DOM attrs. Они перекрывают
-generated attrs, включая value, class/style, readonly, disabled и ARIA.
-Собственный callback input вызывается первым, внутренний — следом, даже после
-preventDefault. Нативный `onkeydown` самого TreeSelect сохраняет отмену built-in.
+The upstream theme combines `components.Select` and
+`components.TreeSelect` in the source order. TreeSelect aliases
+can affect the field too. Select styles tags, arrow, clear,
+and focus. TreeSelect styles node metrics, spacing, colors,
+and panel checkboxes. `components.Tree` leaves TreeSelect's
+internal tree independent. Tokens are available during SSR.
+Theme updates preserve DOM, search, selection, focus, raw
+FormData, and open panel position. Upstream compact nodes are
+21px tall. Native-only themes are retained.
+
+`getPopupContainer` receives the actual root, whether
+`.ant-select` or a registered `components.root`. The local
+function overrides `ConfigProvider.getPopupContainer`. `undefined` inherits the provider. It is skipped on the
+server and before first open. Moving to an HTMLElement or
+ShadowRoot retains Select and TreeSelect tokens, search,
+keyboard behavior, lazy loading, and native FormData. The
+upstream gap to the field is 4px. A new function returning
+the same container preserves panel DOM, focus, and selection.
+Consumers supply ShadowRoot styles. TreeSelect and Cascader
+have 40 official UMD scenarios in `?fixture=choice-container`.
+[Container comparison](../../../tests/browser/popup/choice-container.spec.ts)
+
+`components.input` replaces the editor inside the default
+selector. It preserves selected label, tags, prefix and suffix,
+clear, and Form feedback. React components, tags, and elements
+in `components` map to a Svelte Snippet. An object
+`{render, props}` also supplies custom DOM attributes. They
+override generated attributes, including value, class and
+style, readonly, disabled state, and ARIA. Custom input
+callbacks run first, and internal callbacks run afterward
+even with `preventDefault`. The TreeSelect's native
+`onkeydown` can still cancel built-in handling.
 
 ```svelte
 <script lang="ts">
@@ -439,22 +511,26 @@ preventDefault. Нативный `onkeydown` самого TreeSelect сохра�
   components={{ input: { render: query, props: { rows: 2 } } }} bind:inputElement={editor} />
 ```
 
-Direct textarea сохраняет навигацию стрелками при закрытой панели. Composite ref
-следует своему исходному keyboard path. Multiple editor измеряет текст и меняет
-ширину; собственный style заменяет generated style целиком. Responsive tags
-учитывают весь custom editor, включая wrapper и соседние элементы snippet,
-и реагируют на изменение его ширины. При закрытии multiple
-query скрывается, если autoClearSearchValue не false; controlled owner сохраняет
-свой query. `props.value=undefined` оставляет редактор uncontrolled, фиксированное
-значение перекрывает поиск. При гидратации контролируемое значение custom editor
-применяется к существующему DOM, как в React; фокус и refs сохраняются.
+A direct textarea retains arrow navigation while closed. A composite
+ref follows its original keyboard path. A multiple editor measures
+its text to update width. Custom `style` replaces generated style in
+full. Responsive tags account for the complete custom editor,
+including its wrapper and neighboring Snippet elements, and react
+to width changes. On close, multiple mode hides the query unless
+`autoClearSearchValue` is false. A controlled owner retains its own
+query. `props.value=undefined` leaves the editor uncontrolled, while
+a fixed value overrides search. During hydration, the custom
+editor's controlled value applies to existing DOM as in React,
+preserving focus and refs.
 
-`components.root` полностью заменяет selector: стандартные подписи, теги,
-редактор, affixes и очистка не создаются; `components.input` при этом не вызывается.
-Root переключает popup по click, не по selector mousedown. Его generated callbacks
-выполняются перед собственными. Generated id, class/style, tabIndex, disabled и
-combobox ARIA ему не назначаются; содержимое и DOM attrs задаёт renderer.
-Disabled TreeSelect управляет popup, собственный DOM disabled задаётся через props.
+`components.root` replaces the entire selector. Default labels,
+tags, editor, affixes, and clear are omitted, and `components.input`
+is unused. The root toggles on click instead of selector mousedown.
+Its generated callbacks run before custom ones. The renderer owns
+content and DOM attributes. The generated ID, class, style, tab
+index, disabled state, and combobox ARIA are not assigned. TreeSelect
+disabled state controls the popup. The custom DOM receives its
+own disabled state through props.
 
 ```svelte
 <script lang="ts">
@@ -462,190 +538,223 @@ Disabled TreeSelect управляет popup, собственный DOM disable
 </script>
 
 {#snippet response({ attributes, register }: TreeSelectRootContext<HTMLButtonElement>)}
-  <button {...attributes} {@attach register}>Выбрать узел</button>
+  <button {...attributes} {@attach register}>Select a node</button>
 {/snippet}
 <TreeSelect treeData={[{ value: 'a', title: 'Alpha' }]}
   components={{ root: { render: response, props: { type: 'button', class: 'my-trigger' } } }} />
 ```
 
-`register(node)` возвращает cleanup для attachment. Composite root регистрирует
-`{nativeElement, focus?, blur?}`, composite input —
-`{inputElement, nativeElement?, focus?, blur?}`. Native element у input может быть
-wrapper; inputElement указывает на редактор. Регистрация заменяется безопасно,
-старый cleanup не очищает новый ref. `focus/blur` используют composite методы;
-popup привязан к фактическому root. Для composite Svelte-компонента attrs
-согласуются с его публичными props, например class/style у Input относятся к root.
-Если composite root использует Input со своим текстом, храните его в состоянии
-адаптера и передавайте через `bind:value`. Это сохраняет черновик при обновлении
-динамического spread attrs; выбранное значение TreeSelect остаётся отдельным.
+`register(node)` returns attachment cleanup. A composite root
+registers `{nativeElement, focus?, blur?}`. A composite input uses
+`{inputElement, nativeElement?, focus?, blur?}`. The input's native
+element can be a wrapper, and `inputElement` points to the editor.
+Replacing a registration prevents old cleanup from clearing a
+new ref. Focus and blur use composite methods. The popup anchors
+to the actual root. For a composite Svelte component, attributes
+follow its public props. For example, Input's `class` and `style`
+apply to its root. If a composite root uses Input with its own
+text, store it in adapter state and use `bind:value`. This retains
+drafts when dynamic spread attributes update and keeps the selected
+TreeSelect value separate.
 
-Обычные bindings остаются HTMLDivElement/HTMLInputElement. Дополнительные параметры
-`TreeSelectProps<ValueType, Data, RootElement, EditorElement>` описывают custom DOM.
-Bindings используют RootElement | HTMLDivElement и EditorElement | HTMLInputElement:
-удаление slot возвращает стандартный элемент. Custom root не создаёт внутренний
-inputElement. Renderers наследуют Form status/feedback, не регистрируя второй
-successful control; required/help ARIA передаются и в custom root.
-Native FormData продолжает хранить raw выбранные значения. Native Input
-отражает error status в aria-invalid; Form сохраняет синхронный SSR help
-и существующие ids вида `choice-help` вместо Source `choice_help`.
+Ordinary bindings remain `HTMLDivElement` and `HTMLInputElement`.
+The extra `TreeSelectProps<ValueType, Data, RootElement, EditorElement>`
+parameters describe custom DOM. Bindings use
+`RootElement | HTMLDivElement` and
+`EditorElement | HTMLInputElement`, since removing a slot restores
+the default element. Custom root creates no inner `inputElement`.
+Renderers inherit Form status and feedback without registering a
+second successful control. Required and help ARIA reach custom root.
+Native FormData still contains raw selected values. Native Input
+reflects error status in `aria-invalid`. Form keeps synchronous SSR
+help and existing IDs like `choice-help`, where upstream uses
+`choice_help`.
 
-Native input связывается с существующим Tree и его ARIA ids. Focus/blur/input
-остаются настоящими DOM events: preventDefault не меняет defaultPrevented у
-noncancelable event, в отличие от React SyntheticEvent. Удаление opaque composite
-root может доставить blur до отсоединения DOM, тогда как React уже снял synthetic
-callbacks. Raw наблюдения сохранены отдельно; после unmount callbacks не приходят.
-Удаление сфокусированного редактора может синхронно доставить Native blur до
-отключения DOM; после завершения unmount новых callbacks нет.
-Native регистрация actual editor также сохраняет безопасное измерение composite
-input: Source multiple ref без `.style` выбрасывает TypeError.
-В multiple mode с `components.input` и `maxTagCount="responsive"` suffix следует
-Source Overflow: может стать absolute и сжаться вокруг fragment, сохраняя
-исходные высоту control, overflow, hit targets и порядок тегов. Popup сохраняет
-исходный anchor до изменения размера, resize окна или scroll предка; перемещение
-его контейнера учитывается в той же системе координат, включая RTL.
-[15 сценариев layout](../../../tests/browser/tree-select/tree-select-suffix-layout.spec.ts) и
-[4 сценария контейнера](../../../tests/browser/tree-select/tree-select-suffix-container.spec.ts)
-сверены с независимым React-эталоном в standards mode. Ещё
-[5 регрессий](../../../tests/browser/tree-select/tree-select-suffix-layout-edges.spec.ts) проверяют
-static renderers, историю summary и контейнер с `will-change: transform`.
-Обычный Native responsive
-control сохраняет прежний flow алгоритм. SSR сохраняет скрытые measuring tags
-вместо пустого Source Overflow; Native popup сохраняет свой fixed portal contract.
-[Строгая гидратация](../../../tests/browser/tree-select/tree-select-suffix-layout-hydration.spec.ts)
-проверяет query, выделение, DOM identity и освобождение observers/RAF.
-[Root](../../../tests/browser/tree-select/tree-select-root.spec.ts),
-[input](../../../tests/browser/tree-select/tree-select-input.spec.ts),
-[Form](../../../tests/browser/tree-select/tree-select-components-form.spec.ts).
+The native input connects to the existing Tree and its ARIA IDs.
+Focus, blur, and input remain DOM events. `preventDefault` leaves
+`defaultPrevented` unchanged on a noncancelable event, unlike React
+SyntheticEvent. Removing an opaque composite root can deliver
+blur before DOM detachment, when React has already cleared synthetic
+callbacks. The raw observations are recorded separately. Removing
+a focused editor can synchronously deliver native blur before DOM
+detachment. No callbacks follow completed unmount. Registering the
+actual editor also preserves safe composite measurement. A
+multiple-mode upstream ref without `.style` throws TypeError.
 
-Унаследованные `onPopupVisibleChange`, `popupStyle`, `choiceTransitionName` и
-`direction` принимаются с поведением Ant Design 6.6.8: wrapper перекрывает
-callback/style, текущий Overflow не использует choice transition, RTL и default placement
-задаёт ConfigProvider. Для открытий используется `onOpenChange`, для оформления —
-`styles.popup.root`. Исходные значения и наличие этих props остаются видимы
-в `classNames`/`styles` callbacks, включая live replacement, empty и undefined.
-При SSR custom root semantic callbacks также вычисляются; собственные attrs
-и стили root сохраняются.
-HTML `dir` сохраняет Native контракт: provider задаёт dir стандартному root,
-явный native dir передаётся редактору; собственный dir custom slots сохраняется.
-[Browser](../../../tests/browser/tree-select/tree-select-inert-api.spec.ts) и
-[SSR](../../../tests/package/tree-select/tree-select-inert-api.ssr.test.ts) сравнивают независимый
-React-эталон и явно учитывают прежнее различие владельца HTML dir.
-[Строгая гидратация](../../../tests/browser/tree-select/tree-select-inert-api-hydration.spec.ts)
-сохраняет редактор, query/caret, popup и публичные refs при смене props.
+With `components.input` and `maxTagCount="responsive"` in multiple
+mode, suffix follows upstream Overflow. It can become absolute
+and shrink around a fragment while preserving control height,
+overflow, hit targets, and tag order. The popup keeps its previous
+anchor until a size change, window resize, or ancestor scroll.
+Container movement uses the same coordinate system, including RTL.
+The layout and container scenarios use independent React references
+in standards mode. Five more regressions cover static renderers,
+summary history, and a `will-change: transform` container.
+[15 layout scenarios](../../../tests/browser/tree-select/tree-select-suffix-layout.spec.ts) · [Four container scenarios](../../../tests/browser/tree-select/tree-select-suffix-container.spec.ts)
+· [Five regressions](../../../tests/browser/tree-select/tree-select-suffix-layout-edges.spec.ts)
 
-`popupAlign` задаёт shallow override выбранного placement: `offset`, `targetOffset`
-и `overflow` заменяются целиком. `builtinPlacements` заменяет всю стандартную карту,
-включая явно пустой объект; отсутствующая запись использует исходное центрирование.
-Тип `TreeSelectPopupAlign` принимает points, числовые и процентные offsets,
-overflow flags, `dynamicInset` и `htmlRegion`. Процентный offset считается от popup,
-targetOffset — от control. Четыре текущих `useCssRight`/`useCssBottom`/
-`useCssTransform`/`ignoreShake` принимаются с исходным no-op поведением.
+The ordinary native responsive control keeps its existing flow
+algorithm. SSR retains hidden measuring tags where upstream
+Overflow is empty. The native popup keeps its fixed portal
+contract. Strict hydration checks query, selection, DOM identity,
+and observer and frame cleanup. [Strict hydration](../../../tests/browser/tree-select/tree-select-suffix-layout-hydration.spec.ts) ·
+[Root](../../../tests/browser/tree-select/tree-select-root.spec.ts) · [Input](../../../tests/browser/tree-select/tree-select-input.spec.ts) · [Form](../../../tests/browser/tree-select/tree-select-components-form.spec.ts)
 
-Открытый popup сохраняет вычисленное выравнивание до изменения placement,
-размера control/popup, resize окна или scroll предка. Смена карты сама по себе
-не пересчитывает координаты; изменение `popupAlign` вызывает пересчёт сразу,
-только если выбранной записи в карте нет. Это относится и к первому добавлению
-props при открытой панели. Flip history сохраняется при замене custom root
-и сбрасывается при закрытии. Semantic callbacks получают исходные объекты props.
+Inherited `onPopupVisibleChange`, `popupStyle`,
+`choiceTransitionName`, and `direction` follow Ant Design 6.6.8.
+The wrapper overrides the callback and style, current Overflow
+leaves choice transition unused, and ConfigProvider sets RTL and
+default placement. Use `onOpenChange` for opening and
+`styles.popup.root` for styling. Original prop values and presence
+remain visible in `classNames` and `styles` callbacks, including
+live replacements, empty values, and `undefined`. Custom root
+semantic callbacks also run during SSR, and custom root attributes
+and styles are retained.
 
-При использовании alignment props Native popup сохраняет fixed top-layer и
-собственный DOM parent; Source absolute CSS frame проецируется в его физические
-координаты с учётом border, margin, scale, transforms и ShadowRoot. Смена CSS frame
-контейнера учитывается отдельно от пересчёта alignment. Обычный multiple control
-сохраняет прежний Native flow редактора и тегов; отдельный запуск настоящего Source
-с той же публично заданной высотой control проверяет связанное выравнивание popup.
-Публичные Native методы ref сохраняют identity при обновлении props, хотя Source
-пересоздаёт их; root и popup сравниваются по фактическим DOM refs.
-`htmlRegion` можно задать локально. `ConfigProvider.popupOverflow` выбирает область
-стандартной карты; собственная `builtinPlacements`, включая `{}`, её заменяет,
-а локальный `popupAlign.htmlRegion` имеет приоритет.
-[35 browser-сценариев](../../../tests/browser/tree-select/tree-select-align.spec.ts),
-[два изменения CSS frame/root](../../../tests/browser/tree-select/tree-select-align-frame.spec.ts),
-[DOM-free SSR](../../../tests/package/tree-select/tree-select-align.ssr.test.ts) и
-[строгая гидратация](../../../tests/browser/tree-select/tree-select-align-hydration.spec.ts)
-проверяют независимый React-эталон, geometry, query/caret, refs и cleanup.
+HTML `dir` follows the native contract. The provider supplies
+`dir` to the default root, explicit native `dir` goes to the
+editor, and custom slot `dir` is preserved. Browser and SSR
+tests compare an independent React reference and explicitly
+account for the existing difference in HTML direction ownership.
+Strict hydration retains editor, query, caret, popup, and public
+refs across prop changes. [Browser tests](../../../tests/browser/tree-select/tree-select-inert-api.spec.ts) · [SSR tests](../../../tests/package/tree-select/tree-select-inert-api.ssr.test.ts)
+· [Strict hydration](../../../tests/browser/tree-select/tree-select-inert-api-hydration.spec.ts)
 
-`animation` и `transitionName` управляют исходными переходами панели.
-Непустой `animation` выбирает `${prefixCls}-dropdown-${animation}` и имеет
-приоритет над `transitionName`. При `transitionName=undefined` используется
-`${ConfigProvider.prefixCls}-slide-up`; пустая строка отключает именованный переход.
-Локальный namespace dropdown и общий namespace motion независимы.
-Для своего имени потребитель задаёт CSS. Рецепт `tree-select-popup-motion`
-переносит 110 правил и восемь keyframes slide/move из закреплённого архива.
-Они ограничены popup TreeSelect и не меняют соседние Select.
-Canonical CSS входит в `styles.css`, а `tree-select-popup-motion-prefix`
-создаёт template пользовательских namespaces без новых canonical SSR head scopes.
+`popupAlign` shallowly overrides the selected placement.
+`offset`, `targetOffset`, and `overflow` replace entire fields.
+`builtinPlacements` replaces the full default map, including
+an explicitly empty object. A missing entry uses upstream
+centering. `TreeSelectPopupAlign` accepts points, numeric and
+percentage offsets, overflow flags, `dynamicInset`, and
+`htmlRegion`. Percentage offset is relative to the popup and
+targetOffset to the control. `useCssRight`, `useCssBottom`,
+`useCssTransform`, and `ignoreShake` retain their upstream no-op
+behavior.
 
-Панель проходит appear/enter/leave с prepare, start и active, сохраняя DOM
-после ухода. Повторное открытие прерывает leave без потери draft и refs.
-События animationend/transitionend завершают только собственную активную фазу;
-имя эффекта не фильтруется, события дочерних элементов игнорируются.
-CSSMotion сохраняет отрисованный active frame до готовности следующего шага,
-даже если внутренний статус уже завершён. Alignment cache пересчитывается
-в prepare и после motion; scroll/resize во время перехода не запускают обычное
-выравнивание. Замена custom root сохраняет popup, CSS clock и прежние координаты
-до следующего исходного alignment trigger.
+An open popup retains computed alignment until placement,
+control or popup size, window size, or ancestor scroll changes.
+Replacing the map alone leaves coordinates intact.
+Updating `popupAlign` recalculates immediately only when the
+selected entry is absent. The same applies when adding these
+props for the first time while open. Flip history persists
+across custom root replacement and resets on close. Semantic
+callbacks receive the original prop objects.
 
-Глобальный `theme.token.motion=false` при открытии оставляет только prepare.
-Живая смена имени или общего motion не завершает уже начатую фазу.
-Component token `motion=false` обнуляет CSS duration, сохраняя исходные шаги
-и обработку end. Отдельного JS deadline или завершения по reduced motion нет:
-имя без соответствующего CSS может оставаться active до собственного end event.
+With alignment props, the native popup retains its fixed
+top layer and DOM parent. Upstream's absolute CSS coordinate
+frame is projected to native physical coordinates, accounting
+for border, margin, scale, transforms, and ShadowRoot.
+Container frame changes are handled separately from alignment
+recalculation. The ordinary multiple control keeps native
+editor and tag flow. A separate upstream run with the same
+publicly set control height checks the related popup alignment.
+Native public ref methods retain identity on prop updates.
+Upstream recreates them. Root and popup are compared through
+actual DOM refs. Local `htmlRegion` is supported.
+`ConfigProvider.popupOverflow` chooses the default map region.
+Custom `builtinPlacements`, including `{}`, replaces the map,
+and local `popupAlign.htmlRegion` takes precedence.
 
-Native сохраняет fixed top-layer. CSS animations используют реальные браузерные
-clocks; для проецируемых transform transitions доступен настоящий WAAPI Animation,
-а не Source CSSTransition. В этом случае завершение фазы передаётся контроллеру
-без искусственного DOM transitionend. Без использования alignment props и
-`ConfigProvider.popupOverflow` сохраняются
-прежние Native ограничения ширины и положения панели по viewport; явные
-`popupAlign`/`builtinPlacements` или `popupOverflow` включают исходные overflow rules.
-Закрытый скрытый popup освобождает position RAF без ожидания отменённого CSS end
-и остаётся закрытым при возвращении control в viewport.
-Существующие Svelte refs и opaque snippet
-остаются живыми: отключение общего motion не пересоздаёт редактор, а закрытая
-пользовательская панель получает реактивные изменения вместо React.memo cache.
-Эти границы проверяются отдельными запусками Source с публичными настройками;
-первичные raw snapshots сохраняются без исправлений.
-[Browser](../../../tests/browser/tree-select/tree-select-motion.spec.ts),
-[замена root](../../../tests/browser/tree-select/tree-select-motion-root-swap.spec.ts),
-[завершение leave до activated](../../../tests/browser/tree-select/tree-select-motion-leave.spec.ts),
-[скрытие и повторное открытие](../../../tests/browser/tree-select/tree-select-motion-visibility.spec.ts),
-[DOM-free SSR](../../../tests/package/tree-select/tree-select-motion.ssr.test.ts) и
-[строгая гидратация](../../../tests/browser/tree-select/tree-select-motion-hydration.spec.ts)
-проверяют независимый React-эталон, фазы, geometry, callbacks, identity и cleanup.
-Ant Design исключает `treeMotion` из публичного TreeSelect API и передаёт
-`null` во вложенное дерево. List/collapse motion панели отключён, как в Source.
-Private getInputElement/getRawInputElement не входят в публичный перенос.
-Deprecated React extras исключены.
-Класс popup задаётся через classNames.popup.root; popupClassName удалён.
+Tests check an independent React reference, geometry, query,
+caret, refs, and cleanup. [35 browser scenarios](../../../tests/browser/tree-select/tree-select-align.spec.ts) ·
+[Two CSS frame and root changes](../../../tests/browser/tree-select/tree-select-align-frame.spec.ts) ·
+[DOM-free SSR](../../../tests/package/tree-select/tree-select-align.ssr.test.ts) · [Strict hydration](../../../tests/browser/tree-select/tree-select-align-hydration.spec.ts)
 
-`prefixCls` задаёт локальные классы Select control, tags и TreeSelect popup;
-пустое значение наследует `ConfigProvider.prefixCls`. Служебные Select variables
-следуют общему namespace, canonical token names сохраняются. Общий Native Tree
-адаптер с внутренними `ant-tree` classes и generated IDs остаётся прежним.
-Смена префикса сохраняет поиск, выделение, refs/focus, значения формы и открытое дерево.
-[26 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-tree-select-prefix-reference.json)
-в обычной, вложенной и reset областях проверяются в
-[browser](../../../tests/browser/tree-select/tree-select-prefix.spec.ts) и
-[SSR](../../../tests/package/tree-select/tree-select-prefix.ssr.test.ts).
+`animation` and `transitionName` control upstream panel
+transitions. A nonempty `animation` selects
+`${prefixCls}-dropdown-${animation}` and takes precedence over
+`transitionName`. `transitionName=undefined` uses
+`${ConfigProvider.prefixCls}-slide-up`. An empty string turns
+off named transition. Local dropdown and shared motion
+namespaces are independent. The consumer supplies CSS for a
+custom name. The `tree-select-popup-motion` recipe ports 110
+rules and eight slide and move keyframes from the pinned
+bundle, scoped to TreeSelect popup and leaving adjacent
+Selects intact. Canonical CSS is in `styles.css`.
+`tree-select-popup-motion-prefix` generates a custom namespace
+template without new canonical SSR head scopes.
 
-У Ant Design 6.6.8 локальный prefixCls выявил несогласованность style hook и
-вложенного дерева: при `prefixCls="choices"` стили адресуют `choices`, а rc-tree-select
-создаёт `choices-tree`. В записанном случае пять строк занимают 110px вместо 140px
-и теряют фон. Raw measurements сохранены отдельно от public counterpart без
-локального override при том же ConfigProvider. Только tree/nodes сравниваются
-с этим counterpart; control/popup остаются raw. Его классы отличаются, поэтому
-сверка подтверждает оформление, а не одинаковую разметку. Svelte сохраняет
-согласованный Native Tree adapter и оформление при локальном префиксе.
+The panel runs appear, enter, and leave with prepare, start,
+and active phases, keeping DOM after exit. Reopening aborts
+leave and preserves drafts and refs. `animationend` and
+`transitionend` finish only the element's active phase.
+The effect name is not filtered, and descendant events are
+ignored. CSSMotion retains the rendered active frame until
+the next step is ready even when internal status completed.
+The alignment cache recalculates in prepare and after motion.
+Scroll and resize during transition skip ordinary alignment.
+Replacing a custom root retains popup, CSS clock, and
+previous coordinates until the next upstream alignment trigger.
 
-[32 сценария данных](../../../tests/browser/fixtures/ant-design-tree-select-data-reference.json)
-сверены с неизменённым официальным UMD: aliases, simple topology, search/check
-strategies, literal labels и обновления data/schema/mode. Независимый
-[SSR-эталон](../../../tests/browser/fixtures/ant-design-tree-select-data-ssr-reference.json)
-получен без DOM и timers; [browser](../../../tests/browser/tree-select/tree-select-data.spec.ts),
-[native lifecycle](../../../tests/browser/tree-select/tree-select-data-native.spec.ts) и
-[SSR](../../../tests/package/tree-select/tree-select-data.ssr.test.ts) проверяют соответствующие границы.
-Два дефекта Source записаны отдельно: simple mode дописывает детей во входной
-children array, а raw renderer сначала получает labeled value вместо data node.
-Native сохраняет входной массив и передаёт renderer полную запись с payload.
+Global `theme.token.motion=false` at opening leaves only prepare.
+A live name or global motion change leaves an already running
+phase in progress. Component `motion=false` reduces CSS
+duration to zero and retains upstream steps and end handling.
+There is no separate JavaScript deadline or reduced-motion
+completion. A name without matching CSS can remain active
+until its own end event.
 
+Svelte keeps the fixed top layer. CSS animations use actual
+browser clocks. Projected transform transitions expose a
+real WAAPI Animation, distinct from the upstream CSSTransition.
+Phase completion reaches the controller without a synthetic DOM
+`transitionend`. Without alignment props and
+`ConfigProvider.popupOverflow`, the existing native viewport
+width and positioning limits apply. Explicit `popupAlign`,
+`builtinPlacements`, or `popupOverflow` enables upstream
+overflow rules. A closed hidden popup releases its position
+frame without waiting for a canceled CSS end and stays
+closed when the control returns to view.
+
+Existing Svelte refs and opaque Snippets stay live. Disabling
+global motion preserves the editor, and a closed custom panel
+receives reactive updates instead of React.memo caching.
+Separate upstream runs with public settings check these
+boundaries and retain the original raw snapshots. Tests
+compare the independent React reference, phases, geometry,
+callbacks, identity, and cleanup. [Browser tests](../../../tests/browser/tree-select/tree-select-motion.spec.ts) ·
+[Root replacement](../../../tests/browser/tree-select/tree-select-motion-root-swap.spec.ts) · [Leave completion before activation](../../../tests/browser/tree-select/tree-select-motion-leave.spec.ts)
+· [Hide and reopen](../../../tests/browser/tree-select/tree-select-motion-visibility.spec.ts) · [DOM-free SSR](../../../tests/package/tree-select/tree-select-motion.ssr.test.ts) ·
+[Strict hydration](../../../tests/browser/tree-select/tree-select-motion-hydration.spec.ts)
+
+Ant Design excludes `treeMotion` from public TreeSelect and
+passes `null` to the nested tree. Panel list and collapse motion
+are disabled as upstream. Private `getInputElement` and
+`getRawInputElement` and deprecated React extras are outside
+the public port. Set the popup class through
+`classNames.popup.root`. `popupClassName` is removed.
+
+`prefixCls` sets local classes for the Select control, tags,
+and TreeSelect popup. An empty value inherits
+`ConfigProvider.prefixCls`. Internal Select variables follow
+the shared namespace, and canonical token names persist.
+The shared native Tree adapter retains internal `ant-tree`
+classes and generated IDs. Prefix changes preserve search,
+selection, refs, focus, form values, and the open tree.
+Browser and SSR tests check 26 UMD configurations in normal,
+nested, and reset scopes. [26 UMD configurations](../../../tests/browser/fixtures/ant-design-tree-select-prefix-reference.json)
+· [Browser tests](../../../tests/browser/tree-select/tree-select-prefix.spec.ts) · [SSR tests](../../../tests/package/tree-select/tree-select-prefix.ssr.test.ts)
+
+In Ant Design 6.6.8, a local prefix exposes a style hook and
+nested tree mismatch. With `prefixCls="choices"`, styles target
+`choices` but rc-tree-select produces `choices-tree`. In the
+recorded case, five rows occupy 110px instead of 140px and
+lose their background. Raw measurements are separate from a
+public comparison without the local override under the same
+ConfigProvider. Only tree and nodes use that comparison.
+Control and popup use raw measurements. Its classes differ,
+so the comparison checks styling while preserving the markup
+difference. Svelte retains the native Tree adapter and styling
+under a local prefix.
+
+The data scenarios compare aliases, simple topology, search
+and check strategies, literal labels, and data, schema, and
+mode updates with the unmodified UMD. The independent SSR
+reference runs without DOM or timers. Two upstream defects
+are recorded separately: simple mode appends into the input
+children array, and the raw renderer first receives a
+labeled value instead of a data node. Svelte preserves the
+input array and gives the renderer the complete record and payload.
+[32 data scenarios](../../../tests/browser/fixtures/ant-design-tree-select-data-reference.json) · [SSR reference](../../../tests/browser/fixtures/ant-design-tree-select-data-ssr-reference.json) ·
+[Browser tests](../../../tests/browser/tree-select/tree-select-data.spec.ts) · [Native lifecycle](../../../tests/browser/tree-select/tree-select-data-native.spec.ts) ·
+[SSR tests](../../../tests/package/tree-select/tree-select-data.ssr.test.ts)

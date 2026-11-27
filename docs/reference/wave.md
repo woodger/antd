@@ -1,11 +1,11 @@
-# Эффект Wave
+# Wave effect
 
-Wave добавляет декоративную волну при взаимодействии с Button, Checkbox, Radio,
-RadioButton, Switch, интерактивным Tag и Steps с onChange. Нативные controls,
-callbacks, формы и порядок фокуса сохраняются. Эффект не создаёт DOM при SSR.
+Wave adds a decorative ripple when users interact with Button, Checkbox, Radio,
+RadioButton, Switch, an interactive Tag, or Steps with `onChange`. It preserves
+native controls, callbacks, forms, and focus order. Wave creates its DOM only
+in the browser.
 
-Настройки задаются через ConfigProvider.wave. Точные типы —
-[WaveConfig и WaveEffectInfo](../../src/lib/wave/wave.types.ts).
+Set the effect through `ConfigProvider.wave`. [WaveConfig and WaveEffectInfo](../../src/lib/wave/wave.types.ts)
 
 ```svelte
 <script lang="ts">
@@ -13,88 +13,91 @@ callbacks, формы и порядок фокуса сохраняются. Э�
 </script>
 
 <ConfigProvider wave={{ triggerType: 'pointerdown' }}>
-  <Button type="primary">Действие</Button>
+  <Button type="primary">Do something</Button>
 </ConfigProvider>
 ```
 
-## Настройки и события
+## Settings and events
 
-По умолчанию используется click. Также поддерживаются mousedown, mouseup,
-pointerdown и pointerup. Listener работает в capture-фазе, а несколько событий
-одного animation frame дают один эффект с последним событием. Изменение настроек
-применяется реактивно; disabled=true отключает только волну, сохраняя callbacks control.
+The default event is click. The effect also supports mousedown, mouseup, pointerdown,
+and pointerup. The listener runs in the capture phase. Multiple events in the same
+animation frame produce one effect using the last event. Settings update reactively.
+`disabled=true` disables only the wave and keeps the control callbacks.
 
-Provider без wave наследует родительский record. Явный объект заменяет его целиком:
-wave={} возвращает стандартный эффект и click даже внутри provider с showEffect.
+A provider with no `wave` setting inherits the parent record. An explicit object
+replaces the record in full. `wave={}` restores the default effect and click even
+inside a provider with `showEffect`.
 
-showEffect(element, info) заменяет стандартную волну. Element — выбранный target,
-info содержит полный текущий GlobalToken, component, className/hashId, colorSource
-и нативный MouseEvent/PointerEvent. Это не React SyntheticEvent; currentTarget
-после отложенного вызова имеет обычную нативную семантику. Пользовательский эффект
-сам очищает свои ресурсы.
+`showEffect(element, info)` replaces the default wave. The element is the selected
+target. The info contains the current full GlobalToken, component, className and
+hashId, colorSource, and a native MouseEvent or PointerEvent. `currentTarget` follows
+native event semantics after the deferred call. Custom effects own their cleanup.
 
-## Правила компонентов
+## Component rules
 
-| Компонент | Target и условия |
+| Component | Target and conditions |
 | --- | --- |
-| Button | Native button; href и variants text/link исключены, loading/disabled блокируют волну |
-| Checkbox | Внутренний ant-wave-target; стандартный эффект только после включения |
-| Radio | Внутренний ant-wave-target; быстрый эффект |
-| RadioButton | Вся label-кнопка; обычный эффект |
-| Switch | Native button; disabled/loading блокируют волну |
-| Tag | Корень при onClick/onclick или единственном прямом anchor в children |
-| Steps | Item icon с ant-wave-target, иначе item root; нужен общий onChange и доступный item |
+| Button | Native button. href and the text and link variants are excluded. Loading and disabled states prevent the wave. |
+| Checkbox | Inner ant-wave-target. The default effect runs only when checked. |
+| Radio | Inner ant-wave-target with a quick effect. |
+| RadioButton | Entire label button with the regular effect. |
+| Switch | Native button. Disabled and loading states prevent the wave. |
+| Tag | Root when it has onClick or onclick, or when its only direct child is an anchor. |
+| Steps | Item icon with ant-wave-target, or the item root. Requires a shared onChange and an enabled item. |
 
-Для Checkbox фильтр checked принадлежит стандартному эффекту: showEffect получает
-также выключение. Steps filled передаёт colorSource=color. У CheckableTag нет Wave,
-как в upstream. Закрытие Tag сохраняет stopPropagation и не вызывает его onClick.
-Непрозрачный Svelte snippet Tag проверяется по отрендеренным прямым children;
-React children.type в Svelte отсутствует.
-FloatButton, FloatButtonBackTop и trigger FloatButtonGroup наследуют Wave через общий Button;
-их info.component равен Button, как в source composition.
-Кнопки подтверждения DatePicker/RangePicker и TimePicker/TimeRangePicker также
-используют общий Button и получают его Wave, сохраняя native picker lifecycle.
-Изменение variant Button или удаление handler/ссылки Tag отключает Wave и очищает
-ожидающий либо активный эффект, сохраняя нативный корень Svelte control.
+For Checkbox, the default effect filters on the checked state. `showEffect` also
+receives unchecking. Filled Steps passes `colorSource=color`. CheckableTag follows
+upstream and has no wave. Closing Tag preserves stopPropagation and leaves its
+onClick untouched. For opaque Svelte snippets in Tag, the effect tests the
+rendered direct children because Svelte has no React `children.type`.
 
-Скрытая цель события, disabled/aria-disabled и leaving roots не запускают волну.
-Исходное исключение для utility-классов с disabled: сохраняется.
+FloatButton, FloatButtonBackTop, and the FloatButtonGroup trigger inherit Wave
+through the shared Button. Their `info.component` is Button, as in upstream
+composition. The confirm buttons in DatePicker, RangePicker, TimePicker, and
+TimeRangePicker also get their wave from Button and preserve the native picker
+lifecycle. Changing Button's variant or removing a handler or link from Tag
+disables Wave and clears a pending or active effect. The Svelte control keeps
+its native root.
 
-## Геометрия, цвет и очистка
+Hidden event targets, disabled or aria-disabled targets, and leaving roots
+prevent the wave. The upstream exception for utility classes containing
+`disabled:` is preserved.
 
-Цвет берётся из colorSource, затем border-top-color, border-color и background-color.
-Исключения для белого и прозрачного повторяют исходный predicate без нормализации
-цвета; без подходящего значения CSS использует наследуемый colorPrimary.
-Border radius, border offsets и размеры
-читаются после действия; ResizeObserver следит за изменением target.
+## Geometry, color, and cleanup
 
-Обычная волна использует box-shadow 0.4s и opacity 2s; быстрые Checkbox/Radio —
-motionDurationSlow. Как в официальном UMD, token.motion=false обнуляет длительность
-быстрой волны, а фиксированные длительности обычной остаются. Отдельного Wave
-override для prefers-reduced-motion в закреплённом CSS нет; wave.disabled управляет
-полным отключением эффекта.
+Color comes from colorSource, then border-top-color, border-color, and
+background-color. The white and transparent exclusions follow the upstream
+predicate without normalizing the color. CSS uses the inherited colorPrimary
+when none of those values is suitable. The effect reads the border radius,
+border offsets, and dimensions after the action. A ResizeObserver tracks
+target size changes.
 
-Start и active разделены двумя RAF. Завершение собственного opacity transition
-удаляет волну; box-shadow и события дочерних элементов этого не делают. Исходный
-deadline 5000ms удаляет эффект, если transitionend не пришёл. При unmount очищаются
-pending RAF, timers, observers и holder DOM. Повторные эффекты имеют независимый lifecycle.
+The regular wave uses box-shadow at 0.4s and opacity at 2s. The quick Checkbox
+and Radio waves use motionDurationSlow. As in the official UMD, `token.motion=false`
+sets the quick duration to zero and leaves the regular fixed durations in effect.
+The pinned CSS has no separate Wave override for prefers-reduced-motion.
+Use `wave.disabled` to disable the effect completely.
 
-## Источник и проверки
+Two animation frames separate start and active. The wave is removed when its
+own opacity transition ends. Box-shadow transitions and child element events
+leave it in place. The upstream 5000ms deadline removes the effect if transitionend
+never arrives. On unmount, pending animation frames, timers, observers, and the
+holder DOM are cleaned up. Each repeated effect has its own lifecycle.
 
-Перенесены [wave/](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/_util/wave),
-точки подключения шести source families и timing из @rc-component/motion 1.3.3.
-Цвета и поведение сверялись также с официальным antd.min.js; React/runtime dependencies
-в пакет не добавлены. CSS извлекается рецептом wave из проверенного npm-архива:
-[vendor/wave.css](../../src/lib/vendor/wave.css), восемь правил без keyframes.
+## Sources and checks
 
-- [Выбор цвета](../../src/lib/wave/wave.engine.test.ts).
-- [SSR публичного пакета](../../tests/package/wave/wave.ssr.test.ts).
-- [События, геометрия и lifecycle в Chromium](../../tests/browser/wave/wave.spec.ts),
-  маршрут ?fixture=wave.
-- [Публичные ключи токенов](../../tests/browser/fixtures/ant-design-wave-token-keys-reference.json)
-  извлечены из закреплённого эталона текущего AliasToken; компонентные записи
-  проверяются вместе с ними. Приватный ключ кэша в эту сверку не входит.
+The port includes the wave module, integration points for six upstream families,
+and timing from @rc-component/motion 1.3.3. Colors and behavior were also compared
+with the official antd.min.js. The port is independent of React and its runtime
+dependencies. The wave recipe extracts eight CSS rules without keyframes from the
+verified npm archive. [Upstream wave module](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/_util/wave) ·
+[vendor/wave.css](../../src/lib/vendor/wave.css)
 
-Лицензии: [Ant Design](../../src/lib/vendor/LICENSE.ant-design),
-[rc-util](../../src/lib/vendor/LICENSE.rc-util),
-[rc-motion](../../src/lib/vendor/LICENSE.rc-motion).
+- [Color selection](../../src/lib/wave/wave.engine.test.ts)
+- [Public package SSR](../../tests/package/wave/wave.ssr.test.ts)
+- Events, geometry, and lifecycle on Chromium at `?fixture=wave`. [Browser tests](../../tests/browser/wave/wave.spec.ts)
+- The pinned current AliasToken reference supplies the public keys. The checks
+  include component entries and exclude the private cache key. [Token key reference](../../tests/browser/fixtures/ant-design-wave-token-keys-reference.json)
+
+Licenses for [Ant Design](../../src/lib/vendor/LICENSE.ant-design),
+[rc-util](../../src/lib/vendor/LICENSE.rc-util), and [rc-motion](../../src/lib/vendor/LICENSE.rc-motion).

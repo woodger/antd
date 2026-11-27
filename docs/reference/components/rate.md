@@ -1,99 +1,96 @@
 # Rate
 
-Rate позволяет выбрать оценку, в том числе с шагом в половину значения.
+Rate selects a rating, with optional half steps.
 
 ```svelte
 <script lang="ts">
   import { Rate } from '@woodger/antd';
   let value = $state(2.5);
 </script>
-<Rate aria-label="Оценка" {value} allowHalf
-  tooltips={['Очень плохо', 'Плохо', 'Нормально', 'Хорошо', 'Отлично']}
+<Rate aria-label="Rating" {value} allowHalf
+  tooltips={['Very poor', 'Poor', 'Fair', 'Good', 'Excellent']}
   onChange={next => { value = next; }} />
 ```
 
-Value управляется владельцем через onChange; без value используется внутреннее
-значение с defaultValue=0. Count=5 принимает целое неотрицательное число, как
-new Array(count) в upstream. Значения и fractions владельца не округляются и
-не ограничиваются count. Уменьшение count не меняет value. Native form reset
-не сбрасывает внутренний выбор; собственное поле FormData не создаётся.
+The owner controls value through onChange. Without value, the component uses
+internal state and defaultValue=0. Count defaults to 5 and accepts a nonnegative
+integer, as in upstream new Array(count). Owner values and fractions stay as
+supplied even when count changes. Native form reset keeps internal selection.
+Rate adds no FormData field.
 
-AllowHalf=false по умолчанию. При allowHalf половина определяется координатой
-относительно исходного li, с обратной стороной в RTL; точный midpoint даёт полную
-оценку. Hover показывает временный выбор без onChange. OnHoverChange получает
-также undefined при выходе и перед публикацией клика. AllowClear=true очищает
-повторный выбор до 0; этот же hover подавляется до другой позиции/выхода.
-AllowClear=false повторно публикует то же value. Внешняя смена props не вызывает
-callbacks. Смена controlled value на undefined очищает внутренний fallback,
-как useControlledState зависимости; новое нажатие снова задаёт значение.
+AllowHalf defaults to false. With allowHalf, the half depends on the position
+relative to the original li, reversed in RTL. The exact midpoint selects the
+full rating. Hover shows a temporary selection without onChange. OnHoverChange
+also receives undefined on leave and before the click publishes its value.
+AllowClear=true clears a repeated selection to 0 and suppresses hover at that
+position until it moves or leaves. AllowClear=false publishes the same value
+again. External prop updates leave callbacks untouched. Changing controlled value
+to undefined clears the internal fallback, as in useControlledState. A new
+press sets the value again.
 
-ArrowLeft/Right изменяют значение на 1 либо 0.5, направление обратное в RTL.
-Фокус при этом не перемещается. Исходная арифметика сохраняется без clamp:
-например, внешнее 4.8 при count=5 и allowHalf=true увеличивается до 5.3.
-OnKeyDown вызывается после изменения; обработанная стрелка получает preventDefault.
-Keyboard=false отключает стрелки; Enter на символе по-прежнему выбирает полное
-значение и предотвращает дублирующий native click. Focus/blur callbacks следуют
-всплывающему изменению фокуса.
+ArrowLeft and ArrowRight change the value by 1 or 0.5, reversing direction in RTL.
+Focus stays in place. Arithmetic follows upstream without clamping. For example,
+an external 4.8 with count=5 and allowHalf=true increases to 5.3. OnKeyDown runs
+after the change. A handled arrow calls preventDefault. Keyboard=false disables
+arrows. Enter on a character still selects the full value and prevents a duplicate
+native click. Focus and blur callbacks follow bubbling focus changes.
 
-Character — строка, число или Snippet<[RateCharacterInfo]>; snippet получает
-index/count, временное отображаемое value, allowHalf/disabled/focused, prefixCls
-и исходные onHover(event,index)/onClick(event,index). Он рендерится в двух слоях
-звезды, как исходный character. CharacterRender —
-Snippet<[Snippet,RateCharacterInfo]> с исходным star snippet; как rest override
-Ant wrapper, он заменяет автоматическую Tooltip composition. Tooltips принимает
-строки или поддерживаемые локальные TooltipProps без children. Tooltip использует
-существующую обёртку с display:contents; отступы между stars сохранены.
+Character accepts a string, number, or Snippet<[RateCharacterInfo]>. The snippet
+receives index and count, temporary displayed value, allowHalf, disabled, focused,
+prefixCls, and onHover(event, index) and onClick(event, index) from upstream.
+It renders in both star layers. CharacterRender is Snippet<[Snippet, RateCharacterInfo]>
+with the original star snippet. It overrides automatic Tooltip composition like
+the Ant wrapper's rest override. Tooltips accepts strings or supported local
+TooltipProps without children. Tooltip uses the existing display:contents wrapper
+and preserves star spacing.
 
-Непустой prefixCls задаёт локальные классы Rate; empty/undefined наследуют
-ConfigProvider.prefixCls. Состояния, слои звёзд и RateCharacterInfo.prefixCls
-используют разрешённый prefix. Tooltip сохраняет самостоятельный общий namespace;
-canonical component token marker/variables не переименовываются. Scoped CSS
-использует те же 21 правило с native button adapter. Смена local/shared prefix
-сохраняет оценку, DOM/ref, focus и соседний draft/selection/FormData.
-Сверка с неизменённым UMD: [reference](../../../tests/browser/fixtures/ant-design-rate-prefix-reference.json),
-[browser](../../../tests/browser/rate/rate-prefix.spec.ts),
-[SSR](../../../tests/package/rate/rate-prefix.ssr.test.ts), `?fixture=rate-prefix`.
+A nonempty prefixCls sets local Rate classes. Empty and undefined inherit
+ConfigProvider.prefixCls. States, star layers, and RateCharacterInfo.prefixCls
+use the resolved prefix. Tooltip keeps its own shared namespace. Canonical
+component token markers and variables keep their names. Scoped CSS applies
+the same 21 rules with the native button adapter. Local or shared prefix changes
+preserve rating, DOM, refs, focus, and adjacent draft, selection, and FormData.
+The fixture is `?fixture=rate-prefix`. [Unmodified UMD reference](../../../tests/browser/fixtures/ant-design-rate-prefix-reference.json) ·
+[Browser](../../../tests/browser/rate/rate-prefix.spec.ts) · [SSR](../../../tests/package/rate/rate-prefix.ssr.test.ts)
 
-Size принимает small/medium/large, наследует componentSize.
-Disabled наследует общий disabled-контекст, включая Form; явный false имеет
-приоритет. ConfigProvider.rate принимает class/style, локальные class/rootClassName
-добавляются, style накладывается после контекстного. Вложенный явно заданный rate
-config заменяет родительский. Light/dark, compact, RTL и reduced motion реактивны;
-CSS variables --ant-rate-star-color/size/size-sm/size-lg/bg/hover-scale и
---ant-rate-line-width-focus допускают явный inline override.
+Size accepts small, medium, or large and inherits componentSize. Disabled
+inherits the shared disabled context, including Form. Explicit false takes
+precedence. ConfigProvider.rate accepts class and style. Local class and
+rootClassName are added and local style follows contextual style. An explicit
+nested rate record replaces the parent. Light and dark themes, compact, RTL,
+and reduced motion update reactively. CSS variables --ant-rate-star-color,
+--ant-rate-star-size, --ant-rate-star-size-sm, --ant-rate-star-size-lg,
+--ant-rate-star-bg, --ant-rate-star-hover-scale, and --ant-rate-line-width-focus
+can be overridden inline.
 
-ConfigProvider.theme.components.Rate применяет все шесть компонентных токенов
-со строковым starHoverScale. LineWidthFocus подготавливается по исходному правилу
-из lineWidth/lineWidthFocus. Поддержаны нули, undefined, global/component aliases
-и algorithms, cssVar.prefix, вложенные/reset/sibling providers, hover/focus и
-disabled. Переменные темы идут перед ConfigProvider.rate.style и локальным style;
-смена темы сохраняет оценку, radio DOM, фокус, refs и callbacks.
-Сверка: [UMD](../../../tests/browser/fixtures/ant-design-rate-theme-reference.json),
-[SSR](../../../tests/package/rate/rate-theme.ssr.test.ts),
-[browser](../../../tests/browser/rate/rate-theme.spec.ts), `?fixture=rate-theme`.
+ConfigProvider.theme.components.Rate applies all six component tokens with a
+string starHoverScale. LineWidthFocus follows the upstream rule based on
+lineWidth and lineWidthFocus. Zero, undefined, global and component aliases and
+algorithms, cssVar.prefix, nested, reset, and sibling providers, hover, focus,
+and disabled are supported. Theme variables precede ConfigProvider.rate.style
+and local style. Theme updates preserve rating, radio DOM, focus, refs, and
+callbacks. The fixture is `?fixture=rate-theme`. [UMD](../../../tests/browser/fixtures/ant-design-rate-theme-reference.json) ·
+[SSR](../../../tests/package/rate/rate-theme.ssr.test.ts) · [Browser](../../../tests/browser/rate/rate-theme.spec.ts)
 
-Массивы и CSSObject в starHoverScale пока не исполняются. Ant Design 6.6.8
-не регистрирует для них CSS variable, поэтому его hover transform становится none.
-Это наблюдение записано в реестре; native сохраняет прежний scale(1.1).
-Пользовательские CSS variables/styles перекрывают этот fallback. Полный CSSObject
-API, включая исходные _multi_value_/_skip_check_ markers, остаётся отдельным пробелом.
+Array and CSSObject starHoverScale values are outside the current port. Ant Design
+6.6.8 omits the CSS variable for them, so its hover transform is none. The
+registry records the observation. The native implementation keeps scale(1.1),
+which user CSS variables and styles can override. The full CSSObject API,
+including the upstream _multi_value_ and _skip_check_ markers, is a separate gap.
 
-Bind:this предоставляет focus()/blur(), которые игнорируются при disabled;
-bind:nativeElement возвращает ul. AutoFocus применяется только после mount,
-SSR не обращается к DOM и не вызывает callbacks. Нативные button type=button
-заменяют исходные div role=radio: дополнительно доступна активация Space, корневая
-ul получает radiogroup и видимый focus. Исходные cumulative aria-checked,
-aria-posinset/setsize и отдельные tab stops сохранены. Декоративные копии символов
-скрыты от accessibility tree; имя кнопки — её one-based номер.
+Bind:this provides focus() and blur(), which have no effect while disabled.
+Bind:nativeElement exposes the ul. AutoFocus runs after mount. SSR leaves the DOM
+and callbacks alone. Native buttons with type=button supply Space activation.
+The root ul has radiogroup and visible focus. The upstream cumulative aria-checked,
+aria-posinset and aria-setsize, and separate Tab stops are preserved. Decorative
+copies of characters stay out of the accessibility tree. The button name is its
+one-based number.
 
-[vendor/rate.css](../../../src/lib/vendor/rate.css) содержит все 21 правило из закреплённого
-npm-архива с проверкой SHA-256; рецепт rate адаптирует >div к >button, declarations
-сохранены. Rate.svelte дополняет native reset styles, focus и reduced motion.
-StarFilled SVG взят из Ant Design Icons SVG 4.6.0 с существующей MIT-лицензией.
-Фикстура — `?fixture=rate`; unit/SSR и browser
-сценарии проверяют значения, callbacks, геометрию, контексты и cleanup.
+The rate recipe verifies the pinned npm archive SHA-256 and extracts all 21 rules,
+adapting >div to >button and preserving declarations. Rate.svelte adds native
+reset styles, focus, and reduced motion. StarFilled SVG comes from Ant Design
+Icons SVG 4.6.0 with its MIT license. The `?fixture=rate` unit, SSR, and browser
+scenarios cover values, callbacks, geometry, contexts, and cleanup. [Vendored CSS](../../../src/lib/vendor/rate.css)
 
-Полный upstream Tooltip API ограничен текущим публичным
-Svelte Tooltip. Эти части не считаются покрытыми переносом Rate.
-
-
+The supported Tooltip API is the public Svelte Tooltip API. The rest of the
+upstream Tooltip API remains outside Rate's porting coverage.

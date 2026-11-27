@@ -1,9 +1,9 @@
 # Switch
 
-Switch переключает boolean-состояние через `bind:checked` и
-`onCheckedChange(checked)`. Отдельному control можно задать defaultChecked;
-он фиксируется при создании. С привязкой задавайте начальное значение у
-владельца без defaultChecked. Внешние изменения checked не вызывают callback.
+Switch toggles a boolean through `bind:checked` and `onCheckedChange(checked)`.
+Set defaultChecked for a standalone control. The component captures it on
+creation. With a binding, initialize the value in the owner. External checked
+changes leave the callback untouched.
 
 ```svelte
 <script lang="ts">
@@ -13,88 +13,88 @@ Switch переключает boolean-состояние через `bind:checke
 </script>
 
 <Switch id="notifications" bind:checked={notifications} name="notifications">
-  {#snippet checkedChildren()}Вкл{/snippet}
-  {#snippet unCheckedChildren()}Выкл{/snippet}
+  {#snippet checkedChildren()}On{/snippet}
+  {#snippet unCheckedChildren()}Off{/snippet}
 </Switch>
-<label for="notifications">Уведомления</label>
+<label for="notifications">Notifications</label>
 ```
 
-Компонент использует button с type=button, role=switch и aria-checked.
-Space, Enter, нажатие control или связанной подписи меняют состояние один раз
-и не отправляют форму. Нативный onclick доступен; preventDefault в этом
-обработчике отменяет переключение. Доступное имя задаётся через label,
-FormItem или aria-label/aria-labelledby. Snippets checkedChildren и
-unCheckedChildren предназначены для коротких подписей и декоративных иконок.
-Они скрыты от accessibility tree, поэтому имя control не меняется вместе
-с текстом состояния.
+Switch renders a button with type=button, role=switch, and aria-checked.
+Space, Enter, clicking the control, and clicking its associated label each toggle
+once without submitting a form. The native onclick is available. Calling
+preventDefault in it cancels the toggle. Name the control with a label, FormItem,
+aria-label, or aria-labelledby. The checkedChildren and unCheckedChildren
+snippets are for short labels and decorative icons. They stay out of the
+accessibility tree, so the control's name remains constant as its text changes.
 
-Размеры — medium и small. По умолчанию наследуется componentSize;
-small включает малый размер, medium/large провайдера используют обычный.
-Явный size переопределяет наследование. Disabled наследуется из Form/FormItem
-и ConfigProvider, disabled=false переопределяет его. Loading показывает
-индикатор, выставляет aria-busy и блокирует действия даже с disabled=false.
-Существующее checked-состояние при блокировке сохраняется. Стили поддерживают
-светлую/тёмную тему, основные цвета, RTL и prefers-reduced-motion.
+Sizes are medium and small. By default, Switch inherits componentSize. Small
+selects the small size, and medium or large from the provider uses the regular
+size. An explicit size overrides inheritance. Disabled inherits Form, FormItem,
+and ConfigProvider. Disabled=false overrides it. Loading shows an indicator,
+sets aria-busy, and blocks interaction even with disabled=false. The current
+checked state is kept while blocked. Styles support light and dark themes,
+primary colors, RTL, and prefers-reduced-motion.
 
-С name или FormItem.name включённый доступный Switch передаёт `name=on` в
-нативную FormData, как Checkbox. `new FormData(form).get('notifications')`
-возвращает 'on' либо null; false, disabled и loading исключают поле.
-Модель Form при этом хранит boolean, включая false. Атрибут form связывает
-control с внешней формой. Нативный reset восстанавливает defaultChecked
-и обновляет привязку в следующей задаче после события, без callbacks.
-Отменённый reset сохраняет текущее состояние. При удалении Switch ожидающий
-reset отменяется.
+With name or FormItem.name, an enabled, checked Switch submits `name=on` in native
+FormData, like Checkbox. `new FormData(form).get('notifications')` returns 'on'
+or null. False, disabled, and loading exclude the field. The form model still
+stores a boolean, including false. The form attribute associates it with an
+external form. Native reset restores defaultChecked and updates the binding
+in the next task after the event, without callbacks. A canceled reset preserves
+the current state. Unmount cancels a pending reset.
 
-Для Form передавайте `checked={form.values.notifications}` и
+For Form, pass `checked={form.values.notifications}` and
 `onCheckedChange={(value) => form.setFieldValue('notifications', value)}`.
-FormItem передаёт id, имя, required, ошибки и описание кнопке. Ошибка формы
-переводит фокус на Switch; blur отмечает поле touched. Reset формы использует
-resetFields модели. Правило required считает false заданным значением;
-для обязательного включения задайте custom validator:
-`validator: (value) => value === true ? undefined : 'Включите настройку.'`.
-Проверкой значения управляют правила Form.
+FormItem passes id, name, required, errors, and description to the button.
+A form error focuses Switch, and blur marks the field touched. Form reset uses
+the model's resetFields. The required rule treats false as a supplied value.
+To require the switch to be on, set
+`validator: (value) => value === true ? undefined : 'Turn on this setting.'`.
+Form rules own validation.
 
-Сохранение и ошибки остаются у владельца: Switch сообщает новое состояние,
-а владелец задаёт checked и loading.
+The owner handles saving and errors. Switch reports the new state, and the
+owner sets checked and loading.
 
-Value/defaultValue — aliases checked/defaultChecked. Определённый checked имеет
-приоритет над value; defaultChecked, включая false, — над defaultValue. Defaults
-фиксируются при создании. Value поддерживает bind:value; задавайте начальный boolean
-у владельца и используйте один способ привязки на протяжении жизни control.
-Checked/value сохраняют существующие Svelte state conventions: для отклонения
-пользовательского изменения используйте getter/setter function binding.
+Value and defaultValue alias checked and defaultChecked. Defined checked
+takes priority over value. DefaultChecked, including false, overrides
+defaultValue. Defaults are captured at creation. Value supports bind:value.
+Initialize a boolean in the owner and choose one binding for the lifetime
+of the control. To decline a user change under Svelte's checked and value
+state conventions, use a getter and setter function binding.
 
-OnChange(checked, event) и onClick(checked, event) получают native MouseEvent либо
-KeyboardEvent с button в currentTarget. При click сначала работает прежний native
-onclick, способный отменить переключение, затем onCheckedChange, onChange и onClick.
-ArrowLeft задаёт false, ArrowRight — true, в том числе в RTL. Повторная стрелка
-вызывает onChange даже при том же состоянии, как rc-switch; onClick не вызывается.
-OnKeyDown и native onkeydown работают после обработки стрелок. Внешние обновления
-и reset не вызывают source callbacks. OnFocus/onBlur дополняют lowercase handlers.
-Синтетические keydown используют keyCode 37/39: это native эквивалент which,
-который React нормализует для rc-switch; одного key без кода недостаточно.
+OnChange(checked, event) and onClick(checked, event) receive a native MouseEvent
+or KeyboardEvent with the button as currentTarget. A click runs the native
+onclick first, which can cancel the toggle, followed by onCheckedChange,
+onChange, and onClick. ArrowLeft sets false and ArrowRight sets true, including
+in RTL. Repeating the arrow calls onChange even when the state matches, as in
+rc-switch, and leaves onClick untouched. OnKeyDown and native onkeydown run
+after arrow handling. External updates and reset leave these callbacks untouched.
+OnFocus and onBlur extend lowercase handlers. Synthetic keydown uses keyCode
+37 or 39, the native equivalent of the which value normalized by React for
+rc-switch. Supply the code alongside the key.
 
-CheckedChildren/unCheckedChildren принимают string, number или snippet; ноль
-сохраняется. ConfigProvider.switch задаёт class/style и semantic root/content/indicator,
-которые наследуются вложенным provider. ClassNames/styles принимают объекты или
-функции от props с resolved size/disabled. Content относится к обеим внутренним
-подписям, indicator — к handle. Приоритет root style: config.styles.root, config.style,
-styles.root, style. PrefixCls меняет классы и подключает извлечённый CSS;
-rootClassName относится к button.
+CheckedChildren and unCheckedChildren accept a string, number, or snippet.
+Zero is preserved. ConfigProvider.switch sets class, style, and semantic root,
+content, and indicator slots. Nested providers inherit them. ClassNames and
+styles accept objects or functions of props with resolved size and disabled.
+Content applies to both internal labels, and indicator applies to the handle.
+Root style order is config.styles.root, config.style, styles.root, then style.
+PrefixCls changes classes and connects extracted CSS. RootClassName applies to
+the button.
 
-Bind:ref и bind:nativeElement возвращают native button и очищаются при unmount;
-focus(options?)/blur() доступны и через bind:this. AutoFocus вызывает focus при
-mount, tabIndex — alias tabindex. Lowercase autofocus сохраняет HTML-поведение.
-Native form/reset/hidden field, отменяемый onclick, скрытые от accessibility tree
-подписи и span handle сохраняют прежний Svelte контракт. React использует div handle
-и controlled state/event/ref conventions. Source Switch tokens и отдельные theme
-algorithms применяются к обоим размерам; native-only темы сохраняют прежнее
-оформление. Local/shared prefix CSS и Wave подключены; React diagnostics/statics пока не перенесены.
+Bind:ref and bind:nativeElement expose the native button and clear on unmount.
+Bind:this also exposes focus(options?) and blur(). AutoFocus calls focus on
+mount. TabIndex aliases tabindex. Lowercase autofocus follows HTML behavior.
+Native form and reset behavior, the hidden field, cancelable onclick, labels
+hidden from the accessibility tree, and span handle keep the Svelte contract.
+React uses a div handle and its own controlled state, event, and ref conventions.
+Upstream Switch tokens and separate theme algorithms apply to both sizes.
+Native-only themes keep their appearance. Local and shared prefix CSS and
+Wave are connected. React diagnostics and statics remain outside the port.
 
-Switch поддерживает local/shared prefixCls для root, checked/loading/disabled/size/RTL,
-ручки, подписей и loading icon. Empty/undefined наследуют ConfigProvider; непустой
-local prefix имеет приоритет. Canonical token variables и внешний anticon
-namespace сохраняются. Смена prefix сохраняет DOM/ref, checked, focus/selection
-и native hidden form field. Сверка с UMD — `?fixture=switch-prefix` и
-[browser](../../../tests/browser/switch/switch-prefix.spec.ts).
-
+Local and shared prefixCls cover the root, checked, loading, disabled, size,
+RTL, handle, labels, and loading icon. Empty and undefined values inherit
+ConfigProvider, and a nonempty local prefix takes priority. Canonical token
+variables and the external anticon namespace stay in place. A prefix change
+preserves DOM, refs, checked, focus, selection, and the native hidden field.
+Compare with the UMD at `?fixture=switch-prefix`. [Browser](../../../tests/browser/switch/switch-prefix.spec.ts)

@@ -1,124 +1,141 @@
 # Breadcrumb
 
-Для навигации по иерархии страниц передайте `items` в порядке от общего раздела
-к текущей странице. У последней оставьте только название.
+Pass `items` in order from the top-level section to the current page. Give
+the last item just a title.
 
 ```svelte
 <script lang="ts">
   import { Breadcrumb } from '@woodger/antd';
 
   const items = [
-    { title: 'Проекты', href: '/projects' },
-    { title: 'Команда', href: '/projects/team' },
-    { title: 'Участники' }
+    { title: 'Projects', href: '/projects' },
+    { title: 'Team', href: '/projects/team' },
+    { title: 'Members' }
   ];
 </script>
 
 <Breadcrumb {items} />
 ```
 
-Breadcrumb использует nav/ol/li и items: { key?, title?, href?, path?, menu? }.
-Title/separator/dropdownIcon принимают string/number/boolean/Snippet. Snippet
-title должен быть пассивным; для собственных интерактивных элементов используйте
-itemRender. Default title=0 отображается как "0", true — как "true" после
-строкового преобразования upstream; null/undefined/false/пустая строка пропускают
-item без menu. Нативные props, class/rootClassName/style и bind:nativeElement
-относятся к nav. Имя landmark задавайте через aria-label/aria-labelledby.
+Breadcrumb uses `nav`, `ol`, and `li` elements and accepts items shaped as
+`{ key?, title?, href?, path?, menu? }`. `title`, `separator`, and
+`dropdownIcon` accept strings, numbers, booleans, and Snippets. Keep a title
+Snippet passive. Use `itemRender` for custom interactive elements. With the
+default renderer, `title=0` renders as `"0"`, and `true` becomes `"true"`
+after the upstream string conversion. `null`, `undefined`, `false`, and the
+empty string skip items without a menu. Native props, `class`,
+`rootClassName`, `style`, and `bind:nativeElement` apply to the `nav`.
+Name the landmark with `aria-label` or `aria-labelledby`.
 
-Path удаляет один начальный slash, подставляет каждый params[key] один раз и
-добавляет сегмент к предыдущим path: href="#/" + paths.join('/'). Пустые сегменты
-сохраняются; URL encoding не выполняется. Path перекрывает href только на самом
-item с path; item с одним href не добавляет сегмент. Title подставляет все
-совпадения :key, но falsy parameter оставляет исходный текст. Эти особенности
-взяты из getPath/getBreadcrumbName 6.6.8.
-React children sugar Breadcrumb.Item/Separator заменён массивом items.
+`path` removes one leading slash, substitutes each `params[key]` once, and
+appends the segment to preceding paths as `href="#/" + paths.join('/')`.
+Empty segments are preserved and URLs are left unencoded. `path` overrides
+`href` only on the item that supplies it. An item with just `href` adds no
+segment. `title` substitutes all `:key` matches, leaving the original text
+for a falsy parameter. This behavior comes from `getPath` and
+`getBreadcrumbName` in 6.6.8. The `items` array replaces the React children
+syntax for `Breadcrumb.Item` and `Breadcrumb.Separator`.
 
-Separator берётся из local prop, ConfigProvider.breadcrumb.separator, затем "/";
-null/undefined переходят к следующему уровню, false/"" отключают
-автоматический разделитель. { type:'separator', separator? } создаёт отдельный
-aria-hidden li, даже при отключённых автоматических разделителях; его default
-также "/". Как в исходнике, последний видимый item может сохранить разделитель,
-если после него есть пустые items. Последний href не удаляется автоматически.
-Aria/data атрибуты item и class передаются default a/span/button. OnClick без
-href создаёт нативную кнопку type=button вместо clickable span upstream.
+The separator resolves from the local prop, then
+`ConfigProvider.breadcrumb.separator`, then `"/"`. `null` and `undefined`
+fall through, while `false` and `""` disable automatic separators.
+`{ type:'separator', separator? }` creates a separate `aria-hidden` list
+item even when automatic separators are off. Its default is also `"/"`.
+As in the source, the last visible item may retain a separator if followed
+by empty items. The final `href` is retained. Item `aria-*` and `data-*`
+attributes and classes pass through to the default `a`, `span`, or
+`button`. `onClick` without `href` uses a native `type=button` button in
+place of the clickable span in upstream.
 
-ItemRender — Snippet<[route, params, originalItemsOrRoutes, paths]>, который
-полностью задаёт содержимое li. Paths содержит накопленный префикс текущего item.
-Шаблон непрозрачен для родителя: пустой Snippet сохраняет li; React callback с
-null мог удалить его. В custom menu template задайте свой нативный trigger.
-ClassNames/styles поддерживают root/item/separator, объект либо callback ({ props });
-ConfigProvider.breadcrumb задаёт общие class/style и semantic defaults. Классы
-накапливаются; root style слои идут после component variables: context semantic,
-context plain, local semantic, local plain. Item/separator styles применяются на li.
-Callbacks получают resolved separator и прежние native defaults остальных Props:
-в частности, params={} при отсутствии prop. Исходное отсутствие params в callbacks
-сохранено отдельно в [raw reference](../../../tests/browser/fixtures/ant-design-breadcrumb-config-reference.json).
-Конкретный тип params и itemRender сохраняется; config принимает те же semantic
-callbacks, что локальные Props.
-Item.style в закреплённом BreadcrumbItem.tsx не применяется; сохранено поведение
-кода, для стилей элемента используйте styles.item либо itemRender.
+`itemRender` is a `Snippet<[route, params, originalItemsOrRoutes, paths]>`
+that supplies the entire `li` contents. `paths` contains the cumulative
+prefix for the current item. The parent treats the Snippet as opaque, so
+an empty Snippet leaves the `li` in place. A React callback returning
+`null` could remove it. Supply a native trigger in a custom menu template.
 
-Menu.items принимает key/title/label/path/disabled/danger/onClick. Label имеет
-приоритет над title; truthy path конкатенируется с разрешённым href родителя без
-добавления slash. Raw menu.items.href сам по себе не создаёт ссылку в upstream
-и здесь не используется; навигацию задаёт path. DropdownProps передаются текущему
-Svelte Dropdown с placement=bottom по умолчанию. DropdownIcon берётся из local
-prop, ConfigProvider.breadcrumb.dropdownIcon, затем используется обычная стрелка;
-null/undefined переходят к следующему уровню, false скрывает её, 0 отображается.
-Нативные links меню сохраняют href и
-поддерживают Enter/Space, callback/preventDefault, typeahead и disabled. Это
-адаптация прежнего плоского Dropdown; произвольные React Menu options ещё не
-поддержаны. Тема/compact/RTL наследуются через ConfigProvider.
+`classNames` and `styles` support `root`, `item`, and `separator`, as an
+object or a callback receiving `{ props }`. `ConfigProvider.breadcrumb`
+provides shared `class`, `style`, and semantic defaults. Classes accumulate.
+Root styles apply after component variables in this order: context
+semantic, context plain, local semantic, and local plain. Item and separator
+styles apply to the `li`. Callbacks receive the resolved separator and the
+existing native defaults of the other props, including `params={}` when it
+is omitted. The original callback behavior with absent `params` is captured
+separately. [Raw reference](../../../tests/browser/fixtures/ant-design-breadcrumb-config-reference.json)
 
-Undefined component config наследует родительский record; явно заданный объект,
-включая {}, заменяет его целиком. Смена стилей, separator/icon и items сохраняет
-ключевые DOM nodes, native href, фокус и callbacks. Иконки и разделители могут
-быть Snippet; существующая нативная обёртка Dropdown сохраняется.
+The concrete type of `params` and `itemRender` is preserved. Configuration
+accepts the same semantic callbacks as the local props. The pinned
+`BreadcrumbItem.tsx` leaves `item.style` unused, and Svelte preserves that
+behavior. Use `styles.item` or `itemRender` for item styles.
 
-Обёртка Dropdown внутри пункта Breadcrumb сохраняет базовую линию текста
-соседних links/span/button, в том числе при переносе цепочки и custom itemRender.
-Это локальное правило Breadcrumb; шрифты и выравнивание отдельного Dropdown
-не меняются.
-Ссылки Breadcrumb во всех режимах темы используют linkDecoration,
-linkHoverDecoration и linkFocusDecoration, по умолчанию none. Reset ограничен
-компонентом; inline стили ссылок имеют приоритет, оформление внешних links не меняется.
-В menu с custom itemRender внешняя обёртка не добавляет остановку Tab;
-возврат фокуса после Escape направляет его в первый доступный нативный control
-этого пункта.
+`menu.items` accepts `key`, `title`, `label`, `path`, `disabled`,
+`danger`, and `onClick`. `label` takes precedence over `title`. A truthy
+`path` is appended to the resolved parent href without adding a slash.
+Navigation uses `path`. The raw `menu.items.href` on its own creates no link
+in upstream and is unused here. `dropdownProps` passes to the current Svelte
+Dropdown with `placement=bottom` by default. `dropdownIcon` resolves from
+the local prop, then `ConfigProvider.breadcrumb.dropdownIcon`, then the
+standard arrow. `null` and `undefined` fall through, `false` hides it, and
+`0` renders. Native menu links retain their `href` and support Enter, Space,
+callbacks and `preventDefault`, typeahead, and disabled state. This adapts
+the earlier flat Dropdown. Support for arbitrary React Menu options is
+pending. Theme, compact mode, and RTL come from ConfigProvider.
 
-При source-настройках темы `components.Breadcrumb` получает семь исходных defaults:
-цвета пунктов, ссылок, последнего пункта и разделителей, размер иконок и отступ
-разделителя. Поддержаны aliases, component algorithms, CSS prefix/hash,
-нули и undefined. Цвет стрелки меню наследуется от пункта, цвет текста ссылки
-задаётся отдельно; custom dropdownIcon и semantic styles сохраняют этот порядок.
-Semantic root styles и plain style имеют приоритет после component tokens.
-Popup использует собственные Dropdown/Menu scopes. Обновление темы сохраняет
-нативные ссылки, фокус, навигацию и callbacks; native-only оформление сохранено.
+`undefined` inherits the parent configuration record. An explicit object,
+including `{}`, replaces it in full. Updating styles, separator, icon, or
+items preserves key DOM nodes, native `href`, focus, and callbacks. Icons and
+separators may be Snippets. The existing native Dropdown wrapper stays in
+place.
 
-Фикстуры — `?fixture=breadcrumb`,
-`?fixture=breadcrumb-theme` и `?fixture=breadcrumb-config`.
-Unit/SSR/Chromium покрывают маршруты, параметры, разделители, шаблон, стили,
-меню, отмену перехода и production hydration. Рецепт breadcrumb извлекает 21
-правило без keyframes. Полный Menu API остаётся в полном объёме миграции.
+The Dropdown wrapper inside a Breadcrumb item aligns with the text baseline
+of neighboring links, spans, and buttons, including when the trail wraps or
+uses a custom `itemRender`. This rule is scoped to Breadcrumb. Standalone
+Dropdown typography and alignment are unaffected.
 
-PrefixCls задаёт root/item/link/overlay/separator classes; empty/undefined
-наследуют ConfigProvider.prefixCls (по умолчанию ant-breadcrumb), local prefix
-имеет приоритет. Semantic callbacks получают исходное локальное значение.
-Смена prefix сохраняет DOM ссылок и открытого меню, focus, callbacks и navigation.
-Canonical theme marker, Native Dropdown wrapper/baseline и link decoration states
-сохранены; настройки Dropdown/Menu принадлежат своим семействам.
-CSS-рецепт breadcrumb-prefix воспроизводит те же 21 правило как module template.
+Breadcrumb links use `linkDecoration`, `linkHoverDecoration`, and
+`linkFocusDecoration` in every theme mode, all defaulting to `none`. The
+reset is scoped to the component. Inline link styles take precedence and
+external links retain their styling. With a custom `itemRender` in a menu
+item, the outer wrapper adds no Tab stop. Escape restores focus to the first
+accessible native control in the item.
 
-В 6.6.8 BreadcrumbSeparator игнорирует local owner prefix: при prefixCls="trail"
-в provider prefixCls="suite" его class остаётся suite-breadcrumb-separator,
-боковые margins становятся 0px вместо 8px. Native передаёт owner prefix и
-разделителям. [Эталон](../../../tests/browser/fixtures/ant-design-breadcrumb-prefix-reference.json)
-сохраняет raw classes/geometry и matchedSeparators: публичный classNames.separator
-добавляет Source нужный owner class, без изменения UMD. Проверки:
-[browser](../../../tests/browser/breadcrumb/breadcrumb-prefix.spec.ts),
-[SSR](../../../tests/package/breadcrumb/breadcrumb-prefix.ssr.test.ts), `?fixture=breadcrumb-prefix`.
+With an upstream theme configuration, `components.Breadcrumb` receives
+seven upstream defaults covering item, link, final item, and separator
+colors, icon size, and separator spacing. It supports aliases, component
+algorithms, CSS prefixes and hashes, zero values, and `undefined`. The menu
+arrow inherits its color from the item. Link text has a separate color.
+A custom `dropdownIcon` and semantic styles preserve this order. Semantic
+root styles and plain `style` take precedence after the component tokens.
+The popup uses its own Dropdown and Menu scopes. Theme updates preserve
+native links, focus, navigation, callbacks, and native-only styling.
 
-Raw reference сохраняет полный textContent исходника. Сверка текста использует
-видимые trigger/separator fragments: закрытый native Dropdown сохраняется в DOM,
-а пробелы между элементами Svelte не меняют содержимое пунктов.
+Fixtures are `?fixture=breadcrumb`, `?fixture=breadcrumb-theme`, and
+`?fixture=breadcrumb-config`. Unit, SSR, and Chromium tests cover routes,
+parameters, separators, Snippets, styles, menus, canceled navigation, and
+production hydration. The `breadcrumb` recipe extracts 21 rules without
+keyframes. The full Menu API remains in the migration scope.
 
+`prefixCls` sets the root, item, link, overlay, and separator classes.
+`undefined` and the empty string inherit `ConfigProvider.prefixCls`
+(`ant-breadcrumb` by default). The local prefix takes precedence. Semantic
+callbacks receive the original local value. Changing the prefix preserves the
+DOM of links and the open menu, focus, callbacks, and navigation. The canonical
+theme marker, native Dropdown wrapper and baseline, and link decoration
+states are preserved. Dropdown and Menu settings belong to their own
+component families. The `breadcrumb-prefix` CSS recipe reproduces the same
+21 rules as a module template.
+
+In 6.6.8, BreadcrumbSeparator ignores the local owner prefix. With
+`prefixCls="trail"` inside a provider using `prefixCls="suite"`, its class
+remains `suite-breadcrumb-separator` and its side margins become `0px`
+instead of `8px`. Svelte also passes the owner prefix to the separators. The
+reference captures the raw classes and geometry and the `matchedSeparators`
+case, where upstream receives the owner class through the public
+`classNames.separator` prop without changing the UMD bundle. The fixture is
+`?fixture=breadcrumb-prefix`. [Reference](../../../tests/browser/fixtures/ant-design-breadcrumb-prefix-reference.json) ·
+[Browser tests](../../../tests/browser/breadcrumb/breadcrumb-prefix.spec.ts) · [SSR tests](../../../tests/package/breadcrumb/breadcrumb-prefix.ssr.test.ts)
+
+The raw reference preserves the full upstream `textContent`. Text
+comparisons use visible trigger and separator fragments because the closed
+native Dropdown stays in the DOM and whitespace between Svelte elements
+leaves item contents intact.

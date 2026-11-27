@@ -1,8 +1,9 @@
 # Transfer
 
-Transfer показывает два списка для переноса элементов. `targetKeys` всегда
-задаёт владелец; `onChange(nextKeys, direction, moveKeys)` предлагает перенос.
-Измените targetKeys в callback, чтобы его принять. Локального defaultTargetKeys нет.
+Transfer shows two lists for moving items. The owner always sets
+`targetKeys`. `onChange(nextKeys, direction, moveKeys)` proposes a move.
+Update `targetKeys` in the callback to accept it. There is no local
+`defaultTargetKeys`.
 
 ```svelte
 <script lang="ts">
@@ -25,41 +26,47 @@ Transfer показывает два списка для переноса эле
 />
 ```
 
-Строке нужен стабильный string/number/bigint key либо rowKey. Числовой `0`,
-строка `'0'` и bigint не смешиваются. Без rowKey callbacks получают исходные
-объекты; с rowKey — копии с вычисленным key. Входные данные не изменяются.
-Порядок source задаёт dataSource, порядок target — targetKeys. Неизвестные
-target keys сохраняются в onChange, хотя соответствующих строк пока нет.
-Перенос вправо добавляет выбранные enabled keys в начало targetKeys.
+A row needs a stable string, number, or bigint key or `rowKey`. The
+number `0`, the string `'0'`, and bigint keys remain distinct. Without
+`rowKey`, callbacks receive the original objects. With it, they receive
+copies with the calculated key. Input data is left intact. `dataSource`
+defines the source order, and `targetKeys` defines the target order.
+Unknown target keys remain in `onChange` even when their rows are absent.
+Moving right prepends selected enabled keys to `targetKeys`.
 
-Выделение локальное, пока selectedKeys не задан. Управляемый selectedKeys
-обновляется владельцем через onSelectChange(sourceKeys, targetKeys).
-Возврат к undefined сбрасывает его в пустое локальное выделение. Disabled строки
-не переключаются и не переносятся; disabled-only selection не включает actions.
-При переносе onSelectChange с очищенной стороной вызывается перед onChange.
-Удаление данных очищает устаревшее локальное выделение без callbacks.
+Selection is local until `selectedKeys` is supplied. The owner updates
+controlled `selectedKeys` through
+`onSelectChange(sourceKeys, targetKeys)`. Returning to `undefined`
+resets to empty local selection. Disabled rows cannot be toggled or
+moved. Selecting only disabled rows keeps actions disabled. A move
+calls `onSelectChange` with its corresponding side cleared before
+`onChange`. Removing data clears stale local selection without callbacks.
 
-Нативные checkbox поддерживают Tab/Space; label переключает всю строку.
-Shift выбирает диапазон enabled строк, а полностью выбранный диапазон снимает.
-Поиск сбрасывает anchor; выделенные строки вне выдачи сохраняются.
-Default filter использует case-sensitive includes. ShowSearch допускает
-placeholder/defaultValue; defaultValue читается один раз для каждого списка.
-OnSearch/onScroll и onChange используют логические left/source и right/target.
-FilterOption, footer и children получают физическую сторону: она меняется в RTL.
+Native checkboxes support Tab and Space. The label toggles the whole
+row. Shift selects a range of enabled rows or clears it if it is
+already fully selected. Search resets the range anchor, and selected
+rows outside the results stay selected. The default filter uses
+case-sensitive `includes`. `showSearch` accepts `placeholder` and
+`defaultValue`. `defaultValue` is read once for each list. `onSearch`,
+`onScroll`, and `onChange` use the logical `left`/source and
+`right`/target. `filterOption`, `footer`, and `children` receive the
+physical side, which swaps in RTL.
 
-Render остаётся callback, возвращающим текст либо `{ label, value }`:
-label показывает строку, value задаёт title и текст поиска. Вместо JSX callback
-может вернуть Svelte snippet, которому передаётся record. Для результата без
-metadata текст поиска берётся из первого string/number среди результата,
-item.title и item.key. Без render видимая подпись пустая, как в upstream.
+`render` remains a callback returning text or `{ label, value }`.
+`label` supplies the row content. `value` supplies its `title` and
+search text. In place of JSX, the callback can return a Svelte Snippet
+that receives the record. For a result without metadata, the first
+string or number among the result, `item.title`, and `item.key`
+provides the search text. Without `render`, the visible label is blank
+as in upstream.
 
 ```svelte
 <script lang="ts">
   import { Transfer, type TransferKey } from '@woodger/antd';
 
   const dataSource = [
-    { key: 'a', title: 'Анна' },
-    { key: 'b', title: 'Борис' }
+    { key: 'a', title: 'Anna' },
+    { key: 'b', title: 'Boris' }
   ];
   let targetKeys = $state<TransferKey[]>([]);
 </script>
@@ -76,86 +83,106 @@ item.title и item.key. Без render видимая подпись пустая
 />
 ```
 
-Pagination использует независимые страницы, default pageSize=10 и simple=true;
-поддержаны normal mode, showLessItems и showSizeChanger. Явный pageSize задаёт
-управляемый размер. Select current/invert действуют на текущую страницу,
-select all — на все enabled строки выдачи. Пустая выдача сбрасывает страницу и
-локальный pageSize; временное отключение pagination сохраняет текущую страницу.
-OneWay оставляет только перенос вправо; удаление и remove current/all не затрагивают
-disabled строки. ShowSelectAll=false скрывает header controls, сохраняя счётчик.
+Pagination uses independent pages, with `pageSize=10` and `simple=true`
+by default. Normal mode, `showLessItems`, and `showSizeChanger` are
+supported. An explicit `pageSize` sets the controlled page size. Select
+current and invert act on the current page. Select all acts on all
+enabled rows in the results. Empty results reset the page and local
+page size. Temporarily disabling pagination preserves the current page.
+`oneWay` allows moves only to the right. Removal and remove current or
+all leave disabled rows in place. `showSelectAll=false` hides header
+controls while retaining the count.
 
-Children snippet получает dataSource, filteredItems/filteredRenderItems,
-selectedKeys, direction, disabled, semantic slots и callbacks onItemSelect,
-onItemSelectAll/onItemRemove/onScroll. При children встроенная пагинация выключена.
-Footer snippet получает полные props списка и `{ direction }`.
-Наличие children/footer snippet задаёт layout даже при пустом содержимом snippet;
-проверка возвращённого ReactNode на truthiness заменена присутствием snippet.
+The `children` Snippet receives `dataSource`, `filteredItems`,
+`filteredRenderItems`, `selectedKeys`, `direction`, `disabled`,
+semantic slots, and the callbacks `onItemSelect`, `onItemSelectAll`,
+`onItemRemove`, and `onScroll`. With `children`, built-in pagination
+is off. The `footer` Snippet receives the full list props and
+`{ direction }`. The presence of a `children` or `footer` Snippet
+determines layout even when its contents are empty. It replaces the
+truthiness check of the returned ReactNode.
 
-Actions принимает текст либо snippet с disabled/direction/icon/onClick.
-Для собственного disabled/callback используйте `{ children, disabled, onClick }`.
-Свяжите info.disabled/info.onClick с native control: это замена React cloneElement.
-Собственный onClick вызывается перед переносом; preventDefault его не отменяет,
-как в Ant Design. Последующие actions отображаются отдельно; в oneWay это
-все entries после первого.
-SelectAllLabels принимает текст либо callback, который возвращает текст/snippet.
-Значение 0 показывается; null/false/пустая строка включают стандартный счётчик.
+`actions` accepts text or a Snippet with `disabled`, `direction`,
+`icon`, and `onClick`. For custom disabled state and callbacks, use
+`{ children, disabled, onClick }`. Connect `info.disabled` and
+`info.onClick` to the native control in place of React's
+`cloneElement`. A custom `onClick` runs before the move.
+`preventDefault` leaves the move intact, as in Ant Design. Additional
+actions render separately. In `oneWay` mode, these are all entries
+after the first. `selectAllLabels` accepts text or a callback returning
+text or a Snippet. `0` renders. `null`, `false`, and the empty
+string use the default count.
 
-ConfigProvider.transfer задаёт class/style, semantic classNames/styles и
-selectionsIcon. Common slots дополняются source/target slots; стили конкретной
-стороны имеют приоритет над common, локальные слои — над соответствующими context.
-Root style имеет приоритет над styles.root; styles.section/actions задают
-оформление списков и действий. Поддержаны locale, темы/compact, RTL и status.
-Success/validating из исходного InputStatus сохраняют классы без отдельного оформления;
-пустой status наследует FormItem.
-В корень передаются только aria-/data-атрибуты. NativeElement привязывается к div;
-служебные checkbox/search не получают имя/ID внешнего FormItem и не сериализуют keys.
-Native reset не меняет state Transfer или поисковую строку. Как у
-[React input](https://github.com/facebook/react/blob/v19.2.0/packages/react-dom-bindings/src/client/ReactDOMInput.js),
-checkbox возвращает начальный checked DOM до следующего обновления selection;
-внутреннее выделение при этом сохраняется. Для сброса keys обновите controlled props.
-SSR не публикует callbacks и не обращается к DOM. Состояния и ресурсы принадлежат
-экземпляру; меню использует существующий Dropdown.
+`ConfigProvider.transfer` sets `class`, `style`, semantic
+`classNames` and `styles`, and `selectionsIcon`. Source and target slots
+supplement the common slots. Side-specific styles take precedence over
+common styles. Local layers take precedence over the corresponding
+context layers. Root `style` overrides `styles.root`. `styles.section`
+and `styles.actions` style the lists and actions. Locale, themes,
+compact mode, RTL, and status are supported. The upstream
+`InputStatus` values `success` and `validating` retain their classes
+without separate styles. An empty status inherits from FormItem.
 
-RenderEmpty подключён через ConfigProvider с исходными fallback/locale приоритетами
-и выбором array content по стороне. React-specific refs/dev warnings остаются вне переноса.
+Only `aria-*` and `data-*` attributes pass to the root.
+`nativeElement` binds to the `div`. Internal checkboxes and search
+fields receive no outer FormItem name or ID and do not serialize keys.
+A native reset leaves Transfer state and the search query intact. As
+with a React input, the checkbox reverts to its initial DOM checked
+state until selection updates, while internal selection is preserved.
+Update controlled props to reset keys. SSR makes no callbacks and does
+not use the DOM. State and resources belong to each instance. The menu
+uses the existing Dropdown. [React input](https://github.com/facebook/react/blob/v19.2.0/packages/react-dom-bindings/src/client/ReactDOMInput.js)
 
-`prefixCls` задаёт локальный namespace Transfer; пустое значение наследует
-`ConfigProvider.prefixCls`. Классы списков, состояний и действий получают
-соответствующий CSS, а внутренние Checkbox/Input/Button/Pagination сохраняют
-независимые общие namespaces. Canonical theme variables и semantic priorities
-сохраняются. Смена префикса не заменяет поля, checkbox или pager и сохраняет
-query, выделение текста, фокус, selection keys и текущую страницу.
-[UMD-эталон](../../../tests/browser/fixtures/ant-design-transfer-prefix-reference.json)
-содержит 20 конфигураций в обычном, вложенном и reset scopes и три live transitions;
-[browser](../../../tests/browser/transfer/transfer-prefix.spec.ts) и
-[SSR](../../../tests/package/transfer/transfer-prefix.ssr.test.ts) проверяют эти границы.
-Существующий native remove font учитывается отдельно, без изменения raw measurements.
+`renderEmpty` uses ConfigProvider with the original fallback and locale
+precedence and selects array content by side. React-specific refs and
+development warnings remain outside the port.
 
-`ConfigProvider.theme.components.Transfer` применяет шесть component tokens,
-alias overrides и global/component algorithms. Сохранены числовые и строковые
-CSS-размеры, zero/undefined и приоритет config/semantic/local styles. Внутренний
-header padding рассчитывается по исходному правилу с округлением вверх;
-fontHeight берётся из `Math.round(fontSize * lineHeight)`, а не из одноимённого
-переопределённого alias. Checkbox, Input, Button и Pagination используют свои
-компонентные темы. У внутренней пагинации восстановлен CSS scope, включая
-стандартное оформление без source theme.
+`prefixCls` sets the local Transfer namespace. An empty value inherits
+`ConfigProvider.prefixCls`. List, state, and action classes receive
+their corresponding CSS, while internal Checkbox, Input, Button, and
+Pagination keep independent shared namespaces. Canonical theme
+variables and semantic precedence are preserved. Prefix changes keep
+fields, checkboxes, and the pager mounted and preserve the query,
+text selection, focus, selected keys, and current page.
 
-[UMD-эталон](../../../tests/browser/fixtures/ant-design-transfer-theme-reference.json)
-содержит 17 тем / 136 наборов для восьми независимых scopes. Basic списки проверены
-во всех scopes; oneWay, pagination, empty и custom lists — в normal/RTL/priority.
-Сохранено прежнее native отличие: кнопка удаления наследует шрифт строки, тогда
-как в исходном UMD остаётся браузерный размер `13.33px`. Исходный размер сохранён
-в raw measurements; сравнение явно проверяет native inheritance по source item font.
-Ещё одно прежнее отличие — обычный simple Empty без source `ant-empty-small`.
-В эталоне оставлены стандартный source fallback и отдельный замер с явным
-`locale.notFoundContent`, соответствующим native fallback. Последний применяется
-только для сверки естественной высоты пустой секции с undefined metrics.
-[Browser-проверки темы](../../../tests/browser/transfer/transfer-theme.spec.ts) также проверяют
-draft/selection/focus, страницы, keyed rows и порядок move callbacks при обновлении.
-В исходном UMD переход вложенного provider к `inherit:false` в конфигурации эталона
-заменяет input и теряет query/focus; raw observation сохранено отдельно.
-Native сохраняет поле и введённую строку. Для CSS-сверки эталон дополнительно
-восстанавливает ту же строку и фокус через публичный Input.
-Декларации сверяются с UMD отдельным
-[unit-набором](../../../src/lib/theme/theme-transfer-tokens-reference.test.ts),
-[SSR](../../../tests/package/transfer/transfer-theme.ssr.test.ts) не создаёт браузерные ресурсы.
+The UMD reference covers 20 configurations across normal, nested,
+and reset scopes and three live transitions. Browser and SSR tests
+cover these cases. The native remove button's existing font is
+accounted for separately, with raw measurements unchanged.
+[UMD reference](../../../tests/browser/fixtures/ant-design-transfer-prefix-reference.json) · [Browser tests](../../../tests/browser/transfer/transfer-prefix.spec.ts) ·
+[SSR tests](../../../tests/package/transfer/transfer-prefix.ssr.test.ts)
+
+`ConfigProvider.theme.components.Transfer` applies six component
+tokens, alias overrides, and global and component algorithms. Numeric
+and string CSS sizes, zero and undefined values, and precedence of
+configuration, semantic, and local styles are preserved. Internal
+header padding follows the original rule and rounds up.
+`fontHeight` is calculated as `Math.round(fontSize * lineHeight)`
+regardless of the alias with that name. Checkbox, Input, Button, and
+Pagination use their own component themes. The internal pagination's
+CSS scope is restored, including default styling without an upstream
+theme.
+
+The theme reference covers 17 themes and 136 sets across eight
+independent scopes. Basic lists are tested in all scopes. `oneWay`,
+pagination, empty, and custom lists are tested in normal, RTL, and
+priority scopes. The existing native remove button inherits the row's
+font, while the original UMD retains the browser's `13.33px` size.
+The raw measurements retain the original size, and comparisons check
+native inheritance against the upstream item font. The native empty
+state uses a regular simple Empty without `ant-empty-small`. The
+reference retains the upstream fallback and a separate measurement
+with explicit `locale.notFoundContent` matching the native fallback.
+That measurement is used only for the empty section's natural height
+when metrics are undefined. [UMD theme reference](../../../tests/browser/fixtures/ant-design-transfer-theme-reference.json)
+
+Theme browser tests also check drafts, selection, focus, pages, keyed
+rows, and move callback order during updates. In the original UMD,
+switching a nested provider to `inherit:false` in the reference
+replaces the input and loses the query and focus. The raw observation
+is recorded separately. Svelte preserves the field and query. For CSS
+comparisons, the reference also restores the same query and focus
+through the public Input. [Browser theme tests](../../../tests/browser/transfer/transfer-theme.spec.ts)
+
+Unit tests compare declarations with the UMD. SSR creates no browser
+resources. [Unit tests](../../../src/lib/theme/theme-transfer-tokens-reference.test.ts) · [SSR tests](../../../tests/package/transfer/transfer-theme.ssr.test.ts)

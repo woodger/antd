@@ -1,131 +1,128 @@
-# Политика тестирования
+# Testing policy
 
-> Type: Policy. Этот документ задаёт требования к тестируемости, структуре и
-> именованию тестов проекта.
+> Type: Policy. This document defines testability, test structure, and test naming requirements.
 
-## Назначение
+## Purpose
 
-Тест защищает observable contract и конкретный риск. Он не должен зеркалить
-реализацию, фиксировать случайную структуру объекта или проходить вместе с
-неверным production algorithm.
+A test protects an observable contract and addresses a specific risk. It should
+fail for an incorrect production algorithm and avoid coupling to incidental
+object structure or mirroring the implementation.
 
-Основной вопрос:
+> What behavior or boundary does this test protect?
 
-> Какое поведение или boundary защищено?
+## Current test setup
 
-## Текущий test contour
+`npm test` runs Vitest from the repository root with the following settings.
 
-`npm test` запускает Vitest из корня этого репозитория:
+- Environment: `node`
+- Includes: `src/**/*.{test,spec}.{js,ts}` and `tools/**/*.{test,spec}.mjs`
+- Required assertions: `expect.requireAssertions`
+- External network and infrastructure are excluded.
 
-- environment: `node`;
-- include: `src/**/*.{test,spec}.{js,ts}` и `tools/**/*.{test,spec}.mjs`;
-- assertions обязательны через `expect.requireAssertions`;
-- реальная сеть и внешняя infrastructure не используются.
+`npm run check` checks types and Svelte templates without SvelteKit.
+`npm run cli -- check tests` builds the package and checks the types of tests and browser fixtures.
 
-`npm run check` проверяет типы и Svelte-шаблоны без SvelteKit.
-`npm run cli -- check tests` собирает пакет и проверяет типы тестов и браузерных фикстур.
+`npm run cli -- test package` builds the package and runs Vitest for `tests/package`.
+`npm run cli -- test browser` builds the package and runs Playwright Chromium for
+`tests/browser`. The Vite test app uses the built package's public exports.
+The library owns the fixture modules and data. This setup checks DOM behavior,
+focus, keyboard interaction, events, themes, RTL, and component lifecycles
+independently of the consumer website's source.
 
-`npm run cli -- test package` собирает пакет и запускает Vitest для `tests/package`.
-`npm run cli -- test browser` собирает пакет и запускает Playwright Chromium для
-`tests/browser`. Стенд Vite использует публичные exports собранного пакета;
-fixture modules и данные принадлежат библиотеке. DOM, фокус, клавиатура,
-события, темы, RTL и lifecycle компонентов проверяются здесь без исходников сайта.
+Consumers test their own pages and application scenarios. The registry's
+`integration:` references define those checks. The local registry check verifies
+their identifiers against the registry. Consumers run their scenarios with the
+npm package installed.
 
-Приложения-потребители проверяют свои страницы и прикладные сценарии. Ссылки
-`integration:` в реестре являются контрактами этих проверок; локальный registry
-check сверяет их идентификаторы с внутренним реестром. Прикладные сценарии
-потребителя проверяются с установленным npm-пакетом.
+A successful `npm test` covers the unit test setup. Use the relevant runtime
+checks for real DOM and focus behavior, hydration, responsive layout, Canvas
+integration, or a production deployment.
 
-Успешный `npm test` не подтверждает реальный DOM, focus behavior, hydration,
-responsive layout, Canvas browser integration или production deployment.
+Add browser or e2e tooling as a separate dependency and test pipeline change.
 
-Добавление browser/e2e tooling является отдельным изменением dependencies и
-test pipeline. Нельзя внедрять его скрыто внутри обычной component-задачи.
+Keep checks independent of hidden conditional skips based on a service, browser,
+or environment variable. Report an unavailable environment explicitly as a
+blocked check.
 
-В поддерживаемом контуре не допускаются скрытые условные skip по доступности
-сервиса, браузера или environment variable. Недоступность требуемого окружения
-сообщается явно; она не превращается в успешную проверку.
+## Behavior that requires tests
 
-## Что обязательно тестировать
+Test new or changed behavior in the following areas.
 
-Тесты нужны для нового или изменённого поведения в:
+- Parsing, formatting, validation, and normalization
+- Date, time, and time zone boundaries
+- URL query contracts and HTTP statuses
+- Storage serialization, versions, and fallbacks
+- Server allowlists, token handling, and response forwarding
+- Chart layout, pan calculations, and drawing primitives
+- Table formatting, collapse, and clipboard representation
+- Reusable keyboard, list, and calendar engines
+- Concurrency guards, fallbacks, and error branches that risk stale or corrupt state
+- Regression cases for fixed defects
 
-- parsing, formatting, validation и normalization;
-- date/time и timezone boundaries;
-- URL query contract и HTTP statuses;
-- storage serialization, version и fallback;
-- server allowlist, token handling и response forwarding;
-- chart layout, pan calculations и draw primitives;
-- table formatting, collapse и clipboard representation;
-- reusable keyboard/list/calendar engines;
-- concurrency guard, fallback или error branch с риском stale/corrupt state;
-- regression case исправляемого дефекта.
+Test complex pure logic in a reusable component at the engine boundary. Test
+the component's DOM accessibility separately.
 
-Если reusable component содержит сложную чистую логику, её следует проверять на
-engine boundary. Это не заменяет DOM-test доступности самого component.
+## Behavior that usually needs no separate unit test
 
-## Что обычно не требует отдельного unit test
+- Trivial Svelte composition without its own logic
+- A simple pass-through prop or callback
+- CSS declarations or static markup
+- Framework boilerplate
+- A private helper fully covered through public behavior
+- A re-export without transformation
+- Generated OpenAPI declarations
 
-- тривиальная Svelte composition без собственной логики;
-- простой pass-through prop/callback;
-- CSS declaration или статический markup;
-- framework boilerplate;
-- private helper, полностью покрытый публичным behavior;
-- re-export без преобразования;
-- generated OpenAPI declarations.
+Visual or accessibility changes may still require browser smoke tests or manual
+inspection. Distinguish automated and manual checks in the final report.
 
-Отсутствие unit test не означает отсутствие проверки: визуальный или
-accessibility change может требовать browser smoke/manual inspection. Итоговый
-отчёт должен различать автоматическую и ручную проверку.
-
-## Уровни проверки
+## Test levels
 
 ### Pure unit
 
-Предпочтительный уровень для `*.engine.ts`, config, parsers и formatters.
-Проверяет input/output без DOM, Svelte lifecycle, clock или network.
+Prefer this level for `*.engine.ts`, configuration, parsers, and formatters.
+Check inputs and outputs independently of the DOM, the Svelte lifecycle, the clock,
+and the network.
 
 ### Server boundary
 
-Route loader/handler, server Bootstrap и server Infrastructure проверяются с
-контролируемыми `fetch` и env mocks. Тест должен утверждать observable
-status/data/security behavior, а не только факт вызова mock.
+Test route loaders and handlers, server Bootstrap, and server Infrastructure
+with controlled `fetch` and environment mocks. Assert observable status, data, or
+security behavior. Verify mock calls only in support of that behavior.
 
 ### Rendering primitives
 
-Canvas draw functions можно тестировать через минимальный recording context,
-если assertions выражают видимые primitives/order, являющиеся contract.
-Mock Canvas не подтверждает реальную browser rendering.
+Canvas drawing functions can use a minimal recording context when the assertions
+express the visible primitives and order that the contract requires. A browser
+check is required to verify real rendering.
 
-### Component/browser behavior
+### Component and browser behavior
 
-Focus, keyboard event dispatch, popover dismissal, accessible tree, hydration и
-responsive behavior требуют browser-capable проверки. Нельзя подменять её
-тестом, который вызывает private function и заявляет полную component coverage.
+Focus, keyboard events, popover dismissal, the accessibility tree, hydration, and
+responsive behavior require a browser-capable check. A test of a private function
+covers only that function's behavior.
 
-При существенном UI-риске выполняются релевантные browser-тесты или явно
-описывается manual/browser smoke доступными средствами. Дополнительное tooling
-за пределами существующего контура добавляется отдельным изменением.
+For a significant UI risk, run relevant browser tests or report the manual browser
+smoke check you performed. Add tools outside the existing setup as a separate change.
 
 ## Observable behavior
 
-Предпочитайте assertions на:
+Prefer assertions on the following.
 
-- возвращаемое значение;
-- thrown/rejected error;
-- HTTP response;
-- serialized output;
-- public controller state после действия;
-- зарегистрированный visible draw operation;
-- отсутствие утечки token/private data;
-- сохранённый supported side effect.
+- Return values
+- Thrown or rejected errors
+- HTTP responses
+- Serialized output
+- Public controller state after an action
+- Recorded visible draw operations
+- Protection against token or private data leaks
+- Preservation of a supported side effect
 
-Избегайте assertions только на количество вызовов mock, если production result
-может быть неверным при том же количестве вызовов.
+Assert more than mock call counts when the same counts could occur with an incorrect
+production result.
 
-## Структура и именование
+## Structure and naming
 
-Используйте установленный в проекте Vitest style:
+Use the project's Vitest style.
 
 ```ts
 describe('resolvePanDelta', () => {
@@ -137,161 +134,143 @@ describe('resolvePanDelta', () => {
 });
 ```
 
-Top-level `describe` называет публичную функцию, module contract или component
-engine. `it` описывает ожидаемое поведение прямым глаголом:
+Use the top-level `describe` to name the public function, module contract, or
+component engine. Use `it` to describe the expected behavior with a direct verb.
 
-- `returns`, `rejects`, `parses`, `formats`;
-- `preserves`, `normalizes`, `maps`, `builds`;
-- `ignores`, `prevents`, `keeps`, `does not`.
+- `returns`, `rejects`, `parses`, `formats`
+- `preserves`, `normalizes`, `maps`, `builds`
+- `ignores`, `prevents`, `keeps`, `does not`
 
-Избегайте `works`, `handles correctly`, `test ...` и повторения subject в каждом
-case name.
+Avoid `works`, `handles correctly`, `test ...`, and repeating the subject in
+every case name.
 
-Nested `describe` используется только когда у subject есть несколько ясных
-public operations. Не создавайте hierarchy ради визуального объёма.
+Nest `describe` blocks only when the subject has several distinct public
+operations. Keep the hierarchy focused on those operations.
 
 ## Arrange, Act, Assert
 
-Три фазы разделяются пустыми строками, когда они различимы. Комментарии
-`Arrange/Act/Assert` для короткого теста не нужны.
+Separate the three phases with blank lines when they are distinct. Short tests
+can omit `Arrange/Act/Assert` comments.
 
-Несколько assertions допустимы, если вместе описывают один результат или
-инвариант. Независимые причины failure разделяются на отдельные cases.
+Group assertions that express a single outcome or invariant. Give independent
+failure conditions their own cases.
 
 ## Test data
 
-Данные должны быть минимальными, но реалистичными для contract.
+Use the smallest data set that realistically represents the contract.
 
-- Важные для поведения параметры видны внутри `it`.
-- Не добавляйте поля, не участвующие в scenario.
-- Не используйте случайное значение или текущее время без контроля.
-- Большой shared fixture допустим только для устойчивой boundary-структуры,
-  когда локальное повторение ухудшает ясность.
-- Test helper не должен заново реализовывать production algorithm для expected
-  value.
+- Show behavior-critical inputs inside `it`.
+- Include only fields that participate in the scenario.
+- Control any random value or use of the current clock.
+- Share a large fixture only for a stable boundary shape when local repetition reduces clarity.
+- Derive expected values independently of the production algorithm.
 
-Для matrix/time-series tests размер данных выбирается минимальным, который
-проявляет alignment, boundary или null behavior.
+For matrix and time-series tests, choose the smallest data set that exposes the
+alignment, boundary, or null behavior.
 
-Синтетические unit fixtures используют собственные данные и явно переданные
-зависимости. Они не читают operational-конфигурацию, production defaults или
-deployment identities ради проверки чужого parser, resolver или engine.
+Use owned data and explicit dependencies in synthetic unit fixtures. Keep operational
+configuration, production defaults, and deployment identities out of tests for
+unrelated parsers, resolvers, or engines.
 
-Исключение — отдельная conformance-проверка, предметом которой является сам
-реальный артефакт: npm-пакет, декларации, CSS-рецепт или реестр. Название suite
-или теста явно называет этот предмет; исходный артефакт читается без изменений
-и не становится общей fixture для несвязанных сценариев. Такой тест проверяет
-актуальный контракт, а не историю перемещений и переименований файлов.
+A separate conformance check may read the real artifact that it tests, such as an
+npm package, declarations, a CSS recipe, or the registry. Name that artifact in
+the suite or test name. Read it unchanged and keep it out of fixtures for unrelated
+scenarios. Verify its current contract independently of file moves or renames.
 
-Браузерные фикстуры и локальные lifecycle helpers допустимы. Они делают сценарий
-изолированным, но не скрывают важные параметры, состояние или ожидаемый результат.
-Каждый тест создаёт свои данные; состояние другого сценария не используется.
+Browser fixtures and local lifecycle helpers can isolate a scenario while keeping
+important inputs, state, and expected results visible. Each test creates its own data
+and runs independently of other scenarios' state.
 
-## Изоляция
+## Isolation
 
-Тест не зависит от:
+Run tests independently of external networks and services, production credentials,
+test file order, mutable globals from another suite, the uncontrolled current date
+or time zone, and stale `build` or `.svelte-kit` output. Use real `localStorage`
+only in browser integration tests.
 
-- внешней сети и внешних сервисов;
-- production credentials;
-- порядка test files;
-- mutable global state другого suite;
-- текущей timezone/даты без явной фиксации;
-- реального `localStorage`, если тестируется не browser integration;
-- stale `build` или `.svelte-kit` output.
+Restore changed environment variables, timers, spies, and globals after each case
+or suite.
 
-Изменённые env, timers, spies и globals восстанавливаются после case/suite.
+## Async and concurrency
 
-## Async и concurrency
+Await the promise under test. Control the promise or timer when possible instead
+of waiting with an arbitrary `setTimeout`.
 
-Async test обязан ожидать проверяемую Promise. Не используйте произвольный
-`setTimeout` для ожидания состояния, если можно контролировать Promise/timer.
+When implementing latest-request-wins logic, check that a late response from an
+older request leaves newer state intact if that behavior is observable at the
+test boundary.
 
-При логике latest-request-wins проверяется, что поздний ответ старого запроса не
-перезаписывает новый state, если этот behavior доступен через тестируемую
-boundary.
+Control timers and time through the existing runner in unit tests. When testing
+an application delay in the browser, control time or operation completion. Wait
+for observable DOM state. Clean up test clocks and interceptors.
 
-В unit-тестах таймеры и время контролируются через существующий test runner;
-в браузере используется управление временем или завершением операции, когда
-проверяется задержка приложения. Для реального DOM ожидается наблюдаемое
-состояние, а не произвольная пауза. Использованные часы и перехваты очищаются.
+When verifying that a late callback stays suppressed, progress past the point at
+which it would have run. Advance the controlled clock or complete the deferred
+operation after reset or unmount. Check actual CSS animations in the browser.
 
-Проверка отсутствия позднего callback должна пройти за момент его ожидаемого
-срабатывания: управляемое время продвигается или отложенная операция завершается
-после reset/unmount. Мгновенная проверка начального состояния не заменяет такой
-сценарий. Ожидание реальной CSS-анимации остаётся браузерной проверкой.
+## Error and boundary cases
 
-## Error и boundary cases
+Choose the cases that apply to the module's contract.
 
-Для соответствующей ответственности проверяются:
-
-- empty/missing input;
-- минимальное и максимальное допустимое значение;
-- invalid date/format;
-- duplicate query parameter;
-- range/window overflow;
-- null/NaN/flat data в chart math;
-- repeated call и cleanup;
-- unavailable/disabled branch;
-- storage version mismatch и malformed JSON;
-- missing private token и unknown proxy path.
-
-Не каждый модуль требует всех случаев. Набор определяется его contract.
+- Empty or missing input
+- Minimum and maximum allowed values
+- Invalid dates or formats
+- Duplicate query parameters
+- Range or window overflow
+- Null, NaN, or flat data in chart calculations
+- Repeated calls and cleanup
+- Unavailable or disabled branches
+- Storage version mismatches and malformed JSON
+- Missing private tokens and unknown proxy paths
 
 ## Regression tests
 
-Regression test фиксирует корректное текущее поведение, а не имя старой ошибки
-или прежнюю implementation detail.
+A regression test protects correct current behavior. Name the outcome it protects.
+Add a short comment on the historical context only when it explains an otherwise
+unclear scenario.
 
-Имя описывает защищаемый outcome. Исторический контекст добавляется коротким
-комментарием только если без него scenario выглядит случайным.
+When removing supported behavior, remove tests and fixtures dedicated to it.
+Keep tests for historical API names when an active compatibility contract requires them.
 
-После удаления поддерживаемого behavior удаляются посвящённые только ему tests и
-fixtures. Не сохраняйте отрицательный тест на историческое имя API без текущего
-compatibility contract.
+Deprecated Ant Design props, aliases, and adapters remain part of the public
+contract while the library supports them. Keep their regression tests for as
+long as the corresponding behavior is supported.
 
-Deprecated props, aliases и адаптации Ant Design остаются актуальным публичным
-контрактом, пока библиотека их поддерживает. Их regression-тесты не удаляются
-только из-за исторического происхождения API.
+## Snapshots and visual assertions
 
-## Snapshot и visual assertions
+Use a snapshot only for a stable output contract when narrower assertions express
+the intent less clearly. Prefer semantic assertions for large Svelte DOM trees.
 
-Snapshot допускается только для стабильного output contract, когда точечные
-assertions хуже выражают намерение. Не используйте snapshot большого Svelte DOM
-как замену semantic assertions.
+Pixel screenshots and visual regression testing require approved browser tooling
+and a deterministic environment. Report a one-off screenshot as a manual check.
 
-Pixel screenshot/visual regression требует принятого browser tooling и
-детерминированного окружения. Разовая manual screenshot не называется
-автоматическим regression test.
+## Scope and validation
 
-## Связь с задачей
+Limit a test diff to the affected behavior. Rewriting adjacent suites, changing
+Vitest configuration, and introducing another test framework require explicit scope.
 
-Тестовый diff ограничивается затронутым behavior. Нельзя переписывать соседние
-suites, менять Vitest config или вводить новый test framework ради локальной
-правки без явного scope.
+Run the narrow test file first, then `npm test`. Add lint, `svelte-check`, a build,
+and smoke checks in proportion to the change.
 
-Сначала запускается узкий test file, затем `npm test`; lint, `svelte-check`,
-build и smoke добавляются соразмерно типу изменения.
+Report a pass only after the command runs successfully.
 
-Нельзя утверждать, что проверка прошла, если команда не выполнялась успешно.
+## Test comments
 
-## Комментарии в тестах
+Start with a clear test name and test data. Add a comment only when the test's
+structure cannot express a production risk, regression context, non-obvious
+fixture, or the reason for an expected value.
 
-Сначала ясными делаются имя теста и test data. Комментарий добавляется только
-для production-риска, regression context, неочевидного fixture или причины
-expected value, которые нельзя выразить структурой теста.
+Use comments to explain the following when needed.
 
-Комментарий уместен, если он объясняет:
+- A time zone or local date invariant, or unusual valid upstream input
+- The formula for a non-obvious expected value
+- A limitation of a mock Canvas, `fetch`, or browser API
+- An adjacent responsibility that the test deliberately leaves outside its scope
+- A fixture whose important value is null, zero, duplicated, or out of range
 
-- timezone/local-date invariant или странный допустимый upstream input;
-- формулу неочевидного expected value;
-- ограничение mock Canvas, `fetch` или browser API;
-- намеренно не проверяемую соседнюю responsibility;
-- fixture с важным `null`, zero, duplicate или out-of-range value.
+Short tests can omit `Arrange`, `Act`, `Assert`, `create mock`, `call function`,
+and `check result` comments. Use `Given`, `When`, and `Then` only in long
+integration-style scenarios when they help readers navigate.
 
-Комментарии `Arrange`, `Act`, `Assert`, `create mock`, `call function` и `check
-result` в коротком тесте не нужны. `Given`/`When`/`Then` допустимы только в
-длинном integration-style scenario, если помогают навигации.
-
-Комментарии пишутся на английском. Комментарий должен описывать текущий риск,
-а не историю рефакторинга, и оставаться полезным после behavior-preserving
-изменения реализации.
+Write comments in English. Describe the current risk and make the comment useful
+across implementation changes that preserve behavior.

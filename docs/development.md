@@ -1,20 +1,20 @@
-# Руководство разработчика
+# Developer guide
 
-## Разработка библиотеки
+## Library development
 
-- [Архитектура](architecture/overview.md) — устройство репозитория.
-- [UI Architecture](architecture/ui.md) — направление зависимостей и владельцы контрактов.
-- [Реестр и CSS-инструменты](reference/ant-design-porting/readme.md) — покрытие и извлечение стилей.
-- [Локальный эталон Ant Design](reference/ant-design-porting/upstream.md) — исходники для сверки.
-- [Политики разработки](policy/index.md) — правила проекта.
-- [История изменений](../CHANGELOG.md).
+- Repository structure. [Architecture](architecture/overview.md)
+- Dependency direction and contract ownership. [UI architecture](architecture/ui.md)
+- Coverage tracking and style extraction. [Registry and CSS tools](reference/ant-design-porting/readme.md)
+- Source code for comparison. [Local Ant Design source](reference/ant-design-porting/upstream.md)
+- Repository rules. [Development policies](policy/index.md)
+- [Changelog](../CHANGELOG.md)
 
-## Локальная разработка
+## Local development
 
-### Установка, сборка и проверки
+### Installation, build, and checks
 
-Эти команды устанавливают зависимости, проверяют исходники и тесты, а также
-собирают пакет. Запускайте их из корня репозитория:
+Run these commands from the repository root to install dependencies, check the source
+and tests, and build the package.
 
 ```sh
 npm ci
@@ -26,57 +26,56 @@ npm run build
 npm run cli -- test package
 ```
 
-- `npm ci` устанавливает зависимости из lockfile.
-- `npm run lint` проверяет исходники, тесты и инструменты линтером.
-- `npm run check` проверяет типы и Svelte-компоненты.
-- `npm run cli -- check tests` собирает пакет и проверяет типы тестов и браузерных фикстур.
-- `npm test` запускает тесты исходников и инструментов.
-- `npm run build` собирает пакет в `dist`.
-- `npm run cli -- test package` собирает пакет и запускает его SSR-тесты.
+- `npm ci` installs dependencies from the lockfile.
+- `npm run lint` lints source code, tests, and tools.
+- `npm run check` checks types and Svelte components.
+- `npm run cli -- check tests` builds the package and checks the types of tests and browser fixtures.
+- `npm test` runs tests for the source code and tools.
+- `npm run build` builds the package into `dist`.
+- `npm run cli -- test package` builds the package and runs its SSR tests.
 
-`npm run build` использует официальный `@sveltejs/package` и создаёт `dist`:
-Svelte-компоненты, JavaScript-модули, декларации `.d.ts`, CSS и лицензии vendor.
-`npm run dev` обновляет этот каталог в watch-режиме. Тесты исключены из npm-архива.
+`npm run build` uses the official `@sveltejs/package` to produce Svelte components,
+JavaScript modules, `.d.ts` declarations, CSS, and licenses for vendored code in `dist`.
+`npm run dev` updates that directory in watch mode. The npm archive excludes tests.
 
-Для `cli -- check tests` используется стандартный TypeScript-движок `svelte-check`.
-Опциональный `--tsgo` в этой схеме неверно разрешает часть модулей self-reference
-пакета; обычная проверка сохраняет строгие настройки и проверяет тот же набор файлов.
+`cli -- check tests` uses the standard TypeScript engine in `svelte-check`. The optional
+`--tsgo` mode resolves some package self-references incorrectly in this setup. The standard
+check keeps the same strict settings and covers the same files.
 
-### Браузерные проверки
+### Browser checks
 
-Браузерные проверки компонентов находятся в `tests/browser`, SSR-проверки
-собранного публичного пакета — в `tests/package`. Они используют собственные
-фикстуры. Для браузерных проверок установите Chromium:
+The component browser tests live in `tests/browser`, and the SSR tests for the built public
+package live in `tests/package`. Each uses its own fixtures. Install Chromium for the browser tests.
 
 ```sh
 npm exec -- playwright install chromium
 npm run cli -- test browser
 ```
 
-Playwright собирает текущий пакет и запускает Vite-стенд на `127.0.0.1:4175`.
-Параметры тестового инструмента передаются после разделителя `--` в команде CLI.
+Playwright builds the current package and starts the Vite test app on `127.0.0.1:4175`.
+Pass test runner options after the `--` separator in the CLI command.
 
 ```sh
 npm run cli -- test package -- --maxWorkers=1
 npm run cli -- test browser -- --workers=1 tests/browser/typography/typography.spec.ts
 ```
 
-### Упаковка
+### Packaging
 
-После установки зависимостей выполните из корня репозитория:
+After installing dependencies, run this command from the repository root.
 
 ```sh
-npm run build
-npm pack --ignore-scripts
+npm pack
 ```
 
-`npm pack` запишет архив `woodger-antd-<версия>.tgz` в текущий каталог и выведет его имя.
-Этот файл можно установить в приложение через `npm install`.
+The `prepack` hook runs `npm run build` before npm packages the library. `npm pack` writes
+`woodger-antd-<version>.tgz` to the current directory and prints its filename. Install the
+archive in an application with `npm install`.
 
-### Служебный CLI
+### Development CLI
 
-Помимо проверок пакета, служебный CLI работает с реестром покрытия и
-извлечёнными стилями Ant Design.
+The CLI runs package checks and works with the coverage registry and CSS extracted
+from Ant Design.
 
 ```sh
 npm run cli -- --help
@@ -86,14 +85,12 @@ npm run cli -- registry show avatar
 npm run cli -- css all --check
 ```
 
-- `--help` показывает доступные команды и параметры.
-- `registry check` проверяет реестр, локальные подтверждения и актуальность сводки.
-- `registry report` обновляет сгенерированную сводку покрытия.
-- `registry show avatar` выводит запись Avatar; вместо `avatar` можно указать другой компонент.
-- `css all --check` сравнивает извлечённые стили с файлами проекта по всем рецептам.
-  Для проверки нужен локальный архив Ant Design; способы его получить описаны
-  в [справочнике инструментов](reference/ant-design-porting/readme.md#извлечение-css).
+- `--help` lists available commands and options.
+- `registry check` validates the registry, local evidence, and the generated summary.
+- `registry report` updates the generated coverage summary.
+- `registry show avatar` prints the Avatar entry. Substitute another component name to see its entry.
+- `css all --check` compares the extracted styles with the repository files for each recipe.
+  The check needs a local Ant Design archive. [CSS extraction](reference/ant-design-porting/readme.md#css-extraction)
 
-Ссылки `integration:` обозначают проверки потребителя, которые выполняются
-отдельно. Метаданные переноса хранятся в
-[реестре репозитория](reference/ant-design-porting/registry.json).
+`integration:` references identify checks that consumers run separately. Porting metadata
+lives in the [repository registry](reference/ant-design-porting/registry.json).

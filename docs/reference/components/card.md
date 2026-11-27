@@ -1,111 +1,109 @@
 # Card
 
-Поместите содержимое карточки внутрь `Card`. Для ссылки или другого действия
-рядом с заголовком используйте сниппет `extra`.
+Put card content inside `Card`. Use the `extra` snippet for a link or other
+action beside the title.
 
 ```svelte
 <script lang="ts">
   import { Card } from '@woodger/antd';
 </script>
 
-<Card title="Команда">
+<Card title="Team">
   {#snippet extra()}
-    <a href="/team">Все участники</a>
+    <a href="/team">All members</a>
   {/snippet}
 
-  <p>Ответственная за проект — Анна.</p>
+  <p>Anna is responsible for the project.</p>
 </Card>
 ```
 
-Слоты
-title/extra/cover/actions и Meta.avatar/title/description принимают text/number/
-boolean/Snippet; 0 и true считаются присутствующими, но boolean не выводит текст.
-Children Card/Grid — Snippet. Все три компонента поддерживают нативные attrs,
-class/style и bind:nativeElement; Card дополнительно rootClassName.
-Корни остаются div, actions — ul/li/span с равными долями ширины. Интерактивный
-контент actions задавайте нативными buttons/links; hoverable не добавляет роль
-button или клавиатурную активацию контейнеру.
+Title, extra, cover, actions, and Meta.avatar, title, and description accept
+text, numbers, booleans, or snippets. Zero and true count as present, and
+booleans render no text. Card and Grid children are snippets. All three
+components support native attributes, class, style, and bind:nativeElement.
+Card also accepts rootClassName. Roots stay divs. Actions use ul, li, and span
+with equal shares of the width. Use native buttons and links for interactive
+action content. Hoverable changes styling and leaves the container's role
+and keyboard behavior alone.
 
-Пустой Card не создаёт body. Loading заменяет только children на активный
-Skeleton без title с четырьмя строками; header/cover/actions остаются. State
-заменённого содержимого уничтожается, как в upstream. Если фокус был внутри
-body, он паркуется на body (tabindex=-1, aria-busy); unmount передаёт его соседнему
-control. Это доступная Svelte-адаптация поверх исходной разметки.
+An empty Card omits its body. Loading replaces children with an active Skeleton
+with four lines and no title. Header, cover, and actions stay in place.
+The replaced content loses its state, as in upstream. Focus from inside the
+body is parked on body with tabindex=-1 and aria-busy. Unmount restores focus
+to a nearby control. This is the Svelte accessibility adaptation.
 
-Variant=outlined/borderless. Hoverable
-по умолчанию false, type=inner меняет header/body. Small наследуется из явно
-заданного ConfigProvider.componentSize; medium/large используют
-обычную геометрию. По умолчанию small body/header padding равен 12px;
-остальные размеры/цвета используют theme/compact tokens.
-ClassNames/styles Card принимают root/header/body/extra/title/actions/cover,
-Meta — root/section/avatar/title/description, объект либо callback ({ props }).
-Style корня перекрывает styles.root; styles.header/body оформляют header/body.
-Meta root следует тому же приоритету.
+Variant accepts outlined and borderless. Hoverable defaults to false.
+Type=inner changes header and body. Small inherits an explicitly set
+ConfigProvider.componentSize. Medium and large use regular geometry.
+Small body and header padding defaults to 12px. Other sizes and colors
+use theme and compact tokens. Card classNames and styles accept root, header,
+body, extra, title, actions, and cover. Meta accepts root, section, avatar,
+title, and description. Both use an object or a ({ props }) callback.
+Root style overrides styles.root. Styles.header and styles.body style their
+slots. Meta root follows the same precedence.
 
-Непустой `Card.prefixCls` задаёт корень, состояния, header/body/cover/actions;
-пустое значение наследует `ConfigProvider.prefixCls`. Grid/Meta используют базовый
-Card prefix: undefined наследует ближайшего владельца, непустое значение задаёт
-свой prefix, явная пустая строка выбирает общий provider. Callback props сохраняют
-исходный локальный prefix. Typography и Tabs используют общий namespace независимо
-от local Card; component theme variables и canonical markers сохраняются.
-Смена prefix сохраняет Card/Grid/Meta DOM/ref, active tab, draft/selection/focus
-и FormData. Grid detection использует стабильный marker с прежним canonical fallback.
+A nonempty `Card.prefixCls` sets the root, states, header, body, cover, and
+actions. An empty value inherits `ConfigProvider.prefixCls`. Grid and Meta
+use the base Card prefix. Undefined inherits the nearest owner, a nonempty
+value sets its own prefix, and an explicit empty string selects the shared
+provider. Callback props retain the original local prefix. Typography and
+Tabs use the shared namespace independently of local Card. Component theme
+variables and canonical markers stay in place. Prefix changes preserve
+Card, Grid, and Meta DOM and refs, active tab, draft, selection, focus, and
+FormData. Grid detection uses a stable marker with the existing canonical fallback.
 
-В Ant Design Card не передаёт local prefix в Meta/Grid: raw и matched замеры
-через их публичный prefixCls сохранены отдельно. Native наследует owner prefix.
-При shared local class между Suite/Inner исходный CSS cache также может оставить
-selector только для Suite Typography/Tabs. Raw/matched snapshot сохранён;
-freshNested измеряет свежий Source Inner с той же темой, expectedNative использует
-его для nested scope. Native изолирует class и namespace.
-Сверка: [официальные prefix-замеры](../../../tests/browser/fixtures/ant-design-card-prefix-reference.json),
-[браузер](../../../tests/browser/card/card-prefix.spec.ts) и
-[SSR](../../../tests/package/card/card-prefix.ssr.test.ts), `?fixture=card-prefix`.
+Upstream Card omits its local prefix when mounting Meta and Grid. Raw
+measurements and matching measurements with their public prefixCls stay
+separate. Native children inherit the owner prefix. With a shared local class
+between Suite and Inner, the upstream CSS cache can also retain selectors
+only for Suite Typography and Tabs. The reference preserves raw and matched
+snapshots. FreshNested measures a fresh upstream Inner with the same theme,
+and expectedNative uses it for the nested scope. The native implementation
+isolates class and namespace. The fixture is `?fixture=card-prefix`.
+[Official prefix measurements](../../../tests/browser/fixtures/ant-design-card-prefix-reference.json) · [Browser](../../../tests/browser/card/card-prefix.spec.ts) · [SSR](../../../tests/package/card/card-prefix.ssr.test.ts)
 
-ConfigProvider.card задаёт variant, class/style и те же semantic classNames/styles;
-ConfigProvider.cardMeta независимо настраивает Meta через class/style и semantic
-slots. Классы context/local объединяются. Стили корня: context semantic → context
-style → local semantic → local style; переменные темы идут перед ними.
-Явный вложенный record, включая {}, заменяет соответствующий родительский целиком;
-undefined наследует его. Обновления сохраняют editors, focus/selection, FormData,
-выбранную вкладку и существующие callbacks. Фикстура — `?fixture=card-config`,
-[проверки](../../../tests/browser/card/card-config.spec.ts) используют неизменённый UMD 6.6.8.
+ConfigProvider.card sets variant, class, style, and the same classNames and
+styles slots. ConfigProvider.cardMeta configures Meta separately. Context
+and local classes merge. Root style order is context semantic, context style,
+local semantic, then local style. Theme variables come first. An explicit
+nested record, including {}, replaces the corresponding parent in full.
+Undefined inherits. Updates preserve editors, focus, selection, FormData,
+selected tab, and callbacks. The `?fixture=card-config` checks use the
+unchanged 6.6.8 UMD. [Checks](../../../tests/browser/card/card-config.spec.ts)
 
-Semantic callbacks Card сохраняют прежние native defaults: loading/hoverable=false
-и tabProps={} при отсутствии этих props. Raw source mergedProps оставляет их
-undefined; size/variant разрешены в обоих случаях. Это отличие записано в
-[эталоне](../../../tests/browser/fixtures/ant-design-card-config-reference.json)
-отдельно от CSS-сценариев с явно заданными flags.
+Card semantic callbacks keep the native defaults loading=false, hoverable=false,
+and tabProps={} when the props are omitted. Raw upstream mergedProps leaves
+them undefined. Both resolve size and variant. The reference records this
+separately from CSS cases with explicit flags. [Reference](../../../tests/browser/fixtures/ant-design-card-config-reference.json)
 
-ConfigProvider.theme.components.Card применяет все 13 компонентных токенов
-эталона, включая bodyPadding/bodyPaddingSM, headerHeight/headerHeightSM,
-headerBg и actionsBg. Defaults пересчитываются из aliases и component algorithm;
-вложенные providers, inherit=false, dark/compact и реактивные изменения изолированы.
-Переменные темы идут перед semantic/user styles. Grid/Meta наследуют scope Card;
-padding Grid использует paddingLG, а не bodyPadding, как в upstream.
-Настройки theme.cssVar описаны в [справочнике темы](../theme-context.md).
+ConfigProvider.theme.components.Card applies all 13 upstream component tokens,
+including bodyPadding, bodyPaddingSM, headerHeight, headerHeightSM, headerBg,
+and actionsBg. Defaults are computed from aliases and the component algorithm.
+Nested providers, inherit=false, dark and compact, and live changes are isolated.
+Theme variables come before semantic and user styles. Grid and Meta inherit
+the Card scope. Grid padding uses paddingLG as upstream does. [Theme context](../theme-context.md)
 
-CardGrid по умолчанию hoverable=true и width=33.33%; style переопределяет ширину.
-Card определяет только прямые Grid внутри body. При SSR CSS :has сохраняет
-геометрию до mount, затем direct-child MutationObserver обновляет класс
-ant-card-contain-grid; listener очищается, отложенные callbacks игнорируются.
-Для точного SSR-класса и начального loading с Grid задавайте containGrid=true;
-false отключает auto detection. Это адаптация непрозрачного Snippet вместо
-React children inspection. Флаг сохраняется во время загрузки уже показанного
-Grid. Meta вне Card не подключает самостоятельные стили, как в upstream.
+CardGrid defaults to hoverable=true and width=33.33%. Style can override width.
+Card detects direct Grid children in body. SSR uses CSS :has to preserve
+geometry until mount. A direct-child MutationObserver then updates
+ant-card-contain-grid. Cleanup removes the observer and ignores pending callbacks.
+Use containGrid=true for the exact SSR class and initial loading with Grid.
+False disables detection. This adapts opaque snippets to the Grid structure.
+The flag persists while an already visible Grid is loading. Meta outside
+Card omits standalone styles, as upstream does.
 
-TabList задаёт заголовки Tabs, а body остаётся children Card; выбор поддерживает
-bind:activeTabKey/onTabChange. DefaultActiveTabKey (включая пустую строку) имеет
-приоритет над tabProps.defaultActiveKey. Label задаёт заголовок, включая
-явные null/undefined. Размер вкладок large или small по размеру Card;
-tabProps.size переопределяет его. Card переопределяет tabProps items/class/onChange/
-tabBarExtraContent; остальные поддерживаемые Tabs props передаются. Верхний
-activeTabKey имеет приоритет над tabProps.activeKey. TabBarExtraContent поддерживает
-правый слот либо { left, right }. Клавиатура и fallback ключей следуют ранее
-согласованному Svelte Tabs; полный React Tabs API пока не перенесён.
+TabList supplies Tabs headers, and Card children still render the body.
+Selection supports bind:activeTabKey and onTabChange. DefaultActiveTabKey,
+including the empty string, takes precedence over tabProps.defaultActiveKey.
+Label supplies the heading, including explicit null or undefined. Card size sets
+large or small tabs, and tabProps.size overrides it. Card owns items, class,
+onChange, and tabBarExtraContent. Other supported tabProps pass through.
+The top-level activeTabKey takes precedence over tabProps.activeKey.
+TabBarExtraContent accepts a right slot or { left, right }. Keyboard behavior
+and fallback keys follow the agreed Svelte Tabs. The rest of the React Tabs
+API remains in the broader porting scope.
 
-Фикстура — `?fixture=card`; unit/SSR/Chromium
-проверяют стили, слоты, Grid, загрузку/фокус и вкладки. Рецепт card извлекает
-59 правил без keyframes. Компонентные темы отдельно сверяются с UMD 6.6.8 в
-`tests/browser/card/card-theme.spec.ts`, фикстура — `?fixture=card-theme`.
-Отсутствующие возможности Tabs остаются в полном объёме миграции.
-
+The `?fixture=card` unit, SSR, and Chromium checks cover styles, slots, Grid,
+loading, focus, and tabs. The card recipe extracts 59 rules without keyframes.
+Component themes are compared with UMD 6.6.8 separately in
+`tests/browser/card/card-theme.spec.ts` at `?fixture=card-theme`.

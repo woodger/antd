@@ -1,15 +1,13 @@
-# Архитектурная политика
+# Architecture policy
 
-> Type: Policy. Этот документ задаёт границы библиотеки, направление зависимостей,
-> правила размещения файлов и выделения абстракций.
+> Type: Policy. This document defines library boundaries, dependency direction, file placement,
+> and when to extract an abstraction.
 
-Библиотека находится в `src/lib` и не зависит от исходников приложений или
-SvelteKit. Правила о маршрутах и слоях приложения ниже относятся к потребителям
-библиотеки и не создают дополнительных модулей в этом репозитории.
-Текущая карта системы описана в
-[обзоре архитектуры](../architecture/overview.md).
+The library lives in `src/lib` and is independent of application source code and SvelteKit.
+The route and application-layer rules below govern consumers of the library. They define
+no additional modules in this repository. [Architecture overview](../architecture/overview.md)
 
-## Карта границ
+## Boundary map
 
 ```text
 src/routes
@@ -24,192 +22,160 @@ Bootstrap ──► Presentation / Application / Infrastructure / Domain
 
 ## `src/routes`
 
-Маршруты владеют:
+Routes own the path and query contract, SSR loading and HTTP status, SvelteKit page and
+layout composition, same-origin HTTP endpoints, and the conversion from route input
+to feature input.
 
-- path и query contract;
-- SSR loading и HTTP status;
-- SvelteKit page/layout composition;
-- same-origin HTTP endpoints;
-- преобразованием route input в feature input.
+Keep feature calculations and shared UI logic in their owning modules. Project-specific
+server validation may live in `+page.server.ts` when it belongs to the URL or HTTP boundary.
 
-Route-файл не должен дублировать расчёты feature-модуля или становиться общим
-хранилищем UI-логики. Project-specific server validation может оставаться в
-`+page.server.ts`, если она является частью URL/HTTP boundary.
+Keep `+page.server.ts`, `+server.ts`, server Bootstrap, and server Infrastructure out of
+browser component imports.
 
-Файлы `+page.server.ts`, `+server.ts`, server Bootstrap и server Infrastructure
-не импортируются в browser components.
+## Feature modules
 
-## Feature-модули
+Each feature module owns one user scenario and its orchestration.
 
-Feature-модуль владеет одним пользовательским сценарием и его orchestration.
+Use these roles when splitting a feature.
 
-Рекомендуемое разделение внутри feature:
+- `*.svelte` contains composition, markup, and local view styles.
+- `*.model.svelte.ts` contains reactive presentation state and explicit use case calls.
+- `*.engine.ts` contains pure calculations, parsing, and normalization.
+- `config.ts` contains deterministic defaults and limits.
+- `types.ts` contains feature-level contracts.
 
-- `*.svelte` — composition, markup и локальные view styles;
-- `*.model.svelte.ts` — реактивное presentation state и явные вызовы use cases;
-- `*.engine.ts` — чистые вычисления, parsing и normalization;
-- `config.ts` — детерминированные defaults и limits;
-- `types.ts` — feature-level contracts.
-
-Это соглашение применяется по смыслу. Не нужно создавать каждый тип файла для
-простого компонента.
-
-Feature-модуль может зависеть от reusable UI и общих утилит.
-Он не должен зависеть от route-файлов или private server environment.
+Create only the files a component needs. A feature module may depend on reusable UI and
+shared utilities. Keep route files and private server environment outside its dependencies.
 
 ## Reusable UI
 
-Компоненты библиотеки размещаются в `src/lib` и не знают о предметной области
-приложения или конкретном route.
+Library components live in `src/lib` and are independent of the application domain and
+specific routes. General-purpose composition controls live in `src/lib/layout`.
 
-Композиционные controls общего назначения размещаются в `src/lib/layout`.
+A reusable component has a domain-neutral API, preserves native semantics and
+accessibility, and stays independent of feature-specific network or storage side
+effects and feature, route, or server modules.
 
-Reusable component:
+Extract complex keyboard, calendar, or filtering logic into an engine only when that
+simplifies the component and allows the behavior to be tested independently.
 
-- имеет предметно нейтральный API;
-- сохраняет нативную семантику и accessibility;
-- не выполняет feature-specific network/storage side effects;
-- не импортирует feature, route или server modules.
+## Shared utilities
 
-Сложная keyboard, calendar или filtering logic выносится в engine только когда
-это упрощает компонент и делает поведение независимо тестируемым.
+`src/lib/utils` is for general-purpose browser-aware or framework-aware mechanisms with
+one clear responsibility, such as versioned storage.
 
-## Общие утилиты
-
-`src/lib/utils` предназначен для generic browser/framework-aware механизмов с
-одной ясной ответственностью, например versioned storage.
-
-Запрещено помещать в utils:
-
-- business rules;
-- component markup;
-- API request orchestration;
-- случайные helpers без повторного использования.
-
-Каталог `utils` не является разрешением складывать туда любую общую функцию.
+Keep business rules, component markup, API request orchestration, and one-off helpers
+in their owning modules. A function's reuse potential alone is insufficient justification
+for placing it in `utils`.
 
 ## Server boundary
 
-Обязательные границы:
+- Keep private tokens out of the browser bundle and page data.
+- SSR may call a server client directly.
+- Keep private environment variables out of feature components.
+- Regenerate generated declarations to change them.
+- Adapt provider types at the boundary when an internal module needs a narrower, stable contract.
 
-- private-токены не попадают в browser bundle или page data;
-- SSR может обращаться через server client напрямую;
-- feature components не читают private env;
-- generated declarations не редактируются вручную;
-- provider types преобразуются на границе, когда внутреннему модулю нужен более
-  узкий устойчивый контракт.
+## SSR and browser-only code
 
-## SSR и browser-only код
+Code using `window`, `document`, `localStorage`, Canvas, Worker, or the Clipboard API must
+account for SSR.
 
-Код, который использует `window`, `document`, `localStorage`, Canvas, Worker или
-Clipboard API, обязан учитывать SSR.
+Use the Svelte lifecycle when an API is needed only after mount, `browser` from
+`$app/environment` in a framework-aware utility, or an explicit server-only file for
+private runtime behavior.
 
-Допустимые механизмы:
+Resolve SSR issues at their architectural boundary. A `try/catch`, dynamic import,
+or disabling SSR requires an architectural justification.
 
-- lifecycle Svelte, если API нужен только после mount;
-- `browser` из `$app/environment` в framework-aware utility;
-- явный server-only файл для private runtime behavior.
+## State and side effects
 
-Нельзя скрывать SSR-проблему случайным `try/catch`, динамическим импортом или
-отключением SSR без архитектурного основания.
+- Keep local view state in the component.
+- A controller can own reusable reactive feature state.
+- Keep pure calculations and parsing in an engine where practical.
+- Define URLs in the route contract or a dedicated query utility.
+- Use `localStorage` only for UI preferences and versioned client state.
+- Give network requests a clear owner and guard against stale results when requests can overlap.
 
-## Состояние и side effects
+Keep side effects with their owners. Test convenience alone is insufficient reason
+to move a side effect into an engine.
 
-- Локальное view state остаётся в компоненте.
-- Повторяемое реактивное feature state может жить в controller.
-- Чистые вычисления и parsing должны по возможности жить в engine.
-- URL задаётся route contract или специализированной query utility.
-- `localStorage` хранит только UI preferences и versioned client state.
-- Network request должен иметь явного владельца и защиту от stale result, если
-  возможны конкурирующие запросы.
+## Public boundaries
 
-Нельзя переносить side effect в engine ради удобства теста.
+The following contracts are architecturally significant.
 
-## Публичные границы
+- Exports from a module's `index.ts`
+- Props and callback semantics of reusable components
+- URLs, query parameters, and HTTP status
+- Storage keys and serialized formats
+- Worker messages
+- Environment variables
+- npm scripts and the adapter-node entry point
 
-К архитектурно значимым контрактам относятся:
+Changes to these boundaries require explicit scope, tests, and updates to the living
+documentation.
 
-- exports из module `index.ts`;
-- props и callback semantics reusable components;
-- URL/query и HTTP status;
-- storage keys и serialized format;
-- Worker messages;
-- environment variables;
-- npm scripts и adapter-node entrypoint.
+## Extracting abstractions
 
-Изменение этих границ требует явного scope, тестов и обновления living docs.
+An abstraction must represent a stable responsibility and simplify the current code.
+A few identical lines or a hypothetical future use is insufficient justification.
 
-## Выделение абстракций
+Review the following before extracting an abstraction.
 
-Абстракция должна выражать устойчивую ответственность и упрощать текущий код.
-Совпадение нескольких строк или подготовка к гипотетическому будущему не
-являются достаточным основанием.
+1. Whether the same behavior recurs beyond similarities in code shape.
+2. Whether the new module has a clear name and one owner.
+3. Whether its consumers become simpler.
+4. Whether the abstraction obscures important differences in UI, state, or side effects.
+5. Whether the public API can verify the reusable behavior.
 
-Перед выделением нужно проверить:
+As a heuristic, one use usually stays local, two warrant evaluating the concept's
+stability, and repeated stable behavior may justify extraction. Use judgment instead
+of a numerical threshold.
 
-1. Повторяется ли одно поведение, а не только похожая форма кода.
-2. Есть ли у нового модуля ясное имя и один владелец.
-3. Станут ли consumers проще.
-4. Не скрывает ли abstraction важные различия UI, state или side effects.
-5. Можно ли проверить reusable behavior через публичный API.
+A neutral UI control, a pure engine for calendar, navigation, layout, or formatting,
+a controller for related feature state, versioned storage, an icon facade, and a typed
+API wrapper can be appropriate abstractions.
 
-Практическая эвристика: одно использование обычно остаётся локальным, два
-требуют оценки устойчивости понятия, а повторяющееся стабильное поведение может
-быть выделено. Это не механический порог.
+Avoid `utils.ts`, `helpers.ts`, or `common.ts` without a cohesive responsibility, a
+wrapper over one line of a standard API with no new contract, a base component for
+one shared CSS fragment, a generic engine whose options reproduce the original
+implementation, a controller for one local boolean, an abstraction with no current
+consumer, and a shared UI API that uses feature-specific terminology.
 
-Оправданными могут быть neutral UI control, pure engine для calendar/navigation/
-layout/formatting, controller связанного feature state, versioned storage
-mechanism, icon facade и typed API wrapper. Не следует создавать:
+Separate the view from the engine when the component mixes markup with nontrivial
+deterministic logic. Keep the engine independent of the DOM, Svelte state, and the
+network when a pure function can express its responsibility. Test coverage alone is
+insufficient reason to extract a simple calculation.
 
-- `utils.ts`, `helpers.ts` или `common.ts` без cohesive responsibility;
-- wrapper над одной строкой стандартного API без нового contract;
-- base component только ради общего CSS-фрагмента;
-- generic engine, options которого повторяют исходную реализацию;
-- controller для одного локального boolean;
-- abstraction без текущего consumer;
-- общий UI API с feature-specific vocabulary.
+Preserve observable consumer behavior, test the new logic's stable contract, and
+remove the old duplication in the same task. Add public exports only for actual
+consumers and API options only for established needs.
 
-View и engine разделяются, когда компонент смешивает markup с нетривиальной
-детерминированной логикой. Engine остаётся независимым от DOM, Svelte state и
-network, если его ответственность можно выразить чистой функцией. Простое
-вычисление не выносится только ради увеличения test coverage.
+## File placement and naming
 
-При выделении сохраняется observable behavior consumers, тестируется устойчивый
-contract новой логики, а прежнее дублирование удаляется в рамках той же задачи.
-Public export добавляется только для реальных consumers; гипотетические options
-в API не включаются.
+Identify a file's owner before creating it. The owner may be a route, feature,
+reusable UI, visualization, shared utility, server boundary, generated type,
+documentation, or static asset.
 
-## Размещение и именование файлов
+Follow the existing patterns.
 
-Перед созданием файла определите его владельца: route, feature, reusable UI,
-visualization, shared utility, server boundary, generated types, docs или static
-asset.
+- `PascalCase.svelte` for a Svelte component
+- `*.model.svelte.ts` for a rune-based presentation model
+- `*.engine.ts` for nontrivial pure logic
+- `*.test.ts` for a Vitest test
+- `config.ts`, `types.ts`, and `index.ts` when the file has the corresponding role
+- SvelteKit `+page`, `+layout`, and `+server` files only in the route tree
 
-Используйте существующие patterns:
+Define each class in one file. Create a directory for a stable responsibility.
+A one-off helper belongs with its owner.
 
-- `PascalCase.svelte` — Svelte component;
-- `*.model.svelte.ts` — rune-based presentation model;
-- `*.engine.ts` — чистая нетривиальная логика;
-- `*.test.ts` — Vitest test;
-- `config.ts`, `types.ts`, `index.ts` — только при соответствующей роли;
-- SvelteKit `+page`, `+layout`, `+server` — только в route tree.
+## Moves and architectural refactoring
 
-Один class определяется в одном файле. Новая директория создаётся для
-устойчивой ответственности, а не для одного случайного helper.
+Move code when its current owner is wrong or the task explicitly changes the boundary.
+Shorter imports, directory symmetry, and aesthetic preferences are insufficient reasons.
 
-## Перемещение и архитектурный refactoring
+Combine file moves, export renames, public API changes, changes to runtime behavior,
+and test or build configuration rewrites only when they are necessary together.
 
-Перемещение допустимо, если текущий владелец действительно неверен или задача
-явно меняет границу. Причинами не являются короткий import, симметрия каталогов
-или субъективно более красивое дерево.
-
-Не следует одновременно без необходимости:
-
-- перемещать файлы;
-- переименовывать exports;
-- менять public API;
-- менять runtime behavior;
-- переписывать tests и build config.
-
-Если правильный владелец не определяется по коду и документации, нужно
-запросить архитектурное решение владельца.
+Ask the owner for an architectural decision if the code and documentation cannot
+establish the right owner.

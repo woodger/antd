@@ -1,7 +1,7 @@
 # InputSearch (Input.Search)
 
-InputSearch объединяет Input и кнопку поиска в SpaceCompact. Публичные типы
-описаны в [исходных объявлениях](../../../src/lib/input/input-search.types.ts).
+InputSearch combines Input and a search button in SpaceCompact.
+[Public source declarations](../../../src/lib/input/input-search.types.ts)
 
 ```svelte
 <script lang="ts">
@@ -9,24 +9,24 @@ InputSearch объединяет Input и кнопку поиска в SpaceComp
   let query = $state('');
 </script>
 
-<InputSearch bind:value={query} allowClear enterButton="Найти"
+<InputSearch bind:value={query} allowClear enterButton="Search"
   onSearch={(value, event, info) => console.log(value, info?.source)}
-  aria-label="Поиск" />
+  aria-label="Search" />
 ```
 
-Кнопка и Enter вызывают onSearch с текущим native value и source=input.
-OnPressEnter вызывается перед поиском; IME, isComposing, повторный Enter и loading
-не запускают поиск. Очистка вызывает onValueChange(''), onSearch с source=clear,
-onChange(click), onClear, сохраняя Svelte/native события Input. Loading блокирует
-кнопку и Enter, но не очистку. Click кнопки сохраняет фокус Input, если он уже
-был в поле. Сам по себе ввод не вызывает onSearch.
+The button and Enter call onSearch with the current native value and source=input.
+OnPressEnter runs before search. IME, isComposing, repeated Enter, and loading
+prevent search. Clearing calls onValueChange(''), onSearch with source=clear,
+onChange(click), and onClear in order, preserving Svelte and native Input events.
+Loading blocks the button and Enter and leaves clearing available. Clicking the
+button keeps focus in the Input when it was already there. Typing alone leaves
+onSearch untouched.
 
-Boolean enterButton показывает обычную или primary icon button; scalar задаёт
-текст primary button. SearchIcon наследуется из inputSearch config, локальный
-prop имеет приоритет, null/false скрывают иконку. Для boolean enterButton
-доступное имя кнопки использует locale.searchText. Текстовые кнопки именуются
-своим содержимым. Вместо React cloneElement пользовательская кнопка задаётся
-snippet с InputSearchButtonContext:
+Boolean enterButton shows a normal or primary icon button. A scalar provides text
+for a primary button. SearchIcon is inherited from inputSearch configuration, with
+a local prop taking precedence. Null and false hide the icon. A boolean enterButton
+uses locale.searchText for its accessible name. Text buttons are named from their
+content. Provide a custom button as a snippet with InputSearchButtonContext.
 
 ```svelte
 <script lang="ts">
@@ -34,53 +34,50 @@ snippet с InputSearchButtonContext:
 </script>
 
 {#snippet searchButton(context: InputSearchButtonContext)}
-  <Button {...context.getButtonProps({ class: 'custom-search' })}>Найти</Button>
+  <Button {...context.getButtonProps({ class: 'custom-search' })}>Search</Button>
 {/snippet}
-<InputSearch enterButton={searchButton} aria-label="Поиск" />
+<InputSearch enterButton={searchButton} aria-label="Search" />
 ```
 
-Snippet заменяет кнопку целиком. GetButtonProps сохраняет собственные
-disabled/loading, добавляет size и search class, объединяет callbacks в порядке
-«собственный → Search». GetNativeProps аналогично обслуживает native button,
-сохраняя его class/type и блокируя его при loading. Onmousedown пользователя
-получает событие до preventDefault Search. Semantic button styles Search
-применяются к стандартной кнопке; пользовательская сохраняет собственные, как
-в upstream. Rich content можно разместить внутри своей Button.
+The snippet replaces the entire button. GetButtonProps preserves the button's own
+disabled and loading values, adds size and the search class, and calls the button's
+callbacks before Search callbacks. GetNativeProps handles native buttons similarly,
+keeps their class and type, and blocks them during loading. The user's onmousedown
+receives the event before Search prevents the default. Search semantic button styles
+apply to the standard button. A custom button keeps its own styles as in upstream.
+You can use rich content inside your own Button.
 
-ConfigProvider.inputSearch поддерживает class/style, semantic slots, searchIcon
-и variant; вложенный объект заменяется целиком. Общий Input config продолжает
-действовать на поле. Как в исходнике, input.variant является fallback для поля,
-но не для кнопки: без отдельного Search variant она сохраняет обычный Button
-variant. Semantic root относится к Compact, а button содержит root/icon/content;
-строка в button — сокращение для button.root.
+ConfigProvider.inputSearch supports class, style, semantic slots, searchIcon, and
+variant. A nested object replaces the parent in full. Shared Input configuration
+still applies to the field. As upstream does, use input.variant as the field
+fallback. The button keeps its regular Button variant without a Search variant
+of its own. The semantic root applies to Compact. The button slot has root, icon,
+and content, and a string in button is shorthand for button.root.
 
-Class/style/hidden и data-* передаются Compact root; id/name/ARIA/constraints
-остаются на Input. RootClassName относится к внутреннему Input.
-InputElement/nativeElement и методы
-bind:this возвращают внутренний Input, не внешний Compact. String bind:value,
-defaultValue, FormItem, RTL, Compact, темы и SSR сохраняют контракты Input.
-Fixture `?fixture=input-search` проверяет поиск, IME, callbacks, пользовательские
-кнопки, semantic/config приоритеты и геометрию. Component token engine и variant
-inheritance подключены; согласованные value/ref conventions сохраняются.
-Аудит всего семейства остаётся unreviewed.
+Class, style, hidden, and data-* go to the Compact root. Id, name, ARIA, and
+constraints stay on Input. RootClassName applies to the inner Input. InputElement,
+nativeElement, and bind:this methods expose the inner Input. String bind:value,
+defaultValue, FormItem, RTL, Compact, themes, and SSR keep the Input contracts.
+The `?fixture=input-search` fixture checks search, IME, callbacks, custom buttons,
+semantic and configuration precedence, and geometry. The component token engine
+and variant inheritance preserve the agreed value and ref conventions. A family-wide
+audit is still pending.
 
-PrefixCls задаёт Search root/button classes, inputPrefixCls — независимый Input.
-Empty/undefined наследуют ConfigProvider; Button и служебная btn-height variable
-используют общий prefix независимо от local class и cssVar.prefix. Canonical token
-markers и variables сохраняются. Source component tokens применяются также к
-корню Search: small-button min-height учитывает inputFontSizeSM/paddingBlockSM.
-Semantic styles и style имеют прежний приоритет над вычисленной темой.
+PrefixCls sets Search root and button classes, and inputPrefixCls sets independent
+Input classes. Empty and undefined values inherit ConfigProvider. Button and the
+btn-height variable use the shared prefix independently of the local class and
+cssVar.prefix. Canonical token markers and variables stay in place. The upstream
+component tokens also apply to the Search root. Small button min-height accounts
+for inputFontSizeSM and paddingBlockSM. Semantic styles and style keep precedence
+over the computed theme.
 
-Смена prefix сохраняет DOM/ref, value, selection/focus, FormData и поиск. React
-Compact пересоздаёт Input при смене общего prefix из-за ключа с prefix в имени;
-Native сохраняет прежний стабильный DOM. Raw переходы и измерения после public ref
-focus хранятся раздельно. Для enterButton=true Source создаёт пустое Button content
-и лишнюю ширину; Native сохраняет прежнюю icon-only кнопку. Public counterpart
-использует официальный Button без children. Source shared-class cache теряет
-вложенный private variable namespace; freshNested отдельно измерен со свежим
-локальным классом в Inner provider. Данные —
-[эталон UMD](../../../tests/browser/fixtures/ant-design-input-search-prefix-reference.json),
-проверки — `?fixture=input-search-prefix`,
-[browser](../../../tests/browser/input/input-search-prefix.spec.ts) и
-[SSR](../../../tests/package/input/input-search-prefix.ssr.test.ts).
-
+Changing the prefix preserves DOM, refs, value, selection, focus, FormData, and search.
+React Compact remounts Input after a shared prefix change because its key includes
+the prefix. The native path keeps Input DOM stable. The reference stores raw
+transitions separately from measurements after public ref focus. With enterButton=true,
+upstream creates empty Button content and extra width. The native counterpart keeps
+its icon-only button. The public counterpart uses the official Button without children.
+The upstream shared-class cache loses the nested private variable namespace. The
+reference measures freshNested separately with a fresh local class in the Inner
+provider. The fixture is `?fixture=input-search-prefix`. [UMD reference](../../../tests/browser/fixtures/ant-design-input-search-prefix-reference.json) ·
+[Browser](../../../tests/browser/input/input-search-prefix.spec.ts) · [SSR](../../../tests/package/input/input-search-prefix.ssr.test.ts)

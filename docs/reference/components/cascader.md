@@ -1,9 +1,9 @@
 # Cascader / CascaderPanel
 
-Cascader позволяет выбрать путь в иерархическом списке; CascaderPanel показывает
-те же варианты без всплывающей панели. Публичные типы и значения по умолчанию —
-в [cascader.types.ts](../../../src/lib/cascader/cascader.types.ts).
-Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
+Cascader selects a path in a hierarchy. CascaderPanel displays the same
+options inline. The type declarations define the public types and
+defaults. An embedded panel inherits its owner's layer.
+[Type declarations](../../../src/lib/cascader/cascader.types.ts) · [Owner layer](../theme-context.md#layering-nested-panels)
 
 ```svelte
 <script lang="ts">
@@ -21,122 +21,147 @@ Cascader позволяет выбрать путь в иерархическо�
 <CascaderPanel {options} value={path} onChange={next => { path = next ?? []; }} />
 ```
 
-Value/defaultValue — полный путь string/number; multiple использует массив
-путей. Value управляется владельцем через onChange, defaultValue читается при
-создании. Очистка single вызывает onChange(undefined, undefined), multiple —
-onChange([], []). Второй аргумент содержит исходные options в порядке пути;
-отсутствующие узлы сохраняют undefined. Missing paths остаются видимыми, с
-fallback к raw values. Повторный выбор single тоже вызывает onChange.
-Компонент не задаёт прикладную сериализацию путей в FormData.
+`value` and `defaultValue` are full paths of strings or numbers.
+`multiple` uses an array of paths. The owner controls `value` through
+`onChange`. `defaultValue` is read at creation. Clearing a single
+selection calls `onChange(undefined, undefined)`. Clearing in multiple
+mode calls `onChange([], [])`. The second argument holds the original
+options in path order and keeps `undefined` for missing nodes. Missing
+paths remain visible using raw values. Selecting the same single path
+again also calls `onChange`. Application-specific serialization of
+paths in `FormData` is left to the owner.
 
-В multiple каскадный выбор проходит только через разрешённые checkbox; disabled
-и disableCheckbox разрывают conduction. Отображение и onChange используют
-SHOW_PARENT по умолчанию или SHOW_CHILD. Константы экспортируются как
-CASCADER_SHOW_PARENT/CASCADER_SHOW_CHILD. Клик по содержимому родителя раскрывает
-колонку, checkbox выбирает ветку. Default display — весь путь через ` / ` для
-single и последний label для multiple. MaxTagCount, responsive, maxTagTextLength,
-tagRender и maxTagPlaceholder меняют отображение, сохраняя выбранные пути.
-MaxTagTextLength сохраняет исходный title и считает UTF-16 units, как rc-select;
-при усечении корректной surrogate pair не остаётся её оборванная половина.
-Общие [raw замеры Select/Cascader](../../../tests/browser/fixtures/ant-design-select-tag-text-reference.json)
-сохраняют исходный дефект Unicode для отдельного разбора.
+In multiple mode, selection propagates through enabled checkboxes only.
+`disabled` and `disableCheckbox` stop propagation. Display and
+`onChange` use `SHOW_PARENT` by default or `SHOW_CHILD`. The constants
+are exported as `CASCADER_SHOW_PARENT` and `CASCADER_SHOW_CHILD`.
+Clicking a parent's content opens a column, while its checkbox selects
+the branch. By default, single mode displays the entire path joined
+by ` / `, and multiple mode displays the last label. `maxTagCount`,
+responsive tags, `maxTagTextLength`, `tagRender`, and
+`maxTagPlaceholder` change display while preserving selected paths.
+`maxTagTextLength` retains the original title and counts UTF-16 code
+units as rc-select does. It avoids leaving a dangling half of a valid
+surrogate pair when truncating. The shared reference records the
+upstream Unicode defect for separate analysis. [Raw Select and Cascader measurements](../../../tests/browser/fixtures/ant-design-select-tag-text-reference.json)
 
-ShowSearch по умолчанию false. True включает поиск по любому label в пути;
-объект настраивает controlled searchValue/onSearch, filter/sort/render, limit,
-matchInputWidth, searchIcon и autoClearSearchValue. Default limit=50; false и неположительное число
-снимают лимит. Без sort лимит останавливает обход, с sort применяется после
-сортировки. ChangeOnSelect/multiple включают промежуточные пути в выдачу;
-disabled родителя распространяется на результаты его детей.
-Label snippet остаётся непрозрачным для default filter, как ReactNode;
-для поиска по содержимому snippets задайте filter.
+`showSearch` defaults to `false`. `true` enables search by any label
+in the path. An object configures controlled `searchValue` and
+`onSearch`, `filter`, `sort`, `render`, `limit`,
+`matchInputWidth`, `searchIcon`, and `autoClearSearchValue`. The
+default limit is 50. `false` or a nonpositive number removes it.
+Without `sort`, the limit stops traversal. With `sort`, it applies
+after sorting. `changeOnSelect` and `multiple` include intermediate
+paths in the results. A disabled parent disables its descendants in
+the results. Label Snippets are opaque to the default filter, like
+ReactNode. Supply a custom `filter` to search Snippet contents.
 
-Выбор очищает локальный поиск без отдельного onSearch; multiple с autoClearSearchValue=false
-сохраняет запрос до blur. Полная очистка и закрытие single могут вызвать
-onSearch(''); при controlled search решение об изменении остаётся у владельца.
+Selection clears the local search without a separate `onSearch`.
+Multiple mode with `autoClearSearchValue=false` retains the query
+until blur. Clearing all selections and closing in single mode can
+call `onSearch('')`. With controlled search, the owner decides whether
+to update the query.
 
-LoadData получает исходные options активного пути, когда последний узел не leaf.
-Его Promise не ожидается: индикатор снимается после обновления children,
-isLeaf=true либо удаления узла из options. Пустой children=[] тоже снимает
-индикатор. Во время поиска загрузка не запускается.
-Явный isLeaf=false сохраняется в выдаче: single без changeOnSelect не выбирает
-такой узел. Сетевые запросы, ошибки и обновление options принадлежат потребителю,
-как в upstream; компонент не
-выполняет скрытую загрузку и не добавляет собственные состояния ответа.
+`loadData` receives the original options of the active path when its
+last node is not a leaf. Its Promise is neither awaited nor used to
+clear loading. The indicator disappears when `children` changes,
+`isLeaf` becomes `true`, or the node is removed from `options`.
+Empty `children=[]` also clears it. Search does not trigger loading.
+Explicit `isLeaf=false` stays in search results. Single mode without
+`changeOnSelect` skips selection of such a node. The consumer owns
+requests, errors, and option updates, as upstream.
 
-Popup поддерживает controlled/defaultOpen, changeOnSelect, click/hover,
-размещение, ширину и popupRender; deprecated dropdown aliases удалены.
-Поле удерживает focus при выборе; Up/Down обходят разрешённые строки,
-Left/Right переходят между колонками и меняются местами в RTL, Backspace
-возвращает родителя, Enter выбирает, Escape закрывает.
-При непустом запросе Left/Right сохраняют нативную работу каретки и выделения.
-Поле поиска сохраняет высоту строки и цвет текста после скрытия выбранного label;
-повторный ввод оставляет выбранный путь без изменений.
-В multiple Backspace также удаляет последний разрешённый tag. Clear — нативная кнопка с клавиатурной
-активацией. FormItem передаёт label/id, description, required и status;
-bind:nativeElement/inputElement и focus/blur доступны после mount.
+The popup supports controlled `open` or `defaultOpen`,
+`changeOnSelect`, click and hover, placement, width, and
+`popupRender`. Deprecated dropdown aliases are removed. The field
+retains focus on selection. Up and Down move through enabled rows.
+Left and Right move between columns and swap in RTL. Backspace returns
+to the parent, Enter selects, and Escape closes. With a nonempty
+query, Left and Right preserve native caret and selection behavior.
+The search field retains line height and text color after hiding the
+selected label. Typing again preserves the selected path. In multiple
+mode, Backspace also removes the last removable tag. Clear is a native
+button with keyboard activation. FormItem supplies the label and ID,
+description, required state, and status. `bind:nativeElement`,
+`bind:inputElement`, and focus and blur are available after mount.
 
-ConfigProvider.cascader задаёт variant, class/style, semantic slots и icons.
-Локальные поля уточняют конфигурацию; root style идёт после styles.root,
-для popup/list/listItem применяются соответствующие semantic slots.
-AllowClear=true наследует ConfigProvider.cascader.clearIcon и обычную иконку Ant
-по умолчанию. Объект allowClear передаётся без наследования; его отсутствующий
-или falsy clearIcon использует fallback `×`.
-Semantic callbacks получают исходные props, включая raw
-multiple, и resolved disabled/size/variant/status. Panel наследует disabled/direction и expand/loading icons,
-а root class/style и popup semantic config Cascader к ней не применяются.
-Темы и compact используют текущие tokens библиотеки; locale — общий ConfigProvider.
+`ConfigProvider.cascader` supplies `variant`, `class`, `style`,
+semantic slots, and icons. Local fields refine the configuration.
+Root `style` follows `styles.root`, and popup, list, and list item use
+their own semantic slots. `allowClear=true` inherits
+`ConfigProvider.cascader.clearIcon` and defaults to the standard Ant
+icon. An `allowClear` object is passed through without inheritance. Its
+missing or falsy `clearIcon` falls back to `×`. Semantic callbacks
+receive the original props, including raw `multiple`, and resolved
+`disabled`, `size`, `variant`, and `status`. Panel inherits disabled
+state, direction, and expand and loading icons. Cascader's root
+`class` and `style` and popup semantic configuration do not apply to
+Panel. Themes and compact mode use the library's current tokens, and
+the locale comes from the shared ConfigProvider.
 
-При source-настройках темы поле и dropdown объединяют `components.Select` и
-`components.Cascader` в исходном порядке. Cascader задаёт ширину поля/колонок,
-высоту dropdown, отступы и оформление выбранной строки. Component algorithms,
-нули/undefined и custom CSS prefix поддерживаются; настройки `components.Checkbox`
-не меняют внутренние checkbox. Standalone Panel получает только Cascader tokens,
-наследует шрифт/цвет provider и сохраняет прозрачный фон. Смена темы сохраняет
-DOM, поиск, выделение, фокус и позицию popup; semantic popup styles сохраняют
-приоритет. Native-only темы остаются прежними. Подробности —
-[в справочнике темы](../theme-context.md).
+With an upstream theme, the field and dropdown combine
+`components.Select` and `components.Cascader` in the upstream order.
+Cascader controls field and column widths, dropdown height, padding,
+and selected row styling. Component algorithms, zero and undefined
+values, and a custom CSS prefix are supported. `components.Checkbox`
+leaves internal checkboxes independent. Standalone Panel receives
+only Cascader tokens, inherits the provider's font and color, and
+keeps its transparent background. Theme changes preserve DOM, search,
+selection, focus, and popup position. Semantic popup styles retain
+precedence. Native-only themes retain their behavior.
+[Theme reference](../theme-context.md)
 
-ReactNode/render callbacks заменены Svelte snippets. OptionRender получает
-исходный option и info с path/searchValue/originNode: для поисковой подсветки
-используйте originNode. В React search option.label содержит уже отрисованный
-узел; Svelte сохраняет исходный label и передаёт содержимое отдельно.
-TagRender получает label snippet, closable/onClose и rc path key; сводный tag
-maxTagCount имеет isMaxTag=true без value/index/onClose.
-MaxTagPlaceholder получает default label и исходные labels/options каждого
-скрытого пути; собственный displayRender можно повторно вызвать с ними.
-Custom children получает handlers/ARIA для нативного trigger, который заменяет
-React cloneElement. При нём inputElement отсутствует.
+Svelte Snippets replace ReactNode and render callbacks. `optionRender`
+receives the original option and info with `path`, `searchValue`, and
+`originNode`. Use `originNode` for search highlighting. React's
+search `option.label` contains a rendered node. Svelte keeps the
+original label and supplies the rendered content separately.
+`tagRender` receives a label Snippet, `closable`, `onClose`, and the
+rc path key. The `maxTagCount` summary tag has `isMaxTag=true` and no
+`value`, `index`, or `onClose`. `maxTagPlaceholder` receives the default
+label and original labels and options for each hidden path. A custom
+`displayRender` can be called again with those values. Custom
+`children` receives handlers and ARIA attributes for a native trigger,
+replacing React's `cloneElement`. `inputElement` is absent when it is
+used.
 
-GetPopupContainer получает корень `.ant-select`, а при custom children — DOM trigger
-из snippet. NativeElement при этом сохраняет прежний div обёртки. Локальная функция
-перекрывает ConfigProvider.getPopupContainer; undefined наследует provider.
-Getter выполняется в браузере после первого открытия. ShadowRoot требует собственных
-стилей. Панель сохраняет state, поиск, фокус и выделение при замене функции с тем же
-контейнером; зазор до trigger — исходные 4 px. CascaderPanel остаётся inline и не
-использует глобальный getter.
+`getPopupContainer` receives the `.ant-select` root or, with custom
+`children`, the DOM trigger from the Snippet. `nativeElement` continues
+to refer to the wrapper `div`. The local getter overrides
+`ConfigProvider.getPopupContainer`, and `undefined` inherits the
+provider. The getter runs in the browser after the first open.
+ShadowRoot requires its own styles. Replacing the getter with one
+returning the same container preserves panel state, search, focus, and
+selection. The gap to the trigger remains 4px. CascaderPanel stays
+inline and bypasses the shared getter.
 
-Standalone Panel использует нативные строки-кнопки и клавиатурный focus между
-ними. Это явная Svelte accessibility adaptation к исходной pointer-only Panel.
-SSR не обращается к DOM и не вызывает loadData; initially open popup отрисован
-hidden до mount. Произвольные popup align/motion, React-specific components/refs/warnings и
-вывод типа value по произвольному generic ValueField остаются вне этого этапа.
+Standalone Panel uses native row buttons with keyboard focus between
+them. This adapts the original pointer-only panel for accessibility.
+SSR avoids DOM access and `loadData` calls. An initially open popup
+renders hidden until mount. Arbitrary popup alignment and motion,
+React-specific components, refs and warnings, and inferring the value
+type from arbitrary generic `ValueField` remain outside this stage.
 
-Непустой `prefixCls` задаёт локальный namespace Select control и Cascader
-columns/Panel; пустое значение наследует независимые общие prefixes. CSS сохраняет
-canonical tokens и передаёт resolved Cascader prefix в search render callback.
-Прежние input width, refs/IDs, selected paths, search/caret/focus, callbacks и
-клавиатура Panel сохраняются при смене префикса.
-[30 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-cascader-prefix-reference.json)
-в normal/nested/reset scopes сверяют single/multiple, Panel, поиск, empty/RTL,
-размеры, variants/status и aliases. Проверки:
-[browser](../../../tests/browser/cascader/cascader-prefix.spec.ts),
-[SSR](../../../tests/package/cascader/cascader-prefix.ssr.test.ts).
+A nonempty `prefixCls` sets the namespace for the Select control and
+Cascader columns or Panel. An empty value inherits independent shared
+prefixes. CSS retains canonical tokens and passes the resolved Cascader
+prefix to the search render callback. Input width, refs, IDs, selected
+paths, search, caret, focus, callbacks, and Panel keyboard behavior
+persist when the prefix changes. Thirty UMD configurations in normal,
+nested, and reset scopes cover single and multiple selection, Panel,
+search, empty and RTL, sizes, variants, status, and aliases.
+[UMD configurations](../../../tests/browser/fixtures/ant-design-cascader-prefix-reference.json) · [Browser tests](../../../tests/browser/cascader/cascader-prefix.spec.ts) ·
+[SSR tests](../../../tests/package/cascader/cascader-prefix.ssr.test.ts)
 
-В Ant Design 6.6.8 локальный prefix меняет Select popup class, а сброс Cascader
-padding продолжает искать общий Select class. В raw local случае остаётся 4px
-вместо 0px; Native сохраняет прежний padding:0. Отдельный public counterpart с
-`styles.popup.root.padding:0` сверяет popup и зависящую от padding ширину колонок;
-control остаётся raw. У Panel прежний Native root dir=rtl также сохранён: Source
-задаёт RTL колонкам, оставляя корень LTR. Raw root direction и отдельный public
-counterpart с обычной HTML-обёрткой `dir="rtl"` записаны раздельно. Сам Source Panel
-не передаёт dir на свой корень. Эти границы не означают одинаковый DOM.
+In Ant Design 6.6.8, a local prefix changes the Select popup class, while
+the Cascader padding reset still looks for the shared Select class.
+The raw local case retains 4px instead of 0px. Svelte preserves its
+existing `padding:0`. A separate comparison applies
+`styles.popup.root.padding:0` through public props to match the popup and
+the column width that depends on padding, while the control is compared
+as originally rendered. Panel also keeps the existing native
+`dir=rtl` on its root. Upstream applies RTL to the columns and leaves
+the root LTR. The raw root direction and a separate public equivalent
+with an ordinary `dir="rtl"` HTML wrapper are recorded separately.
+Upstream Panel itself does not pass `dir` to its root. The comparison
+does not assert identical DOM.

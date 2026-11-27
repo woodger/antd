@@ -1,63 +1,78 @@
 # Modal
 
-Modal сохраняет нативный dialog, `bind:open`, footer/children snippets и существующие
-правила onOk/onCancel, confirmLoading, Escape и закрытия по фону.
-`loading` заменяет body на активный Skeleton без title с четырьмя строками и скрывает
-default/custom footer. Возврат к содержимому монтирует body и footer заново;
-локальный draft дочернего компонента сбрасывается. Dialog, header, title и close
-сохраняют DOM identity. Сам `loading` не блокирует закрытие; прежние правила
-`confirmLoading` сохранены. Физический placeholder получает `${prefixCls}-body-skeleton`,
-включая локальный prefix. Сохраняются нативное центрирование dialog, отдельные
-accessibility wrappers Skeleton, max-width containment и имена CSS keyframes.
-[Независимые Source-повторы](../../../tests/browser/fixtures/ant-design-modal-loading-source-manifest.json)
-проверяют 2 owners, 10 действий, 12 состояний и lifecycle после удаления.
-[Browser](../../../tests/browser/modal/modal-loading.spec.ts) проверяет переходы и cleanup,
-[SSR](../../../tests/package/modal/modal-loading.ssr.test.ts) — закрытый Native shell без DOM и timers.
-Title и children необязательны. Title принимает scalar либо Snippet; пустой/null/false
-title убирает header, число 0 остаётся видимым. Без видимого заголовка задайте
-aria-label или aria-labelledby. Явные ARIA-имена применяются к самому dialog;
-aria-labelledby имеет приоритет, затем непустой aria-label, затем generated title id.
-Смена title сохраняет dialog, draft, selection и focus.
-[Raw content/ARIA случаи](../../../tests/browser/fixtures/ant-design-modal-content-reference.json)
-фиксируют исходные исключения: React теряет title=0 и явные ARIA props. Native
-показывает 0 и сохраняет имя, заданное владельцем.
+Modal retains the native dialog, `bind:open`, footer and children
+Snippets, and existing `onOk`, `onCancel`, `confirmLoading`, Escape,
+and backdrop dismissal rules. `loading` replaces the body with
+an active four-row Skeleton without a title and hides the
+default or custom footer. Returning to content remounts body and
+footer and resets local child drafts. Dialog, header, title, and
+close retain their DOM identity. `loading` itself leaves dismissal
+available and preserves the existing `confirmLoading` rules.
+The placeholder element receives `${prefixCls}-body-skeleton`
+with the local prefix. Native dialog centering, separate Skeleton
+accessibility wrappers, max-width containment, and keyframe
+names are preserved. Independent upstream runs cover two owners,
+10 actions, 12 states, and lifecycle after removal. Browser
+tests cover transitions and cleanup. SSR tests cover the closed
+native shell without DOM or timers. [Upstream runs](../../../tests/browser/fixtures/ant-design-modal-loading-source-manifest.json) ·
+[Browser tests](../../../tests/browser/modal/modal-loading.spec.ts) · [SSR tests](../../../tests/package/modal/modal-loading.ssr.test.ts)
 
-На границе Modal сбрасываются статус и индикатор проверки внешнего `Form.Item`.
-Локальный `Form.Item` и явный `status` поля задают оформление внутри окна.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/dialog/dialog-form-style.spec.ts).
+`title` and `children` are optional. `title` takes a scalar or
+Snippet. An empty title, `null`, or `false` removes the header.
+Numeric zero is visible. Without a visible title, supply
+`aria-label` or `aria-labelledby`. Explicit ARIA naming applies
+to the dialog. `aria-labelledby` takes precedence, then a
+nonempty `aria-label`, then the generated title ID. Title
+changes preserve the dialog, draft, selection, and focus.
+The raw cases capture the React exceptions where `title=0` and
+explicit ARIA props are lost. Svelte renders 0 and preserves the
+owner's name. [Raw content and ARIA cases](../../../tests/browser/fixtures/ant-design-modal-content-reference.json)
 
-`prefixCls` меняет namespace Modal и его частей; пустая строка наследует
-ConfigProvider.prefixCls. Настройка доступна и в config контекстного подтверждения,
-включая handle.update. Button использует независимый общий prefix; canonical
-CSS variables, native dialog, IDs и открытое содержимое сохраняются.
-[Raw сверка](../../../tests/browser/fixtures/ant-design-modal-prefix-reference.json)
-фиксирует исходный дефект Confirm: local prefix оставляет лишний header, потому
-что Source скрывает его через общий namespace. Отдельный public styles.header
-counterpart скрывает этот header; Native сохраняет один заголовок подтверждения.
-Там же отделены Source cache с потерей footer Button margin и public counterpart
-с новым local prefix. Прежние disabled-loading правила и размер native SVG сохранены;
-для них записан отдельный React-вариант через публичные button props.
+The Modal boundary clears outer `Form.Item` status and
+validation feedback. Local `Form.Item` and explicit field
+`status` set styling inside the dialog.
+[Ant Design 6.6.8 comparison](../../../tests/browser/dialog/dialog-form-style.spec.ts)
 
-`zIndex` задаёт числовой слой Modal, включая 0. Слой наследуют вложенные
-диалоги и popup. [Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+`prefixCls` changes the namespace of Modal and its parts.
+The empty string inherits `ConfigProvider.prefixCls`. The
+setting also applies to contextual confirmations, including
+`handle.update`. Button uses its own shared prefix. Canonical
+CSS variables, the native dialog, IDs, and open content are
+preserved. In the upstream Confirm defect, a local prefix
+leaves an extra header because upstream hides it through the
+shared namespace. A separate public `styles.header` comparison
+hides it. Svelte keeps one confirmation title. The comparison
+also records the upstream cache's loss of footer Button margins
+separately from a public comparison with a new local prefix.
+Existing native disabled and loading rules and SVG size are
+preserved, with a separate React case using public button props.
+[Raw comparison](../../../tests/browser/fixtures/ant-design-modal-prefix-reference.json)
 
-`theme.components.Modal` настраивает header/content/footer background, title color,
-font size/line height, внутренние отступы и wireframe. Поддерживаются aliases,
-component algorithms, CSS lengths и custom prefix; Button/Input внутри сохраняют
-собственные tokens. Source close wrapper задаёт размер иконки; legacy-размер сохранён.
-Тема обновляется без потери модальности, DOM, draft, selection и focus, включая
-getContainer. Нативное центрирование и резерв места title под close сохранены.
-[Сверка с официальным UMD](../theme-context.md#проверки-диалогов-и-уведомлений) не означает
-поддержку полного render/config API. Контекстные подтверждения описаны ниже.
+`zIndex` sets Modal's numeric layer, including zero. Nested
+dialogs and popups inherit it. [Nested popup layers](../theme-context.md#layering-nested-panels)
 
-GetContainer принимает DOM-узел, DocumentFragment (включая ShadowRoot), CSS-селектор,
-функцию без аргументов либо false. Локальное undefined использует
-ConfigProvider.getPopupContainer; Modal вызывает глобальный getter без trigger,
-как Ant Design 6.6.8. False оставляет DOM на месте и отключает global fallback.
-При смене `open` контейнер разрешается после обновления DOM. Селектор и getter
-видят узел, который монтируется вместе с открытием окна.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/drawer/drawer-container-timing.spec.ts).
-Без обеих настроек сохраняется прежнее native-размещение.
+`theme.components.Modal` sets header, content, and footer
+backgrounds, title color, font size and line height, padding,
+and wireframe styling. Aliases, component algorithms, CSS
+lengths, and a custom prefix are supported. Nested Button and
+Input keep their own tokens. The upstream close wrapper sizes
+the icon, and the legacy size is preserved. Theme updates
+preserve modality, DOM, drafts, selection, and focus, including
+with `getContainer`. Native centering and the title's reserved
+close-button space are preserved. The UMD comparison covers
+the theme options. Full render and configuration API coverage
+remains pending. Contextual confirmations are described below.
+[Official UMD comparison](../theme-context.md#dialog-and-notification-checks)
+
+`getContainer` accepts a DOM node, DocumentFragment including
+ShadowRoot, CSS selector, zero-argument function, or `false`.
+Local `undefined` uses `ConfigProvider.getPopupContainer`. Modal
+calls the global getter without a trigger, as Ant Design 6.6.8
+does. `false` keeps the DOM in place and disables the global
+fallback. On `open` changes, the container resolves after the
+DOM update. Selectors and getters see a node mounted together
+with opening. With neither setting, existing native placement
+applies. [Ant Design 6.6.8 comparison](../../../tests/browser/drawer/drawer-container-timing.spec.ts)
 
 ```svelte
 <script lang="ts">
@@ -65,142 +80,158 @@ ConfigProvider.getPopupContainer; Modal вызывает глобальный ge
   let open = $state(false);
 </script>
 
-<button type="button" onclick={() => open = true}>Открыть редактор</button>
+<button type="button" onclick={() => open = true}>Open editor</button>
 <div id="modal-container"></div>
-<Modal bind:open title="Редактор" getContainer="#modal-container">
-  <input name="description" aria-label="Описание" />
+<Modal bind:open title="Editor" getContainer="#modal-container">
+  <input name="description" aria-label="Description" />
 </Modal>
 ```
 
-Getter вызывается только после browser mount, в том числе у закрытого Modal.
-Первый перенос готового контейнера сохраняет SSR DOM. Смена функции с тем же
-контейнером сохраняет содержимое, draft, выделение и фокус; смена самого
-контейнера пересоздаёт dialog и содержимое, как React portal. Перенос во время
-закрытия Drawer отменяет motion старой панели и её pending destruction;
-новый dialog остаётся закрытым до следующего открытия. Default/custom prefix
-не меняют этот lifecycle и не зацикливают перенос. Отсутствующий
-selector или пустой результат getter используют body. Для отключённого DOM-узла
-и DocumentFragment открытие ждёт вставки в document. Стили ShadowRoot подключает
-потребитель. В нативном режиме dialog сохраняет модальность, inert и возврат
-фокуса в любом контейнере.
+The getter runs only after browser mount, including for a
+closed Modal. The first move into a ready container preserves
+SSR DOM. A new function returning the same container preserves
+content, drafts, selection, and focus. Changing the actual
+container recreates the dialog and contents as with a React
+portal. Moving a closing Drawer cancels the old panel's motion
+and pending destruction. The new dialog stays closed until the
+next opening. Default and custom prefixes preserve lifecycle
+without causing a move loop. A missing selector match or empty
+getter result falls back to the body. A detached node or
+DocumentFragment waits until it is inserted in the document to
+open. Consumers supply ShadowRoot styles. Native dialog mode
+retains modality, `inert`, and focus restoration in any
+container.
 
-Эталонные зависимости — @rc-component/dialog 1.10.0 и portal 2.1.3;
-лицензии сохранены в [LICENSE.rc-dialog](../../../src/lib/vendor/LICENSE.rc-dialog) и
-[LICENSE.rc-portal](../../../src/lib/vendor/LICENSE.rc-portal).
-Сверка Modal/Drawer использует 36 снимков официального UMD,
-[browser-проверки](../../../tests/browser/dialog/dialog-container.spec.ts) и
-[проверки взаимодействия](../../../tests/browser/dialog/dialog-container-interaction.spec.ts),
-фикстура — `?fixture=dialog-container`.
+The reference uses `@rc-component/dialog` 1.10.0 and portal 2.1.3.
+Their licenses are included. [Dialog license](../../../src/lib/vendor/LICENSE.rc-dialog) ·
+[Portal license](../../../src/lib/vendor/LICENSE.rc-portal)
 
-## Маска, прокрутка и фокус
+Modal and Drawer comparisons use 36 official UMD snapshots,
+browser checks, and interaction checks in
+`?fixture=dialog-container`. [Browser checks](../../../tests/browser/dialog/dialog-container.spec.ts) ·
+[Interaction checks](../../../tests/browser/dialog/dialog-container-interaction.spec.ts)
 
-`mask` принимает boolean или объект с `enabled`, `blur` и `closable`.
-По умолчанию маска видима и клик по фону закрывает окно. `blur: true` добавляет
-размытие на 4 px. `mask={false}` оставляет прозрачную область вокруг панели.
-Она обрабатывает клик по правилам `mask.closable` и блокирует кнопки под ней.
-Клик начинается и заканчивается в этой области.
+## Mask, scrolling, and focus
 
-`focusable.trap` по умолчанию следует видимости маски. При `trap: false` фокус
-можно перевести за пределы окна. `aria-modal` следует удержанию фокуса.
-`focusable.focusTriggerAfterClose` по умолчанию возвращает фокус к триггеру
-после закрытия окна с видимой маской. `ConfigProvider.modal` задаёт параметры
-`mask` и `focusable`. Локальные поля имеют приоритет.
+`mask` accepts a boolean or an object with `enabled`, `blur`, and
+`closable`. By default, the mask is visible and a backdrop click
+closes the dialog. `blur: true` adds 4px of blur. `mask={false}`
+leaves a transparent area around the panel. That area follows
+`mask.closable` for clicks and blocks buttons beneath it. A click
+must start and end in the area.
 
-`scrollLock={false}` разрешает прокрутку страницы независимо от маски и фокуса.
-По умолчанию нативный режим блокирует её в любом контейнере. Управляемый режим
-блокирует страницу при стандартном портале и в `document.body`, как Ant Design.
-Смена режима сохраняет dialog, черновик и фокус внутри панели.
-[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-interaction-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-interaction.spec.ts)
-· [Гидратация](../../../tests/browser/modal/modal-interaction-hydration.spec.ts).
+`focusable.trap` defaults to the mask's visibility. With
+`trap: false`, focus can move outside the dialog.
+`aria-modal` follows focus trapping.
+`focusable.focusTriggerAfterClose` restores focus to the trigger
+by default after closing a dialog with a visible mask.
+`ConfigProvider.modal` supplies `mask` and `focusable`. Local
+fields take precedence.
 
-## Размеры и положение
+`scrollLock={false}` allows page scrolling independently of mask
+and focus. By default, native mode locks it in any container.
+Controlled mode locks the page with the default portal and
+in `document.body`, as Ant Design does. Mode changes preserve
+the dialog, draft, and focus inside the panel.
+[Ant Design 6.6.8 reference](../../../tests/browser/fixtures/ant-design-modal-interaction-reference.json) · [Chromium](../../../tests/browser/modal/modal-interaction.spec.ts)
+· [Hydration](../../../tests/browser/modal/modal-interaction-hydration.spec.ts)
 
-`width` принимает число в пикселях, строку с CSS-длиной или карту брейкпоинтов
-Grid от `xs` до `xxxl`. Явный размер действует с указанного брейкпоинта до
-следующего заданного. Правила используют пороги активной темы и работают при SSR.
-Числовой ноль сохраняется. У контекстного подтверждения `width` принимает число
-или строку. Пустое значение и ноль выбирают стандартную ширину 416 px.
-`height` задаёт высоту обоих видов панели числом в пикселях или CSS-длиной.
+## Sizing and placement
 
-`centered` наследуется из `ConfigProvider.modal`. Локальное `true` центрирует
-панель, `false` размещает её сверху, как в Ant Design. Если обе настройки
-отсутствуют, Svelte сохраняет нативное центрирование. В режиме верхнего
-размещения содержимое прокручивается внутри панели по доступной высоте.
-Смена размеров и положения сохраняет DOM, черновик, выделение и фокус.
-[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-layout-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-layout.spec.ts)
-· [Гидратация](../../../tests/browser/modal/modal-layout-hydration.spec.ts).
+`width` takes a number in pixels, a CSS length string, or a
+Grid breakpoint map from `xs` to `xxxl`. A size applies from
+its breakpoint to the next supplied breakpoint. The rules
+use the active theme's thresholds and work during SSR.
+Numeric zero is preserved. For a contextual confirmation,
+`width` takes a number or string. An empty value or zero
+uses the standard 416px width. `height` sets the height of
+either panel type as a number in pixels or a CSS length.
 
-## Монтаж и завершение переходов
+`centered` inherits from `ConfigProvider.modal`. Local `true`
+centers the panel, and `false` places it at the top as in
+Ant Design. When both settings are omitted, Svelte keeps
+native centering. In top placement, content scrolls inside the
+panel within the available height. Size and placement changes
+preserve DOM, drafts, selection, and focus.
+[Ant Design 6.6.8 reference](../../../tests/browser/fixtures/ant-design-modal-layout-reference.json) · [Chromium](../../../tests/browser/modal/modal-layout.spec.ts)
+· [Hydration](../../../tests/browser/modal/modal-layout-hydration.spec.ts)
 
-Без настроек монтажа Modal по-прежнему рендерит закрытый dialog и его содержимое,
-включая SSR. В Ant Design 6.6.8 обычный Modal монтируется при первом открытии.
-В Svelte `forceRender={false}` включает тот же ленивый режим. `forceRender={true}`
-монтирует панель заранее. `destroyOnHidden` откладывает первый монтаж до открытия
-и удаляет панель после скрытия. Одновременный `forceRender={true}` сохраняет панель.
-При сохранении панели сохраняются DOM и черновик. После удаления следующий
-показ монтирует новую панель.
+## Mounting and transition completion
 
-Панель масштабируется от 0,2 до 1 при открытии и обратно при закрытии.
-Маска меняет прозрачность независимо. Длительности берутся из токенов темы.
-`theme.token.motion: false` и `prefers-reduced-motion: reduce` завершают переход
-без анимации. Правила фокуса и блокировки прокрутки действуют до закрытия dialog.
-После показа вызывается `afterOpenChange(true)`. При закрытии Modal сначала
-освобождает модальность, возвращает фокус по настройкам `focusable` и завершает
-удаление при `destroyOnHidden`. Затем вызовы идут в порядке `afterClose()`,
-`afterOpenChange(false)`. Повторное открытие во время скрытия сохраняет
-содержимое и отменяет уведомление о закрытии.
+Without mount settings, Modal renders a closed dialog and
+its content, including in SSR. Ant Design 6.6.8 mounts an
+ordinary Modal at first open. Svelte `forceRender={false}`
+enables that lazy mode. `forceRender={true}` mounts the panel
+ahead of time. `destroyOnHidden` delays first mount until opening
+and removes the panel after hiding. With `forceRender={true}`,
+the panel is retained. Retaining it preserves DOM and drafts.
+After removal, the next opening creates a new panel.
 
-Эти параметры доступны и в контекстных подтверждениях. Их владелец завершает
-`await` при принятии решения. После закрытия колбэки выполняются до удаления
-подтверждения, чтобы cleanup дочерних компонентов видел их обновления.
-SSR не запускает анимацию и не вызывает колбэки. Первое открытие при гидратации
-использует уже отрисованный DOM.
-[Снимки Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-lifecycle-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-lifecycle.spec.ts)
-· [SSR](../../../tests/package/modal/modal-lifecycle.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal/modal-lifecycle-hydration.spec.ts).
+The panel scales from 0.2 to 1 on opening and reverses on close.
+The mask fades independently. Durations come from theme
+tokens. `theme.token.motion: false` and
+`prefers-reduced-motion: reduce` finish transitions without
+animation. Focus and scroll lock rules apply until the dialog
+closes. `afterOpenChange(true)` runs after opening. On close,
+Modal first releases modality, restores focus according to
+`focusable`, and finishes removal with `destroyOnHidden`.
+It calls `afterClose()` and then `afterOpenChange(false)`.
+Reopening during exit retains contents and cancels the close
+notification.
 
-## Именованные переходы и точка начала движения
+The options also apply to contextual confirmations. Their
+owner settles `await` when a decision is made. After close,
+callbacks run before confirmation removal so child cleanup
+can see their updates. SSR runs neither animation nor
+callbacks. The first opening during hydration uses the rendered
+DOM. [Ant Design 6.6.8 snapshots](../../../tests/browser/fixtures/ant-design-modal-lifecycle-reference.json) ·
+[Chromium](../../../tests/browser/modal/modal-lifecycle.spec.ts) · [SSR](../../../tests/package/modal/modal-lifecycle.ssr.test.ts) · [Hydration](../../../tests/browser/modal/modal-lifecycle-hydration.spec.ts)
 
-`transitionName` задаёт CSS-переход панели, а `maskTransitionName` задаёт переход
-маски. Пустая строка отключает движение указанной части. CSS может использовать
-фазы `<имя>-appear`, `<имя>-enter`, `<имя>-leave` и их активные классы
-`<имя>-<фаза>-active`. Без собственных имён действуют штатные zoom и fade.
-Параметры доступны в конфигурации подтверждения и через `handle.update()`.
+## Named transitions and transform origin
 
-`mousePosition` задаёт точку в координатах страницы `{ x, y }`. При `null` или
-`undefined` используется клик за последние 100 мс, включая клик, который
-монтирует Modal. Координаты `{ x: 0, y: 0 }` оставляют обычную точку масштабирования.
+`transitionName` sets the panel CSS transition and
+`maskTransitionName` sets the mask transition. An empty string
+disables motion for that part. CSS can use the phases
+`<name>-appear`, `<name>-enter`, and `<name>-leave`, and their
+`<name>-<phase>-active` classes. Without custom names, the
+default zoom and fade apply. These options are available in
+confirmation configuration and through `handle.update()`.
 
-Закрытие панели освобождает фокус и прокрутку. Маска может продолжать анимацию
-после `afterOpenChange(false)` и пропускает ввод к странице или нижнему диалогу.
-Маска закрывающегося нижнего окна остаётся под уже открытым верхним диалогом.
-При `destroyOnHidden` без `forceRender` содержимое удаляется до колбэков,
-а оставшаяся маска удаляется после них. Если для указанного имени нет
-CSS-эффекта, Svelte завершает фазу после проверки кадра. В замере Ant Design
-6.6.8 без CSS-правил оболочка оставалась видимой после закрытия, а колбэки
-не приходили.
-[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-motion-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-motion.spec.ts)
-· [SSR](../../../tests/package/modal/modal-motion.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal/modal-motion-hydration.spec.ts).
+`mousePosition` supplies a point in page coordinates
+`{ x, y }`. With `null` or `undefined`, a click within the
+last 100ms is used, including the click that mounts Modal.
+`{ x: 0, y: 0 }` retains the normal transform origin.
 
-## Кнопки, футер и закрытие
+Panel close releases focus and scroll lock. The mask can keep
+animating after `afterOpenChange(false)` while passing input to
+the page or lower dialog. The mask of a closing lower window
+stays beneath an already open top dialog. With
+`destroyOnHidden` and no `forceRender`, content is removed before
+callbacks and the remaining mask after them. Without a CSS
+effect for the requested name, Svelte finishes the phase
+after checking a frame. In the Ant Design 6.6.8 measurement
+without CSS rules, the wrapper remained visible after close
+and the callbacks were absent.
+[Ant Design 6.6.8 reference](../../../tests/browser/fixtures/ant-design-modal-motion-reference.json) · [Chromium](../../../tests/browser/modal/modal-motion.spec.ts)
+· [SSR](../../../tests/package/modal/modal-motion.ssr.test.ts) · [Hydration](../../../tests/browser/modal/modal-motion-hydration.spec.ts)
 
-`okButtonProps` и `cancelButtonProps` принимают настройки Button, включая ссылку
-`href` и её нативный обработчик. Локальные поля перекрывают поля
-`ConfigProvider.modal`. `okType` задаёт вид OK, по умолчанию `primary`.
-`okText` и `cancelText` принимают scalar или Snippet. При `undefined` используется
-локаль, `null` оставляет подпись пустой.
+## Buttons, footer, and dismissal
 
-Кнопка сначала запускает действие Modal, затем свой `onclick` или `onClick`.
-У подтверждения повторное нажатие на ту же кнопку во время Promise пропускает
-оба обработчика, даже если визуальное ожидание снято через `loading: false`.
+`okButtonProps` and `cancelButtonProps` accept Button settings,
+including link `href` and its native handler. Local fields
+override `ConfigProvider.modal`. `okType` controls the OK
+appearance and defaults to `primary`. `okText` and
+`cancelText` accept scalars or Snippets. `undefined` uses the
+locale and `null` leaves the label empty.
 
-Футер получает штатную группу и snippets отдельных кнопок. Например, в обычном
-Modal и в подтверждении можно поставить OK перед Cancel.
+A button runs the Modal action first and then its `onclick`
+or `onClick`. In a confirmation, pressing the same button
+again during its Promise skips both handlers, even with the
+loading indicator turned off through `loading: false`.
+
+The footer receives the default group and Snippets for
+individual buttons. For example, ordinary and confirmation
+Modals can place OK before Cancel.
 
 ```svelte
 {#snippet footer(_defaultFooter, { OkBtn, CancelBtn })}
@@ -211,79 +242,86 @@ Modal и в подтверждении можно поставить OK пере
 <Modal bind:open {footer} okButtonProps={{ danger: true }} />
 ```
 
-Футер без параметров работает как прежде. При `footer={null}` кнопок нет.
-В подтверждении штатная группа включает элемент с классом `-confirm-btns`;
-при выборе отдельных кнопок разметку группы задаёт сам snippet. Кнопка Cancel
-появляется, когда её разрешает `okCancel`.
+A footer with no parameters still works. `footer={null}` leaves
+no buttons. In a confirmation, the default group includes an
+element with class suffix `-confirm-btns`. When rendering the
+buttons individually, the Snippet supplies the group markup.
+Cancel appears when `okCancel` allows it.
 
-`closable` принимает boolean или объект с `closeIcon`, `disabled`, ARIA-атрибутами,
-`role`, `onClose` и `afterClose`. `disabled` действует на кнопку закрытия.
-Escape и фон управляются через `keyboard` и `mask.closable`. Если `closable` не
-задан, отдельный `closeIcon={null}` или `closeIcon={false}` скрывает кнопку.
-В объекте `closable` значение `closeIcon: null` оставляет кнопку с доступным
-именем и без иконки.
+`closable` accepts a boolean or an object with `closeIcon`,
+`disabled`, ARIA attributes, `role`, `onClose`, and `afterClose`.
+`disabled` applies to the close button. Escape and backdrop
+dismissal use `keyboard` and `mask.closable`. If `closable` is
+omitted, a separate `closeIcon={null}` or `closeIcon={false}`
+hides the button. In the object, `closeIcon: null` keeps an
+accessible button without an icon.
 
-Обычный Modal вызывает локальный `closable.onClose` после `onOk` или `onCancel`.
-Подтверждение вызывает его при завершении действия кнопки либо сразу после
-`onCancel` для Escape, фона и кнопки закрытия. `closable.afterClose` предшествует
-`afterClose` при закрытии панели, в том числе при внешней смене `open` или
-`handle.destroy()`. Для Promise сохраняется `onClose` на момент нажатия,
-а `afterClose` читается при фактическом закрытии. Провайдер задаёт вид и
-доступность кнопки.
+An ordinary Modal calls local `closable.onClose` after
+`onOk` or `onCancel`. A confirmation calls it when a button
+action finishes, or immediately after `onCancel` for Escape,
+the backdrop, or the close button. `closable.afterClose` runs
+before `afterClose` when closing, including on an external
+`open` change or `handle.destroy()`. With a Promise,
+`onClose` is captured at the press, and `afterClose` is read
+at actual close. The provider sets the button's appearance and
+availability.
 
-В исходной версии `confirmLoading` блокирует действие Cancel через колбэк.
-В Svelte он также сохраняет прежний disabled у кнопки Cancel и кнопки закрытия.
-При загрузке сам Button использует нативный disabled. В обычном Modal OK
-наследует `componentDisabled`, если в настройках кнопки не задано `disabled`.
-[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-actions-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-actions.spec.ts)
-· [SSR и типы](../../../tests/package/modal/modal-actions.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal/modal-actions-hydration.spec.ts).
+In upstream, `confirmLoading` blocks Cancel through the callback.
+Svelte also retains disabled styling and behavior for Cancel and
+the close button. While loading, Button itself uses native
+`disabled`. In an ordinary Modal, OK inherits
+`componentDisabled` if its button settings omit `disabled`.
+[Ant Design 6.6.8 reference](../../../tests/browser/fixtures/ant-design-modal-actions-reference.json) · [Chromium](../../../tests/browser/modal/modal-actions.spec.ts)
+· [SSR and types](../../../tests/package/modal/modal-actions.ssr.test.ts) · [Hydration](../../../tests/browser/modal/modal-actions-hydration.spec.ts)
 
-## Семантические части и оболочка
+## Semantic slots and wrapper
 
-`classNames` и `styles` задают оформление слотов `root`, `wrapper`, `mask`,
-`container`, `close`, `header`, `title`, `body` и `footer`. Можно передать карту
-или функцию `({ props }) => карта`. Функция получает текущие параметры Modal,
-в том числе ширину, состояние маски, настройки фокуса и zIndex. Классы
-`ConfigProvider.modal` и экземпляра складываются. Строки CSS-деклараций
-экземпляра идут после строк провайдера. `ConfigProvider.modal.class` оформляет
-внутреннюю панель, а `style` экземпляра дополняет `ConfigProvider.modal.style`.
+`classNames` and `styles` style `root`, `wrapper`, `mask`,
+`container`, `close`, `header`, `title`, `body`, and `footer`.
+Pass a map or a function receiving `{ props }` and returning
+a map. It receives current Modal settings, including width,
+mask state, focus options, and `zIndex`. Provider and instance
+classes accumulate. Instance CSS declarations follow provider
+declarations. `ConfigProvider.modal.class` styles the inner
+panel, and instance `style` supplements
+`ConfigProvider.modal.style`.
 
-Слоты `root` и `wrapper` оформляют общий нативный `<dialog>`. На него
-попадают также `class`, `rootClassName` и `wrapClassName`.
-`styles.root` дополняет `rootStyle`, затем применяется оформление `wrapper`.
-В React 6.6.8 стиль корня берётся из `styles.root`. Svelte применяет и напрямую
-переданный `rootStyle`. Ширина и высота принадлежат нативной оболочке.
+`root` and `wrapper` style the shared native `<dialog>`, which
+also receives `class`, `rootClassName`, and `wrapClassName`.
+`styles.root` supplements `rootStyle`, followed by wrapper
+styles. React 6.6.8 takes root style from `styles.root`. Svelte
+also applies direct `rootStyle`. Width and height belong to
+the native wrapper.
 
-`wrapProps`, `maskProps` и `bodyProps` принимают нативные атрибуты и
-обработчики соответствующих элементов. Явные `class` и `style` этих props
-заменяют оформление соответствующего слота. Управление `open`, модальностью
-и lifecycle остаётся у Modal. `wrapProps.onclick` и `wrapProps.onmousedown`
-передают обработку закрытия по фону владельцу. Настройка слота маски создаёт
-DOM-элемент под панелью. По умолчанию маска рисует фон, а клики принимает оболочка.
-Модальность остаётся у нативного dialog.
+`wrapProps`, `maskProps`, and `bodyProps` take native attributes
+and handlers for their elements. Explicit `class` and `style`
+in these props replace the corresponding slot's styles.
+Modal retains control of `open`, modality, and lifecycle.
+`wrapProps.onclick` and `wrapProps.onmousedown` delegate backdrop
+dismissal handling to the owner. Customizing the mask slot
+creates a DOM element beneath the panel. By default, the mask
+paints the backdrop and the wrapper receives clicks. The
+native dialog retains modality.
 
-`modalRender` получает штатный контейнер как snippet. Он может обернуть его
-или отрисовать собственное содержимое. `bind:panelRef` получает
-`HTMLDialogElement` на время жизни панели. В контекстном подтверждении
-`panelRef` принимает callback и передаёт ему `undefined` при снятии ссылки.
-У подтверждения слот `body` оформляет видимое содержимое, а `bodyProps`
-относятся к его структурному контейнеру. Подтверждение сохраняет единственный
-заголовок. Слоты `header` и `title` оформляют заголовок обычного Modal.
+`modalRender` receives the default container as a Snippet. It
+can wrap it or render custom content. `bind:panelRef` receives
+the `HTMLDialogElement` for the panel's lifetime. In a contextual
+confirmation, `panelRef` takes a callback and passes
+`undefined` when cleared. The confirmation's `body` slot styles
+visible content, and `bodyProps` apply to its structural
+container. A confirmation retains one title. `header` and
+`title` style the ordinary Modal title.
+[Ant Design 6.6.8 reference](../../../tests/browser/fixtures/ant-design-modal-semantics-reference.json) · [Chromium](../../../tests/browser/modal/modal-semantics.spec.ts)
+· [SSR and types](../../../tests/package/modal/modal-semantics.ssr.test.ts) · [Hydration](../../../tests/browser/modal/modal-semantics-hydration.spec.ts)
 
-[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-semantics-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-semantics.spec.ts)
-· [SSR и типы](../../../tests/package/modal/modal-semantics.ssr.test.ts)
-· [Гидратация](../../../tests/browser/modal/modal-semantics-hydration.spec.ts).
+## Contextual Modal confirmations
 
-## Контекстные подтверждения Modal
-
-`createModal()` и единственный `ModalHolder` заменяют React `Modal.useModal()`.
-Holder размещается под нужным ConfigProvider: открытые подтверждения наследуют его
-тему, локаль, RTL и контейнер, включая последующие изменения контекста.
-`zIndex` здесь по умолчанию равен `zIndexPopupBase + 1000` и обновляется
-через `handle.update({ zIndex })`.
+`createModal()` and one `ModalHolder` replace React
+`Modal.useModal()`. Place the holder under the intended
+ConfigProvider. Open confirmations inherit theme, locale, RTL,
+and container, including subsequent context changes.
+`zIndex` defaults to `zIndexPopupBase + 1000` and can be updated
+with `handle.update({ zIndex })`.
 
 ```svelte
 <script lang="ts">
@@ -291,97 +329,111 @@ Holder размещается под нужным ConfigProvider: открыты
   const modal = createModal();
 
   async function confirm() {
-    const accepted = await modal.confirm({ title: 'Продолжить?', content: 'Подтвердите действие.' });
+    const accepted = await modal.confirm({ title: 'Continue?', content: 'Confirm the action.' });
     if (accepted) {
-      // Выполнить подтверждённое действие.
+      // Carry out the confirmed action.
     }
   }
 </script>
 
-<Button onclick={confirm}>Продолжить</Button>
+<Button onclick={confirm}>Continue</Button>
 <ModalHolder {modal} />
 ```
 
-Методы info/success/error/warning/confirm возвращают handle с destroy(),
-update(object | previous => patch) и await результата true/false. Confirm показывает
-OK и Cancel; остальные типы — только OK. По умолчанию ширина 416px, close скрыт,
-Escape разрешён, закрытие по фону запрещено. Нативное центрирование сохранено.
-Title/content, icon и подписи кнопок принимают scalar или Snippet.
-`ConfigProvider.modal` задаёт `infoIcon`, `successIcon`, `errorIcon` и `warningIcon`.
-Тип confirm использует `warningIcon`. Локальный `icon` имеет приоритет, а
-`icon: null` и `icon: false` скрывают иконку. Опции okCancel, closable, keyboard,
-mask, focusable, scrollLock, getContainer и class применяются отдельно к каждому
-подтверждению.
-`direction` определяет направление конкретного окна. Вызванный метод задаёт
-начальный тип. Через `handle.update({ type })` можно сменить иконку, класс и
-состав штатных кнопок.
-Клик по фону закрывает подтверждение при локальном `mask.closable: true`.
-`focusable.autoFocusButton` выбирает OK или Cancel при открытии и в `handle.update()`.
-По умолчанию выбирается OK. При `null` ни одна кнопка не получает явный autofocus.
-В Ant Design 6.6.8 `null` даёт фокус OK. [Сверка](../../../tests/browser/modal/modal-interaction.spec.ts).
+The `info`, `success`, `error`, `warning`, and `confirm`
+methods return a handle with `destroy()`, an `update` accepting
+an object or `previous => patch`, and an awaitable `true` or
+`false` result. Confirm shows OK and Cancel. The other types
+show only OK. Default width is 416px. Close is hidden, Escape
+is enabled, and backdrop dismissal is off. Native centering
+is preserved. Title, content, icon, and button labels accept
+scalars or Snippets.
 
-Callback onOk/onCancel без аргумента закрывает окно после синхронного результата.
-Callback с аргументом close оставляет закрытие владельцу. Возвращённый Promise
-включает loading соответствующей кнопки: fulfillment закрывает окно, rejection
-оставляет его для повторного действия. Повторное нажатие во время ожидания
-не запускает callback заново. Escape/close/mask закрывают сразу с вызовом onCancel;
-они доступны и при ожидающем onOk. Destroy не вызывает onCancel. AfterClose
-вызывается после фактического закрытия native dialog, один раз; уничтожение
-ещё не смонтированного подтверждения завершает его сразу.
+`ConfigProvider.modal` supplies `infoIcon`, `successIcon`,
+`errorIcon`, and `warningIcon`. Confirm uses `warningIcon`.
+Local `icon` takes precedence. `icon: null` and `icon: false`
+hide it. `okCancel`, `closable`, `keyboard`, `mask`,
+`focusable`, `scrollLock`, `getContainer`, and `class` apply
+separately to each confirmation. `direction` sets the window's
+direction. The called method supplies the initial type.
+`handle.update({ type })` can change the icon, class, and
+default buttons.
 
-Destroy и удаление holder завершают ожидающие handles с false; поздние async
-результаты не возвращают окно. Удаление holder не вызывает onCancel/afterClose,
-освобождает модальность и возвращает фокус, если владелец не перевёл его сам.
-После повторного подключения holder очередь пуста, новые вызовы работают;
-вызовы между отсоединением и подключением завершаются с false.
-В SSR фабрика не обращается к DOM, а holder выводит закрытые dialog shells.
+A backdrop click closes the confirmation with local
+`mask.closable: true`. `focusable.autoFocusButton` chooses
+OK or Cancel on open and in `handle.update()`. The default is
+OK. `null` gives neither button explicit autofocus. In Ant
+Design 6.6.8, `null` focuses OK. [Comparison](../../../tests/browser/modal/modal-interaction.spec.ts)
 
-[13 исходных сценариев](../../../tests/browser/fixtures/ant-design-modal-controller-reference.json)
-сняты с официального UMD. Source destroy оставляет await незавершённым; это
-исключение записано и не воспроизводится. Асинхронный rejection использует
-поведение исходного await-режима, без unhandled rejection. Прежние Native
-подписи кнопок из locale.okText/cancelText сохранены.
-[модель](../../../src/lib/modal/modal.model.test.ts),
-[браузер](../../../tests/browser/modal/modal-controller.spec.ts),
-[SSR и декларации](../../../tests/package/modal/modal-controller.ssr.test.ts).
+An `onOk` or `onCancel` with no argument closes after a
+synchronous result. A callback taking `close` leaves closing
+to the owner. A returned Promise sets loading on the
+corresponding button. Fulfillment closes the dialog, and
+rejection leaves it available to retry. Pressing again while
+pending skips the callback. Escape, close, and the mask close
+immediately and call `onCancel`, even during pending `onOk`.
+`destroy` leaves `onCancel` uncalled. `afterClose` runs once after
+the native dialog actually closes. Destroying a confirmation
+before mount settles it immediately.
 
-## Глобальные подтверждения
+Destroy and holder removal settle pending handles as `false`.
+Late async results cannot bring the window back. Removing the
+holder leaves `onCancel` and `afterClose` uncalled, releases
+modality, and restores focus unless the owner moved it.
+Remount starts with an empty queue and accepts new calls.
+Calls between detaching and reattaching resolve to `false`.
+During SSR, the factory avoids DOM access and the holder
+renders closed dialog shells.
 
-`Modal.confirm(config)`, `Modal.info(config)`, `Modal.success(config)`,
-`Modal.warning(config)` и `Modal.error(config)` открывают окно без `ModalHolder`.
-Каждый вызов создаёт отдельный браузерный корень. Диалог переносится в указанный
-контейнер или использует контейнер провайдера и `document.body`. В статическом
-вызове `getContainer: false` выбирает тот же путь, что и отсутствие настройки.
+Thirteen scenarios use the official UMD. Upstream
+`destroy` leaves `await` pending, and this exception is
+recorded. Svelte settles it. Async rejection follows the
+upstream await mode without an unhandled rejection. Existing
+native button labels use `locale.okText` and `locale.cancelText`.
+[13 upstream scenarios](../../../tests/browser/fixtures/ant-design-modal-controller-reference.json) · [Model tests](../../../src/lib/modal/modal.model.test.ts) ·
+[Browser tests](../../../tests/browser/modal/modal-controller.spec.ts) · [SSR and declarations](../../../tests/package/modal/modal-controller.ssr.test.ts)
 
-Handle предоставляет `destroy()` и `update()`. Объект в `update` дополняет
-текущие настройки. Функция получает их снимок с `open` и `close` и возвращает
-новую конфигурацию целиком. `update({ open: false })` скрывает панель с
-возможностью повторного открытия. Несколько изменений до ближайшего рендера
-применяются одним обновлением. Закрытие до первого показа освобождает корень
-без callback видимости или закрытия.
+## Global confirmations
 
-Кнопки используют актуальные `onOk` и `onCancel`. Если обработчик принимает
-`close`, он может завершить действие вручную. Ожидание Promise показывает
-loading, а отклонение оставляет окно доступным для повтора. Результат
-действия из предыдущего показа не меняет вновь открытое окно. При Escape,
-клике по маске или кнопке закрытия исходный `onCancel` вызывается после
-исходного `afterClose`. `destroy()` также вызывает исходный `afterClose` после
-закрытия показанной панели. `afterOpenChange` читается из текущих настроек.
+`Modal.confirm(config)`, `Modal.info(config)`,
+`Modal.success(config)`, `Modal.warning(config)`, and
+`Modal.error(config)` open without a `ModalHolder`. Each call
+creates a separate browser root. The dialog moves into the
+supplied container, falling back to the provider container
+and `document.body`. For static calls, `getContainer: false`
+uses the same path as omitting the setting.
 
-`Modal.destroyAll()` закрывает глобальные окна и снимает контекстные
-подтверждения, включая `App.useApp().modal`. Контекстные handles при снятии
-панели завершаются с `false`. В React такой handle остаётся в ожидании.
-При SSR глобальный вызов возвращает пассивный handle. Контекстные
-подтверждения принадлежат своему запросу.
+The handle exposes `destroy()` and `update()`. An object passed
+to `update` extends current settings. A function receives a
+snapshot with `open` and `close` and returns the entire new
+configuration. `update({ open: false })` hides the panel while
+allowing it to reopen. Multiple changes before the next
+render apply together. Closing before first show releases
+the root without visibility or close callbacks.
 
-Отдельные корни получают глобальные параметры и `holderRender`. При переносе
-в `document.body` или пользовательский контейнер окно получает вычисленные
-CSS-переменные своего провайдера. При обновлении темы цвета открытой панели
-следуют за настройками. Смонтированные провайдеры `locale` участвуют в выборе
-подписей кнопок статического Modal.
-[ConfigProvider.config](../config-provider.md#глобальные-настройки-статических-вызовов)
+Buttons use current `onOk` and `onCancel` callbacks. A handler
+taking `close` can finish manually. A pending Promise shows
+loading, and a rejection leaves the dialog available to retry.
+An action result from a previous opening leaves a reopened
+dialog intact. For Escape, mask click, or the close button,
+the original `onCancel` runs after the original `afterClose`.
+`destroy()` also calls the original `afterClose` after closing
+a shown panel. `afterOpenChange` is read from current
+settings.
 
-[21 профиль Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-static-reference.json)
-· [Chromium](../../../tests/browser/modal/modal-static.spec.ts)
-· [Цвета портального окна](../../../tests/browser/modal/modal-static-theme.spec.ts)
-· [SSR и типы](../../../tests/package/modal/modal-static.ssr.test.ts).
+`Modal.destroyAll()` closes global windows and removes
+contextual confirmations, including `App.useApp().modal`.
+Removing a contextual panel settles its handle as `false`.
+In React, that handle stays pending. In SSR, a global call
+returns a passive handle. Contextual confirmations belong to
+their request.
+
+Separate roots receive global settings and `holderRender`.
+When moved to `document.body` or a custom container, a dialog
+receives the computed CSS variables from its provider.
+Theme updates change colors on the open panel. Mounted
+`locale` providers participate in choosing static Modal
+button labels. [ConfigProvider.config](../config-provider.md#global-settings-for-static-calls)
+
+[21 Ant Design 6.6.8 profiles](../../../tests/browser/fixtures/ant-design-modal-static-reference.json) · [Chromium](../../../tests/browser/modal/modal-static.spec.ts)
+· [Portalled dialog colors](../../../tests/browser/modal/modal-static-theme.spec.ts) · [SSR and types](../../../tests/package/modal/modal-static.ssr.test.ts)

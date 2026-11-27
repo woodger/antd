@@ -1,8 +1,9 @@
 # App
 
-App объединяет MessageHolder, NotificationHolder и ModalHolder. Дочерний компонент
-получает их API через `App.useApp()` либо отдельный `useApp()` при инициализации.
-Вызов требует ближайшего App; глобальная очередь между SSR-запросами не создаётся.
+App combines MessageHolder, NotificationHolder, and ModalHolder. A child component
+gets their APIs through `App.useApp()` or the separate `useApp()` during initialization.
+The call requires the nearest App. SSR requests have separate contexts without
+a global queue.
 
 ```svelte
 <!-- Application.svelte -->
@@ -25,55 +26,55 @@ App объединяет MessageHolder, NotificationHolder и ModalHolder. До�
   const { message, notification, modal } = App.useApp();
 
   async function confirm() {
-    if (await modal.confirm({ title: 'Продолжить?' })) {
-      message.success('Готово');
-      notification.info({ title: 'Операция завершена' });
+    if (await modal.confirm({ title: 'Continue?' })) {
+      message.success('Done');
+      notification.info({ title: 'Operation complete' });
     }
   }
 </script>
 
-<Button onclick={confirm}>Продолжить</Button>
+<Button onclick={confirm}>Continue</Button>
 ```
 
-Ближайший ConfigProvider задаёт тему, локаль и RTL holders. Настройки message и
-notification объединяются по полям с ближайшим App; локальное undefined тоже
-перекрывает родительское поле и возвращает default соответствующего holder.
-Top/bottom меняют расположение поверхности; duration/pauseOnHover/maxCount и
-notification.placement применяются к следующим вызовам. Изменение defaults не
-перезапускает таймеры и не удаляет существующие записи. Новый maxCount применяется
-при следующем добавлении; прежние placements уведомлений сохраняются.
-Родительская, вложенная и соседняя очереди независимы. API остаются стабильными
-на протяжении жизни App. В React notification API получает новый объект после
-изменения config; это отличие механизма контекста записано в реестре.
+The nearest ConfigProvider sets theme, locale, and RTL for the holders. Message and
+notification settings merge field by field with the nearest App. A local undefined
+overrides the parent field and restores the relevant holder default. Top and
+bottom change surface placement. Duration, pauseOnHover, maxCount, and
+notification.placement apply to future calls. Changing defaults keeps current
+entries and timers. A new maxCount applies when the next entry is added, and
+existing notifications keep their placements.
 
-По умолчанию root — div с исходной типографикой Ant Design. Component принимает
-HTML-тег, Svelte-компонент или false. False выводит children и holders фрагментом,
-в этом режиме `nativeElement` равен `undefined`. Смена корня пересоздаёт дочернее
-DOM-дерево и очищает holders. Те же API
-работают после повторного подключения. Bind:nativeElement даёт текущий HTML-root
-и очищается при его удалении. Local prefixCls задаёт root-классы, иначе используется
-ConfigProvider.prefixCls + app. ConfigProvider.app
-наследует record class/style целиком; локальные class/rootClassName/style дополняют
-его, style имеет приоритет. Обычные HTML attrs передаются корню.
+Parent, nested, and sibling queues are independent. The APIs stay stable for
+the life of App. React's notification API gets a new object when its configuration
+changes. The registry records this difference in context handling.
 
-Пользовательский корень получает children со всеми holders, строковые class и
-style, dir, HTML-атрибуты и собственные типизированные props. `AppRootProps`
-описывает общие параметры. Для передачи DOM-ref объявите `nativeElement` через
-`$bindable()` и используйте `bind:this` на элементе корня. Корень может вызывать
-`App.useApp()`. Гидратация и обновление префикса сохраняют узлы, фокус и черновик.
-[Сверка с Ant Design 6.6.8](../../../tests/browser/app/app-custom-root.spec.ts).
+The default root is a div with upstream Ant Design typography. Component accepts
+an HTML tag, a Svelte component, or false. False renders children and holders as a
+fragment and exposes `nativeElement` as `undefined`. Changing the root remounts
+the child DOM tree and clears the holders. The same APIs work after reconnection.
+`bind:nativeElement` exposes the current HTML root and clears when it is removed.
 
-В SSR App не открывает dialog/popover и не запускает таймеры. Удаление App
-закрывает поверхности, снимает inert/scroll lock и завершает ожидающие Modal
-handles с false. `App.message` дополнительно принимает `rtl`, `getContainer`,
-`stack`, `transitionName`, `classNames` и `styles`. Эти настройки управляют
-поверхностью общего экземпляра. [Message](message.md)
+Local prefixCls sets the root classes. Its fallback is ConfigProvider.prefixCls
+plus app. ConfigProvider.app inherits the class and style record as a whole.
+Local class, rootClassName, and style extend it, with local style taking precedence.
+Ordinary HTML attributes pass through to the root.
 
-`App.notification` принимает `getContainer`, `rtl`, `stack`, `showProgress`,
-`closeIcon`, `classNames`, `styles` и `onAllRemoved`. [Notification](notification.md)
+A custom root receives children with all holders, string class and style, dir,
+HTML attributes, and its own typed props. `AppRootProps` describes the shared
+parameters. To forward the DOM ref, declare `nativeElement` with `$bindable()`
+and use `bind:this` on the root element. The root can call `App.useApp()`.
+Hydration and prefix updates preserve nodes, focus, and drafts.
+[Ant Design 6.6.8 comparison](../../../tests/browser/app/app-custom-root.spec.ts)
 
-Основа сверки — [исходные снимки App](../../../tests/browser/fixtures/ant-design-app-reference.json).
-Все девять root-примеров, включая global-prefix, проверяются. Проверки:
-[браузер](../../../tests/browser/app/app.spec.ts), [SSR и типы](../../../tests/package/app/app.ssr.test.ts),
-[обновление defaults](../../../src/lib/notice/notice-config.test.ts).
+SSR leaves dialogs and popovers closed and timers inactive. Removing App closes
+its surfaces, clears inert and scroll locking, and settles pending Modal handles
+with false. `App.message` also accepts `rtl`, `getContainer`, `stack`,
+`transitionName`, `classNames`, and `styles` for the shared instance surface.
+[Message](message.md)
 
+`App.notification` accepts `getContainer`, `rtl`, `stack`, `showProgress`,
+`closeIcon`, `classNames`, `styles`, and `onAllRemoved`. [Notification](notification.md)
+
+Checks cover all nine root examples, including global-prefix.
+[Upstream App snapshots](../../../tests/browser/fixtures/ant-design-app-reference.json) · [Browser](../../../tests/browser/app/app.spec.ts) ·
+[SSR and types](../../../tests/package/app/app.ssr.test.ts) · [Default updates](../../../src/lib/notice/notice-config.test.ts)

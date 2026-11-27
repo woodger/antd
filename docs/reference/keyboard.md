@@ -1,148 +1,156 @@
-# Клавиатура и фокус
+# Keyboard and focus
 
-## Поля и выбор значений
+## Form controls and value selection
 
-Checkbox использует нативный input: нажатие подписи и Space переключают его,
-смешанное состояние доступно через `aria-checked="mixed"`. FormItem передаёт
-id, name, required, ошибки и описание самому input.
+Checkbox uses a native input. Clicking its label or pressing Space toggles it.
+The mixed state is exposed through `aria-checked="mixed"`. FormItem passes id,
+name, required, errors, and description to the input itself.
 
-CheckboxGroup объединяет нативные input в именованный fieldset; FormItem
-передаёт имя группы, описание и ошибки, а required проверяется правилом массива.
+CheckboxGroup groups native inputs in a named fieldset. FormItem passes the group
+name, description, and errors. An array rule checks the required state.
 
-RadioGroup использует нативную группу input[type=radio], именованный radiogroup,
-стрелки и Space. Tab сохраняет нативный порядок; FormItem направляет фокус к
-выбранному доступному варианту или первому доступному.
+RadioGroup uses native input[type=radio], a named radiogroup, arrow keys, and Space.
+Tab follows the native order. FormItem directs focus to the selected enabled option
+or the first enabled option.
 
-Switch использует нативную кнопку с role=switch: Space и Enter переключают
-состояние, ArrowLeft/ArrowRight задают false/true; disabled/loading исключают кнопку из Tab.
-Имя остаётся постоянным,
-а checked-состояние передаёт aria-checked.
+Switch uses a native button with role=switch. Space and Enter toggle the state.
+ArrowLeft and ArrowRight set it to false and true. The disabled and loading states
+take the button out of the Tab order. Its name remains constant, and aria-checked
+reports the checked state.
 
-InputNumber использует input с role=spinbutton: стрелки меняют число, Enter
-завершает черновик. Кнопки увеличения и уменьшения сохраняют фокус в input.
+InputNumber uses an input with role=spinbutton. Arrow keys change the number and
+Enter commits the draft. The increment and decrement buttons keep focus in the input.
 
-Slider использует нативный range: стрелки, Home/End и PageUp/PageDown,
-label и видимый фокус бегунка. Tab не добавляет отдельную остановку на дорожке.
+Slider uses a native range input with arrow keys, Home and End, PageUp and PageDown,
+a label, and visible focus on the thumb. The track adds no separate Tab stop.
 
-Select предоставляет combobox/listbox. Стрелки перемещают активный пункт,
-пропуская disabled options; Home/End выбирают начало и конец открытого списка,
-Enter подтверждает, Escape закрывает, Tab продолжает обычную навигацию.
-В одиночном режиме без поиска поддерживаются набор текста и очистка клавишами
-Backspace/Delete. В multiple Backspace при пустом поиске удаляет последний
-доступный элемент; редактирование текста и IME сохраняют стандартное поведение.
-Список получает aria-multiselectable; кнопки удаления доступны по Tab и Enter.
-Метка задаётся через label с соответствующим id, FormItem или
-aria-label. Нажатие на поле, стрелку или отступы открывает список. Расположение списка и выбор
-контейнера описаны в [настройках всплывающих элементов](popup-settings.md#контейнер).
+Select exposes a combobox and listbox. Arrow keys move the active option and skip
+disabled options. Home and End go to the first and last option in the open list,
+Enter confirms, Escape closes, and Tab continues normal navigation. Single mode
+without search supports typing and clearing with Backspace and Delete. In multiple
+mode, Backspace removes the last available item when the search is empty. Text
+editing and IME keep their normal behavior.
 
-## Меню, вкладки и навигация
+The list has aria-multiselectable. Remove buttons are reachable by Tab and
+activate with Enter. Give the field a label using a matching id, FormItem, or
+aria-label. Clicking the field, arrow, or padding opens the list. See how to
+set its position and container. [Popup container](popup-settings.md#container)
 
-Dropdown использует role=menu и нативные button/a с role=menuitem, один активный
-tabindex и разделители. Стрелки и typeahead обходят доступные команды;
-Escape закрывает меню раньше Modal, Tab сохраняет естественную навигацию.
+## Menus, tabs, and navigation
 
-Menu использует ul/li с role=menu/menuitem, native button для заголовков и
-настоящие ссылки в label. Стрелки/Home/End обходят доступные пункты по режиму;
-Enter раскрывает подменю, Escape возвращает фокус к родителю popup.
+Dropdown uses role=menu and native button or a elements with role=menuitem, one
+active tabindex, and separators. Arrow keys and typeahead move through available
+actions. Escape closes the menu before a containing Modal, and Tab follows
+natural navigation.
 
-Tabs использует tablist, нативные button с role=tab и связанные tabpanel.
-Aria-selected сообщает выбор; стрелки двигают фокус без активации. Скрытые
-панели недоступны для Tab. More использует listbox с native options/close buttons;
-его Escape закрывает popup раньше содержащего Modal. Фокус из portal учитывается
-при скрытии внешней панели.
+Menu uses ul and li with role=menu and role=menuitem, native buttons for headers,
+and real links in labels. Arrow keys, Home, and End move through available items
+according to the mode. Enter opens a submenu. Escape restores focus to the
+popup's parent item.
 
-Collapse использует нативные кнопки внутри headings, aria-expanded/aria-controls
-и обычную последовательность Tab. Extra отделён от кнопки заголовка, скрытое
-содержимое недоступно для Tab. Именованные regions ограничены небольшими группами
-и accordion; при скрытии или удалении сфокусированной панели фокус восстанавливается.
+Tabs uses a tablist, native buttons with role=tab, and associated tabpanels.
+Aria-selected reports selection. Arrow keys move focus without activating a tab.
+Tab skips hidden panels. More uses a listbox with native options and close
+buttons. Escape closes its popup before the containing Modal. Focus in a portal
+is taken into account when hiding the outer panel.
 
-Steps использует именованный упорядоченный список и нативные кнопки выбора.
-Aria-current обозначает текущий шаг, описание кнопки сообщает статус и content.
-Фокус сохраняется при перестановке и восстанавливается при удалении/отключении;
-live-region отсутствует, переходами и фокусом панели управляет владелец процесса.
+Collapse places native buttons inside headings and uses aria-expanded,
+aria-controls, and the normal Tab order. Extra stays outside the header button.
+Tab skips hidden content. Named regions are limited to small groups and
+accordions. Focus is restored when a focused panel is hidden or removed.
 
-Pagination использует nav со списком нативных кнопок и `aria-current="page"`.
-Tab перемещает фокус, Enter и Space выбирают страницу; недоступные переходы
-пропускаются. При исчезновении сфокусированной кнопки перехода фокус возвращается
-текущей странице. Имя навигации можно задать через `aria-label`.
+Steps uses a named ordered list and native selection buttons. Aria-current marks
+the current step, and the button description reports status and content. Focus
+is kept when steps reorder and restored when a step is removed or disabled.
+The process owner handles transitions and panel focus. Steps has no live region.
 
-## Диалоги и всплывающие элементы
+Pagination uses nav with a list of native buttons and `aria-current="page"`.
+Tab moves focus, and Enter and Space select a page. Unavailable transitions
+are skipped. If a focused navigation button disappears, focus returns to the
+current page. Set the navigation name with `aria-label`.
 
-Tooltip использует role=tooltip и aria-describedby основного дочернего control.
-Поверхность не перехватывает фокус; Escape сохраняет текущий control.
+## Dialogs and popups
 
-Popover предоставляет именованный немодальный dialog с доступными кнопками и
-полями. Trigger связан через aria-controls/aria-expanded; Escape возвращает
-фокус из содержимого, Tab продолжает естественную навигацию.
+Tooltip uses role=tooltip and aria-describedby on the main child control.
+Focus stays on the current control, including when Escape dismisses the tooltip.
 
-Popconfirm использует тот же dialog с именем и описанием подтверждения.
-Кнопки не отправляют окружающую форму. Во время Promise aria-busy сообщает
-ожидание, а Escape потребляется до содержащего Modal без закрытия подтверждения.
+Popover provides a named non-modal dialog with accessible buttons and fields.
+Aria-controls and aria-expanded connect the trigger to the dialog. Escape restores
+focus from the content, and Tab continues natural navigation.
 
-Drawer использует именованный модальный dialog, нативную кнопку закрытия и
-естественный Tab. Фон inert, Escape закрывает верхнюю поверхность, закрытие
-возвращает фокус opener. Во время анимации ухода модальность сохраняется.
+Popconfirm uses the same dialog with a confirmation name and description.
+Its buttons leave the surrounding form alone. While a promise is pending,
+aria-busy announces the wait. Popconfirm handles Escape before a containing
+Modal and stays open during that wait.
 
-Modal открывается через `dialog.showModal()` после mount. Браузер управляет
-модальностью, фокусом и inert-состоянием остальной страницы. Escape, фон и кнопка
-закрытия вызывают onCancel и сбрасывают bind:open; confirmLoading блокирует
-пользовательское закрытие. Если onOk задан, он управляет подтверждением и
-закрытием; без onOk кнопка подтверждения закрывает окно. В SSR dialog остаётся
-скрытым до гидратации. Для асинхронного подтверждения владелец управляет
-confirmLoading, обрабатывает ошибки и сбрасывает open после успеха.
+Drawer uses a named modal dialog, a native close button, and natural Tab
+navigation. The background is inert. Escape closes the top surface, and closing
+returns focus to the opener. The dialog remains modal during its exit animation.
 
-## Сообщения и загрузка
+Modal calls `dialog.showModal()` after mount. The browser manages modality,
+focus, and the inert state of the rest of the page. Escape, the backdrop,
+and the close button call onCancel and reset bind:open. ConfirmLoading blocks
+user-initiated closing. An onOk callback controls confirmation and closing when
+provided. Otherwise, the confirmation button closes the dialog. SSR keeps the
+dialog hidden until hydration. For asynchronous confirmation, the owner manages
+confirmLoading, handles errors, and resets open on success.
 
-Alert предоставляет alert/status, атомарное объявление и декоративные иконки.
-Закрытие доступно нативной кнопкой, уход скрыт от accessibility tree;
-фокус из удаляемого сообщения переходит к доступному соседнему control.
+## Messages and loading
 
-Message использует пассивные status/alert без остановок Tab и переноса фокуса.
-Закрытие host dialog остаётся у Modal/Drawer; скрытые контексты приостанавливают
-очередь и её таймеры.
+Alert provides alert or status semantics, atomic announcements, and decorative
+icons. A native button closes it, and the accessibility tree excludes the exiting
+alert. Focus moves from a removed alert to an available adjacent control.
 
-Notification поддерживает интерактивные действия с обычным Tab и нативной
-кнопкой закрытия. Фокус внутри приостанавливает таймер; при удалении controls
-фокус восстанавливается в доступном соседнем control текущего контекста.
+Message uses passive status or alert semantics and adds neither Tab stops nor
+focus changes. Modal or Drawer owns closing the host dialog. Hidden contexts
+pause the queue and its timers.
 
-Progress предоставляет именованный progressbar со значением и локализованным
-статусом. Он не меняет Tab/focus order и не создаёт собственные live-объявления.
+Notification supports interactive actions in the normal Tab order and a native
+close button. Focus inside pauses the timer. When controls are removed, focus
+is restored to an available adjacent control in the current context.
 
-Spin объявляет отдельный status и немедленно блокирует children через inert
-и aria-busy. Временная парковка фокуса на wrapper не добавляет остановку Tab;
-возврат учитывает замену controls, unmount и выбор пользователя.
+Progress provides a named progressbar with a value and localized status.
+The existing Tab and focus order stays in effect. Progress adds no live
+announcements of its own.
 
-Skeleton заменяет children декоративным каркасом и объявляет отдельный status.
-Фокус из удаляемого содержимого остаётся на постоянной группе; после загрузки
-Tab входит в новые controls. Автоматического фокуса в новые children нет.
+Spin announces a separate status and immediately blocks its children with inert
+and aria-busy. Temporarily moving focus to the wrapper adds no Tab stop. Focus
+restoration accounts for control replacement, unmounting, and the user's choice.
 
-Empty использует декоративное inert-изображение и обычные controls footer.
-Live-region и автофокус отсутствуют; удаление сфокусированных действий
-восстанавливает доступный фокус и сохраняет выбор владельца.
+Skeleton replaces children with a decorative placeholder and announces a
+separate status. Focus from removed content stays on the persistent group.
+After loading, Tab enters the new controls. The new children receive no automatic focus.
 
-Result предоставляет нативный заголовок выбранного уровня, декоративную иконку
-и обычные controls действий/подробностей. Он не объявляет итог автоматически;
-восстановление фокуса при удалении действий использует общий механизм с Empty.
+Empty uses a decorative inert image and ordinary footer controls. It adds neither
+a live region nor autofocus. Removing focused actions restores available focus
+and preserves the owner's choice.
 
-## Таблицы, метки и аватары
+Result provides a native heading at the selected level, a decorative icon,
+and ordinary action and detail controls. The outcome is available without an
+automatic announcement. Focus restoration after action removal uses the same
+mechanism as Empty.
 
-Table сохраняет нативные table/thead/tbody/th/td и `scope="col"`. Имя задаётся
-через caption или aria-label. Сортируемые заголовки содержат нативные кнопки;
-Enter/Space меняют порядок, `aria-sort` сообщает активное направление.
-Контейнер прокрутки доступен по Tab и прокручивается стрелками.
+## Tables, tags, and avatars
 
-Tag использует обычный текст и описанную нативную кнопку закрытия. OnClose может
-отменить действие; удаление сохраняет доступный фокус. CheckableTag — управляемая
-toggle-кнопка с aria-pressed и нативной клавиатурой. Оба компонента скрывают
-декоративные иконки и не создают собственных live-region.
+Table preserves native table, thead, tbody, th, and td elements and
+`scope="col"`. Use a caption or aria-label to name it. Sortable headers contain
+native buttons. Enter and Space change the order, and `aria-sort` reports the
+active direction. Tab reaches the scroll container, and arrow keys scroll it.
 
-Badge сохраняет интерактивные children при изменениях и скрытии индикатора.
-Полное значение доступно обычным текстом; descriptionId связывает его с control
-владельца. Автоматических объявлений и дополнительных остановок Tab нет.
+Tag uses ordinary text and a native close button with a description. OnClose
+can cancel the action. Removing the tag preserves available focus. CheckableTag
+is a controlled toggle button with aria-pressed and native keyboard behavior.
+Both hide decorative icons and add no live region of their own.
 
-Avatar сохраняет полное имя при fallback и подгонке текста. Строка src и
-icon/children без имени декоративны; icon/children inert. Src Snippet сохраняет
-собственные controls; именованный корень — group, явный aria-hidden делает его inert.
+Badge preserves interactive children when the indicator changes or hides.
+The full value is available as ordinary text. DescriptionId associates it with
+the owning control. Badge adds neither automatic announcements nor extra
+Tab stops.
 
-AvatarGroup раскрывает скрытых участников нативной кнопкой в именованный
-Popover. Удаление overflow/группы сохраняет доступный фокус и выбор владельца.
+Avatar preserves the full name in its fallback and while fitting text. A string
+src and unnamed icon or children are decorative. Icon and children are inert.
+An src snippet retains its own controls. The named root is a group, and explicit
+aria-hidden makes it inert.
+
+AvatarGroup reveals hidden members in a named Popover through a native button.
+Removing the overflow control or group preserves available focus and the owner's choice.

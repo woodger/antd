@@ -1,66 +1,66 @@
 # ImagePreviewGroup (Image.PreviewGroup)
 
-ImagePreviewGroup предоставляет дочерним Image общий просмотрщик. Компонент
-не добавляет DOM-обёртку вокруг children.
+ImagePreviewGroup gives its child Image components a shared viewer. Children
+render without an extra DOM wrapper.
 
 ```svelte
 <script lang="ts">
   import { Image, ImagePreviewGroup } from '@woodger/antd';
 </script>
 <ImagePreviewGroup>
-  <Image src="/first.jpg" alt="Первое изображение" width={160} />
-  <Image src="/second.jpg" alt="Второе изображение" width={160} />
+  <Image src="/first.jpg" alt="First image" width={160} />
+  <Image src="/second.jpg" alt="Second image" width={160} />
 </ImagePreviewGroup>
 ```
 
-PreviewPrefixCls группы задаёт базовый Image prefix, как в Ant Design; к нему
-добавляется -preview. Пустая строка наследует ConfigProvider. Префиксы дочерних
-Image независимы от группы. Смена общего или локального префикса сохраняет viewer,
-выбранное изображение и transform.
+The group's previewPrefixCls sets the base Image prefix, as in Ant Design. The
+viewer adds -preview. An empty string inherits ConfigProvider. Child Image
+prefixes are independent of the group. Changing a shared or local prefix preserves
+the viewer, current image, and transform.
 
-Без items список строится из зарегистрированных дочерних Image с preview=true.
-Порядок соответствует созданию/регистрации, сохраняется при keyed DOM reorder;
-обновление src не переставляет элемент. Одинаковые src различаются по id.
-Image.preview=false исключает thumbnail из этого списка. Preview.src дочернего
-Image регистрируется вместо thumbnail src; его собственный preview config и
-onOpenChange не управляют групповым viewer.
+Without items, the list comes from registered child Image components with
+preview=true. It follows creation and registration order and keeps that order
+through keyed DOM reordering. Updating src keeps the entry in place. Repeated
+src values are distinguished by id. Image.preview=false excludes the thumbnail.
+A child Image registers its preview.src in place of the thumbnail src. Its own
+preview configuration and onOpenChange leave the group viewer alone.
 
-Items принимает строки URL или объекты с src/alt и shared native image attrs.
-Явный массив, включая пустой, имеет приоритет над регистрациями. При открытии
-thumbnail ищется первое совпадение preview src, при отсутствии совпадения индекс 0.
-Изображения items не создают thumbnails автоматически. Fallback группы применяется
-к viewer; индивидуальный Image.fallback в registration data не входит.
+Items accepts URL strings or objects with src, alt, and shared native image
+attributes. An explicit array, including an empty one, takes precedence over
+registrations. Opening a thumbnail finds the first matching preview src, with
+index 0 as the fallback. Items do not render thumbnails automatically. The group
+fallback applies to the viewer. Individual Image.fallback is excluded from
+registration data.
 
-Preview config поддерживает open/onOpenChange, current/onChange, countRender и
-общие настройки viewer/transforms/render Snippets. Current — zero-based; по
-умолчанию 0. Prev/next и физические Left/Right меняют индекс в пределах списка;
-в RTL порядок индексов клавиатуры не меняется, иконки/логическое положение
-переключателей адаптируются. OnChange(next,previous) относится к навигации;
-thumbnail напрямую задаёт внутренний индекс и не вызывает onChange. Controlled
-current остаётся у владельца. Navigation фиксирует previous до вызова callbacks,
-даже если onTransform изменил props владельца.
+Preview configuration supports open and onOpenChange, current and onChange,
+countRender, and shared viewer, transform, and render snippet settings. Current
+is zero-based and defaults to 0. Prev, next, and the physical Left and Right keys
+change the index within the list. RTL adapts switch icons and logical placement
+and keeps the keyboard index order. OnChange(next, previous) reports navigation.
+Opening a thumbnail directly sets the internal index without calling onChange.
+The owner controls a controlled current. Navigation captures previous before
+callbacks, even if onTransform updates owner props.
 
-OnOpenChange(open,{current}) вызывается при пользовательском изменении видимости.
-Сохранена особенность rc-image 1.10.0: при открытии thumbnail callback получает
-snapshot прежнего current, а viewer использует индекс нажатого изображения.
-Внешняя смена open сама не вызывает этот callback. После закрытия программное
-открытие uncontrolled current начинает с 0; новое открытие thumbnail сохраняет
-его выбранный индекс. Внешнее изменение controlled current сохраняет transform,
-пользовательская навигация сбрасывает его без scale transition.
+OnOpenChange(open, { current }) runs on user visibility changes. As in rc-image
+1.10.0, opening from a thumbnail reports a snapshot of the previous current to
+the callback while the viewer uses the clicked image's index. An external open
+change leaves the callback untouched. After closing, programmatic reopening
+starts uncontrolled current at 0. Reopening from a thumbnail uses the selected
+thumbnail index. External controlled current changes preserve the transform.
+User navigation resets it without a scale transition.
 
-CountRender(current,total) получает one-based current. Render info для
-imageRender/actionsRender содержит zero-based current, total и actions;
-info.actions.onActive(offset) принимает относительное смещение, как runtime
-rc-image, а не абсолютный индекс. Refs/DOM и управление фокусом относятся к общему
-viewer. После закрытия фокус возвращается thumbnail, открывшему группу.
+CountRender(current, total) receives one-based current. Render info for
+imageRender and actionsRender contains zero-based current, total, and actions.
+Info.actions.onActive(offset) takes a relative offset as in rc-image runtime.
+Refs, DOM, and focus management belong to the shared viewer. Closing returns
+focus to the thumbnail that opened the group.
 
-Удаление images/items обновляет список, не ограничивая owner current автоматически:
-владелец отвечает за допустимый индекс. Даже при пустом списке viewer можно закрыть.
-Ещё одна особенность rc-image 1.10.0 сохранена: preview=false у Group снимает
-настройки, но само по себе не отключает открытие из дочернего Image; отключение
-конкретного thumbnail задаётся Image.preview=false.
+Removing images or items updates the list and leaves the owner responsible for a
+valid current index. The viewer can be closed even with an empty list. In another
+preserved rc-image 1.10.0 case, preview=false on the group clears its configuration
+while child Image can still open the viewer. Set Image.preview=false to disable
+a particular thumbnail.
 
-Fixture — `?fixture=image-preview-group`.
-SSR рендерит children без DOM registration и открытого viewer. Ограничения semantic/
-config/container/icons и исходных motion общие с Image и перечислены выше.
-
+The fixture is `?fixture=image-preview-group`. SSR renders children and leaves
+DOM registration and the viewer inactive. The semantic, configuration, container,
+icon, and upstream motion limitations are shared with Image and listed above.

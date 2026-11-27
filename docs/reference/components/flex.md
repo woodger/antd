@@ -2,47 +2,48 @@
 
 ```svelte
 <Flex gap="small" justify="space-between" wrap>
-  <Button>Первое действие</Button>
-  <Button>Второе действие</Button>
+  <Button>First action</Button>
+  <Button>Second action</Button>
 </Flex>
 ```
 
-Flex не оборачивает детей; нативный component создаёт один корневой элемент. Children — Snippet;
-без содержимого контейнер скрывается CSS-правилом :empty, как в Ant Design.
-Orientation=horizontal/vertical имеет приоритет над vertical. В вертикальном
-режиме без align используется stretch. Align/justify поддерживают значения,
-для которых эталон генерирует классы; остальные CSS-настройки доступны через style.
-Wrap принимает boolean или wrap/nowrap/wrap-reverse; false не добавляет класс.
+Flex renders its children without wrappers. A native component has one root, and
+children is a snippet. CSS `:empty` hides an empty container as in Ant Design.
+Orientation=horizontal or vertical takes priority over vertical. Vertical mode
+uses stretch when align is omitted. Align and justify support values for which
+the reference generates classes. Use style for other CSS settings. Wrap accepts
+a boolean or wrap, nowrap, or wrap-reverse. False adds no class.
 
-Gap принимает small/medium/large, число в px или CSS-строку, включая
-составной row/column gap. Preset-интервалы используют токены padding: 8/16/24px.
-Ноль сохраняется. Flex принимает CSS shorthand либо число без единицы.
-Числовой и произвольный CSS gap, а также flex имеют приоритет над одноимёнными
-декларациями style. Preset gap задаёт CSS-класс, поэтому inline style имеет
-приоритет: gap="small" со style="gap:99px" даёт 99px, gap={12} — 12px.
-Component выбирает нативный HTML-тег (default=div) или Svelte-компонент; bind:nativeElement даёт
-текущий HTMLElement и обновляется при смене тега. Class/rootClassName/style,
-нативные атрибуты и события передаются корню. Собственные роли, tabindex,
-reset шрифта и обработчики клавиатуры не добавляются. RTL меняет визуальное
-направление, сохраняя DOM-порядок и нативный Tab.
+Gap accepts small, medium, large, a number in pixels, or a CSS string, including
+a combined row and column gap. Preset gaps use the 8, 16, and 24px padding tokens.
+Zero is preserved. Flex accepts a CSS shorthand or a unitless number. A numeric
+or custom CSS gap and flex take precedence over the corresponding style
+declarations. A preset gap uses a CSS class, so inline style takes priority.
+For example, gap="small" with style="gap:99px" gives 99px, and gap={12} gives 12px.
 
-Фикстура — `?fixture=flex`.
-SSR/Chromium-проверки покрывают структуру, направления, выравнивание, gap/flex,
-перенос строк, пустое содержимое, смену тега, события, фокус, темы и RTL.
-ConfigProvider.flex задаёт vertical/class/style. Undefined наследует record,
-явный объект, включая {}, заменяет его целиком. Приоритет направления:
-orientation → local vertical → provider vertical → horizontal. Provider style
-идёт перед local style, затем применяются flex и custom gap; preset gap остаётся классом.
-Локальный prefixCls меняет корень и все layout-классы; пустая строка выбирает ant-flex.
-CSS variables сохраняют namespace, собственный stylesheet добавляется при SSR и
-не меняет соседние Flex, включая prefix, совпадающий с private marker.
+Component selects a native HTML tag, div by default, or a Svelte component.
+`bind:nativeElement` exposes the current HTMLElement and updates when the tag
+changes. Class, rootClassName, style, and native attributes and events reach the
+root. It adds no role, tabindex, font reset, or keyboard handler of its own.
+RTL changes visual direction and preserves DOM order and native Tab navigation.
 
-Пользовательский component получает атрибуты, события, class/style/dir и children
-без дополнительного элемента. Class поддерживает стандартные Svelte ClassValue.
-Layout props потребляются Flex. Дополнительные параметры проверяются через generic
-FlexComponentProps; FlexProps остаётся расширяемым интерфейсом для прежних потребителей.
-Для nativeElement custom root должен объявить `$bindable()` без fallback и связать
-его с корнем; без forwarding Flex не подставляет найденный DOM-элемент.
+SSR and Chromium checks for `?fixture=flex` cover structure, direction, alignment,
+gap, flex, wrapping, empty content, tag changes, events, focus, themes, and RTL.
+ConfigProvider.flex sets vertical, class, and style. Undefined inherits the record.
+An explicit object, including {}, replaces it in full. Direction priority is
+orientation, local vertical, provider vertical, then horizontal. Provider style
+comes before local style, followed by flex and a custom gap. Preset gap remains
+a class. Local prefixCls changes the root and all layout classes. An empty string
+selects ant-flex. CSS variables keep their namespace. The component's stylesheet
+is included in SSR and keeps neighboring Flex containers isolated, including
+when a prefix matches a private marker.
+
+A custom component receives attributes, events, class, style, dir, and children
+without an extra element. Class supports standard Svelte ClassValue. Flex consumes
+layout props. The generic FlexComponentProps checks additional parameters, and
+FlexProps remains an extensible interface for existing consumers. A custom root
+must declare `nativeElement` through `$bindable()` without a fallback and bind its
+root to forward that ref. An omitted ref stays undefined.
 
 ```svelte
 <!-- CustomRoot.svelte -->
@@ -54,15 +55,12 @@ FlexComponentProps; FlexProps остаётся расширяемым интер
 <section {...rest} bind:this={nativeElement}>{@render children?.()}</section>
 ```
 
-`components.Flex` принимает alias overrides и algorithm; собственных component defaults
-у upstream нет. PaddingXS/padding/paddingLG меняют preset gaps, а font/color reset не
-добавляется. CSS-variable prefix настраивается независимо от BEM prefix.
-Сверка с 33 официальными UMD-сценариями:
-[browser](../../../tests/browser/flex/flex-source.spec.ts),
-[SSR](../../../tests/package/flex/flex-source.ssr.test.ts),
-[эталон](../../../tests/browser/fixtures/ant-design-flex-source-reference.json),
-фикстура `?fixture=flex-source`. Live updates сохраняют custom state, DOM/ref,
-фокус и selection; смена component заменяет корень, как в React.
-Рецепты flex и flex-prefix воспроизводят 32 правила закреплённого CSS без reset типографики.
-Flex наследует ConfigProvider.prefixCls; непустой локальный prefix имеет приоритет.
-
+`components.Flex` accepts alias overrides and an algorithm. Upstream has no
+component defaults of its own. PaddingXS, padding, and paddingLG change preset
+gaps without adding a font or color reset. Set the CSS variable prefix
+independently of the BEM prefix. The 33 official UMD scenarios use
+`?fixture=flex-source`. Live updates preserve custom state, DOM, refs, focus, and
+selection. Changing component replaces the root, as in React. The flex and
+flex-prefix recipes reproduce 32 pinned CSS rules without a typography reset.
+Flex inherits ConfigProvider.prefixCls. A nonempty local prefix takes priority.
+[Browser](../../../tests/browser/flex/flex-source.spec.ts) · [SSR](../../../tests/package/flex/flex-source.ssr.test.ts) · [Reference](../../../tests/browser/fixtures/ant-design-flex-source-reference.json)

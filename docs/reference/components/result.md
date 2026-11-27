@@ -6,73 +6,74 @@
   let { edit }: { edit: () => void } = $props();
 </script>
 
-<Result status="success" title="Заявка отправлена"
-  subTitle="Данные сохранены." headingLevel={2}>
-  {#snippet extra()}<Button onclick={edit}>Изменить заявку</Button>{/snippet}
-  <p>Номер заявки: 42.</p>
+<Result status="success" title="Application submitted"
+  subTitle="Your data has been saved." headingLevel={2}>
+  {#snippet extra()}<Button onclick={edit}>Edit application</Button>{/snippet}
+  <p>Application number 42.</p>
 </Result>
 ```
 
-Обработчик edit принадлежит владельцу формы. Result показывает итог операции;
-встроенных запросов, таймеров и управления данными в компоненте нет.
-Status: success/error/info/warning и 403/404/500 в строковой или числовой форме.
-По умолчанию — info. У первых четырёх статусов официальные filled-иконки;
-у 403/404/500 — отдельные иллюстрации Ant Design с исходной палитрой.
-Эти варианты не меняют маршруты и HTTP-статусы приложения.
+The form owner supplies the edit handler. Result displays an operation outcome.
+It has no built-in requests, timers, or data management. Status accepts success,
+error, info, warning, and 403, 404, or 500 as strings or numbers. It defaults to
+info. The first four statuses use official filled icons. 403, 404, and 500 use
+separate Ant Design illustrations with their original palettes. These variants
+leave application routes and HTTP statuses alone.
 
-Title, subTitle, extra и children принимают строки, числа, boolean, null, Snippet
-и вложенные массивы такого содержимого. Undefined/null/false/пустая строка
-не создают контейнеров; 0, true и массивы создают, но boolean не выводится текстом.
-Строки экранируются. Title — нативный
-заголовок: headingLevel от 1 до 6, по умолчанию 2. Владелец выбирает уровень
-под структуру страницы и передаёт текстовое содержимое без вложенного заголовка.
-Extra содержит действия; children — подробности. Порядок чтения:
-иконка, заголовок, описание, действия, подробности. Действия остаются обычными
-controls с естественным Tab/Shift+Tab и своей клавиатурной семантикой.
+Title, subTitle, extra, and children accept strings, numbers, booleans, null,
+snippets, and nested arrays of those values. Undefined, null, false, and an empty
+string omit containers. Zero, true, and arrays produce containers, and booleans
+render no text. Strings are escaped. Title is a native heading with headingLevel
+from 1 to 6, defaulting to 2. Choose a level for the page structure and give
+it text content without a nested heading. Extra contains actions and children
+contains details. The reading order is icon, title, description, actions, then
+details. Actions keep normal Tab and Shift+Tab and their own keyboard semantics.
 
-Icon принимает такое же декоративное содержимое; null/false скрывают обычную иконку,
-undefined/пустая строка оставляют встроенную, 0 выводится буквально.
-Как в исходном Ant Design, иллюстрации 403/404/500 имеют приоритет над icon,
-включая false. Контейнер изображения aria-hidden/inert: иконка не дублирует
-заголовок и не создаёт остановок фокуса. Собственный icon отвечает за ресурсы
-и анимацию; интерактивные элементы следует передавать в extra/children.
+Icon accepts the same decorative content. Null and false hide the regular icon,
+undefined and an empty string keep the built-in icon, and 0 renders literally.
+As in Ant Design, the 403, 404, and 500 illustrations take precedence over icon,
+including false. Their container is aria-hidden and inert, so the icon neither
+duplicates the heading nor adds focus stops. A custom icon owns its resources
+and animation. Put interactive elements in extra or children.
 
-Result.PRESENTED_IMAGE_403/404/500 — Svelte-компоненты исходных иллюстраций:
-`<Result.PRESENTED_IMAGE_404 />`. Самостоятельные изображения сохраняют исходные
-SVG-геометрию, цвета и title (Unauthorized / No Found / Server Error), без добавленных
-viewBox/ARIA. Внутри exception Result остаются decorative viewBox-иллюстрации без title;
-один контейнер имеет оба класса icon/image, как upstream.
+Result.PRESENTED_IMAGE_403, 404, and 500 are Svelte components for the upstream
+illustrations, for example `<Result.PRESENTED_IMAGE_404 />`. Standalone images
+keep the upstream SVG geometry, colors, and titles (Unauthorized / No Found /
+Server Error). Their original viewBox and ARIA behavior are preserved. Inside
+an exception Result, the viewBox illustrations are decorative and have no title.
+One container has both icon and image classes, as upstream does.
 
-Id/class/style, data-* и aria-* относятся к корню. Aria-label или
-aria-labelledby создают именованную group; явный role имеет приоритет. Собственных live-region,
-автофокуса и перехвата Tab нет. Владелец решает, нужно ли объявление результата
-или явный перенос фокуса после отправки. Если сфокусированное действие исчезает,
-фокус восстанавливается на доступном control внутри Result или рядом с ним.
-При unmount используются сохранённые соседи текущего dialog/документа;
-явный выбор фокуса владельцем сохраняется. Механизм общий с Empty.
+Id, class, style, data-*, and aria-* apply to the root. Aria-label or
+aria-labelledby names a group. An explicit role takes precedence. Result leaves
+live announcements, autofocus, and Tab handling to its surroundings. The owner
+decides whether to announce the outcome or explicitly move focus after submission.
+When a focused action disappears, focus returns to an available control inside
+or near Result. On unmount, restoration uses saved neighbors in the current
+dialog or document. It preserves explicit focus chosen by the owner. Empty
+uses the same mechanism.
 
-ConfigProvider.result задаёт class/style и object/function classNames/styles
-для root/title/subTitle/body/extra/icon. Callbacks получают входные props с
-разрешённым status='info'. Классы объединяются; root styles следуют порядку
-provider.styles.root → provider.style → local.styles.root → local.style.
-Undefined наследует provider record; явный объект, включая {}, заменяет его целиком.
-Локальные prefixCls/rootClassName и bind:nativeElement/ref поддержаны; refs
-присваиваются после mount и очищаются при unmount. Обновления оформления сохраняют
-DOM действий, value, focus и selection.
+ConfigProvider.result sets class and style and supports object or function
+classNames and styles for root, title, subTitle, body, extra, and icon. Callbacks
+receive input props with resolved status='info'. Classes merge. Root style order
+is provider.styles.root, provider.style, local.styles.root, then local.style.
+Undefined inherits the provider record. An explicit object, including {},
+replaces it in full. Local prefixCls and rootClassName and bind:nativeElement
+and ref are supported. Refs are assigned after mount and cleared on unmount.
+Appearance changes preserve action DOM, value, focus, and selection.
 
-ConfigProvider передаёт тему, compact и direction. Все четыре
-[токена Result](../theme-context.md#токены-result), aliases и component
-algorithms применяются к корню перед пользовательскими styles. Цвета обычных иконок,
-текст и фон подробностей используют токены; иллюстрации сохраняют исходные цвета.
-Текст и действия переносятся, SVG уменьшается на узком экране.
-Заголовок, описание и текст действий вместе с их переводами задаёт владелец.
+ConfigProvider supplies the theme, compact settings, and direction. All four
+Result tokens, aliases, and component algorithms apply to the root before user
+styles. Regular icon colors and the text and background of the details use tokens.
+Illustrations keep their original colors. Text and actions wrap, and SVGs shrink
+in narrow viewports. The owner supplies and translates the title, description,
+and action text. [Result tokens](../theme-context.md#result-tokens)
 
-Сохранены native heading вместо div, именованная group, декоративные inert icons,
-responsive inline padding/image, flex/wrapping действий и восстановление фокуса.
-81 официальный UMD-сценарий сверяет остальной API, slot styles и полную геометрию SVG;
-path d сравнивается через браузерный CSSOM, который разбирает compact arc flags.
-Source theme использует исходный fitted viewBox статусных иконок; legacy viewport сохранён.
-Эти native layout/ARIA boundaries исключены из source snapshots и проверяются
-отдельно. Общий prefix ConfigProvider поддержан; React development warnings
-ещё не перенесены.
-
+The native heading, named group, decorative inert icons, responsive inline
+padding and image sizes, flex and wrapping of actions, and focus restoration
+are preserved. The 81 official UMD scenarios compare the remaining API, slot
+styles, and complete SVG geometry. The browser CSSOM parses compact arc flags
+when comparing path d. The upstream theme uses the original fitted viewBox for
+status icons. The legacy viewport is preserved. Separate checks cover these
+native layout and ARIA boundaries outside the upstream snapshots. The shared
+ConfigProvider prefix is supported. React development warnings are still outside
+the port.

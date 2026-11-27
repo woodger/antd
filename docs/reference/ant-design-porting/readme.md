@@ -1,40 +1,42 @@
-# Инструменты переноса Ant Design
+# Ant Design porting tools
 
-> Type: Reference. Текущее устройство реестра, извлечения CSS и браузерных фикстур.
+> Type: Reference. The current coverage registry, CSS extraction, and browser fixtures.
 
-[Сводка покрытия](./status.md) строится из [registry.json](./registry.json).
-Публичный API и поведение принадлежат [типам и документации компонентов](../components/README.md).
-Реестр фиксирует состояние аудита и согласованный объём; записи candidate
-не означают, что реализация уже запланирована или авторизована.
+The coverage summary is generated from registry.json. The component types and
+documentation define public APIs and behavior. The registry records audit status
+and agreed scope. A candidate entry is pending a scope decision. [Coverage summary](./status.md) ·
+[Registry](./registry.json) · [Component types and documentation](../components/README.md)
 
-## Проектные приоритеты
+## Project priorities
 
-Очередь определена владельцем по потребностям приложений и задаёт порядок работ.
-Перечисленные возможности определяют первые этапы, а не заменяют цель переноса
-актуального API: поведение сверяется с закреплённым Ant Design и его зависимостями.
+The owner sets the order based on application needs. The features below define
+the first stages of work toward porting the current API. Compare behavior
+against the pinned Ant Design and its dependencies.
 
-1. **TextArea / Input.TextArea**: native управляемое значение, name/rows/maxlength,
-   required/disabled/readonly, ошибки, input и selection events.
-2. **Удалённый Select**: управляемый search, callback, loading/error, отключение
-   local filter, подгрузка и выбранные значения вне текущей выдачи. Сетевые запросы
-   остаются у потребителя; сам Select уже существует.
-3. **DatePicker с временем, затем RangePicker**: ввод/календарь, clear, ограничения,
-   клавиатура, locale и формы. Режим Dayjs и точность повторяют upstream;
-   прикладная UTC/ISO-сериализация не входит в компонентный контракт.
-4. **Upload**: несколько файлов, controlled list, выбор/drop, ручной запуск,
-   ошибки и удаление. Поведение отправки сверяется с upstream; прикладные
-   серверные endpoints не входят в компонентный перенос.
-5. **Tree, затем TreeSelect**: стабильные keys, раскрытие/выбор/клавиатура,
-   lazy children, loading/error.
-6. **Menu**: native links, selected item, horizontal/vertical, группы, подменю,
-   keyboard navigation.
-7. **Позже**: AutoComplete, Mentions и Image preview после основных форм и выбора.
+1. **TextArea / Input.TextArea** covers native controlled values, name, rows,
+   maxlength, required, disabled, readonly, errors, input, and selection events.
+2. **Remote Select** covers controlled search, callbacks, loading and errors,
+   disabling local filtering, loading more options, and selected values outside
+   the current results. Consumers own network requests. Select itself already exists.
+3. **DatePicker with time, followed by RangePicker** covers input and calendars,
+   clearing, constraints, keyboard interaction, locale, and forms. Dayjs mode
+   and precision follow upstream. Application UTC and ISO serialization are
+   outside the component contract.
+4. **Upload** covers multiple files, controlled lists, selection and drop, manual
+   starts, errors, and removal. Compare upload behavior with upstream. Application
+   server endpoints are outside the port.
+5. **Tree, followed by TreeSelect** covers stable keys, expansion, selection,
+   keyboard interaction, lazy children, loading, and errors.
+6. **Menu** covers native links, selected items, horizontal and vertical modes,
+   groups, submenus, and keyboard navigation.
+7. **Later stages** cover AutoComplete, Mentions, and Image preview after core
+   forms and selection.
 
-## Реестр
+## Registry
 
-Служебные команды объединены в `tools/cli.mjs`. `icore` установлен как
-dev-зависимость и разбирает пути команд, позиционные аргументы и схемы опций;
-проверки реестра и извлечение CSS выполняют собственные обработчики.
+The development CLI lives in `tools/cli.mjs`. It uses the dev dependency
+`icore` to parse command paths, positional arguments, and option schemas.
+Project handlers validate the registry and extract CSS.
 
 ```sh
 npm run cli -- --help
@@ -42,78 +44,78 @@ npm run cli -- registry --help
 npm run cli -- css --help
 ```
 
-Команды инструментов выполняются из корня репозитория библиотеки. Локальные
-пути evidence, CSS output,
-`.upstream` и `--archive=path` отсчитываются от корня репозитория.
+Run project tools from the library repository root. Resolve local evidence
+paths, CSS output, `.upstream`, and `--archive=path` relative to that root.
 
-Для воспроизведения каталога локалей запустите `node tools/ant-design-locales.mjs`.
-Команда читает закреплённый архив и React UMD из `.upstream/artifacts`. Для
-другого каталога артефактов укажите `--artifacts`. Скрипт проверяет SHA-256
-архива и повторяет извлечение перед записью подмодулей и тестовой сводки.
+Run `node tools/ant-design-locales.mjs` to regenerate the locale catalog.
+It reads the pinned archive and React UMD from `.upstream/artifacts`. Use
+`--artifacts` for a different directory. The script verifies the archive
+SHA-256 and repeats extraction before writing the submodules and test summary.
 
-Перенос актуального API Ant Design 6.6.8 выполняется автономно по поручению владельца:
-порядок компонентов определяется зависимостями и готовностью эталона.
-Цель — полный перенос на Svelte 5 с минимальными структурными и
-поведенческими отклонениями от React-эталона. Перед
-реализацией candidate переводится в target с конкретным объёмом и evidence.
-Результат каждого завершённого этапа сохраняется отдельным Git-коммитом после
-релевантных проверок; промежуточное согласование готовых задач не требуется.
-Существующие актуальные Svelte-контракты и согласованные адаптации сохраняются.
-Deprecated API исключён из целевой библиотеки и удаляется, включая уже реализованные
-компоненты, props, методы, значения и алиасы токенов. Удаляются также код совместимости,
-отдельные стили, тесты, фикстуры и документация этого слоя; актуальные замены сохраняются.
-Deprecated определяется по закреплённому Ant Design 6.6.8 и применимым зависимостям,
-а не по возрасту API или наличию слова legacy во внутреннем имени.
-V1-ready остаётся оценкой первого объёма, а не подтверждением полного переноса.
-Итоговый отчёт должен отдельно учитывать весь API эталона, непокрытые возможности,
-поведенческие отличия и фактически выполненные проверки. Push и публикация
-не входят в этот workflow.
+The owner authorized autonomous porting of the current Ant Design 6.6.8 API.
+Dependencies and reference readiness determine the component order. The goal
+is a complete Svelte 5 port with minimal structural and behavioral differences
+from React. Before implementation, move a candidate to target with specific
+scope and evidence. Save each completed stage in its own Git commit after
+relevant checks. Completed in-scope tasks can proceed without intermediate
+approval.
 
-Явные ошибки upstream не воспроизводятся только ради совпадения с эталоном.
-В `note` соответствующей feature записываются закреплённая версия и ревизия,
-воспроизведение, наблюдаемая ошибка и выбранное поведение Svelte. Спорные случаи
-отмечаются как наблюдения для отдельного разбора с владельцем; неожиданное
-поведение само по себе не считается ошибкой. Существующие публичные контракты
-не меняются без необходимости.
+Preserve current Svelte contracts and agreed adaptations. The target library
+excludes deprecated APIs. Remove deprecated components, props, methods, values,
+and token aliases, including existing implementations. Remove their
+compatibility code, separate styles, tests, fixtures, and documentation.
+Keep current replacements. Use the pinned Ant Design 6.6.8 and applicable
+dependencies to establish deprecation. API age and an internal legacy name
+alone are insufficient.
 
-Одна карточка соответствует семейству каталога. Avatar и Avatar.Group учитываются
-вместе с сопоставлением экспортов Avatar и AvatarGroup. Аналогично сгруппированы
-Checkbox.Group, Radio.Group, Tag.CheckableTag и Form.Item. Фабрики createForm,
-createMessage/createNotification учитываются в API, но не прибавляют компоненты.
-Default exports из *.component обозначают Svelte component facades со статическим API
-и считаются наравне с прямыми *.svelte exports.
-Theme API и useToken учтены в семействе ConfigProvider и не добавляют Svelte-компонент.
+V1-ready assesses the first agreed scope. The final report separately accounts
+for the entire upstream API, remaining gaps, behavior differences, and checks
+actually run. Pushing and publishing are separate from this workflow.
 
-Состав каталога 6.6.8 закреплён в данных: 73 позиции, включая Icon, Util и
-deprecated List; внешние Pro Components не включены. Экспорты Row/Col относятся
-к Grid, а deprecated BackTop не является отдельной позицией этого каталога.
-Scope target обозначает уже принятый объём, candidate — область для решения,
-excluded требует пояснения. Подробные пилотные карточки — Avatar, Select и DatePicker.
-Для остальных записаны публичные экспорты, известные ограничения и unreviewed
-для ещё не выполненного детального аудита. Это не утверждение о неработоспособности
-существующих v1.
+Keep clear upstream defects out of the port. In the feature's `note`, record
+the pinned version and revision, reproduction, observed defect, and selected
+Svelte behavior. Record disputed cases as observations for separate review
+with the owner. Unexpected behavior alone is insufficient evidence of a bug.
+Preserve existing public contracts unless the change requires otherwise.
 
-Общие поля upstream задают версию, Git revision, URL и SHA-256 npm-архива.
-Карточка содержит upstreamPath, exports, известные dependencies,
-ссылки evidence, priority и effort. UpstreamPackages хранит диапазон из package.json;
-referenceVersion остаётся null, пока точная изученная версия зависимости не выбрана.
-Пустой dependencies означает отсутствие записанных связей, а не доказанное
-отсутствие любых импортов.
+Each entry represents one catalog family. Avatar and Avatar.Group are grouped
+with their Avatar and AvatarGroup export mappings. The same applies to
+Checkbox.Group, Radio.Group, Tag.CheckableTag, and Form.Item. The createForm,
+createMessage, and createNotification factories count toward the API and leave
+the component count unchanged. Default exports from *.component are Svelte
+component facades with static APIs and count like direct *.svelte exports.
+Theme API and useToken belong to ConfigProvider and add no Svelte component.
 
-Features описывают функциональные блоки, а не повторяют TypeScript props:
+The pinned 6.6.8 catalog has 73 entries, including Icon, Util, and deprecated
+List. External Pro Components are outside the catalog. Row and Col belong to
+Grid. Deprecated BackTop is grouped within the catalog. Scope target marks
+an agreed scope, candidate marks a pending decision, and excluded requires
+an explanation. Avatar, Select, and DatePicker are detailed pilot entries.
+Other entries list public exports and known limitations, and use unreviewed
+for an outstanding detailed audit. An unreviewed entry can still have a
+working v1 implementation.
 
-| State | Значение |
+Shared upstream fields define version, Git revision, npm archive URL, and
+SHA-256. An entry includes upstreamPath, exports, known dependencies,
+evidence references, priority, and effort. UpstreamPackages records the range
+from package.json. ReferenceVersion stays null until an exact version has
+been selected for review. Empty dependencies means no relationships have
+been recorded.
+
+Features describe functional groups beyond individual TypeScript props.
+
+| State | Meaning |
 | --- | --- |
-| unreviewed | Детальный аудит не выполнен |
-| missing | Возможность отсутствует в публичном переносе |
-| partial | Есть реализация с указанными ограничениями |
-| supported | Поддержанный объём проверен и связан с evidence |
+| unreviewed | Detailed audit pending |
+| missing | Feature absent from the public port |
+| partial | Implementation exists with documented limitations |
+| supported | Supported scope is verified and linked to evidence |
 
-RequiredForV1 отмечает критерии выбранного первого объёма. V1-ready вычисляется,
-когда все эти критерии supported и reviewedRevision совпадает с целевой ревизией.
-Будущие расширения продолжают отображаться как пробелы. Изменение эталонной
-ревизии помечает ранее сверенные реализации needs-review. Отсутствие публичного
-экспорта показывается отдельно как not-started.
+RequiredForV1 marks criteria for the chosen first scope. V1-ready requires
+all of them to be supported and reviewedRevision to match the target
+revision. Future extensions remain visible as gaps. Changing the reference
+revision marks previously reviewed implementations needs-review. Families
+without a public export are shown separately as not-started.
 
 ```sh
 npm run cli -- registry check
@@ -122,386 +124,510 @@ npm run cli -- registry show avatar
 npm run cli -- registry report
 ```
 
-Check проверяет идентификаторы, состояния, зависимости и циклы, публичные экспорты,
-существование локальных evidence и актуальность генерируемой сводки.
-Обычный check работает без сети и без локального upstream; отсутствие клона
-сообщается явно. С --upstream требуется чистый checkout заданной ревизии.
-Report детерминированно перезаписывает только status.md; show выводит карточку.
-Проверка ссылок на тесты не выполняет тесты и не подтверждает их прохождение.
+Check validates identifiers, states, dependencies and cycles, public exports,
+existence of local evidence, and whether the generated summary is current.
+The standard check runs offline and without an upstream checkout. It reports
+a missing clone explicitly. With --upstream it requires a clean checkout of
+the pinned revision. Report deterministically overwrites only status.md.
+Show prints one entry. Run test commands separately to verify execution
+and results.
 
-## Хранение тестовых эталонов
+## Storing test reference data
 
-Крупные JSON-замеры Select и AutoComplete в `tests/browser/fixtures` читаются из
-gzip. Контрольные суммы исходных замеров относятся к распакованным байтам JSON.
-Для двух независимых повторов Select own-style (CSR и гидратация) хранятся только
-изменившиеся фрагменты. Пакетный тест восстанавливает оба потока байтов из первого
-замера и сверяет их с исходными SHA-256 повторов.
+Large Select and AutoComplete JSON measurements in `tests/browser/fixtures`
+are read from gzip files. Checksums of upstream measurements cover the
+decompressed JSON bytes. For the two independent Select own-style repetitions
+(CSR and hydration), the repository stores only changed fragments. The package
+test reconstructs both byte streams from the first measurement and checks
+their original SHA-256 values.
 
-Отчёты аудита недельного DatePicker, полные повторные записи Select own-style и
-сырые архивы ColorPicker short-page и DatePicker offgrid-scroll доступны в коммите
-`76123ad6`. Из корня репозитория эта команда извлекает исходный недельный отчёт.
+The week DatePicker audit reports, full Select own-style repetitions, and raw
+ColorPicker short-page and DatePicker offgrid-scroll archives are available
+in commit `76123ad6`. Run this command from the repository root to extract
+the original week report.
 
 ```sh
 git show 76123ad6:tests/browser/fixtures/ant-design-date-picker-week-semantic-review.json > /tmp/week-review.json
 ```
 
-Закреплённые протоколы React содержат имена и хеши файлов на момент замера.
-Актуальные пути проверок и эталонов перечислены в реестре.
+Pinned React records retain their file names and hashes at measurement time.
+The registry lists the current check and reference paths.
 
-## Извлечение CSS
+## CSS extraction
 
-[Рецепты](../../../tools/ant-design-css-recipes.json) воспроизводят существующие
-vendor/avatar.css, avatar-group.css, badge.css, divider.css, flex.css, statistic.css,
-segmented.css, grid.css, grid-responsive.css.js, layout.css, descriptions.css, card.css, breadcrumb.css,
-space.css, space-compact.css, space-addon.css, input-number-compact.css, affix.css, anchor.css, steps.css, timeline.css, float-button.css, date-picker.css, menu.css, mentions.css, image.css, rate.css, otp.css, border-beam.css, masonry.css, splitter.css, qrcode.css, radio-button.css, calendar.css, transfer.css, pagination.css.
-Рецепты spin и spin-prefix извлекают 35 правил Spin, включая fullscreen/percent;
-первый сохраняет два keyframes, второй выводит локальный CSS prefix template.
-Рецепты progress и progress-prefix извлекают 40 правил line/circle CSS, steps, success и
-percentPosition; первый сохраняет один keyframe, второй выводит CSS data module.
-Рецепты skeleton и skeleton-prefix извлекают 48 правил основного Skeleton и пяти primitives;
-первый сохраняет один keyframe, второй выводит CSS data module для локального prefix.
-Рецепты listy, typography, tour и carousel воспроизводят одноимённые vendor CSS.
-Рецепт slider-range воспроизводит отдельный CSS диапазона; прежний slider.css
-одиночного control не перезаписывается.
-Рецепт slider-prefix выводит CSS data module из 54 правил для обоих режимов;
-defaults ограничены корнем, shared marker и CSS variable names сохраняются.
-Рецепт divider-prefix выводит аналогичный data module из 27 правил Divider;
-defaults ограничены корнем, интеграция ColorPicker исключена.
-Рецепт button-prefix выводит 113 правил Button, включая варианты, размеры,
-loading и Compact. Deprecated ButtonGroup и token declarations исключены;
-component defaults имеют нулевую specificity, чтобы сохранить legacy theme bridge.
-Runtime разделяет local classes и общий namespace служебных переменных.
-Рецепт float-button-prefix выводит 42 правила FloatButton/Group/BackTop. Runtime
-сохраняет component tokens, разделяет local classes и global Button/progress
-namespace; root selector сохраняет исходный приоритет FloatButton после Button
-при любом порядке head styles. Существующий scoped WAAPI fade остаётся в Native.
-Рецепт radio-prefix выводит 99 правил Radio/RadioButton/RadioGroup. Namespace
-component tokens сохранён, Badge selectors используют общий prefix. Неэффективный
-Source selector с button-wrapper исключён; defaultChecked wrapper observation
-хранится raw и с public checked=true counterpart. В radio-button восстановлены
-три пропущенных Group/Badge rules: vertical width/margin и z-index счётчика;
-normal radio.css сохраняется.
-Рецепт checkbox-prefix выводит 31 правило Checkbox/Group, включая hover media
-query, mixed/disabled и интеграцию Row. Runtime сохраняет token markers и общий
-namespace Row. Raw/fresh Inner measurements отдельно фиксируют Source cache
-shared local class; native input/form/fieldset contracts не меняются.
-Рецепт switch-prefix выводит 47 правил Switch в CSS module для local/shared
-prefix. Runtime меняет root/state/handle/caption classes, сохраняя component
-variables, внешний anticon namespace и прежний native max-width adapter.
-Рецепт input-prefix выводит 142 правила Input/TextArea, включая textarea selectors,
-resize/autoSize, affix, clear/count, variants/sizes и Compact. Deprecated Group и
-семейства InputNumber/Search/OTP исключены; runtime сохраняет canonical token
-variables/markers и ограничивает defaults владельцем. Password/Search/OTP имеют
-отдельные prefix API и подключены отдельными рецептами.
-Рецепт input-password-prefix выводит четыре исходных icon rules. Runtime независимо
-адресует Input root и Password icon, исправляя Source предположение об общем имени;
-raw и public paired-prefix counterpart сохранены в browser reference. Native toggle
-reset, token variables и события не меняются.
-Рецепт input-search-prefix выводит 16 правил Search. Runtime сохраняет component
-variables, разделяет local Search и общий Button/private variable namespace.
-Корень получает Input component tokens, включая small-button min-height. Source
-Compact remount, empty content и shared-class cache observations хранятся raw и с
-public/fresh counterparts; Native state/DOM и прежняя icon-only кнопка сохранены.
-Рецепт input-otp-prefix выводит 16 правил OTP. Runtime передаёт owner prefix
-wrappers/mask/input/separator; вложенный Input использует общий namespace.
-Canonical variables/markers сохранены, Input tokens применяются к группе.
-Source пропуск локального mask prefix записан raw/matched public ConfigProvider
-замерами; native values/keyboard/ref/selection contracts не меняются.
-Рецепт input-number-prefix выводит 124 исходных правила обоих modes, вариантов,
-размеров, affixes/actions и Compact. Deprecated addons/token declarations исключены;
-canonical component variables/marker и native geometry adapters сохранены.
-Рецепт segmented-prefix выводит data module из 38 правил Segmented для локального
-prefixCls; runtime сохраняет CSS variables/marker и ограничивает defaults корнем.
-Рецепт flex-prefix выводит data module из 32 правил Flex без typography reset;
-runtime ограничивает каждый selector собственным root.
-Рецепт statistic-prefix выводит data module из 14 правил Statistic; runtime
-сохраняет namespace токенов и изолирует alias prefixes marker своего корня.
-Рецепт qrcode-prefix выводит 11 правил QRCode CSS data module; root/borderless
-defaults ограничены marker, остальные namespace Button/Spin и токенов сохраняются.
-Рецепт timeline-prefix выводит 43 правила Timeline поверх Steps dot; локальный
-prefix меняет Timeline selectors, namespace Steps и токенов сохраняются.
-Рецепт steps-prefix выводит 137 правил Steps, включая layouts и progress;
-runtime изолирует root states, сохраняет token namespace и deprecated exclusions.
-Col local/shared prefixes повторно используют 1027 rules grid-responsive без
-дополнительной копии stylesheet. Runtime меняет Col classes и общий namespace
-private Col/Grid variables; scope учитывает оба prefixes и media thresholds.
-Native Form selectors сохраняют specificity и поддерживают span/breakpoint
-attributes; FormItem display bridge сохраняет default layout. Source shared local
-class private-flex cache записан raw/fresh; Form prefix/media подключены отдельно.
-Рецепт form-prefix выводит 99 исходных rules без collapse motion. Canonical Form
-CSS исключает parts с отдельным scope, сохраняя specificity; runtime подключает
-local Form/Item classes, global Col/private Form/Grid namespaces и global screen*Max.
-Col span/breakpoint metadata сохранены. Raw и fresh measurements отделяют Source
-cache defects; store/validation/ref/focus и native ErrorList motion не меняются.
-Рецепт rate-prefix выводит те же 21 правило Rate с native >button adapter;
-runtime меняет root/state/part selectors и character prefix, сохраняя canonical
-token marker/variables. Tooltip использует самостоятельный общий namespace.
-Рецепт listy-prefix выводит 16 правил Listy для raw/virtual parts, grouped/sticky
-headers и scrollbar. Canonical component tokens и rc-virtual-list variable
-сохраняются; общий link reset продолжает работать через canonical root marker.
-Рецепт tour-prefix выводит 61 правило панелей, маски, primary state и стрелок.
-Runtime разделяет local Tour classes, global Button selectors и private Tooltip
-namespace; canonical tokens и прежние portals/layout/zIndex contracts сохранены.
-Рецепт mentions-prefix выводит 102 правила editor/variants/dropdown без rc-motion.
-Runtime разделяет local classes и общий namespace cmp-mentions variables/Form
-feedback selector; native measurement, triggers, clear/ARIA и popup lifecycle сохранены.
-Рецепт image-prefix выводит 48 правил thumbnail/cover/viewer/actions без progress
-и rc-motion. Runtime меняет базовый Image namespace, сохраняя canonical token
-variables и native dialog/focus/movement selectors. PreviewGroup.previewPrefixCls
-задаёт базовый prefix viewer; дочерние Image сохраняют самостоятельные prefixes.
-Независимый single Image.previewPrefixCls задаёт полный namespace, включая пустой;
-CSS изолирован по base/viewer pair. Отдельные public Source counterparts показывают
-нормальное оформление, raw measurements сохраняют upstream omission stylesheet.
-Рецепт dropdown-prefix выводит 77 правил trigger/menu/arrow/status без rc-motion
-и исходного title flex:auto: сохранены прежние Native label flex/min-width.
-Runtime разделяет owner Dropdown/menu namespace и общий Button prefix; canonical
-markers/variables, native popover/controller, ссылки и typeahead сохраняются.
-Рецепты menu-prefix/menu-theme-prefix выводят 201 base и 77 scoped theme rules с
-прежними deprecated exclusions. Runtime сохраняет canonical variables/link reset,
-изолирует Menu/popup namespaces и общий Typography prefix. Raw dashed Divider
-owner omission отделён от public per-divider prefixCls counterparts.
-Рецепт pagination-prefix выводит 111 правил без общих Input Group selectors.
-Runtime разделяет local classes, global actual metrics и canonical tokens;
-native buttons/active colors/wireframe, media и собственный Select namespace сохранены.
-Raw button font отделён от public itemRender counterparts.
-Рецепт drawer-prefix выводит 32 правила panel/mask/header/body/footer без
-motion/pure/inline/resizable/skeleton. Runtime меняет local classes, сохраняет
-canonical tokens и native dialog/size markers. WAA panel/mask и backdrop dismissal
-используют устойчивые атрибуты, Button namespace независим.
-Рецепт modal-prefix выводит 58 правил Modal/Confirm без zoom/fade, pure и skeleton.
-Runtime сохраняет canonical tokens, native dialog/centering/close-space selectors;
-Button namespace независим, responsive width variables следуют local prefix.
-Raw лишний Confirm header при local prefix отделён от public styles.header
-counterpart; Native сохраняет один заголовок подтверждения.
-Source cache с потерей footer Button margin записан raw/fresh; прежний native
-disabled-loading сверяется с отдельными public button props и SVG counterpart.
-Рецепт message-prefix выводит 21 правило списка сверху и сообщений; тело CSS
-совпадает с прежним vendor-файлом, motion/stack/pure/actions исключены.
-Runtime разделяет local classes и global private Notification metrics; canonical
-tokens и native popover/viewport/timing сохраняются. Source stale status classes
-при live prefix отделены от public same-key refresh counterparts.
-Рецепт notification-prefix выводит 45 правил всех шести placements и карточек;
-тело CSS совпадает с прежним vendor-файлом, motion/stack/progress/pure исключены.
-Runtime разделяет local classes и global private icon/title metrics; component
-tokens/status background bridge, native viewport/motion/focus/timing сохранены.
-Raw замеры отделены от public close/wrapping и same-key refresh counterparts.
-Рецепт upload-prefix выводит те же 91 правило и четыре keyframes, что upload,
-как CSS data module. Неиспользуемые collapse selectors исключены.
-Runtime изолирует wrapper/RTL scopes и меняет owner classes всех controls/list
-states; canonical tokens/link reset и Button/Progress/Tooltip namespaces сохранены.
-Native file input, refs/focus и выполняющиеся запросы не зависят от публичных классов.
-Рецепт tree-prefix выводит 99 правил Tree/checkbox/line/RTL/collapse и один keyframe drag feedback.
-Runtime изолирует local/global scopes, сохраняет canonical tokens
-и отдельный Row namespace. Native focus/IDs/state/load и CSS-адаптер TreeSelect
-сохранены; raw style/readonly-selection отделены от public counterparts.
-Tree expandAction сверяется по 22 raw UMD cases и отдельному counterpart с двумя
-кликами через 100 ms. Проверяются modifier guards, click/doubleClick, controlled
-hold/accept, checkbox, lazy title collapse и синхронное изменение selection в onClick.
-Snapshot node предшествует onExpand/onClick/onSelect/onCheck; предыдущий default
-без title expansion сохраняется. Raw rapid double click отдельно показывает Source
-state/callback inconsistency: setExpandedKeys выполняется перед guard listChanging.
-Native сообщает оба перехода; raw Source outcome не переписан под исправление.
-Рецепт transfer-prefix выводит те же 54 правила, что transfer, как CSS data module.
-Owner classes, включая box-sizing selectors, отделены от общих Button/Input/
-Pagination/Table namespaces; canonical tokens сохраняются. Private Checkbox и
-Pagination используют соответствующие prefix engines без замены native controls.
-Рецепт select-prefix выводит 158 правил single/multiple/tags, variants, options и
-compact, включая hover:none; slide-up motion selectors исключены. Owner classes
-и служебные variables имеют независимые namespaces, canonical tokens сохраняются.
-Native wrapper/option buttons, compact bridge, forms/reset и popup lifecycle сохранены.
-AutoComplete использует этот же template и отдельный общий Input namespace для
-custom controls; свой upstream style hook у него отсутствует.
-Рецепт tree-select-prefix выводит те же 92 правила dropdown/tree/checkbox/RTL,
-что tree-select; внутренние tree selectors сохраняют существующий Native adapter.
-Select control и TreeSelect dropdown имеют отдельные scopes и общий private
-namespace variables. Raw local tree style omission отделён от public counterpart
-без local override; сравнение tree/nodes не заявляет одинаковые классы.
-Рецепт tree-select-popup-motion выводит 110 правил и восемь keyframes исходных
-Select slide/move transitions в canonical styles export. Рецепт
-tree-select-popup-motion-prefix создаёт такой же CSS module для других namespaces.
-Runtime ограничивает их popup TreeSelect, независимо подставляя local dropdown
-и global motion prefixes. Исходные фазы,
-CSS clocks и alignment cache сохраняются в Native fixed top-layer;
-проецируемый geometry transition предоставляет реальный WAAPI Animation
-вместо Source CSSTransition, без искусственных DOM end events.
-Рецепт cascader-prefix выводит те же 108 правил, что cascader, как CSS data module.
-Select control и Cascader columns/Panel имеют независимые owner scopes; Row selector
-следует общему prefix. Native input width перекрывает unitless Source формулу после
-динамической вставки CSS. Raw local padding omission и Panel root direction отделены
-от public styles.popup.root.padding=0 и обычной HTML-обёртки dir=rtl counterparts.
-Рецепт layout-prefix выводит 35 flat rules Layout/Sider; runtime выбирает свою
-группу, сохраняет Menu namespace и ограничивает defaults/state selectors корнем.
-Тот же template используется для Header/Content/Footer: выбираются selectors
-своей роли, scoped defaults добавляются только standalone-секциям.
-Рецепт color-picker извлекает trigger, palette, sliders, inputs, presets и compact.
-Color-picker-prefix выводит те же 94 правила как CSS data module. Owner scopes
-изолированы по локальному и общему префиксу; Popover, Collapse и остальные child
-namespaces разрешаются отдельно, canonical variables/marker сохраняются.
-Raw Source cache omission для child selectors отделён от public counterpart
-с уникальным локальным prefixCls; Native сохраняет прежние controls и состояния.
-Calendar-prefix выводит те же 123 правила, что calendar, включая media 480px.
-Picker owner и Calendar root states ограничены своим scope, canonical variables/marker
-сохраняются. Header Select/Radio используют независимые общие namespaces.
-Raw constrained-header wrapping отделён от public width=400px counterpart;
-он используется только для трёх высот controls, Native сохраняет прежний nowrap.
-Defaults Calendar-prefix имеют нулевую specificity, чтобы сохранить Native
-dark/compact bridge после поздней вставки stylesheet в head.
-Date-picker-prefix выводит те же 262 правила single/range date/time, что date-picker,
-как CSS data module. Owner scopes разделены по local/shared prefix; только private
-affix-color следует общему namespace, component tokens/marker остаются canonical.
-Time columns и arrows используют стабильные DOM hooks; Footer Button сохраняет
-общий prefix. Value/display guards сохраняют draft при смене контекста и продолжают
-синхронизацию при реальном изменении value или format.
-Defaults date-picker-prefix также имеют нулевую specificity; оформление по умолчанию
-сверяется с canonical ant в трёх сочетаниях mode/primary/compact. Source token
-overrides и aliases сохраняют свой приоритет.
-Head stylesheet Date/TimePicker расположен непосредственно перед корнем после
-snippet declarations. Границы snippets и NoCompactStyle не добавляют внешние text nodes;
-SSR охватывает также defaultOpen, browser — смену общего prefix без потери соседнего текста.
-В upstream собственный dropdownPrefixCls оставляет filter Menu без соответствующих
-CSS selectors; raw прозрачный фон сохранён отдельно от public inherited-prefix
-counterpart. Svelte сохраняет прежнее оформление списка; только menu background
-сравнивается с counterpart, остальные свойства — с raw Source.
-Modal/Drawer держат head-style condition вне keyed range переносимого dialog.
-Смешанный range с оставшимся в исходном parent comment anchor разрушал insertion
-anchor при смене target: новый dialog получал себя как theme origin, а observer
-циклически реагировал на собственные style writes. Existing container/motion
-contracts сохранены; regression охватывает default/custom shared prefix и
-перенос Drawer во время leave без ослабления timeout или console checks.
-Upload error Tooltip сверяется по десяти raw UMD cases и четырём transitions:
-string response, error.statusText, error.message, пустые значения, response object,
-Error/ProgressEvent и locale fallback. Sample metadata содержит строки. Текст
-открытого Tooltip меняется без замены строки; SSR сохраняет прежний hidden popover.
-Upload list motion сверяется по 12 raw UMD cases: начальный список без motion,
-добавление/удаление text/picture/card/circle, motion=false, prefixCls, duration и RTL.
-Промежуточные computed размеры оставлены в raw как наблюдения времени; browser
-сравнивает классы, целевые inline styles, keyframes, duration и easing.
-CSS end event завершается только на собственном container; deadline 2000 ms,
-возврат uid, reduced motion и unmount сохраняют cleanup. Девять raw diffKeys cases
-задают порядок retention; ещё два raw observations показывают дубликаты inherited
-имён uid в @rc-component/motion 1.3.3. Native использует Map; этот дефект не перенесён.
-Upload trigger сохраняет forceRender input при пустом children; Dragger не
-получает appendAction select в card/circle. 16 raw UMD cases задают состав controls,
-id/hidden и четыре list types; шесть motion cases фиксируют начальный skip appear,
-leave/enter, identity input/root и style priority. Motion pointer-events:none идёт
-до обычного style; hidden class может быть перекрыт явным display.
-Native сохраняет выбранный FileList без change event через hide/return, внешний
-draft/focus/selection и cleanup после deadline/unmount.
-UploadRef переносит onBatchStart/onProgress/onSuccess/onError, актуальный fileList,
-native refs и upload.abort; Dragger предоставляет тот же API. 18 raw UMD cases
-покрывают ручной/смешанный batch, LIST_IGNORE, maxCount, controlled hold/accept,
-membership guards, JSON/plain response, progress и error. Imperative completion
-не завершает transport request: его abort остаётся доступен. Два дополнительных
-raw cases проверяют реальный customRequest, повторный abort и следующий progress.
-Прямой abort и прежние bindable DOM refs сохранены; SSR не вызывает lifecycle callbacks.
-React.Component/saveUploader и React-specific render boundaries остаются
-отдельными ограничениями.
-Два исходных замера фиксируют callback второго файла уже после
-синхронного unmount из первого onChange. Native останавливает обработку оставшихся
-элементов, включая изменение статусов и transport; это сохраняет прежний cleanup
-contract. Browser-регрессия проверяет public ref batch и native multiple picker
-для Upload и Dragger, а unit-тест проверяет остановку внутри onChange.
-Upload progress motion сверяется по 12 raw UMD cases: четыре list types,
-percent missing/undefined, motion=false, local/shared prefix, глобальная и
-компонентная duration, первый enter после done. Samples явно задают aria-label;
-прежний Native fallback имени не меняется. Source fade длится motionDurationMid
-после задержки 300 ms и сохраняет wrapper до конца ухода; явный percent: undefined
-создаёт нулевую полосу, отсутствие свойства — только wrapper. Общий fade namespace
-не зависит от local Upload prefix; CSS template получает оба namespace.
-Соседние providers с одинаковым local prefix сохраняют свои fade classes и tokens.
-Upload thumbnail fallback сверяется по 24 raw UMD cases и пяти transitions:
-picture/card/circle, absent/empty/present thumbUrl, URL priority, пустые источники
-и non-image файлы. Пустой thumbUrl сохраняет URL изображения/preview и запрещает
-previewFile даже при originFileObj. Обновления сохраняют row/input и внешний
-draft/focus/selection; thumbnail anchor сохраняется, пока источник не исчезает.
-Upload action icon snippets сверяются по 21 raw UMD case, двум action traces
-и пяти transitions. Empty/zero samples используют React Fragment, соответствующий
-opaque Snippet content; falsy render return fallback и ReactElement clone/onClick
-forwarding не подменяются результатами другого сценария и не заявлены как ported.
-Нативный DOM event order собственных snippet handlers сохраняется. Reader
-сравнивает control text без краевых пробелов; Source measurements при этом
-не меняются, а SVG paths и остальные поля сохраняются полностью.
-Upload semantic root/list/item/trigger сверяются по 16 raw UMD cases и пяти
-transitions: object/callback, resolved defaults, style priority, list types,
-drag/disabled/hidden/error и root/trigger variables. Callback получает исходные
-props без bindable DOM refs и отдельно resolved defaults. Нормальный style
-остаётся на trigger; root variables наследуются через внутренний theme bridge.
-ConfigProvider.upload подключён для общих class/style/slots, accept,
-customRequest и progress. 13 raw cases, четыре progress samples и четыре live
-transitions проверяют whole-record inheritance/reset, sibling scopes и приоритеты.
-Raw synchronous request traces содержат abort завершённого запроса rc-upload;
-publicRequests с deferred completion следуют после всех raw measurements.
-Native сохраняет прежний completion guard и отменяет незавершённый transport.
-Upload.progress передаёт действующий line API Progress, без deprecated
-strokeWidth. 16 raw UMD cases и шесть transitions фиксируют 300 ms delay,
-defaults против пустого объекта, size/colors/gradient/status/success/steps,
-formatter, semantic styles и ARIA. Во всех samples явно задано имя файла;
-без него Native сохраняет прежний локализованный fallback. Motion exit списка
-остаётся отдельным пробелом.
-UploadFile.linkProps сверяется по 19 raw UMD cases и пяти transitions:
-object/JSON attributes, file URL priority, class replacement, click callback
-ordering/cancellation и отсутствие props у thumbnail/preview action. Svelte
-использует native class/onclick/style string; reader игнорирует только
-сгенерированные Svelte scope classes. Raw Source результаты не изменены.
-Upload itemRender получает opaque originNode Snippet с Tooltip ошибки,
-file/current fileList и actions, привязанные к файлу. 19 raw UMD cases, два
-набора действий и пять transitions фиксируют wrap/replace/empty/default,
-порядок списка и preview event cancellation. Renderer меняет внутреннее
-содержимое; внешний container и file input сохраняются.
-Upload iconRender использует Svelte snippet с file/listType. 25 raw UMD cases
-покрывают статусы/list types, empty/zero/default и thumbnail priority, четыре
-transitions — смену renderer. Сравнение ограничено видимым содержимым: React
-render invocation side effects не являются выполняемым Snippet contract.
-Upload directory сверяется по 12 raw UMD cases с управляемым FileSystemEntry API:
-BFS, порции directory reader, input/drop/paste, accept и relative paths. Адаптер
-задаёт данные platform callbacks, не порядок обхода или expected result. Source
-не передаёт error callback чтения файла и блокирует очередь; Native завершает
-ошибку и продолжает. Отдельный public sample без нечитаемого файла следует после
-всех raw cases. SSR сохраняет boolean семантику webkitdirectory.
-Upload pastable сверяется по 11 raw UMD cases, трём prop transitions и unmount:
-file/text paste, multiple/accept/native/custom filters, document scope. Disabled
-Source всё ещё обрабатывает paste; Native сохраняет блокировку. Наблюдение остаётся
-в raw reference без подмены expected и без исправления исходной UMD-сборки.
-Masonry/Pagination подключены к global breakpoint resolver. 36 raw viewport frames
-проверяют columns, обе оси gutter и mini class, explicit size/responsive=false,
-раздельные SMMin/SM и nested/reset scopes. Tokens обновляют Native subscriptions
-без remount; Source stale observer и отдельный public fresh mount сохранены раздельно.
-Descriptions responsive column/span используют тот же validated global breakpoint
-resolver, что Row. 52 raw viewport frames и отдельные live/fresh frames описывают
-пороговые значения, вложенные/reset scopes, default columns и packing spans.
-Source useBreakpoint сохраняет старые subscriptions при смене tokens; Native
-заменяет их, сохраняя editor/ref/focus/selection. SSR остаётся с screens={} и fallback3.
-Рецепт table-prefix извлекает 187 правил Table. Owner classes и общие Checkbox,
-Pagination/Descriptions namespaces разделены; private nested-border-top следует
-общему prefix, component tokens/marker canonical. Defaults имеют нулевую specificity.
-Raw UMD замеры покрывают 23 случая в normal/nested/reset scopes и три live prefix
-updates с сохранением editor/selection/focus/DOM. Текущий размер medium используется
-в обоих controls. dropdownPrefixCls относится к списку фильтров; shell и controls
-разрешают общий prefix независимо. Native popover/expanded viewport сохраняют свою
-прежнюю структуру; без source theme paint сравнивается с canonical ant отдельно.
-Рецепт input-number-features извлекает variants, spinner, prefix/suffix и addon;
-прежние outlined/compact файлы не перезаписываются.
-Рецепт switch побайтно воспроизводит прежние 47 правил, включая reduced motion;
-заменяется только исходный CSS-variable root selector.
-Рецепт overlay-color сохраняет 65 исходных preset rules Tooltip и Popover
-без преобразований; Popconfirm использует Popover classes. Inverse classes
-в исходном CSS этих компонентов не имеют цветовой заливки. Собственный цвет
-и native изоляция вложенного contrast принадлежат компонентам, не CSS-рецепту.
-Рецепты tooltip-prefix, popover-prefix и popconfirm-prefix выводят CSS data modules:
-58, 72 и 11 правил соответственно. Локальная подстановка меняет component classes,
-сохраняя имена variables, markers и внешний Popover у Popconfirm. Motion/unique
-исключены; viewport/focus adapters остаются в Svelte-компонентах.
-Остальные текущие vendor-файлы
-этим выпуском инструмента не перегенерируются. Новый компонент получает отдельный
-проверенный рецепт: include/exclude для селекторов, replacements, keyframes,
-ожидаемое число правил, заголовок происхождения и путь вывода. Необязательные
-declarationReplacements меняют только тела обычных правил, сохраняя selectors
-и keyframes; excludeAtRules исключает явно заданные at-rule scopes вместе с их
-дочерними правилами. Steps исключает контейнеры deprecated descriptionMaxWidth;
-его рецепт содержит 137 правил. Удаляемые token declarations перечислены в
-соответствующих рецептах. Исходный vendor/antd.css пока не имеет полного рецепта;
-из него удалены те же старые declarations, а disabled Button читает текущий
-colorBorderDisabled с native fallback colorBorder.
+The recipes reproduce the existing CSS for avatar, avatar-group, badge, divider,
+flex, statistic, segmented, grid, grid-responsive.css.js, layout, descriptions,
+card, breadcrumb, space, space-compact, space-addon, input-number-compact,
+affix, anchor, steps, timeline, float-button, date-picker, menu, mentions, image,
+rate, otp, border-beam, masonry, splitter, qrcode, radio-button, calendar,
+transfer, and pagination in vendor/. [Recipes](../../../tools/ant-design-css-recipes.json)
+
+Spin and spin-prefix extract 35 Spin rules, including fullscreen and percent.
+Spin keeps two keyframes, and spin-prefix produces the local prefix template.
+Progress and progress-prefix extract 40 rules for line and circle, steps,
+success, and percentPosition. Progress keeps one keyframe, and progress-prefix
+produces a CSS data module. Skeleton and skeleton-prefix extract 48 rules for
+the main Skeleton and five primitives. Skeleton keeps one keyframe, and
+skeleton-prefix produces a CSS data module for a local prefix.
+
+Listy, typography, tour, and carousel reproduce their named vendor styles.
+Slider-range reproduces range CSS independently of the existing single-control
+slider.css. Slider-prefix produces a CSS data module with 54 rules for both
+modes. Defaults are scoped to the root, and the shared marker and CSS variable
+names stay in place. Divider-prefix does the same with 27 rules scoped to
+Divider and excludes the ColorPicker integration.
+
+Button-prefix produces 113 Button rules for variants, sizes, loading, and
+Compact. It excludes deprecated ButtonGroup and token declarations. Component
+defaults have zero specificity to preserve the legacy theme bridge. Runtime
+keeps local classes independent of the shared internal variable namespace.
+
+Float-button-prefix produces 42 rules for FloatButton, Group, and BackTop.
+Runtime retains component tokens and separates local classes from the shared
+Button and progress namespace. The root selector preserves upstream
+FloatButton precedence after Button in either head stylesheet order.
+The existing scoped WAAPI fade stays in the native implementation.
+
+Radio-prefix produces 99 rules for Radio, RadioButton, and RadioGroup.
+Component token namespaces stay in place, and Badge selectors use the shared
+prefix. The ineffective upstream button-wrapper selector is excluded.
+The defaultChecked wrapper observation is stored raw and with a public
+checked=true counterpart. Radio-button restores three omitted Group and
+Badge rules for vertical width and margin and count z-index. Normal radio.css
+stays in place.
+
+Checkbox-prefix produces 31 Checkbox and Group rules, including hover media
+queries, mixed and disabled states, and Row integration. Runtime keeps token
+markers and the shared Row namespace. Raw and fresh Inner measurements
+record the upstream shared-local-class cache separately. Native input, form,
+and fieldset contracts remain intact.
+
+Switch-prefix produces 47 Switch rules in a CSS module for local and shared
+prefixes. Runtime changes root, state, handle, and caption classes while
+preserving component variables, the external anticon namespace, and the
+existing native max-width adapter.
+
+Input-prefix produces 142 Input and TextArea rules, including textarea
+selectors, resize and autoSize, affixes, clear and count, variants and sizes,
+and Compact. It excludes deprecated Group and the InputNumber, Search, and OTP
+families. Runtime preserves canonical token variables and markers and scopes
+defaults to the owner. Password, Search, and OTP have separate prefix APIs
+and recipes.
+
+Input-password-prefix produces four upstream icon rules. Runtime addresses
+the Input root and Password icon independently, correcting the upstream
+assumption of a shared name. Browser reference data retains raw and public
+paired-prefix counterparts. Native toggle reset, variables, and events are
+preserved.
+
+Input-search-prefix produces 16 Search rules. Runtime preserves component
+variables and separates local Search classes from shared Button and private
+variables. The root gets Input component tokens, including small-button
+min-height. Upstream Compact remount, empty content, and shared-class cache
+observations are recorded raw and with public or fresh counterparts. Native
+DOM and state and the existing icon-only button are preserved.
+
+Input-otp-prefix produces 16 OTP rules. Runtime passes the owner prefix to
+wrappers, mask, input, and separators. Nested Input uses the shared namespace.
+Canonical variables and markers are preserved, and Input tokens apply to the
+group. The upstream omission of the local mask prefix is recorded with raw
+and matched public ConfigProvider measurements. Native values, keyboard,
+refs, and selection keep their contracts.
+
+Input-number-prefix produces 124 upstream rules covering both modes, variants,
+sizes, affixes and actions, and Compact. Deprecated addons and token declarations
+are excluded. Canonical component variables and markers and native geometry
+adapters are retained.
+
+Segmented-prefix produces a data module with 38 rules for local prefixCls.
+Runtime preserves CSS variables and markers and scopes defaults to the root.
+Flex-prefix produces 32 Flex rules without a typography reset and scopes each
+selector to its own root. Statistic-prefix produces 14 rules. Runtime retains
+the token namespace and isolates overlapping prefixes by root marker.
+Qrcode-prefix produces an 11-rule CSS data module. Root and borderless defaults
+are scoped by marker, and Button, Spin, and token namespaces remain intact.
+
+Timeline-prefix produces 43 Timeline rules on top of Steps dot. Local prefix
+changes Timeline selectors and preserves Steps and token namespaces.
+Steps-prefix produces 137 rules including layouts and progress. Runtime
+isolates root states and preserves the token namespace and deprecated
+exclusions.
+
+Col local and shared prefixes reuse the 1027 grid-responsive rules without
+a stylesheet copy. Runtime changes Col classes and the shared namespace for
+private Col and Grid variables. Scope accounts for both prefixes and media
+thresholds. Native Form selectors keep their specificity and support span and
+breakpoint attributes. The FormItem display bridge preserves default layout.
+The upstream private-flex cache with a shared local class is recorded as raw
+and fresh measurements. Form prefix and media styles are connected separately.
+
+Form-prefix produces 99 upstream rules without collapse motion. Canonical
+Form CSS excludes parts with separate scopes and keeps specificity. Runtime
+connects local Form and Item classes, shared Col and private Form and Grid
+namespaces, and global screen*Max. Col span and breakpoint metadata stay in
+place. Raw and fresh measurements isolate upstream cache defects. Store,
+validation, refs, focus, and native ErrorList motion keep their contracts.
+
+Rate-prefix produces the same 21 Rate rules with a native >button adapter.
+Runtime changes root, state, and part selectors and the character prefix
+while preserving canonical token markers and variables. Tooltip uses an
+independent shared namespace.
+
+Listy-prefix produces 16 rules for raw and virtual parts, grouped and sticky
+headers, and the scrollbar. Canonical component tokens and the rc-virtual-list
+variable stay in place. The canonical root marker keeps the shared link reset
+active.
+
+Tour-prefix produces 61 rules for panels, mask, primary state, and arrows.
+Runtime separates local Tour classes, shared Button selectors, and private
+Tooltip variables. Canonical tokens and existing portal, layout, and zIndex
+contracts are preserved.
+
+Mentions-prefix produces 102 editor, variant, and dropdown rules without
+rc-motion. Runtime separates local classes from the shared cmp-mentions
+variable namespace and Form feedback selector. Native measurement, triggers,
+clear, ARIA, and popup lifecycle are preserved.
+
+Image-prefix produces 48 thumbnail, cover, viewer, and action rules without
+progress and rc-motion. Runtime changes the base Image namespace and preserves
+canonical token variables and native dialog, focus, and movement selectors.
+PreviewGroup.previewPrefixCls supplies the viewer base prefix. Child Image
+instances keep independent prefixes. A standalone Image.previewPrefixCls sets
+the entire viewer namespace, including the empty string. CSS is scoped to
+the base and viewer pair. Separate public upstream counterparts show the
+styled result. Raw measurements preserve the upstream stylesheet omission.
+
+Dropdown-prefix produces 77 trigger, menu, arrow, and status rules without
+rc-motion or upstream title flex:auto. The existing native label flex and
+min-width are preserved. Runtime separates Dropdown and menu owner namespaces
+from the shared Button prefix. Canonical markers and variables, native popover
+and controller, links, and typeahead stay in place.
+
+Menu-prefix and menu-theme-prefix produce 201 base and 77 scoped theme rules
+with the previous deprecated exclusions. Runtime preserves canonical variables
+and the link reset and isolates Menu and popup namespaces and the shared
+Typography prefix. The raw dashed Divider owner omission is recorded separately
+from public per-divider prefixCls counterparts.
+
+Pagination-prefix produces 111 rules without shared Input Group selectors.
+Runtime separates local classes, actual shared metrics, and canonical tokens.
+Native buttons, active colors, wireframe, media, and the separate Select namespace
+are preserved. Raw button font results are separate from public itemRender
+counterparts.
+
+Drawer-prefix produces 32 panel, mask, header, body, and footer rules without
+motion, pure, inline, resizable, and skeleton. Runtime changes local classes and
+preserves canonical tokens and native dialog and size markers. WAA panel and
+mask animation and backdrop dismissal use stable attributes. Button's namespace
+is independent.
+
+Modal-prefix produces 58 Modal and Confirm rules without zoom, fade, pure, and
+skeleton. Runtime preserves canonical tokens and native dialog, centering, and
+close-space selectors. Button's namespace is independent. Responsive width
+variables follow the local prefix. The extra raw Confirm header with a local
+prefix is kept separate from the public styles.header counterpart. The native
+implementation keeps one confirmation heading. Raw and fresh measurements
+record the upstream cache that loses footer Button margin. The existing native
+disabled-loading behavior is compared separately with public button props and
+an SVG counterpart.
+
+Message-prefix produces 21 rules for the top list and messages. CSS bodies
+match the previous vendor file. Motion, stack, pure, and actions are excluded.
+Runtime separates local classes and private shared Notification metrics.
+Canonical tokens and native popover, viewport, and timing stay in place.
+Upstream stale status classes on a live prefix change are recorded separately
+from public same-key refresh counterparts.
+
+Notification-prefix produces 45 rules for all six placements and cards. CSS
+bodies match the previous vendor file. Motion, stack, progress, and pure are
+excluded. Runtime separates local classes from private shared icon and title
+metrics. Component tokens, the status background bridge, and native viewport,
+motion, focus, and timing are preserved. Raw measurements stay separate from
+public close, wrapping, and same-key refresh counterparts.
+
+Upload-prefix produces the same 91 rules and four keyframes as upload, as a
+CSS data module. Unused collapse selectors are excluded. Runtime isolates
+wrapper and RTL scopes and changes owner classes for every control and list
+state. Canonical tokens, link reset, and Button, Progress, and Tooltip namespaces
+stay in place. Native file input, refs, focus, and in-flight requests are
+independent of public classes.
+
+Tree-prefix produces 99 Tree, checkbox, line, RTL, and collapse rules and one
+keyframe for drag feedback. Runtime isolates local and shared scopes and
+preserves canonical tokens and a separate Row namespace. Native focus, IDs,
+state, and load and the TreeSelect CSS adapter are retained. Raw style and
+readonly-selection observations stay separate from public counterparts.
+
+Tree expandAction compares 22 raw UMD cases and a separate counterpart with
+two clicks 100 ms apart. Checks cover modifier guards, click and doubleClick,
+controlled hold and accept, checkbox, lazy title collapse, and synchronous
+selection updates in onClick. The node snapshot precedes onExpand, onClick,
+onSelect, and onCheck. The previous default without title expansion is kept.
+Upstream rapid double click separately shows a state and callback discrepancy.
+SetExpandedKeys runs before the listChanging guard. The native path reports
+both transitions, and the raw upstream outcome stays intact.
+
+Transfer-prefix produces the same 54 rules as transfer, as a CSS data module.
+Owner classes, including box-sizing selectors, are independent of shared
+Button, Input, Pagination, and Table namespaces. Canonical tokens are preserved.
+Private Checkbox and Pagination use their prefix engines while retaining
+native controls.
+
+Select-prefix produces 158 rules for single, multiple, tags, variants, options,
+and compact, including hover:none. Slide-up motion selectors are excluded.
+Owner classes and internal variables have independent namespaces. Canonical
+tokens, native wrapper and option buttons, the compact bridge, form and reset,
+and popup lifecycle stay in place. AutoComplete uses this template and a
+separate shared Input namespace for custom controls. Upstream has no
+AutoComplete style hook of its own.
+
+Tree-select-prefix produces the same 92 dropdown, tree, checkbox, and RTL
+rules as tree-select. The internal tree selectors keep the existing native
+adapter. The Select control and TreeSelect dropdown have separate scopes
+and a shared private variable namespace. Raw omission of local tree styles
+is recorded separately from a public counterpart without the local override.
+Tree and node comparisons account for distinct classes.
+
+Tree-select-popup-motion produces 110 rules and eight keyframes for upstream
+Select slide and move transitions in the canonical styles export.
+Tree-select-popup-motion-prefix produces the same CSS module for other
+namespaces. Runtime scopes both to the TreeSelect popup and substitutes local
+dropdown and shared motion prefixes independently. The native fixed top layer
+preserves phases, CSS clocks, and alignment cache. The projected geometry
+transition exposes a real WAAPI Animation as the counterpart to upstream
+CSSTransition without dispatching artificial DOM end events.
+
+Cascader-prefix produces the same 108 rules as cascader, as a CSS data module.
+Select control and Cascader columns and Panel have independent owner scopes.
+The Row selector follows the shared prefix. Native input width overrides the
+unitless upstream formula after dynamic CSS insertion. Raw local padding
+omission and Panel root direction are recorded separately from public
+styles.popup.root.padding=0 and a regular HTML wrapper with dir=rtl.
+
+Layout-prefix produces 35 flat Layout and Sider rules. Runtime selects the
+group for the component's role, preserves the Menu namespace, and scopes
+defaults and state selectors to the root. Header, Content, and Footer use
+the same template with their role selectors. Scoped defaults are added only
+for standalone sections.
+
+The color-picker recipe extracts the trigger, palette, sliders, inputs,
+presets, and compact styles. Color-picker-prefix produces the same 94 rules
+as a CSS data module. Owner scopes are isolated by local and shared prefix.
+Popover, Collapse, and other child namespaces resolve separately, and
+canonical variables and markers are preserved. Raw upstream cache omission
+of child selectors is recorded separately from a public counterpart with a
+unique local prefixCls. Native controls and state are preserved.
+
+Calendar-prefix produces the same 123 rules as calendar, including the 480px
+media rules. Picker owner and Calendar root states are scoped to their owner.
+Canonical variables and markers are preserved. Header Select and Radio use
+independent shared namespaces. Raw constrained-header wrapping is recorded
+separately from a public width=400px counterpart. The counterpart is used only
+for three control heights. The native implementation keeps nowrap.
+Calendar-prefix defaults have zero specificity to preserve the native dark
+and compact bridge after late insertion into head.
+
+Date-picker-prefix produces the same 262 single and range date and time rules
+as date-picker, as a CSS data module. Owner scopes are separated by local and
+shared prefix. Only private affix-color follows the shared namespace.
+Component tokens and markers stay canonical. Time columns and arrows use
+stable DOM hooks. Footer Button keeps its shared prefix. Value and display
+guards preserve drafts on context changes and synchronize on a real value
+or format change. Date-picker-prefix defaults also have zero specificity.
+Default appearance is compared with canonical ant in three combinations of
+mode, primary, and compact. Upstream token overrides and aliases keep precedence.
+
+The DatePicker and TimePicker head stylesheet appears right before the root,
+after snippet declarations. Snippet boundaries and NoCompactStyle add no
+outer text nodes. SSR also covers defaultOpen, and browser tests cover shared
+prefix changes and preserved adjacent text.
+
+In upstream, a local dropdownPrefixCls leaves the filter Menu without matching
+CSS. The raw transparent background is recorded separately from the public
+inherited-prefix counterpart. Svelte retains the prior list appearance.
+Only menu background compares with the counterpart. Other properties compare
+with raw upstream data.
+
+Modal and Drawer keep the head style condition outside the keyed range of
+a portaled dialog. A mixed range with a comment anchor left in the original
+parent broke the insertion anchor when target changed. The new dialog then
+used itself as theme origin and the observer repeatedly reacted to its own
+style writes. Existing container and motion contracts are preserved. The
+regression covers default and custom shared prefixes and moving Drawer during
+leave, with the existing timeout and console checks.
+
+Upload error Tooltip compares ten raw UMD cases and four transitions covering
+string response, error.statusText, error.message, empty values, response objects,
+Error and ProgressEvent, and locale fallback. Sample metadata stores strings.
+Open Tooltip text updates without replacing the row. SSR preserves the hidden
+popover.
+
+Upload list motion compares 12 raw UMD cases covering an initial list without
+motion, addition and removal for text, picture, card, and circle, motion=false,
+prefixCls, duration, and RTL. Intermediate computed sizes stay in raw data
+as timing observations. Browser checks compare classes, target inline styles,
+keyframes, duration, and easing. The CSS end event completes motion only on
+its own container. The 2000 ms deadline, a returning uid, reduced motion, and
+unmount preserve cleanup. Nine raw diffKeys cases define retention order.
+Two more record duplicates for inherited uid names in @rc-component/motion 1.3.3.
+The native implementation uses Map to avoid that upstream defect.
+
+Upload trigger keeps the forceRender input with empty children. Dragger
+omits appendAction select in card and circle. Sixteen raw cases define the
+controls, id, hidden state, and four list types. Six motion cases record the
+initial skip of appear, leave and enter, input and root identity, and style
+precedence. Motion pointer-events:none precedes ordinary style. Explicit
+display can override the hidden class. The native implementation preserves
+the selected FileList through hide and return without a change event, external
+draft, focus, and selection, and cleanup after the deadline or unmount.
+
+UploadRef ports onBatchStart, onProgress, onSuccess, onError, current fileList,
+native refs, and upload.abort. Dragger supplies the same API. Eighteen raw
+UMD cases cover manual and mixed batches, LIST_IGNORE, maxCount, controlled
+hold and accept, membership guards, JSON and plain responses, progress, and
+errors. Imperative completion leaves transport active and abortable. Two more
+raw cases check actual customRequest, repeated abort, and later progress.
+Direct abort and previous bindable DOM refs are preserved. SSR leaves lifecycle
+callbacks inactive. React.Component, saveUploader, and React-specific render
+boundaries remain separate limitations.
+
+Two upstream measurements report the second file's callback after a synchronous
+unmount in the first onChange. The native implementation stops processing the
+remaining entries, including status changes and transport, and preserves
+cleanup. The browser regression covers a public ref batch and the native
+multiple picker for Upload and Dragger. A unit test checks stopping within
+onChange.
+
+Upload progress motion compares 12 raw UMD cases covering four list types,
+missing and undefined percent, motion=false, local and shared prefixes,
+global and component duration, and the first enter after done. Samples set
+aria-label explicitly and leave the native name fallback unchanged.
+Upstream fade lasts motionDurationMid after a 300 ms delay and keeps the
+wrapper through exit. Explicit percent: undefined renders a zero bar,
+whereas omitting the property renders only the wrapper. The shared fade
+namespace is independent of the local Upload prefix. The CSS template takes
+both namespaces. Sibling providers with the same local prefix keep their own
+fade classes and tokens.
+
+Upload thumbnail fallback compares 24 raw cases and five transitions covering
+picture, card, and circle, absent, empty, and supplied thumbUrl, URL priority,
+empty sources, and non-image files. Empty thumbUrl keeps image or preview URL
+and disables previewFile even with originFileObj. Updates preserve the row,
+input, and external draft, focus, and selection. The thumbnail anchor survives
+until its source disappears.
+
+Upload action icon snippets compare 21 raw UMD cases, two action traces, and
+five transitions. Empty and zero samples use a React Fragment corresponding to
+opaque snippet content. The fallback for a falsy render result and ReactElement
+clone and onClick forwarding remain outside the port. Own snippet handlers
+preserve native DOM event order. The reader compares control text without
+outer whitespace and preserves raw upstream measurements, SVG paths, and all
+other fields.
+
+Upload semantic root, list, item, and trigger compare 16 raw cases and five
+transitions covering object and callback settings, resolved defaults, style
+priority, list types, drag, disabled, hidden, error, and root and trigger
+variables. The callback receives original props without bindable DOM refs
+and separate resolved defaults. Ordinary style stays on the trigger. Root
+variables inherit through the internal theme bridge.
+
+ConfigProvider.upload sets shared class, style, slots, accept, customRequest,
+and progress. Thirteen raw cases, four progress samples, and four live
+transitions check whole-record inheritance and reset, sibling scopes, and
+precedence. Raw synchronous request traces include rc-upload aborting a
+completed request. PublicRequests with deferred completion follow all raw
+measurements. The native implementation keeps its completion guard and
+cancels unfinished transport.
+
+Upload.progress passes the current line API from Progress and excludes
+deprecated strokeWidth. Sixteen raw UMD cases and six transitions cover the
+300 ms delay, defaults and an empty object, size, colors and gradient, status,
+success, steps, formatter, semantic styles, and ARIA. Each sample sets a file
+name explicitly. The native implementation keeps its localized fallback for
+missing names. List exit motion remains a separate gap.
+
+UploadFile.linkProps compares 19 raw cases and five transitions covering
+object and JSON attributes, file URL priority, class replacement, click
+callback order and cancellation, and exclusion from thumbnail and preview
+actions. Svelte uses native class and onclick and a string style. The reader
+ignores only generated Svelte scope classes. Raw upstream results are preserved.
+
+Upload itemRender receives an opaque originNode snippet with the error Tooltip,
+the file and current fileList, and file-specific actions. Nineteen raw cases,
+two action sets, and five transitions cover wrap, replace, empty, and default,
+list order, and preview event cancellation. The renderer changes inner content
+and preserves the outer container and file input.
+
+Upload iconRender uses a Svelte snippet with file and listType. Twenty-five raw
+cases cover status and list types, empty, zero, and default, and thumbnail
+priority. Four transitions change the renderer. The comparison covers visible
+content. React render invocation side effects remain outside the snippet contract.
+
+Upload directory compares 12 raw cases with a controlled FileSystemEntry API
+covering breadth-first traversal, directory reader batches, input, drop, paste,
+accept, and relative paths. The adapter provides platform callback data. The
+implementation determines traversal order and the result. Upstream omits a
+file-read error callback and blocks the queue. The native path settles the
+failure and continues. A separate public sample without the unreadable file
+follows all raw cases. SSR preserves boolean webkitdirectory semantics.
+
+Upload pastable compares 11 raw cases, three prop transitions, and unmount,
+including file and text paste, multiple, accept, native and custom filters,
+and document scope. Upstream still handles paste while disabled. The native
+guard blocks it. The raw reference retains this observation and leaves the
+upstream UMD and expected result intact.
+
+Masonry and Pagination share the global breakpoint resolver. Thirty-six raw
+viewport frames cover columns, both gutter axes, mini class, explicit size,
+responsive=false, independent SMMin and SM, and nested and reset scopes.
+Tokens update native subscriptions without remounting. The upstream stale
+observer and a fresh public mount are recorded separately.
+
+Descriptions responsive columns and spans use the same validated global
+breakpoint resolver as Row. Fifty-two raw viewport frames and separate live
+and fresh frames cover thresholds, nested and reset scopes, default columns,
+and packing spans. Upstream useBreakpoint keeps stale subscriptions after
+token changes. The native implementation replaces them while preserving editor,
+refs, focus, and selection. SSR uses screens={} and fallback3.
+
+Table-prefix extracts 187 Table rules. Owner classes are independent of shared
+Checkbox, Pagination, and Descriptions namespaces. Private nested-border-top
+uses the shared prefix. Component tokens and markers are canonical. Defaults
+have zero specificity. Raw UMD measurements cover 23 cases in normal, nested,
+and reset scopes and three live prefix updates with preserved editor, selection,
+focus, and DOM. Both controls use the current medium size. DropdownPrefixCls
+applies to the filter list. Its shell and controls resolve the shared prefix
+independently. Native popover and expanded viewport keep their existing
+structure. Without an upstream theme, paint is compared separately with
+canonical ant.
+
+Input-number-features extracts variants, spinner, prefix and suffix, and addon.
+Existing outlined and compact files stay in place.
+
+The switch recipe reproduces the previous 47 rules byte for byte, including
+reduced motion, with only the original CSS variable root selector replaced.
+
+Overlay-color preserves 65 upstream Tooltip and Popover preset rules.
+Popconfirm uses Popover classes. Upstream inverse classes for these components
+have no color fill. Custom colors and native isolation of nested contrast
+belong to the components.
+
+Tooltip-prefix, popover-prefix, and popconfirm-prefix produce CSS data modules
+with 58, 72, and 11 rules, respectively. Local substitution changes component
+classes and retains variable names, markers, and Popconfirm's outer Popover.
+Motion and unique styles are excluded. Viewport and focus adapters stay in
+the Svelte components.
+
+This version of the tool leaves the other current vendor files intact. Each
+new component gets a verified recipe with selector includes and excludes,
+replacements, keyframes, expected rule count, provenance header, and output
+path. Optional declarationReplacements change only ordinary rule bodies
+and preserve selectors and keyframes. ExcludeAtRules removes the selected
+at-rule scopes and their children. Steps excludes deprecated descriptionMaxWidth
+containers and has 137 rules. Recipes list removed token declarations.
+The original vendor/antd.css still has no complete recipe. The same old
+declarations are removed there, and disabled Button reads colorBorderDisabled
+with a native colorBorder fallback.
 
 ```sh
 npm run cli -- css --list
@@ -510,77 +636,76 @@ npm run cli -- css badge
 npm run cli -- css all --check
 ```
 
-Путь архива можно передать как `--archive=path` или `--archive path`.
-`--list` используется отдельно от выбора рецепта и параметров извлечения.
-Коды завершения: 0 при успехе, 1 при ошибке аргументов или выполнении.
-JSON/CSS выводятся в stdout; диагностические сообщения и ход извлечения — в stderr.
-Рецепт с format="module" выводит ES-модуль в vendor/*.css.js: default export
-содержит тот же извлечённый CSS. Это позволяет библиотеке использовать CSS в runtime
-без Vite-specific imports; hash, selector/keyframe checks и --check/--write сохраняются.
+Pass the archive path as `--archive=path` or `--archive path`. Use `--list`
+separately from recipe selection and extraction options. Exit status is 0 on
+success and 1 for invalid arguments or execution errors. JSON and CSS go to
+stdout. Diagnostics and extraction progress go to stderr. A recipe with
+format="module" outputs an ES module at vendor/*.css.js whose default export
+contains the same CSS. The library can use CSS at runtime without Vite-specific
+imports and keep the hash, selector, and keyframe checks and --check and --write.
 
-Без --check/--write выводится предварительный CSS или CSS-модуль в stdout.
-При выборе all preview остаётся общим CSS, включая CSS из module-рецептов.
---check сверяет результат
-с текущим vendor-файлом; --write явно записывает результат. Перед записью всех
-выбранных файлов проверяются рецепты и извлечение. Получение npm-архива допускается
-только с --fetch, через зафиксированный официальный URL. Кэш находится в
-`.upstream/artifacts/antd-6.6.8.tgz`, исключён из Git и используется офлайн.
-Для другого локального файла передайте --archive=path; SHA-256 проверяется всегда.
-Установка пакетов не выполняется.
+Without --check or --write, stdout receives a CSS or module preview. An all
+preview is combined CSS, including CSS from module recipes. The --check
+option compares output with the current vendor file. The --write option
+explicitly writes it. Recipes and extraction are checked before any selected
+file is written. The command fetches the npm archive only with --fetch and
+from the pinned official URL. The offline cache at `.upstream/artifacts/antd-6.6.8.tgz`
+is excluded from Git. Pass --archive=path for another local file. SHA-256
+verification always applies. The tool performs no package installation.
 
-Разбор сохраняет тела деклараций, фильтрует части списков селекторов и сохраняет
-области media/supports/container/layer. Явно перечисленные keyframes сохраняются;
-appendRootKeyframes может переместить в конец только корневые keyframes, как
-в существующем Badge. Селекторные преобразования перечисляются в рецепте.
-Необязательный scope задаёт prelude внешнего @scope для выбранных правил;
-expectedRules по-прежнему считает исходные style rules. Тела деклараций и вложенные
-media/supports/container/layer сохраняются. Рецепт menu-theme-scope добавляет
-ограниченные light/dark правила для вложенных native popover; обычный menu CSS
-остаётся базовым оформлением. :where(:scope) в replacements сохраняет specificity.
-Несовпадение хеша, потеря keyframes или неожиданное число правил завершаются
-ошибкой. Инструмент читает только package/dist/antd.css из архива и не распаковывает
-его содержимое на диск. Для произвольных иных at-rules потребуется расширить
-поддерживаемый рецепт/разбор; автоматическое полное покрытие CSS-синтаксиса не заявлено.
+Parsing preserves declaration bodies, filters entries in selector lists,
+and keeps media, supports, container, and layer scopes. Explicit keyframes
+stay in place. AppendRootKeyframes can move only root keyframes to the end,
+as Badge does. Recipes list selector transformations. An optional scope
+sets the prelude of an outer @scope for selected rules. ExpectedRules
+counts original style rules. Declaration bodies and nested media, supports,
+container, and layer rules are preserved. Menu-theme-scope adds scoped light
+and dark rules for nested native popovers. Ordinary Menu CSS remains the
+base styling. A replacement with :where(:scope) preserves specificity.
 
-## Интеграционные подтверждения
+Hash mismatches, lost keyframes, and unexpected rule counts fail the command.
+It reads only package/dist/antd.css from the archive and extracts no files
+to disk. Supporting other at-rules requires a recipe or parser extension.
+The tool covers the CSS syntax used by its recipes.
 
-В schemaVersion 2 локальные evidence остаются путями относительно библиотеки.
-Ссылки вида `integration:button` и `integration:button/compact-context` обозначают
-стабильные контракты потребителя. Идентификатор должен относиться к существующему
-семейству и, если указан, его функциональному блоку. Локальная проверка не читает
-файлы другого репозитория и явно сообщает число таких контрактов.
+## Integration evidence
 
-Метаданные хранятся в [реестре репозитория](./registry.json).
-Потребитель сопоставляет контракты со своими примерами, SSR/e2e тестами и модулями
-фикстур в собственном manifest и проверяет их в своём репозитории. Переименование
-его файлов не требует менять реестр библиотеки; стабильный идентификатор остаётся.
+In schemaVersion 2, local evidence remains relative to the library.
+References such as `integration:button` and `integration:button/compact-context`
+identify stable consumer contracts. An identifier must refer to an existing
+family and, when specified, its feature. Local validation reports the number
+of those contracts without reading files from another repository.
 
-Компонентные SSR- и браузерные подтверждения записаны локальными путями
-`tests/package` и `tests/browser`. Прикладные сценарии и каталог фикстур
-потребителя остаются в его manifest. Состояния аудита,
-requiredForV1 и известные пробелы при разделении не пересматриваются. Успешный
-локальный check не подтверждает чужие файлы или выполнение тестов.
+Consumers map the contracts to examples, SSR and e2e tests, and fixture modules
+in their own manifest and validate them in their own repository. Renaming
+consumer files preserves the stable identifier and needs no library registry
+change. [Repository registry](./registry.json)
 
-Наследование direction/locale у Select и Modal проверяется через
-`?fixture=config-provider`: [фикстура](../../../tests/browser/fixtures/ConfigProviderFixtures.svelte)
-использует те же BasicFixtures и createControls, что общая страница;
-[сценарий](../../../tests/browser/config-provider/config-provider.spec.ts) сохраняет проверки controls
-и dialog. Перед массовыми DOM-операциями тесты ожидают mount ленивой фикстуры:
-evaluateAll сам не ожидает появления элементов.
+Component SSR and browser evidence uses local paths in tests/package and
+tests/browser. Consumer application scenarios and fixture catalogs stay in
+the consumer's manifest. This separation preserves audit states, requiredForV1,
+and known gaps. Consumer files and test execution are checked separately
+from local registry validation.
 
-Общий Input/Select-набор открывает `?fixture=input-select`. Его
-[фикстура](../../../tests/browser/fixtures/InputSelectFixtures.svelte) объединяет
-BasicFixtures input/select/select-numeric с одной createControls; label/input IDs,
-события и модель общие с прежней страницей. Root IDs имеют префикс для изоляции
-каталога. [Сценарии](../../../tests/browser/input/input-select.spec.ts) сохраняют проверки
-клавиатуры, поиска, disabled overrides, числового нуля и FormData.
+The `?fixture=config-provider` route checks direction and locale inheritance
+for Select and Modal. It uses the same BasicFixtures and createControls as the
+shared page. The scenario preserves control and dialog checks. Before bulk
+DOM operations, the tests wait for a lazy fixture to mount because evaluateAll
+does not wait for elements. [Fixture](../../../tests/browser/fixtures/ConfigProviderFixtures.svelte) · [Scenario](../../../tests/browser/config-provider/config-provider.spec.ts)
 
-Для полной проверки этапа нужны собственные проверки библиотеки и проверки
-интеграции приложения с установленным пакетом. Компонентный браузерный стенд
-принадлежит библиотеке; галерея и прикладные сценарии принадлежат потребителю.
-Ни один из стендов не требуется для установки или сборки другого репозитория.
+The shared Input and Select suite uses `?fixture=input-select`. Its fixture
+combines BasicFixtures input, select, and select-numeric with one createControls.
+Label and input IDs, events, and the model are shared with the prior page.
+Root IDs are prefixed to isolate the catalog. The scenarios preserve checks
+for keyboard, search, disabled overrides, numeric zero, and FormData.
+[Fixture](../../../tests/browser/fixtures/InputSelectFixtures.svelte) · [Scenarios](../../../tests/browser/input/input-select.spec.ts)
 
-Deprecated Input/InputNumber addons исключены из runtime и CSS. В исходном
-vendor/antd.css удалены 48 правил группировки, а из смешанных selectors удалены
-только старые классы; текущие selectors и declarations сохранены. Рецепт
-input-number-features исключает старый addon selector и содержит 64 правила.
+Complete stage validation includes the library's own checks and consumer
+integration with the installed package. The library owns the component
+browser app. Consumers own their gallery and application scenarios. Each
+repository installs and builds independently of the other's test app.
+
+Deprecated Input and InputNumber addons are excluded from runtime and CSS.
+The original vendor/antd.css removes 48 grouping rules. Mixed selectors lose
+only old classes and preserve current selectors and declarations.
+Input-number-features excludes the old addon selector and contains 64 rules.

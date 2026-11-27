@@ -1,177 +1,167 @@
-# Политика внесения изменений
+# Change policy
 
-> Type: Policy. Этот документ задаёт правило минимального безопасного изменения
-> проекта.
+> Type: Policy. This document defines how to make the smallest safe change to the project.
 
 ## Decision gate
 
-Изменение выполняется только если оно прямо требуется текущей задачей либо
-минимально необходимо для корректности результата. Существующий код и
-наблюдаемое поведение считаются намеренными, пока repository evidence не
-показывает обратное.
+Make a change only when the current task directly requires it or when it is
+necessary for a correct result. Treat existing code and observable behavior as
+intentional unless repository evidence indicates otherwise.
 
-Перед правкой нужно определить:
+Determine the following before editing.
 
-1. Какое требование задачи покрывает изменение.
-2. Как сейчас реализован затронутый сценарий и где находится его владелец.
-3. Меняется ли public API компонента, URL, persistence, network boundary,
-   SSR/browser behavior, accessibility или build pipeline.
-4. Можно ли получить результат меньшим и более локальным diff.
-5. Какие тесты и документы выражают существующий контракт.
+1. Which task requirement the change addresses.
+2. How the affected scenario works today and which part of the code owns it.
+3. Whether the change affects a public component API, URL, persistence, network boundary,
+   SSR or browser behavior, accessibility, or the build pipeline.
+4. Whether a smaller, more localized diff can produce the same result.
+5. Which tests and documents express the existing contract.
 
-Если разные трактовки существенно меняют runtime, public contract, stored data,
-security или architecture, решение владельца нужно получить до правки.
+Get the owner's decision before editing if different interpretations would materially affect
+runtime, a public contract, stored data, security, or architecture.
 
-## Понимание перед изменением
+## Understand the code before editing
 
-До редактирования нужно изучить относящиеся к задаче:
+Review the parts that relate to the task.
 
-- Svelte-компоненты, controllers и engines;
-- route loaders и server handlers;
-- config, types и public `index.ts`;
-- тесты и живые UI-примеры;
-- профильные документы и policies.
+- Svelte components, controllers, and engines
+- Route loaders and server handlers
+- Configuration, types, and the public `index.ts`
+- Tests and live UI examples
+- Relevant documents and policies
 
-Не следует угадывать framework behavior, формат данных или направление
-зависимости, если ответ можно получить из репозитория.
+Use repository evidence to establish framework behavior, data formats, and dependency
+direction whenever it is available.
 
-## Минимальность изменений
+## Keep changes minimal
 
-В scope входят:
+The scope includes the code the task directly requires, affected tests and documentation,
+and the smallest supporting changes needed for correctness.
 
-- код, прямо необходимый задаче;
-- затронутые тесты;
-- затронутая документация;
-- минимальная поддерживающая правка для корректности.
+The following require a separate justification.
 
-Без отдельного основания запрещены:
+- Broad cleanup or formatting
+- Mass renaming
+- Redesigning adjacent UI
+- Changing dependencies, scripts, Vite or SvelteKit configuration, or deployment
+- Changing URLs, storage schemas, or API requests
+- Moving files or public exports
+- Fixing independent issues along the way
 
-- широкий cleanup или форматирование;
-- массовое переименование;
-- перепроектирование соседнего UI;
-- изменение dependency, scripts, Vite/SvelteKit config или deployment;
-- изменение URL, storage schema или API-запросов;
-- перенос файлов и публичных exports;
-- исправление независимых проблем «заодно».
+## Local improvements
 
-## Локальные улучшения
+A small adjacent improvement is allowed only when it meets all of these conditions.
 
-Небольшое соседнее улучшение допустимо, если оно одновременно:
+- It directly supports the current task.
+- It preserves observable behavior.
+- It stays local and testable.
+- It introduces no new public contract or architectural boundary.
 
-- непосредственно помогает текущей задаче;
-- сохраняет наблюдаемое поведение;
-- остаётся локальным и проверяемым;
-- не создаёт новый public contract или архитектурную границу.
+Describe larger improvements separately. Implement them only when the scope expands.
 
-Большие улучшения описываются отдельно и не внедряются без расширения scope.
+## UI properties to preserve
 
-## Сохраняемые свойства UI
+Preserve these properties unless the task requires a change.
 
-Если задача не требует обратного, изменение сохраняет:
+- SSR and hydration
+- Keyboard navigation, focus order, and accessible names
+- Native element semantics and ARIA
+- Responsive layout and hit targets
+- Public props, callback contracts, and value formats
+- The order of side effects and network requests
+- URL and query semantics
+- `localStorage` keys, versions, and fallback behavior
+- Handling of loading, error, and disabled states
+- Canvas Worker lifecycle and message contracts
+- The adapter-node build output and supported npm commands
 
-- SSR и hydration;
-- keyboard navigation, focus order и доступные имена;
-- семантику нативных элементов и ARIA;
-- responsive layout и hit targets;
-- публичные props, callback contracts и форматы значений;
-- порядок side effects и сетевых запросов;
-- URL/query semantics;
-- `localStorage` keys, versions и fallback behavior;
-- обработку loading, error и disabled states;
-- Canvas Worker lifecycle и message contract;
-- build output adapter-node и поддерживаемые npm commands.
-
-Визуальное изменение не считается только CSS-деталью, если оно влияет на
-доступность control, навигацию, читаемость данных или размер интерактивной зоны.
+A visual change affects the UI contract when it changes control accessibility,
+navigation, data legibility, or the size of an interactive area.
 
 ## Public contracts
 
-К compatibility-sensitive изменениям относятся:
+Changes to the following are compatibility-sensitive.
 
-- маршрут и допустимые query-параметры;
-- server response status и security boundary;
-- exported component/type/config API;
-- формат даты, таблицы, clipboard output или persisted JSON;
-- generated OpenAPI contract;
-- worker messages;
-- environment variables;
-- package scripts и deployment entrypoint.
+- Routes and accepted query parameters
+- Server response status and security boundaries
+- Exported component, type, and configuration APIs
+- Date, table, clipboard output, or persisted JSON formats
+- Generated OpenAPI contracts
+- Worker messages
+- Environment variables
+- Package scripts and deployment entry points
 
-Такой контракт меняется только явно. Реализация, тесты и living documentation
-обновляются вместе.
+Change these contracts only as an explicit part of the task. Update the implementation,
+tests, and living documentation together.
 
-## Работа в общей рабочей копии
+## Working in a shared checkout
 
-Перед изменением проверяется `git status`. Существующие изменения принадлежат
-пользователю или параллельной работе, пока не доказано обратное.
+Run `git status` before editing. Treat existing changes as belonging to the user or
+parallel work until you establish their origin.
 
-Нельзя откатывать, перезаписывать, форматировать или включать в собственный
-cleanup чужие изменения. При пересечении файлов нужно сохранить обе задачи или
-остановиться, если безопасное объединение невозможно.
+Preserve other contributors' changes. Keep them out of your reverts, overwrites,
+formatting changes, and cleanup. When work overlaps in a file, preserve both changes.
+Stop if you cannot combine them safely.
 
-## Cleanup и жизненность кода
+## Cleanup and active code
 
-Код или asset считается живым, если у него есть подтверждённая роль в product
-runtime, developer showcase, build graph, test graph либо поддерживаемом
-public/internal contract. Компиляция, barrel export или наличие теста сами по
-себе не доказывают product runtime usage.
+Code or an asset is active when it has a verified role in the product runtime,
+developer showcase, build graph, test graph, or a supported public or internal
+contract. Compilation, a barrel export, and a test each need additional evidence
+to establish product runtime usage.
 
-При deletion audit учитываются отдельные графы:
+Consider each graph separately in a deletion audit.
 
-- product runtime начинается от SvelteKit routes, loaders, handlers и их
-  imports, включая server boundary, Workers и static assets;
-- build graph включает scripts, lockfile, Svelte/Vite/TypeScript config,
-  environment declarations и generated types;
-- test graph начинается от test files и подтверждает проверяемое поведение, но
-  не product runtime usage.
+- The product runtime starts at SvelteKit routes, loaders, and handlers and follows their
+  imports, including server boundaries, Workers, and static assets.
+- The build graph includes scripts, the lockfile, Svelte, Vite, and TypeScript configuration,
+  environment declarations, and generated types.
+- The test graph starts at test files and establishes the behavior covered by the tests.
+  Establishing product runtime usage requires the product runtime graph.
 
-SvelteKit route convention, dynamic import и `new URL(..., import.meta.url)`
-могут связывать файл без обычного import. Код, достижимый только из tests,
-showcase или barrel export, классифицируется отдельно и не удаляется
-автоматически.
+SvelteKit route conventions, dynamic imports, and `new URL(..., import.meta.url)`
+can connect a file without a conventional import. Classify code reachable only from
+tests, the showcase, or a barrel export separately. Keep it until its role is established.
 
-Для аудита используются следующие решения:
+Use these audit decisions.
 
-- `keep` — подтверждённый product, developer, build или contract code;
-- `delete candidate` — нет активного graph, framework binding, поддерживаемого
-  API или документированного намерения;
-- `move to roadmap` — согласованный будущий scope без текущего consumer;
-- `needs owner decision` — test-only implementation, barrel-only export,
-  orphaned island или значимая роль без подтверждённого entrypoint.
+- `keep` applies to verified product, developer, build, or contract code.
+- `delete candidate` applies when there is no active graph, framework binding,
+  supported API, or documented intent.
+- `move to roadmap` applies to agreed future scope with no current consumer.
+- `needs owner decision` applies to test-only implementations, barrel-only exports,
+  disconnected code, or a significant role without a verified entry point.
 
-Перед решением проверяются imports по path и symbol, public `index.ts`, route
-conventions, dynamic/Worker references, tests и mocks, docs и showcase,
-scripts/config/aliases, CSS/static references, storage/runtime keys и роль
-generated declarations. Одного поиска по имени файла недостаточно.
+Before deciding, inspect imports by path and symbol, the public `index.ts`, route
+conventions, dynamic and Worker references, tests and mocks, documentation and the
+showcase, scripts, configuration, aliases, CSS and static references, storage and
+runtime keys, and the role of generated declarations. A filename search alone is
+insufficient.
 
-Deletion pass ограничивается заранее перечисленными точными targets. Он не
-должен попутно менять behavior, перепроектировать модуль, обновлять dependencies
-или scripts либо удалять owner-decision candidates. После удаления выполняются
-проверки затронутого graph, а в отчёте перечисляются удалённые объекты и способ
-их восстановления.
+Limit deletion to the exact targets listed in advance. Preserve behavior, module design,
+dependencies, and scripts during the deletion pass. Keep targets requiring an owner's
+decision. After deleting the listed targets, check the affected graphs and report
+what you removed and how to restore it.
 
-## Проблемы окружения
+## Environment problems
 
-Проблемы контейнера или локальной машины не являются основанием менять код
-проекта, отключать проверку или добавлять workaround в scripts.
+Keep project code, checks, and scripts independent of container or local machine
+problems. Use an equivalent local command if it preserves the purpose of the check
+and leaves the project intact. If a required tool is unavailable, report the specific
+check affected and the reason.
 
-Допустима эквивалентная локальная команда, если она не меняет проект и сохраняет
-смысл проверки. Если необходимого инструмента нет, нужно сообщить, что именно
-не выполнено и почему.
+## Verify the result
 
-## Проверка результата
+Run the narrowest relevant check first, then broaden validation in proportion to the
+risk. Use a fresh build to validate changed source whenever a check depends on build output.
 
-Сначала запускается самая узкая релевантная проверка, затем более широкий
-контур соразмерно риску. Нельзя использовать stale build artifacts как
-доказательство корректности изменённого source.
+Before finishing, verify the following.
 
-Перед завершением нужно проверить:
+- The change satisfies the original requirement.
+- It preserves independent properties.
+- The scope matches the task.
+- Relevant tests and documentation are up to date.
+- The diff contains only intended changes.
 
-- решено ли исходное требование;
-- сохранены ли независимые свойства;
-- не расширился ли scope;
-- обновлены ли тесты и документация;
-- не содержит ли diff случайных или пользовательских файлов.
-
-Правила выбора тестов находятся в [testing policy](./testing-policy.md), а
-ограничения build/scripts — в [scripts policy](./scripts-policy.md).
+See the [testing policy](./testing-policy.md) for choosing tests and the
+[scripts policy](./scripts-policy.md) for build and script constraints.

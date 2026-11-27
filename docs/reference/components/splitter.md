@@ -1,16 +1,15 @@
 # Splitter
 
-Splitter поддерживает размеры панелей, drag/lazy, collapse и оформление Ant Design.
-Точные Props и callbacks — в
-[исходных объявлениях](../../../src/lib/splitter/splitter.types.ts).
+Splitter supports Ant Design panel sizing, drag, lazy updates, collapse, and
+styling. [Props and callbacks](../../../src/lib/splitter/splitter.types.ts)
 
 ```svelte
 <script lang="ts">
   import { Splitter } from '@woodger/antd';
 </script>
 
-{#snippet navigation()}<nav>Разделы</nav>{/snippet}
-{#snippet content()}<article>Содержимое</article>{/snippet}
+{#snippet navigation()}<nav>Sections</nav>{/snippet}
+{#snippet content()}<article>Content</article>{/snippet}
 
 <Splitter
   style="height:320px"
@@ -21,101 +20,97 @@ Splitter поддерживает размеры панелей, drag/lazy, coll
 />
 ```
 
-React Splitter.Panel declarations заменены массивом items с scalar/snippet
-children: Svelte не предоставляет синхронный разбор дочерних snippets до SSR.
-Отдельного публичного SplitterPanel нет. Панели сохраняются по позиции, как в
-upstream; key не участвует в их идентичности. DefaultSize читается при создании
-Splitter. Если size задан хотя бы у одной панели, вся группа становится
-controlled, а defaults остальных панелей не используются. Для controlled
-режима записывайте предложенные размеры обратно в items[].size.
+Use an items array with scalar or snippet children. Svelte children are opaque
+before SSR, so the port has no separate SplitterPanel declaration. Panels retain
+identity by position as in upstream. Key does not determine panel identity.
+DefaultSize is read when creating Splitter. A size on any panel makes the entire
+group controlled, and defaults on other panels are skipped. Accept proposed
+sizes in controlled mode by writing them back to items[].size.
 
-Числа задают px, строки с % — долю контейнера. Остаток делится между панелями;
-при изменении контейнера размеры нормализуются с исходными правилами min/max.
-Полностью заданные размеры сохраняют пропорции с поправкой на ограничения;
-несовместимые ограничения не имеют отдельного error callback. В ненулевой группе
-размер 0 остаётся collapsed даже при min > 0; если все размеры равны 0, группа
-делится поровну. Orientation имеет приоритет над boolean vertical,
-по умолчанию horizontal.
+Numbers are pixels and percent strings are fractions of the container. The
+remaining space is shared between panels. Container changes normalize sizes
+with the upstream min and max rules. Fully specified sizes keep their ratios
+subject to constraints. There is no separate error callback for incompatible
+constraints. In a nonzero group, size 0 stays collapsed even with min > 0.
+A group of all zeros divides evenly. Orientation takes priority over boolean
+vertical and defaults to horizontal.
 
-Mouse и одиночный touch считают смещение от начала gesture. Normal drag
-вызывает onResizeStart, onResize и onResizeEnd; end сообщает текущие размеры,
-поэтому при controlled rejection возвращает исходную геометрию. Lazy показывает
-preview и вызывает onResizeEnd с предложением только при release, без onResize;
-controlled lazy принимает размеры в onResizeEnd. RTL меняет знак horizontal
-drag. Как в закреплённом SplitBar, lazy сначала ограничивает физическое смещение
-по ARIA-границам, затем меняет знак для RTL; при несимметричных ограничениях это
-может отличаться от normal drag. Вертикальное направление знак не меняет.
+Mouse and single-touch gestures measure from the start. Normal drag calls
+onResizeStart, onResize, and onResizeEnd. The end callback reports current
+sizes, including the original geometry if the owner rejects the change.
+Lazy drag shows a preview and proposes sizes through onResizeEnd on release.
+It leaves onResize unused. Write controlled lazy sizes back in onResizeEnd.
+RTL reverses horizontal delta. As in the pinned SplitBar, lazy drag clamps
+physical distance to its ARIA bounds before applying the RTL sign. Asymmetric
+bounds can therefore differ from normal drag. Vertical direction keeps the sign.
 
-Collapsible задаётся у соседних панелей; его объект управляет start/end и
-showCollapsibleIcon (true/false/auto). Collapse вызывает resize, resizeEnd, затем
-collapse, сохраняет прежний размер и проверяет текущие ограничения при
-восстановлении. Resizable=false блокирует drag, сохраняя collapse и double-click.
-Скрытое содержимое остаётся в DOM; destroyOnHidden удаляет его, а одноимённое
-поле панели переопределяет root. Collapsible.motion включает CSS transition,
-который отключается на время drag и при prefers-reduced-motion.
+Neighboring panels configure collapsible with start, end, and
+showCollapsibleIcon set to true, false, or auto. Collapse calls resize,
+resizeEnd, then collapse, saves the old size, and checks current constraints
+when restoring. Resizable=false blocks drag and leaves collapse and double
+click available. Hidden contents stay mounted unless destroyOnHidden is set.
+The panel option overrides the root option. Collapsible.motion turns on a
+CSS transition, disabled during drag and for prefers-reduced-motion.
 
-Как в Ant Design 6.6.8, при destroyOnHidden=false свёрнутая панель только
-обрезает содержимое: её controls остаются в Tab-порядке и доступном дереве.
-Панель не получает inert или aria-hidden, фокус автоматически не переносится.
-Это ограничение доступности upstream. DestroyOnHidden=true удаляет потомков;
-после раскрытия они создаются заново, неконтролируемые значения сбрасываются.
-Для сохранения значений при таком режиме храните их снаружи панели.
+As in 6.6.8, destroyOnHidden=false collapses the panel by clipping its content.
+Controls still participate in Tab and the accessibility tree. The panel has
+no inert or aria-hidden state, and focus remains in place. With
+destroyOnHidden=true, descendants are removed and remounted on expansion, so
+uncontrolled values reset. Store values outside the panel to keep them.
 
-Разделитель сохраняет role=separator, ориентацию и числовые ARIA-границы; как в
-эталоне, он не получает фокус и не имеет keyboard resize. Кнопки collapse —
-native button type=button с Enter/Space и исходными английскими именами
-Toggle start/end panel. Content controls сохраняют нативную семантику;
-componentDisabled сам по себе не отключает Splitter. Bind:nativeElement заменяет
-React ref. При unmount очищаются ResizeObserver и node/window listeners,
-поздние события не вызывают callbacks.
+The separator keeps role=separator, orientation, and numeric ARIA limits.
+It stays out of focus and has no keyboard resize, as in upstream. Collapse
+uses native buttons with type=button, Enter and Space, and the English
+Toggle start/end panel labels. Content controls retain native semantics.
+ComponentDisabled alone leaves Splitter enabled. Bind:nativeElement supplies
+the Svelte ref. Unmount clears ResizeObserver and node and window listeners
+and prevents late callbacks.
 
-SSR выводит панели и snippets без измерения, сохраняет исходные px/% и auto для
-неуказанного размера. После mount ResizeObserver рассчитывает px; нулевой замер
-не затирает последний размер. Смена orientation без изменения размеров root сама
-по себе не запускает новый замер — это поведение закреплённого upstream.
+SSR renders panels and snippets without measurement and keeps supplied pixels
+or percentages and auto for unspecified size. ResizeObserver computes pixels
+after mount. A zero measurement preserves the previous size. Changing
+orientation without a root size change leaves measurement alone, as in the
+pinned upstream.
 
-ConfigProvider.splitter задаёт class/style и semantic root/panel/dragger;
-nested config заменяет объект целиком. Root style идёт после semantic styles,
-а вычисленные flex-basis/flex-grow панели — после её style. Dragger classes
-принимают строку или default/active; как в upstream, из styles.dragger применяется
-только default. Semantic callbacks получают resolved orientation/vertical.
-Collapsible.icon задаёт иконки сворачивания; пустой объект сохраняет defaults.
-Null/false icons оставляют пустой custom wrapper.
+ConfigProvider.splitter sets class, style, and semantic root, panel, and
+dragger. A nested config replaces the object. Root style follows semantic
+styles. Computed flex-basis and flex-grow on a panel follow its style.
+Dragger classes accept a string or default and active. Styles.dragger applies
+only default as upstream does. Semantic callbacks receive resolved orientation
+and vertical. Collapsible.icon sets collapse icons. An empty object keeps
+defaults. Null or false icon values leave an empty custom wrapper.
 
-CSS-рецепты splitter и splitter-prefix воспроизводят все 59 правил эталона,
-включая reduced motion, с проверкой SHA-256. Второй сохраняет module template для
-локального prefix. Темы, primary и RTL наследуются; локальный hover alias bar
-сохраняется для native темы, а в token theme bar наследует настроенные aliases.
+The splitter and splitter-prefix recipes reproduce all 59 reference rules,
+including reduced motion, with SHA-256 verification. Splitter-prefix supplies
+a module template for a local prefix. Theme, primary, and RTL inherit.
+The native theme keeps its local hover alias for the bar. The token theme
+uses the configured aliases.
 
-ConfigProvider.theme.components.Splitter применяет splitBarSize, splitTriggerSize
-и splitBarDraggableSize, включая 0; обычный splitBarDraggableSize равен 20.
-Поддержаны global/component
-aliases и algorithms, cssVar.prefix, undefined, вложенные/reset/sibling scopes.
-Тематические переменные идут перед semantic/user styles. Реактивные изменения
-сохраняют размеры панелей, draft/selection/focus и текущий lazy drag/preview.
-Сверка: [UMD](../../../tests/browser/fixtures/ant-design-splitter-theme-reference.json),
-[SSR](../../../tests/package/splitter/splitter-theme.ssr.test.ts),
-[browser](../../../tests/browser/splitter/splitter-theme.spec.ts), `?fixture=splitter-theme`.
-RTL-метрики измерены с явным dir=rtl на host; отдельно записано source-наследование
-LTR без этого host. Существующий native direction провайдера сохранён.
-PrefixCls задаёт root/panel/bar/collapse/preview/mask classes. Пустая строка и
-undefined наследуют ConfigProvider.prefixCls (по умолчанию ant-splitter); локальный
-prefix имеет приоритет. Semantic callbacks получают исходный local prefix.
-Служебная preview-offset variable следует общему prefix без точек, независимо от
-локального класса и theme.cssVar.prefix. Canonical token marker сохранён.
-Смена prefix сохраняет панели, refs, draft/focus/selection и активный lazy drag.
+ConfigProvider.theme.components.Splitter applies splitBarSize, splitTriggerSize,
+and splitBarDraggableSize, including 0. The regular splitBarDraggableSize is 20.
+Global and component aliases and algorithms, cssVar.prefix, undefined, and
+nested, reset, and sibling scopes are supported. Theme variables precede semantic
+and user styles. Live updates preserve panel sizes, draft, selection, focus,
+and the current lazy drag and preview. RTL metrics use explicit dir=rtl on the
+host. A separate record captures upstream LTR inheritance without it.
+The native provider direction is preserved. The theme fixture is
+`?fixture=splitter-theme`. [UMD](../../../tests/browser/fixtures/ant-design-splitter-theme-reference.json) · [SSR](../../../tests/package/splitter/splitter-theme.ssr.test.ts) · [Browser](../../../tests/browser/splitter/splitter-theme.spec.ts)
 
-В 6.6.8 CSS-кэш связывает общий local class с первым namespace: у вложенного
-Splitter preview-offset=30px может дать transform:none. В свежем документе с
-тем же вложенным namespace получается смещение 30px. Native изолирует CSS по
-local class и общему namespace; исходные
-[raw](../../../tests/browser/fixtures/ant-design-splitter-prefix-reference.json) и
-[fresh-page](../../../tests/browser/fixtures/ant-design-splitter-prefix-isolated.json)
-замеры сохранены для разбора. Prefix проверяют
-[browser](../../../tests/browser/splitter/splitter-prefix.spec.ts),
-[SSR](../../../tests/package/splitter/splitter-prefix.ssr.test.ts) и fixture `?fixture=splitter-prefix`.
+PrefixCls sets root, panel, bar, collapse, preview, and mask classes. Empty and
+undefined inherit ConfigProvider.prefixCls, giving ant-splitter by default.
+The local prefix takes precedence and semantic callbacks receive its original
+value. The internal preview-offset variable uses the shared prefix with dots
+removed independently of local class and theme.cssVar.prefix. The canonical
+token marker is preserved. Prefix changes preserve panels, refs, drafts, focus,
+selection, and active lazy drag.
 
-Fixture — `?fixture=splitter`. Engine, DOM lifecycle, SSR, package и browser
-проверяют размеры, ограничения, callbacks, controlled/lazy, collapse, native
-controls, touch, RTL, темы, semantic styles и cleanup.
+The 6.6.8 CSS cache binds a shared local class to its first namespace. A nested
+Splitter with preview-offset=30px can get transform:none. A fresh document
+at the same nested namespace gives a 30px offset. Native CSS scopes by local
+class and shared namespace. The fixture is `?fixture=splitter-prefix`.
+[Raw data](../../../tests/browser/fixtures/ant-design-splitter-prefix-reference.json) · [Fresh page](../../../tests/browser/fixtures/ant-design-splitter-prefix-isolated.json) · [Browser](../../../tests/browser/splitter/splitter-prefix.spec.ts) · [SSR](../../../tests/package/splitter/splitter-prefix.ssr.test.ts)
 
+The main fixture is `?fixture=splitter`. Engine, DOM lifecycle, SSR, package,
+and browser tests cover sizing, constraints, callbacks, controlled and lazy
+behavior, collapse, native controls, touch, RTL, themes, semantic styles,
+and cleanup.

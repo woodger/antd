@@ -1,130 +1,125 @@
-# Формы и валидация
+# Forms and validation
 
-`createForm()` хранит значения и ошибки формы. `Form` управляет отправкой,
-`FormItem` связывает поле с подписью и сообщениями, а `FormList` помогает
-работать с массивами полей.
+`createForm()` stores form values and errors. `Form` manages submission.
+`FormItem` associates a field with its label and messages, and `FormList`
+handles arrays of fields.
 
-## Содержание
+## Contents
 
-- [Значения и поля](#значения-и-поля)
-- [Валидация](#валидация)
-- [Отправка](#отправка)
-- [Сброс](#сброс)
-- [Списки полей — FormList](#formlist)
-- [Сообщения списка — FormErrorList](#formerrorlist)
-- [Дополнительные настройки валидации](#дополнительные-настройки-валидации)
-- [Состояние и методы формы](#состояние-и-методы-формы)
-- [Оформление и доступность](#оформление-и-доступность)
+- [Values and fields](#values-and-fields)
+- [Validation](#validation)
+- [Submission](#submission)
+- [Reset](#reset)
+- [Field arrays with FormList](#formlist)
+- [List messages with FormErrorList](#formerrorlist)
+- [Advanced validation settings](#advanced-validation-settings)
+- [Form state and methods](#form-state-and-methods)
+- [Layout and accessibility](#layout-and-accessibility)
 
-## Значения и поля
+## Values and fields
 
-### Значения и пути
+### Values and paths
 
-Создавайте модель внутри компонента или модели представления, чтобы разные формы
-и SSR-запросы не разделяли состояние. В примерах ниже профиль хранит имя и город.
+Create the model inside a component or presentation model to give each form and
+SSR request its own state. The profile in these examples stores a name and city.
 
 ```ts
 import { createForm } from '@woodger/antd';
 
 const form = createForm({
-  initialValues: { profile: { name: 'Анна', city: 'Томск' } }
+  initialValues: { profile: { name: 'Anna', city: 'Tomsk' } }
 });
 
-form.setFieldValue(['profile', 'name'], 'Ирина');
-form.setFieldsValue({ profile: { city: 'Омск' } });
+form.setFieldValue(['profile', 'name'], 'Irina');
+form.setFieldsValue({ profile: { city: 'Omsk' } });
 
-form.getFieldValue('profile'); // { name: 'Ирина', city: 'Омск' }
+form.getFieldValue('profile'); // { name: 'Irina', city: 'Omsk' }
 ```
 
-`setFieldValue(name, value)` заменяет значение по указанному пути.
-`setFieldsValue` рекурсивно объединяет обычные объекты, поэтому обновление
-города сохраняет имя. Массивы заменяются целиком. Свойства `values` и `errors`
-предназначены для чтения. При изменении значения `setFieldValue` очищает ошибки
-и предупреждения поля и его потомков. `setFieldsValue` очищает сообщения
-затронутых полей.
+`setFieldValue(name, value)` replaces the value at the specified path.
+`setFieldsValue` recursively merges plain objects, so updating the city preserves
+the name. It replaces arrays in full. Read values through `values` and `errors`.
+When a value changes, `setFieldValue` clears errors and warnings for that field
+and its descendants. `setFieldsValue` clears messages for affected fields.
 
-`FormItem.name` принимает строку, число или массив сегментов пути, например
-`['users', 0, 'name']`. Строка `"user.name"` обозначает один ключ. Если
-промежуточного контейнера ещё нет, числовой сегмент создаёт массив, а строковый
-`"0"` — объект. Атрибут `name` вложенного HTML-элемента составляется из сегментов
-через `_`; при необходимости задайте ему собственное имя.
+`FormItem.name` accepts a string, number, or array of path segments, such as
+`['users', 0, 'name']`. The string `"user.name"` represents one key. When an
+intermediate container is missing, a numeric segment creates an array and
+the string `"0"` creates an object. The nested HTML element's `name` joins path
+segments with `_`. Supply a custom name when needed.
 
-`FormItem.rules` задаёт правила поля. Если локальных правил нет, используются
-правила соответствующего поля из `createForm`. В `createForm.rules` можно задать
-правила только для полей верхнего уровня; для вложенного пути используйте
-`FormItem.rules` или [вложенные правила](#вложенные-правила). Правила модели
-действуют и без `FormItem` в DOM; локальные правила удаляются вместе с полем,
-но значение сохраняется. При изменении `name` ошибки и `touched` правил модели
-остаются привязаны к прежнему имени. В `FormList` локальное состояние поля следует
-за `key` строки.
+`FormItem.rules` sets field rules. Without local rules, the field uses its
+`createForm` rules. `createForm.rules` accepts top-level fields only. Use
+`FormItem.rules` or nested rules for a nested path. Model rules apply even
+without a FormItem in the DOM. Unmounting the field removes local rules and
+keeps the value. When `name` changes, errors and `touched` from model rules
+stay associated with the old name. In FormList, local field state follows the
+row's `key`. [Nested rules](#nested-rules)
 
-Модель можно хранить в `$state` и заменять: поля зарегистрируются в новом
-экземпляре, а результаты проверок прежней модели не изменят его состояние.
-Обычные объекты и массивы копируются при создании модели, обновлении полей,
-проверке и сбросе. Это отделяет изменяемые контейнеры модели от переданных
-аргументов и снимков проверки. Экземпляры классов, в том числе Day.js,
-сохраняются как есть; для обновления значения передайте новый экземпляр через
-метод модели.
+Store the model in `$state` if you need to replace it. Fields register with the
+new instance, and validation results from the old model leave the new state
+alone. Creation, field updates, validation, and reset copy plain objects and
+arrays. This keeps model containers independent of supplied data and validation
+snapshots. Class instances, including Day.js values, retain identity. Pass a
+new instance through a model method to update one.
 
-### Начальные значения
+### Initial values
 
-`FormItem.initialValue` заполняет отсутствующее значение до отрисовки поля,
-в том числе при SSR. Значение из `initialValues` модели имеет приоритет, даже
-если оно равно `null`, `false`, `0` или `''`. При `undefined` применяется
-`initialValue` поля. Если поле появилось позже, уже записанное значение не
-перезаписывается. Начальные значения не устанавливают `touched`, но учитываются
-при проверке с параметром `dirty`. Привязку `value` и `onValueChange` к модели
-нужно настроить явно.
+`FormItem.initialValue` fills in a missing value before rendering the field,
+including SSR. The model's `initialValues` takes precedence, including
+`null`, `false`, `0`, and `''`. An `undefined` value falls back to the field's
+`initialValue`. A field that appears later leaves an existing value intact.
+Initial values leave `touched` unset and count in validation with `dirty`.
+Connect `value` and `onValueChange` to the model explicitly.
 
-Изменение `initialValue` не перезаписывает текущее значение. При сбросе
-используется текущее `initialValue` поля, если для этого точного пути нет значения
-в исходном `initialValues` модели. Объекты и массивы копируются; `Date`, Day.js
-и другие экземпляры классов сохраняются. Если несколько полей задают
-`initialValue` для одного пути, его заполняет первое появившееся поле, а сброс
-не выбирает между конфликтующими значениями. Для пересекающихся путей родителя
-и потомка порядок появления полей также влияет на начальные значения.
+Changing `initialValue` leaves the current value in place. Reset uses the
+field's current `initialValue` if the exact path has no value in the original
+model `initialValues`. Objects and arrays are copied. `Date`, Day.js, and other
+class instances are preserved. When several fields specify `initialValue`
+for one path, the first mounted field fills it. Reset leaves conflicting
+field defaults unresolved. With overlapping parent and descendant paths,
+mount order also affects the initial values.
 
-Для `FormList` задавайте начальный массив через `initialValue` списка или
-`initialValues` модели. `initialValue` отдельного поля списка применяется при
-его создании, но не восстанавливается при сбросе только этого поля. Полный сброс
-списка пересоздаёт строки и применяет начальные значения заново.
+Initialize a `FormList` array through the list's `initialValue` or the model's
+`initialValues`. A list field's `initialValue` applies when it is created.
+Resetting just that field does not restore the list field default. Resetting
+the entire list remounts rows and reapplies their initial values.
 
-### Поле без имени
+### Nameless fields
 
-`FormItem` без `name` позволяет оформить строку с подписью, пояснением и колонками,
-но не регистрирует `rules` и `initialValue` в модели. Свойство `required` влияет
-на отметку у подписи; атрибуты `required`, `name`, `id` и ARIA вложенного элемента
-нужно задать самостоятельно. Для связи подписи с элементом используйте
-`FormItem.htmlFor` и его `id` либо задайте элементу доступное имя.
+A `FormItem` without `name` can lay out a label, description, and columns.
+It registers neither `rules` nor `initialValue` with the model. `required`
+sets the label marker. Set `required`, `name`, `id`, and ARIA attributes
+on the nested element yourself. Associate a label through `FormItem.htmlFor`
+and the element's `id`, or give the element an accessible name.
 
-Такая строка не регистрируется в `getFieldsValue` и `getFieldInstance`. Сброс
-модели сохраняет её DOM, локальное состояние, фокус и выделение. При добавлении
-или удалении `name` содержимое пересоздаётся; при смене одного имени на другое
-элемент сохраняется.
+These rows stay out of `getFieldsValue` and `getFieldInstance`. Model reset
+preserves their DOM, local state, focus, and selection. Adding or removing
+`name` remounts the content. Changing one name to another preserves it.
 
-### Скрытые поля
+### Hidden fields
 
-`FormItem.hidden` скрывает поле, сохраняя его DOM, значение, `ref` и локальное
-состояние. По умолчанию `hidden` равно `false`. Скрытое поле по-прежнему
-проверяется и участвует в отправке и `FormData`, поэтому ошибка `required` может
-заблокировать отправку. Элементы скрытого поля исключаются из навигации по Tab
-и дерева доступности. Сброс пересоздаёт его содержимое, как и у видимого поля.
+`FormItem.hidden` hides the field and preserves its DOM, value, ref, and local
+state. It defaults to `false`. A hidden field still participates in validation,
+submission, and FormData, so a required error can block submission. Hidden
+field elements stay out of Tab navigation and the accessibility tree. Reset
+remounts their contents just as it does for visible fields.
 
-## Валидация
+## Validation
 
-### Правила
+### Rules
 
-Внутри `<Form {form}>` укажите путь к имени в `FormItem` и передайте введённое
-значение в модель через `onValueChange`. Здесь пустое имя блокирует отправку,
-а имя из одной буквы вызывает предупреждение и позволяет сохранить профиль.
+Inside `<Form {form}>`, give FormItem the name path and pass the entered value
+to the model through `onValueChange`. In this example, an empty name blocks
+submission. A one-letter name produces a warning and still allows saving.
 
 ```svelte
 <FormItem
   name={['profile', 'name']}
-  label="Имя"
+  label="Name"
   rules={[
-    { required: true, message: 'Введите имя.' },
-    { min: 2, warningOnly: true, message: 'Проверьте написание короткого имени.' }
+    { required: true, message: 'Enter a name.' },
+    { min: 2, warningOnly: true, message: 'Check the spelling of this short name.' }
   ]}
 >
   <Input
@@ -134,33 +129,34 @@ form.getFieldValue('profile'); // { name: 'Ирина', city: 'Омск' }
 </FormItem>
 ```
 
-Правила включают `required`, `min`, `max`, `len`, `whitespace`, `pattern` и
-синхронный или асинхронный `validator(value, values)`. Для строк `min`, `max`
-и `len` считают кодовые точки Unicode, для чисел сравнивают значение, для
-массивов считают элементы. Пустой массив считается пустым значением; массивы
-с `0` или `false` — непустыми. `pattern` проверяет скалярные значения; для
-проверки содержимого массива используйте `validator`.
+Rules include `required`, `min`, `max`, `len`, `whitespace`, `pattern`, and a
+synchronous or asynchronous `validator(value, values)`. Min, max, and len count
+Unicode code points in strings, compare numeric values, and count array entries.
+An empty array is an empty value. An array containing `0` or `false` is
+nonempty. Pattern checks scalars. Use validator to check array contents.
 
-Пустые необязательные значения пропускают встроенные проверки, но передаются
-в `validator`. При этом `len` проверяет пустой массив и строку из пробелов,
-а необязательные `null`, `undefined` и `''` пропускает. `len` задаёт точную
-длину или число и имеет приоритет над `min` и `max`, включая `len: 0`. `pattern`
-и `validator` применяются и после успешной проверки длины.
+Empty optional values skip built-in checks and still reach validator. Len
+checks empty arrays and whitespace-only strings and skips optional null,
+undefined, and the empty string. Len specifies an exact length or number and
+takes precedence over min and max, including `len: 0`. Pattern and validator
+still run after a successful length check.
 
-`whitespace: true` отклоняет непустую строку из пробелов, табуляций или
-переводов строки, не изменяя её в модели. Пустая необязательная строка допустима;
-`required` отклоняет пустые строки, строки из пробелов и пустые массивы.
+`whitespace: true` rejects a nonempty string made of spaces, tabs, or line
+breaks while keeping the model value intact. An empty optional string is
+allowed. Required rejects empty strings, whitespace-only strings, and empty
+arrays.
 
-### Ошибки и ручная проверка
+### Errors and manual validation
 
-`validateFields()` возвращает снимок значений или отклоняется с
-`FormValidationError`. Ошибка содержит `values`, `outOfDate` и `errorFields`;
-в каждом элементе `errorFields` указаны путь поля и сообщения. Переданные
-в `validateFields(names)` пути ограничивают список проверяемых полей, но снимок
-по-прежнему содержит значения всей модели.
+`validateFields()` returns a value snapshot or rejects with
+`FormValidationError`. The error includes `values`, `outOfDate`, and
+`errorFields`. Each errorFields entry has the field path and messages.
+Paths passed to `validateFields(names)` limit which fields are checked.
+The snapshot still contains the complete model.
 
-Чтобы проверить только имя в [модели профиля](#значения-и-пути), передайте его путь в `form.validateFields()`.
-Например, обработчик кнопки «Проверить имя» может перевести фокус к полю с ошибкой.
+Pass the name path to `form.validateFields()` to check only the profile name.
+For example, a Check name handler can focus a field with a validation error.
+[Profile model](#values-and-paths)
 
 ```ts
 import { FormValidationError } from '@woodger/antd';
@@ -183,32 +179,32 @@ async function checkName() {
 }
 ```
 
-`getFieldError(name)` и `getFieldsError(names?)` возвращают ошибки полей;
-`errors` содержит ошибки верхнего уровня. `getFieldWarning(name)` возвращает
-предупреждения, а `getFieldsError` — и ошибки, и предупреждения. При сборе всех
-сообщений `errorFields` также включает предупреждения ошибочного поля. Правило
-с `warningOnly: true` не блокирует `validateFields` и отправку и не делает поле
-обязательным. Новая проверка сразу очищает предыдущие предупреждения, в том
-числе на время ожидания асинхронного `validator`.
+`getFieldError(name)` and `getFieldsError(names?)` return field errors.
+`errors` holds top-level errors. `getFieldWarning(name)` returns warnings,
+and `getFieldsError` combines errors and warnings. In aggregate validation,
+errorFields also includes warnings for erroneous fields. A rule with
+`warningOnly: true` allows validation and submission to proceed and leaves
+the field optional. New validation immediately clears previous warnings,
+including while awaiting an asynchronous validator.
 
-`FormItem` показывает ошибки перед предупреждениями; ошибка имеет приоритет.
-Предупреждение входит в доступное описание, но не устанавливает `aria-invalid`.
-Устаревшие результаты проверки не перезаписывают состояние после изменения или
-сброса формы либо удаления поля. После потери фокуса поле считается `touched`;
-изменение любого поля повторно проверяет поля с `touched`, в том числе через
-зависящие от других значений `validator`. Свойство `dependencies` не поддерживается.
+FormItem puts errors before warnings, with errors taking priority. A warning
+contributes to the accessible description and leaves aria-invalid unset. Stale
+validation results stay discarded after an edit, reset, or field removal.
+Blur marks a field touched. Changing any field revalidates touched fields,
+including validators that depend on other values. The dependencies prop is
+outside the current API.
 
-## Отправка
+## Submission
 
-`form.submit(onFinish)` блокирует повторную отправку и возвращает объект со
-статусом `success`, `invalid`, `failed` или `busy`. При `invalid` и `failed`
-объект также содержит `error`. Изменение значений во время проверки делает её
-результат устаревшим и предотвращает вызов `onFinish`. Уже начавшийся `onFinish`
-модель не отменяет.
+`form.submit(onFinish)` prevents duplicate submission and returns an object
+with status `success`, `invalid`, `failed`, or `busy`. Invalid and failed
+results also contain error. Editing values during validation makes that
+result stale and prevents onFinish from running. An onFinish that already
+started continues running.
 
-Например, кнопка вне формы может вызвать этот метод, чтобы сохранить профиль
-в браузере. Если обязательное имя пусто, модель вернёт `{ status: 'invalid', error }`,
-а в `localStorage` останется предыдущая запись.
+A button outside the form can call this method to save the profile in the
+browser. If the required name is empty, the model returns
+`{ status: 'invalid', error }` and localStorage keeps the previous entry.
 
 ```ts
 const result = await form.submit(({ profile }) => {
@@ -216,50 +212,49 @@ const result = await form.submit(({ profile }) => {
 });
 ```
 
-При отправке через кнопку `<Button htmlType="submit">` внутри `Form` компонент
-сам вызывает `onFinish` после успешной проверки. Ошибки
-полей передаются в `onFinishFailed`, ошибки `onFinish` — в `onError` и показываются
-общим сообщением. Встроенная проверка браузера отключена через `novalidate`,
-чтобы использовать правила формы. Проверку данных на сервере нужно реализовать
-в приложении.
+Submitting with `<Button htmlType="submit">` inside Form calls onFinish after
+successful validation. Field errors go to onFinishFailed. Errors from
+onFinish go to onError and appear in a shared message. Form sets novalidate
+so its own rules control validation. Implement server-side validation in the
+application.
 
-## Сброс
+## Reset
 
-`resetFields(names?)` восстанавливает начальные значения выбранных путей.
-Без аргумента сбрасывается вся модель. `[]` ничего не меняет; `[[]]` восстанавливает
-все значения, но не выбирает состояние именованных полей. Неизвестный путь
-получает значение `undefined`, не регистрируя поле.
+`resetFields(names?)` restores initial values at the selected paths.
+Omitting the argument resets the entire model. An empty array changes
+nothing. `[[]]` restores all values without selecting the state of named
+fields. An unknown path receives undefined without registering a field.
 
-Чтобы отменить правку имени и оставить новый город, передайте список с одним
-путём. Внешние скобки обозначают список полей, внутренние — путь к имени.
+To undo an edit to the name and keep the new city, pass a list with one path.
+The outer brackets describe the field list and the inner brackets the name path.
 
 ```ts
-form.setFieldsValue({ profile: { name: 'Ирина', city: 'Омск' } });
+form.setFieldsValue({ profile: { name: 'Irina', city: 'Omsk' } });
 
 form.resetFields([['profile', 'name']]);
 
-form.getFieldValue('profile'); // { name: 'Анна', city: 'Омск' }
+form.getFieldValue('profile'); // { name: 'Anna', city: 'Omsk' }
 ```
 
-Такой сброс также очищает `touched` и ошибки поля имени. Вызов
-`form.resetFields(['profile'])` восстанавливает исходные значения всего профиля,
-но сохраняет `touched` и ошибки вложенных полей. Повтор одного пути в списке
-вызывает сброс один раз.
+That reset also clears touched state and errors for the name field.
+`form.resetFields(['profile'])` restores all original profile values and
+keeps the touched state and errors of nested fields. Repeating a path in the
+list resets it once.
 
-Содержимое выбранного `FormItem` пересоздаётся вместе с локальным состоянием;
-при полном сбросе это относится ко всем полям. Соседние поля сохраняют DOM,
-черновики, фокус и выделение. Фокус связанного HTML-элемента восстанавливается
-после пересоздания, если поле осталось на странице и пользователь не перевёл
-фокус. Элементы без связи с полем не перехватывают фокус.
+Reset remounts a selected FormItem's content and local state. A full reset
+remounts all fields. Neighboring fields retain DOM, drafts, focus, and
+selection. The associated HTML control regains focus after remount if it
+stays on the page and the user has not moved focus. Unassociated elements
+leave focus alone.
 
-Сброс `FormList` пересоздаёт его строки. `initialValues` модели имеет приоритет
-над текущим `initialValue` корневого списка. Если несколько списков задают
-`initialValue` для одного пути, сброс не выбирает между ними произвольное значение.
+Resetting a FormList remounts its rows. The model's initialValues takes
+precedence over the current initialValue of the root list. When several lists
+set initialValue for the same path, reset leaves conflicting defaults unresolved.
 
 ## FormList
 
-`FormList` работает с массивом в ближайшей форме. Компонент не добавляет
-DOM-обёртку и передаёт в `children` поля, операции и ошибки списка:
+`FormList` works with an array in the nearest form. It renders without a DOM
+wrapper and passes fields, operations, and list errors to children.
 
 ```svelte
 <script lang="ts">
@@ -283,131 +278,125 @@ DOM-обёртку и передаёт в `children` поля, операции 
     <FormList name="users">
       {#snippet children(fields, { add, remove }, meta)}
         {#each fields as field (field.key)}
-          <FormItem name={[field.name, 'name']} label="Имя" rules={[{ required: true }]}>
+          <FormItem name={[field.name, 'name']} label="Name" rules={[{ required: true }]}>
             <Input
               value={form.getFieldValue(['users', field.name, 'name']) ?? ''}
               onValueChange={(value) => form.setFieldValue(['users', field.name, 'name'], value)}
             />
           </FormItem>
-          <button type="button" onclick={() => remove(field.name)}>Удалить</button>
+          <button type="button" onclick={() => remove(field.name)}>Delete</button>
         {/each}
         <div class="ant-form-item">
           <FormErrorList errors={meta.errors} warnings={meta.warnings} />
         </div>
-        <button type="button" onclick={() => add({ name: '' })}>Добавить</button>
+        <button type="button" onclick={() => add({ name: '' })}>Add</button>
       {/snippet}
     </FormList>
   </Form>
 </ConfigProvider>
 ```
 
-`field.name` — текущий индекс, `field.key` — устойчивый ключ строки. Используйте
-`field.key` в `{#each}`: при перемещении и удалении соседних строк сохраняются
-элементы, фокус, выделение и ошибки оставшихся строк. Новые строки получают
-новые ключи. При замене массива извне ключи сохраняются по индексам. Для массива
-с пропущенными позициями `fields` содержит только существующие элементы с их
-исходными индексами.
+`field.name` is the current index, and `field.key` is the stable row key. Key the
+`{#each}` by field.key so moving or removing neighboring rows preserves the
+remaining elements, focus, selection, and errors. New rows get new keys. An
+external array replacement retains keys by index. For a sparse array, fields
+includes only existing entries with their original indexes.
 
-Имена `FormItem` и вложенного `FormList` задаются относительно ближайшего списка;
-`setFieldValue` и `getFieldValue` используют полный путь от корня формы. Вложенная
-независимая форма начинает путь заново. Начальный массив из `initialValues`
-модели имеет приоритет, включая `[]`; отсутствующий массив может получить
-`initialValue` списка. При сбросе используются `initialValues` модели либо
-текущий `initialValue` списка. Скрытие списка сохраняет значения, но удаляет
-локальные правила.
+FormItem and nested FormList names are relative to the nearest list.
+`setFieldValue` and `getFieldValue` take full paths from the form root.
+A nested independent form starts a new path. The array in model initialValues
+takes precedence, including []. A missing array can use list initialValue.
+Reset uses model initialValues or the list's current initialValue. Hiding a
+list preserves its values and removes its local rules.
 
-`add(defaultValue, insertIndex)` добавляет строку в указанную позицию или
-в конец, если индекс не указан или неверен. `remove` принимает индекс или массив
-индексов; повторы и отсутствующие индексы не удаляют лишние строки. `move`
-перемещает строку вместе с её ключом и игнорирует дробные индексы.
+`add(defaultValue, insertIndex)` inserts a row at the supplied index or appends
+when the index is missing or invalid. Remove takes an index or an array of
+indexes. Duplicates and absent indexes leave unrelated rows intact. Move
+moves a row with its key and ignores fractional indexes.
 
-`rules` списка поддерживает пользовательские проверки с сигнатурой
-`validator(value, values)`. Ошибки передаются в `meta.errors`, предупреждения
-`warningOnly` — в `meta.warnings`. Результаты проверки, завершившейся после
-удаления или сброса строки, не возвращают ошибки удалённых полей.
+List rules support custom `validator(value, values)`. Errors go to meta.errors,
+and warningOnly warnings go to meta.warnings. Validation that resolves after
+a row is removed or reset leaves the removed field's errors cleared.
 
-`prefixCls` списка задаёт префикс вложенного `FormErrorList`, не меняя префикс
-соседних `FormItem`. Пустое значение или `undefined` наследует префикс
-`ConfigProvider`, по умолчанию `ant-form`.
+A list's prefixCls sets the prefix of the nested FormErrorList and leaves
+neighboring FormItem prefixes alone. Empty or undefined inherits the
+ConfigProvider prefix, ant-form by default.
 
 ## FormErrorList
 
-Передавайте в `FormErrorList` массивы `errors` и `warnings` из `meta` списка,
-как в примере выше. Класс `ant-form-item` на обёртке подключает стили сообщений;
-при другом префиксе используйте соответствующий `<prefix>-item`. Компонент не
-регистрирует поле и не меняет значения формы.
+Pass the list's `meta.errors` and `meta.warnings` to FormErrorList, as in the
+preceding example. Add ant-form-item to the wrapper for message styles. With a
+custom prefix, use the matching `<prefix>-item`. FormErrorList presents
+messages without registering a field or changing form values.
 
-Ошибки идут перед предупреждениями. Сообщениями могут быть строки, числа,
-вложенные массивы и `snippets`. Любое значение `help`, кроме `null` и
-`undefined`, заменяет оба списка, включая `false`, `0` и `''`. `helpStatus`
-задаёт класс статуса, `fieldId` — атрибут `id` со значением `${fieldId}_help`,
-а `class` добавляет класс контейнера. Без сообщений контейнер отсутствует.
+Errors precede warnings. Messages can be strings, numbers, nested arrays, and
+snippets. Any help value other than null or undefined replaces both lists,
+including false, 0, and the empty string. HelpStatus sets the status class.
+FieldId sets id to `${fieldId}_help`. Class adds a container class. The
+container is omitted when there are no messages.
 
-Очистка `errors` и `warnings` задерживается на 10 мс, чтобы короткий
-промежуточный пустой список не скрывал сообщения. Появление и удаление
-анимируются; `motion={false}` и системная настройка уменьшения движения отключают
-анимацию. `onVisibleChanged` вызывается после появления или скрытия, но не для
-исходного пустого списка и не после удаления компонента. Повторная вставка во
-время скрытия отменяет предыдущий вызов. Повторяющиеся сообщения получают
-отдельные ключи; при перестановке текстовых сообщений их DOM сохраняется.
+Clearing errors and warnings waits 10 ms so a brief intermediate empty list
+can keep the messages visible. Enter and exit are animated. Motion={false}
+and the system's reduced-motion setting disable animation.
+OnVisibleChanged runs after entry or exit, excluding the initial empty list
+and unmount. Reinsertion during exit cancels the previous callback. Duplicate
+messages get separate keys, and reordering text messages preserves their DOM.
 
-`help` и `helpItem` наследуют `classNames` и `styles` формы. Префикс списка имеет
-приоритет над префиксом `FormItem`; без списка используется префикс `FormItem`
-через `noStyle`, затем префикс `ConfigProvider`.
+Help and helpItem inherit the form's classNames and styles. A list prefix takes
+priority over FormItem. Without a list, the prefix comes from FormItem through
+noStyle, then ConfigProvider.
 
-## Дополнительные настройки валидации
+## Advanced validation settings
 
-### Типы и форматы правил
+### Rule types and formats
 
-`ValidationRule.type` поддерживает `string`, `number`, `integer`, `float`,
+`ValidationRule.type` supports `string`, `number`, `integer`, `float`,
 `boolean`, `array`, `object`, `date`, `regexp`, `method`, `any`, `enum`, `email`,
-`url`, `hex`, `tel` и `pattern`. Тип этих значений экспортируется как
+`url`, `hex`, `tel`, and `pattern`. The union is exported as
 `ValidationRuleType`.
 
-При явно заданном типе `string` проверяются длина, `pattern` и `whitespace`;
-числовые типы и `array` проверяют диапазон и `len`, `date` — временную метку
-после стандартного преобразования JavaScript. Типы `boolean`, `object`, `regexp`,
-`method` и `any` не применяют эти ограничения. `regexp` принимает регулярное
-выражение или значение, из которого можно его создать; `object` исключает массив,
-`method` обозначает функцию.
+An explicit string type checks length, pattern, and whitespace. Numeric types
+and array check range and len. Date checks a timestamp after standard
+JavaScript conversion. Boolean, object, regexp, method, and any skip these
+constraints. Regexp accepts a regular expression or input from which one can
+be created. Object excludes arrays, and method denotes a function.
 
-Для `string` пробелы считаются содержимым; `whitespace: true` запрещает строку
-из пробелов. Для `array` диапазон проверяет и пустой массив, а `required`
-запрещает его. `number` считает `''` отсутствующим значением; `integer` и
-`float` считают его неверным типом. `any` с `required` проверяет только отсутствие
-`null` и `undefined`. `integer` принимает `1e21`, `float` его отклоняет;
-числовые правила и `date` отклоняют `BigInt` и `Symbol`.
+For string, whitespace counts as content. `whitespace: true` rejects a
+whitespace-only string. For array, range also checks an empty array, and
+required rejects it. Number treats the empty string as missing. Integer and
+float treat it as an invalid type. Any with required only checks for a
+non-null and non-undefined value. Integer accepts 1e21, and float rejects it.
+Numeric rules and date reject BigInt and Symbol.
 
-Пользовательский `validator` заменяет встроенные проверки явно заданного `type`
-и получает значение после `transform`, но до преобразования даты или числа.
-Возвращённые и преобразованные значения не записываются в модель. Сообщения
-по умолчанию на русском языке; общие шаблоны можно настроить через
-`validateMessages`.
+A custom validator replaces built-in checks for an explicit type. It receives
+the value after transform and before date or number coercion. Returned and
+transformed values leave the model intact. Default messages are in Russian.
+Set shared templates through validateMessages.
 
-`type: 'enum'` проверяет `enum` строгим сравнением: `0` отличается от `'0'`,
-`NaN` не совпадает с `NaN`. Массив допустимых значений может быть `readonly`;
-без `type: 'enum'` это свойство не добавляет проверку. Необязательные `null`
-и `undefined` пропускаются, пустая строка проверяется как элемент списка.
+`type: 'enum'` checks enum with strict equality. The number 0 and string '0'
+are distinct, and NaN never matches NaN. The allowed array may be readonly.
+Enum adds validation only with type='enum'. Optional null and undefined skip
+validation. The empty string is tested against the list.
 
-`pattern` принимает строку или `RegExp`. Для `type: 'pattern'` проверяются только
-`required` и выражение. Переданный `RegExp` не меняет `lastIndex`, в том числе
-с флагом `g`. Некорректная строка выражения становится ошибкой проверки.
+Pattern accepts a string or RegExp. `type: 'pattern'` checks only required and
+the expression. A passed RegExp retains its lastIndex, including with g.
+An invalid pattern string becomes a validation error.
 
-`email`, `hex`, `tel` и `url` проверяют тип и формат, игнорируя диапазон,
-`pattern` и `whitespace`. Предельная длина `email` — 320 символов, `tel` — 32,
-`url` — 2048; `hex` принимает 3 или 6 цифр с необязательным `#`. `url` допускает
-адреса вида `https://example.com`, `//example.com` и `www.example.com`;
-IPv6-адрес должен быть в скобках. Адрес не нормализуется в модели.
+Email, hex, tel, and url check type and format and skip range, pattern, and
+whitespace. Email allows up to 320 characters, tel up to 32, and url up to
+2048. Hex accepts three or six digits with an optional #. Url accepts
+addresses such as `https://example.com`, `//example.com`, and `www.example.com`.
+Enclose IPv6 addresses in brackets. The model retains the original address.
 
-### Фабрики правил
+### Rule factories
 
-`FormRule` принимает объект ValidationRule или ValidationRuleFactory — чистую
-функцию `(form) => rule`. Фабрики работают в createForm.rules и FormItem.rules.
-Аргументом служит текущая модель формы. Функция вычисляется заново перед каждой
-проверкой, до задержки `validateDebounce`; возвращённые настройки фиксируются
-для этого запуска. Чтение значений, ошибок и `touched` не вызывает фабрику.
-`isFieldRequired` и отметка `required` вычисляют её отдельно, включая SSR;
-`warningOnly` не делает поле обязательным.
+`FormRule` accepts a ValidationRule object or a ValidationRuleFactory, a pure
+function `(form) => rule`. Factories work in createForm.rules and FormItem.rules
+and receive the current form model. The factory runs before each validation
+and before validateDebounce. Its returned settings are captured for that run.
+Reading values, errors, or touched leaves the factory alone. IsFieldRequired
+and the required marker evaluate it separately, including in SSR.
+WarningOnly leaves the field optional.
 
 ```ts
 const form = createForm({
@@ -418,7 +407,7 @@ const form = createForm({
         const password = form.getFieldValue('password');
 
         return {
-          validator: (value) => value === password ? undefined : 'Пароли различаются.'
+          validator: (value) => value === password ? undefined : 'The passwords do not match.'
         };
       }
     ]
@@ -426,21 +415,20 @@ const form = createForm({
 });
 ```
 
-Фабрика должна возвращать объект правила и не менять форму. Без ближайшего `Form`
-локальная фабрика не используется для отметки `required`; явно заданные `required`
-и правила-объекты продолжают действовать. Исключение фабрики отклоняет
-`validateFields` и снимает `validating`; следующий вызов может повторить проверку.
+Return a rule object without changing the form. A local factory requires a
+nearest Form to supply the required marker. Explicit required and rule
+objects still apply without it. A thrown factory error rejects validateFields
+and clears validating. A later call can retry validation.
 
-### Вложенные правила
+### Nested rules
 
-`fields` задаёт правила дочерних значений при `type: 'object'` или `'array'`.
-Каждый ключ — буквальное имя свойства, в том числе `'a.b'`; значение — объект
-правила или массив объектов. `defaultField` проверяет все существующие элементы
-массива после `fields`, если родитель и явно заданные поля не дали ошибок.
-Для объекта `defaultField` применяется к собственным ключам без переопределения
-в `fields`. Если необязательное родительское значение отсутствует, вложенная
-схема пропускается. Ошибки и предупреждения записываются в родительское поле;
-отдельные поля в модели не создаются.
+`fields` specifies child rules for `type: 'object'` or `'array'`. Each key is a
+literal property name, including 'a.b', and its value is a rule object or an
+array of rules. DefaultField checks existing array entries after fields if the
+parent and explicit fields have passed. For an object, it applies to own keys
+with no override in fields. A missing optional parent skips the nested schema.
+Errors and warnings are stored on the parent field without creating separate
+model fields.
 
 ```ts
 const form = createForm({
@@ -450,7 +438,7 @@ const form = createForm({
       {
         type: 'object',
         fields: {
-          name: { required: true, message: 'Введите имя.' }
+          name: { required: true, message: 'Enter a name.' }
         }
       }
     ]
@@ -458,50 +446,49 @@ const form = createForm({
 });
 ```
 
-Вложенный `validator(value, values)` получает общий снимок значений формы.
-`transform` родителя применяется до дочерних правил и не меняет модель; схема
-фиксируется перед асинхронным `validator` родителя. `validateFirst` управляет
-списком корневых правил, внутри одной схемы собираются все дочерние результаты.
-Вложенное предупреждение не скрывает ошибку последующего корневого правила.
-Результаты `fields` следуют порядку завершения проверок, а `defaultField` массива —
-порядку индексов. Корневой `warningOnly` превращает все сообщения своей схемы
-в предупреждения.
+A nested `validator(value, values)` receives the full form snapshot. The parent's
+transform runs before child rules and leaves the model intact. The schema is
+captured before the parent's asynchronous validator. ValidateFirst controls
+the root rule list. A schema collects all its child results. A nested warning
+leaves later root errors visible. Fields results follow completion order, and
+array defaultField follows index order. A root warningOnly converts all its
+schema's messages to warnings.
 
-Вложенный `warningOnly` не блокирует отправку. `defaultField` проверяет
-существующие позиции разреженного массива и преобразованный массив; поля читаются
-только из собственных свойств объекта. Повтор пары схемы и значения в одной ветви
-вызывает ошибку цикла; один объект в независимых ветвях допустим.
+Nested warningOnly allows submission. DefaultField checks existing indexes
+in a sparse array and works with transformed arrays. Fields uses own object
+properties. Repeating a schema and value pair within a branch produces a cycle
+error. Independent branches can reuse the same object.
 
-### Преобразование значения
+### Value transformation
 
-`ValidationRule.transform(value)` синхронно преобразует вход только для своего
-правила, до `required`, `min`, `max`, `pattern` и `validator`. Другие правила
-получают исходное значение. Результат не записывается в модель и не меняет
-`FormData`, отправляемые или начальные значения. Например,
-`{ transform: value => String(value).trim(), min: 3 }` проверяет длину без крайних
-пробелов, сохраняя введённый текст.
+`ValidationRule.transform(value)` synchronously transforms input for its own
+rule before required, min, max, pattern, and validator. Other rules get
+the original value. The transform leaves model state, FormData, submitted
+values, and initial values intact. For example,
+`{ transform: value => String(value).trim(), min: 3 }` checks length without
+leading and trailing whitespace while preserving the entered text.
 
-Не изменяйте объект на месте: все `callbacks` текущей проверки видят общий снимок.
-Обычные объекты и массивы в нём скопированы, экземпляры классов сохраняются.
+Keep input objects intact because callbacks in the current validation share
+one snapshot. It copies plain objects and arrays and preserves class instances.
 
-Исключение `transform` становится ошибкой правила: используется `message`, затем
-`Error.message` или сообщение по умолчанию. `warningOnly` сохраняет свой смысл.
+A thrown transform error becomes a rule error. Message takes priority, then
+Error.message, then the default message. WarningOnly keeps its effect.
 
-### Шаблоны сообщений
+### Message templates
 
-Строковые сообщения правил поддерживают `${label}`, `${name}` и параметры правила,
-например `${min}` или `${enum}`. `FormItem.messageVariables` переопределяет эти
-значения для текущего поля. `label` берётся из строковой подписи или имени поля;
-`name` — полный путь через точку. У вложенных правил `name` и параметры относятся
-к дочернему правилу, а `label` и явные `messageVariables` сохраняются от
-`FormItem`. Без `FormItem` подписью служит путь.
+String rule messages support `${label}`, `${name}`, and rule parameters such as
+`${min}` or `${enum}`. FormItem.messageVariables overrides those values for its
+field. Label comes from a string label or field name, and name is the full
+dot-separated path. In nested rules, name and rule parameters refer to the
+child rule. Label and explicit messageVariables still come from FormItem.
+Without FormItem, the path is the label.
 
 ```svelte
 <FormItem
   name="title"
-  label="Заголовок"
-  messageVariables={{ min: 'трёх' }}
-  rules={[{ min: 3, message: '${label}: минимум ${min} символа.' }]}
+  label="Title"
+  messageVariables={{ min: 'three' }}
+  rules={[{ min: 3, message: '${label} needs at least ${min} characters.' }]}
 >
   <Input
     value={form.values.title}
@@ -510,26 +497,24 @@ const form = createForm({
 </FormItem>
 ```
 
-Подстановка однократная: подставленный текст не интерпретируется снова. Обратная
-косая черта перед `${label}` сохраняет его буквально; в строке JavaScript её нужно
-экранировать: `'\\${label}'`. Неизвестный ключ даёт текст `undefined`. Переменные
-фиксируются до задержки и асинхронной проверки; следующая проверка читает новые
-`props`. Подстановка также применяется к строковым результатам `validator`, но
-не к сообщениям из `setFields` и ошибкам обработчика отправки.
+Substitution runs once. Inserted text stays literal. A backslash before
+`${label}` keeps it literal. Escape the backslash in a JavaScript string as
+`'\\${label}'`. An unknown key gives the text undefined. Variables are captured
+before delay and async validation. The next run reads updated props.
+Substitution applies to string validator results and leaves messages from
+setFields and submission-handler errors intact.
 
-`Form.validateMessages` задаёт общие шаблоны `required`, `enum`, `whitespace`,
-`types`, `len`, `min`, `max`, `range` и `pattern.mismatch`. Те же настройки
-доступны в `ConfigProvider.form.validateMessages` и
-`locale.Form.defaultValidateMessages`. `Rule.message` имеет приоритет над
-настройками формы, провайдера и локали. Локаль и провайдер объединяют вложенные
-группы шаблонов; форма заменяет переданную группу целиком. Настройки `form`
-вложенного `ConfigProvider`, в том числе `{}`, заменяют настройки родителя.
-Отсутствующие шаблоны используют русские сообщения по умолчанию; встроенные
-`ruRU` и `enUS` их не меняют.
+Form.validateMessages sets shared required, enum, whitespace, types, len, min,
+max, range, and pattern.mismatch templates. The same settings are available in
+ConfigProvider.form.validateMessages and locale.Form.defaultValidateMessages.
+Rule.message takes priority over form, provider, and locale. Locale and provider
+merge nested template groups. Form replaces a supplied group in full. A nested
+ConfigProvider's form setting, including {}, replaces the parent setting.
+Missing templates use the Russian defaults, including with built-in ruRU and enUS.
 
 ```svelte
-<Form {form} validateMessages={{ string: { min: '${label}: минимум ${min} символа.' } }}>
-  <FormItem name="title" label="Заголовок" rules={[{ min: 3 }]}>
+<Form {form} validateMessages={{ string: { min: '${label} needs at least ${min} characters.' } }}>
+  <FormItem name="title" label="Title" rules={[{ min: 3 }]}>
     <Input
       value={form.values.title}
       onValueChange={(value) => form.setFieldValue('title', value)}
@@ -538,53 +523,51 @@ const form = createForm({
 </Form>
 ```
 
-`ValidateMessage` принимает строку или функцию без аргументов, возвращающую строку.
-Шаблон вычисляется только при ошибке соответствующего правила. Форматирование
-`printf` (`%s`, `%d`, `%j`, `%%`) применяется до подстановки `${variables}`;
-аргументы `printf` — путь поля, затем параметры правила. `Rule.message`
-обрабатывает только `${...}`. Для неверной даты используется `types.date`, для
-диапазона временной метки — `number`; `date.format`, `date.parse` и `date.invalid`
-доступны в типах, но дополнительных проверок не запускают. Шаблон `default`
-задаёт сообщение для пользовательской ошибки без `Error.message`; строковые
-результаты `validator` и ошибки, заданные вручную, имеют приоритет.
+ValidateMessage accepts a string or a zero-argument function that returns a string.
+The template runs only when its rule fails. Printf formatting (%s, %d, %j, %%)
+runs before `${variables}` substitution and receives the field path followed by
+rule parameters. Rule.message interprets only `${...}`. An invalid date uses
+types.date, and a timestamp range uses number. Date.format, date.parse, and
+date.invalid are available in the types and add no checks. The default template
+supplies a custom error without Error.message. String validator results and
+manually supplied errors take priority.
 
-Настройки фиксируются перед задержкой и асинхронной проверкой; изменение `props`
-действует при следующей проверке и не переписывает старые ошибки. При SSR проверка
-не запускается; `createForm` без `Form` использует сообщения по умолчанию.
-`undefined` или исключение `callback` шаблона приводит к обычному сообщению,
-а поле остаётся с ошибкой.
+Settings are captured before delay or async validation. Prop changes apply on
+the next run and leave old errors intact. SSR does not run validation.
+CreateForm without Form uses default messages. An undefined result or a
+throw from a template callback falls back to the regular message and keeps
+the field invalid.
 
-### Порядок проверки и задержка
+### Validation order and delay
 
-`FormItem.validateFirst` управляет правилами одного поля:
+FormItem.validateFirst controls the rules for one field.
 
-- `false` по умолчанию запускает правила параллельно и собирает все сообщения
-  в порядке правил, независимо от порядка ответов;
-- `true` проверяет последовательно и останавливается на первом сообщении;
-- `"parallel"` запускает правила параллельно и возвращает первую завершившуюся
-  ошибку, не ожидая остальные результаты. Если ошибок нет, проверка ждёт все
-  блокирующие правила; первое предупреждение выбирается по порядку ответов.
+- The default false runs rules in parallel and collects messages in rule order,
+  regardless of completion order.
+- True runs rules sequentially and stops at the first message.
+- "parallel" runs rules in parallel and returns the first error that completes,
+  without waiting for the others. If none fail, it waits for every blocking rule.
+  The first warning is chosen by completion order.
 
-Блокирующие правила идут перед `warningOnly`; исходный массив правил не меняется.
-В последовательном режиме предупреждение останавливает оставшиеся предупреждения
-только после успешной проверки всех блокирующих правил. Изменение `validateFirst`
-действует при следующей проверке. Поздние ответы после её завершения не меняют
-сообщения; `validateOnly` использует выбранный режим без изменения видимого
-состояния поля.
+Blocking rules precede warningOnly rules without changing the original rules
+array. In sequential mode, a warning stops remaining warnings only after every
+blocking rule passes. Changes to validateFirst take effect on the next run.
+Late results after completion leave messages intact. ValidateOnly uses the
+selected mode without changing visible field state.
 
-`FormItem.validateDebounce` откладывает автоматическую проверку на заданное число
-миллисекунд; `undefined` или `0` запускает её немедленно. Ожидание входит
-в `validating`. Повторный запуск заменяет таймер и не передаёт устаревшие значения
-в `validator`. Правила, `validateFirst` и задержка фиксируются для текущего запуска;
-изменения `props` действуют на следующий. `validateFields` и отправка обходят
-задержку; `validateOnly` работает сразу и не отменяет ожидающую видимую проверку.
-Сброс, ручная замена `value` или `validating` и удаление поля отменяют отложенную
-проверку. Уже запущенные проверки защищены от устаревших результатов.
+FormItem.validateDebounce delays automatic validation by the given number of
+milliseconds. Undefined or 0 starts it immediately. The waiting period counts
+as validating. Restarting replaces the timer and keeps stale values from
+validator. Rules, validateFirst, and the delay are captured for the run.
+Prop changes apply next time. ValidateFields and submit bypass the delay.
+ValidateOnly starts immediately and leaves pending visible validation running.
+Reset, manually setting value or validating, and unmount cancel delayed
+validation. Started runs guard against stale results.
 
-### Параметры validateFields
+### validateFields options
 
-`validateFields(options)` и `validateFields(names, options)` принимают
-`FormValidateOptions`. Все флаги по умолчанию равны `false` и могут сочетаться:
+`validateFields(options)` and `validateFields(names, options)` accept
+FormValidateOptions. Flags default to false and can be combined.
 
 ```ts
 await form.validateFields([['users']], {
@@ -594,262 +577,253 @@ await form.validateFields([['users']], {
 });
 ```
 
-`validateOnly` возвращает результат правил без изменения `errors`, `warnings`,
-`touched` и `validating`. Уже показанные сообщения сохраняются; такая проверка
-не делает нетронутое поле `dirty`. Фокус и значения полей не меняются.
-`recursive` выбирает зарегистрированных потомков указанного пути, включая
-само поле; пересекающиеся пути не запускают его правила повторно. Строка с
-точкой остаётся буквальным именем, числовой и строковый сегменты различаются.
+ValidateOnly returns rule results and leaves errors, warnings, touched, and
+validating intact. Existing visible messages remain. An untouched field stays
+clean. Field focus and values are unchanged. Recursive selects the registered
+descendants of a path, including the field itself. Overlapping paths run each
+field's rules once. Dotted strings stay literal. Numeric and string segments
+remain distinct.
 
-`dirty` выбирает поля с `touched`, изменённые поля и поля, для которых уже
-запускалась обычная проверка. Также включаются поля с `initialValues` или
-`initialValue`, кроме `undefined`: пустая строка, `0`, `false` и `null` считаются
-заданными начальными значениями. `setFieldValue` делает известное поле `dirty`
-даже при записи прежнего значения; `setFieldsValue` — при изменении содержимого.
-Обычные объекты и массивы сравниваются по содержимому, экземпляры классов —
-по идентичности. Сброс очищает историю изменений, но заданные начальные значения
-продолжают участвовать в фильтрации. Запись сама по себе не устанавливает `touched`.
+Dirty selects touched fields, edited fields, and fields that have run regular
+validation. It also includes fields with initialValues or initialValue,
+excluding undefined. An empty string, 0, false, and null are supplied initial
+values. SetFieldValue makes a known field dirty even when writing the same
+value. SetFieldsValue does so when contents change. Plain objects and arrays
+are compared by content, and class instances by identity. Reset clears edit
+history and still includes defined initial values in filtering. Writing alone
+leaves touched unchanged.
 
-Новый вызов проверки помечает предыдущий результат как `outOfDate`. При этом
-`validateOnly` не отменяет видимую проверку: её сообщения и `validating`
-обновляются независимо от результата проверки без изменения состояния.
+A new validation marks the previous result outOfDate. ValidateOnly leaves visible
+validation running. Its messages and validating update independently of the
+state-free validation result.
 
-Параметры также применяются при вызове `validateFields(undefined, options)`.
+Options also apply to `validateFields(undefined, options)`.
 
-## Состояние и методы формы
+## Form state and methods
 
-### Признаки взаимодействия и проверки
+### Interaction and validation flags
 
-`touchField(name)` помечает поле как `touched` и `dirty` и повторно проверяет
-поля с `touched`. `isFieldRequired(name)` проверяет, есть ли у поля блокирующее
-правило `required`; правила с `warningOnly` не учитываются.
+`touchField(name)` marks a field touched and dirty and revalidates touched fields.
+`isFieldRequired(name)` checks for a blocking required rule and skips warningOnly.
 
-`isFieldTouched(name)` проверяет поле и его потомков. Пустой путь `[]` проверяет,
-есть ли в модели поле с `touched`. Запрос не создаёт поля и не меняет их состояние.
+`isFieldTouched(name)` checks the field and its descendants. The empty path []
+checks whether the model has any touched field. The query neither creates
+fields nor changes their state.
 
-`isFieldsTouched()` проверяет, есть ли поле с `touched`. `isFieldsTouched(true)`
-проверяет все зарегистрированные поля; корни `FormList` сами не блокируют эту
-проверку. Список имён задаёт группы по префиксам: `isFieldsTouched(names, true)`
-требует хотя бы одного поля с `touched` в каждой группе, а не всех её потомков.
-Например, `isFieldsTouched([['user']], true)` вернёт `true` после взаимодействия
-с одним полем внутри `user`. Чтобы проверить оба поля, укажите оба полных пути.
+`isFieldsTouched()` asks whether any field is touched.
+`isFieldsTouched(true)` checks all registered fields, excluding the FormList
+roots as blockers. A name list defines groups by path prefix.
+`isFieldsTouched(names, true)` requires one touched field per group. For
+example, `isFieldsTouched([['user']], true)` returns true after a user
+interacts with one field under user. Pass both full paths to check both fields.
 
-Учитываются `FormItem`, `FormList`, поля с правилами `createForm` и поля модели,
-для которых явно установлен `touched`. Ключи `initialValues` без элемента
-интерфейса и правил не добавляются в проверку всех полей. Пустой список имён
-возвращает `false`, а `isFieldsTouched([], true)` — `true`. Вызов
-`isFieldsTouched(undefined, true)` равен `isFieldsTouched(true)`; `[[]]`
-выбирает модель как одну группу.
+The method considers FormItem, FormList, createForm rule fields, and model
+fields explicitly marked touched. InitialValues keys without UI or rules
+stay out of the all-fields check. An empty list returns false, and
+isFieldsTouched([], true) returns true. IsFieldsTouched(undefined, true)
+matches isFieldsTouched(true). The path list [[]] selects the model as one group.
 
-`isFieldsValidating(names?)` проверяет, выполняется ли обычная проверка хотя бы
-одного выбранного поля. Без списка учитываются все поля модели; имена совпадают
-точно, без выбора потомков. Пустой список не выбирает поля. `validateOnly` не
-устанавливает `validating` и не прерывает видимую проверку; поле без правил не
-получает этот флаг. `isFieldValidating(name)` проверяет одно поле.
+`isFieldsValidating(names?)` checks whether any selected field is running
+regular validation. Without a list, it checks all model fields. Names match
+exactly and leave descendants out. An empty list selects no fields. ValidateOnly
+leaves validating and visible validation alone. A field without rules has no
+validating flag. IsFieldValidating(name) checks one field.
 
-### Получение значений
+### Getting values
 
-`getFieldsValue()` возвращает значения зарегистрированных полей, а
-`getFieldsValue(true)` без фильтра возвращает все значения модели. Допустим, в профиле
-записаны имя «Ирина» и город «Омск», а на странице есть только поле имени.
-
-```ts
-form.getFieldsValue();     // { profile: { name: 'Ирина' } }
-form.getFieldsValue(true); // { profile: { name: 'Ирина', city: 'Омск' } }
-```
-
-Список путей выбирает соответствующие поля и их потомков.
-`getFieldsValue([['profile']])` включает зарегистрированные поля профиля. Если под этим путём
-нет зарегистрированных полей, возвращается само значение модели. Пустой список
-даёт `{}`, `[[]]` выбирает все значения.
-
-Без фильтра `getFieldsValue(true)` и `getFieldsValue([[]])` сохраняют полный тип
-формы. При выборке отдельных путей или фильтрации типы полей допускают `undefined`.
-В `FormList` может отсутствовать как строка по индексу, так и отдельное поле строки.
-
-Зарегистрированными считаются `FormItem`, `FormList` и поля с правилами
-`createForm`. Сам по себе флаг `touched` не добавляет значение в результат.
-Фильтр передаётся вторым аргументом после списка или `true` либо через `{ filter }`.
-Он получает `FormFieldMeta` с `touched`, `validating`, `errors`, `warnings`,
-`name` и `validated`; для явно выбранного пути без зарегистрированного поля
-передаётся `null`. Вызов с `true` и фильтром выбирает зарегистрированные поля,
-а не все значения модели. `validated` становится `true` после обычной проверки
-или изменения значения через `setFieldsValue`; `validateOnly` его не меняет.
-
-Для `FormList` метод возвращает поля строк и добавляет отсутствующий корень
-списка как пустой массив. Корни не передаются фильтру: например,
-`getFieldsValue({ filter: () => false })` вернёт `{ people: [] }` для списка
-`people`. Все значения, в том числе без элементов интерфейса, доступны через
-`getFieldsValue(true)` без фильтра. При SSR поля ещё не зарегистрированы в DOM;
-для чтения всех значений также используйте `true`.
-
-### Пакетное обновление полей
-
-`setFields(entries)` применяет записи по порядку без запуска проверки. Можно
-передать `value`, `errors`, `warnings`, `touched` и `validating`. Если сервер
-сообщил, что имя профиля занято, передайте сообщение зарегистрированному полю.
-Введённое имя останется в форме, и пользователь сможет его исправить.
+`getFieldsValue()` returns registered field values. Unfiltered
+`getFieldsValue(true)` returns all model values. In the example, the profile
+stores a name and city, and the page only renders the name field.
 
 ```ts
-form.setFields([{ name: ['profile', 'name'], errors: ['Это имя уже занято.'] }]);
+form.getFieldsValue();     // { profile: { name: 'Irina' } }
+form.getFieldsValue(true); // { profile: { name: 'Irina', city: 'Omsk' } }
 ```
 
-Пустой массив сообщений или явный `undefined` очищает `errors` и `warnings`.
-`value: undefined` записывает пустое значение; отсутствие `value` ничего не
-записывает. Значения можно менять и без элементов интерфейса, но состояние для
-незарегистрированного пути игнорируется и не откладывается до появления поля.
-Поля с правилами `createForm` работают и без интерфейса. Переданный `validated`
-не заменяет вычисляемый флаг; явный `validating: false` устанавливает
-`validated: true` без запуска правил. `undefined` для `touched` и `validating`
-преобразуется в `false`.
+A list of paths selects those fields and their descendants.
+`getFieldsValue([['profile']])` includes the registered profile fields. If the
+path has no registered fields, it returns the model value itself. An empty
+list returns {}, and [[]] selects all values.
 
-Проверка пропускает поля без `rules`: вручную заданные `errors`, `warnings`
-и `validating` сохраняются и сами по себе не блокируют `validateFields` или
-отправку. Проверка поля с правилами может заменить временно заданные сообщения;
-явный `validating` заменяет её управление состоянием. Если значение изменилось,
-результат старого `validator` не заменит новые сообщения.
+Unfiltered getFieldsValue(true) and getFieldsValue([[]]) retain the full form
+type. Selecting paths or filtering allows undefined in field types. A FormList
+row or a field within the row can be missing.
 
-## Оформление и доступность
+FormItem, FormList, and fields with createForm rules count as registered.
+The touched flag alone leaves a field out. Pass the filter after the list or
+true, or use { filter }. It receives FormFieldMeta with touched, validating,
+errors, warnings, name, and validated. An explicitly selected unregistered
+path supplies null. True with a filter selects registered fields. Validated
+becomes true after regular validation or a value change through setFieldsValue.
+ValidateOnly leaves it intact.
 
-### Расположение полей
+For FormList, this returns row fields and supplies an empty array for a missing
+list root. Roots stay out of the filter. For example,
+`getFieldsValue({ filter: () => false })` returns `{ people: [] }` for people.
+Unfiltered getFieldsValue(true) returns all values, including those without
+UI elements. Use true during SSR as well, before fields register in the DOM.
 
-`Form.layout` задаёт расположение полей: `vertical` размещает подпись над полем,
-`horizontal` — рядом с ним на широком экране, `inline` располагает поля в строке
-с переносом по доступной ширине. По умолчанию используется `vertical`.
-Локальный `FormItem.layout` (`horizontal` или `vertical`) имеет приоритет над
-настройкой формы; `undefined` возвращает наследование. Смена расположения не
-пересоздаёт поля и сохраняет их значения, состояние, фокус и выделение.
+### Updating fields in a batch
 
-### Размер и отключение
+`setFields(entries)` applies entries in order without validation. An entry can
+set value, errors, warnings, touched, and validating. If the server reports
+that a profile name is taken, pass its message to the registered field. The
+entered name stays in the form for the user to fix.
 
-`Form.size` задаёт `small`, `medium` или `large` для формы и вложенных
-компонентов. `undefined` наследует размер ближайшего `Form` или `ConfigProvider`;
-локальный размер компонента и размер `SpaceCompact` имеют приоритет. `small`
-и `large` также влияют на высоту подписей и контейнеров полей. Изменение размера
-сохраняет элементы, значения, состояние, фокус и выделение.
+```ts
+form.setFields([{ name: ['profile', 'name'], errors: ['This name is already taken.'] }]);
+```
 
-`Form.disabled` передаётся всем вложенным компонентам Ant Design, включая
-компоненты без `FormItem`. `undefined` наследует настройку `ConfigProvider` или
-внешней формы; `false` включает компоненты даже при `disabled={true}` снаружи.
-Вложенный `ConfigProvider.componentDisabled` переопределяет форму для своего
-поддерева, локальный `disabled` компонента имеет приоритет. Связанное поле также
-блокируется на время асинхронного `onFinish`, если его собственный `disabled`
-явно не равен `false`.
+An empty message array or explicit undefined clears errors and warnings.
+`value: undefined` writes an absent value. Omitting `value` leaves the field
+value intact. Values can be changed without UI elements. State for an unregistered
+path is ignored without deferring it until registration. CreateForm rule
+fields work without UI. An explicit validated field leaves the computed flag
+alone. Validating: false sets validated: true without running rules. Undefined
+for touched and validating becomes false.
 
-### Подписи и колонки
+Validation skips fields without rules. Manually set errors, warnings, and
+validating remain and do not by themselves block validateFields or submission.
+Validation of a field with rules can replace temporary messages. An explicit
+validating value takes over that flag. If the value changes, a stale validator
+result leaves newer messages intact.
 
-`Form.colon`, `labelAlign` и `labelWrap` наследуются из `ConfigProvider.form`.
-По умолчанию `colon` включён, `labelAlign` равен `right`, а `labelWrap` — `false`.
-Локальные `FormItem.colon` и `labelAlign` имеют приоритет над формой. При
-добавлении двоеточия последний `:` или `：` с пробелами удаляется из текста
-подписи, а исходный `title` сохраняется. `labelWrap` разрешает перенос подписи;
-`labelAlign` учитывает направление текста, включая RTL.
+## Layout and accessibility
 
-`ConfigProvider.form` также задаёт `requiredMark`. Объект настроек вложенного
-провайдера заменяет настройки внешнего целиком, включая пустой `{}`; `undefined`
-наследует их. Вложенный `Form` использует собственные настройки и настройки
-провайдера, а не локальные настройки внешней формы.
+### Field layout
 
-`Form.labelCol`, `wrapperCol` и одноимённые `props` поля принимают настройки
-`Col`: `span`, `offset`, `order`, `push`, `pull`, `flex`, размеры для разных
-экранов, `class` и строковый `style`. Объект `FormItem` целиком заменяет настройку
-формы; `{}` сбрасывает её. Для вложенного `FormItem` настройки колонок
-родительского поля не применяются, но можно задать собственные.
+`Form.layout` arranges fields. Vertical puts the label above the field.
+Horizontal puts it beside the field on wide screens, and inline lays fields
+out in a wrapping row. The default is vertical. A local FormItem.layout
+(horizontal or vertical) takes precedence. Undefined restores inheritance.
+Layout changes preserve field DOM, values, state, focus, and selection.
 
-`FormItem.label` можно опустить. `undefined`, `false` и пустая строка не создают
-подпись; строка из пробелов сохраняет контейнер. `null` также убирает подпись,
-но добавляет отступ для содержимого из `Form.labelCol`, если `span` меньше 24.
-Локальные `labelCol` и `wrapperCol`, даже `{}`, отключают этот расчёт; явно
-заданный `offset` сохраняется. Если видимой подписи нет, задайте полю
-`aria-label` или `aria-labelledby`.
+### Size and disabled state
 
-Подпись также принимает числа, вложенные массивы и Svelte `snippets`. Числовой
-`0` отображается; `true`, пустой массив и пустой `snippet` сохраняют контейнер.
-RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элемент ColorPicker
-получают доступное имя из составной подписи через `aria-labelledby`. Явные
-`aria-label` и `aria-labelledby` имеют приоритет.
+`Form.size` sets small, medium, or large for the form and its components.
+Undefined inherits the nearest Form or ConfigProvider size. A local component
+size and SpaceCompact size take precedence. Small and large also affect label
+and field container height. Size changes preserve elements, values, state,
+focus, and selection.
 
-`Form.requiredMark` наследует `ConfigProvider.form.requiredMark` и по умолчанию
-равен `true`. Значение `false` скрывает звёздочку, `'optional'` помечает
-необязательные поля, а Svelte `snippet` получает `(label, { required })` и целиком
-заменяет содержимое подписи. Это настройка оформления: обязательность элемента,
-правила проверки и `FormData` не меняются. Текст для `'optional'` берётся из
-`locale.Form.optional`; при пустом или отсутствующем значении используется
-английский текст.
+`Form.disabled` reaches all nested Ant Design components, including those
+without FormItem. Undefined inherits ConfigProvider or the outer form.
+False enables components even under an outer disabled={true}. A nested
+ConfigProvider.componentDisabled overrides the form for its subtree, and a
+component's local disabled takes precedence. An associated field also
+disables while asynchronous onFinish is pending, unless its own disabled
+is explicitly false.
 
-`FormItem.tooltip` принимает текст, число, массив, Svelte `snippet` или настройки
-`Tooltip`. `Form.tooltip` и `ConfigProvider.form.tooltip` задают значения по
-умолчанию, но сами по себе не показывают значок. Настройки объединяются по
-свойствам: провайдер → форма → поле. Пустой объект поля включает унаследованный
-`title`; `undefined`, `null`, `false` и `''` убирают значок. Значок задаётся
-через `icon`, затем используется `children`, затем стандартный значок вопроса.
-При пользовательском `requiredMark` в `snippet` передаётся подпись с подсказкой.
+### Labels and columns
 
-Значок не входит в порядок навигации по Tab и не фокусирует поле при нажатии.
-Всплывающая подсказка по умолчанию добавляется в `body`; контейнер можно изменить
-через `getPopupContainer`.
+Form.colon, labelAlign, and labelWrap inherit from ConfigProvider.form.
+Colon defaults to true, labelAlign to right, and labelWrap to false.
+Local FormItem.colon and labelAlign take precedence over Form. When adding
+a colon, the last `:` or `：` and surrounding spaces are removed from
+the label text. Its original title is kept. LabelWrap allows wrapping,
+and labelAlign accounts for text direction, including RTL.
 
-### Пояснения полей
+ConfigProvider.form also sets requiredMark. A nested provider configuration
+replaces the outer configuration in full, including an empty {}. Undefined
+inherits it. A nested Form uses its own settings and the provider settings
+independently of local settings on the outer form.
 
-`FormItem.extra` задаёт постоянное пояснение, которое показывается вместе
-с ошибками и предупреждениями. Поддерживаются строки, числа, массивы и Svelte
-`snippets`. Значения `null`, `undefined`, `false` и `''` скрывают пояснение;
-`0` отображается, а `true`, пустой массив и пустой `snippet` сохраняют контейнер.
-`extra` получает собственный `id` и добавляется в `aria-describedby` после
-сообщений; существующие описания элемента сохраняются.
+Form.labelCol, wrapperCol, and the matching field props accept Col settings
+including span, offset, order, push, pull, flex, responsive sizes, class,
+and string style. A FormItem object replaces the form setting in full.
+An empty object clears it. Nested FormItem can set its own columns and does
+not inherit column settings from the parent field.
 
-`FormItem.help` принимает те же виды содержимого. Ошибки и предупреждения
-заменяют `help`, а `extra` остаётся видимым. Числовой `0` отображается и входит
-в `aria-describedby`. Обновление `help` или `extra` сохраняет поле и его фокус;
-сброс поля пересоздаёт пояснения и их локальное состояние.
+FormItem.label is optional. Undefined, false, and an empty string omit the
+label. A whitespace-only string retains the container. Null also omits the
+label and adds a content offset based on Form.labelCol when span is below 24.
+Local labelCol or wrapperCol, including {}, disables this calculation.
+An explicit offset is preserved. Give a field without a visible label
+aria-label or aria-labelledby.
 
-Элементы внутри `label`, `extra`, `help` и `tooltip` наследуют `disabled`,
-`size` и `variant` формы, но не привязываются к значению основного поля и не
-получают его `id`, `name`, статус, ARIA-атрибуты ошибок или `ref`. Ввод во
-вспомогательном элементе не меняет значение и `touched` основного поля.
+Labels also accept numbers, nested arrays, and Svelte snippets. Numeric 0
+is visible. True, an empty array, and an empty snippet retain the container.
+RadioGroup, CheckboxGroup, InputOTP, Slider, and the standard ColorPicker
+control get an accessible name from a composite label through aria-labelledby.
+Explicit aria-label and aria-labelledby take precedence.
 
-### Статус и значки
+Form.requiredMark inherits ConfigProvider.form.requiredMark and defaults to
+true. False hides the asterisk. 'optional' marks optional fields. A Svelte
+snippet receives (label, { required }) and renders the entire label contents.
+The marker controls appearance. Native required, validation, and FormData
+keep their own contracts. The 'optional' label comes from locale.Form.optional
+and falls back to English when empty or missing.
 
-`FormItem.validateStatus` принимает `success`, `warning`, `error`, `validating`
-и `''`. Явное значение меняет оформление; пустая строка отключает автоматический
-визуальный статус. Без него приоритет такой: выполняющаяся проверка, ошибки,
-предупреждения, затем `success` для поля с `touched`. Состояние читается по
-точному имени, без учёта потомков. Свойство работает и у `FormItem` без `name`.
+FormItem.tooltip accepts text, a number, an array, a Svelte snippet, or Tooltip
+settings. Form.tooltip and ConfigProvider.form.tooltip supply defaults and
+leave icon visibility to the field. Settings merge by prop in provider, form,
+and field order. An empty field object enables the inherited title. Undefined,
+null, false, and the empty string hide the icon. Icon takes precedence over
+children, followed by the standard question icon. A custom requiredMark
+snippet receives the label with its tooltip.
 
-Статус не запускает проверку и не удаляет ошибки или предупреждения. Ошибка модели
-остаётся в доступном описании и `aria-invalid` даже при другом визуальном статусе.
-У `Input` и `Select` визуальный статус `error` также устанавливает `aria-invalid`,
-даже если ошибок модели нет.
+The icon stays out of Tab navigation, and a click leaves field focus alone.
+The tooltip goes into body by default. Set getPopupContainer to choose another
+container.
 
-`FormItem.hasFeedback` включает значок статуса. `Form.feedbackIcons` задаёт функцию
-`({ status, errors, warnings }) => ({ success, error, warning, validating })`;
-`hasFeedback={{ icons }}` переопределяет её для одного поля. Значения — содержимое
-или Svelte `snippets`. `false` скрывает значок; `null`, `undefined`, `0` и пустая
-строка выбирают стандартный. Пустой объект использует стандартные значки вместо
-настройки формы. Проверенное поле без `touched` получает `success` только при
-включённом `hasFeedback`.
+### Field descriptions
 
-`noStyle` без собственного `hasFeedback` наследует значок родителя; локальное
-`false` отключает его. Вложенная форма сбрасывает значок и визуальный статус,
-сохраняя состояние ближайшего поля.
+FormItem.extra sets a persistent description displayed with errors and warnings.
+Strings, numbers, arrays, and Svelte snippets are supported. Null, undefined,
+false, and the empty string hide it. Zero is visible. True, an empty array, and
+an empty snippet retain the container. Extra gets its own id and is appended
+after messages in aria-describedby. Existing control descriptions are preserved.
 
-Значок поддерживается полями ввода и выбора, в том числе `Input`, `TextArea`,
-`InputNumber`, `Select`, `TreeSelect`, `Cascader`, `AutoComplete`, `Mentions`,
-`Transfer` и компонентами выбора даты и времени. В зависимости от компонента
-собственный `suffix` может размещаться рядом со значком или заменять его:
-например, у компонентов выбора даты и времени он заменяет значок целиком.
-Переключение `hasFeedback` может заменить обёртку `Input` или `TextArea` и снять
-фокус. У `Mentions` оно может также заменить текстовое поле и закрыть список
-подсказок. Для пользовательского `Input` внутри `AutoComplete` могут отображаться
-оба значка. Не все анимации формы поддерживаются.
+FormItem.help accepts the same content types. Errors and warnings take the
+place of help, and extra stays visible. Numeric 0 renders and appears in
+aria-describedby. Updating help or extra preserves the field and focus.
+Reset remounts descriptions and their local state.
+
+Elements inside label, extra, help, and tooltip inherit form disabled, size,
+and variant. They are independent of the main field value and do not receive
+its id, name, status, error ARIA attributes, or ref. Input in an auxiliary
+control leaves the main field value and touched intact.
+
+### Status and feedback icons
+
+FormItem.validateStatus accepts success, warning, error, validating, and the
+empty string. An explicit value sets appearance, and the empty string disables
+the automatic visual status. Otherwise, pending validation comes first, then
+errors, warnings, and success for a touched field. State is read by exact name.
+Descendants do not affect it. This also works on a FormItem without name.
+
+Status changes leave validation, errors, and warnings alone. A model error
+remains in the accessible description and aria-invalid even with another
+visual status. On Input and Select, the visual error status also sets
+aria-invalid in the absence of model errors.
+
+FormItem.hasFeedback enables a status icon. Form.feedbackIcons supplies a
+function `({ status, errors, warnings }) => ({ success, error, warning, validating })`.
+HasFeedback={{ icons }} overrides it for one field. Values are content or
+Svelte snippets. False hides the icon. Null, undefined, 0, and the empty string
+use the standard icon. An empty object uses standard icons in place of the
+form configuration. A validated, untouched field gets success only when
+hasFeedback is enabled.
+
+NoStyle without its own hasFeedback inherits the parent icon. Local false
+disables it. A nested form resets the icon and visual status and preserves
+the nearest field state.
+
+Feedback icons are supported on input and selection controls, including Input,
+TextArea, InputNumber, Select, TreeSelect, Cascader, AutoComplete, Mentions,
+Transfer, and date and time pickers. Depending on the component, a custom suffix
+may appear beside the icon or replace it. For date and time pickers it replaces
+the icon entirely. Toggling hasFeedback may replace an Input or TextArea wrapper
+and lose focus. In Mentions, it may also replace the text field and close the
+suggestion list. A custom Input in AutoComplete can show both icons. Some form
+animations remain outside the current support.
 
 ### useFormItemStatus
 
-`useFormItemStatus()` позволяет читать состояние поля в собственном компоненте.
-Вызывайте его при инициализации дочернего компонента `FormItem` и читайте поля
-возвращённого объекта: `status`, `errors` и `warnings` обновляются через
-`getters`. При деструктуризации сохраняется снимок значений. Массивы сообщений
-доступны только для чтения.
+Use `useFormItemStatus()` to read field state in a custom component. Call it
+during initialization of a FormItem child and read status, errors, and warnings
+from the returned object. They update through getters. Destructuring captures
+a snapshot. Message arrays are read-only.
 
 ```svelte
 <script lang="ts">
@@ -863,78 +837,74 @@ RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элеме
 {/each}
 ```
 
-Поле без взаимодействия возвращает `status: ''`, вне `FormItem` статус равен
-`undefined`. Вложенный `FormItem` читает собственное состояние. `label` и `extra`
-читают внешний контекст, поскольку состояние поля доступно только его содержимому.
-Вложенный `Form` сбрасывает статус в `undefined` и сохраняет ошибки и
-предупреждения ближайшего внешнего поля. Функция работает при SSR.
+An untouched field returns status: ''. Outside FormItem, status is undefined.
+A nested FormItem reads its own state. Label and extra read the outer context
+because field state is available only inside its content. A nested Form resets
+status to undefined and preserves errors and warnings from the nearest outer
+field. The function works during SSR.
 
 ### FormItem.noStyle
 
-`FormItem.noStyle` убирает оформление, подпись и пояснения, сохраняя привязку
-к полю, правила, `ref` и сброс. Ошибки и предупреждения передаются ближайшему
-оформленному `FormItem`; `help={false}` отключает эту передачу. `hidden` сохраняет
-скрытую обёртку даже при `noStyle`. Без оформленного родителя сообщения остаются
-в состоянии модели и `useFormItemStatus`, но отдельный список в DOM не создаётся.
+FormItem.noStyle omits styling, label, and descriptions and preserves field
+binding, rules, ref, and reset. Errors and warnings go to the nearest styled
+FormItem. Help={false} disables forwarding. Hidden keeps its hidden wrapper
+even with noStyle. Without a styled parent, messages stay in the model and
+useFormItemStatus without a separate DOM list.
 
-Родитель показывает собственные сообщения, затем сообщения `noStyle`-полей
-в порядке их появления. Одинаковые имена объединяются; строки `FormList`
-сохраняют свои сообщения при перестановке. Статус родителя и его
-`useFormItemStatus` описывают только его собственное поле. `noStyle` наследует
-визуальный статус родителя, если у него нет собственного статуса, ошибок,
-предупреждений, текущей проверки или `touched`.
+The parent shows its own messages first, then noStyle field messages in order
+of appearance. Identical names merge. FormList rows keep their messages when
+reordered. The parent's status and useFormItemStatus describe its own field.
+NoStyle inherits the parent's visual status when it has no status, errors,
+warnings, pending validation, or touched state of its own.
 
-### Стили и темы
+### Styles and themes
 
-`Form` и `FormItem` принимают `rootClassName`; `FormItem` также принимает
-строковый `style`. `ConfigProvider.form.class` и `style` оформляют корневой элемент
-формы. Классы провайдера, локальный `class` и `rootClassName` объединяются;
-локальный `style` применяется после стиля провайдера. `component={false}`
-передаёт контекст формы без HTML-элемента `form` и не создаёт контейнер для
-расположения полей.
+Form and FormItem accept rootClassName. FormItem also accepts string style.
+ConfigProvider.form.class and style apply to the form root. Provider classes,
+local class, and rootClassName merge. Local style follows the provider style.
+Component={false} supplies form context without a form element or a field
+layout container.
 
-`Form.classNames`, `Form.styles` и одноимённые настройки `ConfigProvider.form`
-принимают объект или `callback` для частей `root`, `label`, `content`, `help`,
-`helpItem` и `extra`. `root` оформляет форму, остальные части — поля и сообщения.
-Классы провайдера и формы объединяются, CSS задаётся строками. Стили корня
-применяются в порядке: тема компонента → `config.styles.root` → `config.style` →
-`Form.styles.root` → `Form.style`. Для остальных частей объединяются стили
-провайдера и формы. `callback` получает `props` формы; если он возвращает
-`undefined`, предыдущий слой сохраняется.
+Form.classNames, Form.styles, and the matching ConfigProvider.form settings
+accept an object or callback for root, label, content, help, helpItem, and
+extra. Root styles the form, and the other slots style fields and messages.
+Provider and form classes merge, and styles are CSS strings. Root style order
+is component theme, config.styles.root, config.style, Form.styles.root, then
+Form.style. Other slots merge provider and form styles. The callback receives
+form props. An undefined result leaves the preceding layer in place.
 
-`theme.components.Form` настраивает цвет и размер подписи, отметку обязательного
-поля, высоту и отступы. Поддерживаются вложенные темы, алгоритмы и собственный
-префикс CSS-переменных. `labelHeight` также задаёт высоту вертикальной подписи,
-если `verticalLabelHeight` не указан. Для `inline` настройка
-`inlineItemMarginBottom` задаёт нижний отступ, а общий `margin` — промежуток между
-полями. Границы адаптивной вёрстки используют глобальные токены экрана.
+Theme.components.Form configures label color and size, required markers,
+height, and spacing. It supports nested themes, algorithms, and a custom
+CSS variable prefix. LabelHeight also sets vertical label height when
+verticalLabelHeight is omitted. In inline layout, inlineItemMarginBottom
+sets the bottom margin, and the shared margin sets the gap between fields.
+Responsive boundaries use global screen tokens.
 
-`Form`, `FormItem` и `FormList` независимо определяют `prefixCls`: непустое
-локальное значение имеет приоритет, пустое или `undefined` наследуется от
-`ConfigProvider`. Локальный префикс формы не назначается её полям автоматически;
-если нужен общий префикс, задайте его и форме, и полям. Префикс `FormList` имеет
-приоритет при оформлении вложенного `FormErrorList`.
+Form, FormItem, and FormList resolve prefixCls independently. A nonempty
+local value takes precedence, and an empty or undefined value inherits
+ConfigProvider. Set the prefix on both the form and its fields to share a
+local prefix. The FormList prefix takes precedence for its FormErrorList.
 
-### Фокус и прокрутка
+### Focus and scrolling
 
-`getFieldInstance(name)`, `focusField(name)` и `scrollToField(name, options?)`
-работают с зарегистрированным элементом поля. Встроенные компоненты ввода и выбора
-регистрируются автоматически. Если компонент публикует `bind:ref`, возвращается
-его `ref`; в остальных случаях — объект с `nativeElement` и поддерживаемыми
-методами либо сам HTML-элемент.
+`getFieldInstance(name)`, `focusField(name)`, and
+`scrollToField(name, options?)` use a registered field control. Built-in
+input and selection controls register automatically. If a component exposes
+bind:ref, getFieldInstance returns it. Otherwise, it returns an object with
+nativeElement and supported methods, or the HTML element itself.
 
-`Form.scrollToFirstError` прокручивает первую ошибку после `onFinishFailed`.
-Настройка формы целиком заменяет `ConfigProvider.form.scrollToFirstError`;
-`undefined` наследует настройку провайдера, `false` отключает прокрутку и фокус.
-`true` прокручивает к ближайшему краю при необходимости, не переводя фокус.
-Объект принимает `FormScrollOptions`, в том числе `block`, `behavior` и
-`focus: true`. Если настройка не задана ни в одном месте, форма автоматически
-фокусирует первое поле с ошибкой.
+Form.scrollToFirstError scrolls to the first error after onFinishFailed.
+The form setting replaces ConfigProvider.form.scrollToFirstError in full.
+Undefined inherits the provider setting. False disables scrolling and focus.
+True scrolls to the nearest edge when needed and leaves focus in place.
+An object accepts FormScrollOptions, including block, behavior, and
+focus: true. If both settings are omitted, the form automatically focuses
+the first erroneous field.
 
-Для пользовательского поля передайте `ref` в `FormItem.controlRef`. Он имеет
-приоритет над автоматической регистрацией и возвращается без обёртки. Можно
-передать HTML-элемент, Svelte `bind:this` с экспортированным `focus` или объект
-с `nativeElement` и `focus`. Например:
+For a custom field, pass its ref to FormItem.controlRef. It takes precedence
+over automatic registration and is returned as supplied. Use an HTML element,
+a Svelte bind:this with an exported focus method, or an object with
+nativeElement and focus.
 
 ```svelte
 <script lang="ts">
@@ -958,16 +928,15 @@ RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элеме
 </button>
 ```
 
-До появления поля, после его удаления и без регистрации `getFieldInstance`
-возвращает `undefined`. Без `ref` фокус и прокрутка используют связанный `id`;
-для собственного HTML задайте `htmlFor`. `getFieldInstance` выполняет запрос
-в текущий момент и не подписывается на появление поля. Параметр типа `Instance`
-задаёт ожидаемый тип результата, но не проверяет его во время выполнения.
+GetFieldInstance returns undefined before the field appears, after removal,
+or without registration. Without a ref, focus and scrolling use the associated
+id. Set htmlFor for custom HTML. GetFieldInstance queries the current state
+without subscribing to future fields. The Instance type parameter declares
+the expected result type and has no runtime check.
 
-`scrollToField` использует `nativeElement` из `ref` или связанный элемент;
-по умолчанию он прокручивает к ближайшему краю при необходимости. Поддерживаются
-`block`, `inline`, `scrollMode`, `behavior`, `boundary`,
-`skipOverflowHiddenElements` и `focus`. Вместо стандартной прокрутки можно
-передать `callback`; возвращённый им `Promise` не ожидается. Неизвестный путь
-ничего не делает. При SSR методы безопасны без элементов интерфейса. CSS
-`scroll-margin` пока не учитывается при расчёте прокрутки.
+ScrollToField uses nativeElement from the ref or the associated element.
+By default, it scrolls to the nearest edge if needed. It supports block,
+inline, scrollMode, behavior, boundary, skipOverflowHiddenElements, and focus.
+A custom callback can handle scrolling. A promise it returns is left unawaited.
+An unknown path leaves the page alone. The methods are safe during SSR
+without DOM controls. CSS scroll-margin remains outside the scroll calculation.

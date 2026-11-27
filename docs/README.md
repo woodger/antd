@@ -1,6 +1,6 @@
-# Документация @woodger/antd
+# @woodger/antd documentation
 
-- [Подключение и быстрый старт](../readme.md#подключение) — установка библиотеки и первый компонент.
-- [Каталог компонентов](reference/components/README.md) — примеры и настройки по задачам.
-- [Руководства по использованию](../readme.md#документация) — формы, темы, локализация и поведение компонентов.
-- [Руководство разработчика](development.md) — сборка, тесты, инструменты и правила проекта.
+- Install the library and render your first component. [Installation and quick start](../readme.md#installation)
+- Find examples and settings by component. [Component catalog](reference/components/README.md)
+- Learn about forms, themes, localization, and component behavior. [Usage guides](../readme.md#documentation)
+- Build and test the package, use the project tools, and follow the repository policies. [Developer guide](development.md)

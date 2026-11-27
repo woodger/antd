@@ -1,6 +1,7 @@
 # Progress
 
-Компонент отображает переданный percent и не запускает работу самостоятельно:
+Progress displays the supplied `percent`. The owner runs the
+operation and passes progress updates.
 
 ```svelte
 <script lang="ts">
@@ -9,128 +10,166 @@
   let percent = $state(42.5);
 </script>
 
-<Progress {percent} aria-label="Подготовка отчёта" />
-<Progress type="circle" {percent} size={120} aria-label="Проверка файлов" />
+<Progress {percent} aria-label="Preparing report" />
+<Progress type="circle" {percent} size={120} aria-label="Checking files" />
 ```
 
-Type по умолчанию line, также поддерживаются circle и dashboard. Percent по умолчанию 0;
-конечные значения ограничиваются 0–100 без округления. Undefined, NaN и ±Infinity
-заменяются на 0. Отображение, ширина/дуга и aria-valuenow используют одно
-нормализованное значение. Percent не bindable; владелец операции передаёт
-обновления через props. У Progress нет собственных таймеров и callbacks работы.
+`type` defaults to `line` and also supports `circle` and `dashboard`.
+`percent` defaults to 0. Finite values are clamped to 0–100 without
+rounding. `undefined`, `NaN`, and positive or negative infinity use 0.
+Display, width or arc, and `aria-valuenow` use the same normalized
+value. The owner passes `percent` as a prop. It is not bindable.
+Progress has no operation timers or callbacks.
 
-Status поддерживает normal/success/exception/active. Без явного
-status значение 100 включает success, остальные значения — normal. Явный
-normal/exception/success сохраняется при любом проценте. Active добавляет
-декоративную анимацию line и не изменяет percent; circle/dashboard с active остаются
-статичными. Success/exception показывают декоративную иконку вместо
-подписи, если не задан format. Цвета статусов используют токены темы.
+`status` supports `normal`, `success`, `exception`, and `active`. When
+omitted, 100 gives `success` and other values give `normal`. Explicit
+`normal`, `exception`, and `success` apply at any percent. `active`
+adds a decorative animation for line with no value change. Circle
+and dashboard stay static. Without `format`, `success` and
+`exception` show a decorative icon in place of the label. Status
+colors follow theme tokens.
 
-ShowInfo=true по умолчанию. Format получает нормализованный percent и может вернуть
-строку, число или пассивный Snippet. При success либо format.length > 1 вторым аргументом
-передаётся нормализованный success percent (по умолчанию 0). Прежний callback с
-format.length <= 1 без success получает один аргумент, как раньше. Callback вычисляется
-один раз; строка/число используются в aria-valuetext. Для Snippet доступное значение
-сохраняет числовой percent; его можно уточнить через aria-valuetext. HTML в строке экранируется. При showInfo=false
-подпись скрывается, доступные значения сохраняются. Длинная внешняя текстовая подпись
-сокращается многоточием; полный текст остаётся в title и aria-valuetext. Это сохранённый
-native contract: при size=24 подпись ограничена 12px, тогда как React допускает её выход
-за body. В line статусные иконки используют исходную SVG-область и не получают текстовую обрезку.
+`showInfo` defaults to `true`. `format` receives normalized `percent`
+and can return a string, number, or passive Snippet. When `success`
+is supplied or `format.length > 1`, the normalized success percent
+is the second argument, defaulting to 0. Existing callbacks with
+`format.length <= 1` and no `success` still receive one argument.
+The callback is evaluated once, and a string or number is used for
+`aria-valuetext`. A Snippet keeps the numeric percent as its accessible
+value, which can be overridden with `aria-valuetext`. HTML in strings
+is escaped. `showInfo=false` hides the label and retains accessible
+values. A long external text label is truncated with an ellipsis.
+The full text remains in `title` and `aria-valuetext`. This preserves
+the native contract. At `size=24`, the label is limited to 12px, while
+React allows it to extend outside the body. Line status icons use
+upstream SVG dimensions without text truncation.
 
-Size по умолчанию medium. Для line medium/small задают высоту 8/6px; число
-задаёт ширину и высоту в px. Пара [width, height] и объект { width?, height? }
-настраивают line отдельно: ширина — число в px или CSS-строка, по умолчанию
-100%, высота — положительное конечное число. Невалидные числовые размеры
-заменяются defaults. Например, size={{ height: 4 }} сохраняет ширину 100%.
-Доступная ширина контейнера ограничивает индикатор на узких экранах.
+`size` defaults to `medium`. For line, `medium` and `small` set the
+height to 8px and 6px. A number sets both width and height in pixels.
+A pair `[width, height]` or object `{ width?, height? }` sets line
+dimensions independently. Width accepts pixels or a CSS string and
+defaults to 100%. Height is a positive finite number. Invalid numeric
+sizes use defaults. For example, `size={{ height: 4 }}` keeps 100%
+width. Available container width constrains the indicator on narrow
+screens.
 
-Для circle/dashboard size принимает medium=120px, small=60px или положительный конечный
-диаметр в px. Совместимая пара использует первый размер. Невалидный диаметр заменяется
-на 120px. SVG сохраняет пропорции и помещается в контейнер. При диаметре ≤20px подпись
-показывается в Tooltip; доступные значения сохраняются, остановка Tab не добавляется.
-Подпись Tooltip создаётся при первом открытии и сохраняется при закрытии.
-Контейнер подсказки наследуется из ConfigProvider; по умолчанию это body либо
-родительский native modal. Подпись сохраняет цвет Tooltip и доступное имя из содержимого.
-У circle strokeWidth задаётся в процентах viewBox; default — не меньше 6% и 3px при заданном диаметре.
-Невалидное значение использует default, чрезмерное ограничивается 99.9%, чтобы
-радиус оставался положительным. Нулевой процент не рисует цветной дуги.
-При сжатии контейнер круга сохраняет квадрат и центрирование подписи. Явный
-styles.body.width сохраняет исходную высоту; styles.body.height задаёт её напрямую.
-CSS-геометрия следует @rc-component/progress 1.0.3: круглые концы корректируют длину
-сегмента, а быстрые обновления с интервалом менее 100ms отключают переход. Числовые
-dash attributes сохраняют прежнюю геометрию для измеряющих её consumers; видимую дугу
-определяют CSS declarations. Минимальная толщина вычисляется в исходном порядке операций.
+For circle and dashboard, `size` accepts `medium` at 120px,
+`small` at 60px, or a positive finite diameter in pixels. A compatible
+pair uses its first size, and invalid diameters use 120px. The SVG
+maintains its proportions and fits the container. At diameters of
+20px or less, the label appears in a Tooltip. Accessible values
+remain available without an added Tab stop. The tooltip label is
+created on first open and kept after closing. The tooltip container
+inherits from ConfigProvider, defaulting to the body or the containing
+native modal. The label retains Tooltip's text color and an accessible
+name from its content.
 
-StrokeColor/railColor принимают CSS-цвета и переопределяют цвет заполнения/фона,
-включая при success/exception.
-Для line strokeColor также принимает { from, to, direction? } или record процентных
-stops: ключи сортируются по исходному parseFloat, direction по умолчанию to right/to left
-в LTR/RTL. В обычном line массив strokeColor использует первый цвет; в steps цвета
-применяются по индексу. Gradient object в line steps игнорируется, как upstream. StrokeLinecap поддерживает round/butt/square;
-у line butt/square убирают скругления, у circle задают SVG stroke-linecap.
-Круговой градиент использует record процентных stops, SVG mask и conic/linear background;
-порядок ключей сохраняется, концы становятся butt. From/to не преобразуются в процентные
-stops, как и в исходном круговом renderer.
-Темы и compact используют существующие токены. RTL меняет начало заполнения
-line на правое и направление active-анимации; circle сохраняет обход по часовой
-стрелке. Reduced motion отключает active-анимацию и переходы значений/цвета.
+Circle `strokeWidth` is a percentage of the viewBox. The default
+is at least 6% and 3px at the supplied diameter. Invalid values use
+the default. Excessive values are capped at 99.9% to keep the radius
+positive. Zero percent draws no colored arc. When constrained, the
+circle container stays square and keeps the label centered.
+Explicit `styles.body.width` retains the original height.
+`styles.body.height` sets it directly. CSS geometry follows
+`@rc-component/progress` 1.0.3. Round caps adjust segment length,
+and updates less than 100ms apart disable transitions. Numeric dash
+attributes retain the previous geometry for consumers that measure
+it. CSS declarations define the visible arc. Minimum thickness is
+calculated in the upstream operation order.
 
-Корень имеет role=progressbar и aria-valuemin=0/aria-valuemax=100. Доступное имя
-по умолчанию берётся из locale.progress.label; задавайте aria-label либо
-aria-labelledby для конкретной операции. Aria-describedby связывает пояснение.
-Без format aria-valuetext содержит процент и локализованный success/exception;
-явный aria-valuetext имеет приоритет. Locale.progress поддерживает label,
-successText и exceptionText, включая частичные переопределения; отсутствующие
-поля используют ruRU. Иконки, подпись и SVG декоративные.
+`strokeColor` and `railColor` accept CSS colors that override fill
+and background, including for `success` and `exception`. For line,
+`strokeColor` also accepts `{ from, to, direction? }` or a record of
+percentage stops. Keys are sorted by the upstream `parseFloat` rule.
+Direction defaults to `to right` in LTR and `to left` in RTL. A
+regular line uses the first color in a `strokeColor` array. Steps
+apply colors by index. Line steps ignore gradient objects as
+upstream. `strokeLinecap` supports `round`, `butt`, and `square`.
+`butt` and `square` remove rounding for line and set SVG
+`stroke-linecap` for circle. Circle gradients use percentage stops,
+an SVG mask, and a conic or linear background. Key order is kept,
+and caps become `butt`. The upstream circle renderer keeps
+`from` and `to` distinct from percentage stops.
 
-Progress не создаёт live region, остановку Tab и обработчики клавиатуры, не
-захватывает фокус и не блокирует Escape содержащего Modal/Drawer.
-ConfigProvider.disabled не скрывает обратную связь. Id/class/style относятся
-к корню. SSR сразу выводит корректные значения и SVG-геометрию без таймеров
-и DOM-измерений; независимые экземпляры не разделяют состояние.
+Themes and compact mode use existing tokens. RTL starts line fill
+at the right and reverses the active animation. Circle keeps
+clockwise fill. Reduced motion disables the active animation and
+value and color transitions.
 
-Line поддерживает success={{ percent, strokeColor? }} как отдельный track поверх основного.
-Наличие success.percent определяет автоматический status вместо общего percent, в том числе
-при success.percent=0. Длины обоих tracks ограничиваются отдельно; success может выходить
-за основной track, как в upstream. Высота line задаётся через size.
+The root has `role=progressbar`, `aria-valuemin=0`, and
+`aria-valuemax=100`. Its default accessible name comes from
+`locale.progress.label`. Set `aria-label` or `aria-labelledby` for
+a specific operation. `aria-describedby` links an explanation.
+Without `format`, `aria-valuetext` contains the percent and localized
+success or exception. Explicit `aria-valuetext` takes precedence.
+`locale.progress` accepts `label`, `successText`, and `exceptionText`,
+including partial overrides. Missing fields use `ruRU`. Icons,
+label, and SVG are decorative.
 
-Steps задаёт число отдельных элементов line. Math.round определяет активное количество;
-rounding получает steps*percent/100. Size задаёт размер одного элемента, а не общей полосы.
-По умолчанию ширина 14px (2px при small), высота 8px. Object steps использует
-count; gap в этой ветке не меняет интервалы. PercentPosition выбирает start/center/end и
-inner/outer. Внутренняя подпись всегда текстовая, в том числе при success/exception;
-яркость первого заданного цвета выбирает контраст подписи по исходному FastColor.
+Progress adds no live region, Tab stop, or keyboard handlers. It
+leaves focus in place and lets the containing Modal or Drawer handle
+Escape. `ConfigProvider.disabled` leaves feedback visible. `id`,
+`class`, and `style` apply to the root. SSR renders values and SVG
+geometry immediately without timers or DOM measurement. Instances
+hold independent state.
 
-ConfigProvider.progress задаёт class/style и object/function classNames/styles для
-root/body/rail/track/indicator. Undefined наследует record, явный объект заменяет его.
-Callbacks получают props с defaults для type/percent/size/showInfo/percentPosition.
-Provider styles.root → provider style → local styles.root → local style сохраняют приоритет;
-styles отдельных частей применяются после вычисленных размеров/цветов.
-PrefixCls меняет BEM classes; undefined/пустая строка наследуют ConfigProvider.prefixCls
-(по умолчанию ant-progress).
-Bind:nativeElement возвращает текущий root после mount и очищается при unmount.
-Тема Progress подключает шесть исходных component tokens, aliases/algorithm и CSS-variable
-prefix/key/hash; переменные идут перед semantic/user styles.
+Line supports `success={{ percent, strokeColor? }}` as a separate
+track over the main one. A supplied `success.percent` determines the
+automatic status in place of the total percent, including when it
+is 0. Track lengths are independently clamped. As upstream, the
+success track can extend beyond the main one. `size` sets line height.
 
-Dashboard использует gapDegree=75, circle — 0. GapPlacement принимает top/bottom/start/end;
-start/end учитывают RTL. Для circle с положительным gapDegree задавайте placement:
-без него исходный renderer не применяет rotation. Success у круга рисуется отдельным
-сегментом перед остатком percent-success, с исходным порядком наложения.
+`steps` sets the number of separate line elements. `Math.round`
+determines the active count. `rounding` receives
+`steps*percent/100`. `size` sets the dimensions of each segment.
+Width defaults to 14px (2px for `small`) and height to 8px. A
+`steps` object uses `count`. In this case `gap` leaves spacing
+unchanged. `percentPosition` selects `start`, `center`, or `end`
+and `inner` or `outer`. The inner label is always text, including
+for `success` and `exception`. The upstream FastColor brightness
+of the first supplied color determines label contrast.
 
-Круговые steps используют Math.round независимо от rounding. Object steps задаёт count/gap,
-по умолчанию промежуток 2 единицы viewBox; отдельная непрерывная rail не рисуется.
-Success вычитается из процента перед расчётом активных steps. Сохранены особенности
-6.6.8: без railColor неактивные steps наследуют основной stroke, а градиентные steps
-ссылаются на отсутствующее gradient definition. Эти случаи входят в source-проверки.
+`ConfigProvider.progress` supplies `class`, `style`, and object or
+function `classNames` and `styles` for `root`, `body`, `rail`, `track`,
+and `indicator`. `undefined` inherits the record. An explicit object
+replaces it. Callbacks receive defaults for `type`, `percent`, `size`,
+`showInfo`, and `percentPosition`. Root styles apply in order: provider
+`styles.root`, provider `style`, local `styles.root`, and local
+`style`. Individual slot styles follow calculated sizes and colors.
+`prefixCls` changes the BEM classes. `undefined` and the empty string
+inherit `ConfigProvider.prefixCls` (`ant-progress` by default).
+`bind:nativeElement` returns the current root after mount and clears
+on unmount. The theme includes six upstream component tokens,
+aliases and algorithm, and CSS variable prefix, key, and hash.
+Variables precede semantic and user styles.
 
-[Эталоны line/steps](../../../tests/browser/fixtures/ant-design-progress-line-reference.json)
-сняты из официального UMD в стандартном режиме браузера для 65 сценариев.
-Для узкого size=24 отдельно сохранён
-[эталон native clipping](../../../tests/browser/fixtures/progress-native-clipping-reference.json)
-из свежей сборки прежнего коммита библиотеки. Для circle/dashboard есть
-[69 UMD-сценариев и transition trace](../../../tests/browser/fixtures/ant-design-progress-circle-reference.json).
-Сохранены native finite bounds, clipping длинной подписи и числовые SVG attributes;
-Tooltip использует существующую Svelte-обёртку. Общий ConfigProvider prefix поддержан;
-React development warnings остаются следующим этапом. Исходная лицензия
-[@rc-component/progress](../../../src/lib/vendor/LICENSE.rc-progress) включена в пакет.
+Dashboard uses `gapDegree=75`, circle 0. `gapPlacement` accepts
+`top`, `bottom`, `start`, and `end`. Start and end follow RTL.
+Supply placement for a circle with positive `gapDegree`. The
+upstream renderer leaves rotation unset without it. Circle success
+draws a separate segment before the remaining `percent-success`,
+preserving the upstream layering order.
 
+Circle steps use `Math.round` independently of `rounding`. A `steps`
+object sets `count` and `gap`, with a default gap of 2 viewBox units.
+There is no separate continuous rail. Success is subtracted from
+percent before calculating active steps. Upstream 6.6.8 behavior
+is preserved: without `railColor`, inactive steps inherit the main
+stroke, and gradient steps refer to a missing gradient definition.
+Upstream comparisons include these cases.
+
+The line and steps reference comes from the official UMD in standards
+mode for 65 scenarios. [Line and steps reference](../../../tests/browser/fixtures/ant-design-progress-line-reference.json)
+
+For the narrow `size=24` case, clipping was recorded separately
+from a fresh build of the previous library commit.
+[Native clipping reference](../../../tests/browser/fixtures/progress-native-clipping-reference.json)
+
+Circle and dashboard have 69 UMD scenarios and a transition trace.
+Native finite bounds, long label clipping, and numeric SVG attributes
+are preserved. Tooltip uses the existing Svelte wrapper. The shared
+ConfigProvider prefix is supported, and React development warnings
+remain pending. [Circle and dashboard reference](../../../tests/browser/fixtures/ant-design-progress-circle-reference.json)
+
+The package includes the upstream license.
+[@rc-component/progress license](../../../src/lib/vendor/LICENSE.rc-progress)

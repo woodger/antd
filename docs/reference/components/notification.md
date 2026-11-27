@@ -1,7 +1,8 @@
 # Notification
 
-Создавайте экземпляр у владельца и размещайте один NotificationHolder в нужном
-контексте ConfigProvider. Очереди компонентов и SSR-запросов независимы:
+Create an instance in its owner and place one NotificationHolder in the
+intended ConfigProvider context. Components and SSR requests have
+independent queues.
 
 ```svelte
 <script lang="ts">
@@ -11,163 +12,186 @@
 </script>
 
 {#snippet actions()}
-  <Button onclick={() => notification.destroy('report')}>Понятно</Button>
+  <Button onclick={() => notification.destroy('report')}>Got it</Button>
 {/snippet}
 
 <NotificationHolder {notification} />
 <Button onclick={() => notification.success({
   key: 'report',
-  title: 'Отчёт готов',
-  description: 'Подготовлены две записи.',
+  title: 'Report ready',
+  description: 'Two records are ready.',
   duration: 0,
   actions
-})}>Показать результат экспорта</Button>
+})}>Show export result</Button>
 ```
 
-Open/success/info/warning/error принимают объект NotificationConfig и возвращают
-void. Open без type показывает карточку без статусной иконки. Типизированные
-методы задают свой type. Title/description принимают текст, число или Snippet.
-Ноль отображается как число, пустая строка убирает соответствующую область.
-Icon и closeIcon декоративные. Действия могут находиться в actions или
-description. Class/style относятся к карточке. `props` добавляет нативные
-атрибуты корневого div, включая `data-*` и ARIA. Напрямую заданные
-`aria-label`, `aria-labelledby` и `aria-describedby` имеют приоритет.
-По умолчанию имя берётся из title, а описание — из description.
-`onClick` получает нативное событие с карточкой в `currentTarget`.
-Кнопка закрытия останавливает его всплытие.
+`open`, `success`, `info`, `warning`, and `error` accept a
+`NotificationConfig` object and return `void`. `open` without `type`
+shows a card without a status icon. Typed methods set their own
+`type`. `title` and `description` accept text, numbers, or Snippets.
+Zero renders as a number. An empty string removes that area.
+`icon` and `closeIcon` are decorative. Actions can go in `actions` or
+`description`. `class` and `style` apply to the card. `props` adds
+root `div` attributes, including `data-*` and ARIA. Direct
+`aria-label`, `aria-labelledby`, and `aria-describedby` take precedence.
+By default, the name comes from `title` and the accessible description
+from `description`. `onClick` receives a native event with the card as
+`currentTarget`. The close button stops it from bubbling.
 
-Duration задаётся в секундах, по умолчанию 4.5. Значения 0 и false отключают
-автоудаление; отрицательные и неконечные значения используют default.
-CreateNotification фиксирует defaults duration, pauseOnHover=true, placement и
-maxCount. Конфигурация карточки переопределяет duration/pauseOnHover/placement.
-Наведение сохраняет оставшееся время; pauseOnHover=false разрешает отсчёт при
-наведении. Фокус внутри всегда приостанавливает таймер, включая переходы Tab
-между действиями и обновление ключа. Отсчёт продолжается после ухода фокуса и,
-если включена hover-пауза, указателя. Touch не включает hover-паузу.
+`duration` is in seconds and defaults to 4.5. Zero and `false`
+disable automatic removal. Negative and non-finite values use the
+default. `createNotification` captures default `duration`,
+`pauseOnHover=true`, `placement`, and `maxCount`. A card can override
+`duration`, `pauseOnHover`, and `placement`. Hover preserves the
+remaining time, and `pauseOnHover=false` lets the countdown continue
+during hover. Focus inside always pauses the timer, including during
+Tab between actions and same-key updates. The countdown resumes
+once focus leaves and, if hover pausing is enabled, the pointer also
+leaves. Touch does not start a hover pause.
 
-`showProgress` выводит нативный `progress` для положительной длительности.
-Его значение показывает оставшееся время и следует тем же паузам, что таймер.
-Индивидуальное `showProgress: false` переопределяет настройки очереди.
+`showProgress` renders a native `progress` for a positive duration.
+It represents the remaining time and follows the timer's pauses.
+Per-card `showProgress: false` overrides the queue setting.
 
-Key — string или number, включая 0 и пустую строку. Повтор активного ключа
-обновляет содержимое на прежнем месте, перезапускает duration и заменяет onClose.
-В одном placement сохраняются экземпляры неизменённых snippets и их controls.
-Изменение placement переносит карточку в другую группу и пересоздаёт snippets.
-Уходящий ключ можно открыть заново: это отдельная карточка, позднее завершение
-старой анимации её не удалит. Destroy(key) закрывает ключ, destroy() — всю
-очередь экземпляра. MaxCount ограничивает активные уведомления суммарно во всех
-положениях по FIFO; обновления ключа не меняют очередь. Положительное конечное
-значение округляется вниз, без допустимого значения ограничения нет.
+Keys are strings or numbers, including 0 and the empty string.
+Reusing an active key updates content in place, restarts duration,
+and replaces `onClose`. Within a placement, unchanged Snippets and
+their controls retain their instances. Changing placement moves the
+card to another group and recreates the Snippets. Reopening an
+exiting key creates a separate card. A late finish from the old
+animation leaves the new card intact. `destroy(key)` closes the key.
+`destroy()` closes the full instance queue. `maxCount` limits the
+total active notifications across placements in FIFO order. Key
+updates leave queue order intact. Positive finite values round down.
+Without a valid value there is no limit.
 
-Closable=true по умолчанию. False убирает кнопку; объект поддерживает disabled,
-closeIcon и aria-label/aria-labelledby/aria-describedby кнопки. CloseIcon также
-можно задать на верхнем уровне; false/null скрывает кнопку. Доступное имя берётся
-из locale.closeText либо closable.aria-label. Disabled запрещает только кнопку;
-destroy и таймер продолжают действовать. ConfigProvider.disabled не отключает
-закрытие уведомления, а вложенные компоненты действий наследуют свой контекст.
-Иконка закрытия наследуется от `ConfigProvider.notification.closeIcon`. Приоритет
-имеют настройки держателя и карточки. `closable.onClose` вызывается перед
-`onClose` карточки при закрытии кнопкой или по таймеру.
+`closable` defaults to `true`. `false` removes the button. An object
+supports `disabled`, `closeIcon`, and the button's `aria-label`,
+`aria-labelledby`, and `aria-describedby`. `closeIcon` can also be
+supplied at the top level. `false` and `null` hide the button. The
+accessible name comes from `locale.closeText` or `closable.aria-label`.
+`disabled` disables only the button. `destroy` and the timer remain
+effective. `ConfigProvider.disabled` leaves notification closing
+available, and nested action components inherit their own context.
+The close icon inherits `ConfigProvider.notification.closeIcon`.
+Holder and card settings take precedence. `closable.onClose` runs
+before the card's `onClose` for a button close or timer close.
 
-OnClose вызывается один раз при запросе закрытия: кнопкой, destroy, таймером или
-FIFO. Уходящая карточка получает inert/aria-hidden и остаётся в DOM до конца
-анимации. Ошибка callback не мешает обработать остальные карточки destroy(),
-после обработки она передаётся вызывающему коду. При reduced motion анимация
-пропускается; включение режима завершает уже запущенный уход.
+`onClose` runs once on a close request from the button, `destroy`,
+the timer, or FIFO. The exiting card gets `inert` and `aria-hidden`
+and remains in the DOM until the animation ends. A callback error
+does not interrupt processing the other cards in `destroy()`. It
+propagates to the caller after processing. Reduced motion skips
+the animation. Enabling it finishes an already active exit.
 
-Появление не захватывает фокус. Кнопки используют нативные Enter/Space и обычный
-Tab; Escape остаётся у страницы или содержащего Modal/Drawer. При закрытии или
-удалении сфокусированного action фокус переходит к следующему доступному control
-в DOM, затем к предыдущему либо активному dialog. Фокус, выбранный onClose
-снаружи карточки, сохраняется. Role по умолчанию alert, для обычного результата
-используйте status; aria-atomic=true. Иконки не создают остановок Tab.
+Appearance leaves focus in place. Buttons use native Enter, Space,
+and normal Tab. The page or containing Modal or Drawer handles
+Escape. When closing or removing a focused action, focus moves to
+the next accessible control in the DOM, then falls back to the
+previous control or active dialog. Focus chosen outside the card
+by `onClose` is preserved. The default `role` is `alert`. Use `status`
+for an ordinary result. `aria-atomic=true`. Icons add no Tab stops.
 
-Placement поддерживает top/topLeft/topRight/bottom/bottomLeft/bottomRight,
-по умолчанию topRight. Left/right задают физическую сторону и не меняются в RTL.
-Карточки растут к середине viewport; список прокручивается при переполнении.
-Top/bottom у holder задают отступ в px, по умолчанию 24; невалидные значения
-используют 24. Id/class/style относятся к нативной popover-поверхности holder;
-ширину карточек можно настроить CSS-переменной --ant-notification-width
-(по умолчанию 384px). Ширина ограничивается viewport, длинный текст переносится.
-Темы, compact и RTL наследуются от ConfigProvider. `theme.components.Notification`
-настраивает width, zIndexPopup, status backgrounds, aliases и component algorithms.
-`NotificationHolder.prefixCls` меняет namespace всех placement-списков и карточек;
-пустая строка наследует ConfigProvider.prefixCls. В App настройка передаётся через
-notification. Canonical component tokens и прежний status background bridge
-сохранены; private icon/title metrics используют независимый общий namespace.
-[Raw prefix-замеры](../../../tests/browser/fixtures/ant-design-notification-prefix-reference.json)
-отделены от public styles для native close target и wrapping guards. Потеря
-status-классов уже открытой карточки в React записана отдельно от public same-key
-refresh. Native обновляет классы без reopening, сохраняя DOM/ARIA IDs, draft,
-selection/focus, очередь, deadlines и callbacks, в том числе внутри App.
+`placement` supports `top`, `topLeft`, `topRight`, `bottom`,
+`bottomLeft`, and `bottomRight`, defaulting to `topRight`.
+Left and right are physical directions and stay the same in RTL.
+Cards grow toward the center of the viewport. The list scrolls
+on overflow. Holder `top` and `bottom` set offsets in pixels,
+defaulting to 24. Invalid values use 24. `id`, `class`, and `style`
+apply to the holder's native popover surface. The
+`--ant-notification-width` CSS variable sets card width and defaults
+to 384px. The viewport constrains width and long text wraps.
+Theme, compact mode, and RTL inherit from ConfigProvider.
+`theme.components.Notification` configures `width`, `zIndexPopup`,
+status backgrounds, aliases, and component algorithms.
 
-`progressBg` задаёт заливку индикатора времени. Локальные CSS variables
-другого prefix разрешаются на notice. Пользовательские variables Holder имеют приоритет.
-Обновления сохраняют viewport styles, очередь, deadlines, actions DOM, draft/focus/selection.
-Actions находятся на уровне корня, как в эталоне; wrapper выводится только с иконкой,
-section — только для пары title/description. Legacy grid сохраняет прежние отступы
-и расположение. Source flow-root сохраняет высоту float actions
-при native relative positioning; тема переключается без пересоздания controls.
-[Сверка и проверки](../theme-context.md#проверки-диалогов-и-уведомлений).
+`NotificationHolder.prefixCls` changes the namespace of all placement
+lists and cards. An empty string inherits `ConfigProvider.prefixCls`.
+In App, pass it through `notification`. Canonical component tokens
+and existing status background styling are preserved. Private icon
+and title metrics use an independent shared namespace. Raw prefix
+measurements are separate from public styles for the native close
+target and wrapping safeguards. The upstream loss of status classes
+on an already open card is recorded separately from the public
+same-key refresh. Svelte updates classes without reopening and
+preserves DOM, ARIA IDs, drafts, selection, focus, queue, deadlines,
+and callbacks, including in App. [Raw prefix measurements](../../../tests/browser/fixtures/ant-design-notification-prefix-reference.json)
 
-Явные status backgrounds применяются и при равенстве global alias, и при другом
-cssVar prefix. В 6.6.8 такие настройки иногда теряются: [исходные замеры](../../../tests/browser/fixtures/ant-design-notification-background-observation.json).
-В Svelte эти ошибки не повторяются. Сохраняются native close target минимум 24px,
-padding:0, root/actions max-width:100% и перенос title/description; сравнение задаёт
-те же условия через публичные semantic styles эталона.
-Raw замер [width:undefined](../../../tests/browser/fixtures/ant-design-notification-width-observation.json)
-также сохранён: Source обрезает close, а native относительный список сохраняет доступную кнопку.
+`progressBg` sets the timer indicator fill. Local CSS variables with
+a different prefix resolve on the notice. Holder user variables take
+precedence. Updates preserve viewport styles, queue, deadlines,
+action DOM, drafts, focus, and selection. Actions sit at the root
+as in the reference. The wrapper renders only with an icon, and the
+section renders only with both title and description. The legacy
+grid preserves its padding and placement. Upstream `flow-root`
+preserves the height of floated actions with native relative
+positioning. Theme changes preserve controls.
+[Comparison and tests](../theme-context.md#dialog-and-notification-checks)
 
-До первого монтирования можно поставить уведомления в очередь. SSR выводит
-закрытый popover без таймеров и callbacks; отсчёт начинается после показа.
-Скрытый контекст, скрытая вкладка или верхний чужой dialog приостанавливают
-очередь. Внутри Modal/Drawer размещайте holder в содержимом нужного dialog;
-фоновые holders ждут его закрытия. Удаление holder или замена notification
-очищает очередь и отменяет таймеры/анимации без onClose. Поздние вызовы такого
-экземпляра игнорируются до повторного монтирования; новый holder начинает
-пустую очередь. Общая модель очереди находится в notice-queue.model.svelte.ts,
-DOM-видимость и фокус — в notice.dom.ts; ими также пользуются Message и Alert.
+Svelte applies explicit status backgrounds even when they equal the
+global alias or use another `cssVar` prefix. Upstream 6.6.8 sometimes
+loses these settings. The native minimum 24px close target,
+`padding:0`, `max-width:100%` for root and actions, and wrapping for
+title and description are preserved. The comparison gives the
+reference the same conditions through public semantic styles.
+[Upstream measurements](../../../tests/browser/fixtures/ant-design-notification-background-observation.json)
 
-## Стек и контейнер
+The raw `width:undefined` measurement is also retained. Upstream
+clips the close button. The native relative list keeps it
+accessible. [Raw measurement](../../../tests/browser/fixtures/ant-design-notification-width-observation.json)
 
-Стек по умолчанию сворачивается, когда в одном placement больше трёх активных
-карточек. `stack: { threshold: 2 }` задаёт свой порог, `stack: false`
-держит список раскрытым. В свёрнутом виде видны до трёх свежих карточек.
-Наведение или фокус внутри раскрывают список. Наведение приостанавливает
-таймеры с `pauseOnHover` в текущем placement. При явно заданном `stack`
-или при превышении порога самые свежие карточки ближе к краю viewport.
-Обычный список в пределах порога сохраняет порядок вставки.
+Notifications can be queued before first mount. SSR renders a closed
+popover without timers or callbacks. The countdown starts when shown.
+A hidden context, hidden tab, or another topmost dialog pauses the
+queue. Inside Modal or Drawer, put the holder in the intended dialog
+content. Background holders wait for that dialog to close. Removing
+the holder or replacing `notification` clears the queue and cancels
+timers and animations without `onClose`. Later calls on the old
+instance are ignored until remount. A new holder starts with an empty
+queue. The shared queue model is in `notice-queue.model.svelte.ts`.
+`notice.dom.ts` handles DOM visibility and focus. Message and Alert
+also use these modules.
 
-`getContainer` выбирает узел для popover. Метод вызывается в браузере без
-аргументов. При пустом результате используется `ConfigProvider.getPopupContainer`,
-затем `document.body`. Без обоих getter элемент остаётся в DOM-контексте
-держателя. Смена контейнера пересоздаёт списки и сохраняет очередь и таймеры.
-`rtl` переопределяет направление провайдера. `onAllRemoved` срабатывает,
-когда последняя карточка завершила уход и очередь пуста.
+## Stack and container
 
-## Семантическое оформление
+The stack collapses by default when more than three active cards share
+a placement. `stack: { threshold: 2 }` sets a custom threshold and
+`stack: false` keeps the list expanded. Up to three recent cards are
+visible in a collapsed stack. Hover or focus inside expands it. Hover
+pauses timers with `pauseOnHover` in the current placement. With an
+explicit `stack` or once the threshold is exceeded, the newest cards
+are closest to the viewport edge. An ordinary list within the
+threshold preserves insertion order.
 
-`classNames` и `styles` принимают объект слотов либо функцию с аргументом
-`{ props }`. Для списка props содержат настройки держателя. Для отдельной
-карточки они содержат конфигурацию вызова. `list` и `listContent` относятся
-к placement. `root`, `wrapper`, `icon`, `section`, `title`,
-`description`, `actions`, `close` и `progress` относятся к карточке.
-Стили задаются строками inline CSS. Слои провайдера, держателя и карточки
-объединяются в этом порядке. Явный style карточки применяется последним.
+`getContainer` selects a node for the popover. It runs in the browser
+without arguments. An empty result falls back to
+`ConfigProvider.getPopupContainer`, then `document.body`. Without either
+getter, the surface stays in the holder's DOM context. Changing the
+container recreates the lists and preserves the queue and timers.
+`rtl` overrides provider direction. `onAllRemoved` runs once the
+final card finishes exiting and the queue is empty.
 
-## Сверка с Ant Design 6.6.8
+## Semantic styling
 
-`createNotification` и `NotificationHolder` соответствуют контекстному
-`notification.useNotification`. В App тот же экземпляр доступен через
-`App.useApp().notification`. В закреплённом справочнике глобальные методы
-помечены deprecated. Устаревшим полям message и btn соответствуют title и actions.
-[Исходный справочник](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/notification/index.en-US.md#examples)
+`classNames` and `styles` accept a slot object or a function receiving
+`{ props }`. List props hold the holder settings. Card props hold the
+call configuration. `list` and `listContent` apply to a placement.
+`root`, `wrapper`, `icon`, `section`, `title`, `description`, `actions`,
+`close`, and `progress` apply to the card. Styles use inline CSS
+strings. Provider, holder, and card layers merge in that order.
+Explicit card `style` applies last.
 
-В двух прогонах эталона FIFO убирал карточку без вызова `onClose`. Svelte
-вызывает `onClose` при вытеснении. Измерения включают оформление, иконки и
-callbacks закрытия, несколько placements, смену контейнера и App defaults,
-раскладку стека и ход индикатора времени.
-[Исходные замеры](../../../tests/browser/fixtures/ant-design-notification-api-reference.json) ·
-[Браузерная проверка](../../../tests/browser/notification/notification-api.spec.ts) ·
-[SSR и типы](../../../tests/package/notification/notification-api.ssr.test.ts)
+## Comparison with Ant Design 6.6.8
 
+`createNotification` and `NotificationHolder` correspond to contextual
+`notification.useNotification`. In App, the same instance is available
+through `App.useApp().notification`. The pinned reference marks global
+methods deprecated. `title` and `actions` correspond to the deprecated
+`message` and `btn` fields. [Upstream reference](https://github.com/ant-design/ant-design/blob/984592267de88fbf9cdaecc96a56629e721c709d/components/notification/index.en-US.md#examples)
+
+In two reference runs, FIFO removed a card without calling
+`onClose`. Svelte calls `onClose` on eviction. Measurements cover
+styling, icons and closing callbacks, multiple placements, container
+changes and App defaults, stack layout, and time indicator progress.
+[Upstream measurements](../../../tests/browser/fixtures/ant-design-notification-api-reference.json) · [Browser test](../../../tests/browser/notification/notification-api.spec.ts) ·
+[SSR and types](../../../tests/package/notification/notification-api.ssr.test.ts)

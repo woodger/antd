@@ -1,23 +1,21 @@
-# Политики проекта
+# Project policies
 
-> Type: Navigation. Этот документ помогает выбрать нормативный документ для
-> конкретного вида изменения.
+> Type: Navigation. Use this index to find the policy that governs your change.
 
-Политики обязательны для разработчиков, ревьюеров и агентов, изменяющих
-этот репозиторий. Нормативный смысл принадлежит профильным policy-файлам, а
-не этому индексу.
+Developers, reviewers, and agents who modify this repository must follow these policies.
+The individual policy documents define the binding rules.
 
-Набор намеренно ограничен этим индексом и семью профильными документами.
+The policy set consists of this index and seven policy documents.
 
-| Изменение или вопрос | Policy |
+| Change or question | Policy |
 | --- | --- |
-| Минимальный diff, рабочая копия и cleanup | [Политика внесения изменений](./change-policy.md) |
-| Границы SvelteKit, размещение и abstractions | [Архитектурная политика](./architecture.md) |
-| Стиль, имена и production-комментарии | [Политика стиля кода](./code-style.md) |
-| Структура тестов и тестовые комментарии | [Политика тестирования](./testing-policy.md) |
-| Добавление или обновление dependency | [Политика зависимостей](./dependencies-policy.md) |
-| npm scripts, SvelteKit build и test pipeline | [Политика скриптов и сборки](./scripts-policy.md) |
-| Роли, структура и сопровождение документов | [Политика документации](./documentation-policy.md) |
+| Minimal diffs, the working tree, and cleanup | [Change policy](./change-policy.md) |
+| SvelteKit boundaries, file placement, and abstractions | [Architecture policy](./architecture.md) |
+| Code style, naming, and production comments | [Code style policy](./code-style.md) |
+| Test structure and test comments | [Testing policy](./testing-policy.md) |
+| Adding or updating a dependency | [Dependency policy](./dependencies-policy.md) |
+| npm scripts, SvelteKit builds, and the test pipeline | [Scripts and build policy](./scripts-policy.md) |
+| Document roles, organization, and maintenance | [Documentation policy](./documentation-policy.md) |
 
-Для обычной задачи сначала применяется change policy. Остальные документы
-открываются только для затронутых границ.
+For a typical task, start with the change policy. Consult the other documents for the
+boundaries the task touches.
