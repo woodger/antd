@@ -7,19 +7,14 @@ import {
   defaultThemeConfig,
   mergeThemeConfig
 } from './theme-config.engine';
-import { theme } from './theme.engine';
-import type { ThemeConfig } from './types';
+import {
+  resolveThemeTokenReference,
+  type ThemeTokenReferenceConfig
+} from './theme-reference-config.test.helpers';
 
-type AlgorithmName = 'defaultAlgorithm' | 'darkAlgorithm' | 'compactAlgorithm';
 interface ListyTokenCase {
   name: string;
-  config: Omit<ThemeConfig, 'algorithm' | 'components' | 'token'> & {
-    token?: Record<string, unknown>;
-    algorithm?: AlgorithmName[];
-    components?: Record<string, Record<string, unknown> & {
-      algorithm?: boolean | AlgorithmName[];
-    }>;
-  };
+  config: ThemeTokenReferenceConfig;
   variables: Record<string, string>;
   estimatedItemHeight: number;
 }
@@ -30,32 +25,6 @@ const reference: {
   new URL('../../tools/fixtures/ant-design-listy-tokens-reference.json', import.meta.url),
   'utf8'
 ));
-
-function resolve(input: ListyTokenCase['config']): ThemeConfig {
-  const { algorithm, components, token, ...rest } = input;
-  const resolved = components && Object.fromEntries(
-    Object.entries(components).map(([name, value]) => {
-      const fields = Object.fromEntries(Object.entries(value).map(([key, item]) => [
-        key,
-        item && typeof item === 'object' && '$type' in item && item.$type === 'undefined'
-          ? undefined : item
-      ]));
-      if (Array.isArray(value.algorithm)) fields.algorithm = value.algorithm.map(name => theme[name]);
-      return [name, fields];
-    })
-  );
-
-  return {
-    ...rest,
-    ...(token ? { token: Object.fromEntries(Object.entries(token).map(([key, item]) => [
-      key,
-      item && typeof item === 'object' && '$type' in item && item.$type === 'undefined'
-        ? undefined : item
-    ])) } : {}),
-    ...(algorithm ? { algorithm: algorithm.map(name => theme[name]) } : {}),
-    ...(resolved ? { components: resolved } : {})
-  };
-}
 
 describe('Ant Design 6.6.8 official UMD Listy CSS-token conformance', () => {
   it('pins declarations from the official archive', () => {
@@ -70,7 +39,7 @@ describe('Ant Design 6.6.8 official UMD Listy CSS-token conformance', () => {
   for (const sample of reference.cases) {
     it(`matches source Listy declarations and the delegated row estimate for ${sample.name}`, () => {
       const state = createDesignTokenState(mergeThemeConfig(
-        resolve(sample.config),
+        resolveThemeTokenReference(sample.config),
         defaultThemeConfig,
         'reference'
       ));

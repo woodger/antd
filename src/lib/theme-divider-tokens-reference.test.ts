@@ -6,16 +6,14 @@ import {
   defaultThemeConfig,
   mergeThemeConfig
 } from './theme-config.engine';
-import { theme } from './theme.engine';
-import type { ThemeConfig } from './types';
+import {
+  resolveThemeReference,
+  type ThemeReferenceConfig
+} from './theme-reference-config.test.helpers';
 
-type AlgorithmName = 'defaultAlgorithm' | 'darkAlgorithm' | 'compactAlgorithm';
 interface ReferenceCase {
   name: string;
-  config: Omit<ThemeConfig, 'algorithm' | 'components'> & {
-    algorithm?: AlgorithmName[];
-    components?: Record<string, Record<string, unknown> & { algorithm?: boolean | AlgorithmName[]; }>;
-  };
+  config: ThemeReferenceConfig;
   variables: { Divider: Record<string, string>; };
 }
 const reference: {
@@ -24,24 +22,6 @@ const reference: {
 } = JSON.parse(readFileSync(
   new URL('../../tools/fixtures/ant-design-divider-tokens-reference.json', import.meta.url), 'utf8'
 ));
-
-function config(input: ReferenceCase['config']): ThemeConfig {
-  const { algorithm, components, ...rest } = input;
-  const resolved = components && Object.fromEntries(Object.entries(components).map(([name, value]) => {
-    const fields = Object.fromEntries(Object.entries(value).map(([key, item]) => [key,
-      item && typeof item === 'object' && '$type' in item && item.$type === 'undefined'
-        ? undefined : item
-    ]));
-    if (Array.isArray(value.algorithm)) fields.algorithm = value.algorithm.map(name => theme[name]);
-    return [name, fields];
-  }));
-
-  return {
-    ...rest,
-    ...(algorithm ? { algorithm: algorithm.map(name => theme[name]) } : {}),
-    ...(resolved ? { components: resolved } : {})
-  };
-}
 
 describe('Ant Design 6.6.8 official UMD Divider token conformance', () => {
   it('uses declarations captured from the pinned official archive', () => {
@@ -55,7 +35,7 @@ describe('Ant Design 6.6.8 official UMD Divider token conformance', () => {
   for (const sample of reference.cases) {
     it(`reproduces every source Divider declaration for ${sample.name}`, () => {
       const state = createDesignTokenState(mergeThemeConfig(
-        config(sample.config),
+        resolveThemeReference(sample.config),
         defaultThemeConfig,
         'reference'
       ));
