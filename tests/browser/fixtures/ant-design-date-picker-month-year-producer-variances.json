@@ -1,0 +1,32 @@
+{
+  "scope": "Exact whole original producer part comparison; no normalization or identity renumbering",
+  "pairs": [
+    {
+      "id": "range-month",
+      "phase": "step-32",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-month-year-source-proposal-v1/csr-source-first.json.parts/range-month-step-32-producers.json",
+        "bytes": 2009827,
+        "sha256": "ce27d5be5067ee0c69d0fafd6aeb6325ff3b6ff8de7ce99705148d64fb615014",
+        "gzipFile": ".upstream/artifacts/date-picker-month-year-source-proposal-v1/csr-source-first.json.parts/range-month-step-32-producers.json.gz",
+        "gzipBytes": 49445,
+        "gzipSHA256": "bff3ade02d109f67f2f006368c4aa071783da9b9f88a8dd7cacfb75a2bc816f6"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-month-year-source-proposal-v1/csr-source-repeat.json.parts/range-month-step-32-producers.json",
+        "bytes": 2009827,
+        "sha256": "fca6b57fc9cdb84ebdeb0671b6fd7df4783bc43d5539a9e00b084e2b2d1debff",
+        "gzipFile": ".upstream/artifacts/date-picker-month-year-source-proposal-v1/csr-source-repeat.json.parts/range-month-step-32-producers.json.gz",
+        "gzipBytes": 49446,
+        "gzipSHA256": "811a263317a140b74e5ab89c114d3d062a37f2ebe8b95b7ea48eecf5eb89317d"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 268,
+          "repeat": 239
+        }
+      ]
+    }
+  ]
+}

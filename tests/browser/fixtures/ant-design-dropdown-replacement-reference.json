@@ -1,0 +1,814 @@
+{
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "standalone-menu"
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "LI",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-active provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": true
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "sibling-menus",
+          "siblings": true
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "wrapper",
+          "menus": [
+            {
+              "id": "origin",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Original command",
+                  "className": "owner-dropdown-menu-item provider-item dropdown-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            },
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "origin",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Original command",
+                  "className": "owner-dropdown-menu-item provider-item dropdown-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            },
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "selection-on-replacement",
+          "selectable": true
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "LI",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-active provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": true
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-selected provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "multiple-replacement",
+          "selectable": true,
+          "multiple": true
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "LI",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-active provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": true
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-selected provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "errors": []
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "standalone-menu"
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "LI",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-active provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": true
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "sibling-menus",
+          "siblings": true
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "wrapper",
+          "menus": [
+            {
+              "id": "origin",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Original command",
+                  "className": "owner-dropdown-menu-item provider-item dropdown-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            },
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "origin",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Original command",
+                  "className": "owner-dropdown-menu-item provider-item dropdown-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            },
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "selection-on-replacement",
+          "selectable": true
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "LI",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-active provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": true
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-selected provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "multiple-replacement",
+          "selectable": true,
+          "multiple": true
+        },
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ],
+        "open": {
+          "visible": true,
+          "focused": "LI",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-active provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": true
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ]
+          ]
+        },
+        "afterClick": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [
+            {
+              "id": "replacement",
+              "className": "owner-dropdown-menu owner-dropdown-menu-root owner-dropdown-menu-vertical owner-dropdown-menu-light css-1y106cm css-var-r0 owner-dropdown-css-var css-var-r0 owner-dropdown-menu-css-var provider-root",
+              "items": [
+                {
+                  "label": "Replacement command",
+                  "className": "owner-dropdown-menu-item owner-dropdown-menu-item-selected provider-item owner-dropdown-menu-item-only-child",
+                  "isFocused": false
+                }
+              ]
+            }
+          ],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "afterUnmount": {
+          "visible": false,
+          "focused": "BODY",
+          "menus": [],
+          "events": [
+            [
+              "open",
+              true,
+              "trigger"
+            ],
+            [
+              "replacement-click",
+              "alternate"
+            ],
+            [
+              "open",
+              false,
+              "menu"
+            ],
+            [
+              "replacement-select",
+              [
+                "alternate"
+              ]
+            ]
+          ]
+        },
+        "errors": []
+      }
+    ]
+  ]
+}

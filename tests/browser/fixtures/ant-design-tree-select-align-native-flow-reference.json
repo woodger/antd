@@ -1,0 +1,1173 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "trigger": "3.10.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "document": {
+      "compatMode": "CSS1Compat",
+      "doctype": "html"
+    },
+    "viewport": {
+      "width": 1200,
+      "height": 800
+    },
+    "source": "Unmodified official UMD; Source-only factory and shared public configuration/DOM projector, no Native implementation. view is measured geometry/state. raw preserves Source CSS axes/position/offsetParent separately; no expected correction. ShadowRoot is a consumer-styled runtime getter observation.",
+    "settle": "Six identical projections separated by three requestAnimationFrame callbacks",
+    "counterpart": {
+      "kind": "Independent public Source consumer counterpart for the accepted Native805 multiple-editor flow; not a correction of the original Source32 observations",
+      "caseId": "multiple-choice-live",
+      "publicInput": "Only top-level TreeSelect style.height follows the current public model using the independently measured Native805 root heights. styles.root height is not used, so popup height is not inherited. All labels, alignment props, maps, actions and callback handlers remain the original Source case.",
+      "originalSource": {
+        "path": "tests/browser/fixtures/ant-design-tree-select-align-reference.json",
+        "sha256": "6d0c07cc4b00ac6b1bf492a69cf5b3c5ce556bebe1ae98102dc47a198c44cf50"
+      },
+      "nativeBaseline": {
+        "path": ".upstream/artifacts/tree-select-align-native-805-baseline.json",
+        "sha256": "bd194c1bbb783c73d5e07898007f921d2fff399e09ead5368a9b83a3731853b5",
+        "baseCommit": "805cc7e342f61ba8ea7639a48462ae55ca6a50fd",
+        "kind": "Independent Native805 default-editor geometry baseline, not Source expected data"
+      },
+      "baselineRootBoxes": {
+        "[\"a\"]": {
+          "x": 300,
+          "y": 200,
+          "width": 220,
+          "height": 32
+        },
+        "[\"a\",\"b\"]": {
+          "x": 300,
+          "y": 200,
+          "width": 220,
+          "height": 60
+        },
+        "[\"b\"]": {
+          "x": 300,
+          "y": 200,
+          "width": 220,
+          "height": 32
+        }
+      }
+    },
+    "publishedRootHeights": {
+      "[\"a\"]": 32,
+      "[\"a\",\"b\"]": 60,
+      "[\"b\"]": 32
+    },
+    "errors": [],
+    "warnings": []
+  },
+  "cases": [
+    {
+      "id": "multiple-choice-live",
+      "initial": {
+        "view": {
+          "viewport": {
+            "width": 1200,
+            "height": 800
+          },
+          "root": {
+            "tag": "DIV",
+            "box": {
+              "x": 300,
+              "y": 200,
+              "width": 220,
+              "height": 32
+            },
+            "direction": "ltr",
+            "rtlClass": false
+          },
+          "editor": {
+            "box": {
+              "x": 73.688,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "value": "",
+            "caret": [
+              0,
+              0
+            ],
+            "focused": false,
+            "expanded": "false",
+            "readonly": false,
+            "disabled": false
+          },
+          "focused": false,
+          "popup": null,
+          "host": {
+            "x": 300,
+            "y": 200,
+            "width": 420,
+            "height": 160
+          },
+          "scroller": null,
+          "model": [
+            "a"
+          ],
+          "events": [],
+          "semantic": {
+            "keys": [
+              "popupAlign"
+            ],
+            "popupAlign": {
+              "offset": [
+                7,
+                11
+              ]
+            },
+            "builtinPlacements": null,
+            "placement": null,
+            "popupAlignSame": true,
+            "placementsSame": true
+          },
+          "receivedAttrs": null,
+          "leakedProps": {
+            "root": {
+              "attributes": [],
+              "ownProperties": []
+            },
+            "editor": {
+              "attributes": [],
+              "ownProperties": []
+            },
+            "popup": null
+          }
+        },
+        "raw": {
+          "rootDir": null,
+          "editorDir": null,
+          "popup": null,
+          "document": {
+            "compatMode": "CSS1Compat",
+            "scrollX": 0,
+            "scrollY": 0,
+            "clientWidth": 1200,
+            "clientHeight": 800,
+            "scrollWidth": 1200,
+            "scrollHeight": 1600
+          }
+        },
+        "observed": {
+          "sameRoot": true,
+          "sameEditor": true,
+          "samePopup": true,
+          "rootIsPublicRef": true,
+          "focusMethod": true,
+          "blurMethod": true,
+          "getterUsesRoot": null
+        }
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "rtlClass": false
+            },
+            "editor": {
+              "box": {
+                "x": 73.688,
+                "y": 2,
+                "width": 4,
+                "height": 28
+              },
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "focused": true,
+            "popup": {
+              "box": {
+                "x": 307,
+                "y": 243,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 7,
+                "y": 43,
+                "width": 300,
+                "height": 72
+              },
+              "gap": 11,
+              "aboveGap": -115,
+              "endDistance": -87,
+              "rtlClass": false,
+              "direction": "ltr"
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "scroller": null,
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "popupAlign"
+              ],
+              "popupAlign": {
+                "offset": [
+                  7,
+                  11
+                ]
+              },
+              "builtinPlacements": null,
+              "placement": null,
+              "popupAlignSame": true,
+              "placementsSame": true
+            },
+            "receivedAttrs": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            }
+          },
+          "raw": {
+            "rootDir": null,
+            "editorDir": null,
+            "popup": {
+              "visible": true,
+              "position": "absolute",
+              "axes": {
+                "left": "307px",
+                "right": "auto",
+                "top": "243px",
+                "bottom": "auto",
+                "transform": ""
+              },
+              "cssWidth": "300px",
+              "cssHeight": "72px",
+              "computedTransform": "none",
+              "offsetParent": {
+                "tag": "BODY",
+                "caseHost": false,
+                "shadowHost": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "parentTag": "DIV",
+              "container": "body",
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "semanticMarker": "original"
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "scrollX": 0,
+              "scrollY": 0,
+              "clientWidth": 1200,
+              "clientHeight": 800,
+              "scrollWidth": 1200,
+              "scrollHeight": 1600
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "getterUsesRoot": null
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "set": {
+              "popupAlign": {
+                "offset": [
+                  13,
+                  17
+                ]
+              }
+            }
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "rtlClass": false
+            },
+            "editor": {
+              "box": {
+                "x": 73.688,
+                "y": 2,
+                "width": 4,
+                "height": 28
+              },
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "focused": true,
+            "popup": {
+              "box": {
+                "x": 307,
+                "y": 243,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 7,
+                "y": 43,
+                "width": 300,
+                "height": 72
+              },
+              "gap": 11,
+              "aboveGap": -115,
+              "endDistance": -87,
+              "rtlClass": false,
+              "direction": "ltr"
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "scroller": null,
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "popupAlign"
+              ],
+              "popupAlign": {
+                "offset": [
+                  13,
+                  17
+                ]
+              },
+              "builtinPlacements": null,
+              "placement": null,
+              "popupAlignSame": true,
+              "placementsSame": true
+            },
+            "receivedAttrs": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            }
+          },
+          "raw": {
+            "rootDir": null,
+            "editorDir": null,
+            "popup": {
+              "visible": true,
+              "position": "absolute",
+              "axes": {
+                "left": "307px",
+                "right": "auto",
+                "top": "243px",
+                "bottom": "auto",
+                "transform": ""
+              },
+              "cssWidth": "300px",
+              "cssHeight": "72px",
+              "computedTransform": "none",
+              "offsetParent": {
+                "tag": "BODY",
+                "caseHost": false,
+                "shadowHost": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "parentTag": "DIV",
+              "container": "body",
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "semanticMarker": "original"
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "scrollX": 0,
+              "scrollY": 0,
+              "clientWidth": 1200,
+              "clientHeight": 800,
+              "scrollWidth": 1200,
+              "scrollHeight": 1600
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "getterUsesRoot": null
+          }
+        },
+        {
+          "action": {
+            "type": "choose",
+            "value": "b"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "rtlClass": false
+            },
+            "editor": {
+              "box": {
+                "x": 135.594,
+                "y": 2,
+                "width": 4,
+                "height": 28
+              },
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "focused": true,
+            "popup": {
+              "box": {
+                "x": 313,
+                "y": 277,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 13,
+                "y": 77,
+                "width": 300,
+                "height": 72
+              },
+              "gap": 17,
+              "aboveGap": -149,
+              "endDistance": -93,
+              "rtlClass": false,
+              "direction": "ltr"
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "scroller": null,
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "popupAlign"
+              ],
+              "popupAlign": {
+                "offset": [
+                  13,
+                  17
+                ]
+              },
+              "builtinPlacements": null,
+              "placement": null,
+              "popupAlignSame": true,
+              "placementsSame": true
+            },
+            "receivedAttrs": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            }
+          },
+          "raw": {
+            "rootDir": null,
+            "editorDir": null,
+            "popup": {
+              "visible": true,
+              "position": "absolute",
+              "axes": {
+                "left": "313px",
+                "right": "auto",
+                "top": "277px",
+                "bottom": "auto",
+                "transform": ""
+              },
+              "cssWidth": "300px",
+              "cssHeight": "72px",
+              "computedTransform": "none",
+              "offsetParent": {
+                "tag": "BODY",
+                "caseHost": false,
+                "shadowHost": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "parentTag": "DIV",
+              "container": "body",
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "semanticMarker": "original"
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "scrollX": 0,
+              "scrollY": 0,
+              "clientWidth": 1200,
+              "clientHeight": 800,
+              "scrollWidth": 1200,
+              "scrollHeight": 1600
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "getterUsesRoot": null
+          }
+        },
+        {
+          "action": {
+            "type": "remove",
+            "value": "a"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "rtlClass": false
+            },
+            "editor": {
+              "box": {
+                "x": 65.906,
+                "y": 2,
+                "width": 4,
+                "height": 28
+              },
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "focused": true,
+            "popup": {
+              "box": {
+                "x": 313,
+                "y": 249,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 13,
+                "y": 49,
+                "width": 300,
+                "height": 72
+              },
+              "gap": 17,
+              "aboveGap": -121,
+              "endDistance": -93,
+              "rtlClass": false,
+              "direction": "ltr"
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "scroller": null,
+            "model": [
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "popupAlign"
+              ],
+              "popupAlign": {
+                "offset": [
+                  13,
+                  17
+                ]
+              },
+              "builtinPlacements": null,
+              "placement": null,
+              "popupAlignSame": true,
+              "placementsSame": true
+            },
+            "receivedAttrs": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            }
+          },
+          "raw": {
+            "rootDir": null,
+            "editorDir": null,
+            "popup": {
+              "visible": true,
+              "position": "absolute",
+              "axes": {
+                "left": "313px",
+                "right": "auto",
+                "top": "249px",
+                "bottom": "auto",
+                "transform": ""
+              },
+              "cssWidth": "300px",
+              "cssHeight": "72px",
+              "computedTransform": "none",
+              "offsetParent": {
+                "tag": "BODY",
+                "caseHost": false,
+                "shadowHost": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "parentTag": "DIV",
+              "container": "body",
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "semanticMarker": "original"
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "scrollX": 0,
+              "scrollY": 0,
+              "clientWidth": 1200,
+              "clientHeight": 800,
+              "scrollWidth": 1200,
+              "scrollHeight": 1600
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "getterUsesRoot": null
+          }
+        },
+        {
+          "action": {
+            "type": "viewport",
+            "width": 1240,
+            "height": 820
+          },
+          "view": {
+            "viewport": {
+              "width": 1240,
+              "height": 820
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "rtlClass": false
+            },
+            "editor": {
+              "box": {
+                "x": 65.906,
+                "y": 2,
+                "width": 4,
+                "height": 28
+              },
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "focused": true,
+            "popup": {
+              "box": {
+                "x": 313,
+                "y": 249,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 13,
+                "y": 49,
+                "width": 300,
+                "height": 72
+              },
+              "gap": 17,
+              "aboveGap": -121,
+              "endDistance": -93,
+              "rtlClass": false,
+              "direction": "ltr"
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "scroller": null,
+            "model": [
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "popupAlign"
+              ],
+              "popupAlign": {
+                "offset": [
+                  13,
+                  17
+                ]
+              },
+              "builtinPlacements": null,
+              "placement": null,
+              "popupAlignSame": true,
+              "placementsSame": true
+            },
+            "receivedAttrs": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            }
+          },
+          "raw": {
+            "rootDir": null,
+            "editorDir": null,
+            "popup": {
+              "visible": true,
+              "position": "absolute",
+              "axes": {
+                "left": "313px",
+                "right": "auto",
+                "top": "249px",
+                "bottom": "auto",
+                "transform": ""
+              },
+              "cssWidth": "300px",
+              "cssHeight": "72px",
+              "computedTransform": "none",
+              "offsetParent": {
+                "tag": "BODY",
+                "caseHost": false,
+                "shadowHost": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1240,
+                  "height": 1600
+                }
+              },
+              "parentTag": "DIV",
+              "container": "body",
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "semanticMarker": "original"
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "scrollX": 0,
+              "scrollY": 0,
+              "clientWidth": 1240,
+              "clientHeight": 820,
+              "scrollWidth": 1240,
+              "scrollHeight": 1600
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "getterUsesRoot": null
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "viewport": {
+              "width": 1240,
+              "height": 820
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "rtlClass": false
+            },
+            "editor": {
+              "box": {
+                "x": 65.906,
+                "y": 2,
+                "width": 4,
+                "height": 28
+              },
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": false,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "focused": false,
+            "popup": null,
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "scroller": null,
+            "model": [
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "popupAlign"
+              ],
+              "popupAlign": {
+                "offset": [
+                  13,
+                  17
+                ]
+              },
+              "builtinPlacements": null,
+              "placement": null,
+              "popupAlignSame": true,
+              "placementsSame": true
+            },
+            "receivedAttrs": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            }
+          },
+          "raw": {
+            "rootDir": null,
+            "editorDir": null,
+            "popup": {
+              "visible": false,
+              "position": "absolute",
+              "axes": {
+                "left": "313px",
+                "right": "auto",
+                "top": "249px",
+                "bottom": "auto",
+                "transform": ""
+              },
+              "cssWidth": "300px",
+              "cssHeight": "auto",
+              "computedTransform": "none",
+              "offsetParent": null,
+              "parentTag": "DIV",
+              "container": "body",
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "semanticMarker": "original"
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "scrollX": 0,
+              "scrollY": 0,
+              "clientWidth": 1240,
+              "clientHeight": 820,
+              "scrollWidth": 1240,
+              "scrollHeight": 1600
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "getterUsesRoot": null
+          }
+        }
+      ]
+    }
+  ]
+}

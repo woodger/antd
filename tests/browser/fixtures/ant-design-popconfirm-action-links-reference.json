@@ -1,0 +1,173 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "operation": "Capture native anchor attributes and keyboard/mouse navigation, empty href, disabled and pending confirmation in Popconfirm with motion disabled."
+  },
+  "cases": {
+    "links": {
+      "initial": [
+        {
+          "tag": "a",
+          "text": "Cancel link",
+          "href": "#cancelled",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        },
+        {
+          "tag": "a",
+          "text": "Confirm link",
+          "href": "#confirmed",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        }
+      ],
+      "cancelHash": "#cancelled",
+      "hash": "#confirmed",
+      "events": [
+        "open",
+        "close",
+        "cancel",
+        [
+          "cancel-button",
+          "a",
+          "#cancelled"
+        ],
+        "popup",
+        "open",
+        "confirm",
+        "close",
+        [
+          "ok",
+          "a",
+          "#confirmed"
+        ],
+        "popup"
+      ]
+    },
+    "disabled": {
+      "initial": [
+        {
+          "tag": "a",
+          "text": "Cancel link",
+          "href": "#cancelled",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        },
+        {
+          "tag": "a",
+          "text": "Confirm link",
+          "href": null,
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "true",
+          "tabIndex": -1,
+          "loading": false
+        }
+      ]
+    },
+    "empty": {
+      "initial": [
+        {
+          "tag": "a",
+          "text": "Cancel link",
+          "href": "#cancelled",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        },
+        {
+          "tag": "a",
+          "text": "Confirm link",
+          "href": "",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        }
+      ]
+    },
+    "pending": {
+      "initial": [
+        {
+          "tag": "a",
+          "text": "Cancel link",
+          "href": "#cancelled",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        },
+        {
+          "tag": "a",
+          "text": "Confirm link",
+          "href": "#confirmed",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        }
+      ],
+      "waiting": [
+        {
+          "tag": "a",
+          "text": "Cancel link",
+          "href": "#cancelled",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": false
+        },
+        {
+          "tag": "a",
+          "text": "Confirm link",
+          "href": "#confirmed",
+          "target": "_self",
+          "rel": "bookmark",
+          "disabled": "false",
+          "tabIndex": 0,
+          "loading": true
+        }
+      ],
+      "events": [
+        "open",
+        "confirm",
+        [
+          "ok",
+          "a",
+          "#confirmed"
+        ],
+        "popup-prevented",
+        "close"
+      ],
+      "eventsWhileWaiting": [
+        "open",
+        "confirm",
+        [
+          "ok",
+          "a",
+          "#confirmed"
+        ],
+        "popup-prevented"
+      ],
+      "hash": ""
+    }
+  }
+}

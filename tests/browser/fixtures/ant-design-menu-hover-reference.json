@@ -1,0 +1,1086 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "browser": "157.0.8103.78",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "inline",
+          "mode": "inline"
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          },
+          {
+            "name": "title-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "title-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ]
+          },
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "SPAN",
+              null,
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "vertical",
+          "mode": "vertical"
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": null
+          },
+          {
+            "name": "title-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "openKeys",
+            "keys": []
+          },
+          {
+            "name": "openKeys",
+            "keys": []
+          },
+          {
+            "name": "title-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ]
+          },
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "DIV",
+              "menuitem",
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "openKeys",
+            "keys": []
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-leaf",
+          "mode": "inline",
+          "disabledLeaf": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          },
+          {
+            "name": "title-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "title-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-branch",
+          "mode": "inline",
+          "disabledBranch": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "SPAN",
+              null,
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-menu",
+          "mode": "inline",
+          "disabledMenu": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [],
+        "leave": [
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-vertical",
+          "mode": "vertical",
+          "disabledBranch": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "DIV",
+              "menuitem",
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "inline",
+          "mode": "inline"
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          },
+          {
+            "name": "title-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "title-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ]
+          },
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "SPAN",
+              null,
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "vertical",
+          "mode": "vertical"
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": null
+          },
+          {
+            "name": "title-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "openKeys",
+            "keys": []
+          },
+          {
+            "name": "openKeys",
+            "keys": []
+          },
+          {
+            "name": "title-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ]
+          },
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "DIV",
+              "menuitem",
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "openKeys",
+            "keys": []
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-leaf",
+          "mode": "inline",
+          "disabledLeaf": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          },
+          {
+            "name": "title-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "title-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-branch",
+          "mode": "inline",
+          "disabledBranch": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "SPAN",
+              null,
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-menu",
+          "mode": "inline",
+          "disabledMenu": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [],
+        "leave": [
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "disabled-vertical",
+          "mode": "vertical",
+          "disabledBranch": true
+        },
+        "enter": [
+          {
+            "name": "branch-enter",
+            "key": "branch",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "DIV",
+              "menuitem",
+              ""
+            ],
+            "related": null
+          }
+        ],
+        "child": [
+          {
+            "name": "leaf-enter",
+            "key": "4",
+            "event": "mouseenter",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": [
+              "DIV",
+              "menuitem",
+              ""
+            ]
+          }
+        ],
+        "leave": [
+          {
+            "name": "leaf-leave",
+            "key": "4",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "menuitem",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          },
+          {
+            "name": "branch-leave",
+            "key": "branch",
+            "event": "mouseleave",
+            "currentTarget": [
+              "LI",
+              "none",
+              ""
+            ],
+            "target": [
+              "SPAN",
+              null,
+              "leaf-label"
+            ],
+            "related": null
+          }
+        ],
+        "errors": []
+      }
+    ]
+  ]
+}

@@ -1,0 +1,627 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "default"
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "unmasked-boolean",
+        "props": {
+          "mask": false
+        }
+      },
+      "appearance": {
+        "mask": false,
+        "blur": null,
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "dialog"
+      },
+      "programmaticFocus": "background",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "body"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "unmasked-object",
+        "props": {
+          "mask": {
+            "enabled": false,
+            "blur": true
+          }
+        }
+      },
+      "appearance": {
+        "mask": false,
+        "blur": null,
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "dialog"
+      },
+      "programmaticFocus": "background",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "body"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "unmasked-trap",
+        "props": {
+          "mask": false,
+          "focusable": {
+            "trap": true
+          }
+        }
+      },
+      "appearance": {
+        "mask": false,
+        "blur": null,
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "body"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "free-focus-masked",
+        "props": {
+          "focusable": {
+            "trap": false
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "dialog"
+      },
+      "programmaticFocus": "background",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "no-return",
+        "props": {
+          "focusable": {
+            "focusTriggerAfterClose": false
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "body"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "local-blur",
+        "props": {
+          "mask": {
+            "blur": true,
+            "closable": false
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "blur(4px)",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "no-lock",
+        "props": {
+          "scrollLock": false
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": false,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": true,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "unmasked-no-lock",
+        "props": {
+          "mask": false,
+          "scrollLock": false
+        }
+      },
+      "appearance": {
+        "mask": false,
+        "blur": null,
+        "ariaModal": "true",
+        "overflow": false,
+        "initialFocus": "dialog"
+      },
+      "programmaticFocus": "background",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": true,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "body"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "provider-mask",
+        "provider": {
+          "mask": {
+            "blur": true,
+            "closable": false
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "blur(4px)",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "provider-override",
+        "provider": {
+          "mask": false,
+          "focusable": {
+            "trap": false,
+            "focusTriggerAfterClose": false
+          }
+        },
+        "props": {
+          "mask": {
+            "enabled": true,
+            "blur": true
+          },
+          "focusable": {
+            "trap": true
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "blur(4px)",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "body"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "inline",
+        "props": {
+          "getContainer": false
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": false,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": true,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "custom-host",
+        "props": {
+          "getContainer": "#destination"
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": false,
+        "initialFocus": "close"
+      },
+      "programmaticFocus": "close",
+      "tabFromBodyEnd": "body",
+      "pageScrolled": true,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-default",
+        "confirm": true
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "OK"
+      },
+      "programmaticFocus": "editor",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-empty-mask",
+        "confirm": true,
+        "props": {
+          "mask": {}
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "OK"
+      },
+      "programmaticFocus": "editor",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-dismiss",
+        "confirm": true,
+        "props": {
+          "mask": {
+            "blur": true,
+            "closable": true
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "blur(4px)",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "OK"
+      },
+      "programmaticFocus": "editor",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 1,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-cancel-focus",
+        "confirm": true,
+        "props": {
+          "focusable": {
+            "autoFocusButton": "cancel"
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "Cancel"
+      },
+      "programmaticFocus": "editor",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-null-focus",
+        "confirm": true,
+        "props": {
+          "focusable": {
+            "autoFocusButton": null
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "none",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "OK"
+      },
+      "programmaticFocus": "editor",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-unmasked",
+        "confirm": true,
+        "props": {
+          "mask": false,
+          "scrollLock": false
+        }
+      },
+      "appearance": {
+        "mask": false,
+        "blur": null,
+        "ariaModal": "true",
+        "overflow": false,
+        "initialFocus": "OK"
+      },
+      "programmaticFocus": "background",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": true,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "editor"
+        ],
+        "focus": "body"
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-provider",
+        "confirm": true,
+        "provider": {
+          "mask": {
+            "blur": true,
+            "closable": true
+          }
+        }
+      },
+      "appearance": {
+        "mask": true,
+        "blur": "blur(4px)",
+        "ariaModal": "true",
+        "overflow": true,
+        "initialFocus": "OK"
+      },
+      "programmaticFocus": "editor",
+      "tabFromBodyEnd": "Cancel",
+      "pageScrolled": false,
+      "pointer": {
+        "cancelled": 0,
+        "background": 0
+      },
+      "result": {
+        "afterClose": [
+          "opener"
+        ],
+        "focus": "opener"
+      }
+    }
+  ],
+  "focusUpdates": [
+    {
+      "autoFocusButton": "cancel",
+      "focus": "Cancel",
+      "same": true,
+      "value": "Kept draft"
+    },
+    {
+      "autoFocusButton": null,
+      "focus": "OK",
+      "same": true,
+      "value": "Kept draft"
+    }
+  ]
+}

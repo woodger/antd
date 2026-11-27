@@ -1,0 +1,169 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "component": "drawer",
+      "selection": "selector",
+      "order": "before",
+      "destination": "late",
+      "calls": [],
+      "openings": [
+        "default",
+        "late"
+      ]
+    },
+    {
+      "component": "drawer",
+      "selection": "selector",
+      "order": "after",
+      "destination": "late",
+      "calls": [],
+      "openings": [
+        "default",
+        "late"
+      ]
+    },
+    {
+      "component": "drawer",
+      "selection": "getter",
+      "order": "before",
+      "destination": "late",
+      "calls": [
+        [
+          "local",
+          0
+        ]
+      ],
+      "openings": [
+        "default",
+        "late"
+      ]
+    },
+    {
+      "component": "drawer",
+      "selection": "getter",
+      "order": "after",
+      "destination": "late",
+      "calls": [
+        [
+          "local",
+          0
+        ]
+      ],
+      "openings": [
+        "default",
+        "late"
+      ]
+    },
+    {
+      "component": "drawer",
+      "selection": "provider",
+      "order": "before",
+      "destination": "late",
+      "calls": [
+        [
+          "provider",
+          1,
+          true
+        ]
+      ],
+      "openings": [
+        "default",
+        "late"
+      ]
+    },
+    {
+      "component": "drawer",
+      "selection": "provider",
+      "order": "after",
+      "destination": "late",
+      "calls": [
+        [
+          "provider",
+          1,
+          true
+        ]
+      ],
+      "openings": [
+        "default",
+        "late"
+      ]
+    },
+    {
+      "component": "modal",
+      "selection": "selector",
+      "order": "before",
+      "destination": "late",
+      "calls": [],
+      "openings": []
+    },
+    {
+      "component": "modal",
+      "selection": "selector",
+      "order": "after",
+      "destination": "late",
+      "calls": [],
+      "openings": []
+    },
+    {
+      "component": "modal",
+      "selection": "getter",
+      "order": "before",
+      "destination": "late",
+      "calls": [
+        [
+          "local",
+          0
+        ]
+      ],
+      "openings": []
+    },
+    {
+      "component": "modal",
+      "selection": "getter",
+      "order": "after",
+      "destination": "late",
+      "calls": [
+        [
+          "local",
+          0
+        ]
+      ],
+      "openings": []
+    },
+    {
+      "component": "modal",
+      "selection": "provider",
+      "order": "before",
+      "destination": "late",
+      "calls": [
+        [
+          "provider",
+          0,
+          false
+        ]
+      ],
+      "openings": []
+    },
+    {
+      "component": "modal",
+      "selection": "provider",
+      "order": "after",
+      "destination": "late",
+      "calls": [
+        [
+          "provider",
+          0,
+          false
+        ]
+      ],
+      "openings": []
+    }
+  ]
+}

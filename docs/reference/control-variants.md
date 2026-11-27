@@ -1,0 +1,82 @@
+# Варианты оформления полей
+
+`ConfigProvider.variant` задаёт общее оформление полей: outlined, filled, borderless
+или underlined. `Form.variant` задаёт оформление внутри ближайшего Form.
+Точная форма API принадлежит [ConfigProvider](../../src/lib/config-provider/ConfigProvider.svelte),
+[FormProps](../../src/lib/form/form.types.ts) и типам отдельных компонентов.
+
+```svelte
+<script lang="ts">
+  import { ConfigProvider, createForm, Form, Input, Select } from '@woodger/antd';
+
+  const form = createForm({ initialValues: {} });
+  const options = [{ value: 'editor', label: 'Редактор' }];
+</script>
+
+<ConfigProvider variant="filled" input={{ variant: 'underlined' }}>
+  <Input />
+  <Form {form} variant="borderless">
+    <Input />
+    <Select {options} variant="outlined" />
+  </Form>
+</ConfigProvider>
+```
+
+Первый Input будет underlined, второй — borderless, Select — outlined.
+Без настройки используется outlined. Настройки применяются в следующем порядке, начиная с самой приоритетной:
+
+1. Локальный variant.
+2. Variant ближайшего Form.
+3. Variant из component config.
+4. Fallback component config у Password, Search и OTP: input.variant.
+5. Общий ConfigProvider.variant.
+6. Outlined.
+
+У Search fallback input.variant меняет
+только поле. Кнопка читает собственный inputSearch.variant, Form или global variant;
+без этих настроек она сохраняет обычное оформление Button.
+
+Общий механизм подключён к Input, TextArea, InputPassword, InputSearch, InputOTP,
+InputNumber, Mentions, Select single/multiple, AutoComplete, TreeSelect, Cascader,
+DatePicker, TimePicker, RangePicker, TimeRangePicker, Card и Pagination.
+AutoComplete читает config Select. TimePicker читает timePicker.variant,
+TimeRangePicker — rangePicker.variant. Pagination использует variant поля Input;
+size changer сохраняет отдельный Select config.
+
+Card имеет локальные варианты outlined/borderless. Унаследованные filled и
+underlined, как в исходнике, сохраняют рамку Card; отдельное оформление для них
+не добавляется. Button, Tag и SpaceAddon имеют собственные правила и не читают
+общий variant через этот механизм.
+
+ColorPicker задаёт своему внутреннему выбору формата borderless, как исходный
+ColorInput. Это локальное правило сохраняется внутри любого Form/ConfigProvider;
+остальные поля ColorPicker читают обычные настройки Input/InputNumber.
+
+Вложенный ConfigProvider наследует отсутствующий component config. Явный объект,
+включая пустой, заменяет соответствующий родительский объект целиком. Настройка
+global variant во вложенном provider не отменяет унаследованный component variant.
+Theme.inherit=false сбрасывает тему, сохраняя настройки variant.
+
+Вложенный Form с variant=undefined сбрасывает variant внешнего Form и возвращает
+приоритет component/global config. `component={false}` сохраняет контекст Form
+без нативной обёртки: его можно использовать внутри существующей формы.
+По умолчанию Form рендерит прежний native form с submit/reset и validation.
+
+Изменения оформления после mount сохраняют DOM контролов, введённый текст,
+фокус, выделение, выбранные значения и FormData. Они не вызывают change callbacks.
+Существующие native events, bindings, semantic styles и theme tokens сохраняют
+свои контракты.
+
+У `Select` и `AutoComplete` общие [настройки провайдера](components/select.md#оформление-и-состояние).
+TreeSelect также поддерживает [classNames, styles и switcherIcon](components/tree-select.md).
+Card и Meta также поддерживают [class/style и semantic config](components/card.md).
+MentionsComponentConfig относится к provider; прежний MentionsConfig остаётся
+настройкой функции getMentions. Form component поддерживает form/false;
+произвольные wrapper tags остаются отдельным пробелом.
+
+Эталон — неизменённый UMD Ant Design 6.6.8 из закреплённого npm-архива. Raw computed
+colors/borders и классы всех потребителей находятся в
+[reference matrix](../../tests/browser/fixtures/ant-design-config-variants-reference.json).
+Приоритеты проверяют [unit tests](../../src/lib/config-provider/variant.engine.test.ts), публичный
+SSR — [package tests](../../tests/package/config-provider/config-variants.ssr.test.ts), оформление,
+обновления и изоляцию — [browser tests](../../tests/browser/config-provider/config-variants.spec.ts).

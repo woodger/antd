@@ -1,0 +1,6 @@
+{
+  "scope": "Exact comparison of the explicitly selected audit.rows projection; all actual IDs retained.",
+  "normalization": [],
+  "varianceCount": 0,
+  "variances": []
+}

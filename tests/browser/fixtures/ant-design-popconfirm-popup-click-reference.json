@@ -1,0 +1,106 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "operation": "Click title, container, preventDefault, stopPropagation, cancel and keyboard confirm. Repeat in default, explicit and UniqueProvider portals with motion disabled."
+  },
+  "cases": [
+    {
+      "profile": "default",
+      "custom": false,
+      "shared": false,
+      "events": [
+        "open",
+        {
+          "target": "title",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        },
+        {
+          "target": "container",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        },
+        "prevented",
+        {
+          "target": "prevented",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": true
+        },
+        "stopped",
+        "close",
+        "cancel",
+        {
+          "target": "cancel",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        },
+        "open",
+        "confirm",
+        "close",
+        {
+          "target": "confirm",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        }
+      ]
+    },
+    {
+      "profile": "custom",
+      "custom": true,
+      "shared": false,
+      "events": [
+        "open",
+        {
+          "target": "title",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        },
+        {
+          "target": "container",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        },
+        "prevented",
+        {
+          "target": "prevented",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": true
+        },
+        "stopped",
+        "close",
+        "cancel",
+        {
+          "target": "cancel",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        },
+        "open",
+        "confirm",
+        "close",
+        {
+          "target": "confirm",
+          "currentTargetIsPopup": true,
+          "defaultPrevented": false
+        }
+      ]
+    },
+    {
+      "profile": "shared",
+      "custom": false,
+      "shared": true,
+      "events": [
+        "open",
+        "prevented",
+        "stopped",
+        "close",
+        "cancel",
+        "open",
+        "confirm",
+        "close"
+      ]
+    }
+  ]
+}

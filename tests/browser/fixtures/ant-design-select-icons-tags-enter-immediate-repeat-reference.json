@@ -1,0 +1,279 @@
+{
+  "reference": {
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "protocolSHA256": "d8add73b25558e23882218f2b5b2325a883872f152a53ab49cb40263781237eb",
+    "errors": [],
+    "diagnostics": [
+      {
+        "id": "existing-escape-enter",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      },
+      {
+        "id": "existing-escape-enter",
+        "message": "Warning: `value` of Option should not use number type when `mode` is `tags` or `combobox`."
+      },
+      {
+        "id": "metadata-escape-enter",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      },
+      {
+        "id": "metadata-escape-enter",
+        "message": "Warning: `value` of Option should not use number type when `mode` is `tags` or `combobox`."
+      },
+      {
+        "id": "controlled-search-closed-enter",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      },
+      {
+        "id": "controlled-search-closed-enter",
+        "message": "Warning: `value` of Option should not use number type when `mode` is `tags` or `combobox`."
+      },
+      {
+        "id": "controlled-open-accepted-enter",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      },
+      {
+        "id": "controlled-open-accepted-enter",
+        "message": "Warning: `value` of Option should not use number type when `mode` is `tags` or `combobox`."
+      }
+    ]
+  },
+  "cases": [
+    {
+      "sample": {
+        "id": "existing-escape-enter",
+        "text": "  novel  ",
+        "keys": [
+          "Escape",
+          "Enter"
+        ]
+      },
+      "steps": [
+        {
+          "phase": "initial",
+          "point": {
+            "value": [],
+            "events": [],
+            "infos": [],
+            "input": "",
+            "open": "false"
+          }
+        },
+        {
+          "phase": "complete-actions",
+          "point": {
+            "value": [
+              "  novel  "
+            ],
+            "events": [
+              [
+                "search",
+                "  novel  "
+              ],
+              [
+                "change",
+                [
+                  "  novel  "
+                ]
+              ]
+            ],
+            "infos": [],
+            "input": "",
+            "open": "true"
+          }
+        }
+      ]
+    },
+    {
+      "sample": {
+        "id": "metadata-escape-enter",
+        "text": "  novel  ",
+        "keys": [
+          "Escape",
+          "Enter"
+        ],
+        "metadata": true
+      },
+      "steps": [
+        {
+          "phase": "initial",
+          "point": {
+            "value": [],
+            "events": [],
+            "infos": [
+              {
+                "searchValue": "",
+                "open": false,
+                "focused": false,
+                "showSearch": true,
+                "loading": {
+                  "$": "undefined"
+                }
+              }
+            ],
+            "input": "",
+            "open": "false"
+          }
+        },
+        {
+          "phase": "complete-actions",
+          "point": {
+            "value": [
+              "novel"
+            ],
+            "events": [
+              [
+                "search",
+                "  novel  "
+              ],
+              [
+                "change",
+                [
+                  "novel"
+                ]
+              ]
+            ],
+            "infos": [
+              {
+                "searchValue": "",
+                "open": false,
+                "focused": false,
+                "showSearch": true,
+                "loading": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "searchValue": "",
+                "open": false,
+                "focused": true,
+                "showSearch": true,
+                "loading": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "searchValue": "  novel  ",
+                "open": true,
+                "focused": true,
+                "showSearch": true,
+                "loading": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "searchValue": "  novel  ",
+                "open": false,
+                "focused": true,
+                "showSearch": true,
+                "loading": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "searchValue": "",
+                "open": true,
+                "focused": true,
+                "showSearch": true,
+                "loading": {
+                  "$": "undefined"
+                }
+              }
+            ],
+            "input": "",
+            "open": "true"
+          }
+        }
+      ]
+    },
+    {
+      "sample": {
+        "id": "controlled-search-closed-enter",
+        "query": "  novel  ",
+        "keys": [
+          "Enter"
+        ]
+      },
+      "steps": [
+        {
+          "phase": "initial",
+          "point": {
+            "value": [],
+            "events": [],
+            "infos": [],
+            "input": "  novel  ",
+            "open": "false"
+          }
+        },
+        {
+          "phase": "complete-actions",
+          "point": {
+            "value": [
+              "novel"
+            ],
+            "events": [
+              [
+                "change",
+                [
+                  "novel"
+                ]
+              ]
+            ],
+            "infos": [],
+            "input": "  novel  ",
+            "open": "true"
+          }
+        }
+      ]
+    },
+    {
+      "sample": {
+        "id": "controlled-open-accepted-enter",
+        "query": "  novel  ",
+        "keys": [
+          "Enter"
+        ],
+        "openControl": true
+      },
+      "steps": [
+        {
+          "phase": "initial",
+          "point": {
+            "value": [],
+            "events": [],
+            "infos": [],
+            "input": "  novel  ",
+            "open": "false"
+          }
+        },
+        {
+          "phase": "complete-actions",
+          "point": {
+            "value": [
+              "novel"
+            ],
+            "events": [
+              [
+                "change",
+                [
+                  "novel"
+                ]
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "infos": [],
+            "input": "  novel  ",
+            "open": "true"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "format": "date-picker-date-week-prefix-all-point-source-stability-v1",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "scope": "Exact selected owner state/model/full raw model/model Date annotations/full cumulative callback records (all arguments/receiver/IDs), input identity/value/placeholder/disabled at all initial, before, afterFocusPointer, afterCall, settled, Escape+1000, beforeUnmount, cleanup and late points. Producer cursor afterCall variances are in producer-variances.json. Other DOM/events/timing/focus/caret remain outside this projection; whole originals and their hashes remain separate.",
+  "normalization": [],
+  "IDsRenumbered": false,
+  "sourceFieldsRewritten": [],
+  "checkedPoints": 72,
+  "checkedByPhase": {
+    "initial": 2,
+    "before": 20,
+    "afterCall": 20,
+    "settled": 20,
+    "afterFocusPointer": 2,
+    "closedAfter1000": 2,
+    "beforeUnmount": 2,
+    "cleanup": 2,
+    "late": 2
+  },
+  "owners": [
+    {
+      "id": "single-date-week-prefix",
+      "checkedPoints": 36
+    },
+    {
+      "id": "range-date-week-prefix",
+      "checkedPoints": 36
+    }
+  ],
+  "stablePoints": 71,
+  "differingPoints": 1,
+  "variance": [
+    {
+      "id": "range-date-week-prefix",
+      "phase": "afterCall",
+      "index": 6,
+      "differences": [
+        {
+          "path": "/inputs/1/value",
+          "first": "2021-01-03",
+          "repeat": "2021-01-15"
+        }
+      ]
+    }
+  ],
+  "scriptSHA256": "61b12d102a86d5135e9cce260a69f08e7fd99b176ae7ba2c590a5feb59f7ec2e"
+}

@@ -1,0 +1,3564 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "literal-field",
+        "dataIndex": "label",
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "literal-field",
+        "dataIndex": "label",
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "nested-field",
+        "dataIndex": [
+          "metrics",
+          "rank"
+        ],
+        "group": true,
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ],
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "metrics.rank": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "metrics.rank": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "metrics.rank": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "nested-field",
+        "dataIndex": [
+          "metrics",
+          "rank"
+        ],
+        "group": true,
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ],
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "metrics.rank": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "metrics.rank": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "metrics.rank": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "numeric-field",
+        "dataIndex": 0,
+        "group": true,
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Z"
+          ],
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Z"
+          ],
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ],
+          [
+            "a",
+            "Z"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": 0,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ],
+          [
+            "a",
+            "Z"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": 0,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "2": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": 0,
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "numeric-field",
+        "dataIndex": 0,
+        "group": true,
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Z"
+          ],
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Z"
+          ],
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ],
+          [
+            "a",
+            "Z"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": 0,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "b",
+            "A"
+          ],
+          [
+            "c",
+            "B"
+          ],
+          [
+            "a",
+            "Z"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": 0,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "2": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": 0,
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "empty-field",
+        "dataIndex": "",
+        "group": true,
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            ""
+          ],
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            ""
+          ],
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ],
+          [
+            "a",
+            ""
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ],
+          [
+            "a",
+            ""
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "2": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "empty-field",
+        "dataIndex": "",
+        "group": true,
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            ""
+          ],
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            ""
+          ],
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ],
+          [
+            "a",
+            ""
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "b",
+            ""
+          ],
+          [
+            "c",
+            ""
+          ],
+          [
+            "a",
+            ""
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "2": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "empty-path",
+        "dataIndex": [],
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": [],
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "empty-path",
+        "dataIndex": [],
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": null,
+              "field": [],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": [],
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "position",
+        "group": true,
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "2": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "position",
+        "group": true,
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "2": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "2": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "position-after-hidden",
+        "group": true,
+        "hiddenBefore": true,
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "3": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "3": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "3": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": null
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "position-after-hidden",
+        "group": true,
+        "hiddenBefore": true,
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "3": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "3": null
+            },
+            "sorter": {
+              "key": null,
+              "field": null,
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "3": null,
+              "1-0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": null
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-zero",
+        "key": 0,
+        "dataIndex": "label",
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "0": null
+            },
+            "sorter": {
+              "key": 0,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "0": null
+            },
+            "sorter": {
+              "key": 0,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": 0,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-zero",
+        "key": 0,
+        "dataIndex": "label",
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "0": null
+            },
+            "sorter": {
+              "key": 0,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "0": null
+            },
+            "sorter": {
+              "key": 0,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "0": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": 0,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-empty",
+        "key": "",
+        "dataIndex": "label",
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": "",
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": "",
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": "",
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-empty",
+        "key": "",
+        "dataIndex": "label",
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": "",
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "": null
+            },
+            "sorter": {
+              "key": "",
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": "",
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-number",
+        "key": 7,
+        "dataIndex": [
+          "metrics",
+          "rank"
+        ],
+        "group": true,
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ],
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "7": null
+            },
+            "sorter": {
+              "key": 7,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "7": null
+            },
+            "sorter": {
+              "key": 7,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "7": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": 7,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-number",
+        "key": 7,
+        "dataIndex": [
+          "metrics",
+          "rank"
+        ],
+        "group": true,
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ],
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "1"
+          ],
+          [
+            "c",
+            "2"
+          ],
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "7": null
+            },
+            "sorter": {
+              "key": 7,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "3"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "7": null
+            },
+            "sorter": {
+              "key": 7,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "7": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": 7,
+              "field": [
+                "metrics",
+                "rank"
+              ],
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "default-field",
+        "shared": {
+          "dataIndex": "label"
+        },
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "default-field",
+        "shared": {
+          "dataIndex": "label"
+        },
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "default-number",
+        "dataIndex": "label",
+        "shared": {
+          "key": 4
+        },
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "4": null
+            },
+            "sorter": {
+              "key": 4,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "4": null
+            },
+            "sorter": {
+              "key": 4,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "4": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": 4,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "default-number",
+        "dataIndex": "label",
+        "shared": {
+          "key": 4
+        },
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": []
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "4": null
+            },
+            "sorter": {
+              "key": 4,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ]
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "4": null
+            },
+            "sorter": {
+              "key": 4,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "4": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": 4,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "inferred-collision",
+        "dataIndex": "label",
+        "collision": "inferred",
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      }
+    },
+    {
+      "profile": {
+        "id": "inferred-collision",
+        "dataIndex": "label",
+        "collision": "inferred",
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-collision",
+        "dataIndex": "label",
+        "collision": "explicit",
+        "virtual": false
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      }
+    },
+    {
+      "profile": {
+        "id": "explicit-collision",
+        "dataIndex": "label",
+        "collision": "explicit",
+        "virtual": true
+      },
+      "ssr": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "initial": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ],
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ]
+        ],
+        "sort": null,
+        "changes": [],
+        "peerSort": null
+      },
+      "sorted": {
+        "rows": [
+          [
+            "b",
+            "Alpha"
+          ],
+          [
+            "c",
+            "Bravo"
+          ],
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      },
+      "filtered": {
+        "rows": [
+          [
+            "a",
+            "Zulu"
+          ]
+        ],
+        "sort": "ascending",
+        "changes": [
+          {
+            "action": "sort",
+            "filters": {
+              "label": null
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "b",
+              "c",
+              "a"
+            ]
+          },
+          {
+            "action": "filter",
+            "filters": {
+              "label": [
+                "a"
+              ]
+            },
+            "sorter": {
+              "key": null,
+              "field": "label",
+              "order": "ascend"
+            },
+            "rows": [
+              "a"
+            ]
+          }
+        ],
+        "peerSort": "ascending"
+      }
+    }
+  ]
+}

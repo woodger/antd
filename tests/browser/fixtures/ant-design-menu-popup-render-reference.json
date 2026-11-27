@@ -1,0 +1,4402 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "browser": "157.0.8103.78",
+    "react": "18.3.1",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30"
+  },
+  "cases": [
+    {
+      "options": {
+        "id": "vertical-initial",
+        "mode": "vertical",
+        "force": false,
+        "direct": false
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "root",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "root",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "root",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "root",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "root",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "root",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "updated",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "root",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "updated",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "root",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "vertical-forced",
+        "mode": "vertical",
+        "force": true,
+        "direct": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "horizontal",
+        "mode": "horizontal",
+        "force": false,
+        "direct": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            338,
+            164,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            338,
+            164,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            338,
+            164,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "horizontal-overflow",
+        "mode": "horizontal",
+        "force": true,
+        "direct": true,
+        "width": 150
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          }
+        ]
+      },
+      "closed": {
+        "owners": [
+          {
+            "owner": "root",
+            "branch": "rc-menu-more",
+            "path": "rc-menu-more",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Branch",
+              "After"
+            ]
+          },
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "rc-menu-more/branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "rc-menu-more/branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "branch",
+            "keys": [
+              "rc-menu-more",
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "root",
+            "branch": "rc-menu-more",
+            "path": "rc-menu-more",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Branch",
+              "After"
+            ]
+          },
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "rc-menu-more/branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "rc-menu-more/branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "BranchAfterFooter",
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            454,
+            168,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "branch",
+            "keys": [
+              "rc-menu-more",
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "root",
+            "branch": "rc-menu-more",
+            "path": "rc-menu-more",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Branch",
+              "After"
+            ]
+          },
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "rc-menu-more/branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "rc-menu-more/branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "BranchAfterFooter",
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch",
+              "rc-menu-more"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            454,
+            168,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "branch",
+            "keys": [
+              "rc-menu-more",
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "updated",
+            "branch": "rc-menu-more",
+            "path": "rc-menu-more",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Branch",
+              "After"
+            ]
+          },
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "rc-menu-more/branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "rc-menu-more/branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "BranchAfterFooter",
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch",
+              "rc-menu-more"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            454,
+            168,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "branch",
+            "keys": [
+              "rc-menu-more",
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "updated",
+            "branch": "rc-menu-more",
+            "path": "rc-menu-more",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Branch",
+              "After"
+            ]
+          },
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "rc-menu-more/branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "rc-menu-more/branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch",
+              "rc-menu-more"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": []
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "branch",
+            "keys": [
+              "rc-menu-more",
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "rc-menu-more"
+            ],
+            "nodeIdPresent": true,
+            "key": "rc-menu-more",
+            "title": null,
+            "children": [
+              "branch",
+              "after"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "rc-menu-more",
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "inline",
+        "mode": "inline",
+        "force": true,
+        "direct": true
+      },
+      "server": {
+        "originalInline": [
+          2,
+          1
+        ],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [
+          2,
+          1
+        ],
+        "events": [],
+        "leafBoxes": [
+          [
+            62,
+            246,
+            104,
+            40
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [
+          2,
+          1
+        ],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            62,
+            246,
+            104,
+            40
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [
+          2,
+          1
+        ],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            62,
+            246,
+            104,
+            40
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "inline-collapsed",
+        "mode": "inline",
+        "collapsed": true,
+        "force": false,
+        "direct": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "B",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "B",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "B",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "B",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "ChildInnerFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            342,
+            158,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "B",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Child",
+              "Inner"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "B",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "replace-origin",
+        "mode": "vertical",
+        "force": false,
+        "direct": true,
+        "replace": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "click",
+            "leaf",
+            [
+              "leaf",
+              "inner",
+              "branch"
+            ]
+          ],
+          [
+            "select",
+            "leaf",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "open",
+            []
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "options": {
+        "id": "empty-origin",
+        "mode": "vertical",
+        "force": false,
+        "direct": true,
+        "empty": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [],
+        "visiblePopups": [
+          ""
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [],
+        "visiblePopups": [
+          ""
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [],
+        "visiblePopups": [
+          ""
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "navigation": [
+    {
+      "options": {
+        "id": "custom-list",
+        "mode": "vertical",
+        "force": false,
+        "direct": true,
+        "replace": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "open",
+            [
+              "inner",
+              "branch"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "open",
+            [
+              "inner",
+              "branch"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "open",
+            [
+              "inner",
+              "branch"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "navigation": {
+        "enter": "Inner",
+        "last": "Inner",
+        "first": "Inner",
+        "down": "Inner"
+      },
+      "errors": [
+        "Cannot read properties of null (reading 'querySelectorAll')",
+        "Cannot read properties of null (reading 'querySelectorAll')",
+        "Cannot read properties of null (reading 'querySelectorAll')"
+      ]
+    },
+    {
+      "options": {
+        "id": "custom-menu-list",
+        "mode": "vertical",
+        "force": false,
+        "direct": true,
+        "replace": true,
+        "menuList": true
+      },
+      "server": {
+        "originalInline": [],
+        "wrappers": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "closed": {
+        "owners": [],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          }
+        ]
+      },
+      "opened": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "root",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "open",
+            [
+              "inner",
+              "branch"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "updated": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": true,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [
+          "InnerChildFooter",
+          "LeafFooter"
+        ],
+        "inline": [],
+        "events": [
+          [
+            "open",
+            [
+              "inner",
+              "branch"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            242,
+            110,
+            152,
+            40
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "reclosed": {
+        "owners": [
+          {
+            "owner": "branch",
+            "branch": "branch",
+            "path": "branch",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Inner",
+              "Child"
+            ]
+          },
+          {
+            "owner": "updated",
+            "branch": "inner",
+            "path": "branch/inner",
+            "visible": false,
+            "header": "menu",
+            "children": [
+              "Leaf"
+            ]
+          }
+        ],
+        "visiblePopups": [],
+        "inline": [],
+        "events": [
+          [
+            "open",
+            [
+              "inner",
+              "branch"
+            ]
+          ]
+        ],
+        "leafBoxes": [
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "ledger": [
+          {
+            "renderer": "branch",
+            "keys": [
+              "branch"
+            ],
+            "nodeIdPresent": true,
+            "key": "branch",
+            "title": "Branch",
+            "children": [
+              "child",
+              "inner"
+            ]
+          },
+          {
+            "renderer": "root",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          },
+          {
+            "renderer": "updated",
+            "keys": [
+              "branch",
+              "inner"
+            ],
+            "nodeIdPresent": true,
+            "key": "inner",
+            "title": "Inner",
+            "children": [
+              "leaf"
+            ]
+          }
+        ]
+      },
+      "navigation": {
+        "enter": "Inner",
+        "last": "Child",
+        "first": "Inner",
+        "down": "Child"
+      },
+      "errors": []
+    }
+  ],
+  "capture": {
+    "repeats": 2,
+    "renderer": "Official unmodified Ant Design UMD. Browser popup work with Chromium and DOM-free SSR in Node VM.",
+    "repeatSha256": "663bc39523e4e2105877e9e6fea724faa1626090b83cad11a8585e01d48b64ec"
+  }
+}

@@ -1,0 +1,114 @@
+<script lang="ts">
+  import { untrack } from 'svelte';
+  import Input from '../input/Input.svelte';
+  import InputNumber from '../input-number/InputNumber.svelte';
+  import Select from '../select/Select.svelte';
+  import { toHexFormat, type AggregationColor } from '../color/color';
+  import { generateColor, getColorAlpha, type ColorFormat } from './color-picker.engine';
+
+  let { prefixCls, value, format, disabledAlpha, disabledFormat, onFormatChange, onChange }: {
+    prefixCls: string;
+    value: AggregationColor;
+    format?: ColorFormat;
+    disabledAlpha?: boolean;
+    disabledFormat?: boolean;
+    onFormatChange: (format: ColorFormat) => void;
+    onChange: (value: AggregationColor) => void;
+  } = $props();
+  let hex = $state(untrack(() => toHexFormat(value.toHexString())));
+  let colorFormat = $derived(format ?? 'hex');
+
+  $effect.pre(() => {
+    hex = toHexFormat(value.toHexString());
+  });
+
+  function handleHex(input: string) {
+    hex = toHexFormat(input);
+    if (/^(?:[\da-f]{6}|[\da-f]{8})$/i.test(toHexFormat(input, true))) {
+      onChange(generateColor(input));
+    }
+  }
+
+  function handleChannel(channel: 'r' | 'g' | 'b' | 'h' | 's', number: number | null) {
+    if (colorFormat === 'rgb') {
+      onChange(generateColor({ ...value.toRgb(), [channel]: number || 0 }));
+    }
+    else {
+      onChange(generateColor({ ...value.toHsb(),
+        [channel]: channel === 'h' ? number || 0 : (number || 0) / 100 }));
+    }
+  }
+</script>
+
+<style>
+  .color-fields :global(.color-picker-format > [data-ant-select-control]) {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    gap: 0;
+    font-size: var(--ant-font-size-sm);
+    line-height: var(--ant-control-height-sm);
+    height: calc(var(--ant-font-size) + 10px);
+  }
+  .color-fields :global(.color-picker-format [data-ant-select-content]) {
+    flex: none;
+    width: auto;
+    margin-inline-end: var(--ant-margin-xxs);
+  }
+  .color-fields :global(.color-picker-format [data-ant-select-input]) { width: 3ch; }
+  @supports (field-sizing: content) {
+    .color-fields :global(.color-picker-format [data-ant-select-input]) {
+      field-sizing: content;
+      width: auto;
+    }
+  }
+  /* Source color-picker/style/input.ts: compact options through the preserved Select wrapper. */
+  .color-fields :global(.color-picker-format > [data-ant-select-control][data-ant-select-single] [data-ant-select-dropdown] [data-ant-select-item]) { min-height: auto; }
+  .color-fields :global(.color-picker-format > [data-ant-select-control][data-ant-select-single] [data-ant-select-dropdown] [data-ant-select-item] > span:first-child) {
+    font-size: var(--ant-font-size-sm);
+    line-height: var(--ant-line-height-sm);
+  }
+  .color-fields :global([data-ant-input-number-size="small"]) { height: calc(var(--ant-font-size) + 10px); }
+  .color-fields :global([data-color-picker-channels] input[role="spinbutton"]) { height: calc(var(--ant-font-size-sm) + 8px); }
+</style>
+
+<div class={[`${prefixCls}-input-container`, 'color-fields']}>
+  {#if !disabledFormat}
+    <Select bind:value={() => colorFormat, () => {}} variant="borderless"
+      size="small" aria-label="Color format" placement="bottomRight"
+      popupMatchSelectWidth={68} getPopupContainer={current => current}
+      class={`${prefixCls}-format-select color-picker-format`}
+      style={'min-width:0;'
+        + 'width:max-content;'
+        + 'flex:none;'
+        + 'margin-inline-end:var(--ant-margin-xs)'}
+      options={['hex', 'hsb', 'rgb'].map(value => ({ value, label: value.toUpperCase() }))}
+      onValueChange={next => onFormatChange(next as ColorFormat)} />
+  {/if}
+  <div class={`${prefixCls}-input`}>
+    {#if colorFormat === 'hex'}
+      <Input value={hex} onValueChange={handleHex} prefix="#" aria-label="Hex color"
+        class={`${prefixCls}-hex-input`} size="small" />
+    {:else}
+      <div class={`${prefixCls}-${colorFormat}-input`} data-color-picker-channels>
+        {#each colorFormat === 'rgb' ? ['r', 'g', 'b'] as const : ['h', 's', 'b'] as const as channel}
+          {@const number = colorFormat === 'rgb' ? value.toRgb()[channel as 'r' | 'g' | 'b']
+            : value.toHsb()[channel as 'h' | 's' | 'b'] * (channel === 'h' ? 1 : 100)}
+          <InputNumber bind:value={() => number, () => {}} min={0}
+            max={colorFormat === 'rgb' ? 255 : channel === 'h' ? 360 : 100}
+            size="small" aria-label={`Color ${channel}`}
+            class={`${prefixCls}-steppers ${prefixCls}-${colorFormat}-input`}
+            formatter={colorFormat === 'hsb' ? point => `${Math.round(Number(point || 0))}${channel === 'h' ? '' : '%'}` : undefined}
+            onValueChange={next => handleChannel(channel, next)} />
+        {/each}
+      </div>
+    {/if}
+  </div>
+  {#if !disabledAlpha}
+    <InputNumber bind:value={() => getColorAlpha(value), () => {}} size="small" min={0} max={100}
+      class={`${prefixCls}-steppers ${prefixCls}-alpha-input`} aria-label="Color alpha"
+      formatter={point => `${point}%`}
+      onValueChange={point => onChange(generateColor({ ...value.toHsb(), a: (point || 0) / 100 }))} />
+  {/if}
+</div>

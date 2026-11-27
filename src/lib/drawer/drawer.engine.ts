@@ -1,0 +1,128 @@
+// Converts Drawer dimension and placement into size, offset, and motion parameters without using the DOM.
+import type {
+  DrawerConfig, DrawerFocusableConfig, DrawerMask,
+  DrawerPlacement, DrawerPushConfig, DrawerSize
+} from './drawer.types';
+import { resolveDialogFocusable, resolveDialogMask } from '../dialog/dialog-interaction.engine';
+
+export const DEFAULT_DRAWER_SIZE = 378;
+export const DEFAULT_DRAWER_PUSH_DISTANCE = 180;
+const defaultSizeInCss = `${DEFAULT_DRAWER_SIZE}px`;
+
+/** Select native modality for previous settings and allows independent focus modes. */
+export function resolveDrawerInteraction(
+  mask: DrawerMask | undefined,
+  focusable: DrawerFocusableConfig | undefined,
+  autoFocus: boolean,
+  config?: DrawerConfig
+) {
+  const mergedMask = resolveDialogMask(mask, config?.mask);
+  const { trap, restoreFocus } = resolveDialogFocusable(
+    focusable, config?.focusable, mergedMask.enabled
+  );
+  const native = mergedMask.enabled && trap && autoFocus && restoreFocus;
+
+  return {
+    mask: mergedMask,
+    trap,
+    restoreFocus,
+    autoFocus,
+    native
+  };
+}
+
+export type DrawerInteraction = ReturnType<typeof resolveDrawerInteraction>;
+
+/** Retains CSS-length. Let's say zero as a result of changing the size of the panel. */
+export function getDrawerSize(size: DrawerSize = 'default', allowZero = false): string {
+  if (size === 'default') {
+    return defaultSizeInCss;
+  }
+  if (size === 'large') {
+    return '736px';
+  }
+  if (typeof size === 'number') {
+    const valid = size > 0 || size === 0 && allowZero;
+    return Number.isFinite(size) && valid ? `${size}px` : defaultSizeInCss;
+  }
+
+  const text = size.trim();
+  return /^\d+(\.\d+)?$/.test(text) ? `${text}px` : text || defaultSizeInCss;
+}
+
+/** Only an absolute size in pixels can replace the measurement at the beginning drag. */
+export function getDrawerPixelSize(size: string): number | undefined {
+  return /^(\d+(\.\d*)?|\.\d+)px$/i.test(size) ? Number.parseFloat(size) : undefined;
+}
+
+/** The axis resize follows the physical side of the panel and does not depend on the direction. */
+export function isDrawerHorizontal(placement: DrawerPlacement): boolean {
+  return placement === 'left' || placement === 'right';
+}
+
+/** Brings back the proposed size from the full delta from the moment of capture. */
+export function getDrawerResizeSize(
+  placement: DrawerPlacement,
+  startSize: number,
+  delta: number,
+  maxSize?: number
+): number {
+  const reverse = placement === 'right' || placement === 'bottom';
+  const next = Math.max(0, startSize + (reverse ? -delta : delta));
+
+  return maxSize !== undefined && Number.isFinite(maxSize) && maxSize > 0
+    ? Math.min(maxSize, next) : next;
+}
+
+/** An implicit push sets 180px. An explicit true or an empty object inherits distance. */
+export function getDrawerPushDistance(
+  push: boolean | DrawerPushConfig | undefined,
+  parentDistance?: number
+): number {
+  if (push === false) {
+    return 0;
+  }
+  if (push === undefined) {
+    return DEFAULT_DRAWER_PUSH_DISTANCE;
+  }
+
+  const distance = push === true ? parentDistance : push.distance ?? parentDistance;
+  if (distance === undefined) {
+    return DEFAULT_DRAWER_PUSH_DISTANCE;
+  }
+
+  const pixels = Number(distance);
+  return Number.isFinite(pixels) ? pixels : 0;
+}
+
+/** Shifts the open panel from the edge. Translate develops with its own animation transform. */
+export function getDrawerPushOffset(placement: DrawerPlacement, distance: number): string | undefined {
+  if (distance === 0) {
+    return undefined;
+  }
+
+  const reverse = placement === 'right' || placement === 'bottom';
+  const offset = `${reverse ? -distance : distance}px`;
+  return isDrawerHorizontal(placement) ? offset : `0px ${offset}`;
+}
+
+/** Initial and final motion footage refers to the physical side. */
+export function getDrawerTransform(placement: DrawerPlacement): string {
+  return {
+    left: 'translateX(-100%)',
+    right: 'translateX(100%)',
+    top: 'translateY(-100%)',
+    bottom: 'translateY(100%)'
+  }[placement];
+}
+
+/** Returns the duration in milliseconds, including the zero value of the theme. */
+export function getDrawerMotionDuration(value: string): number {
+  const match = value.trim().match(/^(\d*\.?\d+)(ms|s)$/);
+  if (!match) {
+    return 300;
+  }
+
+  const duration = Number(match[1]) * (match[2] === 's' ? 1000 : 1);
+  return Number.isFinite(duration) ? duration : 300;
+}

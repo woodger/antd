@@ -1,0 +1,36 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "rcTabs": {
+      "version": "1.13.0",
+      "revision": "dea2f5f48991865ddbf743b0f783f45eb72ff671"
+    },
+    "source": "package/dist/antd.min.js",
+    "browser": "156.0.8078.4",
+    "currentApiScope": "Deprecated destruction flags removed. Current flags reproduce the originally measured normalized inputs; native item-before-root priority remains explicit. Current Source retention rechecked separately."
+  },
+  "cases": [
+    {"name":"root-destroy","sourceRetained":false,"rootModern":true},
+    {"name":"root-retain","sourceRetained":true,"rootModern":false},
+    {"name":"item-destroy","sourceRetained":false,"itemModern":true},
+    {"name":"item-retain","sourceRetained":true,"itemModern":false},
+    {
+      "name": "native-item-retains-before-root",
+      "itemModern": false,
+      "nativeRetained": true,
+      "sourceRetained": false,
+      "rootModern": true
+    },
+    {
+      "name": "native-item-destroys-before-root",
+      "rootModern": false,
+      "nativeRetained": false,
+      "sourceRetained": true,
+      "itemModern": true
+    },
+    {"name":"root-force-render","force":true,"sourceRetained":true,"rootModern":true},
+    {"name":"item-force-render","force":true,"sourceRetained":true,"itemModern":true}
+  ]
+}

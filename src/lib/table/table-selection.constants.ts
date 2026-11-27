@@ -1,0 +1,3 @@
+export const SELECTION_ALL = 'SELECT_ALL';
+export const SELECTION_INVERT = 'SELECT_INVERT';
+export const SELECTION_NONE = 'SELECT_NONE';

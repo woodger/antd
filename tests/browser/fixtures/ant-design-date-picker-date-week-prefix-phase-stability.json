@@ -1,0 +1,42 @@
+{
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "normalization": [],
+  "IDsRenumbered": false,
+  "scope": "Exact first/repeat owner own keys/open/props-state/full encoded and raw model/full Date annotations/full cumulative callbacks including raw/encoded arguments, receiver and IDs, plus input identity/value/placeholder/disabled at every before, afterFocusPointer, afterCall and settled phase. Focus/caret, other DOM, event times, scheduler and producer counts are outside this selected projection. afterCall is a separate measured phase and is never substituted for settled.",
+  "rows": [
+    {
+      "id": "single-date-week-prefix",
+      "checked": {
+        "before": 10,
+        "afterFocusPointer": 1,
+        "afterCall": 10,
+        "settled": 10
+      }
+    },
+    {
+      "id": "range-date-week-prefix",
+      "checked": {
+        "before": 10,
+        "afterFocusPointer": 1,
+        "afterCall": 10,
+        "settled": 10
+      }
+    }
+  ],
+  "differingPoints": 1,
+  "variance": [
+    {
+      "id": "range-date-week-prefix",
+      "index": 6,
+      "phase": "afterCall",
+      "differences": [
+        {
+          "path": "/inputs/1/value",
+          "first": "2021-01-03",
+          "repeat": "2021-01-15"
+        }
+      ]
+    }
+  ]
+}

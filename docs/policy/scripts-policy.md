@@ -1,29 +1,36 @@
 # Политика скриптов и сборки
 
 > Type: Policy. Этот документ задаёт ограничения на npm scripts, SvelteKit/Vite
-> config, test pipeline и adapter-node build.
+> config, test pipeline и сборку npm-пакета.
 
 ## Поддерживаемый контур
 
-Текущие public developer commands определены в `package.json`:
+Команды определены в локальном `package.json`:
 
-- `npm run dev` — Vite development server;
-- `npm run build` — production SvelteKit build;
-- `npm run lint` — Oxlint для `src`, `e2e` и `playwright.config.ts`;
-- `npm test` — Vitest node contour;
-- `npm run test:e2e` — Playwright Chromium contour;
-- `npm run preview` — локальная проверка build.
+- `npm run build` — сборка npm-пакета в `dist` через `svelte-package`;
+- `npm run dev` — watch-сборка пакета;
+- `npm run lint` — Oxlint для исходников, инструментов и конфигурации;
+- `npm run check` — Svelte/TypeScript check;
+- `npm test` — Vitest для компонентов и инструментов;
+- `npm run cli -- ...` — служебный CLI через `icore`.
 
-Дополнительная type/template проверка выполняется через `svelte-kit sync` и
-`svelte-check`, как указано в корневом readme.
+В CLI собраны проверки собранного пакета и инструменты переноса.
 
-Playwright собирает приложение перед запуском preview и поднимает отдельный
-Vite-стенд из `e2e/fixtures`. Их lifecycle и порты задаёт
-`playwright.config.ts`. Существующие серверы для тестов не переиспользуются.
-Type/template check тестового кода использует `e2e/tsconfig.json`.
+- `npm run cli -- check tests` — Svelte/TypeScript check тестов и фикстур;
+- `npm run cli -- test package` — сборка и SSR-проверки публичного пакета;
+- `npm run cli -- test browser` — Playwright на Vite-стенде.
 
-`npm run preview` не является production entrypoint. Adapter-node production
-запускает `node build` согласно deployment guide.
+Типизация фикстур, package-тесты и браузерный стенд читают текущий `dist`.
+Их команды собирают пакет
+перед проверкой; это зависимые шаги. Стенд работает на порту `4175`, не требует
+homepage и не входит в npm-архив. Playwright, его lifecycle и browser artifacts
+настраиваются в `playwright.config.ts`.
+
+`registry check`, `registry report`, `registry show <component>` и `css`
+обслуживают реестр и vendor CSS.
+`npm run cli -- --help` выводит команды и параметры. Их формат описан в
+[справочнике переноса](../reference/ant-design-porting/readme.md).
+Для этих команд не нужны исходники приложения-потребителя.
 
 ## Изменение scripts
 
@@ -47,7 +54,7 @@ Scripts и config меняются только когда задача прям
 ## Generated и build output
 
 - `.svelte-kit` создаётся SvelteKit tooling и не является source.
-- `build` создаётся adapter-node и не редактируется вручную.
+- `dist` создаётся `svelte-package` и не редактируется вручную.
 - Stale artifact не исправляется изменением исходного кода или постоянным
   `clean` hook без доказанной причины.
 - Проверка изменённого source не опирается на старый `build`.

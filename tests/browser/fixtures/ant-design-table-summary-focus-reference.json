@@ -1,0 +1,59 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "tableVersion": "1.11.1",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "viewport": {
+      "width": 1000,
+      "height": 570
+    },
+    "repeat": 2
+  },
+  "before": {
+    "focused": true,
+    "value": "Written before hydration",
+    "input": [
+      364,
+      452
+    ],
+    "end": [
+      455,
+      635
+    ],
+    "hit": true,
+    "hitText": "",
+    "holderLeft": 0
+  },
+  "after": {
+    "focused": true,
+    "value": "Written before hydration",
+    "input": [
+      392,
+      480
+    ],
+    "end": [
+      268,
+      448
+    ],
+    "hit": false,
+    "hitText": "46",
+    "holderLeft": 0
+  },
+  "afterScroll": {
+    "focused": true,
+    "value": "Written before hydration",
+    "input": [
+      392,
+      480
+    ],
+    "end": [
+      268,
+      448
+    ],
+    "hit": false,
+    "hitText": "46",
+    "holderLeft": 0
+  },
+  "errors": []
+}

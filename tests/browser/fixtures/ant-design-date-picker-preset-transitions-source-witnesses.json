@@ -1,0 +1,75 @@
+{
+  "primary": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+  "bytes": 4217353,
+  "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+  "package": "official Antd 6.6.8 UMD including @rc-component/picker 1.12.2",
+  "evidence": "Static primary-source witnesses; no measured result or expected call count.",
+  "sections": [
+    {
+      "first": 47266,
+      "last": 47276,
+      "fact": "Calendar sync depends on mergedValue, not format.",
+      "excerpt": "function useCalendarValue(mergedValue) {\n  const [calendarValue, setCalendarValue] = useSyncState_useSyncState(mergedValue);\n\n  /** Sync calendarValue & submitValue back with value */\n  const syncWithValue = hooks_useEvent(() => {\n    setCalendarValue(mergedValue);\n  });\n  external_root_React_commonjs2_react_commonjs_react_amd_react_.useEffect(() => {\n    syncWithValue();\n  }, [mergedValue]);\n  return [calendarValue, setCalendarValue];"
+    },
+    {
+      "first": 47080,
+      "last": 47098,
+      "fact": "Picker reset notification and controlled state path.",
+      "excerpt": "  // Current PickerValue\n  const currentPickerValue = external_root_React_commonjs2_react_commonjs_react_amd_react_.useMemo(() => {\n    const current = [mergedStartPickerValue, mergedEndPickerValue][mergedActiveIndex];\n\n    // Merge the `showTime.defaultValue` into `pickerValue`\n    return isTimePicker ? current : fillTime(generateConfig, current, timeDefaultValue[mergedActiveIndex]);\n  }, [isTimePicker, mergedStartPickerValue, mergedEndPickerValue, mergedActiveIndex, generateConfig, timeDefaultValue]);\n  const setCurrentPickerValue = (nextPickerValue, source = 'panel') => {\n    const updater = [setStartPickerValue, setEndPickerValue][mergedActiveIndex];\n    updater(nextPickerValue);\n    const clone = [mergedStartPickerValue, mergedEndPickerValue];\n    clone[mergedActiveIndex] = nextPickerValue;\n    if (onPickerValueChange && (!isSame(generateConfig, locale, mergedStartPickerValue, clone[0], pickerMode) || !isSame(generateConfig, locale, mergedEndPickerValue, clone[1], pickerMode))) {\n      onPickerValueChange(clone, {\n        source,\n        range: mergedActiveIndex === 1 ? 'end' : 'start',\n        mode: modes\n      });\n    }"
+    },
+    {
+      "first": 47124,
+      "last": 47185,
+      "fact": "Open/calendar effects; omitted default; exact min/max clamp.",
+      "excerpt": "  // >>> When switch field, reset the picker value as prev field picker value\n  const prevActiveIndexRef = external_root_React_commonjs2_react_commonjs_react_amd_react_.useRef(null);\n  hooks_useLayoutEffect(() => {\n    if (open) {\n      if (!defaultPickerValue[mergedActiveIndex]) {\n        let nextPickerValue = isTimePicker ? null : generateConfig.getNow();\n\n        /**\n         * 1. If focus switches inside the open Picker, keep the current panels\n         * 2. If current field has value, sync it to the panels\n         *    - Start: use the start value\n         *    - End: keep start when both values fit, otherwise put end on the second panel\n         * 3. If current field has no value but another field has value, use another field value\n         * 4. Else use now (not any `calendarValue` can ref)\n         */\n\n        if (preserveOnFieldChange && prevActiveIndexRef.current !== null && prevActiveIndexRef.current !== mergedActiveIndex) {\n          // If from another field, not jump picker value\n          nextPickerValue = [mergedStartPickerValue, mergedEndPickerValue][mergedActiveIndex ^ 1];\n        } else if (activeCalendarValue) {\n          // Current field has value\n          nextPickerValue = mergedActiveIndex === 0 ? startCalendarValue : getEndDatePickerValue(startCalendarValue, endCalendarValue);\n        } else if (inactiveCalendarValue) {\n          // Current field has no value but another field has value\n          nextPickerValue = inactiveCalendarValue;\n        }\n\n        // Only sync when has value, this will sync in the `min-max` logic\n        if (nextPickerValue) {\n          // nextPickerValue < minDate\n          if (minDate && generateConfig.isAfter(minDate, nextPickerValue)) {\n            nextPickerValue = minDate;\n          }\n\n          // maxDate < nextPickerValue\n          const offsetPickerValue = multiplePanel ? offsetPanelDate(generateConfig, pickerMode, nextPickerValue, 1) : nextPickerValue;\n          if (maxDate && generateConfig.isAfter(offsetPickerValue, maxDate)) {\n            nextPickerValue = multiplePanel ? offsetPanelDate(generateConfig, pickerMode, maxDate, -1) : maxDate;\n          }\n          setCurrentPickerValue(nextPickerValue, 'reset');\n        }\n      }\n    }\n  }, [open, preserveOnFieldChange, mergedActiveIndex, calendarValue[mergedActiveIndex]]);\n\n  // >>> Track previous field only during one continuous Picker focus session\n  external_root_React_commonjs2_react_commonjs_react_amd_react_.useEffect(() => {\n    if (open && preserveOnFieldChange) {\n      prevActiveIndexRef.current = mergedActiveIndex;\n    } else {\n      prevActiveIndexRef.current = null;\n    }\n  }, [open, preserveOnFieldChange, mergedActiveIndex]);\n\n  // >>> defaultPickerValue: Resync to `defaultPickerValue` for each panel focused\n  hooks_useLayoutEffect(() => {\n    if (open && defaultPickerValue) {\n      if (defaultPickerValue[mergedActiveIndex]) {\n        setCurrentPickerValue(defaultPickerValue[mergedActiveIndex], 'reset');\n      }\n    }\n  }, [open, mergedActiveIndex]);"
+    },
+    {
+      "first": 52179,
+      "last": 52193,
+      "fact": "Single picker callback preserves value and clean info source/mode.",
+      "excerpt": "  // ===================== Picker Value =====================\n  // Proxy to single pickerValue\n  const onInternalPickerValueChange = (dates, info) => {\n    if (onPickerValueChange) {\n      const cleanInfo = {\n        ...info,\n        mode: info.mode[0]\n      };\n      delete cleanInfo.range;\n      onPickerValueChange(dates[0], cleanInfo);\n    }\n  };\n  const [currentPickerValue, setCurrentPickerValue] = useRangePickerValue(generateConfig, locale, calendarValue, [mergedMode], mergedOpen, false, activeIndex, internalPicker, false,\n  // multiplePanel,\n  defaultPickerValue, pickerValue, miscUtil_toArray(showTime?.defaultOpenValue), onInternalPickerValueChange, minDate, maxDate);"
+    },
+    {
+      "first": 52234,
+      "last": 52262,
+      "fact": "Preview guard and close reset.",
+      "excerpt": "  // ======================== Hover =========================\n  const [hoverSource, setHoverSource] = external_root_React_commonjs2_react_commonjs_react_amd_react_.useState(null);\n  const [internalHoverValue, setInternalHoverValue] = external_root_React_commonjs2_react_commonjs_react_amd_react_.useState(null);\n  const hoverValues = external_root_React_commonjs2_react_commonjs_react_amd_react_.useMemo(() => {\n    const values = [internalHoverValue, ...calendarValue].filter(date => date);\n    return multiple ? values : values.slice(0, 1);\n  }, [calendarValue, internalHoverValue, multiple]);\n\n  // Selector values is different with RangePicker\n  // which can not use `hoverValue` directly\n  const selectorValues = external_root_React_commonjs2_react_commonjs_react_amd_react_.useMemo(() => {\n    if (!multiple && internalHoverValue) {\n      return [internalHoverValue];\n    }\n    return calendarValue.filter(date => date);\n  }, [calendarValue, internalHoverValue, multiple]);\n\n  // Clean up `internalHoverValues` when closed\n  external_root_React_commonjs2_react_commonjs_react_amd_react_.useEffect(() => {\n    if (!mergedOpen) {\n      setInternalHoverValue(null);\n    }\n  }, [mergedOpen]);\n  const onSetHover = (date, source) => {\n    if (previewValue !== 'hover') {\n      return;\n    }\n    setInternalHoverValue(date);\n    setHoverSource(source);"
+    },
+    {
+      "first": 52269,
+      "last": 52282,
+      "fact": "Preset submission; successful preset closes without OK.",
+      "excerpt": "  const presetList = usePresets(presets);\n  const onPresetHover = nextValue => {\n    onSetHover(nextValue, 'preset');\n  };\n\n  // TODO: handle this\n  const onPresetSubmit = nextValue => {\n    const nextCalendarValues = multiple ? toggleDates(getCalendarValue(), nextValue) : [nextValue];\n    const passed = triggerSubmitChange(nextCalendarValues);\n    if (passed && !multiple) {\n      triggerOpen(false, {\n        force: true\n      });\n    }"
+    },
+    {
+      "first": 48824,
+      "last": 48855,
+      "fact": "Time cell hover is passed without the disabled click guard.",
+      "excerpt": "    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(\"li\", {\n      key: unitValue,\n      style: styles.item,\n      className: clsx(cellPrefixCls, classNames.item, {\n        [`${cellPrefixCls}-selected`]: value === unitValue,\n        [`${cellPrefixCls}-disabled`]: disabled\n      }),\n      onClick: () => {\n        if (!disabled) {\n          onChange(unitValue);\n        }\n      },\n      onDoubleClick: () => {\n        if (!disabled && onDblClick) {\n          onDblClick();\n        }\n      },\n      onMouseEnter: () => {\n        onHover(unitValue);\n      },\n      onMouseLeave: () => {\n        onHover(null);\n      },\n      \"data-value\": unitValue\n    }, cellRender ? cellRender(unitValue, {\n      prefixCls,\n      originNode: inner,\n      today: now,\n      type: 'time',\n      subType: type,\n      locale\n    }) : inner);"
+    },
+    {
+      "first": 49004,
+      "last": 49056,
+      "fact": "Time hover uses individual setters, including meridiem.",
+      "excerpt": "  // ===================== Columns Change =====================\n  const fillColumnValue = (val, func) => {\n    if (val === null) {\n      return null;\n    }\n    return generateConfig[func](triggerDateTmpl, val);\n  };\n  const getNextHourTime = val => fillColumnValue(val, 'setHour');\n  const getNextMinuteTime = val => fillColumnValue(val, 'setMinute');\n  const getNextSecondTime = val => fillColumnValue(val, 'setSecond');\n  const getNextMillisecondTime = val => fillColumnValue(val, 'setMillisecond');\n  const getMeridiemTime = val => {\n    if (val === null) {\n      return null;\n    }\n    if (val === 'am' && !isAM(hour)) {\n      return generateConfig.setHour(triggerDateTmpl, hour - 12);\n    } else if (val === 'pm' && isAM(hour)) {\n      return generateConfig.setHour(triggerDateTmpl, hour + 12);\n    }\n    return triggerDateTmpl;\n  };\n  const onHourChange = val => {\n    triggerChange(getNextHourTime(val));\n  };\n  const onMinuteChange = val => {\n    triggerChange(getNextMinuteTime(val));\n  };\n  const onSecondChange = val => {\n    triggerChange(getNextSecondTime(val));\n  };\n  const onMillisecondChange = val => {\n    triggerChange(getNextMillisecondTime(val));\n  };\n  const onMeridiemChange = val => {\n    triggerChange(getMeridiemTime(val));\n  };\n\n  // ====================== Column Hover ======================\n  const onHourHover = val => {\n    onHover(getNextHourTime(val));\n  };\n  const onMinuteHover = val => {\n    onHover(getNextMinuteTime(val));\n  };\n  const onSecondHover = val => {\n    onHover(getNextSecondTime(val));\n  };\n  const onMillisecondHover = val => {\n    onHover(getNextMillisecondTime(val));\n  };\n  const onMeridiemHover = val => {\n    onHover(getMeridiemTime(val));"
+    },
+    {
+      "first": 46207,
+      "last": 46218,
+      "fact": "fillTime defaults missing time to zero.",
+      "excerpt": "function fillTime(generateConfig, date, time) {\n  let tmpDate = date;\n  const getFn = ['getHour', 'getMinute', 'getSecond', 'getMillisecond'];\n  const setFn = ['setHour', 'setMinute', 'setSecond', 'setMillisecond'];\n  setFn.forEach((fn, index) => {\n    if (time) {\n      tmpDate = generateConfig[fn](tmpDate, generateConfig[getFn[index]](time));\n    } else {\n      tmpDate = generateConfig[fn](tmpDate, 0);\n    }\n  });\n  return tmpDate;"
+    },
+    {
+      "first": 48485,
+      "last": 48506,
+      "fact": "Date cells originate from panel pickerValue.",
+      "excerpt": "    locale,\n    generateConfig,\n    pickerValue,\n    onPickerValueChange,\n    onModeChange,\n    mode = 'date',\n    disabledDate,\n    onSelect,\n    onHover,\n    showWeek\n  } = props;\n  const panelPrefixCls = `${prefixCls}-${panelName}-panel`;\n  const cellPrefixCls = `${prefixCls}-cell`;\n  const isWeek = mode === 'week';\n\n  // ========================== Base ==========================\n  const [info, now] = useInfo(props, mode);\n  const weekFirstDay = generateConfig.locale.getWeekFirstDay(locale.locale);\n  const monthStartDate = generateConfig.setDate(pickerValue, 1);\n  const baseDate = getWeekStartDate(locale.locale, generateConfig, monthStartDate);\n  const month = generateConfig.getMonth(pickerValue);\n"
+    },
+    {
+      "first": 48299,
+      "last": 48325,
+      "fact": "Date hover/leave disabled guard and actual cell render info.",
+      "excerpt": "        onClick: () => {\n          if (!disabled) {\n            onSelect(currentDate);\n          }\n        },\n        onDoubleClick: () => {\n          if (!disabled && onCellDblClick) {\n            onCellDblClick();\n          }\n        },\n        onMouseEnter: () => {\n          if (!disabled) {\n            onHover?.(currentDate);\n          }\n        },\n        onMouseLeave: () => {\n          if (!disabled) {\n            onHover?.(null);\n          }\n        }\n      }, cellRender ? cellRender(currentDate, {\n        prefixCls,\n        originNode: inner,\n        today: now,\n        type: type,\n        locale\n      }) : inner));"
+    }
+  ]
+}

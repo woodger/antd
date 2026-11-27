@@ -1,0 +1,1148 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "rcMentions": "1.12.0",
+    "rcMentionsIntegrity": "sha512-v5MBx8zDcqCT+uybJgKpcx3Fgrvj0m3u+A/15RlSBaMx12lLoJZTTYggC3pbYYfohcKujWWUyBz6O6Gp2vGiNA==",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "browser": "158.0.8127.36",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "default"
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "empty",
+        "transitionName": ""
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "no-css",
+        "transitionName": "mention-absent"
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            [],
+            [
+              "mention-absent",
+              "mention-absent-appear",
+              "mention-absent-appear-prepare"
+            ],
+            [
+              "mention-absent",
+              "mention-absent-appear",
+              "mention-absent-appear-start"
+            ],
+            [
+              "mention-absent",
+              "mention-absent-appear",
+              "mention-absent-appear-active"
+            ]
+          ],
+          "names": []
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "named",
+        "transitionName": "mention-enter",
+        "wrap": true,
+        "portal": true
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": true,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 1,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            [],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-prepare"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-start"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-active"
+            ],
+            []
+          ],
+          "names": [
+            "mention-grow"
+          ]
+        },
+        "whileRenamed": {
+          "open": true,
+          "portal": true,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": true,
+          "side": "overlap",
+          "popupMounts": 1,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "renameMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 1,
+          "popupUnmounts": 1,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        },
+        "reopened": {
+          "open": true,
+          "portal": true,
+          "focused": true,
+          "autofocus": false,
+          "value": "@@",
+          "selection": [
+            2,
+            2
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": "right",
+          "popupMounts": 2,
+          "popupUnmounts": 1,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ],
+            [
+              "change",
+              "@@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "reopenMotion": {
+          "frames": [
+            [],
+            [
+              "mention-revised",
+              "mention-revised-appear",
+              "mention-revised-appear-prepare"
+            ],
+            [
+              "mention-revised",
+              "mention-revised-appear",
+              "mention-revised-appear-start"
+            ],
+            [
+              "mention-revised",
+              "mention-revised-appear",
+              "mention-revised-appear-active"
+            ],
+            []
+          ],
+          "names": [
+            "mention-grow"
+          ]
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "provider-off",
+        "transitionName": "mention-enter",
+        "motion": false
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            [],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-prepare"
+            ],
+            []
+          ],
+          "names": []
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "reduced",
+        "transitionName": "mention-enter",
+        "reduced": true
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            [],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-prepare"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-start"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-active"
+            ],
+            []
+          ],
+          "names": [
+            "mention-grow"
+          ]
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "rapid",
+        "transitionName": "mention-enter",
+        "wrap": true,
+        "portal": true,
+        "rapid": true
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "interrupted": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 1,
+          "popupUnmounts": 1,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "firstMotion": {
+          "frames": [
+            [],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-prepare"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-start"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-active"
+            ],
+            []
+          ],
+          "names": [
+            "mention-grow"
+          ]
+        },
+        "open": {
+          "open": true,
+          "portal": true,
+          "focused": true,
+          "autofocus": false,
+          "value": "@@",
+          "selection": [
+            2,
+            2
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": "right",
+          "popupMounts": 2,
+          "popupUnmounts": 1,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ],
+            [
+              "change",
+              "@@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            [],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-prepare"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-start"
+            ],
+            [
+              "mention-enter",
+              "mention-enter-appear",
+              "mention-enter-appear-active"
+            ],
+            []
+          ],
+          "names": [
+            "mention-grow"
+          ]
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@@",
+          "selection": [
+            2,
+            2
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 2,
+          "popupUnmounts": 2,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ],
+            [
+              "change",
+              "@@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "options",
+        "direction": "rtl",
+        "autoFocus": true,
+        "silent": true,
+        "portal": true
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": true,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "left",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        },
+        "afterEnter": {
+          "open": true,
+          "portal": true,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": true,
+          "side": "left",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@alice ",
+          "selection": [
+            7,
+            7
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ],
+            [
+              "change",
+              "@alice "
+            ],
+            [
+              "select",
+              "alice",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "loading-unmuted",
+        "silent": false,
+        "loading": true
+      },
+      "state": {
+        "initial": {
+          "open": false,
+          "portal": false,
+          "focused": false,
+          "autofocus": false,
+          "value": "",
+          "selection": [
+            0,
+            0
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": []
+        },
+        "open": {
+          "open": true,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": null,
+          "side": "overlap",
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "motion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        },
+        "closed": {
+          "open": false,
+          "portal": false,
+          "focused": true,
+          "autofocus": false,
+          "value": "@",
+          "selection": [
+            1,
+            1
+          ],
+          "sameEditor": true,
+          "nativeRefOwnsEditor": true,
+          "lastPopupConnected": false,
+          "side": null,
+          "popupMounts": 0,
+          "popupUnmounts": 0,
+          "events": [
+            [
+              "change",
+              "@"
+            ],
+            [
+              "search",
+              "",
+              "@"
+            ]
+          ]
+        },
+        "closeMotion": {
+          "frames": [
+            []
+          ],
+          "names": []
+        }
+      }
+    }
+  ]
+}

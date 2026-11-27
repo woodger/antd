@@ -1,0 +1,35 @@
+{
+  "source": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "reactVersion": "18.3.1",
+    "operation": "renderToString, focus, hydrateRoot, press Enter"
+  },
+  "cases": [
+    {
+      "profile": "button",
+      "sameNode": true,
+      "focused": true,
+      "focusEvents": [],
+      "activations": [
+        {
+          "tag": "button",
+          "matchesRef": true
+        }
+      ]
+    },
+    {
+      "profile": "link",
+      "sameNode": true,
+      "focused": true,
+      "focusEvents": [],
+      "activations": [
+        {
+          "tag": "a",
+          "matchesRef": true
+        }
+      ]
+    }
+  ]
+}

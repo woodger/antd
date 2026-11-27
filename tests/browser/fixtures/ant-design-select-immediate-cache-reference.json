@@ -1,0 +1,2600 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "react": "18.3.1",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "atomic",
+          "multiple": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "apple"
+              ],
+              "tagTitles": [
+                "apple"
+              ],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "deferred",
+          "multiple": true,
+          "delayed": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "original",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "hide",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "single"
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": "apple",
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": null,
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  null,
+                  null
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "unbound",
+          "multiple": true,
+          "uncontrolled": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "label-in-value",
+          "multiple": true,
+          "labelInValue": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                {
+                  "label": "Apple label",
+                  "value": "apple"
+                }
+              ],
+              "selection": "hidden",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    {
+                      "label": "Apple label",
+                      "value": "apple"
+                    }
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  {
+                    "label": "Apple label",
+                    "value": "apple"
+                  },
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    {
+                      "label": "Apple label",
+                      "value": "apple"
+                    }
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  {
+                    "label": "Apple label",
+                    "value": "apple"
+                  },
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  {
+                    "value": "apple"
+                  },
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "mapped-zero",
+          "multiple": true,
+          "fieldNames": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                0
+              ],
+              "selection": "hidden",
+              "values": [
+                "0"
+              ],
+              "tagTitles": [
+                "0"
+              ],
+              "controlText": "0",
+              "events": [
+                [
+                  "change",
+                  [
+                    0
+                  ],
+                  [
+                    {
+                      "data": {
+                        "code": 0,
+                        "caption": "Apple label",
+                        "compact": "Compact label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "code",
+                        "caption",
+                        "compact",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  0,
+                  {
+                    "data": {
+                      "code": 0,
+                      "caption": "Apple label",
+                      "compact": "Compact label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "code",
+                      "caption",
+                      "compact",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    0
+                  ],
+                  [
+                    {
+                      "data": {
+                        "code": 0,
+                        "caption": "Apple label",
+                        "compact": "Compact label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "code",
+                        "caption",
+                        "compact",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  0,
+                  {
+                    "data": {
+                      "code": 0,
+                      "caption": "Apple label",
+                      "compact": "Compact label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "code",
+                      "caption",
+                      "compact",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  0,
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "rejected",
+          "multiple": true,
+          "rejected": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "adopt",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "apple"
+              ],
+              "tagTitles": [
+                "apple"
+              ],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "reappears",
+          "multiple": true,
+          "reappears": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "apple"
+              ],
+              "tagTitles": [
+                "apple"
+              ],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reappear",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "fresh",
+              "values": [
+                "Fresh label"
+              ],
+              "tagTitles": [
+                "Fresh label"
+              ],
+              "controlText": "Fresh label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Fresh label",
+                      "meta": {
+                        "id": 2
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "atomic",
+          "multiple": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "apple"
+              ],
+              "tagTitles": [
+                "apple"
+              ],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "deferred",
+          "multiple": true,
+          "delayed": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "original",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "hide",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "single"
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": "apple",
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": null,
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  null,
+                  null
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "unbound",
+          "multiple": true,
+          "uncontrolled": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "label-in-value",
+          "multiple": true,
+          "labelInValue": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                {
+                  "label": "Apple label",
+                  "value": "apple"
+                }
+              ],
+              "selection": "hidden",
+              "values": [
+                "Apple label"
+              ],
+              "tagTitles": [
+                "Apple label"
+              ],
+              "controlText": "Apple label",
+              "events": [
+                [
+                  "change",
+                  [
+                    {
+                      "label": "Apple label",
+                      "value": "apple"
+                    }
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  {
+                    "label": "Apple label",
+                    "value": "apple"
+                  },
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    {
+                      "label": "Apple label",
+                      "value": "apple"
+                    }
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  {
+                    "label": "Apple label",
+                    "value": "apple"
+                  },
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  {
+                    "value": "apple"
+                  },
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "mapped-zero",
+          "multiple": true,
+          "fieldNames": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                0
+              ],
+              "selection": "hidden",
+              "values": [
+                "0"
+              ],
+              "tagTitles": [
+                "0"
+              ],
+              "controlText": "0",
+              "events": [
+                [
+                  "change",
+                  [
+                    0
+                  ],
+                  [
+                    {
+                      "data": {
+                        "code": 0,
+                        "caption": "Apple label",
+                        "compact": "Compact label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "code",
+                        "caption",
+                        "compact",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  0,
+                  {
+                    "data": {
+                      "code": 0,
+                      "caption": "Apple label",
+                      "compact": "Compact label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "code",
+                      "caption",
+                      "compact",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    0
+                  ],
+                  [
+                    {
+                      "data": {
+                        "code": 0,
+                        "caption": "Apple label",
+                        "compact": "Compact label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "code",
+                        "caption",
+                        "compact",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  0,
+                  {
+                    "data": {
+                      "code": 0,
+                      "caption": "Apple label",
+                      "compact": "Compact label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "code",
+                      "caption",
+                      "compact",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  0,
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "rejected",
+          "multiple": true,
+          "rejected": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "adopt",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "apple"
+              ],
+              "tagTitles": [
+                "apple"
+              ],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {},
+                    "keys": [
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "reappears",
+          "multiple": true,
+          "reappears": true
+        },
+        "frames": [
+          {
+            "step": "select",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "hidden",
+              "values": [
+                "apple"
+              ],
+              "tagTitles": [
+                "apple"
+              ],
+              "controlText": "apple",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reappear",
+            "state": {
+              "value": [
+                "apple"
+              ],
+              "selection": "fresh",
+              "values": [
+                "Fresh label"
+              ],
+              "tagTitles": [
+                "Fresh label"
+              ],
+              "controlText": "Fresh label",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "step": "clear",
+            "state": {
+              "value": [],
+              "selection": "hidden",
+              "values": [],
+              "tagTitles": [],
+              "controlText": "",
+              "events": [
+                [
+                  "change",
+                  [
+                    "apple"
+                  ],
+                  [
+                    {
+                      "data": {
+                        "value": "apple",
+                        "label": "Apple label",
+                        "meta": {
+                          "id": 1
+                        }
+                      },
+                      "keys": [
+                        "value",
+                        "label",
+                        "meta",
+                        "props"
+                      ]
+                    }
+                  ]
+                ],
+                [
+                  "select",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Apple label",
+                      "meta": {
+                        "id": 1
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ],
+                [
+                  "change",
+                  [],
+                  []
+                ],
+                [
+                  "deselect",
+                  "apple",
+                  {
+                    "data": {
+                      "value": "apple",
+                      "label": "Fresh label",
+                      "meta": {
+                        "id": 2
+                      }
+                    },
+                    "keys": [
+                      "value",
+                      "label",
+                      "meta",
+                      "props"
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  ]
+}

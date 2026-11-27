@@ -1,0 +1,987 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "trigger"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "animated",
+        "motion": true
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": {
+        "name": "css-1y106cm-antZoomBigIn",
+        "duration": 100
+      },
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "interrupted",
+        "motion": true
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": {
+        "name": "css-1y106cm-antZoomBigIn",
+        "duration": 100
+      },
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": []
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "controlled"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "ignored"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "initial"
+      },
+      "initial": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "forced"
+      },
+      "initial": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "disabled"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "destroy"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popover",
+        "mode": "trigger"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popover",
+        "mode": "controlled"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popover",
+        "mode": "destroy"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popconfirm",
+        "mode": "cancel"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popconfirm",
+        "mode": "controlled"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popconfirm",
+        "mode": "disabled"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "family": "Popover",
+        "mode": "animated",
+        "motion": true
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": {
+        "name": "css-1y106cm-antZoomBigIn",
+        "duration": 200
+      },
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Popconfirm",
+        "mode": "animated",
+        "motion": true
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": {
+        "name": "css-1y106cm-antZoomBigIn",
+        "duration": 200
+      },
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "custom",
+        "motion": true,
+        "motionName": "study-pulse"
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": {
+        "name": "studyPulseIn",
+        "duration": 160
+      },
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    },
+    {
+      "profile": {
+        "family": "Tooltip",
+        "mode": "empty-name",
+        "motion": true,
+        "motionName": ""
+      },
+      "initial": {
+        "mounted": false,
+        "visible": false,
+        "payload": false,
+        "events": []
+      },
+      "activationMotion": null,
+      "activated": {
+        "mounted": true,
+        "visible": true,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": true,
+            "mounted": false,
+            "visible": false,
+            "payload": false
+          },
+          {
+            "type": "settled",
+            "open": true,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          }
+        ]
+      },
+      "deactivated": {
+        "mounted": true,
+        "visible": false,
+        "payload": true,
+        "events": [
+          {
+            "type": "request",
+            "open": false,
+            "mounted": true,
+            "visible": true,
+            "payload": true
+          },
+          {
+            "type": "settled",
+            "open": false,
+            "mounted": true,
+            "visible": false,
+            "payload": true
+          }
+        ]
+      }
+    }
+  ]
+}

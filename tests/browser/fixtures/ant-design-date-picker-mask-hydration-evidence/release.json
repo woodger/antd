@@ -1,0 +1,46 @@
+{
+  "status": "released",
+  "rootLease": "mask-hydration-source-20261119-02",
+  "holder": "/root",
+  "freeze": {
+    "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/protocol-freeze.json",
+    "bytes": 82951,
+    "sha256": "39263c92d730474bd0972660ea32775b19325c18f26bf0cba1e1175002f2a23e"
+  },
+  "unchanged": true,
+  "manifests": [
+    {
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json",
+      "bytes": 12288,
+      "sha256": "e6517624430cc97dcab34eb764af742e3ce160cd9d36f3407645189629a89fb8",
+      "profiles": 15,
+      "snapshots": 135,
+      "browserCloseAwaited": true
+    },
+    {
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json",
+      "bytes": 12319,
+      "sha256": "7258fdade0eb6eadd4afa68dadc558a7a0579d84a198acd6b9449dcbf853ce0c",
+      "profiles": 15,
+      "snapshots": 135,
+      "browserCloseAwaited": true
+    }
+  ],
+  "runs": [
+    {
+      "operation": "first",
+      "actualHandle": 31432,
+      "actualExitCode": 0,
+      "terminalObserved": true
+    },
+    {
+      "operation": "repeat",
+      "actualHandle": 14245,
+      "actualExitCode": 0,
+      "terminalObserved": true
+    }
+  ],
+  "releaseTime": "2026-11-19T13:33:02.127Z"
+}

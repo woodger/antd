@@ -1,0 +1,198 @@
+{
+  "status": "passed-independent-Original-cached-option-counter",
+  "SourceOnly": true,
+  "NativeDataUsed": false,
+  "protocol": {
+    "source": {
+      "path": ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/protocol-freeze.json",
+      "bytes": 9774,
+      "sha256": "f3b0ed104dc916bbcb429bf48682c0b6fb2f2b7cd5507a2277df37d05487a735"
+    },
+    "fixture": "ant-design-select-components-tag-close-handles-cached-option-source-protocol.json"
+  },
+  "rawPair": {
+    "first": {
+      "path": ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/source-first.json",
+      "bytes": 3781242,
+      "sha256": "d07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24"
+    },
+    "repeat": {
+      "path": ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/source-repeat.json",
+      "bytes": 3781242,
+      "sha256": "d07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24"
+    },
+    "wholeByteEqual": true
+  },
+  "portable": {
+    "path": "ant-design-select-components-tag-close-handles-cached-option-reference.json.gz",
+    "storageBytes": 112895,
+    "storageSha256": "8853919e17555a9efb20412247ac60294e05ad48b3a9b6ace3b6a33021b04a6d",
+    "decodedBytes": 3781242,
+    "decodedSha256": "d07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24"
+  },
+  "header": {
+    "kind": "Original-public-tag-render-cached-option-counter",
+    "mode": "csr",
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "rcSelect": "1.10.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "chromium": "157.0.8103.78",
+    "protocolSha256": "f3b0ed104dc916bbcb429bf48682c0b6fb2f2b7cd5507a2277df37d05487a735",
+    "originalHandleSourceProtocolSha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96",
+    "inputPins": {
+      ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/profile.mjs": {
+        "bytes": 718,
+        "sha256": "1ac7edf3b7c1ffbe92e3653252b064a761030880d3b57009bfd7f6ee3a8406da"
+      },
+      ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/capture.mjs": {
+        "bytes": 10319,
+        "sha256": "d4cdcdbe83df180cec580cd0d8c6787852942fb59d5de6d09214f4b6fd1d3403"
+      },
+      ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/protocol.mjs": {
+        "bytes": 7345,
+        "sha256": "759d953cc85d8f83f1e2b78eaebe1625a9c2b00da76e19633e411d071a62c32d"
+      }
+    },
+    "errors": [],
+    "diagnostics": [],
+    "plannedScopeCounts": {
+      "owners": 1,
+      "actions": 2,
+      "logicalInitialAndActionPoints": 3,
+      "retentionSetupButtonInvocations": 0,
+      "totalCallerButtonInvocations": 2,
+      "uniqueInitialSSRStates": 0,
+      "initialSSRSerializations": 0
+    },
+    "actualCounts": {
+      "owners": 1,
+      "actions": 2,
+      "logicalInitialAndActionPoints": 3,
+      "retentionSetupButtonInvocations": 0,
+      "totalCallerButtonInvocations": 2,
+      "uniqueInitialSSRStates": 0,
+      "initialSSRSerializations": 0
+    },
+    "browserOwnedResourceCounters": {
+      "measured": false,
+      "observers": null,
+      "mutations": null,
+      "frames": null,
+      "timers": null,
+      "ports": null
+    },
+    "assertions": "No expected removal, event, payload, identity or callback counts are manufactured; only actual Source traces recorded."
+  },
+  "actualCounts": {
+    "owners": 1,
+    "actions": 2,
+    "logicalInitialAndActionPoints": 3,
+    "retentionSetupButtonInvocations": 0,
+    "totalCallerButtonInvocations": 2,
+    "uniqueInitialSSRStates": 0,
+    "initialSSRSerializations": 0
+  },
+  "sample": {
+    "id": "select-close-handles-cached-option",
+    "mode": "multiple",
+    "initialModel": [
+      "a",
+      "b"
+    ],
+    "initialOptions": [
+      {
+        "key": "option-a",
+        "value": "a",
+        "label": "Alpha old",
+        "marker": "initial-a"
+      },
+      {
+        "key": "option-locked",
+        "value": "locked",
+        "label": "Locked old",
+        "disabled": true,
+        "marker": "initial-locked"
+      },
+      {
+        "key": "option-b",
+        "value": "b",
+        "label": "Beta old",
+        "marker": "initial-b"
+      }
+    ],
+    "replacementOptions": [
+      {
+        "key": "option-b",
+        "value": "b",
+        "label": "Beta updated",
+        "marker": "updated-b"
+      }
+    ],
+    "retentionSetup": null,
+    "actions": [
+      {
+        "id": "replace-options",
+        "type": "options",
+        "phase": "updated"
+      },
+      {
+        "id": "invoke-latest-cached-a",
+        "type": "invoke",
+        "from": "latest",
+        "value": "a",
+        "reason": "latest-supplied-callback-after-option-removed-from-current-options"
+      }
+    ]
+  },
+  "SourceBrowserCounters": "unmeasured/null; no Source zero-owned-resource claim",
+  "serialization": {
+    "losslessWholeRawBytes": true,
+    "fieldsDropped": [],
+    "rewrittenValues": [],
+    "normalizedSourceFields": []
+  },
+  "observedFacts": {
+    "models": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "a",
+        "b"
+      ],
+      [
+        "b"
+      ]
+    ],
+    "eventKinds": [
+      "invoke-before",
+      "change",
+      "deselect",
+      "invoke-after"
+    ],
+    "cachedDeselectPayload": {
+      "key": "option-a",
+      "value": "a",
+      "label": "Alpha old",
+      "marker": "initial-a",
+      "deprecatedPropsGetterRetainedInRaw": true
+    },
+    "actualArgumentCount": 1,
+    "actualArgument0": {
+      "$": "undefined"
+    },
+    "actualCallbackResult": {
+      "$": "undefined"
+    },
+    "wholeLate1000Equal": true
+  },
+  "preservation": {
+    "inheritedInputs": 26,
+    "inheritedReferences": 1503,
+    "wholeHistoricalTrees": 12,
+    "SourceFrozenInputsAndOriginal4RawCapturesUnchanged": true
+  }
+}

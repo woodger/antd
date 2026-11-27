@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "allRawSourcesUnchanged": true,
+  "protocolPath": ".upstream/artifacts/select-components-modes-protocol-freeze.json",
+  "protocolSha256": "2d7eff1deec53913cbaa866af541d6beb35e581b07e0167226be0af2275d8dbe",
+  "normalOwners": 6,
+  "normalActions": 72,
+  "normalSSRStates": 29,
+  "separateCompositeFaultCSR": 1,
+  "separateCompositeSSRStates": 1,
+  "copies": [
+    {
+      "source": ".upstream/artifacts/select-components-modes-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-modes-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-modes-reference.json.gz",
+      "storageBytes": 2043530,
+      "storageSha256": "cbcd11fd0a091134f2699eb91abeaa0378986ede63a64b257c6c1ada0bf6244e",
+      "decodedBytes": 57702873,
+      "decodedSha256": "8f8abf200b493f761aaed4167d781428f9306c55fe629f6de477f1307a028584",
+      "repeatBytes": 57702873,
+      "repeatSha256": "8f8abf200b493f761aaed4167d781428f9306c55fe629f6de477f1307a028584",
+      "wholePairByteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-modes-ssr-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-modes-ssr-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-modes-ssr-reference.json.gz",
+      "storageBytes": 276024,
+      "storageSha256": "d602765c71cc45f11c2c6aa1164a19b765c6113cc1a4fdc2b2181854b5ee27a2",
+      "decodedBytes": 7353837,
+      "decodedSha256": "4720ba047811cbfc8ffb12e97d082ce904ea526a9a65d09b7aecf9392a1a1bee",
+      "repeatBytes": 7353837,
+      "repeatSha256": "4720ba047811cbfc8ffb12e97d082ce904ea526a9a65d09b7aecf9392a1a1bee",
+      "wholePairByteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-modes-composite-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-modes-composite-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-modes-composite-reference.json.gz",
+      "storageBytes": 2875858,
+      "storageSha256": "80207fde1a75f776837b56b2f74485a8065fa4f63b37993d83f618124c8a651d",
+      "decodedBytes": 14602559,
+      "decodedSha256": "55dccef7d013a0db9ae54f82ac530e2ff96c7ee2089aef5c2c6602a1bd7e1025",
+      "repeatBytes": 14602559,
+      "repeatSha256": "55dccef7d013a0db9ae54f82ac530e2ff96c7ee2089aef5c2c6602a1bd7e1025",
+      "wholePairByteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-modes-composite-ssr-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-modes-composite-ssr-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-modes-composite-ssr-reference.json.gz",
+      "storageBytes": 12728,
+      "storageSha256": "e5de2a508ea60393ce4fc744ef7aebb57ff1ff02163946560a3a5ebad49fbc31",
+      "decodedBytes": 296937,
+      "decodedSha256": "ed1c4f7bfc1aef58e403da94e165f513afb1e7baeb63edb1201d2bb778397b0e",
+      "repeatBytes": 296937,
+      "repeatSha256": "ed1c4f7bfc1aef58e403da94e165f513afb1e7baeb63edb1201d2bb778397b0e",
+      "wholePairByteEqual": true
+    }
+  ]
+}

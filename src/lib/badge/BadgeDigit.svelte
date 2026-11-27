@@ -1,0 +1,43 @@
+<script lang="ts">
+  import { untrack } from 'svelte';
+  import { getBadgeDigitState } from './badge-digit.engine';
+
+  let { value, count, prefixCls = 'ant-scroll-number' }: {
+    value: string;
+    count: number;
+    prefixCls?: string;
+  } = $props();
+  let numericValue = $derived(Number(value));
+  let previousValue = $state(untrack(() => Number(value)));
+  let previousCount = $state(untrack(() => Math.abs(count)));
+  let plan = $derived(getBadgeDigitState(value, count, previousValue, previousCount));
+
+  $effect(() => {
+    const nextValue = numericValue;
+    // The upstream effect depends only on value and captures the count from its render.
+    const nextCount = untrack(() => Math.abs(count));
+    const timer = setTimeout(() => {
+      previousValue = nextValue;
+      previousCount = nextCount;
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
+  function finish() {
+    previousValue = numericValue;
+    previousCount = Math.abs(count);
+  }
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) { :global(.ant-badge-css-var) span[data-ant-badge-digit] { transition: none; } }
+</style>
+
+<span class={`${prefixCls}-only`} data-ant-badge-digit
+  style={plan.transform ? `transform:${plan.transform}` : 'transition:none'}
+  ontransitionend={finish}>{#each plan.units as unit (String(unit.key))}<span
+    class={[`${prefixCls}-only-unit`, unit.current && 'current']}
+    style={unit.offset ? `position:absolute;`
+      + `top:${unit.offset}00%;`
+      + `left:0` : undefined}
+  >{unit.value}</span>{/each}</span>

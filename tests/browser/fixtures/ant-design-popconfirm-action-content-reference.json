@@ -1,0 +1,349 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "operation": "Measure action text, icon DOM and button appearance with a locale override. Capture sync cancel/confirm and a pending confirm with onClick preventing default."
+  },
+  "cases": [
+    {
+      "profile": "defaults",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "",
+        "rich": false,
+        "glyph": true,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "null",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": false,
+        "text": null,
+        "rich": false,
+        "glyph": false,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "empty",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": false,
+        "text": null,
+        "rich": false,
+        "glyph": false,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "zero",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": false,
+        "text": null,
+        "rich": false,
+        "glyph": false,
+        "outside": "0"
+      }
+    },
+    {
+      "profile": "boolean",
+      "buttons": [
+        {
+          "text": "",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": false,
+        "text": null,
+        "rich": false,
+        "glyph": false,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "numeric",
+      "buttons": [
+        {
+          "text": "-1",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "42",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "7",
+        "rich": false,
+        "glyph": false,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "rich",
+      "buttons": [
+        {
+          "text": "Discard changes",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": true
+        },
+        {
+          "text": "Keep changes",
+          "appearance": [
+            "ant-btn-color-primary",
+            "ant-btn-variant-solid"
+          ],
+          "rich": true
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "!",
+        "rich": true,
+        "glyph": false,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "danger",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-dangerous",
+            "ant-btn-dangerous",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "!",
+        "rich": false,
+        "glyph": false,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "danger-primary",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-dangerous",
+            "ant-btn-dangerous",
+            "ant-btn-variant-solid"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "",
+        "rich": false,
+        "glyph": true,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "danger-override",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-dashed"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "",
+        "rich": false,
+        "glyph": true,
+        "outside": ""
+      }
+    },
+    {
+      "profile": "danger-pair",
+      "buttons": [
+        {
+          "text": "Locale cancel",
+          "appearance": [
+            "ant-btn-color-default",
+            "ant-btn-variant-outlined"
+          ],
+          "rich": false
+        },
+        {
+          "text": "Locale confirm",
+          "appearance": [
+            "ant-btn-color-purple",
+            "ant-btn-dangerous",
+            "ant-btn-variant-filled"
+          ],
+          "rich": false
+        }
+      ],
+      "icon": {
+        "wrapper": true,
+        "text": "",
+        "rich": false,
+        "glyph": true,
+        "outside": ""
+      }
+    }
+  ],
+  "events": [
+    "open",
+    "close",
+    "cancel",
+    "cancel-button",
+    "popup-prevented",
+    "open",
+    "confirm",
+    "close",
+    "ok-button",
+    "popup-prevented"
+  ],
+  "pending": {
+    "waiting": [
+      "open",
+      "confirm",
+      "ok-button",
+      "popup-prevented"
+    ],
+    "settled": [
+      "open",
+      "confirm",
+      "ok-button",
+      "popup-prevented",
+      "close"
+    ]
+  }
+}

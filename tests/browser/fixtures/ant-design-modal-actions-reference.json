@@ -1,0 +1,2241 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "ordinary": [
+    {
+      "profile": {
+        "id": "ok",
+        "action": "ok",
+        "closeHandlers": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "ok",
+          "click"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "cancel",
+        "action": "cancel",
+        "closeHandlers": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "click"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "close",
+        "action": "close",
+        "closeHandlers": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "click"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "escape",
+        "action": "escape",
+        "closeHandlers": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "keydown"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "mask",
+        "action": "mask",
+        "closeHandlers": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "click"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "icon-disabled",
+        "action": "escape",
+        "closeHandlers": true,
+        "disableIcon": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": true,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "keydown"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "icon-hidden",
+        "action": "escape",
+        "hideIcon": true
+      },
+      "before": {
+        "close": null,
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "keydown"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "provider-icon",
+        "action": "close",
+        "provider": true
+      },
+      "before": {
+        "close": {
+          "label": "Parent dismiss",
+          "icon": "provider",
+          "text": "Parent X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": "parent-ok",
+            "title": "Parent action"
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "cancel",
+          "click"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "button-override",
+        "action": "ok",
+        "replaceOk": true,
+        "buttonProps": true
+      },
+      "before": {
+        "close": {
+          "label": "Parent dismiss",
+          "icon": "provider",
+          "text": "Parent X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ],
+            "disabled": false,
+            "id": "local-ok",
+            "title": "Parent action"
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "ok",
+          "click"
+        ],
+        [
+          "override",
+          "click"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "footer-render",
+        "action": "ok",
+        "renderFooter": true,
+        "buttonProps": true
+      },
+      "before": {
+        "close": {
+          "label": "Parent dismiss",
+          "icon": "provider",
+          "text": "Parent X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": "true",
+          "actions": [
+            "OK",
+            "Cancel"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ],
+            "disabled": false,
+            "id": "local-ok",
+            "title": "Parent action"
+          }
+        }
+      },
+      "open": false,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "ok",
+          "click"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "confirm-loading",
+        "action": "escape",
+        "loading": true,
+        "closeHandlers": true
+      },
+      "before": {
+        "close": {
+          "label": "Dismiss probe",
+          "icon": "local",
+          "text": "Local X",
+          "classNames": [
+            "ant-modal-close"
+          ],
+          "disabled": false,
+          "id": null,
+          "title": null
+        },
+        "footer": {
+          "receivedOrigin": null,
+          "actions": [
+            "Cancel",
+            "OK"
+          ],
+          "ok": {
+            "label": null,
+            "icon": null,
+            "text": "OK",
+            "classNames": [
+              "ant-btn",
+              "ant-btn-color-primary",
+              "ant-btn-loading",
+              "ant-btn-primary",
+              "ant-btn-variant-solid"
+            ],
+            "disabled": false,
+            "id": null,
+            "title": null
+          }
+        }
+      },
+      "open": true,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    }
+  ],
+  "confirmation": [
+    {
+      "profile": {
+        "id": "ok",
+        "action": "ok"
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onOk"
+        ],
+        [
+          "okButtonProps",
+          "click"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "cancel",
+        "action": "cancel"
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onCancel"
+        ],
+        [
+          "cancelButtonProps",
+          "click"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "footer-render",
+        "action": "ok",
+        "footer": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          },
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          }
+        ],
+        "footer": "true",
+        "icon": null
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onOk"
+        ],
+        [
+          "okButtonProps",
+          "click"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "pending",
+        "action": "ok",
+        "pending": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "pending": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-loading",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onOk"
+        ],
+        [
+          "okButtonProps",
+          "click"
+        ],
+        [
+          "result",
+          true
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "pending-loading-false",
+        "action": "ok",
+        "pending": true,
+        "loading": false
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "pending": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onOk"
+        ],
+        [
+          "okButtonProps",
+          "click"
+        ],
+        [
+          "result",
+          true
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "close",
+        "action": "close",
+        "close": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Dismiss",
+            "id": null,
+            "title": null,
+            "aria": "Local dismiss",
+            "disabled": false,
+            "classes": [
+              "ant-modal-close"
+            ]
+          },
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": "local"
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onCancel"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "escape",
+        "action": "escape",
+        "close": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Dismiss",
+            "id": null,
+            "title": null,
+            "aria": "Local dismiss",
+            "disabled": false,
+            "classes": [
+              "ant-modal-close"
+            ]
+          },
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": "local"
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onCancel"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "mask",
+        "action": "mask",
+        "close": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Dismiss",
+            "id": null,
+            "title": null,
+            "aria": "Local dismiss",
+            "disabled": false,
+            "classes": [
+              "ant-modal-close"
+            ]
+          },
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": "local"
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onCancel"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "closed-icon-disabled",
+        "action": "escape",
+        "close": true,
+        "closeDisabled": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Dismiss",
+            "id": null,
+            "title": null,
+            "aria": "Local dismiss",
+            "disabled": true,
+            "classes": [
+              "ant-modal-close"
+            ]
+          },
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": false,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": "local"
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "onCancel"
+        ],
+        [
+          "closable.onClose"
+        ],
+        [
+          "closable.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "provider-disabled",
+        "action": "ok",
+        "disabled": true
+      },
+      "initial": {
+        "options": [
+          {
+            "text": "Cancel",
+            "id": "parent-cancel",
+            "title": "Inherited Cancel",
+            "aria": null,
+            "disabled": true,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-default",
+              "ant-btn-default",
+              "ant-btn-variant-outlined"
+            ]
+          },
+          {
+            "text": "OK",
+            "id": "local-ok",
+            "title": "Inherited OK",
+            "aria": null,
+            "disabled": true,
+            "classes": [
+              "ant-btn",
+              "ant-btn-color-dangerous",
+              "ant-btn-dangerous",
+              "ant-btn-dashed",
+              "ant-btn-variant-dashed"
+            ]
+          }
+        ],
+        "footer": null,
+        "icon": null
+      },
+      "open": true,
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    }
+  ],
+  "overrides": [
+    {
+      "profile": {
+        "id": "no-close-icon",
+        "closeIcon": null
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "enabled-null-icon",
+        "closeIcon": null,
+        "closable": true
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "empty-icon-in-closable",
+        "closeObject": "null"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": false,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "false-icon-in-closable",
+        "closeObject": "false"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "inherited-disabled-close",
+        "inherit": "object"
+      },
+      "initial": {
+        "close": {
+          "icon": "inherited-close",
+          "hasSvg": false,
+          "disabled": true,
+          "label": "Inherited close",
+          "describedBy": "override-description",
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "close-local-override",
+        "inherit": "object",
+        "closeObject": "override"
+      },
+      "initial": {
+        "close": {
+          "icon": "inherited-close",
+          "hasSvg": false,
+          "disabled": false,
+          "label": "Local close",
+          "describedBy": "override-description",
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "inherited-hidden-close",
+        "inherit": "false"
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "enabled-over-inherited-hidden",
+        "inherit": "false",
+        "closable": true
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "danger-and-rich-labels",
+        "danger": true
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "Take action",
+            "disabled": false,
+            "danger": true,
+            "loading": false,
+            "rich": true
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "ordinary-component-disabled",
+        "disabled": true
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "ordinary-loading-overridden",
+        "loading": true,
+        "action": "ok",
+        "closeObject": "hooks"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "ok"
+        ],
+        [
+          "first.onClose"
+        ],
+        [
+          "first.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "external-close",
+        "action": "external",
+        "closeObject": "hooks"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "first.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "success-provider-icon",
+        "method": "success"
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": "success",
+        "hasIcon": true
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "info-provider-null",
+        "method": "info"
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "error-local-null",
+        "method": "error",
+        "explicitIcon": null
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": null,
+        "hasIcon": false
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "warning-provider-icon",
+        "method": "warning"
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": "warning",
+        "hasIcon": true
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "confirm-provider-icon",
+        "method": "confirm"
+      },
+      "initial": {
+        "close": null,
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": "warning",
+        "hasIcon": true
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "confirm-button-closable",
+        "method": "confirm",
+        "action": "ok",
+        "closeObject": "hooks"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": "warning",
+        "hasIcon": true
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "ok"
+        ],
+        [
+          "first.onClose"
+        ],
+        [
+          "first.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ],
+        [
+          "result",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "confirm-destroy-closable",
+        "method": "confirm",
+        "action": "destroy",
+        "closeObject": "hooks"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": "warning",
+        "hasIcon": true
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "first.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "pending-update-closable",
+        "method": "confirm",
+        "action": "async",
+        "closeObject": "hooks"
+      },
+      "initial": {
+        "close": {
+          "icon": null,
+          "hasSvg": true,
+          "disabled": false,
+          "label": "Close",
+          "describedBy": null,
+          "marker": null
+        },
+        "buttons": [
+          {
+            "text": "Cancel",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          },
+          {
+            "text": "OK",
+            "disabled": false,
+            "danger": false,
+            "loading": false,
+            "rich": false
+          }
+        ],
+        "icon": "warning",
+        "hasIcon": true
+      },
+      "events": [
+        [
+          "afterOpenChange",
+          true
+        ],
+        [
+          "ok"
+        ],
+        [
+          "first.onClose"
+        ],
+        [
+          "result",
+          true
+        ],
+        [
+          "updated.afterClose"
+        ],
+        [
+          "afterClose"
+        ],
+        [
+          "afterOpenChange",
+          false
+        ]
+      ]
+    }
+  ]
+}

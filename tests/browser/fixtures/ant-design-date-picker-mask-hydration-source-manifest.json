@@ -1,0 +1,899 @@
+{
+  "format": "ant-design-public-date-picker-mask-initial-hydration-source-v1",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "sourceProtocolSHA256": "39263c92d730474bd0972660ea32775b19325c18f26bf0cba1e1175002f2a23e",
+  "rootLease": "mask-hydration-source-20261119-02",
+  "serialization": {
+    "originalStoredGzipBytesCopiedExactly": true,
+    "IDsRenumbered": false,
+    "rawFieldsDropped": [],
+    "rawFieldsRewritten": [],
+    "normalizedFields": []
+  },
+  "phases": [
+    "parsed",
+    "preHydrate",
+    "afterHydrateCall",
+    "mounted",
+    "settled",
+    "beforeUnmount",
+    "afterUnmountCall",
+    "cleanup",
+    "late1000"
+  ],
+  "profiles": [
+    {
+      "id": "single-date-mask",
+      "formatProfile": "string",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-date-mask-string.json",
+        "bytes": 748159,
+        "sha256": "381437203efc194c76b928449075e14ded7a161040143deb5826bba9a38cf6ab",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-date-mask-string.json.gz",
+        "gzipBytes": 31708,
+        "gzipSHA256": "341d9152c264ec85743ecd7917fc1041fab6344c19e896859f98640928cc71d2"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/341d9152c264ec85743ecd7917fc1041fab6344c19e896859f98640928cc71d2.json.gz",
+      "originalHTMLSHA256": "8c2af5627be6ebe977a5253a5db303dfd4980453774817d7a5c23f7d391f75eb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-string-renderToString.json",
+          "bytes": 79024,
+          "sha256": "b6a28f9d2222d066f14f517ce94f05de3ce279cb9e2de55ff7f75848606b736f",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-string-renderToString.json.gz",
+          "gzipBytes": 5054,
+          "gzipSHA256": "ff9029cdce73054dc6d99a907342365c957eb530d6fe9016742ca9f7195b3cfb"
+        }
+      }
+    },
+    {
+      "id": "single-date-mask",
+      "formatProfile": "object",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-date-mask-object.json",
+        "bytes": 759132,
+        "sha256": "86baec45f0d4c7ae88b6773c9c4ee62e671a374122339e1b226fc23761425187",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-date-mask-object.json.gz",
+        "gzipBytes": 32413,
+        "gzipSHA256": "3368636731718100a59d40ae2ede0ba3b2370f851571cd9c12df5a82252b73c6"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/3368636731718100a59d40ae2ede0ba3b2370f851571cd9c12df5a82252b73c6.json.gz",
+      "originalHTMLSHA256": "8c2af5627be6ebe977a5253a5db303dfd4980453774817d7a5c23f7d391f75eb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-object-renderToString.json",
+          "bytes": 80601,
+          "sha256": "161c0e093b3a5d1c0089e1d8adc398c28f14637bfdba5d1c457d6a35e64f9f4f",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-object-renderToString.json.gz",
+          "gzipBytes": 5166,
+          "gzipSHA256": "4654b2de527c9b7a9c8f8ff5539c7f0ec3529e48855c286198f2d1d4ccdac956"
+        }
+      }
+    },
+    {
+      "id": "single-date-mask",
+      "formatProfile": "mask",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-date-mask-mask.json",
+        "bytes": 763855,
+        "sha256": "f97c205458b4e2103e4a37058d3580e13f9b6a3b3662fa29e86fa48b7b023aab",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-date-mask-mask.json.gz",
+        "gzipBytes": 32581,
+        "gzipSHA256": "a3548d75cb8677106329ea57dfe140c66f9fc5d753aed848057d985ced6ce4ef"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/a3548d75cb8677106329ea57dfe140c66f9fc5d753aed848057d985ced6ce4ef.json.gz",
+      "originalHTMLSHA256": "8c2af5627be6ebe977a5253a5db303dfd4980453774817d7a5c23f7d391f75eb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-mask-renderToString.json",
+          "bytes": 81291,
+          "sha256": "d1b9eb507914222c95f4f95d513cf0f6ad609ad00165b810df632cbd325033c2",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-mask-renderToString.json.gz",
+          "gzipBytes": 5200,
+          "gzipSHA256": "c2e83a462b813a034b71eabac9feda95e3a248dfb52de32ad88c0663b9da461c"
+        }
+      }
+    },
+    {
+      "id": "single-datetime-mask",
+      "formatProfile": "string",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-datetime-mask-string.json",
+        "bytes": 1034790,
+        "sha256": "fe1e89e6558a4353f4683fb789f0fe8c7ad9d1b4416102289561ea9cf30a893c",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-datetime-mask-string.json.gz",
+        "gzipBytes": 37286,
+        "gzipSHA256": "b95d339081855cfe4d666964cc611979c733c57b2150d68732f37752aa4c7c6d"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/b95d339081855cfe4d666964cc611979c733c57b2150d68732f37752aa4c7c6d.json.gz",
+      "originalHTMLSHA256": "208761210c4d8ff9420431189d8603a530394c3077a78447479df64c5534340c",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-string-renderToString.json",
+          "bytes": 102548,
+          "sha256": "6fa2ae1cb4430ff3c629a22a7537b15ecb90f07ac14985c6c86fb4cefafb2bc4",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-string-renderToString.json.gz",
+          "gzipBytes": 5602,
+          "gzipSHA256": "5d971cdf2be2acfc79c5e3c1b11073e563f54f986c76ea3d68cc5e0a4f08d83a"
+        }
+      }
+    },
+    {
+      "id": "single-datetime-mask",
+      "formatProfile": "object",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-datetime-mask-object.json",
+        "bytes": 1045709,
+        "sha256": "33b26b55802b602ca023b54530147c85c8810ac4016da5f020b7c3de85c3cf0f",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-datetime-mask-object.json.gz",
+        "gzipBytes": 37984,
+        "gzipSHA256": "3e50eda8c2c6ca5e67ce23d57d956e421ba5e856b3db78829b9feeda6214a7b2"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/3e50eda8c2c6ca5e67ce23d57d956e421ba5e856b3db78829b9feeda6214a7b2.json.gz",
+      "originalHTMLSHA256": "208761210c4d8ff9420431189d8603a530394c3077a78447479df64c5534340c",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-object-renderToString.json",
+          "bytes": 104116,
+          "sha256": "5497831f312be90c178df3549778a7bc48a9fa9fb519e461de0019fa0a3cdd7c",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-object-renderToString.json.gz",
+          "gzipBytes": 5715,
+          "gzipSHA256": "006d0b44d1e5feb17a82efa91513e2fd22b91ad41d20890f90d838650613597e"
+        }
+      }
+    },
+    {
+      "id": "single-datetime-mask",
+      "formatProfile": "mask",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-datetime-mask-mask.json",
+        "bytes": 1051215,
+        "sha256": "aa8f0e05b648cf20750c0fbdf78344ebdacc11d76bc04383b2703ffa1f4c7058",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-datetime-mask-mask.json.gz",
+        "gzipBytes": 38123,
+        "gzipSHA256": "ff48e6e08723fbe46a3058b2ebe9e4baad56c92e0abfa48721f0a6fa520c22fe"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/ff48e6e08723fbe46a3058b2ebe9e4baad56c92e0abfa48721f0a6fa520c22fe.json.gz",
+      "originalHTMLSHA256": "525df3e7a73d7be1c231b113b38adeb766273acac469fee70434658c15d702bf",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-mask-renderToString.json",
+          "bytes": 104827,
+          "sha256": "0151aba30a06576f3a85883cc0bd4e08e4ad776441487e06bbb91941b5b87e2d",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-mask-renderToString.json.gz",
+          "gzipBytes": 5741,
+          "gzipSHA256": "00bef0778f27daf3ca0b29e60545cbe37bacf409d49857e14e6b58a92ce2890e"
+        }
+      }
+    },
+    {
+      "id": "range-date-mask",
+      "formatProfile": "string",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-date-mask-string.json",
+        "bytes": 950642,
+        "sha256": "eb628498cba0188b3ae3fafe4b137f606edabedb5d1ea6f3080d3111916dcf15",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-date-mask-string.json.gz",
+        "gzipBytes": 38723,
+        "gzipSHA256": "ddf6856a80355e527bb783f294d6138379b6af93d0673b07ed150de131c2076a"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/ddf6856a80355e527bb783f294d6138379b6af93d0673b07ed150de131c2076a.json.gz",
+      "originalHTMLSHA256": "aaee803d89accf4ece13a24dbd40f4194b3410d9b00741b3afc28b7cd417a90d",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-string-renderToString.json",
+          "bytes": 121892,
+          "sha256": "8e2f6c4c0d152d7f3ea00894d045069431e1e33fce0ca9090133d272f447865f",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-string-renderToString.json.gz",
+          "gzipBytes": 6362,
+          "gzipSHA256": "776f850cc76e345a291deb3438b28f4b3efe694987c1ba4688cef4d028e877a2"
+        }
+      }
+    },
+    {
+      "id": "range-date-mask",
+      "formatProfile": "object",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-date-mask-object.json",
+        "bytes": 961633,
+        "sha256": "07e5d4625154d577e4b6c678d1fb1356759b6877a75f14cedfc65825b59b8b75",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-date-mask-object.json.gz",
+        "gzipBytes": 39337,
+        "gzipSHA256": "e9e4f9e21f72425ae86d467844bf04bc4fb2cdd5a90a7aceb340305d4885d23b"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/e9e4f9e21f72425ae86d467844bf04bc4fb2cdd5a90a7aceb340305d4885d23b.json.gz",
+      "originalHTMLSHA256": "aaee803d89accf4ece13a24dbd40f4194b3410d9b00741b3afc28b7cd417a90d",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-object-renderToString.json",
+          "bytes": 123472,
+          "sha256": "d150198ff226e7fec5f2973c80702802c96eeba8044afd585a024cca200dab53",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-object-renderToString.json.gz",
+          "gzipBytes": 6470,
+          "gzipSHA256": "61f431ed07ed2eb9a29518f0bf5b406af11bd576f15b4f2d9e0eaa75303f7c93"
+        }
+      }
+    },
+    {
+      "id": "range-date-mask",
+      "formatProfile": "mask",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-date-mask-mask.json",
+        "bytes": 966356,
+        "sha256": "0541014315fe510030094bb1d731484db9456e8fb4c3bb53a2a6c50ea8a94245",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-date-mask-mask.json.gz",
+        "gzipBytes": 39444,
+        "gzipSHA256": "dbfec94d2321ecb08155ee10bde4a6322f645d76a9830864eed0b34e78bee333"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/dbfec94d2321ecb08155ee10bde4a6322f645d76a9830864eed0b34e78bee333.json.gz",
+      "originalHTMLSHA256": "aaee803d89accf4ece13a24dbd40f4194b3410d9b00741b3afc28b7cd417a90d",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-mask-renderToString.json",
+          "bytes": 124162,
+          "sha256": "ec46c3759130fdee9f00e6d09e21f1610dcb67f0b8045e1495d5f992e52701a7",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-mask-renderToString.json.gz",
+          "gzipBytes": 6494,
+          "gzipSHA256": "da378706fe6bd10a1e16d03fbb2c24d58505c7afdcb5e0cecb7d8f7a9cc4c3fe"
+        }
+      }
+    },
+    {
+      "id": "single-time-mask",
+      "formatProfile": "string",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-time-mask-string.json",
+        "bytes": 1021920,
+        "sha256": "38848bfb13f1296b4e4ccec7645d0cfdfe590f7b18b238d7b6d33bb7d41257e9",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-time-mask-string.json.gz",
+        "gzipBytes": 36576,
+        "gzipSHA256": "985577b06e8de117c3b064397324c6f2b03f88deb1633743d1e40cc0f0befe5f"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/985577b06e8de117c3b064397324c6f2b03f88deb1633743d1e40cc0f0befe5f.json.gz",
+      "originalHTMLSHA256": "8fbb8a78e94b1fa272699aaf4165dcf91ed42d8ab3e3451ab6ebe636b919e6cb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-string-renderToString.json",
+          "bytes": 100782,
+          "sha256": "b6f1905e23895b6cbabcf188100268be1bed5746fd0dceab58f7686d923a773b",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-string-renderToString.json.gz",
+          "gzipBytes": 5494,
+          "gzipSHA256": "1e11b866521759de7935cb6a2f5ae3f897138572f9aab6cf6db0b377e1809ae2"
+        }
+      }
+    },
+    {
+      "id": "single-time-mask",
+      "formatProfile": "object",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-time-mask-object.json",
+        "bytes": 1032972,
+        "sha256": "7369172e43785ee28225b92b4dbd7080180791678480b129c6f3d08bf18bf0ed",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-time-mask-object.json.gz",
+        "gzipBytes": 37245,
+        "gzipSHA256": "b50a5d706be3f16a4f85cd2d9d468144bfa08b55c0b7dfa5c6e99146d324f0ec"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/b50a5d706be3f16a4f85cd2d9d468144bfa08b55c0b7dfa5c6e99146d324f0ec.json.gz",
+      "originalHTMLSHA256": "8fbb8a78e94b1fa272699aaf4165dcf91ed42d8ab3e3451ab6ebe636b919e6cb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-object-renderToString.json",
+          "bytes": 102372,
+          "sha256": "34991923cd13f881c366550319a227b09c39ed5e3e289ce64e642b32c0531f72",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-object-renderToString.json.gz",
+          "gzipBytes": 5617,
+          "gzipSHA256": "8f69d7bc66bcb0972dca2fd35aea04a507c2854bb48bb5d7edebe4b8328bbcf3"
+        }
+      }
+    },
+    {
+      "id": "single-time-mask",
+      "formatProfile": "mask",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-time-mask-mask.json",
+        "bytes": 1038478,
+        "sha256": "1e2e6333df9fab2c7023c109fa4768f9fac62b7d2552d9faa041916d7e8df1dd",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/single-time-mask-mask.json.gz",
+        "gzipBytes": 37517,
+        "gzipSHA256": "5ff064eca8807b015109e4bed6fb918fb870a6724d1206aab85071e2422b80ab"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/5ff064eca8807b015109e4bed6fb918fb870a6724d1206aab85071e2422b80ab.json.gz",
+      "originalHTMLSHA256": "718bb4c8335a3ba282d84d36776e54e1932c2394479c6e6f6c1de69fdcc2501b",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-mask-renderToString.json",
+          "bytes": 103083,
+          "sha256": "6a72f4f795a88134dfbee3bcb8d6204b55cfd000bee91d23f2635ccd43b33437",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-mask-renderToString.json.gz",
+          "gzipBytes": 5655,
+          "gzipSHA256": "7fe2f4fa3a63879fb3df459db48c2ac84ae4ead645d481389f428d9966c62b2a"
+        }
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "string",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-time-mask-string.json",
+        "bytes": 1224077,
+        "sha256": "3529cee4191074a54eb78fde57631f30cece58a4fa06829e13b6ad7ac41366cd",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-time-mask-string.json.gz",
+        "gzipBytes": 43922,
+        "gzipSHA256": "87d9b074c77fe6afed15e935f20a2f1dc2c6071076abb32ac558c4c4d5c46614"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/87d9b074c77fe6afed15e935f20a2f1dc2c6071076abb32ac558c4c4d5c46614.json.gz",
+      "originalHTMLSHA256": "b589ba416eac05dd4a4e0d737502fbfeb0baf757eb0bf0697237ec7d80162e6e",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-string-renderToString.json",
+          "bytes": 162397,
+          "sha256": "5ae885df554f315b814f9c397981c32dfc820e211cd2fdbd102efac4cc8f1b56",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-string-renderToString.json.gz",
+          "gzipBytes": 7209,
+          "gzipSHA256": "4dc1e9051dc0ed1d12e3ed07de7dfe65785c4f1340c71ba0e80f2891f7d36737"
+        }
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "object",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-time-mask-object.json",
+        "bytes": 1235129,
+        "sha256": "45252ff45732841327350da5fdc6c16c8d2e5e57430543002301b72b64e3d050",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-time-mask-object.json.gz",
+        "gzipBytes": 44509,
+        "gzipSHA256": "f3ba7e080291576fe50402f17a99b8fdf900b3ccddd7318a970a0cefb9d07594"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/f3ba7e080291576fe50402f17a99b8fdf900b3ccddd7318a970a0cefb9d07594.json.gz",
+      "originalHTMLSHA256": "b589ba416eac05dd4a4e0d737502fbfeb0baf757eb0bf0697237ec7d80162e6e",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-object-renderToString.json",
+          "bytes": 163987,
+          "sha256": "2b31d73fe0fdcfdab47b651fee62bac5c4c070c93ac251b0f314b12e51ca33fe",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-object-renderToString.json.gz",
+          "gzipBytes": 7308,
+          "gzipSHA256": "7ee517bdc1080a418d3139921cfba2e22cb495bfb731c52640dd40c2f39bfc26"
+        }
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "mask",
+      "variant": "first",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-time-mask-mask.json",
+        "bytes": 1241334,
+        "sha256": "98eba778bbca9744dffb7f38672e86e316015a33c0a6ec7225504dc789233772",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json.parts/range-time-mask-mask.json.gz",
+        "gzipBytes": 44725,
+        "gzipSHA256": "0d36e30e0b789adb34f6ff06245780bd5f18482d5d212864903bdda128aee645"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/0d36e30e0b789adb34f6ff06245780bd5f18482d5d212864903bdda128aee645.json.gz",
+      "originalHTMLSHA256": "41bec363408b60eb1258a156380624e83e900a4f459e5f187e017cbc4aec2716",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-mask-renderToString.json",
+          "bytes": 164705,
+          "sha256": "4d2b376ac08c4c7dfcf49a80d70f7aea8cab23a7779b9e5f899001205aeae223",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-mask-renderToString.json.gz",
+          "gzipBytes": 7344,
+          "gzipSHA256": "7d91f8e61a3dece0165ffc9502cacf4dd8406de41f168b0275a948d389dea000"
+        }
+      }
+    },
+    {
+      "id": "single-date-mask",
+      "formatProfile": "string",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-date-mask-string.json",
+        "bytes": 748159,
+        "sha256": "8c238ff752b0ef92429bc94bb9934cee23b0dd1e3987edcd0b191ec44b2c9475",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-date-mask-string.json.gz",
+        "gzipBytes": 31707,
+        "gzipSHA256": "fa7a7cf514845f5c7f8ed0fb5ebc92c6f6329d1a1c075b68b2f7be00f83c68e2"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/fa7a7cf514845f5c7f8ed0fb5ebc92c6f6329d1a1c075b68b2f7be00f83c68e2.json.gz",
+      "originalHTMLSHA256": "8c2af5627be6ebe977a5253a5db303dfd4980453774817d7a5c23f7d391f75eb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-string-renderToString.json",
+          "bytes": 79024,
+          "sha256": "b6a28f9d2222d066f14f517ce94f05de3ce279cb9e2de55ff7f75848606b736f",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-string-renderToString.json.gz",
+          "gzipBytes": 5054,
+          "gzipSHA256": "ff9029cdce73054dc6d99a907342365c957eb530d6fe9016742ca9f7195b3cfb"
+        }
+      }
+    },
+    {
+      "id": "single-date-mask",
+      "formatProfile": "object",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-date-mask-object.json",
+        "bytes": 759132,
+        "sha256": "47c3049531f9872dc0256200c7c27d8b6c2ec7e6bdc5806a278e8e730daf8ff0",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-date-mask-object.json.gz",
+        "gzipBytes": 32413,
+        "gzipSHA256": "c87f7fc048bc05761e6a7e79bc78b55a60e1c31464babd170d3ddc54af894349"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/c87f7fc048bc05761e6a7e79bc78b55a60e1c31464babd170d3ddc54af894349.json.gz",
+      "originalHTMLSHA256": "8c2af5627be6ebe977a5253a5db303dfd4980453774817d7a5c23f7d391f75eb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-object-renderToString.json",
+          "bytes": 80601,
+          "sha256": "161c0e093b3a5d1c0089e1d8adc398c28f14637bfdba5d1c457d6a35e64f9f4f",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-object-renderToString.json.gz",
+          "gzipBytes": 5166,
+          "gzipSHA256": "4654b2de527c9b7a9c8f8ff5539c7f0ec3529e48855c286198f2d1d4ccdac956"
+        }
+      }
+    },
+    {
+      "id": "single-date-mask",
+      "formatProfile": "mask",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-date-mask-mask.json",
+        "bytes": 763855,
+        "sha256": "cb51c52397f5dc0fbed6fbc258b93fb90109972fa77cade6ccfa5d045193b0cc",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-date-mask-mask.json.gz",
+        "gzipBytes": 32583,
+        "gzipSHA256": "ca4c94aac2e837cb7f1fb0e40c389aa42d057e24778ae692cdf0464b1e972669"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/ca4c94aac2e837cb7f1fb0e40c389aa42d057e24778ae692cdf0464b1e972669.json.gz",
+      "originalHTMLSHA256": "8c2af5627be6ebe977a5253a5db303dfd4980453774817d7a5c23f7d391f75eb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-mask-renderToString.json",
+          "bytes": 81291,
+          "sha256": "d1b9eb507914222c95f4f95d513cf0f6ad609ad00165b810df632cbd325033c2",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-date-mask-mask-renderToString.json.gz",
+          "gzipBytes": 5200,
+          "gzipSHA256": "c2e83a462b813a034b71eabac9feda95e3a248dfb52de32ad88c0663b9da461c"
+        }
+      }
+    },
+    {
+      "id": "single-datetime-mask",
+      "formatProfile": "string",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-datetime-mask-string.json",
+        "bytes": 1034790,
+        "sha256": "7b0b14f1382d2084573cb0c06de8b4bc5e77cd03d3e86fee00d346dc8308c207",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-datetime-mask-string.json.gz",
+        "gzipBytes": 37285,
+        "gzipSHA256": "0ff217e8a3fb45e618b7db550ac96f78f5c72a1d567e499b1586b4ad87eba642"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/0ff217e8a3fb45e618b7db550ac96f78f5c72a1d567e499b1586b4ad87eba642.json.gz",
+      "originalHTMLSHA256": "208761210c4d8ff9420431189d8603a530394c3077a78447479df64c5534340c",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-string-renderToString.json",
+          "bytes": 102548,
+          "sha256": "6fa2ae1cb4430ff3c629a22a7537b15ecb90f07ac14985c6c86fb4cefafb2bc4",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-string-renderToString.json.gz",
+          "gzipBytes": 5602,
+          "gzipSHA256": "5d971cdf2be2acfc79c5e3c1b11073e563f54f986c76ea3d68cc5e0a4f08d83a"
+        }
+      }
+    },
+    {
+      "id": "single-datetime-mask",
+      "formatProfile": "object",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-datetime-mask-object.json",
+        "bytes": 1045710,
+        "sha256": "c0e2dbf1bc958e0bf926e451075b860880fb80eedcbc6af36cbb1ab8744c2e2b",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-datetime-mask-object.json.gz",
+        "gzipBytes": 37985,
+        "gzipSHA256": "f8f0d13bb5f7213fb85d9fd8fd9165fc2f9bc09671e89453bd64b477b635280e"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/f8f0d13bb5f7213fb85d9fd8fd9165fc2f9bc09671e89453bd64b477b635280e.json.gz",
+      "originalHTMLSHA256": "208761210c4d8ff9420431189d8603a530394c3077a78447479df64c5534340c",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-object-renderToString.json",
+          "bytes": 104116,
+          "sha256": "5497831f312be90c178df3549778a7bc48a9fa9fb519e461de0019fa0a3cdd7c",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-object-renderToString.json.gz",
+          "gzipBytes": 5715,
+          "gzipSHA256": "006d0b44d1e5feb17a82efa91513e2fd22b91ad41d20890f90d838650613597e"
+        }
+      }
+    },
+    {
+      "id": "single-datetime-mask",
+      "formatProfile": "mask",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-datetime-mask-mask.json",
+        "bytes": 1051215,
+        "sha256": "f97260f1ffd84842f249aefec23a3445e1c3681d10255d3154f5c7d5c3aa6f64",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-datetime-mask-mask.json.gz",
+        "gzipBytes": 38124,
+        "gzipSHA256": "90fc4e867f8ac70e7f640df5879f6474850f561a9bbdbeba6b26e6a57ffbebe5"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/90fc4e867f8ac70e7f640df5879f6474850f561a9bbdbeba6b26e6a57ffbebe5.json.gz",
+      "originalHTMLSHA256": "525df3e7a73d7be1c231b113b38adeb766273acac469fee70434658c15d702bf",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-mask-renderToString.json",
+          "bytes": 104827,
+          "sha256": "0151aba30a06576f3a85883cc0bd4e08e4ad776441487e06bbb91941b5b87e2d",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-datetime-mask-mask-renderToString.json.gz",
+          "gzipBytes": 5741,
+          "gzipSHA256": "00bef0778f27daf3ca0b29e60545cbe37bacf409d49857e14e6b58a92ce2890e"
+        }
+      }
+    },
+    {
+      "id": "range-date-mask",
+      "formatProfile": "string",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-date-mask-string.json",
+        "bytes": 950641,
+        "sha256": "ea7e792aefcc37b9360af9c750c6c5c4d1ab902b048c6afbc5d02bb012650059",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-date-mask-string.json.gz",
+        "gzipBytes": 38724,
+        "gzipSHA256": "316f2114addd8da2b47bad53c684cb5965788bfa616652afc224eacce2c0103d"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/316f2114addd8da2b47bad53c684cb5965788bfa616652afc224eacce2c0103d.json.gz",
+      "originalHTMLSHA256": "aaee803d89accf4ece13a24dbd40f4194b3410d9b00741b3afc28b7cd417a90d",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-string-renderToString.json",
+          "bytes": 121892,
+          "sha256": "8e2f6c4c0d152d7f3ea00894d045069431e1e33fce0ca9090133d272f447865f",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-string-renderToString.json.gz",
+          "gzipBytes": 6362,
+          "gzipSHA256": "776f850cc76e345a291deb3438b28f4b3efe694987c1ba4688cef4d028e877a2"
+        }
+      }
+    },
+    {
+      "id": "range-date-mask",
+      "formatProfile": "object",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-date-mask-object.json",
+        "bytes": 961633,
+        "sha256": "e2c43aa5aabe046c527d0f3a21c01ba2068c3b1fa90d0587daeefba479eb12cd",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-date-mask-object.json.gz",
+        "gzipBytes": 39336,
+        "gzipSHA256": "7aafaeeab09623f39059cb0dc3fa4911d8feba6eddcfd99e8cf4742a108f50c9"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/7aafaeeab09623f39059cb0dc3fa4911d8feba6eddcfd99e8cf4742a108f50c9.json.gz",
+      "originalHTMLSHA256": "aaee803d89accf4ece13a24dbd40f4194b3410d9b00741b3afc28b7cd417a90d",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-object-renderToString.json",
+          "bytes": 123472,
+          "sha256": "d150198ff226e7fec5f2973c80702802c96eeba8044afd585a024cca200dab53",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-object-renderToString.json.gz",
+          "gzipBytes": 6470,
+          "gzipSHA256": "61f431ed07ed2eb9a29518f0bf5b406af11bd576f15b4f2d9e0eaa75303f7c93"
+        }
+      }
+    },
+    {
+      "id": "range-date-mask",
+      "formatProfile": "mask",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-date-mask-mask.json",
+        "bytes": 966355,
+        "sha256": "e507a9e76fe1a6e3b8788c11ccf00753afefeb417a8965118400b24feb30b0bb",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-date-mask-mask.json.gz",
+        "gzipBytes": 39444,
+        "gzipSHA256": "e94d71f0f627e28fc7cd264182ecfc92f9d025efe8b46bbf69779f44b52faa2c"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/e94d71f0f627e28fc7cd264182ecfc92f9d025efe8b46bbf69779f44b52faa2c.json.gz",
+      "originalHTMLSHA256": "aaee803d89accf4ece13a24dbd40f4194b3410d9b00741b3afc28b7cd417a90d",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-mask-renderToString.json",
+          "bytes": 124162,
+          "sha256": "ec46c3759130fdee9f00e6d09e21f1610dcb67f0b8045e1495d5f992e52701a7",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-date-mask-mask-renderToString.json.gz",
+          "gzipBytes": 6494,
+          "gzipSHA256": "da378706fe6bd10a1e16d03fbb2c24d58505c7afdcb5e0cecb7d8f7a9cc4c3fe"
+        }
+      }
+    },
+    {
+      "id": "single-time-mask",
+      "formatProfile": "string",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-time-mask-string.json",
+        "bytes": 1021920,
+        "sha256": "bb687eb59c13a2e65bbd0b08278a1a27f57bbd7330ce6329d682c662fd2c4a25",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-time-mask-string.json.gz",
+        "gzipBytes": 36580,
+        "gzipSHA256": "9c028370ad31014f2067be339705f125d3ebfef862057ab2d4f25d2c82997a9e"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/9c028370ad31014f2067be339705f125d3ebfef862057ab2d4f25d2c82997a9e.json.gz",
+      "originalHTMLSHA256": "8fbb8a78e94b1fa272699aaf4165dcf91ed42d8ab3e3451ab6ebe636b919e6cb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-string-renderToString.json",
+          "bytes": 100782,
+          "sha256": "b6f1905e23895b6cbabcf188100268be1bed5746fd0dceab58f7686d923a773b",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-string-renderToString.json.gz",
+          "gzipBytes": 5494,
+          "gzipSHA256": "1e11b866521759de7935cb6a2f5ae3f897138572f9aab6cf6db0b377e1809ae2"
+        }
+      }
+    },
+    {
+      "id": "single-time-mask",
+      "formatProfile": "object",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-time-mask-object.json",
+        "bytes": 1032973,
+        "sha256": "84b7b24983c0837352ee3c2c5a9ef33c55c835ec2ff8d8d3f5a5c51686f074e6",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-time-mask-object.json.gz",
+        "gzipBytes": 37244,
+        "gzipSHA256": "b1b6033587fcc89a2de4a70fd88182e70e537ed0ce629a62b1717ea4885d6a2c"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/b1b6033587fcc89a2de4a70fd88182e70e537ed0ce629a62b1717ea4885d6a2c.json.gz",
+      "originalHTMLSHA256": "8fbb8a78e94b1fa272699aaf4165dcf91ed42d8ab3e3451ab6ebe636b919e6cb",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-object-renderToString.json",
+          "bytes": 102372,
+          "sha256": "34991923cd13f881c366550319a227b09c39ed5e3e289ce64e642b32c0531f72",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-object-renderToString.json.gz",
+          "gzipBytes": 5617,
+          "gzipSHA256": "8f69d7bc66bcb0972dca2fd35aea04a507c2854bb48bb5d7edebe4b8328bbcf3"
+        }
+      }
+    },
+    {
+      "id": "single-time-mask",
+      "formatProfile": "mask",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-time-mask-mask.json",
+        "bytes": 1038478,
+        "sha256": "ddd0b9d90722f2eb25f64723c00fd08c53671ed8adf2c7d9b42acd5cc7ac7c8f",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/single-time-mask-mask.json.gz",
+        "gzipBytes": 37516,
+        "gzipSHA256": "a44a9ee54eef8c813eb8f68c6be37494640e718e66c406815b67b203bc082f46"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/a44a9ee54eef8c813eb8f68c6be37494640e718e66c406815b67b203bc082f46.json.gz",
+      "originalHTMLSHA256": "718bb4c8335a3ba282d84d36776e54e1932c2394479c6e6f6c1de69fdcc2501b",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-mask-renderToString.json",
+          "bytes": 103083,
+          "sha256": "6a72f4f795a88134dfbee3bcb8d6204b55cfd000bee91d23f2635ccd43b33437",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/single-time-mask-mask-renderToString.json.gz",
+          "gzipBytes": 5655,
+          "gzipSHA256": "7fe2f4fa3a63879fb3df459db48c2ac84ae4ead645d481389f428d9966c62b2a"
+        }
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "string",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-time-mask-string.json",
+        "bytes": 1224077,
+        "sha256": "5ae4d3cd2937c4ca9fc874297ef2f4195afce27d2ccf1dc059a5aa534b1b772e",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-time-mask-string.json.gz",
+        "gzipBytes": 43925,
+        "gzipSHA256": "c38937e9f084efa1df71a0fe4bc31b329324ed20ec0a3c49b3d756bdbff1e4c2"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/c38937e9f084efa1df71a0fe4bc31b329324ed20ec0a3c49b3d756bdbff1e4c2.json.gz",
+      "originalHTMLSHA256": "b589ba416eac05dd4a4e0d737502fbfeb0baf757eb0bf0697237ec7d80162e6e",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-string-renderToString.json",
+          "bytes": 162397,
+          "sha256": "5ae885df554f315b814f9c397981c32dfc820e211cd2fdbd102efac4cc8f1b56",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-string-renderToString.json.gz",
+          "gzipBytes": 7209,
+          "gzipSHA256": "4dc1e9051dc0ed1d12e3ed07de7dfe65785c4f1340c71ba0e80f2891f7d36737"
+        }
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "object",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-time-mask-object.json",
+        "bytes": 1235129,
+        "sha256": "68d19f3ca155dde50074184021cbdc542044a1ffaf01490fb56576e0b2c036ea",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-time-mask-object.json.gz",
+        "gzipBytes": 44510,
+        "gzipSHA256": "01528072335f131a1263fa6dd88e6eecfbdbf3d7106b4e5ff46cbe80673d117d"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/01528072335f131a1263fa6dd88e6eecfbdbf3d7106b4e5ff46cbe80673d117d.json.gz",
+      "originalHTMLSHA256": "b589ba416eac05dd4a4e0d737502fbfeb0baf757eb0bf0697237ec7d80162e6e",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-object-renderToString.json",
+          "bytes": 163987,
+          "sha256": "2b31d73fe0fdcfdab47b651fee62bac5c4c070c93ac251b0f314b12e51ca33fe",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-object-renderToString.json.gz",
+          "gzipBytes": 7308,
+          "gzipSHA256": "7ee517bdc1080a418d3139921cfba2e22cb495bfb731c52640dd40c2f39bfc26"
+        }
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "mask",
+      "variant": "repeat",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-time-mask-mask.json",
+        "bytes": 1241335,
+        "sha256": "3f9f920501c38c5bc7163a835420a98d7bbee2efc75cd452517480bb7a9ddc3a",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json.parts/range-time-mask-mask.json.gz",
+        "gzipBytes": 44723,
+        "gzipSHA256": "aaba67a987a6eca95c3f0dcfa199f5e1af451b3a65a49f319ef1f15ed89292c6"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-parts/aaba67a987a6eca95c3f0dcfa199f5e1af451b3a65a49f319ef1f15ed89292c6.json.gz",
+      "originalHTMLSHA256": "41bec363408b60eb1258a156380624e83e900a4f459e5f187e017cbc4aec2716",
+      "sourceSSR": {
+        "variant": "first",
+        "method": "renderToString",
+        "rawJSONPart": {
+          "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-mask-renderToString.json",
+          "bytes": 164705,
+          "sha256": "4d2b376ac08c4c7dfcf49a80d70f7aea8cab23a7779b9e5f899001205aeae223",
+          "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/range-time-mask-mask-renderToString.json.gz",
+          "gzipBytes": 7344,
+          "gzipSHA256": "7d91f8e61a3dece0165ffc9502cacf4dd8406de41f168b0275a948d389dea000"
+        }
+      }
+    }
+  ],
+  "documents": {
+    "protocol-freeze": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/protocol-freeze.json",
+      "bytes": 82951,
+      "sha256": "39263c92d730474bd0972660ea32775b19325c18f26bf0cba1e1175002f2a23e",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/protocol-freeze.json"
+    },
+    "protocol-proposal": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/protocol-proposal.json",
+      "bytes": 77735,
+      "sha256": "aeeddb909c8e9e8cfcea1631af941462beac307f5b1fd05193e62e05899d8298",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/protocol-proposal.json"
+    },
+    "execution-freeze": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/execution-freeze.json",
+      "bytes": 235,
+      "sha256": "691d112a7c7197d45d5a7b96a0ea549ed31c56e95d079a04f38fc4fa3c340bfb",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/execution-freeze.json"
+    },
+    "release": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/root-process-release.json",
+      "bytes": 1352,
+      "sha256": "8c555aa43e282d1a30591c495545fe4972699bfafcf290ea03ef7a3de3935e68",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/release.json"
+    },
+    "capture": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/capture.mjs",
+      "bytes": 15201,
+      "sha256": "346779497bae4cd609d8385019bf2c76798296636bb68e9527bbb3468635188b",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/capture.mjs.txt"
+    },
+    "protocol": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/protocol.mjs",
+      "bytes": 7567,
+      "sha256": "18e89bfbaaf1377f29d3202d7767edca93f8d04558d87bd08b018d4a1411bac4",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/protocol.mjs.txt"
+    },
+    "plan": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/plan.md",
+      "bytes": 5638,
+      "sha256": "9782bf1dd9687542f4066035f3f26d85fd2ac73b9d8ec4642c054414b6df52f8",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/plan.md"
+    },
+    "source-factory": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/source-case.mjs",
+      "bytes": 8031,
+      "sha256": "945ab530747dd565950871aecb86afe3b2b04b8ea21b1fcc339278545caf8aba",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/source-factory.mjs.txt"
+    },
+    "capture-first": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-first.json",
+      "bytes": 12288,
+      "sha256": "e6517624430cc97dcab34eb764af742e3ce160cd9d36f3407645189629a89fb8",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/capture-first.json"
+    },
+    "capture-repeat": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/hydrate-source-repeat.json",
+      "bytes": 12319,
+      "sha256": "7258fdade0eb6eadd4afa68dadc558a7a0579d84a198acd6b9449dcbf853ce0c",
+      "fixture": "ant-design-date-picker-mask-hydration-evidence/capture-repeat.json"
+    }
+  }
+}

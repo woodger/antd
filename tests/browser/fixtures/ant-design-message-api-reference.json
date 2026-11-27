@@ -1,0 +1,1494 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "kind": "context-family",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Plain",
+              "type": null,
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": null,
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": null
+            },
+            {
+              "text": "0",
+              "type": null,
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": null,
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": null
+            },
+            {
+              "text": "",
+              "type": null,
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": null,
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": null
+            },
+            {
+              "text": "info",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "success",
+              "type": "success",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "warning",
+              "type": "warning",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "error",
+              "type": "error",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "loading",
+              "type": "loading",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "loading",
+            "error",
+            "warning",
+            "success",
+            "info",
+            "",
+            "0",
+            "Plain"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "plain": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "zero": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "blank": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "info": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "success": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "warning": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "error": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "loading": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "context-queue",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Updated",
+              "type": "warning",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Updated"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "same-first": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "same-last": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "removed": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "context-timeout",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Timed",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Timed"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "timed": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [
+          [
+            "Timed",
+            "close"
+          ],
+          [
+            "timed",
+            "then",
+            true
+          ]
+        ],
+        "motion": []
+      }
+    },
+    {
+      "kind": "context-typed",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Positional",
+              "type": "success",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Positional"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "priority": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "context-semantics",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Decorated",
+              "type": "warning",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [
+                  "holder-root",
+                  "notice-extra",
+                  "notice-root",
+                  "provider-extra",
+                  "provider-root"
+                ],
+                "styles": {
+                  "--winner": "noticeInline",
+                  "--provider": "root",
+                  "--extra": "notice",
+                  "--holder": "root",
+                  "--notice": "root"
+                }
+              },
+              "wrapper": {
+                "classes": [
+                  "holder-wrapper",
+                  "notice-wrapper",
+                  "provider-wrapper"
+                ],
+                "styles": {
+                  "--winner": "notice",
+                  "--provider": "wrapper",
+                  "--holder": "wrapper",
+                  "--notice": "wrapper"
+                }
+              },
+              "title": {
+                "classes": [
+                  "holder-title",
+                  "notice-title",
+                  "provider-title"
+                ],
+                "styles": {
+                  "--winner": "notice",
+                  "--provider": "title",
+                  "--holder": "title",
+                  "--notice": "title"
+                }
+              },
+              "icon": {
+                "classes": [
+                  "holder-icon",
+                  "notice-icon",
+                  "provider-icon"
+                ],
+                "styles": {
+                  "--winner": "notice",
+                  "--provider": "icon",
+                  "--holder": "icon",
+                  "--notice": "icon"
+                }
+              }
+            }
+          ],
+          "list": {
+            "classes": [
+              "holder-list",
+              "provider-list"
+            ],
+            "styles": {
+              "--winner": "holder",
+              "--provider": "list",
+              "--holder": "list"
+            }
+          },
+          "listContent": {
+            "classes": [
+              "holder-listContent",
+              "provider-listContent"
+            ],
+            "styles": {
+              "--winner": "holder",
+              "--provider": "listContent",
+              "--holder": "listContent"
+            }
+          },
+          "visualOrder": [
+            "Decorated"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "29px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "semantic": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {
+          "providerClasses": {
+            "content": null,
+            "duration": 0,
+            "top": 29,
+            "type": null,
+            "rtl": null,
+            "prefixCls": null
+          },
+          "holderClasses": {
+            "content": null,
+            "duration": 0,
+            "top": 29,
+            "type": null,
+            "rtl": null,
+            "prefixCls": null
+          },
+          "providerStyles": {
+            "content": null,
+            "duration": 0,
+            "top": 29,
+            "type": null,
+            "rtl": null,
+            "prefixCls": null
+          },
+          "holderStyles": {
+            "content": null,
+            "duration": 0,
+            "top": 29,
+            "type": null,
+            "rtl": null,
+            "prefixCls": null
+          },
+          "noticeClasses": {
+            "content": "Decorated",
+            "duration": 0,
+            "top": 29,
+            "type": "warning",
+            "rtl": null,
+            "prefixCls": null
+          },
+          "noticeStyles": {
+            "content": "Decorated",
+            "duration": 0,
+            "top": 29,
+            "type": "warning",
+            "rtl": null,
+            "prefixCls": null
+          }
+        },
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [
+          [
+            "click",
+            "DIV"
+          ]
+        ],
+        "motion": []
+      }
+    },
+    {
+      "kind": "context-portal",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Visible",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Visible"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "target-one",
+          "placeholder": "1"
+        },
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Visible",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Visible"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "target-two",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "single": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": false,
+        "containerArity": [
+          0
+        ]
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "provider-portal",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Visible",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Visible"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "target-one",
+          "placeholder": "1"
+        },
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Visible",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Visible"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "target-two",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "single": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": false,
+        "containerArity": [
+          0
+        ]
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "app-message",
+      "frames": [
+        {
+          "prefix": "app-message",
+          "notices": [
+            {
+              "text": "Two",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Three",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Three",
+            "Two"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": true,
+          "top": "57px",
+          "target": "target-one",
+          "placeholder": "1"
+        },
+        {
+          "prefix": "next-message",
+          "notices": [
+            {
+              "text": "Three",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Four",
+              "type": "success",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Four",
+            "Three"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "0px",
+          "target": "target-two",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "One": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "Two": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "Three": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "Four": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": false,
+        "containerArity": [
+          0
+        ]
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "stack",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "One",
+              "type": "info",
+              "role": "alert",
+              "opacity": "0",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Two",
+              "type": "info",
+              "role": "alert",
+              "opacity": "0",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Three",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Three"
+          ],
+          "stack": true,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        },
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "One",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Two",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Three",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Three",
+            "Two",
+            "One"
+          ],
+          "stack": true,
+          "expanded": true,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "0"
+        },
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "One",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            },
+            {
+              "text": "Two",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Two",
+            "One"
+          ],
+          "stack": true,
+          "expanded": true,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "0"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "One": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "Two": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          },
+          "Three": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    },
+    {
+      "kind": "motion",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Visible",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Visible"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "single": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [],
+        "motion": [
+          "message-enter",
+          "message-leave"
+        ]
+      }
+    },
+    {
+      "kind": "motion-disabled",
+      "frames": [
+        {
+          "prefix": "ant-message",
+          "notices": [
+            {
+              "text": "Visible",
+              "type": "info",
+              "role": "alert",
+              "opacity": "1",
+              "root": {
+                "classes": [],
+                "styles": {}
+              },
+              "wrapper": {
+                "classes": [],
+                "styles": {}
+              },
+              "title": {
+                "classes": [],
+                "styles": {}
+              },
+              "icon": {
+                "classes": [],
+                "styles": {}
+              }
+            }
+          ],
+          "list": {
+            "classes": [],
+            "styles": {}
+          },
+          "listContent": {
+            "classes": [],
+            "styles": {}
+          },
+          "visualOrder": [
+            "Visible"
+          ],
+          "stack": false,
+          "expanded": false,
+          "rtl": false,
+          "top": "8px",
+          "target": "body",
+          "placeholder": "1"
+        }
+      ],
+      "before": {
+        "hooks": {
+          "single": {
+            "keys": [
+              "promise",
+              "then"
+            ],
+            "promise": true
+          }
+        },
+        "props": {},
+        "sameNode": null,
+        "containerArity": []
+      },
+      "after": {
+        "events": [],
+        "motion": []
+      }
+    }
+  ]
+}

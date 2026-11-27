@@ -1,0 +1,731 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "source": "package/dist/antd.min.js",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "default"
+      },
+      "initial": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": []
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "force",
+        "forceRender": true
+      },
+      "initial": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount"
+        ]
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "destroy",
+        "destroyOnHidden": true
+      },
+      "initial": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": []
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "force-destroy",
+        "forceRender": true,
+        "destroyOnHidden": true
+      },
+      "initial": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount"
+        ]
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "disable-destroy",
+        "destroyOnHidden": true,
+        "disableDestroyAfterClose": true
+      },
+      "initial": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": []
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "keptClosed": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "motion-destroy",
+        "motion": true,
+        "destroyOnHidden": true
+      },
+      "initial": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": []
+      },
+      "entering": {
+        "panel": "css-1y106cm-antZoomIn",
+        "mask": "css-1y106cm-antFadeIn",
+        "panelDuration": 300,
+        "maskDuration": 200,
+        "editorMounted": true,
+        "events": [
+          "mount"
+        ]
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "leaving": {
+        "panel": "css-1y106cm-antZoomOut",
+        "mask": "css-1y106cm-antFadeOut",
+        "panelDuration": 200,
+        "maskDuration": 200,
+        "editorMounted": true,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ]
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          "destroy",
+          [
+            "afterClose",
+            false,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm",
+        "confirm": true
+      },
+      "initial": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": []
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "destroy"
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "destroy",
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-motion",
+        "confirm": true,
+        "motion": true
+      },
+      "initial": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": []
+      },
+      "entering": {
+        "panel": "css-1y106cm-antZoomIn",
+        "mask": "css-1y106cm-antFadeIn",
+        "panelDuration": 300,
+        "maskDuration": 200,
+        "editorMounted": true,
+        "events": [
+          "mount"
+        ]
+      },
+      "opened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "leaving": {
+        "panel": "css-1y106cm-antZoomOut",
+        "mask": "css-1y106cm-antFadeOut",
+        "panelDuration": 200,
+        "maskDuration": 200,
+        "editorMounted": true,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      },
+      "closed": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "destroy"
+        ]
+      },
+      "reopened": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterClose",
+            true,
+            true
+          ],
+          [
+            "afterOpenChange",
+            false
+          ],
+          "destroy",
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    }
+  ],
+  "updates": [
+    {
+      "profile": {
+        "id": "unforce",
+        "forceRender": true,
+        "motion": true
+      },
+      "afterUnforce": {
+        "mounted": true,
+        "kept": false,
+        "value": "Seed",
+        "events": [
+          "mount"
+        ]
+      },
+      "renewed": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "destroy-unforce",
+        "forceRender": true,
+        "destroyOnHidden": true,
+        "motion": true
+      },
+      "afterUnforce": {
+        "mounted": false,
+        "kept": false,
+        "value": null,
+        "events": [
+          "mount",
+          "destroy"
+        ]
+      },
+      "renewed": {
+        "mounted": true,
+        "kept": true,
+        "value": "Edited",
+        "events": [
+          "mount",
+          "destroy",
+          "mount",
+          [
+            "afterOpenChange",
+            true
+          ],
+          [
+            "afterOpenChange",
+            true
+          ]
+        ]
+      }
+    }
+  ]
+}

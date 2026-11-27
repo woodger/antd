@@ -1,0 +1,2735 @@
+[
+  {
+    "id": "tree-select-motion",
+    "module": "./TreeSelectMotionFixtures.svelte",
+    "root": "tree-select-motion-fixture"
+  },
+  {
+    "id": "tree-select-align-frame",
+    "module": "./TreeSelectAlignFrameFixtures.svelte",
+    "root": "tree-select-align-frame-fixture"
+  },
+  {
+    "id": "tree-select-align",
+    "module": "./TreeSelectAlignFixtures.svelte",
+    "root": "tree-select-align-fixture"
+  },
+  {
+    "id": "tree-select-inert-api",
+    "module": "./TreeSelectInertApiFixtures.svelte",
+    "root": "tree-select-inert-api-fixture"
+  },
+  {
+    "id": "tree-select-components-form",
+    "module": "./TreeSelectComponentsFormFixtures.svelte",
+    "root": "tree-select-components-form-fixture"
+  },
+  {
+    "id": "tree-select-root",
+    "module": "./TreeSelectRootFixtures.svelte",
+    "root": "tree-select-root-fixture"
+  },
+  {
+    "id": "tree-select-root-lifecycle",
+    "module": "./TreeSelectRootLifecycle.svelte",
+    "root": "tree-select-root-lifecycle-fixture"
+  },
+  {
+    "id": "tree-select-input",
+    "module": "./TreeSelectInputFixtures.svelte",
+    "root": "tree-select-input-fixture"
+  },
+  {
+    "id": "tree-select-input-responsive",
+    "module": "./TreeSelectInputResponsiveFixtures.svelte",
+    "root": "tree-select-input-responsive-fixture"
+  },
+  {
+    "id": "tree-select-suffix-layout",
+    "module": "./TreeSelectSuffixLayoutFixtures.svelte",
+    "root": "tree-select-suffix-layout-fixture"
+  },
+  {
+    "id": "tree-select-suffix-container",
+    "module": "./TreeSelectSuffixContainerFixtures.svelte",
+    "root": "tree-select-suffix-container-fixture"
+  },
+  {
+    "id": "tree-select-suffix-layout-edges",
+    "module": "./TreeSelectSuffixLayoutEdgesFixtures.svelte",
+    "root": "tree-select-suffix-layout-edges-fixture"
+  },
+  {
+    "id": "tree-select-token",
+    "module": "./TreeSelectTokenFixtures.svelte",
+    "root": "tree-select-token-fixture"
+  },
+  {
+    "id": "tree-select-pointer",
+    "module": "./TreeSelectPointerFixtures.svelte",
+    "root": "tree-select-pointer-fixture"
+  },
+  {
+    "id": "tree-scrollbar",
+    "module": "./TreeScrollbarFixtures.svelte",
+    "root": "tree-scrollbar-fixture"
+  },
+  {
+    "id": "input",
+    "module": "./BasicFixtures.svelte",
+    "kind": "input",
+    "root": "input-fixture"
+  },
+  {
+    "id": "input-prefix",
+    "module": "./InputPrefixFixtures.svelte",
+    "root": "input-prefix-fixture"
+  },
+  {
+    "id": "input-password-prefix",
+    "module": "./InputPasswordPrefixFixtures.svelte",
+    "root": "input-password-prefix-fixture"
+  },
+  {
+    "id": "input-search-prefix",
+    "module": "./InputSearchPrefixFixtures.svelte",
+    "root": "input-search-prefix-fixture"
+  },
+  {
+    "id": "input-otp-prefix",
+    "module": "./InputOTPPrefixFixtures.svelte",
+    "root": "input-otp-prefix-fixture"
+  },
+  {
+    "id": "input-number-prefix",
+    "module": "./InputNumberPrefixFixtures.svelte",
+    "root": "input-number-prefix-fixture"
+  },
+  {
+    "id": "select",
+    "module": "./BasicFixtures.svelte",
+    "kind": "select",
+    "root": "select-fixture"
+  },
+  {
+    "id": "select-theme",
+    "module": "./SelectThemeFixtures.svelte",
+    "root": "select-theme-fixture"
+  },
+  {
+    "id": "select-numeric",
+    "module": "./BasicFixtures.svelte",
+    "kind": "select-numeric",
+    "root": "numeric-fixture"
+  },
+  {
+    "id": "form",
+    "module": "./BasicFixtures.svelte",
+    "kind": "form",
+    "root": "form-fixture"
+  },
+  {
+    "id": "form-paths",
+    "module": "./FormPathsFixtures.svelte",
+    "root": "form-paths-fixture"
+  },
+  {
+    "id": "form-warnings",
+    "module": "./FormWarningsFixtures.svelte",
+    "root": "form-warnings-fixture"
+  },
+  {
+    "id": "form-error-list",
+    "module": "./FormErrorListFixtures.svelte",
+    "root": "form-error-list-fixture"
+  },
+  {
+    "id": "form-validation-options",
+    "module": "./FormValidationOptionsFixtures.svelte",
+    "root": "form-validation-options-fixture"
+  },
+  {
+    "id": "form-aggregate",
+    "module": "./FormAggregateFixtures.svelte",
+    "root": "form-aggregate-fixture"
+  },
+  {
+    "id": "form-get-fields-value",
+    "module": "./FormGetFieldsValueFixtures.svelte",
+    "root": "form-get-fields-value-fixture"
+  },
+  {
+    "id": "form-set-fields",
+    "module": "./FormSetFieldsFixtures.svelte",
+    "root": "form-set-fields-fixture"
+  },
+  {
+    "id": "form-reset-fields",
+    "module": "./FormResetFieldsFixtures.svelte",
+    "root": "form-reset-fields-fixture"
+  },
+  {
+    "id": "form-validating-aggregate",
+    "module": "./FormValidatingAggregateFixtures.svelte",
+    "root": "form-validating-aggregate-fixture"
+  },
+  {
+    "id": "form-list",
+    "module": "./FormListFixtures.svelte",
+    "root": "form-list-fixture"
+  },
+  {
+    "id": "form-list-defaults",
+    "module": "./FormListDefaultsFixtures.svelte",
+    "root": "form-list-defaults-fixture"
+  },
+  {
+    "id": "form-list-nested",
+    "module": "./FormListNestedFixtures.svelte",
+    "root": "form-list-nested-fixture"
+  },
+  {
+    "id": "form-list-sparse",
+    "module": "./FormListSparseFixtures.svelte",
+    "root": "form-list-sparse-fixture"
+  },
+  {
+    "id": "form-theme",
+    "module": "./FormThemeFixtures.svelte",
+    "root": "form-theme-fixture"
+  },
+  {
+    "id": "modal",
+    "module": "./BasicFixtures.svelte",
+    "kind": "modal",
+    "root": "modal-fixture"
+  },
+  {
+    "id": "modal-prefix",
+    "module": "./ModalPrefixFixtures.svelte",
+    "root": "modal-prefix-fixture"
+  },
+  {
+    "id": "checkbox-pagination",
+    "module": "./CheckboxPagination.svelte",
+    "root": "checkbox-fixture"
+  },
+  {
+    "id": "checkbox-prefix",
+    "module": "./CheckboxPrefixFixtures.svelte",
+    "root": "checkbox-prefix-fixture"
+  },
+  {
+    "id": "pagination-color",
+    "module": "./PaginationColorFixtures.svelte",
+    "root": "pagination-color-fixture"
+  },
+  {
+    "id": "table",
+    "module": "./TableFixtures.svelte",
+    "root": "table-fixture"
+  },
+  {
+    "id": "table-filters",
+    "module": "./TableFilterFixtures.svelte",
+    "root": "table-filter-fixture"
+  },
+  {
+    "id": "table-server",
+    "module": "./ServerTableFixtures.svelte",
+    "root": "server-table-fixture"
+  },
+  {
+    "id": "table-fixed",
+    "module": "./FixedTableFixtures.svelte",
+    "root": "fixed-table-fixture"
+  },
+  {
+    "id": "table-expandable",
+    "module": "./ExpandableTableFixtures.svelte",
+    "root": "expandable-table-fixture"
+  },
+  {
+    "id": "select-multiple",
+    "module": "./MultipleSelectFixtures.svelte",
+    "root": "multiple-select-fixture"
+  },
+  {
+    "id": "select-tags",
+    "module": "./SelectTagsFixtures.svelte",
+    "root": "select-tags-fixture"
+  },
+  {
+    "id": "select-token-separators",
+    "module": "./SelectTokenFixtures.svelte",
+    "root": "select-token-fixture"
+  },
+  {
+    "id": "select-sort",
+    "module": "./SelectSortFixtures.svelte",
+    "root": "select-sort-fixture"
+  },
+  {
+    "id": "select-max-count",
+    "module": "./SelectLimitFixtures.svelte",
+    "root": "select-limit-fixture"
+  },
+  {
+    "id": "select-tag-text",
+    "module": "./TagTextFixtures.svelte",
+    "root": "tag-text-fixture"
+  },
+  {
+    "id": "select-tag-count",
+    "module": "./SelectTagCountFixtures.svelte",
+    "root": "tag-count-fixture"
+  },
+  {
+    "id": "select-responsive-tags",
+    "module": "./SelectResponsiveTagsFixtures.svelte",
+    "root": "responsive-tags-fixture"
+  },
+  {
+    "id": "select-optional-options",
+    "module": "./OptionalSelectFixtures.svelte",
+    "root": "optional-select-fixture"
+  },
+  {
+    "id": "cascader-overflow-owner",
+    "module": "./CascaderOverflowOwnerFixtures.svelte",
+    "root": "cascader-overflow-owner-fixture"
+  },
+  {
+    "id": "select-tag-render",
+    "module": "./SelectTagRenderFixtures.svelte",
+    "root": "tag-render-fixture"
+  },
+  {
+    "id": "modal-content",
+    "module": "./ModalContentFixtures.svelte",
+    "root": "modal-content-fixture"
+  },
+  {
+    "id": "modal-controller",
+    "module": "./ModalControllerFixtures.svelte",
+    "root": "modal-controller-fixture"
+  },
+  {
+    "id": "modal-interaction",
+    "module": "./ModalInteractionFixtures.svelte",
+    "root": "modal-interaction-fixture"
+  },
+  {
+    "id": "checkbox-group",
+    "module": "./CheckboxGroupFixtures.svelte",
+    "root": "checkbox-group-fixture"
+  },
+  {
+    "id": "radio",
+    "module": "./RadioFixtures.svelte",
+    "root": "radio-fixture"
+  },
+  {
+    "id": "radio-prefix",
+    "module": "./RadioPrefixFixtures.svelte",
+    "root": "radio-prefix-fixture"
+  },
+  {
+    "id": "switch",
+    "module": "./SwitchFixtures.svelte",
+    "root": "switch-fixture"
+  },
+  {
+    "id": "switch-prefix",
+    "module": "./SwitchPrefixFixtures.svelte",
+    "root": "switch-prefix-fixture"
+  },
+  {
+    "id": "input-number",
+    "module": "./InputNumberFixtures.svelte",
+    "root": "input-number-fixture"
+  },
+  {
+    "id": "slider",
+    "module": "./SliderFixtures.svelte",
+    "root": "slider-fixture"
+  },
+  {
+    "id": "tooltip",
+    "module": "./TooltipFixtures.svelte",
+    "root": "tooltip-fixture"
+  },
+  {
+    "id": "tooltip-content",
+    "module": "./TooltipContentFixtures.svelte",
+    "root": "tooltip-content-fixture"
+  },
+  {
+    "id": "tooltip-ref",
+    "module": "./TooltipRefFixtures.svelte",
+    "root": "tooltip-ref-fixture"
+  },
+  {
+    "id": "popover-actions",
+    "module": "./PopoverActionsFixtures.svelte",
+    "root": "popover-actions-fixture"
+  },
+  {
+    "id": "tooltip-actions",
+    "module": "./TooltipActionsFixtures.svelte",
+    "root": "tooltip-actions-fixture"
+  },
+  {
+    "id": "tooltip-lifecycle",
+    "module": "./TooltipLifecycleFixtures.svelte",
+    "root": "tooltip-lifecycle-fixture"
+  },
+  {
+    "id": "popover-lifecycle",
+    "module": "./PopoverLifecycleFixtures.svelte",
+    "root": "popover-lifecycle-fixture"
+  },
+  {
+    "id": "overlay-motion",
+    "module": "./OverlayMotionFixtures.svelte",
+    "root": "overlay-motion-fixture"
+  },
+  {
+    "id": "tooltip-unique",
+    "module": "./TooltipUniqueFixtures.svelte",
+    "root": "tooltip-unique-fixture"
+  },
+  {
+    "id": "tooltip-unique-delegates",
+    "module": "./TooltipUniqueDelegateFixtures.svelte",
+    "root": "tooltip-unique-delegate-fixture"
+  },
+  {
+    "id": "popover-ref",
+    "module": "./PopoverRefFixtures.svelte",
+    "root": "popover-ref-fixture"
+  },
+  {
+    "id": "popover-align",
+    "module": "./PopoverAlignFixtures.svelte",
+    "root": "popover-align-fixture"
+  },
+  {
+    "id": "tooltip-align",
+    "module": "./TooltipAlignFixtures.svelte",
+    "root": "tooltip-align-fixture"
+  },
+  {
+    "id": "popover",
+    "module": "./PopoverFixtures.svelte",
+    "root": "popover-fixture"
+  },
+  {
+    "id": "popconfirm",
+    "module": "./PopconfirmFixtures.svelte",
+    "root": "popconfirm-fixture"
+  },
+  {
+    "id": "popconfirm-popup-click",
+    "module": "./PopconfirmPopupClickFixture.svelte",
+    "root": "popconfirm-popup-click-fixture"
+  },
+  {
+    "id": "popconfirm-action-content",
+    "module": "./PopconfirmActionContentFixture.svelte",
+    "root": "popconfirm-action-content-fixture"
+  },
+  {
+    "id": "popconfirm-action-links",
+    "module": "./PopconfirmActionLinksFixture.svelte",
+    "root": "popconfirm-action-links-fixture"
+  },
+  {
+    "id": "dropdown",
+    "module": "./DropdownFixtures.svelte",
+    "root": "dropdown-fixture"
+  },
+  {
+    "id": "dropdown-menu",
+    "module": "./DropdownMenuFixtures.svelte",
+    "root": "dropdown-menu-fixture"
+  },
+  {
+    "id": "dropdown-placement",
+    "module": "./DropdownPlacementFixtures.svelte",
+    "root": "dropdown-placement-fixture"
+  },
+  {
+    "id": "dropdown-lifecycle",
+    "module": "./DropdownLifecycleFixtures.svelte",
+    "root": "dropdown-lifecycle-fixture"
+  },
+  {
+    "id": "dropdown-appearance",
+    "module": "./DropdownAppearanceFixtures.svelte",
+    "root": "dropdown-appearance-fixture"
+  },
+  {
+    "id": "tabs",
+    "module": "./TabsFixtures.svelte",
+    "root": "tabs-fixture"
+  },
+  {
+    "id": "collapse",
+    "module": "./CollapseFixtures.svelte",
+    "root": "collapse-fixture"
+  },
+  {
+    "id": "collapse-source",
+    "module": "./CollapseSourceFixtures.svelte",
+    "root": "collapse-source-fixture"
+  },
+  {
+    "id": "drawer",
+    "module": "./DrawerFixtures.svelte",
+    "root": "drawer-fixture"
+  },
+  {
+    "id": "drawer-geometry",
+    "module": "./DrawerGeometryFixtures.svelte",
+    "root": "drawer-geometry-fixture"
+  },
+  {
+    "id": "drawer-focus",
+    "module": "./DrawerFocusFixtures.svelte",
+    "root": "drawer-focus-fixture"
+  },
+  {
+    "id": "drawer-panel",
+    "module": "./DrawerPanelFixtures.svelte",
+    "root": "drawer-panel-fixture"
+  },
+  {
+    "id": "drawer-dom",
+    "module": "./DrawerDomFixtures.svelte",
+    "root": "drawer-dom-fixture"
+  },
+  {
+    "id": "drawer-motion-api",
+    "module": "./DrawerMotionFixtures.svelte",
+    "root": "drawer-motion-api-fixture"
+  },
+  {
+    "id": "alert",
+    "module": "./AlertFixtures.svelte",
+    "root": "alert-fixture"
+  },
+  {
+    "id": "message",
+    "module": "./MessageFixtures.svelte",
+    "root": "message-fixture"
+  },
+  {
+    "id": "message-prefix",
+    "module": "./MessagePrefixFixtures.svelte",
+    "root": "message-prefix-fixture"
+  },
+  {
+    "id": "notification",
+    "module": "./NotificationFixtures.svelte",
+    "root": "notification-fixture"
+  },
+  {
+    "id": "notification-prefix",
+    "module": "./NotificationPrefixFixtures.svelte",
+    "root": "notification-prefix-fixture"
+  },
+  {
+    "id": "progress",
+    "module": "./ProgressFixtures.svelte",
+    "root": "progress-fixture"
+  },
+  {
+    "id": "spin",
+    "module": "./SpinFixtures.svelte",
+    "root": "spin-fixture"
+  },
+  {
+    "id": "skeleton",
+    "module": "./SkeletonFixtures.svelte",
+    "root": "skeleton-fixture"
+  },
+  {
+    "id": "empty",
+    "module": "./EmptyFixtures.svelte",
+    "root": "empty-fixture"
+  },
+  {
+    "id": "result",
+    "module": "./ResultFixtures.svelte",
+    "root": "result-fixture"
+  },
+  {
+    "id": "steps",
+    "module": "./StepsFixtures.svelte",
+    "root": "steps-fixture"
+  },
+  {
+    "id": "tag",
+    "module": "./TagFixtures.svelte",
+    "root": "tag-fixture"
+  },
+  {
+    "id": "checkable-tag-api",
+    "module": "./CheckableTagApiFixtures.svelte",
+    "root": "checkable-tag-api-fixture"
+  },
+  {
+    "id": "tag-style",
+    "module": "./TagStyleFixtures.svelte",
+    "root": "tag-style-fixture"
+  },
+  {
+    "id": "tag-close",
+    "module": "./TagCloseFixtures.svelte",
+    "root": "tag-close-fixture"
+  },
+  {
+    "id": "badge",
+    "module": "./BadgeFixtures.svelte",
+    "root": "badge-fixture"
+  },
+  {
+    "id": "avatar",
+    "module": "./AvatarFixtures.svelte",
+    "root": "avatar-fixture"
+  },
+  {
+    "id": "avatar-group",
+    "module": "./AvatarGroupFixtures.svelte",
+    "root": "avatar-group-fixture"
+  },
+  {
+    "id": "divider",
+    "module": "./DividerFixtures.svelte",
+    "root": "divider-fixture"
+  },
+  {
+    "id": "flex",
+    "module": "./FlexFixtures.svelte",
+    "root": "flex-fixture"
+  },
+  {
+    "id": "statistic",
+    "module": "./StatisticFixtures.svelte",
+    "root": "statistic-fixture"
+  },
+  {
+    "id": "statistic-theme",
+    "module": "./StatisticThemeFixtures.svelte",
+    "root": "statistic-theme-fixture"
+  },
+  {
+    "id": "statistic-timer",
+    "module": "./StatisticTimerFixtures.svelte",
+    "root": "statistic-timer-fixture"
+  },
+  {
+    "id": "segmented",
+    "module": "./SegmentedFixtures.svelte",
+    "root": "segmented-fixture"
+  },
+  {
+    "id": "segmented-theme",
+    "module": "./SegmentedThemeFixtures.svelte",
+    "root": "segmented-theme-fixture"
+  },
+  {
+    "id": "segmented-config",
+    "module": "./SegmentedConfigFixtures.svelte",
+    "root": "segmented-config-fixture"
+  },
+  {
+    "id": "segmented-prefix",
+    "module": "./SegmentedPrefixFixtures.svelte",
+    "root": "segmented-prefix-fixture"
+  },
+  {
+    "id": "grid",
+    "module": "./GridFixtures.svelte",
+    "root": "grid-fixture"
+  },
+  {
+    "id": "layout-theme",
+    "module": "./LayoutThemeFixtures.svelte",
+    "root": "layout-theme-fixture"
+  },
+  {
+    "id": "layout",
+    "module": "./LayoutFixtures.svelte",
+    "root": "layout-fixture"
+  },
+  {
+    "id": "layout-config",
+    "module": "./LayoutConfigFixtures.svelte",
+    "root": "layout-config-fixture"
+  },
+  {
+    "id": "layout-prefix",
+    "module": "./LayoutPrefixFixtures.svelte",
+    "root": "layout-prefix-fixture"
+  },
+  {
+    "id": "layout-section-prefix",
+    "module": "./LayoutSectionPrefixFixtures.svelte",
+    "root": "layout-section-prefix-fixture"
+  },
+  {
+    "id": "descriptions",
+    "module": "./DescriptionsFixtures.svelte",
+    "root": "descriptions-fixture"
+  },
+  {
+    "id": "descriptions-theme",
+    "module": "./DescriptionsThemeFixtures.svelte",
+    "root": "descriptions-theme-fixture"
+  },
+  {
+    "id": "card",
+    "module": "./CardFixtures.svelte",
+    "root": "card-fixture"
+  },
+  {
+    "id": "card-theme",
+    "module": "./CardThemeFixtures.svelte",
+    "root": "card-theme-fixture"
+  },
+  {
+    "id": "breadcrumb",
+    "module": "./BreadcrumbFixtures.svelte",
+    "root": "breadcrumb-fixture"
+  },
+  {
+    "id": "breadcrumb-config",
+    "module": "./BreadcrumbConfigFixtures.svelte",
+    "root": "breadcrumb-config-fixture"
+  },
+  {
+    "id": "theme",
+    "module": "./ThemeFixtures.svelte",
+    "root": "theme-fixture"
+  },
+  {
+    "id": "space-theme",
+    "module": "./SpaceThemeFixtures.svelte",
+    "root": "space-theme-fixture"
+  },
+  {
+    "id": "space",
+    "module": "./SpaceFixtures.svelte",
+    "root": "space-fixture"
+  },
+  {
+    "id": "space-compact",
+    "module": "./SpaceCompactFixtures.svelte",
+    "root": "space-compact-fixture"
+  },
+  {
+    "id": "affix",
+    "module": "./AffixFixtures.svelte",
+    "root": "affix-fixture"
+  },
+  {
+    "id": "affix-theme",
+    "module": "./AffixThemeFixtures.svelte",
+    "root": "affix-theme-fixture"
+  },
+  {
+    "id": "affix-config",
+    "module": "./AffixConfigFixtures.svelte",
+    "root": "affix-config-fixture"
+  },
+  {
+    "id": "target-container",
+    "module": "./TargetContainerFixtures.svelte",
+    "root": "target-container-fixture"
+  },
+  {
+    "id": "anchor",
+    "module": "./AnchorFixtures.svelte",
+    "root": "anchor-fixture"
+  },
+  {
+    "id": "anchor-config",
+    "module": "./AnchorConfigFixtures.svelte",
+    "root": "anchor-config-fixture"
+  },
+  {
+    "id": "anchor-spacing",
+    "module": "./AnchorSpacingFixtures.svelte",
+    "root": "anchor-spacing-fixture"
+  },
+  {
+    "id": "link-decoration",
+    "module": "./LinkDecorationFixtures.svelte",
+    "root": "link-decoration-fixture"
+  },
+  {
+    "id": "steps-variants",
+    "module": "./StepsVariantsFixtures.svelte",
+    "root": "steps-variants-fixture"
+  },
+  {
+    "id": "timeline",
+    "module": "./TimelineFixtures.svelte",
+    "root": "timeline-fixture"
+  },
+  {
+    "id": "button",
+    "module": "./ButtonFixtures.svelte",
+    "root": "button-fixture"
+  },
+  {
+    "id": "button-prefix",
+    "module": "./ButtonPrefixFixtures.svelte",
+    "root": "button-prefix-fixture"
+  },
+  {
+    "id": "float-button",
+    "module": "./FloatButtonFixtures.svelte",
+    "root": "float-button-fixture",
+    "kind": "float-button"
+  },
+  {
+    "id": "float-button-prefix",
+    "module": "./FloatButtonPrefixFixtures.svelte",
+    "root": "float-button-prefix-fixture"
+  },
+  {
+    "id": "float-button-theme",
+    "module": "./FloatButtonThemeFixtures.svelte",
+    "root": "float-button-theme-fixture"
+  },
+  {
+    "id": "textarea",
+    "module": "./TextAreaFixtures.svelte",
+    "root": "textarea-fixture"
+  },
+  {
+    "id": "select-remote",
+    "module": "./RemoteSelectFixtures.svelte",
+    "root": "remote-select-fixture"
+  },
+  {
+    "id": "date-picker-render-hooks",
+    "module": "./DatePickerRenderHooksFixtures.svelte",
+    "root": "date-picker-render-hooks-fixture"
+  },
+  {
+    "id": "date-picker",
+    "module": "./DatePickerFixtures.svelte",
+    "root": "date-picker-fixture"
+  },
+  {
+    "id": "date-picker-provider",
+    "module": "./DatePickerProviderFixtures.svelte",
+    "root": "date-picker-provider-fixture"
+  },
+  {
+    "id": "date-picker-multiple",
+    "module": "./DatePickerMultipleFixtures.svelte",
+    "root": "date-picker-multiple-fixture"
+  },
+  {
+    "id": "date-picker-multiple-mode",
+    "module": "./DatePickerMultipleModeFixtures.svelte",
+    "root": "date-picker-multiple-mode-fixture"
+  },
+  {
+    "id": "date-picker-panel-mode",
+    "module": "./DatePickerPanelModeFixtures.svelte",
+    "root": "date-picker-panel-mode-fixture"
+  },
+  {
+    "id": "picker-components",
+    "module": "./PickerComponentsFixtures.svelte",
+    "root": "picker-components-fixture"
+  },
+  {
+    "id": "picker-textarea",
+    "module": "./PickerTextareaFixtures.svelte",
+    "root": "picker-textarea-fixture"
+  },
+  {
+    "id": "picker-panels",
+    "module": "./PickerPanelFixtures.svelte",
+    "root": "picker-panel-fixture"
+  },
+  {
+    "id": "generated-picker",
+    "module": "./GeneratedPickerFixtures.svelte",
+    "root": "generated-picker-fixture"
+  },
+  {
+    "id": "generated-range-time-input",
+    "module": "./GeneratedRangeTimeInputFixture.svelte",
+    "root": "generated-range-time-input-fixture"
+  },
+  {
+    "id": "date-picker-offgrid-scroll",
+    "module": "./DatePickerOffGridScrollFixtures.svelte",
+    "root": "date-picker-offgrid-scroll-fixture"
+  },
+  {
+    "id": "range-picker",
+    "module": "./RangePickerFixtures.svelte",
+    "root": "range-picker-fixture"
+  },
+  {
+    "id": "upload",
+    "module": "./UploadFixtures.svelte",
+    "root": "upload-fixture"
+  },
+  {
+    "id": "upload-prefix",
+    "module": "./UploadPrefixFixtures.svelte",
+    "root": "upload-prefix-fixture"
+  },
+  {
+    "id": "tree",
+    "module": "./TreeFixtures.svelte",
+    "root": "tree-fixture"
+  },
+  {
+    "id": "tree-prefix",
+    "module": "./TreePrefixFixtures.svelte",
+    "root": "tree-prefix-fixture"
+  },
+  {
+    "id": "tree-theme",
+    "module": "./TreeThemeFixtures.svelte",
+    "root": "tree-theme-fixture"
+  },
+  {
+    "id": "tree-select",
+    "module": "./TreeSelectFixtures.svelte",
+    "root": "tree-select-fixture"
+  },
+  {
+    "id": "menu-link-decoration",
+    "module": "./MenuLinkDecorationFixtures.svelte",
+    "root": "menu-link-decoration-fixture"
+  },
+  {
+    "id": "menu",
+    "module": "./MenuFixtures.svelte",
+    "root": "menu-fixture"
+  },
+  {
+    "id": "auto-complete",
+    "module": "./AutoCompleteFixtures.svelte",
+    "root": "auto-complete-fixture"
+  },
+  {
+    "id": "mentions",
+    "module": "./MentionsFixtures.svelte",
+    "root": "mentions-fixture"
+  },
+  {
+    "id": "image-theme",
+    "module": "./ImageThemeFixtures.svelte",
+    "root": "image-theme-fixture"
+  },
+  {
+    "id": "image-prefix",
+    "module": "./ImagePrefixFixtures.svelte",
+    "root": "image-prefix-fixture"
+  },
+  {
+    "id": "image",
+    "module": "./ImageFixtures.svelte",
+    "root": "image-fixture"
+  },
+  {
+    "id": "image-preview-group",
+    "module": "./ImageGroupFixtures.svelte",
+    "root": "image-group-fixture"
+  },
+  {
+    "id": "input-features",
+    "module": "./InputFeaturesFixtures.svelte",
+    "root": "input-features-fixture"
+  },
+  {
+    "id": "input-password",
+    "module": "./InputPasswordFixtures.svelte",
+    "root": "input-password-fixture"
+  },
+  {
+    "id": "input-search",
+    "module": "./InputSearchFixtures.svelte",
+    "root": "input-search-fixture"
+  },
+  {
+    "id": "input-otp",
+    "module": "./InputOTPFixtures.svelte",
+    "root": "input-otp-fixture"
+  },
+  {
+    "id": "rate",
+    "module": "./RateFixtures.svelte",
+    "root": "rate-fixture"
+  },
+  {
+    "id": "rate-theme",
+    "module": "./RateThemeFixtures.svelte",
+    "root": "rate-theme-fixture"
+  },
+  {
+    "id": "rate-prefix",
+    "module": "./RatePrefixFixtures.svelte",
+    "root": "rate-prefix-fixture"
+  },
+  {
+    "id": "border-beam-theme",
+    "module": "./BorderBeamThemeFixtures.svelte",
+    "root": "border-beam-theme-fixture"
+  },
+  {
+    "id": "border-beam-prefix",
+    "module": "./BorderBeamPrefixFixtures.svelte",
+    "root": "border-beam-prefix-fixture"
+  },
+  {
+    "id": "border-beam",
+    "module": "./BorderBeamFixtures.svelte",
+    "root": "border-beam-fixture"
+  },
+  {
+    "id": "masonry-theme",
+    "module": "./MasonryThemeFixtures.svelte",
+    "root": "masonry-theme-fixture"
+  },
+  {
+    "id": "masonry",
+    "module": "./MasonryFixtures.svelte",
+    "root": "masonry-fixture"
+  },
+  {
+    "id": "splitter",
+    "module": "./SplitterFixtures.svelte",
+    "root": "splitter-fixture"
+  },
+  {
+    "id": "splitter-theme",
+    "module": "./SplitterThemeFixtures.svelte",
+    "root": "splitter-theme-fixture"
+  },
+  {
+    "id": "qrcode",
+    "module": "./QRCodeFixtures.svelte",
+    "root": "qrcode-fixture"
+  },
+  {
+    "id": "qrcode-theme",
+    "module": "./QRCodeThemeFixtures.svelte",
+    "root": "qrcode-theme-fixture"
+  },
+  {
+    "id": "radio-button",
+    "module": "./RadioButtonFixtures.svelte",
+    "root": "radio-button-fixture"
+  },
+  {
+    "id": "calendar",
+    "module": "./CalendarFixtures.svelte",
+    "root": "calendar-fixture"
+  },
+  {
+    "id": "calendar-theme",
+    "module": "./CalendarThemeFixtures.svelte",
+    "root": "calendar-theme-fixture"
+  },
+  {
+    "id": "picker-theme",
+    "module": "./PickerThemeFixtures.svelte",
+    "root": "picker-theme-fixture"
+  },
+  {
+    "id": "time-picker",
+    "module": "./TimePickerFixtures.svelte",
+    "root": "time-picker-fixture"
+  },
+  {
+    "id": "time-range-picker",
+    "module": "./TimeRangePickerFixtures.svelte",
+    "root": "time-range-picker-fixture"
+  },
+  {
+    "id": "watermark",
+    "module": "./WatermarkFixtures.svelte",
+    "root": "watermark-fixture"
+  },
+  {
+    "id": "watermark-theme",
+    "module": "./WatermarkThemeFixtures.svelte",
+    "root": "watermark-theme-fixture"
+  },
+  {
+    "id": "textarea-features",
+    "module": "./TextAreaFeaturesFixtures.svelte",
+    "root": "textarea-features-fixture"
+  },
+  {
+    "id": "cascader",
+    "module": "./CascaderFixtures.svelte",
+    "root": "cascader-fixture"
+  },
+  {
+    "id": "transfer",
+    "module": "./TransferFixtures.svelte",
+    "root": "transfer-fixture"
+  },
+  {
+    "id": "transfer-prefix",
+    "module": "./TransferPrefixFixtures.svelte",
+    "root": "transfer-prefix-fixture"
+  },
+  {
+    "id": "transfer-theme",
+    "module": "./TransferThemeFixtures.svelte",
+    "root": "transfer-theme-fixture"
+  },
+  {
+    "id": "pagination-features",
+    "module": "./PaginationFeaturesFixtures.svelte",
+    "root": "pagination-features-fixture"
+  },
+  {
+    "id": "list-links",
+    "module": "./ListLinksFixtures.svelte",
+    "root": "list-links-fixture"
+  },
+  {
+    "id": "listy",
+    "module": "./ListyFixtures.svelte",
+    "root": "listy-fixture"
+  },
+  {
+    "id": "listy-theme",
+    "module": "./ListyThemeFixtures.svelte",
+    "root": "listy-theme-fixture"
+  },
+  {
+    "id": "listy-prefix",
+    "module": "./ListyPrefixFixtures.svelte",
+    "root": "listy-prefix-fixture"
+  },
+  {
+    "id": "typography",
+    "module": "./TypographyFixtures.svelte",
+    "root": "typography-fixture"
+  },
+  {
+    "id": "typography-theme",
+    "module": "./TypographyThemeFixtures.svelte",
+    "root": "typography-theme-fixture"
+  },
+  {
+    "id": "tour",
+    "module": "./TourFixtures.svelte",
+    "root": "tour-fixture"
+  },
+  {
+    "id": "carousel",
+    "module": "./CarouselFixtures.svelte",
+    "root": "carousel-fixture"
+  },
+  {
+    "id": "carousel-theme",
+    "module": "./CarouselThemeFixtures.svelte",
+    "root": "carousel-theme-fixture"
+  },
+  {
+    "id": "slider-range",
+    "module": "./SliderRangeFixtures.svelte",
+    "root": "slider-range-fixture"
+  },
+  {
+    "id": "color-picker",
+    "module": "./ColorPickerFixtures.svelte",
+    "root": "color-picker-fixture"
+  },
+  {
+    "id": "color-picker-viewport",
+    "module": "./ColorPickerViewportFixtures.svelte",
+    "root": "color-picker-viewport-fixture"
+  },
+  {
+    "id": "color-picker-short-page",
+    "module": "./ColorPickerViewportFixtures.svelte",
+    "root": "color-picker-viewport-fixture",
+    "kind": "short"
+  },
+  {
+    "id": "color-picker-fixed-popup",
+    "module": "./ColorPickerViewportFixtures.svelte",
+    "root": "color-picker-viewport-fixture",
+    "kind": "fixed"
+  },
+  {
+    "id": "input-number-features",
+    "module": "./InputNumberFeaturesFixtures.svelte",
+    "root": "input-number-features-fixture"
+  },
+  {
+    "id": "radio-features",
+    "module": "./RadioFeaturesFixtures.svelte",
+    "root": "radio-features-fixture"
+  },
+  {
+    "id": "checkbox-features",
+    "module": "./CheckboxFeaturesFixtures.svelte",
+    "root": "checkbox-features-fixture"
+  },
+  {
+    "id": "switch-features",
+    "module": "./SwitchFeaturesFixtures.svelte",
+    "root": "switch-features-fixture"
+  },
+  {
+    "id": "theme-tokens",
+    "module": "./ThemeTokensFixtures.svelte",
+    "root": "theme-tokens-fixture"
+  },
+  {
+    "id": "theme-context",
+    "module": "./ThemeContextFixtures.svelte",
+    "root": "theme-context-fixture"
+  },
+  {
+    "id": "control-theme",
+    "module": "./ControlThemeFixtures.svelte",
+    "root": "control-theme-fixture"
+  },
+  {
+    "id": "toggle-theme",
+    "module": "./ToggleThemeFixtures.svelte",
+    "root": "toggle-theme-fixture"
+  },
+  {
+    "id": "wave",
+    "module": "./WaveFixtures.svelte",
+    "root": "wave-fixture"
+  },
+  {
+    "id": "picker-button",
+    "module": "./PickerButtonFixtures.svelte",
+    "root": "picker-button-fixture"
+  },
+  {
+    "id": "compact-theme",
+    "module": "./CompactThemeFixtures.svelte",
+    "root": "compact-theme-fixture"
+  },
+  {
+    "id": "avatar-badge-theme",
+    "module": "./AvatarBadgeThemeFixtures.svelte",
+    "root": "avatar-badge-theme-fixture"
+  },
+  {
+    "id": "overlay-theme",
+    "module": "./OverlayThemeFixtures.svelte",
+    "root": "overlay-theme-fixture"
+  },
+  {
+    "id": "auto-complete-theme",
+    "module": "./AutoCompleteThemeFixtures.svelte",
+    "root": "auto-complete-theme-fixture"
+  },
+  {
+    "id": "tree-select-theme",
+    "module": "./TreeSelectThemeFixtures.svelte",
+    "root": "tree-select-theme-fixture"
+  },
+  {
+    "id": "cascader-theme",
+    "module": "./CascaderThemeFixtures.svelte",
+    "root": "cascader-theme-fixture"
+  },
+  {
+    "id": "anchor-theme",
+    "module": "./AnchorThemeFixtures.svelte",
+    "root": "anchor-theme-fixture"
+  },
+  {
+    "id": "menu-theme",
+    "module": "./MenuThemeFixtures.svelte",
+    "root": "menu-theme-fixture"
+  },
+  {
+    "id": "menu-prefix",
+    "module": "./MenuPrefixFixtures.svelte",
+    "root": "menu-prefix-fixture"
+  },
+  {
+    "id": "dropdown-theme",
+    "module": "./DropdownThemeFixtures.svelte",
+    "root": "dropdown-theme-fixture"
+  },
+  {
+    "id": "dropdown-prefix",
+    "module": "./DropdownPrefixFixtures.svelte",
+    "root": "dropdown-prefix-fixture"
+  },
+  {
+    "id": "breadcrumb-theme",
+    "module": "./BreadcrumbThemeFixtures.svelte",
+    "root": "breadcrumb-theme-fixture"
+  },
+  {
+    "id": "steps-theme",
+    "module": "./StepsThemeFixtures.svelte",
+    "root": "steps-theme-fixture"
+  },
+  {
+    "id": "pagination-theme",
+    "module": "./PaginationThemeFixtures.svelte",
+    "root": "pagination-theme-fixture"
+  },
+  {
+    "id": "pagination-prefix",
+    "module": "./PaginationPrefixFixtures.svelte",
+    "root": "pagination-prefix-fixture"
+  },
+  {
+    "id": "tabs-editable",
+    "module": "./TabsEditableFixtures.svelte",
+    "root": "tabs-editable-fixture"
+  },
+  {
+    "id": "tabs-layout",
+    "module": "./TabsLayoutFixtures.svelte",
+    "root": "tabs-layout-fixture"
+  },
+  {
+    "id": "tabs-overflow",
+    "module": "./TabsOverflowFixtures.svelte",
+    "root": "tabs-overflow-fixture"
+  },
+  {
+    "id": "tabs-indicator",
+    "module": "./TabsIndicatorFixtures.svelte",
+    "root": "tabs-indicator-fixture"
+  },
+  {
+    "id": "tabs-destroy",
+    "module": "./TabsDestroyFixtures.svelte",
+    "root": "tabs-destroy-fixture"
+  },
+  {
+    "id": "tabs-theme",
+    "module": "./TabsThemeFixtures.svelte",
+    "root": "tabs-theme-fixture"
+  },
+  {
+    "id": "tabs-semantic",
+    "module": "./TabsSemanticFixtures.svelte",
+    "root": "tabs-semantic-fixture"
+  },
+  {
+    "id": "tabs-motion",
+    "module": "./TabsMotionFixtures.svelte",
+    "root": "tabs-motion-fixture"
+  },
+  {
+    "id": "tabs-render",
+    "module": "./TabsRenderFixtures.svelte",
+    "root": "tabs-render-fixture"
+  },
+  {
+    "id": "tabs-more-runtime",
+    "module": "./TabsMoreRuntimeFixtures.svelte",
+    "root": "tabs-more-runtime-fixture"
+  },
+  {
+    "id": "tabs-more-position",
+    "module": "./TabsMorePositionFixtures.svelte",
+    "root": "tabs-more-position-fixture"
+  },
+  {
+    "id": "popup-container",
+    "module": "./PopupContainerFixtures.svelte",
+    "root": "popup-container-fixture"
+  },
+  {
+    "id": "overlay-container",
+    "module": "./OverlayContainerFixtures.svelte",
+    "root": "overlay-container-fixture"
+  },
+  {
+    "id": "select-container",
+    "module": "./SelectContainerFixtures.svelte",
+    "root": "select-container-fixture"
+  },
+  {
+    "id": "choice-container",
+    "module": "./ChoiceContainerFixtures.svelte",
+    "root": "choice-container-fixture"
+  },
+  {
+    "id": "mentions-popup",
+    "module": "./MentionsPopupFixtures.svelte",
+    "root": "mentions-popup-fixture"
+  },
+  {
+    "id": "picker-container",
+    "module": "./PickerContainerFixtures.svelte",
+    "root": "picker-container-fixture"
+  },
+  {
+    "id": "menu-overflow",
+    "module": "./MenuOverflowFixtures.svelte",
+    "root": "menu-overflow-fixture"
+  },
+  {
+    "id": "menu-popup-render",
+    "module": "./MenuPopupRenderFixtures.svelte",
+    "root": "menu-popup-render-fixture"
+  },
+  {
+    "id": "menu-popup-alignment",
+    "module": "./MenuPopupAlignmentFixtures.svelte",
+    "root": "menu-popup-alignment-fixture"
+  },
+  {
+    "id": "menu-item-icon",
+    "module": "./MenuItemIconFixtures.svelte",
+    "root": "menu-item-icon-fixture"
+  },
+  {
+    "id": "menu-tooltip",
+    "module": "./MenuTooltipFixtures.svelte",
+    "root": "menu-tooltip-fixture"
+  },
+  {
+    "id": "menu-motion",
+    "module": "./MenuMotionFixtures.svelte",
+    "root": "menu-motion-fixture"
+  },
+  {
+    "id": "menu-hover",
+    "module": "./MenuHoverFixtures.svelte",
+    "root": "menu-hover-fixture"
+  },
+  {
+    "id": "menu-config",
+    "module": "./MenuConfigFixtures.svelte",
+    "root": "menu-config-fixture"
+  },
+  {
+    "id": "menu-config-vertical",
+    "module": "./MenuConfigFixtures.svelte",
+    "root": "menu-config-fixture",
+    "kind": "vertical"
+  },
+  {
+    "id": "menu-config-horizontal",
+    "module": "./MenuConfigFixtures.svelte",
+    "root": "menu-config-fixture",
+    "kind": "horizontal"
+  },
+  {
+    "id": "menu-config-collapsed",
+    "module": "./MenuConfigFixtures.svelte",
+    "root": "menu-config-fixture",
+    "kind": "collapsed"
+  },
+  {
+    "id": "menu-config-provider-only",
+    "module": "./MenuConfigFixtures.svelte",
+    "root": "menu-config-fixture",
+    "kind": "provider-only"
+  },
+  {
+    "id": "menu-config-reset",
+    "module": "./MenuConfigFixtures.svelte",
+    "root": "menu-config-fixture",
+    "kind": "reset"
+  },
+  {
+    "id": "menu-container",
+    "module": "./MenuContainerFixtures.svelte",
+    "root": "menu-container-fixture"
+  },
+  {
+    "id": "dialog-container",
+    "module": "./DialogContainerFixtures.svelte",
+    "root": "dialog-container-fixture"
+  },
+  {
+    "id": "dialog-form-style",
+    "module": "./DialogFormStyleFixtures.svelte",
+    "root": "dialog-form-style-fixture"
+  },
+  {
+    "id": "avatar-responsive",
+    "module": "./AvatarResponsiveFixtures.svelte",
+    "root": "avatar-responsive-fixture"
+  },
+  {
+    "id": "avatar-source",
+    "module": "./AvatarSourceFixtures.svelte",
+    "root": "avatar-source-fixture"
+  },
+  {
+    "id": "badge-ribbon",
+    "module": "./BadgeRibbonFixtures.svelte",
+    "root": "badge-ribbon-fixture"
+  },
+  {
+    "id": "badge-count",
+    "module": "./BadgeCountFixtures.svelte",
+    "root": "badge-count-fixture"
+  },
+  {
+    "id": "badge-digit-motion",
+    "module": "./BadgeDigitMotionFixtures.svelte",
+    "root": "badge-digit-motion-fixture"
+  },
+  {
+    "id": "badge-zoom",
+    "module": "./BadgeZoomFixtures.svelte",
+    "root": "badge-zoom-fixture"
+  },
+  {
+    "id": "badge-api",
+    "module": "./BadgeApiFixtures.svelte",
+    "root": "badge-api-fixture"
+  },
+  {
+    "id": "badge-values",
+    "module": "./BadgeValuesFixtures.svelte",
+    "root": "badge-values-fixture"
+  },
+  {
+    "id": "badge-prefix",
+    "module": "./BadgePrefixFixtures.svelte",
+    "root": "badge-prefix-fixture"
+  },
+  {
+    "id": "badge-prefix-motion",
+    "module": "./BadgePrefixMotionFixtures.svelte",
+    "root": "badge-prefix-motion-fixture"
+  },
+  {
+    "id": "tag-group",
+    "module": "./TagGroupFixtures.svelte",
+    "root": "tag-group-fixture"
+  },
+  {
+    "id": "tag-prefix",
+    "module": "./TagPrefixFixtures.svelte",
+    "root": "tag-prefix-fixture"
+  },
+  {
+    "id": "avatar-api",
+    "module": "./AvatarApiFixtures.svelte",
+    "root": "avatar-api-fixture"
+  },
+  {
+    "id": "avatar-prefix",
+    "module": "./AvatarPrefixFixtures.svelte",
+    "root": "avatar-prefix-fixture"
+  },
+  {
+    "id": "avatar-group-max",
+    "module": "./AvatarGroupMaxFixtures.svelte",
+    "root": "avatar-group-max-fixture"
+  },
+  {
+    "id": "avatar-group-popover",
+    "module": "./AvatarGroupPopoverFixtures.svelte",
+    "root": "avatar-group-popover-fixture"
+  },
+  {
+    "id": "overlay-corner",
+    "module": "./OverlayCornerFixtures.svelte",
+    "root": "overlay-corner-fixture"
+  },
+  {
+    "id": "overlay-options",
+    "module": "./OverlayOptionsFixtures.svelte",
+    "root": "overlay-options-fixture"
+  },
+  {
+    "id": "overlay-config",
+    "module": "./OverlayConfigFixtures.svelte",
+    "root": "overlay-config-fixture"
+  },
+  {
+    "id": "overlay-color",
+    "module": "./OverlayColorFixtures.svelte",
+    "root": "overlay-color-fixture"
+  },
+  {
+    "id": "overlay-prefix",
+    "module": "./OverlayPrefixFixtures.svelte",
+    "root": "overlay-prefix-fixture"
+  },
+  {
+    "id": "typography-tooltip",
+    "module": "./TypographyTooltipFixtures.svelte",
+    "root": "typography-tooltip-fixture"
+  },
+  {
+    "id": "overlay-lifecycle",
+    "module": "./OverlayLifecycleFixtures.svelte",
+    "root": "overlay-lifecycle-fixture"
+  },
+  {
+    "id": "slider-theme",
+    "module": "./SliderThemeFixtures.svelte",
+    "root": "slider-theme-fixture"
+  },
+  {
+    "id": "slider-scalar",
+    "module": "./SliderScalarFixtures.svelte",
+    "root": "slider-scalar-fixture"
+  },
+  {
+    "id": "slider-prefix",
+    "module": "./SliderPrefixFixtures.svelte",
+    "root": "slider-prefix-fixture"
+  },
+  {
+    "id": "divider-theme",
+    "module": "./DividerThemeFixtures.svelte",
+    "root": "divider-theme-fixture"
+  },
+  {
+    "id": "divider-config",
+    "module": "./DividerConfigFixtures.svelte",
+    "root": "divider-config-fixture"
+  },
+  {
+    "id": "flex-source",
+    "module": "./FlexSourceFixtures.svelte",
+    "root": "flex-source-fixture"
+  },
+  {
+    "id": "spin-source",
+    "module": "./SpinSourceFixtures.svelte",
+    "root": "spin-source-fixture"
+  },
+  {
+    "id": "progress-line",
+    "module": "./ProgressLineFixtures.svelte",
+    "root": "progress-line-fixture"
+  },
+  {
+    "id": "progress-circle",
+    "module": "./ProgressCircleFixtures.svelte",
+    "root": "progress-circle-fixture"
+  },
+  {
+    "id": "skeleton-element",
+    "module": "./SkeletonElementFixtures.svelte",
+    "root": "skeleton-element-fixture"
+  },
+  {
+    "id": "skeleton-main",
+    "module": "./SkeletonMainFixtures.svelte",
+    "root": "skeleton-main-fixture"
+  },
+  {
+    "id": "empty-source",
+    "module": "./EmptySourceFixtures.svelte",
+    "root": "empty-source-fixture"
+  },
+  {
+    "id": "render-empty",
+    "module": "./RenderEmptyFixtures.svelte",
+    "root": "render-empty-fixture"
+  },
+  {
+    "id": "result-source",
+    "module": "./ResultSourceFixtures.svelte",
+    "root": "result-source-fixture"
+  },
+  {
+    "id": "alert-source",
+    "module": "./AlertSourceFixtures.svelte",
+    "root": "alert-source-fixture"
+  },
+  {
+    "id": "alert-boundary",
+    "module": "./AlertBoundaryFixtures.svelte",
+    "root": "alert-boundary-fixture"
+  },
+  {
+    "id": "datetime-config",
+    "module": "./DatetimeConfigFixtures.svelte",
+    "root": "datetime-config-fixture"
+  },
+  {
+    "id": "picker-alignment",
+    "module": "./PickerAlignmentFixtures.svelte",
+    "root": "picker-alignment-fixture"
+  },
+  {
+    "id": "picker-clock-options",
+    "module": "./PickerClockOptionsFixtures.svelte",
+    "root": "picker-clock-options-fixture"
+  },
+  {
+    "id": "picker-confirmation",
+    "module": "./PickerConfirmationFixtures.svelte",
+    "root": "picker-confirmation-fixture"
+  },
+  {
+    "id": "picker-controlled-confirmation",
+    "module": "./PickerControlledConfirmationFixtures.svelte",
+    "root": "picker-controlled-confirmation-fixture"
+  },
+  {
+    "id": "color-picker-theme",
+    "module": "./ColorPickerThemeFixtures.svelte",
+    "root": "color-picker-theme-fixture"
+  },
+  {
+    "id": "tour-theme",
+    "module": "./TourThemeFixtures.svelte",
+    "root": "tour-theme-fixture"
+  },
+  {
+    "id": "tour-prefix",
+    "module": "./TourPrefixFixtures.svelte",
+    "root": "tour-prefix-fixture"
+  },
+  {
+    "id": "mentions-theme",
+    "module": "./MentionsThemeFixtures.svelte",
+    "root": "mentions-theme-fixture"
+  },
+  {
+    "id": "mentions-prefix",
+    "module": "./MentionsPrefixFixtures.svelte",
+    "root": "mentions-prefix-fixture"
+  },
+  {
+    "id": "upload-theme",
+    "module": "./UploadThemeFixtures.svelte",
+    "root": "upload-theme-fixture"
+  },
+  {
+    "id": "drawer-theme",
+    "module": "./DrawerThemeFixtures.svelte",
+    "root": "drawer-theme-fixture"
+  },
+  {
+    "id": "drawer-prefix",
+    "module": "./DrawerPrefixFixtures.svelte",
+    "root": "drawer-prefix-fixture"
+  },
+  {
+    "id": "modal-theme",
+    "module": "./ModalThemeFixtures.svelte",
+    "root": "modal-theme-fixture"
+  },
+  {
+    "id": "message-theme",
+    "module": "./MessageThemeFixtures.svelte",
+    "root": "message-theme-fixture"
+  },
+  {
+    "id": "notification-theme",
+    "module": "./NotificationThemeFixtures.svelte",
+    "root": "notification-theme-fixture"
+  },
+  {
+    "id": "table-theme",
+    "module": "./TableThemeFixtures.svelte",
+    "root": "table-theme-fixture"
+  },
+  {
+    "id": "table-panels",
+    "module": "./TablePanelsFixtures.svelte",
+    "root": "table-panels-fixture"
+  },
+  {
+    "id": "table-row-options",
+    "module": "./TableRowOptionsFixtures.svelte",
+    "root": "table-row-options-fixture"
+  },
+  {
+    "id": "table-cell-update",
+    "module": "./TableCellUpdateFixture.svelte",
+    "root": "table-cell-update-fixture"
+  },
+  {
+    "id": "table-dom-attributes",
+    "module": "./TableDomAttributesFixture.svelte",
+    "root": "table-dom-attributes-fixture"
+  },
+  {
+    "id": "table-column-keys",
+    "module": "./TableColumnKeysFixture.svelte",
+    "root": "table-column-keys-fixture"
+  },
+  {
+    "id": "table-filter-content",
+    "module": "./TableFilterContentFixture.svelte",
+    "root": "table-filter-content-fixture"
+  },
+  {
+    "id": "table-header",
+    "module": "./TableHeaderFixtures.svelte",
+    "root": "table-header-fixture"
+  },
+  {
+    "id": "grid-theme",
+    "module": "./GridThemeFixtures.svelte",
+    "root": "grid-theme-fixture"
+  },
+  {
+    "id": "grid-breakpoints",
+    "module": "./GridBreakpointsFixtures.svelte",
+    "root": "grid-breakpoints-fixture"
+  },
+  {
+    "id": "table-column-classes",
+    "module": "./TableColumnClassesFixtures.svelte",
+    "root": "table-column-classes-fixture"
+  },
+  {
+    "id": "table-row-scope",
+    "module": "./TableRowScopeFixtures.svelte",
+    "root": "table-row-scope-fixture"
+  },
+  {
+    "id": "config-provider",
+    "module": "./ConfigProviderFixtures.svelte",
+    "root": "config-provider-fixture"
+  },
+  {
+    "id": "input-select",
+    "module": "./InputSelectFixtures.svelte",
+    "root": "input-select-fixture"
+  },
+  {
+    "id": "table-column-hidden",
+    "module": "./TableColumnHiddenFixtures.svelte",
+    "root": "table-column-hidden-fixture"
+  },
+  {
+    "id": "table-tree",
+    "module": "./TableTreeFixture.svelte",
+    "root": "table-tree-fixture"
+  },
+  {
+    "id": "table-virtual",
+    "module": "./TableVirtualFixture.svelte",
+    "root": "table-virtual-fixture"
+  },
+  {
+    "id": "table-custom-body",
+    "module": "./TableCustomBodyFixture.svelte",
+    "root": "table-custom-body-fixture"
+  },
+  {
+    "id": "table-element-components",
+    "module": "./TableElementComponentsFixture.svelte",
+    "root": "table-element-components-fixture"
+  },
+  {
+    "id": "table-columns",
+    "module": "./TableColumnsFixture.svelte",
+    "root": "table-columns-fixture"
+  },
+  {
+    "id": "table-spans",
+    "module": "./TableSpansFixture.svelte",
+    "root": "table-spans-fixture"
+  },
+  {
+    "id": "table-summary",
+    "module": "./TableSummaryFixture.svelte",
+    "root": "table-summary-fixture"
+  },
+  {
+    "id": "table-selection",
+    "module": "./TableSelectionFixture.svelte",
+    "root": "table-selection-fixture"
+  },
+  {
+    "id": "table-service-columns",
+    "module": "./TableServiceColumnsFixture.svelte",
+    "root": "table-service-columns-fixture"
+  },
+  {
+    "id": "table-expansion-options",
+    "module": "./TableExpansionOptionsFixture.svelte",
+    "root": "table-expansion-options-fixture"
+  },
+  {
+    "id": "table-row-attributes",
+    "module": "./TableRowAttributesFixture.svelte",
+    "root": "table-row-attributes-fixture"
+  },
+  {
+    "id": "table-filter-options",
+    "module": "./TableFilterOptionsFixture.svelte",
+    "root": "table-filter-options-fixture"
+  },
+  {
+    "id": "table-filter-dropdown",
+    "module": "./TableFilterDropdownFixture.svelte",
+    "root": "table-filter-dropdown-fixture"
+  },
+  {
+    "id": "table-filter-static-content",
+    "module": "./TableFilterStaticContentFixture.svelte",
+    "root": "table-filter-static-content-fixture"
+  },
+  {
+    "id": "table-popup-container",
+    "module": "./TablePopupContainerFixture.svelte",
+    "root": "table-popup-container-fixture"
+  },
+  {
+    "id": "table-filter-state",
+    "module": "./TableFilterStateFixture.svelte",
+    "root": "table-filter-state-fixture"
+  },
+  {
+    "id": "table-column-defaults",
+    "module": "./TableColumnDefaultsFixture.svelte",
+    "root": "table-column-defaults-fixture"
+  },
+  {
+    "id": "table-column-layout",
+    "module": "./TableColumnLayoutFixture.svelte",
+    "root": "table-column-layout-fixture"
+  },
+  {
+    "id": "table-column-title",
+    "module": "./TableColumnTitleFixture.svelte",
+    "root": "table-column-title-fixture"
+  },
+  {
+    "id": "table-heading-content",
+    "module": "./TableHeadingContentFixture.svelte",
+    "root": "table-heading-content-fixture"
+  },
+  {
+    "id": "table-semantic",
+    "module": "./TableSemanticFixture.svelte",
+    "root": "table-semantic-fixture"
+  },
+  {
+    "id": "table-pagination",
+    "module": "./TablePaginationFixture.svelte",
+    "root": "table-pagination-fixture"
+  },
+  {
+    "id": "table-locale",
+    "module": "./TableLocaleFixture.svelte",
+    "root": "table-locale-fixture"
+  },
+  {
+    "id": "table-loading",
+    "module": "./TableLoadingFixture.svelte",
+    "root": "table-loading-fixture"
+  },
+  {
+    "id": "table-config",
+    "module": "./TableConfigFixture.svelte",
+    "root": "table-config-fixture"
+  },
+  {
+    "id": "table-sorter",
+    "module": "./TableSorterFixture.svelte",
+    "root": "table-sorter-fixture"
+  },
+  {
+    "id": "table-sorter-tooltip",
+    "module": "./TableSorterTooltipFixture.svelte",
+    "root": "table-sorter-tooltip-fixture"
+  },
+  {
+    "id": "select-variants",
+    "module": "./SelectVariantsFixtures.svelte",
+    "root": "select-variants-fixture"
+  },
+  {
+    "id": "config-variants",
+    "module": "./ConfigVariantsFixtures.svelte",
+    "root": "config-variants-fixture"
+  },
+  {
+    "id": "card-config",
+    "module": "./CardConfigFixtures.svelte",
+    "root": "card-config-fixture"
+  },
+  {
+    "id": "descriptions-config",
+    "module": "./DescriptionsConfigFixtures.svelte",
+    "root": "descriptions-config-fixture"
+  },
+  {
+    "id": "form-dom",
+    "module": "./FormDomFixtures.svelte",
+    "root": "form-dom-fixture"
+  },
+  {
+    "id": "form-dom-scroll",
+    "module": "./FormDomScrollFixtures.svelte",
+    "root": "form-dom-scroll-fixture"
+  },
+  {
+    "id": "form-validate-first",
+    "module": "./FormValidateFirstFixtures.svelte",
+    "root": "form-validate-first-fixture"
+  },
+  {
+    "id": "form-validate-debounce",
+    "module": "./FormValidateDebounceFixtures.svelte",
+    "root": "form-validate-debounce-fixture"
+  },
+  {
+    "id": "form-layout",
+    "module": "./FormLayoutFixtures.svelte",
+    "root": "form-layout-fixture"
+  },
+  {
+    "id": "form-hidden",
+    "module": "./FormHiddenFixtures.svelte",
+    "root": "form-hidden-fixture"
+  },
+  {
+    "id": "form-extra",
+    "module": "./FormExtraFixtures.svelte",
+    "root": "form-extra-fixture"
+  },
+  {
+    "id": "form-labels",
+    "module": "./FormLabelsFixtures.svelte",
+    "root": "form-labels-fixture"
+  },
+  {
+    "id": "form-columns",
+    "module": "./FormColumnsFixtures.svelte",
+    "root": "form-columns-fixture"
+  },
+  {
+    "id": "form-prefix",
+    "module": "./FormPrefixFixtures.svelte",
+    "root": "form-prefix-fixture"
+  },
+  {
+    "id": "form-label-presence",
+    "module": "./FormLabelPresenceFixtures.svelte",
+    "root": "form-label-presence-fixture"
+  },
+  {
+    "id": "form-rich-labels",
+    "module": "./FormRichLabelsFixtures.svelte",
+    "root": "form-rich-labels-fixture"
+  },
+  {
+    "id": "form-root",
+    "module": "./FormRootFixtures.svelte",
+    "root": "form-root-fixture"
+  },
+  {
+    "id": "form-semantic",
+    "module": "./FormSemanticFixtures.svelte",
+    "root": "form-semantic-fixture"
+  },
+  {
+    "id": "form-required-mark",
+    "module": "./FormRequiredMarkFixtures.svelte",
+    "root": "form-required-mark-fixture"
+  },
+  {
+    "id": "form-size",
+    "module": "./FormSizeFixtures.svelte",
+    "root": "form-size-fixture"
+  },
+  {
+    "id": "form-scroll-first",
+    "module": "./FormScrollFirstFixtures.svelte",
+    "root": "form-scroll-first-fixture"
+  },
+  {
+    "id": "form-tooltip",
+    "module": "./FormTooltipFixtures.svelte",
+    "root": "form-tooltip-fixture"
+  },
+  {
+    "id": "form-explanation-reset",
+    "module": "./FormExplanationResetFixtures.svelte",
+    "root": "form-explanation-reset-fixture"
+  },
+  {
+    "id": "form-slot-context",
+    "module": "./FormSlotContextFixtures.svelte",
+    "root": "form-slot-context-fixture"
+  },
+  {
+    "id": "form-help",
+    "module": "./FormHelpFixtures.svelte",
+    "root": "form-help-fixture"
+  },
+  {
+    "id": "form-nameless",
+    "module": "./FormNamelessFixtures.svelte",
+    "root": "form-nameless-fixture"
+  },
+  {
+    "id": "form-disabled",
+    "module": "./FormDisabledFixtures.svelte",
+    "root": "form-disabled-fixture"
+  },
+  {
+    "id": "form-status",
+    "module": "./FormStatusFixtures.svelte",
+    "root": "form-status-fixture"
+  },
+  {
+    "id": "form-initial",
+    "module": "./FormInitialFixtures.svelte",
+    "root": "form-initial-fixture"
+  },
+  {
+    "id": "form-use-status",
+    "module": "./FormUseStatusFixtures.svelte",
+    "root": "form-use-status-fixture"
+  },
+  {
+    "id": "form-no-style",
+    "module": "./FormNoStyleFixtures.svelte",
+    "root": "form-no-style-fixture"
+  },
+  {
+    "id": "form-transform",
+    "module": "./FormTransformFixtures.svelte",
+    "root": "form-transform-fixture"
+  },
+  {
+    "id": "form-constraints",
+    "module": "./FormConstraintsFixtures.svelte",
+    "root": "form-constraints-fixture"
+  },
+  {
+    "id": "form-rule-types",
+    "module": "./FormRuleTypesFixtures.svelte",
+    "root": "form-rule-types-fixture"
+  },
+  {
+    "id": "form-rule-formats",
+    "module": "./FormRuleFormatsFixtures.svelte",
+    "root": "form-rule-formats-fixture"
+  },
+  {
+    "id": "form-rule-factories",
+    "module": "./FormRuleFactoriesFixtures.svelte",
+    "root": "form-rule-factories-fixture"
+  },
+  {
+    "id": "form-nested-rules",
+    "module": "./FormNestedRulesFixtures.svelte",
+    "root": "form-nested-rules-fixture"
+  },
+  {
+    "id": "form-message-variables",
+    "module": "./FormMessageVariablesFixtures.svelte",
+    "root": "form-message-variables-fixture"
+  },
+  {
+    "id": "form-validate-messages",
+    "module": "./FormValidateMessagesFixtures.svelte",
+    "root": "form-validate-messages-fixture"
+  },
+  {
+    "id": "statistic-config",
+    "module": "./StatisticConfigFixtures.svelte",
+    "root": "statistic-config-fixture"
+  },
+  {
+    "id": "statistic-prefix",
+    "module": "./StatisticPrefixFixtures.svelte",
+    "root": "statistic-prefix-fixture"
+  },
+  {
+    "id": "qrcode-prefix",
+    "module": "./QRCodePrefixFixtures.svelte",
+    "root": "qrcode-prefix-fixture"
+  },
+  {
+    "id": "timeline-config",
+    "module": "./TimelineConfigFixtures.svelte",
+    "root": "timeline-config-fixture"
+  },
+  {
+    "id": "steps-config",
+    "module": "./StepsConfigFixtures.svelte",
+    "root": "steps-config-fixture"
+  },
+  {
+    "id": "steps-prefix",
+    "module": "./StepsPrefixFixtures.svelte",
+    "root": "steps-prefix-fixture"
+  },
+  {
+    "id": "timeline-prefix",
+    "module": "./TimelinePrefixFixtures.svelte",
+    "root": "timeline-prefix-fixture"
+  },
+  {
+    "id": "app",
+    "module": "./AppFixtures.svelte",
+    "root": "app-fixture"
+  },
+  {
+    "id": "select-option-render",
+    "module": "./SelectOptionRenderFixtures.svelte",
+    "root": "select-option-render-fixture"
+  },
+  {
+    "id": "select-open",
+    "module": "./SelectOpenFixtures.svelte",
+    "root": "select-open-fixture"
+  },
+  {
+    "id": "config-prefix",
+    "module": "./ConfigPrefixFixtures.svelte",
+    "root": "config-prefix-fixture"
+  },
+  {
+    "id": "widget-prefix",
+    "module": "./WidgetPrefixFixtures.svelte",
+    "root": "widget-prefix-fixture"
+  },
+  {
+    "id": "core-prefix",
+    "module": "./CorePrefixFixtures.svelte",
+    "root": "core-prefix-fixture"
+  },
+  {
+    "id": "status-prefix",
+    "module": "./StatusPrefixFixtures.svelte",
+    "root": "status-prefix-fixture"
+  },
+  {
+    "id": "structure-prefix",
+    "module": "./StructurePrefixFixtures.svelte",
+    "root": "structure-prefix-fixture"
+  },
+  {
+    "id": "popup-prefix",
+    "module": "./PopupPrefixFixtures.svelte",
+    "root": "popup-prefix-fixture"
+  },
+  {
+    "id": "beam-global",
+    "module": "./BeamGlobalFixtures.svelte",
+    "root": "beam-global-fixture"
+  },
+  {
+    "id": "masonry-prefix",
+    "module": "./MasonryPrefixFixtures.svelte",
+    "root": "masonry-prefix-fixture"
+  },
+  {
+    "id": "splitter-prefix",
+    "module": "./SplitterPrefixFixtures.svelte",
+    "root": "splitter-prefix-fixture"
+  },
+  {
+    "id": "anchor-prefix",
+    "module": "./AnchorPrefixFixtures.svelte",
+    "root": "anchor-prefix-fixture"
+  },
+  {
+    "id": "space-prefix",
+    "module": "./SpacePrefixFixtures.svelte",
+    "root": "space-prefix-fixture"
+  },
+  {
+    "id": "breadcrumb-prefix",
+    "module": "./BreadcrumbPrefixFixtures.svelte",
+    "root": "breadcrumb-prefix-fixture"
+  },
+  {
+    "id": "grid-row-prefix",
+    "module": "./GridRowPrefixFixtures.svelte",
+    "root": "grid-row-prefix-fixture"
+  },
+  {
+    "id": "grid-col-prefix",
+    "module": "./GridColPrefixFixtures.svelte",
+    "root": "grid-col-prefix-fixture"
+  },
+  {
+    "id": "typography-prefix",
+    "module": "./TypographyPrefixFixtures.svelte",
+    "root": "typography-prefix-fixture"
+  },
+  {
+    "id": "carousel-prefix",
+    "module": "./CarouselPrefixFixtures.svelte",
+    "root": "carousel-prefix-fixture"
+  },
+  {
+    "id": "descriptions-prefix",
+    "module": "./DescriptionsPrefixFixtures.svelte",
+    "root": "descriptions-prefix-fixture"
+  },
+  {
+    "id": "tabs-prefix",
+    "module": "./TabsPrefixFixtures.svelte",
+    "root": "tabs-prefix-fixture"
+  },
+  {
+    "id": "card-prefix",
+    "module": "./CardPrefixFixtures.svelte",
+    "root": "card-prefix-fixture"
+  },
+  {
+    "id": "prefix-text-boundaries",
+    "module": "./PrefixTextBoundariesFixtures.svelte",
+    "root": "prefix-text-boundaries-fixture"
+  },
+  {
+    "id": "select-prefix",
+    "module": "./SelectPrefixFixtures.svelte",
+    "root": "select-prefix-fixture"
+  },
+  {
+    "id": "auto-complete-prefix",
+    "module": "./AutoCompletePrefixFixtures.svelte",
+    "root": "auto-complete-prefix-fixture"
+  },
+  {
+    "id": "tree-select-prefix",
+    "module": "./TreeSelectPrefixFixtures.svelte",
+    "root": "tree-select-prefix-fixture"
+  },
+  {
+    "id": "cascader-prefix",
+    "module": "./CascaderPrefixFixtures.svelte",
+    "root": "cascader-prefix-fixture"
+  },
+  {
+    "id": "color-picker-prefix",
+    "module": "./ColorPickerPrefixFixtures.svelte",
+    "root": "color-picker-prefix-fixture"
+  },
+  {
+    "id": "calendar-prefix",
+    "module": "./CalendarPrefixFixtures.svelte",
+    "root": "calendar-prefix-fixture"
+  },
+  {
+    "id": "picker-prefix",
+    "module": "./PickerPrefixFixtures.svelte",
+    "root": "picker-prefix-fixture"
+  },
+  {
+    "id": "prefix-default-styling",
+    "module": "./PrefixDefaultStylingFixtures.svelte",
+    "root": "prefix-default-styling-fixture"
+  },
+  {
+    "id": "table-prefix",
+    "module": "./TablePrefixFixtures.svelte",
+    "root": "table-prefix-fixture"
+  },
+  {
+    "id": "descriptions-breakpoints",
+    "module": "./DescriptionsBreakpointsFixtures.svelte",
+    "root": "descriptions-breakpoints-fixture"
+  },
+  {
+    "id": "responsive-controls",
+    "module": "./ResponsiveControlsFixtures.svelte",
+    "root": "responsive-controls-fixture"
+  },
+  {
+    "id": "upload-paste",
+    "module": "./UploadPasteFixtures.svelte",
+    "root": "upload-paste-fixture"
+  },
+  {
+    "id": "upload-directory",
+    "module": "./UploadDirectoryFixtures.svelte",
+    "root": "upload-directory-fixture"
+  },
+  {
+    "id": "upload-icon-render",
+    "module": "./UploadIconRenderFixtures.svelte",
+    "root": "upload-icon-render-fixture"
+  },
+  {
+    "id": "upload-item-render",
+    "module": "./UploadItemRenderFixtures.svelte",
+    "root": "upload-item-render-fixture"
+  },
+  {
+    "id": "upload-link-props",
+    "module": "./UploadLinkPropsFixtures.svelte",
+    "root": "upload-link-props-fixture"
+  },
+  {
+    "id": "upload-progress",
+    "module": "./UploadProgressFixtures.svelte",
+    "root": "upload-progress-fixture"
+  },
+  {
+    "id": "upload-semantic",
+    "module": "./UploadSemanticFixtures.svelte",
+    "root": "upload-semantic-fixture"
+  },
+  {
+    "id": "upload-config",
+    "module": "./UploadConfigFixtures.svelte",
+    "root": "upload-config-fixture"
+  },
+  {
+    "id": "upload-action-icons",
+    "module": "./UploadActionIconsFixtures.svelte",
+    "root": "upload-action-icons-fixture"
+  },
+  {
+    "id": "upload-error-message",
+    "module": "./UploadErrorMessageFixtures.svelte",
+    "root": "upload-error-message-fixture"
+  },
+  {
+    "id": "upload-thumbnail-fallback",
+    "module": "./UploadThumbnailFallbackFixtures.svelte",
+    "root": "upload-thumbnail-fallback-fixture"
+  },
+  {
+    "id": "upload-preview-reactivity",
+    "module": "./UploadPreviewReactivityFixtures.svelte",
+    "root": "upload-preview-reactivity-fixture"
+  },
+  {
+    "id": "upload-motion",
+    "module": "./UploadMotionFixtures.svelte",
+    "root": "upload-motion-fixture"
+  },
+  {
+    "id": "upload-progress-motion",
+    "module": "./UploadProgressMotionFixtures.svelte",
+    "root": "upload-progress-motion-fixture"
+  },
+  {
+    "id": "upload-trigger",
+    "module": "./UploadTriggerFixtures.svelte",
+    "root": "upload-trigger-fixture"
+  },
+  {
+    "id": "upload-ref",
+    "module": "./UploadRefFixtures.svelte",
+    "root": "upload-ref-fixture"
+  },
+  {
+    "id": "tree-expand-action",
+    "module": "./TreeExpandActionFixtures.svelte",
+    "root": "tree-expand-action-fixture"
+  },
+  {
+    "id": "directory-tree",
+    "module": "./DirectoryTreeFixtures.svelte",
+    "root": "directory-tree-fixture"
+  },
+  {
+    "id": "tree-node-renderers",
+    "module": "./TreeNodeRendererFixtures.svelte",
+    "root": "tree-node-renderer-fixture"
+  },
+  {
+    "id": "tree-data-model",
+    "module": "./TreeDataModelFixtures.svelte",
+    "root": "tree-data-model-fixture"
+  },
+  {
+    "id": "tree-fields",
+    "module": "./TreeFieldsFixtures.svelte",
+    "root": "tree-fields-fixture"
+  },
+  {
+    "id": "tree-generic-fields",
+    "module": "./TreeGenericFields.svelte",
+    "root": "tree-generic-fields-fixture"
+  },
+  {
+    "id": "tree-semantic",
+    "module": "./TreeSemanticFixtures.svelte",
+    "root": "tree-semantic-fixture"
+  },
+  {
+    "id": "tree-virtual",
+    "module": "./TreeVirtualFixtures.svelte",
+    "root": "tree-virtual-fixture"
+  },
+  {
+    "id": "tree-drag",
+    "module": "./TreeDragFixtures.svelte",
+    "root": "tree-drag-fixture"
+  },
+  {
+    "id": "tree-drag-generic",
+    "module": "./TreeDragGeneric.svelte",
+    "root": "tree-drag-generic-fixture"
+  },
+  {
+    "id": "tree-motion",
+    "module": "./TreeMotionFixtures.svelte",
+    "root": "tree-motion-fixtures"
+  },
+  {
+    "id": "tree-motion-generic",
+    "module": "./TreeMotionGeneric.svelte",
+    "root": "tree-motion-generic-fixture"
+  },
+  {
+    "id": "tree-select-data",
+    "module": "./TreeSelectDataFixtures.svelte",
+    "root": "tree-select-data-fixture"
+  },
+  {
+    "id": "tree-select-data-generic",
+    "module": "./TreeSelectDataGeneric.svelte",
+    "root": "tree-select-data-generic-fixture"
+  },
+  {
+    "id": "tree-select-expand-action",
+    "module": "./TreeSelectExpandActionFixtures.svelte",
+    "root": "tree-select-expand-action-fixture"
+  },
+  {
+    "id": "tree-select-max-count",
+    "module": "./TreeSelectMaxCountFixtures.svelte",
+    "root": "tree-select-max-count-fixture"
+  },
+  {
+    "id": "tree-select-tags",
+    "module": "./TreeSelectTagsFixtures.svelte",
+    "root": "tree-select-tags-fixture"
+  },
+  {
+    "id": "tree-select-labels",
+    "module": "./TreeSelectLabelsFixtures.svelte",
+    "root": "tree-select-labels-fixture"
+  },
+  {
+    "id": "tree-select-surface",
+    "module": "./TreeSelectSurfaceFixtures.svelte",
+    "root": "tree-select-surface-fixture"
+  },
+  {
+    "id": "tree-select-semantic",
+    "module": "./TreeSelectSemanticFixtures.svelte",
+    "root": "tree-select-semantic-fixture"
+  },
+  {
+    "id": "tree-select-virtual",
+    "module": "./TreeSelectVirtualFixtures.svelte",
+    "root": "tree-select-virtual-fixture"
+  },
+  {
+    "id": "tree-select-nodes",
+    "module": "./TreeSelectNodesFixtures.svelte",
+    "root": "tree-select-nodes-fixture"
+  },
+  {
+    "id": "tree-select-trigger",
+    "module": "./TreeSelectTriggerFixtures.svelte",
+    "root": "tree-select-trigger-fixture"
+  },
+  {
+    "id": "form-feedback",
+    "module": "./FormFeedbackFixtures.svelte",
+    "root": "form-feedback-fixture"
+  },
+  {
+    "id": "form-feedback-control",
+    "module": "./FormFeedbackControlFixtures.svelte",
+    "root": "form-feedback-control-fixture"
+  },
+  {
+    "id": "form-feedback-cascader",
+    "module": "./FormFeedbackCascaderFixtures.svelte",
+    "root": "form-feedback-cascader-fixture"
+  },
+  {
+    "id": "form-feedback-picker",
+    "module": "./FormFeedbackPickerFixtures.svelte",
+    "root": "form-feedback-picker-fixture"
+  },
+  {
+    "id": "form-feedback-mentions",
+    "module": "./FormFeedbackMentionsFixtures.svelte",
+    "root": "form-feedback-mentions-fixture"
+  },
+  {
+    "id": "form-feedback-autocomplete",
+    "module": "./FormFeedbackAutoCompleteFixtures.svelte",
+    "root": "form-feedback-autocomplete-fixture"
+  },
+  {
+    "id": "tree-select-checkable",
+    "module": "./TreeSelectCheckableFixtures.svelte",
+    "root": "tree-select-checkable-fixture"
+  },
+  {
+    "id": "popup-overflow",
+    "module": "./PopupOverflowFixtures.svelte",
+    "root": "popup-overflow-fixture"
+  },
+  {
+    "id": "popup-overflow-smoke",
+    "module": "./PopupOverflowSmokeFixtures.svelte",
+    "root": "popup-overflow-smoke-fixture"
+  },
+  {
+    "id": "popup-width",
+    "module": "./PopupWidthFixtures.svelte",
+    "root": "popup-width-fixture"
+  },
+  {
+    "id": "popup-width-nested",
+    "module": "./PopupWidthNestedFixtures.svelte",
+    "root": "popup-width-nested-fixture"
+  },
+  {
+    "id": "select-virtual",
+    "module": "./SelectVirtualFixtures.svelte",
+    "root": "select-virtual-fixture"
+  },
+  {
+    "id": "select-data",
+    "module": "./SelectDataFixtures.svelte",
+    "root": "select-data-fixture"
+  },
+  {
+    "id": "select-value",
+    "module": "./SelectValueFixtures.svelte",
+    "root": "select-value-fixture"
+  },
+  {
+    "id": "select-surface",
+    "module": "./SelectSurfaceFixtures.svelte",
+    "root": "select-surface-fixture"
+  },
+  {
+    "id": "select-surface-context",
+    "module": "./SelectSurfaceContextFixtures.svelte",
+    "root": "select-surface-context-fixture"
+  },
+  {
+    "id": "select-surface-edge-native",
+    "module": "./SelectSurfaceEdgeNativeFixtures.svelte",
+    "root": "select-surface-edge-native-fixture"
+  },
+  {
+    "id": "select-surface-style-history-native",
+    "module": "./SelectSurfaceStyleHistoryFixtures.svelte",
+    "root": "select-surface-style-history-fixture"
+  },
+  {
+    "id": "select-surface-omission",
+    "module": "./SelectSurfaceOmissionFixtures.svelte",
+    "root": "select-surface-omission-fixture"
+  },
+  {
+    "id": "select-value-ownership",
+    "module": "./SelectValueOwnershipFixtures.svelte",
+    "root": "select-value-ownership-fixture"
+  },
+  {
+    "id": "select-immediate-cache",
+    "module": "./SelectImmediateCacheFixtures.svelte",
+    "root": "select-immediate-cache-fixture"
+  },
+  {
+    "id": "autocomplete-render",
+    "module": "./AutoCompleteRenderFixtures.svelte",
+    "root": "autocomplete-render-fixture"
+  },
+  {
+    "id": "auto-complete-editor-height",
+    "module": "./AutoCompleteEditorHeightFixtures.svelte",
+    "root": "auto-complete-editor-height-fixture"
+  },
+  {
+    "id": "autocomplete-render-label-title",
+    "module": "./AutoCompleteRenderLabelTitleFixtures.svelte",
+    "root": "autocomplete-render-label-title-fixture"
+  },
+  {
+    "id": "autocomplete-textarea-reset",
+    "module": "./AutoCompleteTextareaResetFixtures.svelte",
+    "root": "autocomplete-textarea-reset-fixture"
+  },
+  {
+    "id": "autocomplete-close",
+    "module": "./AutoCompleteCloseFixtures.svelte",
+    "root": "autocomplete-close-fixture"
+  },
+  {
+    "id": "select-icons",
+    "module": "./SelectIconsFixtures.svelte",
+    "root": "select-icons-fixture"
+  },
+  {
+    "id": "select-icons-edge",
+    "module": "./SelectIconsEdgeFixtures.svelte",
+    "root": "select-icons-edge-fixture"
+  },
+  {
+    "id": "select-components",
+    "module": "./SelectComponentsFixtures.svelte",
+    "root": "select-components-fixture"
+  },
+  {
+    "id": "select-components-regression",
+    "module": "./SelectComponentsRegressionFixtures.svelte",
+    "root": "select-components-regression-fixture"
+  },
+  {
+    "id": "select-components-modes",
+    "module": "./SelectComponentsModesFixtures.svelte",
+    "root": "select-components-modes-fixture"
+  },
+  {
+    "id": "select-components-modes-composite-safe",
+    "module": "./SelectComponentsModesCompositeSafeFixtures.svelte",
+    "root": "select-components-modes-composite-safe-fixture"
+  },
+  {
+    "id": "select-components-responsive",
+    "module": "./SelectComponentsResponsiveFixtures.svelte",
+    "root": "select-components-responsive-fixture"
+  },
+  {
+    "id": "select-components-ac-style",
+    "module": "./SelectComponentsACStyleFixtures.svelte",
+    "root": "select-components-ac-style-fixture"
+  },
+  {
+    "id": "z-index-context",
+    "module": "./ZIndexContextFixture.svelte",
+    "root": "z-index-context-fixture"
+  },
+  {
+    "id": "input-z-index-context",
+    "module": "./InputZIndexContextFixture.svelte",
+    "root": "input-z-index-context-fixture"
+  },
+  {
+    "id": "auxiliary-z-index-context",
+    "module": "./AuxiliaryZIndexContextFixture.svelte",
+    "root": "auxiliary-z-index-context-fixture"
+  }
+]

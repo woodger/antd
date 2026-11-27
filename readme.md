@@ -1,93 +1,91 @@
-# SvelteKit Starter
+# Ant Design для Svelte 5
 
-Минимальный каркас на SvelteKit, Svelte 5 и TypeScript. В проекте настроены
-Oxlint, проверка Svelte/TypeScript, Vitest, Playwright и production-сборка через
-adapter-node.
+[![Svelte 5](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)](https://svelte.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-types-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#лицензия)
+
+Библиотека компонентов [Ant Design](https://ant.design/) для Svelte и TypeScript: элементы интерфейса,
+модели форм, темы и локализация.
+
+[Каталог компонентов](docs/reference/components/README.md) · [Документация](#документация)
+
+## Подключение
+
+```sh
+npm install @woodger/antd
+```
+
+Для проверки локальной сборки [соберите архив](docs/development.md#упаковка)
+и установите его из каталога приложения:
+
+```sh
+npm install ./woodger-antd-*.tgz
+```
+
+## Стили
+
+`ConfigProvider` подключает стили библиотеки. Если компоненты используются без
+него, импортируйте стили один раз в точке входа приложения или в корневом
+компоненте. В SvelteKit это можно сделать в `<script>` корневого layout
+`src/routes/+layout.svelte`:
+
+```ts
+import '@woodger/antd/styles.css';
+```
 
 ## Быстрый старт
 
-Используйте Node.js 20 от версии 20.19, Node.js 22 от версии 22.12 либо Node.js
-24 или новее. Единственный поддерживаемый менеджер пакетов — npm.
+```svelte
+<script lang="ts">
+  import { Button, ConfigProvider, Input, Select } from '@woodger/antd';
 
-```sh
-npm ci
-npm run dev
+  let name = $state('');
+  let role = $state<string | undefined>('developer');
+</script>
+
+<ConfigProvider theme={{ mode: 'light', primary: 'blue' }}>
+  <label for="name">Имя</label>
+  <Input id="name" bind:value={name} />
+
+  <label for="role">Роль</label>
+  <Select
+    id="role"
+    bind:value={role}
+    options={[
+      { value: 'developer', label: 'Разработчик' },
+      { value: 'designer', label: 'Дизайнер' }
+    ]}
+    showSearch
+    allowClear
+  />
+
+  <Button type="primary" onclick={() => console.log(name, role)}>Сохранить</Button>
+</ConfigProvider>
 ```
-
-Для локального запуска переменные окружения не нужны. Настройки production-сервера
-описаны в [справочнике конфигурации](docs/reference/configuration.md).
-
-## Структура
-
-- `src/routes/+page.svelte` — стартовая страница;
-- `src/routes/+layout.svelte` — общий layout;
-- `src/lib/architecture.test.ts` — проверка направления зависимостей;
-- `e2e` — браузерные проверки и отдельный стенд компонентов;
-- `static` — статические файлы;
-- `docs` — документация и правила разработки.
-
-При добавлении сценариев размещайте код по его ответственности. Не создавайте
-пустые слои или абстракции заранее; правила описаны в
-[архитектурной политике](docs/policy/architecture.md).
-
-## Проверки
-
-```sh
-npm run lint
-npm exec -- svelte-kit sync
-npm exec -- svelte-check --tsconfig ./tsconfig.json --tsgo
-npm exec -- svelte-check --tsconfig ./e2e/tsconfig.json --tsgo
-npm test
-```
-
-Oxlint проверяет JavaScript, TypeScript и `<script>`-блоки Svelte в `src`, `e2e`
-и конфигурацию Playwright. Диагностика Svelte-шаблонов и типов выполняется
-отдельно для приложения и браузерных тестов через `svelte-check`.
-
-## Браузерные проверки
-
-После установки npm-зависимостей установите Chromium:
-
-```sh
-npm exec -- playwright install chromium
-npm run test:e2e
-```
-
-Playwright каждый раз собирает приложение из текущих исходников и запускает
-preview на `127.0.0.1:4173`. Отдельный Vite-стенд из `e2e/fixtures` на порту
-`4174` проверяет публичные props, bindings и управляемые асинхронные сценарии
-компонентов. Оба порта должны быть свободны; серверы останавливаются после
-прогона. Тестовый стенд не входит в production-сборку приложения и пакет UI.
-
-Сценарии покрывают Input, Select, Checkbox, Pagination, Table, Modal и Form,
-включая серверные страницы Table, отмену запросов, поздние ответы и ошибки/retry,
-темы, размеры, RTL, локаль, узкий экран, SSR и гидратацию. Browser errors и console warnings/errors
-приводят к ошибке теста. Набор выполняется в Chromium; Vitest остаётся
-отдельным контуром Node unit/SSR-проверок.
-
-HTML-отчёт сохраняется в `playwright-report`, диагностические trace и снимки —
-в `test-results`. Светлая и тёмная темы и мобильная страница также сохраняются
-для визуального просмотра. Сравнение скриншотов с эталоном не настроено.
-
-```sh
-npm exec -- playwright show-report
-```
-
-## Сборка
-
-```sh
-npm run build
-npm run preview
-```
-
-`npm run preview` предназначен для локальной проверки. Production-сервер
-запускается командой `node build`; настройка окружения и systemd описаны в
-[инструкции deployment](docs/deployment/systemd.md).
 
 ## Документация
 
-- [Ant Design для Svelte 5](src/lib/components/ant-design/readme.md) — библиотека
-  компонентов и отдельный пакет исходников; живые примеры на `/ant-design`.
-- [карта документации](docs/README.md)
-- [политики разработки](docs/policy/index.md)
-- [история изменений](CHANGELOG.md)
+### Использование библиотеки
+
+- [Каталог компонентов](docs/reference/components/README.md) — компоненты, примеры и ограничения.
+- [Формы и валидация](docs/reference/forms.md) — модели, поля, правила и отправка.
+- [Темы и локализация](docs/reference/themes.md) — оформление, размеры и язык интерфейса.
+- [Токены темы в ConfigProvider](docs/reference/theme-context.md) — наследование темы, настройка компонентов и чтение значений через `theme.useToken()`.
+- [Статический расчёт design tokens](docs/reference/design-tokens.md) — получение цветов, размеров и отступов через `theme.getDesignToken()`.
+- [Размеры компонентов](docs/reference/current-size-observation.md) — локальный размер и наследование от провайдера.
+- [Варианты оформления полей](docs/reference/control-variants.md) — настройки `ConfigProvider` и `Form`.
+- [Пустые состояния ConfigProvider](docs/reference/render-empty.md) — настройка `renderEmpty`.
+- [Всплывающие элементы](docs/reference/popup-settings.md) — контейнер, размещение и ширина списка.
+- [Эффект Wave](docs/reference/wave.md) — настройки и поведение эффекта нажатия.
+- [Клавиатура и фокус](docs/reference/keyboard.md) — управление компонентами и доступность.
+- [Покрытие переноса Ant Design](docs/reference/ant-design-porting/status.md) — реализованные возможности и отличия.
+
+## Руководство разработчика
+
+Установка зависимостей, сборка и проверки описаны в
+[руководстве разработчика](docs/development.md). Правила проекта собраны в
+[политиках разработки](docs/policy/index.md).
+
+## Лицензия
+
+Проект распространяется по [лицензии MIT](LICENSE).

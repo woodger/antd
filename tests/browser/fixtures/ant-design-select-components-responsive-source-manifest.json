@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "allRawSourcesUnchanged": true,
+  "protocolPath": ".upstream/artifacts/select-components-responsive-input-v1-protocol-freeze.json",
+  "protocolSha256": "1b0dd23f2ef35ee069acb02e6398a595a81e79acdb2b4d987a1e785a34295348",
+  "owners": 2,
+  "actions": 12,
+  "initialSSRStates": 2,
+  "preservedReferences": 797,
+  "inputPins": 11,
+  "copies": [
+    {
+      "source": ".upstream/artifacts/select-components-responsive-input-v1-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-responsive-input-v1-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-responsive-reference.json.gz",
+      "storageBytes": 852045,
+      "storageSha256": "9df4ef982f1cec94d704276630eeed53c9dcbbccd6ab2bedca4a39ca5983a702",
+      "decodedBytes": 26098146,
+      "decodedSha256": "7cf64201b575227378b5477c6e17feb5d870fc76af8b1997f1449a994a6cb983",
+      "repeatBytes": 26098146,
+      "repeatSha256": "7cf64201b575227378b5477c6e17feb5d870fc76af8b1997f1449a994a6cb983",
+      "wholePairByteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-responsive-input-v1-ssr-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-responsive-input-v1-ssr-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-responsive-ssr-reference.json.gz",
+      "storageBytes": 20572,
+      "storageSha256": "36c46d973f0a173e7a7bddf2446e5e63a2c3223ddb7747f674864c1ffce42070",
+      "decodedBytes": 515996,
+      "decodedSha256": "292fe7d2fc2716f270926dd53142eb0d95f53781ee2874818c2b6e623a54a0f1",
+      "repeatBytes": 515996,
+      "repeatSha256": "292fe7d2fc2716f270926dd53142eb0d95f53781ee2874818c2b6e623a54a0f1",
+      "wholePairByteEqual": true
+    }
+  ]
+}

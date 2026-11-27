@@ -1,0 +1,4477 @@
+{
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "protocolSHA256": "5214ca6f831ded7c015998f8f119129aea1499d7124754b763977415602fc1d1",
+  "scope": "Derived Source review annotations only; every full original byte/field/ID/event remains in linked raw parts.",
+  "note": "No raw normalization or first/repeat byte-equality claim; actual afterCall timing and hover15 tails remain distinct.",
+  "variants": {
+    "first": [
+      {
+        "id": "single",
+        "initialPart": {
+          "rawJSONPart": {
+            "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-initial.json",
+            "bytes": 63313,
+            "sha256": "a11253eead698924944791035f584f867cf1be2778093483502ce14a6bfd9ce9",
+            "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-initial.json.gz",
+            "gzipBytes": 4885,
+            "gzipSHA256": "adbb7deb5bb65d0184e1d5261f1bcc4f8f9a991d002b3aeaae586a6347ab2d08"
+          }
+        },
+        "authored": {
+          "panel": {
+            "identity": 1,
+            "temporal": {
+              "valid": true,
+              "epoch": 1718303420500,
+              "iso": "2024-06-13T18:30:20.500Z",
+              "utcOffset": 0,
+              "fields": [
+                2024,
+                5,
+                13,
+                18,
+                30,
+                20,
+                500
+              ],
+              "locale": "en"
+            }
+          },
+          "template": {
+            "identity": 4,
+            "temporal": {
+              "valid": true,
+              "epoch": 946717954567,
+              "iso": "2000-01-01T09:12:34.567Z",
+              "utcOffset": 0,
+              "fields": [
+                2000,
+                0,
+                1,
+                9,
+                12,
+                34,
+                567
+              ],
+              "locale": "en"
+            }
+          }
+        },
+        "steps": [
+          {
+            "index": 0,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-0.json",
+                "bytes": 871659,
+                "sha256": "e2878e6c2747bbd98c3217207f6740d6d742b2548141c683636e4eb3fe73bb2d",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-0.json.gz",
+                "gzipBytes": 37899,
+                "gzipSHA256": "8f3ff2eb70a2cb4b49f8692789f858f234a75fe7f05e2f560559606e39d6e51f"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 0,
+                "name": "open",
+                "actionIndex": 0,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 1,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-1.json",
+                "bytes": 1213612,
+                "sha256": "59fbbb09e32368a101c9ef46c856e27c36edba2212acf830d3b395671452dc6a",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-1.json.gz",
+                "gzipBytes": 51553,
+                "gzipSHA256": "74077c7f628ae0e6934e4f5720332bec69af52ab37d35f9e655a7a1590d83d85"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              "00:00:00.000"
+            ],
+            "settledInputs": [
+              "00:00:00.000"
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 2,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-2.json",
+                "bytes": 1220590,
+                "sha256": "3142661e80c55c453b6be00e4b76ca4bc50600a69f7a6c06bab64d4a395b1cd5",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-2.json.gz",
+                "gzipBytes": 52495,
+                "gzipSHA256": "01f1d13ede3ad3287eb37fd3e5c7fa6f60229c72d140a3a25fafd062529cc68d"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000"
+            ],
+            "afterCallInputs": [
+              "12:00:00.000"
+            ],
+            "settledInputs": [
+              "12:00:00.000"
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 3,
+            "action": {
+              "type": "date-click",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-3.json",
+                "bytes": 1314813,
+                "sha256": "a574b10f3a499233f828e113f38e7c71b97d07c2bb85b42bade6478281f60a14",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-3.json.gz",
+                "gzipBytes": 55297,
+                "gzipSHA256": "17e688a3390bbf9e048c8a992a4f3a7210dce0dc2716a406692a136feb4a3792"
+              }
+            },
+            "beforeInputs": [
+              "12:00:00.000"
+            ],
+            "afterCallInputs": [
+              "12:00:00.000"
+            ],
+            "settledInputs": [
+              "00:00:00.000"
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 1,
+                "name": "calendar",
+                "actionIndex": 3,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": "00:00:00.000"
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 263,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "name": "picker-value",
+                "actionIndex": 3,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "mode",
+                          "value": "date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 263,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 4,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-4.json",
+                "bytes": 1850033,
+                "sha256": "20bb477492bf389cc21d55bea7267a597113b2050afbc2761982464c1dd33cb0",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-4.json.gz",
+                "gzipBytes": 72773,
+                "gzipSHA256": "3a91a2d0cdcee6274fe55882a382955ac7804227a2e05e17066f075b776a6df2"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000"
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": false,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 3,
+                "name": "calendar",
+                "actionIndex": 4,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "undefined"
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 4,
+                "name": "open",
+                "actionIndex": 4,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 5,
+            "action": {
+              "type": "template-button"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-5.json",
+                "bytes": 1381633,
+                "sha256": "abc3a4391142213132f4afcc0be54d8c27a0642711ef1e4e81fbc6c9dc54fdeb",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-5.json.gz",
+                "gzipBytes": 49901,
+                "gzipSHA256": "72255802d194f392c0b72a33513b0bda9c060c30ae6ae8bdb1884ede0b5ed1cc"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 6,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-6.json",
+                "bytes": 1434548,
+                "sha256": "c74e7fe16b08b5416a5c205364f136b8f55a95f09acabefacb58dfc8e9adaf47",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-6.json.gz",
+                "gzipBytes": 54704,
+                "gzipSHA256": "efa59c5b69db5681d59d321e748f6bd9443591ccc6c2a1575241a28a9b9a2f45"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 5,
+                "name": "open",
+                "actionIndex": 6,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 6,
+                "name": "picker-value",
+                "actionIndex": 6,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "reset"
+                        },
+                        {
+                          "key": "mode",
+                          "value": "date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 1,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": {
+              "inputValues": [
+                ""
+              ],
+              "selectedDateCells": 0,
+              "selectedTimeRows": 0,
+              "hasTemplate": true,
+              "open": true,
+              "lifecycle": [
+                {
+                  "phase": "mount"
+                }
+              ]
+            },
+            "hourClickTail": null
+          },
+          {
+            "index": 7,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-7.json",
+                "bytes": 1466302,
+                "sha256": "31f7aa8ff9b9ae4a6d6d8cbd6fbed785b2223da1cb4a7f91c2368941529ab0be",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-7.json.gz",
+                "gzipBytes": 58406,
+                "gzipSHA256": "1eab9dbc45cf5950b1c5840d62c357f19cc00f79d166143487519edba231d096"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              "09:12:34.567"
+            ],
+            "settledInputs": [
+              "09:12:34.567"
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 8,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-8.json",
+                "bytes": 1473280,
+                "sha256": "b3fd181d5b8eca2c867a4fd286237ccd9481a041d8ba45e75ee67f8d1e0dce77",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-8.json.gz",
+                "gzipBytes": 59274,
+                "gzipSHA256": "535f24c09a4502f01d853f249092fdd56eedef18978f34ccc3dd9e1e45b28675"
+              }
+            },
+            "beforeInputs": [
+              "09:12:34.567"
+            ],
+            "afterCallInputs": [
+              "12:12:34.567"
+            ],
+            "settledInputs": [
+              "12:12:34.567"
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 9,
+            "action": {
+              "type": "hour-click",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-9.json",
+                "bytes": 1566429,
+                "sha256": "6f9422254d212e580fdca1fb4840429da0184e5ca4d9feb877bb82c5214ad13c",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-9.json.gz",
+                "gzipBytes": 60995,
+                "gzipSHA256": "d68609b321a33bdc4ea5adf7b786f08796b0792e668bbf3ff2c5a9261efd2031"
+              }
+            },
+            "beforeInputs": [
+              "12:12:34.567"
+            ],
+            "afterCallInputs": [
+              "12:12:34.567"
+            ],
+            "settledInputs": [
+              "15:12:34.567"
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 7,
+                "name": "calendar",
+                "actionIndex": 9,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": "12:12:34.567"
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 291,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "name": "picker-value",
+                "actionIndex": 9,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "mode",
+                          "value": "date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 291,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": {
+              "before": {
+                "scrollTop": 84,
+                "selectedRows": [],
+                "actualMouseRows": []
+              },
+              "afterCall": {
+                "scrollTop": 93,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": []
+              },
+              "settled": {
+                "scrollTop": 112,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": [
+                  {
+                    "type": "mouseout",
+                    "targetIdentity": 146,
+                    "matchedActualHour": "12",
+                    "clientX": 557,
+                    "clientY": 203,
+                    "isTrusted": true
+                  },
+                  {
+                    "type": "mouseover",
+                    "targetIdentity": 147,
+                    "matchedActualHour": "15",
+                    "clientX": 557,
+                    "clientY": 203,
+                    "isTrusted": true
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "index": 10,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-10.json",
+                "bytes": 2192879,
+                "sha256": "07e0a4475393e3c8e8a10458c7602a95bf62686d33c00e02f52eeb4655b4ade0",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-step-10.json.gz",
+                "gzipBytes": 79801,
+                "gzipSHA256": "9d586918e8ff96c7f1d2bc5de113348b16282a8823b1ca429d4f893c8afcae93"
+              }
+            },
+            "beforeInputs": [
+              "15:12:34.567"
+            ],
+            "afterCallInputs": [
+              "12:12:34.567"
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 9,
+                "name": "calendar",
+                "actionIndex": 10,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "undefined"
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 10,
+                "name": "open",
+                "actionIndex": 10,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          }
+        ],
+        "closed": [
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-closed-4.json",
+                "bytes": 456009,
+                "sha256": "18923a95b68e697defa9d78f532ab0730a38957ae044d0017dccecc5687c4a49",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-closed-4.json.gz",
+                "gzipBytes": 16496,
+                "gzipSHA256": "7245d6aadf73e31329561f7fac114d24a4f5e18950c0a2115a0b3dd7b672be4b"
+              }
+            },
+            "actionIndex": 4,
+            "open": false,
+            "inputValues": [
+              ""
+            ]
+          },
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-closed-10.json",
+                "bytes": 540305,
+                "sha256": "ed904bf3cab83eb0c4e48e0ee620faf85578391e51ffe173259600cf3e1e3336",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-closed-10.json.gz",
+                "gzipBytes": 18218,
+                "gzipSHA256": "bc48878a170f16556e48784d48082428d3fda550f3d3b6919b5c9ac40e1c2986"
+              }
+            },
+            "actionIndex": 10,
+            "open": false,
+            "inputValues": [
+              ""
+            ]
+          }
+        ],
+        "cleanup": {
+          "beforeUnmountPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-before-unmount.json",
+              "bytes": 508237,
+              "sha256": "4ebb5606228666fa5583c4a49d859211bb06417cdf4eec35651712fc52e16dd2",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-before-unmount.json.gz",
+              "gzipBytes": 17908,
+              "gzipSHA256": "c22deb9201efc0d861980b87feaeec12e2d175e5374751dcfb7dbbb595e3e9da"
+            }
+          },
+          "cleanupPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-cleanup.json",
+              "bytes": 212586,
+              "sha256": "cf9c770716fa1b41aba01d20a7270bf300479f2820eab26d2fdf483fbf0f8698",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-cleanup.json.gz",
+              "gzipBytes": 7673,
+              "gzipSHA256": "77ca9031dd49fbacac95934b648fe92c1f495a2af2147baae020aa40040769cb"
+            }
+          },
+          "latePart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-late.json",
+              "bytes": 212586,
+              "sha256": "cf9c770716fa1b41aba01d20a7270bf300479f2820eab26d2fdf483fbf0f8698",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/single-late.json.gz",
+              "gzipBytes": 7673,
+              "gzipSHA256": "77ca9031dd49fbacac95934b648fe92c1f495a2af2147baae020aa40040769cb"
+            }
+          },
+          "alive": false,
+          "refs": {
+            "owner": null,
+            "root": null,
+            "control": null
+          },
+          "inputs": 0,
+          "popups": 0,
+          "connectedRetained": 0,
+          "lifecycle": [
+            {
+              "phase": "mount"
+            },
+            {
+              "phase": "unmount"
+            }
+          ],
+          "wholeCleanupLateByteEqual": true,
+          "globalResourceCounters": "unmeasured/null"
+        }
+      },
+      {
+        "id": "range",
+        "initialPart": {
+          "rawJSONPart": {
+            "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-initial.json",
+            "bytes": 73482,
+            "sha256": "c7e90e6b4ca119dcabd7f647ca203d8d5845836cf3b77be6775b05ac27afa3e1",
+            "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-initial.json.gz",
+            "gzipBytes": 5398,
+            "gzipSHA256": "bce6f91e317b7a11ddf3f6a9b59d2dc0005a271c6795ea653778c5c70fdbc002"
+          }
+        },
+        "authored": {
+          "panel": {
+            "identity": 2,
+            "temporal": {
+              "valid": true,
+              "epoch": 1718303420500,
+              "iso": "2024-06-13T18:30:20.500Z",
+              "utcOffset": 0,
+              "fields": [
+                2024,
+                5,
+                13,
+                18,
+                30,
+                20,
+                500
+              ],
+              "locale": "en"
+            }
+          },
+          "template": {
+            "identity": 5,
+            "temporal": {
+              "valid": true,
+              "epoch": 946717954567,
+              "iso": "2000-01-01T09:12:34.567Z",
+              "utcOffset": 0,
+              "fields": [
+                2000,
+                0,
+                1,
+                9,
+                12,
+                34,
+                567
+              ],
+              "locale": "en"
+            }
+          }
+        },
+        "steps": [
+          {
+            "index": 0,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-0.json",
+                "bytes": 911594,
+                "sha256": "ad28322d6b3dc23121716ee192966c1c05e0979a00fbe1c498450019eeccb276",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-0.json.gz",
+                "gzipBytes": 40100,
+                "gzipSHA256": "455c4f907fb99cd737a6f067e3c79a941de7e347f54d19d8b909abc466aa9bbf"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 0,
+                "name": "open",
+                "actionIndex": 0,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 1,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-1.json",
+                "bytes": 1257716,
+                "sha256": "5171f912dcac45fb4b4e1b9ded69bd331903fda648980efcfebb8b578ecad152",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-1.json.gz",
+                "gzipBytes": 54145,
+                "gzipSHA256": "19d18a6ec471b2a37c27a158b229b6c7b20b2c5c4601bb0935ac5b572d987d80"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "settledInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 2,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-2.json",
+                "bytes": 1265045,
+                "sha256": "2915acc292e08cb83a07a711ce403943570be9c140238925022884bd56e612ba",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-2.json.gz",
+                "gzipBytes": 55113,
+                "gzipSHA256": "ba94087acae96db54d27266e6a217e705b0f6f3c78ac30a1dfce894cd19b6a74"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "settledInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 3,
+            "action": {
+              "type": "date-click",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-3.json",
+                "bytes": 1406101,
+                "sha256": "a9df3a64321e113075fd23f57aea301ac15e8c23eaf5f89b679decec80eb81d7",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-3.json.gz",
+                "gzipBytes": 59254,
+                "gzipSHA256": "8c5381c1bca758707a4bc89a39c47c471fa7cccbcd21a76e6cb9cfc3d0ea4bf8"
+              }
+            },
+            "beforeInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "settledInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 1,
+                "name": "calendar",
+                "actionIndex": 3,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": "00:00:00.000"
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 274,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "name": "picker-value",
+                "actionIndex": 3,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "range",
+                          "value": "start"
+                        },
+                        {
+                          "key": "mode",
+                          "value": {
+                            "$": "array",
+                            "properties": [
+                              {
+                                "key": "0",
+                                "value": "date"
+                              },
+                              {
+                                "key": "1",
+                                "value": "date"
+                              },
+                              {
+                                "key": "length",
+                                "value": 2
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 274,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  },
+                  {
+                    "path": [
+                      0,
+                      1
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 4,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-4.json",
+                "bytes": 2011563,
+                "sha256": "8485d874cbfafc1561dd517fec4fe21be782c318972a2414b1ae8cfead359fb8",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-4.json.gz",
+                "gzipBytes": 79856,
+                "gzipSHA256": "541fee89358b666353aa0c9b046877c3b9ed5cd0374b7733db5dad56bf6064b1"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": false,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 3,
+                "name": "calendar",
+                "actionIndex": 4,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": ""
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 4,
+                "name": "open",
+                "actionIndex": 4,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 5,
+            "action": {
+              "type": "template-button"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-5.json",
+                "bytes": 1505435,
+                "sha256": "a65b92d130dfece9abb043a58204d3714a9e105bb73a4f40543d4c0673b77b6a",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-5.json.gz",
+                "gzipBytes": 55047,
+                "gzipSHA256": "8db2adb4063b8f902c0bc8c3e21dea09c7ad165abb376bc801210bae8399a634"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 6,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-6.json",
+                "bytes": 1589362,
+                "sha256": "17981b589c07a8aafd068d75ddabdb5443a069f546382408b8920a5b9f107da6",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-6.json.gz",
+                "gzipBytes": 61140,
+                "gzipSHA256": "d68b50a9c85b4b47097f9be8cddb036859492c25bc60db314a8f3c4b9b36b821"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 5,
+                "name": "open",
+                "actionIndex": 6,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 6,
+                "name": "picker-value",
+                "actionIndex": 6,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "reset"
+                        },
+                        {
+                          "key": "range",
+                          "value": "start"
+                        },
+                        {
+                          "key": "mode",
+                          "value": {
+                            "$": "array",
+                            "properties": [
+                              {
+                                "key": "0",
+                                "value": "date"
+                              },
+                              {
+                                "key": "1",
+                                "value": "date"
+                              },
+                              {
+                                "key": "length",
+                                "value": 2
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  },
+                  {
+                    "path": [
+                      0,
+                      1
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": {
+              "inputValues": [
+                "",
+                ""
+              ],
+              "selectedDateCells": 0,
+              "selectedTimeRows": 0,
+              "hasTemplate": true,
+              "open": true,
+              "lifecycle": [
+                {
+                  "phase": "mount"
+                }
+              ]
+            },
+            "hourClickTail": null
+          },
+          {
+            "index": 7,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-7.json",
+                "bytes": 1636520,
+                "sha256": "9895e399b87c200a846ae9bb948ef85cdc25da8aa1c81509d3d01d13595bd1fb",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-7.json.gz",
+                "gzipBytes": 65612,
+                "gzipSHA256": "6ecdd1791c69e57601ba2975c1e2a6d8a2176f211d306d337c921f80648d154b"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "09:12:34.567",
+              ""
+            ],
+            "settledInputs": [
+              "09:12:34.567",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 8,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-8.json",
+                "bytes": 1643849,
+                "sha256": "c9e606d49db5686843e108e3d5513d45275174074af07ce3106a00c90c6a8243",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-8.json.gz",
+                "gzipBytes": 66554,
+                "gzipSHA256": "7b247b8512427523c5be3c70a77e9404fd7e3fd388f2e1f380cf1485249ad6c8"
+              }
+            },
+            "beforeInputs": [
+              "09:12:34.567",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "settledInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 9,
+            "action": {
+              "type": "hour-click",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-9.json",
+                "bytes": 1783827,
+                "sha256": "4de4be18c75a4fb8e5207341e0d764fca058f6c52e9537fc14e41e4eb47a55ec",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-9.json.gz",
+                "gzipBytes": 69721,
+                "gzipSHA256": "b899408155d81600a2793f3a6d6b2ab033b428df84e20ab82999c2e0ad5da1fb"
+              }
+            },
+            "beforeInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "settledInputs": [
+              "15:12:34.567",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 7,
+                "name": "calendar",
+                "actionIndex": 9,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": "12:12:34.567"
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 314,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "name": "picker-value",
+                "actionIndex": 9,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "range",
+                          "value": "start"
+                        },
+                        {
+                          "key": "mode",
+                          "value": {
+                            "$": "array",
+                            "properties": [
+                              {
+                                "key": "0",
+                                "value": "date"
+                              },
+                              {
+                                "key": "1",
+                                "value": "date"
+                              },
+                              {
+                                "key": "length",
+                                "value": 2
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 314,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  },
+                  {
+                    "path": [
+                      0,
+                      1
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": {
+              "before": {
+                "scrollTop": 84,
+                "selectedRows": [],
+                "actualMouseRows": []
+              },
+              "afterCall": {
+                "scrollTop": 93,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": []
+              },
+              "settled": {
+                "scrollTop": 112,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": [
+                  {
+                    "type": "mouseout",
+                    "targetIdentity": 154,
+                    "matchedActualHour": "12",
+                    "clientX": 557,
+                    "clientY": 213,
+                    "isTrusted": true
+                  },
+                  {
+                    "type": "mouseover",
+                    "targetIdentity": 155,
+                    "matchedActualHour": "15",
+                    "clientX": 557,
+                    "clientY": 213,
+                    "isTrusted": true
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "index": 10,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-10.json",
+                "bytes": 2525010,
+                "sha256": "ca91268ba86179dd6bb568d0fef79dec931b512b85d77df9b5162b3e3fc32c99",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-step-10.json.gz",
+                "gzipBytes": 93799,
+                "gzipSHA256": "c5103e8447d09c194b49d81bf5e8e40a8ff7ac5ca8274aaa20e361f75c8969f5"
+              }
+            },
+            "beforeInputs": [
+              "15:12:34.567",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 9,
+                "name": "calendar",
+                "actionIndex": 10,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": ""
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 10,
+                "name": "open",
+                "actionIndex": 10,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          }
+        ],
+        "closed": [
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-closed-4.json",
+                "bytes": 496401,
+                "sha256": "8cafabfb579fc833f89122b647cd7ab09bb9783f0f80436be9caa6326a95f6e1",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-closed-4.json.gz",
+                "gzipBytes": 18221,
+                "gzipSHA256": "146b93ff00d662c7de72e0eb0ed883c0b639d831f55574de3997ac297165f271"
+              }
+            },
+            "actionIndex": 4,
+            "open": false,
+            "inputValues": [
+              "",
+              ""
+            ]
+          },
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-closed-10.json",
+                "bytes": 622733,
+                "sha256": "cf818cd7dd2cf3c8ed59bc63f4a500c0046eeb1939aa8180c06d4538c14cb875",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-closed-10.json.gz",
+                "gzipBytes": 21508,
+                "gzipSHA256": "85bb556798c2881d7f1ada0fa9c0b3e3a3c5c3385722d55d45dcf16105fdbfa2"
+              }
+            },
+            "actionIndex": 10,
+            "open": false,
+            "inputValues": [
+              "",
+              ""
+            ]
+          }
+        ],
+        "cleanup": {
+          "beforeUnmountPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-before-unmount.json",
+              "bytes": 585631,
+              "sha256": "c8eb94b6f9b72e211a175c491b2e2b1cf1c5c3f5ec0dec09582d21da26d7167c",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-before-unmount.json.gz",
+              "gzipBytes": 20709,
+              "gzipSHA256": "ba275846e7fd0b4472ca61a8f3a1f3c736e1a1dab9cf981a3eb931c8e8d5ccd4"
+            }
+          },
+          "cleanupPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-cleanup.json",
+              "bytes": 284424,
+              "sha256": "d90eeb2ac51a5fd82af0be3155e2a2d9fade37af138b4c82f5e657ca80003dc7",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-cleanup.json.gz",
+              "gzipBytes": 9886,
+              "gzipSHA256": "0d9d16042dd010045fedc41c47c52dbabe5c81184af1fa6c13b9babda432fa65"
+            }
+          },
+          "latePart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-late.json",
+              "bytes": 284424,
+              "sha256": "d90eeb2ac51a5fd82af0be3155e2a2d9fade37af138b4c82f5e657ca80003dc7",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json.parts/range-late.json.gz",
+              "gzipBytes": 9886,
+              "gzipSHA256": "0d9d16042dd010045fedc41c47c52dbabe5c81184af1fa6c13b9babda432fa65"
+            }
+          },
+          "alive": false,
+          "refs": {
+            "owner": null,
+            "root": null,
+            "control": null
+          },
+          "inputs": 0,
+          "popups": 0,
+          "connectedRetained": 0,
+          "lifecycle": [
+            {
+              "phase": "mount"
+            },
+            {
+              "phase": "unmount"
+            }
+          ],
+          "wholeCleanupLateByteEqual": true,
+          "globalResourceCounters": "unmeasured/null"
+        }
+      }
+    ],
+    "repeat": [
+      {
+        "id": "single",
+        "initialPart": {
+          "rawJSONPart": {
+            "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-initial.json",
+            "bytes": 63313,
+            "sha256": "f9b156d95b8e6d958ef9b1c255acce44f37a87a80b53317072e1502acf7983c8",
+            "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-initial.json.gz",
+            "gzipBytes": 4886,
+            "gzipSHA256": "f1cef32c6054a0edf5ec08e5103213bf6b44a1e083d4fefb9b5f3ab2262d2e7d"
+          }
+        },
+        "authored": {
+          "panel": {
+            "identity": 1,
+            "temporal": {
+              "valid": true,
+              "epoch": 1718303420500,
+              "iso": "2024-06-13T18:30:20.500Z",
+              "utcOffset": 0,
+              "fields": [
+                2024,
+                5,
+                13,
+                18,
+                30,
+                20,
+                500
+              ],
+              "locale": "en"
+            }
+          },
+          "template": {
+            "identity": 4,
+            "temporal": {
+              "valid": true,
+              "epoch": 946717954567,
+              "iso": "2000-01-01T09:12:34.567Z",
+              "utcOffset": 0,
+              "fields": [
+                2000,
+                0,
+                1,
+                9,
+                12,
+                34,
+                567
+              ],
+              "locale": "en"
+            }
+          }
+        },
+        "steps": [
+          {
+            "index": 0,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-0.json",
+                "bytes": 871659,
+                "sha256": "00da8e432df5b147e0358b7087cb03fb7e665ce656cdcf9e6717826dbf3dda53",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-0.json.gz",
+                "gzipBytes": 37890,
+                "gzipSHA256": "a4cc793add38c50765f82b8eeca7538b8ec3605b34f89c149d9042a77db9f6f8"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 0,
+                "name": "open",
+                "actionIndex": 0,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 1,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-1.json",
+                "bytes": 1213612,
+                "sha256": "76de36a5222e5bc101d41e13eada4348dd422e212bc596fb64ca392a8567e1ec",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-1.json.gz",
+                "gzipBytes": 51537,
+                "gzipSHA256": "ee7025d369f0f9cbf3c8988ad272f3f501f261728c292102a365eefc2d2d45a9"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              "00:00:00.000"
+            ],
+            "settledInputs": [
+              "00:00:00.000"
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 2,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-2.json",
+                "bytes": 1220590,
+                "sha256": "5f094d9ff217a1d985d44c7a49492bfabbc2945c4501f10ece2ffd02f859cee1",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-2.json.gz",
+                "gzipBytes": 52476,
+                "gzipSHA256": "36e1a06f51fc03f06c911bdd32a93cafad6b10b55bbf4f1e0d0518dfd5f28d43"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000"
+            ],
+            "afterCallInputs": [
+              "12:00:00.000"
+            ],
+            "settledInputs": [
+              "12:00:00.000"
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 3,
+            "action": {
+              "type": "date-click",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-3.json",
+                "bytes": 1314813,
+                "sha256": "fa1999d2c9800284c27bab216166a58509f0e0c3024b60670b2da65c27953a84",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-3.json.gz",
+                "gzipBytes": 55277,
+                "gzipSHA256": "f8b81a74b16491bfff408a63ea90e40f88f0ffde5b706a7467e57466834ba37a"
+              }
+            },
+            "beforeInputs": [
+              "12:00:00.000"
+            ],
+            "afterCallInputs": [
+              "00:00:00.000"
+            ],
+            "settledInputs": [
+              "00:00:00.000"
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 1,
+                "name": "calendar",
+                "actionIndex": 3,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": "00:00:00.000"
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 263,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "name": "picker-value",
+                "actionIndex": 3,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "mode",
+                          "value": "date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 263,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 4,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-4.json",
+                "bytes": 1850056,
+                "sha256": "482a3a990d8a007c123dc90dd1359d65e754c881d1e41df01349a9d0979d7a1e",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-4.json.gz",
+                "gzipBytes": 72800,
+                "gzipSHA256": "86e4a2ce6f8a5974aeb84aa400446aeaecd54e752ec35dae991c8acb28779df7"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000"
+            ],
+            "afterCallInputs": [
+              "00:00:00.000"
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": false,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 3,
+                "name": "calendar",
+                "actionIndex": 4,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "undefined"
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 4,
+                "name": "open",
+                "actionIndex": 4,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 5,
+            "action": {
+              "type": "template-button"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-5.json",
+                "bytes": 1381633,
+                "sha256": "9a3437bff6c26bb7b830d013d956beb1ba8201829ba343f974f05d87752e10fd",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-5.json.gz",
+                "gzipBytes": 49908,
+                "gzipSHA256": "ecf5414365afb415afcc6e17cdf845610974f4607ca4d2b5deda0e5e8cfa0916"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 6,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-6.json",
+                "bytes": 1434538,
+                "sha256": "8e8055087e15e82ed49525c9c330224a3a460d145c538fae8d6960c6e1119e0b",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-6.json.gz",
+                "gzipBytes": 54763,
+                "gzipSHA256": "babceb02e51bae8108a982386af1d69af1acc04a281a91a450349e2a42abc2b4"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              ""
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 5,
+                "name": "open",
+                "actionIndex": 6,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 6,
+                "name": "picker-value",
+                "actionIndex": 6,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "reset"
+                        },
+                        {
+                          "key": "mode",
+                          "value": "date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 1,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": {
+              "inputValues": [
+                ""
+              ],
+              "selectedDateCells": 0,
+              "selectedTimeRows": 0,
+              "hasTemplate": true,
+              "open": true,
+              "lifecycle": [
+                {
+                  "phase": "mount"
+                }
+              ]
+            },
+            "hourClickTail": null
+          },
+          {
+            "index": 7,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-7.json",
+                "bytes": 1466302,
+                "sha256": "2d7194699cc65eda6b7cf656cfb3ea7d57634060edbae1d473ee0b3570d7a051",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-7.json.gz",
+                "gzipBytes": 58416,
+                "gzipSHA256": "ba09f880ad70c638efd11b709d06584e18f6bbe42a9204a7ff2aa68007f669ad"
+              }
+            },
+            "beforeInputs": [
+              ""
+            ],
+            "afterCallInputs": [
+              "09:12:34.567"
+            ],
+            "settledInputs": [
+              "09:12:34.567"
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 8,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-8.json",
+                "bytes": 1473280,
+                "sha256": "7a9ba3a5180eb1e9b84d847575ad2c2b936610730c03bbae7bf2a62bd1e4f872",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-8.json.gz",
+                "gzipBytes": 59268,
+                "gzipSHA256": "ca501212c93845a06194fa5176d85f0acebd18f0311f9fd2f449a64fb0b61e26"
+              }
+            },
+            "beforeInputs": [
+              "09:12:34.567"
+            ],
+            "afterCallInputs": [
+              "12:12:34.567"
+            ],
+            "settledInputs": [
+              "12:12:34.567"
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 9,
+            "action": {
+              "type": "hour-click",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-9.json",
+                "bytes": 1566429,
+                "sha256": "ba2ffbe9de1b5b109b9297a5d4cfb47a12a363a5056fe5d15494755c39652b87",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-9.json.gz",
+                "gzipBytes": 60984,
+                "gzipSHA256": "ff7f02d315222c4781404a4080e5a717d6ea37656b6054b52e25b3350c321e19"
+              }
+            },
+            "beforeInputs": [
+              "12:12:34.567"
+            ],
+            "afterCallInputs": [
+              "12:12:34.567"
+            ],
+            "settledInputs": [
+              "15:12:34.567"
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 7,
+                "name": "calendar",
+                "actionIndex": 9,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": "12:12:34.567"
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 291,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "name": "picker-value",
+                "actionIndex": 9,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "mode",
+                          "value": "date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0
+                    ],
+                    "identity": 291,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": {
+              "before": {
+                "scrollTop": 84,
+                "selectedRows": [],
+                "actualMouseRows": []
+              },
+              "afterCall": {
+                "scrollTop": 93,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": []
+              },
+              "settled": {
+                "scrollTop": 112,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": [
+                  {
+                    "type": "mouseout",
+                    "targetIdentity": 146,
+                    "matchedActualHour": "12",
+                    "clientX": 557,
+                    "clientY": 203,
+                    "isTrusted": true
+                  },
+                  {
+                    "type": "mouseover",
+                    "targetIdentity": 147,
+                    "matchedActualHour": "15",
+                    "clientX": 557,
+                    "clientY": 203,
+                    "isTrusted": true
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "index": 10,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-10.json",
+                "bytes": 2192879,
+                "sha256": "db099624baf1c291746b2305908d4f4a75bd26e059be0a375f7ebdd91ee343b3",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-step-10.json.gz",
+                "gzipBytes": 79801,
+                "gzipSHA256": "92d46f692e52a905d618be5becddef1ef49c2ffab9e116cb4abfc889c40ba9cf"
+              }
+            },
+            "beforeInputs": [
+              "15:12:34.567"
+            ],
+            "afterCallInputs": [
+              "12:12:34.567"
+            ],
+            "settledInputs": [
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 9,
+                "name": "calendar",
+                "actionIndex": 10,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "undefined"
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": []
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 10,
+                "name": "open",
+                "actionIndex": 10,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          }
+        ],
+        "closed": [
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-closed-4.json",
+                "bytes": 456009,
+                "sha256": "666b51208518a46d01c0eb42a3462bfee716a8d66d1b154a4d571da5febdc1a7",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-closed-4.json.gz",
+                "gzipBytes": 16499,
+                "gzipSHA256": "823e87d87dcfb606a50cdf5f260e3ea195504ca779a04b6305d4d384a2de382a"
+              }
+            },
+            "actionIndex": 4,
+            "open": false,
+            "inputValues": [
+              ""
+            ]
+          },
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-closed-10.json",
+                "bytes": 540305,
+                "sha256": "6402b2862789917b13939e48d10ce18d4eb12dfc9483d22f93b706691433c234",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-closed-10.json.gz",
+                "gzipBytes": 18219,
+                "gzipSHA256": "e72c6493e37a352db4b6be9607240baf06a2ce671f82b4b717a2ab0424243c2f"
+              }
+            },
+            "actionIndex": 10,
+            "open": false,
+            "inputValues": [
+              ""
+            ]
+          }
+        ],
+        "cleanup": {
+          "beforeUnmountPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-before-unmount.json",
+              "bytes": 508237,
+              "sha256": "cf7f2ab116a7efb4400c9fbc17c1e0c6c05e9cbc9518051d00777df4ab7a8dcb",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-before-unmount.json.gz",
+              "gzipBytes": 17914,
+              "gzipSHA256": "8ae2d85846456583dde1b18788ed9040896224f0d6bd00d20e2751f37e75d397"
+            }
+          },
+          "cleanupPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-cleanup.json",
+              "bytes": 212586,
+              "sha256": "75a397ec1b224fa08f633807acb07470e9a3f7517326aed24164f766ec980d45",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-cleanup.json.gz",
+              "gzipBytes": 7677,
+              "gzipSHA256": "b3e11931cdb5615be0ef22f2052991995c27f8d176d61e1ba9be5c41c02db52e"
+            }
+          },
+          "latePart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-late.json",
+              "bytes": 212586,
+              "sha256": "75a397ec1b224fa08f633807acb07470e9a3f7517326aed24164f766ec980d45",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/single-late.json.gz",
+              "gzipBytes": 7677,
+              "gzipSHA256": "b3e11931cdb5615be0ef22f2052991995c27f8d176d61e1ba9be5c41c02db52e"
+            }
+          },
+          "alive": false,
+          "refs": {
+            "owner": null,
+            "root": null,
+            "control": null
+          },
+          "inputs": 0,
+          "popups": 0,
+          "connectedRetained": 0,
+          "lifecycle": [
+            {
+              "phase": "mount"
+            },
+            {
+              "phase": "unmount"
+            }
+          ],
+          "wholeCleanupLateByteEqual": true,
+          "globalResourceCounters": "unmeasured/null"
+        }
+      },
+      {
+        "id": "range",
+        "initialPart": {
+          "rawJSONPart": {
+            "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-initial.json",
+            "bytes": 73482,
+            "sha256": "5e86c9c41cd738647c4727335b9e5395ba08940cbb0210684ca4d03fe62c7a2e",
+            "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-initial.json.gz",
+            "gzipBytes": 5400,
+            "gzipSHA256": "2e726e31a1ff98136da079a2acb12c09dbae65e6285d564566a125bc5a22e88e"
+          }
+        },
+        "authored": {
+          "panel": {
+            "identity": 2,
+            "temporal": {
+              "valid": true,
+              "epoch": 1718303420500,
+              "iso": "2024-06-13T18:30:20.500Z",
+              "utcOffset": 0,
+              "fields": [
+                2024,
+                5,
+                13,
+                18,
+                30,
+                20,
+                500
+              ],
+              "locale": "en"
+            }
+          },
+          "template": {
+            "identity": 5,
+            "temporal": {
+              "valid": true,
+              "epoch": 946717954567,
+              "iso": "2000-01-01T09:12:34.567Z",
+              "utcOffset": 0,
+              "fields": [
+                2000,
+                0,
+                1,
+                9,
+                12,
+                34,
+                567
+              ],
+              "locale": "en"
+            }
+          }
+        },
+        "steps": [
+          {
+            "index": 0,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-0.json",
+                "bytes": 911594,
+                "sha256": "d6b875c295786b16c96f59ddddfca95f9bd92c7afef066aad08a2e64e2963b3e",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-0.json.gz",
+                "gzipBytes": 40096,
+                "gzipSHA256": "e0b65a8951e29a0895215f5ae6f36f72998ba58ceea842e4c9555d55a1f04e30"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 0,
+                "name": "open",
+                "actionIndex": 0,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 1,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-1.json",
+                "bytes": 1257716,
+                "sha256": "a4c6577a871b8c8a00a8d264ca14dd77c0b3b52253cc65f248f7b8433b208400",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-1.json.gz",
+                "gzipBytes": 54136,
+                "gzipSHA256": "8a8742d1ad67574a20eb6d10997ca6cb21d683a46e24dba5887065933b2fd314"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "settledInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 2,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-2.json",
+                "bytes": 1265045,
+                "sha256": "d4ea362c9e05d09f37ff7c895d520a5d6b18f720f356832c3e8c88ac052766e1",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-2.json.gz",
+                "gzipBytes": 55107,
+                "gzipSHA256": "b0177f826421c06f78e5f91d41cc54818ca7929f41c3ca6f0bdf0692dcbb53b0"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "settledInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 3,
+            "action": {
+              "type": "date-click",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-3.json",
+                "bytes": 1406101,
+                "sha256": "75a3db937843906b31b70bf0fda9b1b21cde35e2a2a29f7c8844e63d0a5bffe3",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-3.json.gz",
+                "gzipBytes": 59234,
+                "gzipSHA256": "6b4305b435dc602551219efb472c51062658b67484e7c7fcb9e778be7fbec076"
+              }
+            },
+            "beforeInputs": [
+              "12:00:00.000",
+              ""
+            ],
+            "afterCallInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "settledInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": false,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 1,
+                "name": "calendar",
+                "actionIndex": 3,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": "00:00:00.000"
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 274,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "name": "picker-value",
+                "actionIndex": 3,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "range",
+                          "value": "start"
+                        },
+                        {
+                          "key": "mode",
+                          "value": {
+                            "$": "array",
+                            "properties": [
+                              {
+                                "key": "0",
+                                "value": "date"
+                              },
+                              {
+                                "key": "1",
+                                "value": "date"
+                              },
+                              {
+                                "key": "length",
+                                "value": 2
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 274,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718668800000,
+                      "iso": "2024-06-18T00:00:00.000Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  },
+                  {
+                    "path": [
+                      0,
+                      1
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 4,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-4.json",
+                "bytes": 2011563,
+                "sha256": "f50a1b7a7276cf6a949be5cd1c3956bc90973c05881e8d82b5de397c57b16833",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-4.json.gz",
+                "gzipBytes": 79843,
+                "gzipSHA256": "c855189d3bb72cf77796b4a7965ec915f592ddfe3e452d6cf95a7a62d9a1ccf9"
+              }
+            },
+            "beforeInputs": [
+              "00:00:00.000",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": false,
+            "hasTemplate": false,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 3,
+                "name": "calendar",
+                "actionIndex": 4,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": ""
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 4,
+                "name": "open",
+                "actionIndex": 4,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 5,
+            "action": {
+              "type": "template-button"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-5.json",
+                "bytes": 1505435,
+                "sha256": "6f89c4ac5841285ff3e9865260b7ae7b0532443d426a00ef52eab15e4c9739c6",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-5.json.gz",
+                "gzipBytes": 55043,
+                "gzipSHA256": "2c80de420aabce360edad2eb3be7fcda5dc70963685e9e7368dd259aeb0112a2"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 6,
+            "action": {
+              "type": "input-open"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-6.json",
+                "bytes": 1589362,
+                "sha256": "aae4bfeb1cf46d29a565116fd44a8cca3353214dfd69b5c0eb885fa68835d769",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-6.json.gz",
+                "gzipBytes": 61126,
+                "gzipSHA256": "f9d9dd3b1f60a081cc97ead74008859b61f646f09217397939ca7cfe297bc73f"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 5,
+                "name": "open",
+                "actionIndex": 6,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 6,
+                "name": "picker-value",
+                "actionIndex": 6,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "reset"
+                        },
+                        {
+                          "key": "range",
+                          "value": "start"
+                        },
+                        {
+                          "key": "mode",
+                          "value": {
+                            "$": "array",
+                            "properties": [
+                              {
+                                "key": "0",
+                                "value": "date"
+                              },
+                              {
+                                "key": "1",
+                                "value": "date"
+                              },
+                              {
+                                "key": "length",
+                                "value": 2
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  },
+                  {
+                    "path": [
+                      0,
+                      1
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": {
+              "inputValues": [
+                "",
+                ""
+              ],
+              "selectedDateCells": 0,
+              "selectedTimeRows": 0,
+              "hasTemplate": true,
+              "open": true,
+              "lifecycle": [
+                {
+                  "phase": "mount"
+                }
+              ]
+            },
+            "hourClickTail": null
+          },
+          {
+            "index": 7,
+            "action": {
+              "type": "date-hover",
+              "value": "2024-06-18"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-7.json",
+                "bytes": 1636520,
+                "sha256": "0af40ed0885f173c0129e76f7eb74b1dc1827e16a67e5ddafec79bf7fb57b0c9",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-7.json.gz",
+                "gzipBytes": 65595,
+                "gzipSHA256": "20b79f480d51d83ace201761c137815f0f2a713e3d15efef6d12b8303079833a"
+              }
+            },
+            "beforeInputs": [
+              "",
+              ""
+            ],
+            "afterCallInputs": [
+              "09:12:34.567",
+              ""
+            ],
+            "settledInputs": [
+              "09:12:34.567",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 8,
+            "action": {
+              "type": "hour-hover",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-8.json",
+                "bytes": 1643849,
+                "sha256": "5bd5c9c2fd6fc1d664bdd6247b17cb3991d57bd9a4cc085bd3ac7b6baf171c44",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-8.json.gz",
+                "gzipBytes": 66543,
+                "gzipSHA256": "1076fca7f7e8e48820f2585dc9929f6901bf9afb498972478305380874d6635e"
+              }
+            },
+            "beforeInputs": [
+              "09:12:34.567",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "settledInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [],
+            "prerequisite": null,
+            "hourClickTail": null
+          },
+          {
+            "index": 9,
+            "action": {
+              "type": "hour-click",
+              "value": 12
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-9.json",
+                "bytes": 1783827,
+                "sha256": "d470a345975150be3eb58c4c6ac50365f8b73bd3d025e003771fdaa6d30abb0c",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-9.json.gz",
+                "gzipBytes": 69706,
+                "gzipSHA256": "c9e5f8241451524fc528c14ef1849828d9f989a03f56b67faa83f98beadc4692"
+              }
+            },
+            "beforeInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "afterCallInputs": [
+              "12:12:34.567",
+              ""
+            ],
+            "settledInputs": [
+              "15:12:34.567",
+              ""
+            ],
+            "open": true,
+            "hasTemplate": true,
+            "focusedInput": -1,
+            "callbacks": [
+              {
+                "index": 7,
+                "name": "calendar",
+                "actionIndex": 9,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": "12:12:34.567"
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 314,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "name": "picker-value",
+                "actionIndex": 9,
+                "actualArgumentCount": 2,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "source",
+                          "value": "panel"
+                        },
+                        {
+                          "key": "range",
+                          "value": "start"
+                        },
+                        {
+                          "key": "mode",
+                          "value": {
+                            "$": "array",
+                            "properties": [
+                              {
+                                "key": "0",
+                                "value": "date"
+                              },
+                              {
+                                "key": "1",
+                                "value": "date"
+                              },
+                              {
+                                "key": "length",
+                                "value": 2
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ],
+                "dates": [
+                  {
+                    "path": [
+                      0,
+                      0
+                    ],
+                    "identity": 314,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718280754567,
+                      "iso": "2024-06-13T12:12:34.567Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        12,
+                        12,
+                        34,
+                        567
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": false,
+                      "template": false
+                    }
+                  },
+                  {
+                    "path": [
+                      0,
+                      1
+                    ],
+                    "identity": 2,
+                    "temporal": {
+                      "valid": true,
+                      "epoch": 1718303420500,
+                      "iso": "2024-06-13T18:30:20.500Z",
+                      "utcOffset": 0,
+                      "fields": [
+                        2024,
+                        5,
+                        13,
+                        18,
+                        30,
+                        20,
+                        500
+                      ],
+                      "locale": "en"
+                    },
+                    "sameAsAuthored": {
+                      "panel": true,
+                      "template": false
+                    }
+                  }
+                ]
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": {
+              "before": {
+                "scrollTop": 84,
+                "selectedRows": [],
+                "actualMouseRows": []
+              },
+              "afterCall": {
+                "scrollTop": 93,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": []
+              },
+              "settled": {
+                "scrollTop": 112,
+                "selectedRows": [
+                  "12"
+                ],
+                "actualMouseRows": [
+                  {
+                    "type": "mouseout",
+                    "targetIdentity": 154,
+                    "matchedActualHour": "12",
+                    "clientX": 557,
+                    "clientY": 213,
+                    "isTrusted": true
+                  },
+                  {
+                    "type": "mouseover",
+                    "targetIdentity": 155,
+                    "matchedActualHour": "15",
+                    "clientX": 557,
+                    "clientY": 213,
+                    "isTrusted": true
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "index": 10,
+            "action": {
+              "type": "input-escape"
+            },
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-10.json",
+                "bytes": 2524769,
+                "sha256": "027bb7179d39b635af488633741950949a33cf5c2afd89012164a8808373fe0e",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-step-10.json.gz",
+                "gzipBytes": 93741,
+                "gzipSHA256": "2862220722483b36f21b760964462308f39f60917d4cd060767b194873d5ab4a"
+              }
+            },
+            "beforeInputs": [
+              "15:12:34.567",
+              ""
+            ],
+            "afterCallInputs": [
+              "",
+              ""
+            ],
+            "settledInputs": [
+              "",
+              ""
+            ],
+            "open": false,
+            "hasTemplate": true,
+            "focusedInput": 0,
+            "callbacks": [
+              {
+                "index": 9,
+                "name": "calendar",
+                "actionIndex": 10,
+                "actualArgumentCount": 3,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "array",
+                      "properties": [
+                        {
+                          "key": "0",
+                          "value": ""
+                        },
+                        {
+                          "key": "1",
+                          "value": ""
+                        },
+                        {
+                          "key": "length",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "range",
+                          "value": "start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 3
+                  }
+                ],
+                "dates": []
+              },
+              {
+                "index": 10,
+                "name": "open",
+                "actionIndex": 10,
+                "actualArgumentCount": 1,
+                "receiver": {
+                  "type": "undefined",
+                  "isUndefined": true,
+                  "isNull": false,
+                  "identity": null
+                },
+                "argumentTail": [
+                  {
+                    "key": "length",
+                    "value": 1
+                  }
+                ],
+                "dates": []
+              }
+            ],
+            "prerequisite": null,
+            "hourClickTail": null
+          }
+        ],
+        "closed": [
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-closed-4.json",
+                "bytes": 496401,
+                "sha256": "6f03100e36d128a536aa10e65693590c00567e7e7a82e779829ad948a2b33c84",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-closed-4.json.gz",
+                "gzipBytes": 18220,
+                "gzipSHA256": "2bf579ff5572f8dbf62a3773d506667360041a7424ca1f5bb2d7a9b85c1c00da"
+              }
+            },
+            "actionIndex": 4,
+            "open": false,
+            "inputValues": [
+              "",
+              ""
+            ]
+          },
+          {
+            "part": {
+              "rawJSONPart": {
+                "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-closed-10.json",
+                "bytes": 622733,
+                "sha256": "8977d3676982c61a2eff49397b9d70af5961d2352837341d51ab4aeb9bf66b2d",
+                "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-closed-10.json.gz",
+                "gzipBytes": 21502,
+                "gzipSHA256": "28c2a19405cfbe702a6a6cbfab31105f60d8262708473a289eff29716796dabc"
+              }
+            },
+            "actionIndex": 10,
+            "open": false,
+            "inputValues": [
+              "",
+              ""
+            ]
+          }
+        ],
+        "cleanup": {
+          "beforeUnmountPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-before-unmount.json",
+              "bytes": 585631,
+              "sha256": "8f8d08a91492b0915f6768a374500196c2cf802214cd86eeb6bb17b83a17ac9a",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-before-unmount.json.gz",
+              "gzipBytes": 20701,
+              "gzipSHA256": "c990b9f6af4fbe8c17a807d40fc220c209349a24ed2513612b8f619ced492c00"
+            }
+          },
+          "cleanupPart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-cleanup.json",
+              "bytes": 284424,
+              "sha256": "9a30974409ec80a154610469882599689cc6705d078b38c826b239e0ba76d718",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-cleanup.json.gz",
+              "gzipBytes": 9881,
+              "gzipSHA256": "08fb77a43fcb14d1f95a75ca29cc9718a7f56fe193f9bbc1897d9751aa74d266"
+            }
+          },
+          "latePart": {
+            "rawJSONPart": {
+              "file": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-late.json",
+              "bytes": 284424,
+              "sha256": "9a30974409ec80a154610469882599689cc6705d078b38c826b239e0ba76d718",
+              "gzipFile": ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json.parts/range-late.json.gz",
+              "gzipBytes": 9881,
+              "gzipSHA256": "08fb77a43fcb14d1f95a75ca29cc9718a7f56fe193f9bbc1897d9751aa74d266"
+            }
+          },
+          "alive": false,
+          "refs": {
+            "owner": null,
+            "root": null,
+            "control": null
+          },
+          "inputs": 0,
+          "popups": 0,
+          "connectedRetained": 0,
+          "lifecycle": [
+            {
+              "phase": "mount"
+            },
+            {
+              "phase": "unmount"
+            }
+          ],
+          "wholeCleanupLateByteEqual": true,
+          "globalResourceCounters": "unmeasured/null"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "primary": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+  "bytes": 4217353,
+  "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+  "evidence": "Static primary-source facts, not executed observations.",
+  "sections": [
+    {
+      "first": 48727,
+      "last": 48778,
+      "fact": "flattenUnits includes value/label/disabled; effect selected and optional deps; no focus/open flag.",
+      "excerpt": "const SCROLL_DELAY = 300;\n// Not use JSON.stringify to avoid dead loop\nfunction flattenUnits(units) {\n  return units.map(({\n    value,\n    label,\n    disabled\n  }) => [value, label, disabled].join(',')).join(';');\n}\nfunction TimeColumn(props) {\n  const {\n    units,\n    value,\n    optionalValue,\n    type,\n    onChange,\n    onHover,\n    onDblClick,\n    changeOnScroll\n  } = props;\n  const {\n    prefixCls,\n    cellRender,\n    now,\n    locale,\n    classNames,\n    styles\n  } = usePanelContext();\n  const panelPrefixCls = `${prefixCls}-time-panel`;\n  const cellPrefixCls = `${prefixCls}-time-panel-cell`;\n\n  // ========================== Refs ==========================\n  const ulRef = external_root_React_commonjs2_react_commonjs_react_amd_react_.useRef(null);\n\n  // ========================= Scroll =========================\n  const checkDelayRef = external_root_React_commonjs2_react_commonjs_react_amd_react_.useRef(undefined);\n  const clearDelayCheck = () => {\n    clearTimeout(checkDelayRef.current);\n  };\n\n  // ========================== Sync ==========================\n  const [syncScroll, stopScroll, isScrolling] = useScrollTo_useScrollTo(ulRef, value ?? optionalValue);\n\n  // Effect sync value scroll\n  hooks_useLayoutEffect(() => {\n    syncScroll();\n    clearDelayCheck();\n    return () => {\n      stopScroll();\n      clearDelayCheck();\n    };\n  }, [value, optionalValue, flattenUnits(units)]);"
+    },
+    {
+      "first": 48666,
+      "last": 48713,
+      "fact": "Real Source scroll-to reads offsets/visibility, retries5frames, eases and stops on user divergence.",
+      "excerpt": "    const ul = ulRef.current;\n    scrollDistRef.current = null;\n    scrollRafTimesRef.current = 0;\n    if (ul) {\n      const targetLi = ul.querySelector(`[data-value=\"${value}\"]`);\n      const firstLi = ul.querySelector(`li`);\n      const doScroll = () => {\n        stopScroll();\n        scrollingRef.current = true;\n        scrollRafTimesRef.current += 1;\n        const {\n          scrollTop: currentTop\n        } = ul;\n        const firstLiTop = firstLi.offsetTop;\n        const targetLiTop = targetLi.offsetTop;\n        const targetTop = targetLiTop - firstLiTop;\n\n        // Wait for element exist. 5 frames is enough\n        if (targetLiTop === 0 && targetLi !== firstLi || !isVisible(ul)) {\n          if (scrollRafTimesRef.current <= 5) {\n            scrollRafRef.current = es_raf(doScroll);\n          }\n          return;\n        }\n        const nextTop = currentTop + (targetTop - currentTop) * SPEED_PTG;\n        const dist = Math.abs(targetTop - nextTop);\n\n        // Break if dist get larger, which means user is scrolling\n        if (scrollDistRef.current !== null && scrollDistRef.current < dist) {\n          stopScroll();\n          return;\n        }\n        scrollDistRef.current = dist;\n\n        // Stop when dist is less than 1\n        if (dist <= 1) {\n          ul.scrollTop = targetTop;\n          stopScroll();\n          return;\n        }\n\n        // IE not support `scrollTo`\n        ul.scrollTop = nextTop;\n        scrollRafRef.current = es_raf(doScroll);\n      };\n      if (targetLi && firstLi) {\n        doScroll();\n      }"
+    },
+    {
+      "first": 48894,
+      "last": 48912,
+      "fact": "Selected numeric units and optional picker units are separate.",
+      "excerpt": "    onCellDblClick\n  } = external_root_React_commonjs2_react_commonjs_react_amd_react_.useContext(PickerHackContext);\n\n  // ========================== Info ==========================\n  const [getValidTime, rowHourUnits, getMinuteUnits, getSecondUnits, getMillisecondUnits] = useTimeInfo(generateConfig, props, value);\n\n  // ========================= Value ==========================\n  // PickerValue will tell which one to align on the top\n  const getUnitValue = func => {\n    const valueUnitVal = value && generateConfig[func](value);\n    const pickerUnitValue = pickerValue && generateConfig[func](pickerValue);\n    return [valueUnitVal, pickerUnitValue];\n  };\n  const [hour, pickerHour] = getUnitValue('getHour');\n  const [minute, pickerMinute] = getUnitValue('getMinute');\n  const [second, pickerSecond] = getUnitValue('getSecond');\n  const [millisecond, pickerMillisecond] = getUnitValue('getMillisecond');\n  const meridiem = hour === null ? null : isAM(hour) ? 'am' : 'pm';\n"
+    },
+    {
+      "first": 49067,
+      "last": 49101,
+      "fact": "Hour/minute/second/ms receive optionalValue; meridiem does not.",
+      "excerpt": "  }, showHour && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(TimeColumn, TimePanelBody_extends({\n    units: hourUnits,\n    value: hour,\n    optionalValue: pickerHour,\n    type: \"hour\",\n    onChange: onHourChange,\n    onHover: onHourHover\n  }, sharedColumnProps)), showMinute && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(TimeColumn, TimePanelBody_extends({\n    units: minuteUnits,\n    value: minute,\n    optionalValue: pickerMinute,\n    type: \"minute\",\n    onChange: onMinuteChange,\n    onHover: onMinuteHover\n  }, sharedColumnProps)), showSecond && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(TimeColumn, TimePanelBody_extends({\n    units: secondUnits,\n    value: second,\n    optionalValue: pickerSecond,\n    type: \"second\",\n    onChange: onSecondChange,\n    onHover: onSecondHover\n  }, sharedColumnProps)), showMillisecond && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(TimeColumn, TimePanelBody_extends({\n    units: millisecondUnits,\n    value: millisecond,\n    optionalValue: pickerMillisecond,\n    type: \"millisecond\",\n    onChange: onMillisecondChange,\n    onHover: onMillisecondHover\n  }, sharedColumnProps)), showMeridiem && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(TimeColumn, TimePanelBody_extends({\n    units: meridiemUnits,\n    value: meridiem,\n    type: \"meridiem\",\n    onChange: onMeridiemChange,\n    onHover: onMeridiemHover\n  }, sharedColumnProps)));"
+    },
+    {
+      "first": 46207,
+      "last": 46219,
+      "fact": "fillTime copies all4 time fields from supplied time, otherwise zeros all4.",
+      "excerpt": "function fillTime(generateConfig, date, time) {\n  let tmpDate = date;\n  const getFn = ['getHour', 'getMinute', 'getSecond', 'getMillisecond'];\n  const setFn = ['setHour', 'setMinute', 'setSecond', 'setMillisecond'];\n  setFn.forEach((fn, index) => {\n    if (time) {\n      tmpDate = generateConfig[fn](tmpDate, generateConfig[getFn[index]](time));\n    } else {\n      tmpDate = generateConfig[fn](tmpDate, 0);\n    }\n  });\n  return tmpDate;\n}"
+    },
+    {
+      "first": 46448,
+      "last": 46459,
+      "fact": "Public showTime defaultOpenValue normalization and legacy defaultValue fallback.",
+      "excerpt": "function getTimeProps(componentProps) {\n  const {\n    showTime\n  } = componentProps;\n  const [pickedProps, propFormat] = pickTimeProps(componentProps);\n  const showTimeConfig = showTime && typeof showTime === 'object' ? showTime : {};\n  const timeConfig = {\n    defaultOpenValue: showTimeConfig.defaultOpenValue || showTimeConfig.defaultValue,\n    ...pickedProps,\n    ...showTimeConfig\n  };\n  const {"
+    },
+    {
+      "first": 47076,
+      "last": 47085,
+      "fact": "DatePicker currentPickerValue fills raw panel value from timeDefaultValue.",
+      "excerpt": "  // PickerValue state\n  const [mergedStartPickerValue, setStartPickerValue] = useControlledState(() => getDefaultPickerValue(0), startPickerValue);\n  const [mergedEndPickerValue, setEndPickerValue] = useControlledState(() => getDefaultPickerValue(1), endPickerValue);\n\n  // Current PickerValue\n  const currentPickerValue = external_root_React_commonjs2_react_commonjs_react_amd_react_.useMemo(() => {\n    const current = [mergedStartPickerValue, mergedEndPickerValue][mergedActiveIndex];\n\n    // Merge the `showTime.defaultValue` into `pickerValue`\n    return isTimePicker ? current : fillTime(generateConfig, current, timeDefaultValue[mergedActiveIndex]);"
+    },
+    {
+      "first": 52191,
+      "last": 52193,
+      "fact": "Single picker supplies showTime.defaultOpenValue to useRangePickerValue.",
+      "excerpt": "  const [currentPickerValue, setCurrentPickerValue] = useRangePickerValue(generateConfig, locale, calendarValue, [mergedMode], mergedOpen, false, activeIndex, internalPicker, false,\n  // multiplePanel,\n  defaultPickerValue, pickerValue, miscUtil_toArray(showTime?.defaultOpenValue), onInternalPickerValueChange, minDate, maxDate);"
+    },
+    {
+      "first": 52357,
+      "last": 52362,
+      "fact": "Public panel receives transformed currentPickerValue and defaultOpenValue.",
+      "excerpt": "    // PickerValue\n    ,\n    pickerValue: currentPickerValue,\n    defaultOpenValue: showTime?.defaultOpenValue,\n    onPickerValueChange: setCurrentPickerValue\n    // Hover"
+    },
+    {
+      "first": 14426,
+      "last": 14443,
+      "fact": "Portal recomputes actual target; no same-callback/same-target expectation is invented.",
+      "excerpt": "      setShouldRender(open);\n    }\n  }, [open, autoDestroy]);\n\n  // ======================== Container ========================\n  const [innerContainer, setInnerContainer] = external_root_React_commonjs2_react_commonjs_react_amd_react_.useState(() => getPortalContainer(getContainer));\n  external_root_React_commonjs2_react_commonjs_react_amd_react_.useEffect(() => {\n    const customizeContainer = getPortalContainer(getContainer);\n\n    // Tell component that we check this in effect which is safe to be `null`\n    setInnerContainer(() =>\n    // React do the state update even the value is the same,\n    // Use function call to force React to compare update\n    customizeContainer ?? null);\n  });\n  const [defaultContainer, queueCreate] = useDom(mergedRender && !innerContainer, debug);\n  const mergedContainer = innerContainer ?? defaultContainer;\n"
+    },
+    {
+      "first": 14699,
+      "last": 14715,
+      "fact": "Trigger defers parameterized getPopupContainer until actual target exists.",
+      "excerpt": "    }\n    return [mask, maskMotion, motion];\n  }, [mobile, mask, maskMotion, motion]);\n\n  // ======================= Container ========================\n  const getPopupContainerNeedParams = getPopupContainer?.length > 0;\n  const [show, setShow] = external_root_React_commonjs2_react_commonjs_react_amd_react_.useState(!getPopupContainer || !getPopupContainerNeedParams);\n\n  // Delay to show since `getPopupContainer` need target element\n  hooks_useLayoutEffect(() => {\n    if (!show && getPopupContainerNeedParams && target) {\n      setShow(true);\n    }\n  }, [show, getPopupContainerNeedParams, target]);\n\n  // ========================= Resize =========================\n  const onInternalResize = hooks_useEvent((size, ele) => {"
+    },
+    {
+      "first": 14743,
+      "last": 14753,
+      "fact": "Popup passes the real trigger into public getPopupContainer.",
+      "excerpt": "    miscStyle.pointerEvents = 'none';\n  }\n  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(Portal, {\n    open: forceRender || isNodeVisible,\n    getContainer: getPopupContainer && (() => getPopupContainer(target)),\n    autoDestroy: autoDestroy,\n    onEsc: onEsc\n  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(Mask, {\n    prefixCls: prefixCls,\n    open: open,\n    zIndex: zIndex,"
+    }
+  ]
+}

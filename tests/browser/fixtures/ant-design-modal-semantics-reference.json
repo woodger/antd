@@ -1,0 +1,3201 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "default"
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root"
+            ],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper"
+            ],
+            "style": {
+              "--winner": "wrapStyle",
+              "--raw-wrap": "raw-wrapper"
+            },
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "all-slots",
+        "local": "object",
+        "provider": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root",
+              "provider-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "root",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper",
+              "provider-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--provider": "wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask",
+              "provider-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "mask",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container",
+              "provider-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "container",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close",
+              "provider-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "close",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header",
+              "provider-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "header",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title",
+              "provider-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "title",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body",
+              "provider-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "body",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer",
+              "provider-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "footer",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel",
+            "provider-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--provider-panel": "panel",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {
+          "providerClasses": {
+            "open": true,
+            "width": 520,
+            "prefixCls": null,
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "providerStyles": {
+            "open": true,
+            "width": 520,
+            "prefixCls": null,
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          }
+        },
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "semantic-functions",
+        "local": "function",
+        "provider": true,
+        "customize": true,
+        "update": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root",
+              "provider-root",
+              "width-626"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "root",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper",
+              "provider-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--provider": "wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask",
+              "provider-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "mask",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container",
+              "provider-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "container",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close",
+              "provider-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "close",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header",
+              "provider-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "header",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title",
+              "provider-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "title",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body",
+              "provider-body",
+              "width-626"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "body"
+            },
+            "border": "2px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer",
+              "provider-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "footer",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel",
+            "provider-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--provider-panel": "panel",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "626px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {
+          "providerClasses": {
+            "open": true,
+            "width": 626,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "localClasses": {
+            "open": true,
+            "width": 626,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "providerStyles": {
+            "open": true,
+            "width": 626,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "localStyles": {
+            "open": true,
+            "width": 626,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          }
+        },
+        "callbacks": [
+          true
+        ]
+      },
+      "updated": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root",
+              "provider-root",
+              "width-699"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "root",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper",
+              "provider-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--provider": "wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask",
+              "provider-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "mask",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container",
+              "provider-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "container",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close",
+              "provider-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "close",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header",
+              "provider-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "header",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title",
+              "provider-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "title",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body",
+              "provider-body",
+              "width-699"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "body"
+            },
+            "border": "2px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer",
+              "provider-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "footer",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel",
+            "provider-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--provider-panel": "panel",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "699px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {
+          "providerClasses": {
+            "open": true,
+            "width": 699,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "localClasses": {
+            "open": true,
+            "width": 699,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "providerStyles": {
+            "open": true,
+            "width": 699,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "localStyles": {
+            "open": true,
+            "width": 699,
+            "prefixCls": "probe-modal",
+            "centered": true,
+            "focusable": {
+              "trap": false,
+              "focusTriggerAfterClose": false
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          }
+        },
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "native-props",
+        "local": "object",
+        "provider": true,
+        "elementProps": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root",
+              "provider-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "root",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "replacement-wrap"
+            ],
+            "style": {
+              "--winner": "wrapProps"
+            },
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": "1200",
+            "extra": "wrapper",
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "replacement-mask"
+            ],
+            "style": {
+              "--winner": "maskProps"
+            },
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": "1199",
+            "extra": "mask",
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container",
+              "provider-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "container",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close",
+              "provider-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "close",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header",
+              "provider-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "header",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title",
+              "provider-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "title",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "replacement-body"
+            ],
+            "style": {
+              "--winner": "bodyProps"
+            },
+            "border": null,
+            "width": null,
+            "padding": "11px",
+            "zIndex": null,
+            "extra": "body",
+            "ariaLabel": "body props"
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer",
+              "provider-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "footer",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel",
+            "provider-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--provider-panel": "panel",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {
+          "providerClasses": {
+            "open": true,
+            "width": 520,
+            "prefixCls": null,
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          },
+          "providerStyles": {
+            "open": true,
+            "width": 520,
+            "prefixCls": null,
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": null,
+            "loading": null,
+            "closable": null
+          }
+        },
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "without-parts",
+        "local": "object",
+        "minimal": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": null,
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": null,
+          "header": null,
+          "title": null,
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": null,
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "render",
+        "local": "object",
+        "render": true,
+        "update": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true
+        ]
+      },
+      "updated": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "699px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "unmount",
+        "local": "object",
+        "render": true,
+        "destroy": true,
+        "cycle": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true
+        ]
+      },
+      "closed": {
+        "slots": {
+          "root": null,
+          "wrapper": null,
+          "mask": null,
+          "container": null,
+          "close": null,
+          "header": null,
+          "title": null,
+          "body": null,
+          "footer": null,
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": null
+        },
+        "panel": null,
+        "ref": {
+          "attached": false,
+          "role": null,
+          "isPanel": false
+        },
+        "renderOwnsContainer": false,
+        "inputValue": null,
+        "inputs": {},
+        "callbacks": [
+          true,
+          "close",
+          false
+        ]
+      },
+      "reopened": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true,
+          "close",
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "keep-mounted",
+        "local": "object",
+        "render": true,
+        "cycle": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Seed",
+        "inputs": {},
+        "callbacks": [
+          true
+        ]
+      },
+      "closed": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": null,
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Draft",
+        "inputs": {},
+        "callbacks": [
+          true,
+          "close",
+          false
+        ]
+      },
+      "reopened": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--raw-wrap": "raw-wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [
+              "local-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": {
+            "tag": "div",
+            "classNames": [
+              "local-footer"
+            ],
+            "style": {
+              "--winner": "local",
+              "--local": "footer"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-title": null,
+          "confirm-content": null,
+          "confirm-btns": null,
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "520px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": {
+          "attached": true,
+          "role": "dialog",
+          "isPanel": true
+        },
+        "renderOwnsContainer": true,
+        "inputValue": "Draft",
+        "inputs": {},
+        "callbacks": [
+          true,
+          "close",
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm",
+        "confirm": true,
+        "local": "function",
+        "provider": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root",
+              "provider-root",
+              "width-416"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "root",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper",
+              "provider-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": "2000",
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask",
+              "provider-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "mask",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": "2000",
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container",
+              "provider-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "container",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close",
+              "provider-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "close",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header",
+              "provider-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "header",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title",
+              "provider-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "title",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": null,
+          "confirm-title": {
+            "tag": "span",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-content": {
+            "tag": "div",
+            "classNames": [
+              "local-body",
+              "provider-body",
+              "width-416"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "body"
+            },
+            "border": "2px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-btns": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "render": null
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel",
+            "provider-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--provider-panel": "panel",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "416px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": null,
+        "renderOwnsContainer": false,
+        "inputValue": "Seed",
+        "inputs": {
+          "providerClasses": {
+            "open": true,
+            "width": 416,
+            "prefixCls": "ant-modal",
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": 2000,
+            "loading": null,
+            "closable": true
+          },
+          "localClasses": {
+            "open": true,
+            "width": 416,
+            "prefixCls": "ant-modal",
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": 2000,
+            "loading": null,
+            "closable": true
+          },
+          "providerStyles": {
+            "open": true,
+            "width": 416,
+            "prefixCls": "ant-modal",
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": 2000,
+            "loading": null,
+            "closable": true
+          },
+          "localStyles": {
+            "open": true,
+            "width": 416,
+            "prefixCls": "ant-modal",
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": 2000,
+            "loading": null,
+            "closable": true
+          }
+        },
+        "callbacks": [
+          true
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "confirm-render",
+        "confirm": true,
+        "local": "object",
+        "render": true,
+        "provider": true
+      },
+      "open": {
+        "slots": {
+          "root": {
+            "tag": "div",
+            "classNames": [
+              "explicit-root",
+              "local-root",
+              "provider-root"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "root",
+              "--local": "root"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "wrapper": {
+            "tag": "div",
+            "classNames": [
+              "explicit-wrapper",
+              "local-wrapper",
+              "provider-wrapper"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "wrapper",
+              "--local": "wrapper"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": "2000",
+            "extra": null,
+            "ariaLabel": null
+          },
+          "mask": {
+            "tag": "div",
+            "classNames": [
+              "local-mask",
+              "provider-mask"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "mask",
+              "--local": "mask"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": "2000",
+            "extra": null,
+            "ariaLabel": null
+          },
+          "container": {
+            "tag": "div",
+            "classNames": [
+              "local-container",
+              "provider-container"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "container",
+              "--local": "container"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "close": {
+            "tag": "button",
+            "classNames": [
+              "local-close",
+              "provider-close"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "close",
+              "--local": "close"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": "Close"
+          },
+          "header": {
+            "tag": "div",
+            "classNames": [
+              "local-header",
+              "provider-header"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "header",
+              "--local": "header"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "title": {
+            "tag": "div",
+            "classNames": [
+              "local-title",
+              "provider-title"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "title",
+              "--local": "title"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "body": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "footer": null,
+          "confirm-title": {
+            "tag": "span",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-content": {
+            "tag": "div",
+            "classNames": [
+              "local-body",
+              "provider-body"
+            ],
+            "style": {
+              "--winner": "local",
+              "--provider": "body",
+              "--local": "body"
+            },
+            "border": "3px",
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "confirm-btns": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          },
+          "render": {
+            "tag": "div",
+            "classNames": [],
+            "style": {},
+            "border": null,
+            "width": null,
+            "padding": null,
+            "zIndex": null,
+            "extra": null,
+            "ariaLabel": null
+          }
+        },
+        "panel": {
+          "tag": "div",
+          "classNames": [
+            "explicit-panel",
+            "provider-panel"
+          ],
+          "style": {
+            "--winner": "explicitStyle",
+            "--provider-panel": "panel",
+            "--explicit": "panel"
+          },
+          "border": null,
+          "width": "416px",
+          "padding": null,
+          "zIndex": null,
+          "extra": null,
+          "ariaLabel": null
+        },
+        "ref": null,
+        "renderOwnsContainer": true,
+        "inputValue": "Seed",
+        "inputs": {
+          "providerClasses": {
+            "open": true,
+            "width": 416,
+            "prefixCls": "ant-modal",
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": 2000,
+            "loading": null,
+            "closable": true
+          },
+          "providerStyles": {
+            "open": true,
+            "width": 416,
+            "prefixCls": "ant-modal",
+            "centered": null,
+            "focusable": {
+              "trap": true,
+              "focusTriggerAfterClose": true
+            },
+            "mask": true,
+            "zIndex": 2000,
+            "loading": null,
+            "closable": true
+          }
+        },
+        "callbacks": [
+          true
+        ]
+      }
+    }
+  ],
+  "pointer": {
+    "repeat": 2,
+    "pointerEvents": [
+      "wrapper-click"
+    ],
+    "maskPointerEvents": "none",
+    "wrapperReceivesPointer": true
+  }
+}

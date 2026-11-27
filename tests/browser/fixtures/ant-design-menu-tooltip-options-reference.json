@@ -1,0 +1,305 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "react": "18.3.1",
+    "browser": "157.0.8103.78",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30"
+  },
+  "results": [
+    {
+      "kind": "click",
+      "initial": {
+        "row": {
+          "text": "W",
+          "description": false
+        },
+        "popup": null,
+        "containers": [],
+        "events": []
+      },
+      "after": {
+        "row": {
+          "text": "W",
+          "description": true
+        },
+        "popup": {
+          "visible": true,
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [],
+          "contentClass": false,
+          "fontSize": "14px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": null
+        },
+        "containers": [],
+        "events": [
+          [
+            "tooltip",
+            true
+          ],
+          [
+            "click",
+            "leaf"
+          ],
+          [
+            "select",
+            [
+              "leaf"
+            ]
+          ]
+        ]
+      },
+      "again": {
+        "row": {
+          "text": "W",
+          "description": false
+        },
+        "popup": {
+          "visible": false,
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [],
+          "contentClass": false,
+          "fontSize": "14px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": null
+        },
+        "containers": [],
+        "events": [
+          [
+            "tooltip",
+            true
+          ],
+          [
+            "click",
+            "leaf"
+          ],
+          [
+            "select",
+            [
+              "leaf"
+            ]
+          ],
+          [
+            "tooltip",
+            false
+          ],
+          [
+            "click",
+            "leaf"
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "semantic-portal",
+      "initial": {
+        "row": {
+          "text": "W",
+          "description": false
+        },
+        "popup": null,
+        "containers": [],
+        "events": []
+      },
+      "after": {
+        "row": {
+          "text": "W",
+          "description": true
+        },
+        "popup": {
+          "visible": true,
+          "text": "Warehouse",
+          "placement": "hint-placement-right",
+          "id": null,
+          "classes": [
+            "tooltip-root",
+            "tooltip-right"
+          ],
+          "contentClass": true,
+          "fontSize": "19px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": "tooltip-container"
+        },
+        "containers": [
+          "LI"
+        ],
+        "events": [
+          [
+            "tooltip",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "extra-zero",
+      "initial": {
+        "row": {
+          "text": "Warehouse0",
+          "description": false
+        },
+        "popup": null,
+        "containers": [],
+        "events": []
+      },
+      "after": {
+        "row": {
+          "text": "Warehouse0",
+          "description": true
+        },
+        "popup": {
+          "visible": true,
+          "text": "Warehouse0",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [],
+          "contentClass": false,
+          "fontSize": "14px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": null
+        },
+        "containers": [],
+        "events": [
+          [
+            "tooltip",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "force-expanded",
+      "initial": {
+        "row": {
+          "text": "Warehouse",
+          "description": false
+        },
+        "popup": {
+          "visible": false,
+          "text": "",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [],
+          "contentClass": false,
+          "fontSize": "14px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": "tooltip-container"
+        },
+        "containers": [
+          "LI"
+        ],
+        "events": []
+      },
+      "after": {
+        "row": {
+          "text": "Warehouse",
+          "description": false
+        },
+        "popup": {
+          "visible": false,
+          "text": "",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [],
+          "contentClass": false,
+          "fontSize": "14px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": "tooltip-container"
+        },
+        "containers": [
+          "LI"
+        ],
+        "events": []
+      }
+    },
+    {
+      "kind": "sider",
+      "initial": {
+        "row": {
+          "text": "Warehouse",
+          "description": false
+        },
+        "popup": null,
+        "containers": [],
+        "events": []
+      },
+      "after": {
+        "row": {
+          "text": "Warehouse",
+          "description": true
+        },
+        "popup": {
+          "visible": true,
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [],
+          "contentClass": false,
+          "fontSize": "14px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": null
+        },
+        "containers": [],
+        "events": [
+          [
+            "tooltip",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "semantic-implicit-portal",
+      "initial": {
+        "row": {
+          "text": "W",
+          "description": false
+        },
+        "popup": null,
+        "containers": [],
+        "events": []
+      },
+      "after": {
+        "row": {
+          "text": "W",
+          "description": true
+        },
+        "popup": {
+          "visible": true,
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "id": null,
+          "classes": [
+            "tooltip-implicit"
+          ],
+          "contentClass": false,
+          "fontSize": "19px",
+          "paddingTop": "0px",
+          "pointerEvents": "none",
+          "portal": null
+        },
+        "containers": [],
+        "events": [
+          [
+            "tooltip",
+            true
+          ]
+        ]
+      }
+    }
+  ]
+}

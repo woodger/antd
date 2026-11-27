@@ -1,0 +1,124 @@
+{
+  "rootLease": "week-20261119-01",
+  "status": "released",
+  "releasedAtUTC": "2026-11-19T07:12:33.029Z",
+  "sourceProtocolSHA256": "fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200",
+  "reviewedProposalSHA256": "d48ed6d044484a6621b787862c1feb93ba8318cdbe0b23ef25535db52c4cea8c",
+  "actualSourceProcesses": "All four approved coordinators reached actual exit 0 in declared order, observed through their real process handles. Each CSR coordinator awaited browser.close before its final manifest; both browsers and all four Source coordinators are closed. No Source server was started.",
+  "sourceInputPinsUnchangedAtRelease": true,
+  "inputPinsVerified": 29,
+  "priorSourceMetadataPinsUnchanged": true,
+  "priorSourcePinsVerified": 17,
+  "runs": [
+    {
+      "kind": "csr",
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json",
+      "bytes": 202983,
+      "sha256": "a865c2a4446e90d215742a9a51d3e1c1f3852cb26e9bbf652030fdc442b5c128",
+      "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json.gz",
+      "gzipSHA256": "f491e6d5ff9ed595197eb6ca109e22c06976e0e81e8288d805688b1148aa98b6",
+      "actualToolSession": 86759,
+      "actualExitCode": 0,
+      "actualTerminalObserved": true,
+      "coordinator": "node .upstream/artifacts/date-picker-week-source-proposal-v1/capture.mjs first fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200 week-20261119-01",
+      "log": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-first.log",
+        "sha256": "d7a2a23cac5ad555a1ae82b3e68c287e0c1ae5e3255013a0ff6e1f9aa43b9479"
+      },
+      "actualCounts": {
+        "owners": 2,
+        "actions": 125,
+        "initialAndSettledPoints": 127,
+        "declaredEscapeReadsAfter1000": 17,
+        "wholeUnmounts": 2,
+        "cleanupReads": 2,
+        "lateReads": 2,
+        "rawPointParts": 150,
+        "producerParts": 152,
+        "producerInvocations": 3449,
+        "rawParts": 302
+      },
+      "terminalPinsUnchanged": true
+    },
+    {
+      "kind": "csr",
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json",
+      "bytes": 203588,
+      "sha256": "8b875ce8710780626f79d42ede1dddf6eb98da374b5c63371b6e9e996c9c4f25",
+      "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json.gz",
+      "gzipSHA256": "1ff1084143a4f271a5af03e55179e467d0a49258ae1c5cd5127818b2d9f6d7d7",
+      "actualToolSession": 18297,
+      "actualExitCode": 0,
+      "actualTerminalObserved": true,
+      "coordinator": "node .upstream/artifacts/date-picker-week-source-proposal-v1/capture.mjs repeat fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200 week-20261119-01",
+      "log": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-repeat.log",
+        "sha256": "d543185f61dc5ae1d9abcbe1b512a88e60be7b0ad1b2ba7a696b1d54c5ec366c"
+      },
+      "actualCounts": {
+        "owners": 2,
+        "actions": 125,
+        "initialAndSettledPoints": 127,
+        "declaredEscapeReadsAfter1000": 17,
+        "wholeUnmounts": 2,
+        "cleanupReads": 2,
+        "lateReads": 2,
+        "rawPointParts": 150,
+        "producerParts": 152,
+        "producerInvocations": 3449,
+        "rawParts": 302
+      },
+      "terminalPinsUnchanged": true
+    },
+    {
+      "kind": "ssr",
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-first.json",
+      "bytes": 5930,
+      "sha256": "b13f3cab5a50dca291d5317344f9a3be6793a802fbbbcbc55c4257dadc58aa46",
+      "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-first.json.gz",
+      "gzipSHA256": "a8a9e48283fbd3f7e325771a0d73ae34269b5855a40228cd86f4ce1819af0e40",
+      "actualToolSession": 67439,
+      "actualExitCode": 0,
+      "actualTerminalObserved": true,
+      "coordinator": "node .upstream/artifacts/date-picker-week-source-proposal-v1/capture-ssr.mjs first fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200 week-20261119-01",
+      "log": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-first.log",
+        "sha256": "4b36f4923a61a1618c680d2ed27e607887c0e60f7a62d46ad1b33dbb8e87d844"
+      },
+      "actualCounts": {
+        "owners": 2,
+        "serializations": 8
+      },
+      "terminalPinsUnchanged": true
+    },
+    {
+      "kind": "ssr",
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-repeat.json",
+      "bytes": 5947,
+      "sha256": "5e3c1ebfca633442e01bbd7c8ce17c626dd4dc399fc2fd6962e96f29d14965bf",
+      "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-repeat.json.gz",
+      "gzipSHA256": "c9b996743e03a4b7c16b84f98fe98c1f608ee296fa62ac9e77cf32e9665a2837",
+      "actualToolSession": 44187,
+      "actualExitCode": 0,
+      "actualTerminalObserved": true,
+      "coordinator": "node .upstream/artifacts/date-picker-week-source-proposal-v1/capture-ssr.mjs repeat fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200 week-20261119-01",
+      "log": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-repeat.log",
+        "sha256": "5837b1926b5bad73b23a79fdb599284afb0d672b078cadb31387fc15c41687ba"
+      },
+      "actualCounts": {
+        "owners": 2,
+        "serializations": 8
+      },
+      "terminalPinsUnchanged": true
+    }
+  ],
+  "rawMutations": [],
+  "trackedEdits": [],
+  "NativeDataRead": false,
+  "remainingWork": "Read-only audit of immutable Source captures. This does not retain a browser/build/SSR lease."
+}

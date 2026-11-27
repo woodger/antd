@@ -1,0 +1,123 @@
+/** Ordinary public React owner for the authored numeric-format scenarios. */
+export function createMaskSourceApp(React, antd, sample, raw, shared) {
+  'use strict';
+  const h = React.createElement, dayjs = shared.dayjs, recorder = shared.recorder();
+  const owner = React.createRef(), control = React.createRef();
+  const range = sample.kind === 'range', time = sample.family === 'time';
+  const authored = Object.fromEntries(['initialStart', 'initialEnd'].map(name => [name,
+    recorder.register(dayjs(sample[name]), { authoredDate: name })]));
+  const initialModel = range ? [authored.initialStart, authored.initialEnd] : authored.initialStart;
+  const initialPanel = range ? [authored.initialStart, authored.initialStart] : authored.initialStart;
+  const formats = {
+    string: sample.plainFormat,
+    object: recorder.register({ format: sample.plainFormat }, { authoredFormat: 'object' }),
+    mask: recorder.register({ format: sample.maskFormat, type: 'mask' }, { authoredFormat: 'mask' })
+  };
+  const rangeIds = { start: 'mask-input', end: 'mask-end' };
+  const pickerStyle = { width: '100%' };
+  const ownerStyle = { position: 'absolute', left: 160, top: 80, width: 520 };
+  const theme = { token: { motion: false } };
+  const clock = { format: 'HH:mm:ss.SSS', showSecond: true, showMillisecond: true };
+  const noTimeRestrictions = recorder.register({}, { authoredTimeRestrictions: true });
+  const callbacks = [], producers = [], ownerActions = [], lifecycle = [];
+  let actionIndex = -1, substepIndex = -1, alive = false;
+  let currentState, currentProps, updateModel, updateOpen;
+  const dates = value => ({ identity: recorder.identity(value),
+    encoded: recorder.encode(value), raw: recorder.raw(value),
+    temporal: { valid: value.isValid(), epoch: value.valueOf(),
+      iso: value.isValid() ? value.toISOString() : null, utcOffset: value.utcOffset(),
+      fields: [value.year(), value.month(), value.date(), value.hour(), value.minute(),
+        value.second(), value.millisecond()], locale: value.locale() },
+    sameAsAuthored: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, date === value])) });
+  const nestedDates = (value, path = []) => {
+    if (dayjs.isDayjs(value)) return [{ path, value: dates(value) }];
+    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(item, [...path, index]));
+    if (value && Object.getPrototypeOf(value) === Object.prototype)
+      return Object.entries(value).flatMap(([key, item]) => nestedDates(item, [...path, key]));
+    return [];
+  };
+  const context = value => ({ type: typeof value, isUndefined: value === undefined,
+    isNull: value === null, identity: value !== null && ['object', 'function'].includes(typeof value)
+      ? recorder.identity(value) : null });
+  const invocation = (name, args, receiver, index) => ({ index, actionIndex, substepIndex, name,
+    actualArgumentCount: args.length, encodedArguments: recorder.encode(args),
+    rawArguments: recorder.raw(args), dates: nestedDates(args), receiver: context(receiver) });
+  const record = (name, args, receiver) => callbacks.push(invocation(name, args, receiver, callbacks.length));
+  const handler = (name, value) => recorder.register(value, { callback: name });
+  const onChange = handler('change', function (next) {
+    record('change', Array.from(arguments), this); updateModel(next);
+  });
+  const onOpenChange = handler('open', function (next) {
+    record('open', Array.from(arguments), this); updateOpen(next);
+  });
+  const onCalendarChange = handler('calendar', function () { record('calendar', Array.from(arguments), this); });
+  const onPickerValueChange = handler('picker-value', function () { record('picker-value', Array.from(arguments), this); });
+  const onPanelChange = handler('panel', function () { record('panel', Array.from(arguments), this); });
+  const onOk = handler('ok', function () { record('ok', Array.from(arguments), this); });
+  const onClear = handler('clear', function () { record('clear', Array.from(arguments), this); });
+  const produce = (name, args, receiver, returned) => {
+    producers.push({ ...invocation(name, args, receiver, producers.length),
+      returned: recorder.encode(returned), rawReturned: recorder.raw(returned),
+      returnedIdentity: returned !== null && ['object', 'function'].includes(typeof returned)
+        ? recorder.identity(returned) : null });
+    return returned;
+  };
+  const disabledDate = recorder.register(function (date) {
+    return produce('disabledDate', Array.from(arguments), this, false);
+  }, { producer: 'disabledDate' });
+  const disabledTime = recorder.register(function (date) {
+    return produce('disabledTime', Array.from(arguments), this, noTimeRestrictions);
+  }, { producer: 'disabledTime' });
+  function App() {
+    const [model, setModel] = React.useState(initialModel);
+    const [open, setOpen] = React.useState(false);
+    const [formatProfile, setFormatProfile] = React.useState(sample.initialFormatProfile);
+    updateModel = setModel; updateOpen = setOpen;
+    currentState = { model, open, formatProfile };
+    React.useEffect(() => {
+      alive = true; lifecycle.push({ phase: 'mount' });
+      return () => { alive = false; lifecycle.push({ phase: 'unmount' }); };
+    }, []);
+    currentProps = { ref: control, value: model, open, format: formats[formatProfile],
+      defaultPickerValue: initialPanel, style: pickerStyle, disabledDate,
+      onChange, onCalendarChange, onPickerValueChange, onPanelChange, onOpenChange, onOk, onClear,
+      ...(time ? { showSecond: true, showMillisecond: true, disabledTime }
+        : { picker: 'date', ...(sample.family === 'datetime' ? { showTime: clock, disabledTime } : {}) }),
+      ...(range ? { id: rangeIds } : { id: 'mask-input' }) };
+    raw.current = { recorder,
+      setActionIndex(index) { actionIndex = index; substepIndex = -1; },
+      setSubstepIndex(index) { substepIndex = index; },
+      readRefs() { return { owner: owner.current, control: control.current,
+        root: control.current?.nativeElement ?? null }; },
+      readProducers(cursor = 0) { return { cursor, next: producers.length, rows: producers.slice(cursor) }; },
+      read() {
+        const value = formats[formatProfile];
+        return { id: sample.id, family: sample.family, kind: sample.kind,
+          picker: time ? 'time' : 'date', actionIndex, substepIndex, alive,
+          ...currentState, model: recorder.encode(model), rawModel: recorder.raw(model),
+          modelDates: nestedDates(model), producerCount: producers.length,
+          formatValue: { type: typeof value,
+            identity: typeof value === 'object' ? recorder.identity(value) : null,
+            encoded: recorder.encode(value), raw: recorder.raw(value) },
+          authoredDates: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, dates(date)])),
+          authoredProps: recorder.encode(currentProps), rawAuthoredProps: recorder.raw(currentProps),
+          callbacks: [...callbacks], ownerActions: [...ownerActions], lifecycle: [...lifecycle] };
+      }
+    };
+    const Component = time ? range ? antd.TimePicker.RangePicker : antd.TimePicker
+      : range ? antd.DatePicker.RangePicker : antd.DatePicker;
+    return h(antd.ConfigProvider, { theme }, h('section', {
+      ref: owner, 'data-mask-owner': sample.id, style: ownerStyle },
+    h(Component, currentProps),
+    ...['format-object', 'restore-authored-value', 'format-mask'].map(value => h('button', {
+      key: value, type: 'button', tabIndex: -1, 'data-mask-control': value,
+      onClick(event) {
+        ownerActions.push({ actionIndex, substepIndex, value, type: event.type,
+          isTrusted: event.isTrusted, nativeIsTrusted: event.nativeEvent.isTrusted,
+          targetTag: event.target.tagName, currentTargetTag: event.currentTarget.tagName });
+        if (value === 'restore-authored-value') setModel(initialModel);
+        else setFormatProfile(value === 'format-object' ? 'object' : 'mask');
+      } }, value))));
+  }
+  return h(App);
+}

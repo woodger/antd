@@ -1,0 +1,184 @@
+<script lang="ts" generics="Element extends HTMLElement = HTMLDivElement">
+  import { createRawSnippet, untrack, type Snippet } from 'svelte';
+  import { createSelectComponentHydration } from './select-component-hydration.dom';
+  import { selectInputSsrAttributes } from './select-components.engine';
+  import { isSelectComponentHydration, selectComponentHydrationAttributes, takeSelectComponentHydration } from './select-components-hydration.dom';
+  type Context = { attributes: object; register: (registration: Element) => () => void };
+  type Intrinsic = { element: string; ref?: (node: Element | null) => void };
+  type Renderer = Snippet<[never]>;
+  // The calling field already merged its own props. The renderer uses only context.attributes.
+  type Component = string | Renderer | (Intrinsic & { props?: object })
+    | { render: Renderer; props?: object };
+  let { component, context, root = false }: {
+    component: Component;
+    context: Context;
+    root?: boolean;
+  } = $props();
+
+  let intrinsic: Intrinsic | undefined = $derived(typeof component === 'object' && 'element' in component ? component : undefined);
+  let tag = $derived(typeof component === 'string' ? component : intrinsic?.element);
+  let constructorCSR = $state(false);
+  let constructorRequested = $state(false);
+  let renderedOnClient = false;
+  $effect.pre(() => { if (constructorRequested) constructorCSR = true; });
+  let register = $derived(context.register);
+  let reference = $derived(intrinsic?.ref);
+  const initializedInputs = new WeakSet<HTMLInputElement>();
+  let attributes = $derived(context.attributes);
+  type InputValue = string | number | string[] | null | undefined;
+  type InputAttributes = Record<string, unknown> & {
+    value?: InputValue;
+    defaultValue?: InputValue;
+    defaultvalue?: InputValue;
+  };
+  let retainedInputDefaultValue = $state<InputValue>(untrack(() => {
+    const attrs = context.attributes as { defaultValue?: InputValue; defaultvalue?: InputValue };
+    return attrs.defaultValue ?? attrs.defaultvalue;
+  }));
+  $effect.pre(() => {
+    const attrs = context.attributes as { defaultValue?: InputValue; defaultvalue?: InputValue };
+    const value = attrs.defaultValue ?? attrs.defaultvalue;
+    if (tag !== 'input') {
+      retainedInputDefaultValue = undefined;
+    }
+    else if (value != null) retainedInputDefaultValue = value;
+  });
+  let input = $derived.by(() => {
+    const { value, defaultValue, defaultvalue, ...attributes } = context.attributes as InputAttributes;
+    const serverEditor = !root && typeof document === 'undefined';
+    const clientEditor = !root && !serverEditor;
+    // The controller applies editor styles before calling the public ref.
+    if (clientEditor) {
+      delete attributes.style;
+    }
+
+    // React retains the last defaultValue on the existing uncontrolled DOM input.
+    const initialValue = defaultValue ?? defaultvalue ?? retainedInputDefaultValue;
+    if (value != null) {
+      attributes.value = value;
+      if (clientEditor) {
+        attributes.defaultValue = value;
+      }
+    }
+    else if (initialValue != null) {
+      attributes.defaultValue = initialValue;
+    }
+
+    return serverEditor ? selectInputSsrAttributes(attributes) : attributes;
+  });
+  let textarea = $derived.by(() => {
+    const { value, defaultValue, defaultvalue, ...attributes } = context.attributes as InputAttributes;
+    if (!root && typeof document !== 'undefined') delete attributes.style;
+    return { attributes, value: value ?? defaultValue ?? defaultvalue };
+  });
+  let textareaValueAttributes = $derived(typeof document === 'undefined' ? {} : { value: textarea.value });
+  let textareaText = $derived.by(() => {
+    const text = String(textarea.value ?? '');
+    return typeof document === 'undefined' && text.startsWith('\n') ? '\n' + text : text;
+  });
+  // One renderer accepts a compatible root or input context at the framework boundary.
+  let render = $derived((typeof component === 'function' ? component
+    : typeof component === 'object' && 'render' in component ? component.render : undefined) as Snippet<[Context]> | undefined);
+
+  function attachElement(node: HTMLElement) {
+    const attachedRegister = register;
+    const attachedReference = reference;
+    const element = node as Element;
+    const attrs = untrack(() => context.attributes) as {
+      value?: unknown;
+      defaultValue?: unknown;
+      defaultvalue?: unknown
+    };
+    const initialValue = attrs.defaultValue ?? attrs.defaultvalue;
+    if (node instanceof HTMLInputElement && !initializedInputs.has(node)) {
+      initializedInputs.add(node);
+      if (!isSelectComponentHydration(node) && attrs.value == null && initialValue != null) {
+        node.value = String(initialValue);
+        if (node.selectionStart !== null) {
+          node.setSelectionRange(
+            node.value.length,
+            node.value.length
+          );
+        }
+      }
+    }
+    const unregister = untrack(() => attachedRegister(element));
+    if (root) takeSelectComponentHydration(node);
+    try { untrack(() => attachedReference?.(element)); }
+    catch (error) {
+      unregister();
+      throw error;
+    }
+    let released = false;
+    return () => {
+      if (released) {
+        return;
+      }
+      released = true;
+      try { attachedReference?.(null); }
+      finally { unregister(); }
+    };
+  }
+  type Editor = HTMLInputElement | HTMLTextAreaElement;
+  let hydration: { node: Editor; attributes: Record<string, unknown>;
+    writer: ReturnType<typeof createSelectComponentHydration> } | undefined;
+  let editorAttributes = $derived(tag === 'input' ? input
+    : { ...textarea.attributes, value: textarea.value });
+  function setupHydratedEditor(node: globalThis.Element) {
+    if (renderedOnClient) {
+      // The empty CSR placeholder receives no attributes or ref. The existing branch creates the new DOM.
+      constructorRequested = true;
+      return;
+    }
+    if ((node.localName !== 'input' && node.localName !== 'textarea') || node.localName !== tag) {
+      throw new Error('Select hydration requires its matching input or textarea');
+    }
+    const editor = node as Editor;
+    const initial = untrack(() => editorAttributes);
+    const writer = untrack(() => createSelectComponentHydration(editor, initial));
+    const current = { node: editor, attributes: initial, writer };
+    hydration = current;
+    // Like an attachment, registration, CSS preparation, and the authored ref receive connected DOM.
+    $effect(() => attachElement(editor));
+    return () => {
+      writer.destroy();
+      if (hydration === current) hydration = undefined;
+    };
+  }
+  $effect(() => {
+    if (root || tag !== 'input' && tag !== 'textarea') {
+      return;
+    }
+    const attributes = editorAttributes;
+    const current = hydration;
+    if (current && attributes !== current.attributes) {
+      untrack(() => current.writer.update(
+        attributes,
+        (context.attributes as { value?: unknown }).value != null
+      ));
+      current.attributes = attributes;
+    }
+  });
+  const hydratedEditor = createRawSnippet(() => ({
+    render() {
+      renderedOnClient = true;
+      return untrack(() => tag === 'input' ? '<input>' : '<textarea></textarea>');
+    },
+    setup: setupHydratedEditor
+  }));
+  let editorRenderer = $derived(typeof document === 'undefined'
+    ? tag === 'input' ? ssrInput : ssrTextarea : hydratedEditor);
+</script>
+
+{#if !root && constructorCSR && (tag === 'input' || tag === 'textarea')}
+  {#if tag === 'input'}<svelte:element this={tag} {...input} {@attach attachElement} />
+  {:else}<svelte:element this={tag} {...textarea.attributes} {...textareaValueAttributes} {@attach attachElement}>{textareaText}</svelte:element>{/if}
+{:else if !root && (tag === 'input' || tag === 'textarea')}
+  {#key tag}{@render editorRenderer()}{/key}
+{:else if tag === 'input'}<input {...input} {...selectComponentHydrationAttributes(root)} {@attach attachElement} />
+{:else if tag === 'textarea'}<textarea {...textarea.attributes} value={textarea.value} {@attach attachElement}></textarea>
+{:else if tag}<svelte:element this={tag} {...attributes} {@attach attachElement} />
+{:else if render}{@render render(context)}{/if}
+
+{#snippet ssrInput()}<input {...input} />{/snippet}
+{#snippet ssrTextarea()}<textarea {...textarea.attributes} value={textareaText}></textarea>{/snippet}

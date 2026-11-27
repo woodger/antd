@@ -1,0 +1,2251 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "renderer": "Unmodified official ReactDOMServer/Antd UMD in an isolated DOM-free VM; unchanged Source-only factory. Shared HTML-only SSR projector; no Native implementation or geometry.",
+    "factory": ".upstream/artifacts/tree-select-align-source-app.mjs",
+    "domAvailableDuringRender": false,
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "default-ltr",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "84646a48c89d9d01e144a2d5a39c4bc9ee09a8e44261b74c996d5d4816321c85"
+    },
+    {
+      "id": "default-rtl",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": true,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "bd27ffd21dc1e946d7a468f28387cd60a3060573b346eea20a694a9f063072fb"
+    },
+    {
+      "id": "corner-topLeft",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "placement"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": "topLeft",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "0b8ba47c99063a62c3196f1b3929971b2bb57b2ccf9748119f86069f41d87b93"
+    },
+    {
+      "id": "corner-topRight",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "placement"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": "topRight",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "e0b07569009ca4830c37b2c7c2a7df6d6a007b0457bd46e02f6875992929e2c1"
+    },
+    {
+      "id": "corner-bottomLeft",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "placement"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": "bottomLeft",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "0c50f01c9647b095696eb8d92360c82e89792d1c98e3333aa9ecb2819ebd7dd2"
+    },
+    {
+      "id": "corner-bottomRight",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "placement"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": "bottomRight",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "d06b2675a8996d842c013cd603b764e13e195e8e8dcf4a248116312662b13735"
+    },
+    {
+      "id": "map-offset",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "builtinPlacements"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": {
+            "bottomLeft": {
+              "points": [
+                "tl",
+                "bl"
+              ],
+              "offset": [
+                11,
+                17
+              ],
+              "overflow": {
+                "adjustX": true,
+                "adjustY": true
+              },
+              "dynamicInset": false
+            }
+          },
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "960723602c9e4bd09dda4b8dc64dbcb88f0be4b105e23e477ee4fe99204e95c8"
+    },
+    {
+      "id": "map-shallow-overflow",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign",
+            "builtinPlacements"
+          ],
+          "popupAlign": {
+            "offset": [
+              5,
+              8
+            ],
+            "overflow": {
+              "adjustY": true
+            }
+          },
+          "builtinPlacements": {
+            "bottomLeft": {
+              "points": [
+                "tl",
+                "bl"
+              ],
+              "offset": [
+                11,
+                17
+              ],
+              "overflow": {
+                "adjustX": true,
+                "adjustY": true
+              },
+              "dynamicInset": false
+            }
+          },
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b5b61e31bf103dc4d557fc1c2f84584191c9c8e17378eda8cd74011d109be66e"
+    },
+    {
+      "id": "map-empty",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "builtinPlacements"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": {},
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "cddb14da4bdf6b67a94604d0db4d9215449a18666d31b36b74e1e7d92cf9dbfe"
+    },
+    {
+      "id": "map-missing",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "builtinPlacements"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": {
+            "topLeft": {
+              "points": [
+                "bl",
+                "tl"
+              ],
+              "offset": [
+                0,
+                -4
+              ]
+            }
+          },
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "88010ff5d1d6540a949255b6463087eca66125698e9e8db5d3833a2550eb4d2f"
+    },
+    {
+      "id": "percent-target",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "offset": [
+              "25%",
+              "-10%"
+            ],
+            "targetOffset": [
+              "50%",
+              "25%"
+            ],
+            "overflow": {
+              "adjustX": false,
+              "adjustY": false
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "d6e056909d495b3e9db778370650d00d99ace981638817bc3fcc53cb8a9f99b4"
+    },
+    {
+      "id": "points-inset-false",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "offset": [
+              "25%",
+              "-10%"
+            ],
+            "targetOffset": [
+              "50%",
+              "25%"
+            ],
+            "overflow": {
+              "adjustX": false,
+              "adjustY": false
+            },
+            "points": [
+              "tr-extra",
+              "br-extra"
+            ],
+            "dynamicInset": false,
+            "useCssRight": true,
+            "useCssBottom": true,
+            "useCssTransform": true,
+            "ignoreShake": true
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "323fe8f0798f9d1e56dfcb4010ef723e65377f5d7c343b2d47b4b7ee5fe112d2"
+    },
+    {
+      "id": "cache-provided",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "offset": [
+              9,
+              13
+            ]
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b2247e4e836111748b93db083a703381b8648aee465734c626bd509840f8e58e"
+    },
+    {
+      "id": "cache-missing",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "builtinPlacements"
+          ],
+          "popupAlign": null,
+          "builtinPlacements": {},
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "7ae11fe419cfdbdf0ca8ddddad34751f4c5cb65da5f6b510ae341c924e4e28dd"
+    },
+    {
+      "id": "provider-placement-live",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [],
+          "popupAlign": null,
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "5bb9109b21498d0073368bc6214ec859a372a5574f321e08c87535c1846cbbe9"
+    },
+    {
+      "id": "edge-flip-y",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {},
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "2abd558ecfce3d1256ff5e341c8f6de972a5a7ac898229389f93cf5ca3a35a72"
+    },
+    {
+      "id": "edge-shift-y",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "overflow": {
+              "adjustY": false,
+              "shiftY": true
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "7a54a343884a9270bc8fe98282194ae3a6a70f3e843665ffd5a0e223ef1aaebd"
+    },
+    {
+      "id": "region-scroll",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "htmlRegion": "scroll",
+            "overflow": {
+              "adjustY": true
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "3a9dc827b182df5e2ee4edc4ed33268d45f5c43a1218da85bb5ba379fe08359a"
+    },
+    {
+      "id": "region-visible-first",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "htmlRegion": "visibleFirst",
+            "overflow": {
+              "adjustY": true
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "1df58321fc2728c0bae3a9381179343334710f9340efb1ed07ebd8ef7c0c83e8"
+    },
+    {
+      "id": "overflow-adjust-zero",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "overflow": {
+              "adjustY": 0
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "0ba632ea96a9d96ddf19030843ef626d761d84ef2fdb6d3496dbdc301633dea7"
+    },
+    {
+      "id": "overflow-adjust-negative",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "overflow": {
+              "adjustY": -1
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "a3177bf96eb3f57e0eadb3c87c5399e3fa71dc80473cda27093d002c507048b4"
+    },
+    {
+      "id": "root-button",
+      "view": {
+        "root": {
+          "tag": "BUTTON",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": "40px",
+            "display": null
+          }
+        },
+        "editor": null,
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign",
+            "placement"
+          ],
+          "popupAlign": {
+            "offset": [
+              7,
+              11
+            ]
+          },
+          "builtinPlacements": null,
+          "placement": "bottomRight",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": {
+          "keys": []
+        },
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "13d025fc09be15c8c9f85c7e56ea886585987df1606eb374066335921ff911e0"
+    },
+    {
+      "id": "root-composite",
+      "view": {
+        "root": {
+          "tag": "SPAN",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": "40px",
+            "display": "inline-flex"
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": null,
+          "style": {
+            "width": "156px",
+            "height": "40px",
+            "boxSizing": "border-box"
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "offset": [
+              9,
+              13
+            ]
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": {
+          "keys": []
+        },
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "286c5eea5dc539848c72724c50bb87491c3292ca7f5947f31dcbed053cfedcd9"
+    },
+    {
+      "id": "input-responsive",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": true,
+          "style": {
+            "width": "234px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 1,
+        "restCount": 1,
+        "model": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "offset": [
+              7,
+              11
+            ]
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": {
+          "keys": []
+        },
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "09b7de5433725dbbd6ff664f0f9d163b80b52f6f4e7a22797570cb8bdfbafd9c"
+    },
+    {
+      "id": "container-top-right",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign",
+            "placement"
+          ],
+          "popupAlign": {},
+          "builtinPlacements": null,
+          "placement": "topRight",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "4b5800696c0a0778a1d074893cfb4b53795d76a9e1400653aa7aac93a7e5b495"
+    },
+    {
+      "id": "container-left-inset-false",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "dynamicInset": false
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "bce6ae7739c9efe0c9043bb271b0edea06376162e86aecf1cc36016f711b3dd3"
+    },
+    {
+      "id": "shadow-runtime",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign",
+            "placement"
+          ],
+          "popupAlign": {
+            "offset": [
+              9,
+              13
+            ]
+          },
+          "builtinPlacements": null,
+          "placement": "bottomRight",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "bf886a39e59f0d864cbb1b703b224ccf3051b1c1bb7021e421641abee5279bfc"
+    },
+    {
+      "id": "multiple-choice-live",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": true,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": [
+          "a"
+        ],
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "offset": [
+              7,
+              11
+            ]
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b3812bf8e924ec045b32fa847959135d1ffb83203f8835373b8e6aa0b8fc61b9"
+    },
+    {
+      "id": "host-border-margin-transform",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {
+            "overflow": {
+              "adjustX": false,
+              "adjustY": false
+            }
+          },
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "c4dc50338243304ae5177bf2ae605254c82039bb4247f5ba8ece5e99dfe80a07"
+    },
+    {
+      "id": "host-scale-bottom-left",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign",
+            "placement"
+          ],
+          "popupAlign": {
+            "overflow": {
+              "adjustX": false,
+              "adjustY": false
+            }
+          },
+          "builtinPlacements": null,
+          "placement": "bottomLeft",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "cbf733a00d661909133b8b679044f24326fa945ee20d139855a56c221fe043b8"
+    },
+    {
+      "id": "host-scale-top-right",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign",
+            "placement"
+          ],
+          "popupAlign": {
+            "overflow": {
+              "adjustX": false,
+              "adjustY": false
+            }
+          },
+          "builtinPlacements": null,
+          "placement": "topRight",
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "fa30304639822fcc7e871908141cf9b22b799fca819381f905a632ba6aeb1fd7"
+    },
+    {
+      "id": "host-clip-border",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "rtlClass": false,
+          "multipleClass": false,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "align-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": "",
+          "style": {
+            "width": null,
+            "height": null,
+            "boxSizing": null
+          }
+        },
+        "popupPresent": false,
+        "prefixCount": 0,
+        "restCount": 0,
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "popupAlign"
+          ],
+          "popupAlign": {},
+          "builtinPlacements": null,
+          "placement": null,
+          "popupAlignSame": true,
+          "placementsSame": true
+        },
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "5790c42b33e16df2b8bb620511ca8a8e8dcdb60437a8dad0bab716da8be98aed"
+    }
+  ]
+}

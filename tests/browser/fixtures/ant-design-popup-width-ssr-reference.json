@@ -1,0 +1,3841 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "umdSha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+    "umdArchiveByteEqual": true,
+    "renderer": "Actual unmodified official UMD in a fresh DOM-free VM. Same public owner fixture and closed provider scenarios. HTML-only parser; no window/document, geometry, container getters, callbacks, timers, frames, microtasks or observers.",
+    "domAvailableDuringRender": false,
+    "factory": ".upstream/artifacts/popup-width-source-app.mjs",
+    "factorySha256": "f17c60739d511e6f1b7c2c365ee30fdf88b0f552f13165224c2bf38194215885",
+    "configurationSha256": "d4c7414627acd5424cbcc5459d3560413b60c0867949811af08e338a52a87044",
+    "metricsSha256": "1a1b62311049ed1624366ec4998519eda2b75d6c5b77ac59a71abd426f324c8e",
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "select-omitted",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "def824e940a055c0393fd4b18016bf80a3360afe833bb8f538da79ae49d0ddfd"
+    },
+    {
+      "id": "select-own-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "78c38724bdc043403240ae457cc54051f2b033a5d9dd10b2275ac1df9391562a"
+    },
+    {
+      "id": "select-global-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "15e1e0de84bc5aa7ac5d8bceaa8d40ac003f845e34b3b2203fd00d4e9a455cad"
+    },
+    {
+      "id": "select-global-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d8c50412a67e0076a2984bbc2dc0d65ff164fce183569971ddae66bf9170f101"
+    },
+    {
+      "id": "select-nested-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "67a3fc7034121aaae95e3ea01cdd26294c0135c8bfccc25d9cfa496d34a904af"
+    },
+    {
+      "id": "select-nested-reset-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8709cc3a275db3ab1a00086c1eaf0945af364bdeec99bafecf6a028854e07ce3"
+    },
+    {
+      "id": "select-nested-reset-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "4e3ef3bdd3beff1ce6b048eff7b1097b03e3efeeb797c6f4b69e261e934a904c"
+    },
+    {
+      "id": "select-local-true-over-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "49f88728f21089e1d2168c6512867c2e2075425d6a559c53a7f4a7573a4d9433"
+    },
+    {
+      "id": "select-local-false-over-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b84eaf611e95f61954cc09dbb97a94428daa9048a84a905e4f21e1a0c90ab5c8"
+    },
+    {
+      "id": "select-local-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "0",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2f070898df5b39bdf6a5d24e1ea5763606a7e865672b7ef124175de647972158"
+    },
+    {
+      "id": "select-local-negative-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative-zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-0",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8833daef343d44ef0ddaa871cea7dd8964ca9c5de5767fd9e5767d0dd4ff9469"
+    },
+    {
+      "id": "select-local-small",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "small",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "80",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7d179985a388fb5f02ea6f15e8cb3908770252e140c2b732d4c41d634ba47282"
+    },
+    {
+      "id": "select-local-number",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7ab1e56b715828dc0da15828c9d5af7f34263a5f2767fc76d811b56e2455127a"
+    },
+    {
+      "id": "select-local-wide",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "wide",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "1600",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2356f96f3266cda95bccd4eccfb032ac6efb8bb35f9b421c18072d6ae1f85f41"
+    },
+    {
+      "id": "select-local-negative",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-1",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2c44f9aa1def46681555f6e34c9283f7432568aa7810cb49b4364745c8e685a9"
+    },
+    {
+      "id": "select-global-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "0",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "4e88cc3664b99f42518bdf7aa99a8232087732bde76a796851f23549b4e8be6e"
+    },
+    {
+      "id": "select-global-number",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "9c5f0e19479dacd08bd3bab6f23beeac472e51a0f2c19ea4eb2e644edfa0aa09"
+    },
+    {
+      "id": "select-local-nan",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "nan",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "NaN",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2d6e44b28838f6449aec20b9c0cdcb3a4e66cffd3a3c6bead6df876b08bd3033"
+    },
+    {
+      "id": "select-local-infinity",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "infinity",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "Infinity",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5fffb0e2cffde5376562ce13d94b834b1bf7c2342339ca39cca797790987e5cb"
+    },
+    {
+      "id": "select-local-negative-infinity",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative-infinity",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-Infinity",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ceadf7a6faea622448f6428908db396552bcb9f0cf36fb79c3b2fc333995e55b"
+    },
+    {
+      "id": "select-live-global",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "76f50eeca9af4c8c4fc1701086d9e84031115b39f5977c02bd7f258a2af98604"
+    },
+    {
+      "id": "select-live-local",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "e5197d97d4ae34f71be0e5857068569cf3d6a18bb0a273e6340455f7e075be80"
+    },
+    {
+      "id": "select-rtl-natural",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a62ee620274cfe1a0e8951863efbec627b044da7efec6900a2f1080898717b00"
+    },
+    {
+      "id": "select-scaled-shadow",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ba2e5f8d6ab28926c400e26f8c5270c3bade9081086a70cbb43efb06c68aae50"
+    },
+    {
+      "id": "select-many-options",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "542f60fb4bed5302f8e7a3c47324d2903b8db6c9431bc4558409e6834cd421ae"
+    },
+    {
+      "id": "auto-complete-omitted",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "78870f3a185f12fea82a99432f1631028d2b8996994d007fbef4c5dcc1a5191f"
+    },
+    {
+      "id": "auto-complete-own-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ae184bbbe587f29b169f5694f76d4ccbe537de2e94a1af6ee4c4daf91d2e2554"
+    },
+    {
+      "id": "auto-complete-global-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "49fd8313564e7caf40fc3d7f0f8985156631db225c3aceb9a42ae35941b6c157"
+    },
+    {
+      "id": "auto-complete-global-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "e42d470bb9698f51f6b9886a7ff9353f019c9df712d1f1c048285493415ed5d1"
+    },
+    {
+      "id": "auto-complete-nested-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f1bb07277037bbffe84503ffbf0f710a66035f063277ab186060d0432360c33a"
+    },
+    {
+      "id": "auto-complete-nested-reset-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7fb2c8236b0550b8eb6f389ea191f499da6bac8d6eb8bac33fa879b0f98da897"
+    },
+    {
+      "id": "auto-complete-nested-reset-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ec4e4093f9f4cb9d1525954404e2df3dfeecac086a2bf9be2a71a7f96db5bc18"
+    },
+    {
+      "id": "auto-complete-local-true-over-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2c644e947db4ed6aa8d9a680010bbcc36ba2a96ed3ffae5d5ca0c1a04f119c41"
+    },
+    {
+      "id": "auto-complete-local-false-over-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a6247bc9c939cce769727c5bf48af557cb256d8cd171e869e73596aeda15e486"
+    },
+    {
+      "id": "auto-complete-local-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "0",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "78f8be556658424ad81db1ea2e340f5e2aff5a951965b68a6590dc38e8e23d27"
+    },
+    {
+      "id": "auto-complete-local-negative-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative-zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-0",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7b0999cc02581413990f6f45fc0e52870ee52e9b455ecdb0d6ecb6e06da56362"
+    },
+    {
+      "id": "auto-complete-local-small",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "small",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "80",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "dff9a6b9ab233dacf47515d52ef38623a8e9f9a8cf872e028f3b375db02af039"
+    },
+    {
+      "id": "auto-complete-local-number",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "9ec510951a2d9aa6bf3210a8efa3f7647fc2a291061a84be1b203416661d668f"
+    },
+    {
+      "id": "auto-complete-local-wide",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "wide",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "1600",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "4933f713159ba9d5a35f97627a623a64662368c5be33ed9a6e401bdb39544d10"
+    },
+    {
+      "id": "auto-complete-local-negative",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-1",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "eb65d0605edbbac1ca422839b178d00386b73a8a624b3f8bff1aa8bf612f7de4"
+    },
+    {
+      "id": "auto-complete-global-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "0",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0e154ed2d4ff3f489bb697292918a3dfc8b9a96d209109feafc876feb219a6a5"
+    },
+    {
+      "id": "auto-complete-global-number",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d20e301ad584f8db371a07a33a44dd18c3f6e0cd56fd1a8ecaa4b2e9008602c6"
+    },
+    {
+      "id": "auto-complete-local-nan",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "nan",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "NaN",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "67cffef28aa34c39940a4cfe4f6a794d348eb1f697b23b4cdd8bdb378e6849a2"
+    },
+    {
+      "id": "auto-complete-local-infinity",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "infinity",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "Infinity",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f3b37001ef78c970e87f6a8702464449fef6436eb836ebc31fd2d6b86eb63707"
+    },
+    {
+      "id": "auto-complete-local-negative-infinity",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative-infinity",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-Infinity",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ce35b51ded70b594f83390930f719faf1410f47d4583f72402f48a0005f20491"
+    },
+    {
+      "id": "auto-complete-live-global",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "54c6d1de5996479c46e33adaa198d308f0987aa32636b96b3190ce3be2f59926"
+    },
+    {
+      "id": "auto-complete-live-local",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3a6a3ca0c62a4fd256c67ae21d3337bd9ba343c7d60edc6dd6c119a4d118632b"
+    },
+    {
+      "id": "auto-complete-rtl-natural",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "893f2bcdc7ecc72756b0a03229b97686f247e04521bb31ec1df0f94ea75fb621"
+    },
+    {
+      "id": "auto-complete-scaled-shadow",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "6a42cd4e5b6ff138068c44b8f425fd32fa0a14a5aa28346da91379946555de6d"
+    },
+    {
+      "id": "auto-complete-many-options",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b18abc3574f04c0c12c9c1fcc0a6ca2507f4813186ae99092e86938b4a5d9f77"
+    },
+    {
+      "id": "tree-select-omitted",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0f25f7eac3e1011a050c536f018fca9fdbf4619323d5ca22dc1cb55487084f35"
+    },
+    {
+      "id": "tree-select-own-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "c3c4b8a7cd5cb3cf01a514d0a0fed151d18bc597ec4bb65aadaf372d848dd496"
+    },
+    {
+      "id": "tree-select-global-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "beb10f82805aa5b350afc0889866d83473beb574943ee9ebc7f620cb25e9e906"
+    },
+    {
+      "id": "tree-select-global-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2c0a53dcfbe52a5a02a20bc4e7dfbb1045eddcb584f39253237d2666d14bebc9"
+    },
+    {
+      "id": "tree-select-nested-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "undefined",
+            "keyPresent": true,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0319ce3408297434e9dbee933aa71ccdd95a3ce81943adca4d16901529f07192"
+    },
+    {
+      "id": "tree-select-nested-reset-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "6b91e1e55b95b04fd36a1ee4ed67d4cc056dfd65243ebce7b92e4c3f367ad06f"
+    },
+    {
+      "id": "tree-select-nested-reset-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a5dcc07d8dc74a9237fc757a18ddd38dc0d96b7d98a5b68c37d06685e1419ca0"
+    },
+    {
+      "id": "tree-select-local-true-over-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d90075cda3e289a2521949a4a5da11148e02b1c06c6975dcd7c62817678a1aaf"
+    },
+    {
+      "id": "tree-select-local-false-over-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "1de69c8214c0bb6d00b90652492d9a21b89386c38243ad21687db6c12e8c8d61"
+    },
+    {
+      "id": "tree-select-local-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "0",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "167bbbb22a0bc897e82fad8929e94e7e5c1716a11af747a38b86851fd005fa8f"
+    },
+    {
+      "id": "tree-select-local-negative-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative-zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-0",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "030b0c212c0c04f8f354de58825a6231fadd446d32eb4fad31214514f0b42156"
+    },
+    {
+      "id": "tree-select-local-small",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "small",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "80",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8ae9618805296729bc298e344a4c4d214d6f665e52259dd791d6f9a90457c4c9"
+    },
+    {
+      "id": "tree-select-local-number",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "fcdb88b41fd5643df9ac6fc410f4cf27b6d90ea155458b7f647784953aa1bf06"
+    },
+    {
+      "id": "tree-select-local-wide",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "wide",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "1600",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "55c3995f0bcc3a22705d2d65b2b415b7361a4f8a1f925784467945b50cd21afc"
+    },
+    {
+      "id": "tree-select-local-negative",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-1",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5d8c224c58c6e58f017b24b340fc85f3c6298678a53e950e7eb74d6abf8b4174"
+    },
+    {
+      "id": "tree-select-global-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "zero",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "0",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "fec6e095b13c1ef728f067a015ccc43feeb4bfc48da4a944e6176cb0a622c65a"
+    },
+    {
+      "id": "tree-select-global-number",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "99746452a99d5f6e31724c8f6f1c594a06a5597f745501768f549ab97482e4ab"
+    },
+    {
+      "id": "tree-select-local-nan",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "nan",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "NaN",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "af150c1e39bcb88694ca329d5c3176478dcc5110c394fda6dd22cbb1592e421d"
+    },
+    {
+      "id": "tree-select-local-infinity",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "infinity",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "Infinity",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "dba03ae44ddd74f6b3a86570ef7c0b2efa48f447ec5570a07a115a25268426ee"
+    },
+    {
+      "id": "tree-select-local-negative-infinity",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "negative-infinity",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "-Infinity",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "81b27bdc3061983743f4d5f2e9a24dc69f40216219c9ec67d1a4d45005ecaaee"
+    },
+    {
+      "id": "tree-select-live-global",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "164e15ab4a967eea25d7ebe36f09d43a5349dd6518298b2afd90ada7ea4ef1f6"
+    },
+    {
+      "id": "tree-select-live-local",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a2435c7b037119f48f7a6224bb1a147726fe04512eacf68f45e7efd61fb9d8ad"
+    },
+    {
+      "id": "tree-select-rtl-natural",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "c82e94d654db280e8dc558be0676ed4fe3c4eaafd64846c289f4fcc3cd3b9067"
+    },
+    {
+      "id": "tree-select-scaled-shadow",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5613ff346fe103162da4758033aa423e72d8a3e6e244a9dbdf1e19a891114366"
+    },
+    {
+      "id": "tree-select-many-options",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "true",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "true",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "c45493049956f3acdced634d0e426c373833f9725fc8fc8fb42b922f0429d52f"
+    },
+    {
+      "id": "select-history-numeric-close",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f321e3918ccfcd4da00005f5bb13b1cde8ac7fbfd7b27b153cb5d2dbdc9f3eeb"
+    },
+    {
+      "id": "auto-complete-history-numeric-close",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d30e1268dde22cf46dcc3e384c2b1916b527426e54c8c0974a294b4c804dcfb2"
+    },
+    {
+      "id": "tree-select-history-numeric-close",
+      "view": {
+        "receipts": {
+          "outer": {
+            "descriptor": "omitted",
+            "keyPresent": false,
+            "type": "undefined",
+            "scalar": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "descriptor": "false",
+            "keyPresent": true,
+            "type": "boolean",
+            "scalar": "false",
+            "sameOriginal": true
+          },
+          "local": {
+            "descriptor": "number",
+            "keyPresent": true,
+            "type": "number",
+            "scalar": "360",
+            "sameOriginal": true
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "33f4521e33a4982b720e49590de2f077a8823494085ac8cdcbb64f2e1b3e8eff"
+    }
+  ]
+}

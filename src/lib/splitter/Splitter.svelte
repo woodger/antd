@@ -1,0 +1,166 @@
+<script lang="ts">
+  import { useConfig } from '../config-provider/config-context';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { getSplitterPrefixCss } from './splitter-prefix.engine';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import { getSplitterAria, splitterDraggerClasses } from './splitter.engine';
+  import { observeSplitterSize } from './splitter.dom';
+  import { createSplitterModel } from './splitter.model.svelte.js';
+  import { spaceOrientation } from '../space/space.engine';
+  import type { SplitterProps, SplitterSemantic } from './splitter.types';
+  import SplitterBar from './SplitterBar.svelte';
+  import SplitterPanel from './SplitterPanel.svelte';
+
+  let {
+    prefixCls,
+    items = [],
+    orientation,
+    vertical,
+    lazy = false,
+    collapsible,
+    destroyOnHidden = false,
+    draggerIcon,
+    onResizeStart,
+    onResize,
+    onResizeEnd,
+    onCollapse,
+    onDraggerDoubleClick,
+    class: className,
+    rootClassName,
+    style,
+    classNames,
+    styles,
+    nativeElement = $bindable()
+  }: SplitterProps = $props();
+
+  const config = useConfig();
+  let componentPrefix = $derived(config.getPrefixCls('splitter', prefixCls));
+  let rootPrefix = $derived(config.getPrefixCls());
+  let prefixCss = $derived(getSplitterPrefixCss(componentPrefix, rootPrefix));
+  const componentTheme = useComponentTheme('Splitter');
+  let actualOrientation = $derived(spaceOrientation(orientation, vertical));
+  let isVertical = $derived(actualOrientation === 'vertical');
+  let reverse = $derived(!isVertical && config.direction === 'rtl');
+  const model = createSplitterModel(
+    () => ({ items, onResizeStart, onResize, onResizeEnd, onCollapse }),
+    () => reverse
+  );
+  let info = $derived({
+    props: {
+      prefixCls,
+      items,
+      orientation: actualOrientation,
+      vertical: isVertical,
+      lazy,
+      collapsible,
+      destroyOnHidden,
+      draggerIcon,
+      onResizeStart,
+      onResize,
+      onResizeEnd,
+      onCollapse,
+      onDraggerDoubleClick,
+      class: className,
+      rootClassName,
+      style,
+      classNames,
+      styles,
+      nativeElement
+    }
+  });
+  const resolve = <Value,>(value: SplitterSemantic<Value> | undefined) =>
+    typeof value === 'function'
+      ? (value as (context: { props: SplitterProps; }) => Value | undefined)(info)
+      : value;
+  let contextClasses = $derived(resolve(config.splitter?.classNames) ?? {});
+  let localClasses = $derived(resolve(classNames) ?? {});
+  let contextStyles = $derived(resolve(config.splitter?.styles) ?? {});
+  let localStyles = $derived(resolve(styles) ?? {});
+  let draggerClass = $derived({
+    default: [
+      splitterDraggerClasses(contextClasses.dragger).default,
+      splitterDraggerClasses(localClasses.dragger).default
+    ].filter(Boolean).join(' '),
+    active: [
+      splitterDraggerClasses(contextClasses.dragger).active,
+      splitterDraggerClasses(localClasses.dragger).active
+    ].filter(Boolean).join(' ')
+  });
+  let draggerStyle = $derived({
+    default: [
+      contextStyles.dragger?.default,
+      localStyles.dragger?.default
+    ].filter(Boolean).join(';'),
+    active: [contextStyles.dragger?.active, localStyles.dragger?.active].filter(Boolean).join(';')
+  });
+
+  $effect(() => {
+    if (!nativeElement) {
+      return;
+    }
+
+    return observeSplitterSize(nativeElement, () => isVertical, model.measure);
+  });
+</script>
+
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`splitter-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div
+  bind:this={nativeElement}
+  data-ant-splitter-native={!componentTheme.className || undefined}
+  data-ant-splitter-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-splitter-vars={prefixCss ? rootPrefix.replace(/\./g, '') : undefined}
+  class={[
+    componentPrefix,
+    componentTheme.className,
+    className,
+    `${componentPrefix}-${actualOrientation}`,
+    config.direction === 'rtl' && `${componentPrefix}-rtl`,
+    rootClassName,
+    contextClasses.root,
+    localClasses.root,
+    config.splitter?.class,
+    'ant-splitter-css-var'
+  ]}
+  style={[
+    componentTheme.style, contextStyles.root, config.splitter?.style, localStyles.root, style
+  ].filter(Boolean).join(';')}
+>
+  {#each model.items as panel, index}
+    <SplitterPanel
+      prefixCls={componentPrefix}
+      {panel}
+      size={model.sizes.panels[index]}
+      class={[contextClasses.panel, localClasses.panel].filter(Boolean).join(' ')}
+      style={[contextStyles.panel, localStyles.panel].filter(Boolean).join(';')}
+      motion={Boolean(collapsible?.motion && model.movingIndex === undefined)}
+      destroyOnHidden={panel.destroyOnHidden ?? destroyOnHidden}
+    />
+    {#if model.resizable[index]}<SplitterBar
+      prefixCls={componentPrefix}
+      {rootPrefix}
+      {index}
+      {lazy}
+      {reverse}
+      vertical={isVertical}
+      active={model.movingIndex === index}
+      resizable={model.resizable[index]}
+      aria={getSplitterAria(model.sizes, index)}
+      container={model.containerSize}
+      {draggerIcon}
+      icons={collapsible?.icon}
+      classDefault={draggerClass.default}
+      classActive={draggerClass.active}
+      style={draggerStyle}
+      callbacks={{
+        start: model.start,
+        update: model.update,
+        end: model.end,
+        doubleClick: value => onDraggerDoubleClick?.(value)
+      }}
+      onCollapse={model.collapse}
+    />{/if}
+  {/each}
+  {#if model.movingIndex !== undefined}<div
+    aria-hidden="true"
+    class={`${componentPrefix}-mask ${componentPrefix}-mask-${actualOrientation}`}
+  ></div>{/if}
+</div>

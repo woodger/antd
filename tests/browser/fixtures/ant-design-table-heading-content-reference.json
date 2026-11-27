@@ -1,0 +1,1325 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "default",
+        "type": null
+      },
+      "ssr": {
+        "caption": null,
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": null,
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "zero",
+        "type": "zero"
+      },
+      "ssr": {
+        "caption": {
+          "text": "0",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "0",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "0",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "0",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "number",
+        "type": "number"
+      },
+      "ssr": {
+        "caption": {
+          "text": "42",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "42",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "42",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "42",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "42",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "42",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "42",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "42",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "42",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "42",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "empty",
+        "type": "empty"
+      },
+      "ssr": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "false",
+        "type": "false"
+      },
+      "ssr": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "false",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "false",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "true",
+        "type": "true"
+      },
+      "ssr": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "true",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "true",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "null",
+        "type": "null"
+      },
+      "ssr": {
+        "caption": null,
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": null,
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "array",
+        "type": "array"
+      },
+      "ssr": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection 0",
+            "marks": [
+              "Selection"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection 0",
+            "marks": [
+              "Selection"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": {
+        "order": "ascending",
+        "rows": [
+          "a",
+          "b"
+        ]
+      },
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "empty-array",
+        "type": "empty-array"
+      },
+      "ssr": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "group",
+        "type": "array",
+        "group": true
+      },
+      "ssr": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection 0",
+            "marks": [
+              "Selection"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Group 0",
+            "marks": [
+              "Group"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection 0",
+            "marks": [
+              "Selection"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Group 0",
+            "marks": [
+              "Group"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": {
+        "order": "ascending",
+        "rows": [
+          "a",
+          "b"
+        ]
+      },
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "radio-array",
+        "type": "array",
+        "radio": true
+      },
+      "ssr": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection 0",
+            "marks": [
+              "Selection"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection 0",
+            "marks": [
+              "Selection"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "renderer",
+        "type": "array",
+        "renderer": true
+      },
+      "ssr": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection with control",
+            "marks": [
+              "selection-renderer"
+            ],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection with control",
+            "marks": [
+              "selection-renderer"
+            ],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "radio-renderer",
+        "type": "array",
+        "renderer": true,
+        "radio": true
+      },
+      "ssr": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection without control",
+            "marks": [
+              "selection-renderer"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection without control",
+            "marks": [
+              "selection-renderer"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "hidden-default",
+        "type": "zero",
+        "hidden": true
+      },
+      "ssr": {
+        "caption": {
+          "text": "0",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "0",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "0",
+          "marks": []
+        },
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "0",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "0",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "hidden-renderer",
+        "type": "array",
+        "renderer": true,
+        "hidden": true
+      },
+      "ssr": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection with control",
+            "marks": [
+              "selection-renderer"
+            ],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": {
+          "text": "Caption 0",
+          "marks": [
+            "Caption"
+          ]
+        },
+        "headers": [
+          {
+            "text": "Selection with control",
+            "marks": [
+              "selection-renderer"
+            ],
+            "checkboxes": 1,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Expand 0",
+            "marks": [
+              "Expand"
+            ],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "Data 0",
+            "marks": [
+              "Data"
+            ],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": null
+    },
+    {
+      "profile": {
+        "id": "command",
+        "type": null,
+        "command": true
+      },
+      "ssr": {
+        "caption": null,
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": true
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "caption": null,
+        "headers": [
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 1,
+            "title": null,
+            "menu": true
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": null,
+            "menu": false
+          },
+          {
+            "text": "",
+            "marks": [],
+            "checkboxes": 0,
+            "title": "",
+            "menu": false
+          }
+        ],
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "sort": null,
+      "command": {
+        "text": "Batch 0 Apply",
+        "marker": 1,
+        "events": [
+          [
+            "command",
+            [
+              "b",
+              "a"
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+// Parses the npm archive and extracts selectors for a CSS recipe. Declarations and keyframes keep
+// their original form except for explicit replacements.
+import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
+
+// Verifies the original bytes before unpacking and writing derived files.
+export function verifyArchive(bytes, expected) {
+  const actual = createHash('sha256').update(bytes).digest('hex');
+  if (actual !== expected) {
+    throw new Error(`Archive SHA-256 mismatch: expected ${expected}, received ${actual}`);
+  }
+}
+
+// Returns a view of the requested regular file without extracting the archive to disk.
+export function archiveEntry(bytes, wanted) {
+  const tar = gunzipSync(bytes);
+  for (let offset = 0; offset + 512 <= tar.length;) {
+    const header = tar.subarray(offset, offset + 512);
+    if (header.every(byte => byte === 0)) {
+      break;
+    }
+
+    // Tar fields end at a NUL byte within the specified range.
+    const string = (start, end) => header.toString('utf8', start, end).split('\0')[0];
+    const name = [string(345, 500), string(0, 100)].filter(Boolean).join('/');
+    const rawSize = string(124, 136).trim();
+    if (!/^[0-7]+$/.test(rawSize)) {
+      throw new Error('Invalid npm tar entry size');
+    }
+
+    const size = Number.parseInt(rawSize, 8);
+    const dataStart = offset + 512;
+    if (!Number.isSafeInteger(size) || dataStart + size > tar.length) {
+      throw new Error('Truncated npm tar archive');
+    }
+
+    if (name === wanted && [0, 48].includes(header[156])) {
+      return tar.subarray(dataStart, dataStart + size);
+    }
+    offset += 512 + Math.ceil(size / 512) * 512;
+  }
+  throw new Error(`Missing npm archive entry: ${wanted}`);
+}
+
+// Skips the whole comment and reports a truncated CSS input.
+function commentEnd(css, start) {
+  const end = css.indexOf('*/', start + 2);
+  if (end < 0) {
+    throw new Error('Unclosed CSS comment');
+  }
+  return end + 2;
+}
+
+// Stops at the first delimiter outside strings, comments, and selectors.
+function preludeEnd(css, index) {
+  let quote = '';
+  let parentheses = 0;
+  let brackets = 0;
+  for (; index < css.length; index++) {
+    const ch = css[index];
+    if (ch === '\\') {
+      index++;
+      continue;
+    }
+    if (quote) {
+      if (ch === quote) quote = '';
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (css.startsWith('/*', index)) {
+      index = commentEnd(css, index) - 1;
+      continue;
+    }
+
+    if (ch === '(') parentheses++;
+    if (ch === ')') parentheses--;
+    if (ch === '[') brackets++;
+    if (ch === ']') brackets--;
+    if (parentheses < 0 || brackets < 0) {
+      throw new Error('Unbalanced CSS prelude');
+    }
+    if ((ch === '{' || ch === ';') && !parentheses && !brackets) {
+      break;
+    }
+  }
+  return index;
+}
+
+// Finds the end of a body with nested blocks, preserving its contents.
+function bodyEnd(css, index) {
+  let depth = 1;
+  let quote = '';
+  for (; index < css.length && depth; index++) {
+    const ch = css[index];
+    if (ch === '\\') {
+      index++;
+      continue;
+    }
+    if (quote) {
+      if (ch === quote) quote = '';
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (css.startsWith('/*', index)) {
+      index = commentEnd(css, index) - 1;
+      continue;
+    }
+    if (ch === '{') depth++;
+    if (ch === '}') depth--;
+  }
+  if (depth || quote) {
+    throw new Error('Unclosed CSS block');
+  }
+  return index;
+}
+
+// Splits CSS into top-level blocks and rules without bodies in their original order.
+export function cssBlocks(css) {
+  const blocks = [];
+  let index = 0;
+  while (index < css.length) {
+    if (/\s/.test(css[index])) {
+      index++;
+      continue;
+    }
+    if (css.startsWith('/*', index)) {
+      index = commentEnd(css, index);
+      continue;
+    }
+
+    const start = index;
+    index = preludeEnd(css, start);
+    const prelude = css.slice(start, index).trim();
+    if (index === css.length) {
+      if (prelude) {
+        throw new Error('CSS rule without a body');
+      }
+      break;
+    }
+    if (css[index] === ';') {
+      blocks.push({ prelude, body: null });
+      index++;
+      continue;
+    }
+
+    const bodyStart = index + 1;
+    index = bodyEnd(css, bodyStart);
+    blocks.push({ prelude, body: css.slice(bodyStart, index - 1) });
+  }
+  return blocks;
+}
+
+// Splits selectors only at top-level commas.
+export function splitSelectors(value) {
+  const selectors = [];
+  let start = 0;
+  let quote = '';
+  let depth = 0;
+  for (let index = 0; index < value.length; index++) {
+    const ch = value[index];
+    if (ch === '\\') {
+      index++;
+      continue;
+    }
+    if (quote) {
+      if (ch === quote)
+        quote = '';
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (ch === '(' || ch === '[')
+      depth++;
+    if (ch === ')' || ch === ']')
+      depth--;
+    if (ch === ',' && !depth) {
+      selectors.push(value.slice(start, index).trim());
+      start = index + 1;
+    }
+  }
+  selectors.push(value.slice(start).trim());
+  return selectors.filter(Boolean);
+}
+
+// Preserves replacement order. Declarations and selectors use separate rule sets.
+function applyReplacements(text, replacements) {
+  return replacements.reduce((result, entry) => result.replace(entry.pattern, entry.replacement), text);
+}
+
+// Validates a recipe and returns CSS or a module containing the same CSS, along with rule counts.
+export function extractCss(css, recipe) {
+  if (recipe.format !== undefined && !['css', 'module'].includes(recipe.format)) {
+    throw new Error('CSS recipe format must be css or module');
+  }
+  if (recipe.scope !== undefined
+    && (typeof recipe.scope !== 'string' || !recipe.scope.trim() || /[{};]/.test(recipe.scope))) {
+    throw new Error('CSS recipe scope must be a non-empty @scope prelude');
+  }
+  if (!Array.isArray(recipe.include)
+    || !recipe.include.length
+    || !Number.isInteger(recipe.expectedRules)
+    || recipe.expectedRules < 1) {
+    throw new Error('CSS recipe requires selectors and a positive expectedRules count');
+  }
+
+  const include = recipe.include.map(pattern => new RegExp(pattern));
+  const exclude = recipe.exclude.map(pattern => new RegExp(pattern));
+  const replace = recipe.replacements.map(
+    ({ pattern, replacement }) => ({ pattern: new RegExp(pattern, 'g'), replacement })
+  );
+  const replaceDeclarations = (recipe.declarationReplacements ?? []).map(
+    ({ pattern, replacement }) => ({ pattern: new RegExp(pattern, 'g'), replacement })
+  );
+  const excludeAtRules = (recipe.excludeAtRules ?? []).map(pattern => new RegExp(pattern));
+  const foundKeyframes = new Set();
+  const appended = [];
+  let count = 0;
+
+  // Traverses nested at-rules and counts only selected regular rules.
+  function select(input, root = false) {
+    const output = [];
+    for (const block of cssBlocks(input)) {
+      if (block.body === null)
+        continue;
+      if (block.prelude.startsWith('@')
+        && excludeAtRules.some(pattern => pattern.test(block.prelude))) {
+        continue;
+      }
+      const keyframe = /^@(?:-webkit-)?keyframes\s+([\w-]+)$/.exec(block.prelude);
+      if (keyframe) {
+        if (recipe.keyframes.includes(keyframe[1])) {
+          (root && recipe.appendRootKeyframes ? appended : output).push(
+            `${block.prelude}{${block.body}}`
+          );
+          foundKeyframes.add(keyframe[1]);
+        }
+      }
+      else if (/^@(media|supports|container|layer)\b/.test(block.prelude)) {
+        const children = select(block.body);
+        if (children.length)
+          output.push(`${block.prelude}{${children.join('')}}`);
+      }
+      else if (!block.prelude.startsWith('@')) {
+        const allSelectors = splitSelectors(block.prelude);
+        const selectors = allSelectors.filter(
+          selector => include.some(pattern => pattern.test(selector))
+            && !exclude.some(pattern => pattern.test(selector))
+        );
+        if (!selectors.length) {
+          continue;
+        }
+
+        count++;
+        const selectorText = selectors.map(selector => applyReplacements(selector, replace)).join(',');
+        const declarations = applyReplacements(block.body, replaceDeclarations);
+        output.push(`${selectorText}{${declarations}}`);
+      }
+    }
+    return output;
+  }
+  const rules = [...select(css, true), ...appended];
+  for (const name of recipe.keyframes)
+    if (!foundKeyframes.has(name)) {
+      throw new Error(`Missing keyframes: ${name}`);
+    }
+  if (count !== recipe.expectedRules) {
+    throw new Error(`Unexpected CSS rule count: expected ${recipe.expectedRules}, received ${count}`);
+  }
+
+  const content = recipe.scope
+    ? `@scope ${recipe.scope}{\n${rules.join('\n')}\n}` : rules.join('\n');
+  const stylesheet = `${recipe.header}\n${content}\n`;
+  return {
+    stylesheet,
+    content: recipe.format === 'module'
+      ? `${recipe.header}\n/** @type {string} */\nconst css = ${JSON.stringify(stylesheet)};\nexport default css;\n`
+      : stylesheet,
+    rules: count,
+    keyframes: [...foundKeyframes]
+  };
+}

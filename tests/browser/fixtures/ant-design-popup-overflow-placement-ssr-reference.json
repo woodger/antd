@@ -1,0 +1,165 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "umdSha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+    "umdArchiveByteEqual": true,
+    "renderer": "Actual unmodified official UMD in a fresh DOM-free VM. Same public owner fixture and closed provider scenarios. HTML-only parser; no window/document, geometry, container getters, callbacks, timers, frames, microtasks or observers.",
+    "domAvailableDuringRender": false,
+    "factory": ".upstream/artifacts/popup-overflow-supplement-source-app.mjs",
+    "factorySha256": "c09b3256006bf38b7664bd7cd816128509a0a1b21d7cf09c498c8d077f45abb5",
+    "configurationSha256": "6606344e596d66f163e4625046d5f78181df124d6160a3030a299521db239e9a",
+    "baseConfigurationSha256": "e9a3760d8479329328e0281a86e2e94698cc47254ee77709d5f28844003d10f6",
+    "originalFactory": {
+      "path": ".upstream/artifacts/popup-overflow-source-app.mjs",
+      "sha256": "eaf9034622ef4a33afdb9906523591c3444889fc2fd67c9eecad3e9e6e3e1173"
+    },
+    "metricsSha256": "0fe754d22679a54ce168ffb0260f327a4bf7e9f6d090c527b001b74cd885177c",
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "select-placement-bottom-right",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "9e50e82b2a657acd7f248943ca6ebd662ce02687c2b250dd9a0a1f4ab4211152"
+    },
+    {
+      "id": "select-placement-top-left",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "aea7e33d5cb2984c5bb41d61bcd9da6988dc90cdb98a8cddb1d674d2ddd51fe4"
+    },
+    {
+      "id": "select-placement-top-right",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "4a2764067485fccb7a1175ba77f8e4f0748021504576926a379d5f5b3b4d01e9"
+    }
+  ]
+}

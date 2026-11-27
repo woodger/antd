@@ -1,0 +1,7 @@
+{
+  "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/protocol-freeze.json",
+  "sha256": "fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200",
+  "proposalSHA256": "d48ed6d044484a6621b787862c1feb93ba8318cdbe0b23ef25535db52c4cea8c",
+  "rootLease": "week-20261119-01",
+  "frozenBeforeSourceExecution": true
+}

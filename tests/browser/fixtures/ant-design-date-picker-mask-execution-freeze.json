@@ -1,0 +1,7 @@
+{
+  "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/protocol-freeze.json",
+  "sha256": "18caf577d37c657652640b13f22292e052e914a435c4ad38627f6b231df790fe",
+  "proposalSHA256": "1c520497e6ae90b0a96bdb8ff41a941c2c14d3d2ab7ce52613d27109c3ef8e27",
+  "rootLease": "numeric-mask-source-20261119-01",
+  "frozenBeforeSourceExecution": true
+}

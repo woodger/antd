@@ -1,0 +1,222 @@
+{
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "normalization": [],
+  "IDsRenumbered": false,
+  "scope": "Exact first/repeat owner own keys/open/props-state/full encoded and raw model/full Date annotations/full cumulative callbacks including raw/encoded arguments, receiver and IDs, plus input identity/value/placeholder/disabled at every before, afterFocusPointer, afterCall and settled phase. Focus/caret, other DOM, event times, scheduler and producer counts are outside this selected projection. afterCall is a separate measured phase and is never substituted for settled.",
+  "rows": [
+    {
+      "id": "single-week",
+      "checked": {
+        "before": 50,
+        "afterFocusPointer": 6,
+        "afterCall": 50,
+        "settled": 50
+      }
+    },
+    {
+      "id": "range-week",
+      "checked": {
+        "before": 75,
+        "afterFocusPointer": 11,
+        "afterCall": 75,
+        "settled": 75
+      }
+    }
+  ],
+  "differingPoints": 1,
+  "variance": [
+    {
+      "id": "single-week",
+      "index": 38,
+      "phase": "afterCall",
+      "differences": [
+        {
+          "path": "/owner/open",
+          "first": false,
+          "repeat": true
+        },
+        {
+          "path": "/owner/callbacks/ownKeys",
+          "first": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50"
+          ],
+          "repeat": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49"
+          ]
+        },
+        {
+          "path": "/owner/callbacks/50",
+          "firstOwn": true,
+          "repeatOwn": false,
+          "first": {
+            "index": 50,
+            "actionIndex": 38,
+            "name": "open",
+            "actualArgumentCount": 1,
+            "encodedArguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": false
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "rawArguments": {
+              "root": {
+                "ref": 5635
+              },
+              "objects": [
+                {
+                  "id": 5635,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "0",
+                      "value": false
+                    },
+                    {
+                      "key": "length",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "dates": [],
+            "receiver": {
+              "type": "undefined",
+              "isUndefined": true,
+              "isNull": false,
+              "identity": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

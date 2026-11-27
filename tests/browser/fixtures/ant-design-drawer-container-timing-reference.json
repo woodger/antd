@@ -1,0 +1,123 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "selection": "selector",
+      "timing": "first",
+      "after": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "calls": []
+    },
+    {
+      "selection": "getter",
+      "timing": "first",
+      "after": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "calls": [
+        [
+          "local",
+          0
+        ]
+      ]
+    },
+    {
+      "selection": "provider",
+      "timing": "first",
+      "after": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "calls": [
+        [
+          "provider",
+          1,
+          true
+        ]
+      ]
+    },
+    {
+      "selection": "selector",
+      "timing": "reopen",
+      "before": {
+        "destination": "default",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "after": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "calls": []
+    },
+    {
+      "selection": "getter",
+      "timing": "reopen",
+      "before": {
+        "destination": "default",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "after": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "calls": [
+        [
+          "local",
+          0
+        ]
+      ]
+    },
+    {
+      "selection": "provider",
+      "timing": "reopen",
+      "before": {
+        "destination": "default",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "after": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "calls": [
+        [
+          "provider",
+          1,
+          true
+        ]
+      ]
+    },
+    {
+      "selection": "selector",
+      "timing": "same-target",
+      "before": {
+        "destination": "target",
+        "draft": "Seed",
+        "sameInput": false
+      },
+      "after": {
+        "destination": "target",
+        "draft": "Draft before move",
+        "sameInput": true
+      },
+      "calls": []
+    }
+  ]
+}

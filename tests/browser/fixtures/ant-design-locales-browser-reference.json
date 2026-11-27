@@ -1,0 +1,587 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd-with-locales.min.js",
+    "now": "2024-06-19T15:14:15Z",
+    "repeated": 2
+  },
+  "cases": [
+    {
+      "sample": {
+        "code": "fr_FR",
+        "dayjs": "fr"
+      },
+      "initial": {
+        "placeholders": [
+          "Sélectionner une date",
+          "Date de début",
+          "Date de fin",
+          "Sélectionner une semaine",
+          "Sélectionner un trimestre",
+          "Sélectionner l'heure",
+          "Heure de début",
+          "Heure de fin"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "lu",
+          "ma",
+          "me",
+          "je",
+          "ve",
+          "sa",
+          "di"
+        ],
+        "pagination": [
+          "Page précédente",
+          "Page suivante",
+          "Aller à",
+          "Page"
+        ],
+        "empty": "Aucune donnée",
+        "table": "Aucune donnée"
+      },
+      "modal": [
+        "Annuler",
+        "OK"
+      ],
+      "popconfirm": [
+        "Annuler",
+        "OK"
+      ],
+      "changed": {
+        "data": {
+          "placeholders": [
+            "Datum auswählen",
+            "Startdatum",
+            "Enddatum",
+            "Woche auswählen",
+            "Quartal auswählen",
+            "Zeit auswählen",
+            "Startzeit",
+            "Endzeit"
+          ],
+          "dateValue": "19.06.2024",
+          "timeValue": "15:14:15",
+          "weekdays": [
+            "Mo",
+            "Di",
+            "Mi",
+            "Do",
+            "Fr",
+            "Sa",
+            "So"
+          ],
+          "pagination": [
+            "Vorherige Seite",
+            "Nächste Seite",
+            "Gehe zu",
+            "Seite"
+          ],
+          "empty": "Keine Daten",
+          "table": "Keine Daten"
+        },
+        "sameEditor": true,
+        "focused": true
+      }
+    },
+    {
+      "sample": {
+        "code": "de_DE",
+        "dayjs": "de"
+      },
+      "initial": {
+        "placeholders": [
+          "Datum auswählen",
+          "Startdatum",
+          "Enddatum",
+          "Woche auswählen",
+          "Quartal auswählen",
+          "Zeit auswählen",
+          "Startzeit",
+          "Endzeit"
+        ],
+        "dateValue": "19.06.2024",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "Mo",
+          "Di",
+          "Mi",
+          "Do",
+          "Fr",
+          "Sa",
+          "So"
+        ],
+        "pagination": [
+          "Vorherige Seite",
+          "Nächste Seite",
+          "Gehe zu",
+          "Seite"
+        ],
+        "empty": "Keine Daten",
+        "table": "Keine Daten"
+      },
+      "modal": [
+        "Abbrechen",
+        "OK"
+      ],
+      "popconfirm": [
+        "Abbrechen",
+        "OK"
+      ]
+    },
+    {
+      "sample": {
+        "code": "ar_EG",
+        "dayjs": "ar",
+        "direction": "rtl"
+      },
+      "initial": {
+        "placeholders": [
+          "اختيار التاريخ",
+          "البداية",
+          "النهاية",
+          "اختيار الأسبوع",
+          "اختيار ربع السنة",
+          "اختيار الوقت",
+          "وقت البدء",
+          "وقت الانتهاء"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "السبت",
+          "الأحد",
+          "الإثنين",
+          "الثلاثاء",
+          "الأربعاء",
+          "الخميس",
+          "الجمعة"
+        ],
+        "pagination": [
+          "الصفحة السابقة",
+          "الصفحة التالية",
+          "الذهاب إلى",
+          "الصفحة"
+        ],
+        "empty": "لا توجد بيانات",
+        "table": "لا توجد بيانات"
+      },
+      "modal": [
+        "إلغاء",
+        "تأكيد"
+      ],
+      "popconfirm": [
+        "إلغاء",
+        "تأكيد"
+      ]
+    },
+    {
+      "sample": {
+        "code": "hy_AM",
+        "dayjs": "hy-am"
+      },
+      "initial": {
+        "placeholders": [
+          "Ընտրեք ամսաթիվը",
+          "Մեկնարկի ամսաթիվ",
+          "Ավարտի ամսաթիվը",
+          "Ընտրեք շաբաթը",
+          "Ընտրեք եռամսյակը",
+          "Ընտրեք ժամը",
+          "Մեկնարկի ժամը",
+          "Ավարտի ժամը"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "երկ",
+          "երք",
+          "չրք",
+          "հնգ",
+          "ուրբ",
+          "շբթ",
+          "կրկ"
+        ],
+        "pagination": [
+          "Նախորդ Էջ",
+          "Հաջորդ Էջ",
+          "Գնալ",
+          ""
+        ],
+        "empty": "Տվյալներ չկան",
+        "table": "Տվյալներ չկան"
+      },
+      "modal": [
+        "Չեղարկել",
+        "Օկ"
+      ],
+      "popconfirm": [
+        "Մերժել",
+        "Հաստատել"
+      ]
+    },
+    {
+      "sample": {
+        "code": "ja_JP",
+        "dayjs": "ja"
+      },
+      "initial": {
+        "placeholders": [
+          "日付を選択",
+          "開始日付",
+          "終了日付",
+          "週を選択",
+          "四半期を選択",
+          "時間を選択",
+          "開始時間",
+          "終了時間"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "日",
+          "月",
+          "火",
+          "水",
+          "木",
+          "金",
+          "土"
+        ],
+        "pagination": [
+          "前のページ",
+          "次のページ",
+          "移動",
+          "ページ"
+        ],
+        "empty": "データがありません",
+        "table": "データがありません"
+      },
+      "modal": [
+        "キャンセル",
+        "OK"
+      ],
+      "popconfirm": [
+        "キャンセル",
+        "OK"
+      ]
+    },
+    {
+      "sample": {
+        "code": "zh_CN",
+        "dayjs": "zh-cn"
+      },
+      "initial": {
+        "placeholders": [
+          "请选择日期",
+          "开始日期",
+          "结束日期",
+          "请选择周",
+          "请选择季度",
+          "请选择时间",
+          "开始时间",
+          "结束时间"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "一",
+          "二",
+          "三",
+          "四",
+          "五",
+          "六",
+          "日"
+        ],
+        "pagination": [
+          "上一页",
+          "下一页",
+          "跳至",
+          "页"
+        ],
+        "empty": "暂无数据",
+        "table": "暂无数据"
+      },
+      "modal": [
+        "取 消",
+        "确 定"
+      ],
+      "popconfirm": [
+        "取 消",
+        "确 定"
+      ]
+    },
+    {
+      "sample": {
+        "code": "sl_SI",
+        "dayjs": "sl"
+      },
+      "initial": {
+        "placeholders": [
+          "Izberite datum",
+          "Začetni datum",
+          "Končni datum",
+          "Izberite teden",
+          "Izberite četrtletje",
+          "Izberite čas",
+          "Začetni čas",
+          "Končni čas"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "po",
+          "to",
+          "sr",
+          "če",
+          "pe",
+          "so",
+          "ne"
+        ],
+        "pagination": [
+          "Prejšnja stran",
+          "Naslednja stran",
+          "Pojdi na",
+          ""
+        ],
+        "empty": "Ni podatkov",
+        "table": "Ni podatkov"
+      },
+      "modal": [
+        "Prekliči",
+        "V redu"
+      ],
+      "popconfirm": [
+        "Prekliči",
+        "v redu"
+      ]
+    },
+    {
+      "sample": {
+        "code": "uz_UZ",
+        "dayjs": "uz"
+      },
+      "initial": {
+        "placeholders": [
+          "Sanani tanlang",
+          "Boshlanish sanasi",
+          "Tugallanish sanasi",
+          "Haftani tanlang",
+          "Chorakni tanlang",
+          "Vaqtni tanlang",
+          "Boshlanish vaqti",
+          "Tugallanish vaqti"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "Ду",
+          "Се",
+          "Чо",
+          "Па",
+          "Жу",
+          "Ша",
+          "Як"
+        ],
+        "pagination": [
+          "Orqaga",
+          "Oldinga",
+          "O'tish",
+          "Sahifa"
+        ],
+        "empty": "Maʼlumot topilmadi",
+        "table": "Maʼlumot topilmadi"
+      },
+      "modal": [
+        "Yopish",
+        "OK"
+      ],
+      "popconfirm": [
+        "Bekor qilish",
+        "OK"
+      ]
+    },
+    {
+      "sample": {
+        "code": "pt_BR",
+        "dayjs": "pt-br"
+      },
+      "initial": {
+        "placeholders": [
+          "Selecionar data",
+          "Data inicial",
+          "Data final",
+          "Selecionar semana",
+          "Selecionar trimestre",
+          "Hora",
+          "Hora de início",
+          "Hora de término"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "Dom",
+          "Seg",
+          "Ter",
+          "Qua",
+          "Qui",
+          "Sex",
+          "Sáb"
+        ],
+        "pagination": [
+          "Página anterior",
+          "Próxima página",
+          "Vá até",
+          "Página"
+        ],
+        "empty": "Não há dados",
+        "table": "Não há dados"
+      },
+      "modal": [
+        "Cancelar",
+        "OK"
+      ],
+      "popconfirm": [
+        "Cancelar",
+        "OK"
+      ]
+    },
+    {
+      "sample": {
+        "code": "en_GB",
+        "dayjs": "en-gb"
+      },
+      "initial": {
+        "placeholders": [
+          "Select date",
+          "Start date",
+          "End date",
+          "Select week",
+          "Select quarter",
+          "Select time",
+          "Start time",
+          "End time"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "Mo",
+          "Tu",
+          "We",
+          "Th",
+          "Fr",
+          "Sa",
+          "Su"
+        ],
+        "pagination": [
+          "Previous Page",
+          "Next Page",
+          "Go to",
+          "Page"
+        ],
+        "empty": "No data",
+        "table": "No data"
+      },
+      "modal": [
+        "Cancel",
+        "OK"
+      ],
+      "popconfirm": [
+        "Cancel",
+        "OK"
+      ]
+    },
+    {
+      "sample": {
+        "code": "ru_RU",
+        "dayjs": "ru"
+      },
+      "initial": {
+        "placeholders": [
+          "Выберите дату",
+          "Начальная дата",
+          "Конечная дата",
+          "Выберите неделю",
+          "Выберите квартал",
+          "Выберите время",
+          "Время начала",
+          "Время окончания"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "Пн",
+          "Вт",
+          "Ср",
+          "Чт",
+          "Пт",
+          "Сб",
+          "Вс"
+        ],
+        "pagination": [
+          "Назад",
+          "Вперед",
+          "Перейти",
+          "Страница"
+        ],
+        "empty": "Нет данных",
+        "table": "Нет данных"
+      },
+      "modal": [
+        "Отмена",
+        "OK"
+      ],
+      "popconfirm": [
+        "Отмена",
+        "OK"
+      ]
+    },
+    {
+      "sample": {
+        "code": "en_US"
+      },
+      "initial": {
+        "placeholders": [
+          "Select date",
+          "Start date",
+          "End date",
+          "Select week",
+          "Select quarter",
+          "Select time",
+          "Start time",
+          "End time"
+        ],
+        "dateValue": "2024-06-19",
+        "timeValue": "15:14:15",
+        "weekdays": [
+          "Su",
+          "Mo",
+          "Tu",
+          "We",
+          "Th",
+          "Fr",
+          "Sa"
+        ],
+        "pagination": [
+          "Previous Page",
+          "Next Page",
+          "Go to",
+          "Page"
+        ],
+        "empty": "No data",
+        "table": "No data"
+      },
+      "modal": [
+        "Cancel",
+        "OK"
+      ],
+      "popconfirm": [
+        "Cancel",
+        "OK"
+      ]
+    }
+  ]
+}

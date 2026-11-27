@@ -1,0 +1,3992 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "react": "18.3.1",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "bottomLeft",
+          "placement": "bottomLeft"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideUpIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-appear",
+                    "ant-slide-up-appear-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideUpOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-leave",
+                    "ant-slide-up-leave-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideUpIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-enter",
+                    "ant-slide-up-enter-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "topLeft",
+          "placement": "topLeft"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-down-appear",
+                    "ant-slide-down-appear-active",
+                    "ant-slide-down",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-down-leave",
+                    "ant-slide-down-leave-active",
+                    "ant-slide-down",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-down-enter",
+                    "ant-slide-down-enter-active",
+                    "ant-slide-down",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "left",
+          "placement": "left"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideRightIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-right-appear",
+                    "ant-slide-right-appear-active",
+                    "ant-slide-right",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-left"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-left"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideRightOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-right-leave",
+                    "ant-slide-right-leave-active",
+                    "ant-slide-right",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-left"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-left"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideRightIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-right-enter",
+                    "ant-slide-right-enter-active",
+                    "ant-slide-right",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-left"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-left"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "right",
+          "placement": "right"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideLeftIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-left-appear",
+                    "ant-slide-left-appear-active",
+                    "ant-slide-left",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-right"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-right"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideLeftOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-left-leave",
+                    "ant-slide-left-leave-active",
+                    "ant-slide-left",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-right"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-right"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideLeftIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-left-enter",
+                    "ant-slide-left-enter-active",
+                    "ant-slide-left",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-right"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-right"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "bottom-flipped",
+          "placement": "bottomLeft",
+          "nearBottom": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-appear",
+                    "ant-slide-up-appear-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-leave",
+                    "ant-slide-up-leave-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-enter",
+                    "ant-slide-up-enter-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-destroy",
+          "transitionName": "case-fade",
+          "destroyOnHidden": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-appear",
+                    "case-fade-appear-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "case-out",
+              "duration": 480,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-leave",
+                    "case-fade-leave-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 2,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-appear",
+                    "case-fade-appear-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 2,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-force-destroy",
+          "transitionName": "case-fade",
+          "destroyOnHidden": true,
+          "forceRender": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-enter",
+                    "case-fade-enter-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "case-out",
+              "duration": 480,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-leave",
+                    "case-fade-leave-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-enter",
+                    "case-fade-enter-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "empty-destroy",
+          "transitionName": "",
+          "destroyOnHidden": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": null,
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": null,
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": null,
+            "state": {
+              "popup": {
+                "identity": 2,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "bottomLeft",
+          "placement": "bottomLeft"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideUpIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-appear",
+                    "ant-slide-up-appear-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideUpOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-leave",
+                    "ant-slide-up-leave-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideUpIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-enter",
+                    "ant-slide-up-enter-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "topLeft",
+          "placement": "topLeft"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-down-appear",
+                    "ant-slide-down-appear-active",
+                    "ant-slide-down",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-down-leave",
+                    "ant-slide-down-leave-active",
+                    "ant-slide-down",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-down-enter",
+                    "ant-slide-down-enter-active",
+                    "ant-slide-down",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "left",
+          "placement": "left"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideRightIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-right-appear",
+                    "ant-slide-right-appear-active",
+                    "ant-slide-right",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-left"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-left"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideRightOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-right-leave",
+                    "ant-slide-right-leave-active",
+                    "ant-slide-right",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-left"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-left"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideRightIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-right-enter",
+                    "ant-slide-right-enter-active",
+                    "ant-slide-right",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-left"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-left"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "right",
+          "placement": "right"
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideLeftIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-left-appear",
+                    "ant-slide-left-appear-active",
+                    "ant-slide-left",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-right"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-right"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideLeftOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-left-leave",
+                    "ant-slide-left-leave-active",
+                    "ant-slide-left",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-right"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-right"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideLeftIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleX(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleX(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-left-enter",
+                    "ant-slide-left-enter-active",
+                    "ant-slide-left",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-right"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-right"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "bottom-flipped",
+          "placement": "bottomLeft",
+          "nearBottom": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-appear",
+                    "ant-slide-up-appear-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownOut",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-leave",
+                    "ant-slide-up-leave-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "css-1y106cm-antSlideDownIn",
+              "duration": 200,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0",
+                  "transform": "scaleY(0.8)"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1",
+                  "transform": "scaleY(1)"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "ant-slide-up-enter",
+                    "ant-slide-up-enter-active",
+                    "ant-slide-up",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-topLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-topLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-destroy",
+          "transitionName": "case-fade",
+          "destroyOnHidden": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-appear",
+                    "case-fade-appear-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "case-out",
+              "duration": 480,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-leave",
+                    "case-fade-leave-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 2,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-appear",
+                    "case-fade-appear-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 2,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-force-destroy",
+          "transitionName": "case-fade",
+          "destroyOnHidden": true,
+          "forceRender": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-enter",
+                    "case-fade-enter-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": {
+              "name": "case-out",
+              "duration": 480,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "1"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "0"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-leave",
+                    "case-fade-leave-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "hiddenClass": true
+              },
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": {
+              "name": "case-in",
+              "duration": 320,
+              "delay": 0,
+              "easing": "linear",
+              "fill": "both",
+              "keyframes": [
+                {
+                  "offset": 0,
+                  "opacity": "0"
+                },
+                {
+                  "offset": 1,
+                  "opacity": "1"
+                }
+              ],
+              "state": {
+                "popup": {
+                  "identity": 1,
+                  "classes": [
+                    "ant-dropdown",
+                    "case-fade-enter",
+                    "case-fade-enter-active",
+                    "case-fade",
+                    "css-1y106cm",
+                    "css-var-root",
+                    "ant-dropdown-css-var",
+                    "subject-popup",
+                    "ant-dropdown-placement-bottomLeft"
+                  ],
+                  "visible": true,
+                  "hiddenClass": false
+                },
+                "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+                "events": [
+                  [
+                    true,
+                    "trigger"
+                  ],
+                  [
+                    false,
+                    "trigger"
+                  ],
+                  [
+                    true,
+                    "trigger"
+                  ]
+                ]
+              }
+            },
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "empty-destroy",
+          "transitionName": "",
+          "destroyOnHidden": true
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "animation": null,
+            "state": {
+              "popup": {
+                "identity": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "animation": null,
+            "state": {
+              "popup": null,
+              "triggerClass": "ant-dropdown-trigger",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "reopen",
+            "animation": null,
+            "state": {
+              "popup": {
+                "identity": 2,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-root",
+                  "ant-dropdown-css-var",
+                  "subject-popup",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "hiddenClass": false
+              },
+              "triggerClass": "ant-dropdown-trigger ant-dropdown-open",
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "popup": null,
+              "triggerClass": null,
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  ]
+}

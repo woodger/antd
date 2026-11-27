@@ -1,0 +1,17 @@
+{
+  "scope": "Exact comparison of the explicitly selected audit.rows projection; all actual IDs retained.",
+  "normalization": [],
+  "varianceCount": 2,
+  "variances": [
+    {
+      "path": "/1/steps/21/actionEvidence/hitBefore/identity",
+      "first": 176,
+      "repeat": 156
+    },
+    {
+      "path": "/1/steps/23/actionEvidence/hitBefore/identity",
+      "first": 157,
+      "repeat": 158
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+{
+  "source": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "reactVersion": "18.3.1",
+    "chromiumVersion": "158.0.8127.36"
+  },
+  "cases": [
+    {
+      "id": "default",
+      "initial": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "retainedWhenHidden": true,
+      "hidden": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [
+        {
+          "phase": "enter-start",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": "-8px"
+        },
+        {
+          "phase": "enter-active",
+          "width": "15px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-start",
+          "width": "19px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-active",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": null
+        }
+      ],
+      "repeatedWidths": [
+        "0px",
+        "15px",
+        "19px",
+        "0px"
+      ]
+    },
+    {
+      "id": "prefix-end-link",
+      "initial": {
+        "tag": "a",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "a",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "retainedWhenHidden": true,
+      "hidden": {
+        "tag": "a",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [
+        {
+          "phase": "enter-start",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": "-8px"
+        },
+        {
+          "phase": "enter-active",
+          "width": "15px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-start",
+          "width": "19px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-active",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": null
+        }
+      ],
+      "repeatedWidths": [
+        "0px",
+        "15px",
+        "19px",
+        "0px"
+      ]
+    },
+    {
+      "id": "initial",
+      "initial": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "retainedWhenHidden": true,
+      "hidden": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [
+        {
+          "phase": "leave-start",
+          "width": "14px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-active",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": null
+        }
+      ],
+      "repeatedWidths": [
+        "14px",
+        "0px"
+      ]
+    },
+    {
+      "id": "existing-icon",
+      "initial": {
+        "tag": "button",
+        "kind": "ordinary",
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "retainedWhenHidden": false,
+      "hidden": {
+        "tag": "button",
+        "kind": "ordinary",
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [],
+      "repeatedWidths": []
+    },
+    {
+      "id": "appear",
+      "initial": {
+        "tag": "button",
+        "kind": "ordinary",
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "retainedWhenHidden": true,
+      "hidden": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [
+        {
+          "phase": "appear-start",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": "-8px"
+        },
+        {
+          "phase": "appear-active",
+          "width": "15px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-start",
+          "width": "19px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-active",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": null
+        }
+      ],
+      "repeatedWidths": [
+        "0px",
+        "15px",
+        "19px",
+        "0px"
+      ]
+    },
+    {
+      "id": "custom-loading-icon",
+      "initial": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "custom",
+        "inlineWidth": null,
+        "duration": null
+      },
+      "retainedWhenHidden": false,
+      "hidden": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [
+        {
+          "phase": "leave-start",
+          "width": "14px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-active",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": null
+        }
+      ],
+      "repeatedWidths": [
+        "14px",
+        "0px"
+      ]
+    },
+    {
+      "id": "motion-off",
+      "initial": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0s, 0s, 0s"
+      },
+      "retainedWhenHidden": false,
+      "hidden": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [],
+      "repeatedWidths": []
+    },
+    {
+      "id": "reduced",
+      "initial": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "shown": {
+        "tag": "button",
+        "kind": "default",
+        "inlineWidth": "",
+        "duration": "0.3s, 0.3s, 0.3s"
+      },
+      "retainedWhenHidden": true,
+      "hidden": {
+        "tag": "button",
+        "kind": null,
+        "inlineWidth": null,
+        "duration": null
+      },
+      "trace": [
+        {
+          "phase": "enter-start",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": "-8px"
+        },
+        {
+          "phase": "enter-active",
+          "width": "15px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-start",
+          "width": "19px",
+          "opacity": "1",
+          "transform": "scale(1)",
+          "gap": null
+        },
+        {
+          "phase": "leave-active",
+          "width": "0px",
+          "opacity": "0",
+          "transform": "scale(0)",
+          "gap": null
+        }
+      ],
+      "repeatedWidths": [
+        "0px",
+        "15px",
+        "19px",
+        "0px"
+      ]
+    }
+  ]
+}

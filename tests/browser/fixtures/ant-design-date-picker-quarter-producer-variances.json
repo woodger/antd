@@ -1,0 +1,92 @@
+{
+  "sourceOnly": true,
+  "sourceFieldsRewritten": [],
+  "IDsRenumbered": false,
+  "scope": "Exact original whole producer-part first/repeat bytes; every differing JSON leaf and own-key order is recorded without normalization. UI originals and their hashes remain separate.",
+  "paired": 113,
+  "exactByteEqual": 110,
+  "different": [
+    {
+      "id": "single-quarter",
+      "phase": "step-29",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/single-quarter-step-29-producers.json",
+        "bytes": 663495,
+        "sha256": "5e6cfa892f548e2a59da2f974d951d848c06cba63e3e3548900baf81a334a06a",
+        "gzipFile": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/single-quarter-step-29-producers.json.gz",
+        "gzipBytes": 9633,
+        "gzipSHA256": "5e8ae5d0184db2e85c2269ac21f0eb753cea0c59e33960d27652cc57de3ab8d6"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/single-quarter-step-29-producers.json",
+        "bytes": 663495,
+        "sha256": "0cec9cc80978e11130eaf30365c5d31d583e26b4dc8dfd5dd01eed228b303b66",
+        "gzipFile": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/single-quarter-step-29-producers.json.gz",
+        "gzipBytes": 9633,
+        "gzipSHA256": "f17a9cd929f2926576ba576a348c74f41612561b576831bb6571dc057d026674"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 209,
+          "repeat": 217
+        }
+      ]
+    },
+    {
+      "id": "range-quarter",
+      "phase": "step-38",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/range-quarter-step-38-producers.json",
+        "bytes": 1753193,
+        "sha256": "a8856f8c6976a266f64438660f22c6683ca170a3ae200ddf5cde8f2731a24e34",
+        "gzipFile": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/range-quarter-step-38-producers.json.gz",
+        "gzipBytes": 40663,
+        "gzipSHA256": "ed5ee259a2377dd0e5fca01877c6414cc65a3aba1d60e793e58c018d0a57a177"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/range-quarter-step-38-producers.json",
+        "bytes": 1753193,
+        "sha256": "3ec516ecb21df50fc3250915ffedccd7b6648affec66db6f48533cf342b0bde4",
+        "gzipFile": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/range-quarter-step-38-producers.json.gz",
+        "gzipBytes": 40662,
+        "gzipSHA256": "0a998c71a958711fdd819aee5bfb38445af302e45a22d3e4fb649552c5171ff3"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 239,
+          "repeat": 257
+        }
+      ]
+    },
+    {
+      "id": "range-quarter",
+      "phase": "step-39",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/range-quarter-step-39-producers.json",
+        "bytes": 1707735,
+        "sha256": "c5cfc4fde5f2d14af851e4a8d3530b0aeb71f31786f15d8365ad8227c013e796",
+        "gzipFile": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/range-quarter-step-39-producers.json.gz",
+        "gzipBytes": 27251,
+        "gzipSHA256": "517d030c3d5c0b16ce1a66d743b52e5e6f064e9eaed988e0b1365c57de7f7768"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/range-quarter-step-39-producers.json",
+        "bytes": 1707735,
+        "sha256": "3a51894f13efbd87299e23130ea6104cf9023062ac583aa4312682e668f0d8ec",
+        "gzipFile": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/range-quarter-step-39-producers.json.gz",
+        "gzipBytes": 27249,
+        "gzipSHA256": "0b5934e9096518455937053db59728a364cbcab6285d704922a0cfccea5bd020"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 328,
+          "repeat": 339
+        }
+      ]
+    }
+  ],
+  "scriptSHA256": "4b6679f8df4f21085d6c5a27c8a0bd3f106c05300c9aec5a8357a23489d9d9e6"
+}

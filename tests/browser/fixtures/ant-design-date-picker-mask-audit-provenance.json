@@ -1,0 +1,181 @@
+{
+  "format": "numeric-mask-source-final-audit-delivery-v1",
+  "status": "complete",
+  "sourceOnly": true,
+  "NativeDataRead": false,
+  "sourceProtocolSHA256": "18caf577d37c657652640b13f22292e052e914a435c4ad38627f6b231df790fe",
+  "RootActualRelease": {
+    "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/source-process-release.json",
+    "bytes": 2788,
+    "sha256": "66ccd9432d943e0171a21683adc027983b17ff1b469a04d2d581527b8587b235"
+  },
+  "actualNodeTerminals": [
+    {
+      "operation": "csr-first-lossless",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/csr-first-audit-attempt-01.log"
+    },
+    {
+      "operation": "csr-repeat-lossless",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/csr-repeat-audit-attempt-01.log"
+    },
+    {
+      "operation": "ssr-first-lossless",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/ssr-first-audit-attempt-01.log"
+    },
+    {
+      "operation": "ssr-repeat-lossless",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/ssr-repeat-audit-attempt-01.log"
+    },
+    {
+      "operation": "phase-repeat-comparison",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/compare-attempt-01.log"
+    },
+    {
+      "operation": "semantic-facts",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/semantic-attempt-01.log"
+    },
+    {
+      "operation": "local-input-facts",
+      "actualExitCode": 0,
+      "log": ".upstream/artifacts/date-picker-mask-source-review-v1/input-facts-attempt-01.log"
+    }
+  ],
+  "fullOriginalPartsVerified": 1618,
+  "rawBytesVerified": 2361319287,
+  "gzipBytesVerified": 65755165,
+  "documents": [
+    {
+      "name": "csr-first-audit",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/csr-first-audit.json",
+      "bytes": 14797488,
+      "sha256": "5e4fbe5668108ce8802dd780e5587f09c118d160c4a42d4d5762d9828c6390c3"
+    },
+    {
+      "name": "csr-repeat-audit",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/csr-repeat-audit.json",
+      "bytes": 14798222,
+      "sha256": "8f7a709b0ce843b799e808357b84b21ecf7fcdbbe24df526646e385fbd653109"
+    },
+    {
+      "name": "ssr-first-audit",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/ssr-first-audit.json",
+      "bytes": 3904213,
+      "sha256": "9ea68f7f6a7150244573bc727b79c49da14434fd8f256944a02cb1e0d1d22409"
+    },
+    {
+      "name": "ssr-repeat-audit",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/ssr-repeat-audit.json",
+      "bytes": 3904216,
+      "sha256": "ec980974c922d63a0a116f53bb9d98013c9d3a7a015e6445be715cf3e1bd7b73"
+    },
+    {
+      "name": "semantic-review",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/semantic-review.json",
+      "bytes": 64758946,
+      "sha256": "52526e0efe9f7899d02d9588e0721a20754147a449aee4755cb5f5fab193f540"
+    },
+    {
+      "name": "selected-facts-variances",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/selected-facts-variances.json",
+      "bytes": 41318,
+      "sha256": "4e2f1d04534f1a1b03ae7ee4c7a37e03f221c5ac25cc4db4d98f47d8184539e0"
+    },
+    {
+      "name": "producer-variances",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/producer-variances.json",
+      "bytes": 548426,
+      "sha256": "8812f22673b6f04ee559d4fe100ebadbb82ccb9a0e62bba1f3af92149ad94c1b"
+    },
+    {
+      "name": "action-phase-stability",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/action-phase-stability.json",
+      "bytes": 49321,
+      "sha256": "2ee3b96d1da6bb4ce5a18a86848a5ef63796e52a8302f646faf62dd6e351aa43"
+    },
+    {
+      "name": "all-point-stability",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/all-point-stability.json",
+      "bytes": 2287914,
+      "sha256": "1cf1fc43128178e920ed751f1fc62b93d2cbbb3b32f1433ff9e94c7d7b672a2f"
+    },
+    {
+      "name": "input-phase-facts",
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/input-phase-facts.json",
+      "bytes": 25230474,
+      "sha256": "852204751e73fb44d288a56c991d9618851183d1d8359e7eeec0721e1cb0ec4d"
+    }
+  ],
+  "portableSupplementalIndexes": [
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/bounded-facts-index.json",
+      "bytes": 12718344,
+      "sha256": "930daeb554294c71c78b1e61796e8b1efd25259cc5d4f73f173b50e7311b959c"
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/bounded-variance-index.json",
+      "bytes": 177759,
+      "sha256": "73a9ada8e73c32efa66f2338c7123037e458efdf5e589bca76f48712a75b32db"
+    }
+  ],
+  "observations": {
+    "distinctReadsPerCSR": 1036,
+    "retainedPhasePositionsPerCSR": 1111,
+    "all80InitialAndMacroSettledSelectedEqual": true,
+    "wholeCleanupLateEqualOwnerVariants": 10,
+    "immediateVarianceMeaning": "16 distinct immediate observations differ:10 caret,4 time column scrollTop,2 RangeDate producer afterCall cursor; four additional macro.afterCall slots repeat child immediate snapshots. Variance is retained, not waived.",
+    "producerRowsPerCSR": 13401,
+    "producerWholePartsEqual": 388,
+    "producerPartDifferences": "Exactly four boundaries.afterCall fields; complete original invocation rows equal.",
+    "SSR": "30/30 whole states and HTML equal; packet differences exclusively original actual VM environment.dateNow.",
+    "sourceQuirks": [
+      "Singles pristine Enter preserves original authored Date identity, including hidden HMS/ms; no change callback.",
+      "Range restore uses the same original tuple and is a no-op while the public model already equals it; pending end text survives. Authored pristine-mask purpose is not a factual guarantee that local text is pristine.",
+      "Range typed-mask Enter moves focus to start and does not itself emit change. RangeDate next end pointer interaction commits the pending candidate before Backspace.",
+      "TimeRange macro13 end mousedown briefly focuses end then Source returns actual focus/active to start before immediate read. Backspace changes start HH; incomplete Enter itself emits no callbacks."
+    ]
+  },
+  "sourceFieldsRewritten": [],
+  "IDsRenumbered": false,
+  "producerRowsDeduplicated": false,
+  "newWaivers": [],
+  "newBrowserBuildSSRRuns": 0,
+  "noNativeParityClaim": true,
+  "scripts": [
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/common.mjs",
+      "bytes": 11185,
+      "sha256": "cc7235ea6ec42213fa2da3c3ba0319cc47f3161a9e36df3c3eb3331d505ff16e"
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/audit.mjs",
+      "bytes": 25284,
+      "sha256": "7371a212d9444952f7443709864e07fdf1febed682441bf8c337ca3801ed3806"
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/compare.mjs",
+      "bytes": 14661,
+      "sha256": "8cbcdaf2a4ce93b2b436b7d291811873001ca388c8faffc2e6bc255b5cb011d5"
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/semantic.mjs",
+      "bytes": 14718,
+      "sha256": "eba640074e4c9691c1ceea4dea5265633c718bd3b3c6f8ba96bc3e9cb2904ac4"
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/input-facts.mjs",
+      "bytes": 7985,
+      "sha256": "461a3e53d5eea6022de08efe18c084008f214ab27765ebbc69a6b4604503ec5c"
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-mask-source-review-v1/finalize.mjs",
+      "bytes": 9555,
+      "sha256": "886e7e49d74921cc77c1422eb04cf554b58353d0b368a37c6892054fa4c5cfd2"
+    }
+  ]
+}

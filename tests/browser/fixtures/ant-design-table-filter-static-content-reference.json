@@ -1,0 +1,987 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "builtin"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "zero-icon",
+        "icon": "zero"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "false-icon",
+        "icon": "false"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "empty-string-icon",
+        "icon": "empty"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "null-icon",
+        "icon": "null"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "true-icon",
+        "icon": "true"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "number-icon",
+        "icon": "number"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "42",
+          "marks": [],
+          "active": false,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "42",
+          "marks": [],
+          "active": false,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "array-icon",
+        "icon": "array",
+        "active": true
+      },
+      "ssr": {
+        "trigger": {
+          "text": "Icon 0",
+          "marks": [
+            "Icon"
+          ],
+          "active": true,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "Icon 0",
+          "marks": [
+            "Icon"
+          ],
+          "active": true,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "renderer-icon",
+        "icon": "renderer",
+        "active": true
+      },
+      "ssr": {
+        "trigger": {
+          "text": "true",
+          "marks": [
+            "Icon"
+          ],
+          "active": true,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "true",
+          "marks": [
+            "Icon"
+          ],
+          "active": true,
+          "defaultIcon": false
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "number-panel",
+        "panel": "number"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "42",
+        "marks": [],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "string-panel",
+        "panel": "string"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Panel note",
+        "marks": [],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "zero-panel",
+        "panel": "zero"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "false-panel",
+        "panel": "false"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "empty-string-panel",
+        "panel": "empty"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "null-panel",
+        "panel": "null"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Alpha onlyResetOK",
+        "marks": [],
+        "hasFilters": true,
+        "options": [
+          "Alpha only"
+        ],
+        "commands": [
+          "Reset",
+          "OK"
+        ]
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "true-panel",
+        "panel": "true"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "",
+        "marks": [],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "empty-array-panel",
+        "panel": "empty-array"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "",
+        "marks": [],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "array-panel",
+        "panel": "array"
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Panel 0",
+        "marks": [
+          "Panel"
+        ],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "standalone-array",
+        "panel": "array",
+        "standalone": true
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": false,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Panel 0",
+        "marks": [
+          "Panel"
+        ],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "standalone-zero",
+        "panel": "zero",
+        "standalone": true
+      },
+      "ssr": {
+        "trigger": null,
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": null,
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": null,
+      "changes": []
+    },
+    {
+      "profile": {
+        "id": "controlled-standalone",
+        "panel": "array",
+        "standalone": true,
+        "controlled": [
+          "remote"
+        ]
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": true,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": true,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Panel 0",
+        "marks": [
+          "Panel"
+        ],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    },
+    {
+      "profile": {
+        "id": "controlled-renderer",
+        "panel": "renderer",
+        "standalone": true,
+        "controlled": [
+          "remote"
+        ]
+      },
+      "ssr": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": true,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "initial": {
+        "trigger": {
+          "text": "",
+          "marks": [],
+          "active": true,
+          "defaultIcon": true
+        },
+        "rows": [
+          "b",
+          "a"
+        ]
+      },
+      "panel": {
+        "text": "Selected remote",
+        "marks": [
+          "Panel"
+        ],
+        "hasFilters": false,
+        "options": [],
+        "commands": []
+      },
+      "changes": [
+        true,
+        false
+      ]
+    }
+  ]
+}

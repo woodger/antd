@@ -1,0 +1,736 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "root"
+      },
+      "initial": {
+        "select": {
+          "computed": "1050",
+          "inline": null
+        },
+        "nestedTip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "autocomplete": {
+          "computed": "1050",
+          "inline": null
+        },
+        "treeSelect": {
+          "computed": "1050",
+          "inline": null
+        },
+        "cascader": {
+          "computed": "1050",
+          "inline": null
+        },
+        "mentions": {
+          "computed": "1050",
+          "inline": null
+        },
+        "date": {
+          "computed": "1050",
+          "inline": null
+        },
+        "range": {
+          "computed": "1050",
+          "inline": null
+        },
+        "time": {
+          "computed": "1050",
+          "inline": null
+        },
+        "timeRange": {
+          "computed": "1050",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-token",
+        "base": 1450
+      },
+      "initial": {
+        "select": {
+          "computed": "1500",
+          "inline": null
+        },
+        "nestedTip": {
+          "computed": "1520",
+          "inline": null
+        },
+        "autocomplete": {
+          "computed": "1500",
+          "inline": null
+        },
+        "treeSelect": {
+          "computed": "1500",
+          "inline": null
+        },
+        "cascader": {
+          "computed": "1500",
+          "inline": null
+        },
+        "mentions": {
+          "computed": "1500",
+          "inline": null
+        },
+        "date": {
+          "computed": "1500",
+          "inline": null
+        },
+        "range": {
+          "computed": "1500",
+          "inline": null
+        },
+        "time": {
+          "computed": "1500",
+          "inline": null
+        },
+        "timeRange": {
+          "computed": "1500",
+          "inline": null
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-local",
+        "local": 1670
+      },
+      "initial": {
+        "select": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "nestedTip": {
+          "computed": "1070",
+          "inline": null
+        },
+        "autocomplete": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "treeSelect": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "cascader": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "mentions": {
+          "computed": "1050",
+          "inline": null
+        },
+        "date": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "range": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "time": {
+          "computed": "1670",
+          "inline": "1670"
+        },
+        "timeRange": {
+          "computed": "1670",
+          "inline": "1670"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal",
+        "owner": "modal"
+      },
+      "initial": {
+        "select": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "nestedTip": {
+          "computed": "1200",
+          "inline": "1200"
+        },
+        "autocomplete": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "treeSelect": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "cascader": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "mentions": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "date": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "range": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "time": {
+          "computed": "1150",
+          "inline": "1150"
+        },
+        "timeRange": {
+          "computed": "1150",
+          "inline": "1150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-zero",
+        "owner": "modal",
+        "initial": 0
+      },
+      "initial": {
+        "select": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "nestedTip": {
+          "computed": "1100",
+          "inline": "1100"
+        },
+        "autocomplete": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "treeSelect": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "cascader": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "mentions": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "date": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "range": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "time": {
+          "computed": "50",
+          "inline": "50"
+        },
+        "timeRange": {
+          "computed": "50",
+          "inline": "50"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-local-zero",
+        "owner": "modal",
+        "initial": 1530,
+        "local": 0
+      },
+      "initial": {
+        "select": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "nestedTip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "autocomplete": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "treeSelect": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "cascader": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "mentions": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "date": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "range": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "time": {
+          "computed": "0",
+          "inline": "0"
+        },
+        "timeRange": {
+          "computed": "0",
+          "inline": "0"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-undefined-style",
+        "owner": "modal",
+        "initial": 1530,
+        "empty": "undefined",
+        "update": 1730
+      },
+      "initial": {
+        "select": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "nestedTip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "autocomplete": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "treeSelect": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "cascader": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "mentions": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "date": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "range": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "time": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "timeRange": {
+          "computed": "1580",
+          "inline": "1580"
+        }
+      },
+      "updated": {
+        "select": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "nestedTip": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "autocomplete": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "treeSelect": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "cascader": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "mentions": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "date": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "range": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "time": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "timeRange": {
+          "computed": "1780",
+          "inline": "1780"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "modal-null-style",
+        "owner": "modal",
+        "initial": 1530,
+        "empty": "null"
+      },
+      "initial": {
+        "select": {
+          "computed": "1050",
+          "inline": null
+        },
+        "nestedTip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "autocomplete": {
+          "computed": "1050",
+          "inline": null
+        },
+        "treeSelect": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "cascader": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "mentions": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "date": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "range": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "time": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "timeRange": {
+          "computed": "1580",
+          "inline": "1580"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-update",
+        "owner": "modal",
+        "initial": 1530,
+        "update": 1730
+      },
+      "initial": {
+        "select": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "nestedTip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "autocomplete": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "treeSelect": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "cascader": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "mentions": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "date": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "range": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "time": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "timeRange": {
+          "computed": "1580",
+          "inline": "1580"
+        }
+      },
+      "updated": {
+        "select": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "nestedTip": {
+          "computed": "1830",
+          "inline": "1830"
+        },
+        "autocomplete": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "treeSelect": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "cascader": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "mentions": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "date": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "range": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "time": {
+          "computed": "1780",
+          "inline": "1780"
+        },
+        "timeRange": {
+          "computed": "1780",
+          "inline": "1780"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "modal-reset",
+        "owner": "modal",
+        "initial": 1530,
+        "update": null,
+        "base": 1450
+      },
+      "initial": {
+        "select": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "nestedTip": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "autocomplete": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "treeSelect": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "cascader": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "mentions": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "date": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "range": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "time": {
+          "computed": "1580",
+          "inline": "1580"
+        },
+        "timeRange": {
+          "computed": "1580",
+          "inline": "1580"
+        }
+      },
+      "updated": {
+        "select": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "nestedTip": {
+          "computed": "1650",
+          "inline": "1650"
+        },
+        "autocomplete": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "treeSelect": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "cascader": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "mentions": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "date": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "range": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "time": {
+          "computed": "1600",
+          "inline": "1600"
+        },
+        "timeRange": {
+          "computed": "1600",
+          "inline": "1600"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "tooltip-trigger",
+        "owner": "tooltip",
+        "initial": 1520
+      },
+      "initial": {
+        "select": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "nestedTip": {
+          "computed": "1620",
+          "inline": "1620"
+        },
+        "autocomplete": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "treeSelect": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "cascader": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "mentions": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "date": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "range": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "time": {
+          "computed": "1570",
+          "inline": "1570"
+        },
+        "timeRange": {
+          "computed": "1570",
+          "inline": "1570"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-dropdown",
+        "owner": "modal-dropdown",
+        "initial": 1530
+      },
+      "initial": {
+        "select": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "nestedTip": {
+          "computed": "1680",
+          "inline": "1680"
+        },
+        "autocomplete": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "treeSelect": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "cascader": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "mentions": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "date": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "range": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "time": {
+          "computed": "1630",
+          "inline": "1630"
+        },
+        "timeRange": {
+          "computed": "1630",
+          "inline": "1630"
+        }
+      },
+      "updated": null
+    }
+  ]
+}

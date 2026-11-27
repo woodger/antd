@@ -1,0 +1,179 @@
+{
+  "status": "passed",
+  "purpose": "lossless independent Source portable evidence",
+  "sourceOnly": true,
+  "allRawSourcesUnchanged": true,
+  "protocol": {
+    "path": ".upstream/artifacts/select-components-own-style-init-v1/protocol-freeze.json",
+    "bytes": 180272,
+    "sha256": "345e89218b2c7a76172070d95cfa58d815db579997f65ded00596bf57b8b8351"
+  },
+  "protocolSha256": "345e89218b2c7a76172070d95cfa58d815db579997f65ded00596bf57b8b8351",
+  "baselineHead": "780faf81e3f1dbd89d10fb3ac1af9bb8a09a3ebb",
+  "sourceVersion": "6.6.8",
+  "react": "18.3.1",
+  "chromium": "157.0.8103.78",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "node": "v24.18.0",
+  "counts": {
+    "owners": 2,
+    "entryPaths": 4,
+    "clientTrajectories": 8,
+    "actionsPerTrajectory": 12,
+    "clientActions": 96,
+    "clientInitialAndActionPoints": 104,
+    "uniqueInitialSSRStates": 2,
+    "serializersPerSSRState": 2
+  },
+  "frozenInputs": 10,
+  "preservedReferences": 848,
+  "inheritedPreservedReferences": 797,
+  "pageErrors": 0,
+  "consoleMessages": 0,
+  "recoverableErrors": 0,
+  "copies": [
+    {
+      "mode": "csr",
+      "variant": "first",
+      "path": "tests/browser/fixtures/ant-design-select-components-own-style-init-csr-first-reference.json.gz",
+      "source": ".upstream/artifacts/select-components-own-style-init-v1/csr-source-first.json",
+      "storageBytes": 6467865,
+      "storageSha256": "5b7eb875ef6b9c9e19487e7da88359ef940f02aa6eae9f28470a9635a01ea9c2",
+      "decodedBytes": 107628300,
+      "decodedSha256": "e1bf37981fe1c07bc6d3b462c480802ff007e0abfd8545e34a86e97009f3b250",
+      "losslessDecodedByteEqual": true
+    },
+    {
+      "mode": "ssr",
+      "variant": "first",
+      "path": "tests/browser/fixtures/ant-design-select-components-own-style-init-ssr-reference.json.gz",
+      "source": ".upstream/artifacts/select-components-own-style-init-v1/ssr-source-first.json",
+      "storageBytes": 18918,
+      "storageSha256": "c932dd27b2f007a82beae1930c491028a424814ac02f86430f072bbd7e688c68",
+      "decodedBytes": 374771,
+      "decodedSha256": "611338304e648203c259877e17d5349828230f7b79e5906922b5126f915833a9",
+      "losslessDecodedByteEqual": true
+    },
+    {
+      "mode": "hydrate",
+      "variant": "first",
+      "path": "tests/browser/fixtures/ant-design-select-components-own-style-init-hydrate-first-reference.json.gz",
+      "source": ".upstream/artifacts/select-components-own-style-init-v1/hydrate-source-first.json",
+      "storageBytes": 22100630,
+      "storageSha256": "107ce7a86af25ae957fc59b82bc6645ec384cae751c6c15079da399c11405e0a",
+      "decodedBytes": 367593608,
+      "decodedSha256": "b156fecf625b40c03b055f998ea1eec8527dcf1e5233c05db36b20dfdd661100",
+      "losslessDecodedByteEqual": true
+    }
+  ],
+  "repeatProofs": [
+    {
+      "path": ".upstream/artifacts/select-components-own-style-init-v1/csr-source-repeat-fidelity-proof.json",
+      "bytes": 5943901,
+      "sha256": "cbc4fbb3e78005590cf6316c059f9c1730fe679e266703e48082ec066ffa148f",
+      "mode": "csr",
+      "wholePairByteEqual": false,
+      "first": {
+        "path": ".upstream/artifacts/select-components-own-style-init-v1/csr-source-first.json",
+        "bytes": 107628300,
+        "sha256": "e1bf37981fe1c07bc6d3b462c480802ff007e0abfd8545e34a86e97009f3b250"
+      },
+      "repeat": {
+        "path": ".upstream/artifacts/select-components-own-style-init-v1/csr-source-repeat.json",
+        "bytes": 107628300,
+        "sha256": "e5ba8b195d0128fd6d5146b9b3011d8d5b14857fb90ece66ff267076b3da2d87"
+      },
+      "totalComputedArrays": 748,
+      "exactComputedArrays": 545,
+      "customOrderPermutations": 203,
+      "otherRawDifferences": 0,
+      "allStandardNamesValuesPrioritiesAndOrderEqual": true,
+      "allCustomNamesValuesAndPrioritiesEqual": true,
+      "changes": {
+        "file": "ant-design-select-components-own-style-init-csr-repeat-changes.json.gz",
+        "bytes": 3811668,
+        "sha256": "af9e1836b596e00982b348438aeb34c5ce22212af2ea386ef7d197314c3b41c1"
+      }
+    },
+    {
+      "path": ".upstream/artifacts/select-components-own-style-init-v1/ssr-source-repeat-fidelity-proof.json",
+      "bytes": 1865,
+      "sha256": "b6d03323df9e409b9aa84a074bae901f6e8f25940d68f8bcbf74e82f4c40e320",
+      "mode": "ssr",
+      "wholePairByteEqual": true,
+      "first": {
+        "path": ".upstream/artifacts/select-components-own-style-init-v1/ssr-source-first.json",
+        "bytes": 374771,
+        "sha256": "611338304e648203c259877e17d5349828230f7b79e5906922b5126f915833a9"
+      },
+      "repeat": {
+        "path": ".upstream/artifacts/select-components-own-style-init-v1/ssr-source-repeat.json",
+        "bytes": 374771,
+        "sha256": "611338304e648203c259877e17d5349828230f7b79e5906922b5126f915833a9"
+      },
+      "totalComputedArrays": 0,
+      "exactComputedArrays": 0,
+      "customOrderPermutations": 0,
+      "otherRawDifferences": 0,
+      "allStandardNamesValuesPrioritiesAndOrderEqual": true,
+      "allCustomNamesValuesAndPrioritiesEqual": true
+    },
+    {
+      "path": ".upstream/artifacts/select-components-own-style-init-v1/hydrate-source-repeat-fidelity-proof.json",
+      "bytes": 1202947,
+      "sha256": "776a891a98a46fe7fcff27119d66d75c079d05441c789e0bcb82ba32f7b8a172",
+      "mode": "hydrate",
+      "wholePairByteEqual": false,
+      "first": {
+        "path": ".upstream/artifacts/select-components-own-style-init-v1/hydrate-source-first.json",
+        "bytes": 367593608,
+        "sha256": "b156fecf625b40c03b055f998ea1eec8527dcf1e5233c05db36b20dfdd661100"
+      },
+      "repeat": {
+        "path": ".upstream/artifacts/select-components-own-style-init-v1/hydrate-source-repeat.json",
+        "bytes": 367593608,
+        "sha256": "621a8db24097e23f6351b8ca7ba0a3a1cb6259ffb3fb0e006c89ec459176850a"
+      },
+      "totalComputedArrays": 2700,
+      "exactComputedArrays": 2658,
+      "customOrderPermutations": 42,
+      "otherRawDifferences": 0,
+      "allStandardNamesValuesPrioritiesAndOrderEqual": true,
+      "allCustomNamesValuesAndPrioritiesEqual": true,
+      "changes": {
+        "file": "ant-design-select-components-own-style-init-hydrate-repeat-changes.json.gz",
+        "bytes": 27228,
+        "sha256": "0a24364cc90a1866f8959d9832ac9bcd748d11a26c07ce7295f0be55f934ddd9"
+      }
+    }
+  ],
+  "copiedInputs": [
+    {
+      "source": ".upstream/artifacts/select-components-own-style-init-v1/cases.mjs",
+      "destination": "tests/browser/select-components-own-style-init-cases.mjs",
+      "path": ".upstream/artifacts/select-components-own-style-init-v1/cases.mjs",
+      "bytes": 5027,
+      "sha256": "bba438e93f3aa6b64009be880ffe4fd5cf1969572f0217fa59c71b1025c67b35",
+      "byteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-own-style-init-v1/reader.mjs",
+      "destination": "tests/browser/select-components-own-style-init-metrics.mjs",
+      "path": ".upstream/artifacts/select-components-own-style-init-v1/reader.mjs",
+      "bytes": 11960,
+      "sha256": "636b117b40dd1282a6007b783e2dd5e3b93c3384e8a2831c6c31717d27dc276c",
+      "byteEqual": true
+    }
+  ],
+  "computedCustomPropertyOrderPrimary": {
+    "path": ".upstream/artifacts/select-components-own-style-init-computed-order-primary.json",
+    "bytes": 3207,
+    "sha256": "3947c2851a932c3ef63357ed2d04695d31b1cbee2247750030aa0e97906be190"
+  },
+  "actualCSSHistoryReview": {
+    "path": ".upstream/artifacts/select-components-own-style-init-actual-css-review.json",
+    "bytes": 1642025,
+    "sha256": "774b030c61cc1812933211831f6716b01bc639c44224b7914ca7bae23508ba08"
+  },
+  "comparisonScope": "Canonical Source expectations use full first actual captures. CSR and hydration repeats are recovered from the first capture with equal-length UTF-8 replacements at the recorded byte offsets. Each reconstructed JSON matches its original repeat SHA-256. Their wholePairByteEqual is false; independent raw recursive proof found only getComputedStyle custom-property enumeration permutations, with exact unique names/values/priorities, exact standard enumeration, and zero other raw differences. Inline CSSOM declaration order, DOM attribute order and every actual CSS/box/context/event/ref field remain unchanged. SSR whole pair is byte equal and has one lossless portable copy."
+}

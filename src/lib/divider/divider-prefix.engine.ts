@@ -1,0 +1,18 @@
+import template from '../vendor/divider-prefix.css.js';
+
+const rootStates = new Set(['', '-horizontal', '-vertical', '-with-text', '-with-text-start',
+  '-with-text-end', '-dashed', '-dotted', '-plain', '-rtl', '-sm', '-md']);
+
+/** Changes componentCls and descendant resets while sharing the marker and CSS variables. */
+export function getDividerPrefixCss(prefix: string) {
+  if (prefix === 'ant-divider') {
+    return undefined;
+  }
+
+  return template
+    .replace(/\.ant-divider(?!-css-var\b)([-\w]*)/g, (_, suffix: string) =>
+      `.${prefix}${suffix}${rootStates.has(suffix) ? ':where([data-ant-divider-prefix])' : ''}`)
+    .replace(/"ant-divider"/g, () => `"${prefix}"`)
+    .replace(/" ant-divider"/g, () => `" ${prefix}"`)
+    .replace(/<\/style/gi, '<\\/style');
+}

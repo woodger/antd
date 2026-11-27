@@ -1,14 +1,20 @@
 node_modules
 
+# Upstream source references
+/.upstream/
+
 # Output
 .output
 .vercel
 .netlify
 .wrangler
-/.svelte-kit
-/build
-/test-results/
-/playwright-report/
+.svelte-kit/
+.svelte-check/
+build/
+dist/
+test-results/
+playwright-report/
+*.tgz
 MR.md
 
 # OS

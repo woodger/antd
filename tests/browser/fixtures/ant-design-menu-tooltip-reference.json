@@ -1,0 +1,666 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "browser": "157.0.8103.78",
+    "react": "18.3.1",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30"
+  },
+  "results": [
+    {
+      "sample": {
+        "id": "default"
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "native-title",
+        "itemTitle": "Explicit title"
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": "Explicit title",
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": "Explicit title",
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Explicit title",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": "Explicit title",
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "false-title",
+        "itemTitle": false
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      }
+    },
+    {
+      "sample": {
+        "id": "empty-title",
+        "itemTitle": ""
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": "",
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": "",
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": "",
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      }
+    },
+    {
+      "sample": {
+        "id": "disabled-tooltip",
+        "tooltip": false
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      }
+    },
+    {
+      "sample": {
+        "id": "rtl",
+        "direction": "rtl"
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-left",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "custom-title-placement",
+        "tooltip": {
+          "title": "Custom",
+          "placement": "topLeft",
+          "arrow": false
+        }
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Custom",
+          "placement": "ant-tooltip-placement-topLeft",
+          "menuClass": true,
+          "arrow": false
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "open-controlled",
+        "tooltip": {
+          "open": true,
+          "title": "Controlled"
+        },
+        "collapse": true
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Controlled",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Controlled",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": []
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Controlled",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          false,
+          false
+        ]
+      },
+      "expanded": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          false,
+          false
+        ]
+      },
+      "collapsed": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Controlled",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "default-open",
+        "tooltip": {
+          "defaultOpen": true
+        }
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "focus-trigger",
+        "tooltip": {
+          "trigger": "focus"
+        },
+        "activate": "focus"
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "nested-default",
+        "nested": true
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      }
+    },
+    {
+      "sample": {
+        "id": "nested-title",
+        "nested": true,
+        "tooltip": {
+          "title": "Nested override"
+        }
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Nested override",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "Warehouse",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "sample": {
+        "id": "disabled-item",
+        "disabled": true
+      },
+      "initial": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": []
+      },
+      "active": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": true
+        },
+        "tooltip": {
+          "text": "Warehouse",
+          "placement": "ant-tooltip-placement-right",
+          "menuClass": true,
+          "arrow": true
+        },
+        "changes": [
+          true
+        ]
+      },
+      "inactive": {
+        "item": {
+          "same": true,
+          "title": null,
+          "text": "W",
+          "role": "menuitem",
+          "describedBy": false
+        },
+        "tooltip": null,
+        "changes": [
+          true,
+          false
+        ]
+      }
+    }
+  ]
+}

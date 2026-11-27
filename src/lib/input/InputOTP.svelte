@@ -1,0 +1,258 @@
+<script module lang="ts">
+  export type { InputOTPProps } from './input-otp.types';
+</script>
+
+<script lang="ts">
+  // Manages the individual OTP cells and their focus. Emits the complete value once all cells are
+  // filled.
+  import { untrack } from 'svelte';
+  import InputOTPCell from './InputOTPCell.svelte';
+  import { useConfig } from '../config-provider/config-context';
+  import { useVariant } from '../config-provider/variant.svelte';
+  import { provideFormField, useForm, useFormField } from '../form/form-context';
+  import { provideFormItemStatus, useFormItemStatusContext } from '../form/form-item-status';
+  import { provideFormFeedback, useFormFeedback } from '../form/form-feedback-context';
+  import { isOTPCompleteChange, patchOTPCells } from './input-otp.engine';
+  import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { getInputOTPPrefixCss } from './input-otp-prefix.engine';
+  import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
+  import type { InputOTPProps } from './input-otp.types';
+
+  let {
+    length = 6,
+    value,
+    defaultValue,
+    formatter,
+    separator,
+    mask,
+    type,
+    autoComplete,
+    autoFocus,
+    inputMode,
+    size,
+    disabled,
+    status,
+    variant,
+    onInput,
+    onChange,
+    onFocus,
+    onBlur,
+    onfocus,
+    nativeElement = $bindable(),
+    prefixCls: customizePrefixCls,
+    class: className = '',
+    rootClassName = '',
+    style,
+    classNames,
+    styles,
+    ...attributes
+  }: InputOTPProps = $props();
+
+  const config = useConfig();
+  const componentTheme = useComponentTheme('Input');
+  let componentPrefix = $derived(config.getPrefixCls('otp', customizePrefixCls));
+  let prefixCss = $derived(getInputOTPPrefixCss(componentPrefix));
+  const variantContext = useVariant('otp', () => ({ variant }), 'input');
+  const form = useForm();
+  const controlRef = {
+    get nativeElement() {
+      return nativeElement;
+    },
+    focus, blur
+  };
+  const field = useFormField(() => controlRef);
+  const itemStatus = useFormItemStatusContext();
+  provideFormFeedback(Object.create(useFormFeedback(), {
+    hasFeedback: { value: false }, icon: { value: undefined }
+  }));
+  provideFormItemStatus(Object.create(itemStatus, {
+    status: { get: () => status || itemStatus.status }
+  }));
+  // FormItem owns the group, so individual inputs do not share id, name, or required. Cells inherit
+  // visual status but not the root OTP's id, name, ref, or blur binding.
+  provideFormField({
+    get status() {
+      return resolvedStatus;
+    },
+    get invalid() {
+      return field?.invalid;
+    },
+    disabled: undefined,
+    required: false,
+    describedBy: undefined,
+    onBlur() {}
+  });
+
+  const initialCells = untrack(() => {
+    const initial = defaultValue || '';
+    return ((formatter ? formatter(initial) : initial) || '').split('');
+  });
+  let cells = $state.raw<string[]>(initialCells);
+  let elements = $state<(HTMLInputElement | undefined)[]>([]);
+  let external = $derived({ value, resetKey: form?.resetKey });
+  let resolvedSize = $derived(size ?? config.explicitComponentSize);
+  let blocked = $derived(
+    disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
+  );
+  let resolvedStatus = $derived(status || field?.status);
+  let appearance = $derived(variantContext.variant);
+  let info = $derived<{ props: InputOTPProps; }>({
+    props: {
+      ...attributes,
+      length,
+      value,
+      defaultValue,
+      formatter,
+      separator,
+      mask,
+      type,
+      autoComplete,
+      autoFocus,
+      inputMode,
+      size,
+      disabled,
+      status,
+      variant: appearance,
+      onInput,
+      onChange,
+      onFocus,
+      onBlur,
+      onfocus,
+      nativeElement,
+      prefixCls: customizePrefixCls,
+      class: className,
+      rootClassName,
+      style,
+      classNames,
+      styles
+    }
+  });
+  let contextClasses = $derived(
+    typeof config.otp?.classNames === 'function'
+      ? config.otp.classNames(info) : config.otp?.classNames
+  );
+  let localClasses = $derived(typeof classNames === 'function' ? classNames(info) : classNames);
+  let contextStyles = $derived(
+    typeof config.otp?.styles === 'function' ? config.otp.styles(info) : config.otp?.styles
+  );
+  let localStyles = $derived(typeof styles === 'function' ? styles(info) : styles);
+  let rootStyle = $derived(
+    [componentTheme.style, contextStyles?.root, config.otp?.style, localStyles?.root, style]
+      .filter(Boolean).join(';')
+  );
+
+  $effect(() => {
+    if (external.value !== undefined) cells = (external.value || '').split('');
+  });
+
+  function handleCellInput(index: number, text: string): string {
+    const previous = cells;
+    const next = patchOTPCells(previous, index, text, length, formatter);
+    cells = next;
+
+    onInput?.(next);
+    if (isOTPCompleteChange(previous, next, length)) onChange?.(next.join(''));
+
+    // The focus guard must see new cells before the DOM update.
+    const nextIndex = Math.min(index + text.length, length - 1);
+    if (nextIndex !== index && next[index] !== undefined) elements[nextIndex]?.focus();
+
+    return next[index] || '';
+  }
+
+  function handleCellFocus(
+    event: FocusEvent & { currentTarget: HTMLInputElement; },
+    index: number
+  ) {
+    for (let previous = 0; previous < index; previous++) {
+      if (!cells[previous]) {
+        elements[previous]?.focus();
+        break;
+      }
+    }
+
+    onFocus?.(event);
+  }
+
+  const handleCellBlur: NonNullable<InputOTPProps['onBlur']> = event => {
+    field?.onBlur();
+    onBlur?.(event);
+  };
+
+  const handleRootFocus: NonNullable<InputOTPProps['onfocus']> = event => {
+    if (field && !event.defaultPrevented && event.target === event.currentTarget) focus();
+    onfocus?.(event);
+  };
+
+  /** Focuses the first cell, like upstream OTPRef.focus. */
+  export function focus() {
+    elements[0]?.focus();
+  }
+
+  /** Blurs every cell. */
+  export function blur() {
+    for (let index = 0; index < length; index++) elements[index]?.blur();
+  }
+</script>
+
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-otp-prefix:${componentPrefix}`} />{/if}<!-- tabindex=-1 lets FormItem focus the group. An explicit native tabindex takes precedence. --><div
+  {...(field ? { tabindex: -1 } : {})}
+  {...attributes}
+  bind:this={nativeElement}
+  data-ant-otp-prefix={prefixCss ? componentPrefix : undefined}
+  id={attributes.id ?? field?.id}
+  role="group"
+  aria-label={attributes['aria-label'] ?? (attributes['aria-labelledby'] ? undefined : field?.label)}
+  aria-labelledby={attributes['aria-labelledby']
+    ?? (attributes['aria-label'] != null ? undefined : field?.labelledBy)}
+  data-ant-form-invalid={field?.invalid || resolvedStatus === 'error'
+    || attributes['aria-invalid'] === true || attributes['aria-invalid'] === 'true' || undefined}
+  aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(Boolean).join(' ') || undefined}
+  onfocus={handleRootFocus}
+  class={[
+    className,
+    rootClassName,
+    `${componentPrefix} ant-otp-css-var`,
+    componentTheme.className,
+    resolvedSize === 'small' && `${componentPrefix}-sm`,
+    resolvedSize === 'large' && `${componentPrefix}-lg`,
+    config.direction === 'rtl' && `${componentPrefix}-rtl`,
+    config.otp?.class,
+    contextClasses?.root,
+    localClasses?.root
+  ].filter(Boolean).join(' ')}
+  style={rootStyle}
+>
+  {#each Array.from({ length }, (_, index) => index) as index (index)}
+    <InputOTPCell
+      {index}
+      otpPrefix={componentPrefix}
+      value={cells[index] || ''}
+      bind:inputElement={elements[index]}
+      size={resolvedSize}
+      disabled={blocked}
+      {status}
+      variant={appearance}
+      {mask}
+      {type}
+      {inputMode}
+      {autoComplete}
+      autoFocus={index === 0 && autoFocus}
+      class={[`${componentPrefix}-input`, contextClasses?.input, localClasses?.input].filter(Boolean).join(' ')}
+      style={[contextStyles?.input, localStyles?.input].filter(Boolean).join(';')}
+      onCellInput={handleCellInput}
+      onActiveChange={next => elements[next]?.focus()}
+      onCellFocus={handleCellFocus}
+      onCellBlur={handleCellBlur}
+    />
+    {#if index < length - 1}
+      {@const content = typeof separator === 'function' ? separator(index) : separator}
+      {#if content !== null && content !== undefined && content !== false && content !== ''}
+        <span
+          class={[`${componentPrefix}-separator`, contextClasses?.separator, localClasses?.separator].filter(Boolean).join(' ')}
+          style={[contextStyles?.separator, localStyles?.separator].filter(Boolean).join(';')}
+        >{#if typeof content === 'function'}{@render content(index)}{:else if content !== true}{content}{/if}</span>
+      {/if}
+    {/if}
+  {/each}
+</div>

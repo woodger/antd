@@ -1,0 +1,931 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "pointer"
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "keyboard",
+        "input": "keyboard"
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        0,
+        0
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "",
+          false
+        ],
+        "close",
+        [
+          false,
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "explicit",
+        "mousePosition": {
+          "x": 120,
+          "y": 300
+        }
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-260px 200px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-260px 200px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "null-pointer",
+        "mousePosition": null
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "delayed",
+        "delay": 180
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "",
+          false
+        ],
+        "close",
+        [
+          false,
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "panel-off",
+        "transitionName": ""
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "mask-off",
+        "maskTransitionName": ""
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "both-off",
+        "transitionName": "",
+        "maskTransitionName": ""
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom",
+        "transitionName": "probe-panel",
+        "maskTransitionName": "probe-mask"
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "mask-end",
+          "role": "mask",
+          "duration": 300
+        },
+        {
+          "name": "mask-enter",
+          "role": "mask",
+          "duration": 260
+        },
+        {
+          "name": "panel-end",
+          "role": "panel",
+          "duration": 120
+        },
+        {
+          "name": "panel-slide",
+          "role": "panel",
+          "duration": 180
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-motion-disabled",
+        "transitionName": "probe-panel",
+        "maskTransitionName": "probe-mask",
+        "motion": false
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    }
+  ],
+  "lifetimes": [
+    {
+      "profile": {
+        "id": "panel-off",
+        "transitionName": ""
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": true,
+        "editor": true
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        [
+          "close",
+          true,
+          true,
+          true
+        ],
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "panel-off-custom-mask",
+        "transitionName": "",
+        "maskTransitionName": "probe-mask"
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": true,
+        "editor": true
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "mask-end",
+          "role": "mask",
+          "duration": 300
+        },
+        {
+          "name": "mask-enter",
+          "role": "mask",
+          "duration": 260
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        [
+          "close",
+          true,
+          true,
+          true
+        ],
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-panel-default-mask",
+        "transitionName": "probe-panel-long"
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": true,
+        "editor": true
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "panel-end",
+          "role": "panel",
+          "duration": 80
+        },
+        {
+          "name": "panel-slide",
+          "role": "panel",
+          "duration": 360
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        [
+          "close",
+          true,
+          true,
+          true
+        ],
+        [
+          false,
+          "-306px 90px",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "stock-names",
+        "transitionName": "ant-zoom",
+        "maskTransitionName": "ant-fade"
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": false,
+        "editor": true
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "antFadeIn",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antFadeOut",
+          "role": "mask",
+          "duration": 200
+        },
+        {
+          "name": "antZoomIn",
+          "role": "panel",
+          "duration": 300
+        },
+        {
+          "name": "antZoomOut",
+          "role": "panel",
+          "duration": 200
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        [
+          "close",
+          true,
+          false,
+          true
+        ],
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-destroy",
+        "transitionName": "probe-panel",
+        "maskTransitionName": "probe-mask",
+        "destroyOnHidden": true
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": false,
+        "editor": false
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "mask-end",
+          "role": "mask",
+          "duration": 300
+        },
+        {
+          "name": "mask-enter",
+          "role": "mask",
+          "duration": 260
+        },
+        {
+          "name": "panel-end",
+          "role": "panel",
+          "duration": 120
+        },
+        {
+          "name": "panel-slide",
+          "role": "panel",
+          "duration": 180
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        [
+          "close",
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          null,
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-force-destroy",
+        "transitionName": "probe-panel",
+        "maskTransitionName": "probe-mask",
+        "forceRender": true,
+        "destroyOnHidden": true
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": true,
+        "editor": true
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "mask-end",
+          "role": "mask",
+          "duration": 300
+        },
+        {
+          "name": "mask-enter",
+          "role": "mask",
+          "duration": 260
+        },
+        {
+          "name": "panel-end",
+          "role": "panel",
+          "duration": 120
+        },
+        {
+          "name": "panel-slide",
+          "role": "panel",
+          "duration": 180
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        [
+          "close",
+          true,
+          true,
+          true
+        ],
+        [
+          false,
+          "-306px 90px",
+          true
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "custom-inline",
+        "transitionName": "probe-panel",
+        "maskTransitionName": "probe-mask",
+        "inline": true
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 96
+      },
+      "afterCallback": {
+        "mask": true,
+        "editor": true
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "mask-end",
+          "role": "mask",
+          "duration": 300
+        },
+        {
+          "name": "mask-enter",
+          "role": "mask",
+          "duration": 260
+        },
+        {
+          "name": "panel-end",
+          "role": "panel",
+          "duration": 120
+        },
+        {
+          "name": "panel-slide",
+          "role": "panel",
+          "duration": 180
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          true
+        ],
+        [
+          "close",
+          true,
+          true,
+          true
+        ],
+        [
+          false,
+          "-306px 90px",
+          true
+        ]
+      ]
+    }
+  ],
+  "special": [
+    {
+      "profile": {
+        "id": "css-transition",
+        "transitionName": "probe-transition",
+        "maskTransitionName": ""
+      },
+      "panel": {
+        "x": 380,
+        "y": 100,
+        "width": 520,
+        "height": 94
+      },
+      "point": [
+        74,
+        190
+      ],
+      "animations": [
+        {
+          "name": "opacity",
+          "role": "panel",
+          "duration": 180
+        },
+        {
+          "name": "opacity",
+          "role": "panel",
+          "duration": 120
+        }
+      ],
+      "callbacks": [
+        [
+          true,
+          "-306px 90px",
+          false
+        ],
+        "close",
+        [
+          false,
+          "-306px 90px",
+          false
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "id": "missing-rules",
+        "transitionName": "missing-panel",
+        "maskTransitionName": "missing-mask"
+      },
+      "opened": {
+        "callbacks": [],
+        "effects": 0
+      },
+      "closed": {
+        "callbacks": [],
+        "effects": 0,
+        "wrapperVisible": true
+      }
+    }
+  ]
+}

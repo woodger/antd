@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta property="csp-nonce" nonce="Y3NwLWZpeHR1cmU=">
+  <title>ConfigProvider nonce fixture</title>
+  <link rel="icon" href="data:,">
+  <script>
+    const profile = new URLSearchParams(location.search).get('profile');
+    if (profile === 'strict' || profile === 'shadow') {
+      const policy = document.createElement('meta');
+      policy.httpEquiv = 'Content-Security-Policy';
+      policy.content = "style-src-elem 'self' 'nonce-Y3NwLWZpeHR1cmU='" +
+        " 'nonce-bmV4dC1jc3AtZml4dHVyZQ=='; style-src-attr 'unsafe-inline'";
+      document.head.append(policy);
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="./config-provider-csp.client.ts"></script>
+</body>
+</html>

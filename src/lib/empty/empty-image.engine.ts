@@ -1,0 +1,35 @@
+import { FastColor } from '../color/fast-color.engine';
+import type { AliasToken } from '../theme/theme-token.types';
+
+/** Source empty/utils.getAsSolidColor: CSS variables are not composed in advance. */
+function solidColor(color: string, background: string) {
+  if (color?.startsWith('var(') || background?.startsWith('var(')) {
+    return color;
+  }
+
+  const fill = new FastColor(color);
+  return fill.onBackground(background).toHexString();
+}
+
+/** Built-in SVGs use global tokens regardless of Empty component aliases. */
+export function resolveEmptyImageColors(
+  token: Pick<AliasToken,
+    'colorBgContainer' | 'colorFill' | 'colorFillSecondary' | 'colorFillTertiary'
+    | 'colorFillQuaternary' | 'colorTextQuaternary'
+  >,
+  simple: boolean
+): Record<string, string> {
+  const background = token.colorBgContainer;
+
+  return simple ? {
+    border: solidColor(token.colorFill, background),
+    shadow: solidColor(token.colorFillTertiary, background),
+    content: solidColor(token.colorFillQuaternary, background)
+  } : {
+    panel: solidColor(token.colorFillTertiary, background),
+    border: solidColor(token.colorTextQuaternary, background),
+    detail: solidColor(token.colorFill, background),
+    shadow: solidColor(token.colorFillSecondary, background),
+    icon: background
+  };
+}

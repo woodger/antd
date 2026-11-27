@@ -1,0 +1,489 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "Unmodified official UMD ReactDOMServer in an isolated DOM-free VM; shared Source-only factory and HTML projector. Every sample explicitly records its SSR prop mode.",
+    "domAvailableDuringRender": false,
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "inert-live-controls",
+      "mode": "provided",
+      "view": {
+        "mode": "provided",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": null,
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "rtlClass": false,
+          "ownStyleMarker": false,
+          "semanticStyleMarker": true
+        },
+        "editor": {
+          "dir": null,
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "257a56eac4e2588d2dc712a0d8904c755826ca5103a4a5a2b62a635ab6436ce8"
+    },
+    {
+      "id": "inert-callback-only",
+      "mode": "provided",
+      "view": {
+        "mode": "provided",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": null,
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "rtlClass": false,
+          "ownStyleMarker": false,
+          "semanticStyleMarker": true
+        },
+        "editor": {
+          "dir": null,
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "5359f0ef111492cd8544adadbf4a003ff5965df7d2b029988a4631fd82b19a1a"
+    },
+    {
+      "id": "provider-rtl-local-ltr",
+      "mode": "provided",
+      "view": {
+        "mode": "provided",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "ltr",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": null,
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "rtlClass": true,
+          "ownStyleMarker": false,
+          "semanticStyleMarker": true
+        },
+        "editor": {
+          "dir": null,
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "bef98394c10aa68419ae1141a6ad36a732f1553506ac74db5d80a1c127a442ed"
+    },
+    {
+      "id": "custom-root-own-dir",
+      "mode": "provided",
+      "view": {
+        "mode": "provided",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": [],
+          "dirKey": true,
+          "dir": "rtl",
+          "ownStyleKept": true
+        },
+        "root": {
+          "tag": "BUTTON",
+          "dir": "rtl",
+          "rtlClass": false,
+          "ownStyleMarker": true,
+          "semanticStyleMarker": false
+        },
+        "editor": null,
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "c4f39b3c2da6b3258af2712ffd0ade7b65e677bc49b5f9c84b07159d80dc83ff"
+    },
+    {
+      "id": "custom-root-provider-rtl",
+      "mode": "live",
+      "view": {
+        "mode": "live",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice-live",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "live",
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": [],
+          "dirKey": true,
+          "dir": "ltr",
+          "ownStyleKept": true
+        },
+        "root": {
+          "tag": "BUTTON",
+          "dir": "ltr",
+          "rtlClass": false,
+          "ownStyleMarker": true,
+          "semanticStyleMarker": false
+        },
+        "editor": null,
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "eb8afc675f8d96bb553e0331fb2a9a12fc6545d9c2fba4ef26ef042c6842d14f"
+    },
+    {
+      "id": "custom-input-filter",
+      "mode": "provided",
+      "view": {
+        "mode": "provided",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "ltr",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": {
+          "slot": "input",
+          "keys": [],
+          "dirKey": true,
+          "dir": "rtl",
+          "ownStyleKept": null
+        },
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "rtlClass": true,
+          "ownStyleMarker": false,
+          "semanticStyleMarker": true
+        },
+        "editor": {
+          "dir": "rtl",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "0497024550f0c6f4b8da1d69c2d7cd016db8019f2c573994239196194092c362"
+    },
+    {
+      "id": "multiple-choice",
+      "mode": "empty",
+      "view": {
+        "mode": "empty",
+        "model": [
+          "a"
+        ],
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": null,
+          "choice": "",
+          "callback": {
+            "isFunction": false,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": null,
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": null,
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "rtlClass": false,
+          "ownStyleMarker": false,
+          "semanticStyleMarker": true
+        },
+        "editor": {
+          "dir": null,
+          "expanded": "false",
+          "readonly": true,
+          "disabled": false
+        },
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "baa91060be0fb6c9c04172a17e26bc99f334525ee1fd676be90b1fb8c5e17aff"
+    },
+    {
+      "id": "native-dir-boundary",
+      "mode": "undefined",
+      "view": {
+        "mode": "undefined",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": null,
+          "choice": null,
+          "callback": {
+            "isFunction": false,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": null,
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": null,
+        "root": {
+          "tag": "DIV",
+          "dir": "rtl",
+          "rtlClass": false,
+          "ownStyleMarker": false,
+          "semanticStyleMarker": true
+        },
+        "editor": {
+          "dir": null,
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "a2323ab817cf2c0aa63d4bdeb23108889d31f8a6e05d20953ad14a23ce840186"
+    },
+    {
+      "id": "custom-root-explicit-undefined-dir",
+      "mode": "omitted",
+      "view": {
+        "mode": "omitted",
+        "model": null,
+        "events": [],
+        "semantic": {
+          "keys": [],
+          "direction": null,
+          "choice": null,
+          "callback": {
+            "isFunction": false,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": null,
+            "sameReference": true
+          }
+        },
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": [],
+          "dirKey": true,
+          "dir": null,
+          "ownStyleKept": true
+        },
+        "root": {
+          "tag": "BUTTON",
+          "dir": null,
+          "rtlClass": false,
+          "ownStyleMarker": true,
+          "semanticStyleMarker": false
+        },
+        "editor": null,
+        "leakedAttributes": [],
+        "choiceClasses": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0
+      },
+      "refs": {
+        "native": null
+      },
+      "htmlSha256": "417a08871431687afefece20f5dd3dd2b27657c5fb107c0780f368efd597094c"
+    }
+  ]
+}

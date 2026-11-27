@@ -1,0 +1,158 @@
+# Popconfirm
+
+GetPopupContainer передаётся Popover с теми же приоритетами.
+Контекст темы и Promise действия сохраняются при переносе popup в контейнер.
+Trigger и hover delays наследуются из ConfigProvider.popconfirm; локальные props
+имеют приоритет. Без настройки trigger остаётся click.
+ShowAction/hideAction и focusDelay/blurDelay передаются Popover с теми же
+приоритетами и native границами, описанными выше. Пустой hideAction не отключает
+кнопки подтверждения/отмены. Защита ожидающего Promise и прежний disabled contract
+сохраняются; Popover.disabled и Popconfirm.disabled имеют собственные правила.
+Align/builtinPlacements/onPopupAlign также передаются наружному Popover;
+callback получает его DOM, перемещение не заменяет description и кнопки.
+Bind:ref передаётся тому же Popover и использует общий PopoverRef; forceAlign
+не прерывает ожидающее подтверждение и сохраняет припаркованный фокус.
+Id/forceRender/fresh/zIndex передаются также. Смена ID/слоя сохраняет ожидающий
+Promise, текущее содержимое и припаркованный фокус; его результат по-прежнему
+подчиняется controlled owner и защите от устаревших запросов.
+[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+DestroyOnHidden передаётся Popover, включая явный false. При удалении содержимого заново
+создаются description snippet и кнопки; сам контроллер подтверждения сохраняет
+защиту от результата прежнего Promise после закрытия или повторного открытия.
+При включённом удалении SSR-содержимое остаётся ленивым даже при начальном open/defaultOpen;
+native shell, focus и ARIA следуют прежним правилам Popover.
+
+`unique={true}` передаётся [Popover](./popover.md) и включает подтверждение в
+ближайшую группу Tooltip.UniqueProvider. Каждое подтверждение хранит свой
+Promise и состояние ожидания. Если группа передала панель другому триггеру,
+завершение прошлого действия обновляет его владельца. Текущая карточка
+сохраняет своё состояние.
+
+```svelte
+<script lang="ts">
+  import { Button, Popconfirm } from '@woodger/antd';
+
+  let open = $state(false);
+
+  async function remove() {
+    // Здесь владелец выполняет запрос и обновляет данные после успеха.
+  }
+</script>
+
+<Popconfirm
+  title="Удалить запись?"
+  description="Запись исчезнет из списка."
+  bind:open
+  okText="Удалить"
+  okButtonProps={{ danger: true }}
+  onConfirm={remove}
+>
+  <Button danger>Удалить</Button>
+</Popconfirm>
+```
+
+Title обязателен; title и description принимают строку, число или Svelte
+snippet. Число 0 отображается, строки экранируются. Пустая строка title отключает
+карточку; snippet должен содержать доступный заголовок. `icon` принимает
+декоративное содержимое Button, включая строку, число и Svelte snippet.
+`undefined` оставляет знак предупреждения, `null`, `false` и пустая строка
+убирают слот. Children содержит один основной DOM-элемент, обычно
+Button. Его атрибуты и обработчики сохраняются.
+
+Popover обеспечивает открытие кликом, Enter/Space нативной кнопки, 12
+положений Tooltip, arrow и autoAdjustOverflow. В содержимом
+сначала находится отмена, затем подтверждение; showCancel=false скрывает
+отмену. При открытии фокусируется первый доступный control, для обычного
+описания — кнопка отмены. Tab следует естественному порядку, Escape закрывает
+карточку и возвращает фокус. Поддерживаются Modal, вложенный Tooltip, темы,
+compact, RTL и prefers-reduced-motion. Требуется нативный Popover API.
+
+При source-настройках ConfigProvider aliases применяются в порядке
+Tooltip → Popover → Popconfirm; Popconfirm подготавливает собственный zIndexPopup.
+Вложенный самостоятельный Popover использует свои tokens без aliases Popconfirm.
+Смена темы не прерывает ожидающее подтверждение.
+
+`bind:open`, defaultOpen и `onOpenChange(open)` следуют модели Svelte.
+DefaultOpen учитывается один раз; внешние изменения open не вызывают
+onOpenChange. `onConfirm(event)` вызывается только кнопкой подтверждения.
+Синхронное завершение и успешный Promise закрывают карточку; без onConfirm
+подтверждение просто закрывает её. `onCancel(event)` вызывается только кнопкой
+отмены. Escape, клик снаружи и повторный клик trigger меняют видимость через
+onOpenChange и не вызывают onCancel.
+
+`afterOpenChange(open)` сообщает о завершении смены видимости внешнего Popover.
+`motion.motionName` переопределяет его стандартное `zoom-big`. Длительность,
+reduced motion и порядок удаления содержимого следуют
+[контракту Tooltip](tooltip.md#завершение-открытия-и-закрытия).
+Изменение `disabled` у уже открытого Popconfirm закрывает карточку по контракту
+Svelte и вызывает `afterOpenChange(false)` после закрытия.
+
+Во время Promise подтверждение показывает loading, обе кнопки отключены;
+повторный запуск, Escape, клик снаружи, повторный клик trigger и уход фокуса
+не закрывают карточку. Внешнее open остаётся под контролем владельца.
+Закрытие, повторное открытие, disabled и удаление компонента делают старый
+результат неактуальным: он не закрывает новую карточку, не сбрасывает её
+loading и не вызывает onError. Эта защита относится к состоянию Popconfirm;
+отменой запроса и изменениями данных управляет владелец onConfirm.
+
+Синхронный throw и отклонение Promise оставляют карточку открытой и показывают
+безопасное сообщение с role=alert. `onError(error)` получает исходную ошибку
+как unknown; её технический текст автоматически не выводится. Повторная
+попытка очищает сообщение. Сообщение ошибки задаёт `locale.confirmErrorText`.
+
+`okText` и `cancelText` принимают содержимое Button, в том числе число и Svelte
+snippet. Для `null` и `undefined` используется `locale.popconfirm`, затем общие
+подписи локали. Пустая строка и `false` оставляют подпись пустой, `0`
+отображается числом. В React 6.6.8 эти три значения дают подпись из локали.
+Поддерживаются ruRU и enUS, а частичная locale наследуется из ConfigProvider.
+
+`okType="danger"` задаёт опасную палитру Button. `okButtonProps` задаёт
+окончательные `type`, `danger`, `color` и `variant` по правилам Button.
+Обе кнопки принимают размер, disabled, атрибуты и обработчики.
+`onclick` вызывается перед действием и может отменить его через `preventDefault()`.
+При отсутствии `onclick` совместимый `onClick` вызывается после действия.
+Он получает событие сразу после запуска Promise или после синхронного закрытия.
+Нативная кнопка получает `type="button"`, а состоянием loading управляет Popconfirm.
+`disabled` наследуется из Form и ConfigProvider. Явный `disabled={false}`
+переопределяет наследование.
+Disabled скрывает карточку и блокирует её действия, сохраняя open владельца;
+исходный trigger не заменяется и сам по себе не отключается этим prop.
+[Варианты и порядок вызовов в React](../../../tests/browser/fixtures/ant-design-popconfirm-action-content-reference.json)
+· [Проверки Svelte](../../../tests/browser/popconfirm/popconfirm-action-content.spec.ts).
+
+С параметром `href` действие рендерит ссылку Button и передаёт ей `target` и
+`rel`. В `onclick` и `onClick` значение `event.currentTarget` имеет тип
+`HTMLAnchorElement` у ссылки и `HTMLButtonElement` у кнопки. Условный `href`
+даёт объединение этих типов. В шаблоне типы выводятся из props. При отдельной
+типизации можно задать адрес подтверждения первым параметром
+`PopconfirmProps<string>`, а адрес отмены вторым. В программном SSR тип
+можно задать у самого компонента, например `render(Popconfirm<string>, { props })`.
+Локальные semantic callbacks получают типы действий своего экземпляра.
+Настройки `ConfigProvider.popconfirm` действуют на кнопки и ссылки, поэтому
+их callback видит оба варианта действий.
+
+Браузер переходит по ссылке после обработчиков исходного клика. Во время ожидания
+Popconfirm убирает `href` у обеих ссылок,
+исключает их из порядка Tab и переносит фокус в карточку. В React 6.6.8
+обе ссылки во время ожидания сохраняют `href` и `tabindex`.
+[Замеры React](../../../tests/browser/fixtures/ant-design-popconfirm-action-links-reference.json)
+· [Проверки Svelte](../../../tests/browser/popconfirm/popconfirm-action-links.spec.ts).
+
+`onPopupClick(event)` получает нативный `MouseEvent` при всплытии до корня панели.
+Обработчики содержимого, в том числе действий подтверждения и отмены,
+вызываются раньше. `preventDefault()` сохраняет всплытие, `stopPropagation()`
+останавливает его. В общей панели `Tooltip.UniqueProvider` событие получает
+текущий владелец. В Ant Design React 6.6.8 callback общей панели теряется.
+[Замеры React](../../../tests/browser/fixtures/ant-design-popconfirm-popup-click-reference.json)
+· [Проверки Svelte](../../../tests/browser/popconfirm/popconfirm-popup-click.spec.ts).
+
+Карточка получает role=dialog, имя от title и описание от description.
+Trigger сохраняет существующий aria-describedby и связан с карточкой через
+aria-controls/aria-expanded. Во время ожидания выставляется aria-busy;
+фокус из отключаемых кнопок сохраняется на содержимом. Class/style относятся
+к wrapper trigger, как у Popover. Содержимое закрытой карточки остаётся
+смонтированным, состояние ошибки сбрасывается для нового открытия.
+
+Поддерживаются открытие по клику и все 12 направлений Tooltip;
+hover/focus/contextMenu и независимые action props доступны также через Popconfirm.
+

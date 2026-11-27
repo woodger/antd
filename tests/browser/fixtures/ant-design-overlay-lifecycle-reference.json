@@ -1,0 +1,1503 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "styles": "runtime CSS-in-JS only; static antd.css is not loaded",
+    "scope": "destroyOnHidden and legacy precedence; motion disabled; component content/state after first open, closed updates and reopen",
+    "nativeBoundary": "Svelte retains its hidden shell and eager default SSR content; source initial lazy mounts are recorded separately",
+    "currentApiScope": "Deprecated getter/destroy alias profiles are excluded; current measured frames are retained."
+  },
+  "viewport": {
+    "width": 700,
+    "height": 500
+  },
+  "cases": [
+    {
+      "name": "tooltip-default",
+      "component": "tooltip",
+      "options": {},
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        }
+      }
+    },
+    {
+      "name": "tooltip-destroy",
+      "component": "tooltip",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "tooltip-keep",
+      "component": "tooltip",
+      "options": {
+        "destroyOnHidden": false
+      },
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        }
+      }
+    },
+    {
+      "name": "tooltip-reactive",
+      "component": "tooltip",
+      "options": {},
+      "patch": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "changed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "tooltip-initial-open",
+      "component": "tooltip",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": true,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "tooltip-default-open",
+      "component": "tooltip",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "defaultOpen": true,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "tooltip-portal",
+      "component": "tooltip",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "container": "body",
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-default",
+      "component": "popover",
+      "options": {},
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-destroy",
+      "component": "popover",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-keep",
+      "component": "popover",
+      "options": {
+        "destroyOnHidden": false
+      },
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-reactive",
+      "component": "popover",
+      "options": {},
+      "patch": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "changed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-initial-open",
+      "component": "popover",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": true,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-default-open",
+      "component": "popover",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "defaultOpen": true,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popover-portal",
+      "component": "popover",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "container": "body",
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-default",
+      "component": "popconfirm",
+      "options": {},
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-destroy",
+      "component": "popconfirm",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-keep",
+      "component": "popconfirm",
+      "options": {
+        "destroyOnHidden": false
+      },
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-reactive",
+      "component": "popconfirm",
+      "options": {},
+      "patch": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-undefined"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "changed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-initial-open",
+      "component": "popconfirm",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": true,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-default-open",
+      "component": "popconfirm",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "defaultOpen": true,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "popconfirm-portal",
+      "component": "popconfirm",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "container": "body",
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "typography-default",
+      "component": "typography",
+      "options": {},
+      "open": false,
+      "retained": true,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        }
+      }
+    },
+    {
+      "name": "typography-destroy",
+      "component": "typography",
+      "options": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    },
+    {
+      "name": "typography-reactive",
+      "component": "typography",
+      "options": {},
+      "patch": {
+        "destroyOnHidden": true
+      },
+      "open": false,
+      "retained": false,
+      "snapshots": {
+        "initial": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "opened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "edited": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-false"
+          ]
+        },
+        "closed": {
+          "visible": 0,
+          "contents": [
+            {
+              "value": "Edited draft",
+              "count": "1"
+            }
+          ],
+          "callbacks": []
+        },
+        "changed": {
+          "visible": 0,
+          "contents": [],
+          "callbacks": []
+        },
+        "reopened": {
+          "visible": 1,
+          "contents": [
+            {
+              "value": "Draft",
+              "count": "0"
+            }
+          ],
+          "callbacks": [
+            "lifecycle-destroy-true"
+          ]
+        }
+      }
+    }
+  ]
+}

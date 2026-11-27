@@ -1,0 +1,1719 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "umdSha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+    "umdArchiveByteEqual": true,
+    "chromium": "156.0.8078.79",
+    "viewport": {
+      "width": 1200,
+      "height": 800
+    },
+    "source": "Independent fresh standalone pages using unmodified official Ant Design/React UMD. Public ConfigProvider descriptors, natural popup contents, real pointer/editor/context/resize/scroll actions. No Native code, expected geometry math, or Source result corrections.",
+    "defaults": "Stable theme token.motion=false; transitionName and getPopupContainer omitted unless a case explicitly supplies a global container. Initial models are null for Select/TreeSelect, empty string for AutoComplete, empty array for Cascader.",
+    "settle": "Shared public driver moves the pointer outside after actions. Three identical complete projections, separated by two real paint frames and two tasks; consumer-owned actual head styles copied to an owned ShadowRoot.",
+    "originalFactory": {
+      "path": ".upstream/artifacts/popup-overflow-source-app.mjs",
+      "sha256": "eaf9034622ef4a33afdb9906523591c3444889fc2fd67c9eecad3e9e6e3e1173"
+    },
+    "supplement": "Public Pagination intrinsic-width counterparts; same IDs and actions as the immutable primary smoke pair.",
+    "comparisonScope": "Nested Select readers retain actual complete projections. Nonreader geometry is evidence for Source viewport/scroll pair inertness only; it does not establish new Native cross-framework geometry parity.",
+    "factory": ".upstream/artifacts/popup-overflow-supplement-source-app.mjs",
+    "factorySha256": "c09b3256006bf38b7664bd7cd816128509a0a1b21d7cf09c498c8d077f45abb5",
+    "configurationSha256": "0505f5e591e9f92f7f077df2460612fef59dc7d7b6bbf2c4b73c0d62118baa04",
+    "baseConfigurationSha256": "e9a3760d8479329328e0281a86e2e94698cc47254ee77709d5f28844003d10f6",
+    "metricsSha256": "622d9ef2dd957fc321a559f70098cf5aaa4b1ea5c6b99fa85d0bb813e3efc31c",
+    "driverSha256": "5c438a9d21354015e898e98b239063ffd9d6991031de0830e86729fa73d3d8bb",
+    "errors": [],
+    "warnings": [
+      {
+        "current": {
+          "id": "pagination-viewport",
+          "action": "mount"
+        },
+        "message": "Warning: You provided a `current` prop to a Pagination component without an `onChange` handler. This will render a read-only component."
+      },
+      {
+        "current": {
+          "id": "pagination-scroll",
+          "action": "mount"
+        },
+        "message": "Warning: You provided a `current` prop to a Pagination component without an `onChange` handler. This will render a read-only component."
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "pagination-viewport",
+      "initial": {
+        "view": {
+          "family": "pagination",
+          "context": {
+            "outer": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": null
+            },
+            "inner": {
+              "keyPresent": true,
+              "type": "string",
+              "value": "viewport"
+            },
+            "globalContainer": "default"
+          },
+          "model": null,
+          "query": "",
+          "events": [],
+          "anchor": {
+            "x": 668,
+            "y": 740,
+            "width": 103.484375,
+            "height": 32
+          },
+          "popup": null,
+          "editor": {
+            "value": "",
+            "caret": [
+              0,
+              0
+            ],
+            "focused": false,
+            "readonly": false,
+            "disabled": false
+          },
+          "viewport": {
+            "width": 1200,
+            "height": 800
+          },
+          "document": {
+            "clientWidth": 1200,
+            "clientHeight": 800,
+            "scrollWidth": 2200,
+            "scrollHeight": 2000,
+            "left": 0,
+            "top": 0
+          },
+          "scroller": null,
+          "leaks": []
+        },
+        "raw": {
+          "root": {
+            "tag": "DIV",
+            "box": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "classes": [
+              "ant-select",
+              "ant-select-outlined",
+              "ant-pagination-options-size-changer-select",
+              "ant-pagination-options-size-changer",
+              "popup-overflow",
+              "ant-select-css-var",
+              "css-dev-only-do-not-override-1y106cm",
+              "ant-select-single",
+              "ant-select-show-arrow",
+              "ant-select-show-search"
+            ],
+            "css": {
+              "position": "relative",
+              "left": "0px",
+              "right": "0px",
+              "top": "0px",
+              "bottom": "0px",
+              "width": "103.484px",
+              "minWidth": "0px",
+              "maxWidth": "none",
+              "height": "32px",
+              "transform": "none",
+              "direction": "ltr",
+              "display": "inline-flex",
+              "visibility": "visible",
+              "overflow": "visible"
+            }
+          },
+          "anchor": {
+            "tag": "DIV",
+            "box": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "css": {
+              "position": "relative",
+              "left": "0px",
+              "right": "0px",
+              "top": "0px",
+              "bottom": "0px",
+              "width": "103.484px",
+              "minWidth": "0px",
+              "maxWidth": "none",
+              "height": "32px",
+              "transform": "none",
+              "direction": "ltr",
+              "display": "inline-flex",
+              "visibility": "visible",
+              "overflow": "visible"
+            }
+          },
+          "publicRoot": null,
+          "publicEditor": null,
+          "methods": {
+            "focus": false,
+            "blur": false,
+            "scrollTo": false
+          },
+          "editor": {
+            "tag": "INPUT",
+            "id": ":r2:",
+            "role": "combobox",
+            "value": "",
+            "caret": [
+              0,
+              0
+            ],
+            "focused": false,
+            "readonly": false,
+            "disabled": false,
+            "box": {
+              "x": 680,
+              "y": 745,
+              "width": 61.484375,
+              "height": 22
+            }
+          },
+          "popups": [],
+          "outerColorPopup": [],
+          "getterCalls": []
+        },
+        "observed": {
+          "sameRoot": true,
+          "sameAnchor": true,
+          "sameEditor": true,
+          "sameEditorParent": true,
+          "samePopup": true,
+          "popupPresent": false,
+          "rootIsPublicRef": false,
+          "focusMethod": false,
+          "blurMethod": false,
+          "scrollToMethod": false,
+          "sameFocus": true,
+          "sameBlur": true,
+          "sameScrollTo": true
+        }
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "family": "pagination",
+            "context": {
+              "outer": {
+                "keyPresent": false,
+                "type": "undefined",
+                "value": null
+              },
+              "inner": {
+                "keyPresent": true,
+                "type": "string",
+                "value": "viewport"
+              },
+              "globalContainer": "default"
+            },
+            "model": null,
+            "query": "",
+            "events": [],
+            "anchor": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "popup": {
+              "box": {
+                "x": 668,
+                "y": 600,
+                "width": 103.484375,
+                "height": 136
+              },
+              "placement": [
+                "ant-select-dropdown-placement-topLeft"
+              ]
+            },
+            "editor": {
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false
+            },
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "document": {
+              "clientWidth": 1200,
+              "clientHeight": 800,
+              "scrollWidth": 2200,
+              "scrollHeight": 2000,
+              "left": 0,
+              "top": 0
+            },
+            "scroller": null,
+            "leaks": []
+          },
+          "raw": {
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "classes": [
+                "ant-select",
+                "ant-select-outlined",
+                "ant-pagination-options-size-changer-select",
+                "ant-pagination-options-size-changer",
+                "popup-overflow",
+                "ant-select-css-var",
+                "css-dev-only-do-not-override-1y106cm",
+                "ant-select-focused",
+                "ant-select-single",
+                "ant-select-show-arrow",
+                "ant-select-open",
+                "ant-select-show-search"
+              ],
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "anchor": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "publicRoot": null,
+            "publicEditor": null,
+            "methods": {
+              "focus": false,
+              "blur": false,
+              "scrollTo": false
+            },
+            "editor": {
+              "tag": "INPUT",
+              "id": ":r2:",
+              "role": "combobox",
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false,
+              "box": {
+                "x": 680,
+                "y": 745,
+                "width": 61.484375,
+                "height": 22
+              }
+            },
+            "popups": [
+              {
+                "tag": "DIV",
+                "box": {
+                  "x": 668,
+                  "y": 600,
+                  "width": 103.484375,
+                  "height": 136
+                },
+                "visible": true,
+                "hidden": false,
+                "classes": [
+                  "ant-select-dropdown",
+                  "popup-overflow",
+                  "ant-select-css-var",
+                  "css-dev-only-do-not-override-1y106cm",
+                  "ant-select-dropdown-placement-topLeft"
+                ],
+                "placement": [
+                  "ant-select-dropdown-placement-topLeft"
+                ],
+                "css": {
+                  "position": "absolute",
+                  "left": "368px",
+                  "right": "-251.484px",
+                  "top": "-140px",
+                  "bottom": "36px",
+                  "width": "103.484px",
+                  "minWidth": "103.484px",
+                  "maxWidth": "none",
+                  "height": "136px",
+                  "transform": "none",
+                  "direction": "ltr",
+                  "display": "block",
+                  "visibility": "visible",
+                  "overflow": "hidden"
+                },
+                "parent": {
+                  "kind": "element",
+                  "tag": "LI"
+                },
+                "offsetParent": "DIV"
+              }
+            ],
+            "outerColorPopup": [],
+            "getterCalls": []
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameAnchor": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "popupPresent": true,
+            "rootIsPublicRef": false,
+            "focusMethod": false,
+            "blurMethod": false,
+            "scrollToMethod": false,
+            "sameFocus": true,
+            "sameBlur": true,
+            "sameScrollTo": true
+          }
+        },
+        {
+          "action": {
+            "type": "viewport",
+            "width": 1200,
+            "height": 820
+          },
+          "view": {
+            "family": "pagination",
+            "context": {
+              "outer": {
+                "keyPresent": false,
+                "type": "undefined",
+                "value": null
+              },
+              "inner": {
+                "keyPresent": true,
+                "type": "string",
+                "value": "viewport"
+              },
+              "globalContainer": "default"
+            },
+            "model": null,
+            "query": "",
+            "events": [],
+            "anchor": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "popup": {
+              "box": {
+                "x": 668,
+                "y": 600,
+                "width": 103.484375,
+                "height": 136
+              },
+              "placement": [
+                "ant-select-dropdown-placement-topLeft"
+              ]
+            },
+            "editor": {
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false
+            },
+            "viewport": {
+              "width": 1200,
+              "height": 820
+            },
+            "document": {
+              "clientWidth": 1200,
+              "clientHeight": 820,
+              "scrollWidth": 2200,
+              "scrollHeight": 2000,
+              "left": 0,
+              "top": 0
+            },
+            "scroller": null,
+            "leaks": []
+          },
+          "raw": {
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "classes": [
+                "ant-select",
+                "ant-select-outlined",
+                "ant-pagination-options-size-changer-select",
+                "ant-pagination-options-size-changer",
+                "popup-overflow",
+                "ant-select-css-var",
+                "css-dev-only-do-not-override-1y106cm",
+                "ant-select-focused",
+                "ant-select-single",
+                "ant-select-show-arrow",
+                "ant-select-open",
+                "ant-select-show-search"
+              ],
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "anchor": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "publicRoot": null,
+            "publicEditor": null,
+            "methods": {
+              "focus": false,
+              "blur": false,
+              "scrollTo": false
+            },
+            "editor": {
+              "tag": "INPUT",
+              "id": ":r2:",
+              "role": "combobox",
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false,
+              "box": {
+                "x": 680,
+                "y": 745,
+                "width": 61.484375,
+                "height": 22
+              }
+            },
+            "popups": [
+              {
+                "tag": "DIV",
+                "box": {
+                  "x": 668,
+                  "y": 600,
+                  "width": 103.484375,
+                  "height": 136
+                },
+                "visible": true,
+                "hidden": false,
+                "classes": [
+                  "ant-select-dropdown",
+                  "popup-overflow",
+                  "ant-select-css-var",
+                  "css-dev-only-do-not-override-1y106cm",
+                  "ant-select-dropdown-placement-topLeft"
+                ],
+                "placement": [
+                  "ant-select-dropdown-placement-topLeft"
+                ],
+                "css": {
+                  "position": "absolute",
+                  "left": "368px",
+                  "right": "-251.484px",
+                  "top": "-140px",
+                  "bottom": "36px",
+                  "width": "103.484px",
+                  "minWidth": "103.484px",
+                  "maxWidth": "none",
+                  "height": "136px",
+                  "transform": "none",
+                  "direction": "ltr",
+                  "display": "block",
+                  "visibility": "visible",
+                  "overflow": "hidden"
+                },
+                "parent": {
+                  "kind": "element",
+                  "tag": "LI"
+                },
+                "offsetParent": "DIV"
+              }
+            ],
+            "outerColorPopup": [],
+            "getterCalls": []
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameAnchor": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "popupPresent": true,
+            "rootIsPublicRef": false,
+            "focusMethod": false,
+            "blurMethod": false,
+            "scrollToMethod": false,
+            "sameFocus": true,
+            "sameBlur": true,
+            "sameScrollTo": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "family": "pagination",
+            "context": {
+              "outer": {
+                "keyPresent": false,
+                "type": "undefined",
+                "value": null
+              },
+              "inner": {
+                "keyPresent": true,
+                "type": "string",
+                "value": "viewport"
+              },
+              "globalContainer": "default"
+            },
+            "model": null,
+            "query": "",
+            "events": [],
+            "anchor": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "popup": null,
+            "editor": {
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": false,
+              "readonly": false,
+              "disabled": false
+            },
+            "viewport": {
+              "width": 1200,
+              "height": 820
+            },
+            "document": {
+              "clientWidth": 1200,
+              "clientHeight": 820,
+              "scrollWidth": 2200,
+              "scrollHeight": 2000,
+              "left": 0,
+              "top": 0
+            },
+            "scroller": null,
+            "leaks": []
+          },
+          "raw": {
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "classes": [
+                "ant-select",
+                "ant-select-outlined",
+                "ant-pagination-options-size-changer-select",
+                "ant-pagination-options-size-changer",
+                "popup-overflow",
+                "ant-select-css-var",
+                "css-dev-only-do-not-override-1y106cm",
+                "ant-select-single",
+                "ant-select-show-arrow",
+                "ant-select-show-search"
+              ],
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "anchor": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "publicRoot": null,
+            "publicEditor": null,
+            "methods": {
+              "focus": false,
+              "blur": false,
+              "scrollTo": false
+            },
+            "editor": {
+              "tag": "INPUT",
+              "id": ":r2:",
+              "role": "combobox",
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": false,
+              "readonly": false,
+              "disabled": false,
+              "box": {
+                "x": 680,
+                "y": 745,
+                "width": 61.484375,
+                "height": 22
+              }
+            },
+            "popups": [
+              {
+                "tag": "DIV",
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 0,
+                  "height": 0
+                },
+                "visible": false,
+                "hidden": false,
+                "classes": [
+                  "ant-select-dropdown",
+                  "ant-select-dropdown-hidden",
+                  "popup-overflow",
+                  "ant-select-css-var",
+                  "css-dev-only-do-not-override-1y106cm",
+                  "ant-select-dropdown-placement-topLeft"
+                ],
+                "placement": [
+                  "ant-select-dropdown-placement-topLeft"
+                ],
+                "css": {
+                  "position": "absolute",
+                  "left": "368px",
+                  "right": "auto",
+                  "top": "auto",
+                  "bottom": "36px",
+                  "width": "auto",
+                  "minWidth": "103.484px",
+                  "maxWidth": "none",
+                  "height": "auto",
+                  "transform": "none",
+                  "direction": "ltr",
+                  "display": "none",
+                  "visibility": "visible",
+                  "overflow": "hidden"
+                },
+                "parent": {
+                  "kind": "element",
+                  "tag": "LI"
+                },
+                "offsetParent": null
+              }
+            ],
+            "outerColorPopup": [],
+            "getterCalls": []
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameAnchor": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "popupPresent": true,
+            "rootIsPublicRef": false,
+            "focusMethod": false,
+            "blurMethod": false,
+            "scrollToMethod": false,
+            "sameFocus": true,
+            "sameBlur": true,
+            "sameScrollTo": true
+          }
+        }
+      ],
+      "beforeUnmount": {
+        "focusKind": null,
+        "rootFocused": false,
+        "editorFocused": false,
+        "activeTag": "BUTTON"
+      },
+      "cleanup": {
+        "rootConnected": false,
+        "anchorConnected": false,
+        "editorConnected": false,
+        "popupConnected": false,
+        "callbacks": [],
+        "getterCalls": []
+      },
+      "counterpart": {
+        "kind": "public-pagination-intrinsic-layout",
+        "original": "tests/browser/fixtures/ant-design-popup-overflow-smoke-reference.json",
+        "originalSha256": "d5784b43af39a461a7b451da851c19a5b6fe5ea633967b90e0d39a6608e95be9",
+        "publicProps": {
+          "style": {
+            "width": "max-content"
+          }
+        },
+        "reason": "The same public intrinsic width gives the existing Native NAV/UL pagination layout room without changing its wrapping policy. Original Source pair evidence remains immutable."
+      }
+    },
+    {
+      "id": "pagination-scroll",
+      "initial": {
+        "view": {
+          "family": "pagination",
+          "context": {
+            "outer": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": null
+            },
+            "inner": {
+              "keyPresent": true,
+              "type": "string",
+              "value": "scroll"
+            },
+            "globalContainer": "default"
+          },
+          "model": null,
+          "query": "",
+          "events": [],
+          "anchor": {
+            "x": 668,
+            "y": 740,
+            "width": 103.484375,
+            "height": 32
+          },
+          "popup": null,
+          "editor": {
+            "value": "",
+            "caret": [
+              0,
+              0
+            ],
+            "focused": false,
+            "readonly": false,
+            "disabled": false
+          },
+          "viewport": {
+            "width": 1200,
+            "height": 800
+          },
+          "document": {
+            "clientWidth": 1200,
+            "clientHeight": 800,
+            "scrollWidth": 2200,
+            "scrollHeight": 2000,
+            "left": 0,
+            "top": 0
+          },
+          "scroller": null,
+          "leaks": []
+        },
+        "raw": {
+          "root": {
+            "tag": "DIV",
+            "box": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "classes": [
+              "ant-select",
+              "ant-select-outlined",
+              "ant-pagination-options-size-changer-select",
+              "ant-pagination-options-size-changer",
+              "popup-overflow",
+              "ant-select-css-var",
+              "css-dev-only-do-not-override-1y106cm",
+              "ant-select-single",
+              "ant-select-show-arrow",
+              "ant-select-show-search"
+            ],
+            "css": {
+              "position": "relative",
+              "left": "0px",
+              "right": "0px",
+              "top": "0px",
+              "bottom": "0px",
+              "width": "103.484px",
+              "minWidth": "0px",
+              "maxWidth": "none",
+              "height": "32px",
+              "transform": "none",
+              "direction": "ltr",
+              "display": "inline-flex",
+              "visibility": "visible",
+              "overflow": "visible"
+            }
+          },
+          "anchor": {
+            "tag": "DIV",
+            "box": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "css": {
+              "position": "relative",
+              "left": "0px",
+              "right": "0px",
+              "top": "0px",
+              "bottom": "0px",
+              "width": "103.484px",
+              "minWidth": "0px",
+              "maxWidth": "none",
+              "height": "32px",
+              "transform": "none",
+              "direction": "ltr",
+              "display": "inline-flex",
+              "visibility": "visible",
+              "overflow": "visible"
+            }
+          },
+          "publicRoot": null,
+          "publicEditor": null,
+          "methods": {
+            "focus": false,
+            "blur": false,
+            "scrollTo": false
+          },
+          "editor": {
+            "tag": "INPUT",
+            "id": ":r2:",
+            "role": "combobox",
+            "value": "",
+            "caret": [
+              0,
+              0
+            ],
+            "focused": false,
+            "readonly": false,
+            "disabled": false,
+            "box": {
+              "x": 680,
+              "y": 745,
+              "width": 61.484375,
+              "height": 22
+            }
+          },
+          "popups": [],
+          "outerColorPopup": [],
+          "getterCalls": []
+        },
+        "observed": {
+          "sameRoot": true,
+          "sameAnchor": true,
+          "sameEditor": true,
+          "sameEditorParent": true,
+          "samePopup": true,
+          "popupPresent": false,
+          "rootIsPublicRef": false,
+          "focusMethod": false,
+          "blurMethod": false,
+          "scrollToMethod": false,
+          "sameFocus": true,
+          "sameBlur": true,
+          "sameScrollTo": true
+        }
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "family": "pagination",
+            "context": {
+              "outer": {
+                "keyPresent": false,
+                "type": "undefined",
+                "value": null
+              },
+              "inner": {
+                "keyPresent": true,
+                "type": "string",
+                "value": "scroll"
+              },
+              "globalContainer": "default"
+            },
+            "model": null,
+            "query": "",
+            "events": [],
+            "anchor": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "popup": {
+              "box": {
+                "x": 668,
+                "y": 668,
+                "width": 103.484375,
+                "height": 136
+              },
+              "placement": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ]
+            },
+            "editor": {
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false
+            },
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "document": {
+              "clientWidth": 1200,
+              "clientHeight": 800,
+              "scrollWidth": 2200,
+              "scrollHeight": 2000,
+              "left": 0,
+              "top": 0
+            },
+            "scroller": null,
+            "leaks": []
+          },
+          "raw": {
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "classes": [
+                "ant-select",
+                "ant-select-outlined",
+                "ant-pagination-options-size-changer-select",
+                "ant-pagination-options-size-changer",
+                "popup-overflow",
+                "ant-select-css-var",
+                "css-dev-only-do-not-override-1y106cm",
+                "ant-select-focused",
+                "ant-select-single",
+                "ant-select-show-arrow",
+                "ant-select-open",
+                "ant-select-show-search"
+              ],
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "anchor": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "publicRoot": null,
+            "publicEditor": null,
+            "methods": {
+              "focus": false,
+              "blur": false,
+              "scrollTo": false
+            },
+            "editor": {
+              "tag": "INPUT",
+              "id": ":r2:",
+              "role": "combobox",
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false,
+              "box": {
+                "x": 680,
+                "y": 745,
+                "width": 61.484375,
+                "height": 22
+              }
+            },
+            "popups": [
+              {
+                "tag": "DIV",
+                "box": {
+                  "x": 668,
+                  "y": 668,
+                  "width": 103.484375,
+                  "height": 136
+                },
+                "visible": true,
+                "hidden": false,
+                "classes": [
+                  "ant-select-dropdown",
+                  "popup-overflow",
+                  "ant-select-css-var",
+                  "css-dev-only-do-not-override-1y106cm",
+                  "ant-select-dropdown-placement-bottomLeft"
+                ],
+                "placement": [
+                  "ant-select-dropdown-placement-bottomLeft"
+                ],
+                "css": {
+                  "position": "absolute",
+                  "left": "368px",
+                  "right": "-251.484px",
+                  "top": "-72px",
+                  "bottom": "-32px",
+                  "width": "103.484px",
+                  "minWidth": "103.484px",
+                  "maxWidth": "none",
+                  "height": "136px",
+                  "transform": "none",
+                  "direction": "ltr",
+                  "display": "block",
+                  "visibility": "visible",
+                  "overflow": "hidden"
+                },
+                "parent": {
+                  "kind": "element",
+                  "tag": "LI"
+                },
+                "offsetParent": "DIV"
+              }
+            ],
+            "outerColorPopup": [],
+            "getterCalls": []
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameAnchor": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "popupPresent": true,
+            "rootIsPublicRef": false,
+            "focusMethod": false,
+            "blurMethod": false,
+            "scrollToMethod": false,
+            "sameFocus": true,
+            "sameBlur": true,
+            "sameScrollTo": true
+          }
+        },
+        {
+          "action": {
+            "type": "viewport",
+            "width": 1200,
+            "height": 820
+          },
+          "view": {
+            "family": "pagination",
+            "context": {
+              "outer": {
+                "keyPresent": false,
+                "type": "undefined",
+                "value": null
+              },
+              "inner": {
+                "keyPresent": true,
+                "type": "string",
+                "value": "scroll"
+              },
+              "globalContainer": "default"
+            },
+            "model": null,
+            "query": "",
+            "events": [],
+            "anchor": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "popup": {
+              "box": {
+                "x": 668,
+                "y": 688,
+                "width": 103.484375,
+                "height": 136
+              },
+              "placement": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ]
+            },
+            "editor": {
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false
+            },
+            "viewport": {
+              "width": 1200,
+              "height": 820
+            },
+            "document": {
+              "clientWidth": 1200,
+              "clientHeight": 820,
+              "scrollWidth": 2200,
+              "scrollHeight": 2000,
+              "left": 0,
+              "top": 0
+            },
+            "scroller": null,
+            "leaks": []
+          },
+          "raw": {
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "classes": [
+                "ant-select",
+                "ant-select-outlined",
+                "ant-pagination-options-size-changer-select",
+                "ant-pagination-options-size-changer",
+                "popup-overflow",
+                "ant-select-css-var",
+                "css-dev-only-do-not-override-1y106cm",
+                "ant-select-focused",
+                "ant-select-single",
+                "ant-select-show-arrow",
+                "ant-select-open",
+                "ant-select-show-search"
+              ],
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "anchor": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "publicRoot": null,
+            "publicEditor": null,
+            "methods": {
+              "focus": false,
+              "blur": false,
+              "scrollTo": false
+            },
+            "editor": {
+              "tag": "INPUT",
+              "id": ":r2:",
+              "role": "combobox",
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": true,
+              "readonly": false,
+              "disabled": false,
+              "box": {
+                "x": 680,
+                "y": 745,
+                "width": 61.484375,
+                "height": 22
+              }
+            },
+            "popups": [
+              {
+                "tag": "DIV",
+                "box": {
+                  "x": 668,
+                  "y": 688,
+                  "width": 103.484375,
+                  "height": 136
+                },
+                "visible": true,
+                "hidden": false,
+                "classes": [
+                  "ant-select-dropdown",
+                  "popup-overflow",
+                  "ant-select-css-var",
+                  "css-dev-only-do-not-override-1y106cm",
+                  "ant-select-dropdown-placement-bottomLeft"
+                ],
+                "placement": [
+                  "ant-select-dropdown-placement-bottomLeft"
+                ],
+                "css": {
+                  "position": "absolute",
+                  "left": "368px",
+                  "right": "-251.484px",
+                  "top": "-52px",
+                  "bottom": "-52px",
+                  "width": "103.484px",
+                  "minWidth": "103.484px",
+                  "maxWidth": "none",
+                  "height": "136px",
+                  "transform": "none",
+                  "direction": "ltr",
+                  "display": "block",
+                  "visibility": "visible",
+                  "overflow": "hidden"
+                },
+                "parent": {
+                  "kind": "element",
+                  "tag": "LI"
+                },
+                "offsetParent": "DIV"
+              }
+            ],
+            "outerColorPopup": [],
+            "getterCalls": []
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameAnchor": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "popupPresent": true,
+            "rootIsPublicRef": false,
+            "focusMethod": false,
+            "blurMethod": false,
+            "scrollToMethod": false,
+            "sameFocus": true,
+            "sameBlur": true,
+            "sameScrollTo": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "family": "pagination",
+            "context": {
+              "outer": {
+                "keyPresent": false,
+                "type": "undefined",
+                "value": null
+              },
+              "inner": {
+                "keyPresent": true,
+                "type": "string",
+                "value": "scroll"
+              },
+              "globalContainer": "default"
+            },
+            "model": null,
+            "query": "",
+            "events": [],
+            "anchor": {
+              "x": 668,
+              "y": 740,
+              "width": 103.484375,
+              "height": 32
+            },
+            "popup": null,
+            "editor": {
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": false,
+              "readonly": false,
+              "disabled": false
+            },
+            "viewport": {
+              "width": 1200,
+              "height": 820
+            },
+            "document": {
+              "clientWidth": 1200,
+              "clientHeight": 820,
+              "scrollWidth": 2200,
+              "scrollHeight": 2000,
+              "left": 0,
+              "top": 0
+            },
+            "scroller": null,
+            "leaks": []
+          },
+          "raw": {
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "classes": [
+                "ant-select",
+                "ant-select-outlined",
+                "ant-pagination-options-size-changer-select",
+                "ant-pagination-options-size-changer",
+                "popup-overflow",
+                "ant-select-css-var",
+                "css-dev-only-do-not-override-1y106cm",
+                "ant-select-single",
+                "ant-select-show-arrow",
+                "ant-select-show-search"
+              ],
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "anchor": {
+              "tag": "DIV",
+              "box": {
+                "x": 668,
+                "y": 740,
+                "width": 103.484375,
+                "height": 32
+              },
+              "css": {
+                "position": "relative",
+                "left": "0px",
+                "right": "0px",
+                "top": "0px",
+                "bottom": "0px",
+                "width": "103.484px",
+                "minWidth": "0px",
+                "maxWidth": "none",
+                "height": "32px",
+                "transform": "none",
+                "direction": "ltr",
+                "display": "inline-flex",
+                "visibility": "visible",
+                "overflow": "visible"
+              }
+            },
+            "publicRoot": null,
+            "publicEditor": null,
+            "methods": {
+              "focus": false,
+              "blur": false,
+              "scrollTo": false
+            },
+            "editor": {
+              "tag": "INPUT",
+              "id": ":r2:",
+              "role": "combobox",
+              "value": "",
+              "caret": [
+                0,
+                0
+              ],
+              "focused": false,
+              "readonly": false,
+              "disabled": false,
+              "box": {
+                "x": 680,
+                "y": 745,
+                "width": 61.484375,
+                "height": 22
+              }
+            },
+            "popups": [
+              {
+                "tag": "DIV",
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 0,
+                  "height": 0
+                },
+                "visible": false,
+                "hidden": false,
+                "classes": [
+                  "ant-select-dropdown",
+                  "ant-select-dropdown-hidden",
+                  "popup-overflow",
+                  "ant-select-css-var",
+                  "css-dev-only-do-not-override-1y106cm",
+                  "ant-select-dropdown-placement-bottomLeft"
+                ],
+                "placement": [
+                  "ant-select-dropdown-placement-bottomLeft"
+                ],
+                "css": {
+                  "position": "absolute",
+                  "left": "368px",
+                  "right": "auto",
+                  "top": "-52px",
+                  "bottom": "auto",
+                  "width": "auto",
+                  "minWidth": "103.484px",
+                  "maxWidth": "none",
+                  "height": "auto",
+                  "transform": "none",
+                  "direction": "ltr",
+                  "display": "none",
+                  "visibility": "visible",
+                  "overflow": "hidden"
+                },
+                "parent": {
+                  "kind": "element",
+                  "tag": "LI"
+                },
+                "offsetParent": null
+              }
+            ],
+            "outerColorPopup": [],
+            "getterCalls": []
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameAnchor": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "popupPresent": true,
+            "rootIsPublicRef": false,
+            "focusMethod": false,
+            "blurMethod": false,
+            "scrollToMethod": false,
+            "sameFocus": true,
+            "sameBlur": true,
+            "sameScrollTo": true
+          }
+        }
+      ],
+      "beforeUnmount": {
+        "focusKind": null,
+        "rootFocused": false,
+        "editorFocused": false,
+        "activeTag": "BUTTON"
+      },
+      "cleanup": {
+        "rootConnected": false,
+        "anchorConnected": false,
+        "editorConnected": false,
+        "popupConnected": false,
+        "callbacks": [],
+        "getterCalls": []
+      },
+      "counterpart": {
+        "kind": "public-pagination-intrinsic-layout",
+        "original": "tests/browser/fixtures/ant-design-popup-overflow-smoke-reference.json",
+        "originalSha256": "d5784b43af39a461a7b451da851c19a5b6fe5ea633967b90e0d39a6608e95be9",
+        "publicProps": {
+          "style": {
+            "width": "max-content"
+          }
+        },
+        "reason": "The same public intrinsic width gives the existing Native NAV/UL pagination layout room without changing its wrapping policy. Original Source pair evidence remains immutable."
+      }
+    }
+  ]
+}

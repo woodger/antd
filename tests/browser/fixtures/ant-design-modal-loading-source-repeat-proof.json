@@ -1,0 +1,502 @@
+{
+  "status": "passed-source-first-repeat-whole-byte-equal",
+  "protocol": {
+    "bytes": 187678,
+    "sha256": "4d3e2a1fbfbc4e13a11fecc5d4157701dd692c96e6db0b0c7864a9f475af4ee7"
+  },
+  "raws": {
+    "first": {
+      "bytes": 3008606,
+      "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+    },
+    "repeat": {
+      "bytes": 3008606,
+      "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+    }
+  },
+  "losslessGzips": {
+    "first": {
+      "bytes": 119555,
+      "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+    },
+    "repeat": {
+      "bytes": 119555,
+      "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+    }
+  },
+  "wholeByteEqual": true,
+  "normalizationsApplied": false,
+  "counts": {
+    "owners": 2,
+    "actions": 10,
+    "initialAndSettledPoints": 12,
+    "cleanup": 2,
+    "late1000": 2
+  },
+  "errors": [],
+  "diagnostics": [],
+  "facts": [
+    {
+      "id": "default-footer",
+      "bodyInstanceInitial": 2,
+      "bodyInstanceRestored": 37,
+      "drafts": [
+        "Body draft",
+        "Edited body draft",
+        "Body draft"
+      ],
+      "activityPerPoint": [
+        [
+          {
+            "kind": "body-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "body-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "body-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "body-render"
+          }
+        ]
+      ],
+      "lifecycle": [
+        {
+          "slot": "editor",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "mount"
+        },
+        {
+          "slot": "owner",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "unmount"
+        },
+        {
+          "slot": "body",
+          "event": "detach"
+        },
+        {
+          "slot": "editor",
+          "event": "detach"
+        },
+        {
+          "slot": "editor",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "mount"
+        },
+        {
+          "slot": "body",
+          "event": "unmount"
+        },
+        {
+          "slot": "body",
+          "event": "detach"
+        },
+        {
+          "slot": "editor",
+          "event": "detach"
+        },
+        {
+          "slot": "owner",
+          "event": "detach"
+        }
+      ],
+      "skeleton": {
+        "attributes": [
+          [
+            "class",
+            "ant-skeleton ant-skeleton-active ant-modal-body-skeleton css-dev-only-do-not-override-1y106cm css-var-r0"
+          ]
+        ],
+        "box": {
+          "x": 404,
+          "y": 160,
+          "width": 472,
+          "height": 140
+        },
+        "rows": 4,
+        "title": null,
+        "computed": {
+          "display": "flex",
+          "position": "static",
+          "width": "472px",
+          "height": "140px",
+          "min-width": "0px",
+          "min-height": "0px",
+          "max-width": "none",
+          "max-height": "none",
+          "box-sizing": "border-box",
+          "margin-top": "16px",
+          "margin-right": "0px",
+          "margin-bottom": "16px",
+          "margin-left": "0px",
+          "padding-top": "0px",
+          "padding-right": "0px",
+          "padding-bottom": "0px",
+          "padding-left": "0px",
+          "justify-content": "center",
+          "align-items": "center",
+          "font-family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "font-size": "14px",
+          "line-height": "22px",
+          "color": "rgba(0, 0, 0, 0.88)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "opacity": "1",
+          "visibility": "visible",
+          "animation-name": "none",
+          "animation-duration": "0s"
+        }
+      },
+      "closedEvents": [
+        {
+          "$": "array",
+          "properties": [
+            {
+              "key": "0",
+              "value": "cancel"
+            },
+            {
+              "key": "length",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "$": "array",
+          "properties": [
+            {
+              "key": "0",
+              "value": "after-close"
+            },
+            {
+              "key": "length",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "loadingSuppressesBodyAndFooter": true,
+      "titleCloseContainerIdentityRetained": true,
+      "cleanupLateQuiet": true,
+      "ownedResourceCounters": {
+        "measured": false,
+        "observers": null,
+        "mutations": null,
+        "frames": null,
+        "timers": null,
+        "ports": null
+      }
+    },
+    {
+      "id": "custom-footer-local-prefix",
+      "bodyInstanceInitial": 2,
+      "bodyInstanceRestored": 33,
+      "drafts": [
+        "Body draft",
+        "Edited body draft",
+        "Body draft"
+      ],
+      "activityPerPoint": [
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          },
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          },
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          }
+        ],
+        [
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          },
+          {
+            "kind": "body-render"
+          },
+          {
+            "kind": "footer-render"
+          }
+        ]
+      ],
+      "lifecycle": [
+        {
+          "slot": "editor",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "mount"
+        },
+        {
+          "slot": "footer",
+          "event": "attach"
+        },
+        {
+          "slot": "footer",
+          "event": "mount"
+        },
+        {
+          "slot": "owner",
+          "event": "attach"
+        },
+        {
+          "slot": "footer",
+          "event": "unmount"
+        },
+        {
+          "slot": "footer",
+          "event": "detach"
+        },
+        {
+          "slot": "body",
+          "event": "unmount"
+        },
+        {
+          "slot": "body",
+          "event": "detach"
+        },
+        {
+          "slot": "editor",
+          "event": "detach"
+        },
+        {
+          "slot": "editor",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "attach"
+        },
+        {
+          "slot": "body",
+          "event": "mount"
+        },
+        {
+          "slot": "footer",
+          "event": "attach"
+        },
+        {
+          "slot": "footer",
+          "event": "mount"
+        },
+        {
+          "slot": "footer",
+          "event": "unmount"
+        },
+        {
+          "slot": "footer",
+          "event": "detach"
+        },
+        {
+          "slot": "body",
+          "event": "unmount"
+        },
+        {
+          "slot": "body",
+          "event": "detach"
+        },
+        {
+          "slot": "editor",
+          "event": "detach"
+        },
+        {
+          "slot": "owner",
+          "event": "detach"
+        }
+      ],
+      "skeleton": {
+        "attributes": [
+          [
+            "class",
+            "ant-skeleton ant-skeleton-active loading-modal-body-skeleton css-dev-only-do-not-override-1y106cm css-var-r0"
+          ]
+        ],
+        "box": {
+          "x": 404,
+          "y": 160,
+          "width": 472,
+          "height": 140
+        },
+        "rows": 4,
+        "title": null,
+        "computed": {
+          "display": "flex",
+          "position": "static",
+          "width": "472px",
+          "height": "140px",
+          "min-width": "0px",
+          "min-height": "0px",
+          "max-width": "none",
+          "max-height": "none",
+          "box-sizing": "border-box",
+          "margin-top": "16px",
+          "margin-right": "0px",
+          "margin-bottom": "16px",
+          "margin-left": "0px",
+          "padding-top": "0px",
+          "padding-right": "0px",
+          "padding-bottom": "0px",
+          "padding-left": "0px",
+          "justify-content": "center",
+          "align-items": "center",
+          "font-family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "font-size": "14px",
+          "line-height": "22px",
+          "color": "rgba(0, 0, 0, 0.88)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "opacity": "1",
+          "visibility": "visible",
+          "animation-name": "none",
+          "animation-duration": "0s"
+        }
+      },
+      "closedEvents": [
+        {
+          "$": "array",
+          "properties": [
+            {
+              "key": "0",
+              "value": "cancel"
+            },
+            {
+              "key": "length",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "$": "array",
+          "properties": [
+            {
+              "key": "0",
+              "value": "after-close"
+            },
+            {
+              "key": "length",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "loadingSuppressesBodyAndFooter": true,
+      "titleCloseContainerIdentityRetained": true,
+      "cleanupLateQuiet": true,
+      "ownedResourceCounters": {
+        "measured": false,
+        "observers": null,
+        "mutations": null,
+        "frames": null,
+        "timers": null,
+        "ports": null
+      }
+    }
+  ],
+  "sourceInputsUnchanged": "verified by both actual capture processes before and after",
+  "historicalProductionTrees": {
+    "protected": 12,
+    "statusesFromRoot": {
+      "passed": 10,
+      "failed": 2
+    },
+    "historyUnchanged": true
+  },
+  "workingTree": "?? tests/browser/fixtures/SelectComponentsTagCloseHandlesCase.svelte\n?? tests/browser/fixtures/SelectComponentsTagCloseHandlesTagBody.svelte\n?? tests/browser/fixtures/select-components-tag-close-handles.client.ts\n?? tests/browser/fixtures/select-components-tag-close-handles.html\n?? tests/browser/fixtures/select-components-tag-close-handles.server.ts\n?? tests/browser/fixtures/select-components-tag-close-handles.styles.client.ts\n?? tests/browser/select-components-tag-close-handles-cases.d.mts\n?? tests/browser/select-components-tag-close-handles-cases.mjs\n?? tests/browser/select-components-tag-close-handles-context.ts\n?? tests/browser/select-components-tag-close-handles-metrics.d.mts\n?? tests/browser/select-components-tag-close-handles-metrics.mjs\n",
+  "sourceBrowsersClosed": true,
+  "nativeBrowsersRun": 0,
+  "sourceSSRRun": 0
+}

@@ -1,0 +1,230 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { chromium } from '@playwright/test';
+import { writeJSONPart } from '../date-picker-presets-source-v2/json-stream.mjs';
+import { sourceSharedScript } from '../homepage-five-source-review-v1/shared.mjs';
+import { createMaskSourceApp } from '../date-picker-mask-source-proposal-v1/source-case.mjs';
+import { base, profiles, phases, sourceScripts, environment, verifyPins, sha256 } from './protocol.mjs';
+
+const [variant, reviewedFreezeSHA256, rootLease] = process.argv.slice(2);
+assert(['first', 'repeat'].includes(variant));
+const frozen = verifyPins(reviewedFreezeSHA256, rootLease);
+const output = base + 'hydrate-source-' + variant + '.json';
+for (const suffix of ['', '.gz', '.parts']) assert(!fs.existsSync(output + suffix), 'Fresh output only');
+fs.mkdirSync(output + '.parts');
+const cases = [], errors = [], diagnostics = [];
+const serializeError = error => ({ name: error.name, message: error.message, stack: error.stack });
+let browser = null, browserVersion = null, browserCloseAwaited = false, current = null, fatal = null;
+let contextsCreated = 0, contextsClosed = 0;
+const captureIssues = [];
+
+function initializeObservation(id) {
+  const target = document.getElementById('root');
+  const owner = target.querySelector('[data-mask-owner="' + id + '"]');
+  const picker = owner?.querySelector('.ant-picker') ?? null;
+  const parsedInputs = [...(owner?.querySelectorAll('input') ?? [])];
+  const identities = new WeakMap(); let nextIdentity = 0;
+  const identity = node => {
+    if (node === null || node === undefined) return null;
+    if (!identities.has(node)) identities.set(node, 'hydrate-dom-' + (++nextIdentity));
+    return identities.get(node);
+  };
+  window.maskHydration = { id, target, parsed: { target, owner, picker, inputs: parsedInputs },
+    identity, events: [], recoverableErrors: [], root: null };
+  const types = ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click',
+    'keydown', 'keyup', 'beforeinput', 'input', 'change', 'selectionchange',
+    'focusin', 'focusout', 'paste', 'compositionstart', 'compositionupdate', 'compositionend'];
+  const listener = event => {
+    const input = event.target instanceof HTMLInputElement ? event.target
+      : document.activeElement instanceof HTMLInputElement ? document.activeElement : null;
+    maskHydration.events.push({ type: event.type, isTrusted: event.isTrusted,
+      target: identity(event.target), targetTag: event.target?.tagName ?? null,
+      targetId: event.target?.id ?? null, active: identity(document.activeElement),
+      key: typeof event.key === 'string' ? event.key : null,
+      input: input ? { identity: identity(input), id: input.id, value: input.value,
+        defaultValue: input.defaultValue, selectionStart: input.selectionStart,
+        selectionEnd: input.selectionEnd, selectionDirection: input.selectionDirection } : null });
+  };
+  types.forEach(type => document.addEventListener(type, listener, true));
+  maskHydration.stopObserver = () => types.forEach(type => document.removeEventListener(type, listener, true));
+}
+
+function readObservation(phase) {
+  const observed = window.maskHydration, { parsed, identity } = observed;
+  const owner = observed.target.querySelector('[data-mask-owner="' + observed.id + '"]');
+  const picker = owner?.querySelector('.ant-picker') ?? null;
+  const inputs = [...(owner?.querySelectorAll('input') ?? [])];
+  const attributes = node => node ? Object.fromEntries([...node.attributes].map(item => [item.name, item.value])) : null;
+  const readInput = input => ({ identity: identity(input), id: input.id, type: input.type,
+    value: input.value, defaultValue: input.defaultValue, valueAttribute: input.getAttribute('value'),
+    selectionStart: input.selectionStart, selectionEnd: input.selectionEnd,
+    selectionDirection: input.selectionDirection, focused: document.activeElement === input,
+    connected: input.isConnected, attributes: attributes(input), outerHTML: input.outerHTML });
+  const current = window.raw?.current ?? null;
+  const refs = current?.readRefs() ?? null;
+  const recorder = current?.recorder;
+  const ref = value => ({ type: typeof value, isNull: value === null, isUndefined: value === undefined,
+    recorderIdentity: value == null || !recorder ? null : recorder.identity(value),
+    domIdentity: value instanceof Node ? identity(value) : null });
+  return { phase, environment: { dateNow: Date.now(), performanceNow: performance.now(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, documentReadyState: document.readyState },
+    nodes: { target: identity(observed.target), owner: identity(owner), root: identity(picker),
+      active: identity(document.activeElement), activeTag: document.activeElement?.tagName ?? null,
+      activeId: document.activeElement?.id ?? null,
+      sameParsed: { target: document.getElementById('root') === parsed.target,
+        owner: owner === parsed.owner, root: picker === parsed.picker,
+        inputCount: inputs.length === parsed.inputs.length,
+        inputs: parsed.inputs.map((input, index) => input === inputs[index]) },
+      parsed: { target: identity(parsed.target), owner: identity(parsed.owner),
+        root: identity(parsed.picker), inputs: parsed.inputs.map(identity) } },
+    inputs: inputs.map(readInput), retainedParsedInputs: parsed.inputs.map(readInput),
+    html: { owner: owner?.outerHTML ?? null, root: picker?.outerHTML ?? null,
+      target: observed.target.outerHTML, body: document.body.innerHTML },
+    source: current ? { owner: current.read(), producers: current.readProducers(0),
+      refs: { owner: ref(refs.owner), control: ref(refs.control), root: ref(refs.root),
+        ownerIsParsed: refs.owner === parsed.owner, rootIsParsed: refs.root === parsed.picker } } : null,
+    events: [...observed.events], recoverableErrors: [...observed.recoverableErrors] };
+}
+
+try {
+  browser = await chromium.launch({ executablePath: environment.browserExecutable });
+  browserVersion = browser.version(); assert.equal(browserVersion, environment.chromium);
+  for (const profile of profiles()) {
+    current = { id: profile.id, formatProfile: profile.formatProfile, phase: 'create-context' };
+    const context = await browser.newContext({ viewport: environment.viewport,
+      locale: environment.locale, timezoneId: environment.timezone, deviceScaleFactor: 1 });
+    contextsCreated++;
+    const page = await context.newPage(); page.setDefaultTimeout(10000);
+    const row = { id: profile.id, formatProfile: profile.formatProfile, sourceSSR: profile.sourceSSR,
+      originalSourceHTML: null, observations: [], versions: null, failure: null,
+      network: { requests: [], responses: [], failures: [] }, contextCloseAwaited: false };
+    page.on('pageerror', error => errors.push({ ...current, ...serializeError(error) }));
+    page.on('console', message => diagnostics.push({ ...current, type: message.type(),
+      message: message.text(), location: message.location() }));
+    page.on('request', request => row.network.requests.push({ url: request.url(),
+      method: request.method(), type: request.resourceType() }));
+    page.on('response', response => row.network.responses.push({ url: response.url(), status: response.status() }));
+    page.on('requestfailed', request => row.network.failures.push({ url: request.url(), failure: request.failure() }));
+    const observe = async phase => {
+      current.phase = phase; const value = await page.evaluate(readObservation, phase);
+      row.observations.push(value); return value;
+    };
+    const drain = () => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() =>
+      requestAnimationFrame(() => setTimeout(resolve, 25)))));
+    try {
+      const bytes = fs.readFileSync(profile.sourceSSR.rawJSONPart.file);
+      assert.equal(sha256(bytes), profile.sourceSSR.rawJSONPart.sha256);
+      const packet = JSON.parse(bytes);
+      assert.equal(sha256(Buffer.from(packet.rawHtml)), packet.htmlSha256);
+      row.originalSourceHTML = { value: packet.rawHtml, sha256: packet.htmlSha256,
+        originalEnvironment: packet.environment };
+      await page.clock.setFixedTime(new Date(environment.fixedDate));
+      await page.setContent('<!doctype html><html><head><meta charset="UTF-8">'
+        + '<link rel="icon" href="data:,"></head><body style="margin:0;min-height:900px">'
+        + '<div id="root">' + packet.rawHtml + '</div></body></html>');
+      await page.evaluate(initializeObservation, profile.id);
+      await observe('parsed');
+      for (const file of sourceScripts) await page.addScriptTag({ path: file });
+      row.versions = await page.evaluate(() => ({ react: React.version, antd: antd.version,
+        hasHydrateRoot: typeof ReactDOM.hydrateRoot === 'function',
+        dateNow: Date.now(), dayjsLocale: dayjs.locale() }));
+      assert.deepEqual(row.versions, { react: '18.3.1', antd: '6.6.8', hasHydrateRoot: true,
+        dateNow: Date.parse(environment.fixedDate), dayjsLocale: 'en' });
+      await page.addScriptTag({ content: 'window.maskShared=' + sourceSharedScript() });
+      await page.addScriptTag({ content: 'window.maskFactory=' + createMaskSourceApp.toString() });
+      await page.addScriptTag({ content: 'window.readMaskHydration=' + readObservation.toString() });
+      await observe('preHydrate');
+      current.phase = 'afterHydrateCall';
+      const immediate = await page.evaluate(sample => {
+        window.raw = {};
+        const app = window.maskFactory(React, antd, sample, window.raw, window.maskShared);
+        maskHydration.root = ReactDOM.hydrateRoot(maskHydration.target, app, {
+          onRecoverableError(error, info) {
+            maskHydration.recoverableErrors.push({ name: error.name, message: error.message,
+              stack: error.stack, cause: error.cause == null ? null : String(error.cause),
+              digest: info?.digest ?? null, componentStack: info?.componentStack ?? null });
+          }
+        });
+        return window.readMaskHydration('afterHydrateCall');
+      }, profile.sample);
+      row.observations.push(immediate);
+      await page.waitForFunction(() => window.raw?.current?.read().alive === true);
+      await observe('mounted');
+      let previous = '', stable = 0, settled = null;
+      for (let attempt = 0; attempt < 70; attempt++) {
+        await drain(); const value = await page.evaluate(readObservation, 'settled');
+        const owner = value.source?.owner;
+        const signature = JSON.stringify({ inputs: value.inputs, html: value.html,
+          owner: owner ? { alive: owner.alive, open: owner.open, formatProfile: owner.formatProfile,
+            model: owner.model, modelDates: owner.modelDates.map(item => ({ path: item.path,
+              temporal: item.value.temporal, sameAsAuthored: item.value.sameAsAuthored })),
+            callbacks: owner.callbacks.length, ownerActions: owner.ownerActions.length,
+            producerCount: owner.producerCount, lifecycle: owner.lifecycle } : null,
+          events: value.events, errors: value.recoverableErrors });
+        stable = signature === previous ? stable + 1 : 0;
+        previous = signature;
+        if (stable >= 4) { settled = value; break; }
+      }
+      assert(settled, 'Initial Source hydration observation did not settle');
+      current.phase = 'settled'; row.observations.push(settled);
+      await observe('beforeUnmount');
+      current.phase = 'afterUnmountCall';
+      row.observations.push(await page.evaluate(() => {
+        maskHydration.root.unmount(); return window.readMaskHydration('afterUnmountCall');
+      }));
+      await drain(); await observe('cleanup');
+      await page.waitForTimeout(1000); await observe('late1000');
+      await page.evaluate(() => maskHydration.stopObserver());
+      assert.deepEqual(row.observations.map(value => value.phase), phases);
+      assert.equal(row.observations.at(-1).source.owner.alive, false);
+    } catch (error) {
+      row.failure = { ...serializeError(error), phase: current.phase };
+      try {
+        if (await page.evaluate(() => !!window.maskHydration?.root)) {
+          await page.evaluate(() => maskHydration.root.unmount());
+        }
+      } catch (cleanupError) { row.failedCleanup = serializeError(cleanupError); }
+    } finally {
+      try { await context.close(); row.contextCloseAwaited = true; contextsClosed++; }
+      catch (error) {
+        row.contextCloseFailure = serializeError(error);
+        row.failure ??= { ...serializeError(error), phase: 'context-close' };
+      }
+    }
+    const recoverableErrors = row.observations.at(-1)?.recoverableErrors ?? [];
+    if (recoverableErrors.length || row.network.failures.length) captureIssues.push({
+      id: row.id, formatProfile: row.formatProfile, recoverableErrors, networkFailures: row.network.failures });
+    const rawJSONPart = await writeJSONPart(output + '.parts/' + profile.id + '-' + profile.formatProfile + '.json', row);
+    cases.push({ id: profile.id, formatProfile: profile.formatProfile,
+      snapshots: row.observations.length, failure: row.failure, rawJSONPart });
+    console.log(JSON.stringify({ variant, id: profile.id, formatProfile: profile.formatProfile,
+      snapshots: row.observations.length, failure: row.failure, contextClosed: row.contextCloseAwaited }));
+    if (row.failure || row.network.failures.length
+      || row.observations.some(value => value.recoverableErrors.length)) break;
+    if (errors.length || diagnostics.some(value => ['warning', 'warn', 'error'].includes(value.type))) break;
+  }
+} catch (error) { fatal = serializeError(error); }
+finally {
+  if (browser) {
+    try { await browser.close(); browserCloseAwaited = true; }
+    catch (error) { fatal = { ...serializeError(error), phase: 'browser-close' }; }
+  }
+}
+let terminal = null;
+try { terminal = verifyPins(reviewedFreezeSHA256, rootLease); }
+catch (error) { fatal = { ...serializeError(error), phase: 'terminal-input-verification' }; }
+const complete = cases.length === 15 && cases.every(row => row.snapshots === phases.length && !row.failure);
+const failed = !complete || !!fatal || !browserCloseAwaited || errors.length > 0
+  || contextsCreated !== contextsClosed || captureIssues.length > 0
+  || diagnostics.some(row => ['warning', 'warn', 'error'].includes(row.type));
+const manifest = await writeJSONPart(output, { status: failed ? 'failed' : 'complete', variant,
+  scope: 'Independent original React initial hydration; no CSR behavior/caret parity claim',
+  sourceProtocol: { file: base + 'protocol-freeze.json', sha256: frozen.sha256, rootLease },
+  originalInputs: frozen.protocol.proposal.source, cases, errors, diagnostics, captureIssues, fatal,
+  counts: { profiles: cases.length, snapshots: cases.reduce((sum, row) => sum + row.snapshots, 0),
+    authoredInputActions: 0, newSSRSerializations: 0 },
+  lifecycle: { browserVersion, browserCloseAwaited, contextsCreated, contextsClosed,
+    allContextsCloseAwaited: contextsCreated === contextsClosed },
+  terminalInputVerification: { unchanged: terminal !== null, sha256: terminal?.sha256 ?? null } });
+console.log(JSON.stringify({ manifest, failed, browserCloseAwaited, profiles: cases.length }));
+if (failed) process.exitCode = 1;

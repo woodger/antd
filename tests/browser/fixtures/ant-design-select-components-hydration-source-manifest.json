@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "allRawSourcesUnchanged": true,
+  "scope": "Six actual DOM-free Original SSR→hydrateRoot owners, 34 actions, layout-commit/ref and stable snapshots; complete Source callbacks/diagnostics including one pending close delivered after child removal. Lossless portable evidence; no Native run or library changes.",
+  "protocol": {
+    "path": ".upstream/artifacts/select-components-hydration-draft/protocol-v2-freeze.json",
+    "bytes": 11410,
+    "sha256": "b77c356b0aa6d4d21c2539ab426eb27040e053f878305e53b986b1b62d922105"
+  },
+  "copy": {
+    "source": ".upstream/artifacts/select-components-hydration-draft/source-v2-first.json",
+    "repeatSource": ".upstream/artifacts/select-components-hydration-draft/source-v2-repeat.json",
+    "path": "tests/browser/fixtures/ant-design-select-components-hydration-reference.json.gz",
+    "decodedBytes": 463119,
+    "decodedSha256": "a627192f3ebcee9c1135ee3710eb1569990d0848e424140f846cca4523295937",
+    "storageBytes": 17521,
+    "storageSha256": "24d7ab4aabfb316c2df5fb4ad218d992213d6378b9ead8182ad40fbc3a324b7f",
+    "repeatBytes": 463119,
+    "repeatSHA256": "a627192f3ebcee9c1135ee3710eb1569990d0848e424140f846cca4523295937",
+    "wholePairByteEqual": true,
+    "compression": "gzip level9 mtime0 lossless"
+  },
+  "portableInputs": [
+    {
+      "source": ".upstream/artifacts/select-components-hydration-draft/cases.mjs",
+      "path": "tests/browser/fixtures/select-components-hydration-cases.mjs",
+      "bytes": 2057,
+      "sha256": "13c5b99cd8f19e5de3578629b1c0f6c4ffec7fd33d942edd1f6293eb915df280",
+      "byteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-hydration-draft/reader.mjs",
+      "path": "tests/browser/select-components-hydration-metrics.mjs",
+      "bytes": 2525,
+      "sha256": "4c5b6bf1f22368f52f594ae622232daff5ba80ae2e4346c6dec5345827f8ac34",
+      "byteEqual": true
+    }
+  ],
+  "boundaries": [
+    {
+      "name": "react-layout-commit-vs-svelte-onMount",
+      "scope": "Only Select input-string/input-composite value/caret during first commit; their captured React layout commit precedes its captured useOpen passive reset. All raw snapshots retained; settled state remains strict."
+    },
+    {
+      "name": "removed-control-pending-close",
+      "scope": "Only AC replace-close after its synchronous alive:false removal: Source later appends onOpenChange(false); Native preserves existing cancellation/quiescence and its already observed owner open state. Full Source late event remains in portable evidence."
+    },
+    {
+      "name": "react-focus-vs-native-focusin",
+      "scope": "Only application focus/blur event type labels; target/currentTarget/default prevention/propagation and event order remain strict."
+    },
+    {
+      "name": "react-composed-ref-callback-vs-svelte-attachment",
+      "scope": "All raw lifecycle entries retained; framework ref detach/attach counts may differ while physical DOM identity, public binding coherence, authored attach/detach and composite method calls remain checked."
+    }
+  ]
+}

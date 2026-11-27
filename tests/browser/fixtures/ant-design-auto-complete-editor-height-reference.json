@@ -1,0 +1,4276 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "react": "18.3.1",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "standard"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "input",
+          "tag": "input"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "textarea",
+          "tag": "textarea"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "controlled",
+          "tag": "input",
+          "controlled": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "initial-value",
+          "tag": "textarea",
+          "initial": "Saved draft"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "Saved draft",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Saved draft",
+            "tag": "TEXTAREA",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": []
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Saved draft",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": []
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Saved draft",
+            "tag": "TEXTAREA",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": []
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "input-height-counterpart",
+          "tag": "input",
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "textarea-height-counterpart",
+          "tag": "textarea",
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "controlled-height-counterpart",
+          "tag": "input",
+          "controlled": true,
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "initial-height-counterpart",
+          "tag": "textarea",
+          "initial": "Saved draft",
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "Saved draft",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "compact-rtl",
+          "tag": "textarea",
+          "strut": true,
+          "rtl": true,
+          "prefix": "catalog",
+          "size": "small"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 298,
+            "height": 22
+          },
+          "content": {
+            "width": 298,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 24
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "catalog-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 298,
+              "height": 22
+            },
+            "content": {
+              "width": 298,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 24
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "catalog-select-content",
+              "catalog-select-content-has-value",
+              "catalog-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 298,
+            "height": 22
+          },
+          "content": {
+            "width": 298,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 24
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "catalog-select-content",
+            "catalog-select-content-has-value",
+            "catalog-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 298,
+              "height": 22
+            },
+            "content": {
+              "width": 298,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 24
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "catalog-select-content",
+              "catalog-select-content-has-value",
+              "catalog-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "author-height",
+          "tag": "input",
+          "minHeight": "40px"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 40
+          },
+          "content": {
+            "width": 290,
+            "height": 40
+          },
+          "surface": {
+            "width": 320,
+            "height": 50
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "40px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 40
+            },
+            "content": {
+              "width": 290,
+              "height": 40
+            },
+            "surface": {
+              "width": 320,
+              "height": 50
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "40px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 40
+          },
+          "content": {
+            "width": 290,
+            "height": 40
+          },
+          "surface": {
+            "width": 320,
+            "height": 50
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "40px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 40
+            },
+            "content": {
+              "width": 290,
+              "height": 40
+            },
+            "surface": {
+              "width": 320,
+              "height": 50
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "40px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "standard"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "input",
+          "tag": "input"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "textarea",
+          "tag": "textarea"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "controlled",
+          "tag": "input",
+          "controlled": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "initial-value",
+          "tag": "textarea",
+          "initial": "Saved draft"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "Saved draft",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Saved draft",
+            "tag": "TEXTAREA",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": []
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Saved draft",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 0
+          },
+          "content": {
+            "width": 290,
+            "height": 0
+          },
+          "surface": {
+            "width": 320,
+            "height": 10
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "auto",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": []
+        },
+        "second": {
+          "filled": false,
+          "state": {
+            "sameEditor": true,
+            "value": "Saved draft",
+            "tag": "TEXTAREA",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "expanded": "false",
+            "editor": {
+              "width": 290,
+              "height": 0
+            },
+            "content": {
+              "width": 290,
+              "height": 0
+            },
+            "surface": {
+              "width": 320,
+              "height": 10
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "auto",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": []
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "input-height-counterpart",
+          "tag": "input",
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "textarea-height-counterpart",
+          "tag": "textarea",
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "controlled-height-counterpart",
+          "tag": "input",
+          "controlled": true,
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "initial-height-counterpart",
+          "tag": "textarea",
+          "initial": "Saved draft",
+          "strut": true
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "Saved draft",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 22
+          },
+          "content": {
+            "width": 290,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 32
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 22
+            },
+            "content": {
+              "width": 290,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 32
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "compact-rtl",
+          "tag": "textarea",
+          "strut": true,
+          "rtl": true,
+          "prefix": "catalog",
+          "size": "small"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "TEXTAREA",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 298,
+            "height": 22
+          },
+          "content": {
+            "width": 298,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 24
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "catalog-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 298,
+              "height": 22
+            },
+            "content": {
+              "width": 298,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 24
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "catalog-select-content",
+              "catalog-select-content-has-value",
+              "catalog-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "TEXTAREA",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 298,
+            "height": 22
+          },
+          "content": {
+            "width": 298,
+            "height": 22
+          },
+          "surface": {
+            "width": 320,
+            "height": 24
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "22px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "catalog-select-content",
+            "catalog-select-content-has-value",
+            "catalog-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "TEXTAREA",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 298,
+              "height": 22
+            },
+            "content": {
+              "width": 298,
+              "height": 22
+            },
+            "surface": {
+              "width": 320,
+              "height": 24
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "22px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "catalog-select-content",
+              "catalog-select-content-has-value",
+              "catalog-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": {
+          "id": "author-height",
+          "tag": "input",
+          "minHeight": "40px"
+        },
+        "before": {
+          "sameEditor": true,
+          "value": "",
+          "tag": "INPUT",
+          "focused": false,
+          "selection": [
+            0,
+            0
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 40
+          },
+          "content": {
+            "width": 290,
+            "height": 40
+          },
+          "surface": {
+            "width": 320,
+            "height": 50
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "40px",
+          "placeholderDisplay": "block",
+          "classes": [
+            "ant-select-content"
+          ],
+          "events": []
+        },
+        "first": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Alpha",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              5,
+              5
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 40
+            },
+            "content": {
+              "width": 290,
+              "height": 40
+            },
+            "surface": {
+              "width": 320,
+              "height": 50
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "40px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        "closed": {
+          "sameEditor": true,
+          "value": "Alpha",
+          "tag": "INPUT",
+          "focused": true,
+          "selection": [
+            5,
+            5
+          ],
+          "expanded": "false",
+          "editor": {
+            "width": 290,
+            "height": 40
+          },
+          "content": {
+            "width": 290,
+            "height": 40
+          },
+          "surface": {
+            "width": 320,
+            "height": 50
+          },
+          "position": "absolute",
+          "lineHeight": "22px",
+          "minHeight": "40px",
+          "placeholderDisplay": "none",
+          "classes": [
+            "ant-select-content",
+            "ant-select-content-has-value",
+            "ant-select-content-has-search-value"
+          ],
+          "events": [
+            [
+              "change",
+              "Alpha"
+            ],
+            [
+              "search",
+              "Alpha"
+            ],
+            [
+              "open",
+              true
+            ],
+            [
+              "open",
+              false
+            ]
+          ]
+        },
+        "second": {
+          "filled": true,
+          "state": {
+            "sameEditor": true,
+            "value": "Beta",
+            "tag": "INPUT",
+            "focused": true,
+            "selection": [
+              4,
+              4
+            ],
+            "expanded": "true",
+            "editor": {
+              "width": 290,
+              "height": 40
+            },
+            "content": {
+              "width": 290,
+              "height": 40
+            },
+            "surface": {
+              "width": 320,
+              "height": 50
+            },
+            "position": "absolute",
+            "lineHeight": "22px",
+            "minHeight": "40px",
+            "placeholderDisplay": "none",
+            "classes": [
+              "ant-select-content",
+              "ant-select-content-has-value",
+              "ant-select-content-has-search-value"
+            ],
+            "events": [
+              [
+                "change",
+                "Alpha"
+              ],
+              [
+                "search",
+                "Alpha"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "change",
+                "Beta"
+              ],
+              [
+                "search",
+                "Beta"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        }
+      }
+    ]
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "pin": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "react": "18.3.1",
+    "dropdown": "1.0.3",
+    "trigger": "3.10.1",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa"
+  },
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "omitted-menu"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "closed"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "closed-wrap",
+          "renderer": "wrap"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "open-wrap",
+          "renderer": "wrap",
+          "open": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "open-destroy-wrap",
+          "renderer": "wrap",
+          "open": true,
+          "destroy": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "closed-destroy-wrap",
+          "renderer": "wrap",
+          "destroy": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-wrap",
+          "renderer": "wrap",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-destroy-wrap",
+          "renderer": "wrap",
+          "force": true,
+          "destroy": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "empty-items-wrap",
+          "renderer": "wrap"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "open-standalone",
+          "renderer": "replace",
+          "open": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-standalone",
+          "renderer": "replace",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-text",
+          "renderer": "text",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-zero",
+          "renderer": "zero",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-null",
+          "renderer": "null",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "omitted-menu"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "closed"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "closed-wrap",
+          "renderer": "wrap"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "open-wrap",
+          "renderer": "wrap",
+          "open": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "open-destroy-wrap",
+          "renderer": "wrap",
+          "open": true,
+          "destroy": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "closed-destroy-wrap",
+          "renderer": "wrap",
+          "destroy": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-wrap",
+          "renderer": "wrap",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-destroy-wrap",
+          "renderer": "wrap",
+          "force": true,
+          "destroy": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "empty-items-wrap",
+          "renderer": "wrap"
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "open-standalone",
+          "renderer": "replace",
+          "open": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-standalone",
+          "renderer": "replace",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-text",
+          "renderer": "text",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-zero",
+          "renderer": "zero",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      },
+      {
+        "profile": {
+          "id": "force-null",
+          "renderer": "null",
+          "force": true
+        },
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Actions</button>",
+        "calls": [],
+        "version": "6.6.8",
+        "react": "18.3.1",
+        "diagnostics": []
+      }
+    ]
+  ]
+}

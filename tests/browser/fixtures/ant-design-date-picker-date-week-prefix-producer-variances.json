@@ -1,0 +1,38 @@
+{
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "normalization": [],
+  "IDsRenumbered": false,
+  "scope": "Every differing whole original producer JSON leaf and own-key order is recorded. First/repeat byte-equal parts are verified by their hashes; original indices, cursors, full arguments and IDs remain unchanged.",
+  "paired": 32,
+  "exactByteEqual": 31,
+  "different": [
+    {
+      "id": "range-date-week-prefix",
+      "phase": "step-6",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6-producers.json",
+        "bytes": 6644424,
+        "sha256": "f8fea178bc6ae90754563949fa02e450029d4bbcc2a29d26cfd7631d3114615c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6-producers.json.gz",
+        "gzipBytes": 157763,
+        "gzipSHA256": "d5bc3baa6f5fa458d4d3fcba8e023fd5772d930161eef749264fbec42ababb8c"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6-producers.json",
+        "bytes": 6644424,
+        "sha256": "db17f766d25df08931e5674e76793fd7bbec936503a0ddfb4704cd6ce4ca9adc",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6-producers.json.gz",
+        "gzipBytes": 157762,
+        "gzipSHA256": "84d06600f5bb755bb0fdd8109f08949dbbae0058f44de3ee0e8e9de18d6b01b6"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 1300,
+          "repeat": 1397
+        }
+      ]
+    }
+  ]
+}

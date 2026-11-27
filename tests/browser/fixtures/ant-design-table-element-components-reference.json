@@ -1,0 +1,4778 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "tableVersion": "1.11.1",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "single",
+        "count": 3,
+        "actions": [
+          "row",
+          "sort"
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": "row",
+          "state": {
+            "nodes": [
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ]
+            ]
+          }
+        },
+        {
+          "action": "sort",
+          "state": {
+            "nodes": [
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ],
+              [
+                "sort"
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "tbody",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "0",
+            "scope": null,
+            "role": null,
+            "data": "0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-0",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "1",
+            "scope": null,
+            "role": null,
+            "data": "1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-1",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "2",
+            "scope": null,
+            "role": null,
+            "data": "2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-2",
+            "empty": false
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "id": "fixed",
+        "count": 3,
+        "fixed": true,
+        "actions": [
+          "row",
+          "sort"
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": "row",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ]
+            ]
+          }
+        },
+        {
+          "action": "sort",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ],
+              [
+                "sort"
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "header.table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "tbody",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "0",
+            "scope": null,
+            "role": null,
+            "data": "0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-0",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "1",
+            "scope": null,
+            "role": null,
+            "data": "1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-1",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "2",
+            "scope": null,
+            "role": null,
+            "data": "2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-2",
+            "empty": false
+          },
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "id": "fixed-wide",
+        "count": 5,
+        "fixed": true,
+        "width": 680,
+        "actions": [
+          "right",
+          "wheel",
+          "sort"
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "3",
+                "scope": null,
+                "role": null,
+                "data": "3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-3",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "4",
+                "scope": null,
+                "role": null,
+                "data": "4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-4",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [],
+            "geometry": [
+              0,
+              0,
+              0,
+              399,
+              281
+            ]
+          }
+        },
+        {
+          "action": "right",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "3",
+                "scope": null,
+                "role": null,
+                "data": "3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-3",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "4",
+                "scope": null,
+                "role": null,
+                "data": "4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-4",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [],
+            "geometry": [
+              121,
+              121,
+              121,
+              399,
+              281
+            ]
+          }
+        },
+        {
+          "action": "wheel",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "3",
+                "scope": null,
+                "role": null,
+                "data": "3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-3",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "4",
+                "scope": null,
+                "role": null,
+                "data": "4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-4",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [],
+            "geometry": [
+              150,
+              150,
+              150,
+              399,
+              281
+            ]
+          }
+        },
+        {
+          "action": "sort",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "4",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-4",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "3",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-3",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "4",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "sort"
+              ]
+            ],
+            "geometry": [
+              150,
+              150,
+              150,
+              399,
+              281
+            ]
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "header.table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "tbody",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "0",
+            "scope": null,
+            "role": null,
+            "data": "0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-0",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "1",
+            "scope": null,
+            "role": null,
+            "data": "1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-1",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "2",
+            "scope": null,
+            "role": null,
+            "data": "2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-2",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "3",
+            "scope": null,
+            "role": null,
+            "data": "3",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-3",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-3",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "4",
+            "scope": null,
+            "role": null,
+            "data": "4",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-4",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-4",
+            "empty": false
+          },
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          }
+        ],
+        "events": [],
+        "geometry": [
+          0,
+          0,
+          0,
+          395,
+          279
+        ]
+      }
+    },
+    {
+      "profile": {
+        "id": "sticky",
+        "count": 3,
+        "sticky": true,
+        "actions": [
+          "row"
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": "row",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "header.table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "tbody",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "0",
+            "scope": null,
+            "role": null,
+            "data": "0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-0",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "1",
+            "scope": null,
+            "role": null,
+            "data": "1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-1",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "2",
+            "scope": null,
+            "role": null,
+            "data": "2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-2",
+            "empty": false
+          },
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "id": "headerless",
+        "count": 3,
+        "fixed": true,
+        "hideHeader": true,
+        "actions": [
+          "row"
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": "row",
+          "state": {
+            "nodes": [
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "th",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "tbody",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "0",
+            "scope": null,
+            "role": null,
+            "data": "0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-0",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "1",
+            "scope": null,
+            "role": null,
+            "data": "1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-1",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": "2",
+            "scope": null,
+            "role": null,
+            "data": "2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "th",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-2",
+            "empty": false
+          },
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "id": "empty",
+        "count": 0,
+        "actions": []
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "tbody",
+                "parent": "table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "tr",
+                "parent": "body.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": true
+              },
+              {
+                "slot": "body.cell",
+                "tag": "td",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": true
+              }
+            ],
+            "events": []
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "tbody",
+            "parent": "table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "tr",
+            "parent": "body.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": true
+          },
+          {
+            "slot": "body.cell",
+            "tag": "td",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": true
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "id": "virtual",
+        "count": 40,
+        "fixed": true,
+        "virtual": true,
+        "actions": [
+          "row",
+          "scroll"
+        ]
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "div",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "3",
+                "scope": null,
+                "role": null,
+                "data": "3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-3",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": "row",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "div",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "0",
+                "scope": null,
+                "role": null,
+                "data": "0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-0",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-0",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "1",
+                "scope": null,
+                "role": null,
+                "data": "1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-1",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-1",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "2",
+                "scope": null,
+                "role": null,
+                "data": "2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-2",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-2",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "3",
+                "scope": null,
+                "role": null,
+                "data": "3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-3",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-3",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ]
+            ]
+          }
+        },
+        {
+          "action": "scroll",
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.wrapper",
+                "tag": "div",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "31",
+                "scope": null,
+                "role": null,
+                "data": "31",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-31",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-31",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "32",
+                "scope": null,
+                "role": null,
+                "data": "32",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-32",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-32",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "33",
+                "scope": null,
+                "role": null,
+                "data": "33",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-33",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-33",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "34",
+                "scope": null,
+                "role": null,
+                "data": "34",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-34",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-34",
+                "empty": false
+              },
+              {
+                "slot": "body.row",
+                "tag": "div",
+                "parent": "body.wrapper",
+                "key": "35",
+                "scope": null,
+                "role": null,
+                "data": "35",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": "row",
+                "role": null,
+                "data": "value-35",
+                "empty": false
+              },
+              {
+                "slot": "body.cell",
+                "tag": "div",
+                "parent": "body.row",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "key-35",
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": [
+              [
+                "row",
+                0
+              ]
+            ]
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "header.table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.wrapper",
+            "tag": "div",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "div",
+            "parent": "body.wrapper",
+            "key": "0",
+            "scope": null,
+            "role": null,
+            "data": "0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-0",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-0",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "div",
+            "parent": "body.wrapper",
+            "key": "1",
+            "scope": null,
+            "role": null,
+            "data": "1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-1",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-1",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "div",
+            "parent": "body.wrapper",
+            "key": "2",
+            "scope": null,
+            "role": null,
+            "data": "2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-2",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-2",
+            "empty": false
+          },
+          {
+            "slot": "body.row",
+            "tag": "div",
+            "parent": "body.wrapper",
+            "key": "3",
+            "scope": null,
+            "role": null,
+            "data": "3",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": "row",
+            "role": null,
+            "data": "value-3",
+            "empty": false
+          },
+          {
+            "slot": "body.cell",
+            "tag": "div",
+            "parent": "body.row",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "key-3",
+            "empty": false
+          },
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "profile": {
+        "id": "virtual-empty",
+        "count": 0,
+        "fixed": true,
+        "virtual": true,
+        "actions": []
+      },
+      "states": [
+        {
+          "action": null,
+          "state": {
+            "nodes": [
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.wrapper",
+                "tag": "thead",
+                "parent": "header.table",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.row",
+                "tag": "tr",
+                "parent": "header.wrapper",
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": "heading-0",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": "header-name",
+                "empty": false
+              },
+              {
+                "slot": "header.cell",
+                "tag": "th",
+                "parent": "header.row",
+                "key": null,
+                "scope": "col",
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              },
+              {
+                "slot": "header.table",
+                "tag": "table",
+                "parent": null,
+                "key": null,
+                "scope": null,
+                "role": null,
+                "data": null,
+                "empty": false
+              }
+            ],
+            "events": []
+          }
+        }
+      ],
+      "ssr": {
+        "nodes": [
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.wrapper",
+            "tag": "thead",
+            "parent": "header.table",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.row",
+            "tag": "tr",
+            "parent": "header.wrapper",
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": "heading-0",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": "header-name",
+            "empty": false
+          },
+          {
+            "slot": "header.cell",
+            "tag": "th",
+            "parent": "header.row",
+            "key": null,
+            "scope": "col",
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          },
+          {
+            "slot": "header.table",
+            "tag": "table",
+            "parent": null,
+            "key": null,
+            "scope": null,
+            "role": null,
+            "data": null,
+            "empty": false
+          }
+        ],
+        "events": []
+      }
+    }
+  ]
+}

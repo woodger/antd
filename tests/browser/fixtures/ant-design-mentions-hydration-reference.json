@@ -1,0 +1,363 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "source": "package/dist/antd.min.js",
+  "react": "18.3.1",
+  "server": "react-dom-server-legacy.browser.production.min.js in a DOM-free context",
+  "repeat": 2,
+  "cases": [
+    {
+      "profile": "default-backward",
+      "before": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @Xi",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          8,
+          8,
+          "forward"
+        ],
+        "counter": null,
+        "events": [
+          "Draft @Xi"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "controlled-backward",
+      "before": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          10,
+          10,
+          "forward"
+        ],
+        "counter": null,
+        "events": [
+          "Draft @Xi"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "default-edited",
+      "before": {
+        "value": "Draft @bob",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          10,
+          10,
+          "forward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @aliX",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          11,
+          11,
+          "forward"
+        ],
+        "counter": null,
+        "events": [
+          "Draft @aliX"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "controlled-edited",
+      "before": {
+        "value": "Draft @bob",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          10,
+          10,
+          "forward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          10,
+          10,
+          "forward"
+        ],
+        "counter": null,
+        "events": [
+          "Draft @aliX"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "count-edited",
+      "before": {
+        "value": "Draft @bob",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": "10 / 20",
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          10,
+          10,
+          "forward"
+        ],
+        "counter": "10 / 20",
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @aliX",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          11,
+          11,
+          "forward"
+        ],
+        "counter": "11 / 20",
+        "events": [
+          "Draft @aliX"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "count-backward",
+      "before": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": "10 / 20",
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": "10 / 20",
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @Xi",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          8,
+          8,
+          "forward"
+        ],
+        "counter": "9 / 20",
+        "events": [
+          "Draft @Xi"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "default-unfocused",
+      "before": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": false,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": false,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @Xi",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          8,
+          8,
+          "forward"
+        ],
+        "counter": null,
+        "events": [
+          "Draft @Xi"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "profile": "default-shadow",
+      "before": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "hydrated": {
+        "value": "Draft @ali",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          7,
+          9,
+          "backward"
+        ],
+        "counter": null,
+        "events": [],
+        "errors": []
+      },
+      "edited": {
+        "value": "Draft @Xi",
+        "sameEditor": true,
+        "focused": true,
+        "selection": [
+          8,
+          8,
+          "forward"
+        ],
+        "counter": null,
+        "events": [
+          "Draft @Xi"
+        ],
+        "errors": []
+      }
+    }
+  ]
+}

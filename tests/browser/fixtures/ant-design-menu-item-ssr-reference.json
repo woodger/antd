@@ -1,0 +1,22 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "results": [
+    {
+      "id": "rtl-local-in-ltr-provider",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light css-1y106cm css-var-root ant-menu-css-var\" id=\"audit-menu\" dir=\"ltr\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open\" role=\"none\" rootClassName=\"sub-menu-branch-token\"><div role=\"menuitem\" style=\"padding-left:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"audit-menu-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"audit-menu-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"audit-menu-branch-popup\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"audit-menu-leaf\" data-item-token=\"kept\" style=\"padding-left:48px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Leaf</span></li></ul></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": []
+    },
+    {
+      "id": "ltr-local-in-rtl-provider",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light ant-menu-rtl css-1y106cm css-var-root ant-menu-css-var\" id=\"audit-menu\" dir=\"rtl\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open\" role=\"none\" rootClassName=\"sub-menu-branch-token\"><div role=\"menuitem\" style=\"padding-right:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"audit-menu-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"audit-menu-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-rtl ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"audit-menu-branch-popup\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"audit-menu-leaf\" data-item-token=\"kept\" style=\"padding-right:48px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Leaf</span></li></ul></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": []
+    },
+    {
+      "id": "rtl-provider",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light ant-menu-rtl css-1y106cm css-var-root ant-menu-css-var\" id=\"audit-menu\" dir=\"rtl\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open\" role=\"none\" rootClassName=\"sub-menu-branch-token\"><div role=\"menuitem\" style=\"padding-right:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"audit-menu-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"audit-menu-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-rtl ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"audit-menu-branch-popup\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"audit-menu-leaf\" data-item-token=\"kept\" style=\"padding-right:48px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Leaf</span></li></ul></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": []
+    }
+  ]
+}

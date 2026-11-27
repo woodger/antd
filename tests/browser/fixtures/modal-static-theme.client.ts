@@ -1,0 +1,11 @@
+// Connects only package styles. Colors are compared without CSS consumers.
+import '@woodger/antd/styles.css';
+import { mount } from 'svelte';
+import ModalStaticTheme from './ModalStaticTheme.svelte';
+
+const target = document.getElementById('root');
+if (!target) {
+  throw new Error('Missing modal theme fixture root');
+}
+const profile = new URLSearchParams(location.search).get('profile') ?? 'dark';
+mount(ModalStaticTheme, { target, props: { profile } });

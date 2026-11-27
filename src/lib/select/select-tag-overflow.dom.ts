@@ -1,0 +1,68 @@
+import { getResponsiveTagCount } from './select-tag-overflow.engine';
+
+/** As SelectInput: scrollWidth at width=0 measures text without the remnant flex-container. */
+export function measureSelectInput(input: HTMLInputElement | HTMLTextAreaElement): number {
+  const previous = { width: input.style.width, flex: input.style.flex };
+  input.style.flex = 'none';
+  input.style.width = '0px';
+  const width = input.scrollWidth;
+  input.style.width = previous.width;
+  input.style.flex = previous.flex;
+  return Math.max(4, width);
+}
+
+/** Source Input preserves logical width prop, but after the measurement removes its DOM setter. */
+export function measureSelectSourceInput(input: HTMLInputElement | HTMLTextAreaElement): number {
+  input.style.width = '0px';
+  const width = input.scrollWidth;
+  input.style.width = '';
+  return width;
+}
+
+/** Hidden tags are measured outside flow; observer/RAF belongs to the component instance. */
+export function connectSelectTagOverflow(
+  host: HTMLElement,
+  update: (count: number) => void,
+  selectors: { tag: string; rest: string; input: string | HTMLElement | undefined; } = {
+    tag: ':scope > [data-select-tag]',
+    rest: ':scope > [data-select-rest]',
+    input: ':scope > input'
+  }
+) {
+  const view = host.ownerDocument.defaultView!;
+  const tags = [...host.querySelectorAll<HTMLElement>(selectors.tag)];
+  const rest = host.querySelector<HTMLElement>(selectors.rest);
+  const defaultInput = typeof selectors.input === 'string'
+    ? host.querySelector<HTMLInputElement>(selectors.input) : null;
+  const input = typeof selectors.input === 'string' ? defaultInput : selectors.input;
+  let frame = 0;
+  let previous = -1;
+
+  function width(element: HTMLElement) {
+    const style = view.getComputedStyle(element);
+    return element.getBoundingClientRect().width
+      + (parseFloat(style.marginInlineStart) || 0)
+      + (parseFloat(style.marginInlineEnd) || 0);
+  }
+  function measure() {
+    frame = 0;
+    const available = host.clientWidth - (defaultInput ? measureSelectInput(defaultInput) : input ? width(input) : 4);
+    const count = getResponsiveTagCount(tags.map(width), available, rest ? width(rest) : 0);
+    if (count !== previous) {
+      previous = count;
+      update(count);
+    }
+  }
+  function schedule() {
+    if (!frame) frame = view.requestAnimationFrame(measure);
+  }
+  const observer = new view.ResizeObserver(schedule);
+  for (const element of [host, ...tags, rest, input]) {
+    if (element) observer.observe(element);
+  }
+  measure();
+  return () => {
+    observer.disconnect();
+    if (frame) view.cancelAnimationFrame(frame);
+  };
+}

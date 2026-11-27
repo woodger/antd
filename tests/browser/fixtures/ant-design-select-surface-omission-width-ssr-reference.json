@@ -1,0 +1,5322 @@
+{
+  "reference": {
+    "mode": "ssr",
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "chromium": null,
+    "source": "Fresh actual Original public open Select multiple width history. Actual displayed nonempty query, semantic font-only change, unrelated data prop update, physical query fill, simultaneous font/query update. Complete raw/common props/callbacks/DOM/CSSOM/computed styles/boxes retained. Closed-query precursor remains immutable. No Native reads, runtime patches, output correction or SSR computed-width oracle.",
+    "archives": [
+      {
+        "archive": ".upstream/artifacts/antd-6.6.8.tgz",
+        "member": "package/dist/antd.js",
+        "path": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+        "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+        "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+        "byteEqual": true
+      },
+      {
+        "archive": ".upstream/artifacts/react-18.3.1.tgz",
+        "member": "package/umd/react.production.min.js",
+        "path": ".upstream/artifacts/react-18.3.1/umd/react.production.min.js",
+        "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd",
+        "archiveSha256": "8d9bed01a672e7eaf387942d781ad47c6a43089a30a0306060f9fd5ac7870347",
+        "byteEqual": true
+      },
+      {
+        "archive": ".upstream/artifacts/react-dom-18.3.1.tgz",
+        "member": "package/umd/react-dom.production.min.js",
+        "path": ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js",
+        "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d",
+        "archiveSha256": "031d4427a99f2f3f6cac18bbbf308594a67e4f47d10f4896fdec446505b040e0",
+        "byteEqual": true
+      },
+      {
+        "archive": ".upstream/artifacts/react-dom-18.3.1.tgz",
+        "member": "package/umd/react-dom-server-legacy.browser.production.min.js",
+        "path": ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js",
+        "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5",
+        "archiveSha256": "031d4427a99f2f3f6cac18bbbf308594a67e4f47d10f4896fdec446505b040e0",
+        "byteEqual": true
+      }
+    ],
+    "protocol": ".upstream/artifacts/select-surface-omission-width-protocol-freeze.json",
+    "protocolSha256": "90f0a2d58cff6a644a186b51ddb4f17590d517570d57c010399aeb2d46eccd59",
+    "inputPins": {
+      ".upstream/artifacts/select-surface-omission-width-source-app.mjs": "ed270c61c79bb7a87517aba1cedbccc48494e9d9337499d05e60d8eb00adbca5",
+      ".upstream/artifacts/select-surface-omission-width-capture.mjs": "faad871a049b5f03b354745e5f13701eae5be961486d18a9855e14f560511a95",
+      ".upstream/artifacts/select-surface-omission-width-verify.mjs": "2d9d0e7027d2a9a60234e76af524b06a81506db80d7511d6e1712fde87e6f9ed",
+      ".upstream/artifacts/select-surface-omission-width-freeze-protocol.mjs": "be9a02e85ee3e10a97fcfef315b3ba1f77931bb5f0909eb47c5aecf39c5ff8bf"
+    },
+    "preservedReferences": 471,
+    "errors": [],
+    "diagnostics": []
+  },
+  "cases": [
+    {
+      "id": "select-surface-omission-width-open",
+      "states": [
+        {
+          "name": "query4-font12",
+          "view": {
+            "rootPresent": true,
+            "popupPresent": false,
+            "prefixPresent": false,
+            "authoredClasses": [
+              "surface-control",
+              "surface-omission-root",
+              "surface-omission-input"
+            ],
+            "leakedAttributes": []
+          },
+          "state": {
+            "fontSize": 12,
+            "query": "WWWW",
+            "unrelated": "parent-revision-0",
+            "open": true,
+            "model": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 0
+                }
+              ]
+            },
+            "rawModel": {
+              "root": {
+                "ref": 1
+              },
+              "objects": [
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "events": [],
+            "rawEvents": [],
+            "calls": [],
+            "authoredProps": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "ref",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "current",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "id",
+                  "value": "surface-omission-width-field"
+                },
+                {
+                  "key": "className",
+                  "value": "surface-control"
+                },
+                {
+                  "key": "style",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "width",
+                        "value": "100%"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "classNames",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "root",
+                        "value": "surface-omission-root"
+                      },
+                      {
+                        "key": "input",
+                        "value": "surface-omission-input"
+                      },
+                      {
+                        "key": "popup",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "root",
+                              "value": "surface-omission-popup"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "input",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "fontSize",
+                              "value": 12
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "mode",
+                  "value": "multiple"
+                },
+                {
+                  "key": "options",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "0",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "a"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Alpha"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "1",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "b"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Beta"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "length",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "open",
+                  "value": true
+                },
+                {
+                  "key": "listHeight",
+                  "value": 140
+                },
+                {
+                  "key": "placeholder",
+                  "value": "Width query"
+                },
+                {
+                  "key": "aria-label",
+                  "value": "Surface width value"
+                },
+                {
+                  "key": "data-parent-revision",
+                  "value": "parent-revision-0"
+                },
+                {
+                  "key": "showSearch",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "filterOption",
+                        "value": false
+                      },
+                      {
+                        "key": "searchValue",
+                        "value": "WWWW"
+                      },
+                      {
+                        "key": "onSearch",
+                        "value": {
+                          "$": "authored",
+                          "role": {
+                            "callback": "width-search"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "onOpenChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-open"
+                    }
+                  }
+                },
+                {
+                  "key": "onChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-change"
+                    }
+                  }
+                },
+                {
+                  "key": "onSelect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-select"
+                    }
+                  }
+                },
+                {
+                  "key": "onDeselect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-deselect"
+                    }
+                  }
+                },
+                {
+                  "key": "onClear",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-clear"
+                    }
+                  }
+                }
+              ]
+            },
+            "rawAuthoredProps": {
+              "root": {
+                "ref": 2
+              },
+              "objects": [
+                {
+                  "id": 2,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "ref",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "id",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "className",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "style",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "classNames",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "styles",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "mode",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "options",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "open",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "listHeight",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "placeholder",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "aria-label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "showSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onSelect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onDeselect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onClear",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "ref",
+                      "value": {
+                        "ref": 3
+                      }
+                    },
+                    {
+                      "key": "id",
+                      "value": "surface-omission-width-field"
+                    },
+                    {
+                      "key": "className",
+                      "value": "surface-control"
+                    },
+                    {
+                      "key": "style",
+                      "value": {
+                        "ref": 4
+                      }
+                    },
+                    {
+                      "key": "classNames",
+                      "value": {
+                        "ref": 5
+                      }
+                    },
+                    {
+                      "key": "styles",
+                      "value": {
+                        "ref": 7
+                      }
+                    },
+                    {
+                      "key": "mode",
+                      "value": "multiple"
+                    },
+                    {
+                      "key": "options",
+                      "value": {
+                        "ref": 9
+                      }
+                    },
+                    {
+                      "key": "value",
+                      "value": {
+                        "ref": 1
+                      }
+                    },
+                    {
+                      "key": "open",
+                      "value": true
+                    },
+                    {
+                      "key": "listHeight",
+                      "value": 140
+                    },
+                    {
+                      "key": "placeholder",
+                      "value": "Width query"
+                    },
+                    {
+                      "key": "aria-label",
+                      "value": "Surface width value"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "value": "parent-revision-0"
+                    },
+                    {
+                      "key": "showSearch",
+                      "value": {
+                        "ref": 12
+                      }
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "value": {
+                        "ref": 14
+                      }
+                    },
+                    {
+                      "key": "onChange",
+                      "value": {
+                        "ref": 15
+                      }
+                    },
+                    {
+                      "key": "onSelect",
+                      "value": {
+                        "ref": 16
+                      }
+                    },
+                    {
+                      "key": "onDeselect",
+                      "value": {
+                        "ref": 17
+                      }
+                    },
+                    {
+                      "key": "onClear",
+                      "value": {
+                        "ref": 18
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 3,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "current",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "current",
+                      "value": null
+                    }
+                  ]
+                },
+                {
+                  "id": 4,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "width",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "width",
+                      "value": "100%"
+                    }
+                  ]
+                },
+                {
+                  "id": 5,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "popup",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-root"
+                    },
+                    {
+                      "key": "input",
+                      "value": "surface-omission-input"
+                    },
+                    {
+                      "key": "popup",
+                      "value": {
+                        "ref": 6
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-popup"
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "input",
+                      "value": {
+                        "ref": 8
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 8,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "fontSize",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "fontSize",
+                      "value": 12
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "0",
+                      "value": {
+                        "ref": 10
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "value": {
+                        "ref": 11
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "a"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Alpha"
+                    }
+                  ]
+                },
+                {
+                  "id": 11,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "b"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Beta"
+                    }
+                  ]
+                },
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "filterOption",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "searchValue",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "onSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "filterOption",
+                      "value": false
+                    },
+                    {
+                      "key": "searchValue",
+                      "value": "WWWW"
+                    },
+                    {
+                      "key": "onSearch",
+                      "value": {
+                        "ref": 13
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-search"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 14,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-open"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-change"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-select"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 17,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-deselect"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 18,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-clear"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            "authoredProvider": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "theme",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "token",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "motion",
+                              "value": false
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "cssVar",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "key",
+                              "value": "select-surface-omission-width"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "popupOverflow",
+                  "value": "viewport"
+                }
+              ]
+            },
+            "rawAuthoredProvider": {
+              "root": {
+                "ref": 19
+              },
+              "objects": [
+                {
+                  "id": 19,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "theme",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "theme",
+                      "value": {
+                        "ref": 20
+                      }
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "value": "viewport"
+                    }
+                  ]
+                },
+                {
+                  "id": 20,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "token",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "cssVar",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "token",
+                      "value": {
+                        "ref": 21
+                      }
+                    },
+                    {
+                      "key": "cssVar",
+                      "value": {
+                        "ref": 22
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 21,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "motion",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "motion",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "id": 22,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "key",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "key",
+                      "value": "select-surface-omission-width"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "resources": {
+            "timers": 0,
+            "frames": 0,
+            "measurements": 0,
+            "microtasks": 0
+          },
+          "rawHtml": "<section data-surface-case=\"select-surface-omission-width-open\" data-parent-revision=\"parent-revision-0\" style=\"font-family:initial;font-size:16px;line-height:normal\"><div style=\"position:absolute;left:300px;top:200px;width:280px\"><div data-parent-revision=\"parent-revision-0\" class=\"ant-select ant-select-outlined surface-control surface-omission-root select-surface-omission-width ant-select-css-var css-dev-only-do-not-override-1y106cm ant-select-multiple ant-select-show-arrow ant-select-show-search\" style=\"width:100%\"><div class=\"ant-select-content\"><div class=\"ant-select-content-item ant-select-content-item-prefix\" style=\"opacity:1\"><div class=\"ant-select-placeholder\">Width query</div></div><div class=\"ant-select-content-item ant-select-content-item-suffix\" style=\"opacity:1\"><input id=\"surface-omission-width-field\" type=\"text\" aria-label=\"Surface width value\" style=\"font-size:12px\" autoComplete=\"new-password\" class=\"ant-select-input surface-omission-input\" role=\"combobox\" aria-expanded=\"false\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" value=\"\"/></div></div><div class=\"ant-select-suffix\"><span role=\"img\" aria-label=\"down\" class=\"anticon anticon-down\"><svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"down\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z\"></path></svg></span></div></div></div><button type=\"button\" data-surface-outside=\"\" style=\"position:fixed;left:16px;top:80px\">Outside width</button><div hidden=\"\" data-surface-command=\"\"></div></section>",
+          "htmlSha256": "c7d68338bb2f6f485e8105320d555f25db002e106cbe6c8c73ccd94fd34a1976"
+        },
+        {
+          "name": "query4-font32",
+          "view": {
+            "rootPresent": true,
+            "popupPresent": false,
+            "prefixPresent": false,
+            "authoredClasses": [
+              "surface-control",
+              "surface-omission-root",
+              "surface-omission-input"
+            ],
+            "leakedAttributes": []
+          },
+          "state": {
+            "fontSize": 32,
+            "query": "WWWW",
+            "unrelated": "parent-revision-0",
+            "open": true,
+            "model": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 0
+                }
+              ]
+            },
+            "rawModel": {
+              "root": {
+                "ref": 1
+              },
+              "objects": [
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "events": [],
+            "rawEvents": [],
+            "calls": [],
+            "authoredProps": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "ref",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "current",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "id",
+                  "value": "surface-omission-width-field"
+                },
+                {
+                  "key": "className",
+                  "value": "surface-control"
+                },
+                {
+                  "key": "style",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "width",
+                        "value": "100%"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "classNames",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "root",
+                        "value": "surface-omission-root"
+                      },
+                      {
+                        "key": "input",
+                        "value": "surface-omission-input"
+                      },
+                      {
+                        "key": "popup",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "root",
+                              "value": "surface-omission-popup"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "input",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "fontSize",
+                              "value": 32
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "mode",
+                  "value": "multiple"
+                },
+                {
+                  "key": "options",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "0",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "a"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Alpha"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "1",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "b"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Beta"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "length",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "open",
+                  "value": true
+                },
+                {
+                  "key": "listHeight",
+                  "value": 140
+                },
+                {
+                  "key": "placeholder",
+                  "value": "Width query"
+                },
+                {
+                  "key": "aria-label",
+                  "value": "Surface width value"
+                },
+                {
+                  "key": "data-parent-revision",
+                  "value": "parent-revision-0"
+                },
+                {
+                  "key": "showSearch",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "filterOption",
+                        "value": false
+                      },
+                      {
+                        "key": "searchValue",
+                        "value": "WWWW"
+                      },
+                      {
+                        "key": "onSearch",
+                        "value": {
+                          "$": "authored",
+                          "role": {
+                            "callback": "width-search"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "onOpenChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-open"
+                    }
+                  }
+                },
+                {
+                  "key": "onChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-change"
+                    }
+                  }
+                },
+                {
+                  "key": "onSelect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-select"
+                    }
+                  }
+                },
+                {
+                  "key": "onDeselect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-deselect"
+                    }
+                  }
+                },
+                {
+                  "key": "onClear",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-clear"
+                    }
+                  }
+                }
+              ]
+            },
+            "rawAuthoredProps": {
+              "root": {
+                "ref": 2
+              },
+              "objects": [
+                {
+                  "id": 2,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "ref",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "id",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "className",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "style",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "classNames",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "styles",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "mode",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "options",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "open",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "listHeight",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "placeholder",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "aria-label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "showSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onSelect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onDeselect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onClear",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "ref",
+                      "value": {
+                        "ref": 3
+                      }
+                    },
+                    {
+                      "key": "id",
+                      "value": "surface-omission-width-field"
+                    },
+                    {
+                      "key": "className",
+                      "value": "surface-control"
+                    },
+                    {
+                      "key": "style",
+                      "value": {
+                        "ref": 4
+                      }
+                    },
+                    {
+                      "key": "classNames",
+                      "value": {
+                        "ref": 5
+                      }
+                    },
+                    {
+                      "key": "styles",
+                      "value": {
+                        "ref": 7
+                      }
+                    },
+                    {
+                      "key": "mode",
+                      "value": "multiple"
+                    },
+                    {
+                      "key": "options",
+                      "value": {
+                        "ref": 9
+                      }
+                    },
+                    {
+                      "key": "value",
+                      "value": {
+                        "ref": 1
+                      }
+                    },
+                    {
+                      "key": "open",
+                      "value": true
+                    },
+                    {
+                      "key": "listHeight",
+                      "value": 140
+                    },
+                    {
+                      "key": "placeholder",
+                      "value": "Width query"
+                    },
+                    {
+                      "key": "aria-label",
+                      "value": "Surface width value"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "value": "parent-revision-0"
+                    },
+                    {
+                      "key": "showSearch",
+                      "value": {
+                        "ref": 12
+                      }
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "value": {
+                        "ref": 14
+                      }
+                    },
+                    {
+                      "key": "onChange",
+                      "value": {
+                        "ref": 15
+                      }
+                    },
+                    {
+                      "key": "onSelect",
+                      "value": {
+                        "ref": 16
+                      }
+                    },
+                    {
+                      "key": "onDeselect",
+                      "value": {
+                        "ref": 17
+                      }
+                    },
+                    {
+                      "key": "onClear",
+                      "value": {
+                        "ref": 18
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 3,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "current",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "current",
+                      "value": null
+                    }
+                  ]
+                },
+                {
+                  "id": 4,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "width",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "width",
+                      "value": "100%"
+                    }
+                  ]
+                },
+                {
+                  "id": 5,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "popup",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-root"
+                    },
+                    {
+                      "key": "input",
+                      "value": "surface-omission-input"
+                    },
+                    {
+                      "key": "popup",
+                      "value": {
+                        "ref": 6
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-popup"
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "input",
+                      "value": {
+                        "ref": 8
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 8,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "fontSize",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "fontSize",
+                      "value": 32
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "0",
+                      "value": {
+                        "ref": 10
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "value": {
+                        "ref": 11
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "a"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Alpha"
+                    }
+                  ]
+                },
+                {
+                  "id": 11,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "b"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Beta"
+                    }
+                  ]
+                },
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "filterOption",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "searchValue",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "onSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "filterOption",
+                      "value": false
+                    },
+                    {
+                      "key": "searchValue",
+                      "value": "WWWW"
+                    },
+                    {
+                      "key": "onSearch",
+                      "value": {
+                        "ref": 13
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-search"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 14,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-open"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-change"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-select"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 17,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-deselect"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 18,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-clear"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            "authoredProvider": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "theme",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "token",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "motion",
+                              "value": false
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "cssVar",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "key",
+                              "value": "select-surface-omission-width"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "popupOverflow",
+                  "value": "viewport"
+                }
+              ]
+            },
+            "rawAuthoredProvider": {
+              "root": {
+                "ref": 19
+              },
+              "objects": [
+                {
+                  "id": 19,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "theme",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "theme",
+                      "value": {
+                        "ref": 20
+                      }
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "value": "viewport"
+                    }
+                  ]
+                },
+                {
+                  "id": 20,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "token",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "cssVar",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "token",
+                      "value": {
+                        "ref": 21
+                      }
+                    },
+                    {
+                      "key": "cssVar",
+                      "value": {
+                        "ref": 22
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 21,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "motion",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "motion",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "id": 22,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "key",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "key",
+                      "value": "select-surface-omission-width"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "resources": {
+            "timers": 0,
+            "frames": 0,
+            "measurements": 0,
+            "microtasks": 0
+          },
+          "rawHtml": "<section data-surface-case=\"select-surface-omission-width-open\" data-parent-revision=\"parent-revision-0\" style=\"font-family:initial;font-size:16px;line-height:normal\"><div style=\"position:absolute;left:300px;top:200px;width:280px\"><div data-parent-revision=\"parent-revision-0\" class=\"ant-select ant-select-outlined surface-control surface-omission-root select-surface-omission-width ant-select-css-var css-dev-only-do-not-override-1y106cm ant-select-multiple ant-select-show-arrow ant-select-show-search\" style=\"width:100%\"><div class=\"ant-select-content\"><div class=\"ant-select-content-item ant-select-content-item-prefix\" style=\"opacity:1\"><div class=\"ant-select-placeholder\">Width query</div></div><div class=\"ant-select-content-item ant-select-content-item-suffix\" style=\"opacity:1\"><input id=\"surface-omission-width-field\" type=\"text\" aria-label=\"Surface width value\" style=\"font-size:32px\" autoComplete=\"new-password\" class=\"ant-select-input surface-omission-input\" role=\"combobox\" aria-expanded=\"false\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" value=\"\"/></div></div><div class=\"ant-select-suffix\"><span role=\"img\" aria-label=\"down\" class=\"anticon anticon-down\"><svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"down\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z\"></path></svg></span></div></div></div><button type=\"button\" data-surface-outside=\"\" style=\"position:fixed;left:16px;top:80px\">Outside width</button><div hidden=\"\" data-surface-command=\"\"></div></section>",
+          "htmlSha256": "36403b53edfdcf1169f2632a6df4824d166059d40c88251ed11b690fae96d62a"
+        },
+        {
+          "name": "query5-font32",
+          "view": {
+            "rootPresent": true,
+            "popupPresent": false,
+            "prefixPresent": false,
+            "authoredClasses": [
+              "surface-control",
+              "surface-omission-root",
+              "surface-omission-input"
+            ],
+            "leakedAttributes": []
+          },
+          "state": {
+            "fontSize": 32,
+            "query": "WWWWW",
+            "unrelated": "parent-revision-0",
+            "open": true,
+            "model": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 0
+                }
+              ]
+            },
+            "rawModel": {
+              "root": {
+                "ref": 1
+              },
+              "objects": [
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "events": [],
+            "rawEvents": [],
+            "calls": [],
+            "authoredProps": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "ref",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "current",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "id",
+                  "value": "surface-omission-width-field"
+                },
+                {
+                  "key": "className",
+                  "value": "surface-control"
+                },
+                {
+                  "key": "style",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "width",
+                        "value": "100%"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "classNames",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "root",
+                        "value": "surface-omission-root"
+                      },
+                      {
+                        "key": "input",
+                        "value": "surface-omission-input"
+                      },
+                      {
+                        "key": "popup",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "root",
+                              "value": "surface-omission-popup"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "input",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "fontSize",
+                              "value": 32
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "mode",
+                  "value": "multiple"
+                },
+                {
+                  "key": "options",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "0",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "a"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Alpha"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "1",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "b"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Beta"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "length",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "open",
+                  "value": true
+                },
+                {
+                  "key": "listHeight",
+                  "value": 140
+                },
+                {
+                  "key": "placeholder",
+                  "value": "Width query"
+                },
+                {
+                  "key": "aria-label",
+                  "value": "Surface width value"
+                },
+                {
+                  "key": "data-parent-revision",
+                  "value": "parent-revision-0"
+                },
+                {
+                  "key": "showSearch",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "filterOption",
+                        "value": false
+                      },
+                      {
+                        "key": "searchValue",
+                        "value": "WWWWW"
+                      },
+                      {
+                        "key": "onSearch",
+                        "value": {
+                          "$": "authored",
+                          "role": {
+                            "callback": "width-search"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "onOpenChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-open"
+                    }
+                  }
+                },
+                {
+                  "key": "onChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-change"
+                    }
+                  }
+                },
+                {
+                  "key": "onSelect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-select"
+                    }
+                  }
+                },
+                {
+                  "key": "onDeselect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-deselect"
+                    }
+                  }
+                },
+                {
+                  "key": "onClear",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-clear"
+                    }
+                  }
+                }
+              ]
+            },
+            "rawAuthoredProps": {
+              "root": {
+                "ref": 2
+              },
+              "objects": [
+                {
+                  "id": 2,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "ref",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "id",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "className",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "style",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "classNames",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "styles",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "mode",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "options",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "open",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "listHeight",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "placeholder",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "aria-label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "showSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onSelect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onDeselect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onClear",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "ref",
+                      "value": {
+                        "ref": 3
+                      }
+                    },
+                    {
+                      "key": "id",
+                      "value": "surface-omission-width-field"
+                    },
+                    {
+                      "key": "className",
+                      "value": "surface-control"
+                    },
+                    {
+                      "key": "style",
+                      "value": {
+                        "ref": 4
+                      }
+                    },
+                    {
+                      "key": "classNames",
+                      "value": {
+                        "ref": 5
+                      }
+                    },
+                    {
+                      "key": "styles",
+                      "value": {
+                        "ref": 7
+                      }
+                    },
+                    {
+                      "key": "mode",
+                      "value": "multiple"
+                    },
+                    {
+                      "key": "options",
+                      "value": {
+                        "ref": 9
+                      }
+                    },
+                    {
+                      "key": "value",
+                      "value": {
+                        "ref": 1
+                      }
+                    },
+                    {
+                      "key": "open",
+                      "value": true
+                    },
+                    {
+                      "key": "listHeight",
+                      "value": 140
+                    },
+                    {
+                      "key": "placeholder",
+                      "value": "Width query"
+                    },
+                    {
+                      "key": "aria-label",
+                      "value": "Surface width value"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "value": "parent-revision-0"
+                    },
+                    {
+                      "key": "showSearch",
+                      "value": {
+                        "ref": 12
+                      }
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "value": {
+                        "ref": 14
+                      }
+                    },
+                    {
+                      "key": "onChange",
+                      "value": {
+                        "ref": 15
+                      }
+                    },
+                    {
+                      "key": "onSelect",
+                      "value": {
+                        "ref": 16
+                      }
+                    },
+                    {
+                      "key": "onDeselect",
+                      "value": {
+                        "ref": 17
+                      }
+                    },
+                    {
+                      "key": "onClear",
+                      "value": {
+                        "ref": 18
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 3,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "current",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "current",
+                      "value": null
+                    }
+                  ]
+                },
+                {
+                  "id": 4,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "width",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "width",
+                      "value": "100%"
+                    }
+                  ]
+                },
+                {
+                  "id": 5,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "popup",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-root"
+                    },
+                    {
+                      "key": "input",
+                      "value": "surface-omission-input"
+                    },
+                    {
+                      "key": "popup",
+                      "value": {
+                        "ref": 6
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-popup"
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "input",
+                      "value": {
+                        "ref": 8
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 8,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "fontSize",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "fontSize",
+                      "value": 32
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "0",
+                      "value": {
+                        "ref": 10
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "value": {
+                        "ref": 11
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "a"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Alpha"
+                    }
+                  ]
+                },
+                {
+                  "id": 11,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "b"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Beta"
+                    }
+                  ]
+                },
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "filterOption",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "searchValue",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "onSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "filterOption",
+                      "value": false
+                    },
+                    {
+                      "key": "searchValue",
+                      "value": "WWWWW"
+                    },
+                    {
+                      "key": "onSearch",
+                      "value": {
+                        "ref": 13
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-search"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 14,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-open"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-change"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-select"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 17,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-deselect"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 18,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-clear"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            "authoredProvider": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "theme",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "token",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "motion",
+                              "value": false
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "cssVar",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "key",
+                              "value": "select-surface-omission-width"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "popupOverflow",
+                  "value": "viewport"
+                }
+              ]
+            },
+            "rawAuthoredProvider": {
+              "root": {
+                "ref": 19
+              },
+              "objects": [
+                {
+                  "id": 19,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "theme",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "theme",
+                      "value": {
+                        "ref": 20
+                      }
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "value": "viewport"
+                    }
+                  ]
+                },
+                {
+                  "id": 20,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "token",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "cssVar",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "token",
+                      "value": {
+                        "ref": 21
+                      }
+                    },
+                    {
+                      "key": "cssVar",
+                      "value": {
+                        "ref": 22
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 21,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "motion",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "motion",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "id": 22,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "key",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "key",
+                      "value": "select-surface-omission-width"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "resources": {
+            "timers": 0,
+            "frames": 0,
+            "measurements": 0,
+            "microtasks": 0
+          },
+          "rawHtml": "<section data-surface-case=\"select-surface-omission-width-open\" data-parent-revision=\"parent-revision-0\" style=\"font-family:initial;font-size:16px;line-height:normal\"><div style=\"position:absolute;left:300px;top:200px;width:280px\"><div data-parent-revision=\"parent-revision-0\" class=\"ant-select ant-select-outlined surface-control surface-omission-root select-surface-omission-width ant-select-css-var css-dev-only-do-not-override-1y106cm ant-select-multiple ant-select-show-arrow ant-select-show-search\" style=\"width:100%\"><div class=\"ant-select-content\"><div class=\"ant-select-content-item ant-select-content-item-prefix\" style=\"opacity:1\"><div class=\"ant-select-placeholder\">Width query</div></div><div class=\"ant-select-content-item ant-select-content-item-suffix\" style=\"opacity:1\"><input id=\"surface-omission-width-field\" type=\"text\" aria-label=\"Surface width value\" style=\"font-size:32px\" autoComplete=\"new-password\" class=\"ant-select-input surface-omission-input\" role=\"combobox\" aria-expanded=\"false\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" value=\"\"/></div></div><div class=\"ant-select-suffix\"><span role=\"img\" aria-label=\"down\" class=\"anticon anticon-down\"><svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"down\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z\"></path></svg></span></div></div></div><button type=\"button\" data-surface-outside=\"\" style=\"position:fixed;left:16px;top:80px\">Outside width</button><div hidden=\"\" data-surface-command=\"\"></div></section>",
+          "htmlSha256": "36403b53edfdcf1169f2632a6df4824d166059d40c88251ed11b690fae96d62a"
+        },
+        {
+          "name": "query6-font18",
+          "view": {
+            "rootPresent": true,
+            "popupPresent": false,
+            "prefixPresent": false,
+            "authoredClasses": [
+              "surface-control",
+              "surface-omission-root",
+              "surface-omission-input"
+            ],
+            "leakedAttributes": []
+          },
+          "state": {
+            "fontSize": 18,
+            "query": "WWWWWW",
+            "unrelated": "parent-revision-0",
+            "open": true,
+            "model": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 0
+                }
+              ]
+            },
+            "rawModel": {
+              "root": {
+                "ref": 1
+              },
+              "objects": [
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "events": [],
+            "rawEvents": [],
+            "calls": [],
+            "authoredProps": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "ref",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "current",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "id",
+                  "value": "surface-omission-width-field"
+                },
+                {
+                  "key": "className",
+                  "value": "surface-control"
+                },
+                {
+                  "key": "style",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "width",
+                        "value": "100%"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "classNames",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "root",
+                        "value": "surface-omission-root"
+                      },
+                      {
+                        "key": "input",
+                        "value": "surface-omission-input"
+                      },
+                      {
+                        "key": "popup",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "root",
+                              "value": "surface-omission-popup"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "input",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "fontSize",
+                              "value": 18
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "mode",
+                  "value": "multiple"
+                },
+                {
+                  "key": "options",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "0",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "a"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Alpha"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "1",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "value",
+                              "value": "b"
+                            },
+                            {
+                              "key": "label",
+                              "value": "Beta"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "length",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": {
+                    "$": "array",
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "open",
+                  "value": true
+                },
+                {
+                  "key": "listHeight",
+                  "value": 140
+                },
+                {
+                  "key": "placeholder",
+                  "value": "Width query"
+                },
+                {
+                  "key": "aria-label",
+                  "value": "Surface width value"
+                },
+                {
+                  "key": "data-parent-revision",
+                  "value": "parent-revision-0"
+                },
+                {
+                  "key": "showSearch",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "filterOption",
+                        "value": false
+                      },
+                      {
+                        "key": "searchValue",
+                        "value": "WWWWWW"
+                      },
+                      {
+                        "key": "onSearch",
+                        "value": {
+                          "$": "authored",
+                          "role": {
+                            "callback": "width-search"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "onOpenChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-open"
+                    }
+                  }
+                },
+                {
+                  "key": "onChange",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-change"
+                    }
+                  }
+                },
+                {
+                  "key": "onSelect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-select"
+                    }
+                  }
+                },
+                {
+                  "key": "onDeselect",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-deselect"
+                    }
+                  }
+                },
+                {
+                  "key": "onClear",
+                  "value": {
+                    "$": "authored",
+                    "role": {
+                      "callback": "width-clear"
+                    }
+                  }
+                }
+              ]
+            },
+            "rawAuthoredProps": {
+              "root": {
+                "ref": 2
+              },
+              "objects": [
+                {
+                  "id": 2,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "ref",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "id",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "className",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "style",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "classNames",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "styles",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "mode",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "options",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "open",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "listHeight",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "placeholder",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "aria-label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "showSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onChange",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onSelect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onDeselect",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    },
+                    {
+                      "key": "onClear",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "ref",
+                      "value": {
+                        "ref": 3
+                      }
+                    },
+                    {
+                      "key": "id",
+                      "value": "surface-omission-width-field"
+                    },
+                    {
+                      "key": "className",
+                      "value": "surface-control"
+                    },
+                    {
+                      "key": "style",
+                      "value": {
+                        "ref": 4
+                      }
+                    },
+                    {
+                      "key": "classNames",
+                      "value": {
+                        "ref": 5
+                      }
+                    },
+                    {
+                      "key": "styles",
+                      "value": {
+                        "ref": 7
+                      }
+                    },
+                    {
+                      "key": "mode",
+                      "value": "multiple"
+                    },
+                    {
+                      "key": "options",
+                      "value": {
+                        "ref": 9
+                      }
+                    },
+                    {
+                      "key": "value",
+                      "value": {
+                        "ref": 1
+                      }
+                    },
+                    {
+                      "key": "open",
+                      "value": true
+                    },
+                    {
+                      "key": "listHeight",
+                      "value": 140
+                    },
+                    {
+                      "key": "placeholder",
+                      "value": "Width query"
+                    },
+                    {
+                      "key": "aria-label",
+                      "value": "Surface width value"
+                    },
+                    {
+                      "key": "data-parent-revision",
+                      "value": "parent-revision-0"
+                    },
+                    {
+                      "key": "showSearch",
+                      "value": {
+                        "ref": 12
+                      }
+                    },
+                    {
+                      "key": "onOpenChange",
+                      "value": {
+                        "ref": 14
+                      }
+                    },
+                    {
+                      "key": "onChange",
+                      "value": {
+                        "ref": 15
+                      }
+                    },
+                    {
+                      "key": "onSelect",
+                      "value": {
+                        "ref": 16
+                      }
+                    },
+                    {
+                      "key": "onDeselect",
+                      "value": {
+                        "ref": 17
+                      }
+                    },
+                    {
+                      "key": "onClear",
+                      "value": {
+                        "ref": 18
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 3,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "current",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "current",
+                      "value": null
+                    }
+                  ]
+                },
+                {
+                  "id": 4,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "width",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "width",
+                      "value": "100%"
+                    }
+                  ]
+                },
+                {
+                  "id": 5,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "popup",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-root"
+                    },
+                    {
+                      "key": "input",
+                      "value": "surface-omission-input"
+                    },
+                    {
+                      "key": "popup",
+                      "value": {
+                        "ref": 6
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "root",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "root",
+                      "value": "surface-omission-popup"
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "input",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "input",
+                      "value": {
+                        "ref": 8
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 8,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "fontSize",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "fontSize",
+                      "value": 18
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "0",
+                      "value": {
+                        "ref": 10
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "value": {
+                        "ref": 11
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "a"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Alpha"
+                    }
+                  ]
+                },
+                {
+                  "id": 11,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "value",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "label",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "value",
+                      "value": "b"
+                    },
+                    {
+                      "key": "label",
+                      "value": "Beta"
+                    }
+                  ]
+                },
+                {
+                  "id": 1,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "filterOption",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "searchValue",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    },
+                    {
+                      "key": "onSearch",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "function"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "filterOption",
+                      "value": false
+                    },
+                    {
+                      "key": "searchValue",
+                      "value": "WWWWWW"
+                    },
+                    {
+                      "key": "onSearch",
+                      "value": {
+                        "ref": 13
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-search"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 14,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-open"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 1
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-change"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-select"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 17,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-deselect"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 2
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                },
+                {
+                  "id": 18,
+                  "type": "function",
+                  "array": false,
+                  "authoredRole": {
+                    "callback": "width-clear"
+                  },
+                  "ownProperties": [
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "number"
+                    },
+                    {
+                      "key": "name",
+                      "enumerable": false,
+                      "configurable": true,
+                      "writable": false,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "length",
+                      "value": 0
+                    },
+                    {
+                      "key": "name",
+                      "value": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            "authoredProvider": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "theme",
+                  "value": {
+                    "$": "object",
+                    "properties": [
+                      {
+                        "key": "token",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "motion",
+                              "value": false
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": "cssVar",
+                        "value": {
+                          "$": "object",
+                          "properties": [
+                            {
+                              "key": "key",
+                              "value": "select-surface-omission-width"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "popupOverflow",
+                  "value": "viewport"
+                }
+              ]
+            },
+            "rawAuthoredProvider": {
+              "root": {
+                "ref": 19
+              },
+              "objects": [
+                {
+                  "id": 19,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "theme",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "theme",
+                      "value": {
+                        "ref": 20
+                      }
+                    },
+                    {
+                      "key": "popupOverflow",
+                      "value": "viewport"
+                    }
+                  ]
+                },
+                {
+                  "id": 20,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "token",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    },
+                    {
+                      "key": "cssVar",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "object"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "token",
+                      "value": {
+                        "ref": 21
+                      }
+                    },
+                    {
+                      "key": "cssVar",
+                      "value": {
+                        "ref": 22
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": 21,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "motion",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "motion",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "id": 22,
+                  "type": "object",
+                  "array": false,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "key",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "string"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "key",
+                      "value": "select-surface-omission-width"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "resources": {
+            "timers": 0,
+            "frames": 0,
+            "measurements": 0,
+            "microtasks": 0
+          },
+          "rawHtml": "<section data-surface-case=\"select-surface-omission-width-open\" data-parent-revision=\"parent-revision-0\" style=\"font-family:initial;font-size:16px;line-height:normal\"><div style=\"position:absolute;left:300px;top:200px;width:280px\"><div data-parent-revision=\"parent-revision-0\" class=\"ant-select ant-select-outlined surface-control surface-omission-root select-surface-omission-width ant-select-css-var css-dev-only-do-not-override-1y106cm ant-select-multiple ant-select-show-arrow ant-select-show-search\" style=\"width:100%\"><div class=\"ant-select-content\"><div class=\"ant-select-content-item ant-select-content-item-prefix\" style=\"opacity:1\"><div class=\"ant-select-placeholder\">Width query</div></div><div class=\"ant-select-content-item ant-select-content-item-suffix\" style=\"opacity:1\"><input id=\"surface-omission-width-field\" type=\"text\" aria-label=\"Surface width value\" style=\"font-size:18px\" autoComplete=\"new-password\" class=\"ant-select-input surface-omission-input\" role=\"combobox\" aria-expanded=\"false\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" value=\"\"/></div></div><div class=\"ant-select-suffix\"><span role=\"img\" aria-label=\"down\" class=\"anticon anticon-down\"><svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"down\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z\"></path></svg></span></div></div></div><button type=\"button\" data-surface-outside=\"\" style=\"position:fixed;left:16px;top:80px\">Outside width</button><div hidden=\"\" data-surface-command=\"\"></div></section>",
+          "htmlSha256": "bdadf5ba607302f57f9b279077728979eada7cfa3f49567eec292978a1037477"
+        }
+      ]
+    }
+  ]
+}

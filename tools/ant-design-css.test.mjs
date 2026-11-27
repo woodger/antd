@@ -1,0 +1,166 @@
+import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
+import { describe, expect, it } from 'vitest';
+import {
+  archiveEntry,
+  cssBlocks,
+  extractCss,
+  splitSelectors,
+  verifyArchive
+} from './ant-design-css-core.mjs';
+
+// Provides a minimal CSS recipe so each test can vary just the parameter it covers.
+const recipe = (extra = {}) => ({
+  include: ['\\.ant-test(?![\\w])'],
+  exclude: ['ant-other'],
+  replacements: [
+    { pattern: '\\.ant-test(?![-\\w])', replacement: '.ant-test:where(.test-vars)' }
+  ],
+  expectedRules: 1,
+  keyframes: [],
+  header: '/* Test source */',
+  ...extra
+});
+
+describe('Pinned CSS archive', () => {
+  it('verifies the archive bytes before extraction', () => {
+    const bytes = Buffer.from('source');
+    const hash = createHash('sha256').update(bytes).digest('hex');
+
+    expect(() => verifyArchive(bytes, hash)).not.toThrow();
+    expect(() => verifyArchive(Buffer.from('changed'), hash)).toThrow('SHA-256 mismatch');
+  });
+  it('reads only the requested npm tar entry and rejects missing or truncated data', () => {
+    const header = Buffer.alloc(512);
+    header.write('package/dist/antd.css');
+    const body = Buffer.from('.a{color:red}');
+    header.write(`${body.length.toString(8).padStart(11, '0')}\0`, 124);
+    header[156] = 48;
+    const archive = gzipSync(
+      Buffer.concat([header, body, Buffer.alloc(512 - body.length), Buffer.alloc(1024)])
+    );
+
+    expect(archiveEntry(archive, 'package/dist/antd.css').toString()).toBe('.a{color:red}');
+    expect(() => archiveEntry(archive, 'package/other.css')).toThrow('Missing npm archive entry');
+    expect(
+      () => archiveEntry(
+        gzipSync(Buffer.concat([header, body.subarray(0, 2)])),
+        'package/dist/antd.css'
+      )
+    ).toThrow(
+      'Truncated'
+    );
+  });
+});
+
+describe('CSS extraction', () => {
+  it('exports the same verified stylesheet as a portable ES module', async () => {
+    const css = '.ant-test{content:"quotes\\\\and braces{}";color:red}';
+    const plain = extractCss(css, recipe());
+    const module = extractCss(css, recipe({ format: 'module' }));
+    const imported = await import(`data:text/javascript,${encodeURIComponent(module.content)}`);
+
+    expect(imported.default).toBe(plain.content);
+    expect(module.stylesheet).toBe(plain.content);
+    expect(module.rules).toBe(plain.rules);
+    expect(module.keyframes).toEqual(plain.keyframes);
+    expect(module.content).toContain('/* Test source */');
+  });
+
+  it('rejects an unknown output format before writing artifacts', () => {
+    expect(() => extractCss('.ant-test{color:red}', recipe({ format: 'javascript' })))
+      .toThrow('format');
+  });
+
+  it('wraps extracted rules in an explicit scope without changing rule counts or media', () => {
+    const result = extractCss('@media(width>20px){.ant-test{color:red}}.other{color:blue}', recipe({
+      scope: '(.fixture) to (:scope .nested)'
+    }));
+
+    expect(result.content).toBe('/* Test source */\n@scope (.fixture) to (:scope .nested){\n@media(width>20px){.ant-test:where(.test-vars){color:red}}\n}\n');
+    expect(result.rules).toBe(1);
+  });
+
+  it('rejects empty and malformed scope preludes', () => {
+    for (const scope of ['', ' ', true, '(.fixture){}', '(.fixture);']) {
+      expect(() => extractCss('.ant-test{color:red}', recipe({ scope }))).toThrow('scope');
+    }
+  });
+
+  it(
+    'splits selector lists without splitting functional selectors or quoted attribute values',
+    () => {
+      expect(splitSelectors('.ant-test:is(.a,.b),[data-x="a,b"],.escaped\\,comma')).toEqual(
+        ['.ant-test:is(.a,.b)', '[data-x="a,b"]', '.escaped\\,comma']
+      );
+    }
+  );
+  it('preserves declarations quoted braces comments and escaped strings exactly', () => {
+    const body = 'content:"{,}";background:url("data:image/svg+xml,%7B%7D");/* } */color:red;';
+    const result = extractCss(
+      `/* header */.ant-test,.ant-other{${body}}.ant-testing{color:blue}`,
+      recipe()
+    );
+
+    expect(result.content).toBe(`/* Test source */\n.ant-test:where(.test-vars){${body}}\n`);
+    expect(result.rules).toBe(1);
+  });
+  it('preserves media scope and does not move scoped keyframes to the root', () => {
+    const result = extractCss(
+      '@media(width>20px){.ant-test{color:red}@keyframes pulse{0%{opacity:0}}}.other{color:blue}',
+      recipe({ keyframes: ['pulse'], appendRootKeyframes: true })
+    );
+
+    expect(result.content).toContain(
+      '@media(width>20px){.ant-test:where(.test-vars){color:red}@keyframes pulse{0%{opacity:0}}}'
+    );
+    expect(result.keyframes).toEqual(['pulse']);
+  });
+  it('applies explicit declaration changes without rewriting selectors or keyframes', () => {
+    const result = extractCss(
+      '.ant-test[data-label="retired"]{--retired:4px;color:var(--retired);padding:2px}'
+        + '@keyframes pulse{to{--retired:0;opacity:0}}',
+      recipe({
+        declarationReplacements: [
+          { pattern: '--retired:[^;]+;', replacement: '' },
+          { pattern: 'var\\(--retired\\)', replacement: 'var(--current)' }
+        ],
+        keyframes: ['pulse']
+      })
+    );
+
+    expect(result.content).toBe('/* Test source */\n.ant-test:where(.test-vars)[data-label="retired"]{color:var(--current);padding:2px}\n@keyframes pulse{to{--retired:0;opacity:0}}\n');
+    expect(result.rules).toBe(1);
+  });
+  it('excludes explicitly selected at-rules while retaining other scopes and their rule counts', () => {
+    const result = extractCss(
+      '@container style(--retired){.ant-test{color:red}}'
+        + '@media(width>20px){.ant-test{color:blue}}',
+      recipe({ excludeAtRules: ['^@container style\\(--retired\\)$'] })
+    );
+
+    expect(result.content).toBe('/* Test source */\n@media(width>20px){.ant-test:where(.test-vars){color:blue}}\n');
+    expect(result.rules).toBe(1);
+  });
+  it('appends explicitly selected root keyframes when a recipe requires that order', () => {
+    const result = extractCss(
+      '@keyframes pulse{to{opacity:0}}.ant-test{color:red}',
+      recipe({ keyframes: ['pulse'], appendRootKeyframes: true })
+    );
+
+    expect(result.content).toBe(
+      '/* Test source */\n.ant-test:where(.test-vars){color:red}\n@keyframes pulse{to{opacity:0}}\n'
+    );
+  });
+  it('fails closed on missing rules keyframes malformed CSS and empty recipes', () => {
+    expect(() => extractCss('.other{color:red}', recipe())).toThrow('rule count');
+    expect(() => extractCss('.ant-test{color:red}', recipe({ keyframes: ['absent'] }))).toThrow(
+      'Missing keyframes'
+    );
+    expect(() => extractCss('.ant-test{content:"unterminated}', recipe())).toThrow('Unclosed');
+    expect(() => cssBlocks('/* unclosed')).toThrow('comment');
+    expect(() => extractCss('.ant-test{color:red}', recipe({ expectedRules: 0 }))).toThrow(
+      'positive expectedRules'
+    );
+  });
+});

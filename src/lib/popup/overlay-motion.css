@@ -1,0 +1,45 @@
+/* ZoomBig from Ant Design 6.6.8, under MIT. See vendor/LICENSE.ant-design.
+ * Built-in phases are scoped to the native popup. A custom motionName uses its own CSS.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  :where([data-ant-overlay-motion][data-ant-tooltip]) {
+    --ant-overlay-motion-duration: var(--ant-motion-duration-fast, 0.1s);
+  }
+
+  :where([data-ant-overlay-motion][data-ant-popover]) {
+    --ant-overlay-motion-duration: var(--ant-motion-duration-mid, 0.2s);
+  }
+
+  :where([data-ant-overlay-motion="appear-start"], [data-ant-overlay-motion="enter-start"]) {
+    opacity: 0;
+  }
+
+  :where([data-ant-overlay-motion="appear-active"], [data-ant-overlay-motion="enter-active"]) {
+    animation: ant-overlay-zoom-in var(--ant-overlay-motion-duration)
+      var(--ant-motion-ease-out-circ, cubic-bezier(0.08, 0.82, 0.17, 1)) both;
+  }
+
+  :where([data-ant-overlay-motion="leave-active"]) {
+    animation: ant-overlay-zoom-out var(--ant-overlay-motion-duration)
+      var(--ant-motion-ease-in-out-circ, cubic-bezier(0.78, 0.14, 0.15, 0.86)) both;
+  }
+}
+
+@keyframes ant-overlay-zoom-in {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ant-overlay-zoom-out {
+  from { transform: scale(1); }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "format": "date-picker-week-all-point-source-stability-v1",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "scope": "Exact selected owner state/model/full raw model/model Date annotations/full cumulative callback records (all arguments/receiver/IDs), input identity/value/placeholder/disabled at all initial, before, afterFocusPointer, afterCall, settled, Escape+1000, beforeUnmount, cleanup and late points. Producer cursor afterCall variances are in producer-variances.json. Other DOM/events/timing/focus/caret remain outside this projection; whole originals and their hashes remain separate.",
+  "normalization": [],
+  "IDsRenumbered": false,
+  "sourceFieldsRewritten": [],
+  "checkedPoints": 417,
+  "checkedByPhase": {
+    "initial": 2,
+    "before": 125,
+    "afterCall": 125,
+    "settled": 125,
+    "afterFocusPointer": 17,
+    "closedAfter1000": 17,
+    "beforeUnmount": 2,
+    "cleanup": 2,
+    "late": 2
+  },
+  "owners": [
+    {
+      "id": "single-week",
+      "checkedPoints": 166
+    },
+    {
+      "id": "range-week",
+      "checkedPoints": 251
+    }
+  ],
+  "stablePoints": 416,
+  "differingPoints": 1,
+  "variance": [
+    {
+      "id": "single-week",
+      "phase": "afterCall",
+      "index": 38,
+      "differences": [
+        {
+          "path": "/owner/open",
+          "first": false,
+          "repeat": true
+        },
+        {
+          "path": "/owner/callbacks/ownKeys",
+          "first": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50"
+          ],
+          "repeat": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49"
+          ]
+        },
+        {
+          "path": "/owner/callbacks/50",
+          "firstOwn": true,
+          "repeatOwn": false,
+          "first": {
+            "index": 50,
+            "actionIndex": 38,
+            "name": "open",
+            "actualArgumentCount": 1,
+            "encodedArguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": false
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "rawArguments": {
+              "root": {
+                "ref": 5635
+              },
+              "objects": [
+                {
+                  "id": 5635,
+                  "type": "object",
+                  "array": true,
+                  "authoredRole": null,
+                  "ownProperties": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "boolean"
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "kind": "value",
+                      "valueType": "number"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "key": "0",
+                      "value": false
+                    },
+                    {
+                      "key": "length",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "dates": [],
+            "receiver": {
+              "type": "undefined",
+              "isUndefined": true,
+              "isNull": false,
+              "identity": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scriptSHA256": "521082b34d88998606711bbbfff74b181558943ed55f80b6f95c967d054be033"
+}

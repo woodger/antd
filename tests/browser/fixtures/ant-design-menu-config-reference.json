@@ -1,0 +1,1622 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "entry": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30",
+    "reactVersion": "18.3.1",
+    "chromiumVersion": "157.0.8103.78",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "repeat": 2,
+    "operation": "Production React UMD, unchanged. Two nested ConfigProviders, public Menu items, controlled openKeys, forceSubMenuRender, motion=false and an explicit popup host. Record authored class tokens and CSS declarations on normal and grouped items, submenu titles/lists/icons and portal roots. Provider popup class uses shorthand; local style uses popup.root. A local item CSS value supersedes the shared slot. An empty inner menu record replaces the outer defaults."
+  },
+  "cases": [
+    {
+      "name": "inline",
+      "calls": {
+        "providerClasses": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localClasses": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "providerStyles": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localStyles": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        }
+      },
+      "nodes": {
+        "root": {
+          "tag": "ul",
+          "classes": [
+            "l-root",
+            "local-menu",
+            "local-root",
+            "p-root",
+            "provider-menu"
+          ],
+          "styles": {
+            "color": "rgb(102, 102, 102)",
+            "background-color": "rgb(34, 51, 68)",
+            "padding-block-start": "6px",
+            "padding-block-end": "9px",
+            "padding-inline-start": "7px"
+          },
+          "expand": "+"
+        },
+        "leaf": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "29px"
+          },
+          "expand": null
+        },
+        "leafIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "leafContent": {
+          "tag": "span",
+          "classes": [
+            "l-content",
+            "p-content"
+          ],
+          "styles": {
+            "font-weight": "700"
+          },
+          "expand": null
+        },
+        "rootGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-title",
+            "p-title"
+          ],
+          "styles": {
+            "font-weight": "600"
+          },
+          "expand": null
+        },
+        "rootGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-list",
+            "p-list"
+          ],
+          "styles": {
+            "letter-spacing": "1px"
+          },
+          "expand": null
+        },
+        "rootGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "21px"
+          },
+          "expand": null
+        },
+        "parent": {
+          "tag": "li",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "parentContent": {
+          "tag": "span",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "popup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": "item-nested"
+        },
+        "parentList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "child": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "childIcon": {
+          "tag": "span",
+          "classes": [
+            "l-nested-icon",
+            "p-nested-icon"
+          ],
+          "styles": {
+            "opacity": "0.65"
+          },
+          "expand": null
+        },
+        "childContent": {
+          "tag": "span",
+          "classes": [
+            "l-nested-content",
+            "p-nested-content"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)"
+          },
+          "expand": null
+        },
+        "nestedGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-nested-title",
+            "p-nested-title"
+          ],
+          "styles": {
+            "letter-spacing": "3px"
+          },
+          "expand": null
+        },
+        "nestedGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-nested-list",
+            "p-nested-list"
+          ],
+          "styles": {
+            "color": "rgb(86, 86, 86)"
+          },
+          "expand": null
+        },
+        "nestedGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "nestedTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "nestedList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "nestedPopup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": null
+        },
+        "grandchild": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        }
+      }
+    },
+    {
+      "name": "vertical",
+      "calls": {
+        "providerClasses": {
+          "mode": "vertical",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localClasses": {
+          "mode": "vertical",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "providerStyles": {
+          "mode": "vertical",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localStyles": {
+          "mode": "vertical",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        }
+      },
+      "nodes": {
+        "root": {
+          "tag": "ul",
+          "classes": [
+            "l-root",
+            "local-menu",
+            "local-root",
+            "p-root",
+            "provider-menu"
+          ],
+          "styles": {
+            "color": "rgb(102, 102, 102)",
+            "background-color": "rgb(34, 51, 68)",
+            "padding-block-start": "6px",
+            "padding-block-end": "9px",
+            "padding-inline-start": "7px"
+          },
+          "expand": "+"
+        },
+        "leaf": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "29px"
+          },
+          "expand": null
+        },
+        "leafIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "leafContent": {
+          "tag": "span",
+          "classes": [
+            "l-content",
+            "p-content"
+          ],
+          "styles": {
+            "font-weight": "700"
+          },
+          "expand": null
+        },
+        "rootGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-title",
+            "p-title"
+          ],
+          "styles": {
+            "font-weight": "600"
+          },
+          "expand": null
+        },
+        "rootGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-list",
+            "p-list"
+          ],
+          "styles": {
+            "letter-spacing": "1px"
+          },
+          "expand": null
+        },
+        "rootGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "21px"
+          },
+          "expand": null
+        },
+        "parent": {
+          "tag": "li",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "parentContent": {
+          "tag": "span",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "popup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": "item-nested"
+        },
+        "parentList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "child": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "childIcon": {
+          "tag": "span",
+          "classes": [
+            "l-nested-icon",
+            "p-nested-icon"
+          ],
+          "styles": {
+            "opacity": "0.65"
+          },
+          "expand": null
+        },
+        "childContent": {
+          "tag": "span",
+          "classes": [
+            "l-nested-content",
+            "p-nested-content"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)"
+          },
+          "expand": null
+        },
+        "nestedGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-nested-title",
+            "p-nested-title"
+          ],
+          "styles": {
+            "letter-spacing": "3px"
+          },
+          "expand": null
+        },
+        "nestedGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-nested-list",
+            "p-nested-list"
+          ],
+          "styles": {
+            "color": "rgb(86, 86, 86)"
+          },
+          "expand": null
+        },
+        "nestedGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "nestedTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "nestedList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "nestedPopup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": null
+        },
+        "grandchild": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        }
+      }
+    },
+    {
+      "name": "horizontal",
+      "calls": {
+        "providerClasses": {
+          "mode": "horizontal",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localClasses": {
+          "mode": "horizontal",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "providerStyles": {
+          "mode": "horizontal",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localStyles": {
+          "mode": "horizontal",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        }
+      },
+      "nodes": {
+        "root": {
+          "tag": "ul",
+          "classes": [
+            "l-root",
+            "local-menu",
+            "local-root",
+            "p-root",
+            "provider-menu"
+          ],
+          "styles": {
+            "color": "rgb(102, 102, 102)",
+            "background-color": "rgb(34, 51, 68)",
+            "padding-block-start": "6px",
+            "padding-block-end": "9px",
+            "padding-inline-start": "7px"
+          },
+          "expand": null
+        },
+        "leaf": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "opacity": "1",
+            "padding-inline-start": "29px"
+          },
+          "expand": null
+        },
+        "leafIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "leafContent": {
+          "tag": "span",
+          "classes": [
+            "l-content",
+            "p-content"
+          ],
+          "styles": {
+            "font-weight": "700"
+          },
+          "expand": null
+        },
+        "rootGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-title",
+            "p-title"
+          ],
+          "styles": {
+            "font-weight": "600"
+          },
+          "expand": null
+        },
+        "rootGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-list",
+            "p-list"
+          ],
+          "styles": {
+            "letter-spacing": "1px"
+          },
+          "expand": null
+        },
+        "rootGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "opacity": "1",
+            "padding-inline-start": "21px"
+          },
+          "expand": null
+        },
+        "parent": {
+          "tag": "li",
+          "classes": [],
+          "styles": {
+            "opacity": "1"
+          },
+          "expand": null
+        },
+        "parentTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "parentIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "parentContent": {
+          "tag": "span",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "popup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": "item-nested"
+        },
+        "parentList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "child": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "childIcon": {
+          "tag": "span",
+          "classes": [
+            "l-nested-icon",
+            "p-nested-icon"
+          ],
+          "styles": {
+            "opacity": "0.65"
+          },
+          "expand": null
+        },
+        "childContent": {
+          "tag": "span",
+          "classes": [
+            "l-nested-content",
+            "p-nested-content"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)"
+          },
+          "expand": null
+        },
+        "nestedGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-nested-title",
+            "p-nested-title"
+          ],
+          "styles": {
+            "letter-spacing": "3px"
+          },
+          "expand": null
+        },
+        "nestedGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-nested-list",
+            "p-nested-list"
+          ],
+          "styles": {
+            "color": "rgb(86, 86, 86)"
+          },
+          "expand": null
+        },
+        "nestedGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "nestedTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "nestedList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "nestedPopup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": null
+        },
+        "grandchild": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        }
+      }
+    },
+    {
+      "name": "collapsed",
+      "calls": {
+        "providerClasses": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": true,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localClasses": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": true,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "providerStyles": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": true,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localStyles": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": true,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        }
+      },
+      "nodes": {
+        "root": {
+          "tag": "ul",
+          "classes": [
+            "l-root",
+            "local-menu",
+            "local-root",
+            "p-root",
+            "provider-menu"
+          ],
+          "styles": {
+            "color": "rgb(102, 102, 102)",
+            "background-color": "rgb(34, 51, 68)",
+            "padding-block-start": "6px",
+            "padding-block-end": "9px",
+            "padding-inline-start": "7px"
+          },
+          "expand": "+"
+        },
+        "leaf": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "29px"
+          },
+          "expand": null
+        },
+        "leafIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "leafContent": {
+          "tag": "span",
+          "classes": [
+            "l-content",
+            "p-content"
+          ],
+          "styles": {
+            "font-weight": "700"
+          },
+          "expand": null
+        },
+        "rootGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-title",
+            "p-title"
+          ],
+          "styles": {
+            "font-weight": "600"
+          },
+          "expand": null
+        },
+        "rootGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-list",
+            "p-list"
+          ],
+          "styles": {
+            "letter-spacing": "1px"
+          },
+          "expand": null
+        },
+        "rootGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-item",
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "21px"
+          },
+          "expand": null
+        },
+        "parent": {
+          "tag": "li",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon",
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "parentContent": {
+          "tag": "span",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "popup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": "item-nested"
+        },
+        "parentList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "child": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "childIcon": {
+          "tag": "span",
+          "classes": [
+            "l-nested-icon",
+            "p-nested-icon"
+          ],
+          "styles": {
+            "opacity": "0.65"
+          },
+          "expand": null
+        },
+        "childContent": {
+          "tag": "span",
+          "classes": [
+            "l-nested-content",
+            "p-nested-content"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)"
+          },
+          "expand": null
+        },
+        "nestedGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-nested-title",
+            "p-nested-title"
+          ],
+          "styles": {
+            "letter-spacing": "3px"
+          },
+          "expand": null
+        },
+        "nestedGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-nested-list",
+            "p-nested-list"
+          ],
+          "styles": {
+            "color": "rgb(86, 86, 86)"
+          },
+          "expand": null
+        },
+        "nestedGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "nestedTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "nestedList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "nestedPopup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root",
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": null
+        },
+        "grandchild": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item",
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        }
+      }
+    },
+    {
+      "name": "provider-only",
+      "calls": {
+        "providerClasses": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "providerStyles": {
+          "mode": "inline",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        }
+      },
+      "nodes": {
+        "root": {
+          "tag": "ul",
+          "classes": [
+            "p-root",
+            "provider-menu"
+          ],
+          "styles": {
+            "color": "rgb(34, 34, 34)",
+            "background-color": "rgb(34, 51, 68)",
+            "padding-block-end": "9px"
+          },
+          "expand": "+"
+        },
+        "leaf": {
+          "tag": "li",
+          "classes": [
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(17, 34, 68)",
+            "background-color": "rgb(223, 239, 255)",
+            "padding-inline-start": "29px"
+          },
+          "expand": null
+        },
+        "leafIcon": {
+          "tag": "span",
+          "classes": [
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.5"
+          },
+          "expand": null
+        },
+        "leafContent": {
+          "tag": "span",
+          "classes": [
+            "p-content"
+          ],
+          "styles": {
+            "font-weight": "500"
+          },
+          "expand": null
+        },
+        "rootGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "p-title"
+          ],
+          "styles": {
+            "font-weight": "600"
+          },
+          "expand": null
+        },
+        "rootGroupList": {
+          "tag": "ul",
+          "classes": [
+            "p-list"
+          ],
+          "styles": {
+            "letter-spacing": "1px"
+          },
+          "expand": null
+        },
+        "rootGroupItem": {
+          "tag": "li",
+          "classes": [
+            "p-item"
+          ],
+          "styles": {
+            "color": "rgb(17, 34, 68)",
+            "background-color": "rgb(223, 239, 255)"
+          },
+          "expand": null
+        },
+        "parent": {
+          "tag": "li",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "+"
+        },
+        "parentIcon": {
+          "tag": "span",
+          "classes": [
+            "p-icon"
+          ],
+          "styles": {
+            "opacity": "0.5"
+          },
+          "expand": null
+        },
+        "parentContent": {
+          "tag": "span",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "popup": {
+          "tag": "div",
+          "classes": [
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "color": "rgb(68, 68, 68)",
+            "opacity": "0.92",
+            "z-index": "3022"
+          },
+          "expand": "item-nested"
+        },
+        "parentList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "child": {
+          "tag": "li",
+          "classes": [
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(34, 51, 68)",
+            "background-color": "rgb(255, 238, 221)"
+          },
+          "expand": null
+        },
+        "childIcon": {
+          "tag": "span",
+          "classes": [
+            "p-nested-icon"
+          ],
+          "styles": {
+            "opacity": "0.65"
+          },
+          "expand": null
+        },
+        "childContent": {
+          "tag": "span",
+          "classes": [
+            "p-nested-content"
+          ],
+          "styles": {
+            "font-weight": "600"
+          },
+          "expand": null
+        },
+        "nestedGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "p-nested-title"
+          ],
+          "styles": {
+            "letter-spacing": "3px"
+          },
+          "expand": null
+        },
+        "nestedGroupList": {
+          "tag": "ul",
+          "classes": [
+            "p-nested-list"
+          ],
+          "styles": {
+            "color": "rgb(86, 86, 86)"
+          },
+          "expand": null
+        },
+        "nestedGroupItem": {
+          "tag": "li",
+          "classes": [
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(34, 51, 68)",
+            "background-color": "rgb(255, 238, 221)"
+          },
+          "expand": null
+        },
+        "nestedTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "nestedList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "nestedPopup": {
+          "tag": "div",
+          "classes": [
+            "p-popup",
+            "p-root"
+          ],
+          "styles": {
+            "color": "rgb(68, 68, 68)",
+            "opacity": "0.92",
+            "z-index": "3022"
+          },
+          "expand": null
+        },
+        "grandchild": {
+          "tag": "li",
+          "classes": [
+            "p-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(34, 51, 68)",
+            "background-color": "rgb(255, 238, 221)"
+          },
+          "expand": null
+        }
+      }
+    },
+    {
+      "name": "reset",
+      "calls": {
+        "localClasses": {
+          "mode": "vertical",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        },
+        "localStyles": {
+          "mode": "vertical",
+          "theme": "light",
+          "inlineCollapsed": null,
+          "selectable": null,
+          "items": true,
+          "disabled": null
+        }
+      },
+      "nodes": {
+        "root": {
+          "tag": "ul",
+          "classes": [
+            "l-root",
+            "local-menu",
+            "local-root"
+          ],
+          "styles": {
+            "color": "rgb(102, 102, 102)",
+            "padding-block-start": "6px",
+            "padding-inline-start": "7px"
+          },
+          "expand": null
+        },
+        "leaf": {
+          "tag": "li",
+          "classes": [
+            "l-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "padding-inline-start": "29px"
+          },
+          "expand": null
+        },
+        "leafIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "leafContent": {
+          "tag": "span",
+          "classes": [
+            "l-content"
+          ],
+          "styles": {
+            "font-weight": "700"
+          },
+          "expand": null
+        },
+        "rootGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-title"
+          ],
+          "styles": {},
+          "expand": null
+        },
+        "rootGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-list"
+          ],
+          "styles": {},
+          "expand": null
+        },
+        "rootGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-item"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)",
+            "padding-inline-start": "21px"
+          },
+          "expand": null
+        },
+        "parent": {
+          "tag": "li",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "parentTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "parentIcon": {
+          "tag": "span",
+          "classes": [
+            "l-icon"
+          ],
+          "styles": {
+            "opacity": "0.6"
+          },
+          "expand": null
+        },
+        "parentContent": {
+          "tag": "span",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "popup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": "item-nested"
+        },
+        "parentList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "child": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "childIcon": {
+          "tag": "span",
+          "classes": [
+            "l-nested-icon"
+          ],
+          "styles": {},
+          "expand": null
+        },
+        "childContent": {
+          "tag": "span",
+          "classes": [
+            "l-nested-content"
+          ],
+          "styles": {
+            "color": "rgb(68, 85, 102)"
+          },
+          "expand": null
+        },
+        "nestedGroupTitle": {
+          "tag": "div",
+          "classes": [
+            "l-nested-title"
+          ],
+          "styles": {},
+          "expand": null
+        },
+        "nestedGroupList": {
+          "tag": "ul",
+          "classes": [
+            "l-nested-list"
+          ],
+          "styles": {},
+          "expand": null
+        },
+        "nestedGroupItem": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        },
+        "nestedTitle": {
+          "tag": "div",
+          "classes": [],
+          "styles": {},
+          "expand": "item-nested"
+        },
+        "nestedList": {
+          "tag": "ul",
+          "classes": [],
+          "styles": {},
+          "expand": null
+        },
+        "nestedPopup": {
+          "tag": "div",
+          "classes": [
+            "l-popup",
+            "l-root",
+            "local-root"
+          ],
+          "styles": {
+            "background-color": "rgb(85, 102, 119)",
+            "z-index": "3023"
+          },
+          "expand": null
+        },
+        "grandchild": {
+          "tag": "li",
+          "classes": [
+            "l-nested-item"
+          ],
+          "styles": {
+            "color": "rgb(51, 68, 85)"
+          },
+          "expand": null
+        }
+      }
+    }
+  ]
+}

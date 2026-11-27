@@ -1,0 +1,579 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "scope": "Current max object only: count, styles, placements, triggers, reactive updates. No deprecated aliases.",
+    "nativeBoundary": "Source overflow Avatar is an unfocusable span: actual focus result is retained as sourceFocusAcquired; focusin is dispatched separately to exercise the public focus trigger. Native overflow remains a keyboard-focusable button."
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "cases": [
+    {
+      "name": "click",
+      "max": {
+        "count": 2,
+        "style": "color:rgb(5,15,25);background:rgb(200,210,220)",
+        "popover": {
+          "trigger": "click",
+          "placement": "bottom"
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(5, 15, 25)",
+          "background": "rgb(200, 210, 220)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "bottom",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "hover",
+      "max": {
+        "count": 1
+      },
+      "probe": "hover",
+      "snapshot": {
+        "texts": [
+          "A"
+        ],
+        "counter": {
+          "text": "+3",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "focus",
+      "max": {
+        "count": 3,
+        "popover": {
+          "trigger": "focus",
+          "placement": "bottom"
+        }
+      },
+      "probe": "focus",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B",
+          "C"
+        ],
+        "counter": {
+          "text": "+1",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "sourceFocusAcquired": false,
+      "popup": {
+        "open": true,
+        "placement": "bottom",
+        "texts": [
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "empty-max",
+      "max": {},
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "counter": null
+      },
+      "popup": {
+        "open": false,
+        "placement": null,
+        "texts": []
+      }
+    },
+    {
+      "name": "zero-count",
+      "max": {
+        "count": 0
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "counter": null
+      },
+      "popup": {
+        "open": false,
+        "placement": null,
+        "texts": []
+      }
+    },
+    {
+      "name": "unlimited",
+      "max": {
+        "count": 9
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "counter": null
+      },
+      "popup": {
+        "open": false,
+        "placement": null,
+        "texts": []
+      }
+    },
+    {
+      "name": "count",
+      "max": {
+        "count": 3
+      },
+      "probe": "hover",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B",
+          "C"
+        ],
+        "counter": {
+          "text": "+1",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "whitespace-style",
+      "max": {
+        "count": 2,
+        "style": " ",
+        "popover": {
+          "trigger": "click"
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "placement",
+      "max": {
+        "count": 2,
+        "popover": {
+          "trigger": "click",
+          "placement": "left"
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "left",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "focus-trigger",
+      "max": {
+        "count": 2,
+        "popover": {
+          "trigger": "focus"
+        }
+      },
+      "probe": "focus",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "sourceFocusAcquired": false,
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "trigger-array",
+      "max": {
+        "count": 2,
+        "popover": {
+          "trigger": [
+            "hover",
+            "click"
+          ]
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "empty-trigger-array",
+      "max": {
+        "count": 2,
+        "popover": {
+          "trigger": []
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": false,
+        "placement": null,
+        "texts": []
+      }
+    },
+    {
+      "name": "reactive-style-placement",
+      "max": {
+        "count": 2,
+        "style": "color:rgb(5,15,25);background:rgb(200,210,220)",
+        "popover": {
+          "trigger": "click",
+          "placement": "top"
+        }
+      },
+      "patch": {
+        "max": {
+          "count": 2,
+          "style": "color:rgb(25,35,45);background:rgb(220,230,240)",
+          "popover": {
+            "trigger": "focus",
+            "placement": "bottom"
+          }
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(5, 15, 25)",
+          "background": "rgb(200, 210, 220)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "changed": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(25, 35, 45)",
+          "background": "rgb(220, 230, 240)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "restored": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(5, 15, 25)",
+          "background": "rgb(200, 210, 220)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "reactive-limit",
+      "max": {
+        "count": 2,
+        "popover": {
+          "trigger": "click"
+        }
+      },
+      "patch": {
+        "max": {
+          "count": 4
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "changed": {
+        "texts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "counter": null
+      },
+      "restored": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.25)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "name": "reactive-reset",
+      "max": {
+        "count": 2,
+        "style": "color:rgb(25,35,45);background:rgb(220,230,240)",
+        "popover": {
+          "trigger": "click",
+          "placement": "top"
+        }
+      },
+      "patch": {
+        "max": {
+          "count": 0,
+          "style": "",
+          "popover": {}
+        }
+      },
+      "probe": "click",
+      "snapshot": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(25, 35, 45)",
+          "background": "rgb(220, 230, 240)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "changed": {
+        "texts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "counter": null
+      },
+      "restored": {
+        "texts": [
+          "A",
+          "B"
+        ],
+        "counter": {
+          "text": "+2",
+          "color": "rgb(25, 35, 45)",
+          "background": "rgb(220, 230, 240)",
+          "width": "32px",
+          "height": "32px",
+          "radius": "50%",
+          "fontSize": "14px"
+        }
+      },
+      "popup": {
+        "open": true,
+        "placement": "top",
+        "texts": [
+          "C",
+          "D"
+        ]
+      }
+    }
+  ]
+}

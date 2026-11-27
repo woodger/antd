@@ -1,0 +1,6 @@
+{
+  "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/protocol-freeze.json",
+  "sha256": "6ab38509e7c2f926c146ed85884674c3e3c438b3163d174078aeb36d34535274",
+  "proposalSHA256": "0f256aba405624d261dc470a842f03dd1ae3834eb0955e6dc8d9d6c68c4c299c",
+  "frozenBeforeBrowser": true
+}

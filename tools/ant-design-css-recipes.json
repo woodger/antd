@@ -1,0 +1,3479 @@
+[
+  {
+    "id": "avatar",
+    "output": "src/lib/vendor/avatar.css",
+    "expectedRules": 17,
+    "include": [
+      "\\.ant-avatar(?![\\w])"
+    ],
+    "exclude": [
+      "ant-avatar-group",
+      "\\.anticon"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-avatar-css-var",
+        "replacement": ".ant-avatar-css-var"
+      },
+      {
+        "pattern": "\\.ant-avatar(?![-\\w])",
+        "replacement": ".ant-avatar:where(.ant-avatar-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Avatar image/icon/text и Image display; исключены Group и anticon.\n * Корни ограничены :where(.ant-avatar-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "avatar-prefix",
+    "output": "src/lib/vendor/avatar-prefix.css.js",
+    "expectedRules": 24,
+    "include": [
+      "\\.ant-avatar(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-avatar-css-var",
+        "replacement": ".ant-avatar-css-var"
+      },
+      {
+        "pattern": "\\.ant-avatar(?![-\\w])",
+        "replacement": ".ant-avatar:where(.ant-avatar-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Avatar prefix template: размеры, image/icon, Group и Popover.\n * CSS data module сохраняет marker, Image/anticon selectors и имена CSS variables.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "avatar-group",
+    "output": "src/lib/vendor/avatar-group.css",
+    "expectedRules": 3,
+    "include": [
+      "^\\.ant-avatar-group(?:\\s|>|$)"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Avatar.Group: группа, обводка и перекрытие; список Popover адаптирован в Svelte.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tag-prefix",
+    "output": "src/lib/vendor/tag-prefix.css.js",
+    "expectedRules": 90,
+    "include": [
+      "\\.ant-tag(?![\\w])"
+    ],
+    "exclude": [
+      "ant-picker-tag"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tag-css-var",
+        "replacement": ".ant-tag-css-var"
+      },
+      {
+        "pattern": "\\.ant-tag(?![-\\w])",
+        "replacement": ".ant-tag:where(.ant-tag-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tag prefix template: базовые правила, CheckableTag/Group, цвета и ссылки.\n * CSS data module для локального prefixCls; marker и имена CSS variables сохраняются.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "tag-group",
+    "output": "src/lib/vendor/tag-group.css",
+    "expectedRules": 1,
+    "include": [
+      "^\\.ant-tag-checkable-group$"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * CheckableTagGroup: flex, перенос и исходный gap.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tag-link-reset",
+    "output": "src/lib/vendor/tag-link-reset.css",
+    "expectedRules": 14,
+    "include": [
+      "^a(?=:[\\w-]+(?:-|\\b)|\\[disabled\\]|$)"
+    ],
+    "exclude": [
+      "\\s"
+    ],
+    "replacements": [
+      {
+        "pattern": "^a",
+        "replacement": ":is(a:where(.ant-tag-css-var),:where(.ant-tag-css-var) a)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Общий link reset ограничен корнями Tag и их descendant anchors.\n * :where сохраняет исходную specificity a и псевдоклассов.\n * Два исходных набора правил сохранены в порядке npm CSS.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tag-links",
+    "output": "src/lib/vendor/tag-links.css",
+    "expectedRules": 4,
+    "include": [
+      "^\\.ant-tag(?:-disabled)?\\s+a(?=[\\s.:#>+~\\[]|$)",
+      "^a\\.ant-tag-disabled(?=[\\s.:#>+~\\[]|$)"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-tag(?![-\\w])",
+        "replacement": ".ant-tag:where(.ant-tag-css-var)"
+      },
+      {
+        "pattern": "\\.ant-tag-disabled(?![-\\w])",
+        "replacement": ".ant-tag-disabled:where(.ant-tag-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tag links: source foreground и disabled root/descendant links.\n * Корни ограничены :where(.ant-tag-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "badge",
+    "output": "src/lib/vendor/badge.css",
+    "expectedRules": 52,
+    "include": [
+      "\\.ant-badge(?![\\w])"
+    ],
+    "exclude": [
+      "ant-radio",
+      "ant-space",
+      "ant-badge-zoom",
+      "ant-scroll-number",
+      "(^|\\s)a(?=[\\s.:#>+~\\[]|$)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-badge",
+        "replacement": ".ant-badge-css-var"
+      },
+      {
+        "pattern": "\\.ant-badge(?![-\\w])",
+        "replacement": ".ant-badge:where(.ant-badge-css-var)"
+      }
+    ],
+    "keyframes": [
+      "antStatusProcessing"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge count/dot/status и preset colors; исключены scrolling/zoom и интеграции с Radio/Space.\n * Корни ограничены :where(.ant-badge-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true
+  },
+  {
+    "id": "badge-prefix",
+    "output": "src/lib/vendor/badge-prefix.css.js",
+    "expectedRules": 59,
+    "include": [
+      "\\.ant-badge(?![\\w])"
+    ],
+    "exclude": [
+      "ant-radio",
+      "ant-space",
+      "(^|\\s)a(?=[\\s.:#>+~\\[]|$)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-badge",
+        "replacement": ".ant-badge-css-var"
+      },
+      {
+        "pattern": "\\.ant-badge(?![-\\w])",
+        "replacement": ".ant-badge:where(.ant-badge-css-var)"
+      }
+    ],
+    "keyframes": [
+      "antStatusProcessing",
+      "antBadgeLoadingCircle",
+      "antZoomBadgeIn",
+      "antZoomBadgeOut",
+      "antNoWrapperZoomBadgeIn",
+      "antNoWrapperZoomBadgeOut"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge prefix template: count/dot/status, ScrollNumber/custom count и zoom; без Radio/Space.\n * CSS data module для локального prefixCls; корни ограничены :where(.ant-badge-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true,
+    "format": "module"
+  },
+  {
+    "id": "badge-custom-count",
+    "output": "src/lib/vendor/badge-custom-count.css",
+    "expectedRules": 5,
+    "include": [
+      "ant-scroll-number-custom-component"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-badge(?![-\\w])",
+        "replacement": ".ant-badge:where(.ant-badge-css-var)"
+      }
+    ],
+    "keyframes": [
+      "antBadgeLoadingCircle"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge custom count: source positioning, standalone, RTL и spinning icon.\n * Корни ограничены :where(.ant-badge-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "badge-count-digits",
+    "output": "src/lib/vendor/badge-count-digits.css",
+    "expectedRules": 3,
+    "include": [
+      "\\.ant-scroll-number(?![-\\w])",
+      "\\.ant-scroll-number-only(?![-\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-badge(?![-\\w])",
+        "replacement": ".ant-badge:where(.ant-badge-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge count: ScrollNumber и SingleNumber slots.\n * JS-план прокрутки перенесён в badge-digit.engine.ts и BadgeDigit.svelte.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "badge-zoom",
+    "output": "src/lib/vendor/badge-zoom.css",
+    "expectedRules": 4,
+    "include": [
+      "ant-badge-zoom"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-badge(?![-\\w])",
+        "replacement": ".ant-badge:where(.ant-badge-css-var)"
+      }
+    ],
+    "keyframes": [
+      "antZoomBadgeIn",
+      "antZoomBadgeOut",
+      "antNoWrapperZoomBadgeIn",
+      "antNoWrapperZoomBadgeOut"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge CSSMotion zoom: enter/leave и отдельные standalone keyframes.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "badge-ribbon",
+    "output": "src/lib/vendor/badge-ribbon.css",
+    "expectedRules": 27,
+    "include": [
+      "\\.ant-ribbon(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-ribbon-wrapper",
+        "replacement": ".ant-ribbon-wrapper-css-var"
+      },
+      {
+        "pattern": "\\.ant-ribbon-wrapper(?![-\\w])",
+        "replacement": ".ant-ribbon-wrapper:where(.ant-ribbon-wrapper-css-var)"
+      },
+      {
+        "pattern": "\\.ant-ribbon(?![-\\w])",
+        "replacement": ".ant-ribbon:where(.ant-ribbon-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge.Ribbon: wrapper, indicator, content, corner, placement, RTL и preset colors.\n * Корни ограничены :where(.ant-ribbon-wrapper-css-var) / :where(.ant-ribbon-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "badge-ribbon-prefix",
+    "output": "src/lib/vendor/badge-ribbon-prefix.css.js",
+    "expectedRules": 27,
+    "include": [
+      "\\.ant-ribbon(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-ribbon-wrapper",
+        "replacement": ".ant-ribbon-wrapper-css-var"
+      },
+      {
+        "pattern": "\\.ant-ribbon-wrapper(?![-\\w])",
+        "replacement": ".ant-ribbon-wrapper:where(.ant-ribbon-wrapper-css-var)"
+      },
+      {
+        "pattern": "\\.ant-ribbon(?![-\\w])",
+        "replacement": ".ant-ribbon:where(.ant-ribbon-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Badge.Ribbon global prefix template: wrapper, indicator, content, corner, placement, RTL и preset colors.\n * Корни ограничены :where(.ant-ribbon-wrapper-css-var) / :where(.ant-ribbon-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "divider",
+    "output": "src/lib/vendor/divider.css",
+    "expectedRules": 27,
+    "include": [
+      "\\.ant-divider(?![\\w])"
+    ],
+    "exclude": [
+      "ant-color-picker",
+      "no-default-orientation-margin"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-divider",
+        "replacement": ".ant-divider-css-var"
+      },
+      {
+        "pattern": "\\.ant-divider(?![-\\w])",
+        "replacement": ".ant-divider:where(.ant-divider-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Divider: horizontal/vertical, подпись, размеры и варианты линий; исключена интеграция ColorPicker.\n * Корни ограничены :where(.ant-divider-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "divider-prefix",
+    "output": "src/lib/vendor/divider-prefix.css.js",
+    "expectedRules": 27,
+    "include": [
+      "\\.ant-divider(?![\\w])"
+    ],
+    "exclude": [
+      "ant-color-picker",
+      "no-default-orientation-margin"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-divider",
+        "replacement": ".ant-divider-css-var"
+      },
+      {
+        "pattern": "\\.ant-divider(?![-\\w])",
+        "replacement": ".ant-divider:where(.ant-divider-css-var)"
+      },
+      {
+        "pattern": "^\\.ant-divider-css-var$",
+        "replacement": ".ant-divider:where(.ant-divider-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Divider prefix template: horizontal/vertical, подпись, размеры и варианты линий.\n * Defaults ограничены корнем; marker и CSS variable names сохраняются.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "flex",
+    "output": "src/lib/vendor/flex.css",
+    "expectedRules": 32,
+    "include": [
+      "\\.ant-flex(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-flex-gap-middle$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.ant-flex(?![-\\w])",
+        "replacement": ".ant-flex:where(.ant-flex-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Flex: направления, align/justify, wrap и preset gaps; без reset типографики.\n * Корни ограничены :where(.ant-flex-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "flex-prefix",
+    "output": "src/lib/vendor/flex-prefix.css.js",
+    "expectedRules": 32,
+    "include": [
+      "\\.ant-flex(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-flex-gap-middle$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.ant-flex(?![-\\w])",
+        "replacement": ".ant-flex:where(.ant-flex-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Flex prefix template: направления, align/justify, wrap и preset gaps; без reset типографики.\n * Корни ограничены :where(.ant-flex-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "statistic",
+    "output": "src/lib/vendor/statistic.css",
+    "expectedRules": 14,
+    "include": [
+      "\\.ant-statistic(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-statistic",
+        "replacement": ".ant-statistic-css-var"
+      },
+      {
+        "pattern": "\\.ant-statistic(?![-\\w])",
+        "replacement": ".ant-statistic:where(.ant-statistic-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Statistic: header/title/content/value/prefix/suffix и loading Skeleton.\n * Корни ограничены :where(.ant-statistic-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "statistic-prefix",
+    "output": "src/lib/vendor/statistic-prefix.css.js",
+    "expectedRules": 14,
+    "include": [
+      "\\.ant-statistic(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-statistic",
+        "replacement": ".ant-statistic-css-var"
+      },
+      {
+        "pattern": "\\.ant-statistic(?![-\\w])",
+        "replacement": ".ant-statistic:where(.ant-statistic-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Statistic prefix template: header/title/content/value/prefix/suffix и loading Skeleton; CSS data module.\n * Корни ограничены :where(.ant-statistic-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "segmented",
+    "output": "src/lib/vendor/segmented.css",
+    "expectedRules": 38,
+    "include": [
+      "\\.ant-segmented(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-segmented",
+        "replacement": ".ant-segmented-css-var"
+      },
+      {
+        "pattern": "\\.ant-segmented(?![-\\w])",
+        "replacement": ".ant-segmented:where(.ant-segmented-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Segmented: размеры, направления, состояния и thumb; все 38 правил компонента.\n * Корни ограничены :where(.ant-segmented-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "grid",
+    "output": "src/lib/vendor/grid.css",
+    "expectedRules": 1043,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-(?:row|col)(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-(?:row|col)",
+        "replacement": ".ant-grid-css-var"
+      },
+      {
+        "pattern": "\\.ant-(row|col)(?![-\\w])",
+        "replacement": ".ant-$1:where(.ant-grid-css-var)"
+      },
+      {
+        "pattern": "(\\.ant-col(?![-\\w])|\\.ant-col-(?!css-var\\b)[\\w-]+)",
+        "replacement": "$1:where(:not(.ant-grid-custom-media))"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Grid Row/Col: 24 колонки, xs–xxxl, responsive flex и логические отступы.\n * Сохранены media scopes 576/768/992/1200/1600/1920px; исключены чужие интеграции.\n * Корни ограничены :where(.ant-grid-css-var); custom media Col получают отдельный scoped CSS.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "grid-row-prefix",
+    "output": "src/lib/vendor/grid-row-prefix.css.js",
+    "expectedRules": 16,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-row(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-(?:row|col)",
+        "replacement": ".ant-grid-css-var"
+      },
+      {
+        "pattern": "\\.ant-(row|col)(?![-\\w])",
+        "replacement": ".ant-$1:where(.ant-grid-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Grid Row prefix template: layout, align, justify, wrap и common reset.\n * Canonical Grid marker сохранён; Col и media scopes исключены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "grid-responsive",
+    "output": "src/lib/vendor/grid-responsive.css.js",
+    "expectedRules": 1027,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-col(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-(?:row|col)",
+        "replacement": ".ant-grid-css-var"
+      },
+      {
+        "pattern": "\\.ant-(row|col)(?![-\\w])",
+        "replacement": ".ant-$1:where(.ant-grid-css-var)"
+      },
+      {
+        "pattern": "(\\.ant-col(?:-[\\w-]+)?)",
+        "replacement": "$1:where(.__ANT_GRID_MEDIA_SCOPE__)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Grid Col: полный scoped шаблон для пользовательских global media thresholds.\n * Сохранены media scopes 576/768/992/1200/1600/1920px; исключены чужие интеграции.\n * Маркер __ANT_GRID_MEDIA_SCOPE__ и шесть min-width заменяются grid-style.engine.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "layout",
+    "output": "src/lib/vendor/layout.css",
+    "expectedRules": 35,
+    "include": [
+      "\\.ant-layout(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.(ant-layout(?:-sider)?)(?![-\\w])",
+        "replacement": ".$1.ant-layout-css-var"
+      },
+      {
+        "pattern": "\\.ant-layout(?:-(?:sider|header|footer|content))?(?![-\\w])",
+        "replacement": "$&:where(.ant-layout-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Layout/Header/Content/Footer/Sider и контекстные Menu-интеграции.\n * Корни ограничены :where(.ant-layout-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ]
+  },
+  {
+    "id": "layout-prefix",
+    "output": "src/lib/vendor/layout-prefix.css.js",
+    "expectedRules": 35,
+    "include": [
+      "\\.ant-layout(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.(ant-layout(?:-sider)?)(?![-\\w])",
+        "replacement": ".$1.ant-layout-css-var"
+      },
+      {
+        "pattern": "\\.ant-layout(?:-(?:sider|header|footer|content))?(?![-\\w])",
+        "replacement": "$&:where(.ant-layout-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Layout prefix template: контейнер, Sider и Menu-интеграции; CSS data module.\n * Корни ограничены :where(.ant-layout-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "format": "module"
+  },
+  {
+    "id": "descriptions",
+    "output": "src/lib/vendor/descriptions.css",
+    "expectedRules": 40,
+    "include": [
+      "\\.ant-descriptions(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-descriptions",
+        "replacement": ".ant-descriptions-css-var"
+      },
+      {
+        "pattern": "\\.ant-descriptions(?![-\\w])",
+        "replacement": ".ant-descriptions:where(.ant-descriptions-css-var)"
+      },
+      {
+        "pattern": "(\\.ant-table-wrapper tr\\.ant-table-expanded-row) (\\.ant-descriptions-view)",
+        "replacement": "$1 :where(.ant-descriptions:not([data-ant-descriptions-global])) $2"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Descriptions: таблицы, bordered, размеры и изоляция вложенных строк.\n * Корни ограничены :where(.ant-descriptions-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "descriptions-prefix",
+    "output": "src/lib/vendor/descriptions-prefix.css.js",
+    "expectedRules": 40,
+    "include": [
+      "\\.ant-descriptions(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-descriptions",
+        "replacement": ".ant-descriptions-css-var"
+      },
+      {
+        "pattern": "\\.ant-descriptions(?![-\\w])",
+        "replacement": ".ant-descriptions:where(.ant-descriptions-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Descriptions prefix template: таблицы, bordered, размеры и изоляция вложенных строк.\n * Корни ограничены :where(.ant-descriptions-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "card",
+    "output": "src/lib/vendor/card.css",
+    "expectedRules": 59,
+    "include": [
+      "\\.ant-card(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-card",
+        "replacement": ".ant-card-css-var"
+      },
+      {
+        "pattern": "\\.ant-card(?![-\\w])",
+        "replacement": ".ant-card:where(.ant-card-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Card/Grid/Meta: header/body/cover/actions, loading, tabs, inner и размеры.\n * Корни ограничены :where(.ant-card-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "card-prefix",
+    "output": "src/lib/vendor/card-prefix.css.js",
+    "expectedRules": 59,
+    "include": [
+      "\\.ant-card(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-card",
+        "replacement": ".ant-card-css-var"
+      },
+      {
+        "pattern": "\\.ant-card(?![-\\w])",
+        "replacement": ".ant-card:where(.ant-card-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Card/Grid/Meta prefix template: header/body/cover/actions, loading, tabs, inner и размеры.\n * Корни ограничены :where(.ant-card-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "button-prefix",
+    "output": "src/lib/vendor/button-prefix.css.js",
+    "expectedRules": 113,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-btn(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-btn-group(?![-\\w])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-btn",
+        "replacement": ":where(.ant-btn-css-var)"
+      },
+      {
+        "pattern": "\\.ant-btn(?![-\\w])",
+        "replacement": ".ant-btn:where(.ant-btn-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Button prefix template: варианты, цвета, размеры, shapes, loading и Compact.\n * Deprecated ButtonGroup исключён. Корни ограничены :where(.ant-btn-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "format": "module"
+  },
+  {
+    "id": "breadcrumb",
+    "output": "src/lib/vendor/breadcrumb.css",
+    "expectedRules": 21,
+    "include": [
+      "\\.ant-breadcrumb(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-breadcrumb",
+        "replacement": ".ant-breadcrumb-css-var"
+      },
+      {
+        "pattern": "\\.ant-breadcrumb(?![-\\w])",
+        "replacement": ".ant-breadcrumb:where(.ant-breadcrumb-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Breadcrumb: links, separators, overlay, icon alignment, focus и RTL.\n * Корни ограничены :where(.ant-breadcrumb-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "breadcrumb-prefix",
+    "output": "src/lib/vendor/breadcrumb-prefix.css.js",
+    "expectedRules": 21,
+    "include": [
+      "\\.ant-breadcrumb(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-breadcrumb",
+        "replacement": ".ant-breadcrumb-css-var"
+      },
+      {
+        "pattern": "\\.ant-breadcrumb(?![-\\w])",
+        "replacement": ".ant-breadcrumb:where(.ant-breadcrumb-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Breadcrumb prefix template: links, separators, overlay, icon alignment, focus и RTL.\n * Корни ограничены :where(.ant-breadcrumb-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "space",
+    "output": "src/lib/vendor/space.css",
+    "expectedRules": 16,
+    "include": [
+      "^\\.ant-space(?![\\w])"
+    ],
+    "exclude": [
+      "ant-space-(?:compact|addon)",
+      "\\.ant-space-gap-(?:row|col)-middle$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.ant-space(?![-\\w])",
+        "replacement": ".ant-space:where(.ant-space-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Space: orientation, align, gaps, empty wrappers и Badge; без Compact/Addon.\n * Без typography reset; корни ограничены :where(.ant-space-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "space-prefix",
+    "output": "src/lib/vendor/space-prefix.css.js",
+    "expectedRules": 16,
+    "include": [
+      "^\\.ant-space(?![\\w])"
+    ],
+    "exclude": [
+      "ant-space-(?:compact|addon)",
+      "\\.ant-space-gap-(?:row|col)-middle$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.ant-space(?![-\\w])",
+        "replacement": ".ant-space:where(.ant-space-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Space: orientation, align, gaps, empty wrappers и Badge; без Compact/Addon.\n * Без typography reset; корни ограничены :where(.ant-space-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "space-compact",
+    "output": "src/lib/vendor/space-compact.css",
+    "expectedRules": 4,
+    "include": [
+      "^\\.ant-space-compact(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-space-compact(?![-\\w])",
+        "replacement": ".ant-space-compact:where(.ant-space-compact-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Space.Compact: block, vertical и RTL; без typography reset.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "space-compact-prefix",
+    "output": "src/lib/vendor/space-compact-prefix.css.js",
+    "expectedRules": 4,
+    "include": [
+      "^\\.ant-space-compact(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-space-compact(?![-\\w])",
+        "replacement": ".ant-space-compact:where(.ant-space-compact-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Space.Compact: block, vertical и RTL; без typography reset.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "space-addon",
+    "output": "src/lib/vendor/space-addon.css",
+    "expectedRules": 29,
+    "include": [
+      "\\.ant-space-addon(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-space-addon(?![-\\w])",
+        "replacement": ".ant-space-addon:where(.ant-space-addon-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Space.Addon: variants/status, размеры, compact borders и z-index.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "space-addon-prefix",
+    "output": "src/lib/vendor/space-addon-prefix.css.js",
+    "expectedRules": 29,
+    "include": [
+      "\\.ant-space-addon(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-space-addon(?![-\\w])",
+        "replacement": ".ant-space-addon:where(.ant-space-addon-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Space.Addon: variants/status, размеры, compact borders и z-index.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "input-number-compact",
+    "output": "src/lib/vendor/input-number-compact.css",
+    "expectedRules": 8,
+    "include": [
+      "\\.ant-input-number-compact(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-input-number-compact-item(?![-\\w])",
+        "replacement": ".ant-input-number-compact-item:where(.ant-input-number-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * InputNumber: compact margins, z-index и логические углы.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "affix",
+    "output": "src/lib/vendor/affix.css",
+    "expectedRules": 6,
+    "include": [
+      "\\.ant-affix(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-affix",
+        "replacement": ".ant-affix-css-var"
+      },
+      {
+        "pattern": "\\.ant-affix(?![-\\w])",
+        "replacement": ".ant-affix:where(.ant-affix-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Affix: reset, fixed position и z-index; корни ограничены :where(.ant-affix-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "affix-prefix",
+    "output": "src/lib/vendor/affix-prefix.css.js",
+    "expectedRules": 6,
+    "include": [
+      "\\.ant-affix(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-affix",
+        "replacement": ".ant-affix-css-var"
+      },
+      {
+        "pattern": "\\.ant-affix(?![-\\w])",
+        "replacement": ".ant-affix:where(.ant-affix-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Affix: reset, fixed position и z-index; корни ограничены :where(.ant-affix-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "anchor",
+    "output": "src/lib/vendor/anchor.css",
+    "expectedRules": 22,
+    "include": [
+      "\\.ant-anchor(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-anchor(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-anchor-css-var"
+      },
+      {
+        "pattern": "\\.ant-anchor-wrapper(?:-horizontal)?(?![-\\w])",
+        "replacement": "$&:where(.ant-anchor-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Anchor: vertical/horizontal, indicator, nested links и reset.\n * Wrapper-корни ограничены :where(.ant-anchor-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "anchor-prefix",
+    "output": "src/lib/vendor/anchor-prefix.css.js",
+    "expectedRules": 22,
+    "include": [
+      "\\.ant-anchor(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-anchor(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-anchor-css-var"
+      },
+      {
+        "pattern": "\\.ant-anchor-wrapper(?:-horizontal)?(?![-\\w])",
+        "replacement": "$&:where(.ant-anchor-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Anchor prefix template: vertical/horizontal, indicator, nested links и reset.\n * Wrapper-корни ограничены :where(.ant-anchor-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "steps",
+    "output": "src/lib/vendor/steps.css",
+    "expectedRules": 137,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-steps(?![\\w])"
+    ],
+    "exclude": [
+      "^\\.ant-steps-title-horizontal \\.ant-steps-item-content$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-steps",
+        "replacement": ".ant-steps-css-var"
+      },
+      {
+        "pattern": "\\.ant-steps(?![-\\w])",
+        "replacement": ".ant-steps:where(.ant-steps-css-var)"
+      },
+      {
+        "pattern": "\\[role=['\\\"]button['\\\"]\\]",
+        "replacement": ".ant-steps-item-clickable"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Steps: все варианты, maxCount и progress.\n * Корни ограничены :where(.ant-steps-css-var); role-button selectors адаптированы\n * к классу интерактивного шага с нативной кнопкой.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "excludeAtRules": [
+      "^@container style\\(--ant-steps-description-max-width\\)$"
+    ]
+  },
+  {
+    "id": "steps-prefix",
+    "output": "src/lib/vendor/steps-prefix.css.js",
+    "expectedRules": 137,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-steps(?![\\w])"
+    ],
+    "exclude": [
+      "^\\.ant-steps-title-horizontal \\.ant-steps-item-content$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-steps",
+        "replacement": ".ant-steps-css-var"
+      },
+      {
+        "pattern": "\\.ant-steps(?![-\\w])",
+        "replacement": ".ant-steps:where(.ant-steps-css-var)"
+      },
+      {
+        "pattern": "\\[role=['\\\"]button['\\\"]\\]",
+        "replacement": ".ant-steps-item-clickable"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Steps prefix template: все варианты, maxCount и progress; CSS data module.\n * Корни ограничены :where(.ant-steps-css-var); role-button selectors адаптированы\n * к классу интерактивного шага с нативной кнопкой.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "excludeAtRules": [
+      "^@container style\\(--ant-steps-description-max-width\\)$"
+    ],
+    "format": "module"
+  },
+  {
+    "id": "timeline",
+    "output": "src/lib/vendor/timeline.css",
+    "expectedRules": 43,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-timeline(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-timeline",
+        "replacement": ".ant-timeline-css-var"
+      },
+      {
+        "pattern": "\\.ant-timeline(?![-\\w])",
+        "replacement": ".ant-timeline:where(.ant-timeline-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Timeline: все правила, оформление поверх Steps dot.\n * Корни ограничены :where(.ant-timeline-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "timeline-prefix",
+    "output": "src/lib/vendor/timeline-prefix.css.js",
+    "expectedRules": 43,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-timeline(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-timeline",
+        "replacement": ".ant-timeline-css-var"
+      },
+      {
+        "pattern": "\\.ant-timeline(?![-\\w])",
+        "replacement": ".ant-timeline:where(.ant-timeline-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Timeline prefix template: оформление поверх Steps dot; CSS data module.\n * Корни ограничены :where(.ant-timeline-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "float-button",
+    "output": "src/lib/vendor/float-button.css",
+    "expectedRules": 42,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-float-btn(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-float-btn",
+        "replacement": ".ant-float-btn-css-var"
+      },
+      {
+        "pattern": "\\.ant-float-btn(?![-\\w])",
+        "replacement": ".ant-float-btn:where(.ant-float-btn-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * FloatButton/Group/BackTop: geometry, placements и progress; общий fade\n * адаптирован через Web Animations API, без глобальных ant-fade/keyframes.\n * Корни кнопок ограничены :where(.ant-float-btn-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "float-button-prefix",
+    "output": "src/lib/vendor/float-button-prefix.css.js",
+    "expectedRules": 42,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-float-btn(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-float-btn",
+        "replacement": ".ant-float-btn-css-var"
+      },
+      {
+        "pattern": "\\.ant-float-btn(?![-\\w])",
+        "replacement": ".ant-float-btn:where(.ant-float-btn-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * FloatButton/Group/BackTop prefix template: geometry, placements и progress; общий fade\n * адаптирован через Web Animations API, без глобальных ant-fade/keyframes.\n * Корни кнопок ограничены :where(.ant-float-btn-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "date-picker",
+    "output": "src/lib/vendor/date-picker.css",
+    "expectedRules": 262,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-picker(?![\\w])"
+    ],
+    "exclude": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-picker-calendar"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-picker-css-var",
+        "replacement": ".ant-picker-css-var"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-picker(?![-\\w])",
+        "replacement": ".ant-picker-css-var"
+      },
+      {
+        "pattern": "\\.ant-picker(?![-\\w])",
+        "replacement": ".ant-picker:where(.ant-picker-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * DatePicker: single/range panels, time, variants и RTL из закреплённого dist.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "date-picker-prefix",
+    "output": "src/lib/vendor/date-picker-prefix.css.js",
+    "expectedRules": 262,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-picker(?![\\w])"
+    ],
+    "exclude": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-picker-calendar"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-picker-css-var",
+        "replacement": ":where(.ant-picker-css-var)"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-picker(?![-\\w])",
+        "replacement": ":where(.ant-picker-css-var)"
+      },
+      {
+        "pattern": "\\.ant-picker(?![-\\w])",
+        "replacement": ".ant-picker:where(.ant-picker-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Picker prefix template: single/range panels, time, variants и RTL.\n * Owner, private affix namespace и canonical tokens независимы.\n * Component defaults имеют нулевую specificity для сохранения Native theme bridge.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "upload-link-reset",
+    "output": "src/lib/vendor/upload-link-reset.css",
+    "expectedRules": 14,
+    "include": [
+      "^a(?=:[\\w-]+(?:-|\\b)|\\[disabled\\]|$)"
+    ],
+    "exclude": [
+      "\\s"
+    ],
+    "replacements": [
+      {
+        "pattern": "^a",
+        "replacement": ":where(.ant-upload-css-var) a"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Общий link reset ограничен ссылками внутри Upload.\n * :where сохраняет исходную specificity a и псевдоклассов; цвета error rows приоритетнее.\n * Два исходных набора правил сохранены в порядке npm CSS.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "upload",
+    "output": "src/lib/vendor/upload.css",
+    "expectedRules": 91,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-upload(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-motion-collapse"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-upload-wrapper",
+        "replacement": ".ant-upload-css-var"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-upload",
+        "replacement": ".ant-upload-css-var"
+      },
+      {
+        "pattern": "\\.ant-upload-wrapper(?![-\\w])",
+        "replacement": ".ant-upload-wrapper:where(.ant-upload-css-var)"
+      }
+    ],
+    "keyframes": [
+      "uploadAnimateInlineIn",
+      "uploadAnimateInlineOut",
+      "antFadeIn",
+      "antFadeOut"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Upload: text, picture, cards, drag и RTL; appear/leave строк, inline keyframes и fade progress.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tree",
+    "output": "src/lib/vendor/tree.css",
+    "expectedRules": 99,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tree(?![\\w])"
+    ],
+    "exclude": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tree-select"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tree(?![-\\w])",
+        "replacement": ".ant-tree-css-var"
+      },
+      {
+        "pattern": "\\.ant-tree(?![-\\w])",
+        "replacement": ".ant-tree:where(.ant-tree-css-var)"
+      }
+    ],
+    "keyframes": [
+      "ant-tree-node-fx-do-not-use"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Tree: nodes/checkbox/line/RTL, drag feedback и collapse motion.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tree-select",
+    "output": "src/lib/vendor/tree-select.css",
+    "expectedRules": 92,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tree-select"
+    ],
+    "exclude": [
+      "\\.ant-motion-collapse"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tree-select-css-var",
+        "replacement": ".ant-tree-select-css-var"
+      },
+      {
+        "pattern": "\\.ant-select-tree(?!-select)",
+        "replacement": ".ant-tree"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * TreeSelect: dropdown/checkbox/RTL; .ant-select-tree заменён на общий .ant-tree.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "menu",
+    "output": "src/lib/vendor/menu.css",
+    "expectedRules": 201,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-menu(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-menu-css-var",
+        "replacement": ".ant-menu-css-var"
+      },
+      {
+        "pattern": "\\.ant-menu(?![-\\w])",
+        "replacement": ".ant-menu:where(.ant-menu-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Menu: items/submenus/inline/horizontal/themes; rc-motion исключён.\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ]
+  },
+  {
+    "id": "menu-motion",
+    "output": "src/lib/vendor/menu-motion.css",
+    "expectedRules": 92,
+    "include": [
+      "^[.]ant-menu [.]ant-motion-collapse$",
+      "^[.]ant-(?:slide-up|slide-down|zoom-big)-(?:appear|enter|leave)(?![a-z0-9])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^[.]ant-menu [.]ant-motion-collapse$",
+        "replacement": ".ant-menu-css-var:where([data-ant-menu-motion=\"ant\"]).ant-motion-collapse"
+      },
+      {
+        "pattern": "^[.]ant-((?:slide-up|slide-down|zoom-big)-)",
+        "replacement": ":where([data-ant-menu-motion=\"ant\"]).ant-$1"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antZoomBigIn",
+      "antZoomBigOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Menu: collapse, slide и zoom из npm CSS. Селекторы ограничены поверхностями Menu.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "menu-motion-prefix",
+    "output": "src/lib/vendor/menu-motion-prefix.css.js",
+    "expectedRules": 92,
+    "include": [
+      "^[.]ant-menu [.]ant-motion-collapse$",
+      "^[.]ant-(?:slide-up|slide-down|zoom-big)-(?:appear|enter|leave)(?![a-z0-9])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^[.]ant-menu [.]ant-motion-collapse$",
+        "replacement": ".ant-menu-css-var:where([data-ant-menu-motion=\"ant\"]).ant-motion-collapse"
+      },
+      {
+        "pattern": "^[.]ant-((?:slide-up|slide-down|zoom-big)-)",
+        "replacement": ":where([data-ant-menu-motion=\"ant\"]).ant-$1"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antZoomBigIn",
+      "antZoomBigOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Menu: collapse, slide и zoom из npm CSS. Селекторы ограничены поверхностями Menu.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "menu-link-reset",
+    "output": "src/lib/vendor/menu-link-reset.css",
+    "expectedRules": 14,
+    "include": [
+      "^a(?=:[\\w-]+(?:-|\\b)|\\[disabled\\]|$)"
+    ],
+    "exclude": [
+      "\\s"
+    ],
+    "replacements": [
+      {
+        "pattern": "^a",
+        "replacement": ":where(.ant-menu-css-var) a"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Общий link reset ограничен Menu и его popup/inline descendants.\n * :where сохраняет исходную specificity a и псевдоклассов; Menu colors приоритетнее.\n * Два исходных набора правил сохранены в порядке npm CSS.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "menu-theme-scope",
+    "output": "src/lib/vendor/menu-theme-scope.css",
+    "expectedRules": 77,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-menu-(?:light|dark)(?![-\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-menu-css-var",
+        "replacement": ".ant-menu-css-var"
+      },
+      {
+        "pattern": "\\.ant-menu(?![-\\w])",
+        "replacement": ".ant-menu:where(.ant-menu-css-var)"
+      },
+      {
+        "pattern": "^\\.ant-menu-(light|dark)",
+        "replacement": ":where(:scope).ant-menu-$1"
+      }
+    ],
+    "scope": "(.ant-menu-css-var) to (:scope .ant-menu-submenu-popup)",
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Menu theme scope: native popovers сохраняют DOM и отделяют вложенную тему.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "mentions",
+    "output": "src/lib/vendor/mentions.css",
+    "expectedRules": 102,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-mentions(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-mentions-css-var",
+        "replacement": ".ant-mentions-css-var"
+      },
+      {
+        "pattern": "\\.ant-mentions(?![-\\w])",
+        "replacement": ".ant-mentions:where(.ant-mentions-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Mentions: textarea/variants/dropdown; rc-trigger motion исключён.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "image",
+    "output": "src/lib/vendor/image.css",
+    "expectedRules": 48,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-image(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)",
+      "ant-image-progress"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-image-css-var",
+        "replacement": ".ant-image-css-var"
+      },
+      {
+        "pattern": "\\.ant-image(?![-\\w])",
+        "replacement": ".ant-image:where(.ant-image-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Image/Preview: thumbnail/cover/viewer/actions; progress wrapper/rc-motion исключены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "rate",
+    "output": "src/lib/vendor/rate.css",
+    "expectedRules": 21,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-rate(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-rate(?![-\\w])",
+        "replacement": ".ant-rate-css-var"
+      },
+      {
+        "pattern": "\\.ant-rate(?![-\\w])",
+        "replacement": ".ant-rate:where(.ant-rate-css-var)"
+      },
+      {
+        "pattern": ">div",
+        "replacement": ">button"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Rate: все правила; >div заменён на >button для нативных controls.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "otp",
+    "output": "src/lib/vendor/otp.css",
+    "expectedRules": 16,
+    "include": [
+      "\\.ant-otp(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-otp(?![-\\w])",
+        "replacement": ".ant-otp-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Input.OTP: ячейки, маска, размеры, RTL и переменные компонента.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "border-beam",
+    "output": "src/lib/vendor/border-beam.css",
+    "expectedRules": 10,
+    "include": [
+      "\\.ant-border-beam(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [
+      "antBorderBeamMove"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * BorderBeam: mask/offset-path, анимация и prefers-reduced-motion.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "border-beam-prefix",
+    "output": "src/lib/vendor/border-beam-prefix.css.js",
+    "expectedRules": 10,
+    "include": [
+      "\\.ant-border-beam(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [
+      "antBorderBeamMove"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * BorderBeam: mask/offset-path, анимация и prefers-reduced-motion.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "masonry",
+    "output": "src/lib/vendor/masonry.css",
+    "expectedRules": 12,
+    "include": [
+      "\\.ant-masonry(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Masonry: root/item, RTL и CSS appear/leave transitions.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "masonry-prefix",
+    "output": "src/lib/vendor/masonry-prefix.css.js",
+    "expectedRules": 12,
+    "include": [
+      "\\.ant-masonry(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Masonry prefix template: root/item, RTL и CSS appear/leave transitions.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "splitter",
+    "output": "src/lib/vendor/splitter.css",
+    "expectedRules": 59,
+    "include": [
+      "\\.ant-splitter(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-splitter-css-var",
+        "replacement": ".ant-splitter-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Splitter: panels, dragger/preview, collapse controls и reduced motion.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ]
+  },
+  {
+    "id": "splitter-prefix",
+    "output": "src/lib/vendor/splitter-prefix.css.js",
+    "expectedRules": 59,
+    "include": [
+      "\\.ant-splitter(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-splitter-css-var",
+        "replacement": ".ant-splitter-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Splitter prefix template: panels, dragger/preview, collapse controls и reduced motion.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "format": "module"
+  },
+  {
+    "id": "qrcode",
+    "output": "src/lib/vendor/qrcode.css",
+    "expectedRules": 11,
+    "include": [
+      "\\.ant-qrcode(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-qrcode(?![-\\w])",
+        "replacement": ".ant-qrcode-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * QRCode: root, cover, canvas и borderless.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "qrcode-prefix",
+    "output": "src/lib/vendor/qrcode-prefix.css.js",
+    "expectedRules": 11,
+    "include": [
+      "\\.ant-qrcode(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-qrcode(?![-\\w])",
+        "replacement": ".ant-qrcode-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * QRCode prefix template: root, cover, canvas и borderless; CSS data module.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "radio-button",
+    "output": "src/lib/vendor/radio-button.css",
+    "expectedRules": 70,
+    "include": [
+      "\\.ant-radio-button(?![\\w])",
+      "\\.ant-radio-group-(?:large|small|solid|block)(?![\\w])",
+      "\\.ant-radio-wrapper-block(?![\\w])",
+      "^\\.css-var-_R_0_\\.ant-radio-css-var$",
+      "^\\.ant-radio-group-vertical\\s*>\\s*\\.ant-badge$",
+      "^\\.ant-radio-group-vertical\\s*>\\s*\\.ant-badge:not\\(:last-child\\)$",
+      "^\\.ant-radio-group\\s+\\.ant-badge\\s+\\.ant-badge-count$"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-radio-css-var",
+        "replacement": ".ant-radio-button-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Radio.Button: outline/solid, размеры, block, vertical, Badge и focus.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "radio-prefix",
+    "output": "src/lib/vendor/radio-prefix.css.js",
+    "expectedRules": 99,
+    "include": [
+      "\\.ant-radio(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-button-wrapper(?![-\\w])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-radio-css-var",
+        "replacement": ":where(.ant-radio-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Radio/Group/Button prefix template: states, sizes, solid/outline, Badge и focus.\n * Неэффективный Source Badge/button-wrapper selector исключён.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "checkbox-prefix",
+    "output": "src/lib/vendor/checkbox-prefix.css.js",
+    "expectedRules": 31,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-checkbox(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-checkbox-css-var",
+        "replacement": ":where(.ant-checkbox-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Checkbox/Group prefix template: checked, indeterminate, disabled, hover и Row.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "calendar",
+    "output": "src/lib/vendor/calendar.css",
+    "expectedRules": 123,
+    "include": [
+      "\\.ant-picker-calendar(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-picker-calendar",
+        "replacement": ".ant-picker-calendar-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Calendar: date/month panels, full/mini, week, header и responsive.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "calendar-prefix",
+    "output": "src/lib/vendor/calendar-prefix.css.js",
+    "expectedRules": 123,
+    "include": [
+      "\\.ant-picker-calendar(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-picker-calendar",
+        "replacement": ":where(.ant-picker-calendar-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Calendar prefix template: date/month panels, full/mini, week, header и responsive.\n * Picker owner и canonical Calendar variables/marker независимы.\n * Component defaults имеют нулевую specificity для сохранения Native theme bridge.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "cascader",
+    "output": "src/lib/vendor/cascader.css",
+    "expectedRules": 108,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-cascader(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-cascader-css-var",
+        "replacement": ".ant-cascader-css-var"
+      },
+      {
+        "pattern": "\\.ant-cascader(?![-\\w])",
+        "replacement": ".ant-cascader:where(.ant-cascader-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Cascader: selector, columns, checkbox, panel и RTL; select base — vendor/antd.css.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "transfer",
+    "output": "src/lib/vendor/transfer.css",
+    "expectedRules": 54,
+    "include": [
+      "\\.ant-transfer(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-transfer",
+        "replacement": ".ant-transfer-css-var"
+      },
+      {
+        "pattern": "\\.ant-transfer(?:-customize-list|-status-(?:error|warning)|-rtl)?(?![-\\w])",
+        "replacement": "$&:where(.ant-transfer-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Transfer: списки, поиск, actions, custom lists, pagination, status и RTL.\n * Корни ограничены :where(.ant-transfer-css-var); keyframes и at-rules отсутствуют.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "pagination",
+    "output": "src/lib/vendor/pagination.css",
+    "expectedRules": 115,
+    "include": [
+      "\\.ant-pagination(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-pagination",
+        "replacement": ".ant-pagination-css-var"
+      },
+      {
+        "pattern": "\\.ant-pagination(?![-\\w])",
+        "replacement": ".ant-pagination:where(.ant-pagination-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Pagination: sizes, simple/quick jumper, options, variants и responsive media.\n * Корни ограничены :where(.ant-pagination-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "list-link-reset",
+    "output": "src/lib/vendor/list-link-reset.css",
+    "expectedRules": 14,
+    "include": [
+      "^a(?=:[\\w-]+(?:-|\\b)|\\[disabled\\]|$)"
+    ],
+    "exclude": [
+      "\\s"
+    ],
+    "replacements": [
+      {
+        "pattern": "^a",
+        "replacement": ":where(.ant-listy-css-var) a"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Общий link reset ограничен Listy и их descendant anchors.\n * :where сохраняет исходную specificity a и псевдоклассов.\n * Два исходных набора правил сохранены в порядке npm CSS.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "listy",
+    "output": "src/lib/vendor/listy.css",
+    "expectedRules": 16,
+    "include": [
+      "\\.ant-listy(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-listy(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-listy-css-var"
+      },
+      {
+        "pattern": "\\.ant-listy(?![-\\w])",
+        "replacement": ".ant-listy:where(.ant-listy-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Listy: items, group headers, sticky и scrollbar.\n * Базовый корень ограничен :where(.ant-listy-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "typography",
+    "output": "src/lib/vendor/typography.css",
+    "expectedRules": 73,
+    "include": [
+      "\\.ant-typography(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:menu|select)(?![\\w])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-typography(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-typography-css-var"
+      },
+      {
+        "pattern": "\\.ant-typography(?![-\\w])",
+        "replacement": ".ant-typography:where(.ant-typography-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Typography: headings, decorations, actions, editing и ellipsis.\n * Базовый корень ограничен :where(.ant-typography-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "typography-prefix",
+    "output": "src/lib/vendor/typography-prefix.css.js",
+    "expectedRules": 73,
+    "include": [
+      "\\.ant-typography(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:menu|select)(?![\\w])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-typography(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-typography-css-var"
+      },
+      {
+        "pattern": "\\.ant-typography(?![-\\w])",
+        "replacement": ".ant-typography:where(.ant-typography-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Typography prefix template: headings, decorations, actions, editing и ellipsis.\n * Базовый корень ограничен :where(.ant-typography-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "tour",
+    "output": "src/lib/vendor/tour.css",
+    "expectedRules": 61,
+    "include": [
+      "\\.ant-tour(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tour(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-tour-css-var"
+      },
+      {
+        "pattern": "\\.ant-tour(?![-\\w])",
+        "replacement": ".ant-tour:where(.ant-tour-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tour: panel, mask, actions и arrows.\n * Базовый корень ограничен :where(.ant-tour-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "carousel",
+    "output": "src/lib/vendor/carousel.css",
+    "expectedRules": 58,
+    "include": [
+      "\\.ant-carousel(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-carousel(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-carousel-css-var"
+      },
+      {
+        "pattern": "\\.ant-carousel((?:-vertical|-rtl)?)(?![-\\w])",
+        "replacement": ".ant-carousel$1:where(.ant-carousel-css-var)"
+      }
+    ],
+    "keyframes": [
+      "ant-carousel-dot-animation",
+      "ant-carousel-dot-vertical-animation"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Carousel: slick track, slides, arrows, dots и duration animations.\n * Корни ограничены :where(.ant-carousel-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ]
+  },
+  {
+    "id": "carousel-prefix",
+    "output": "src/lib/vendor/carousel-prefix.css.js",
+    "expectedRules": 58,
+    "include": [
+      "\\.ant-carousel(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-carousel(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-carousel-css-var"
+      },
+      {
+        "pattern": "\\.ant-carousel((?:-vertical|-rtl)?)(?![-\\w])",
+        "replacement": ".ant-carousel$1:where(.ant-carousel-css-var)"
+      }
+    ],
+    "keyframes": [
+      "ant-carousel-dot-animation",
+      "ant-carousel-dot-vertical-animation"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Carousel prefix template: slick track, slides, arrows, dots и duration animations.\n * Корни ограничены :where(.ant-carousel-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "format": "module"
+  },
+  {
+    "id": "slider-range",
+    "output": "src/lib/vendor/slider-range.css",
+    "expectedRules": 54,
+    "include": [
+      "\\.ant-slider(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-slider(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-slider-css-var"
+      },
+      {
+        "pattern": "\\.ant-slider((?:-horizontal|-vertical|-rtl|-disabled|-lock|-with-marks)?)(?![-\\w])",
+        "replacement": ".ant-slider$1:where(.ant-slider-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Slider: range handles, tracks, marks/dots и RTL.\n * Новые правила ограничены :where(.ant-slider-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "slider-prefix",
+    "output": "src/lib/vendor/slider-prefix.css.js",
+    "expectedRules": 54,
+    "include": [
+      "\\.ant-slider(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-slider(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-slider-css-var"
+      },
+      {
+        "pattern": "\\.ant-slider((?:-horizontal|-vertical|-rtl|-disabled|-lock|-with-marks)?)(?![-\\w])",
+        "replacement": ".ant-slider$1:where(.ant-slider-css-var)"
+      },
+      {
+        "pattern": "^\\.ant-slider-css-var$",
+        "replacement": ".ant-slider:where(.ant-slider-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Slider prefix template: single/range, tracks, marks/dots и RTL.\n * Defaults ограничены корнем; marker, Tooltip и CSS variable names сохраняются.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "color-picker",
+    "output": "src/lib/vendor/color-picker.css",
+    "expectedRules": 94,
+    "include": [
+      "\\.ant-color-picker(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-color-picker(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-color-picker-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * ColorPicker: trigger, palette, sliders, inputs, presets и compact.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "color-picker-prefix",
+    "output": "src/lib/vendor/color-picker-prefix.css.js",
+    "expectedRules": 94,
+    "include": [
+      "\\.ant-color-picker(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-color-picker(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-color-picker-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * ColorPicker prefix template: trigger, palette, sliders, inputs, presets и compact.\n * Owner и вложенные namespaces независимы; variables и marker сохраняются.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "input-number-features",
+    "output": "src/lib/vendor/input-number-features.css",
+    "expectedRules": 64,
+    "include": [
+      "\\.ant-input-number-(?:filled|borderless|underlined|mode-spinner|prefix|suffix|addon)(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-input(?:-number)?-(?:group|addon)(?![a-z])"
+    ],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * InputNumber: variants, spinner и prefix/suffix.\n * Существующие outlined/compact rules остаются в исходных vendor-файлах.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated addon selectors исключены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "switch",
+    "output": "src/lib/vendor/switch.css",
+    "expectedRules": 47,
+    "include": [
+      "^\\.ant-switch(?![\\w])",
+      "^\\.css-var-_R_0_\\.ant-switch$"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-switch",
+        "replacement": ".ant-switch"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Стили Switch из официального dist/antd.css, включая prefers-reduced-motion.\n * Селектор css-var-_R_0_.ant-switch заменён на .ant-switch.\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "switch-prefix",
+    "output": "src/lib/vendor/switch-prefix.css.js",
+    "expectedRules": 47,
+    "include": [
+      "^\\.ant-switch(?![\\w])",
+      "^\\.css-var-_R_0_\\.ant-switch$"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-switch",
+        "replacement": ".ant-switch"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Switch prefix template: states, sizes, handle, captions и reduced motion.\n * Селектор css-var-_R_0_.ant-switch заменён на .ant-switch.\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "input-prefix",
+    "output": "src/lib/vendor/input-prefix.css.js",
+    "format": "module",
+    "expectedRules": 142,
+    "include": [
+      "^(?:textarea|\\.css-var-_R_0_)?\\.ant-input(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-input-(?:number|group|search|otp)(?![\\w])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-input(?:-css-var)?(?![-\\w])",
+        "replacement": ":where(.ant-input-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Input/TextArea prefix template: base, affix, variants, sizes, count, clear и Compact.\n * Deprecated Input.Group исключён; component defaults ограничены marker.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "wave",
+    "output": "src/lib/vendor/wave.css",
+    "expectedRules": 8,
+    "include": [
+      "^\\.ant-wave(?![-\\w])"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Wave: reset, ordinary/quick appear transitions; без keyframes.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tabs-prefix",
+    "output": "src/lib/vendor/tabs-prefix.css.js",
+    "format": "module",
+    "expectedRules": 203,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tabs(?![\\w])",
+      "^\\.ant-slide-(?:up|down)(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tabs(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-tabs-css-var"
+      },
+      {
+        "pattern": "\\.ant-tabs(?![-\\w])",
+        "replacement": ".ant-tabs:where(.ant-tabs-css-var)"
+      },
+      {
+        "pattern": "^\\.ant-slide-",
+        "replacement": ":where(.ant-tabs-dropdown).ant-slide-"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tabs prefix template: line/card/editable, layouts, More и switch/slide motions.\n * Общие slide selectors ограничены dropdown; CSS tokens сохраняют canonical bridge.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tabs-editable",
+    "output": "src/lib/vendor/tabs-editable.css",
+    "expectedRules": 13,
+    "include": [
+      "^(?=.*\\.ant-tabs(?![\\w]))(?=.*(?:tab-remove|nav-add|tab-with-remove|editable))"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.ant-tabs(?![-\\w])",
+        "replacement": ".ant-tabs:where(.ant-tabs-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tabs editable-card: кнопки добавления и удаления, размеры, RTL и focus.\n * Дополнение существующего tabs.css; declarations сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tabs-layout",
+    "output": "src/lib/vendor/tabs-layout.css",
+    "expectedRules": 1,
+    "include": [
+      "^\\.ant-tabs-centered(?![-\\w])"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Центрирование заголовков Tabs из закреплённого dist/antd.css.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tabs-overflow",
+    "output": "src/lib/vendor/tabs-overflow.css",
+    "expectedRules": 16,
+    "include": [
+      "ant-tabs-(?:dropdown|nav-more|nav-operations)"
+    ],
+    "exclude": [
+      "\\.ant-slide-(?:up|down)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.ant-tabs(?![-\\w])",
+        "replacement": ".ant-tabs:where(.ant-tabs-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tabs: операции More, dropdown listbox, remove и RTL.\n * Motion selectors исключены; native popover управляет поверхностью.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tabs-overflow-motion",
+    "output": "src/lib/vendor/tabs-overflow-motion.css",
+    "expectedRules": 74,
+    "include": [
+      "^\\.ant-slide-(?:up|down)(?![\\w])",
+      "^\\.ant-tabs-dropdown\\.ant-slide-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^\\.ant-slide-",
+        "replacement": ":where(.ant-tabs-dropdown).ant-slide-"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tabs More: slide-up/down phases и placement overrides.\n * Общие motion selectors ограничены .ant-tabs-dropdown; source groups сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "overlay-color",
+    "output": "src/lib/vendor/overlay-color.css",
+    "expectedRules": 65,
+    "include": [
+      "^\\.ant-(tooltip|popover)\\.ant-\\1-(?:blue|purple|cyan|green|magenta|pink|red|orange|yellow|volcano|geekblue|lime|gold)(?:\\s|$)"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tooltip и Popover preset colors; Popconfirm использует Popover.\n * 65 исходных CSS rules; selectors и declarations сохранены без изменений.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tooltip-prefix",
+    "output": "src/lib/vendor/tooltip-prefix.css.js",
+    "format": "module",
+    "expectedRules": 58,
+    "include": [
+      "^\\.ant-tooltip(?![\\w])",
+      "^\\.css-var-_R_0_\\.ant-tooltip(?![\\w])"
+    ],
+    "exclude": [
+      "ant-(?:fade|zoom)",
+      "unique"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tooltip-css-var",
+        "replacement": ".ant-tooltip:where(.ant-tooltip-css-var)"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tooltip(?![-\\w])",
+        "replacement": ".ant-tooltip"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tooltip prefix template: базовые правила, slots, placements и preset colors.\n * Motion/unique исключены; CSS variables и глобальные интеграции сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "popover-prefix",
+    "output": "src/lib/vendor/popover-prefix.css.js",
+    "format": "module",
+    "expectedRules": 72,
+    "include": [
+      "^\\.ant-popover(?![\\w])",
+      "^\\.css-var-_R_0_\\.ant-popover(?![\\w])"
+    ],
+    "exclude": [
+      "ant-(?:fade|zoom)",
+      "unique"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-popover-css-var",
+        "replacement": ".ant-popover:where(.ant-popover-css-var)"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-popover(?![-\\w])",
+        "replacement": ".ant-popover"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Popover prefix template: базовые правила, slots, placements и preset colors.\n * Motion/unique исключены; CSS variables и глобальные интеграции сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "popconfirm-prefix",
+    "output": "src/lib/vendor/popconfirm-prefix.css.js",
+    "format": "module",
+    "expectedRules": 11,
+    "include": [
+      "^\\.ant-popconfirm(?![\\w])",
+      "^\\.css-var-_R_0_\\.ant-popconfirm(?![\\w])"
+    ],
+    "exclude": [
+      "ant-(?:fade|zoom)",
+      "unique"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-popconfirm-css-var",
+        "replacement": ".ant-popconfirm:where(.ant-popconfirm-css-var)"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-popconfirm(?![-\\w])",
+        "replacement": ".ant-popconfirm"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Popconfirm prefix template: message, title/description, icon и buttons.\n * Внешний ant-popover, anticon и имена CSS variables сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "spin",
+    "output": "src/lib/vendor/spin.css",
+    "expectedRules": 35,
+    "include": [
+      "\\.ant-spin(?![\\w])"
+    ],
+    "exclude": [
+      "ant-list"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-spin(?![-\\w])",
+        "replacement": ".ant-spin-css-var"
+      },
+      {
+        "pattern": "\\.ant-spin(?![-\\w])",
+        "replacement": ".ant-spin:where(.ant-spin-css-var)"
+      }
+    ],
+    "keyframes": [
+      "antRotate",
+      "antSpinMove"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Spin: standalone/children, fullscreen, percent и размеры; List исключён.\n * Корни ограничены :where(.ant-spin-css-var); имена CSS variables сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true
+  },
+  {
+    "id": "spin-prefix",
+    "output": "src/lib/vendor/spin-prefix.css.js",
+    "expectedRules": 35,
+    "include": [
+      "\\.ant-spin(?![\\w])"
+    ],
+    "exclude": [
+      "ant-list"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-spin(?![-\\w])",
+        "replacement": ".ant-spin-css-var"
+      },
+      {
+        "pattern": "\\.ant-spin(?![-\\w])",
+        "replacement": ".ant-spin:where(.ant-spin-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Spin prefix template: standalone/children, fullscreen, percent и размеры.\n * Корни ограничены :where(.ant-spin-css-var); имена CSS variables сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true,
+    "format": "module"
+  },
+  {
+    "id": "progress",
+    "output": "src/lib/vendor/progress.css",
+    "expectedRules": 40,
+    "include": [
+      "\\.ant-progress(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-progress(?![-\\w])",
+        "replacement": ".ant-progress-css-var"
+      },
+      {
+        "pattern": "\\.ant-progress(?![-\\w])",
+        "replacement": ".ant-progress:where(.ant-progress-css-var)"
+      }
+    ],
+    "keyframes": [
+      "antProgressLTRActive"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Progress: line/circle CSS, steps, success segment и percentPosition.\n * Root reset ограничен marker; namespace CSS variables сохранён.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true
+  },
+  {
+    "id": "progress-prefix",
+    "output": "src/lib/vendor/progress-prefix.css.js",
+    "expectedRules": 40,
+    "include": [
+      "\\.ant-progress(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-progress(?![-\\w])",
+        "replacement": ".ant-progress-css-var"
+      },
+      {
+        "pattern": "\\.ant-progress(?![-\\w])",
+        "replacement": ".ant-progress:where(.ant-progress-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Progress: line/circle CSS, steps, success segment и percentPosition.\n * Root reset ограничен marker; namespace CSS variables сохранён.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true,
+    "format": "module"
+  },
+  {
+    "id": "skeleton",
+    "output": "src/lib/vendor/skeleton.css",
+    "expectedRules": 48,
+    "include": [
+      "\\.ant-skeleton(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-skeleton(?![-\\w])",
+        "replacement": ".ant-skeleton-css-var"
+      },
+      {
+        "pattern": "\\.ant-skeleton(?![-\\w])",
+        "replacement": ".ant-skeleton:where(.ant-skeleton-css-var)"
+      }
+    ],
+    "keyframes": [
+      "ant-skeleton-loading"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Skeleton: основной каркас и Button/Avatar/Input/Image/Node, block и active.\n * Root reset ограничен marker; имена CSS variables сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true,
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ]
+  },
+  {
+    "id": "skeleton-prefix",
+    "output": "src/lib/vendor/skeleton-prefix.css.js",
+    "expectedRules": 48,
+    "include": [
+      "\\.ant-skeleton(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-skeleton(?![-\\w])",
+        "replacement": ".ant-skeleton-css-var"
+      },
+      {
+        "pattern": "\\.ant-skeleton(?![-\\w])",
+        "replacement": ".ant-skeleton:where(.ant-skeleton-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Skeleton: основной каркас и Button/Avatar/Input/Image/Node, block и active.\n * Root reset ограничен marker; имена CSS variables сохранены.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true,
+    "format": "module",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ]
+  },
+  {
+    "id": "empty",
+    "output": "src/lib/vendor/empty.css",
+    "expectedRules": 15,
+    "include": [
+      "\\.ant-empty(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-empty(?![-\\w])",
+        "replacement": ".ant-empty-css-var"
+      },
+      {
+        "pattern": "\\.ant-empty(?![-\\w])",
+        "replacement": ".ant-empty:where(.ant-empty-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Empty: default/simple/small, image, description и footer.\n * Root reset ограничен marker; namespace CSS variables сохранён.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true
+  },
+  {
+    "id": "empty-prefix",
+    "output": "src/lib/vendor/empty-prefix.css.js",
+    "expectedRules": 15,
+    "include": [
+      "\\.ant-empty(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-empty(?![-\\w])",
+        "replacement": ".ant-empty-css-var"
+      },
+      {
+        "pattern": "\\.ant-empty(?![-\\w])",
+        "replacement": ".ant-empty:where(.ant-empty-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Empty: default/simple/small, image, description и footer.\n * Root reset ограничен marker; namespace CSS variables сохранён.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "appendRootKeyframes": true,
+    "format": "module"
+  },
+  {
+    "id": "result",
+    "output": "src/lib/vendor/result.css",
+    "expectedRules": 20,
+    "include": [
+      "\\.ant-result(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-result(?![-\\w])",
+        "replacement": ".ant-result-css-var"
+      },
+      {
+        "pattern": "\\.ant-result(?![-\\w])",
+        "replacement": ".ant-result:where(.ant-result-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Все 20 правил Result из официального dist/antd.css.\n * Корень .ant-result ограничен :where(.ant-result-css-var).\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "result-prefix",
+    "output": "src/lib/vendor/result-prefix.css.js",
+    "expectedRules": 20,
+    "include": [
+      "\\.ant-result(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-result(?![-\\w])",
+        "replacement": ".ant-result-css-var"
+      },
+      {
+        "pattern": "\\.ant-result(?![-\\w])",
+        "replacement": ".ant-result:where(.ant-result-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Все 20 правил Result из официального dist/antd.css.\n * Корень .ant-result ограничен :where(.ant-result-css-var).\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "alert",
+    "output": "src/lib/vendor/alert.css",
+    "expectedRules": 37,
+    "include": [
+      "\\.ant-alert(?![\\w])"
+    ],
+    "exclude": [
+      "ant-alert-motion-"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-alert(?![-\\w])",
+        "replacement": ".ant-alert-css-var"
+      },
+      {
+        "pattern": "\\.ant-alert(?![-\\w])",
+        "replacement": ".ant-alert:where(.ant-alert-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Alert из официального dist/antd.css; React motion исключён.\n * css-var-_R_0_.ant-alert заменён на .ant-alert-css-var;\n * корень .ant-alert ограничен :where(.ant-alert-css-var).\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "alert-prefix",
+    "output": "src/lib/vendor/alert-prefix.css.js",
+    "expectedRules": 37,
+    "include": [
+      "\\.ant-alert(?![\\w])"
+    ],
+    "exclude": [
+      "ant-alert-motion-"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-alert(?![-\\w])",
+        "replacement": ".ant-alert-css-var"
+      },
+      {
+        "pattern": "\\.ant-alert(?![-\\w])",
+        "replacement": ".ant-alert:where(.ant-alert-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Alert из официального dist/antd.css; React motion исключён.\n * css-var-_R_0_.ant-alert заменён на .ant-alert-css-var;\n * корень .ant-alert ограничен :where(.ant-alert-css-var).\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "collapse",
+    "output": "src/lib/vendor/collapse.css",
+    "expectedRules": 49,
+    "include": [
+      "\\.ant-collapse(?![\\w])"
+    ],
+    "exclude": [
+      "\\.anticon",
+      "ant-motion-collapse",
+      "ant-color-picker"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-collapse(?![-\\w])",
+        "replacement": ".ant-collapse-css-var"
+      },
+      {
+        "pattern": "\\.ant-collapse(?![-\\w])",
+        "replacement": ".ant-collapse:where(.ant-collapse-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Collapse из официального dist/antd.css; motion-классы React исключены.\n * css-var-_R_0_.ant-collapse заменён на .ant-collapse-css-var;\n * корень .ant-collapse ограничен :where(.ant-collapse-css-var).\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "collapse-prefix",
+    "output": "src/lib/vendor/collapse-prefix.css.js",
+    "expectedRules": 49,
+    "include": [
+      "\\.ant-collapse(?![\\w])"
+    ],
+    "exclude": [
+      "\\.anticon",
+      "ant-motion-collapse",
+      "ant-color-picker"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-collapse(?![-\\w])",
+        "replacement": ".ant-collapse-css-var"
+      },
+      {
+        "pattern": "\\.ant-collapse(?![-\\w])",
+        "replacement": ".ant-collapse:where(.ant-collapse-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Collapse из официального dist/antd.css; motion-классы React исключены.\n * css-var-_R_0_.ant-collapse заменён на .ant-collapse-css-var;\n * корень .ant-collapse ограничен :where(.ant-collapse-css-var).\n * Источник: https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256 архива: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "segmented-prefix",
+    "output": "src/lib/vendor/segmented-prefix.css.js",
+    "expectedRules": 38,
+    "include": [
+      "\\.ant-segmented(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-segmented",
+        "replacement": ".ant-segmented-css-var"
+      },
+      {
+        "pattern": "\\.ant-segmented(?![-\\w])",
+        "replacement": ".ant-segmented:where(.ant-segmented-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Segmented: размеры, направления, состояния и thumb; все 38 правил компонента.\n * Корни ограничены :where(.ant-segmented-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "input-password-prefix",
+    "output": "src/lib/vendor/input-password-prefix.css.js",
+    "format": "module",
+    "expectedRules": 4,
+    "include": [
+      "^\\.ant-input-affix-wrapper(?:-disabled)? \\.ant-input-password-icon(?::hover)?$"
+    ],
+    "exclude": [],
+    "replacements": [],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Password icon CSS; runtime разделяет Password и Input namespaces.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "input-search-prefix",
+    "output": "src/lib/vendor/input-search-prefix.css.js",
+    "format": "module",
+    "expectedRules": 16,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-input-search(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-input-search(?:-css-var)?(?![-\\w])",
+        "replacement": ":where(.ant-input-search-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Search prefix template; Button и private variable namespace задаёт ConfigProvider.\n * Deprecated token declarations исключены; component defaults ограничены marker.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "input-otp-prefix",
+    "output": "src/lib/vendor/input-otp-prefix.css.js",
+    "expectedRules": 16,
+    "include": [
+      "\\.ant-otp(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-otp(?![-\\w])",
+        "replacement": ":where(.ant-otp-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Input.OTP prefix template: ячейки, маска, размеры, RTL и переменные компонента.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "input-number-prefix",
+    "output": "src/lib/vendor/input-number-prefix.css.js",
+    "format": "module",
+    "expectedRules": 124,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-input-number(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-input(?:-number)?-(?:group|addon)(?![a-z])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-input-number-css-var",
+        "replacement": ":where(.ant-input-number-css-var)"
+      }
+    ],
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * InputNumber prefix template: input/spinner, variants, actions, affix и Compact.\n * Deprecated addons и token declarations исключены; canonical variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "form-prefix",
+    "output": "src/lib/vendor/form-prefix.css.js",
+    "format": "module",
+    "expectedRules": 99,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-form(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-motion-collapse(?![\\w-])"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-form-css-var",
+        "replacement": ":where(.ant-form-css-var)"
+      },
+      {
+        "pattern": "\\.ant-col-(xs|sm|md|lg|xl|xxl|xxxl)-24(?![\\w-])",
+        "replacement": ":is($&,[data-ant-col-$1-span=\"24\"])"
+      },
+      {
+        "pattern": "\\.ant-col-24(?![\\w-])",
+        "replacement": ":is($&,[data-ant-col-span=\"24\"])"
+      },
+      {
+        "pattern": ":not\\(\\[class\\*=\" ant-col-xs\"\\]\\)",
+        "replacement": ":not(:is([class*=\" ant-col-xs\"],[data-ant-col-xs]))"
+      }
+    ],
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Form prefix/media template; motion остаётся native, Col metadata сохраняют specificity.\n * Canonical component tokens сохранены; private Form/Grid variables используют общий prefix.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "rate-prefix",
+    "output": "src/lib/vendor/rate-prefix.css.js",
+    "expectedRules": 21,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-rate(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-rate(?![-\\w])",
+        "replacement": ".ant-rate-css-var"
+      },
+      {
+        "pattern": "\\.ant-rate(?![-\\w])",
+        "replacement": ".ant-rate:where(.ant-rate-css-var)"
+      },
+      {
+        "pattern": ">div",
+        "replacement": ">button"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Rate prefix template: все правила; >div заменён на >button для нативных controls.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "listy-prefix",
+    "output": "src/lib/vendor/listy-prefix.css.js",
+    "expectedRules": 16,
+    "include": [
+      "\\.ant-listy(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-listy(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-listy-css-var"
+      },
+      {
+        "pattern": "\\.ant-listy(?![-\\w])",
+        "replacement": ".ant-listy:where(.ant-listy-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Listy prefix template: items, group headers, sticky и scrollbar.\n * Базовый корень ограничен :where(.ant-listy-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "tour-prefix",
+    "output": "src/lib/vendor/tour-prefix.css.js",
+    "expectedRules": 61,
+    "include": [
+      "\\.ant-tour(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tour(?:-css-var)?(?![-\\w])",
+        "replacement": ".ant-tour-css-var"
+      },
+      {
+        "pattern": "\\.ant-tour(?![-\\w])",
+        "replacement": ".ant-tour:where(.ant-tour-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Tour prefix template: panel, mask, actions и arrows.\n * Базовый корень ограничен :where(.ant-tour-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "mentions-prefix",
+    "output": "src/lib/vendor/mentions-prefix.css.js",
+    "expectedRules": 102,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-mentions(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-mentions-css-var",
+        "replacement": ".ant-mentions-css-var"
+      },
+      {
+        "pattern": "\\.ant-mentions(?![-\\w])",
+        "replacement": ".ant-mentions:where(.ant-mentions-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Mentions prefix template: textarea/variants/dropdown; rc-trigger motion исключён.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "image-prefix",
+    "output": "src/lib/vendor/image-prefix.css.js",
+    "expectedRules": 48,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-image(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)",
+      "ant-image-progress"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-image-css-var",
+        "replacement": ".ant-image-css-var"
+      },
+      {
+        "pattern": "\\.ant-image(?![-\\w])",
+        "replacement": ".ant-image:where(.ant-image-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Image/Preview prefix template: thumbnail/cover/viewer/actions; progress wrapper/rc-motion исключены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "dropdown-prefix",
+    "output": "src/lib/vendor/dropdown-prefix.css.js",
+    "expectedRules": 77,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-dropdown(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)",
+      "\\.ant-dropdown-menu-title-content$"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-dropdown-css-var",
+        "replacement": ".ant-dropdown-css-var"
+      },
+      {
+        "pattern": "\\.ant-dropdown(?![-\\w])",
+        "replacement": ".ant-dropdown:where(.ant-dropdown-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Dropdown prefix template: trigger/flat menu/arrow/states; rc-motion и исходный title flex:auto исключены; native label layout сохранён.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "dropdown-motion",
+    "output": "src/lib/vendor/dropdown-motion.css.js",
+    "expectedRules": 92,
+    "include": [
+      "^\\.ant-slide-(?:up|down|left|right)-(?:appear|enter|leave)(?![a-z0-9])",
+      "^\\.ant-dropdown\\.ant-slide-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^",
+        "replacement": ":where([data-ant-dropdown-motion][data-ant-dropdown-prefix=\"ant-dropdown\"][data-ant-dropdown-root-prefix=\"ant\"])"
+      }
+    ],
+    "declarationReplacements": [
+      {
+        "pattern": "var\\(--ant-motion-duration-mid\\)",
+        "replacement": "var(--ant-motion-duration-mid,0.2s)"
+      },
+      {
+        "pattern": "var\\(--ant-motion-ease-out-quint\\)",
+        "replacement": "var(--ant-motion-ease-out-quint,cubic-bezier(0.23,1,0.32,1))"
+      },
+      {
+        "pattern": "var\\(--ant-motion-ease-in-quint\\)",
+        "replacement": "var(--ant-motion-ease-in-quint,cubic-bezier(0.755,0.05,0.855,0.06))"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antSlideLeftIn",
+      "antSlideLeftOut",
+      "antSlideRightIn",
+      "antSlideRightOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Dropdown: фазы slide по четырём сторонам и замена keyframes после flip.\n * CSS ограничен панелью; fallback motion tokens действуют вне полной темы.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "menu-prefix",
+    "output": "src/lib/vendor/menu-prefix.css.js",
+    "expectedRules": 201,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-menu(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:slide|zoom|motion-collapse|fade)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-menu-css-var",
+        "replacement": ".ant-menu-css-var"
+      },
+      {
+        "pattern": "\\.ant-menu(?![-\\w])",
+        "replacement": ".ant-menu:where(.ant-menu-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Menu: items/submenus/inline/horizontal/themes; rc-motion исключён.\n * Deprecated token declarations исключены; актуальные CSS variables сохранены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "declarationReplacements": [
+      {
+        "pattern": "(?:\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected\\-horizontal|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover\\-horizontal|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-selected|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-selected|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-border\\-size|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text\\-hover|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-color\\-item\\-text\\-disabled|\\-\\-ant\\-menu\\-color\\-item\\-text\\-selected|\\-\\-ant\\-button\\-content\\-line\\-height\\-lg|\\-\\-ant\\-button\\-content\\-line\\-height\\-sm|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-height|\\-\\-ant\\-splitter\\-resize\\-spinner\\-size|\\-\\-ant\\-button\\-border\\-color\\-disabled|\\-\\-ant\\-menu\\-color\\-active\\-bar\\-width|\\-\\-ant\\-menu\\-color\\-danger\\-item\\-text|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-selected|\\-\\-ant\\-steps\\-description\\-max\\-width|\\-\\-ant\\-skeleton\\-color\\-gradient\\-end|\\-\\-ant\\-menu\\-color\\-item\\-text\\-hover|\\-\\-ant\\-button\\-content\\-line\\-height|\\-\\-ant\\-carousel\\-dot\\-width\\-active|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-active|\\-\\-ant\\-menu\\-radius\\-sub\\-menu\\-item|\\-\\-ant\\-button\\-group\\-border\\-color|\\-\\-ant\\-menu\\-color\\-item\\-bg\\-hover|\\-\\-ant\\-steps\\-title\\-line\\-height|\\-\\-ant\\-button\\-padding\\-block\\-lg|\\-\\-ant\\-button\\-padding\\-block\\-sm|\\-\\-ant\\-layout\\-color\\-bg\\-trigger|\\-\\-ant\\-menu\\-color\\-group\\-title|\\-\\-ant\\-menu\\-color\\-sub\\-item\\-bg|\\-\\-ant\\-layout\\-color\\-bg\\-header|\\-\\-ant\\-menu\\-color\\-item\\-text|\\-\\-ant\\-button\\-padding\\-block|\\-\\-ant\\-layout\\-color\\-bg\\-body|\\-\\-ant\\-control\\-tmp\\-outline|\\-\\-ant\\-menu\\-color\\-item\\-bg|\\-\\-ant\\-popover\\-min\\-width|\\-\\-ant\\-menu\\-radius\\-item|\\-\\-ant\\-skeleton\\-color|\\-\\-ant\\-popover\\-width|\\-\\-ant\\-pink):[^;{}]*(?:;|$)",
+        "replacement": ""
+      },
+      {
+        "pattern": "var\\(--ant-button-border-color-disabled\\)",
+        "replacement": "var(--ant-color-border-disabled,var(--ant-color-border))"
+      }
+    ],
+    "format": "module"
+  },
+  {
+    "id": "menu-theme-prefix",
+    "output": "src/lib/vendor/menu-theme-prefix.css.js",
+    "expectedRules": 77,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-menu-(?:light|dark)(?![-\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-menu-css-var",
+        "replacement": ".ant-menu-css-var"
+      },
+      {
+        "pattern": "\\.ant-menu(?![-\\w])",
+        "replacement": ".ant-menu:where(.ant-menu-css-var)"
+      },
+      {
+        "pattern": "^\\.ant-menu-(light|dark)",
+        "replacement": ":where(:scope).ant-menu-$1"
+      }
+    ],
+    "scope": "(.ant-menu-css-var) to (:scope .ant-menu-submenu-popup)",
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Menu theme scope: native popovers сохраняют DOM и отделяют вложенную тему.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "pagination-prefix",
+    "output": "src/lib/vendor/pagination-prefix.css.js",
+    "expectedRules": 111,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-pagination(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-pagination",
+        "replacement": ".ant-pagination-css-var"
+      },
+      {
+        "pattern": "\\.ant-pagination(?![-\\w])",
+        "replacement": ".ant-pagination:where(.ant-pagination-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Pagination prefix template: sizes/simple/quick/options/variants/media; global Input Group rules исключены.\n * Корни ограничены :where(.ant-pagination-css-var).\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "drawer-prefix",
+    "output": "src/lib/vendor/drawer-prefix.css.js",
+    "format": "module",
+    "expectedRules": 32,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-drawer(?![\\w])"
+    ],
+    "exclude": [
+      "ant-drawer-(?:mask-motion|panel-motion|pure|inline|resizable|body-skeleton)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-drawer",
+        "replacement": ".ant-drawer-css-var"
+      },
+      {
+        "pattern": "\\.ant-drawer(?![-\\w])",
+        "replacement": ".ant-drawer:where(.ant-drawer-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Drawer prefix template: panel/mask/header/body/footer; motion/pure/inline/resizable/skeleton исключены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "modal-prefix",
+    "output": "src/lib/vendor/modal-prefix.css.js",
+    "format": "module",
+    "expectedRules": 58,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-modal(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-(?:zoom|fade)",
+      "ant-modal-(?:pure|body-skeleton)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-modal-css-var",
+        "replacement": ".ant-modal-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Modal/Confirm prefix template; zoom/fade, pure and skeleton исключены.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "message-prefix",
+    "output": "src/lib/vendor/message-prefix.css.js",
+    "format": "module",
+    "expectedRules": 21,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-message(?![\\w])"
+    ],
+    "exclude": [
+      "ant-message-(?:topLeft|topRight|bottom|fade|stack|notice-pure|list-content-decrease|notice-actions)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-message-css-var",
+        "replacement": ".ant-message-css-var"
+      },
+      {
+        "pattern": "\\.ant-message(?![-\\w])",
+        "replacement": ".ant-message:where(.ant-message-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Message prefix template: top/list/notices, без motion/stack/pure/actions.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "notification-prefix",
+    "output": "src/lib/vendor/notification-prefix.css.js",
+    "format": "module",
+    "expectedRules": 45,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-notification(?![\\w])"
+    ],
+    "exclude": [
+      "ant-notification-(?:fade|stack|notice-pure|notice-progress|list-content-decrease)"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-notification-css-var",
+        "replacement": ".ant-notification-css-var"
+      },
+      {
+        "pattern": "\\.ant-notification(?![-\\w])",
+        "replacement": ".ant-notification:where(.ant-notification-list)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Notification prefix template: six placements/list/notices, без motion/stack/progress/pure.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "upload-prefix",
+    "output": "src/lib/vendor/upload-prefix.css.js",
+    "expectedRules": 91,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-upload(?![\\w])"
+    ],
+    "exclude": [
+      "\\.ant-motion-collapse"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-upload-wrapper",
+        "replacement": ".ant-upload-css-var"
+      },
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-upload",
+        "replacement": ".ant-upload-css-var"
+      },
+      {
+        "pattern": "\\.ant-upload-wrapper(?![-\\w])",
+        "replacement": ".ant-upload-wrapper:where(.ant-upload-css-var)"
+      }
+    ],
+    "keyframes": [
+      "uploadAnimateInlineIn",
+      "uploadAnimateInlineOut",
+      "antFadeIn",
+      "antFadeOut"
+    ],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Upload: text, picture, cards, drag и RTL; appear/leave строк, inline keyframes и fade progress.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "tree-prefix",
+    "output": "src/lib/vendor/tree-prefix.css.js",
+    "expectedRules": 99,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tree(?![\\w])"
+    ],
+    "exclude": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tree-select"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tree(?![-\\w])",
+        "replacement": ".ant-tree-css-var"
+      },
+      {
+        "pattern": "\\.ant-tree(?![-\\w])",
+        "replacement": ".ant-tree:where(.ant-tree-css-var)"
+      }
+    ],
+    "keyframes": [
+      "ant-tree-node-fx-do-not-use"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Tree: nodes/checkbox/line/RTL, drag feedback и collapse motion.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "transfer-prefix",
+    "output": "src/lib/vendor/transfer-prefix.css.js",
+    "expectedRules": 54,
+    "include": [
+      "\\.ant-transfer(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-transfer",
+        "replacement": ".ant-transfer-css-var"
+      },
+      {
+        "pattern": "\\.ant-transfer(?:-customize-list|-status-(?:error|warning)|-rtl)?(?![-\\w])",
+        "replacement": "$&:where(.ant-transfer-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Transfer: списки, поиск, actions, custom lists, pagination, status и RTL.\n * Корни ограничены :where(.ant-transfer-css-var); keyframes и at-rules отсутствуют.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "select-prefix",
+    "output": "src/lib/vendor/select-prefix.css.js",
+    "expectedRules": 158,
+    "include": [
+      "^(?:\\.css-var-[^\\s.]+)?\\.ant-select(?![\\w])"
+    ],
+    "exclude": [
+      "ant-slide-up"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-select-css-var",
+        "replacement": ".ant-select-css-var"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Select prefix template: single/multiple/tags, variants, options и compact.\n * Owner selectors и private variable namespace независимы от canonical tokens.\n * Motion selectors исключены; hover:none at-rule сохраняется.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "tree-select-prefix",
+    "output": "src/lib/vendor/tree-select-prefix.css.js",
+    "expectedRules": 92,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-tree-select"
+    ],
+    "exclude": [
+      "\\.ant-motion-collapse"
+    ],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-tree-select-css-var",
+        "replacement": ".ant-tree-select-css-var"
+      },
+      {
+        "pattern": "\\.ant-select-tree(?!-select)",
+        "replacement": ".ant-tree"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * TreeSelect: dropdown/checkbox/RTL; .ant-select-tree заменён на общий .ant-tree.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "cascader-prefix",
+    "output": "src/lib/vendor/cascader-prefix.css.js",
+    "expectedRules": 108,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-cascader(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-cascader-css-var",
+        "replacement": ".ant-cascader-css-var"
+      },
+      {
+        "pattern": "\\.ant-cascader(?![-\\w])",
+        "replacement": ".ant-cascader:where(.ant-cascader-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Cascader: selector, columns, checkbox, panel и RTL; select base — vendor/antd.css.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "table-prefix",
+    "output": "src/lib/vendor/table-prefix.css.js",
+    "expectedRules": 187,
+    "include": [
+      "^(?:\\.css-var-_R_0_)?\\.ant-table(?![\\w])"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "\\.css-var-_R_0_\\.ant-table(?:-css-var)?(?![-\\w])",
+        "replacement": ":where(.ant-table-css-var)"
+      }
+    ],
+    "keyframes": [],
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Table prefix template: panels, cells, selection, expansion, filters и sizes.\n * Canonical tokens/marker, private nested border и общие namespaces независимы.\n * Component defaults имеют нулевую specificity для сохранения Native theme bridge.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
+    "id": "tree-select-popup-motion",
+    "output": "src/lib/vendor/tree-select-popup-motion.css",
+    "expectedRules": 110,
+    "include": [
+      "^\\.ant-(?:slide|move)-(?:up|down)(?![\\w])",
+      "^\\.ant-select-dropdown\\.ant-(?:slide|move)-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^\\.ant-(?:slide|move)-",
+        "replacement": ":where(.ant-select-dropdown)$&"
+      },
+      {
+        "pattern": "\\.ant-select-dropdown([-\\w]*)",
+        "replacement": ".ant-select-dropdown$1:where([data-ant-select-prefix=\"ant-select\"][data-ant-select-root-prefix=\"ant\"][data-ant-tree-select-motion])"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antMoveUpIn",
+      "antMoveUpOut",
+      "antMoveDownIn",
+      "antMoveDownOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Select/TreeSelect popup slide/move phases and placement overrides.\n * Common motion selectors are scoped to their Select dropdown owner.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tree-select-popup-motion-prefix",
+    "output": "src/lib/vendor/tree-select-popup-motion.css.js",
+    "format": "module",
+    "expectedRules": 110,
+    "include": [
+      "^\\.ant-(?:slide|move)-(?:up|down)(?![\\w])",
+      "^\\.ant-select-dropdown\\.ant-(?:slide|move)-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^\\.ant-(?:slide|move)-",
+        "replacement": ":where(.ant-select-dropdown)$&"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antMoveUpIn",
+      "antMoveUpOut",
+      "antMoveDownIn",
+      "antMoveDownOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Select/TreeSelect popup slide/move phases and placement overrides.\n * Common motion selectors are scoped to their Select dropdown owner.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  }
+]

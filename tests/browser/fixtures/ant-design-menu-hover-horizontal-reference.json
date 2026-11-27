@@ -1,0 +1,340 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "browser": "157.0.8103.78",
+  "passes": [
+    [
+      {
+        "id": "horizontal",
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "outside",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              }
+            ]
+          }
+        ],
+        "inPopup": false,
+        "errors": []
+      },
+      {
+        "id": "overflow",
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "outside",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              }
+            ]
+          }
+        ],
+        "inPopup": true,
+        "errors": []
+      }
+    ],
+    [
+      {
+        "id": "horizontal",
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "outside",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              }
+            ]
+          }
+        ],
+        "inPopup": false,
+        "errors": []
+      },
+      {
+        "id": "overflow",
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "outside",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ]
+              }
+            ]
+          }
+        ],
+        "inPopup": true,
+        "errors": []
+      }
+    ]
+  ]
+}

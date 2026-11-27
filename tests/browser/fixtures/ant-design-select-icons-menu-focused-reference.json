@@ -1,0 +1,360 @@
+{
+  "reference": {
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "protocolSHA256": "72b5054ce13b787bbab0ae6e02dd7792199028e00cc1eb87de7a8dee32700c32",
+    "errors": [],
+    "diagnostics": []
+  },
+  "cases": [
+    {
+      "sample": {
+        "id": "select-menu-mouse",
+        "control": "select",
+        "initialOpen": true,
+        "menu": true,
+        "menuFocused": true
+      },
+      "initial": {
+        "model": "a",
+        "open": true,
+        "events": [],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "true",
+          "active": "icon-edge-value_list_0"
+        }
+      },
+      "after": {
+        "model": "b",
+        "open": false,
+        "events": [
+          [
+            "menu-mousedown",
+            false
+          ],
+          [
+            "menu-click",
+            false
+          ],
+          [
+            "change",
+            "b"
+          ],
+          [
+            "select",
+            "b"
+          ],
+          [
+            "open",
+            false
+          ]
+        ],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "false",
+          "active": null
+        }
+      }
+    },
+    {
+      "sample": {
+        "id": "autocomplete-menu-mouse",
+        "control": "autocomplete",
+        "initialOpen": true,
+        "menu": true,
+        "menuFocused": true
+      },
+      "initial": {
+        "model": "",
+        "open": true,
+        "events": [],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "true",
+          "active": "icon-edge-value_list_-1"
+        }
+      },
+      "after": {
+        "model": "b",
+        "open": false,
+        "events": [
+          [
+            "menu-mousedown",
+            false
+          ],
+          [
+            "menu-click",
+            false
+          ],
+          [
+            "change",
+            "b"
+          ],
+          [
+            "select",
+            "b"
+          ],
+          [
+            "open",
+            false
+          ]
+        ],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "b",
+            "open": true,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "b",
+            "open": false,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "b",
+          "readOnly": false,
+          "expanded": "false",
+          "active": null
+        }
+      }
+    }
+  ]
+}

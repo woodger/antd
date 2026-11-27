@@ -1,0 +1,970 @@
+{
+  "format": "ant-design-public-date-picker-time-scroll-source-v1",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "protocolSHA256": "6ab38509e7c2f926c146ed85884674c3e3c438b3163d174078aeb36d34535274",
+  "counts": {
+    "owners": 2,
+    "actions": 17,
+    "logicalPoints": 19,
+    "authoredCloseActions": 2,
+    "trustedWheelActions": 5
+  },
+  "captures": {
+    "first": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json",
+        "bytes": 21586,
+        "sha256": "4d688c3bf1ea4c57816b8d14049c321863453e7bdd12d950546be92355c2e6d4",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.gz",
+        "gzipBytes": 3831,
+        "gzipSHA256": "8769b57b66e645ef6b00e773991cccadbea21acd29a3e5818f83149d36a81065"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/8769b57b66e645ef6b00e773991cccadbea21acd29a3e5818f83149d36a81065.json.gz"
+    },
+    "repeat": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json",
+        "bytes": 21640,
+        "sha256": "6f60c40294bb7ad9a0bd517025b7c55fc1e2871a4f8430e4fd6a30633250bb00",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.gz",
+        "gzipBytes": 3833,
+        "gzipSHA256": "b295aef1cf584835a390663b26cb99becbdb5a7c18b9af9b0d6b398c25871c45"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/b295aef1cf584835a390663b26cb99becbdb5a7c18b9af9b0d6b398c25871c45.json.gz"
+    }
+  },
+  "documents": {
+    "protocol-freeze.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/protocol-freeze.json",
+        "bytes": 15990,
+        "sha256": "6ab38509e7c2f926c146ed85884674c3e3c438b3163d174078aeb36d34535274"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-protocol-freeze.json"
+    },
+    "execution-freeze.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/execution-freeze.json",
+        "bytes": 290,
+        "sha256": "bded129c6ddacc08885bacbb247305b0afb412a3b782bf4a10c7a63c9a217d5f"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-execution-freeze.json"
+    },
+    "source-witnesses.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/source-witnesses.json",
+        "bytes": 12115,
+        "sha256": "94a0d94b00e8c1c61d9928310d175eb4598b82aeaa220d8a149f937cea7b5cc7"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-source-witnesses.json"
+    }
+  },
+  "parts": {
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-initial.json",
+        "bytes": 92861,
+        "sha256": "7ec3a22946d0dae37558084c90f07349563a9068dd71d02a65a9067122724a79",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-initial.json.gz",
+        "gzipBytes": 5722,
+        "gzipSHA256": "5b4bb950b0b946ca7589d45c994fa36b18565a5621325b3aaedfe19797b92cf2"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/5b4bb950b0b946ca7589d45c994fa36b18565a5621325b3aaedfe19797b92cf2.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-0.json",
+        "bytes": 548503,
+        "sha256": "e13e1508b8fb0a212c2ca094556d4c97e35fdf7ad8c15479e9644745455f7823",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-0.json.gz",
+        "gzipBytes": 27988,
+        "gzipSHA256": "a542321c37a34fe1f2b000a1a4e695e9f31bb2d4b41b4739f629777a913f99fd"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/a542321c37a34fe1f2b000a1a4e695e9f31bb2d4b41b4739f629777a913f99fd.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-1.json",
+        "bytes": 549217,
+        "sha256": "2e6fde89364814238ca1c96f8a87cb102ddde156a815810150b611d940835bae",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-1.json.gz",
+        "gzipBytes": 28173,
+        "gzipSHA256": "f3fcaf905081a6647e343974d4313ecbcc2ce6093254d4e747b1174fc86a2df9"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/f3fcaf905081a6647e343974d4313ecbcc2ce6093254d4e747b1174fc86a2df9.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-2.json",
+        "bytes": 549221,
+        "sha256": "7aa3f97e4e8995b6c0b9ba069282d1906cb011690ab9963ed17041f7f259f012",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-2.json.gz",
+        "gzipBytes": 28163,
+        "gzipSHA256": "b66133b05481f9316cae18a0d9f3e97afdcf0b83417354567fc2c37373fff516"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/b66133b05481f9316cae18a0d9f3e97afdcf0b83417354567fc2c37373fff516.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-3.json",
+        "bytes": 578262,
+        "sha256": "236389e70a30971adce60d92ea86131dd76a73a5aea38312edf5430c49c5fa5f",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-3.json.gz",
+        "gzipBytes": 29254,
+        "gzipSHA256": "39d9cb02ca8a2d916adc29d5432105ff83f3fddecae0e7a006f04bd35fcd15c0"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/39d9cb02ca8a2d916adc29d5432105ff83f3fddecae0e7a006f04bd35fcd15c0.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-4.json",
+        "bytes": 607581,
+        "sha256": "5d67a4ab7c97e4d4c740a6c497ff80d7f1c65565f7b6cacf32fe2fe7293ca4e0",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-4.json.gz",
+        "gzipBytes": 29562,
+        "gzipSHA256": "f00e210c0a41f860f9967c09fbd7e4158dc3a9c2b50b0d4f0716b971f881cb5a"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/f00e210c0a41f860f9967c09fbd7e4158dc3a9c2b50b0d4f0716b971f881cb5a.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-5.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-5.json",
+        "bytes": 608023,
+        "sha256": "aafa59f558768737358563dd158b60e1f19e716b6fbfa1878816d5a873d412b1",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-5.json.gz",
+        "gzipBytes": 29699,
+        "gzipSHA256": "d28c9e03389e95372ff2c9173e8d025ec4470fb4b6213c1af9f1ce2b1a165f1e"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/d28c9e03389e95372ff2c9173e8d025ec4470fb4b6213c1af9f1ce2b1a165f1e.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-6.json",
+        "bytes": 606830,
+        "sha256": "f83c19b04539b29085459169d95e1680c173f42ff5546d9bdee8cb682e32eb6d",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-6.json.gz",
+        "gzipBytes": 28205,
+        "gzipSHA256": "bb2be9a73d470a758259db32b9e98fa1bd216971bdbc0681257c22ffe40d8de5"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/bb2be9a73d470a758259db32b9e98fa1bd216971bdbc0681257c22ffe40d8de5.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-7.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-7.json",
+        "bytes": 636272,
+        "sha256": "a715926713bebeeffd87e8a5029717d7672504282456a9c80a1d59465e327457",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-7.json.gz",
+        "gzipBytes": 28723,
+        "gzipSHA256": "76741dbcac942bd5b3f8e4438a18ef26e67a8d7e2162f142ac14829a7e228e7a"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/76741dbcac942bd5b3f8e4438a18ef26e67a8d7e2162f142ac14829a7e228e7a.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-8.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-8.json",
+        "bytes": 673924,
+        "sha256": "d13c996c22f51015f92869e46071c87cc25e51795b559ff7b91a433d9bb766ce",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-8.json.gz",
+        "gzipBytes": 31665,
+        "gzipSHA256": "95392b1ba33f44fb1d6f1774e69e3e251472f6432cd77152f9a40607d9877495"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/95392b1ba33f44fb1d6f1774e69e3e251472f6432cd77152f9a40607d9877495.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-9.json",
+        "bytes": 672896,
+        "sha256": "ffb23780369255ae9bff306297d17a1fb80800fe7b40f9f7bb87bccba497403e",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-9.json.gz",
+        "gzipBytes": 30199,
+        "gzipSHA256": "139cf9160ed6007078f9bd5d634228eca972f79018cc7a58dcb0202385910ebe"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/139cf9160ed6007078f9bd5d634228eca972f79018cc7a58dcb0202385910ebe.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-10.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-10.json",
+        "bytes": 702393,
+        "sha256": "801d9060dceff04d1065395872e41535b639ba1942c72acc1ba5407340c33235",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-10.json.gz",
+        "gzipBytes": 30595,
+        "gzipSHA256": "0af236135f08e25a2ad013868129a632999c486a30f9e9a29e401ca50f62d2ce"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/0af236135f08e25a2ad013868129a632999c486a30f9e9a29e401ca50f62d2ce.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-11.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-11.json",
+        "bytes": 740043,
+        "sha256": "34174881a3d6dfffc3855c5de13411aaa3ecb1e2b8b5d4a0a942f8d40305c2d9",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-step-11.json.gz",
+        "gzipBytes": 32448,
+        "gzipSHA256": "4cf504a17e233f247e12592b6f4cc24ef03483010d966008387ec7d0a3dfa642"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/4cf504a17e233f247e12592b6f4cc24ef03483010d966008387ec7d0a3dfa642.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-closed-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-closed-6.json",
+        "bytes": 303275,
+        "sha256": "ba4bb71b69ae1ab06fdd3eaded18189b245412b4c4534d268fd74b003ed6cf8c",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-closed-6.json.gz",
+        "gzipBytes": 14135,
+        "gzipSHA256": "9f08c169d454c56827c0ec3da1032c1484e09e334ca68b7a2dca76e6fd14f535"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/9f08c169d454c56827c0ec3da1032c1484e09e334ca68b7a2dca76e6fd14f535.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-closed-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-closed-9.json",
+        "bytes": 336308,
+        "sha256": "e8f46ba143b5ebafd97656009dad14a729ca10f29646cf97a29ff5cc0a0de036",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-closed-9.json.gz",
+        "gzipBytes": 15131,
+        "gzipSHA256": "62843bf1700e5169488347297258b3ce8af8b7cf3f5a0da48f5698aed77d6105"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/62843bf1700e5169488347297258b3ce8af8b7cf3f5a0da48f5698aed77d6105.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-before-unmount.json",
+        "bytes": 349249,
+        "sha256": "28882b159da44f096975a0c8bff9407d97b2a7afa7c29eb66844643b56e6ba16",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-before-unmount.json.gz",
+        "gzipBytes": 16000,
+        "gzipSHA256": "226cffd37118e3889f400171c0c7c08820aadc3f423ac4f2b610228bf8e03e4c"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/226cffd37118e3889f400171c0c7c08820aadc3f423ac4f2b610228bf8e03e4c.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-cleanup.json",
+        "bytes": 190156,
+        "sha256": "e4a503238ebda50700b2603bc91dc21fa92d795996302e4b25c20be09071717f",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-cleanup.json.gz",
+        "gzipBytes": 7224,
+        "gzipSHA256": "bd98508d41e719c48a9dcc52cc2f15882f6254fec66fc98a6bf6f455a499c3b1"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/bd98508d41e719c48a9dcc52cc2f15882f6254fec66fc98a6bf6f455a499c3b1.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-late.json",
+        "bytes": 190156,
+        "sha256": "e4a503238ebda50700b2603bc91dc21fa92d795996302e4b25c20be09071717f",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-template-and-picker-control-late.json.gz",
+        "gzipBytes": 7224,
+        "gzipSHA256": "bd98508d41e719c48a9dcc52cc2f15882f6254fec66fc98a6bf6f455a499c3b1"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/bd98508d41e719c48a9dcc52cc2f15882f6254fec66fc98a6bf6f455a499c3b1.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-initial.json",
+        "bytes": 95495,
+        "sha256": "f218e9d9ebe13b93f6a85d66e735d9d7fb9e9653c1ba07f20f4203b5c0dbc289",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-initial.json.gz",
+        "gzipBytes": 5825,
+        "gzipSHA256": "529cb4d0546051a7feda47e0b383991816ee3e2ee69b37c400f77e31b167c895"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/529cb4d0546051a7feda47e0b383991816ee3e2ee69b37c400f77e31b167c895.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-0.json",
+        "bytes": 723297,
+        "sha256": "d8601334fcd0d064889ab26fc2a3daadb043d52918917b7cf1267f949c2256c3",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-0.json.gz",
+        "gzipBytes": 30842,
+        "gzipSHA256": "679aad56febb7da61912721992a2759340d9cffeb11315acbb97c5da19b45a23"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/679aad56febb7da61912721992a2759340d9cffeb11315acbb97c5da19b45a23.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-1.json",
+        "bytes": 746730,
+        "sha256": "2c370c2ea938aeea9ac60e2ee7f2aa336333bb4423ffef55b74f8670a67d5cb5",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-1.json.gz",
+        "gzipBytes": 31299,
+        "gzipSHA256": "dcc0505b8d96bdc44d7ed30eb8b07ed0050027022e368af02f4a73155d1eff80"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/dcc0505b8d96bdc44d7ed30eb8b07ed0050027022e368af02f4a73155d1eff80.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-2.json",
+        "bytes": 769456,
+        "sha256": "5fc102a9c40860d94a1c145e16565a3a80aeeddf60a52579ec5379a3a1b8a1d2",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-2.json.gz",
+        "gzipBytes": 31541,
+        "gzipSHA256": "8e4b4ccb2b6fc36510ed89bbb3f9dc56cb16e8294024270c56dffc20ddddcda7"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/8e4b4ccb2b6fc36510ed89bbb3f9dc56cb16e8294024270c56dffc20ddddcda7.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-3.json",
+        "bytes": 777021,
+        "sha256": "af82a53c50608fb7c6f8dbe191fb47ca601464fe9383b7a9811285d2f9a92a9d",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-3.json.gz",
+        "gzipBytes": 31609,
+        "gzipSHA256": "9f3fb65494b2587e2c2017f313240b7b99bd6cb980c1837fb181c4542881d6b1"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/9f3fb65494b2587e2c2017f313240b7b99bd6cb980c1837fb181c4542881d6b1.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-4.json",
+        "bytes": 843576,
+        "sha256": "a5a41b00018b4811cd34ead77cefecbf3fb0433e46de785949fa3f7fc52cf6cc",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-step-4.json.gz",
+        "gzipBytes": 32914,
+        "gzipSHA256": "538f433ba21d055a258c5d8531a190e3ba4742777bbfb867136186208e37f316"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/538f433ba21d055a258c5d8531a190e3ba4742777bbfb867136186208e37f316.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-before-unmount.json",
+        "bytes": 403310,
+        "sha256": "2ec485a250d3fd89bc9d98d7329bda6bb4d962a88559fd46f6615a08a3273ab3",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-before-unmount.json.gz",
+        "gzipBytes": 16322,
+        "gzipSHA256": "a0c99a999a1690b2900eeb47bbd397bb399e678012caf5f4af58b8d55bb4230f"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/a0c99a999a1690b2900eeb47bbd397bb399e678012caf5f4af58b8d55bb4230f.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-cleanup.json",
+        "bytes": 189979,
+        "sha256": "703649f8f0ea1cafd55916266b7b6b628dd0e6079ef977cf9045ac5a4f8663e3",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-cleanup.json.gz",
+        "gzipBytes": 6821,
+        "gzipSHA256": "b5e45246fbd8ba382e18ab1173397611f6d03f834128e44c24373a0eeaa6efac"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/b5e45246fbd8ba382e18ab1173397611f6d03f834128e44c24373a0eeaa6efac.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-late.json",
+        "bytes": 189979,
+        "sha256": "703649f8f0ea1cafd55916266b7b6b628dd0e6079ef977cf9045ac5a4f8663e3",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json.parts/selected-time-portal-target-and-callback-control-late.json.gz",
+        "gzipBytes": 6821,
+        "gzipSHA256": "b5e45246fbd8ba382e18ab1173397611f6d03f834128e44c24373a0eeaa6efac"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/b5e45246fbd8ba382e18ab1173397611f6d03f834128e44c24373a0eeaa6efac.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-initial.json",
+        "bytes": 92861,
+        "sha256": "7ec3a22946d0dae37558084c90f07349563a9068dd71d02a65a9067122724a79",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-initial.json.gz",
+        "gzipBytes": 5722,
+        "gzipSHA256": "5b4bb950b0b946ca7589d45c994fa36b18565a5621325b3aaedfe19797b92cf2"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/5b4bb950b0b946ca7589d45c994fa36b18565a5621325b3aaedfe19797b92cf2.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-0.json",
+        "bytes": 548503,
+        "sha256": "6f7394d3d94718e675631afd6970ff283df61d8ea16a13c2aee65518fbc54716",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-0.json.gz",
+        "gzipBytes": 27997,
+        "gzipSHA256": "aac6a641a8e4057169a54749aa7633ac2cc19cfbfa4f8d7f19b3399513dffc6c"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/aac6a641a8e4057169a54749aa7633ac2cc19cfbfa4f8d7f19b3399513dffc6c.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-1.json",
+        "bytes": 549218,
+        "sha256": "f4267a2a3439147814dd53bd4f75a9b6be3bdba6a58d7e7f8c5385fdcc5b2e50",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-1.json.gz",
+        "gzipBytes": 28177,
+        "gzipSHA256": "f3ed4f20ea25f9119c67cb397894ae62aa4c97a79966556110573e7b7f8620db"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/f3ed4f20ea25f9119c67cb397894ae62aa4c97a79966556110573e7b7f8620db.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-2.json",
+        "bytes": 549210,
+        "sha256": "0317952eeaba9e0ecb88a57fdfda9392dd1b7fd54eff923fd6edc4d94b2bfbc6",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-2.json.gz",
+        "gzipBytes": 28166,
+        "gzipSHA256": "c61e5e86a0ff89c1e9f8e38c2463dd97eb4fad0e23431b384c0588f11d376b17"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/c61e5e86a0ff89c1e9f8e38c2463dd97eb4fad0e23431b384c0588f11d376b17.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-3.json",
+        "bytes": 578262,
+        "sha256": "767bb3284e341d309f939712287d219c3ef99ebe0403b8a903aba24271675501",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-3.json.gz",
+        "gzipBytes": 29257,
+        "gzipSHA256": "ccd39a0f07f5e8534d047f9f8de3955f581b33ba10d5c41e027ddfcf4e888a95"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/ccd39a0f07f5e8534d047f9f8de3955f581b33ba10d5c41e027ddfcf4e888a95.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-4.json",
+        "bytes": 607581,
+        "sha256": "400b4343d123c56ce85a89b849c874defee3dcdc121162e7d6de169210ee339b",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-4.json.gz",
+        "gzipBytes": 29565,
+        "gzipSHA256": "c183b8c7fe3e88d6fb77761463927475f136d8ac2df657520a70be3aa565e081"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/c183b8c7fe3e88d6fb77761463927475f136d8ac2df657520a70be3aa565e081.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-5.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-5.json",
+        "bytes": 608024,
+        "sha256": "82442eb84699b86c2a0486c612f268006e68a7a5dffd62064799aa868685122b",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-5.json.gz",
+        "gzipBytes": 29700,
+        "gzipSHA256": "812cdda20b172dd1e0955f90988f01d078c302a0707e511505d89e6af3f88c50"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/812cdda20b172dd1e0955f90988f01d078c302a0707e511505d89e6af3f88c50.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-6.json",
+        "bytes": 606830,
+        "sha256": "5025a31fe45231ab136de311b65c794ab1142095dd5d2e3d07907bf8e23f48bb",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-6.json.gz",
+        "gzipBytes": 28208,
+        "gzipSHA256": "78948ad980887e5aa8797cd3fa023b19e90858cbfbe5f0973d25496db8a8dc13"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/78948ad980887e5aa8797cd3fa023b19e90858cbfbe5f0973d25496db8a8dc13.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-7.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-7.json",
+        "bytes": 636272,
+        "sha256": "9059989cbea095300a52202c27681ac14b003e33c1b897f631686281eb589881",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-7.json.gz",
+        "gzipBytes": 28726,
+        "gzipSHA256": "9303904321da5ba7cd9719f00073a9ba1893c7e9bf1271023a450306bf606d33"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/9303904321da5ba7cd9719f00073a9ba1893c7e9bf1271023a450306bf606d33.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-8.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-8.json",
+        "bytes": 673924,
+        "sha256": "a58f9844b63d77a2f6845524785f6d28377573af32ef97ee430651a8b65c4574",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-8.json.gz",
+        "gzipBytes": 31668,
+        "gzipSHA256": "6f47a572dc12855f966c06572e439dd89ce3193fe5d416b2e83261e16ada10d5"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/6f47a572dc12855f966c06572e439dd89ce3193fe5d416b2e83261e16ada10d5.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-9.json",
+        "bytes": 672896,
+        "sha256": "fb9ae17fd133b89268daebb885a67497c18021bb3162d51ef39e3aa1ea9988e9",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-9.json.gz",
+        "gzipBytes": 30201,
+        "gzipSHA256": "87c84ded3e15da426428c7a172f6a0d0d22b176888bbccbf8ab1c7b339376b8e"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/87c84ded3e15da426428c7a172f6a0d0d22b176888bbccbf8ab1c7b339376b8e.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-10.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-10.json",
+        "bytes": 702393,
+        "sha256": "26957915014beb3535d19c538e360c1e4c0f7546e41f9d75e91353fe3610724c",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-10.json.gz",
+        "gzipBytes": 30598,
+        "gzipSHA256": "85935361e0d0bd465d27950e54ca17eda7a263110c34c0f871f5ec63add19b21"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/85935361e0d0bd465d27950e54ca17eda7a263110c34c0f871f5ec63add19b21.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-11.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-11.json",
+        "bytes": 740043,
+        "sha256": "81741ad5aafb9b1f3affcb91929add9f7bf68384e578acc4f6f8afa914aab6d7",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-step-11.json.gz",
+        "gzipBytes": 32461,
+        "gzipSHA256": "2ccdc912cc6660c8c11a5c4037eb68882ae0cd97f2b8ee57bf781aff4de62836"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/2ccdc912cc6660c8c11a5c4037eb68882ae0cd97f2b8ee57bf781aff4de62836.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-closed-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-closed-6.json",
+        "bytes": 303275,
+        "sha256": "e4d3485dd8175841888a42dfa00d0f444e237bc3638a0789366ed34da26612a5",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-closed-6.json.gz",
+        "gzipBytes": 14136,
+        "gzipSHA256": "7d78150315e19ff67790fed3ebc78a55b486c4095a93ea5f61d9a444e1036a58"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/7d78150315e19ff67790fed3ebc78a55b486c4095a93ea5f61d9a444e1036a58.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-closed-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-closed-9.json",
+        "bytes": 336308,
+        "sha256": "dc5787cc6877aec74ffea8c369650fbb5a8bc95d697db7157d0445985a3a37fc",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-closed-9.json.gz",
+        "gzipBytes": 15132,
+        "gzipSHA256": "bba3df2b8c8474eee27b2ccf59494e6bf29a1d5393ad587bf4eada553e835edc"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/bba3df2b8c8474eee27b2ccf59494e6bf29a1d5393ad587bf4eada553e835edc.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-before-unmount.json",
+        "bytes": 349249,
+        "sha256": "259cd1d49e6b46827d008044edb465bb40f2185fa758e56bc7295e84210f65bf",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-before-unmount.json.gz",
+        "gzipBytes": 16001,
+        "gzipSHA256": "879601c1e6451b0c03d3662d6864147f817efce3b087266c8d2716b378a094ed"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/879601c1e6451b0c03d3662d6864147f817efce3b087266c8d2716b378a094ed.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-cleanup.json",
+        "bytes": 190156,
+        "sha256": "8b24c4ac120e133d58f313e3d17aae842890ba31044e089240a32d64e29d28b4",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-cleanup.json.gz",
+        "gzipBytes": 7225,
+        "gzipSHA256": "afde69d74b7d8cb3d43b864f28e89c14c6de4322cdda9c9c782cfc0f462fde29"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/afde69d74b7d8cb3d43b864f28e89c14c6de4322cdda9c9c782cfc0f462fde29.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-late.json",
+        "bytes": 190156,
+        "sha256": "8b24c4ac120e133d58f313e3d17aae842890ba31044e089240a32d64e29d28b4",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-template-and-picker-control-late.json.gz",
+        "gzipBytes": 7225,
+        "gzipSHA256": "afde69d74b7d8cb3d43b864f28e89c14c6de4322cdda9c9c782cfc0f462fde29"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/afde69d74b7d8cb3d43b864f28e89c14c6de4322cdda9c9c782cfc0f462fde29.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-initial.json",
+        "bytes": 95495,
+        "sha256": "f218e9d9ebe13b93f6a85d66e735d9d7fb9e9653c1ba07f20f4203b5c0dbc289",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-initial.json.gz",
+        "gzipBytes": 5825,
+        "gzipSHA256": "529cb4d0546051a7feda47e0b383991816ee3e2ee69b37c400f77e31b167c895"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/529cb4d0546051a7feda47e0b383991816ee3e2ee69b37c400f77e31b167c895.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-0.json",
+        "bytes": 723297,
+        "sha256": "2f00688c5ffed2784d4656ab6a3b46f48f75cb471b18e0993d8f1cf5580140f1",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-0.json.gz",
+        "gzipBytes": 30848,
+        "gzipSHA256": "6cfdcfd7cf6f36389f9cca688b19ce036a911b0f47c4fc05860af705fbba3fee"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/6cfdcfd7cf6f36389f9cca688b19ce036a911b0f47c4fc05860af705fbba3fee.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-1.json",
+        "bytes": 746729,
+        "sha256": "5db5daadcc1fdd3a2d14ce25813ecbb03e9676381333b5c55a02c5cd10f67bb0",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-1.json.gz",
+        "gzipBytes": 31302,
+        "gzipSHA256": "c1b3c8854365f985d62a86e4160f86e9f69fdc9dea5ff76576d32940302ea1b6"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/c1b3c8854365f985d62a86e4160f86e9f69fdc9dea5ff76576d32940302ea1b6.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-2.json",
+        "bytes": 769456,
+        "sha256": "be154f79446432ed6662b35717f9747763b49f96be38f5440ea61c3ed9bff368",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-2.json.gz",
+        "gzipBytes": 31546,
+        "gzipSHA256": "0d5780cf5c199ef80958ac9e67ab970c672eb8cf001414bb4346500805f90f87"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/0d5780cf5c199ef80958ac9e67ab970c672eb8cf001414bb4346500805f90f87.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-3.json",
+        "bytes": 777021,
+        "sha256": "8cd9740cbd43940614fb97455bb12a2395c497ed29bae30e1bfefdfadf14588e",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-3.json.gz",
+        "gzipBytes": 31615,
+        "gzipSHA256": "df31136ca0847c62c2dad706dc51da6eef03c13a6ba03c23482bdf8e4efcca5c"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/df31136ca0847c62c2dad706dc51da6eef03c13a6ba03c23482bdf8e4efcca5c.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-4.json",
+        "bytes": 843575,
+        "sha256": "4fd9acb1e13ae935f915d003513009e5de2ab357e787bc6f9a69c33999720747",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-step-4.json.gz",
+        "gzipBytes": 32921,
+        "gzipSHA256": "c568c4cc5c4b9ff5c72166960504e641df4ea82b7c8a2f04de4578bde255c060"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/c568c4cc5c4b9ff5c72166960504e641df4ea82b7c8a2f04de4578bde255c060.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-before-unmount.json",
+        "bytes": 403310,
+        "sha256": "1195f48eb286d849962433663da280ccf45382b45c51ccc47d910c2e7fecc72e",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-before-unmount.json.gz",
+        "gzipBytes": 16325,
+        "gzipSHA256": "2e5144989fa41709962341454340580c69772d96580251e636913b1c4b45f4df"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/2e5144989fa41709962341454340580c69772d96580251e636913b1c4b45f4df.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-cleanup.json",
+        "bytes": 189979,
+        "sha256": "4133882d00ab30f79e72c7b149962ed73b2f81aa41e67a95cd2c0b7afa8b9c06",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-cleanup.json.gz",
+        "gzipBytes": 6824,
+        "gzipSHA256": "2e65a6686d94621a126edff94df10f4eca9947131df500c6decabc20ae90a7d6"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/2e65a6686d94621a126edff94df10f4eca9947131df500c6decabc20ae90a7d6.json.gz"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-late.json",
+        "bytes": 189979,
+        "sha256": "4133882d00ab30f79e72c7b149962ed73b2f81aa41e67a95cd2c0b7afa8b9c06",
+        "gzipFile": ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json.parts/selected-time-portal-target-and-callback-control-late.json.gz",
+        "gzipBytes": 6824,
+        "gzipSHA256": "2e65a6686d94621a126edff94df10f4eca9947131df500c6decabc20ae90a7d6"
+      },
+      "fixture": "ant-design-date-picker-time-scroll-parts/2e65a6686d94621a126edff94df10f4eca9947131df500c6decabc20ae90a7d6.json.gz"
+    }
+  },
+  "blobs": {
+    "ant-design-date-picker-time-scroll-parts/8769b57b66e645ef6b00e773991cccadbea21acd29a3e5818f83149d36a81065.json.gz": {
+      "bytes": 3831,
+      "sha256": "8769b57b66e645ef6b00e773991cccadbea21acd29a3e5818f83149d36a81065",
+      "decodedBytes": 21586,
+      "decodedSHA256": "4d688c3bf1ea4c57816b8d14049c321863453e7bdd12d950546be92355c2e6d4"
+    },
+    "ant-design-date-picker-time-scroll-parts/5b4bb950b0b946ca7589d45c994fa36b18565a5621325b3aaedfe19797b92cf2.json.gz": {
+      "bytes": 5722,
+      "sha256": "5b4bb950b0b946ca7589d45c994fa36b18565a5621325b3aaedfe19797b92cf2",
+      "decodedBytes": 92861,
+      "decodedSHA256": "7ec3a22946d0dae37558084c90f07349563a9068dd71d02a65a9067122724a79"
+    },
+    "ant-design-date-picker-time-scroll-parts/a542321c37a34fe1f2b000a1a4e695e9f31bb2d4b41b4739f629777a913f99fd.json.gz": {
+      "bytes": 27988,
+      "sha256": "a542321c37a34fe1f2b000a1a4e695e9f31bb2d4b41b4739f629777a913f99fd",
+      "decodedBytes": 548503,
+      "decodedSHA256": "e13e1508b8fb0a212c2ca094556d4c97e35fdf7ad8c15479e9644745455f7823"
+    },
+    "ant-design-date-picker-time-scroll-parts/f3fcaf905081a6647e343974d4313ecbcc2ce6093254d4e747b1174fc86a2df9.json.gz": {
+      "bytes": 28173,
+      "sha256": "f3fcaf905081a6647e343974d4313ecbcc2ce6093254d4e747b1174fc86a2df9",
+      "decodedBytes": 549217,
+      "decodedSHA256": "2e6fde89364814238ca1c96f8a87cb102ddde156a815810150b611d940835bae"
+    },
+    "ant-design-date-picker-time-scroll-parts/b66133b05481f9316cae18a0d9f3e97afdcf0b83417354567fc2c37373fff516.json.gz": {
+      "bytes": 28163,
+      "sha256": "b66133b05481f9316cae18a0d9f3e97afdcf0b83417354567fc2c37373fff516",
+      "decodedBytes": 549221,
+      "decodedSHA256": "7aa3f97e4e8995b6c0b9ba069282d1906cb011690ab9963ed17041f7f259f012"
+    },
+    "ant-design-date-picker-time-scroll-parts/39d9cb02ca8a2d916adc29d5432105ff83f3fddecae0e7a006f04bd35fcd15c0.json.gz": {
+      "bytes": 29254,
+      "sha256": "39d9cb02ca8a2d916adc29d5432105ff83f3fddecae0e7a006f04bd35fcd15c0",
+      "decodedBytes": 578262,
+      "decodedSHA256": "236389e70a30971adce60d92ea86131dd76a73a5aea38312edf5430c49c5fa5f"
+    },
+    "ant-design-date-picker-time-scroll-parts/f00e210c0a41f860f9967c09fbd7e4158dc3a9c2b50b0d4f0716b971f881cb5a.json.gz": {
+      "bytes": 29562,
+      "sha256": "f00e210c0a41f860f9967c09fbd7e4158dc3a9c2b50b0d4f0716b971f881cb5a",
+      "decodedBytes": 607581,
+      "decodedSHA256": "5d67a4ab7c97e4d4c740a6c497ff80d7f1c65565f7b6cacf32fe2fe7293ca4e0"
+    },
+    "ant-design-date-picker-time-scroll-parts/d28c9e03389e95372ff2c9173e8d025ec4470fb4b6213c1af9f1ce2b1a165f1e.json.gz": {
+      "bytes": 29699,
+      "sha256": "d28c9e03389e95372ff2c9173e8d025ec4470fb4b6213c1af9f1ce2b1a165f1e",
+      "decodedBytes": 608023,
+      "decodedSHA256": "aafa59f558768737358563dd158b60e1f19e716b6fbfa1878816d5a873d412b1"
+    },
+    "ant-design-date-picker-time-scroll-parts/bb2be9a73d470a758259db32b9e98fa1bd216971bdbc0681257c22ffe40d8de5.json.gz": {
+      "bytes": 28205,
+      "sha256": "bb2be9a73d470a758259db32b9e98fa1bd216971bdbc0681257c22ffe40d8de5",
+      "decodedBytes": 606830,
+      "decodedSHA256": "f83c19b04539b29085459169d95e1680c173f42ff5546d9bdee8cb682e32eb6d"
+    },
+    "ant-design-date-picker-time-scroll-parts/76741dbcac942bd5b3f8e4438a18ef26e67a8d7e2162f142ac14829a7e228e7a.json.gz": {
+      "bytes": 28723,
+      "sha256": "76741dbcac942bd5b3f8e4438a18ef26e67a8d7e2162f142ac14829a7e228e7a",
+      "decodedBytes": 636272,
+      "decodedSHA256": "a715926713bebeeffd87e8a5029717d7672504282456a9c80a1d59465e327457"
+    },
+    "ant-design-date-picker-time-scroll-parts/95392b1ba33f44fb1d6f1774e69e3e251472f6432cd77152f9a40607d9877495.json.gz": {
+      "bytes": 31665,
+      "sha256": "95392b1ba33f44fb1d6f1774e69e3e251472f6432cd77152f9a40607d9877495",
+      "decodedBytes": 673924,
+      "decodedSHA256": "d13c996c22f51015f92869e46071c87cc25e51795b559ff7b91a433d9bb766ce"
+    },
+    "ant-design-date-picker-time-scroll-parts/139cf9160ed6007078f9bd5d634228eca972f79018cc7a58dcb0202385910ebe.json.gz": {
+      "bytes": 30199,
+      "sha256": "139cf9160ed6007078f9bd5d634228eca972f79018cc7a58dcb0202385910ebe",
+      "decodedBytes": 672896,
+      "decodedSHA256": "ffb23780369255ae9bff306297d17a1fb80800fe7b40f9f7bb87bccba497403e"
+    },
+    "ant-design-date-picker-time-scroll-parts/0af236135f08e25a2ad013868129a632999c486a30f9e9a29e401ca50f62d2ce.json.gz": {
+      "bytes": 30595,
+      "sha256": "0af236135f08e25a2ad013868129a632999c486a30f9e9a29e401ca50f62d2ce",
+      "decodedBytes": 702393,
+      "decodedSHA256": "801d9060dceff04d1065395872e41535b639ba1942c72acc1ba5407340c33235"
+    },
+    "ant-design-date-picker-time-scroll-parts/4cf504a17e233f247e12592b6f4cc24ef03483010d966008387ec7d0a3dfa642.json.gz": {
+      "bytes": 32448,
+      "sha256": "4cf504a17e233f247e12592b6f4cc24ef03483010d966008387ec7d0a3dfa642",
+      "decodedBytes": 740043,
+      "decodedSHA256": "34174881a3d6dfffc3855c5de13411aaa3ecb1e2b8b5d4a0a942f8d40305c2d9"
+    },
+    "ant-design-date-picker-time-scroll-parts/9f08c169d454c56827c0ec3da1032c1484e09e334ca68b7a2dca76e6fd14f535.json.gz": {
+      "bytes": 14135,
+      "sha256": "9f08c169d454c56827c0ec3da1032c1484e09e334ca68b7a2dca76e6fd14f535",
+      "decodedBytes": 303275,
+      "decodedSHA256": "ba4bb71b69ae1ab06fdd3eaded18189b245412b4c4534d268fd74b003ed6cf8c"
+    },
+    "ant-design-date-picker-time-scroll-parts/62843bf1700e5169488347297258b3ce8af8b7cf3f5a0da48f5698aed77d6105.json.gz": {
+      "bytes": 15131,
+      "sha256": "62843bf1700e5169488347297258b3ce8af8b7cf3f5a0da48f5698aed77d6105",
+      "decodedBytes": 336308,
+      "decodedSHA256": "e8f46ba143b5ebafd97656009dad14a729ca10f29646cf97a29ff5cc0a0de036"
+    },
+    "ant-design-date-picker-time-scroll-parts/226cffd37118e3889f400171c0c7c08820aadc3f423ac4f2b610228bf8e03e4c.json.gz": {
+      "bytes": 16000,
+      "sha256": "226cffd37118e3889f400171c0c7c08820aadc3f423ac4f2b610228bf8e03e4c",
+      "decodedBytes": 349249,
+      "decodedSHA256": "28882b159da44f096975a0c8bff9407d97b2a7afa7c29eb66844643b56e6ba16"
+    },
+    "ant-design-date-picker-time-scroll-parts/bd98508d41e719c48a9dcc52cc2f15882f6254fec66fc98a6bf6f455a499c3b1.json.gz": {
+      "bytes": 7224,
+      "sha256": "bd98508d41e719c48a9dcc52cc2f15882f6254fec66fc98a6bf6f455a499c3b1",
+      "decodedBytes": 190156,
+      "decodedSHA256": "e4a503238ebda50700b2603bc91dc21fa92d795996302e4b25c20be09071717f"
+    },
+    "ant-design-date-picker-time-scroll-parts/529cb4d0546051a7feda47e0b383991816ee3e2ee69b37c400f77e31b167c895.json.gz": {
+      "bytes": 5825,
+      "sha256": "529cb4d0546051a7feda47e0b383991816ee3e2ee69b37c400f77e31b167c895",
+      "decodedBytes": 95495,
+      "decodedSHA256": "f218e9d9ebe13b93f6a85d66e735d9d7fb9e9653c1ba07f20f4203b5c0dbc289"
+    },
+    "ant-design-date-picker-time-scroll-parts/679aad56febb7da61912721992a2759340d9cffeb11315acbb97c5da19b45a23.json.gz": {
+      "bytes": 30842,
+      "sha256": "679aad56febb7da61912721992a2759340d9cffeb11315acbb97c5da19b45a23",
+      "decodedBytes": 723297,
+      "decodedSHA256": "d8601334fcd0d064889ab26fc2a3daadb043d52918917b7cf1267f949c2256c3"
+    },
+    "ant-design-date-picker-time-scroll-parts/dcc0505b8d96bdc44d7ed30eb8b07ed0050027022e368af02f4a73155d1eff80.json.gz": {
+      "bytes": 31299,
+      "sha256": "dcc0505b8d96bdc44d7ed30eb8b07ed0050027022e368af02f4a73155d1eff80",
+      "decodedBytes": 746730,
+      "decodedSHA256": "2c370c2ea938aeea9ac60e2ee7f2aa336333bb4423ffef55b74f8670a67d5cb5"
+    },
+    "ant-design-date-picker-time-scroll-parts/8e4b4ccb2b6fc36510ed89bbb3f9dc56cb16e8294024270c56dffc20ddddcda7.json.gz": {
+      "bytes": 31541,
+      "sha256": "8e4b4ccb2b6fc36510ed89bbb3f9dc56cb16e8294024270c56dffc20ddddcda7",
+      "decodedBytes": 769456,
+      "decodedSHA256": "5fc102a9c40860d94a1c145e16565a3a80aeeddf60a52579ec5379a3a1b8a1d2"
+    },
+    "ant-design-date-picker-time-scroll-parts/9f3fb65494b2587e2c2017f313240b7b99bd6cb980c1837fb181c4542881d6b1.json.gz": {
+      "bytes": 31609,
+      "sha256": "9f3fb65494b2587e2c2017f313240b7b99bd6cb980c1837fb181c4542881d6b1",
+      "decodedBytes": 777021,
+      "decodedSHA256": "af82a53c50608fb7c6f8dbe191fb47ca601464fe9383b7a9811285d2f9a92a9d"
+    },
+    "ant-design-date-picker-time-scroll-parts/538f433ba21d055a258c5d8531a190e3ba4742777bbfb867136186208e37f316.json.gz": {
+      "bytes": 32914,
+      "sha256": "538f433ba21d055a258c5d8531a190e3ba4742777bbfb867136186208e37f316",
+      "decodedBytes": 843576,
+      "decodedSHA256": "a5a41b00018b4811cd34ead77cefecbf3fb0433e46de785949fa3f7fc52cf6cc"
+    },
+    "ant-design-date-picker-time-scroll-parts/a0c99a999a1690b2900eeb47bbd397bb399e678012caf5f4af58b8d55bb4230f.json.gz": {
+      "bytes": 16322,
+      "sha256": "a0c99a999a1690b2900eeb47bbd397bb399e678012caf5f4af58b8d55bb4230f",
+      "decodedBytes": 403310,
+      "decodedSHA256": "2ec485a250d3fd89bc9d98d7329bda6bb4d962a88559fd46f6615a08a3273ab3"
+    },
+    "ant-design-date-picker-time-scroll-parts/b5e45246fbd8ba382e18ab1173397611f6d03f834128e44c24373a0eeaa6efac.json.gz": {
+      "bytes": 6821,
+      "sha256": "b5e45246fbd8ba382e18ab1173397611f6d03f834128e44c24373a0eeaa6efac",
+      "decodedBytes": 189979,
+      "decodedSHA256": "703649f8f0ea1cafd55916266b7b6b628dd0e6079ef977cf9045ac5a4f8663e3"
+    },
+    "ant-design-date-picker-time-scroll-parts/b295aef1cf584835a390663b26cb99becbdb5a7c18b9af9b0d6b398c25871c45.json.gz": {
+      "bytes": 3833,
+      "sha256": "b295aef1cf584835a390663b26cb99becbdb5a7c18b9af9b0d6b398c25871c45",
+      "decodedBytes": 21640,
+      "decodedSHA256": "6f60c40294bb7ad9a0bd517025b7c55fc1e2871a4f8430e4fd6a30633250bb00"
+    },
+    "ant-design-date-picker-time-scroll-parts/aac6a641a8e4057169a54749aa7633ac2cc19cfbfa4f8d7f19b3399513dffc6c.json.gz": {
+      "bytes": 27997,
+      "sha256": "aac6a641a8e4057169a54749aa7633ac2cc19cfbfa4f8d7f19b3399513dffc6c",
+      "decodedBytes": 548503,
+      "decodedSHA256": "6f7394d3d94718e675631afd6970ff283df61d8ea16a13c2aee65518fbc54716"
+    },
+    "ant-design-date-picker-time-scroll-parts/f3ed4f20ea25f9119c67cb397894ae62aa4c97a79966556110573e7b7f8620db.json.gz": {
+      "bytes": 28177,
+      "sha256": "f3ed4f20ea25f9119c67cb397894ae62aa4c97a79966556110573e7b7f8620db",
+      "decodedBytes": 549218,
+      "decodedSHA256": "f4267a2a3439147814dd53bd4f75a9b6be3bdba6a58d7e7f8c5385fdcc5b2e50"
+    },
+    "ant-design-date-picker-time-scroll-parts/c61e5e86a0ff89c1e9f8e38c2463dd97eb4fad0e23431b384c0588f11d376b17.json.gz": {
+      "bytes": 28166,
+      "sha256": "c61e5e86a0ff89c1e9f8e38c2463dd97eb4fad0e23431b384c0588f11d376b17",
+      "decodedBytes": 549210,
+      "decodedSHA256": "0317952eeaba9e0ecb88a57fdfda9392dd1b7fd54eff923fd6edc4d94b2bfbc6"
+    },
+    "ant-design-date-picker-time-scroll-parts/ccd39a0f07f5e8534d047f9f8de3955f581b33ba10d5c41e027ddfcf4e888a95.json.gz": {
+      "bytes": 29257,
+      "sha256": "ccd39a0f07f5e8534d047f9f8de3955f581b33ba10d5c41e027ddfcf4e888a95",
+      "decodedBytes": 578262,
+      "decodedSHA256": "767bb3284e341d309f939712287d219c3ef99ebe0403b8a903aba24271675501"
+    },
+    "ant-design-date-picker-time-scroll-parts/c183b8c7fe3e88d6fb77761463927475f136d8ac2df657520a70be3aa565e081.json.gz": {
+      "bytes": 29565,
+      "sha256": "c183b8c7fe3e88d6fb77761463927475f136d8ac2df657520a70be3aa565e081",
+      "decodedBytes": 607581,
+      "decodedSHA256": "400b4343d123c56ce85a89b849c874defee3dcdc121162e7d6de169210ee339b"
+    },
+    "ant-design-date-picker-time-scroll-parts/812cdda20b172dd1e0955f90988f01d078c302a0707e511505d89e6af3f88c50.json.gz": {
+      "bytes": 29700,
+      "sha256": "812cdda20b172dd1e0955f90988f01d078c302a0707e511505d89e6af3f88c50",
+      "decodedBytes": 608024,
+      "decodedSHA256": "82442eb84699b86c2a0486c612f268006e68a7a5dffd62064799aa868685122b"
+    },
+    "ant-design-date-picker-time-scroll-parts/78948ad980887e5aa8797cd3fa023b19e90858cbfbe5f0973d25496db8a8dc13.json.gz": {
+      "bytes": 28208,
+      "sha256": "78948ad980887e5aa8797cd3fa023b19e90858cbfbe5f0973d25496db8a8dc13",
+      "decodedBytes": 606830,
+      "decodedSHA256": "5025a31fe45231ab136de311b65c794ab1142095dd5d2e3d07907bf8e23f48bb"
+    },
+    "ant-design-date-picker-time-scroll-parts/9303904321da5ba7cd9719f00073a9ba1893c7e9bf1271023a450306bf606d33.json.gz": {
+      "bytes": 28726,
+      "sha256": "9303904321da5ba7cd9719f00073a9ba1893c7e9bf1271023a450306bf606d33",
+      "decodedBytes": 636272,
+      "decodedSHA256": "9059989cbea095300a52202c27681ac14b003e33c1b897f631686281eb589881"
+    },
+    "ant-design-date-picker-time-scroll-parts/6f47a572dc12855f966c06572e439dd89ce3193fe5d416b2e83261e16ada10d5.json.gz": {
+      "bytes": 31668,
+      "sha256": "6f47a572dc12855f966c06572e439dd89ce3193fe5d416b2e83261e16ada10d5",
+      "decodedBytes": 673924,
+      "decodedSHA256": "a58f9844b63d77a2f6845524785f6d28377573af32ef97ee430651a8b65c4574"
+    },
+    "ant-design-date-picker-time-scroll-parts/87c84ded3e15da426428c7a172f6a0d0d22b176888bbccbf8ab1c7b339376b8e.json.gz": {
+      "bytes": 30201,
+      "sha256": "87c84ded3e15da426428c7a172f6a0d0d22b176888bbccbf8ab1c7b339376b8e",
+      "decodedBytes": 672896,
+      "decodedSHA256": "fb9ae17fd133b89268daebb885a67497c18021bb3162d51ef39e3aa1ea9988e9"
+    },
+    "ant-design-date-picker-time-scroll-parts/85935361e0d0bd465d27950e54ca17eda7a263110c34c0f871f5ec63add19b21.json.gz": {
+      "bytes": 30598,
+      "sha256": "85935361e0d0bd465d27950e54ca17eda7a263110c34c0f871f5ec63add19b21",
+      "decodedBytes": 702393,
+      "decodedSHA256": "26957915014beb3535d19c538e360c1e4c0f7546e41f9d75e91353fe3610724c"
+    },
+    "ant-design-date-picker-time-scroll-parts/2ccdc912cc6660c8c11a5c4037eb68882ae0cd97f2b8ee57bf781aff4de62836.json.gz": {
+      "bytes": 32461,
+      "sha256": "2ccdc912cc6660c8c11a5c4037eb68882ae0cd97f2b8ee57bf781aff4de62836",
+      "decodedBytes": 740043,
+      "decodedSHA256": "81741ad5aafb9b1f3affcb91929add9f7bf68384e578acc4f6f8afa914aab6d7"
+    },
+    "ant-design-date-picker-time-scroll-parts/7d78150315e19ff67790fed3ebc78a55b486c4095a93ea5f61d9a444e1036a58.json.gz": {
+      "bytes": 14136,
+      "sha256": "7d78150315e19ff67790fed3ebc78a55b486c4095a93ea5f61d9a444e1036a58",
+      "decodedBytes": 303275,
+      "decodedSHA256": "e4d3485dd8175841888a42dfa00d0f444e237bc3638a0789366ed34da26612a5"
+    },
+    "ant-design-date-picker-time-scroll-parts/bba3df2b8c8474eee27b2ccf59494e6bf29a1d5393ad587bf4eada553e835edc.json.gz": {
+      "bytes": 15132,
+      "sha256": "bba3df2b8c8474eee27b2ccf59494e6bf29a1d5393ad587bf4eada553e835edc",
+      "decodedBytes": 336308,
+      "decodedSHA256": "dc5787cc6877aec74ffea8c369650fbb5a8bc95d697db7157d0445985a3a37fc"
+    },
+    "ant-design-date-picker-time-scroll-parts/879601c1e6451b0c03d3662d6864147f817efce3b087266c8d2716b378a094ed.json.gz": {
+      "bytes": 16001,
+      "sha256": "879601c1e6451b0c03d3662d6864147f817efce3b087266c8d2716b378a094ed",
+      "decodedBytes": 349249,
+      "decodedSHA256": "259cd1d49e6b46827d008044edb465bb40f2185fa758e56bc7295e84210f65bf"
+    },
+    "ant-design-date-picker-time-scroll-parts/afde69d74b7d8cb3d43b864f28e89c14c6de4322cdda9c9c782cfc0f462fde29.json.gz": {
+      "bytes": 7225,
+      "sha256": "afde69d74b7d8cb3d43b864f28e89c14c6de4322cdda9c9c782cfc0f462fde29",
+      "decodedBytes": 190156,
+      "decodedSHA256": "8b24c4ac120e133d58f313e3d17aae842890ba31044e089240a32d64e29d28b4"
+    },
+    "ant-design-date-picker-time-scroll-parts/6cfdcfd7cf6f36389f9cca688b19ce036a911b0f47c4fc05860af705fbba3fee.json.gz": {
+      "bytes": 30848,
+      "sha256": "6cfdcfd7cf6f36389f9cca688b19ce036a911b0f47c4fc05860af705fbba3fee",
+      "decodedBytes": 723297,
+      "decodedSHA256": "2f00688c5ffed2784d4656ab6a3b46f48f75cb471b18e0993d8f1cf5580140f1"
+    },
+    "ant-design-date-picker-time-scroll-parts/c1b3c8854365f985d62a86e4160f86e9f69fdc9dea5ff76576d32940302ea1b6.json.gz": {
+      "bytes": 31302,
+      "sha256": "c1b3c8854365f985d62a86e4160f86e9f69fdc9dea5ff76576d32940302ea1b6",
+      "decodedBytes": 746729,
+      "decodedSHA256": "5db5daadcc1fdd3a2d14ce25813ecbb03e9676381333b5c55a02c5cd10f67bb0"
+    },
+    "ant-design-date-picker-time-scroll-parts/0d5780cf5c199ef80958ac9e67ab970c672eb8cf001414bb4346500805f90f87.json.gz": {
+      "bytes": 31546,
+      "sha256": "0d5780cf5c199ef80958ac9e67ab970c672eb8cf001414bb4346500805f90f87",
+      "decodedBytes": 769456,
+      "decodedSHA256": "be154f79446432ed6662b35717f9747763b49f96be38f5440ea61c3ed9bff368"
+    },
+    "ant-design-date-picker-time-scroll-parts/df31136ca0847c62c2dad706dc51da6eef03c13a6ba03c23482bdf8e4efcca5c.json.gz": {
+      "bytes": 31615,
+      "sha256": "df31136ca0847c62c2dad706dc51da6eef03c13a6ba03c23482bdf8e4efcca5c",
+      "decodedBytes": 777021,
+      "decodedSHA256": "8cd9740cbd43940614fb97455bb12a2395c497ed29bae30e1bfefdfadf14588e"
+    },
+    "ant-design-date-picker-time-scroll-parts/c568c4cc5c4b9ff5c72166960504e641df4ea82b7c8a2f04de4578bde255c060.json.gz": {
+      "bytes": 32921,
+      "sha256": "c568c4cc5c4b9ff5c72166960504e641df4ea82b7c8a2f04de4578bde255c060",
+      "decodedBytes": 843575,
+      "decodedSHA256": "4fd9acb1e13ae935f915d003513009e5de2ab357e787bc6f9a69c33999720747"
+    },
+    "ant-design-date-picker-time-scroll-parts/2e5144989fa41709962341454340580c69772d96580251e636913b1c4b45f4df.json.gz": {
+      "bytes": 16325,
+      "sha256": "2e5144989fa41709962341454340580c69772d96580251e636913b1c4b45f4df",
+      "decodedBytes": 403310,
+      "decodedSHA256": "1195f48eb286d849962433663da280ccf45382b45c51ccc47d910c2e7fecc72e"
+    },
+    "ant-design-date-picker-time-scroll-parts/2e65a6686d94621a126edff94df10f4eca9947131df500c6decabc20ae90a7d6.json.gz": {
+      "bytes": 6824,
+      "sha256": "2e65a6686d94621a126edff94df10f4eca9947131df500c6decabc20ae90a7d6",
+      "decodedBytes": 189979,
+      "decodedSHA256": "4133882d00ab30f79e72c7b149962ed73b2f81aa41e67a95cd2c0b7afa8b9c06"
+    }
+  },
+  "serialization": {
+    "wholeOriginalJSONAndGzipBytesPreserved": true,
+    "fieldsDropped": [],
+    "fieldsRewritten": [],
+    "normalizedFields": [],
+    "IDsRenumbered": false,
+    "NativeExpectedUsed": false,
+    "deduplication": "Whole original stored gzip SHA-256 only; original path metadata stays intact."
+  }
+}

@@ -1,0 +1,1103 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": "initial",
+      "lifecycle": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "factory",
+      "lifecycle": {
+        "panel": [
+          [
+            "Enter",
+            "prepare",
+            true
+          ],
+          [
+            "Enter",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Enter",
+            "active",
+            true,
+            true,
+            "Enter"
+          ],
+          [
+            "Enter",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Enter",
+            "prepare",
+            true
+          ],
+          [
+            "Enter",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Enter",
+            "active",
+            true,
+            true,
+            "Enter"
+          ],
+          [
+            "Enter",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [
+          "right",
+          "left"
+        ],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "prepare-only",
+      "lifecycle": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ]
+        ],
+        "mask": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "disabled-phases",
+      "lifecycle": {
+        "panel": [],
+        "mask": [
+          [
+            "visible",
+            true
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "hold-end",
+      "held": {
+        "active": "Appear",
+        "nestedIgnored": true,
+        "visible": true,
+        "afterOpen": []
+      },
+      "lifecycle": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "transitionend"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "async-prepare",
+      "held": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ]
+        ],
+        "afterOpen": []
+      },
+      "lifecycle": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "late-mask",
+      "lifecycle": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": [],
+        "maskSettledAtClose": false
+      }
+    },
+    {
+      "profile": "immediate",
+      "held": {
+        "panel": [
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [],
+        "panelVisible": []
+      },
+      "lifecycle": {
+        "panel": [
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Enter",
+            "prepare",
+            true
+          ],
+          [
+            "Enter",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Enter",
+            "active",
+            true,
+            true,
+            "Enter"
+          ],
+          [
+            "Enter",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ]
+        ],
+        "mask": [
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "Enter",
+            "prepare",
+            true
+          ],
+          [
+            "Enter",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Enter",
+            "active",
+            true,
+            true,
+            "Enter"
+          ],
+          [
+            "Enter",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "deadline"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    },
+    {
+      "profile": "css-end",
+      "lifecycle": {
+        "panel": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "animationend"
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "animationend"
+          ]
+        ],
+        "mask": [
+          [
+            "Appear",
+            "prepare",
+            true
+          ],
+          [
+            "Appear",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Appear",
+            "active",
+            true,
+            true,
+            "Appear"
+          ],
+          [
+            "Appear",
+            "end",
+            true,
+            "animationend"
+          ],
+          [
+            "visible",
+            true
+          ],
+          [
+            "Leave",
+            "prepare",
+            true
+          ],
+          [
+            "Leave",
+            "start",
+            true,
+            true
+          ],
+          [
+            "Leave",
+            "active",
+            true,
+            true,
+            "Leave"
+          ],
+          [
+            "Leave",
+            "end",
+            true,
+            "animationend"
+          ],
+          [
+            "visible",
+            false
+          ]
+        ],
+        "positions": [],
+        "afterOpen": [
+          true,
+          false
+        ],
+        "panelVisible": []
+      }
+    }
+  ],
+  "masks": [
+    {
+      "kind": "remove",
+      "initial": {
+        "present": false,
+        "display": null,
+        "leaveClass": false,
+        "same": false
+      },
+      "hidden": {
+        "present": false,
+        "display": null,
+        "leaveClass": false,
+        "same": false
+      }
+    },
+    {
+      "kind": "force",
+      "initial": {
+        "present": true,
+        "display": "none",
+        "leaveClass": false,
+        "same": false
+      },
+      "hidden": {
+        "present": true,
+        "display": "none",
+        "leaveClass": false,
+        "same": true
+      }
+    },
+    {
+      "kind": "keep",
+      "initial": {
+        "present": true,
+        "display": "none",
+        "leaveClass": false,
+        "same": false
+      },
+      "hidden": {
+        "present": true,
+        "display": "none",
+        "leaveClass": false,
+        "same": true
+      }
+    },
+    {
+      "kind": "class",
+      "initial": {
+        "present": false,
+        "display": null,
+        "leaveClass": false,
+        "same": false
+      },
+      "hidden": {
+        "present": true,
+        "display": "",
+        "leaveClass": true,
+        "same": true
+      }
+    }
+  ]
+}

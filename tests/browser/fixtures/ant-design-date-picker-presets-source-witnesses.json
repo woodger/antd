@@ -1,0 +1,44 @@
+{
+  "primary": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+  "bytes": 4217353,
+  "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+  "package": "official ant-design6.6.8 UMD including @rc-component/picker1.12.2",
+  "sections": [
+    {
+      "first": 49987,
+      "last": 50016,
+      "fact": "Bare executeValue(value) for hover and click; mouseleave null",
+      "excerpt": "function executeValue(value) {\n  return typeof value === 'function' ? value() : value;\n}\nfunction PresetPanel(props) {\n  const {\n    prefixCls,\n    presets,\n    onClick,\n    onHover\n  } = props;\n  if (!presets.length) {\n    return null;\n  }\n  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(\"div\", {\n    className: `${prefixCls}-presets`\n  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(\"ul\", null, presets.map(({\n    label,\n    value\n  }, index) => /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_.createElement(\"li\", {\n    key: index,\n    onClick: () => {\n      onClick(executeValue(value));\n    },\n    onMouseEnter: () => {\n      onHover(executeValue(value));\n    },\n    onMouseLeave: () => {\n      onHover(null);\n    }\n  }, label))));"
+    },
+    {
+      "first": 52224,
+      "last": 52232,
+      "fact": "Actual selector clear submit-null/close/focus/onClear order",
+      "excerpt": "  const onSelectorClear = () => {\n    resetSingleValueChange();\n    triggerSubmitChange(null);\n    triggerOpen(false, {\n      force: true\n    });\n    selectorRef.current.focus();\n    onClear?.();\n  };"
+    },
+    {
+      "first": 52234,
+      "last": 52262,
+      "fact": "Hover versus calendar; previewValue guard and close reset",
+      "excerpt": "  // ======================== Hover =========================\n  const [hoverSource, setHoverSource] = external_root_React_commonjs2_react_commonjs_react_amd_react_.useState(null);\n  const [internalHoverValue, setInternalHoverValue] = external_root_React_commonjs2_react_commonjs_react_amd_react_.useState(null);\n  const hoverValues = external_root_React_commonjs2_react_commonjs_react_amd_react_.useMemo(() => {\n    const values = [internalHoverValue, ...calendarValue].filter(date => date);\n    return multiple ? values : values.slice(0, 1);\n  }, [calendarValue, internalHoverValue, multiple]);\n\n  // Selector values is different with RangePicker\n  // which can not use `hoverValue` directly\n  const selectorValues = external_root_React_commonjs2_react_commonjs_react_amd_react_.useMemo(() => {\n    if (!multiple && internalHoverValue) {\n      return [internalHoverValue];\n    }\n    return calendarValue.filter(date => date);\n  }, [calendarValue, internalHoverValue, multiple]);\n\n  // Clean up `internalHoverValues` when closed\n  external_root_React_commonjs2_react_commonjs_react_amd_react_.useEffect(() => {\n    if (!mergedOpen) {\n      setInternalHoverValue(null);\n    }\n  }, [mergedOpen]);\n  const onSetHover = (date, source) => {\n    if (previewValue !== 'hover') {\n      return;\n    }\n    setInternalHoverValue(date);\n    setHoverSource(source);"
+    },
+    {
+      "first": 52269,
+      "last": 52282,
+      "fact": "Preset submit bypasses onOk and closes only passed",
+      "excerpt": "  const presetList = usePresets(presets);\n  const onPresetHover = nextValue => {\n    onSetHover(nextValue, 'preset');\n  };\n\n  // TODO: handle this\n  const onPresetSubmit = nextValue => {\n    const nextCalendarValues = multiple ? toggleDates(getCalendarValue(), nextValue) : [nextValue];\n    const passed = triggerSubmitChange(nextCalendarValues);\n    if (passed && !multiple) {\n      triggerOpen(false, {\n        force: true\n      });\n    }"
+    },
+    {
+      "first": 47380,
+      "last": 47428,
+      "fact": "Calendar notification precedes validation",
+      "excerpt": "    // Sync `calendarValue`\n    triggerCalendarChange(clone);\n\n    // ========= Validate check =========\n    const [start, end] = clone;\n\n    // >>> Empty\n    const startEmpty = !start;\n    const endEmpty = !end;\n    const validateEmptyDateRange = allowEmpty ?\n    // Validate empty start\n    (!startEmpty || allowEmpty[0]) && (\n    // Validate empty end\n    !endEmpty || allowEmpty[1]) : true;\n\n    // >>> Order\n    const validateOrder = !order || startEmpty || endEmpty || isSame(generateConfig, locale, start, end, picker) || generateConfig.isAfter(end, start);\n\n    // >>> Invalid\n    const validateDates =\n    // Validate start\n    (disabled[0] || !start || !isInvalidateDate(start, {\n      activeIndex: 0\n    })) && (\n    // Validate end\n    disabled[1] || !end || !isInvalidateDate(end, {\n      from: start,\n      activeIndex: 1\n    }));\n    // >>> Result\n    const allPassed =\n    // Null value is from clear button\n    isNullValue ||\n    // Normal check\n    validateEmptyDateRange && validateOrder && validateDates;\n    if (allPassed) {\n      // Sync value with submit value\n      setInnerValue(clone);\n      const [isSameMergedDates] = isSameDates(clone, mergedValue);\n\n      // Trigger `onChange` if needed\n      if (onChange && !isSameMergedDates) {\n        const everyEmpty = clone.every(val => !val);\n        onChange(\n        // Return null directly if all date are empty\n        isNullValue && everyEmpty ? null : clone, everyEmpty ? null : getDateTexts(clone));\n      }\n    }\n    return allPassed;"
+    },
+    {
+      "first": 52094,
+      "last": 52101,
+      "fact": "Single calendar info wrapper removes range",
+      "excerpt": "  const onInternalCalendarChange = (dates, dateStrings, info) => {\n    if (onCalendarChange) {\n      const filteredInfo = {\n        ...info\n      };\n      delete filteredInfo.range;\n      onCalendarChange(pickerParam(dates), pickerParam(dateStrings), filteredInfo);\n    }"
+    }
+  ]
+}

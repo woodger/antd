@@ -1,0 +1,3112 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "treeSelect": "1.16.1",
+    "select": "1.10.1",
+    "tree": "1.4.0",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "renderer": "Actual unmodified official UMD in a fresh DOM-free VM, same Source-only fixture and public cases; HTML-only parser. Actual ignored elements/iterables/Promise and bigint values are retained, never rendered/consumed/awaited.",
+    "domAvailableDuringRender": false,
+    "factory": ".upstream/artifacts/tree-select-checkable-source-app.mjs",
+    "factorySha256": "796f3ab515b08bf02648c012c20357fdf7ce69f20ae7e2f4b2d9a11cad4fac3e",
+    "configurationSha256": "a925a86d908a1bac4ba0cf8bc44e2f2d54a05a2c350122e6f28854f6a6166231",
+    "metricsSha256": "344722bf60db001e578d24f134245497ccd198ba9af43dd04fc56caff87d45cb",
+    "messages": [
+      "Warning: [antd: TreeSelect] `multiple` will always be `true` when `treeCheckable` is true"
+    ]
+  },
+  "cases": [
+    {
+      "id": "omitted",
+      "view": {
+        "descriptor": "omitted",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": false,
+            "descriptor": "omitted",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": false,
+            "descriptor": "omitted",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "3e2472c5bb8bed1c9becc67f00cb2de0eda25c33e18be9e183779b5a92db8487"
+    },
+    {
+      "id": "own-undefined",
+      "view": {
+        "descriptor": "undefined",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "undefined",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "undefined",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "c5e1853dbead02293fad7dc1c1710e40d5612e568505b6262cdb1458fa92ed43"
+    },
+    {
+      "id": "false",
+      "view": {
+        "descriptor": "false",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "false",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "false",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "boolean",
+            "scalar": false,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "boolean",
+            "scalar": false,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "04980e5178afd743f799fa571b1ce12e5230587b23e51bd448fa7584b242e692"
+    },
+    {
+      "id": "null",
+      "view": {
+        "descriptor": "null",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "null",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "null",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "ac76eb7a9d2a0a18d3c8ccb5122bc3948597a92f704d6ebca9ce15805bb1ac7c"
+    },
+    {
+      "id": "zero",
+      "view": {
+        "descriptor": "zero",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "zero",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "zero",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "number",
+            "scalar": "0",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "number",
+            "scalar": "0",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "93a1e8a210f331a84c7fa3f24f881674f3127205ebc8bcbdf5ba6b93e2d36649"
+    },
+    {
+      "id": "negative-zero",
+      "view": {
+        "descriptor": "negative-zero",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "negative-zero",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "negative-zero",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "number",
+            "scalar": "-0",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "number",
+            "scalar": "-0",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "0853a9ed6303ab770873120099a8db229fb34edd9e87336a9e8074643dfc5001"
+    },
+    {
+      "id": "nan",
+      "view": {
+        "descriptor": "nan",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "nan",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "nan",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "number",
+            "scalar": "NaN",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "number",
+            "scalar": "NaN",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "45597ebe773db07ef4879e76b95b50979dafcf44010522e05f28f7ae73bc416f"
+    },
+    {
+      "id": "empty-string",
+      "view": {
+        "descriptor": "empty-string",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "empty-string",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "empty-string",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "string",
+            "scalar": "",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "string",
+            "scalar": "",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "5b97ba3095d4227ad2392080c5a38333212f5ac03e4e75a33c180f90267bd6cd"
+    },
+    {
+      "id": "true",
+      "view": {
+        "descriptor": "true",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "true",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "true",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "boolean",
+            "scalar": true,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "boolean",
+            "scalar": true,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "525086afefc9589c806a28bb9e99ea92cac91640da98656eeda1182f699af95d"
+    },
+    {
+      "id": "text",
+      "view": {
+        "descriptor": "text",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "text",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "text",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "string",
+            "scalar": "Checkbox text",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "string",
+            "scalar": "Checkbox text",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "09dca0b80275d2c55fa959726619812da171b36743d6cd3aa08ffaf8545170b7"
+    },
+    {
+      "id": "number",
+      "view": {
+        "descriptor": "number",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "number",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "number",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "number",
+            "scalar": "2",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "number",
+            "scalar": "2",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "d5993d32bddab4a826cc3655291db126aacddf88ae292ffef2758e44a2c7cbb1"
+    },
+    {
+      "id": "negative",
+      "view": {
+        "descriptor": "negative",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "negative",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "negative",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "number",
+            "scalar": "-3",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "number",
+            "scalar": "-3",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "d3398b22d9e54aed14291c4ade43627b108b2983f9d229871bc91c14cba7b298"
+    },
+    {
+      "id": "element-empty",
+      "view": {
+        "descriptor": "element-empty",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "element-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "element-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "b19d3573cd5ec5f9de90a7cf6793d1a52bef6b54df211ccb623c278ea64ad267"
+    },
+    {
+      "id": "element-rich",
+      "view": {
+        "descriptor": "element-rich",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "fe1ad4395bdea075fbcaf887c1d4e1a3881027cd65018ca639a4908e0ce64535"
+    },
+    {
+      "id": "array-empty",
+      "view": {
+        "descriptor": "array-empty",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 0
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 0
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 0,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 0,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "f042d2ad76532fd4a108a99710c47b2343ba0b79bd99eac6aa785675019a4636"
+    },
+    {
+      "id": "array-false",
+      "view": {
+        "descriptor": "array-false",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-false",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 1
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-false",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 1
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 1,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 1,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "d1179588b7374905fd6e010685ab1adf731ada04949137e5d36561ca96d277e5"
+    },
+    {
+      "id": "array-zero",
+      "view": {
+        "descriptor": "array-zero",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-zero",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 1
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-zero",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 1
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 1,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 1,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "29ebde64c44cf75f36fb7187173c96f5ff027075c7fbca4979a9a884bcac04bd"
+    },
+    {
+      "id": "array-nested",
+      "view": {
+        "descriptor": "array-nested",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-nested",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 2
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-nested",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 2
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 2,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 2,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "db36cad12ecaf293df167a62c41428b8802cd224ad45b5b5edef6b3660e0893d"
+    },
+    {
+      "id": "bigint-zero",
+      "view": {
+        "descriptor": "bigint-zero",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "bigint-zero",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "bigint-zero",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "bigint",
+            "scalar": "0n",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "bigint",
+            "scalar": "0n",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "e72aa897aa74ac897ef022a92227bbb6acad37eecda7a63680550ccaaf88a104"
+    },
+    {
+      "id": "bigint-one",
+      "view": {
+        "descriptor": "bigint-one",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "bigint-one",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "bigint-one",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "bigint",
+            "scalar": "1n",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "bigint",
+            "scalar": "1n",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "9863f3ee2bc5f75f0eaeee01757719b7a021b0b35b867f5601d69c954bc0f48b"
+    },
+    {
+      "id": "bigint-negative",
+      "view": {
+        "descriptor": "bigint-negative",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "bigint-negative",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "bigint-negative",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "bigint",
+            "scalar": "-1n",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "bigint",
+            "scalar": "-1n",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "e7ce4df2ed14f5288219ac09b7788689bd874d2d46c5064384012c0083042a38"
+    },
+    {
+      "id": "iterable-empty",
+      "view": {
+        "descriptor": "iterable-empty",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "iterable-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "iterable-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "d49be151de13697654856537ed3991a8d07301345bd6a90991fc1966c4d89f23"
+    },
+    {
+      "id": "iterable-values",
+      "view": {
+        "descriptor": "iterable-values",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "iterable-values",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "iterable-values",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "a3ca3dc468852d9022fed4630af91642b93bfe29ce00bba12f2ba8759a6e6f7a"
+    },
+    {
+      "id": "iterable-throw",
+      "view": {
+        "descriptor": "iterable-throw",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "iterable-throw",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "iterable-throw",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "0c0b8a1c30af88e4dc49ed3cd72a58e7596084f766766e75976d703786dfe13f"
+    },
+    {
+      "id": "promise-pending",
+      "view": {
+        "descriptor": "promise-pending",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "promise-pending",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "promise-pending",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "56470b1a3247faede958e40b2ecc1385fa9955da9c7c3b7eb41a0a0e81058cf8"
+    },
+    {
+      "id": "live-values",
+      "view": {
+        "descriptor": "undefined",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "undefined",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "undefined",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "f20557ec7b4bb4548002fe2e66f2556bc8670ed2ff779234cc1712381782624b"
+    },
+    {
+      "id": "live-reference-reuse",
+      "view": {
+        "descriptor": "element-rich",
+        "model": [
+          "a"
+        ],
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [
+          "Alpha"
+        ],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "a54327f7f2105815dde1b3719accd1e8237f4eec7e3b594eee6044ec52e4da81"
+    },
+    {
+      "id": "strict-only-falsy",
+      "view": {
+        "descriptor": "null",
+        "model": [],
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "null",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "null",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "77508dd6cb07f238fe794e5fc6ffcf7a2a055f9d0b3f2cb1c76702c90263b58e"
+    },
+    {
+      "id": "limit-child-array",
+      "view": {
+        "descriptor": "array-empty",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 0
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 0
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 0,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 0,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "741e87f23ebb9cff32d126ad3a398a4c7301ff2634cc1d4f2e5ec79e5653c6e2"
+    },
+    {
+      "id": "limit-all-text",
+      "view": {
+        "descriptor": "text",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "text",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "text",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "string",
+            "scalar": "Checkbox text",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "string",
+            "scalar": "Checkbox text",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "c0c67375c64ecfc6a642897901c3d5e862ef1f718d64d00cb5861a1d5ab7bdcd"
+    },
+    {
+      "id": "limit-parent-nested-array",
+      "view": {
+        "descriptor": "array-nested",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-nested",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 2
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-nested",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 2
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 2,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 2,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "bdc31720093e10283cd11c5465cbb7609cb8198b4328acb7c22fd2650ddc81ad"
+    },
+    {
+      "id": "strict-limit-number",
+      "view": {
+        "descriptor": "number",
+        "model": [],
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "number",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "number",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "number",
+            "scalar": "2",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "number",
+            "scalar": "2",
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "56bce9a40239a4f9e639fd591691a9d669915433d9ffc551474b6fb3eb6d8858"
+    },
+    {
+      "id": "multiple-with-falsy",
+      "view": {
+        "descriptor": "false",
+        "model": [
+          "a"
+        ],
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [
+          "Alpha"
+        ],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "false",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "false",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "boolean",
+            "scalar": false,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "boolean",
+            "scalar": false,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "833e2aa4d368112c222ed15775e9dfbe6dbf0fdd7a642f08cb40a40455766210"
+    },
+    {
+      "id": "content-forces-multiple-false",
+      "view": {
+        "descriptor": "element-rich",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [
+        "Warning: [antd: TreeSelect] `multiple` will always be `true` when `treeCheckable` is true"
+      ],
+      "htmlSha256": "aab610fb6ac9ff6f387b066f017f24aa1075b74d2f03a4f339313a98380ddc30"
+    },
+    {
+      "id": "input-element-rich",
+      "view": {
+        "descriptor": "element-rich",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": true,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": {
+          "slot": "input",
+          "keys": []
+        },
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "5c4405b5063d138cf9f98c8cadce810f68f4f39bccf9436012720e72b9c200aa"
+    },
+    {
+      "id": "root-empty-array",
+      "view": {
+        "descriptor": "array-empty",
+        "model": null,
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "BUTTON",
+        "editor": null,
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "array-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 0
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "array-empty",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": true,
+            "length": 0
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": []
+        },
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 0,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": 0,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "9bb6dcddbf21a1f6e87eec99634f59768a5fd21bf1d21417da1ddeb9e4040e0d"
+    },
+    {
+      "id": "search-live-truthy",
+      "view": {
+        "descriptor": "element-rich",
+        "model": [
+          "a"
+        ],
+        "query": "",
+        "events": [],
+        "multiple": true,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false
+        },
+        "tags": [
+          "Alpha"
+        ],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "element-rich",
+            "truthy": true,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "object",
+            "scalar": null,
+            "reactElement": true,
+            "elementType": "function",
+            "elementName": "IgnoredCheckableContent",
+            "elementProps": [
+              "kind",
+              "children"
+            ],
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "09a585f0d697ab4c217427b72150b3890a3818ddd6433a4a0a6cecdf0ac4c06b"
+    },
+    {
+      "id": "search-live-falsy",
+      "view": {
+        "descriptor": "undefined",
+        "model": "a",
+        "query": "",
+        "events": [],
+        "multiple": false,
+        "rootTag": "DIV",
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false
+        },
+        "tags": [],
+        "semantic": {
+          "classNames": {
+            "keyPresent": true,
+            "descriptor": "undefined",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          },
+          "styles": {
+            "keyPresent": true,
+            "descriptor": "undefined",
+            "truthy": false,
+            "sameOriginal": true,
+            "isArray": false,
+            "length": null
+          }
+        },
+        "ignored": {
+          "renderCalls": 0,
+          "iteratorCalls": 0,
+          "thenReads": 0
+        },
+        "receivedAttrs": null,
+        "ignoredContentPresent": false,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "raw": {
+        "semantic": {
+          "classNames": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          },
+          "styles": {
+            "type": "undefined",
+            "scalar": null,
+            "reactElement": false,
+            "elementType": null,
+            "elementName": null,
+            "elementProps": null,
+            "arrayLength": null,
+            "sameOriginal": true
+          }
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "refs": {
+        "control": null
+      },
+      "callbacks": [],
+      "diagnostics": [],
+      "htmlSha256": "978f6a977d7a4a82c1c5fa567943aaafd438796d42f777d720b795ba418a2196"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "format": "ant-design-plain-modal-loading-csr-v1",
+  "axis": "plain-modal-loading-body-footer-lifecycle",
+  "mode": "csr",
+  "sourceHeader": {
+    "axis": "plain-modal-loading-body-footer-lifecycle",
+    "mode": "csr",
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "chromium": "157.0.8103.78",
+    "protocolSha256": "4d3e2a1fbfbc4e13a11fecc5d4157701dd692c96e6db0b0c7864a9f475af4ee7",
+    "inputPins": {
+      ".upstream/artifacts/modal-loading-source-v1/cases.mjs": {
+        "bytes": 645,
+        "sha256": "7c54da6c7e3d41e815b067abdea097be547d1907016b9b28ab0e90172b7c46ce"
+      },
+      ".upstream/artifacts/modal-loading-source-v1/source-app.mjs": {
+        "bytes": 3760,
+        "sha256": "e6b63a630d7670329aeec21c6004de14766a8454ea396a7091cf0c8ba0e4f85a"
+      },
+      ".upstream/artifacts/modal-loading-source-v1/reader.mjs": {
+        "bytes": 5090,
+        "sha256": "d9a6d556d18a7e672c03d8991f102eb50b7aff9ec94e3231b59adf7e8c131ea8"
+      },
+      ".upstream/artifacts/modal-loading-source-v1/capture.mjs": {
+        "bytes": 8184,
+        "sha256": "0c1191bf80e70614e81c86c9361bc2bb2e0c1d6f95b6b53b06697bb1c66b448c"
+      },
+      ".upstream/artifacts/modal-loading-source-v1/verify.mjs": {
+        "bytes": 1526,
+        "sha256": "b66dc7bf7a5eb0169df1b13b6a0cc238e5202fd9ae5d4bc8ea1bb3982084d4ee"
+      },
+      ".upstream/artifacts/modal-loading-source-v1/prepare.mjs": {
+        "bytes": 7179,
+        "sha256": "d51e37df901ec7abc34d10c50dd49d3661fd3cd9205c3b7010edec0d0549155a"
+      },
+      "tests/browser/select-surface-driver.ts": {
+        "bytes": 2262,
+        "sha256": "03cea54b5b0e2d6205b10c2bdeaf3ca40ccf2edec03ac7f215ef3cb1c483b0d7"
+      },
+      "tests/browser/select-surface-producers.mjs": {
+        "bytes": 4134,
+        "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+      },
+      ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+        "bytes": 10751,
+        "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+      },
+      ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+        "bytes": 131835,
+        "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+      },
+      "node_modules/dayjs/dayjs.min.js": {
+        "bytes": 7161,
+        "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+      },
+      ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+        "bytes": 4217353,
+        "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+      },
+      ".upstream/ant-design/components/modal/Modal.tsx": {
+        "bytes": 10844,
+        "sha256": "61039f22f4a5ca11649793da73280441f53626abcef7334b57dee26c318edf8d"
+      },
+      ".upstream/ant-design/components/modal/interface.ts": {
+        "bytes": 6386,
+        "sha256": "68f6e88d4ed5a838eefbeff82e154fe6d4b933d3024deb28eeaecb99ee940d6d"
+      },
+      ".upstream/ant-design/components/modal/style/index.ts": {
+        "bytes": 14839,
+        "sha256": "dd9fe0d8be70e128633ffad2d9fec901c6a1bccb847c958d2fbcfa1a07faf70b"
+      },
+      ".upstream/ant-design/components/skeleton/Skeleton.tsx": {
+        "bytes": 7515,
+        "sha256": "357f23b74815f37446e12897cb429f7e30eecfa82f8f97f4b3f65f4841e36a7d"
+      },
+      ".upstream/ant-design/components/skeleton/Paragraph.tsx": {
+        "bytes": 986,
+        "sha256": "168dc72e6731c1740341e4f0e5e344a15216abb4f19dd332d3383503dcde00f1"
+      }
+    },
+    "preservedReferenceCount": 819,
+    "protectedProductionStandCount": 12,
+    "pinsChanged": [],
+    "errors": [],
+    "diagnostics": []
+  },
+  "artifact": {
+    "file": "ant-design-modal-loading-reference.json.gz",
+    "storage": {
+      "bytes": 119555,
+      "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+    },
+    "decoded": {
+      "bytes": 3008606,
+      "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+    }
+  },
+  "copies": {
+    "first": {
+      "file": "ant-design-modal-loading-reference.json.gz",
+      "independentlyCapturedRaw": {
+        "file": ".upstream/artifacts/modal-loading-source-v1/source-first.json",
+        "bytes": 3008606,
+        "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+      },
+      "originalCompressedRaw": {
+        "file": ".upstream/artifacts/modal-loading-source-v1/source-first.json.gz",
+        "bytes": 119555,
+        "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+      }
+    },
+    "repeat": {
+      "file": "ant-design-modal-loading-reference.json.gz",
+      "independentlyCapturedRaw": {
+        "file": ".upstream/artifacts/modal-loading-source-v1/source-repeat.json",
+        "bytes": 3008606,
+        "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+      },
+      "originalCompressedRaw": {
+        "file": ".upstream/artifacts/modal-loading-source-v1/source-repeat.json.gz",
+        "bytes": 119555,
+        "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+      }
+    }
+  },
+  "protocol": {
+    "file": "ant-design-modal-loading-source-protocol.json",
+    "bytes": 187678,
+    "sha256": "4d3e2a1fbfbc4e13a11fecc5d4157701dd692c96e6db0b0c7864a9f475af4ee7"
+  },
+  "repeatProof": {
+    "file": "ant-design-modal-loading-source-repeat-proof.json",
+    "bytes": 12149,
+    "sha256": "2a7fcc82d12f7d74856259c71c3e73c004ebcea00c39d6c1f6ada7df36297d9d"
+  },
+  "counts": {
+    "owners": 2,
+    "actions": 10,
+    "initialAndSettledPoints": 12,
+    "cleanup": 2,
+    "late1000": 2
+  },
+  "caseIds": [
+    "default-footer",
+    "custom-footer-local-prefix"
+  ],
+  "wholeRawByteEqual": true,
+  "singleGzipAliasJustification": "Both independently captured complete raw files are byte equal; no data is rewritten or normalized",
+  "serialization": {
+    "lossless": true,
+    "fieldsDropped": [],
+    "fieldsRewritten": [],
+    "sourceExpectedValuesDerivedFromNative": false
+  },
+  "browserOwnedResourceCounters": {
+    "measured": false,
+    "observers": null,
+    "mutations": null,
+    "frames": null,
+    "timers": null,
+    "ports": null
+  },
+  "SSR": "Not measured in this CSR Source corpus"
+}

@@ -1,0 +1,141 @@
+{
+  "format": "date-picker-preset-transitions-actual-Native-boundaries-v1",
+  "native": {
+    "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json",
+    "bytes": 3700666,
+    "sha256": "c11d98433473acde3e48e1962a9bf58ed86cf9ad5c4721d38b445337b70f977e"
+  },
+  "SourceProtocolSHA256": "20a41ba69c7e91228cf6215009a1b1000376688fa46eaef911ae607fa949f0d2",
+  "parts": {
+    "closed-initial": {
+      "id": "date-only-hover-precision",
+      "phase": "initial",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/date-only-hover-precision-initial.json",
+        "bytes": 549897,
+        "sha256": "814bb225725d6695f38d425f35038516baaadec7147d87ad7631aa05c94b298e",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/date-only-hover-precision-initial.json.gz",
+        "gzipBytes": 28435,
+        "gzipSHA256": "38cb9f689fda2e29fd445f5d4a0b4c47f1da981ee6c21c66a0444a824b6c36ca"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/814bb225725d6695f38d425f35038516baaadec7147d87ad7631aa05c94b298e.json.gz",
+        "bytes": 28435,
+        "sha256": "38cb9f689fda2e29fd445f5d4a0b4c47f1da981ee6c21c66a0444a824b6c36ca"
+      }
+    },
+    "callbacks": {
+      "id": "navigation-minimum-clamp",
+      "phase": "steps",
+      "actionIndex": 1,
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-step-1.json",
+        "bytes": 4359764,
+        "sha256": "b7a95dd384f908ccc9de5d8cad47e9bc8b668b05540556a837d801a6767939c7",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-step-1.json.gz",
+        "gzipBytes": 164796,
+        "gzipSHA256": "0dc514ca04b8ca9072c7fcc9595dcc607ebe56a8c67472dd6e7a6faf2a37854a"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/b7a95dd384f908ccc9de5d8cad47e9bc8b668b05540556a837d801a6767939c7.json.gz",
+        "bytes": 164796,
+        "sha256": "0dc514ca04b8ca9072c7fcc9595dcc607ebe56a8c67472dd6e7a6faf2a37854a"
+      }
+    },
+    "time-visible": {
+      "id": "datetime-disabled-meridiem",
+      "phase": "steps",
+      "actionIndex": 8,
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/datetime-disabled-meridiem-step-8.json",
+        "bytes": 6323833,
+        "sha256": "999e9b71d001b1f7fb9b061062aedec7bdafa89af84c7c2be738086d4d057b65",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/datetime-disabled-meridiem-step-8.json.gz",
+        "gzipBytes": 207042,
+        "gzipSHA256": "ce5fb9b2dc270b0246db71454504226ddb3e1870cb734e9e268d0408be1f5af9"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/999e9b71d001b1f7fb9b061062aedec7bdafa89af84c7c2be738086d4d057b65.json.gz",
+        "bytes": 207042,
+        "sha256": "ce5fb9b2dc270b0246db71454504226ddb3e1870cb734e9e268d0408be1f5af9"
+      }
+    },
+    "time-known-bad-reopen": {
+      "id": "datetime-disabled-meridiem",
+      "phase": "steps",
+      "actionIndex": 10,
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/datetime-disabled-meridiem-step-10.json",
+        "bytes": 6744169,
+        "sha256": "d61b55e580622d9012f331b51d2775e5038033fbc1a5f0d513ad20ef475cf99e",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/datetime-disabled-meridiem-step-10.json.gz",
+        "gzipBytes": 214036,
+        "gzipSHA256": "7288efe04a156eb2eb02c48ccb0adb5a685aeb68e2ae0fd730b2f73618ac142b"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/d61b55e580622d9012f331b51d2775e5038033fbc1a5f0d513ad20ef475cf99e.json.gz",
+        "bytes": 214036,
+        "sha256": "7288efe04a156eb2eb02c48ccb0adb5a685aeb68e2ae0fd730b2f73618ac142b"
+      }
+    },
+    "before-removal": {
+      "id": "navigation-minimum-clamp",
+      "phase": "beforeUnmount",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-before-unmount.json",
+        "bytes": 2161037,
+        "sha256": "602343d3a63a8aa260d8530364bed80c5be839c692a5a41297c3758ce39bf2eb",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-before-unmount.json.gz",
+        "gzipBytes": 83187,
+        "gzipSHA256": "c983b4c20cbd61ce4ac63e1e613947b258685c18dcd136ed249e6ee2fa89d595"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/602343d3a63a8aa260d8530364bed80c5be839c692a5a41297c3758ce39bf2eb.json.gz",
+        "bytes": 83187,
+        "sha256": "c983b4c20cbd61ce4ac63e1e613947b258685c18dcd136ed249e6ee2fa89d595"
+      }
+    },
+    "cleanup": {
+      "id": "navigation-minimum-clamp",
+      "phase": "cleanup",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-cleanup.json",
+        "bytes": 952265,
+        "sha256": "2bca3d8202e13396cb4c34c49375babc7e6ba46d9a4e3a120dedbbc3fb962d7a",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-cleanup.json.gz",
+        "gzipBytes": 31048,
+        "gzipSHA256": "8c0b61e99cbcb27ebb2a13f7182f6b55dbab95a669fc161a7bfbaaaa73e4817b"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/2bca3d8202e13396cb4c34c49375babc7e6ba46d9a4e3a120dedbbc3fb962d7a.json.gz",
+        "bytes": 31048,
+        "sha256": "8c0b61e99cbcb27ebb2a13f7182f6b55dbab95a669fc161a7bfbaaaa73e4817b"
+      }
+    },
+    "late": {
+      "id": "navigation-minimum-clamp",
+      "phase": "late",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-late.json",
+        "bytes": 952265,
+        "sha256": "2bca3d8202e13396cb4c34c49375babc7e6ba46d9a4e3a120dedbbc3fb962d7a",
+        "gzipFile": ".upstream/artifacts/date-picker-preset-transitions-native-current-v2.json.parts/navigation-minimum-clamp-late.json.gz",
+        "gzipBytes": 31048,
+        "gzipSHA256": "8c0b61e99cbcb27ebb2a13f7182f6b55dbab95a669fc161a7bfbaaaa73e4817b"
+      },
+      "compressed": {
+        "file": "date-picker-preset-transitions-native-parts/2bca3d8202e13396cb4c34c49375babc7e6ba46d9a4e3a120dedbbc3fb962d7a.json.gz",
+        "bytes": 31048,
+        "sha256": "8c0b61e99cbcb27ebb2a13f7182f6b55dbab95a669fc161a7bfbaaaa73e4817b"
+      }
+    }
+  },
+  "preservation": {
+    "completeOriginalRawParts": true,
+    "fieldsDropped": [],
+    "fieldsRewritten": [],
+    "sourceExpectedValuesDerivedFromNative": false,
+    "knownBadReopenRetainedAsFailingCounterexample": true,
+    "wholeRawPartHashDeduplicationOnly": true
+  }
+}

@@ -1,0 +1,3029 @@
+{
+  "status": "root-reviewed-frozen-before-Source-capture",
+  "axis": "single-DatePicker-presets-previewValue",
+  "source": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "chromium": "157.0.8103.78",
+    "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+    "browserLocale": "en-US",
+    "browserTimezone": "UTC",
+    "wallClock": "unmodified; SyntheticEvent/native timestamps are real, no whole-byte-equality prediction"
+  },
+  "samples": [
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "prefixCls": null,
+      "rejectChange": false,
+      "showTime": null,
+      "needConfirm": null,
+      "id": "static-validity",
+      "disabledDay": "2024-06-15",
+      "minDate": "2024-06-05",
+      "maxDate": "2024-06-25",
+      "presets": [
+        {
+          "id": "valid",
+          "label": "Valid June 12",
+          "value": "2024-06-12"
+        },
+        {
+          "id": "disabled",
+          "label": "Disabled June 15",
+          "value": "2024-06-15"
+        },
+        {
+          "id": "below-min",
+          "label": "Before minimum",
+          "value": "2024-06-04"
+        },
+        {
+          "id": "above-max",
+          "label": "After maximum",
+          "value": "2024-06-26"
+        }
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-hover",
+          "value": "valid"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "preset-hover",
+          "value": "disabled"
+        },
+        {
+          "type": "preset-click",
+          "value": "disabled"
+        },
+        {
+          "type": "preset-click",
+          "value": "below-min"
+        },
+        {
+          "type": "preset-click",
+          "value": "above-max"
+        },
+        {
+          "type": "escape"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "valid"
+        }
+      ]
+    },
+    {
+      "initialValue": null,
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "prefixCls": null,
+      "rejectChange": false,
+      "showTime": null,
+      "needConfirm": null,
+      "id": "lazy-hover-click",
+      "presets": [
+        {
+          "id": "lazy",
+          "label": "Lazy dates",
+          "sequence": [
+            "2024-06-12T00:00:00.000",
+            "2024-06-13T00:00:00.000",
+            "2024-06-14T00:00:00.000",
+            "2024-06-16T00:00:00.000",
+            "2024-06-17T00:00:00.000"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-hover",
+          "value": "lazy"
+        },
+        {
+          "type": "clear"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "preset-hover",
+          "value": "lazy"
+        },
+        {
+          "type": "preset-click",
+          "value": "lazy"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "escape"
+        },
+        {
+          "type": "open"
+        }
+      ]
+    },
+    {
+      "initialValue": null,
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": false,
+      "prefixCls": null,
+      "rejectChange": false,
+      "showTime": null,
+      "needConfirm": null,
+      "id": "preview-false-and-switch",
+      "presets": [
+        {
+          "id": "lazy",
+          "label": "Lazy without preview",
+          "sequence": [
+            "2024-06-12T00:00:00.000",
+            "2024-06-13T00:00:00.000",
+            "2024-06-14T00:00:00.000",
+            "2024-06-16T00:00:00.000",
+            "2024-06-17T00:00:00.000"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-hover",
+          "value": "lazy"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "preview",
+          "value": "hover"
+        },
+        {
+          "type": "preset-hover",
+          "value": "lazy"
+        },
+        {
+          "type": "preview",
+          "value": false
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "preset-click",
+          "value": "lazy"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "escape"
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T08:00:00.000",
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "format": "YYYY-MM-DD HH:mm:ss",
+      "preview": "omitted",
+      "prefixCls": null,
+      "rejectChange": false,
+      "showTime": {
+        "format": "HH:mm:ss",
+        "hourStep": 2,
+        "minuteStep": 15,
+        "secondStep": 10
+      },
+      "needConfirm": true,
+      "id": "time-confirm-preset",
+      "presets": [
+        {
+          "id": "time",
+          "label": "Full timestamp",
+          "sequence": [
+            "2024-06-12T14:23:45.678",
+            "2024-06-13T16:37:59.456",
+            "2024-06-14T11:22:33.789"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-hover",
+          "value": "time"
+        },
+        {
+          "type": "preset-click",
+          "value": "time"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "escape"
+        },
+        {
+          "type": "open"
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "prefixCls": null,
+      "rejectChange": true,
+      "showTime": null,
+      "needConfirm": null,
+      "id": "controlled-rejection",
+      "presets": [
+        {
+          "id": "valid",
+          "label": "Rejected June 12",
+          "value": "2024-06-12"
+        }
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "valid"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "escape"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "outside"
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "prefixCls": "preset-picker",
+      "rejectChange": false,
+      "showTime": null,
+      "needConfirm": null,
+      "id": "custom-label-prefix",
+      "presets": [
+        {
+          "id": "custom",
+          "customLabel": true,
+          "label": "Custom June 12",
+          "value": "2024-06-12"
+        }
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-hover",
+          "value": "custom"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "preset-click",
+          "value": "custom"
+        },
+        {
+          "type": "open"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "outside"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "owners": 6,
+    "CSRactions": 58,
+    "CSRlogicalPoints": 64,
+    "uniqueClosedSSRStates": 6,
+    "actualClosedSSRSerializations": 12
+  },
+  "inputPins": {
+    ".upstream/artifacts/date-picker-presets-source-v2/cases.mjs": {
+      "bytes": 3071,
+      "sha256": "5f127a2ae2ddefc6540275c429d7493c558cc4109f506dedf33b69be0c4cc9b1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/source-app.mjs": {
+      "bytes": 8185,
+      "sha256": "0a310260339a730aa0a82d5fe38b81ce6ef7d42e0db3bb490ea855f2a72f702e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/shared.mjs": {
+      "bytes": 1151,
+      "sha256": "6c778ec1476ad33f1ec112e060583e2af5968e4d66da41a1096edcd60cdcb210"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/reader.mjs": {
+      "bytes": 6507,
+      "sha256": "7f2bfd90a335435ed0b8b3d387310521aff51504b320cf4f490e68f429f82948"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/server.mjs": {
+      "bytes": 3604,
+      "sha256": "bcb2b5e8ea826d14ffbe9a013a4938da4c212049fbc2d7ebb62ec11367fe4e9d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/capture.mjs": {
+      "bytes": 10291,
+      "sha256": "8847ad4779f5be9630f934b90f635464baff991de16ecb1533847102a94884ec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/protocol.mjs": {
+      "bytes": 12435,
+      "sha256": "7fdf3ded33f44f0930d01ecf59c2d5e6c2bbde4d61cf77f320e1808e333948d3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/source-witnesses.json": {
+      "bytes": 5912,
+      "sha256": "086a36ffea0cf22b0041e72f330d1b653dd6f68a9905c49c10b8110656e214d4"
+    },
+    "tests/browser/select-surface-driver.ts": {
+      "bytes": 2262,
+      "sha256": "03cea54b5b0e2d6205b10c2bdeaf3ca40ccf2edec03ac7f215ef3cb1c483b0d7"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+      "bytes": 35128,
+      "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/interface.ts": {
+      "bytes": 5733,
+      "sha256": "d9f3e34418aaca9d1b11ffd72fc900d3e09908e8208c3ddf15427537153cd207"
+    }
+  },
+  "preservedReferences": {
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/capture-review.json": {
+      "bytes": 85967,
+      "sha256": "54486a8c288b9473d4ae509134d0c4c901d260816306bf900705bd1a512a67cd"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/capture.mjs": {
+      "bytes": 10395,
+      "sha256": "54155fabb88a6bd6e3e1e62292d8a877fa2594e3ad0988c73d3df36ded257130"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/cases.mjs": {
+      "bytes": 2598,
+      "sha256": "edcd1a515d3ff4395a3b26d5481bf21c6e2690e35086e0d99a92ec7fcbe88f4e"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/csr-source-first.json": {
+      "bytes": 21000790,
+      "sha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/csr-source-repeat.json": {
+      "bytes": 21000790,
+      "sha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/execution-freeze.json": {
+      "bytes": 690,
+      "sha256": "7c99ca7b131c56c6bc2ec38710155a3679306ea72a565325e645051808ecbd2d"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/freeze-protocol.mjs": {
+      "bytes": 1643,
+      "sha256": "825f01c01f854bdfce0531eb4ee1667488637b90816560dc846fedb2fed1c35b"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/input-manifest.json": {
+      "bytes": 11598,
+      "sha256": "2bf33103e8798d49304bb2340d163f45483ff55882cc0260766e243f6eaa1911"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/matrix.json": {
+      "bytes": 7292,
+      "sha256": "9703b32f818b104c155ad8a2c0d78ae8c2f198c572fbef433c953ccf2d9ffdef"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/oxlint.validation.json": {
+      "bytes": 387,
+      "sha256": "8cedda0bb978c0dbb636790860a6100620411f8f6bc186b20550e009df9540f9"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/preflight.mjs": {
+      "bytes": 2262,
+      "sha256": "a962f77e15f2e75ae92210082dece1d14b6d720099a6d6fa7def33b86886efbe"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/prepare-review.mjs": {
+      "bytes": 12621,
+      "sha256": "92a4daf1889f7ecf47770c6edfb6458135c9d2a671544a556c6dc6a8a13b7bca"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/protocol-freeze.json": {
+      "bytes": 513946,
+      "sha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/protocol-proposal.json": {
+      "bytes": 513744,
+      "sha256": "3fcea513fa3858e39bd9a9d6dc801efe649e70ebc1cc5e1730ca69aea444e5cf"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/reader.mjs": {
+      "bytes": 3746,
+      "sha256": "e67ed651aac3219e5e4241d0a29245993dbd387849c19713ac5a7af42d5ba781"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/server.mjs": {
+      "bytes": 3484,
+      "sha256": "f20450b19d1d17547a5e2876e1720337a635b48cbf6e51b010172e81a7b19764"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/shared.mjs": {
+      "bytes": 332,
+      "sha256": "7a98a8443b91c2b9e786c000dd4fcd7359356964d68460329b3afac391c2b57f"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/source-app.mjs": {
+      "bytes": 10110,
+      "sha256": "0f9fab5f192a4b690a57fc7e18fdcb41548432e725279af34173d26940b574d8"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/source-witnesses.json": {
+      "bytes": 11348,
+      "sha256": "e1fd4167514b63d98eaef69646b39a291fe4d3ed31e6240d2be25439017762ba"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/ssr-source-first.json": {
+      "bytes": 1519632,
+      "sha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/ssr-source-repeat.json": {
+      "bytes": 1519632,
+      "sha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-source-v1/verify.mjs": {
+      "bytes": 1856,
+      "sha256": "75369e78f02a54fb2d5d58725e427eaaa3221ad3241c163f8ce3965bf890822e"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/capture.mjs": {
+      "bytes": 10319,
+      "sha256": "d4cdcdbe83df180cec580cd0d8c6787852942fb59d5de6d09214f4b6fd1d3403"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/execution-freeze.json": {
+      "bytes": 508,
+      "sha256": "f86fec1c31227a1f587ba3ae296248bea90a49e5143a10ed4cb38ee7178dbc3e"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/profile.mjs": {
+      "bytes": 718,
+      "sha256": "1ac7edf3b7c1ffbe92e3653252b064a761030880d3b57009bfd7f6ee3a8406da"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/protocol-freeze.json": {
+      "bytes": 9774,
+      "sha256": "f3b0ed104dc916bbcb429bf48682c0b6fb2f2b7cd5507a2277df37d05487a735"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/protocol-proposal.json": {
+      "bytes": 9674,
+      "sha256": "1d5637b0d518e392290a89d501b61761cdbd0aea3f3f283dd825abf04d453057"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/protocol.mjs": {
+      "bytes": 7345,
+      "sha256": "759d953cc85d8f83f1e2b78eaebe1625a9c2b00da76e19633e411d071a62c32d"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/source-first.json": {
+      "bytes": 3781242,
+      "sha256": "d07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24"
+    },
+    ".upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/source-repeat.json": {
+      "bytes": 3781242,
+      "sha256": "d07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/capture.mjs": {
+      "bytes": 8184,
+      "sha256": "0c1191bf80e70614e81c86c9361bc2bb2e0c1d6f95b6b53b06697bb1c66b448c"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/cases.mjs": {
+      "bytes": 645,
+      "sha256": "7c54da6c7e3d41e815b067abdea097be547d1907016b9b28ab0e90172b7c46ce"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/execution-freeze.json": {
+      "bytes": 257,
+      "sha256": "5dadb58b32d52f30928d5d532f44b8baea4af3d01bd191fd777392c28eb9574e"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/lint-config.json": {
+      "bytes": 320,
+      "sha256": "eea689426cb260e78f5242c7c96669734f0060d05aedc5747c469c0a527fad54"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/prepare.mjs": {
+      "bytes": 7179,
+      "sha256": "d51e37df901ec7abc34d10c50dd49d3661fd3cd9205c3b7010edec0d0549155a"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/protocol-freeze.json": {
+      "bytes": 187678,
+      "sha256": "4d3e2a1fbfbc4e13a11fecc5d4157701dd692c96e6db0b0c7864a9f475af4ee7"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/protocol-proposal.json": {
+      "bytes": 187679,
+      "sha256": "9d8e22214075cc28af507740b2404b5b690afb726cf5046851d59d4e4dfba626"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/reader.mjs": {
+      "bytes": 5090,
+      "sha256": "d9a6d556d18a7e672c03d8991f102eb50b7aff9ec94e3231b59adf7e8c131ea8"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/review.json": {
+      "bytes": 3976,
+      "sha256": "cbe88645bd9a11539e50c4bd401fd67db7ddc71086d1a4772934a27ff7995415"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/source-app.mjs": {
+      "bytes": 3760,
+      "sha256": "e6b63a630d7670329aeec21c6004de14766a8454ea396a7091cf0c8ba0e4f85a"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/source-first.json": {
+      "bytes": 3008606,
+      "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/source-first.json.gz": {
+      "bytes": 119555,
+      "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/source-pair-review.json": {
+      "bytes": 12149,
+      "sha256": "2a7fcc82d12f7d74856259c71c3e73c004ebcea00c39d6c1f6ada7df36297d9d"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/source-repeat.json": {
+      "bytes": 3008606,
+      "sha256": "6e895d3f9c10b2815cd14462524b3aab97a099036171312484f6bf029f5daad6"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/source-repeat.json.gz": {
+      "bytes": 119555,
+      "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+    },
+    ".upstream/artifacts/modal-loading-source-v1/verify.mjs": {
+      "bytes": 1526,
+      "sha256": "b66dc7bf7a5eb0169df1b13b6a0cc238e5202fd9ae5d4bc8ea1bb3982084d4ee"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/capture.mjs": {
+      "bytes": 9100,
+      "sha256": "b243d7782b10fa5eaf34d959c60516f030a404a172c748c548d0cb614e7d1743"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/cases.mjs": {
+      "bytes": 3071,
+      "sha256": "5f127a2ae2ddefc6540275c429d7493c558cc4109f506dedf33b69be0c4cc9b1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/execution-freeze.json": {
+      "bytes": 239,
+      "sha256": "f71ab5cc066a434a85b859ea345df9d05a667268c7752cea4fb84b55b3721866"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/protocol-freeze.json": {
+      "bytes": 135727,
+      "sha256": "c9f9c9b4eb5392d574853da83a75a8684dff3e0e6aa7c87f3c8223097f749182"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/protocol-proposal.json": {
+      "bytes": 135629,
+      "sha256": "6b4a56809207dde3f5a929298015c44b6a3f83cb9ce95bbff110dff957dd644e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/protocol.mjs": {
+      "bytes": 11444,
+      "sha256": "0251a333b6d7b7585d7218bb94116f8d5fefbb3c259eac6fdd6ea8bb9b723b5f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/reader.mjs": {
+      "bytes": 6507,
+      "sha256": "7f2bfd90a335435ed0b8b3d387310521aff51504b320cf4f490e68f429f82948"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/server.mjs": {
+      "bytes": 3604,
+      "sha256": "bcb2b5e8ea826d14ffbe9a013a4938da4c212049fbc2d7ebb62ec11367fe4e9d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/shared.mjs": {
+      "bytes": 1151,
+      "sha256": "6c778ec1476ad33f1ec112e060583e2af5968e4d66da41a1096edcd60cdcb210"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/source-app.mjs": {
+      "bytes": 8185,
+      "sha256": "0a310260339a730aa0a82d5fe38b81ce6ef7d42e0db3bb490ea855f2a72f702e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v1/source-witnesses.json": {
+      "bytes": 5912,
+      "sha256": "086a36ffea0cf22b0041e72f330d1b653dd6f68a9905c49c10b8110656e214d4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-first.log": {
+      "bytes": 470,
+      "sha256": "479370b83b787d0b56ba3346250c866a8851b36c268a735a179985701ab054cf"
+    },
+    "tests/browser/fixtures/ant-design-affix-config-reference.json": {
+      "bytes": 56552,
+      "sha256": "fdaa481e618a5d592821154257431c78ef601f2d4adec39f2d0da142dfd37e63"
+    },
+    "tests/browser/fixtures/ant-design-affix-theme-reference.json": {
+      "bytes": 93200,
+      "sha256": "e31d7affb10a4b6d7f75038fd16ca79e912f7cdae1cf2182afef944d0360b35f"
+    },
+    "tests/browser/fixtures/ant-design-alert-boundary-reference.json": {
+      "bytes": 10556,
+      "sha256": "ad8cca3ae3911bcbe57751f1f23c7b4f54e1687d6287a1dfd68c9195d3be5347"
+    },
+    "tests/browser/fixtures/ant-design-alert-reference.json": {
+      "bytes": 343202,
+      "sha256": "851bf211a4299a7b200663857eb4696dacb454deccf1d963b84de98519bcc2b4"
+    },
+    "tests/browser/fixtures/ant-design-anchor-config-layout-observation.json": {
+      "bytes": 688,
+      "sha256": "1e10df03af7c241ad1f4ff5a5d2b7d26986d423fce0639669e044ce3c8c9cbe1"
+    },
+    "tests/browser/fixtures/ant-design-anchor-config-reference.json": {
+      "bytes": 122888,
+      "sha256": "b9a854226214dee08392951fa2ed92793c1e7339af3bf1570d8ceebf977affc3"
+    },
+    "tests/browser/fixtures/ant-design-anchor-metrics.json": {
+      "bytes": 100049,
+      "sha256": "505b3840264f94c5ae455a07cf1e7e9a672fd5fea86f133f6fd2fc55fb98117b"
+    },
+    "tests/browser/fixtures/ant-design-anchor-prefix-reference.json": {
+      "bytes": 221917,
+      "sha256": "59de95d8f018829529e3bd85b650138111748e7660ecb5dd6d6e0cb388d184dc"
+    },
+    "tests/browser/fixtures/ant-design-app-reference.json": {
+      "bytes": 8825,
+      "sha256": "4c5f6231454d6d35454441d19407df485c0aef5037115648b50f1f93c05b2da9"
+    },
+    "tests/browser/fixtures/ant-design-auto-complete-metrics.json": {
+      "bytes": 164623,
+      "sha256": "942fb7f6831c6bb709baf0fdaa9651ab526aa7028fa68da52c024f830b22329d"
+    },
+    "tests/browser/fixtures/ant-design-auto-complete-prefix-reference.json": {
+      "bytes": 204254,
+      "sha256": "23f4af730c6b497d33574b523f68e8f407ae6e91961622dfecb53b548c83e6d2"
+    },
+    "tests/browser/fixtures/ant-design-autocomplete-close-reference.json.gz": {
+      "bytes": 1097585,
+      "sha256": "667b940d4008f19067a0d17eae9e79dab5c8171d5b9ff15a4063f5a7c231ccbf"
+    },
+    "tests/browser/fixtures/ant-design-autocomplete-render-label-title-reference.json": {
+      "bytes": 1378306,
+      "sha256": "b6003c7b9daba3bc2d8a7dfe23a4335404ce70cc43d552117028e206b2d8d2f1"
+    },
+    "tests/browser/fixtures/ant-design-autocomplete-render-label-title-ssr-reference.json": {
+      "bytes": 558643,
+      "sha256": "b1a88f9349ec2a88e228b4ec4f10c00bdda48a221ab7b75e91ee4aa8f85b332a"
+    },
+    "tests/browser/fixtures/ant-design-autocomplete-render-reference.json.gz": {
+      "bytes": 986923,
+      "sha256": "78333e2cd394d73aad39acc4a94b055e0f37aff53947ae55930a06d8e91849dc"
+    },
+    "tests/browser/fixtures/ant-design-autocomplete-render-ssr-reference.json": {
+      "bytes": 1750313,
+      "sha256": "c23ec4ca70e497a1d7564e1e1b107a7e785d16ba8af9439db18ab1ab136afb0f"
+    },
+    "tests/browser/fixtures/ant-design-avatar-api-reference.json": {
+      "bytes": 46783,
+      "sha256": "ab4909b1cbcf3b32d6aeac96ac6218df59ca9e265eac8357641bd1cc96cb5296"
+    },
+    "tests/browser/fixtures/ant-design-avatar-badge-metrics.json": {
+      "bytes": 30102,
+      "sha256": "4cdb96d700803bf5b16c71ef1ee4627c60bc491d34b09deead815f11a6248242"
+    },
+    "tests/browser/fixtures/ant-design-avatar-group-max-reference.json": {
+      "bytes": 11871,
+      "sha256": "8d07d1e5daa7d2e1f2b69353ea3c62f3873bde4eb103d86f2d27d159c777a2f7"
+    },
+    "tests/browser/fixtures/ant-design-avatar-group-popover-reference.json": {
+      "bytes": 39880,
+      "sha256": "329cbbb5b3ecf8762fa6c9ecc744c369857ccac91dc85d2c5ad5c263e916c8b9"
+    },
+    "tests/browser/fixtures/ant-design-avatar-prefix-reference.json": {
+      "bytes": 65592,
+      "sha256": "cae75f18646200838efbde4e55883fd4c05f5cc9a8661fbc843b7555b8255477"
+    },
+    "tests/browser/fixtures/ant-design-avatar-responsive-reference.json": {
+      "bytes": 111828,
+      "sha256": "fae1b9da29b161d611c3a60a60296de83adfce2aef1ddd1610977972e7997778"
+    },
+    "tests/browser/fixtures/ant-design-avatar-source-reference.json": {
+      "bytes": 16932,
+      "sha256": "e3d01282d2d488ceb614e7822cf6ad4c00d61a645732549d23e0590c5a5ff3c5"
+    },
+    "tests/browser/fixtures/ant-design-badge-api-reference.json": {
+      "bytes": 122190,
+      "sha256": "4321b21c4451b152e7342ee7c1ba66172cd0d820c8420be5523832268306bf88"
+    },
+    "tests/browser/fixtures/ant-design-badge-count-reference.json": {
+      "bytes": 37058,
+      "sha256": "774c63e41920a4395173423268c7aad24069b7e40cd549b698a408f888a7a35a"
+    },
+    "tests/browser/fixtures/ant-design-badge-digit-motion-reference.json": {
+      "bytes": 82893,
+      "sha256": "4e2edb75a6d513ee53c129ea47f35b237dbf0d3560610e32e03fd5b51aabc077"
+    },
+    "tests/browser/fixtures/ant-design-badge-prefix-motion-reference.json": {
+      "bytes": 18307,
+      "sha256": "18266f12c52504eb19fce63c510a9e0c3c048e46466efd25c33086c2aaac85b8"
+    },
+    "tests/browser/fixtures/ant-design-badge-prefix-reference.json": {
+      "bytes": 191518,
+      "sha256": "15d014dff3cedaa9b8854631f9364f0844b861069ad0a03d3f4f21b3ded27154"
+    },
+    "tests/browser/fixtures/ant-design-badge-ribbon-reference.json": {
+      "bytes": 252456,
+      "sha256": "5fbf365ece68889ad34c753146624fdbb4e2ec10fea17ec109b3620b67055116"
+    },
+    "tests/browser/fixtures/ant-design-badge-values-reference.json": {
+      "bytes": 129899,
+      "sha256": "ff635f98adc3f1f3d983deb48c0c70d904268670e96278eb8c5ea82370142ee0"
+    },
+    "tests/browser/fixtures/ant-design-badge-zoom-reference.json": {
+      "bytes": 51323,
+      "sha256": "08c822c80fbd9e5c0fdd0d37a237e2a5c2a8f1f1c3a26b309db7bfeb397cb3fb"
+    },
+    "tests/browser/fixtures/ant-design-beam-global-isolated.json": {
+      "bytes": 17422,
+      "sha256": "a1c808d7355db2253d0787fe5f67be7acf3577bed34eddf974a3bbf12c4bef76"
+    },
+    "tests/browser/fixtures/ant-design-beam-global-reference.json": {
+      "bytes": 181350,
+      "sha256": "36d3e046af9913a665c938d12deda655243a206a5f079fd3bf495bd6fc987cde"
+    },
+    "tests/browser/fixtures/ant-design-border-beam-prefix-reference.json": {
+      "bytes": 123288,
+      "sha256": "bf4e737b925abcbf0f01e24bc4c6a7e2c316e452fb45a74db33cc03c1c3dd7ed"
+    },
+    "tests/browser/fixtures/ant-design-border-beam-theme-reference.json": {
+      "bytes": 231989,
+      "sha256": "89761d8279d9145363365e73b003bbebc410a03f0cd78743373caaf9d9ebfac9"
+    },
+    "tests/browser/fixtures/ant-design-breadcrumb-config-reference.json": {
+      "bytes": 128584,
+      "sha256": "f0c10a86f1174d7acc994517d5cd5c7eda08e629cf3db1989d1154f46452ae01"
+    },
+    "tests/browser/fixtures/ant-design-breadcrumb-metrics.json": {
+      "bytes": 178330,
+      "sha256": "7d91a3c7f5611e29214b958ac3162bed77cd2fcb24b3a3d7fee103f19e79b25c"
+    },
+    "tests/browser/fixtures/ant-design-breadcrumb-prefix-reference.json": {
+      "bytes": 179979,
+      "sha256": "a068160370c620c9e4e382a6ac91d85deb05c11d804562d5eefd8318e1c09fd2"
+    },
+    "tests/browser/fixtures/ant-design-button-prefix-reference.json": {
+      "bytes": 548470,
+      "sha256": "6b9b70a116de49fc8f5ff90176804d1857e662ad64edbf9f2e231bcc7fa9cd55"
+    },
+    "tests/browser/fixtures/ant-design-calendar-prefix-reference.json": {
+      "bytes": 472622,
+      "sha256": "d8a712e3f7331434835dfeb56f859e8a0ccecf3fdc0c66441c64a62521f0c69c"
+    },
+    "tests/browser/fixtures/ant-design-calendar-theme-reference.json": {
+      "bytes": 2309319,
+      "sha256": "429d328a94078ba34d81e77e61bd659c271e5bb5c1ed57006186c6672e2975f8"
+    },
+    "tests/browser/fixtures/ant-design-card-config-reference.json": {
+      "bytes": 93972,
+      "sha256": "afcdcf799d1cfcae46088b880d2d76c5450359e9209b8a528b48ad2e7312deef"
+    },
+    "tests/browser/fixtures/ant-design-card-prefix-reference.json": {
+      "bytes": 283845,
+      "sha256": "0d752ab1c6ab2ffe3759fa72bf2ad3d1b56f0603a9340b568f20291d441db4f9"
+    },
+    "tests/browser/fixtures/ant-design-card-theme-reference.json": {
+      "bytes": 247997,
+      "sha256": "6416bff0707e98bccbda2f9c4709fc6153570680c89313431c52b8298e772bbf"
+    },
+    "tests/browser/fixtures/ant-design-carousel-prefix-reference.json": {
+      "bytes": 185351,
+      "sha256": "d3c969b7d67c57be8f0cf0440e6d01ea7d38dc0c0f3f005e4f8cd8ecbf77f35e"
+    },
+    "tests/browser/fixtures/ant-design-carousel-theme-reference.json": {
+      "bytes": 95279,
+      "sha256": "30c99bb7a92ef18210a8809ede77be56a029e764e2060ab3deb4e8610740fedc"
+    },
+    "tests/browser/fixtures/ant-design-cascader-metrics.json": {
+      "bytes": 369609,
+      "sha256": "faa6c565bf2e790ec68112a523f702538e7f36d8a280975738a11c26552b616a"
+    },
+    "tests/browser/fixtures/ant-design-cascader-prefix-reference.json": {
+      "bytes": 907962,
+      "sha256": "1d4bb3b4f227be9a97ceb263c165c56c1c2df9a6cb1cd0cacf39c42f25255413"
+    },
+    "tests/browser/fixtures/ant-design-checkable-tag-api-reference.json": {
+      "bytes": 4774,
+      "sha256": "6cb6b857aabe7cc3c80692d0a51f0b2755cd2a0c779b9ee5a3241ff674e1d483"
+    },
+    "tests/browser/fixtures/ant-design-checkbox-prefix-reference.json": {
+      "bytes": 378683,
+      "sha256": "36fd27e8574d6d5ad7d1a4ce539dae487107e0f1e4804ce92fe46ca04b0d1e4e"
+    },
+    "tests/browser/fixtures/ant-design-choice-container-reference.json": {
+      "bytes": 23227,
+      "sha256": "f093c7c5c65406a5017e76b0d4d6487ac6003a9ff589d92d1d092ab0aa859ad6"
+    },
+    "tests/browser/fixtures/ant-design-collapse-reference.json": {
+      "bytes": 401123,
+      "sha256": "4370b255ca97df87bda9a2ba70d9a42bfb4169c93651ef9f3b3b74ff8c1c657c"
+    },
+    "tests/browser/fixtures/ant-design-color-picker-prefix-reference.json": {
+      "bytes": 798670,
+      "sha256": "e8994c70013c81f20c85408606ad3305aec5eb41a09367172c27c2ca1d39aaf3"
+    },
+    "tests/browser/fixtures/ant-design-color-picker-theme-reference.json": {
+      "bytes": 927492,
+      "sha256": "595e1da8840e374aa433d8fb2812ddfe92b0ac59bdef53fbd0d683a993fae595"
+    },
+    "tests/browser/fixtures/ant-design-compact-metrics.json": {
+      "bytes": 20313,
+      "sha256": "565cea3e41066459cddff4175e692355c52f4316c979b734260d9bace22aa848"
+    },
+    "tests/browser/fixtures/ant-design-config-prefix-reference.json": {
+      "bytes": 40447,
+      "sha256": "0d14f36f37853145d0b656283785fd2df8a88090ad11a587daaef62ac7cf6f57"
+    },
+    "tests/browser/fixtures/ant-design-config-variants-reference.json": {
+      "bytes": 177041,
+      "sha256": "e529e1d896988e4dcaaf1ec2b18d3ef5666c3f50fc856cfff2c45f6e0f1e324e"
+    },
+    "tests/browser/fixtures/ant-design-core-prefix-reference.json": {
+      "bytes": 158466,
+      "sha256": "ccfdb3b295d7c6a85a8d1e8cf185cc73f7ef4eca10bf14cc4047106bddaab959"
+    },
+    "tests/browser/fixtures/ant-design-datetime-config-reference.json": {
+      "bytes": 108630,
+      "sha256": "df9ea202db3e2a94840cf04aa9e4f16ab1bce82671d843e478823ded7e2f9231"
+    },
+    "tests/browser/fixtures/ant-design-descriptions-breakpoints-reference.json": {
+      "bytes": 134558,
+      "sha256": "5965d15eff340ab3ae6ef6f7a571e5de5fe7d0bd52fee5de63805c5caeb77198"
+    },
+    "tests/browser/fixtures/ant-design-descriptions-config-reference.json": {
+      "bytes": 121048,
+      "sha256": "1493ec3e1d0e71383d0867fe35e8e3286a2925b606273eaa353b15d1d2544196"
+    },
+    "tests/browser/fixtures/ant-design-descriptions-prefix-reference.json": {
+      "bytes": 371970,
+      "sha256": "6660e93eabb419fc27cb09a3a6b2640a88696efff420032a3c125ca58b79a53a"
+    },
+    "tests/browser/fixtures/ant-design-descriptions-theme-reference.json": {
+      "bytes": 203176,
+      "sha256": "2fd5077bf980b1a02bf77cc29d9f2c7fe8033d5f03c8d715eca8d2db1fa11495"
+    },
+    "tests/browser/fixtures/ant-design-dialog-container-reference.json": {
+      "bytes": 42041,
+      "sha256": "69c2b283bb9844ecfd5007df1f1aec3986eb21ba66e8aa45aa1513ae66ca1355"
+    },
+    "tests/browser/fixtures/ant-design-directory-tree-control-release-observation.json": {
+      "bytes": 2718,
+      "sha256": "4e69f504c4fea065feb99c7c6afc4fb4b10972abb658d294f695fdedb3d7e210"
+    },
+    "tests/browser/fixtures/ant-design-directory-tree-reference.json": {
+      "bytes": 181947,
+      "sha256": "e52611c7b14651e8e13af7ad84ee9e992387be9b841ad2aa0db898b4e43e3005"
+    },
+    "tests/browser/fixtures/ant-design-divider-config-reference.json": {
+      "bytes": 59768,
+      "sha256": "e4b798be82707a02de5456ea3491783ac7ab482a127965deb2c49e3b70d7822c"
+    },
+    "tests/browser/fixtures/ant-design-divider-theme-reference.json": {
+      "bytes": 179546,
+      "sha256": "41508dad2134b2f0d47fc959d77a6bb407cf29b49ce3cf400973097fa39fcc3a"
+    },
+    "tests/browser/fixtures/ant-design-drawer-prefix-reference.json": {
+      "bytes": 473567,
+      "sha256": "da5ac8670da149dc4b5c9dc8ae1689a65cf80fac01a5e199a089e18b5850b874"
+    },
+    "tests/browser/fixtures/ant-design-drawer-theme-reference.json": {
+      "bytes": 2203459,
+      "sha256": "6d6330a906555fa1b16c99d39075b40360a98249283a4122a352d8e57277f7c1"
+    },
+    "tests/browser/fixtures/ant-design-dropdown-metrics.json": {
+      "bytes": 167171,
+      "sha256": "e64cf8bdab9db4eb9875fc9a0312b64bbaf83ec20d6503e9d11d7d4a2019e2de"
+    },
+    "tests/browser/fixtures/ant-design-dropdown-prefix-reference.json": {
+      "bytes": 726840,
+      "sha256": "3b8fb3ad8398bf48dad0c09d5da1b575c6e7e64e163f41ebd22d12a70ec62a16"
+    },
+    "tests/browser/fixtures/ant-design-empty-reference.json": {
+      "bytes": 174932,
+      "sha256": "7345d169e350d43dea167291b1b3546c48df9ea54ceb8312e769059ffefd8d65"
+    },
+    "tests/browser/fixtures/ant-design-flex-source-reference.json": {
+      "bytes": 57241,
+      "sha256": "56d892720133588942dc7bf0039bf3f3cfa9f2932ab99c8067eb8d63074092c0"
+    },
+    "tests/browser/fixtures/ant-design-float-back-top-motion-reference.json": {
+      "bytes": 1772,
+      "sha256": "73d089863fd61cc9d4e29cc012b9b6fb990d9c525823e49b789f926d751aa034"
+    },
+    "tests/browser/fixtures/ant-design-float-button-prefix-reference.json": {
+      "bytes": 910881,
+      "sha256": "6ff0b16206205336c71400fd484b73b055150aca607019f1cfb5ecb27bac9410"
+    },
+    "tests/browser/fixtures/ant-design-float-button-theme-reference.json": {
+      "bytes": 501676,
+      "sha256": "863d5d76b5c45b6e52fc31f75b8988dd1957926630974c30dfa534cb2a1d7d22"
+    },
+    "tests/browser/fixtures/ant-design-form-aggregate-touched-observation.json": {
+      "bytes": 16669,
+      "sha256": "cba304f91cc621aaa7a5482eee995ad802d7ec539dd91f1f77a8c71285236620"
+    },
+    "tests/browser/fixtures/ant-design-form-aggregate-validating-observation.json": {
+      "bytes": 7877,
+      "sha256": "63146867bfe1afdc349926059dc46dd01656fb27d03e5698d7e3e17a3289350a"
+    },
+    "tests/browser/fixtures/ant-design-form-columns-reference.json": {
+      "bytes": 86338,
+      "sha256": "d5849ddb2459eeb7e6a0cac5791a27c36a5641a4c6d2e3edfbbc3b58cc276a50"
+    },
+    "tests/browser/fixtures/ant-design-form-constraints-reference.json": {
+      "bytes": 8550,
+      "sha256": "1fd1e103230462b7473303647d12d53bca79fb8fb7d9167df6e361154cfacf85"
+    },
+    "tests/browser/fixtures/ant-design-form-debounce-observation.json": {
+      "bytes": 11062,
+      "sha256": "0ae69c3de92ae3d83f1239c11b242eee7a6607acd492083f31b3ad7a5fed8466"
+    },
+    "tests/browser/fixtures/ant-design-form-disabled-reference.json": {
+      "bytes": 5205,
+      "sha256": "c1aad530453c25e69545c793ce8787cd0b0bc933132c50e38b4d425d16b8b3b1"
+    },
+    "tests/browser/fixtures/ant-design-form-dom-observation.json": {
+      "bytes": 7456,
+      "sha256": "d4b32237e57c25f7778b371bac06d742474852baabb115d570fc38a65a8b29ba"
+    },
+    "tests/browser/fixtures/ant-design-form-error-list-observation.json": {
+      "bytes": 6454,
+      "sha256": "e98578cacfc122f2229fea639f24405a8750603c138f350460862fb1b83ef3aa"
+    },
+    "tests/browser/fixtures/ant-design-form-explanation-reset-reference.json": {
+      "bytes": 1330,
+      "sha256": "b9fa403a77b0a0c7523c8af18be14e5c02778dc37ff05eea54db0a6fd719d7db"
+    },
+    "tests/browser/fixtures/ant-design-form-extra-reference.json": {
+      "bytes": 5245,
+      "sha256": "add9fd1b0be0edfd18a1cb6eae228a1e42ef05477c00d4b6ceff6bbd2e6941e6"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-autocomplete-clear-reference.json": {
+      "bytes": 1233,
+      "sha256": "7d47a2b89d62046f1f84cc88363f4f8e92156b0cc5e7ac8777060df18381bbea"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-autocomplete-reference.json": {
+      "bytes": 127806,
+      "sha256": "da6486ff7ecfd9ad09ee806d9fc2d63b8f827044119bc299f5dae102af086a29"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-cascader-reference.json": {
+      "bytes": 81371,
+      "sha256": "bccaffee7f394fd3e01164ff86631648ec229bdd7599ccbcd429ed921221a730"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-control-reference.json": {
+      "bytes": 270653,
+      "sha256": "970f2a96e258a32ec21b545f018088b9eeb1b35d7fb435ec8943c5f3c1016ebc"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-mentions-reference.json": {
+      "bytes": 136917,
+      "sha256": "1782bb3f413c17f5ada544422516ba72320a7ea8ebbfe2351b76443a0f807bd5"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-picker-reference.json": {
+      "bytes": 137972,
+      "sha256": "196342061b0801a8c6909993becb7675e96166594507d39a10497eac92a3e19b"
+    },
+    "tests/browser/fixtures/ant-design-form-feedback-reference.json": {
+      "bytes": 101725,
+      "sha256": "73d0327538c02e75ffb2328f0502a5cb6eac6dbb21db30d93087a3971566d65a"
+    },
+    "tests/browser/fixtures/ant-design-form-get-fields-value-observation.json": {
+      "bytes": 40115,
+      "sha256": "07b494d5adf21af6db7a722a29b6b87b775bbf2d1b9fd38fe7bb76c65c80c72f"
+    },
+    "tests/browser/fixtures/ant-design-form-help-reference.json": {
+      "bytes": 5627,
+      "sha256": "3697c2e118fcc4fa375f886104d6018dd3196e6dc1032d00d66fac2de070453f"
+    },
+    "tests/browser/fixtures/ant-design-form-hidden-reference.json": {
+      "bytes": 4844,
+      "sha256": "4a123c48d73da45611751a4ff7df473605cdb7c39ea5e632b45cf074e999370b"
+    },
+    "tests/browser/fixtures/ant-design-form-initial-reference.json": {
+      "bytes": 23527,
+      "sha256": "f5b7e9ed4961869b114b6fdf64fe83d5f816e0001bbee729376e82d12e25416e"
+    },
+    "tests/browser/fixtures/ant-design-form-label-presence-reference.json": {
+      "bytes": 53357,
+      "sha256": "76a177490b6ea22342730d47cae0b5ce9d6c790e369cc3096dd7d8454015736e"
+    },
+    "tests/browser/fixtures/ant-design-form-labels-reference.json": {
+      "bytes": 27583,
+      "sha256": "e216beb339b1394eaf64073657836e17a572d5b245b256addea7864efce8cbfa"
+    },
+    "tests/browser/fixtures/ant-design-form-layout-reference.json": {
+      "bytes": 120346,
+      "sha256": "3b3d4dd699d7ae02d04aedda25980ed18d15359ecd2f3ea6d08838fb3ea878fb"
+    },
+    "tests/browser/fixtures/ant-design-form-list-observation.json": {
+      "bytes": 7216,
+      "sha256": "b016007c08662a659c6194caafbf7c5eecc37ef41a482875efa4546e56e79f47"
+    },
+    "tests/browser/fixtures/ant-design-form-message-variables-reference.json": {
+      "bytes": 5961,
+      "sha256": "5cf001deb4c619c6683743b82d7b3d9a1bc58ff42400321458c06bab2aec0d54"
+    },
+    "tests/browser/fixtures/ant-design-form-name-paths-observation.json": {
+      "bytes": 2380,
+      "sha256": "832944e6cee22b31c50636c0465553f20e974d28bb1aa75d6831cc4408ea826a"
+    },
+    "tests/browser/fixtures/ant-design-form-nameless-reference.json": {
+      "bytes": 6205,
+      "sha256": "132ff37dfe0a87fd2aafdfe97748589f35abbbc11dba50e1a47c7ea65adb41fb"
+    },
+    "tests/browser/fixtures/ant-design-form-nested-rules-reference.json": {
+      "bytes": 15814,
+      "sha256": "5ffef81dcdb436fad9109af07d838d75823753297c90f727c23228869d7ec147"
+    },
+    "tests/browser/fixtures/ant-design-form-no-style-reference.json": {
+      "bytes": 26044,
+      "sha256": "c4ddc230c415553d12dd53705201ebde392c0acd9355e920d58142000b2778b5"
+    },
+    "tests/browser/fixtures/ant-design-form-prefix-reference.json": {
+      "bytes": 4036382,
+      "sha256": "79090cea69afe8b1080334dff0a1836ef19cc3ad3d69861548e2bae98578a60e"
+    },
+    "tests/browser/fixtures/ant-design-form-required-mark-reference.json": {
+      "bytes": 21900,
+      "sha256": "57231c14e0bbd528b9b215671c949eec2daeaa6c2699c429dd1a80d807ff809f"
+    },
+    "tests/browser/fixtures/ant-design-form-reset-conflicts-observation.json": {
+      "bytes": 866,
+      "sha256": "d66fe76334266214dc3dd415ba1d29a301e136298c87c1e895164e4b4c05a408"
+    },
+    "tests/browser/fixtures/ant-design-form-reset-fields-observation.json": {
+      "bytes": 56549,
+      "sha256": "f1fd0fbb585fe0244ac75a4fdabbe474ef10a9f57fef7bd80a959d2b498464dc"
+    },
+    "tests/browser/fixtures/ant-design-form-rich-labels-reference.json": {
+      "bytes": 28000,
+      "sha256": "10129e872b4a5c9d3863ea03403052021710137e3992656d293306013b7ea263"
+    },
+    "tests/browser/fixtures/ant-design-form-root-reference.json": {
+      "bytes": 16042,
+      "sha256": "b2a8349d18b528f983bf3d8d9fc7249b40885cd2e40caafc48a685dfd2a81b8c"
+    },
+    "tests/browser/fixtures/ant-design-form-rule-factories-reference.json": {
+      "bytes": 6819,
+      "sha256": "13ba2baa7cc7b08b7f3b0a07f625bab8b242d69a3b39dd510bad708bc0d0d63c"
+    },
+    "tests/browser/fixtures/ant-design-form-rule-formats-reference.json": {
+      "bytes": 46533,
+      "sha256": "6308a5177a436735141e9d9ca6c68785e82cef33efe316837ede5b27bfb213fa"
+    },
+    "tests/browser/fixtures/ant-design-form-rule-types-reference.json": {
+      "bytes": 82411,
+      "sha256": "1d4ff8ca67e7aebfe28122332544604aa1071a1fb22ea4ad6dcbc8a4812cc216"
+    },
+    "tests/browser/fixtures/ant-design-form-scroll-first-reference.json": {
+      "bytes": 10778,
+      "sha256": "4270d77faccccaa94cf570e13f3d17f363dce67d8324ba5e6a95dd56e88ff75a"
+    },
+    "tests/browser/fixtures/ant-design-form-semantic-reference.json": {
+      "bytes": 57844,
+      "sha256": "2beea710035f39e92a7175d64e6a8c098a028ff9638544c1ad11c3b47c0ed047"
+    },
+    "tests/browser/fixtures/ant-design-form-set-fields-observation.json": {
+      "bytes": 94365,
+      "sha256": "5319ebc3d6815b33bb47797c6134c2dfbdb756fe4c31dc4e120538907339fe95"
+    },
+    "tests/browser/fixtures/ant-design-form-size-reference.json": {
+      "bytes": 34314,
+      "sha256": "b5f0e74fb005accaeb8f9f73a0b9268fe002a3ca11e5b62cb5292589984d5a18"
+    },
+    "tests/browser/fixtures/ant-design-form-slot-context-reference.json": {
+      "bytes": 7354,
+      "sha256": "ec6e129591d87343ec454e761b04b0fddde890fbedc69b1a21be3517a7de0e84"
+    },
+    "tests/browser/fixtures/ant-design-form-sparse-list-observation.json": {
+      "bytes": 3089,
+      "sha256": "b336893adcb463e1602c11ce8d1ac5b9306e19aee0f58d37c1716a216e25e1aa"
+    },
+    "tests/browser/fixtures/ant-design-form-status-reference.json": {
+      "bytes": 19919,
+      "sha256": "b36287f2778a411b62c603f673bf4e3fb4843cf65162f22f2fa5a35a3841610d"
+    },
+    "tests/browser/fixtures/ant-design-form-theme-reference.json": {
+      "bytes": 312365,
+      "sha256": "a5fd3a861ae88fe59b5f5b9e1edbb5cb96fb80947a566aacb2135086c6b88f5e"
+    },
+    "tests/browser/fixtures/ant-design-form-tooltip-reference.json": {
+      "bytes": 25708,
+      "sha256": "cb3b7d47e615d5fd79816ac8d8416c242718ef3a1f7ffa20368367c660ceb78d"
+    },
+    "tests/browser/fixtures/ant-design-form-touched-paths-observation.json": {
+      "bytes": 2668,
+      "sha256": "abc341c1689a69c833bc49b153c506b48849fcac30ecc0a58e3c498c5cf540ef"
+    },
+    "tests/browser/fixtures/ant-design-form-transform-reference.json": {
+      "bytes": 5786,
+      "sha256": "91fde236b79c0e4a392e660323f3d27c9ad4ab9ad875d91747d4f4b58f61fc52"
+    },
+    "tests/browser/fixtures/ant-design-form-use-status-reference.json": {
+      "bytes": 13593,
+      "sha256": "6dcecb7f6ae3ce96b9e4bbed611013ffa4e0e6d188597a50eb74736a17418e1f"
+    },
+    "tests/browser/fixtures/ant-design-form-validate-first-observation.json": {
+      "bytes": 16653,
+      "sha256": "18eef01a22bb03dfc92a49e25eae80fb4b81b77081ea276ec53978da33cedbac"
+    },
+    "tests/browser/fixtures/ant-design-form-validate-messages-reference.json": {
+      "bytes": 23133,
+      "sha256": "cb3cadc30d4f4d358f2e4e613c04ff13fc1b0006c1db1d197ebf34a5c6365a26"
+    },
+    "tests/browser/fixtures/ant-design-form-validation-concurrency-observation.json": {
+      "bytes": 4339,
+      "sha256": "29ff56b69e443ecb70e90136b151920627727f5a9148e4c7fe3b580d2d1c716f"
+    },
+    "tests/browser/fixtures/ant-design-form-validation-options-observation.json": {
+      "bytes": 15384,
+      "sha256": "833a7bacb68d9b24fbbc4f03c038171b783521f1f457ad7e8450ef63b0b350f3"
+    },
+    "tests/browser/fixtures/ant-design-form-warning-lifecycle-observation.json": {
+      "bytes": 1239,
+      "sha256": "79f74151eebe6e596adc2de03423a9d52e03e8a71b88547013d085174168b08f"
+    },
+    "tests/browser/fixtures/ant-design-form-warning-observation.json": {
+      "bytes": 3140,
+      "sha256": "6319879bdffc022990717b343d550b1b4519d8010002067fdfaccd714735e995"
+    },
+    "tests/browser/fixtures/ant-design-grid-breakpoints-reference.json": {
+      "bytes": 789381,
+      "sha256": "a7238590c302510c7c6d04952c610e6e82aa5ba5fceba5cfd008efd38681bffb"
+    },
+    "tests/browser/fixtures/ant-design-grid-breakpoints-update-observation.json": {
+      "bytes": 11858,
+      "sha256": "f567ed6b7262fc1a4f0bbcd29217c7dc826fa719321591ea9ee55ad10b9797a2"
+    },
+    "tests/browser/fixtures/ant-design-grid-col-prefix-reference.json": {
+      "bytes": 5674185,
+      "sha256": "6d9c807ad51f59fd12fcd74ac0497835c9cca4294485c70a2578caf5f7e301d0"
+    },
+    "tests/browser/fixtures/ant-design-grid-media-observation.json": {
+      "bytes": 21375,
+      "sha256": "0ca4e67907afa1bbc077eb35e23a3180e5daee24d9ad7f05df9dea45426bbf0f"
+    },
+    "tests/browser/fixtures/ant-design-grid-row-prefix-reference.json": {
+      "bytes": 86031,
+      "sha256": "8c282f7fd44f3699a435f8d1e0fcd0c71ba306e7c735996c4869e303e8dd7812"
+    },
+    "tests/browser/fixtures/ant-design-grid-theme-reference.json": {
+      "bytes": 339709,
+      "sha256": "d4cec4c4585af46750c28e3a054bc67070488fea29e9171fb3ef713896a3ce50"
+    },
+    "tests/browser/fixtures/ant-design-image-independent-preview-reference.json": {
+      "bytes": 62875,
+      "sha256": "53eaa344374ea26d190ce38a07331b070f84e4989fdf1a47d9649df96bd6ecec"
+    },
+    "tests/browser/fixtures/ant-design-image-prefix-reference.json": {
+      "bytes": 327518,
+      "sha256": "7219c72eb68a6b739347da6b8cd683e96383d976e01037911deaf3d8ef0609d8"
+    },
+    "tests/browser/fixtures/ant-design-image-theme-reference.json": {
+      "bytes": 343671,
+      "sha256": "1de81a68bae27ae49233ab47d37c0752e6432e808fe7bc0ead5c8bf72876166f"
+    },
+    "tests/browser/fixtures/ant-design-input-number-prefix-reference.json": {
+      "bytes": 134876,
+      "sha256": "50ed4d43a2bdda2befaf82607cca33c115479318dc4d0db98d320cd66190d3c4"
+    },
+    "tests/browser/fixtures/ant-design-input-otp-prefix-reference.json": {
+      "bytes": 737341,
+      "sha256": "7dfb96cce285fd419659055150414574153f967bde9a8c1c9cc745cd44896ebc"
+    },
+    "tests/browser/fixtures/ant-design-input-password-prefix-reference.json": {
+      "bytes": 233996,
+      "sha256": "2ddd70b65a80c0b56be394f5bb1518870303df6da4d5cc16b3150a9c4d5de68d"
+    },
+    "tests/browser/fixtures/ant-design-input-prefix-reference.json": {
+      "bytes": 278894,
+      "sha256": "0598e85721b6e01f6f9c3d60f652bbfb564bbc1a64bcf639c5b062d6cedbe35f"
+    },
+    "tests/browser/fixtures/ant-design-input-search-prefix-reference.json": {
+      "bytes": 303162,
+      "sha256": "1640889d5a0690f69946e03eee38c6fb22f315a4312ed2f46df0d0ce1a182055"
+    },
+    "tests/browser/fixtures/ant-design-layout-config-reference.json": {
+      "bytes": 259847,
+      "sha256": "8858d5ca6938d9fb6110283dc9b6289de70debc98845d80c896f441b4d7a23ac"
+    },
+    "tests/browser/fixtures/ant-design-layout-prefix-reference.json": {
+      "bytes": 467793,
+      "sha256": "4dae7e888f3378e720f4a075cd30f622a272b11ff07b01d9ecec273d57e6ff8a"
+    },
+    "tests/browser/fixtures/ant-design-layout-section-prefix-observation.json": {
+      "bytes": 3381,
+      "sha256": "e1896efbe6eac2158cef72f09f09b3221455f9276f8792bb6ce907d32cbc6bca"
+    },
+    "tests/browser/fixtures/ant-design-layout-section-prefix-reference.json": {
+      "bytes": 176255,
+      "sha256": "40e52db84bdf9f235ddcaabf0d37c9cdd21edeec8e87fb2b64d7ec0adcc9f9e1"
+    },
+    "tests/browser/fixtures/ant-design-layout-theme-reference.json": {
+      "bytes": 294730,
+      "sha256": "28b6b6b3f0f0d8ea99ba5444c6e7c99f9a54364fc791d6391c480fa77c6deb30"
+    },
+    "tests/browser/fixtures/ant-design-link-decoration-reference.json": {
+      "bytes": 10673,
+      "sha256": "4c4364db1f6b8292299f4b16218b7f2744184133b80836924b358b1a1cee5cc6"
+    },
+    "tests/browser/fixtures/ant-design-list-links-reference.json": {
+      "bytes": 6289,
+      "sha256": "61293157d5f912ace99109a8beccfa1891ce7dda9e0d23470f945494203769cc"
+    },
+    "tests/browser/fixtures/ant-design-listy-prefix-reference.json": {
+      "bytes": 578729,
+      "sha256": "c70ab9954543daadb3f9a201587fc0a1cbe3c2338467f1aa4d419ab0b4a7014e"
+    },
+    "tests/browser/fixtures/ant-design-listy-theme-reference.json": {
+      "bytes": 988431,
+      "sha256": "79db3d20a070e5a49088390e4b2c0e63059a45e985bd02e5719817b3e970bd97"
+    },
+    "tests/browser/fixtures/ant-design-masonry-prefix-isolated.json": {
+      "bytes": 4740,
+      "sha256": "fa3cb0254c758a7fdbb6e90f884b42226282a1b8ad237846066ed67fb6e68e41"
+    },
+    "tests/browser/fixtures/ant-design-masonry-prefix-reference.json": {
+      "bytes": 214056,
+      "sha256": "76c7f13aa7e6adce7ff9de493462430c2d416c70fa69c8e67e64ac6d4a38ab10"
+    },
+    "tests/browser/fixtures/ant-design-masonry-theme-reference.json": {
+      "bytes": 414763,
+      "sha256": "da49ff935ab7e6149543bf559b2629fadcb8177f832f3edd80cf4a5082a32a0e"
+    },
+    "tests/browser/fixtures/ant-design-mentions-popup-reference.json": {
+      "bytes": 15362,
+      "sha256": "dd60e6b525db44b843b2174fa2e95122fd818e069b0f7a89494f64de01444686"
+    },
+    "tests/browser/fixtures/ant-design-mentions-prefix-reference.json": {
+      "bytes": 214412,
+      "sha256": "9a76b8e3884bfd57709d1899e2448ce6fd8e68a03dc12f009777f53f6c4fe4d0"
+    },
+    "tests/browser/fixtures/ant-design-mentions-theme-reference.json": {
+      "bytes": 610122,
+      "sha256": "9b07903e9f61bc8dde86781c6097fbff079941d126fad45cce0c1b6ef706fcb4"
+    },
+    "tests/browser/fixtures/ant-design-menu-container-reference.json": {
+      "bytes": 78825,
+      "sha256": "01f252191b430deb7bc05a574b342449864b5eec44b80166d7936fc8e3c5a8c0"
+    },
+    "tests/browser/fixtures/ant-design-menu-link-decoration-reference.json": {
+      "bytes": 30901,
+      "sha256": "796929e4e37b63bee5e3ff2010c0777b5c62d493bd5474a0ae229d402d98e7f1"
+    },
+    "tests/browser/fixtures/ant-design-menu-metrics.json": {
+      "bytes": 717631,
+      "sha256": "112906daa791e6a866bd4d71f63a43ff301b6ab6a067c70bd255118aa36b0526"
+    },
+    "tests/browser/fixtures/ant-design-menu-prefix-reference.json": {
+      "bytes": 1660044,
+      "sha256": "efa93ae0e55b13f61543d93be0ac713dbc3ea4292ed7b924485a1bd14baf6f72"
+    },
+    "tests/browser/fixtures/ant-design-message-prefix-reference.json": {
+      "bytes": 232556,
+      "sha256": "716a90eb7e59eaf0541b3b5f15da0924e46c882525e82065bff6faf25fa64cf2"
+    },
+    "tests/browser/fixtures/ant-design-message-theme-reference.json": {
+      "bytes": 691361,
+      "sha256": "a472ec14b06219959ecccc40e62d525f4f4e868c1b8a222cb9d0895d2e0975b2"
+    },
+    "tests/browser/fixtures/ant-design-message-wrap-observation.json": {
+      "bytes": 3884,
+      "sha256": "650b985183fad12de80664813a5efc3b823395d3b2a0f2b7b1badef9e489b6f9"
+    },
+    "tests/browser/fixtures/ant-design-modal-content-reference.json": {
+      "bytes": 3216,
+      "sha256": "c2c1241be18587b73b08ae197725543a96bb23df30eba15749acc4ac30ce81ef"
+    },
+    "tests/browser/fixtures/ant-design-modal-controller-reference.json": {
+      "bytes": 6879,
+      "sha256": "1ad81c8f15bdfc5504193a86dfd4d8e97923325fcf08c67a77fec50ef132b45d"
+    },
+    "tests/browser/fixtures/ant-design-modal-loading-reference.json.gz": {
+      "bytes": 119555,
+      "sha256": "43a0f7869d06d6a4abf6cfd67a29624a79a41c46ee07de2fec98005c53e4d9e1"
+    },
+    "tests/browser/fixtures/ant-design-modal-loading-source-manifest.json": {
+      "bytes": 6291,
+      "sha256": "d927d8c7aa2b7d2cc3e3e3f8beea7aae0fc451f82e740142905edc8adb0610c9"
+    },
+    "tests/browser/fixtures/ant-design-modal-loading-source-protocol.json": {
+      "bytes": 187678,
+      "sha256": "4d3e2a1fbfbc4e13a11fecc5d4157701dd692c96e6db0b0c7864a9f475af4ee7"
+    },
+    "tests/browser/fixtures/ant-design-modal-loading-source-repeat-proof.json": {
+      "bytes": 12149,
+      "sha256": "2a7fcc82d12f7d74856259c71c3e73c004ebcea00c39d6c1f6ada7df36297d9d"
+    },
+    "tests/browser/fixtures/ant-design-modal-prefix-reference.json": {
+      "bytes": 826500,
+      "sha256": "cdd2895fb858f6241920e2a9d6a04073f5a83b3284b2e9b91fa5ce0072252e82"
+    },
+    "tests/browser/fixtures/ant-design-modal-theme-reference.json": {
+      "bytes": 2052964,
+      "sha256": "a51c025669db5c4589b40b192d8875138b512809e1442c9b39297b532eebd0dc"
+    },
+    "tests/browser/fixtures/ant-design-notification-background-observation.json": {
+      "bytes": 7638,
+      "sha256": "581accd340a850fe6cb3b08df8ac472be3a9da7d69392d781234294442f91d45"
+    },
+    "tests/browser/fixtures/ant-design-notification-prefix-reference.json": {
+      "bytes": 1238544,
+      "sha256": "beb1f642de99187d2e7db970c09e1ab15441bfcf6c8b9101822f1f5662b84101"
+    },
+    "tests/browser/fixtures/ant-design-notification-theme-reference.json": {
+      "bytes": 1825783,
+      "sha256": "dc4b8562f6ea3ff2f1940839becf83530e64da850aacb82f81f659eacce9c437"
+    },
+    "tests/browser/fixtures/ant-design-notification-width-observation.json": {
+      "bytes": 30119,
+      "sha256": "3fcad55b12c0bcc6229bdccd35da7a1b7f2e063f070104fc83663def73175104"
+    },
+    "tests/browser/fixtures/ant-design-overlay-color-reference.json": {
+      "bytes": 146351,
+      "sha256": "be7ddadfbbc1db69683d4582ee0ebc6e2bf3a361aba678dba5710fa0de4b92a0"
+    },
+    "tests/browser/fixtures/ant-design-overlay-config-reference.json": {
+      "bytes": 262501,
+      "sha256": "4ba3d7780e076dd49cdda02deb47dec84947919c45cb8d0c0424495e3207ba00"
+    },
+    "tests/browser/fixtures/ant-design-overlay-container-reference.json": {
+      "bytes": 17513,
+      "sha256": "811fc48335e6a78f2bf8902d920043255b76ef07234ac6eb743fba6065ed67d5"
+    },
+    "tests/browser/fixtures/ant-design-overlay-corner-reference.json": {
+      "bytes": 98572,
+      "sha256": "87f784a01a6f17ee49d71689eecf6ea3cd4b21570150ee58007f7928d3f33397"
+    },
+    "tests/browser/fixtures/ant-design-overlay-empty-trigger-reference.json": {
+      "bytes": 48050,
+      "sha256": "5f56cb0055d028be432bd7c9dd4bf55bc260dea6b63e3c2898579525236c9899"
+    },
+    "tests/browser/fixtures/ant-design-overlay-lifecycle-reference.json": {
+      "bytes": 32112,
+      "sha256": "1e237ff9532ae7b454d3d9d01cd133588c4988aa182c95840834a4d0cc3df43c"
+    },
+    "tests/browser/fixtures/ant-design-overlay-metrics.json": {
+      "bytes": 47124,
+      "sha256": "ccf1442a07b2d927b7111cd1202b37f7707d0d1032b37fa1a2ee84b8d734fc88"
+    },
+    "tests/browser/fixtures/ant-design-overlay-options-reference.json": {
+      "bytes": 102218,
+      "sha256": "c7e25a76e644b4c6c962723efc8d0867cc80783bb8e00fb7b110c073675e9f60"
+    },
+    "tests/browser/fixtures/ant-design-overlay-prefix-reference.json": {
+      "bytes": 439248,
+      "sha256": "6405afdf856c19353aa151573f0a39ba2b73ee9ebc04749e267fd3e981f964e5"
+    },
+    "tests/browser/fixtures/ant-design-pagination-metrics.json": {
+      "bytes": 389206,
+      "sha256": "cd845a512fd347bb156f3bbb985cfbf16b89b61b1525f03bd1bac5f989c3413a"
+    },
+    "tests/browser/fixtures/ant-design-pagination-prefix-reference.json": {
+      "bytes": 691880,
+      "sha256": "cede74b7fd1578dd15d253515641e8f22954aac0edc0dfc22f8d2631e1f3120d"
+    },
+    "tests/browser/fixtures/ant-design-picker-container-reference.json": {
+      "bytes": 41372,
+      "sha256": "aeea6212733d348a7d7ab14734ff375218df2204b9fdd75c982b6c7c751405aa"
+    },
+    "tests/browser/fixtures/ant-design-picker-prefix-reference.json": {
+      "bytes": 526374,
+      "sha256": "55416bb30a957b78256f5d6080860ff7d35215ec5f6784bccd3adf5d310e49c5"
+    },
+    "tests/browser/fixtures/ant-design-picker-theme-reference.json": {
+      "bytes": 1410614,
+      "sha256": "fb38be7e9e34679225d2676eb4ed1711ff1f15cab9249304b2e02d209488a4ba"
+    },
+    "tests/browser/fixtures/ant-design-popover-actions-reference.json": {
+      "bytes": 252215,
+      "sha256": "8d4d7ee01b21c34e1e8dc86a75023dc07d0224f94ed431b940fff4dc801e74b0"
+    },
+    "tests/browser/fixtures/ant-design-popover-align-reference.json": {
+      "bytes": 128409,
+      "sha256": "98ac69f045721acf2a9b1ac1d47331560ee5295c38da7ebd0ae83ba4ee53e658"
+    },
+    "tests/browser/fixtures/ant-design-popover-lifecycle-reference.json": {
+      "bytes": 474736,
+      "sha256": "609dad05b75692eecfafa36b5dbad457a08fe6b2cc61841d81bbd40d45eaf471"
+    },
+    "tests/browser/fixtures/ant-design-popover-ref-reference.json": {
+      "bytes": 17832,
+      "sha256": "e92edfcb428823871049c5bc305c9e7a943482ec796cc7466b753ab67ba73155"
+    },
+    "tests/browser/fixtures/ant-design-popup-container-reference.json": {
+      "bytes": 13975,
+      "sha256": "30d4fd2d855004233176f66257ba8e067b0283f9fb738a25b41b7ad419bc0158"
+    },
+    "tests/browser/fixtures/ant-design-popup-overflow-nested-layout-reference.json": {
+      "bytes": 51919,
+      "sha256": "b2c531079f5da259e5906aa323077ec924ffbf5261e42bfe4216d2ac721e8fc4"
+    },
+    "tests/browser/fixtures/ant-design-popup-overflow-placement-reference.json": {
+      "bytes": 71748,
+      "sha256": "05e008ec1f9a72e2616f2dfaba8f3d593e0b64f89812b8450b457c391f948396"
+    },
+    "tests/browser/fixtures/ant-design-popup-overflow-placement-ssr-reference.json": {
+      "bytes": 4662,
+      "sha256": "694c7f09e9df57322b6782d21f311f35bcb40a4237ac0eeb38acbbfb326b90a3"
+    },
+    "tests/browser/fixtures/ant-design-popup-overflow-reference.json": {
+      "bytes": 1807572,
+      "sha256": "5c8d8182c6f4cdeb107b00b26917119654d442595fa6b03e466bbd3f0e3847d1"
+    },
+    "tests/browser/fixtures/ant-design-popup-overflow-smoke-reference.json": {
+      "bytes": 309342,
+      "sha256": "d5784b43af39a461a7b451da851c19a5b6fe5ea633967b90e0d39a6608e95be9"
+    },
+    "tests/browser/fixtures/ant-design-popup-overflow-ssr-reference.json": {
+      "bytes": 69130,
+      "sha256": "50b9a25219ab844571c1f95a5f25f4599bc9d949f37cd49e773e75540b420d9c"
+    },
+    "tests/browser/fixtures/ant-design-popup-prefix-reference.json": {
+      "bytes": 270231,
+      "sha256": "d22df0957cc419055d954e5e5fcd921c0135499ba3843a31994203b517a54b1f"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-development-reference.json": {
+      "bytes": 399577,
+      "sha256": "010069c8399bb3e16363d780571ab6dfc9d1c3cf26b4d967cc7b56142662faac"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-height-reference.json": {
+      "bytes": 1472226,
+      "sha256": "730cea7a75ea51638cf47c9ab5ce29b4a35db74da862a74b189625b6e4f81f0a"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-near-right-reference.json": {
+      "bytes": 240147,
+      "sha256": "d09cf2a987b5e1a9e3631ab5492aaa6d56b105476f63b82d5e2a61be44253a41"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-nested-reference.json": {
+      "bytes": 867851,
+      "sha256": "6c00e68fa3ec812e48be78724f1fb4c8f34aefaaa11de9dd4d4b6b458950b4b6"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-nested-ssr-reference.json": {
+      "bytes": 18676,
+      "sha256": "0ca6023444fbbee741b43461bf50267f5387c0285a37c9fdbbb7c4f02c0e2267"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-reference.json": {
+      "bytes": 5580317,
+      "sha256": "a2bc4757cd96a00d229df9e3d35ca9f00705421ed3af7020b00dde4612f7940e"
+    },
+    "tests/browser/fixtures/ant-design-popup-width-ssr-reference.json": {
+      "bytes": 97793,
+      "sha256": "ae62faea7d7cdebbfe79fbd956030d07f4152f5de8857f9c05ce3127d5258537"
+    },
+    "tests/browser/fixtures/ant-design-progress-circle-reference.json": {
+      "bytes": 253953,
+      "sha256": "70c9c2be21479b80d24bba60216bb90b2cdecd3034a8b766620844d506c59069"
+    },
+    "tests/browser/fixtures/ant-design-progress-line-reference.json": {
+      "bytes": 179854,
+      "sha256": "d0d02ad56e52ce0ac69c60b9494bf55a9bde4bc95915783c78527a17d4fb9284"
+    },
+    "tests/browser/fixtures/ant-design-qrcode-prefix-reference.json": {
+      "bytes": 159557,
+      "sha256": "014404caab3f2c18c010120e8c8f5609d1831f376f23c0bca9ae1e5f273dbb03"
+    },
+    "tests/browser/fixtures/ant-design-qrcode-theme-reference.json": {
+      "bytes": 193154,
+      "sha256": "ebe02c89e151e9bb68d33c7799c27292230cd7ae5d1232f146a4c5c1ae59c5ee"
+    },
+    "tests/browser/fixtures/ant-design-radio-prefix-reference.json": {
+      "bytes": 958991,
+      "sha256": "24b3f2bee8e352fd9c175d9d2e6446cfb54dbf559d6d01b64e8c36bf849a6549"
+    },
+    "tests/browser/fixtures/ant-design-rate-prefix-reference.json": {
+      "bytes": 563401,
+      "sha256": "893248fd60b5962886bb04aff9a38034b0510fc0edfbc614815ef42071b5f218"
+    },
+    "tests/browser/fixtures/ant-design-rate-theme-reference.json": {
+      "bytes": 369676,
+      "sha256": "f5b350658db1ef64d4e2ebe18583a8da8189909f68a39b0cc6cac247f5698acc"
+    },
+    "tests/browser/fixtures/ant-design-render-empty-reference.json": {
+      "bytes": 34598,
+      "sha256": "59d9cc7fb760092fb381183144a0135a5d79d546d1b96d85c557ed57b1b0b25e"
+    },
+    "tests/browser/fixtures/ant-design-responsive-controls-reference.json": {
+      "bytes": 49606,
+      "sha256": "49d67d2999917f89d124f8e0418e236eb9157ba99fc59ea621f4ee3481cd6d77"
+    },
+    "tests/browser/fixtures/ant-design-result-reference.json": {
+      "bytes": 520802,
+      "sha256": "411da0e067ba86e7f2259959ac502053a786f28b378f6feb1d333165c7a0067a"
+    },
+    "tests/browser/fixtures/ant-design-segmented-config-reference.json": {
+      "bytes": 97937,
+      "sha256": "125e31402d338c33a8961b48529ec325e4e90d232aaa1c343dea83a33dc1676f"
+    },
+    "tests/browser/fixtures/ant-design-segmented-prefix-reference.json": {
+      "bytes": 270706,
+      "sha256": "83042d545a927a28a620f6ce22482d7815478248dfa9e336e94760d5c7e28a7c"
+    },
+    "tests/browser/fixtures/ant-design-segmented-theme-reference.json": {
+      "bytes": 198073,
+      "sha256": "e4780de81bf0e95818c30a47ae2dcc78a4c83f987d560ff9eb25db3e4c8c0f34"
+    },
+    "tests/browser/fixtures/ant-design-select-components-ac-style-chromium157-reference.json.gz": {
+      "bytes": 470091,
+      "sha256": "4e2cb3c9a40e69a44876065d89bc37ac791b178843c6953cd3f1b48c67a1a1b3"
+    },
+    "tests/browser/fixtures/ant-design-select-components-ac-style-reference.json.gz": {
+      "bytes": 470092,
+      "sha256": "ff1f3fce5ed820ce8a3dd7bfc2431c21352ef6bc97332e37e0ff02c15c07ac21"
+    },
+    "tests/browser/fixtures/ant-design-select-components-ac-style-source-manifest.json": {
+      "bytes": 1701,
+      "sha256": "7f3a9c6597924082f083b34dfdd6e5f98bf4edf728709e3715a0d946f0b095a8"
+    },
+    "tests/browser/fixtures/ant-design-select-components-ac-style-ssr-reference.json.gz": {
+      "bytes": 137095,
+      "sha256": "fb28412c8bbb1ad899a353883803975e03dc68fd7258263d35a09e2da475632f"
+    },
+    "tests/browser/fixtures/ant-design-select-components-chromium157-source-manifest.json": {
+      "bytes": 9078,
+      "sha256": "f051a2c49a863bd30b9fbf7e6e5dd4605ce9ba486610ec65c7576b203c9b66cd"
+    },
+    "tests/browser/fixtures/ant-design-select-components-flow-reference.json.gz": {
+      "bytes": 1730770,
+      "sha256": "1b76936cfdcbd00deece5fefbec1a24b0522fd0c22136891007c34146abfea10"
+    },
+    "tests/browser/fixtures/ant-design-select-components-flow-ssr-reference.json.gz": {
+      "bytes": 225398,
+      "sha256": "713b590f2f3bc848c117824a465ab47c001b05ed2a933802ed35e938af0e22ae"
+    },
+    "tests/browser/fixtures/ant-design-select-components-hydration-ownership-reference.json.gz": {
+      "bytes": 1764888,
+      "sha256": "a8be2ee627031e98fee1c1cdeacd7c6e2e893463f68233be79059d61a92f027a"
+    },
+    "tests/browser/fixtures/ant-design-select-components-hydration-ownership-repeat-proof.json": {
+      "bytes": 11549,
+      "sha256": "b1526a6d75b4ded32ddc1a3a26907d936bd69ea935dcf1596cad40a9933f5c07"
+    },
+    "tests/browser/fixtures/ant-design-select-components-hydration-ownership-source-manifest.json": {
+      "bytes": 345867,
+      "sha256": "02a2f57dd06aa4c8b41c038ac3e8b826fa5f523988e1653ab421a869b0b4f679"
+    },
+    "tests/browser/fixtures/ant-design-select-components-hydration-reference.json.gz": {
+      "bytes": 17521,
+      "sha256": "24d7ab4aabfb316c2df5fb4ad218d992213d6378b9ead8182ad40fbc3a324b7f"
+    },
+    "tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json": {
+      "bytes": 3089,
+      "sha256": "fd41ec3665313599f4841ccc3ea6edef155da80a7917f309bd481ddaac09fa51"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-chromium157-reference.json.gz": {
+      "bytes": 2043530,
+      "sha256": "ad7f834a632c2b9ad9057785ed1c3eae7943798e8a7b1fb429f43740d857ffc3"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-composite-reference.json.gz": {
+      "bytes": 2875858,
+      "sha256": "80207fde1a75f776837b56b2f74485a8065fa4f63b37993d83f618124c8a651d"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-composite-ssr-reference.json.gz": {
+      "bytes": 12728,
+      "sha256": "e5de2a508ea60393ce4fc744ef7aebb57ff1ff02163946560a3a5ebad49fbc31"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-keyed-reference.json.gz": {
+      "bytes": 2055092,
+      "sha256": "07bd199697c71be2bb4b567a94dfa941ed4991f36a7efd2f36ed84686676217b"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-keyed-source-manifest.json": {
+      "bytes": 1798,
+      "sha256": "9e311066d998d66cde74a4f450f008afa56a6c40e4d5a1f0e52415b871264b2d"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-keyed-ssr-reference.json.gz": {
+      "bytes": 278521,
+      "sha256": "080a164863154e42baccb0196e48ff674c63f0968479201cffc97c3d2f9f10da"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-reference.json.gz": {
+      "bytes": 2043530,
+      "sha256": "cbcd11fd0a091134f2699eb91abeaa0378986ede63a64b257c6c1ada0bf6244e"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-source-manifest.json": {
+      "bytes": 3182,
+      "sha256": "1f4b8b82cba38c3012daa360a89996430d52757ada4388dcf44de2b0604047ae"
+    },
+    "tests/browser/fixtures/ant-design-select-components-modes-ssr-reference.json.gz": {
+      "bytes": 276024,
+      "sha256": "d602765c71cc45f11c2c6aa1164a19b765c6113cc1a4fdc2b2181854b5ee27a2"
+    },
+    "tests/browser/fixtures/ant-design-select-components-own-style-init-csr-first-reference.json.gz": {
+      "bytes": 6467865,
+      "sha256": "5b7eb875ef6b9c9e19487e7da88359ef940f02aa6eae9f28470a9635a01ea9c2"
+    },
+    "tests/browser/fixtures/ant-design-select-components-own-style-init-csr-repeat-reference.json.gz": {
+      "bytes": 6468808,
+      "sha256": "2ccd71fa894a4ed94325c221cd6a6bb2ad09d082e67f18063caf35cf58d3de77"
+    },
+    "tests/browser/fixtures/ant-design-select-components-own-style-init-hydrate-first-reference.json.gz": {
+      "bytes": 22100630,
+      "sha256": "107ce7a86af25ae957fc59b82bc6645ec384cae751c6c15079da399c11405e0a"
+    },
+    "tests/browser/fixtures/ant-design-select-components-own-style-init-hydrate-repeat-reference.json.gz": {
+      "bytes": 22100782,
+      "sha256": "e15a60b2427d554d410f3dc6042eb37447d6d360e303e5110eaea41b66df0b1f"
+    },
+    "tests/browser/fixtures/ant-design-select-components-own-style-init-source-manifest.json": {
+      "bytes": 8828,
+      "sha256": "887a79caeb01d8a246e417aa511a3e451aba5b567ba840caacfee35cf819deff"
+    },
+    "tests/browser/fixtures/ant-design-select-components-own-style-init-ssr-reference.json.gz": {
+      "bytes": 18918,
+      "sha256": "c932dd27b2f007a82beae1930c491028a424814ac02f86430f072bbd7e688c68"
+    },
+    "tests/browser/fixtures/ant-design-select-components-reference.json.gz": {
+      "bytes": 485314,
+      "sha256": "6dc7115a58ea1d69b08607b1a735c1e0c039e60ac18e02f1c00668d3c36cbe56"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-reference.json.gz": {
+      "bytes": 852045,
+      "sha256": "9df4ef982f1cec94d704276630eeed53c9dcbbccd6ab2bedca4a39ca5983a702"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-source-manifest.json": {
+      "bytes": 1812,
+      "sha256": "e3ab2165e4d07a7e37d0370f88fc53e0aeae13b2f713027bac4ffdc672528366"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-ssr-reference.json.gz": {
+      "bytes": 20572,
+      "sha256": "36c46d973f0a173e7a7bddf2446e5e63a2c3223ddb7747f674864c1ffce42070"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-reference.json.gz": {
+      "bytes": 4115582,
+      "sha256": "326fcfec346d0601feb6f500edcad776abb23af44e7988d245feb515e8db1207"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-repeat-proof.json": {
+      "bytes": 186541,
+      "sha256": "4461fc145bd5f60cb79272381e6d24f892c055160aa81d6ddedc622d0764f8cb"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-repeat-reference.json.gz": {
+      "bytes": 4172232,
+      "sha256": "bf5b6bdabeb2869b748905194c72e47aa764676a7a1b016b00318bb3226af3b5"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-source-manifest.json": {
+      "bytes": 382260,
+      "sha256": "8341c95e91cfe93baa76715785cf2039f80977864459717720c78a48415ad2e8"
+    },
+    "tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-ssr-reference.json.gz": {
+      "bytes": 57800,
+      "sha256": "b9b2bc65605a5013ff1a28e40446acf0f63f40e08bf64927f6e04c31a5b6f175"
+    },
+    "tests/browser/fixtures/ant-design-select-components-source-manifest.json": {
+      "bytes": 3222,
+      "sha256": "ed91573d1445e2978082157fcf6382c4c40a5224dc6aefed6e2d80b1e417c2cc"
+    },
+    "tests/browser/fixtures/ant-design-select-components-ssr-reference.json.gz": {
+      "bytes": 76839,
+      "sha256": "0c479d32a14b5692c093bb5cbfccbe7e1616a6b3ca5aeb7884552714e7626e9f"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-cached-option-reference.json.gz": {
+      "bytes": 112895,
+      "sha256": "8853919e17555a9efb20412247ac60294e05ad48b3a9b6ace3b6a33021b04a6d"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-cached-option-source-manifest.json": {
+      "bytes": 5909,
+      "sha256": "953888e3eaf15923cf6c8b0246bf23f767e4084a0989f485914e06de32b69579"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-cached-option-source-protocol.json": {
+      "bytes": 9774,
+      "sha256": "f3b0ed104dc916bbcb429bf48682c0b6fb2f2b7cd5507a2277df37d05487a735"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-capture-review.json": {
+      "bytes": 85967,
+      "sha256": "54486a8c288b9473d4ae509134d0c4c901d260816306bf900705bd1a512a67cd"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-reference.json.gz": {
+      "bytes": 607773,
+      "sha256": "3a7f98b08b5741cc7d7f976df7f39979de333d82ed576510d64fd07ded5146ff"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-source-manifest.json": {
+      "bytes": 23525,
+      "sha256": "10be72298454dad04a9bfbf32e678ffa72331abbced70103341433c471fd3e4d"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-source-protocol.json": {
+      "bytes": 513946,
+      "sha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-handles-ssr-reference.json.gz": {
+      "bytes": 47563,
+      "sha256": "2ef5f431f4cc0e73e1623e70052078fcb1877c49c20aec2f112bac994eeef2bd"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-first-reference.json.gz": {
+      "bytes": 1902674,
+      "sha256": "4b0fa1c3d223b25cda8b56678e58c7b9e29e40a492c07657abe786e946b395ea"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-repeat-reference.json.gz": {
+      "bytes": 1902685,
+      "sha256": "752011e3e6e217078a58b70ecf09806edfbb59ed40c6e33d4c9d89d1a7305f0b"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-source-manifest.json": {
+      "bytes": 5493,
+      "sha256": "2dff325c99283488e50200fcbdf2709da976964d92d52ce6b4060d2369bb1252"
+    },
+    "tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-source-protocol.json": {
+      "bytes": 164563,
+      "sha256": "33a7039d7f906c4bf54be36c49c65bc5d94d1f14cfb70feb752c1f512e344c76"
+    },
+    "tests/browser/fixtures/ant-design-select-container-reference.json": {
+      "bytes": 17703,
+      "sha256": "61c7f9b78fcec5453eee080d8e946cd973a0758f674cfb1362d089f968863490"
+    },
+    "tests/browser/fixtures/ant-design-select-data-aria-reference.json": {
+      "bytes": 1067404,
+      "sha256": "2f11b06e680da750bcfe675020ddb331c2bcce02cdcda2bd65775e3204b322f8"
+    },
+    "tests/browser/fixtures/ant-design-select-data-attributes-reference.json": {
+      "bytes": 8022152,
+      "sha256": "95c56926369a18bb7f3b10ec13e8a697789b74e387a94f5ff5f87e4555162030"
+    },
+    "tests/browser/fixtures/ant-design-select-data-cache-native-reference.json": {
+      "bytes": 691016,
+      "sha256": "bb2db7a51a85fcd54281e664077ba568737c2cc3d59c6bfba92f81219a3db870"
+    },
+    "tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json": {
+      "bytes": 2649525,
+      "sha256": "ff98cfb57e40d5fd5938d3c24ffdfeb056e604f2e121f586fbf29ca92f8473d6"
+    },
+    "tests/browser/fixtures/ant-design-select-data-label-native-reference.json": {
+      "bytes": 1177036,
+      "sha256": "6302c9c9724aaad0126b18e7cf8049883f86a520154da3b882f0009f7561ec70"
+    },
+    "tests/browser/fixtures/ant-design-select-data-reference.json.gz": {
+      "bytes": 1382654,
+      "sha256": "ea2c220dad8e678aee530c2d25c077cc9676e05fc59e70c05b46203fbae453e7"
+    },
+    "tests/browser/fixtures/ant-design-select-data-ssr-reference.json": {
+      "bytes": 6124336,
+      "sha256": "d47fe13d2d13164617aa1ab7b301801480b29b07da4677dc68e40927cea703a0"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-boundary-source-manifest.json": {
+      "bytes": 8053,
+      "sha256": "bba2d2413ea7cecfe08c9c8978b265c5bdc46b19cd252ad7b07d4c9bce5934b1"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-close-reference.json.gz": {
+      "bytes": 895459,
+      "sha256": "01d9a6ad6df1284483385366d6a313207f203a1cb3489b5c384fd6c81c8bd5be"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-edges-reference.json": {
+      "bytes": 12539,
+      "sha256": "cdba9aad852ab404b2d8b836a4157ffa660beab8e1fed37add05b477d47ead8f"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-menu-focused-reference.json": {
+      "bytes": 8119,
+      "sha256": "0a55a0399ab8faec321b0a7d9ac6e6f5a29d028ac5960c81314e852a383e171f"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-menu-reference.json": {
+      "bytes": 7245,
+      "sha256": "6160ac68d7b4630962d3e2fa9f33d48857a3b95e5be2751add81a8292f715d44"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-plain-empty-reference.json.gz": {
+      "bytes": 376417,
+      "sha256": "9ddc1197dd9bc64661c3c5b8b6fc99ad79a1278cc835a13c155cc2f6c9e5dc81"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-reference.json.gz": {
+      "bytes": 2060389,
+      "sha256": "dce7960198102e5446218d588811cfc609040e2ae5a761d8a137759a544664f8"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-repeat-reference.json.gz": {
+      "bytes": 2062355,
+      "sha256": "85566bdc1e921b575fb77e56267cf4cbd4155bc172409f4944ef4986f465b894"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-source-manifest.json": {
+      "bytes": 4549,
+      "sha256": "633af505c8539aa12983fd4fe2681b7d187dafbd2bbd658e960a7d547b29ffc3"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-ssr-reference.json.gz": {
+      "bytes": 493335,
+      "sha256": "55622220bed081c183df3821e5d98220fceda5acb9d5a92b75a0a5f10379a75f"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-stop-reference.json": {
+      "bytes": 8390,
+      "sha256": "38f52a92e16ad3bcda670e305e910a901e161f5f272c6a20e98e3b2bba772806"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-sync-reference.json.gz": {
+      "bytes": 2062357,
+      "sha256": "1a0874a4975c4a806e95804e13bb5fd77fc865e01ee810275481a7c62668c464"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-sync-repeat-reference.json.gz": {
+      "bytes": 2060393,
+      "sha256": "3699ebe18b54110bb08c0aa8fc6f86a84696a17f8f1625ea7e196109edc00c91"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-tags-enter-immediate-reference.json": {
+      "bytes": 6560,
+      "sha256": "8495c6c5f8b685d90ba862b670af2cc323f338ac6d34da065b7dd88e25530f70"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-tags-enter-immediate-repeat-reference.json": {
+      "bytes": 6811,
+      "sha256": "d60cd90b8c40c69e8c649fc18aa06849d8e7ee6a81df12b6bf17670346e827b5"
+    },
+    "tests/browser/fixtures/ant-design-select-icons-tags-enter-reference.json": {
+      "bytes": 9834,
+      "sha256": "cb2d34fd31291486340080fe03ddfb932364846ec40e151c479b2b22364228da"
+    },
+    "tests/browser/fixtures/ant-design-select-max-count-reference.json": {
+      "bytes": 15524,
+      "sha256": "953e1be6f789397ba775d027fab385c1fffcfa5bc9ede549c02fd2ef02a89e09"
+    },
+    "tests/browser/fixtures/ant-design-select-metrics.json": {
+      "bytes": 169802,
+      "sha256": "2500d8a4d9cf0e1c68d7840d7ab3c61098b2b2d4da5c3d638ae4abae704e70b6"
+    },
+    "tests/browser/fixtures/ant-design-select-open-reference.json": {
+      "bytes": 13592,
+      "sha256": "5f0757d706f22c8ba1739ea945e898dc6ceb06fdd1d634575483a1ad25558289"
+    },
+    "tests/browser/fixtures/ant-design-select-option-render-reference.json": {
+      "bytes": 45720,
+      "sha256": "01e20f018c559d758e8a59513278c29ab9751c7ff2533922fa423a0dd3d23740"
+    },
+    "tests/browser/fixtures/ant-design-select-owned-overflow-reference.json": {
+      "bytes": 1811,
+      "sha256": "5ede9056b4a02ee3b056e6c687c93353af0807d5d31cde5581147803c42df67c"
+    },
+    "tests/browser/fixtures/ant-design-select-prefix-reference.json": {
+      "bytes": 184287,
+      "sha256": "0aaabb35d8db1d8c29c358000bbb6b5ba7489de7f9f4cb1cbe48a4cda734b0c1"
+    },
+    "tests/browser/fixtures/ant-design-select-responsive-tags-reference.json": {
+      "bytes": 18595,
+      "sha256": "89ea2ce31687083e893c623d77d36d58dc8df5a05c322dc57aaf0ad932e51d45"
+    },
+    "tests/browser/fixtures/ant-design-select-sort-reference.json": {
+      "bytes": 25092,
+      "sha256": "fa6f1d7fbc8381ce3f19b8c3b990a35d10e8e94d9b0ec8254499225a47859211"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-context-reference.json": {
+      "bytes": 3092745,
+      "sha256": "7916eb6af8dc39e3e1866a1aeb2bfef034f302a59fecbd32765a15777433314d"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-context-ssr-reference.json": {
+      "bytes": 259599,
+      "sha256": "a7877ee736fc894f9579fa404901e8bc939bd9621238fd27793bbbdbd3ce309e"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-edge-reference.json": {
+      "bytes": 3443552,
+      "sha256": "06795b3a7ec0185ab9b5929e25ccc42bd5eff100bba87bb56c836b40a3f24f39"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-input-width-own-reference.json.gz": {
+      "bytes": 175688,
+      "sha256": "7e6e4a9bf0fa6e5d0e26563d819607d205cfa6eda3c96e1653081a6c34b5d8de"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-input-width-own-ssr-reference.json": {
+      "bytes": 125257,
+      "sha256": "dc323b41357fb52b0d3ace7ca08988abf133bb9e3153ac2674708279c90c1a05"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-omission-default-reference.json": {
+      "bytes": 3164603,
+      "sha256": "ee333b6be254c9f264f8e897a18146cf5ef2c94c189b46b3a675ae4f16c4fdde"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-omission-reference.json": {
+      "bytes": 4639913,
+      "sha256": "7c92067411c25f5515a9b4e389127879c861fa90b5d9b335fed7fd8724421010"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-omission-ssr-reference.json": {
+      "bytes": 434703,
+      "sha256": "a7652d636039b7ca7a034f0e19c2cc6d08c163bba63c94a30960c866d87109cb"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-omission-width-reference.json": {
+      "bytes": 637821,
+      "sha256": "37369ae387b5af9277a62d32c544545885dd2aad8dcde990cb5ccca83351b891"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-omission-width-ssr-reference.json": {
+      "bytes": 179645,
+      "sha256": "f28e83c44a6bc68501e1fdc0f781d10938f53c6ef243255d759b4b2413e4cd5a"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-reference.json.gz": {
+      "bytes": 1410555,
+      "sha256": "836623978050d863893226a864f3f6b23b0daf6cfcf2614b2a6381ce6c4b3cd1"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-ssr-reference.json": {
+      "bytes": 3183815,
+      "sha256": "53400dff120a7bb4caf01a242ced30c5522096255ab97cb7f08ac5b2e4ee7375"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-style-history-hydration-reference.json": {
+      "bytes": 7553192,
+      "sha256": "750ed241a637dbca3d5e20415b23641eba19ab251de22796c19c81a51470fda8"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-style-history-reference.json": {
+      "bytes": 1315713,
+      "sha256": "dccfb9125276b92582645226ced7b4387492fa660a3deb95436b257c9258e7ad"
+    },
+    "tests/browser/fixtures/ant-design-select-surface-style-history-ssr-reference.json": {
+      "bytes": 88086,
+      "sha256": "0bb0050bac2bf73e1821de00385c83c91b9a50c9e090621567f6a143ac257c66"
+    },
+    "tests/browser/fixtures/ant-design-select-tag-count-reference.json": {
+      "bytes": 18239,
+      "sha256": "2ac690ef8c2dc1039047c5d6094b5a2b2b9a763985d175f99179c0760464d7ed"
+    },
+    "tests/browser/fixtures/ant-design-select-tag-render-reference.json": {
+      "bytes": 11907,
+      "sha256": "538617006caee48bf3803cd48392493c11f1a8a9f4c376dc83132dba6daaaad6"
+    },
+    "tests/browser/fixtures/ant-design-select-tag-text-reference.json": {
+      "bytes": 8474,
+      "sha256": "641240db4596ff9222a81708af95fc7c012aaa2b9c8267841c62b0d9d0071cf9"
+    },
+    "tests/browser/fixtures/ant-design-select-tags-interaction-reference.json": {
+      "bytes": 12449,
+      "sha256": "60d8eb491762c5d3b0e2be48dfef79d2bd82076479a0f24a1a05a1e1bf08e307"
+    },
+    "tests/browser/fixtures/ant-design-select-tags-options-reference.json": {
+      "bytes": 17273,
+      "sha256": "6660d07829944e16b400f88062912265d6efc8bb7d99f827c80b26d9851564c8"
+    },
+    "tests/browser/fixtures/ant-design-select-token-separators-reference.json": {
+      "bytes": 12274,
+      "sha256": "d7180ab23146913cc7c5404bdadcd2a8564f3712a3d012d344ee807b47aa69d6"
+    },
+    "tests/browser/fixtures/ant-design-select-value-cache-native-reference.json": {
+      "bytes": 663425,
+      "sha256": "a07683c962316e2c574052a0859da78c4ed47798fe355c9008257e0ec255301e"
+    },
+    "tests/browser/fixtures/ant-design-select-value-live-reference.json": {
+      "bytes": 2738539,
+      "sha256": "ab2c4f600296233201ccc712ece548319cde73b548eb99532f4a86fdf4a3b99a"
+    },
+    "tests/browser/fixtures/ant-design-select-value-opacity-reference.json": {
+      "bytes": 650803,
+      "sha256": "e6ada4d37004ee45bef3b7c77cf632765d5b3b3ffd7301671fff5d9b90fd07bd"
+    },
+    "tests/browser/fixtures/ant-design-select-value-reference.json.gz": {
+      "bytes": 1390410,
+      "sha256": "340d3d8d3f4b20943238bc25cfc19fdd054505561ed2528110514a50274b8347"
+    },
+    "tests/browser/fixtures/ant-design-select-value-ssr-reference.json": {
+      "bytes": 4603029,
+      "sha256": "963cebc354e00e74ccac39ce4d32c0d99ae92dfe61731eb74a1eb978b7ca3b06"
+    },
+    "tests/browser/fixtures/ant-design-select-variants-reference.json": {
+      "bytes": 18134,
+      "sha256": "1bbc637d1a68a602a9c9608e9d3027aeac22acad7a1eae32fd0d5c6e43b4fe4b"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-closed-diagnostic-reference.json": {
+      "bytes": 1297534,
+      "sha256": "7b26855d91e0bae2b90e5888de155179e0b7a93792fa98d8cd012a9b45835de2"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-edge-reference.json": {
+      "bytes": 468644,
+      "sha256": "d24d994e056eca0b2f3901f050f948474c36ce3135caf4d324395c93f984097a"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-empty-native-reference.json": {
+      "bytes": 409102,
+      "sha256": "0ce7ea77d0f138e6a8acbf72ea73a6bec42f5b814a2a7c538c0da191d871e98f"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-hover-reference.json": {
+      "bytes": 469933,
+      "sha256": "8c4bfff041e1529bc8bfd44c1ed9202dc86d6a5340084a3fe226a00e2d69a513"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-initialization-reference.json": {
+      "bytes": 1595523,
+      "sha256": "c98e17f2203792f37c0bb175c3c78f5ab04cb9f6f94e9e778e9875da4a803bfc"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-native-reference.json": {
+      "bytes": 1710652,
+      "sha256": "3bc8b88b919942a97d8339cc5607696126613aab7ef2eef702182265721faff9"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-query-native-reference.json": {
+      "bytes": 3805235,
+      "sha256": "b19ec834c7bfc7f9f1c977f591144ee39787680d8ffeca748e2917d403f185bb"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-reference.json": {
+      "bytes": 41545080,
+      "sha256": "52dfac8270e633900801776743a11be8869d8e9ef18bb43ff23526cb1b416392"
+    },
+    "tests/browser/fixtures/ant-design-select-virtual-ssr-reference.json": {
+      "bytes": 143168,
+      "sha256": "5c51aadde1a0360a292890ba554764649ba44ed255de9ceb5b691ab2b4ae5fca"
+    },
+    "tests/browser/fixtures/ant-design-skeleton-element-reference.json": {
+      "bytes": 150588,
+      "sha256": "4aa2662a37bdbc17e47c8cc2d486b65a70039186a474370b43a9daecb62caefb"
+    },
+    "tests/browser/fixtures/ant-design-skeleton-main-reference.json": {
+      "bytes": 74395,
+      "sha256": "d7127ae12de260200d8bcd2a55775c29c86505d1f1f013ac29538563818510d8"
+    },
+    "tests/browser/fixtures/ant-design-slider-prefix-reference.json": {
+      "bytes": 450168,
+      "sha256": "2559dfc34d2f0e67f43dca8a38d5b56f1f38b0627fc125a60f3e1adc4530302b"
+    },
+    "tests/browser/fixtures/ant-design-slider-scalar-reference.json": {
+      "bytes": 153564,
+      "sha256": "17334dedb14a6b53073968184acec7bcb4c4e9c4f76590e0b4a1dfb432d2a45d"
+    },
+    "tests/browser/fixtures/ant-design-slider-theme-reference.json": {
+      "bytes": 349673,
+      "sha256": "ff487024a4b9d96abb1e35018bb48cc02f6525866bc9df4110de91b49b8b8c45"
+    },
+    "tests/browser/fixtures/ant-design-space-prefix-isolated.json": {
+      "bytes": 4127,
+      "sha256": "fc53f714b8a41e1a0ad0b104951abe3f5c95994d9163d3c34320058a21196177"
+    },
+    "tests/browser/fixtures/ant-design-space-prefix-reference.json": {
+      "bytes": 230563,
+      "sha256": "e6baec2804b2048680fe024d063c2af6d0875a0c009b1b47c14c876f048d1ce2"
+    },
+    "tests/browser/fixtures/ant-design-space-theme-reference.json": {
+      "bytes": 351133,
+      "sha256": "179e8313010065a16219b157fabf98ac2f7bb7a762154ac5d5e6cf6e79a64b51"
+    },
+    "tests/browser/fixtures/ant-design-spin-source-reference.json": {
+      "bytes": 112837,
+      "sha256": "cab4cbf4862144e91100070a784d1244a33639c44129b626e8fbb1b1d069a52a"
+    },
+    "tests/browser/fixtures/ant-design-splitter-focus-reference.json": {
+      "bytes": 4352,
+      "sha256": "0dd0d0adb1b11679ef2f6cae93fb66ba554d93492af141d9aebe4f5acad52b75"
+    },
+    "tests/browser/fixtures/ant-design-splitter-prefix-isolated.json": {
+      "bytes": 3691,
+      "sha256": "5f361d4ea00e1b3f881e555c1e6572981b7127dbfd62f17454446a757f437624"
+    },
+    "tests/browser/fixtures/ant-design-splitter-prefix-reference.json": {
+      "bytes": 224435,
+      "sha256": "586f32f955f5ee81959ca8716d851797b9ab7d7d540db8c5e7447ea93814ca60"
+    },
+    "tests/browser/fixtures/ant-design-splitter-theme-reference.json": {
+      "bytes": 263280,
+      "sha256": "7f3662fe0ae9f1860ff2d8fece856f9b45eefbfa8d6467b68a8ea6440b790a13"
+    },
+    "tests/browser/fixtures/ant-design-statistic-config-reference.json": {
+      "bytes": 210727,
+      "sha256": "3e33800ea4040e06479bfb1e3453a50537107b8762173411c9b69f977b7772ff"
+    },
+    "tests/browser/fixtures/ant-design-statistic-prefix-reference.json": {
+      "bytes": 163810,
+      "sha256": "ae8b2a724d20a58c742cbacce05184488b1c184b41c22c5d6d0ae89b3ef704b6"
+    },
+    "tests/browser/fixtures/ant-design-statistic-theme-reference.json": {
+      "bytes": 84488,
+      "sha256": "ce1f6271f7367f9e367429325dc5ad721f0b8e7e832ed7360ff8f534c3aef359"
+    },
+    "tests/browser/fixtures/ant-design-status-prefix-reference.json": {
+      "bytes": 371604,
+      "sha256": "9eb0ebf963e43f3026c2484037a31d66603ba1ae4876390842459890b97b16be"
+    },
+    "tests/browser/fixtures/ant-design-steps-config-reference.json": {
+      "bytes": 368299,
+      "sha256": "4df0694521e55df4f20d4b8a7d3db7edba80c246d169577e68a2671dcc1b8736"
+    },
+    "tests/browser/fixtures/ant-design-steps-metrics.json": {
+      "bytes": 551232,
+      "sha256": "ac3a1893a35c02d45a567931a3ad8def67a8e35802c2709d8985b2fa0446f017"
+    },
+    "tests/browser/fixtures/ant-design-steps-prefix-reference.json": {
+      "bytes": 472415,
+      "sha256": "b1b28c4c915248642409f98f527517ec1797e846b1f8a6f0275787de7c36e1de"
+    },
+    "tests/browser/fixtures/ant-design-structure-prefix-reference.json": {
+      "bytes": 57107,
+      "sha256": "02cbd9a6eccc6354e11e155860f33130377bab2944ed649ab5e001211aa91ede"
+    },
+    "tests/browser/fixtures/ant-design-switch-prefix-reference.json": {
+      "bytes": 139071,
+      "sha256": "582ddb32c066b9ae2ba631aea4bd79ecf562c0c7aa7547ad6b3cc4dd2e5b6395"
+    },
+    "tests/browser/fixtures/ant-design-table-column-classes-reference.json": {
+      "bytes": 11809,
+      "sha256": "ab051893cc917854d0fdfc220d4c7862dc30bb9b68e93aaddb8413b88385f359"
+    },
+    "tests/browser/fixtures/ant-design-table-column-hidden-reference.json": {
+      "bytes": 22777,
+      "sha256": "bd63033f205d47086c0a3ca696a69dcf23e10bab23846484e42c44f8f8b0b8ae"
+    },
+    "tests/browser/fixtures/ant-design-table-header-reference.json": {
+      "bytes": 132458,
+      "sha256": "57c4bf6eb0ab36238106f2d687920a4a36b0a66e0b63af82327022e24415bd35"
+    },
+    "tests/browser/fixtures/ant-design-table-hover-observation.json": {
+      "bytes": 2447,
+      "sha256": "ad6a9e7e454c397f7fe589108945c6aa2b16a5694f06bbd7e6bb3a05073b6661"
+    },
+    "tests/browser/fixtures/ant-design-table-hover-reference.json": {
+      "bytes": 29006,
+      "sha256": "8a204ba7d5afd1389e9adf7eb0e525ea8ea82c9df908fad8e53d9b1dcfafe594"
+    },
+    "tests/browser/fixtures/ant-design-table-panels-reference.json": {
+      "bytes": 208099,
+      "sha256": "4ad715fb563d39f7a020be31ea0d2a17c2680453632c0e47e8afe84c4face50d"
+    },
+    "tests/browser/fixtures/ant-design-table-prefix-reference.json": {
+      "bytes": 340647,
+      "sha256": "2b7bac80086124d4f42b45c808ebe5989e0b0bd5437f4d5d44010121b3f6b259"
+    },
+    "tests/browser/fixtures/ant-design-table-root-style-observation.json": {
+      "bytes": 5441,
+      "sha256": "e3e09448eee416b8a3b7780f1614c30db18535a870cbe01026be7544217abc64"
+    },
+    "tests/browser/fixtures/ant-design-table-row-classes-reference.json": {
+      "bytes": 2829,
+      "sha256": "409589f87143fb3873b7bd450e19e275eea0ad963fe524c20513dfdb7ed4772b"
+    },
+    "tests/browser/fixtures/ant-design-table-row-scope-reference.json": {
+      "bytes": 62650,
+      "sha256": "81c3f994188d8403ba96ccbe79c8e8bf9113080ea57b2b5e1f5b7ed12e9788a3"
+    },
+    "tests/browser/fixtures/ant-design-table-theme-reference.json": {
+      "bytes": 1311298,
+      "sha256": "a45b66819e6bc7f62105eaeb648a83413e567e23f51c6a10a9fcdbb4a8cb99a5"
+    },
+    "tests/browser/fixtures/ant-design-tabs-destroy-reference.json": {
+      "bytes": 1430,
+      "sha256": "05778e3c5b4901933c38d0fa48bbbe582d20b4989984a8fbaa6faaecb8e7b97e"
+    },
+    "tests/browser/fixtures/ant-design-tabs-editable-metrics.json": {
+      "bytes": 71109,
+      "sha256": "752aad78804563eb569652debbf2c4b2fce5808d9a91a3d0e1f75d4782b41f70"
+    },
+    "tests/browser/fixtures/ant-design-tabs-indicator-metrics.json": {
+      "bytes": 31172,
+      "sha256": "934ed043dcaa30130f3b5a702d2f5871aaf3c9bd136d1f1f1fce13db22021f3f"
+    },
+    "tests/browser/fixtures/ant-design-tabs-layout-metrics.json": {
+      "bytes": 109149,
+      "sha256": "7f8dfe8a0a8c88847474e52c8ada870d128b93041c0aa097d6f1f309d1e33249"
+    },
+    "tests/browser/fixtures/ant-design-tabs-more-position-reference.json": {
+      "bytes": 50751,
+      "sha256": "b7050d115cec22557e579a4f17a2ec601111271e2acc3f5a465479e4f0baa1d0"
+    },
+    "tests/browser/fixtures/ant-design-tabs-more-runtime-reference.json": {
+      "bytes": 123948,
+      "sha256": "5cb2134f0cab13816d7c83de22b51cddf8a2432623311a07d53048b1fdaf5f54"
+    },
+    "tests/browser/fixtures/ant-design-tabs-motion-reference.json": {
+      "bytes": 156846,
+      "sha256": "db5614a7f93c314057b23aa7f64c6cf3d885ffff4e099b1922190fbe525e8585"
+    },
+    "tests/browser/fixtures/ant-design-tabs-overflow-metrics.json": {
+      "bytes": 147414,
+      "sha256": "e97889ca93ef7c1bd86a3d3ff6d9f924489b626115182ebfc136f248e944f634"
+    },
+    "tests/browser/fixtures/ant-design-tabs-prefix-reference.json": {
+      "bytes": 290107,
+      "sha256": "5838af245a8a5c4c936ac7a7a26df2c23a31e21a7b2c0b621cf7263cdd30ac2f"
+    },
+    "tests/browser/fixtures/ant-design-tabs-render-reference.json": {
+      "bytes": 254180,
+      "sha256": "a25b2dd33b1926f54dacfff7358db8bf9b2aa1a4017fe163c5734a6aaa1ea623"
+    },
+    "tests/browser/fixtures/ant-design-tabs-semantic-reference.json": {
+      "bytes": 62386,
+      "sha256": "93aee6919ee1ff6d3d6d2e7f1b727b4aa33ccf0f133670fe1de68f05935735ee"
+    },
+    "tests/browser/fixtures/ant-design-tabs-theme-metrics.json": {
+      "bytes": 634070,
+      "sha256": "3e4d5b2289e369acc369e8448153f65e434e56e45a1025c2415686a4514979ba"
+    },
+    "tests/browser/fixtures/ant-design-tag-close-reference.json": {
+      "bytes": 71008,
+      "sha256": "f99c020684d58d61d05653bda7728d0d9fedaee1ce9a2305c49993942a1458f8"
+    },
+    "tests/browser/fixtures/ant-design-tag-group-reference.json": {
+      "bytes": 162442,
+      "sha256": "158402e3ccc28894638e58988f4759b047a1532b07858960ca7a3d109b9e7652"
+    },
+    "tests/browser/fixtures/ant-design-tag-prefix-reference.json": {
+      "bytes": 81920,
+      "sha256": "159c977dfdb686174d8c1e1ab371568a46ca28fec164f2b2fc2e10e75516cc9e"
+    },
+    "tests/browser/fixtures/ant-design-tag-style-reference.json": {
+      "bytes": 75404,
+      "sha256": "76b102f25b3ba683900e31d753c21f8c8def7d8836d7ebc0c8c06aed897f28e5"
+    },
+    "tests/browser/fixtures/ant-design-target-container-reference.json": {
+      "bytes": 21653,
+      "sha256": "315c0f62098babb7023bdd247facee7eb0719702aca71238aa0fe4f43902003c"
+    },
+    "tests/browser/fixtures/ant-design-target-shadow-root-observation.json": {
+      "bytes": 1302,
+      "sha256": "4621293947d3d7bbca353cfad6455079c188ca9e2b811795d53d0da20afd3808"
+    },
+    "tests/browser/fixtures/ant-design-time-column-double-click-observation.json": {
+      "bytes": 2941,
+      "sha256": "0ddbfd6503eb26303fd76933d6a3d609b9f9992a52cc79f1d81ba11d636b4acd"
+    },
+    "tests/browser/fixtures/ant-design-timeline-config-reference.json": {
+      "bytes": 242574,
+      "sha256": "d9a07fed963b59abd893189dde451af3cb1babc367c46d51e8b6eedba9d89eef"
+    },
+    "tests/browser/fixtures/ant-design-timeline-prefix-reference.json": {
+      "bytes": 404850,
+      "sha256": "97dd0dedbdeb89de8dff38e0163b395b9c7a65657645e43734b7fab1abae92fc"
+    },
+    "tests/browser/fixtures/ant-design-toggle-metrics.json": {
+      "bytes": 9940,
+      "sha256": "58851d390630f2ad320d40c9da7fe937197005b1c07b893db4ed53e00054c5ad"
+    },
+    "tests/browser/fixtures/ant-design-tooltip-actions-reference.json": {
+      "bytes": 190655,
+      "sha256": "307a26a9fdf46e78001174a7433c0731a442eb87902d30f78c3aa5063f3b0eb9"
+    },
+    "tests/browser/fixtures/ant-design-tooltip-align-reference.json": {
+      "bytes": 97087,
+      "sha256": "be403f3da8da504de7ab3f65768f8a43c66f615cb305d5fb7afdaae17d9679cd"
+    },
+    "tests/browser/fixtures/ant-design-tooltip-content-reference.json": {
+      "bytes": 30031,
+      "sha256": "fc1024e0de9a1dd946a726f7c34782c12f981813b3d00ee47629ef0ccff8133f"
+    },
+    "tests/browser/fixtures/ant-design-tooltip-lifecycle-reference.json": {
+      "bytes": 122233,
+      "sha256": "c06317a08e313a8fb2731b7028d330c72d5ab99f9094bbe4bc9930d4bae7fc12"
+    },
+    "tests/browser/fixtures/ant-design-tooltip-ref-reference.json": {
+      "bytes": 7509,
+      "sha256": "e1f673e16aba9ddd7aa0cb556524db53ce786c44a36d958a2b74273433a41723"
+    },
+    "tests/browser/fixtures/ant-design-tour-prefix-reference.json": {
+      "bytes": 565849,
+      "sha256": "0797b80a863e5ad9f6303e674381c5087091273f759e715250707080eb6055f8"
+    },
+    "tests/browser/fixtures/ant-design-tour-theme-reference.json": {
+      "bytes": 1017391,
+      "sha256": "5e2e038da21079bd5e75f66b2f0f428bc73a08acee8e301cf3610400e41f36f3"
+    },
+    "tests/browser/fixtures/ant-design-tour-z-index-observation.json": {
+      "bytes": 9101,
+      "sha256": "5624e8ab5e93ca6af439502aad250288341728d4fa5c051c2c0cf07b299ff656"
+    },
+    "tests/browser/fixtures/ant-design-transfer-prefix-reference.json": {
+      "bytes": 517261,
+      "sha256": "03d10ec247a7bc01bde4a4473868181949a7c2800c82e19bf11991d4575f24ea"
+    },
+    "tests/browser/fixtures/ant-design-transfer-theme-reference.json": {
+      "bytes": 1769924,
+      "sha256": "e85c9c55ba2a306d0e2bd37101d88dd72755591f7951a078c0459cf8fbf04812"
+    },
+    "tests/browser/fixtures/ant-design-tree-data-model-reference.json": {
+      "bytes": 179458,
+      "sha256": "c3c3f89520caa5e33a5cbabe19ab1bbf2872a9bc2a1ae71e316e69b8fe7ad16d"
+    },
+    "tests/browser/fixtures/ant-design-tree-drag-reference.json": {
+      "bytes": 732644,
+      "sha256": "cd201b356951565bb0e3600af7f4b7099f3203ada61f6e730724f852ebb564ac"
+    },
+    "tests/browser/fixtures/ant-design-tree-drag-ssr-reference.json": {
+      "bytes": 24931,
+      "sha256": "8b95b06b7bb52d40a87b137557b2fbd9f8cb299e2e8cffd98d4a5ca0de72f4f3"
+    },
+    "tests/browser/fixtures/ant-design-tree-expand-action-reference.json": {
+      "bytes": 36232,
+      "sha256": "bef86cf5b1c76493983b2337813148a61aa03f83a6647068004dea28a2fa4b41"
+    },
+    "tests/browser/fixtures/ant-design-tree-expand-action-settled-reference.json": {
+      "bytes": 2660,
+      "sha256": "d9bab0d925b95580cf079d65f41d8743f45166fd4f7491032c51b4f2794a601a"
+    },
+    "tests/browser/fixtures/ant-design-tree-fields-reference.json": {
+      "bytes": 279940,
+      "sha256": "5d18047026eefc7270fd70a0e90a957578c8c3f16bc9afcf39f5cf791e3f485e"
+    },
+    "tests/browser/fixtures/ant-design-tree-motion-reference.json": {
+      "bytes": 201042,
+      "sha256": "f462ed38c29329aec281b71df1392a05eb2af1d04cded108277ac9c0cc61c396"
+    },
+    "tests/browser/fixtures/ant-design-tree-motion-ssr-reference.json": {
+      "bytes": 8374,
+      "sha256": "1e57d42493b554609e74ea64f9746d6b98f24d6b1851301f7b256d11646b0f2a"
+    },
+    "tests/browser/fixtures/ant-design-tree-node-renderers-reference.json": {
+      "bytes": 54031,
+      "sha256": "a0ebd7186af69da9d9fc7970026f315d0fc6e50f83b0329c1756bf225b4b7b3e"
+    },
+    "tests/browser/fixtures/ant-design-tree-prefix-reference.json": {
+      "bytes": 486647,
+      "sha256": "ba9ce42bccd82cf692b39fcb0ec461d3c85f06f8af0f0c0b99c91dcdf347f8c1"
+    },
+    "tests/browser/fixtures/ant-design-tree-scrollbar-reference.json": {
+      "bytes": 119311,
+      "sha256": "e9cc497331bb89c8d203606bd05a0a80e2053d6dec11c8f11f7c1af4c2ca4f9f"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-align-activation-reference.json": {
+      "bytes": 72900,
+      "sha256": "044a91ec3b664f0c0e33c7ffa27055adc5289aa88c410f3b79e20bc4ca4836ce"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-align-frame-reference.json": {
+      "bytes": 11680,
+      "sha256": "cf523e034f6a2862da8b6b02638f5595891705cff47df789a7c79cb48bbde297"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-align-native-flow-reference.json": {
+      "bytes": 31156,
+      "sha256": "8214f6eb1dd4480c691121aefc134f456765e4aca1ca047b52cc3f3f3d367261"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-align-reference.json": {
+      "bytes": 614783,
+      "sha256": "6d0c07cc4b00ac6b1bf492a69cf5b3c5ce556bebe1ae98102dc47a198c44cf50"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-align-ssr-reference.json": {
+      "bytes": 54130,
+      "sha256": "804f15f631fd63550501050a71d591f72d45db972122e186919ce53155ee7ef5"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-checkable-diagnostic-reference.json": {
+      "bytes": 38144,
+      "sha256": "e89a80123c4fa24d8760ca76a48181ff478d638c0986f9cc385c3545f3e0dc09"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-checkable-native-reference.json": {
+      "bytes": 254081,
+      "sha256": "a88b6a68569cc20aebc9d3626892ff64521fb1ce62c3060ced56cba32e847b72"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-checkable-reference.json": {
+      "bytes": 1549070,
+      "sha256": "dce396087d3bf67fd35e33470eef6f856e810557ad8cc8d003588a3a3b7c542a"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-checkable-ssr-reference.json": {
+      "bytes": 79910,
+      "sha256": "ca6fcfd942ee4ef2b75181a5b06e75f1ce4c8b9a73c3b6f2c4ea685af5ffb573"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-components-form-reference.json": {
+      "bytes": 44177,
+      "sha256": "ee075c4179f54ea40560791fdb46455cc61f3480ae06bf47c020ac20aaea59cf"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-data-reference.json": {
+      "bytes": 218750,
+      "sha256": "b0d60923c3ab420d9dd8151206930580a68499497888cbf4932e1202fd241d6b"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-data-ssr-reference.json": {
+      "bytes": 7795,
+      "sha256": "6f8cd85a6653b75eee2a705c372600d6a5cd8586318fa323e44761c5d3a27be6"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-expand-action-reference.json": {
+      "bytes": 88166,
+      "sha256": "29ca232280f2db9db57dba7810cd17df7b66aa7f8b9ec48387152c1bb0f66b8a"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-inert-api-reference.json": {
+      "bytes": 108535,
+      "sha256": "7c040a0f8b28dd304a1328107bd66466a28ab22ca1eda19d55314fe3beedcb6f"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-inert-api-ssr-reference.json": {
+      "bytes": 12085,
+      "sha256": "88544fa18daa594b04f1bb3a04a6fbbaee58d09dc0b38c8e8355873e018e0803"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-input-reference.json": {
+      "bytes": 767872,
+      "sha256": "ebdc8d129f7578fa6615aed6f62e3ae1f8988c5a9bc509c0cf79bdddb47b4b51"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-input-responsive-reference.json": {
+      "bytes": 13082,
+      "sha256": "88fc9a71689ae13c9901f2aa221fc3a7a86208444511f39918c66f73fa44d5a5"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-labels-reference.json": {
+      "bytes": 177772,
+      "sha256": "0e48ac11c4348cd07953ebc02f8c119129dd707a0f64bbd3117273a0e9fe903b"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-labels-ssr-reference.json": {
+      "bytes": 23597,
+      "sha256": "cc3994d8fc43ee933e0741f1d22695e6adf03401a27eb42320c3c694df1e9b19"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-max-count-reference.json": {
+      "bytes": 352957,
+      "sha256": "34822338d27752fd1b6d912353b2a5362e391d355d6b0351908f0d1f80cb6cb3"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-max-count-ssr-reference.json": {
+      "bytes": 8714,
+      "sha256": "5abd95ca3fce21b1bd9205fbcbbb5b706cf021308479131a798adf5e372b7ea1"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-metrics.json": {
+      "bytes": 237337,
+      "sha256": "d8661a1e7e4b80068a21f28526170b0ef9a5ac6102b24fd78993111508f3ceb3"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-flow-reference.json": {
+      "bytes": 87327,
+      "sha256": "1aed99cb4650f96656b23ee13c95ac293fd687fd307becc4cddf8f38fbbd8971"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-leave-reference.json": {
+      "bytes": 109825,
+      "sha256": "b04f7a9788ba1291b26913b65992aa99866b91a639e78ec8204c8a1c85b74299"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-native-reference.json": {
+      "bytes": 300591,
+      "sha256": "f8e45cda2ddf77b648b1eb5308789f8f4b94b472788e32ff7f77947a949081c1"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-prefix-reference.json": {
+      "bytes": 170769,
+      "sha256": "ca3cfcba05b4ab75aa354db6ca0a64067bed26e684a1b5a88f83bea5514b2f23"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-reference.json": {
+      "bytes": 3590863,
+      "sha256": "2560d5c9a30977308ccd8f6f50c66755cf0d6e5565aafa4a6987cb47ba495d3c"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-root-swap-reference.json": {
+      "bytes": 82473,
+      "sha256": "a5108c90bba0cb866cb2ac55ed4a30b941bdd3f66e11f64606f77c44e51d26c0"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-motion-ssr-reference.json": {
+      "bytes": 50932,
+      "sha256": "cc75b68b49fcbc8bd8bc39f3f0cbd75dcd97e0f1bb36a9c008f6fcc4adbb5605"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-nodes-reference.json": {
+      "bytes": 158180,
+      "sha256": "80d0798694c3a0b5ec657611b1edb9078c5a9101d1ded4a4d7ea78f65ab77975"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-pointer-reference.json": {
+      "bytes": 861798,
+      "sha256": "d7e737790230d06cf849f5c240a365410e3e4370857c9e30dc734f0733fceacd"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-prefix-reference.json": {
+      "bytes": 951994,
+      "sha256": "dc951f0f5052aac4fbb1ee9b7c6087acdffcb70da553de1c053669163565daba"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-root-reference.json": {
+      "bytes": 473540,
+      "sha256": "ed270b6551ce0fe30fc0837d101ad3c3a2b566175dd87ebc305fbcdfb44deb8f"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-semantic-reference.json": {
+      "bytes": 255860,
+      "sha256": "3eee0faa80508ef184cce7e77fd46d07e8ec730c69a46f20662e1e21342132ba"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-semantic-ssr-reference.json": {
+      "bytes": 51105,
+      "sha256": "ab9f02983069534bc5952c6aec50deaaf2bb1acbfaad8021a27d1ba7ac922341"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-suffix-container-reference.json": {
+      "bytes": 337858,
+      "sha256": "a3464e6b998c81d152c7b7017e897695de9a1323435018cad04324e82e0111b8"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-suffix-layout-edges-reference.json": {
+      "bytes": 57334,
+      "sha256": "104b61ed9e58e4b044137edc3a701061a301b8fdcfe45395680c3fbd46116acd"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-suffix-layout-reference.json": {
+      "bytes": 1603474,
+      "sha256": "40ca4248398cccc2ef402874c93a6accfdc4e48a587e0a617aecbd45da7444e6"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-suffix-layout-ssr-reference.json": {
+      "bytes": 15581,
+      "sha256": "8eb7684c73127d8dd292c7e1652e3a967788d4fcca3661fb6e6c149c532eacf4"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-surface-reference.json": {
+      "bytes": 79252,
+      "sha256": "df5e35e70de0dd3d1611852a0d02fdd9e2d503bfc054241359d10987d659af9d"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-surface-ssr-reference.json": {
+      "bytes": 21688,
+      "sha256": "cc0f9b570bf7dfd6b866fddb6af6a3ebfaecefed61d6334aa81492f3ca607eb3"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-tags-reference.json": {
+      "bytes": 78761,
+      "sha256": "aafc1c2f4360367b4b9aa591ee6b78affd30180ddeaa0e78b69a085f3a5256f3"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-tags-ssr-reference.json": {
+      "bytes": 43991,
+      "sha256": "58ff81ae414466817c5a88e1313fe32cc0319889daad5de192824669f9b26fda"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-token-reference.json": {
+      "bytes": 36014,
+      "sha256": "63dfa3a7327ad4e3b601584822db2158e532029fa0a152d2b7f5145f1e661f1f"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-trigger-reference.json": {
+      "bytes": 109619,
+      "sha256": "cf845f2cc2ff5efde5275432e240115b1cd87539bc2bbd94d2e5648b9bdc04d8"
+    },
+    "tests/browser/fixtures/ant-design-tree-select-virtual-reference.json": {
+      "bytes": 29419,
+      "sha256": "892bdc9570009f0cdc94d4252c2bf23e3a75f74f4521eb33685ae1409d93b80f"
+    },
+    "tests/browser/fixtures/ant-design-tree-semantic-reference.json": {
+      "bytes": 312423,
+      "sha256": "6ae172f8bd9c6fe984c09093aa97052e04b947cd4783739f241c8872fb34c160"
+    },
+    "tests/browser/fixtures/ant-design-tree-theme-reference.json": {
+      "bytes": 786855,
+      "sha256": "bdb6d065c8b5c8c22a49ad212f82edd3dadd17dcdbfcf026f44b1f27108b40cf"
+    },
+    "tests/browser/fixtures/ant-design-tree-virtual-reference.json": {
+      "bytes": 253176,
+      "sha256": "d753fb31c18da73150511a5bdc3ddb6374efeb8d72e4be820be2707641633690"
+    },
+    "tests/browser/fixtures/ant-design-typography-actions-reference.json": {
+      "bytes": 54135,
+      "sha256": "c46dc278ac92641ba409eaea212ae42fd25d49ce08438ff2946e4ef4f008201b"
+    },
+    "tests/browser/fixtures/ant-design-typography-prefix-reference.json": {
+      "bytes": 288900,
+      "sha256": "8a0abd4c0099a56da9e8e0a8207e6cf9ef8b84e3f45f119b2bee69aef3104eae"
+    },
+    "tests/browser/fixtures/ant-design-typography-theme-reference.json": {
+      "bytes": 1166122,
+      "sha256": "e157390ad0b0c9e2eb6adf735c8df0243ff2bb1f605d5859bed140463f9f514b"
+    },
+    "tests/browser/fixtures/ant-design-typography-tooltip-reference.json": {
+      "bytes": 41463,
+      "sha256": "0af58f24318616e60b131f1e17b67f9e6ace5e6ac86271fdae6d0583613ab1cd"
+    },
+    "tests/browser/fixtures/ant-design-upload-action-icons-reference.json": {
+      "bytes": 28356,
+      "sha256": "ebc7cc54421e0c9307bccba077e01a900cce5e8946044e81e1961728dc957823"
+    },
+    "tests/browser/fixtures/ant-design-upload-batch-disposal-observation.json": {
+      "bytes": 1997,
+      "sha256": "2474a9e53bd8633473e155e72fbbdafc6277018abd30a9088709cd788ddc83f3"
+    },
+    "tests/browser/fixtures/ant-design-upload-config-reference.json": {
+      "bytes": 32865,
+      "sha256": "132bc025379bb4380413495bdc48342dd7b1e39a44cc4b45d798e8722a425366"
+    },
+    "tests/browser/fixtures/ant-design-upload-directory-reference.json": {
+      "bytes": 41203,
+      "sha256": "a7acd7c81dabb48c9877dd35330449006a90854280462e0198cf4b62258a62f3"
+    },
+    "tests/browser/fixtures/ant-design-upload-error-message-reference.json": {
+      "bytes": 3238,
+      "sha256": "de33ebda1b48b85d55fcd4bd53629ab20a73ad2915b0be5cb7527e748817fb6e"
+    },
+    "tests/browser/fixtures/ant-design-upload-icon-render-reference.json": {
+      "bytes": 9946,
+      "sha256": "738a3adb3eb6983d17a2eecd17a7e1d31e7190803c0cbf160ff04b047654e7df"
+    },
+    "tests/browser/fixtures/ant-design-upload-item-render-reference.json": {
+      "bytes": 18030,
+      "sha256": "1a5dd65beea3a41fe0e3e39eda8a1bacd361972fa9f60f26848e5613810b5769"
+    },
+    "tests/browser/fixtures/ant-design-upload-link-props-reference.json": {
+      "bytes": 16592,
+      "sha256": "9e8afbafb5dde4a9aeeba554910024637e7405f198fe5832bf7bc2abdb3ae4fd"
+    },
+    "tests/browser/fixtures/ant-design-upload-motion-reference.json": {
+      "bytes": 85811,
+      "sha256": "779fd1dbbaabd8b55a4da5b8752cc2c5c6853e6594f45f49d074c11b020a493f"
+    },
+    "tests/browser/fixtures/ant-design-upload-paste-reference.json": {
+      "bytes": 9011,
+      "sha256": "483672898e18c764b1032e6ebdc37dfdfca29cabd9cf69f35f4db66f187ef1f6"
+    },
+    "tests/browser/fixtures/ant-design-upload-prefix-reference.json": {
+      "bytes": 858536,
+      "sha256": "0a2f327cdc044a96a531ce12d3f2d3163330923fe5ad42b162629fb36d0fffee"
+    },
+    "tests/browser/fixtures/ant-design-upload-progress-motion-reference.json": {
+      "bytes": 19197,
+      "sha256": "331aa76838cbc4db6ad13314b1a55a2abee88b329a13be871fd14c0061740d0a"
+    },
+    "tests/browser/fixtures/ant-design-upload-progress-reference.json": {
+      "bytes": 22816,
+      "sha256": "ffee82d7db92ddcb515c7d4c4b4c1b41628dda3b3d86e72d009ff2f0b04c496d"
+    },
+    "tests/browser/fixtures/ant-design-upload-ref-reference.json": {
+      "bytes": 319209,
+      "sha256": "ec451f3b7c94210c87de0bfe0dd55256a22987c8eaa3b04ac1f89207ef1a0a00"
+    },
+    "tests/browser/fixtures/ant-design-upload-ref-transport-reference.json": {
+      "bytes": 3738,
+      "sha256": "1956ddd84a968bf3e58040d27ac25eaa2d9dc7c04d53cdc8f738059cc18a9521"
+    },
+    "tests/browser/fixtures/ant-design-upload-semantic-reference.json": {
+      "bytes": 37972,
+      "sha256": "a63d9b8439bf3c23e8636c8441381f2f7acf436ec6b3ff56169db1ba174de25e"
+    },
+    "tests/browser/fixtures/ant-design-upload-theme-reference.json": {
+      "bytes": 3574793,
+      "sha256": "d10620da8b61ee267c98f1c69605e714864bdd9a58ea8c3cbc1b6f652044e976"
+    },
+    "tests/browser/fixtures/ant-design-upload-thumbnail-fallback-reference.json": {
+      "bytes": 21186,
+      "sha256": "8aec3111307344bee388cc0a72aa1cbc86a8a2ed3a8aabf42faf30ffeda6db50"
+    },
+    "tests/browser/fixtures/ant-design-upload-trigger-motion-reference.json": {
+      "bytes": 16016,
+      "sha256": "5c52a22d14636e98309a568c3dd634f4c6815adc16f320083aaa61f0c8a119d6"
+    },
+    "tests/browser/fixtures/ant-design-upload-trigger-structure-reference.json": {
+      "bytes": 7811,
+      "sha256": "3ade06747a1227c130c2ec4f57d6b6e2f01b842c5127645a2cb92dd15ffdd070"
+    },
+    "tests/browser/fixtures/ant-design-watermark-theme-reference.json": {
+      "bytes": 82836,
+      "sha256": "c51f7c36033e0d90b80b62fb843ec2dfddb8f0d483c290ac9435dfb8853597da"
+    },
+    "tests/browser/fixtures/ant-design-wave-token-keys-reference.json": {
+      "bytes": 8738,
+      "sha256": "84521c03f52b27e2028aebf8d2f7a66ee7084e6f0a64564d47add22bc0457d81"
+    },
+    "tests/browser/fixtures/ant-design-widget-prefix-reference.json": {
+      "bytes": 95268,
+      "sha256": "99a902dd971124b59a16386c56c7a6c58afb976ea6d6c9bfcf4a24852503b869"
+    }
+  },
+  "inheritedSource": {
+    "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/protocol-freeze.json",
+    "sha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96",
+    "inputs": 26,
+    "references": 1503,
+    "wholeHistoricalStandTrees": 12
+  },
+  "thirteenthStand": {
+    "path": ".upstream/artifacts/callback-loading-production-v1",
+    "pins": {
+      ".upstream/artifacts/callback-loading-production-v1/ModalLoadingBody.svelte": {
+        "bytes": 845,
+        "sha256": "c0c97a5acfd414da5c9f0e72402057df0c853dc06521368cf085befbd1b64e4b"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/ModalLoadingCase.svelte": {
+        "bytes": 3943,
+        "sha256": "6cde05e830b27c103385189784abff540e68abb3227d6fdcbcb7dc2a28c39d1e"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/ModalLoadingFooter.svelte": {
+        "bytes": 645,
+        "sha256": "acac47df1470da8074311a5ca53423934effd8fddf22ce9354b18361a61aef71"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/SelectComponentsTagCloseHandlesCase.svelte": {
+        "bytes": 12409,
+        "sha256": "39a7956ec9a71f61174c3a68ad3f42b140224435badc8f6a98fc30f44e6edf2e"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/SelectComponentsTagCloseHandlesTagBody.svelte": {
+        "bytes": 1268,
+        "sha256": "01eb405cbdc62b7414492a060d1a7859ba43f78d7b542f39f31076c02afbef74"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/actions.mjs": {
+        "bytes": 701,
+        "sha256": "7afe1dddf321230b99671885eebd088708f63629afc058d33b3d8797b0304dae"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/audit.mjs": {
+        "bytes": 8034,
+        "sha256": "f6dd732380092b639709637d0cca4630dd4c8fd949ca600557d0612dcc5acd68"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-baseline.mjs": {
+        "bytes": 1696,
+        "sha256": "421a208ddc56463727467a8937f9f371cbdd150b8927310ef91ef6689a54ccab"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json": {
+        "bytes": 1194124,
+        "sha256": "81319361738f28b70d55e513bd46e3b75cb7be3226f4e3d215dee18c1d15a19f"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.owners/custom-footer-local-prefix.json.gz": {
+        "bytes": 64374,
+        "sha256": "ecff11582d473b08e65bd7bff2b8898a5583c334f830486e383f8ab6ba3ec94c"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.owners/default-footer.json.gz": {
+        "bytes": 72339,
+        "sha256": "2449ea8543091f306c85aad09e579cef51f2d9235b1a235c1dba0b6c93767306"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.owners/select-close-handles-cached-option.json.gz": {
+        "bytes": 114546,
+        "sha256": "d073b7f59adb7465714a5db67967425fae517e3d8ca1baf9b6cec2210245c6b5"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.owners/select-close-handles-nonclosable.json.gz": {
+        "bytes": 333379,
+        "sha256": "a75d2d5b5fc00f7272824cd2ff182166b5c6a0a3619b8574fb3f3e4b2514f82a"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.owners/select-close-handles-retained.json.gz": {
+        "bytes": 296774,
+        "sha256": "d6bc638ec548516149b5d8028e2d7b79a4ac82dc87ebba9de1b0bc699cc3ede1"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.ssr/custom-footer-local-prefix.json": {
+        "bytes": 98260,
+        "sha256": "dd8cb2c4ddfe8055b4551329f2fe402ee681f80b086bfe388f468d73ea1883fb"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.ssr/default-footer.json": {
+        "bytes": 82508,
+        "sha256": "04851ab3e2fe3f3a473dc2e9a779f20389aa43b6eed0521d930d5a92d739f382"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.ssr/select-close-handles-nonclosable.json": {
+        "bytes": 404272,
+        "sha256": "4e50ab4cb642d1471cb325f4a61d18661c0a6ec8cbb9a27690df10c6ff9dec96"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture-first.json.ssr/select-close-handles-retained.json": {
+        "bytes": 357778,
+        "sha256": "c826faf8dc7553fac53f2c732da7d995a4ba812866e951f6cae16a98530876de"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/capture.mjs": {
+        "bytes": 12575,
+        "sha256": "1a8d33ce177567b4bf7edd9f5605d3b4126fffec1f036e7bb1f311eb98a39103"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/cases.mjs": {
+        "bytes": 1165,
+        "sha256": "3c8a56817b5cf43ef56d46f7f53d3e286323c62f47a921d116fa6020ea6555b1"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/.vite/manifest.json": {
+        "bytes": 638,
+        "sha256": "3004530af2c04903938a0c9a2190733b449b74fd97f00b019ef36d45d6037f82"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/modal-BsPgsueT.js": {
+        "bytes": 85031,
+        "sha256": "506f9c10259a048c9d23119e5bcbf986ec3a0a023ca34056fecbcf8bb8f1e9ed"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/modal-BsPgsueT.js.map": {
+        "bytes": 163147,
+        "sha256": "c3a4983311b378d86605bb9923d10daa026c8de1a354417447652d43c05596a5"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/select-B5JN921X.js": {
+        "bytes": 201627,
+        "sha256": "2543992c6ca42f5e6c432e6b7fbece13bc6a4c4fd7103a07703faad5a49f8521"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/select-B5JN921X.js.map": {
+        "bytes": 618053,
+        "sha256": "d4e1eb24a61a2afe997e965b44a88bfb99985196669ff119221aed0d2216f89b"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/select-surface-producers-9Q4SzFLm.js": {
+        "bytes": 249541,
+        "sha256": "70482be049ae684ce02438c2337197023097a588d5917adb1ae058139ef3fb04"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/select-surface-producers-9Q4SzFLm.js.map": {
+        "bytes": 931008,
+        "sha256": "782845bedeb3de6a306946d861a17809c182c7200821a7c328db5cc72797ae6d"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/assets/style-BVbVDnWH.css": {
+        "bytes": 1134751,
+        "sha256": "f64a9ab1244bf38b19e6d9191134454a9fd74dab7eca30e73e8fba5eda97d9e2"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/consumer-modules.json": {
+        "bytes": 39962,
+        "sha256": "a19a12886f45ad095581ef6e5756676666d7adc876149895a6eb36c1d9544c50"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/modal.html": {
+        "bytes": 510,
+        "sha256": "ec64d615c41fac2421f7ec4a0c76d339b3fb29a5aebc095d17d3bb0edb3d6b8b"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/client-build/select.html": {
+        "bytes": 501,
+        "sha256": "d904ec1a97d45df1b9894e0eb028bb4dfcf50a506beaac5930f9c169d85f4e25"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/consumer.tsconfig.json": {
+        "bytes": 359,
+        "sha256": "a513ed6f0d1734841a6943c7e3675cfff98128206a30b147f073fc9aaef6deb4"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/copy-provenance.json": {
+        "bytes": 10384,
+        "sha256": "465f60112853ce479feb3d2421f0841215d3f5ddaa823c9d19cb18ace6fc7945"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/final-static-review.json": {
+        "bytes": 9099,
+        "sha256": "16d28742d7a4463456c8624e4527073c226e083405ffa230eff9af847b174f8d"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/freeze-inputs.mjs": {
+        "bytes": 1167,
+        "sha256": "85eca78bdc4b68eab0605fc1021a25161717d36a6d97d9a39b0a0c4540746b6a"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/helper-adapter.mjs": {
+        "bytes": 2039,
+        "sha256": "2641f1f81523f5aaf789604410cd751e424f834e129199654663c7d9b42c45ab"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/helper-contract.json": {
+        "bytes": 3813,
+        "sha256": "171aedb547d3f7a55ee5595fba2347956653798c513873328e348f45a8fe0150"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/inputs-freeze.json": {
+        "bytes": 13514,
+        "sha256": "c023aa72df3ddd0c68480827e59508e14de961fbf6c7f998678577b1e6b5092c"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal-entry.ts": {
+        "bytes": 2502,
+        "sha256": "cf9ee05cbde79acd41483cf9948dc946d8670cb3f306a40b991531b02ac8b5a4"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal-loading-cases.d.mts": {
+        "bytes": 543,
+        "sha256": "2238c6566ad15c8e54e32a6aa294ab67cf24289041328a5381609891c8c63bac"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal-loading-cases.mjs": {
+        "bytes": 645,
+        "sha256": "7c54da6c7e3d41e815b067abdea097be547d1907016b9b28ab0e90172b7c46ce"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal-loading-metrics.d.mts": {
+        "bytes": 3429,
+        "sha256": "0dac69eadd5ddc5fea759f1c05a94a5bc71afc4bedc4138ca30347910a3e3cbb"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal-loading-metrics.mjs": {
+        "bytes": 5090,
+        "sha256": "d9a6d556d18a7e672c03d8991f102eb50b7aff9ec94e3231b59adf7e8c131ea8"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal-loading.styles.client.ts": {
+        "bytes": 33,
+        "sha256": "869131a5f619f28714315d9c7923d17ae5274b1a5bb9fa4cb58c78f6c66918ee"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/modal.html": {
+        "bytes": 320,
+        "sha256": "f617bb69e2efb5879d21861dbf2cb52bdff983f806b188eebe694b47fd77c127"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/preflight.mjs": {
+        "bytes": 1829,
+        "sha256": "33f31f5f0810e0b2af79a5b5389ed8ecad6d3cc1138b52ad2293afcbef7df977"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/preparation-validation.json": {
+        "bytes": 1934,
+        "sha256": "ae46440f47f74b7f8945d82454faa667bcbcaa5d7199be0f94553574b07090fc"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/preparation.json": {
+        "bytes": 4161,
+        "sha256": "a71b6af2bc6cd5de584dc4edcdb1c94e466f00b296d1c0d11d843075a9a30319"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/prepare.mjs": {
+        "bytes": 5240,
+        "sha256": "bf6a8118cf4542bcec5cf37887ffb18e2abb0dad3524886310391a2814363cbb"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/readers.mjs": {
+        "bytes": 2813,
+        "sha256": "bc202c25f2292cb9c9b42ebe1980a353424d425c1ffe9422e4da7244133a8c21"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/render-ssr.mjs": {
+        "bytes": 3091,
+        "sha256": "c35ae9be4ecf582a774ee65048304ff9715f37f6ff5ec2cdc436fee9972d78ba"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/resources.ts": {
+        "bytes": 8358,
+        "sha256": "1ddb9611d7ae45ec98a862eaed4c3fa0bc305016aa87403e6653607d80536210"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/root-capture.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/root-client-build.log": {
+        "bytes": 943,
+        "sha256": "027ed26f421ddad3bbf232d48d35915d7bc39a691b7357a90d0f4216d1c56575"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/root-freeze.log": {
+        "bytes": 281,
+        "sha256": "db0ff6ccac763795f35c27ce95b701e6e35048d60df7b31a1897bb7ff0d0ca9b"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/root-server-build.log": {
+        "bytes": 247,
+        "sha256": "ae76eeaf8c83f0f7b61772220dea609bc981a139c53d8c3665577a84b1a0d5e8"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-cached-option-cases.d.mts": {
+        "bytes": 163,
+        "sha256": "49d8eed43d44da9f1fa9d522263e6c9f2178b54e845709eb006ff1bae0bd359a"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-cached-option-cases.mjs": {
+        "bytes": 707,
+        "sha256": "c81b95fe96c04c6be6a1ab9ee2d4c391a3cf228de437ef907dbf0815acfc74f1"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-cases.d.mts": {
+        "bytes": 1386,
+        "sha256": "5c371f4a527cbfe418efb99512afb1d07a0b75ff5735896a06f83db02caf7467"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-cases.mjs": {
+        "bytes": 2598,
+        "sha256": "edcd1a515d3ff4395a3b26d5481bf21c6e2690e35086e0d99a92ec7fcbe88f4e"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-context.ts": {
+        "bytes": 261,
+        "sha256": "097ed6e0e61d61bf668b168ad14b59d9e050e75b42f0180bd22dc9bda47cd4a0"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-metrics.d.mts": {
+        "bytes": 2986,
+        "sha256": "cdad2270de93e30962bbed1a6f4e7b8794a15cbc7bc22acb1e9910da6a00b63a"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-components-tag-close-handles-metrics.mjs": {
+        "bytes": 3746,
+        "sha256": "e67ed651aac3219e5e4241d0a29245993dbd387849c19713ac5a7af42d5ba781"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-entry.ts": {
+        "bytes": 2775,
+        "sha256": "14a364399211e5435c41e1a57772716f53dd1945fc8eea626ac6d58904add1fa"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-surface-producers.d.mts": {
+        "bytes": 693,
+        "sha256": "65739aaddcd33d1f931bf6b4551704a2ac950416e94a6a86b9c660e884e40565"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select-surface-producers.mjs": {
+        "bytes": 4134,
+        "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/select.html": {
+        "bytes": 311,
+        "sha256": "28ebd724dc845d6696605a6cf9f81a444ef8c2e814cf990d55d2da0336e23368"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/server.ts": {
+        "bytes": 1673,
+        "sha256": "61c8d81e94045a85918dcc3dca8d426f6e48452b6979fbd0e17b734a7506d0ec"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/source-pins.json": {
+        "bytes": 16439,
+        "sha256": "471a7a0ac027b388a52b51594a57e9449034f4e7b7e841cd34dd631a11b3343a"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/ssr-build/consumer-modules.json": {
+        "bytes": 33926,
+        "sha256": "b6402a4b889fd01e8ca9cffcf64fe1eef6d9faf5a61e48f92b37eee27ed523c9"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/ssr-build/server.mjs": {
+        "bytes": 409747,
+        "sha256": "3fc0e7d4740d535eb8cdb085d7bee33f6484f43f410f0bcfad059ebca34eab9d"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/ssr-build/server.mjs.map": {
+        "bytes": 1076301,
+        "sha256": "4ace0e43856f819c4def1afef85a66276321850163f56dad424f9816e7dc9082"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/vite.client.config.mjs": {
+        "bytes": 655,
+        "sha256": "8a9aebc5ec651272173bcd1a9966002619863a7fd1916b59b691e2594bd12ecf"
+      },
+      ".upstream/artifacts/callback-loading-production-v1/vite.ssr.config.mjs": {
+        "bytes": 625,
+        "sha256": "d2e30e35a98300a76f732e7777bfe91e42afbb86d2ee7088aa0be8984ebe6691"
+      }
+    },
+    "report": {
+      "path": ".upstream/artifacts/callback-loading-production-v1/capture-first.json",
+      "bytes": 1194124,
+      "sha256": "81319361738f28b70d55e513bd46e3b75cb7be3226f4e3d215dee18c1d15a19f",
+      "status": "passed"
+    }
+  },
+  "caller": "Public DatePicker only; picker omitted=date; no multiple/range/new picker mode. Controlled value/open, fixed authored June2024 dates, defaultPickerValue, showNowfalse, public callbacks actually recorded. Controlled rejection refuses only value; open requests accepted. No imperative caller hover/calendar/draft reset.",
+  "lazy": "Named strict authored lazyPreset receives actual zero arguments/unbound receiver; own arguments descriptors+raw graphs and returned Dayjs aliases/epoch/ISO/offset/all7fields preserved. Source executes function for hover and click independently; real pointer click may also mouseenter. No invented call counts.",
+  "choreography": "Open/preset/cell/outside actions are real pointer, Escape real keyboard, leave mouse.move. Preview prop controls use ordinary authored HTMLElement.click()+flushSync without pointer/focus injection. Empty-model clear uses actual Source clear-span HTMLElement.click(): isTrusted=false observed by one-shot capture listener; actual onClear argumentCount recorded, no direct callback call. Programmatic clear preserves hovered affordance without pointer-leave changing the tested state.",
+  "observations": "Full actual ordered DOM attributes/inlineCSSOM/HTML/topology and selected computedCSS including every border/padding/margin side; boxes/value/defaultValue/caret/focus/clear/presets/cellhover/selected state. Committed value distinct from input preview/calendar. Popup ancestry up to BODY/HTML observed; post-mount Source popup ancestors owned only with explicit premount provenance. BODY/HTML never owned. Full callbacks/producers/lazy args/results; actual Date precision beside untouched raw graphs.",
+  "ambientRecorder": "Exact existing generic recorder with2 explicit Window-opaque guards only, retaining Window identity edges instead of recursively dumping ambient globals. No Source/Event/React/prototype patch, no Native expected transform.",
+  "closedAndCleanup": "Every observed open→closed transition stores afterCall, settled and+1000ms actual DOM/state without silence assumptions. Whole owner unmount stores cleanup+1000; assert only Source-owned nodes disconnected. Browser-owned resource counters unmeasured/null; real network/resourceTiming retained.",
+  "SSR": "Both real serializers in fresh DOM-free VM perprofile. Initial open=false Source portal only; full raw input/owner HTML and refs/resource traps. No fabricated open popup SSR DOM or hydration parity claim; actual Node timezone recorded.",
+  "repeat": "Four fresh processes: CSRfirst/repeat then SSRfirst/repeat. Preserve every complete raw and losslessgzip independently. Compare bytes first; any temporal raw deltas explicitly reported without rewriting/stripping fields or broad normalization.",
+  "NativeContract": "No Native implementation or expected data used. Existing Native onCalendarChange third {source:date|time} operational API remains separate from actual Source third{}; Source data never rewritten.",
+  "rawStorage": "Lossless partition of initial, each step, each closed transition, beforeUnmount, cleanup and late into separate full JSON plus gzip parts. All original values, descriptors, arrays, raw IDs and ordering stay intact; manifest rawJSONPart records the exact bytes and hashes. Streaming JSON encoder avoids Node aggregate string cap. No payload field is omitted or projected.",
+  "priorFrozenAttempt": {
+    "path": ".upstream/artifacts/date-picker-presets-source-v1",
+    "protocolSHA256": "c9f9c9b4eb5392d574853da83a75a8684dff3e0e6aa7c87f3c8223097f749182",
+    "status": "CSR attempt failed at aggregate JSON.stringify Invalid string length; no raw output; original inputs and failure log preserved"
+  },
+  "expectedOutcomes": null,
+  "preflight": {
+    "status": "passed-static-parse-and-profile-only",
+    "scripts": 8,
+    "owners": 6,
+    "actions": 58,
+    "logicalPoints": 64,
+    "actualSourceRuns": 0
+  },
+  "commands": [
+    "node .upstream/artifacts/date-picker-presets-source-v2/protocol.mjs freeze <EXACT_REVIEWED_PROPOSAL_SHA256>",
+    "node .upstream/artifacts/date-picker-presets-source-v2/capture.mjs csr .upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json",
+    "node .upstream/artifacts/date-picker-presets-source-v2/capture.mjs csr .upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json",
+    "node .upstream/artifacts/date-picker-presets-source-v2/capture.mjs ssr .upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json",
+    "node .upstream/artifacts/date-picker-presets-source-v2/capture.mjs ssr .upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json"
+  ],
+  "reviewedProposalSHA256": "6695c170c4b118c013d72cb0562873efb412877287a858fcc8c90554ed90cd69"
+}

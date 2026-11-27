@@ -1,0 +1,943 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": "focus-item",
+      "steps": [
+        {
+          "action": "opened",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Alpha",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "ArrowDown",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Alpha",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "End",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Alpha",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Home",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Alpha",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Enter",
+          "state": {
+            "value": "@alpha \n",
+            "selection": [
+              8,
+              8
+            ],
+            "focus": "editor",
+            "menus": [],
+            "events": [
+              [
+                "change",
+                "@"
+              ],
+              [
+                "change",
+                "@alpha "
+              ],
+              [
+                "select",
+                "alpha",
+                "Alpha",
+                "alpha-key-:r1:",
+                "@"
+              ],
+              [
+                "change",
+                "@alpha \n"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "profile": "focus-other",
+      "steps": [
+        {
+          "action": "opened",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Beta",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "ArrowUp",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Beta",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Space",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Beta",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Enter",
+          "state": {
+            "value": "@beta \n",
+            "selection": [
+              7,
+              7
+            ],
+            "focus": "editor",
+            "menus": [],
+            "events": [
+              [
+                "change",
+                "@"
+              ],
+              [
+                "change",
+                "@beta "
+              ],
+              [
+                "select",
+                "beta",
+                "Beta",
+                "beta-key-:r1:",
+                "@"
+              ],
+              [
+                "change",
+                "@beta \n"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "profile": "focus-menu",
+      "steps": [
+        {
+          "action": "opened",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "menu",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "ArrowDown",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "menu",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Enter",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "menu",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Escape",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "menu",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "profile": "focused-escape",
+      "steps": [
+        {
+          "action": "opened",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Alpha",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Escape",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "item:Alpha",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "profile": "copies-pointer",
+      "steps": [
+        {
+          "action": "opened",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "editor",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              },
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Other Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r5:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Other Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r5:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "select:Other Beta",
+          "state": {
+            "value": "@chosen ",
+            "selection": [
+              8,
+              8
+            ],
+            "focus": "editor",
+            "menus": [],
+            "events": [
+              [
+                "change",
+                "@"
+              ],
+              [
+                "change",
+                "@chosen "
+              ],
+              [
+                "select",
+                "chosen",
+                "Other Beta",
+                "beta-key-:r1:",
+                "@"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "profile": "copies-hover",
+      "steps": [
+        {
+          "action": "opened",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "editor",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              },
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Other Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r5:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Other Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r5:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "hover:Other Beta",
+          "state": {
+            "value": "@",
+            "selection": [
+              1,
+              1
+            ],
+            "focus": "editor",
+            "menus": [
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Blocked",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-blocked-key-:r1:",
+                    "disabled": "true",
+                    "highlight": false
+                  },
+                  {
+                    "text": "Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r4:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              },
+              {
+                "tabIndex": 0,
+                "options": [
+                  {
+                    "text": "Other Alpha",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r5:-alpha-key-:r1:",
+                    "disabled": null,
+                    "highlight": true
+                  },
+                  {
+                    "text": "Other Beta",
+                    "tabIndex": -1,
+                    "id": "rc-menu-uuid-:r5:-beta-key-:r1:",
+                    "disabled": null,
+                    "highlight": false
+                  }
+                ]
+              }
+            ],
+            "events": [
+              [
+                "change",
+                "@"
+              ]
+            ]
+          }
+        },
+        {
+          "action": "Enter",
+          "state": {
+            "value": "@alpha ",
+            "selection": [
+              7,
+              7
+            ],
+            "focus": "editor",
+            "menus": [],
+            "events": [
+              [
+                "change",
+                "@"
+              ],
+              [
+                "change",
+                "@alpha "
+              ],
+              [
+                "select",
+                "alpha",
+                "Alpha",
+                "alpha-key-:r1:",
+                "@"
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

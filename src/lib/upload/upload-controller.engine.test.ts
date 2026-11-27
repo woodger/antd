@@ -1,0 +1,388 @@
+import { describe, expect, it } from 'vitest';
+import { createUploadController } from './upload-controller.engine';
+import { UPLOAD_LIST_IGNORE } from './upload.engine';
+import type {
+  UploadFile,
+  UploadProps,
+  UploadRequestOptions,
+  UploadChangeParam
+} from './upload.types';
+function setup(initial: UploadFile[] = [], overrides: UploadProps = {}) {
+  let files = initial;
+  let count = 0;
+  let aborted = 0;
+  const events: UploadChangeParam[] = [];
+  const requests: UploadRequestOptions[] = [];
+  const props: UploadProps = {
+    ...overrides,
+    onChange: event => {
+      events.push(event);
+      overrides.onChange?.(event);
+    }
+  };
+  const controller = createUploadController({
+    props: () => props,
+    files: () => files,
+    setFiles: next => {
+      files = next;
+    },
+    uid: () => `${++count}`,
+    defaultRequest: option => {
+      requests.push(option);
+      return {
+        abort: () => {
+          aborted++;
+        }
+      };
+    }
+  });
+  return {
+    controller,
+    events,
+    requests,
+    props,
+    get files() {
+      return files;
+    },
+    set files(next) {
+      files = next;
+    },
+    get aborted() {
+      return aborted;
+    }
+  };
+}
+const file = (name = 'a.txt') => new File(['content'], name, { type: 'text/plain' });
+describe('Upload imperative lifecycle', () => {
+  it('publishes a manual batch without preprocessing or transport', () => {
+    let prepared = 0;
+    const h = setup([], { beforeUpload: () => {
+      prepared++;
+      return true;
+    } });
+    const raw = Object.assign(file(), { uid: 'manual' });
+
+    h.controller.onBatchStart([{ file: raw, parsedFile: null }]);
+
+    expect(prepared).toBe(0);
+    expect(h.requests).toEqual([]);
+    expect(h.files).toHaveLength(1);
+    expect(h.files[0]).toMatchObject({ uid: 'manual', name: 'a.txt', originFileObj: raw });
+    expect(h.files[0].status).toBeUndefined();
+    expect(h.events[0].file).toBeInstanceOf(File);
+    expect(h.events[0].file).not.toBe(raw);
+  });
+
+  it('filters the source ignore marker before publishing the complete batch', () => {
+    const h = setup();
+    const ignored = Object.assign(file('ignored.txt'), { uid: 'ignored' });
+    Object.defineProperty(ignored, UPLOAD_LIST_IGNORE, { value: true, configurable: true });
+    const accepted = Object.assign(file('accepted.txt'), { uid: 'accepted' });
+
+    h.controller.onBatchStart([
+      { file: ignored, parsedFile: ignored },
+      { file: accepted, parsedFile: accepted }
+    ]);
+
+    expect(h.files.map(item => item.name)).toEqual(['accepted.txt']);
+    expect(h.events).toHaveLength(1);
+    expect(h.events[0].fileList.map(item => item.name)).toEqual(['accepted.txt']);
+    expect(h.requests).toEqual([]);
+  });
+
+  it('replaces an existing uid while preserving the incoming original File', () => {
+    const h = setup([{ uid: 'same', name: 'previous.txt', url: '/previous.txt' }]);
+    const raw = Object.assign(file('replacement.txt'), { uid: 'same' });
+
+    h.controller.onBatchStart([{ file: raw, parsedFile: raw }]);
+
+    expect(h.files).toHaveLength(1);
+    expect(h.files[0]).toMatchObject({ name: 'replacement.txt', status: 'uploading' });
+    expect(h.files[0].originFileObj).toBe(raw);
+    expect(h.files[0].url).toBeUndefined();
+  });
+
+  it('publishes direct progress, parsed success, raw text and error with source resets', () => {
+    const h = setup();
+    const raw = Object.assign(file(), { uid: 'direct' });
+    const event = { percent: 37, loaded: 37, total: 100 };
+    h.controller.onBatchStart([{ file: raw, parsedFile: raw }]);
+
+    h.controller.onProgress(event, raw);
+
+    expect(h.files[0]).toMatchObject({ status: 'uploading', percent: 37 });
+    expect(h.events.at(-1)?.event).toBe(event);
+
+    h.controller.onSuccess('{"ok":true}', raw);
+
+    expect(h.files[0]).toMatchObject({ status: 'done', percent: 100, response: { ok: true } });
+
+    h.controller.onSuccess('plain text', raw);
+
+    expect(h.files[0].response).toBe('plain text');
+    const error = Error('Unavailable');
+
+    h.controller.onError(error, { reason: 'unavailable' }, raw);
+
+    expect(h.files[0]).toMatchObject({ status: 'error', percent: 0,
+      error, response: { reason: 'unavailable' } });
+  });
+
+  it('keeps transport abortable after a direct success callback', async () => {
+    const h = setup();
+    await h.controller.upload([file()]);
+    const raw = h.requests[0].file;
+
+    h.controller.onSuccess('{"imperative":true}', raw);
+    h.controller.abort(raw);
+    h.controller.abort(raw);
+
+    expect(h.files[0]).toMatchObject({ status: 'done', response: { imperative: true } });
+    expect(h.aborted).toBe(1);
+    expect(h.events).toHaveLength(2);
+  });
+
+  it('stops remaining batch callbacks and status mutations when onChange disposes the controller',
+    () => {
+      const h = setup([], { onChange: () => { h.controller.dispose(); } });
+      const batch = ['a', 'b'].map(name => Object.assign(file(`${name}.txt`), { uid: name }));
+
+      h.controller.onBatchStart(batch.map(raw => ({ file: raw, parsedFile: raw })));
+
+      expect(h.events).toHaveLength(1);
+      expect(h.files.map(item => item.status)).toEqual(['uploading', undefined]);
+      expect(h.requests).toEqual([]);
+    });
+
+  it('ignores callbacks for removed files and all held ref operations after disposal', async () => {
+    const h = setup();
+    const raw = Object.assign(file(), { uid: 'removed' });
+    h.controller.onBatchStart([{ file: raw, parsedFile: raw }]);
+    await h.controller.remove(h.files[0]);
+    const events = h.events.length;
+
+    h.controller.onProgress({ percent: 42 }, raw);
+    h.controller.onSuccess('{"late":true}', raw);
+    h.controller.onError(Error('late'), undefined, raw);
+    h.controller.dispose();
+    h.controller.onBatchStart([{ file: raw, parsedFile: raw }]);
+
+    expect(h.files).toEqual([]);
+    expect(h.events).toHaveLength(events);
+    expect(h.requests).toEqual([]);
+  });
+});
+describe('Upload lifecycle', () => {
+  it(
+    'starts a batch after all preprocessing and passes the same original batch to each hook',
+    async () => {
+      let release!: () => void;
+      const gate = new Promise<void>(resolve => {
+        release = resolve;
+      });
+      const seen: string[][] = [];
+      const h = setup([], {
+        beforeUpload: async (current, batch) => {
+          seen.push(batch.map(item => item.uid));
+          if (current.name === 'a.txt')
+            await gate;
+          return true;
+        }
+      });
+      const pending = h.controller.upload([file(), file('b.txt')]);
+      await Promise.resolve();
+
+      expect(h.files).toEqual([]);
+      expect(h.requests).toEqual([]);
+      release();
+      await pending;
+
+      expect(seen).toEqual([['1', '2'], ['1', '2']]);
+      expect(h.files.map(item => item.status)).toEqual(['uploading', 'uploading']);
+      expect(h.requests).toHaveLength(2);
+      expect(h.events[0].fileList).toHaveLength(2);
+    }
+  );
+  it(
+    'retains false and rejected files without status but excludes LIST_IGNORE completely',
+    async () => {
+      const h = setup([], {
+        beforeUpload: async current => {
+          if (current.name === 'skip.txt') {
+            return UPLOAD_LIST_IGNORE;
+          }
+          if (current.name === 'reject.txt') {
+            throw Error('rejected');
+          }
+          return false;
+        }
+      });
+      await h.controller.upload([file(), file('skip.txt'), file('reject.txt')]);
+
+      expect(h.files.map(item => item.name)).toEqual(['a.txt', 'reject.txt']);
+      expect(h.files.every(item => item.status === undefined)).toBe(true);
+      expect(h.requests).toEqual([]);
+      expect(h.events[0].file).toBeInstanceOf(File);
+    }
+  );
+  it(
+    'sends transformed content with original uid while resolving action and data with the original file',
+    async () => {
+      const h = setup(
+        [],
+        {
+          beforeUpload: () => new Blob(['transformed']),
+          action: async original => `/upload/${original.name}`,
+          data: original => ({ name: original.name })
+        }
+      );
+      await h.controller.upload([file()]);
+      const request = h.requests[0];
+
+      expect(await request.file.text()).toBe('transformed');
+      expect(request.file.uid).toBe('1');
+      expect(request.action).toBe('/upload/a.txt');
+      expect(request.data).toEqual({ name: 'a.txt' });
+      expect(h.files[0].originFileObj?.size).toBe(7);
+    }
+  );
+  it(
+    'publishes progress and parsed success response and ignores callbacks once removed',
+    async () => {
+      const h = setup();
+      await h.controller.upload([file()]);
+      const request = h.requests[0];
+      request.onProgress?.({ percent: 45 });
+
+      expect(h.files[0].percent).toBe(45);
+      expect(h.events.at(-1)?.event).toEqual({ percent: 45 });
+      request.onSuccess?.('{"ok":true}');
+
+      expect(h.files[0]).toMatchObject({ status: 'done', percent: 100, response: { ok: true } });
+      await h.controller.remove(h.files[0]);
+      const length = h.events.length;
+      request.onError?.(Error('late'));
+      request.onProgress?.({ percent: 99 });
+
+      expect(h.files).toEqual([]);
+      expect(h.events).toHaveLength(length);
+    }
+  );
+  it('supports asynchronous removal veto and aborts only after approval', async () => {
+    const h = setup([], { onRemove: async () => false });
+    await h.controller.upload([file()]);
+    await h.controller.remove(h.files[0]);
+
+    expect(h.files).toHaveLength(1);
+    expect(h.aborted).toBe(0);
+    h.props.onRemove = async () => true;
+    await h.controller.remove(h.files[0]);
+
+    expect(h.files).toEqual([]);
+    expect(h.aborted).toBe(1);
+    expect(h.events.at(-1)?.file).toMatchObject({ status: 'removed' });
+  });
+  it('does not publish progress for entries filtered out by the owner', async () => {
+    const h = setup();
+    await h.controller.upload([file()]);
+    h.files = [];
+    const length = h.events.length;
+    h.requests[0].onSuccess?.({ ok: true });
+
+    expect(h.events).toHaveLength(length);
+  });
+  it(
+    'keeps transport independent of maxCount and suppresses excluded file events',
+    async () => {
+      const h = setup([], { maxCount: 2 });
+      await h.controller.upload([file(), file('b.txt'), file('c.txt')]);
+
+      expect(h.files.map(item => item.name)).toEqual(['a.txt', 'b.txt']);
+      expect(h.events).toHaveLength(2);
+      expect(h.requests).toHaveLength(3);
+      h.requests[2].onProgress?.({ percent: 50 });
+
+      expect(h.events).toHaveLength(2);
+    }
+  );
+  it(
+    'aborts active requests on disposal and prevents post-unmount preprocessing and callbacks',
+    async () => {
+      const h = setup();
+      await h.controller.upload([file()]);
+      h.controller.dispose();
+      h.requests[0].onProgress?.({ percent: 12 });
+
+      expect(h.aborted).toBe(1);
+      expect(h.events).toHaveLength(1);
+      let release!: () => void;
+      const gate = new Promise<void>(resolve => {
+        release = resolve;
+      });
+      const waiting = setup([], {
+        beforeUpload: async () => {
+          await gate;
+        }
+      });
+      const pending = waiting.controller.upload([file()]);
+      waiting.controller.dispose();
+      release();
+      await pending;
+
+      expect(waiting.files).toEqual([]);
+      expect(waiting.requests).toEqual([]);
+    }
+  );
+  it(
+    'provides defaultRequest to a custom transport and accepts synchronous completion',
+    async () => {
+      const h = setup([], {
+        customRequest: (option, info) => {
+          expect(info.defaultRequest).toBeTypeOf('function');
+          option.onSuccess?.({ custom: true });
+          return {
+            abort: () => {
+              throw Error('completed');
+            }
+          };
+        }
+      });
+      await h.controller.upload([file()]);
+
+      expect(h.files[0]).toMatchObject({ status: 'done', response: { custom: true } });
+      expect(h.requests).toEqual([]);
+      h.controller.dispose();
+    }
+  );
+
+  it.each([false, true])('handles a custom request returned after disposal (completed = %s)',
+    async completed => {
+      const aborted: string[] = [];
+      const h = setup([], {
+        customRequest: option => {
+          if (completed) {
+            option.onSuccess?.({ custom: true });
+          }
+          h.controller.dispose();
+          return {
+            abort() {
+              aborted.push(option.file.name);
+              option.onError?.(Error('aborted'));
+            }
+          };
+        }
+      });
+
+      await h.controller.upload([file()]);
+
+      const expectedAborts = completed ? [] : ['a.txt'];
+      const statuses = h.events.map(({ file }) => 'status' in file ? file.status : undefined);
+      expect(aborted).toEqual(expectedAborts);
+      expect(statuses).toEqual(completed ? ['uploading', 'done'] : ['uploading']);
+
+      h.controller.dispose();
+
+      expect(aborted).toEqual(expectedAborts);
+    }
+  );
+});

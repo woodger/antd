@@ -1,0 +1,2515 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "default",
+        "widths": [
+          375,
+          767,
+          768,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 108,
+          "width": 359,
+          "left": 8,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "359px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 767,
+          "top": 108,
+          "width": 520,
+          "left": 123.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "751px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 768,
+          "top": 100,
+          "width": 520,
+          "left": 124,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "736px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 520,
+          "left": 380,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "centered",
+        "props": {
+          "centered": true
+        },
+        "widths": [
+          375,
+          767,
+          768,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 312,
+          "width": 359,
+          "left": 8,
+          "height": 96,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "359px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 767,
+          "top": 312,
+          "width": 520,
+          "left": 123.5,
+          "height": 96,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "751px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 768,
+          "top": 312,
+          "width": 520,
+          "left": 124,
+          "height": 96,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "736px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 312,
+          "width": 520,
+          "left": 380,
+          "height": 96,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "1248px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "percent",
+        "props": {
+          "width": "50%"
+        },
+        "widths": [
+          576,
+          960,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 576,
+          "top": 108,
+          "width": 288,
+          "left": 144,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "560px",
+            "styleWidth": "50%"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 960,
+          "top": 100,
+          "width": 480,
+          "left": 240,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "928px",
+            "styleWidth": "50%"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 640,
+          "left": 320,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": "50%"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "zero",
+        "props": {
+          "width": 0
+        },
+        "widths": [
+          375,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 108,
+          "width": 0,
+          "left": 187.5,
+          "height": 336,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "359px",
+            "styleWidth": "0px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 0,
+          "left": 640,
+          "height": 336,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": "0px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "height",
+        "props": {
+          "width": 450,
+          "height": 240,
+          "centered": true
+        },
+        "widths": [
+          375,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 240,
+          "width": 359,
+          "left": 8,
+          "height": 240,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "359px",
+            "styleWidth": "450px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 240,
+          "width": 450,
+          "left": 415,
+          "height": 240,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "1248px",
+            "styleWidth": "450px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "height-percent",
+        "props": {
+          "height": "50vh",
+          "centered": false
+        },
+        "widths": [
+          375,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 108,
+          "width": 359,
+          "left": 8,
+          "height": 360,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "359px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 520,
+          "left": 380,
+          "height": 360,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": "520px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "map",
+        "props": {
+          "width": {
+            "xs": 300,
+            "sm": 360,
+            "md": 430,
+            "lg": "48vw",
+            "xl": 580,
+            "xxl": 650,
+            "xxxl": 730
+          }
+        },
+        "widths": [
+          375,
+          575,
+          576,
+          767,
+          768,
+          991,
+          992,
+          1199,
+          1200,
+          1599,
+          1600,
+          1919,
+          1920
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 108,
+          "width": 300,
+          "left": 37.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "359px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 575,
+          "top": 108,
+          "width": 300,
+          "left": 137.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "559px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 576,
+          "top": 108,
+          "width": 360,
+          "left": 108,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "560px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 767,
+          "top": 108,
+          "width": 360,
+          "left": 203.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "751px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 768,
+          "top": 100,
+          "width": 430,
+          "left": 169,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "736px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 991,
+          "top": 100,
+          "width": 430,
+          "left": 280.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "959px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 992,
+          "top": 100,
+          "width": 476.15625,
+          "left": 257.921875,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "960px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1199,
+          "top": 100,
+          "width": 575.515625,
+          "left": 311.734375,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1167px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1200,
+          "top": 100,
+          "width": 580,
+          "left": 310,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1168px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1599,
+          "top": 100,
+          "width": 580,
+          "left": 509.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1567px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1600,
+          "top": 100,
+          "width": 650,
+          "left": 475,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1568px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1919,
+          "top": 100,
+          "width": 650,
+          "left": 634.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1887px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1920,
+          "top": 100,
+          "width": 730,
+          "left": 595,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1888px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-sm-width": "360px",
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-lg-width": "48vw",
+            "--ant-modal-xl-width": "580px",
+            "--ant-modal-xxl-width": "650px",
+            "--ant-modal-xxxl-width": "730px"
+          },
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "sparse",
+        "props": {
+          "width": {
+            "md": 430,
+            "xl": "48vw"
+          }
+        },
+        "widths": [
+          375,
+          575,
+          576,
+          767,
+          768,
+          991,
+          992,
+          1199,
+          1200,
+          1599,
+          1600,
+          1919,
+          1920
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 108,
+          "width": 359,
+          "left": 8,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "359px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 575,
+          "top": 108,
+          "width": 559,
+          "left": 8,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "559px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 576,
+          "top": 108,
+          "width": 560,
+          "left": 8,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "560px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 767,
+          "top": 108,
+          "width": 751,
+          "left": 8,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "751px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 768,
+          "top": 100,
+          "width": 430,
+          "left": 169,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "736px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 991,
+          "top": 100,
+          "width": 430,
+          "left": 280.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "959px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 992,
+          "top": 100,
+          "width": 430,
+          "left": 281,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "960px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1199,
+          "top": 100,
+          "width": 430,
+          "left": 384.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1167px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1200,
+          "top": 100,
+          "width": 576,
+          "left": 312,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1168px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1599,
+          "top": 100,
+          "width": 767.515625,
+          "left": 415.734375,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1567px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1600,
+          "top": 100,
+          "width": 768,
+          "left": 416,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1568px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1919,
+          "top": 100,
+          "width": 921.109375,
+          "left": 498.9375,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1887px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1920,
+          "top": 100,
+          "width": 921.59375,
+          "left": 499.203125,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1888px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal"
+            ]
+          },
+          "host": "DIV",
+          "variables": {
+            "--ant-modal-md-width": "430px",
+            "--ant-modal-xl-width": "48vw"
+          },
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "prefix-breakpoint",
+        "props": {
+          "getContainer": "#layout-host",
+          "width": {
+            "xs": 300,
+            "md": 430
+          },
+          "prefixCls": "layout-modal"
+        },
+        "token": {
+          "screenMD": 820,
+          "screenMDMin": 820,
+          "screenSMMax": 819
+        },
+        "widths": [
+          767,
+          768,
+          819,
+          820,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 767,
+          "top": 108,
+          "width": 300,
+          "left": 233.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "751px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "layout-modal-root",
+              "layout-probe",
+              "layout-modal-css-var"
+            ],
+            "wrapper": [
+              "layout-modal-wrap"
+            ],
+            "panel": [
+              "layout-modal"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-modal-xs-width": "300px",
+            "--layout-modal-md-width": "430px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 768,
+          "top": 108,
+          "width": 300,
+          "left": 234,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "752px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "layout-modal-root",
+              "layout-probe",
+              "layout-modal-css-var"
+            ],
+            "wrapper": [
+              "layout-modal-wrap"
+            ],
+            "panel": [
+              "layout-modal"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-modal-xs-width": "300px",
+            "--layout-modal-md-width": "430px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 819,
+          "top": 108,
+          "width": 300,
+          "left": 259.5,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "803px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "layout-modal-root",
+              "layout-probe",
+              "layout-modal-css-var"
+            ],
+            "wrapper": [
+              "layout-modal-wrap"
+            ],
+            "panel": [
+              "layout-modal"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-modal-xs-width": "300px",
+            "--layout-modal-md-width": "430px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 820,
+          "top": 100,
+          "width": 430,
+          "left": 195,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "788px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "layout-modal-root",
+              "layout-probe",
+              "layout-modal-css-var"
+            ],
+            "wrapper": [
+              "layout-modal-wrap"
+            ],
+            "panel": [
+              "layout-modal"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-modal-xs-width": "300px",
+            "--layout-modal-md-width": "430px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 430,
+          "left": 425,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "layout-modal-root",
+              "layout-probe",
+              "layout-modal-css-var"
+            ],
+            "wrapper": [
+              "layout-modal-wrap"
+            ],
+            "panel": [
+              "layout-modal"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-modal-xs-width": "300px",
+            "--layout-modal-md-width": "430px"
+          },
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "confirm",
+        "confirm": true,
+        "props": {
+          "width": "50vw",
+          "height": "50vh",
+          "centered": false
+        },
+        "widths": [
+          375,
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 375,
+          "top": 108,
+          "width": 187.5,
+          "left": 93.75,
+          "height": 360,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "359px",
+            "styleWidth": "50vw"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal",
+              "ant-modal-confirm",
+              "ant-modal-confirm-confirm"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 640,
+          "left": 320,
+          "height": 360,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": "50vw"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal",
+              "ant-modal-confirm",
+              "ant-modal-confirm-confirm"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "confirm-zero",
+        "confirm": true,
+        "props": {
+          "width": 0,
+          "centered": false
+        },
+        "widths": [
+          1280
+        ]
+      },
+      "views": [
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 416,
+          "left": 432,
+          "height": 140,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": "416px"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal",
+              "ant-modal-confirm",
+              "ant-modal-confirm-confirm"
+            ]
+          },
+          "host": "DIV",
+          "variables": {},
+          "rootVariable": ""
+        }
+      ],
+      "updates": []
+    },
+    {
+      "profile": {
+        "id": "live",
+        "props": {
+          "width": {
+            "xs": 300,
+            "md": 470
+          },
+          "centered": false,
+          "getContainer": "#layout-host"
+        },
+        "provider": {
+          "centered": true,
+          "className": "layout-provider",
+          "style": {
+            "--layout-provider-value": "provider",
+            "backgroundColor": "rgb(42, 45, 49)"
+          }
+        },
+        "widths": [
+          1280
+        ],
+        "updates": [
+          {
+            "resetCentered": true
+          },
+          {
+            "width": "50%",
+            "style": {
+              "width": "320px",
+              "top": "40px",
+              "--layout-provider-value": "local"
+            },
+            "className": "layout-panel",
+            "wrapClassName": "layout-wrap",
+            "rootClassName": "layout-root",
+            "rootStyle": {
+              "--layout-root-value": "root"
+            }
+          },
+          {
+            "width": {
+              "xs": 260,
+              "md": 510
+            },
+            "style": {
+              "top": "36px"
+            },
+            "prefixCls": "layout-modal"
+          }
+        ]
+      },
+      "views": [
+        {
+          "viewport": 1280,
+          "top": 100,
+          "width": 470,
+          "left": 405,
+          "height": 96,
+          "computed": {
+            "top": "100px",
+            "maxWidth": "1248px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap"
+            ],
+            "panel": [
+              "ant-modal",
+              "layout-provider"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-provider-value": "provider",
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-md-width": "470px"
+          },
+          "rootVariable": ""
+        }
+      ],
+      "updates": [
+        {
+          "viewport": 1280,
+          "top": 312,
+          "width": 470,
+          "left": 405,
+          "height": 96,
+          "computed": {
+            "top": "0px",
+            "maxWidth": "1248px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-probe",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal",
+              "layout-provider"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-provider-value": "provider",
+            "--ant-modal-xs-width": "300px",
+            "--ant-modal-md-width": "470px"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 352,
+          "width": 640,
+          "left": 320,
+          "height": 96,
+          "computed": {
+            "top": "40px",
+            "maxWidth": "1248px",
+            "styleWidth": "50%"
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "ant-modal-root",
+              "layout-root",
+              "ant-modal-css-var"
+            ],
+            "wrapper": [
+              "ant-modal-wrap",
+              "layout-wrap",
+              "ant-modal-centered"
+            ],
+            "panel": [
+              "ant-modal",
+              "layout-panel",
+              "layout-provider"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-provider-value": "local"
+          },
+          "rootVariable": ""
+        },
+        {
+          "viewport": 1280,
+          "top": 348,
+          "width": 510,
+          "left": 385,
+          "height": 96,
+          "computed": {
+            "top": "36px",
+            "maxWidth": "1248px",
+            "styleWidth": ""
+          },
+          "editor": {
+            "kept": true,
+            "value": "Edited",
+            "focused": true,
+            "selection": [
+              1,
+              4
+            ]
+          },
+          "classes": {
+            "root": [
+              "layout-modal-root",
+              "layout-root",
+              "layout-modal-css-var"
+            ],
+            "wrapper": [
+              "layout-modal-wrap",
+              "layout-wrap",
+              "layout-modal-centered"
+            ],
+            "panel": [
+              "layout-modal",
+              "layout-panel",
+              "layout-provider"
+            ]
+          },
+          "host": "layout-host",
+          "variables": {
+            "--layout-provider-value": "provider",
+            "--layout-modal-xs-width": "260px",
+            "--layout-modal-md-width": "510px"
+          },
+          "rootVariable": ""
+        }
+      ]
+    }
+  ]
+}

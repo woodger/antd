@@ -1,0 +1,281 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import { describe, expect, it } from 'vitest';
+import { datePickerEnUS, datePickerRuRU } from './date-picker.locale';
+import {
+  timePickerFormats,
+  datePickerClock,
+  timePickerClock,
+  timePickerPanel,
+  timePickerColumnDate,
+  timePickerColumnValue,
+  timePickerDateDisabled,
+  timePickerOptions,
+  timePickerSameValue,
+  timePickerLang
+} from './time-picker.engine';
+import { timePickerSharedProps } from './time-picker-props.engine';
+import { timePickerSemantic } from './time-picker-semantic.engine';
+
+dayjs.extend(utc);
+
+describe('TimePicker formatting and units', () => {
+  it('unwraps scalar time masks and infers clock units from the actual format string', () => {
+    const format = { format: 'HH:mm:ss.SSS', type: 'mask' } as const;
+    const clock = timePickerClock({ format });
+
+    expect(timePickerFormats({ format })).toEqual(['HH:mm:ss.SSS']);
+    expect(clock.format).toBe('HH:mm:ss.SSS');
+    expect([clock.showHour, clock.showMinute, clock.showSecond, clock.showMillisecond])
+      .toEqual([true, true, true, true]);
+    expect(datePickerClock({ format: { format: 'YYYY-MM-DD HH:mm' }, showTime: true }).showSecond)
+      .toBe(false);
+    expect(datePickerClock({ format, showTime: { format: 'HH:mm' } }).format).toBe('HH:mm');
+  });
+  it('defaults input formats from the time locale and visible units', () => {
+    expect(timePickerFormats({})).toEqual(['HH:mm:ss']);
+    expect(timePickerFormats({ use12Hours: true })).toEqual(['hh:mm:ss A']);
+    expect(timePickerFormats({ showSecond: false })).toEqual(['HH:mm']);
+    expect(timePickerFormats({ showHour: true })).toEqual(['HH']);
+    expect(timePickerFormats({ showMillisecond: true })).toEqual(['HH:mm:ss.SSS']);
+    expect(timePickerFormats({ use12Hours: true }, { fieldTimeFormat: 'HH:mm' }))
+      .toEqual(['HH:mm']);
+    expect(timePickerFormats({ format: ['HH:mm', 'H:m'] })).toEqual(['HH:mm', 'H:m']);
+  });
+
+  it('infers time columns from format while explicit flags retain source fallback rules', () => {
+    const short = timePickerClock({ format: 'HH:mm' });
+    const explicit = timePickerClock({ format: 'HH:mm', showSecond: false });
+    const literal = timePickerClock({ format: 'YYYY' });
+
+    expect([short.showHour, short.showMinute, short.showSecond, short.showMillisecond])
+      .toEqual([true, true, false, false]);
+    expect([explicit.showHour, explicit.showMinute, explicit.showSecond]).toEqual([true, true, false]);
+    expect([literal.showHour, literal.showMinute, literal.showSecond]).toEqual([true, true, true]);
+    expect(timePickerClock({ format: 'h:mm a' }).use12Hours).toBe(true);
+    expect(timePickerClock({ format: 'h:mm a', use12Hours: false }).use12Hours).toBe(false);
+    expect(timePickerClock({ showHour: true }).showMinute).toBe(false);
+  });
+
+  it('keeps filled locale defaults separate from the explicit input format', () => {
+    const locale = timePickerLang({ format: 'HH:mm', use12Hours: true }, datePickerEnUS.lang);
+
+    expect(locale.fieldTimeFormat).toBe('hh:mm:ss A');
+    expect(locale.fieldDateTimeFormat).toBe('YYYY-MM-DD hh:mm:ss A');
+    expect(locale.fieldMonthFormat).toBe('YYYY-MM');
+    expect(locale.cellDateFormat).toBe('D');
+    expect(timePickerFormats({ format: 'HH:mm', use12Hours: true }, locale)).toEqual(['HH:mm']);
+  });
+
+  it('uses source bitwise step truncation, labels and disabled-option filtering', () => {
+    expect(timePickerOptions(6, 2.9, [2])).toEqual([
+      { value: 0, label: '00', disabled: false },
+      { value: 2, label: '02', disabled: true },
+      { value: 4, label: '04', disabled: false }
+    ]);
+    expect(timePickerOptions(6, 2, [2], true)).toEqual([
+      { value: 0, label: '00', disabled: false },
+      { value: 4, label: '04', disabled: false }
+    ]);
+    expect(timePickerOptions(1000, 500, [], false, 3).map(option => option.label))
+      .toEqual(['000', '500']);
+    expect(timePickerOptions(2, -1).map(option => option.value)).toEqual([0, 1]);
+    expect(() => timePickerOptions(24, 2 ** 32)).toThrow(RangeError);
+  });
+
+  it('leaves an empty value unselected and uses optional picker time as the change template', () => {
+    const now = dayjs.utc('2024-09-15T12:34:56.789Z');
+    const panel = timePickerPanel(null, now.startOf('day'), timePickerClock({}), undefined,
+      datePickerEnUS.lang, now);
+
+    expect(timePickerColumnValue(null, 'hour')).toBeNull();
+    expect(panel.template.toISOString()).toBe('2024-09-15T00:00:00.000Z');
+    expect(timePickerColumnDate(panel.template, null, 'hour', 1).toISOString())
+      .toBe('2024-09-15T01:00:00.000Z');
+  });
+
+  it('finds first enabled dependent units when neither value nor pickerValue exists', () => {
+    const now = dayjs.utc('2024-09-15T12:34:56.789Z');
+    const panel = timePickerPanel(null, null, timePickerClock({ minuteStep: 15 }), () => ({
+      disabledHours: () => [0, 1],
+      disabledMinutes: hour => hour === 2 ? [0] : [],
+      disabledSeconds: (_hour, minute) => minute === 15 ? [0] : []
+    }), datePickerEnUS.lang, now);
+
+    expect(panel.template.toISOString()).toBe('2024-09-15T02:15:01.000Z');
+  });
+
+  it.each([
+    ['minute', 'disabledMinutes', 60, '00:34:00.000'],
+    ['second', 'disabledSeconds', 60, '00:00:56.000'],
+    ['millisecond', 'disabledMilliseconds', 1000, '00:00:00.789']
+  ] as const)('retains the base %s when its column has no available values',
+    (unit, callback, count, expectedTime) => {
+      const now = dayjs.utc('2024-09-15T12:34:56.789Z');
+      const clock = timePickerClock({ format: 'HH:mm:ss.SSS', hideDisabledOptions: true });
+      const disabledUnits = Array.from({ length: count }, (_, index) => index);
+      const disabledTime = () => ({ [callback]: () => disabledUnits });
+
+      const panel = timePickerPanel(null, undefined, clock, disabledTime, datePickerEnUS.lang, now);
+      const column = panel.columns.find(column => column.type === unit);
+
+      expect(column?.options).toEqual([]);
+      expect(panel.template.toISOString()).toBe(`2024-09-15T${expectedTime}Z`);
+      expect(panel.template.isUTC()).toBe(true);
+    }
+  );
+
+  it('passes numeric panel time to restrictions for empty higher columns', () => {
+    const now = dayjs.utc('2024-09-15T12:34:56.789Z');
+    const pickerValue = dayjs.utc('2024-09-15T08:09:10.123Z');
+    const clock = timePickerClock({ format: 'HH:mm:ss.SSS', hideDisabledOptions: true });
+    const allHours = Array.from({ length: 24 }, (_, hour) => hour);
+    const allMinutes = Array.from({ length: 60 }, (_, minute) => minute);
+    const allSeconds = Array.from({ length: 60 }, (_, second) => second);
+    const args: number[][] = [];
+
+    const panel = timePickerPanel(null, pickerValue, clock, () => ({
+      disabledHours: () => allHours,
+      disabledMinutes(hour) {
+        args.push([hour]);
+        return allMinutes;
+      },
+      disabledSeconds(hour, minute) {
+        args.push([hour, minute]);
+        return allSeconds;
+      },
+      disabledMilliseconds(hour, minute, second) {
+        args.push([hour, minute, second]);
+        return [];
+      }
+    }), datePickerEnUS.lang, now);
+
+    expect(args).toEqual([[8], [8, 9], [8, 9, 10]]);
+    expect(panel.columns.map(column => column.options.length)).toEqual([0, 0, 0, 10]);
+    expect(panel.template.toISOString()).toBe(pickerValue.toISOString());
+  });
+
+  it('aligns all units with restrictions evaluated from the current panel value', () => {
+    const value = dayjs.utc('2024-09-15T10:23:44.567Z');
+    const observed: string[] = [];
+    const panel = timePickerPanel(value, null, timePickerClock({
+      minuteStep: 15, secondStep: 10
+    }), base => {
+      observed.push(base.toISOString());
+      return { disabledHours: () => base.hour() === 10 ? [9] : [] };
+    }, datePickerEnUS.lang, value);
+
+    const next = panel.align(timePickerColumnDate(panel.template, value, 'hour', 9));
+
+    expect(observed).toEqual(['2024-09-15T10:23:44.567Z']);
+    expect(next.toISOString()).toBe('2024-09-15T08:15:40.500Z');
+    expect(next.isUTC()).toBe(true);
+    expect(value.toISOString()).toBe('2024-09-15T10:23:44.567Z');
+  });
+
+  it('keeps the time panel producer at one full-date argument before alignment', () => {
+    const value = dayjs('2020-12-31T16:37:59.456').locale('en');
+    const observed: Array<{ receiver: unknown; args: unknown[]; }> = [];
+    const disabledTime = function (this: unknown, _date: typeof value) {
+      observed.push({ receiver: this, args: Array.from(arguments) });
+      return {};
+    };
+    const clock = timePickerClock({ showSecond: true, showMillisecond: true, millisecondStep: 1 });
+
+    const panel = timePickerPanel(value, null, clock, disabledTime, datePickerEnUS.lang, value);
+    const aligned = panel.align(value);
+
+    expect(observed).toHaveLength(1);
+    expect(observed[0].receiver).toBeUndefined();
+    expect(observed[0].args).toHaveLength(1);
+    expect(observed[0].args[0]).toBe(value);
+    expect(panel.template.valueOf()).toBe(value.valueOf());
+    expect(aligned.valueOf()).toBe(value.valueOf());
+    expect(value.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
+  });
+
+  it('filters 12-hour values and disables a meridiem with no enabled hours', () => {
+    const value = dayjs.utc('2024-09-15T15:34:56.789Z');
+    const panel = timePickerPanel(value, null, timePickerClock({ use12Hours: true }), () => ({
+      disabledHours: () => Array.from({ length: 12 }, (_, hour) => hour)
+    }), datePickerEnUS.lang, value);
+    const hours = panel.columns.find(column => column.type === 'hour')!;
+    const meridiem = panel.columns.find(column => column.type === 'meridiem')!;
+
+    expect(hours.options).toHaveLength(12);
+    expect(hours.options[0]).toEqual({ value: 12, label: '12', disabled: false });
+    expect(hours.options[3]).toEqual({ value: 15, label: '03', disabled: false });
+    expect(meridiem.options).toEqual([
+      { value: 'am', label: 'AM', disabled: true },
+      { value: 'pm', label: 'PM', disabled: false }
+    ]);
+    expect(timePickerColumnDate(panel.template, value, 'meridiem', 'am').toISOString())
+      .toBe('2024-09-15T03:34:56.789Z');
+  });
+
+  it('formats localized meridiem labels and retains the empty-hour PM behavior', () => {
+    const now = dayjs.utc('2024-09-15T19:34:56.789Z');
+    const panel = timePickerPanel(null, now, timePickerClock({ use12Hours: true }), undefined,
+      datePickerRuRU.lang, now);
+    const meridiem = panel.columns.find(column => column.type === 'meridiem')!;
+
+    expect(meridiem.options.map(option => option.label)).toEqual(['утра', 'дня']);
+    expect(timePickerColumnDate(panel.template, null, 'meridiem', 'pm').toISOString())
+      .toBe('2024-09-15T12:34:56.789Z');
+  });
+
+  it('compares source calendar fields independently of the timestamp offset', () => {
+    const a = dayjs.utc('2024-09-15T10:00:00.123Z');
+    const sameWall = a.utcOffset(60, true);
+    const sameInstant = a.utcOffset(60);
+
+    expect(timePickerSameValue(a, sameWall)).toBe(true);
+    expect(timePickerSameValue(a, sameInstant)).toBe(false);
+    expect(timePickerSameValue(a, a.millisecond(124))).toBe(false);
+    expect(timePickerSameValue(null, null)).toBe(true);
+  });
+
+  it('applies time boundary equality to hours/minutes/seconds without comparing the date or milliseconds', () => {
+    const value = dayjs.utc('2024-09-15T10:00:00.123Z');
+
+    expect(timePickerDateDisabled(value, { minDate: value.add(1, 'year') })).toBe(false);
+    expect(timePickerDateDisabled(value, { minDate: value.millisecond(900) })).toBe(false);
+    expect(timePickerDateDisabled(value, { minDate: value.add(1, 'second') })).toBe(true);
+    expect(timePickerDateDisabled(value, { disabledDate: () => true })).toBe(true);
+  });
+});
+
+describe('TimePicker common props and semantic styles', () => {
+  it('keeps native fields while adapting clear callback payloads and stripping time-only DOM props', () => {
+    const events: unknown[] = [];
+    const shared = timePickerSharedProps({
+      name: 'time', required: true, minuteStep: 15, previewValue: false,
+      onChange: (value, text) => events.push(['change', value, text]),
+      onCalendarChange: (value, text, info) => events.push(['calendar', value, text, info])
+    });
+
+    shared.onCalendarChange?.(null, '', { source: 'time' });
+    shared.onChange?.(null, '');
+
+    expect(shared).toMatchObject({ name: 'time', required: true, showTime: true });
+    expect(shared).not.toHaveProperty('minuteStep');
+    expect(shared).not.toHaveProperty('previewValue');
+    expect(events).toEqual([['calendar', null, '', {}], ['change', null, null]]);
+  });
+
+  it('preserves both upstream semantic layers and root style priority', () => {
+    const result = timePickerSemantic({
+      classNames: ({ props }) => ({ root: props.size === undefined ? 'raw-size' : 'wrong',
+        popup: { root: 'local-popup' } }),
+      styles: { root: 'outline-offset:6px', popup: { root: 'outline-offset:8px' } }
+    }, {
+      classNames: ({ props }) => ({ root: props.size ? 'inner-context' : 'outer-context' }),
+      style: 'outline-offset:4px', styles: { root: 'outline-offset:2px' }
+    }, { size: 'small', disabled: false, variant: 'filled' });
+
+    expect(result.classes.root).toBe('inner-context outer-context raw-size');
+    expect(result.classes.popup.root).toBe('local-popup');
+    expect(result.styles.root?.endsWith('outline-offset:4px;outline-offset:6px')).toBe(true);
+    expect(result.styles.popup.root).toBe('outline-offset:8px');
+  });
+});
