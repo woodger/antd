@@ -1,6 +1,6 @@
 # Segmented
 
-`Segmented` позволяет выбрать один вариант. Храните выбранное значение в состоянии компонента.
+`Segmented` selects one option. Keep the selected value in component state.
 
 ```svelte
 <script lang="ts">
@@ -12,84 +12,80 @@
 <Segmented options={['День', 'Неделя', 'Месяц']} bind:value={period} />
 ```
 
-Options — строки/числа или объекты value/label/icon/title/tooltip/disabled/class.
-Значения должны быть уникальными; число 0 и строка "0" различаются. Label —
-строка, число или Snippet; icon — Snippet. Для icon-only задавайте title либо
-aria-label option. Пустая строка рядом с icon не создаёт текстовый span и считается
-icon-only; числовой 0 отображается. Интервал icon/label задаётся CSS margin.
-Title по умолчанию берётся из scalar label без icon,
-как в Ant Design. ClassNames/styles поддерживают root/item/label/icon, объект
-либо callback ({ props }); styles — CSS-строки. Style перекрывает styles.root.
+Options are strings, numbers, or objects with value, label, icon, title, tooltip,
+disabled, and class. Values must be unique. The number 0 and string "0" are distinct.
+Label accepts a string, number, or snippet, and icon accepts a snippet. Set title
+or an option aria-label for icon-only options. An empty string beside an icon
+is treated as icon-only and omits the text span. Numeric 0 is visible.
+CSS margin sets icon and label spacing. Title defaults to the scalar label
+when there is no icon, as in Ant Design. ClassNames and styles accept root, item,
+label, and icon through an object or a ({ props }) callback. Styles are CSS strings,
+and style overrides styles.root.
 
-ConfigProvider.segmented задаёт class/style и classNames/styles всех четырёх slots.
-Undefined наследует родительский record; явный record, включая {}, заменяет его
-целиком. Slot classes объединяются context → local; root styles идут в порядке
-context styles.root → context style → local styles.root → local style.
-Callbacks могут возвращать undefined. Они сохраняют существующие native props:
-generated name и defaults disabled/block/vertical; size остаётся локальным prop,
-даже при наследуемом componentSize. Глобальный callback типизирован для разных
-value/options и не меняет выбор значения.
-Сверка: [UMD](../../../tests/browser/fixtures/ant-design-segmented-config-reference.json),
-[SSR](../../../tests/package/segmented/segmented-config.ssr.test.ts),
-[browser](../../../tests/browser/segmented/segmented-config.spec.ts), `?fixture=segmented-config`.
+ConfigProvider.segmented sets class and style and classNames and styles for all
+four slots. Undefined inherits the parent record. An explicit record, including
+{}, replaces it in full. Provider classes come before local classes. Root style
+order is context styles.root, context style, local styles.root, then local style.
+Callbacks may return undefined. They retain native props such as generated name
+and disabled, block, and vertical defaults. Size stays local in the callback,
+including with inherited componentSize. The global callback is typed across
+different values and options and leaves selection intact. The fixture is
+`?fixture=segmented-config`. [UMD](../../../tests/browser/fixtures/ant-design-segmented-config-reference.json) · [SSR](../../../tests/package/segmented/segmented-config.ssr.test.ts) · [Browser](../../../tests/browser/segmented/segmented-config.spec.ts)
 
-ConfigProvider.theme.components.Segmented применяет все восемь компонентных
-токенов: padding/фон track, обычный/selected/hover текст и фоны selected/hover/active.
-Поддержаны числовой 0, строковая CSS-длина trackPadding, alias tokens,
-глобальные и компонентные algorithms, cssVar.prefix и вложенные providers.
-Тема обновляет размеры и состояния без сброса selection, focus или radio DOM;
-изменение геометрии завершает существующий thumb через ResizeObserver.
-Переменные темы идут перед semantic/user styles; native light/dark/compact
-сохраняют прежние цвета и размеры.
-Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-segmented-tokens-reference.json),
-[размеры и pseudo states](../../../tests/browser/fixtures/ant-design-segmented-theme-reference.json),
-[SSR](../../../tests/package/segmented/segmented-theme.ssr.test.ts) и
-[browser](../../../tests/browser/segmented/segmented-theme.spec.ts), `?fixture=segmented-theme`.
+ConfigProvider.theme.components.Segmented applies all eight component tokens for
+track padding and background, regular, selected, and hover text, and selected,
+hover, and active backgrounds. Numeric 0, CSS length strings for trackPadding,
+aliases, global and component algorithms, cssVar.prefix, and nested providers
+are supported. The theme changes sizes and states while preserving selection,
+focus, and radio DOM. A geometry change ends the existing thumb through
+ResizeObserver. Theme variables precede semantic and user styles. The native
+light, dark, and compact colors and dimensions remain available.
+The fixture is `?fixture=segmented-theme`. [Official CSS tokens](../../../tests/reference/ant-design-segmented-tokens-reference.json) ·
+[Sizes and pseudo-states](../../../tests/browser/fixtures/ant-design-segmented-theme-reference.json) · [SSR](../../../tests/package/segmented/segmented-theme.ssr.test.ts) · [Browser](../../../tests/browser/segmented/segmented-theme.spec.ts)
 
-Value поддерживает binding, defaultValue читается при создании; без него выбран
-первый option, даже disabled. Внешняя смена value не вызывает onChange(value).
-Удаление выбранного option не исправляет значение; восстановление option
-возвращает checked. Size наследует ConfigProvider, orientation имеет приоритет
-над vertical; block и shape=round повторяют оформление эталона. Disabled влияет
-на все radio, option.disabled — на один. Как Ant Design 6.6.8, Segmented не
-наследует ConfigProvider.componentDisabled; передавайте disabled явно.
+Value supports binding. DefaultValue is read at creation. When omitted, the first
+option is selected even if disabled. External value changes leave onChange(value)
+untouched. Removing the selected option leaves its value in the model. Restoring
+the option checks it again. Size inherits ConfigProvider. Orientation takes
+priority over vertical, and block and shape=round follow reference styling.
+Disabled applies to all radios, and option.disabled to one. Pass disabled
+explicitly because Segmented follows Ant Design 6.6.8 and reads no
+ConfigProvider.componentDisabled.
 
-Внутри radiogroup — нативные label/input[type=radio]/div label. Name общий
-для inputs и уникален между экземплярами по умолчанию. Корень имеет tabindex=0,
-если не disabled; native Tab также достигает выбранного radio. Стрелки циклически
-выбирают enabled options в порядке массива независимо от RTL и направления.
-Смена по стрелке подавляет второе нативное переключение и переводит фокус
-на выбранный radio. Bind:nativeElement даёт корневой div.
+The radiogroup contains native label, input[type=radio], and div labels. Name
+is shared by the inputs and unique between instances by default. The root has
+tabindex=0 when enabled. Native Tab also reaches the selected radio. Arrow keys
+cycle through enabled options in array order regardless of RTL and orientation.
+An arrow selection suppresses the second native toggle and focuses the selected
+radio. Bind:nativeElement exposes the root div.
 
-Сохраняется upstream-контракт FormData: у radio нет value-атрибута, поэтому
-выбранный enabled option отправляет "on" под name. Типизированное значение
-получайте через binding/onChange. Native reset не меняет модель и не вызывает
-onChange; checked после reset приводится к текущему value. Интеграция с FormItem
-и сериализация option.value не добавляются скрыто.
+The upstream FormData contract is preserved. The radio omits its value attribute,
+so the selected enabled option submits "on" under name. Read the typed value
+through binding or onChange. Native reset leaves the model and onChange intact.
+Checked is reconciled with the current value after reset. FormItem integration
+and option.value serialization remain outside this contract.
 
-При смене значения между существующими видимыми options создаётся штатный thumb.
-Layout-геометрия labels (offset/client, без повторного применения CSS scale)
-измеряется после обновления DOM; Web Animations API перемещает
-индикатор с duration/easing токенов. Во время движения сохраняется selected-text,
-а обычный selected фон возвращается после завершения. Повторная смена отменяет
-предыдущий запуск. ResizeObserver, смена оси/RTL, изменения options и удаление
-компонента очищают animation/observer; reduced motion пропускает либо завершает
-движение. SSR не создаёт thumb, observers или animations.
+A change between existing visible options creates the standard thumb. Layout
+geometry uses label offsets and client sizes after the DOM update and avoids
+applying CSS scale again. Web Animations API moves the indicator with the token
+duration and easing. Selected text stays styled during motion, and the normal
+selected background returns when it ends. A new value change cancels the previous
+animation. ResizeObserver, axis or RTL changes, option updates, and unmount
+clean up animation and observation. Reduced motion skips or ends the movement.
+The thumb, observers, and animations run only in the browser.
 
-Option.tooltip принимает строку либо props существующего Svelte Tooltip без
-children. Поддержаны hover/focus/Escape, в том числе для disabled option.
-Локальный Tooltip добавляет служебный span с display:contents и native popover;
-label остаётся flex-item для block и измерений thumb. Пользовательский tooltip.style
-может переопределить display; это меняет компоновку по явному выбору владельца.
-Локальный prefixCls меняет классы корня, options, icon и thumb и подключает
-извлечённый CSS для этого префикса. Пустая строка наследует ConfigProvider.prefixCls
-(по умолчанию ant-segmented).
-Имена CSS variables и общий marker сохраняются; defaults ограничены собственным
-корнем. Смена префикса сохраняет radio, значение, фокус и ref, отменяя старый thumb;
-при unmount удаляется локальный stylesheet. Поддержаны native и token themes,
-размеры, block/round, vertical/RTL, disabled, semantic styles и option Tooltip.
-Сверка: [UMD](../../../tests/browser/fixtures/ant-design-segmented-prefix-reference.json),
-[SSR](../../../tests/package/segmented/segmented-prefix.ssr.test.ts),
-[browser](../../../tests/browser/segmented/segmented-prefix.spec.ts), `?fixture=segmented-prefix`.
-Segmented наследует ConfigProvider.prefixCls; непустой локальный prefix имеет приоритет.
+Option.tooltip accepts a string or existing Svelte Tooltip props without children.
+Hover, focus, and Escape also work for disabled options. A local Tooltip adds
+a display:contents span and a native popover, keeping the label a flex item for
+block and thumb measurements. A custom tooltip.style may override display and
+explicitly change layout.
 
+Local prefixCls changes the root, option, icon, and thumb classes and connects
+extracted CSS. An empty string inherits ConfigProvider.prefixCls, giving
+ant-segmented by default. CSS variable names and the shared marker stay the same.
+Defaults are scoped to the component root. Prefix changes preserve radio DOM,
+value, focus, and ref and cancel the old thumb. Unmount removes the local
+stylesheet. Native and token themes, sizes, block, round, vertical, RTL, disabled,
+semantic styles, and option Tooltip are supported. The fixture is
+`?fixture=segmented-prefix`. [UMD](../../../tests/browser/fixtures/ant-design-segmented-prefix-reference.json) · [SSR](../../../tests/package/segmented/segmented-prefix.ssr.test.ts) · [Browser](../../../tests/browser/segmented/segmented-prefix.spec.ts)
+Segmented inherits ConfigProvider.prefixCls, and a nonempty local prefix takes priority.

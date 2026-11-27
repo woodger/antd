@@ -1,7 +1,6 @@
 # Carousel
 
-Carousel отображает слайды с поддержкой прокрутки и автоматического переключения.
-Props, snippets и refs описаны в [carousel.types.ts](../../../src/lib/carousel/carousel.types.ts).
+Carousel displays slides with scrolling and autoplay. [Props, snippets, and refs](../../../src/lib/carousel/carousel.types.ts)
 
 ```svelte
 <script lang="ts">
@@ -15,81 +14,78 @@ Props, snippets и refs описаны в [carousel.types.ts](../../../src/lib/c
 <button type="button" onclick={() => carousel?.goTo(0)}>В начало</button>
 ```
 
-Каждый элемент массива children — отдельный логический слайд. Один непрозрачный
-snippet тоже образует один слайд: его внутренние DOM-узлы не разбираются.
-Для нескольких snippets и метаданных используйте items: каждый элемент задаёт
-children, class, attributes и width исходного child div. Items имеет приоритет
-над children. Числовой width нужен для variableWidth, включая SSR; строки rows
-и slidesPerRow группируются до создания клонов. Как в Slick, группировка заменяет
-child style своими width/display; произвольный стиль содержимого задавайте внутри
-snippet. Клоны создают независимые экземпляры snippets, поэтому их DOM ids должны
-учитывать возможное повторение.
+Each entry in the children array is one logical slide. An opaque snippet also
+forms a single slide. Its internal DOM stays opaque. Use items for multiple
+snippets with metadata. Each entry supplies children, class, attributes, and
+width for the original child div. Items takes precedence over children.
+VariableWidth needs numeric width, including in SSR. Rows and slidesPerRow
+are grouped before creating clones. As in Slick, grouping gives the child
+its own width and display styles. Set custom content style inside the snippet.
+Clones create independent snippet instances, so use DOM IDs that allow repetition.
 
-По умолчанию dots включены, arrows/draggable/autoplay/waitForAnimate выключены,
-infinite включён, speed равен 500ms. Effect="fade" включает fade и один слайд на
-страницу; centerMode устанавливает slidesToScroll=1. DotPlacement принимает
-top/bottom/start/end.
-Start/end включают vertical по умолчанию; явный vertical имеет приоритет.
-Вертикальный режим отключает наследуемое зеркалирование RTL. В горизонтальном
-RTL currentSlide зеркальный, но next/prev сохраняют исходное направление Slick.
+Dots and infinite are enabled by default. Arrows, draggable, autoplay, and
+waitForAnimate are disabled. Speed defaults to 500ms. Effect="fade" enables
+fade and one slide per page. CenterMode sets slidesToScroll=1. DotPlacement
+accepts top, bottom, start, and end. Start and end default to vertical.
+An explicit vertical takes precedence. Vertical mode disables inherited RTL
+mirroring. In horizontal RTL, currentSlide is mirrored while next and prev
+keep Slick's direction.
 
-InitialSlide задаёт начальную позицию и повторно применяется при изменении этого
-prop или root RTL. Смена количества слайдов сама по себе его не применяет.
-Как в Ant Design, RTL reset считает исходные children до rows grouping.
-BeforeChange/afterChange сохраняют порядок и прерывание перехода; waitForAnimate
-блокирует повторный переход. GoTo/next/prev откладываются на native timer, как
-исходные методы. Ref появляется после mount, nativeElement указывает на внешний
-div. InnerSlider предоставляет типизированные state/list/track и методы Slick;
-это Svelte adapter, а не произвольный React class instance. В responsive unslick
-innerSlider отсутствует, а методы Carousel ничего не переключают.
+InitialSlide sets the initial position and is reapplied when the prop or root RTL
+changes. A slide count change alone leaves it untouched. As in Ant Design, RTL reset
+counts the original children before row grouping. BeforeChange and afterChange
+preserve transition order and interruption. WaitForAnimate blocks repeated
+transitions. GoTo, next, and prev use a deferred native timer like upstream.
+The ref is available after mount. NativeElement points to the outer div.
+InnerSlider exposes typed state, list, track, and Slick methods through a
+Svelte adapter. Responsive unslick has no innerSlider and its methods leave the
+current slide unchanged.
 
-Autoplay использует интервал autoplaySpeed+50ms; duration dots — autoplaySpeed.
-PauseOnHover/pauseOnDotsHover/pauseOnFocus сохраняют исходные состояния
-playing/paused/hovered/focused. Focus pause относится к самому slick-slide,
-а не к вложенному input. CSS-прогресс dots не останавливается вместе с JS autoplay.
-LazyLoad поддерживает ondemand, anticipated и progressive с исходными индексами
-onLazyLoad, включая клоны. AdaptiveHeight обновляется после измерений и image load.
-Responsive регистрирует media listeners при mount и применяет breakpoint по
-событию matchMedia; исходного принудительного применения при mount нет.
+Autoplay ticks every autoplaySpeed+50ms. The dots duration is autoplaySpeed.
+PauseOnHover, pauseOnDotsHover, and pauseOnFocus preserve playing, paused, hovered,
+and focused states. Focus pause applies to the slick-slide itself. The CSS
+dots progress continues during a JavaScript autoplay pause. LazyLoad supports
+ondemand, anticipated, and progressive with upstream onLazyLoad indexes,
+including clones. AdaptiveHeight updates after measurements and image load.
+Responsive registers media listeners on mount and applies a breakpoint on a
+matchMedia event. Mount alone does not force the breakpoint.
 
-Клавиатура использует physical Left/Right и RTL, пропуская input/textarea/select.
-Мышиный drag требует draggable; touch учитывает swipe/touchMove/touchThreshold,
-edgeFriction и swipeToSlide. Controls — native button с type="button"; они не
-отправляют форму. У arrows, dots и слайдов есть видимый keyboard focus. Отключённая
-стрелка сохраняет исходные class/pointer semantics без добавления native disabled.
-FocusOnSelect фокусирует прежний current DOM slide до commit, как react-slick.
+Keyboard handling uses physical Left and Right and RTL, skipping input, textarea,
+and select. Mouse drag requires draggable. Touch considers swipe, touchMove,
+touchThreshold, edgeFriction, and swipeToSlide. Controls are native buttons with
+type="button" and leave form submission alone. Arrows, dots, and slides have
+visible keyboard focus. An unavailable arrow keeps upstream class and pointer
+semantics without native disabled. FocusOnSelect focuses the previous current DOM
+slide before commit, as in react-slick.
 
-PrevArrow/nextArrow получают class/style/onClick/currentSlide/slideCount;
-customPaging — индекс и onClick, appendDots — default dots snippet и root props.
-Пользовательский renderer явно применяет эти props к своим элементам.
-ConfigProvider.carousel задаёт class/style внутреннего slick-slider; локальные
-значения имеют приоритет. RootClassName/id относятся к внешнему wrapper.
-Locale.carousel и исходный alias Carousel задают имена стрелок; локальный
-Carousel имеет приоритет. Темы light/dark/compact и RTL используют общие CSS variables.
+PrevArrow and nextArrow receive class, style, onClick, currentSlide, and slideCount.
+CustomPaging receives the index and onClick. AppendDots receives the default dots
+snippet and root props. Custom renderers apply these props explicitly.
+ConfigProvider.carousel sets class and style on the inner slick-slider. Local
+values take precedence. RootClassName and id apply to the outer wrapper.
+Locale.carousel and upstream alias Carousel set arrow names, with local
+Carousel taking precedence. Light, dark, compact, and RTL use shared CSS variables.
 
-Локальный `prefixCls` задаёт wrapper, RTL/vertical classes и имена duration
-keyframes; пустое значение наследует `ConfigProvider.prefixCls`. Классы Slick
-сохраняются. Prefix вложенных Radio/Checkbox selectors берётся из общего provider,
-независимо от локального имени Carousel и namespace theme variables. Смена prefix
-сохраняет текущий слайд, DOM, ref, draft/selection/focus и управление стрелками.
-Сверка: [официальные замеры](../../../tests/browser/fixtures/ant-design-carousel-prefix-reference.json),
-[браузер](../../../tests/browser/carousel/carousel-prefix.spec.ts) и
-[SSR](../../../tests/package/carousel/carousel-prefix.ssr.test.ts), `?fixture=carousel-prefix`.
+Local `prefixCls` sets the wrapper, RTL and vertical classes, and duration keyframe
+names. An empty value inherits `ConfigProvider.prefixCls`. Slick classes stay in
+place. Nested Radio and Checkbox selectors use the shared provider prefix independently
+of local Carousel and the theme variable namespace. Prefix changes preserve slide,
+DOM, ref, draft, selection, focus, and arrow controls. The fixture is
+`?fixture=carousel-prefix`. [Official measurements](../../../tests/browser/fixtures/ant-design-carousel-prefix-reference.json) · [Browser](../../../tests/browser/carousel/carousel-prefix.spec.ts) ·
+[SSR](../../../tests/package/carousel/carousel-prefix.ssr.test.ts)
 
-ConfigProvider.theme.components.Carousel применяет семь компонентных токенов:
-размеры и отступ стрелок, ширину/высоту/отступ/интервал точек и ширину активной
-точки. Вертикальный режим меняет местами размеры точек по исходным правилам.
-Поддержаны alias tokens, глобальные и компонентные algorithms, cssVar.prefix,
-вложенные providers и реактивное обновление без пересоздания слайдов.
-DotActiveWidth поддерживает явный 0; по умолчанию используется 24.
-Тематические переменные задаются wrapper; пользовательские class/style и
-ConfigProvider.carousel по-прежнему относятся к inner slider и сохраняют приоритет.
-Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-carousel-tokens-reference.json),
-[геометрия четырёх размещений](../../../tests/browser/fixtures/ant-design-carousel-theme-reference.json),
-[SSR](../../../tests/package/carousel/carousel-theme.ssr.test.ts) и
-[browser](../../../tests/browser/carousel/carousel-theme.spec.ts), `?fixture=carousel-theme`.
+ConfigProvider.theme.components.Carousel applies seven component tokens for arrow
+size and spacing, dot width, height, margin, interval, and active dot width.
+Vertical mode swaps dot dimensions as upstream does. Alias tokens, global and
+component algorithms, cssVar.prefix, nested providers, and live updates without
+remounting slides are supported. DotActiveWidth accepts explicit 0 and defaults
+to 24. The wrapper receives theme variables. User class and style and
+ConfigProvider.carousel still apply to the inner slider and retain precedence.
+The theme fixture is `?fixture=carousel-theme`. [Official CSS tokens](../../../tests/reference/ant-design-carousel-tokens-reference.json) ·
+[Geometry for four placements](../../../tests/browser/fixtures/ant-design-carousel-theme-reference.json) · [SSR](../../../tests/package/carousel/carousel-theme.ssr.test.ts) · [Browser](../../../tests/browser/carousel/carousel-theme.spec.ts)
 
-SSR выводит исходную процентную либо variable-width геометрию и lazy placeholders
-без DOM, callbacks, timers или media queries. При уничтожении очищаются timers,
-ResizeObserver, image/focus/touch/media listeners и refs; поздние callbacks не
-вызываются. React development diagnostics и устаревшие IE fallbacks не воспроизводятся.
+SSR renders upstream percentage or variable-width geometry and lazy placeholders
+without browser DOM, callbacks, timers, or media queries. Unmount clears timers,
+ResizeObserver, image, focus, touch, and media listeners, and refs, and prevents
+late callbacks. React development diagnostics and old IE fallbacks remain
+outside the port.

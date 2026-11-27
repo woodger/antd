@@ -1,7 +1,6 @@
 # TimePicker
 
-TimePicker позволяет выбрать время.
-Вложенная панель наследует [слой владельца](../theme-context.md#layering-nested-panels).
+TimePicker selects a time. A nested panel inherits its owner layer. [Owner layer](../theme-context.md#layering-nested-panels)
 
 ```svelte
 <script lang="ts">
@@ -15,101 +14,100 @@ TimePicker позволяет выбрать время.
 <TimePicker id="meeting-time" name="time" {value} onChange={next => { value = next; }} />
 ```
 
-`value`, `open` и `pickerValue` управляются props/callbacks. Без value/open
-используются defaultValue/defaultOpen. Пустое значение остаётся пустым: начало
-панели берётся из текущего дня с нулевым временем. DefaultOpenValue заполняет
-только панель и кандидат для OK, не input или onCalendarChange до выбора.
-DefaultPickerValue задаёт время панели при открытии; pickerValue независим от value.
+Value, open, and pickerValue are controlled through props and callbacks.
+Without value or open, use defaultValue and defaultOpen. An empty value stays
+empty. The panel starts at the current day with zero time. DefaultOpenValue
+sets the panel and the OK candidate and leaves input and onCalendarChange
+untouched until selection. DefaultPickerValue sets panel time on open.
+PickerValue is independent of value.
 
-По умолчанию format — HH:mm:ss; use12Hours включает hh:mm:ss A. Format принимает
-строку, массив допустимых форматов или display callback. Callback делает input
-readonly, даже при inputReadOnly={false}. Флаги showHour/showMinute/showSecond/
-showMillisecond задают колонки; остальные выводятся из формата по правилам
-rc-picker. Шаги и disabledTime управляют
-единицами; hideDisabledOptions скрывает запрещённые пункты.
+Format defaults to HH:mm:ss. Use12Hours selects hh:mm:ss A. Format accepts a
+string, an array of formats, or a display callback. A callback makes the input
+readonly even with inputReadOnly={false}. ShowHour, showMinute, showSecond,
+and showMillisecond set columns. Omitted flags follow rc-picker format rules.
+Steps and disabledTime control units. HideDisabledOptions removes unavailable
+options.
 
-Panel selection выравнивает все четыре единицы, включая скрытые: default
-millisecondStep=100, ближайшее разрешённое значение слева либо первое
-разрешённое. Для точности до миллисекунды задайте millisecondStep={1}.
-Ручной ввод разбирается строго и не округляется. Дата и UTC/timezone режим
-входного Dayjs сохраняются при редактировании панели; parser/getNow используют
-общий адаптер без прикладной сериализации.
+Panel selection aligns all four units, including hidden ones. MillisecondStep
+defaults to 100. Alignment uses the nearest allowed value to the left or the
+first allowed value. Set millisecondStep={1} for millisecond precision. Manual
+entry uses strict parsing without rounding. Panel edits preserve input Dayjs
+date, UTC mode, and timezone. Parser and getNow use the shared adapter.
+Application serialization stays with the owner.
 
-`needConfirm` по умолчанию true. Выбор в колонке меняет только calendar draft.
-Кнопка OK вызывает `onOk` перед `onChange`. Если обработчик `onOk` принимает
-выбранное время или закрывает панель через `open`, пикер всё равно сообщает
-об изменённом выборе и запросе закрытия. У диапазона закрытие относится к
-последнему подтверждению. Enter/Tab подтверждают допустимый ввод без `onOk`.
-Двойной клик по единице подтверждает первый выбранный пункт без `onOk`.
-Если автопрокрутка меняет цель между вторыми down/up, подтверждение обрабатывается
-на колонке. Новый двойной клик по пустой области не подтверждает прежний выбор.
-В [закреплённом upstream](../../../tests/browser/fixtures/ant-design-time-column-double-click-observation.json)
-автопрокрутка между двумя кликами может выбрать соседний час; это поведение
-намеренно не воспроизводится. При needConfirm={false}
-onChange вызывается при завершении ввода/закрытии, а не при каждом клике колонки.
-Escape отменяет draft; закрытие снаружи при needConfirm=true тоже отменяет его.
-Now и presets применяют значение сразу. OnCalendarChange получает пустой info
-объект. При полной очистке onChange
-получает `(null, null)`, а onCalendarChange — `(null, '', {})`, как SinglePicker.
+NeedConfirm defaults to true. Column selection updates only the calendar draft.
+OK calls onOk before onChange. If onOk accepts the selected time or closes the
+panel through open, the picker still reports the change and close request.
+For ranges, closing belongs to the last confirmation. Enter and Tab accept
+valid input without onOk. Double click confirms the first selected option
+without onOk. If autoscroll moves the target between the second down and up,
+the column handles confirmation. A new double click on empty space leaves
+the old selection unconfirmed. The pinned upstream can select an adjacent
+hour when autoscroll moves between clicks. The port keeps the first selection.
+With needConfirm={false}, onChange runs when input finishes or the panel
+closes. Escape cancels the draft, and outside close also cancels it when
+needConfirm=true. Now and presets apply immediately. OnCalendarChange gets
+an empty info object. Complete clear gives onChange(null, null) and
+onCalendarChange(null, '', {}), as in SinglePicker. [Pinned upstream](../../../tests/browser/fixtures/ant-design-time-column-double-click-observation.json)
 
-`previewValue='hover'` временно показывает время под указателем, включая disabled
-units, без callbacks. False отключает preview. ChangeOnScroll выбирает ближайшую
-разрешённую единицу через 300 ms после прокрутки; программное выравнивание колонок
-не считается вводом. RAF, scroll listeners и delayed callbacks очищаются при
-изменении выбора и удалении панели.
+PreviewValue='hover' temporarily displays the hovered time, including
+disabled units, without callbacks. False disables preview. ChangeOnScroll
+selects the nearest allowed unit 300 ms after scrolling. Programmatic
+alignment leaves user input untouched. Selection changes and panel removal
+clear animation frames, scroll listeners, and delayed callbacks.
 
-Locale имеет общую форму DatePickerLocale: lang плюс timePickerLocale.placeholder.
-Он объединяется с ConfigProvider.locale.datePicker. Default ruRU и переключение
-enUS сохраняются. ConfigProvider.timePicker задаёт variant, class/style, icons,
-clear и semantic config; вложенный объект заменяет родительский целиком.
-Semantic classNames/styles поддерживают root/prefix/input/suffix и popup
-root/content/item/footer/container. Локальный callback получает исходные props
-с разрешённым variant; контекст проходит оба исходных слоя TimePicker/SinglePicker.
-Локальный style применяется последним к root.
+Locale uses the DatePickerLocale shape with lang and timePickerLocale.placeholder
+and merges with ConfigProvider.locale.datePicker. RuRU is the default, and enUS
+switches to English. ConfigProvider.timePicker sets variant, class, style, icons,
+clear, and semantic configuration. A nested object replaces the parent.
+ClassNames and styles support root, prefix, input, suffix, and popup root,
+content, item, footer, and container. A local callback receives raw props with
+resolved variant. Context follows both upstream TimePicker and SinglePicker
+layers. Local style applies last to the root.
 
-Prefix/suffixIcon/allowClear.clearIcon, cellRender, panelRender, renderExtraFooter
-и presets принимают Svelte snippets вместо React nodes/render functions.
-Cell info.originNode — snippet
-нативной кнопки, остальные поля описаны в [time-picker.types.ts](../../../src/lib/picker/time-picker.types.ts).
-Bind:nativeElement даёт root div, bind:this — focus({cursor,preventScroll})/blur().
-Native name/id/required и FormItem работают без скрытого ISO input; FormData
-содержит отображаемую строку, Form model хранит Dayjs напрямую.
+Prefix, suffixIcon, allowClear.clearIcon, cellRender, panelRender,
+renderExtraFooter, and presets accept Svelte snippets. Cell info.originNode
+is the native button snippet. Bind:nativeElement exposes the root div, and
+bind:this exposes focus({ cursor, preventScroll }) and blur(). Native name,
+id, required, and FormItem work without a hidden ISO input. FormData contains
+the display string and the form model keeps Dayjs directly. [Types](../../../src/lib/picker/time-picker.types.ts)
 
-`components.input` заменяет поле времени. `components.button` получает
-подпись OK и атрибуты штатного подтверждения.
-[Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
+`components.input` replaces the time editor. `components.button` gets the OK
+label and normal confirmation attributes. [Editor and button context](date-picker.md#редактор-и-кнопка-подтверждения)
 
-`components.time` заменяет колонки, сохраняя обычный черновик и подтверждение.
-Панель может запросить календарный режим через `onModeChange`. Для владельца
-с такими переходами используйте `TimePickerProps<DatePickerMode>`. По
-умолчанию тип режима у `TimePickerProps` — `'time'`.
-[Контекст панели](date-picker.md#пользовательские-панели)
+`components.time` replaces the columns and keeps ordinary drafts and
+confirmation. A panel can request a calendar mode through onModeChange.
+Use TimePickerProps<DatePickerMode> for an owner with those transitions.
+The default TimePickerProps mode type is 'time'. [Panel context](date-picker.md#пользовательские-панели)
 
-Адаптация доступности использует native buttons для единиц, стрелки/Home/End,
-ArrowDown из input, Enter/Tab и Escape с возвратом фокуса. Popup использует общий
-native popover lifecycle библиотеки. Класс popup задаётся через classNames.popup.root
-у всех четырёх picker-компонентов; остальные semantic slots у DatePicker/RangePicker
-ещё не перенесены. ShowNow управляет Today/Now, ограничения времени задаются
-функцией disabledTime, иконка очистки — allowClear.clearIcon. Прежние popup aliases,
-showToday, прямые disabled units, addon/onSelect и второй аргумент onKeyDown удалены. Темы, compact, RTL, status и размеры
-наследуют текущие контексты.
+The accessibility adaptation uses native unit buttons, arrows, Home and End,
+ArrowDown from input, Enter and Tab, and Escape with focus restoration.
+Popup uses the library's native popover lifecycle. All four picker components
+use classNames.popup.root for popup class. Other DatePicker and RangePicker
+semantic slots are still outside the port. ShowNow controls Today and Now.
+DisabledTime sets time constraints, and allowClear.clearIcon sets the clear
+icon. The old popup aliases, showToday, direct disabled units, addon, onSelect,
+and the second onKeyDown argument were removed. Themes, compact, RTL, status,
+and size inherit current contexts.
 
-Проверки: [engine](../../../src/lib/picker/time-picker.engine.test.ts),
-[SSR](../../../src/lib/picker/time-picker.ssr.test.ts),
-[public package](../../../tests/package/picker/time-picker.ssr.test.ts),
-[browser](../../../tests/browser/picker/time-picker.spec.ts) и `?fixture=time-picker`.
-Общие component tokens настраиваются через `components.DatePicker`; подробности
-и правила обновления открытой панели описаны в разделе DatePicker.
-Для собственного типа даты используйте `DatePicker.generatePicker(adapter).TimePicker`.
-Описание адаптера есть в [документации DatePicker](./date-picker.md#свой-тип-даты).
-`multiple` доступен у `DatePicker.TimePicker` и `Picker.TimePicker` из
-`generatePicker`. Эти компоненты принимают массив дат и подтверждают набор
-по правилам [множественного выбора](./date-picker.md#множественный-выбор).
-Mask format, React diagnostics и полный rc-trigger/
-motion API пока не перенесены. Настройки `popupAlign` и `builtinPlacements`
-общие для пикеров даты и времени. [Положение панели](./date-picker.md#положение-панели)
-Подписи и формат времени берутся из словаря в `ConfigProvider.locale`.
-[Подключение локали](../themes.md#interface-language)
-Диапазон экспортируется как TimeRangePicker.
-Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream.
+The fixture is `?fixture=time-picker`. [Engine](../../../src/lib/picker/time-picker.engine.test.ts) · [SSR](../../../src/lib/picker/time-picker.ssr.test.ts) ·
+[Public package](../../../tests/package/picker/time-picker.ssr.test.ts) · [Browser](../../../tests/browser/picker/time-picker.spec.ts)
 
+Set shared component tokens in components.DatePicker. The DatePicker reference
+covers token updates while the panel is open and the adapter for custom dates.
+Use DatePicker.generatePicker(adapter).TimePicker for a custom date type.
+[DatePicker reference](./date-picker.md#свой-тип-даты)
+
+Multiple is available on DatePicker.TimePicker and Picker.TimePicker from
+generatePicker. They take arrays of dates and confirm the set using the
+multiple selection rules. [Multiple selection](./date-picker.md#множественный-выбор)
+
+Mask format, React diagnostics, and the full rc-trigger and motion API remain
+outside the port. Date and time pickers share popupAlign and builtinPlacements.
+[Panel placement](./date-picker.md#положение-панели)
+
+Labels and time formats come from the ConfigProvider.locale dictionary.
+[Locale setup](../themes.md#interface-language)
+
+Use TimeRangePicker for a range. An overflowing 32-bit step throws RangeError
+to avoid the upstream infinite loop.

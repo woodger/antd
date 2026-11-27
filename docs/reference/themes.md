@@ -106,4 +106,4 @@ strings stay in English.
 ```
 
 Set shared form error messages through `validateMessages` and the message for
-an individual rule through `message`. [Message templates](forms.md#шаблоны-сообщений)
+an individual rule through `message`. [Message templates](forms.md#message-templates)

@@ -1,14 +1,14 @@
 # RangePicker (DatePicker.RangePicker)
 
-RangePicker позволяет выбрать диапазон дат и времени. Черновой выбор,
-подтверждённые границы и принятое владельцем значение хранятся отдельно.
+RangePicker selects a date and time range. Draft selection, confirmed endpoints,
+and the value accepted by the owner are stored separately.
 
-RangePickerCore также используется TimeRangePicker. ConfigProvider.rangePicker
-задаёт общий variant/class/style/separator; локальные props имеют приоритет.
-Объект вложенного провайдера заменяет родительский целиком.
-Семантические классы и стили, значок суффикса и настройку очистки RangePicker
-наследует из `ConfigProvider.datePicker`. Локальные `prefix`, `classNames`
-и `styles` работают по [общим правилам DatePicker](date-picker.md#семантическое-оформление-и-настройки-провайдера).
+TimeRangePicker also uses RangePickerCore. ConfigProvider.rangePicker supplies
+shared variant, class, style, and separator. Local props take precedence.
+A nested provider object replaces the parent in full. RangePicker inherits
+semantic classes and styles, the suffix icon, and clear settings from
+`ConfigProvider.datePicker`. Local `prefix`, `classNames`, and `styles` follow the
+shared picker rules. [DatePicker rules](date-picker.md#семантическое-оформление-и-настройки-провайдера)
 
 ```svelte
 <script lang="ts">
@@ -21,68 +21,67 @@ RangePickerCore также используется TimeRangePicker. ConfigProvi
   value={period} onChange={next => { period = next; }} />
 ```
 
-Value/defaultValue — пара Dayjs|null|undefined; отсутствующие границы внутри
-нормализуются в null. Value=null очищает обе границы, undefined включает внутреннее
-состояние. OnChange получает пару Dayjs|null либо null при полной очистке.
-Второй аргумент — пара отображаемых строк либо null при полной очистке: это
-фактическое поведение rc-picker 1.12.2, хотя его declaration обещает только tuple.
-OnCalendarChange всегда получает пару значений, пару строк и {range:'start'|'end'}
-для первой изменённой границы. OnOk получает текущую календарную пару после
-подтверждения каждой границы; первое подтверждение ещё не означает onChange.
+Value and defaultValue are pairs of Dayjs, null, or undefined. Missing endpoints
+are normalized to null internally. Value=null clears both ends, and undefined
+uses internal state. OnChange gets a Dayjs or null pair, or null on complete
+clear. Its second argument is a pair of display strings, or null on complete
+clear. This is rc-picker 1.12.2 runtime behavior, although its declaration only
+lists a tuple. OnCalendarChange always gets a value pair, string pair, and
+{ range: 'start' | 'end' } for the first changed endpoint. OnOk gets the
+current calendar pair after each endpoint confirmation. The first confirmation
+does not by itself trigger onChange.
 
-Date показывает два соседних календаря, showTime — календарь и время активной
-границы. Переход к следующему полю, Tab, Enter, OK, Escape и закрытие снаружи
-различаются как в исходной машине переходов. NeedConfirm по умолчанию включён
-для datetime. Неподтверждённые изменения отменяются; controlled value/open могут
-отклонить предложение компонента. DefaultPickerValue/pickerValue принимают дату
-или пару дат панели; onPickerValueChange сообщает range/source/mode.
+Date uses two adjacent calendars. ShowTime shows the calendar and time for the
+active endpoint. Moving to the next field, Tab, Enter, OK, Escape, and outside
+dismissal follow separate upstream transitions. NeedConfirm defaults to enabled
+for datetime. Unconfirmed changes are discarded. Controlled value and open
+can decline proposed changes. DefaultPickerValue and pickerValue accept a
+panel date or pair, and onPickerValueChange reports range, source, and mode.
 
-`mode` принимает пару `[start, end]` и задаёт панели обеих границ.
-`onPanelChange(dates, modes)` предлагает режим активной границы и сохраняет режим
-второй. При переключении границы календарь использует её текущий режим.
-Смена пары не пересоздаёт поля и сохраняет введённое значение, выделение и фокус.
-При снятии `mode` обе панели возвращаются к `picker`. Исходный RangePicker
-в Ant Design React 6.6.8 выбрасывает TypeError и удаляет поле при снятии пары.
-[Замеры React](../../../tests/browser/fixtures/ant-design-date-picker-panel-mode-range-release.json.gz)
+`mode` accepts a `[start, end]` pair for the two endpoint panels.
+`onPanelChange(dates, modes)` proposes a mode for the active endpoint and keeps
+the other mode. Changing the active end uses its current mode. Replacing the pair
+preserves the fields, entered value, selection, and focus. Removing mode returns
+both panels to picker. Ant Design React 6.6.8 throws TypeError and removes the
+field when the pair is removed. [React measurements](../../../tests/browser/fixtures/ant-design-date-picker-panel-mode-range-release.json.gz)
 
-Order=true сортирует отправляемую пару, если обе границы доступны. Order=false
-сохраняет позиции. Disabled принимает boolean либо [start,end], allowEmpty —
-boolean либо [start,end]. Очистка сохраняет заблокированную границу. DisabledDate
-получает {type,from}, disabledTime — (date,'start'|'end',{from}); from зависит от
-порядка посещения полей, как в rc-picker. Проверяются границы диапазона:
-запрещённая дата внутри него сама по себе не запрещает диапазон. MinDate/maxDate
-ограничивают выбор и навигацию. Presets принимают пару либо фабрику, previewValue
-по умолчанию 'hover'; false отключает предварительный просмотр. ShowNow
-по умолчанию выключен для диапазона; явное включение подтверждает текущую границу.
+Order=true sorts the emitted pair when both endpoints are available. Order=false
+preserves positions. Disabled and allowEmpty accept a boolean or [start,end].
+Clearing preserves a disabled endpoint. DisabledDate receives { type, from },
+and disabledTime receives (date, 'start' | 'end', { from }). From follows field
+visit order as in rc-picker. Constraints check the endpoints. A disabled date
+inside the range can still be spanned. MinDate and maxDate constrain selection
+and navigation. Presets accept a pair or factory. PreviewValue defaults to
+'hover', and false disables preview. ShowNow defaults to off for ranges.
+Enabling it confirms the current endpoint.
 
-Format, showTime units/steps/defaultOpenValue, inputReadOnly,
-preserveInvalidOnBlur, size/status/variant/Compact, локали, тема и RTL используют
-общие механизмы DatePicker. ShowTime.defaultOpenValue принимает пару дат времени.
-CellRender, panelRender и renderExtraFooter используют тот же Snippet-контракт,
-что DatePicker; footer получает один режим, cell info.range — активную границу.
-Календарные операции сохраняют режим входного Dayjs; UTC и wire-сериализация не
-навязываются. Native FormData.getAll(name) содержит две отображаемые строки под
-одним name. Form хранит пару объектов Dayjs, копирует tuple при snapshot и
-восстанавливает исходные даты при reset. Id-строка относится к первому полю,
-id={{start,end}} задаёт оба. Bind:nativeElement/startInput/endInput возвращают DOM;
-bind:this даёт focus({index:0|1,preventScroll,cursor}) и blur(). Native onfocus/onblur
-относятся к input; полный semantic event API upstream ещё не перенесён.
+Format, showTime units, steps, and defaultOpenValue, inputReadOnly,
+preserveInvalidOnBlur, size, status, variant, Compact, locale, theme, and RTL
+use shared DatePicker mechanisms. ShowTime.defaultOpenValue accepts a time
+date pair. CellRender, panelRender, and renderExtraFooter use the DatePicker
+snippet contract. Footer receives one mode and cell info.range identifies the
+active endpoint. Calendar operations preserve the incoming Dayjs mode.
+The application owns UTC and wire serialization. Native FormData.getAll(name)
+gets both display strings under the same name. Form stores a pair of Dayjs
+objects, copies the tuple in a snapshot, and restores the original dates
+on reset. A string id applies to the first field, and id={{ start, end }}
+sets both. Bind:nativeElement, startInput, and endInput expose DOM.
+Bind:this provides focus({ index:0|1, preventScroll, cursor }) and blur().
+Native onfocus and onblur apply to the input. The rest of the upstream semantic
+event API remains outside the port.
 
-`components.input` получает `range: 'start' | 'end'` для каждой границы.
-Классы, маска и атрибуты формы передаются в `attributes`. Привязки
-`startInput` и `endInput` по-прежнему возвращают `HTMLInputElement`;
-пользовательский `textarea` подключается через `register`. Кнопку OK можно
-заменить через `components.button`. [Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
+`components.input` receives `range: 'start' | 'end'` for each endpoint.
+Classes, mask, and form attributes go in attributes. StartInput and endInput
+bindings still expose HTMLInputElement. Connect a custom textarea through
+register. Replace OK through components.button. [Editor and button context](date-picker.md#редактор-и-кнопка-подтверждения)
 
-Оба календаря диапазона используют snippet текущего режима. Контекст
-`range` обозначает активную границу. У второго календаря `pickerValue` сдвинут
-на следующий период, а `onPickerValueChange` пересчитывает его к дате первого.
-`hoverRangeValue` содержит предварительный диапазон. Если подсвечивается
-только одна кандидатная дата, она передаётся в `hoverValue`.
-[Контекст панели](date-picker.md#пользовательские-панели)
+Both range calendars use the snippet for the current mode. Range identifies the
+active endpoint. The second calendar's pickerValue is shifted to the next
+period, and its onPickerValueChange converts it back to the first calendar's date.
+HoverRangeValue contains the preview range. If highlighting only one candidate
+date, it is passed as hoverValue. [Panel context](date-picker.md#пользовательские-панели)
 
-Подтверждены SSR без browser APIs, ввод/ошибки/очистка, переходы фокуса,
-подтверждение времени, ограничения/from, nullable границы, controlled rejection,
-Form/нативная отправка и UTC в разных browser zones. Состояние переноса остальных
-возможностей приведено в [реестре](../ant-design-porting/status.md).
-
+Checks cover SSR without browser APIs, input, errors, clear, focus transitions,
+time confirmation, constraints and from, nullable endpoints, controlled
+rejection, Form and native submission, and UTC across browser zones.
+[Remaining coverage](../ant-design-porting/status.md)

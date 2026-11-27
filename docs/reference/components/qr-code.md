@@ -1,8 +1,7 @@
 # QRCode
 
-QRCode показывает код на canvas или в SVG и поддерживает состояния загрузки
-и ошибки. Props, status snippet и semantic/config описаны в
-[исходных объявлениях](../../../src/lib/qr-code/qrcode.types.ts).
+QRCode renders a code on canvas or in SVG and supports loading and error states.
+[Props, status snippet, and semantic configuration](../../../src/lib/qr-code/qrcode.types.ts)
 
 ```svelte
 <script lang="ts">
@@ -18,85 +17,83 @@ QRCode показывает код на canvas или в SVG и поддержи
 />
 ```
 
-Массив value задаёт отдельные сегменты, а не склеенную строку. Numeric,
-alphanumeric и UTF-8 выбираются с исходными правилами; доступны версии 1–40 и
-уровни L/M/Q/H. BoostLevel по умолчанию повышает коррекцию, если размер символа
-не увеличивается. Пустая строка не создаёт DOM, пустой массив создаёт символ
-без payload. Слишком длинное значение сохраняет RangeError `Data too long`,
-незавершённая Unicode surrogate pair — URIError, без подмены данных.
+An array value specifies separate segments. Numeric, alphanumeric, and UTF-8
+use upstream rules. Versions 1–40 and correction levels L, M, Q, and H are
+available. BoostLevel raises correction by default when the symbol size stays
+the same. An empty string renders no DOM. An empty array renders a symbol without
+a payload. A value that is too long throws RangeError `Data too long`, and an
+unpaired Unicode surrogate throws URIError without substituting input.
 
-Type по умолчанию canvas. SSR создаёт canvas shell размером size; отрисовка после
-mount учитывает devicePixelRatio. SVG целиком готов при SSR. MarginSize задаётся
-в модулях, округляется вниз и ограничивается снизу нулём; default 0 сохраняет
-поведение Ant Design. Size управляет bitmap и fallback root width/height.
-Только width/height обычного style передаются также рисунку; semantic root
-dimensions не передаются ему. CSS-растяжение не увеличивает разрешение bitmap.
+Type defaults to canvas. SSR emits a canvas shell with size dimensions.
+Drawing after mount accounts for devicePixelRatio. SVG is complete in SSR.
+MarginSize is measured in modules, rounds down, and is clamped to at least 0.
+The default 0 preserves Ant Design behavior. Size sets bitmap size and fallback
+root width and height. Only ordinary style width and height also reach the
+drawing. Semantic root dimensions stay on the root. CSS stretching leaves
+bitmap resolution intact.
 
-Icon принимает URL, iconSize — квадрат либо width/height, по умолчанию 40×40.
-Размер 0 сохраняет fallback rc-qrcode к 10% от size. Изображение центрируется,
-загружается с crossOrigin=anonymous и растягивается в указанный прямоугольник.
-Canvas вырезает перекрытые модули только после успешной загрузки; SVG делает это
-сразу. При отсутствии Path2D используется исходный fallback с отдельными rect:
-он сохраняет модули под иконкой, как в закреплённом rc-qrcode. При отсутствии
-2D context остаётся canvas shell. При ошибке загрузки canvas сохраняет все QR-модули.
-PNG можно получить через nativeElement.querySelector('canvas').toDataURL();
-чужой сервер изображения должен разрешать CORS, как в эталоне.
+Icon takes a URL. IconSize accepts a square size or width and height, defaulting
+to 40×40. Zero preserves rc-qrcode's fallback to 10% of size. The icon is centered,
+loaded with crossOrigin=anonymous, and stretched to the specified rectangle.
+Canvas cuts out overlapped modules only after successful load. SVG does so
+immediately. Without Path2D, the upstream separate-rect fallback keeps the
+modules under the icon. Without a 2D context, the canvas shell stays in place.
+A failed image load leaves all QR modules visible on the canvas. Use
+nativeElement.querySelector('canvas').toDataURL() for PNG. The remote image
+server must permit CORS as in upstream.
 
-Status active оставляет рисунок без cover; expired показывает текст и refresh,
-loading использует Spin, scanned — текст подтверждения. OnRefresh не меняет
-status автоматически. Кнопка использует текущие Button/config/disabled правила
-и сохраняет native type=button; её click всплывает до root. StatusRender —
-snippet с status/locale/onRefresh, который целиком заменяет содержимое cover,
-включая пустой результат. Locale.qrcode объединяется по полям; RU/EN подписи
-взяты из закреплённых словарей Ant Design.
+Status active shows the drawing without a cover. Expired shows a message and
+refresh, loading uses Spin, and scanned shows confirmation text. The owner
+updates status after onRefresh. The button uses current Button, configuration,
+and disabled rules, keeps native type=button, and bubbles its click to the
+root. StatusRender receives status, locale, and onRefresh and replaces the
+entire cover contents, including an empty result. Locale.qrcode merges field
+by field. Russian and English labels come from the pinned Ant Design dictionaries.
 
-Role=img и aria-* относятся к canvas/SVG. Native id/title/data-* и обработчики
-относятся к root; title не создаёт SVG title, children не выводится. Передавайте
-aria-label или aria-labelledby для имени рисунка. Bind:nativeElement заменяет
-React ref и очищается при пустом value или unmount; поздний load отсоединённого
-изображения не перерисовывает старый canvas.
+Role=img and aria-* apply to canvas or SVG. Native id, title, data-*, and event
+handlers apply to the root. Title stays on the root, and children is omitted.
+Name the drawing with aria-label or aria-labelledby. Bind:nativeElement exposes
+the root and clears on an empty value or unmount. A late load from a detached
+image leaves the old canvas alone.
 
-ConfigProvider.qrcode задаёт class/style/classNames/styles для root/cover;
-nested config заменяет объект целиком. Semantic callbacks получают разрешённые
-type/size/status/bordered/errorLevel/bgColor. Root style идёт после semantic
-styles, затем записываются size или plain width/height. Color по умолчанию берётся
-из глобального colorText token theme; component QRCode.colorText и style.color
-не меняют модули. Явный color приоритетнее; при undefined global colorText действует
-исходный fallback #000000. Native light/dark defaults сохранены. Bordered=false
-оставляет прозрачную границу, убирает padding и radius. RTL наследуется.
+ConfigProvider.qrcode sets class, style, classNames, and styles for root and
+cover. A nested config replaces the object in full. Semantic callbacks receive
+resolved type, size, status, bordered, errorLevel, and bgColor. Root style follows
+semantic styles. Size or ordinary width and height are applied last. Color
+defaults to the global colorText theme token. Component QRCode.colorText and
+style.color leave modules unaffected. Explicit color takes precedence. Undefined
+global colorText uses the upstream #000000 fallback. Native light and dark
+defaults are preserved. Bordered=false retains a transparent border and removes
+padding and radius. RTL is inherited.
 
-В upstream QRCode не объявляет публичных собственных component tokens.
-ConfigProvider.theme.components.QRCode поддерживает alias tokens и algorithms:
-padding, border, radius, текст cover и прочие глобальные значения. Внутренний
-background cover готовится из colorBgContainer с абсолютной alpha 0.96, включая
-полупрозрачный исходный цвет. Theme variables идут перед semantic/user styles.
-Global/component algorithms, cssVar.prefix и nested/reset/sibling scopes
-сверяются с [UMD](../../../tests/browser/fixtures/ant-design-qrcode-theme-reference.json),
-[SSR](../../../tests/package/qr-code/qrcode-theme.ssr.test.ts) и
-[browser](../../../tests/browser/qr-code/qrcode-theme.spec.ts), `?fixture=qrcode-theme`.
-Реактивная смена global colorText перерисовывает прежний canvas и обновляет
-прежний SVG; cover/padding не сбрасывают фокус status snippet или refs.
+Upstream QRCode declares no public component tokens of its own.
+ConfigProvider.theme.components.QRCode supports alias tokens and algorithms for
+padding, border, radius, cover text, and other global values. The inner cover
+background comes from colorBgContainer with absolute alpha 0.96, including
+a translucent original color. Theme variables precede semantic and user styles.
+The `?fixture=qrcode-theme` checks cover global and component algorithms,
+cssVar.prefix, and nested, reset, and sibling scopes. Changes to global colorText
+redraw the existing canvas and update the existing SVG. Cover and padding changes
+preserve status snippet focus and refs. [UMD](../../../tests/browser/fixtures/ant-design-qrcode-theme-reference.json) · [SSR](../../../tests/package/qr-code/qrcode-theme.ssr.test.ts) · [Browser](../../../tests/browser/qr-code/qrcode-theme.spec.ts)
 
-CSS-рецепт qrcode воспроизводит все 11 правил с проверкой SHA-256. Fixture —
-`?fixture=qrcode`; unit/SSR/package/browser проверяют матрицы, pixel centers,
-quiet zone, иконку/CORS, statuses, refs, темы, стили и fallback. Матрицы сверяются
-с [фиксированными результатами npm-пакета](../../../tests/package/qr-code/qrcode-vectors.json),
-включая все 40 версий, четыре уровня коррекции и восемь масок.
+The qrcode recipe reproduces all 11 CSS rules with SHA-256 verification.
+The `?fixture=qrcode` unit, SSR, package, and browser checks cover matrices,
+pixel centers, quiet zone, icon and CORS, statuses, refs, themes, styles, and
+fallback. Matrix checks use fixed npm package results for all 40 versions,
+four correction levels, and eight masks. [Fixed reference matrices](../../../tests/package/qr-code/qrcode-vectors.json)
 
-Локальный prefixCls меняет root/cover/expired/scanned/borderless classes; пустая
-строка наследует ConfigProvider.prefixCls (по умолчанию ant-qrcode). CSS module
-ограничен marker своего корня, namespace
-токенов и классы Button/Spin сохраняются. Соседние QRCode не меняются, включая
-совпадения prefix с cover/css-var/borderless. При смене prefix сохраняются root,
-canvas/SVG, encoding, status, refs и доступная с клавиатуры кнопка refresh.
-Fallback-переменная module не перекрывает адаптивный cover прежней light/dark темы.
-Native RTL наследуется, исходное LTR-направление корня хранится в raw reference.
-Сверка: [44 исходных случая и 4 обновления](../../../tests/browser/fixtures/ant-design-qrcode-prefix-reference.json),
-[CSS boundary](../../../src/lib/qr-code/qrcode-prefix.test.ts),
-[браузер](../../../tests/browser/qr-code/qrcode-prefix.spec.ts),
-[публичный пакет и SSR](../../../tests/package/qr-code/qrcode-prefix.ssr.test.ts), `?fixture=qrcode-prefix`.
-Рецепт qrcode-prefix воспроизводит те же 11 правил CSS data module с проверкой SHA-256.
-Общий ConfigProvider.prefixCls применяется к QRCode, локальный prefix имеет приоритет.
-React development warnings для пустого value и icon с уровнем L
-пока не воспроизводятся; production-поведение этих случаев сохранено.
-
+Local prefixCls changes root, cover, expired, scanned, and borderless classes.
+An empty string inherits ConfigProvider.prefixCls, giving ant-qrcode by default.
+The CSS module is scoped to its root marker. Token namespaces and Button and
+Spin classes stay intact. Neighboring QRCode instances are isolated, including
+prefix collisions with cover, css-var, and borderless. A prefix change preserves
+root, canvas or SVG, encoding, status, refs, and keyboard-accessible refresh.
+The module fallback variable preserves the adaptive cover of the existing
+light and dark themes. Native RTL is inherited. The raw reference records
+upstream root LTR. The `?fixture=qrcode-prefix` uses the qrcode-prefix recipe,
+which produces the same 11 rules as a CSS data module and verifies SHA-256.
+The local prefix takes priority over shared ConfigProvider.prefixCls.
+React development warnings for empty value and for an icon with correction
+level L are still outside the port. Production behavior is preserved.
+[44 upstream cases and four updates](../../../tests/browser/fixtures/ant-design-qrcode-prefix-reference.json) · [CSS boundary](../../../src/lib/qr-code/qrcode-prefix.test.ts) ·
+[Browser](../../../tests/browser/qr-code/qrcode-prefix.spec.ts) · [Public package and SSR](../../../tests/package/qr-code/qrcode-prefix.ssr.test.ts)

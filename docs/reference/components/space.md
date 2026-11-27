@@ -1,44 +1,43 @@
 # Space
 
-Space добавляет отдельный div.ant-space-item вокруг каждого элемента, а Flex
-сохраняет children без wrappers. Для нескольких элементов используйте items:
-readonly-массив string/number/Snippet либо { key, children }. Key сохраняет DOM
-и state при перестановке. Children Snippet без items представляет одну группу;
-его содержимое нельзя проинспектировать и разделить как React children.
-Пустой items имеет приоритет над children и не создаёт root. Непустой массив
-из одних пустых значений сохраняет пустой root, как исходник.
+Space adds a div.ant-space-item around each entry. Flex renders children
+without wrappers. Pass items for multiple entries, as a readonly array of
+strings, numbers, snippets, or { key, children }. Key preserves DOM and state
+on reorder. A children snippet without items represents one group. Its
+contents stay opaque. An empty items array takes precedence and omits the root.
+A nonempty array of empty values keeps an empty root as upstream does.
 
-Boolean/null/undefined/пустые строки не создают item wrappers, 0 отображается.
-Это учитывает React.Children, который нормализует оба boolean в null перед
-rc-component/util.toArray. Snippet, ничего не отрисовавший, сохраняет wrapper,
-скрытый CSS :empty; как React child component с null, он всё ещё участвует в
-расчёте позиции разделителя. Separator задаёт span между renderable
-entries, кроме последнего; falsy separator, включая 0, не создаёт span. Такой
-separator не помечается aria-hidden автоматически: Snippet может содержать
-собственный содержательный элемент.
+Booleans, null, undefined, and empty strings omit item wrappers. Zero renders.
+React.Children normalizes booleans to null before rc-component/util.toArray.
+An empty snippet retains a wrapper hidden by CSS :empty and counts for separator
+placement, as a React child returning null does. Separator provides a span
+between renderable entries, excluding the last. A falsy separator, including
+0, omits that span. A separator snippet can contain meaningful content, so it
+receives no automatic aria-hidden.
 
-Orientation имеет приоритет над явным vertical;
-по умолчанию horizontal. Align=start/end/center/baseline, horizontal по умолчанию
-center, vertical без align использует естественное stretch. Size выбирается из
-локального prop, ConfigProvider.space.size и затем small; componentSize не участвует.
-Поддержаны small/medium/large
-либо число, tuple [horizontal, vertical]. Числовой 0 не создаёт inline gap,
-NaN игнорируется. Wrap добавляет flex-wrap:wrap. Gap/wrap styles идут перед
-styles.root и style: пользовательский inline style перекрывает также числовой
-gap. Presets используют общие padding tokens, включая compact 4/8/16px.
+Orientation takes priority over explicit vertical and defaults to horizontal.
+Align accepts start, end, center, and baseline. Horizontal defaults to center,
+and vertical without align uses natural stretch. Size resolves from local size,
+ConfigProvider.space.size, then small, independently of componentSize. Use
+small, medium, large, a number, or [horizontal, vertical]. Zero omits inline
+gap. NaN is ignored. Wrap adds flex-wrap:wrap. Gap and wrap styles precede
+styles.root and style, so inline styles also override numeric gap. Presets
+use shared padding tokens, including compact 4/8/16px.
 
-Root — div с нативными attrs, class/rootClassName/style и bind:nativeElement.
-ClassNames/styles root/item/separator принимают объект либо callback ({ props })
-с разрешёнными size/orientation/align. Space не сбрасывает typography и наследует
-тему/RTL. Фикстура — `?fixture=space`. Unit/SSR/
-Chromium проверяют gaps, пустые значения, keyed DOM/фокус и production hydration.
-Рецепт space извлекает 16 правил без Compact/Addon, reset и keyframes.
-ConfigProvider.space задаёт size, class/style и object/function classNames/styles
-для root/item/separator. Явный вложенный record заменяет родительский целиком;
-undefined наследует, {} очищает. Semantic callbacks получают разрешённые
-size/orientation/align и могут вернуть undefined. Порядок styles: gap/wrap →
-provider styles.root → provider style → local styles.root → local style.
-ConfigProvider.space не применяется к Compact/Addon.
+The root is a div with native attributes, class, rootClassName, style, and
+bind:nativeElement. ClassNames and styles accept root, item, and separator
+through an object or ({ props }) callback with resolved size, orientation,
+and align. Space inherits typography, theme, and RTL. The `?fixture=space`
+unit, SSR, and Chromium checks cover gaps, empty values, keyed DOM and focus,
+and production hydration. The space recipe extracts 16 rules without Compact,
+Addon, reset, and keyframes.
+
+ConfigProvider.space sets size, class, style, and object or function classNames
+and styles for root, item, and separator. An explicit nested record replaces
+the parent in full. Undefined inherits, and {} clears. Semantic callbacks
+receive resolved size, orientation, and align and may return undefined.
+Style order is gap and wrap, provider styles.root, provider style, local
+styles.root, then local style. Compact and Addon have separate settings.
 
 ```svelte
 <script lang="ts">
@@ -51,70 +50,69 @@ ConfigProvider.space не применяется к Compact/Addon.
 </ConfigProvider>
 ```
 
-Theme.components.Space принимает alias overrides и отдельный algorithm; собственных
-component tokens в 6.6.8 нет. Preset gaps читают paddingXS/padding/paddingLG,
-numeric gaps сохраняют inline priority, typography reset не добавляется. Поддержаны
-именованные cssVar, нули/undefined и независимые provider scopes; обновление темы
-или config сохраняет keyed DOM, черновики, выделение и фокус.
-PrefixCls меняет root/orientation/align/gap/item/separator classes. Empty/undefined
-наследуют ConfigProvider.prefixCls (по умолчанию ant-space), локальный prefix
-имеет приоритет. Semantic callbacks получают исходный local prefix.
-Badge selector использует общий prefix провайдера независимо от local Space.
-Смена prefix сохраняет keyed DOM, refs, draft/selection/focus и приоритет стилей.
+Theme.components.Space accepts alias overrides and a separate algorithm.
+Upstream 6.6.8 has no component tokens of its own. Preset gaps read paddingXS,
+padding, and paddingLG. Numeric gaps retain inline precedence and no typography
+reset is added. Named cssVar settings, zero and undefined, and independent
+provider scopes are supported. Theme and config updates preserve keyed DOM,
+drafts, selection, and focus.
 
-## SpaceCompact и SpaceAddon
+PrefixCls changes root, orientation, align, gap, item, and separator classes.
+Empty and undefined inherit ConfigProvider.prefixCls, giving ant-space by
+default. The local prefix takes priority. Semantic callbacks receive the
+original local prefix. Badge selectors use the provider's shared prefix
+independently of local Space. Prefix changes preserve keyed DOM, refs, drafts,
+selection, focus, and style precedence.
 
-SpaceCompact соответствует Space.Compact: тот же items/children Snippet API,
-один div без дополнительных item wrappers. Каждый item задаёт отдельный context
-для первого/последнего элемента и размера. Для нескольких controls используйте
-items; один children Snippet представляет одну позицию, как компонент React,
-вернувший несколько узлов. Null/undefined/boolean удаляются из позиций, пустая
-строка и 0 сохраняются, как rc-component/util.toArray без keepEmpty.
+## SpaceCompact and SpaceAddon
 
-Size=small/medium/large, по умолчанию явно заданный componentSize;
-приоритет control.size → Compact.size → ConfigProvider.componentSize. Block
-включает width=100% и display=flex, иначе inline-flex. Orientation/vertical следуют приоритету Space. Нативные attrs, class/rootClassName/
-style и bind:nativeElement относятся к root. Подключены Button, Input,
-InputNumber и Select. Горизонтальные стыки используют логические углы и
-перекрытие на lineWidth; vertical compact-стыки поддержаны для Button, как
-в исходнике. Select сохраняет существующий внешний container: его радиусы
-наследует внутренняя рамка. Keyed DOM и фокус сохраняются при перестановке.
+SpaceCompact corresponds to Space.Compact. It uses the same items and children
+snippet API and one div without item wrappers. Each item supplies its own context
+for first and last flags and size. Pass items for several controls. A single
+children snippet is one position, like a React component returning several
+nodes. Null, undefined, and booleans are removed. Empty string and 0 are
+retained, as in rc-component/util.toArray without keepEmpty.
 
-Вложенный Compact получает крайние flags с учётом положения во внешней группе;
-его собственный size снова разрешается из props/ConfigProvider, а не из размера
-родительского Compact. Это соответствует Compact.tsx 6.6.8. Контекст остаётся
-на Popup triggers, но сбрасывается внутри Modal/Drawer и содержимого Tooltip/
-Popover/Dropdown. Общие ConfigProvider/Form contexts при этом не меняются.
+Size accepts small, medium, and large. It defaults to explicit componentSize.
+Control size takes priority, then Compact size, then ConfigProvider.componentSize.
+Block sets width=100% and display=flex. Otherwise, it uses inline-flex.
+Orientation and vertical follow Space. Native attributes, class, rootClassName,
+style, and bind:nativeElement apply to the root. Button, Input, InputNumber,
+and Select support Compact. Horizontal joins use logical corners and overlap
+by lineWidth. Vertical joins support Button, as upstream does. Select keeps its
+outer container and the inner border inherits the radii. Keyed DOM and focus
+are preserved on reorder.
 
-SpaceAddon соответствует Space.Addon, использует div и children Snippet.
-Variant=outlined/filled/borderless/underlined, default=outlined;
-status=error/warning меняет границу/фон/текст. Disabled задаёт только внешний
-вид: не наследуется из componentDisabled автоматически и не отключает children.
-Размер берётся только из Compact context; вне Compact componentSize не меняет
-Addon. Поддержаны нативные attrs, class/style и bind:nativeElement.
+Nested Compact inherits edge flags from its outer group position. Its own size
+resolves from props and ConfigProvider independently of the parent's Compact size,
+matching Compact.tsx 6.6.8. Context stays on popup triggers and resets inside
+Modal and Drawer and Tooltip, Popover, and Dropdown contents. Shared
+ConfigProvider and Form contexts are preserved.
 
-SpaceCompact и SpaceAddon имеют собственные prefixCls с теми же правилами
-наследования: ant-space-compact/ant-space-addon по умолчанию. Local prefix Compact
-не меняет prefixes вложенных Addon и controls. Служебные variant/status variables
-Addon используют общий prefix без точек, независимо от local class и theme.cssVar.prefix.
-Canonical markers и прежние Compact adapters сохраняются; prefixes остальных
-controls подключаются в своих семействах.
+SpaceAddon corresponds to Space.Addon with a div and children snippet. Variant
+accepts outlined, filled, borderless, and underlined, defaulting to outlined.
+Status=error or warning changes border, background, and text. Disabled sets
+appearance only, without inheriting componentDisabled or disabling children.
+Size comes only from Compact context. Outside Compact, componentSize leaves
+Addon alone. Native attributes, class, style, and bind:nativeElement are supported.
 
-В 6.6.8 общий local class Space кэшируется с первым global prefix. Во вложенном
-провайдере правило Badge может продолжать искать родительский class и оставлять
-display:inline-block вместо block. Native ограничивает CSS по local и global
-prefix; [raw](../../../tests/browser/fixtures/ant-design-space-prefix-reference.json) и
-[fresh-page](../../../tests/browser/fixtures/ant-design-space-prefix-isolated.json)
-замеры сохранены для разбора. Prefix проверяют
-[browser](../../../tests/browser/space/space-prefix.spec.ts),
-[SSR](../../../tests/package/space/space-prefix.ssr.test.ts) и fixture `?fixture=space-prefix`.
+SpaceCompact and SpaceAddon have their own prefixCls using the same inheritance
+rules, with defaults ant-space-compact and ant-space-addon. Local Compact prefix
+leaves nested Addon and controls intact. Addon variant and status variables use
+the shared prefix with dots removed and are independent of local class and
+theme.cssVar.prefix. Canonical markers and existing Compact adapters remain.
+Other control prefixes are covered in their own families.
 
-Фикстура — `?fixture=space-compact`. Unit/SSR/
-Chromium проверяют размеры, границы/RTL, вложенность, фокус, Popup isolation,
-variants/status/disabled и hydration. Рецепты space-compact/space-addon/
-input-number-compact извлекают 4/29/8 правил без keyframes. InputSearch использует
-внутренний Compact с отдельными items для Input и кнопки. Состояние
-Compact-интеграций остальных семейств описано в реестре.
-Рецепты space-prefix/space-compact-prefix/space-addon-prefix воспроизводят
-16/4/29 правил CSS-модулями с проверкой SHA-256; namespace и selectors меняет runtime.
+In 6.6.8, a shared local Space class is cached with the first global prefix.
+A nested Badge rule can look for the parent class and retain display:inline-block
+in place of block. The native implementation scopes CSS by local and shared
+prefix. The checks use `?fixture=space-prefix`. [Raw measurements](../../../tests/browser/fixtures/ant-design-space-prefix-reference.json) ·
+[Fresh page measurements](../../../tests/browser/fixtures/ant-design-space-prefix-isolated.json) · [Browser](../../../tests/browser/space/space-prefix.spec.ts) · [SSR](../../../tests/package/space/space-prefix.ssr.test.ts)
 
+The `?fixture=space-compact` checks cover size, borders and RTL, nesting, focus,
+popup isolation, variants, status, disabled, and hydration. The space-compact,
+space-addon, and input-number-compact recipes extract 4, 29, and 8 rules without
+keyframes. InputSearch uses inner Compact with separate Input and button items.
+The registry tracks Compact support in other families. Space-prefix,
+space-compact-prefix, and space-addon-prefix reproduce 16, 4, and 29 rules as CSS
+modules with SHA-256 verification. Runtime substitutes namespaces and selectors.

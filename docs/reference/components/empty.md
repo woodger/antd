@@ -17,80 +17,80 @@
 {/if}
 ```
 
-Empty показывает отсутствие данных и предлагает действие через Snippet children.
-Данными, фильтром и результатом действия управляет владелец; компонент не
-выполняет запросов и не создаёт таймеров.
+Empty shows a lack of data and offers an action through the children snippet.
+The owner handles data, filtering, and the action outcome. Empty has no
+requests or timers of its own.
 
-Image принимает default (по умолчанию), simple, URL, собственный Snippet или scalar.
-Empty.PRESENTED_IMAGE_DEFAULT/SIMPLE дают прежние aliases default/simple;
-остальные строки трактуются как URL и выводятся через img с draggable=false.
-Alt берётся из строкового description, иначе используется empty.
-False удаляет изображение вместе с контейнером. Встроенные иллюстрации — SVG
-Ant Design 6.6.8. В нативном режиме их цвета используют текущие CSS-токены; SVG-паттерны совмещают
-полупрозрачный fill с colorBgContainer, сохраняя непрозрачную заливку при
-перекрытии частей. Идентификаторы уникальны для каждого экземпляра и стабильны
-между SSR и гидратацией. При явной source theme используется исходный getAsSolidColor
-и цвета глобальной темы, независимо от component aliases Empty. CSS-переменные
-сохраняются без предварительного смешивания; декоративный SVG получает исходный title.
-Контейнер изображения декоративный: aria-hidden и inert исключают
-его содержимое из accessibility tree, Tab и взаимодействий.
+Image accepts default, simple, a URL, a custom snippet, or a scalar. The default
+is default. Empty.PRESENTED_IMAGE_DEFAULT and Empty.PRESENTED_IMAGE_SIMPLE
+keep their aliases. Other strings are URLs rendered as img with draggable=false.
+Alt comes from a string description, with empty as the fallback. False removes
+the image and container. The built-in illustrations are Ant Design 6.6.8 SVGs.
+In native mode, their colors use current CSS tokens. SVG patterns blend a
+translucent fill with colorBgContainer and keep opaque fill where parts overlap.
+IDs are unique per instance and stable between SSR and hydration. An explicit
+upstream theme uses getAsSolidColor and global theme colors independently of
+Empty component aliases. CSS variables stay unblended in advance. Decorative
+SVGs receive the upstream title. The image container is aria-hidden and inert,
+keeping its contents out of the accessibility tree, Tab order, and interaction.
 
-Description принимает scalar или Snippet. Undefined использует
-Locale.empty.description: ruRU — «Нет данных», enUS — «No data»; отсутствующие
-поля используют ruRU. False, null и пустая строка убирают описание без fallback.
-Ноль выводится текстом; true сохраняет пустой description div, как в закреплённом upstream.
-Строки экранируются. Generic locale.emptyText для Select и других компонентов
-сохраняет прежний смысл и значения.
+Description accepts a scalar or snippet. Undefined uses Locale.empty.description.
+RuRU supplies `Нет данных` and enUS supplies `No data`. Missing fields fall back
+to ruRU. False, null, and the empty string hide the description without
+fallback. Zero renders as text and true keeps an empty description div, as in
+upstream. Strings are escaped. Generic locale.emptyText for Select and other
+components keeps its existing meaning and values.
 
-Children принимает scalar или Snippet и выводится в footer с обычными controls и Tab-навигацией.
-Ноль сохраняется; false/null/пустая строка убирают footer, true оставляет пустой div. Изменение
-image/description не пересоздаёт сохранённые действия. Без явного aria-label
-или aria-labelledby корень остаётся обычным div; с ними — именованная group.
-Id/class/style и aria-describedby относятся к корню. Empty не создаёт live-region,
-не добавляет остановку Tab и не переносит фокус при показе. Объявление результата
-операции и выбор конкретного control после неё остаются у владельца.
+Children accepts a scalar or snippet and renders in the footer with ordinary
+controls and Tab navigation. Zero is visible. False, null, and the empty string
+omit the footer, and true leaves an empty div. Changing image or description
+preserves mounted actions. An explicit aria-label or aria-labelledby gives
+the root a named group. Otherwise, it is an ordinary div. Id, class, style,
+and aria-describedby apply to the root. The owner handles announcements and
+focus after an operation. Empty does not add a live region, Tab stop, or
+focus movement on display.
 
-При удалении сфокусированного действия внутри сохранённого Empty фокус
-переходит к доступному control внутри него, затем к соседу снаружи. При удалении
-всего Empty используются сохранённые соседи текущего dialog/документа: сначала
-следующий, затем предыдущий, затем сам dialog. Проверка после tick сохраняет
-фокус, уже выбранный владельцем. Выбор снаружи также сохраняется. Ресурсы
-focusin/MutationObserver освобождаются при unmount; SSR не обращается к DOM.
-Escape остаётся у содержащего Modal/Drawer.
+Removing a focused action inside a retained Empty moves focus to an available
+control within it, then to a neighbor outside. Removing Empty uses saved
+neighbors in the current dialog or document. It tries the next, then previous,
+then the dialog itself. The check after tick preserves focus already chosen
+by the owner, including focus outside. Unmount clears focusin tracking and
+MutationObserver. SSR leaves the DOM alone. The containing Modal or Drawer
+owns Escape.
 
-Компонент наследует темы, compact и RTL из ConfigProvider. Высота изображения
-default — 2.5 controlHeightLG, simple — controlHeightLG; compact уменьшает их
-с 100/40 до 90/36px. Изображения ограничены контейнером, длинное описание
-переносится, действия footer переходят на следующую строку. Встроенной анимации
-нет; reduced motion не требует таймеров или переходов. ConfigProvider.disabled
-не скрывает описание и иллюстрацию; disabled controls задаёт их владелец.
+The component inherits themes, compact, and RTL from ConfigProvider. Default
+image height is 2.5 controlHeightLG and simple is controlHeightLG. Compact
+changes 100/40px to 90/36px. Images stay within the container, long descriptions
+wrap, and footer actions wrap to the next line. Empty uses no built-in animation
+or timer for reduced motion. ConfigProvider.disabled leaves description and
+illustration visible. The owner sets disabled on its controls.
 
-Table использует simple Empty в прежней единственной ячейке пустой строки.
-Colspan и нативная семантика таблицы сохранены. Description получает
-Locale.table.emptyText, включая существующие переопределения. Snippet empty
-имеет приоритет; во время loading оба варианта пустого состояния не выводятся.
+Table uses simple Empty in the existing single cell of the empty row. Colspan
+and native table semantics are preserved. Description comes from
+Locale.table.emptyText, including overrides. The empty snippet takes priority.
+Loading omits both empty states.
 
-ConfigProvider.empty задаёт image, class/style и object/function classNames/styles;
-вложенный record заменяется целиком, undefined наследует родительский.
-Локальный image имеет приоритет, null/undefined используют context image и затем default.
-Semantic slots root/image/description/footer получают исходные props без defaults.
-Root styles: context styles.root → context style → local styles.root → local style.
-Styles.image задаёт оформление изображения. PrefixCls меняет
-BEM-классы; иначе он наследует ConfigProvider (по умолчанию ant-empty).
-RootClassName относится к корню.
-Bind:nativeElement и поле nativeElement объекта bind:ref указывают на корневой div после mount;
-при unmount bindings очищаются до undefined, при SSR не присваиваются.
+ConfigProvider.empty sets image, class, style, and object or function classNames
+and styles. A nested record replaces the parent, while undefined inherits it.
+A local image takes priority. Null and undefined fall back to context image and
+then default. Semantic root, image, description, and footer receive raw props
+before defaults. Root style order is context styles.root, context style,
+local styles.root, then local style. Styles.image styles the illustration.
+PrefixCls sets BEM classes and otherwise inherits ConfigProvider, giving
+ant-empty by default. RootClassName applies to the root. Bind:nativeElement
+and nativeElement on bind:ref expose the root div after mount and clear to
+undefined on unmount. SSR leaves them unset.
 
-Empty не имеет собственных component tokens; theme.components.Empty поддерживает
-общие aliases/algorithm, variable prefix/key/hash, dark и compact. Все 15 исходных
-CSS rules включают small; для совместимого размера можно добавить class="ant-empty-small".
-[55 UMD-сценариев](../../../tests/browser/fixtures/ant-design-empty-reference.json) сверяют классы,
-slot styles, изображения и их исходные цвета при явной source theme.
-Native image=false, inert/ARIA, responsive guards, footer wrapping, paint patterns
-прежнего режима и восстановление фокуса сохранены.
-Общий ConfigProvider prefix поддержан; React diagnostics остаются в работе.
-[RenderEmpty](../render-empty.md) подключён к Select/TreeSelect,
-Cascader/Panel, Mentions, Transfer, Table/фильтру; AutoComplete сохраняет
-исходное исключение combobox. Без callback действуют прежние native defaults.
-Собственный image Snippet отвечает за свои ресурсы и анимацию.
+Empty has no component tokens of its own. Theme.components.Empty supports shared
+aliases and algorithms, variable prefix and key, hash, dark, and compact.
+The 15 upstream CSS rules include small, available through class="ant-empty-small".
+The 55 UMD cases cover classes, slot styles, images, and original colors under
+an explicit upstream theme. Native image=false, inert and ARIA, responsive
+guards, footer wrapping, earlier paint patterns, and focus restoration are
+preserved. The shared ConfigProvider prefix is supported. React diagnostics
+remain outside the port. [UMD scenarios](../../../tests/browser/fixtures/ant-design-empty-reference.json)
 
+The RenderEmpty mechanism covers Select, TreeSelect, Cascader and Panel,
+Mentions, Transfer, and Table and its filter. AutoComplete retains the upstream
+combobox exception. Without a callback, existing native defaults apply. A custom
+image snippet owns its resources and animations. [RenderEmpty](../render-empty.md)

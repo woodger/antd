@@ -1,11 +1,11 @@
 # CheckboxGroup
 
-CheckboxGroup переносит выбор нескольких флажков в одно поле с массивом.
-`CheckboxGroupProps<Value>` и `CheckboxGroupOption<Value>` поддерживают
-string, number и boolean. Options принимает примитивы или объекты
-`{ value, label, disabled?, id?, title?, className?, style?, required?, onChange? }`;
-подпись примитива получается через String. Label принимает строку, число или
-snippet; style — CSS-строка. Nullish entries/values пропускаются.
+CheckboxGroup collects several checkboxes into one array field.
+`CheckboxGroupProps<Value>` and `CheckboxGroupOption<Value>` support string,
+number, and boolean. Options accepts primitives or objects of the form
+`{ value, label, disabled?, id?, title?, className?, style?, required?, onChange? }`.
+A primitive uses String for its label. Label accepts a string, number, or snippet,
+and style is a CSS string. Nullish entries and values are skipped.
 
 ```svelte
 <script lang="ts">
@@ -22,48 +22,45 @@ snippet; style — CSS-строка. Nullish entries/values пропускают
 <CheckboxGroup {options} bind:value={permissions} name="permissions" aria-label="Права доступа" />
 ```
 
-При options каждое пользовательское переключение обновляет bind:value и вызывает
-`onValueChange(values)` с новым массивом в порядке options. Массив callback
-не разделяется с привязкой. Повторяющиеся options показываются один раз;
-первая подпись и disabled-состояние сохраняются. Числовой 0 и строковый "0",
-boolean false и строковый "false" остаются разными значениями.
+With options, each user toggle updates bind:value and calls onValueChange(values)
+with a new array in options order. The callback gets its own array. Duplicate
+options render once and keep the first label and disabled state. Numeric 0 and
+string "0" are distinct, as are false and "false".
 
-Внешние обновления value/options не переписывают массив владельца и не вызывают
-callback. Временно отсутствующие варианты скрываются, а возвращённые снова
-отображают выбранное состояние. При следующем пользовательском переключении
-массив содержит только текущие options, без повторов, в их текущем порядке.
+External value and options updates leave the owner's array and callback alone.
+Temporarily missing options are hidden and show their saved selection when
+returned. The next user toggle emits only current options, without duplicates,
+in current order.
 
-Группа наследует disabled из Form/FormItem и ConfigProvider; явный
-`disabled={false}` переопределяет наследование. Disabled группы блокирует все
-варианты, disabled option блокирует только соответствующий checkbox.
-Уже выбранный disabled-вариант сохраняется в массиве.
+The group inherits disabled from Form, FormItem, and ConfigProvider. Explicit
+`disabled={false}` overrides it. Group disabled blocks every option, and option
+disabled blocks its own checkbox. An already selected disabled option stays
+in the array.
 
-Для отдельной группы defaultValue принимает readonly-массив и копируется один
-раз. С bind:value задавайте начальное значение у владельца без defaultValue.
-Нативный reset формы восстанавливает defaultValue или пустой массив, включая
-привязку, без callbacks. Массив обновляется в следующей задаче после события
-reset, чтобы учесть отмену события; отменённый reset сохраняет текущий выбор.
-Внешняя форма через атрибут form поддерживается. В Form сбросом управляет
-модель через resetFields.
+Standalone defaultValue accepts a readonly array and is copied once. With
+bind:value, initialize the value in the owner. Native form reset restores
+defaultValue or an empty array and updates the binding without callbacks. The
+array updates in the task after the reset event so a canceled reset preserves
+selection. External forms through the form attribute are supported. Form uses
+the model's resetFields.
 
-Группа содержит нативные checkbox: Tab перемещает фокус, Space и нажатие подписи
-переключают вариант. С name или FormItem.name отмеченные доступные варианты
-попадают в FormData под одним именем. Читайте их через
-`new FormData(form).getAll('permissions')`. Результат содержит строки в порядке
-options; disabled, отсутствующие и невыбранные варианты исключаются.
-Например, выбранные числовой 0 и boolean false передаются как `['0', 'false']`.
+The group uses native checkboxes. Tab moves focus, and Space or the label toggles
+the option. With name or FormItem.name, selected enabled options appear in
+FormData under one name. Read them with `new FormData(form).getAll('permissions')`.
+The result is strings in options order, excluding disabled, missing, and unselected
+options. For example, selected numeric 0 and boolean false submit as `['0', 'false']`.
 
-В Form используйте `value={form.values.permissions}` и
+In Form, use `value={form.values.permissions}` and
 `onValueChange={(value) => form.setFieldValue('permissions', value)}`.
-Правила required/min/max проверяют массив целиком. Required не назначается
-каждому input, поэтому выбор всех вариантов не становится обязательным.
-Имя поля, описание и ошибки передаются из FormItem; группа использует fieldset
-и получает доступное имя из label FormItem либо aria-label/aria-labelledby.
-При ошибке или нажатии подписи FormItem фокус переходит к первому доступному
-варианту; пустая группа может получить фокус сама, без дополнительного шага Tab.
+Required, min, and max apply to the whole array. Required stays off individual
+inputs, so users can select a subset. FormItem passes name, description, and
+errors. The group uses a fieldset named through the FormItem label,
+aria-label, or aria-labelledby. A validation error or label activation focuses
+the first available option. An empty group can receive focus without an extra
+Tab stop.
 
-Непустые нормализованные options имеют приоритет над children; пустые оставляют
-snippet с вложенными Checkbox, включая Row/Col и другие контейнеры:
+Nonempty normalized options take priority over children. Empty options leave the
+snippet, including Checkbox inside Row, Col, or other containers.
 
 ```svelte
 <script lang="ts">
@@ -78,43 +75,38 @@ snippet с вложенными Checkbox, включая Row/Col и другие
 </CheckboxGroup>
 ```
 
-Children регистрируют текущие значения и отменяют регистрацию при удалении или
-смене value. Как upstream, их внутренний массив сохраняет порядок выбора и
-временно отсутствующие значения. Bind:value отражает этот raw state; callbacks
-получают только зарегистрированные значения. Поэтому вернувшийся child снова
-показывает сохранённый выбор. OnChange(values) вызывается перед onValueChange,
-массивы callbacks не разделяются с state. У options сохраняются описанные выше
-сортировка и нормализация прежнего API. Getter/setter function binding позволяет
-владельцу отклонять изменения; native checked восстанавливается по типизированным
-значениям, не смешивая 0 и '0'.
+Children register their current values and unregister on removal or value
+change. As upstream does, internal state keeps selection order and temporarily
+missing values. Bind:value reflects that raw state, and callbacks receive only
+registered values. A returning child therefore shows its saved selection.
+OnChange(values) runs before onValueChange. Callback arrays are independent
+of state. Options retain the sorting and normalization above. A getter and
+setter function binding lets the owner decline a change, restoring native checked
+from typed values without conflating 0 and '0'.
 
-SkipGroup оставляет Checkbox самостоятельным: его checked/name и callbacks не
-входят в группу. Disabled внешнего native fieldset продолжает действовать.
-Вложенные CheckboxGroup изолируют context; флажки выбора строк Table используют
-skipGroup, как в upstream. Group.nativeElement — bindable fieldset; rootClassName,
-prefixCls и явный role относятся к корню. PrefixCls передаётся в generated options,
-а children задают собственный prefixCls.
+SkipGroup keeps Checkbox standalone with its own checked, name, and callbacks.
+An outer native fieldset's disabled still applies. Nested groups have isolated
+contexts. Table row selection uses skipGroup as upstream does. Group.nativeElement
+is a bindable fieldset, and rootClassName, prefixCls, and explicit role apply
+to it. PrefixCls reaches generated options. Child Checkbox can set its own prefixCls.
 
-Checkbox/CheckboxGroup подключают CSS для local/shared prefixCls. Непустой
-локальный prefix имеет приоритет; empty/undefined наследуют ConfigProvider.
-Row использует общий namespace независимо от local Checkbox class; canonical
-token markers и Wave target сохраняются. Смена prefix сохраняет group/input DOM,
-refs, checked/mixed, выбранный массив, focus/selection и FormData.
-В Source shared local class может сохранить Row selector первого provider:
-nested Inner Row получает flex-grow:0, а fresh Inner с теми же props/theme — 1.
-Оба замера сохранены; Native изолирует CSS по local class и global namespace.
+Checkbox and CheckboxGroup load local and shared prefix CSS. A nonempty local
+prefix takes priority, and empty or undefined inherits ConfigProvider. Row uses
+the shared namespace independently of local Checkbox. Canonical token markers
+and Wave target stay in place. A prefix change preserves group and input DOM,
+refs, checked and mixed state, selected array, focus, selection, and FormData.
+With a shared local class, upstream can retain the first provider's Row selector.
+Nested Inner then gets flex-grow:0, and a fresh Inner with the same props and
+theme gets 1. Both measurements are preserved. The native implementation scopes
+CSS by local class and shared namespace.
 
-Сохранены native fieldset/form/reset/required, принудительный disabled группы,
-primitive values и deduplication options, bind:indeterminate и defaults. Они
-отличаются от React state/ref conventions, child disabled override и controlled
-indeterminate. Source Checkbox aliases и отдельные theme algorithms применяются
-к Checkbox/CheckboxGroup; native-only темы сохраняют прежнее оформление.
-Local/shared prefix CSS и Wave подключены; React diagnostics/statics остаются
-неперенесёнными. Сверка с официальным UMD — `?fixture=checkbox-prefix` и
-[browser](../../../tests/browser/checkbox/checkbox-prefix.spec.ts). Типы —
-[checkbox.types.ts](../../../src/lib/checkbox/checkbox.types.ts) и
-[checkbox-group.types.ts](../../../src/lib/checkbox/checkbox-group.types.ts); проверки —
-[browser](../../../tests/browser/checkbox/checkbox-features.spec.ts),
-[package SSR](../../../tests/package/checkbox/checkbox-features.ssr.test.ts) и
-[engine](../../../src/lib/checkbox/checkbox-group.engine.test.ts).
-
+Native fieldset, form, reset, and required behavior, enforced group disabled,
+primitive values, option deduplication, bind:indeterminate, and defaults are
+preserved. React uses different state and ref conventions, child disabled
+overrides, and controlled indeterminate. Upstream Checkbox aliases and separate
+theme algorithms apply to Checkbox and CheckboxGroup. Native-only themes
+retain their appearance. Local and shared prefix CSS and Wave are supported.
+React diagnostics and statics remain outside the port. The UMD comparison uses
+`?fixture=checkbox-prefix`. [Prefix browser tests](../../../tests/browser/checkbox/checkbox-prefix.spec.ts) ·
+[Checkbox types](../../../src/lib/checkbox/checkbox.types.ts) · [Group types](../../../src/lib/checkbox/checkbox-group.types.ts) · [Browser](../../../tests/browser/checkbox/checkbox-features.spec.ts) ·
+[Package SSR](../../../tests/package/checkbox/checkbox-features.ssr.test.ts) · [Engine](../../../src/lib/checkbox/checkbox-group.engine.test.ts)

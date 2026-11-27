@@ -1,11 +1,10 @@
 # BorderBeam
 
-BorderBeam добавляет декоративные слои к указанному контейнеру без дополнительной
-обёртки. Слои скрыты от accessibility tree. Точные props и значения по умолчанию —
-в [исходных типах](../../../src/lib/border-beam/border-beam.types.ts).
+BorderBeam adds decorative layers to a target container without an extra wrapper.
+The layers stay out of the accessibility tree. [Exact props and defaults](../../../src/lib/border-beam/border-beam.types.ts)
 
-В Svelte target явно связывает контейнер с эффектом. Это заменяет клонирование
-React child с составным ref; существующий ref вызывающего кода сохраняется.
+In Svelte, explicitly associate the container with the effect through target.
+The caller keeps its existing ref. React composes a ref by cloning its child.
 
 ```svelte
 <script lang="ts">
@@ -21,65 +20,62 @@ React child с составным ref; существующий ref вызыва
 </BorderBeam>
 ```
 
-Для нативного элемента используйте bind:this. Контейнер должен задавать
-position:relative либо другой positioning context; BorderBeam не исправляет его
-style. Отсутствующий target, SVG и обычный текст не получают декорацию. Содержимое
-при этом отображается; собственных DOM nodes на SSR нет. Смена target и unmount
-удаляют принадлежащие эффекту слои, не меняя controls и содержимое контейнера.
+Use bind:this for a native element. The container needs position:relative or
+another positioning context. BorderBeam leaves its style intact. A missing target,
+SVG, and plain text receive no decoration and preserve the content. SSR emits no
+effect nodes of its own. Changing target or unmounting removes the owned layers
+while preserving controls and contents.
 
-Count округляется вниз; неконечное число или число меньше 1 дают один луч.
-Несколько лучей распределяются по циклу отрицательным animation-delay. Первый
-луч сохраняет delay из style; остальные используют duration prop либо исходные
-6 секунд, даже когда duration переопределена через CSS variable в style.
+Count rounds down. A non-finite value or a number below 1 gives one beam.
+Negative animation delays distribute multiple beams through the cycle. The first
+keeps the delay from style. The others use the duration prop or the upstream
+six seconds, even when style overrides duration through a CSS variable.
 
-Градиент сохраняет порядок stops и масштабирует входные проценты 0–100 в видимые
-0–70%, оставляя хвост прозрачным. Если последний stop не равен 100%, его цвет
-добавляется в конец видимого участка. Пустой массив возвращает градиент темы.
-Числовые size/lineWidth используют px; строки остаются CSS lengths.
+The gradient preserves stop order and maps input percentages 0–100 to a visible
+0–70%, leaving a transparent tail. If the final stop is below or above 100%, its
+color is added at the end of the visible area. An empty array restores the theme
+gradient. Numeric size and lineWidth use pixels, and strings remain CSS lengths.
 
-Без outset четыре отступа измеряются по border-width один раз для каждого
-target. Последующие изменения рамки того же узла не вызывают новый замер.
-Radius наследуется через CSS и обновляется сразу, включая разные углы. Явный
-outset задаётся числом в px либо строкой через calc(-1 * outset); числовое
-отрицательное значение сохраняет исходное выражение `--2px` и не нормализуется.
+Without outset, measure the four insets from border-width once per target.
+Later border updates on the same node leave the measurement in place. Radius
+inherits through CSS and updates immediately, including different corners.
+Provide explicit outset as a number in pixels or a string through
+calc(-1 * outset). A negative number preserves the upstream `--2px` expression.
 
-ConfigProvider.borderBeam задаёт class/style слоёв. Вложенный config заменяется
-целиком; локальный style идёт после контекстного, а переменные параметров —
-после style. Theme light/dark и primary работают через CSS variables; disabled,
-locale и направление не меняют декоративное поведение.
+ConfigProvider.borderBeam sets class and style on the layers. A nested config
+replaces the parent in full. Local style follows contextual style, followed by
+variables from props. Light and dark themes and primary color use CSS variables.
+Disabled, locale, and direction leave the decorative behavior intact.
 
-BorderBeam принимает alias overrides и algorithms из theme.components.BorderBeam;
-собственных component tokens у него нет. Line width, primary gradient и typography
-обновляются без пересоздания слоёв. Внешний target получает тему владельца эффекта,
-включая CSS overrides его ConfigProvider, независимо от темы физического контейнера.
-Context/local style и явные параметры сохраняют приоритет над вычисленной темой.
-При удалении source theme возвращается прежнее наследование CSS от target.
+BorderBeam accepts alias overrides and algorithms from theme.components.BorderBeam.
+It has no component tokens of its own. Line width, primary gradient, and
+typography update without recreating layers. An external target uses the effect
+owner's theme, including CSS overrides from its ConfigProvider, independently
+of the physical container's theme. Context and local styles and explicit props
+take priority over the computed theme. Removing the upstream theme restores the
+existing CSS inheritance from target.
 
-CSS-рецепт border-beam сохраняет 10 правил и antBorderBeamMove с проверкой
-SHA-256 архива. Слои видимы при поддержке mask-composite и offset-path:rect;
-иначе применяется исходный CSS fallback display:none. Reduced motion скрывает
-псевдоэлемент и отключает анимацию. Hover/pause настраиваются обычными CSS rules.
-Эффект не заменяет focus ring или validation border.
+The border-beam recipe preserves 10 rules and antBorderBeamMove and verifies the
+archive SHA-256. Layers are visible with mask-composite and offset-path:rect support.
+Otherwise, upstream CSS uses display:none. Reduced motion hides the pseudo-element
+and disables animation. Use ordinary CSS for hover or pause. Keep the focus ring
+and validation border independently of the effect.
 
-Локальный prefixCls меняет классы слоёв и selectors, включая supports/media rules.
-Пустое значение наследует ConfigProvider.prefixCls (по умолчанию ant-border-beam).
-Общий prefix задаёт namespace служебных переменных --prefix-border-beam-*;
-точки удаляются из namespace, как в source genCssVar. Локальный prefix на него не
-влияет, theme.cssVar.prefix независим, имя antBorderBeamMove сохраняется. Смена префикса
-сохраняет слои, контейнер, draft и фокус. Scoped stylesheet удаляется вместе
-с эффектом либо при возврате к стандартным class/variable prefixes.
-Проверки локального prefix — `?fixture=border-beam-prefix`.
+Local prefixCls changes layer classes and selectors, including supports and media
+rules. An empty value inherits ConfigProvider.prefixCls, giving ant-border-beam
+by default. The shared prefix supplies the --prefix-border-beam-* namespace.
+Dots are removed as in upstream genCssVar. The local prefix and theme.cssVar.prefix
+are independent of it. The antBorderBeamMove name is preserved. Changing the prefix
+preserves layers, container, draft, and focus. The scoped stylesheet is removed
+with the effect or when the standard class and variable prefixes are restored.
+The local prefix fixture is `?fixture=border-beam-prefix`.
 
-Общий prefix проверяется по
-[14 исходным примерам и трём переходам](../../../tests/browser/fixtures/ant-design-beam-global-reference.json):
-[browser](../../../tests/browser/border-beam/beam-global.spec.ts),
-[SSR](../../../tests/package/border-beam/beam-global.ssr.test.ts), `?fixture=beam-global`.
-CSS-кэш 6.6.8 при одинаковом local class и разных общих prefixes повторно использует
-namespace родителя: у вложенного луча теряются outset/параметры либо читается размер
-родителя. Четыре случая сохранены в raw данных; те же вложенные компоненты на
-[отдельной свежей странице](../../../tests/browser/fixtures/ant-design-beam-global-isolated.json)
-читают свои переменные правильно. Svelte ограничивает CSS парой class/namespace и
-сверяется с этими изолированными исходными результатами. Дефект кэша не перенесён;
-raw наблюдение остаётся для отдельного разбора. Слои, target, border snapshot,
-draft/focus/selection и reduced motion сохраняются.
-
+The shared prefix fixture is `?fixture=beam-global`. The 6.6.8 CSS cache reuses
+the parent namespace when the local class matches and shared prefixes differ.
+A nested beam loses outset or parameters or reads a parent size. The raw data
+preserves four cases. The same nested components on a fresh page use the correct
+variables. Svelte scopes CSS to the class and namespace pair and compares against
+those isolated upstream results. The upstream cache defect remains recorded
+separately. Layers, target, border snapshot, draft, focus, selection, and
+reduced motion are preserved. [14 upstream cases and three transitions](../../../tests/browser/fixtures/ant-design-beam-global-reference.json) ·
+[Browser](../../../tests/browser/border-beam/beam-global.spec.ts) · [SSR](../../../tests/package/border-beam/beam-global.ssr.test.ts) · [Fresh page](../../../tests/browser/fixtures/ant-design-beam-global-isolated.json)

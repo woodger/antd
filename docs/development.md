@@ -90,7 +90,7 @@ npm run cli -- css all --check
 - `registry report` updates the generated coverage summary.
 - `registry show avatar` prints the Avatar entry. Substitute another component name to see its entry.
 - `css all --check` compares the extracted styles with the repository files for each recipe.
-  The check needs a local Ant Design archive. [CSS extraction](reference/ant-design-porting/readme.md#извлечение-css)
+  The check needs a local Ant Design archive. [CSS extraction](reference/ant-design-porting/readme.md#css-extraction)
 
 `integration:` references identify checks that consumers run separately. Porting metadata
 lives in the [repository registry](reference/ant-design-porting/registry.json).

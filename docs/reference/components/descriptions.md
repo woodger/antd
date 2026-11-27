@@ -1,7 +1,7 @@
 # Descriptions
 
-Передайте в `items` пары из подписи (`label`) и значения (`children`). Например,
-карточка проекта с `column={1}` покажет каждое свойство в отдельной строке.
+Pass label and value pairs through `items` using `label` and `children`.
+For example, a project card with `column={1}` puts each property on its own row.
 
 ```svelte
 <script lang="ts">
@@ -16,93 +16,88 @@
 <Descriptions title="Проект" column={1} {items} />
 ```
 
-Label/children/title/extra принимают string, number или Snippet; 0 отображается,
-пустые значения не создают соответствующий wrapper. Корень — div, затем view/table/tbody/tr и нативные th/td;
-bind:nativeElement возвращает div, нативные attrs передаются корню.
+Label, children, title, and extra accept a string, number, or snippet. Zero is
+displayed, and empty values omit the corresponding wrapper. The structure is a
+div root, then view, table, tbody, tr, and native th or td. Bind:nativeElement
+exposes the div, and native attributes pass to the root.
 
-Column — число либо responsive map xs–xxxl; по умолчанию xs=1, sm=2,
-md/lg/xl/xxl=3, xxxl=4. Пользовательская map проверяется от большего активного
-breakpoint к меньшему; затем используется default map. При SSR screens={}
-и column=3; media подключаются после mount и очищаются при unmount.
-Span — число, responsive map либо filled. Переполнение ограничивается остатком
-строки; последняя ячейка неполной строки растягивается на свободные колонки.
-Filled завершает текущую строку и занимает оставшуюся часть. Входные items не
-мутируются. Как в upstream, responsive перестройка строк может пересоздать
-содержимое ячейки, переместившейся между строками; state таких controls храните
-снаружи в модели.
+Column is a number or a responsive xs–xxxl map. The default map is xs=1, sm=2,
+md/lg/xl/xxl=3, and xxxl=4. A custom map resolves from the largest active
+breakpoint to the smallest and falls back to the default map. SSR uses
+screens={} and column=3. Media subscriptions start on mount and clear on unmount.
+Span accepts a number, responsive map, or filled. Overflow is limited to
+the remaining row, and the last cell of a partial row takes unused columns.
+Filled finishes the current row and occupies its remainder. Items stay intact.
+As upstream does, responsive row repacking can remount a cell that moves to
+another row. Store state for such controls in an external model.
 
-Layout=horizontal по умолчанию; vertical создаёт отдельные строки labels/content.
-Bordered=false, colon=true. В horizontal bordered label получает th/span=1,
-content — td/span=2*span-1; vertical сохраняет span на обеих строках. Colon
-управляет псевдоэлементом label только без рамки. Без явного size/componentSize
-используется размер large; medium и small уменьшают отступы.
-ComponentDisabled не меняет read-only поля.
+Layout defaults to horizontal. Vertical uses separate label and content rows.
+Bordered defaults to false and colon to true. In horizontal bordered mode,
+the label gets th/span=1 and content gets td/span=2*span-1. Vertical mode keeps
+the span on both rows. Colon controls the label pseudo-element without a
+border. Without explicit size or componentSize, size is large. Medium and small
+reduce padding. ComponentDisabled leaves read-only fields intact.
 
-ClassNames/styles поддерживают root/header/title/extra/label/content, объект
-либо callback ({ props }) с разрешёнными column/items/size. У items есть
-class/style и classNames/styles.label/content.
-Приоритет label/content: root semantic style → item semantic style. В bordered
-эти стили относятся к th/td и перекрывают item.style; без рамки — к внутренним span. Style корня идёт после styles.root.
-Вложенные таблицы сохраняют собственные bordered/size и не получают row-стили
-внешней таблицы. Темы/RTL наследуются через ConfigProvider.
+ClassNames and styles accept root, header, title, extra, label, and content
+through an object or ({ props }) callback with resolved column, items, and size.
+Items have class, style, and classNames and styles for label and content.
+Root semantic style precedes item semantic style. In bordered mode those
+styles apply to th and td and take priority over item.style. Without a border,
+they apply to inner spans. Root style follows styles.root. Nested tables keep
+their own bordered and size settings and remain isolated from outer row styles.
+Themes and RTL inherit from ConfigProvider.
 
-Непустой локальный `prefixCls` задаёт корень, header/title/extra, view/row и все
-ячейки; пустое значение наследует `ConfigProvider.prefixCls`. Semantic callbacks
-получают исходный локальный prefix. Namespace theme variables независим.
-Смена prefix сохраняет DOM/ref, draft/selection/focus и FormData.
+A nonempty local `prefixCls` sets the root, header, title, extra, view, row,
+and all cell classes. Empty inherits `ConfigProvider.prefixCls`. Semantic
+callbacks receive the original local prefix. The theme variable namespace
+is independent. Changing the prefix preserves DOM, refs, drafts, selection,
+focus, and FormData.
 
-Два правила Descriptions внутри Table expanded-row используют общий prefix Table
-и локальный prefix Descriptions; namespace владельца изолирует соседние scopes.
-Их default-копии в descriptions.css и общем vendor/antd.css ограничены стандартным
-owner через zero-specificity selector, чтобы не перекрывать custom namespace.
-В оригинале Table ищет только общий Descriptions class и пропускает local prefix.
-Raw UMD замеры сохранены; Native сохраняет expanded-row оформление и с local prefix.
-Для этого случая expectedNative в эталоне меняет только display view и flex table
-на измеренные значения обычного Table context. Полный перенос prefix Table идёт отдельно.
-Сверка: [prefix-эталон](../../../tests/browser/fixtures/ant-design-descriptions-prefix-reference.json),
-[браузер](../../../tests/browser/descriptions/descriptions-prefix.spec.ts) и
-[SSR](../../../tests/package/descriptions/descriptions-prefix.ssr.test.ts), `?fixture=descriptions-prefix`.
+Two rules for Descriptions inside a Table expanded row use the shared Table
+prefix and local Descriptions prefix. The owner namespace isolates adjacent
+scopes. Default copies in descriptions.css and vendor/antd.css are scoped to
+the standard owner with zero specificity to preserve a custom namespace.
+Upstream looks only for the shared Descriptions class and misses a local prefix.
+Raw UMD measurements are preserved. The native implementation keeps expanded-row
+styling with a local prefix. In that case expectedNative changes only view
+display and table flex to the values measured in regular Table context.
+Full Table prefix coverage is tracked separately. The fixture is
+`?fixture=descriptions-prefix`. [Prefix reference](../../../tests/browser/fixtures/ant-design-descriptions-prefix-reference.json) · [Browser](../../../tests/browser/descriptions/descriptions-prefix.spec.ts) · [SSR](../../../tests/package/descriptions/descriptions-prefix.ssr.test.ts)
 
-ConfigProvider.descriptions задаёт class/style и object/function classNames/styles
-для тех же semantic slots. Классы context/local объединяются; root style layers:
-context semantic → context style → local semantic → local style. Для ячеек общий
-semantic слой идёт перед item semantic styles. Явный вложенный
-record, включая {}, заменяет родительский; undefined наследует его. Обновления
-сохраняют editor/focus/selection и FormData первой ячейки при смене column/size.
-Фикстура — `?fixture=descriptions-config`,
-[браузерная сверка](../../../tests/browser/descriptions/descriptions-config.spec.ts) сохраняет raw UMD
-classes/tags/colspan/computed styles; проверка классов учитывает состав и количество.
+ConfigProvider.descriptions sets class, style, and object or function classNames
+and styles for the same slots. Context and local classes merge. Root style
+order is context semantic, context style, local semantic, then local style.
+Cell semantic styles precede item semantic styles. A nested record, including
+{}, replaces its parent. Undefined inherits it. Column and size changes preserve
+the editor, focus, selection, and FormData of the first cell. The
+`?fixture=descriptions-config` browser comparison preserves raw UMD classes,
+tags, colspan, and computed styles. The class check compares membership and count.
+[Browser comparison](../../../tests/browser/descriptions/descriptions-config.spec.ts)
 
-Callbacks сохраняют прежние native bordered=false, layout=horizontal и colon=true
-при отсутствии этих props. У upstream raw mergedProps они отсутствуют; наблюдение
-записано отдельно в [эталоне](../../../tests/browser/fixtures/ant-design-descriptions-config-reference.json).
-Column/items/size разрешены в обоих вариантах.
+Callbacks keep native defaults for omitted bordered=false, layout=horizontal,
+and colon=true. Raw upstream mergedProps omits them. Both resolve column,
+items, and size. [Reference observation](../../../tests/browser/fixtures/ant-design-descriptions-config-reference.json)
 
-ConfigProvider.theme.components.Descriptions применяет все десять компонентных
-токенов, включая цвета title/extra/label/content, фон label, отступ заголовка,
-ячеек и двоеточия. Значения рассчитываются из общих alias tokens; поддержаны
-глобальные и компонентные algorithms, cssVar.prefix, вложенные providers
-и обновление после mount. Переменные темы идут перед semantic/user styles.
-Сохраняются исходные правила 6.6.8: bordered использует labelBg и общий
-colorTextSecondary вместо labelColor, а размеры и рамка могут перекрывать
-itemPaddingBottom/itemPaddingEnd собственными отступами.
-Сверка: [официальные CSS tokens](../../../tests/reference/ant-design-descriptions-tokens-reference.json),
-[варианты и responsive spans](../../../tests/browser/fixtures/ant-design-descriptions-theme-reference.json),
-[SSR](../../../tests/package/descriptions/descriptions-theme.ssr.test.ts) и
-[browser](../../../tests/browser/descriptions/descriptions-theme.spec.ts), `?fixture=descriptions-theme`.
+ConfigProvider.theme.components.Descriptions applies all ten component tokens,
+including title, extra, label, and content colors, label background, and
+header, cell, and colon spacing. Values are derived from global aliases,
+with global and component algorithms, cssVar.prefix, nested providers, and
+live updates supported. Theme variables precede semantic and user styles.
+As in 6.6.8, bordered uses labelBg and global colorTextSecondary, and its size
+and border styles can set their own spacing over itemPaddingBottom and
+itemPaddingEnd. The fixture is `?fixture=descriptions-theme`. [Official CSS tokens](../../../tests/reference/ant-design-descriptions-tokens-reference.json) ·
+[Variants and responsive spans](../../../tests/browser/fixtures/ant-design-descriptions-theme-reference.json) · [SSR](../../../tests/package/descriptions/descriptions-theme.ssr.test.ts) · [Browser](../../../tests/browser/descriptions/descriptions-theme.spec.ts)
 
-Фикстура — `?fixture=descriptions`.
-Unit/SSR/Chromium проверяют раскладку, media, приоритет стилей и вложенность.
-Рецепт descriptions извлекает 40 правил без keyframes, включая две интеграции
-Table expanded-row. Responsive column/span используют глобальные
-`theme.token.screen*`, включая отдельные screenSMMin/screenSM и gaps между
-порогами. Вложенный provider наследует значения; inherit:false возвращает defaults.
-Порядок порогов проверяется и при SSR; в браузере смена токенов заменяет queries
-без remount. Существующее оформление без source theme сохраняет стандартные пороги.
-[Исходные замеры](../../../tests/browser/fixtures/ant-design-descriptions-breakpoints-reference.json)
-содержат raw stale observer Source при смене токенов и отдельный public fresh mount:
-Native сохраняет реактивное поведение, проверенное по свежей исходной раскладке.
-[Browser](../../../tests/browser/descriptions/descriptions-breakpoints.spec.ts) проверяет column/span,
-editor/ref/focus/selection/FormData и cleanup подписок;
-[SSR](../../../tests/package/descriptions/descriptions-breakpoints.ssr.test.ts) — fallback и validation.
-
+Unit, SSR, and Chromium checks for `?fixture=descriptions` cover layout, media,
+style precedence, and nesting. The descriptions recipe extracts 40 rules
+without keyframes, including two Table expanded-row integrations. Responsive
+column and span use global `theme.token.screen*`, including separate screenSMMin
+and screenSM and the gap between them. A nested provider inherits values.
+Inherit:false restores defaults. Threshold order is validated during SSR.
+In the browser, token changes replace queries without remounting. Existing
+styling without an upstream theme keeps standard thresholds. The raw data
+records the upstream stale observer after token changes and a separate fresh
+public mount. Native updates match the freshly mounted upstream layout.
+Browser checks cover column, span, editor, refs, focus, selection, FormData,
+and subscription cleanup. SSR checks cover fallback and validation.
+[Upstream measurements](../../../tests/browser/fixtures/ant-design-descriptions-breakpoints-reference.json) · [Browser](../../../tests/browser/descriptions/descriptions-breakpoints.spec.ts) · [SSR](../../../tests/package/descriptions/descriptions-breakpoints.ssr.test.ts)

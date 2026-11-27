@@ -1,6 +1,6 @@
 # TimeRangePicker (TimePicker.RangePicker)
 
-TimeRangePicker позволяет выбрать диапазон времени.
+TimeRangePicker selects a time range.
 
 ```svelte
 <script lang="ts">
@@ -15,88 +15,82 @@ TimeRangePicker позволяет выбрать диапазон времен�
 <TimeRangePicker name="interval" {value} onChange={next => { value = next; }} />
 ```
 
-Value/open — controlled props, defaultValue/defaultOpen читаются при создании.
-Удаление controlled value очищает локальный диапазон, без возврата к defaultValue.
-Calendar draft, подтверждённые границы и значение владельца хранятся отдельно.
-Смена `prefixCls` при прежнем `value` сохраняет черновик и выделение текста.
-OnCalendarChange сообщает пару и info.range в текущем порядке полей; onChange
-получает итог после завершения обеих границ. При order=true пара сортируется
-перед публикацией; disabled-граница отключает сортировку. Сравнение сохраняет
-правила Dayjs/rc-picker, включая календарную часть дат.
+Value and open are controlled props. DefaultValue and defaultOpen are read
+at creation. Removing controlled value clears the local range. The calendar draft,
+confirmed endpoints, and owner value are stored separately. Changing `prefixCls`
+with the same value preserves the draft and text selection. OnCalendarChange
+reports the pair and info.range in field order. OnChange receives the final
+result after both endpoints finish. Order=true sorts before emitting, and
+a disabled endpoint disables sorting. Comparison follows Dayjs and rc-picker,
+including the calendar date.
 
-NeedConfirm=true по умолчанию. OK подтверждает активную границу и переводит фокус
-к следующей; onOk вызывается до перехода и onChange. Enter/Tab и двойной клик
-подтверждают без onOk. Неподтверждённая граница удерживает фокус при попытке перейти
-в соседнее поле. Без needConfirm выбор в колонках всё равно остаётся черновиком:
-завершение первой границы переводит выбор ко второй. Закрытие после такого выбора
-может снова открыть панель второй границы, как useFocusLock upstream.
+NeedConfirm defaults to true. OK confirms the active endpoint and moves focus
+to the next one. OnOk runs before the transition and onChange. Enter, Tab, and
+double click confirm without onOk. An unconfirmed endpoint keeps focus when
+moving to the other field. Without needConfirm, column selection is still
+a draft. Finishing the first endpoint moves to the second. Closing after
+that choice can reopen the second panel as in upstream useFocusLock.
 
-Escape отменяет calendar draft. Неразобранный текст при неизменившемся calendar
-value сохраняется до blur; preserveInvalidOnBlur управляет его восстановлением.
-AllowEmpty допускает null в соответствующей границе и подтверждение через Tab,
-но не включает OK для пустой панели. При очистке обеих границ onChange получает
-`(null, null)`; disabled-граница сохраняется. Now по явному showNow подтверждает
-только активное поле без onOk; presets сразу применяют всю пару.
+Escape cancels the calendar draft. Unparsed text with unchanged calendar value
+persists until blur. PreserveInvalidOnBlur controls restoration. AllowEmpty permits
+a null endpoint and Tab confirmation while keeping OK disabled for an empty
+panel. Clearing both calls onChange(null, null). A disabled endpoint is preserved.
+Now with explicit showNow confirms only the active field without onOk.
+Presets apply the whole pair immediately.
 
-Format, 12-hour, show flags, steps, disabled units, hover preview и changeOnScroll
-используют ту же логику, что TimePicker. DefaultOpenValue задаёт отдельные кандидаты
-для обеих панелей, не заполняя inputs; одиночный Dayjs относится только к start.
-PickerValue управляет шаблонами времени независимо от value, defaultPickerValue
-восстанавливается при открытии и переключении полей. DisabledTime получает
-`(date, partial, {from})`; при итоговой проверке end получает start, включая null
-для разрешённой пустой границы.
+Format, 12-hour mode, show flags, steps, disabled units, hover preview, and
+changeOnScroll follow TimePicker. DefaultOpenValue supplies separate candidates
+for both panels without filling inputs. A single Dayjs applies only to start.
+PickerValue controls time templates independently of value. DefaultPickerValue
+is restored on open and field switch. DisabledTime receives (date, partial,
+{ from }). During final validation, end receives start, including null for an
+allowed empty endpoint.
 
-Panel edits сохраняют дату и UTC/timezone входного Dayjs. Default millisecondStep
-равен 100 и действует даже для скрытых разрядов; шаг 1 сохраняет миллисекунды.
-Ручной ввод использует строгий общий Day.js parser без panel rounding или
-принудительного UTC. Native name создаёт два поля с отображаемыми строками;
-Form model и onFinish получают объекты Dayjs без скрытой ISO-копии.
+Panel edits preserve the input Dayjs date, UTC mode, and timezone. The default
+millisecondStep is 100 and applies even to hidden units. A step of 1 preserves
+milliseconds. Manual entry uses the shared strict Day.js parser without panel
+rounding or forced UTC. Native name produces two fields with the display
+strings. The form model and onFinish get Dayjs objects without an ISO copy.
 
-Конфигурация повторяет разделение upstream: ConfigProvider.timePicker даёт
-icons/allowClear и semantic classNames/styles; ConfigProvider.rangePicker даёт
-variant, separator, class и обычный style. TimePicker.style/class/variant
-на range-обёртку не переносятся. Вложенный rangePicker config заменяется целиком.
-Semantic callback выполняется в одном слое с разрешёнными size/disabled и исходным
-variant. Локальный callback типизирован TimeRangePickerProps. Общие `classNames`
-и `styles` получают props одиночного пикера, диапазона или множественного выбора.
-Проверяйте массив через `Array.isArray`. Если нужны методы Dayjs, проверьте
-саму дату через `dayjs.isDayjs`, поскольку фабрика может использовать другой адаптер.
-Приоритет root styles: timePicker
-styles.root → rangePicker style → local styles.root → local style.
+Configuration follows upstream. ConfigProvider.timePicker supplies icons,
+allowClear, and semantic classNames and styles. ConfigProvider.rangePicker
+supplies variant, separator, class, and ordinary style. Single TimePicker
+style, class, and variant stay off the range wrapper. A nested rangePicker
+record replaces the parent. The semantic callback runs in one layer with
+resolved size and disabled and the original variant. The local callback is
+typed TimeRangePickerProps. Shared classNames and styles receive single, range,
+or multiple-picker props. Check arrays with Array.isArray and date instances
+with dayjs.isDayjs before using Dayjs methods because the factory can use
+another adapter. Root style order is timePicker styles.root, rangePicker style,
+local styles.root, then local style.
 
-Prefix/icons, cellRender с info.range и originNode, panelRender, presets и footer
-используют Svelte snippets. Footer получает mode='time'. Полная форма находится в
-[time-range-picker.types.ts](../../../src/lib/picker/time-range-picker.types.ts).
-Bind:nativeElement/startInput/endInput возвращают native refs и очищаются при
-unmount. Focus принимает объект с index/cursor/preventScroll либо число 0/1;
-индекс по умолчанию 0. Один focus не открывает закрытую панель. Keyboard и native
-popover используют согласованную Svelte adaptation; deferred focus, RAF геометрии,
-scroll timers и observers очищаются при удалении.
+Prefix and icons, cellRender with info.range and originNode, panelRender,
+presets, and footer use Svelte snippets. Footer receives mode='time'.
+Bind:nativeElement, startInput, and endInput expose native refs and clear on
+unmount. Focus accepts index, cursor, and preventScroll in an object or an
+index 0 or 1, defaulting to 0. Focusing alone leaves a closed panel closed.
+Keyboard and native popover follow the agreed Svelte adaptation. Unmount
+clears deferred focus, geometry animation frames, scroll timers, and observers.
+[Types](../../../src/lib/picker/time-range-picker.types.ts)
 
-`components.input` подключает редакторы обеих границ, а
-`components.button` отвечает за OK активной границы. Привязки
-`startInput` и `endInput` сохраняют тип `HTMLInputElement`.
-[Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
+`components.input` provides editors for both endpoints. `components.button`
+renders OK for the active endpoint. StartInput and endInput retain
+HTMLInputElement types. [Editor and button context](date-picker.md#редактор-и-кнопка-подтверждения)
 
-`components.time` заменяет панель активной границы. Действия snippet применяются
-к этой границе, а кнопка OK использует штатное подтверждение диапазона.
-Переходы в другие режимы отражаются в паре `onPanelChange`. Для таких панелей
-используйте `TimeRangePickerProps<DatePickerMode>`.
-[Контекст панели](date-picker.md#пользовательские-панели)
+`components.time` replaces the active endpoint panel. Snippet actions affect
+that endpoint, and OK uses normal range confirmation. Other panel modes are
+reported in the onPanelChange pair. Use TimeRangePickerProps<DatePickerMode>
+for those panels. [Panel context](date-picker.md#пользовательские-панели)
 
-Popup наследует общий container API DatePicker, сохраняет минимальную ширину selector
-и сдвигает узкую time panel со стрелкой под активное
-поле. Положение панели настраивается через `popupAlign` и `builtinPlacements`.
-В RTL колонки времени сохраняют исходный порядок hours → minutes → seconds,
-а направление внутри колонок меняется. Темы, compact, размеры, locale и status
-используют текущие контексты библиотеки. [Положение панели](./date-picker.md#положение-панели)
+The popup inherits the shared DatePicker container API. It keeps the selector's
+minimum width and shifts a narrow time panel with an arrow under the active
+field. Set placement through popupAlign and builtinPlacements. RTL keeps the
+upstream hours, minutes, and seconds column order and changes direction inside
+the columns. Theme, compact, size, locale, and status use current library
+contexts. [Panel placement](./date-picker.md#положение-панели)
 
-Проверки: [engine](../../../src/lib/picker/time-range-picker.engine.test.ts),
-[SSR](../../../src/lib/picker/time-range-picker.ssr.test.ts),
-[public package](../../../tests/package/picker/time-range-picker.ssr.test.ts),
-[browser](../../../tests/browser/picker/time-range-picker.spec.ts) и `?fixture=time-range-picker`.
-Для собственного типа даты используйте `RangePicker` из
-[фабрики DatePicker](./date-picker.md#свой-тип-даты) с `picker="time"`.
-Полные mask/trigger/token API и React diagnostics остаются
-в следующих этапах; v1-ready в реестре не означает полного покрытия React API.
-
+The fixture is `?fixture=time-range-picker`. [Engine](../../../src/lib/picker/time-range-picker.engine.test.ts) · [SSR](../../../src/lib/picker/time-range-picker.ssr.test.ts) ·
+[Public package](../../../tests/package/picker/time-range-picker.ssr.test.ts) · [Browser](../../../tests/browser/picker/time-range-picker.spec.ts)
+For a custom date type, use the DatePicker factory's RangePicker with
+`picker="time"`. The full mask, trigger, and token APIs and React diagnostics
+remain future work. V1-ready applies to the agreed scope. [DatePicker factory](./date-picker.md#свой-тип-даты)
