@@ -23,7 +23,7 @@ callbacks. Consumer slot classes keep their names.
 <Upload fileList={files} multiple action="/api/upload" name="attachment"
   beforeUpload={file => file.size > 10_000_000 ? UPLOAD_LIST_IGNORE : true}
   onChange={info => { files = info.fileList; }}>
-  <Button>Выбрать файлы</Button>
+  <Button>Choose files</Button>
 </Upload>
 ```
 
@@ -353,7 +353,7 @@ disabled state is independent.
   {#snippet itemRender(originNode, file, fileList, actions)}
     <div data-file-count={fileList.length}>
       {@render originNode()}
-      <button type="button" onclick={actions.preview}>Открыть {file.name}</button>
+      <button type="button" onclick={actions.preview}>Open {file.name}</button>
     </div>
   {/snippet}
 </Upload>

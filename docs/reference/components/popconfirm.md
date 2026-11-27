@@ -39,19 +39,19 @@ card retains its state. [Popover](./popover.md)
   let open = $state(false);
 
   async function remove() {
-    // Здесь владелец выполняет запрос и обновляет данные после успеха.
+    // Send the request and update the data after it succeeds.
   }
 </script>
 
 <Popconfirm
-  title="Удалить запись?"
-  description="Запись исчезнет из списка."
+  title="Delete this record?"
+  description="The record will be removed from the list."
   bind:open
-  okText="Удалить"
+  okText="Delete"
   okButtonProps={{ danger: true }}
   onConfirm={remove}
 >
-  <Button danger>Удалить</Button>
+  <Button danger>Delete</Button>
 </Popconfirm>
 ```
 

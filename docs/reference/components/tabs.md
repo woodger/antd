@@ -8,17 +8,17 @@
 </script>
 
 {#snippet profile()}
-  <label>Имя<Input defaultValue="Анна" /></label>
+  <label>Name<Input defaultValue="Anna" /></label>
 {/snippet}
-{#snippet history()}<p>Последние изменения профиля.</p>{/snippet}
+{#snippet history()}<p>Recent profile changes.</p>{/snippet}
 
 <Tabs
-  aria-label="Разделы участника"
+  aria-label="Member sections"
   bind:activeKey
   items={[
-    { key: 'profile', label: 'Профиль', children: profile },
-    { key: 'access', label: 'Доступ', disabled: true },
-    { key: 'history', label: 'История', children: history }
+    { key: 'profile', label: 'Profile', children: profile },
+    { key: 'access', label: 'Access', disabled: true },
+    { key: 'history', label: 'History', children: history }
   ]}
 />
 ```
@@ -277,16 +277,16 @@ preserved.
 <script lang="ts">
   import { Tabs, type TabsItem } from '@woodger/antd';
 
-  let items = $state<TabsItem[]>([{ key: 'first', label: 'Первая вкладка' }]);
+  let items = $state<TabsItem[]>([{ key: 'first', label: 'First tab' }]);
   let next = 1;
 </script>
 
-<Tabs type="editable-card" aria-label="Разделы" {items}
-  locale={{ addAriaLabel: 'Добавить вкладку', removeAriaLabel: 'Закрыть вкладку' }}
+<Tabs type="editable-card" aria-label="Sections" {items}
+  locale={{ addAriaLabel: 'Add tab', removeAriaLabel: 'Close tab' }}
   onEdit={(target, action) => {
     if (action === 'add') {
       const key = `new-${next++}`;
-      items = [...items, { key, label: 'Новая вкладка' }];
+      items = [...items, { key, label: 'New tab' }];
     } else if (typeof target === 'string') {
       items = items.filter(item => item.key !== target);
     }
@@ -448,15 +448,15 @@ without content, unless `autoDestroy=true`.
 
   const items = Array.from({ length: 12 }, (_, index) => ({
     key: String(index),
-    label: `Вкладка ${index + 1}`
+    label: `Tab ${index + 1}`
   }));
 </script>
 
 {#snippet popup(menu: Snippet, info: TabsMoreRenderInfo)}
   {@render menu()}
-  <button type="button" onclick={info.onClose}>Закрыть список</button>
+  <button type="button" onclick={info.onClose}>Close list</button>
 {/snippet}
-<Tabs {items} aria-label="Разделы" more={{ trigger: 'click', popupRender: popup }} />
+<Tabs {items} aria-label="Sections" more={{ trigger: 'click', popupRender: popup }} />
 ```
 
 `renderTabBar` receives resolved navigation props and a
@@ -467,7 +467,7 @@ its props, or build a custom header.
 <script lang="ts">
   import { Tabs, type TabsDefaultTabBar, type TabsTabBarProps } from '@woodger/antd';
 
-  const items = [{ key: 'profile', label: 'Профиль' }, { key: 'history', label: 'История' }];
+  const items = [{ key: 'profile', label: 'Profile' }, { key: 'history', label: 'History' }];
 </script>
 
 {#snippet bar(props: TabsTabBarProps, DefaultTabBar: TabsDefaultTabBar)}

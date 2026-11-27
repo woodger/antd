@@ -23,18 +23,18 @@ An individual Divider has no independent `prefixCls`.
   let opened = $state<string[]>(['guides']);
   const items: MenuItemType[] = [
     { key: 'overview', label: overview },
-    { key: 'guides', label: 'Руководства', children: [
-      { key: 'setup', label: 'Подключение' },
-      { key: 'forms', label: 'Формы' }
+    { key: 'guides', label: 'Guides', children: [
+      { key: 'setup', label: 'Setup' },
+      { key: 'forms', label: 'Forms' }
     ] }
   ];
 </script>
 
-{#snippet overview()}<a href="/overview">Обзор</a>{/snippet}
+{#snippet overview()}<a href="/overview">Overview</a>{/snippet}
 <Menu {items} mode="inline" selectedKeys={selected} openKeys={opened}
   onSelect={info => { selected = info.selectedKeys; }}
   onDeselect={info => { selected = info.selectedKeys; }}
-  onOpenChange={keys => { opened = keys; }} aria-label="Навигация" />
+  onOpenChange={keys => { opened = keys; }} aria-label="Navigation" />
 ```
 
 `items` accepts `MenuItemType`: an ordinary item, a submenu with
@@ -93,14 +93,14 @@ slot in full. Surface `styles.popup.root` applies after the branch's
   import { ConfigProvider, Menu, type MenuExpandIconInfo, type MenuItemType } from '@woodger/antd';
 
   const items: MenuItemType[] = [
-    { key: 'docs', label: 'Документация', children: [{ key: 'api', label: 'API' }] }
+    { key: 'docs', label: 'Documentation', children: [{ key: 'api', label: 'API' }] }
   ];
 </script>
 
 {#snippet expand(info: MenuExpandIconInfo)}{info.isOpen ? '−' : '+'}{/snippet}
 <ConfigProvider menu={{ classNames: { item: 'navigation-item' }, expandIcon: expand }}>
   <Menu {items} mode="inline" styles={{ subMenu: { item: 'font-weight: 600' } }}
-    aria-label="Разделы документации" />
+    aria-label="Documentation sections" />
 </ConfigProvider>
 ```
 
@@ -309,7 +309,7 @@ the popup setting.
 {/snippet}
 
 <Menu popupRender={popup} items={[
-  { key: 'projects', label: 'Проекты', children: [{ key: 'new', label: 'Новый проект' }] }
+  { key: 'projects', label: 'Projects', children: [{ key: 'new', label: 'New project' }] }
 ]} />
 ```
 

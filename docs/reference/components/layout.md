@@ -9,10 +9,10 @@
 </script>
 
 <Layout>
-  <LayoutHeader>Кабинет проекта</LayoutHeader>
+  <LayoutHeader>Project dashboard</LayoutHeader>
   <Layout hasSider>
-    <LayoutSider theme="light"><a href="#team">Команда</a></LayoutSider>
-    <LayoutContent><h1 id="team">Участники проекта</h1></LayoutContent>
+    <LayoutSider theme="light"><a href="#team">Team</a></LayoutSider>
+    <LayoutContent><h1 id="team">Project members</h1></LayoutContent>
   </Layout>
 </Layout>
 ```

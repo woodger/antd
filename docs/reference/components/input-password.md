@@ -13,7 +13,7 @@ Compact, and ref methods. [Source types](../../../src/lib/input/input-password.t
 
 <InputPassword bind:value={password} autoComplete="new-password"
   visibilityToggle={{ visible, onVisibleChange: next => { visible = next; } }}
-  aria-label="Пароль" />
+  aria-label="Password" />
 ```
 
 Without visibilityToggle.visible, the component owns visibility. In controlled

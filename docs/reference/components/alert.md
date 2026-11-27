@@ -10,13 +10,13 @@
 {#key revision}
   <Alert
     type="warning"
-    title="Есть несохранённые изменения"
-    description="Сохраните настройки перед выходом."
+    title="You have unsaved changes"
+    description="Save your settings before leaving."
     showIcon
     closable
   />
 {/key}
-<Button onclick={() => { revision++; }}>Показать сообщение снова</Button>
+<Button onclick={() => { revision++; }}>Show the alert again</Button>
 ```
 
 `type` accepts `success`, `info`, `warning`, and `error`, defaulting to

@@ -7,15 +7,15 @@
   let activeKey = $state<CollapseActiveKey>(['contacts']);
 </script>
 
-{#snippet contacts()}<label>Имя<Input defaultValue="Анна" /></label>{/snippet}
-{#snippet preferences()}<p>Настройки участника.</p>{/snippet}
+{#snippet contacts()}<label>Name<Input defaultValue="Anna" /></label>{/snippet}
+{#snippet preferences()}<p>Member preferences.</p>{/snippet}
 
 <Collapse
-  aria-label="Анкета участника"
+  aria-label="Member questionnaire"
   bind:activeKey
   items={[
-    { key: 'contacts', label: 'Контакты', children: contacts },
-    { key: 'preferences', label: 'Настройки', children: preferences }
+    { key: 'contacts', label: 'Contacts', children: contacts },
+    { key: 'preferences', label: 'Settings', children: preferences }
   ]}
 />
 ```

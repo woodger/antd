@@ -7,8 +7,8 @@ Rate selects a rating, with optional half steps.
   import { Rate } from '@woodger/antd';
   let value = $state(2.5);
 </script>
-<Rate aria-label="Оценка" {value} allowHalf
-  tooltips={['Очень плохо', 'Плохо', 'Нормально', 'Хорошо', 'Отлично']}
+<Rate aria-label="Rating" {value} allowHalf
+  tooltips={['Very poor', 'Poor', 'Fair', 'Good', 'Excellent']}
   onChange={next => { value = next; }} />
 ```
 

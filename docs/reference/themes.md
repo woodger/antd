@@ -16,7 +16,7 @@ Set `mode` and `primary` for a dark theme with a purple accent. A button with
 </script>
 
 <ConfigProvider theme={{ mode: 'dark', primary: 'purple' }}>
-  <Button type="primary">Сохранить</Button>
+  <Button type="primary">Save</Button>
 </ConfigProvider>
 ```
 
@@ -41,12 +41,12 @@ the size of the panel buttons and the gap between them while inheriting the dark
 </script>
 
 <ConfigProvider theme={{ mode: 'dark' }}>
-  <Button type="primary">Создать</Button>
+  <Button type="primary">Create</Button>
 
   <ConfigProvider componentSize="small" theme={{ compact: true }}>
     <Flex gap="small">
-      <Button>Изменить</Button>
-      <Button>Удалить</Button>
+      <Button>Edit</Button>
+      <Button>Delete</Button>
     </Flex>
   </ConfigProvider>
 </ConfigProvider>

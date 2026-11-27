@@ -8,12 +8,12 @@
 </script>
 
 {#snippet content()}
-  <p>Настройки сохранены.</p>
-  <Button onclick={() => { open = false; }}>Закрыть</Button>
+  <p>Settings saved.</p>
+  <Button onclick={() => { open = false; }}>Close</Button>
 {/snippet}
 
-<Popover title="Настройки" {content} trigger="click" bind:open>
-  <Button>Открыть настройки</Button>
+<Popover title="Settings" {content} trigger="click" bind:open>
+  <Button>Open settings</Button>
 </Popover>
 ```
 

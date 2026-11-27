@@ -14,7 +14,7 @@ remains active after a month is selected.
 
 <Calendar {value} onChange={next => { value = next; }}>
   {#snippet cellRender(date, info)}
-    {#if info.type === 'date' && date.date() === 15}<span>Событие</span>{/if}
+    {#if info.type === 'date' && date.date() === 15}<span>Event</span>{/if}
   {/snippet}
 </Calendar>
 ```

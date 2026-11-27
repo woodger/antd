@@ -10,7 +10,7 @@ TimePicker selects a time. A nested panel inherits its owner layer. [Owner layer
   let value = $state<Dayjs | null>(dayjs('2024-09-15T10:30:15'));
 </script>
 
-<label for="meeting-time">Время встречи</label>
+<label for="meeting-time">Meeting time</label>
 <TimePicker id="meeting-time" name="time" {value} onChange={next => { value = next; }} />
 ```
 

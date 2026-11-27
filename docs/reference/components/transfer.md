@@ -65,8 +65,8 @@ as in upstream.
   import { Transfer, type TransferKey } from '@woodger/antd';
 
   const dataSource = [
-    { key: 'a', title: 'Анна' },
-    { key: 'b', title: 'Борис' }
+    { key: 'a', title: 'Anna' },
+    { key: 'b', title: 'Boris' }
   ];
   let targetKeys = $state<TransferKey[]>([]);
 </script>

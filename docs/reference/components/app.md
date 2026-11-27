@@ -26,14 +26,14 @@ a global queue.
   const { message, notification, modal } = App.useApp();
 
   async function confirm() {
-    if (await modal.confirm({ title: 'Продолжить?' })) {
-      message.success('Готово');
-      notification.info({ title: 'Операция завершена' });
+    if (await modal.confirm({ title: 'Continue?' })) {
+      message.success('Done');
+      notification.info({ title: 'Operation complete' });
     }
   }
 </script>
 
-<Button onclick={confirm}>Продолжить</Button>
+<Button onclick={confirm}>Continue</Button>
 ```
 
 The nearest ConfigProvider sets theme, locale, and RTL for the holders. Message and

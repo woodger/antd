@@ -12,14 +12,14 @@ and style is a CSS string. Nullish entries and values are skipped.
   import { Checkbox, CheckboxGroup } from '@woodger/antd';
 
   const options = [
-    { value: 'read', label: 'Просмотр' },
-    { value: 'edit', label: 'Редактирование' },
-    { value: 'archive', label: 'Архив', disabled: true }
+    { value: 'read', label: 'View' },
+    { value: 'edit', label: 'Edit' },
+    { value: 'archive', label: 'Archive', disabled: true }
   ];
   let permissions = $state<string[]>(['read']);
 </script>
 
-<CheckboxGroup {options} bind:value={permissions} name="permissions" aria-label="Права доступа" />
+<CheckboxGroup {options} bind:value={permissions} name="permissions" aria-label="Permissions" />
 ```
 
 With options, each user toggle updates bind:value and calls onValueChange(values)
@@ -69,9 +69,9 @@ snippet, including Checkbox inside Row, Col, or other containers.
   let permissions = $state<string[]>(['read']);
 </script>
 
-<CheckboxGroup bind:value={permissions} name="permissions" aria-label="Права доступа">
-  <Checkbox value="read">Просмотр</Checkbox>
-  <Checkbox value="edit">Редактирование</Checkbox>
+<CheckboxGroup bind:value={permissions} name="permissions" aria-label="Permissions">
+  <Checkbox value="read">View</Checkbox>
+  <Checkbox value="edit">Edit</Checkbox>
 </CheckboxGroup>
 ```
 

@@ -14,7 +14,7 @@ native API. Range mode is described below.
   let volume = $state(40);
 </script>
 
-<label for="volume">Громкость</label>
+<label for="volume">Volume</label>
 <Slider id="volume" name="volume" bind:value={volume} min={0} max={100} step={5} />
 ```
 
@@ -174,7 +174,7 @@ are preserved. [Single-value types](../../../src/lib/slider/slider.types.ts) ·
 </script>
 
 <Slider range bind:value={interval} bind:ref={slider} name="interval"
-  ariaLabelForHandle={['Начало', 'Конец']} />
+  ariaLabelForHandle={['Start', 'End']} />
 ```
 
 Values are sorted into a new copy. The external array is

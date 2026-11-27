@@ -10,7 +10,7 @@ nearest Form. The component types define the exact API. [ConfigProvider](../../s
   import { ConfigProvider, createForm, Form, Input, Select } from '@woodger/antd';
 
   const form = createForm({ initialValues: {} });
-  const options = [{ value: 'editor', label: 'Редактор' }];
+  const options = [{ value: 'editor', label: 'Editor' }];
 </script>
 
 <ConfigProvider variant="filled" input={{ variant: 'underlined' }}>

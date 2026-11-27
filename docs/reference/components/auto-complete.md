@@ -69,7 +69,7 @@ blur are available.
 Provide an editor through a children(control) snippet.
 
 ```svelte
-<AutoComplete options={[{ value: 'example' }]} aria-label="Подсказки">
+<AutoComplete options={[{ value: 'example' }]} aria-label="Suggestions">
   {#snippet children(control)}
     <textarea {...control.attributes} use:control.register rows="3"></textarea>
   {/snippet}

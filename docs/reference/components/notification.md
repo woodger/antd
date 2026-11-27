@@ -12,17 +12,17 @@ independent queues.
 </script>
 
 {#snippet actions()}
-  <Button onclick={() => notification.destroy('report')}>Понятно</Button>
+  <Button onclick={() => notification.destroy('report')}>Got it</Button>
 {/snippet}
 
 <NotificationHolder {notification} />
 <Button onclick={() => notification.success({
   key: 'report',
-  title: 'Отчёт готов',
-  description: 'Подготовлены две записи.',
+  title: 'Report ready',
+  description: 'Two records are ready.',
   duration: 0,
   actions
-})}>Показать результат экспорта</Button>
+})}>Show export result</Button>
 ```
 
 `open`, `success`, `info`, `warning`, and `error` accept a

@@ -8,8 +8,8 @@ render without an extra DOM wrapper.
   import { Image, ImagePreviewGroup } from '@woodger/antd';
 </script>
 <ImagePreviewGroup>
-  <Image src="/first.jpg" alt="Первое изображение" width={160} />
-  <Image src="/second.jpg" alt="Второе изображение" width={160} />
+  <Image src="/first.jpg" alt="First image" width={160} />
+  <Image src="/second.jpg" alt="Second image" width={160} />
 </ImagePreviewGroup>
 ```
 

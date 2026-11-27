@@ -16,7 +16,7 @@ shared picker rules. [DatePicker rules](date-picker.md#semantic-styling-and-prov
   import { RangePicker, type RangePickerValue } from '@woodger/antd';
   let period = $state<RangePickerValue | null>([dayjs('2026-10-10'), dayjs('2026-10-20')]);
 </script>
-<label for="period-start">Начало</label><label for="period-end">Конец</label>
+<label for="period-start">Start</label><label for="period-end">End</label>
 <RangePicker id={{start:'period-start',end:'period-end'}} name="period"
   value={period} onChange={next => { period = next; }} />
 ```

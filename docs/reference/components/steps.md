@@ -7,9 +7,9 @@
 </script>
 
 <Steps {current} onChange={index => { current = index; }} items={[
-  { key: 'data', title: 'Данные', content: 'Заполните форму' },
-  { key: 'review', title: 'Проверка', subTitle: 'Перед отправкой' },
-  { key: 'send', title: 'Отправка', disabled: true }
+  { key: 'data', title: 'Data', content: 'Complete the form' },
+  { key: 'review', title: 'Review', subTitle: 'Before submitting' },
+  { key: 'send', title: 'Submission', disabled: true }
 ]} />
 ```
 

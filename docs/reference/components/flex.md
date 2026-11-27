@@ -2,8 +2,8 @@
 
 ```svelte
 <Flex gap="small" justify="space-between" wrap>
-  <Button>Первое действие</Button>
-  <Button>Второе действие</Button>
+  <Button>First action</Button>
+  <Button>Second action</Button>
 </Flex>
 ```
 

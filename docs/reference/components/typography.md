@@ -9,16 +9,16 @@ Link and add text operations. [Type declarations](../../../src/lib/typography/ty
 <script lang="ts">
   import { TypographyTitle, TypographyParagraph, TypographyLink } from '@woodger/antd';
 
-  let text = $state('Длинный текст статьи');
+  let text = $state('Long article text');
   let expanded = $state(false);
 </script>
 
-<TypographyTitle level={2}>Название статьи</TypographyTitle>
+<TypographyTitle level={2}>Article title</TypographyTitle>
 <TypographyParagraph children={text} copyable
   editable={{ onChange: value => { text = value; } }}
   ellipsis={{ rows: 2, expandable: 'collapsible', expanded,
     onExpand: (_event, info) => { expanded = info.expanded; } }} />
-<TypographyLink href="/articles" target="_blank">Все статьи</TypographyLink>
+<TypographyLink href="/articles" target="_blank">All articles</TypographyLink>
 ```
 
 Text renders a `span`, Title an `h1` through `h5` (default `h1`),

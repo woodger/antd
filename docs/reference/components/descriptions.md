@@ -8,12 +8,12 @@ For example, a project card with `column={1}` puts each property on its own row.
   import { Descriptions } from '@woodger/antd';
 
   const items = [
-    { key: 'owner', label: 'Владелец', children: 'Анна' },
-    { key: 'status', label: 'Статус', children: 'В работе' }
+    { key: 'owner', label: 'Owner', children: 'Anna' },
+    { key: 'status', label: 'Status', children: 'In progress' }
   ];
 </script>
 
-<Descriptions title="Проект" column={1} {items} />
+<Descriptions title="Project" column={1} {items} />
 ```
 
 Label, children, title, and extra accept a string, number, or snippet. Zero is

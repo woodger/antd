@@ -7,11 +7,11 @@
   let open = $state(false);
 </script>
 
-{#snippet footer()}<Button onclick={() => { open = false; }}>Закрыть</Button>{/snippet}
+{#snippet footer()}<Button onclick={() => { open = false; }}>Close</Button>{/snippet}
 
-<Button onclick={() => { open = true; }}>Редактировать</Button>
-<Drawer bind:open title="Карточка участника" {footer}>
-  <label>Имя<Input defaultValue="Анна" /></label>
+<Button onclick={() => { open = true; }}>Edit</Button>
+<Drawer bind:open title="Member details" {footer}>
+  <label>Name<Input defaultValue="Anna" /></label>
 </Drawer>
 ```
 
@@ -168,8 +168,8 @@ the section is removed.
   <div class="drawer-frame">{@render section()}</div>
 {/snippet}
 
-<Drawer open drawerRender={decorate} title="Карточка участника">
-  <p>Здесь находится содержимое панели.</p>
+<Drawer open drawerRender={decorate} title="Member details">
+  <p>The panel content goes here.</p>
 </Drawer>
 ```
 

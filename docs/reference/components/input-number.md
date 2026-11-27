@@ -13,7 +13,7 @@ owner and omit `defaultValue`.
   let quantity = $state<number | null>(2);
 </script>
 
-<label for="quantity">Количество</label>
+<label for="quantity">Quantity</label>
 <InputNumber id="quantity" name="quantity" bind:value={quantity} min={0} max={99} step={1} precision={0} />
 ```
 

@@ -78,9 +78,9 @@ intermediate frames with the official UMD. Wave is inherited through the
 shared Button, including BackTop and the group trigger. [Browser](../../../tests/browser/float-button/float-button-motion.spec.ts)
 
 ```svelte
-<FloatButton tooltip="Помощь" aria-label="Помощь" onclick={showHelp} />
-<FloatButtonGroup shape="square" trigger="click" aria-label="Действия">
-  <FloatButton content="?" aria-label="Поддержка" />
-  <FloatButtonBackTop visibilityHeight={0} aria-label="К началу" />
+<FloatButton tooltip="Help" aria-label="Help" onclick={showHelp} />
+<FloatButtonGroup shape="square" trigger="click" aria-label="Actions">
+  <FloatButton content="?" aria-label="Support" />
+  <FloatButtonBackTop visibilityHeight={0} aria-label="Back to top" />
 </FloatButtonGroup>
 ```

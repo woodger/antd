@@ -5,8 +5,8 @@
   import { BadgeRibbon, Card } from '@woodger/antd';
 </script>
 
-<BadgeRibbon text="Новинка" color="green" placement="start">
-  <Card title="Материал">Содержимое карточки</Card>
+<BadgeRibbon text="New" color="green" placement="start">
+  <Card title="Article">Card content</Card>
 </BadgeRibbon>
 ```
 

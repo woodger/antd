@@ -46,7 +46,7 @@ styles.root, then local style. Compact and Addon have separate settings.
 
 <ConfigProvider space={{ size: ['small', 'large'], styles: { item: 'color:#531dab' } }}
   theme={{ components: { Space: { paddingXS: 12 } } }}>
-  <Space items={['Первый', 'Второй']} separator="|" />
+  <Space items={['First', 'Second']} separator="|" />
 </ConfigProvider>
 ```
 

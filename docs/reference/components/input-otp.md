@@ -12,7 +12,7 @@ Cells are named “OTP Input 1”, “OTP Input 2”, and so on by default.
 
 <InputOTP value={code} onChange={next => { code = next; }}
   formatter={text => text.replace(/\D/g, '')} autoComplete="one-time-code"
-  aria-label="Код подтверждения" />
+  aria-label="Verification code" />
 ```
 
 There are six cells by default, with type=text and arbitrary text content.

@@ -13,7 +13,7 @@ QRCode renders a code on canvas or in SVG and supports loading and error states.
   type="svg"
   size={180}
   marginSize={4}
-  aria-label="Ссылка на Ant Design"
+  aria-label="Link to Ant Design"
 />
 ```
 

@@ -1,7 +1,7 @@
 # Statistic
 
 ```svelte
-<Statistic title="Баланс" value="123456.789" precision={2} suffix="₽" />
+<Statistic title="Balance" value="123456.789" precision={2} suffix="₽" />
 ```
 
 Value is a number or string and defaults to 0. Built-in formatting follows
@@ -31,7 +31,7 @@ parent record. Any explicit object, including {}, replaces it.
 
 ```svelte
 <ConfigProvider statistic={{ class: 'metric', styles: { value: 'font-weight:600' } }}>
-  <Statistic title="Баланс" value={1234.5} styles={{ value: 'color:green' }} />
+  <Statistic title="Balance" value={1234.5} styles={{ value: 'color:green' }} />
 </ConfigProvider>
 ```
 

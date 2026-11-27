@@ -11,9 +11,9 @@ control moves to an available neighbor.
 
 ```svelte
 <Timeline titleSpan="80px" items={[
-  { key: 'created', title: '09:00', content: 'Создано', color: 'green' },
-  { key: 'processing', title: '09:30', content: 'Обработка' },
-  { key: 'waiting', content: 'Ожидается подтверждение', loading: true }
+  { key: 'created', title: '09:00', content: 'Created', color: 'green' },
+  { key: 'processing', title: '09:30', content: 'Processing' },
+  { key: 'waiting', content: 'Waiting for confirmation', loading: true }
 ]} />
 ```
 

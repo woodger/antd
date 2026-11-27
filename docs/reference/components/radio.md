@@ -22,14 +22,14 @@ once with the first option's label and disabled state.
   import { RadioGroup } from '@woodger/antd';
 
   const options = [
-    { value: 0, label: 'Базовый' },
-    { value: 1, label: 'Командный' },
-    { value: 2, label: 'Архивный', disabled: true }
+    { value: 0, label: 'Basic' },
+    { value: 1, label: 'Team' },
+    { value: 2, label: 'Archived', disabled: true }
   ];
   let plan = $state<number | undefined>(0);
 </script>
 
-<RadioGroup {options} bind:value={plan} name="plan" aria-label="Тариф" orientation="vertical" />
+<RadioGroup {options} bind:value={plan} name="plan" aria-label="Plan" orientation="vertical" />
 ```
 
 User selection updates `bind:value` and calls `onValueChange(value)`
@@ -94,9 +94,9 @@ in place.
   let mode = $state('month');
 </script>
 
-<RadioGroup bind:value={mode} name="mode" aria-label="Режим календаря" size="small">
-  <RadioButton value="month">Месяц</RadioButton>
-  <RadioButton value="year">Год</RadioButton>
+<RadioGroup bind:value={mode} name="mode" aria-label="Calendar mode" size="small">
+  <RadioButton value="month">Month</RadioButton>
+  <RadioButton value="year">Year</RadioButton>
 </RadioGroup>
 ```
 

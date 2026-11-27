@@ -7,12 +7,12 @@
   interface Person { id: number; name: string; score: number }
 
   const people: Person[] = [
-    { id: 0, name: 'Анна', score: 30 },
-    { id: 1, name: 'Борис', score: 10 }
+    { id: 0, name: 'Anna', score: 30 },
+    { id: 1, name: 'Boris', score: 10 }
   ];
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Имя', render: personName },
-    { key: 'score', title: 'Баллы', dataIndex: 'score', sorter: (left, right) => left.score - right.score }
+    { key: 'name', title: 'Name', render: personName },
+    { key: 'score', title: 'Score', dataIndex: 'score', sorter: (left, right) => left.score - right.score }
   ];
   let current = $state(1);
   let pageSize = $state(10);
@@ -26,7 +26,7 @@
   dataSource={people}
   {columns}
   rowKey="id"
-  caption="Участники"
+  caption="Members"
   bind:current
   bind:pageSize
   bind:sorter
@@ -165,7 +165,7 @@ hides the empty cell label for an empty array.
 
 ```svelte
 <Table {columns} {dataSource}
-  loading={{ spinning: pending, delay: 150, description: 'Загрузка данных…' }} />
+  loading={{ spinning: pending, delay: 150, description: 'Loading data…' }} />
 ```
 
 [Ant Design snapshots](../../../tests/browser/fixtures/ant-design-table-loading-reference.json) · [Chromium](../../../tests/browser/table/table-loading.spec.ts) · [SSR](../../../tests/package/table/table-loading.ssr.test.ts)
@@ -201,10 +201,10 @@ depends on loading mode and whether `dataSource` is supplied.
 [Loading](#loading)
 
 ```svelte
-{#snippet emptyRows()}<span>Для этих условий записей нет.</span>{/snippet}
+{#snippet emptyRows()}<span>No records match these criteria.</span>{/snippet}
 
 <Table {columns} {dataSource}
-  locale={{ emptyText: emptyRows, filterConfirm: 'Применить условия' }} />
+  locale={{ emptyText: emptyRows, filterConfirm: 'Apply filters' }} />
 ```
 
 For filters, `renderEmpty('Table.filter')` can return `0` or
@@ -328,9 +328,9 @@ wins. A marker without active `rowSelection` or
 
 ```ts
 const columns: TableColumn<Person>[] = [
-  { key: 'name', title: 'Имя', dataIndex: 'name' },
+  { key: 'name', title: 'Name', dataIndex: 'name' },
   Table.SELECTION_COLUMN,
-  { key: 'score', title: 'Баллы', dataIndex: 'score' },
+  { key: 'score', title: 'Score', dataIndex: 'score' },
   Table.EXPAND_COLUMN
 ];
 ```
@@ -377,16 +377,16 @@ individual rows. Every supplied record can expand by default.
 
   interface Person { key: number; name: string; email: string; active: boolean }
   const people: Person[] = [
-    { key: 0, name: 'Анна', email: 'anna@example.com', active: true },
-    { key: 1, name: 'Борис', email: 'boris@example.com', active: false }
+    { key: 0, name: 'Anna', email: 'anna@example.com', active: true },
+    { key: 1, name: 'Boris', email: 'boris@example.com', active: false }
   ];
-  const columns: TableColumn<Person>[] = [{ key: 'name', title: 'Имя', dataIndex: 'name', width: 200 }];
+  const columns: TableColumn<Person>[] = [{ key: 'name', title: 'Name', dataIndex: 'name', width: 200 }];
   let expanded = $state<TableKey[]>([0]);
 </script>
 
 {#snippet details(person: Person, index: number)}<p>{index + 1}. {person.name}: {person.email}</p>{/snippet}
-<Button onclick={() => { expanded = []; }}>Свернуть все</Button>
-<Table dataSource={people} {columns} caption="Участники"
+<Button onclick={() => { expanded = []; }}>Collapse all</Button>
+<Table dataSource={people} {columns} caption="Members"
   expandable={{ expandedRowRender: details, rowExpandable: (person) => person.active,
     fixed: true, expandedRowKeys: expanded, onExpandedRowsChange: next => { expanded = next; } }} />
 ```
@@ -537,11 +537,11 @@ Use `TableColumnsType<Row>`, `TableColumnGroupType<Row>`, and
 
 ```ts
 const columns: TableColumnsType<Person> = [
-  { key: 'name', title: 'Имя', dataIndex: 'name' },
+  { key: 'name', title: 'Name', dataIndex: 'name' },
   {
-    key: 'metrics', title: 'Показатели', children: [
-      { key: 'score', title: 'Баллы', dataIndex: 'score' },
-      { key: 'tasks', title: 'Задачи', dataIndex: 'tasks' }
+    key: 'metrics', title: 'Metrics', children: [
+      { key: 'score', title: 'Score', dataIndex: 'score' },
+      { key: 'tasks', title: 'Tasks', dataIndex: 'tasks' }
     ]
   }
 ];
@@ -639,7 +639,7 @@ the owner's controlled values.
 
 ```svelte
 {#snippet scoreHeading(info: TableColumnTitleProps<Row>)}
-  Баллы
+  Score
   {#if info.filters.score?.length}
     <span>({info.filters.score.length})</span>
   {/if}
@@ -764,7 +764,7 @@ the header or column `rowScope`.
 ```ts
 const teamColumn: TableColumn<Person> = {
   key: 'team',
-  title: 'Команда',
+  title: 'Team',
   dataIndex: 'team',
   onCell: (_record, index) => ({
     rowSpan: index === 0 ? 2 : index === 1 ? 0 : 1
@@ -877,9 +877,9 @@ processed set. Server mode passes the supplied `dataSource`
 without repagination. An empty set passes `[]`.
 
 ```svelte
-<Table dataSource={people} {columns} caption="Участники">
-  {#snippet title(currentPage)}На странице: {currentPage.length}{/snippet}
-  {#snippet footer(currentPage)}Всего баллов на странице:
+<Table dataSource={people} {columns} caption="Members">
+  {#snippet title(currentPage)}On this page: {currentPage.length}{/snippet}
+  {#snippet footer(currentPage)}Total score on this page:
     {currentPage.reduce((sum, person) => sum + person.score, 0)}
   {/snippet}
 </Table>
@@ -907,7 +907,7 @@ attributes and events to its `tr`.
 {#snippet totals(page: readonly Person[])}
   <Table.Summary>
     <Table.Summary.Row>
-      <Table.Summary.Cell index={0}>Всего</Table.Summary.Cell>
+      <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
       <Table.Summary.Cell index={1} align="right">
         {page.reduce((total, person) => total + person.score, 0)}
       </Table.Summary.Cell>
@@ -1073,16 +1073,16 @@ Columns are unfixed by default.
 
   interface Person { key: number; name: string; team: string; tasks: number }
   const people: Person[] = Array.from({ length: 30 }, (_, index) => ({
-    key: index, name: `Участник ${index + 1}`, team: 'Разработка', tasks: index
+    key: index, name: `Member ${index + 1}`, team: 'Engineering', tasks: index
   }));
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Участник', dataIndex: 'name', width: 200, fixed: true },
-    { key: 'team', title: 'Команда', dataIndex: 'team', width: '24rem' },
-    { key: 'tasks', title: 'Задачи', dataIndex: 'tasks', width: 100, fixed: 'end' }
+    { key: 'name', title: 'Member', dataIndex: 'name', width: 200, fixed: true },
+    { key: 'team', title: 'Team', dataIndex: 'team', width: '24rem' },
+    { key: 'tasks', title: 'Tasks', dataIndex: 'tasks', width: 100, fixed: 'end' }
   ];
 </script>
 
-<Table dataSource={people} {columns} caption="Участники"
+<Table dataSource={people} {columns} caption="Members"
   rowSelection={{ fixed: true }} scroll={{ x: 1000, y: 320 }} pagination={false} />
 ```
 
@@ -1164,14 +1164,14 @@ accessibility. Set numeric column widths for the shared grid.
   import { Table, type TableBodyRenderInfo, type TableColumn } from '@woodger/antd';
 
   interface Person { key: number; name: string; }
-  const people: Person[] = [{ key: 1, name: 'Анна' }];
+  const people: Person[] = [{ key: 1, name: 'Anna' }];
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Имя', dataIndex: 'name', width: 640 }
+    { key: 'name', title: 'Name', dataIndex: 'name', width: 640 }
   ];
 </script>
 
 {#snippet body(page: readonly Person[], info: TableBodyRenderInfo)}
-  <div role="region" aria-label="Участники" style="max-height:240px;overflow:auto"
+  <div role="region" aria-label="Members" style="max-height:240px;overflow:auto"
     {@attach info.ref} onscroll={info.onScroll}>
     <div style="width:640px">
       {#each page as person (person.key)}
@@ -1252,21 +1252,21 @@ filters from different columns combine with AND.
   interface Person { key: number; name: string; active: boolean }
 
   const people: Person[] = [
-    { key: 0, name: 'Анна', active: true },
-    { key: 1, name: 'Борис', active: false }
+    { key: 0, name: 'Anna', active: true },
+    { key: 1, name: 'Boris', active: false }
   ];
   const columns: TableColumn<Person>[] = [
-    { key: 'name', title: 'Имя', dataIndex: 'name' },
+    { key: 'name', title: 'Name', dataIndex: 'name' },
     {
-      key: 'active', title: 'Статус', dataIndex: 'active', filterMultiple: false,
-      filters: [{ text: 'Активен', value: true }, { text: 'Приостановлен', value: false }],
+      key: 'active', title: 'Status', dataIndex: 'active', filterMultiple: false,
+      filters: [{ text: 'Active', value: true }, { text: 'Paused', value: false }],
       onFilter: (value, person) => person.active === value
     }
   ];
   let filters = $state<TableFilters>({});
 </script>
 
-<Table dataSource={people} {columns} bind:filters caption="Участники" />
+<Table dataSource={people} {columns} bind:filters caption="Members" />
 ```
 
 Table `filters` maps each `column.key` to an array of selected
@@ -1385,7 +1385,7 @@ keys to `setSelectedKeys`.
   const columns: TableColumn<Row>[] = [{
     key: 'team',
     dataIndex: 'team',
-    title: 'Команда',
+    title: 'Team',
     filterDropdown: teamFilter,
     onFilter: (key, row) => key === row.team
   }];
@@ -1393,9 +1393,9 @@ keys to `setSelectedKeys`.
 
 {#snippet teamFilter(filter: TableFilterDropdownProps)}
   <button type="button" onclick={() => filter.setSelectedKeys(['core'])}>
-    Основная команда
+    Core team
   </button>
-  <button type="button" onclick={() => filter.confirm()}>Применить</button>
+  <button type="button" onclick={() => filter.confirm()}>Apply</button>
 {/snippet}
 
 <Table {columns} {dataSource} pagination={false} />
@@ -1574,7 +1574,7 @@ unmounting cancels the previous request.
   }
 
   const columns: TableColumn<Member>[] = [
-    { key: 'name', title: 'Участник', dataIndex: 'name' }
+    { key: 'name', title: 'Member', dataIndex: 'name' }
   ];
   let current = $state(1);
   let pageSize = $state(10);
@@ -1596,7 +1596,7 @@ unmounting cancels the previous request.
         const response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok) {
-          throw new Error(`Ошибка загрузки (HTTP ${response.status})`);
+          throw new Error(`Load failed (HTTP ${response.status})`);
         }
 
         const page: { rows: Member[]; total: number } = await response.json();
@@ -1608,7 +1608,7 @@ unmounting cancels the previous request.
       }
       catch (cause) {
         if (!controller.signal.aborted) {
-          error = cause instanceof Error ? cause.message : 'Не удалось загрузить страницу';
+          error = cause instanceof Error ? cause.message : 'Could not load the page';
         }
       }
       finally {
@@ -1637,6 +1637,6 @@ unmounting cancels the previous request.
   {loading}
   bind:current
   bind:pageSize
-  caption="Участники"
+  caption="Members"
 />
 ```

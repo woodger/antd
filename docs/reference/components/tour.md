@@ -11,10 +11,10 @@ Tour walks the user through a series of interface steps. [Props and snippets](..
 </script>
 
 <button type="button" bind:this={target} onclick={() => { open = true; }}>
-  Начать знакомство
+  Start tour
 </button>
 <Tour {open} onClose={() => { open = false; }}
-  steps={[{ title: 'Первый шаг', description: 'Описание', target: () => target }]} />
+  steps={[{ title: 'First step', description: 'Description', target: () => target }]} />
 ```
 
 Open and current are controlled props. The component reports changes through

@@ -13,7 +13,7 @@ callbacks, and data types are defined in the source. [Declarations](../../../src
 <Masonry {items} columns={{ xs: 1, sm: 2, md: 3 }} gutter={[12, 24]} fresh>
   {#snippet itemRender({ data, index, column })}
     <div style={`height:${data}px`}>
-      Карточка {index + 1}, колонка {column + 1}
+      Card {index + 1}, column {column + 1}
     </div>
   {/snippet}
 </Masonry>

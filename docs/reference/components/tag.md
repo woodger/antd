@@ -6,12 +6,12 @@
   let checked = $state(false);
 </script>
 
-<Tag color="success" variant="outlined">Готово</Tag>
-<Tag closeIcon closeLabel="Удалить обязательную метку"
-  onClose={event => event.preventDefault()}>Обязательная метка</Tag>
-<Tag href="#tag-help" closable>Ссылка с закрытием</Tag>
+<Tag color="success" variant="outlined">Done</Tag>
+<Tag closeIcon closeLabel="Remove required tag"
+  onClose={event => event.preventDefault()}>Required tag</Tag>
+<Tag href="#tag-help" closable>Closable link</Tag>
 <CheckableTag {checked} onChange={value => { checked = value; }}>
-  Показывать готовые задачи
+  Show completed tasks
 </CheckableTag>
 
 <ConfigProvider tag={{ variant: 'outlined', style: 'letter-spacing:1px' }}>

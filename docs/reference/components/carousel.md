@@ -10,8 +10,8 @@ Carousel displays slides with scrolling and autoplay. [Props, snippets, and refs
 </script>
 
 <Carousel arrows autoplay={{ dotDuration: true }} bind:ref={carousel}
-  children={['Первый слайд', 'Второй слайд', 'Третий слайд']} />
-<button type="button" onclick={() => carousel?.goTo(0)}>В начало</button>
+  children={['First slide', 'Second slide', 'Third slide']} />
+<button type="button" onclick={() => carousel?.goTo(0)}>First slide</button>
 ```
 
 Each entry in the children array is one logical slide. An opaque snippet also

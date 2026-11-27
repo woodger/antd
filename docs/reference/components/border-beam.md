@@ -15,7 +15,7 @@ The caller keeps its existing ref. React composes a ref by cloning its child.
 
 <BorderBeam target={container} count={3} duration={12} color="#36cfc9">
   <Card bind:nativeElement={container} title="Workspace overview">
-    Состояние задач и последних запусков
+    Task status and recent runs
   </Card>
 </BorderBeam>
 ```

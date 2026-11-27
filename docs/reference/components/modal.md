@@ -80,10 +80,10 @@ applies. [Ant Design 6.6.8 comparison](../../../tests/browser/drawer/drawer-cont
   let open = $state(false);
 </script>
 
-<button type="button" onclick={() => open = true}>Открыть редактор</button>
+<button type="button" onclick={() => open = true}>Open editor</button>
 <div id="modal-container"></div>
-<Modal bind:open title="Редактор" getContainer="#modal-container">
-  <input name="description" aria-label="Описание" />
+<Modal bind:open title="Editor" getContainer="#modal-container">
+  <input name="description" aria-label="Description" />
 </Modal>
 ```
 
@@ -329,14 +329,14 @@ with `handle.update({ zIndex })`.
   const modal = createModal();
 
   async function confirm() {
-    const accepted = await modal.confirm({ title: 'Продолжить?', content: 'Подтвердите действие.' });
+    const accepted = await modal.confirm({ title: 'Continue?', content: 'Confirm the action.' });
     if (accepted) {
-      // Выполнить подтверждённое действие.
+      // Carry out the confirmed action.
     }
   }
 </script>
 
-<Button onclick={confirm}>Продолжить</Button>
+<Button onclick={confirm}>Continue</Button>
 <ModalHolder {modal} />
 ```
 

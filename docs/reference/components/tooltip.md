@@ -8,8 +8,8 @@
   let tooltipRef = $state<TooltipRef>();
 </script>
 
-<Tooltip title="Сохранить изменения" bind:open bind:ref={tooltipRef} placement="top">
-  <Button>Сохранить</Button>
+<Tooltip title="Save changes" bind:open bind:ref={tooltipRef} placement="top">
+  <Button>Save</Button>
 </Tooltip>
 ```
 
@@ -213,8 +213,8 @@ pinned React UMD, each measured twice.
 
 ```svelte
 <Tooltip.UniqueProvider>
-  <Tooltip title="Скопировать ссылку"><button type="button">Скопировать</button></Tooltip>
-  <Tooltip title="Открыть в новом окне"><button type="button">Открыть</button></Tooltip>
+  <Tooltip title="Copy link"><button type="button">Copy</button></Tooltip>
+  <Tooltip title="Open in a new window"><button type="button">Open</button></Tooltip>
 </Tooltip.UniqueProvider>
 ```
 
@@ -354,9 +354,9 @@ flipping, as in rc-trigger. Boolean `false` disables both
 adjustments. [Tooltip.UniqueProvider](#shared-tooltip-for-multiple-triggers)
 
 ```svelte
-<Tooltip title="Подсказка" placement="topLeft"
+<Tooltip title="Tooltip" placement="topLeft"
   arrow={{ pointAtCenter: true }} autoAdjustOverflow={{ adjustX: 1, adjustY: 1 }}>
-  <button type="button">Подробнее</button>
+  <button type="button">Details</button>
 </Tooltip>
 ```
 
@@ -394,7 +394,7 @@ and `AvatarGroup.max.popover`.
 ```svelte
 <ConfigProvider tooltip={{ trigger: 'click', arrow: { pointAtCenter: true },
   class: 'help-popup', styles: { container: 'padding:12px' } }}>
-  <Tooltip title="Подсказка"><button type="button">Подробнее</button></Tooltip>
+  <Tooltip title="Tooltip"><button type="button">Details</button></Tooltip>
 </ConfigProvider>
 ```
 
@@ -463,8 +463,8 @@ aliases and algorithm. Existing native themes keep their
 palettes. The upstream theme uses original Ant Design tokens.
 
 ```svelte
-<Tooltip title="Сохранено" color="#fadb14">
-  <button type="button">Статус</button>
+<Tooltip title="Saved" color="#fadb14">
+  <button type="button">Status</button>
 </Tooltip>
 <Slider defaultValue={40} tooltip={{ color: 'purple' }} />
 ```
@@ -508,8 +508,8 @@ and existing native markers and hash remain part of the
 Svelte adaptation.
 
 ```svelte
-<Popover prefixCls="project-card" title="Настройки" content="Сохранены">
-  <button type="button">Показать</button>
+<Popover prefixCls="project-card" title="Settings" content="Saved">
+  <button type="button">Show</button>
 </Popover>
 ```
 

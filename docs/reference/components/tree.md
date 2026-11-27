@@ -5,11 +5,11 @@ Tree displays hierarchical data with expansion, selection, and checking.
 ```svelte
 <script lang="ts">
   import { Tree, type TreeKey, type TreeCheckedKeys } from '@woodger/antd';
-  const nodes = [{key:'docs',title:'Документы',children:[{key:'intro',title:'Введение'}]}];
+  const nodes = [{key:'docs',title:'Documents',children:[{key:'intro',title:'Introduction'}]}];
   let expanded = $state<TreeKey[]>(['docs']);
   let checked = $state<TreeKey[] | TreeCheckedKeys>([]);
 </script>
-<Tree treeData={nodes} aria-label="Документы" checkable expandedKeys={expanded}
+<Tree treeData={nodes} aria-label="Documents" checkable expandedKeys={expanded}
   checkedKeys={checked} onExpand={keys => { expanded = keys; }}
   onCheck={keys => { checked = keys; }} />
 ```
@@ -185,7 +185,7 @@ propagation, lazy loading, renderers, and DirectoryTree ranges.
     priority: number;
     items?: Entry[];
   }
-  const entries: Entry[] = [{ id: 0, caption: 'Документ', priority: 2 }];
+  const entries: Entry[] = [{ id: 0, caption: 'Document', priority: 2 }];
 </script>
 
 <Tree treeData={entries} fieldNames={{ key: 'id', title: 'caption', children: 'items' }}
@@ -457,8 +457,8 @@ number, and bigint lookup follows upstream string key matching.
     caption: string;
     items?: Item[];
   }
-  let items = $state.raw<Item[]>([{ id: 'root', caption: 'Корень', items: [
-    { id: 'leaf', caption: 'Лист' }
+  let items = $state.raw<Item[]>([{ id: 'root', caption: 'Root', items: [
+    { id: 'leaf', caption: 'Leaf' }
   ] }]);
   let fields = $state<TreeFieldNames>({ key: 'id', title: 'caption', children: 'items' });
   const model = createTree(() => items, { get fieldNames() { return fields; } });
@@ -501,13 +501,13 @@ replaces the default icon.
 <script lang="ts">
   import { DirectoryTree } from '@woodger/antd';
 
-  const nodes = [{ key: 'docs', title: 'Документы', children: [
-    { key: 'intro', title: 'Введение', isLeaf: true },
+  const nodes = [{ key: 'docs', title: 'Documents', children: [
+    { key: 'intro', title: 'Introduction', isLeaf: true },
     { key: 'api', title: 'API', isLeaf: true }
   ] }];
 </script>
 
-<DirectoryTree treeData={nodes} multiple defaultExpandAll aria-label="Файлы" />
+<DirectoryTree treeData={nodes} multiple defaultExpandAll aria-label="Files" />
 ```
 
 A regular click selects just the row, and another click keeps it

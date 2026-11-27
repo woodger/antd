@@ -2,8 +2,8 @@
 
 ```svelte
 <Row gutter={[16, 8]}>
-  <Col xs={24} md={12}>Первая колонка</Col>
-  <Col xs={24} md={12}>Вторая колонка</Col>
+  <Col xs={24} md={12}>First column</Col>
+  <Col xs={24} md={12}>Second column</Col>
 </Row>
 ```
 

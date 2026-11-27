@@ -6,10 +6,10 @@
 <script lang="ts">
   import { Segmented } from '@woodger/antd';
 
-  let period = $state('Неделя');
+  let period = $state('Week');
 </script>
 
-<Segmented options={['День', 'Неделя', 'Месяц']} bind:value={period} />
+<Segmented options={['Day', 'Week', 'Month']} bind:value={period} />
 ```
 
 Options are strings, numbers, or objects with value, label, icon, title, tooltip,

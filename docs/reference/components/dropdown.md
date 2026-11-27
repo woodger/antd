@@ -13,15 +13,15 @@
   trigger={['click']}
   menu={{
     items: [
-      { key: 'details', label: 'Открыть карточку' },
-      { key: 'export', label: 'Экспорт', disabled: true },
+      { key: 'details', label: 'View details' },
+      { key: 'export', label: 'Export', disabled: true },
       { key: 'divider', type: 'divider' },
-      { key: 'archive', label: 'В архив', danger: true }
+      { key: 'archive', label: 'Move to archive', danger: true }
     ],
     onClick: ({ key }) => { lastAction = key; }
   }}
 >
-  <Button>Действия</Button>
+  <Button>Actions</Button>
 </Dropdown>
 <output>{lastAction}</output>
 ```

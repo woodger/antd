@@ -8,9 +8,9 @@ the last item just a title.
   import { Breadcrumb } from '@woodger/antd';
 
   const items = [
-    { title: 'Проекты', href: '/projects' },
-    { title: 'Команда', href: '/projects/team' },
-    { title: 'Участники' }
+    { title: 'Projects', href: '/projects' },
+    { title: 'Team', href: '/projects/team' },
+    { title: 'Members' }
   ];
 </script>
 

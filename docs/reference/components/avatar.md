@@ -5,11 +5,11 @@
   import { Avatar, Badge, Image } from '@woodger/antd';
 </script>
 
-<Avatar src="/anna.jpg" alt="Анна Новикова">АН</Avatar>
-<Avatar shape="square" size={48} alt="Дмитрий Орлов">ДО</Avatar>
-<Badge count={3}><Avatar alt="Вера Смирнова" size="large">ВС</Avatar></Badge>
-{#snippet photo()}<Image src="/anna.jpg" alt="Фото Анны" />{/snippet}
-<Avatar src={photo} size={64} alt="Анна Новикова" />
+<Avatar src="/anna.jpg" alt="Anna Novikova">AN</Avatar>
+<Avatar shape="square" size={48} alt="Dmitry Orlov">DO</Avatar>
+<Badge count={3}><Avatar alt="Vera Smirnova" size="large">VS</Avatar></Badge>
+{#snippet photo()}<Image src="/anna.jpg" alt="Photo of Anna" />{/snippet}
+<Avatar src={photo} size={64} alt="Anna Novikova" />
 ```
 
 Avatar displays an image, icon, or member initials. `src` accepts a string

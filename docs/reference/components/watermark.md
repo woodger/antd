@@ -7,7 +7,7 @@ Watermark overlays repeating text or an image on its content.
   import { Watermark } from '@woodger/antd';
 </script>
 <Watermark content={['Ant Design', { text: 'Svelte 5', font: { fontSize: 12 } }]}>
-  <p>Содержимое страницы</p>
+  <p>Page content</p>
 </Watermark>
 ```
 

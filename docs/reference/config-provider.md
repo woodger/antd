@@ -10,7 +10,7 @@ local `prefixCls` specifies its own class.
 </script>
 
 <ConfigProvider prefixCls="suite">
-  <Button>Сохранить</Button>
+  <Button>Save</Button>
 </ConfigProvider>
 ```
 

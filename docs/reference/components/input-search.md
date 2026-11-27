@@ -9,9 +9,9 @@ InputSearch combines Input and a search button in SpaceCompact.
   let query = $state('');
 </script>
 
-<InputSearch bind:value={query} allowClear enterButton="Найти"
+<InputSearch bind:value={query} allowClear enterButton="Search"
   onSearch={(value, event, info) => console.log(value, info?.source)}
-  aria-label="Поиск" />
+  aria-label="Search" />
 ```
 
 The button and Enter call onSearch with the current native value and source=input.
@@ -34,9 +34,9 @@ content. Provide a custom button as a snippet with InputSearchButtonContext.
 </script>
 
 {#snippet searchButton(context: InputSearchButtonContext)}
-  <Button {...context.getButtonProps({ class: 'custom-search' })}>Найти</Button>
+  <Button {...context.getButtonProps({ class: 'custom-search' })}>Search</Button>
 {/snippet}
-<InputSearch enterButton={searchButton} aria-label="Поиск" />
+<InputSearch enterButton={searchButton} aria-label="Search" />
 ```
 
 The snippet replaces the entire button. GetButtonProps preserves the button's own

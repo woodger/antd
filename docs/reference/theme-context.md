@@ -19,7 +19,7 @@ they need the primary color.
 </script>
 
 <ConfigProvider theme={{ token: { colorPrimary: '#0f766e' } }}>
-  <Button type="primary">Сохранить</Button>
+  <Button type="primary">Save</Button>
 </ConfigProvider>
 ```
 
@@ -40,8 +40,8 @@ button to 24 pixels. The adjacent field keeps its own padding.
 </script>
 
 <ConfigProvider theme={{ components: { Button: { paddingInline: 24 } } }}>
-  <Input aria-label="Название проекта" />
-  <Button>Сохранить</Button>
+  <Input aria-label="Project name" />
+  <Button>Save</Button>
 </ConfigProvider>
 ```
 
@@ -62,10 +62,10 @@ A nested provider merges tokens by name. Both buttons in the example have a
 </script>
 
 <ConfigProvider theme={{ token: { colorPrimary: '#0f766e', borderRadius: 10 } }}>
-  <Button type="primary">Сохранить</Button>
+  <Button type="primary">Save</Button>
 
   <ConfigProvider theme={{ token: { colorPrimary: '#722ed1' } }}>
-    <Button type="primary">Опубликовать</Button>
+    <Button type="primary">Publish</Button>
   </ConfigProvider>
 </ConfigProvider>
 ```
@@ -98,7 +98,7 @@ new primary color.
 </script>
 
 <label>
-  Цвет акцента
+  Accent color
   <input type="color" bind:value={primary} />
 </label>
 
@@ -117,7 +117,7 @@ new primary color.
 </script>
 
 <p style:color={current.token.colorPrimary}>
-  Основной цвет: {current.token.colorPrimary}
+  Primary color: {current.token.colorPrimary}
 </p>
 ```
 

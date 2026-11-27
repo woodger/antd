@@ -6,10 +6,10 @@
   let { edit }: { edit: () => void } = $props();
 </script>
 
-<Result status="success" title="Заявка отправлена"
-  subTitle="Данные сохранены." headingLevel={2}>
-  {#snippet extra()}<Button onclick={edit}>Изменить заявку</Button>{/snippet}
-  <p>Номер заявки: 42.</p>
+<Result status="success" title="Application submitted"
+  subTitle="Your data has been saved." headingLevel={2}>
+  {#snippet extra()}<Button onclick={edit}>Edit application</Button>{/snippet}
+  <p>Application number 42.</p>
 </Result>
 ```
 

@@ -10,8 +10,8 @@ operation and passes progress updates.
   let percent = $state(42.5);
 </script>
 
-<Progress {percent} aria-label="Подготовка отчёта" />
-<Progress type="circle" {percent} size={120} aria-label="Проверка файлов" />
+<Progress {percent} aria-label="Preparing report" />
+<Progress type="circle" {percent} size={120} aria-label="Checking files" />
 ```
 
 `type` defaults to `line` and also supports `circle` and `dashboard`.

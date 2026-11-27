@@ -198,14 +198,14 @@ native compact styling preserves outer container geometry.
   import { Select } from '@woodger/antd';
 
   const options = [
-    { value: 0, label: 'Разработка' },
-    { value: 1, label: 'Дизайн' },
-    { value: 2, label: 'Архив', disabled: true }
+    { value: 0, label: 'Engineering' },
+    { value: 1, label: 'Design' },
+    { value: 2, label: 'Archive', disabled: true }
   ];
   let teams = $state<number[]>([0]);
 </script>
 
-<label for="teams">Команды</label>
+<label for="teams">Teams</label>
 <Select id="teams" mode="multiple" {options} bind:value={teams} name="teams" allowClear />
 ```
 
@@ -352,7 +352,7 @@ untouched.
 </script>
 
 <Select {options} bind:open />
-<!-- Владелец может принимать только разрешённые запросы. -->
+<!-- The owner can accept only permitted requests. -->
 <Select {options} {open} onOpenChange={next => { open = next; }} />
 ```
 
@@ -446,13 +446,13 @@ Snippet receiving the original menu as an argument.
 
 {#snippet popup(originMenu: Snippet)}
   <section>
-    <header>Роли</header>
+    <header>Roles</header>
     {@render originMenu()}
-    <footer>Дополнительная информация</footer>
+    <footer>Additional information</footer>
   </section>
 {/snippet}
 
-<Select {options} prefix="Роль" popupRender={() => popup}
+<Select {options} prefix="Role" popupRender={() => popup}
   classNames={({ props }) => ({ root: props.disabled ? 'blocked' : 'available' })}
   styles={{ input: { color: 'navy' }, popup: { root: { maxHeight: 320 } } }} />
 ```
@@ -544,7 +544,7 @@ directly.
 </script>
 {#snippet arrow()}<span aria-hidden="true">⌄</span>{/snippet}
 <Select {options} bind:value suffix={(info: SelectSuffixInfo) => info.loading ? '…' : arrow}
-  allowClear={{ clearIcon: '×', label: 'Очистить выбор' }} aria-label="Значение" />
+  allowClear={{ clearIcon: '×', label: 'Clear selection' }} aria-label="Value" />
 ```
 
 A suffix producer receives one new object with its own
@@ -629,7 +629,7 @@ are exported. DOM type parameters follow the existing parameters.
   {@const { value, ...rest } = attributes}
   <textarea {...rest} {value} rows="3" {@attach register}></textarea>
 {/snippet}
-<Select {options} components={{ input: editor }} aria-label="Значение" />
+<Select {options} components={{ input: editor }} aria-label="Value" />
 ```
 
 Apply the supplied attributes and register the actual DOM through
@@ -1133,7 +1133,7 @@ removal, Svelte cancels the previous request through
       const response = await fetch(`/api/members?q=${encodeURIComponent(text)}`, { signal });
 
       if (!response.ok) {
-        throw new Error(`Ошибка поиска (HTTP ${response.status})`);
+        throw new Error(`Search failed (HTTP ${response.status})`);
       }
 
       const matches = await response.json();
@@ -1144,7 +1144,7 @@ removal, Svelte cancels the previous request through
     }
     catch (cause) {
       if (!signal.aborted) {
-        error = cause instanceof Error ? cause.message : 'Не удалось загрузить список';
+        error = cause instanceof Error ? cause.message : 'Could not load the list';
       }
     }
     finally {
@@ -1160,7 +1160,7 @@ removal, Svelte cancels the previous request through
   {loading}
   showSearch={{ searchValue: query, onSearch: text => { query = text; }, filterOption: false }}
   status={error ? 'error' : undefined}
-  aria-label="Поиск сотрудника"
+  aria-label="Find an employee"
 />
 {#if error}
   <p role="alert">{error}</p>

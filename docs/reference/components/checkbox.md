@@ -9,7 +9,7 @@
 </script>
 
 <Checkbox bind:checked bind:indeterminate name="notifications" value="enabled">
-  Получать уведомления
+  Receive notifications
 </Checkbox>
 ```
 

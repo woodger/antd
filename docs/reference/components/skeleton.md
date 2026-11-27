@@ -7,8 +7,8 @@
   let loading = $state(true);
 </script>
 
-<Skeleton {loading} active avatar paragraph={{ rows: 3 }} aria-label="Профиль участника">
-  <p>Анна — разработчик.</p>
+<Skeleton {loading} active avatar paragraph={{ rows: 3 }} aria-label="Member profile">
+  <p>Anna is a developer.</p>
 </Skeleton>
 ```
 

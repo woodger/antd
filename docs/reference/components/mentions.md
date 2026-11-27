@@ -10,7 +10,7 @@ the owner's layer. [Owner layer](../theme-context.md#layering-nested-panels)
 </script>
 <Mentions {value} options={[{ value: 'alice', label: 'Alice' }]}
   onChange={next => { value = next; }} allowClear
-  autoSize={{ minRows: 2, maxRows: 5 }} aria-label="Комментарий" />
+  autoSize={{ minRows: 2, maxRows: 5 }} aria-label="Comment" />
 <p>{getMentions(value).map(item => item.value).join(', ')}</p>
 ```
 
@@ -160,11 +160,11 @@ focus, and textarea selection.
   import { Mentions, type MentionsPopupMenu, type MentionsPopupRenderInfo } from '@woodger/antd';
 </script>
 {#snippet popup(menu: MentionsPopupMenu, info: MentionsPopupRenderInfo)}
-  <strong>Участники</strong>
+  <strong>Members</strong>
   {@render menu({ options: info.options.filter(option => !option.disabled) })}
 {/snippet}
 <Mentions options={[{ value: 'alice', label: 'Alice' }]} popupRender={popup}
-  getPopupContainer={() => document.body} aria-label="Комментарий" />
+  getPopupContainer={() => document.body} aria-label="Comment" />
 ```
 
 [React measurements](../../../tests/browser/fixtures/ant-design-mentions-menu-reference.json) · [Browser tests](../../../tests/browser/mentions/mentions-menu.spec.ts) ·

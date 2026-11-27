@@ -16,7 +16,7 @@ browser. The shared GetTargetContainer type is exported.
 </script>
 <div bind:this={container} style="height:200px;overflow:auto">
   <Affix target={() => container ?? null} offsetTop={8}>
-    <Button>Действие</Button>
+    <Button>Do something</Button>
   </Affix>
   <div style="height:600px"></div>
 </div>

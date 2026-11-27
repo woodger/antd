@@ -9,10 +9,10 @@ a Svelte snippet for markup. [RenderEmptyContent return types](../../src/lib/typ
   import { ConfigProvider, Select } from '@woodger/antd';
 </script>
 
-{#snippet noData()}<p>Нет подходящих записей.</p>{/snippet}
+{#snippet noData()}<p>No matching records.</p>{/snippet}
 
 <ConfigProvider renderEmpty={() => noData}>
-  <Select options={[]} aria-label="Участник" />
+  <Select options={[]} aria-label="Member" />
 </ConfigProvider>
 ```
 

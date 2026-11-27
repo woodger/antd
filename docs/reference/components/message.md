@@ -10,22 +10,22 @@ independent queues. Each instance supports one mounted MessageHolder.
   const message = createMessage({ maxCount: 3 });
 
   async function save() {
-    const close = message.loading({ key: 'save', content: 'Сохраняем…', duration: 0 });
+    const close = message.loading({ key: 'save', content: 'Saving…', duration: 0 });
     try {
       const response = await fetch('/api/settings', { method: 'POST' });
       if (!response.ok) throw new Error('Save failed');
-      message.success({ key: 'save', content: 'Настройки сохранены.' });
+      message.success({ key: 'save', content: 'Settings saved.' });
     } catch {
-      message.error({ key: 'save', content: 'Не удалось сохранить настройки.' });
+      message.error({ key: 'save', content: 'Could not save settings.' });
     }
-    // close() закроет обновлённое сообщение; await дождётся его удаления.
+    // close() closes the updated message. Await its removal.
     const closed = await close;
-    if (closed) console.log('Сообщение удалено');
+    if (closed) console.log('Message removed');
   }
 </script>
 
 <MessageHolder {message} />
-<Button onclick={save}>Сохранить</Button>
+<Button onclick={save}>Save</Button>
 ```
 
 `open` accepts `MessageConfig` with required `content`. `info`,

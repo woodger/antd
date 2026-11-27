@@ -9,7 +9,7 @@
 </script>
 
 <Pagination total={137} bind:current bind:pageSize>
-  {#snippet showTotal(total, range)}{range[0]}–{range[1]} из {total}{/snippet}
+  {#snippet showTotal(total, range)}{range[0]}–{range[1]} of {total}{/snippet}
 </Pagination>
 ```
 

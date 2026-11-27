@@ -6,7 +6,7 @@ calculated across the full tree, including nodes hidden by filters.
 ```svelte
 <script lang="ts">
   import { TreeSelect } from '@woodger/antd';
-  const data = [{value:'docs',title:'Документы',children:[{value:'intro',title:'Введение'}]}];
+  const data = [{value:'docs',title:'Documents',children:[{value:'intro',title:'Introduction'}]}];
   let value = $state<string[]>([]);
 </script>
 <TreeSelect treeData={data} {value} treeCheckable treeDefaultExpandAll
@@ -42,8 +42,8 @@ array. Simple mode applies to `treeData`.
 
 ```svelte
 <TreeSelect defaultValue={0} treeDefaultExpandAll treeIcon>
-  <TreeSelect.TreeNode value="docs" title="Документы">
-    <TreeSelect.TreeNode value={0} title="Введение" icon="📄" />
+  <TreeSelect.TreeNode value="docs" title="Documents">
+    <TreeSelect.TreeNode value={0} title="Introduction" icon="📄" />
   </TreeSelect.TreeNode>
 </TreeSelect>
 ```
@@ -538,7 +538,7 @@ own disabled state through props.
 </script>
 
 {#snippet response({ attributes, register }: TreeSelectRootContext<HTMLButtonElement>)}
-  <button {...attributes} {@attach register}>Выбрать узел</button>
+  <button {...attributes} {@attach register}>Select a node</button>
 {/snippet}
 <TreeSelect treeData={[{ value: 'a', title: 'Alpha' }]}
   components={{ root: { render: response, props: { type: 'button', class: 'my-trigger' } } }} />

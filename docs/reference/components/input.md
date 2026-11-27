@@ -8,7 +8,7 @@ Input is a text field with a value binding, prefix, suffix, and clear control.
   let value = $state('example');
 </script>
 <Input bind:value prefix="https://" suffix=".org" allowClear
-  count={{ show: true, max: 24 }} variant="filled" aria-label="Адрес" />
+  count={{ show: true, max: 24 }} variant="filled" aria-label="Address" />
 ```
 
 The string bind:value and defaultValue, onValueChange, native oninput, onchange,

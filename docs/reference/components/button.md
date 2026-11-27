@@ -10,9 +10,9 @@ and with href gets HTMLAnchorElement. OnClick is an alias, with native onclick
 taking precedence. Bind:nativeElement exposes the actual button or anchor.
 
 ```svelte
-<Button color="purple" variant="filled" iconPlacement="end">Действие</Button>
-<Button href="#details">К подробностям</Button>
-<SpaceCompact size="small"><Button>Назад</Button><Button>Вперёд</Button></SpaceCompact>
+<Button color="purple" variant="filled" iconPlacement="end">Do something</Button>
+<Button href="#details">View details</Button>
+<SpaceCompact size="small"><Button>Back</Button><Button>Next</Button></SpaceCompact>
 ```
 
 A complete color and variant pair takes precedence over type and danger.

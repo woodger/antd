@@ -8,7 +8,7 @@ group previews.
   import { Image } from '@woodger/antd';
   let open = $state(false);
 </script>
-<Image src="/photo.jpg" alt="Фотография" width={240}
+<Image src="/photo.jpg" alt="Photo" width={240}
   preview={{ open, onOpenChange: next => { open = next; } }} />
 ```
 

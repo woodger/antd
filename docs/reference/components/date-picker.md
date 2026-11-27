@@ -12,7 +12,7 @@ displayed string.
   import { DatePicker } from '@woodger/antd';
   let value = $state<Dayjs | null>(dayjs('2026-10-29T10:30:15'));
 </script>
-<label for="when">Дата и время</label>
+<label for="when">Date and time</label>
 <DatePicker id="when" name="when" {value} showTime onChange={next => { value = next; }} />
 ```
 
@@ -331,7 +331,7 @@ hooks receive focus on normal mouse press.
   {/snippet}
 
   {#snippet renderExtraFooter(mode)}
-    <small>Режим: {mode}</small>
+    <small>Mode: {mode}</small>
   {/snippet}
 </DatePicker>
 ```
@@ -508,11 +508,11 @@ The `datetime` key maps to public mode `date`.
 {#snippet month(context: DatePickerPanelContext)}
   {@const date = context.pickerValue.startOf('month')}
   <button type="button" onclick={() => context.onPickerValueChange(date.add(1, 'month'))}>
-    Следующий месяц
+    Next month
   </button>
   <button type="button" disabled={context.disabledDate(date, { type: 'month' })}
     onclick={() => context.onSelect(date)}>
-    Выбрать {date.format('YYYY-MM')}
+    Select {date.format('YYYY-MM')}
   </button>
 {/snippet}
 

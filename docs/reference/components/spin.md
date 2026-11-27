@@ -5,12 +5,12 @@
   import { Button, Input, Spin } from '@woodger/antd';
 
   let loading = $state(false);
-  let draft = $state<string | undefined>('Анна');
+  let draft = $state<string | undefined>('Anna');
 </script>
 
-<Button onclick={() => { loading = !loading; }}>Переключить загрузку</Button>
-<Spin spinning={loading} delay={200} description="Обновляем профиль…" aria-label="Профиль">
-  <label for="profile-name">Имя</label>
+<Button onclick={() => { loading = !loading; }}>Toggle loading</Button>
+<Spin spinning={loading} delay={200} description="Updating profile…" aria-label="Profile">
+  <label for="profile-name">Name</label>
   <Input id="profile-name" bind:value={draft} />
 </Spin>
 ```

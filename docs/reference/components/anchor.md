@@ -7,7 +7,7 @@ without additional keyboard handling.
 
 ```svelte
 <Anchor affix={false} showInkInFixed items={[
-  { key: 'intro', href: '#intro', title: 'Введение' },
+  { key: 'intro', href: '#intro', title: 'Introduction' },
   { key: 'api', href: '#api', title: 'API', targetOffset: 48 }
 ]} />
 ```

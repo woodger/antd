@@ -1,7 +1,7 @@
 # Divider
 
 ```svelte
-<Divider titlePlacement="start" variant="dashed">Раздел проекта</Divider>
+<Divider titlePlacement="start" variant="dashed">Project section</Divider>
 <Divider orientation="vertical" />
 ```
 

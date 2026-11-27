@@ -8,12 +8,12 @@ action beside the title.
   import { Card } from '@woodger/antd';
 </script>
 
-<Card title="Команда">
+<Card title="Team">
   {#snippet extra()}
-    <a href="/team">Все участники</a>
+    <a href="/team">All members</a>
   {/snippet}
 
-  <p>Ответственная за проект — Анна.</p>
+  <p>Anna is responsible for the project.</p>
 </Card>
 ```
 

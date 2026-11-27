@@ -7,12 +7,12 @@
   let hasRecords = $state(false);
 </script>
 
-<Button onclick={() => { hasRecords = false; }}>Очистить список</Button>
+<Button onclick={() => { hasRecords = false; }}>Clear the list</Button>
 {#if hasRecords}
-  <p>Первый участник создан.</p>
+  <p>The first member has been added.</p>
 {:else}
-  <Empty image="simple" description="Участников пока нет.">
-    <Button type="primary" onclick={() => { hasRecords = true; }}>Создать участника</Button>
+  <Empty image="simple" description="No members yet.">
+    <Button type="primary" onclick={() => { hasRecords = true; }}>Add a member</Button>
   </Empty>
 {/if}
 ```
@@ -35,8 +35,8 @@ SVGs receive the upstream title. The image container is aria-hidden and inert,
 keeping its contents out of the accessibility tree, Tab order, and interaction.
 
 Description accepts a scalar or snippet. Undefined uses Locale.empty.description.
-RuRU supplies `Нет данных` and enUS supplies `No data`. Missing fields fall back
-to ruRU. False, null, and the empty string hide the description without
+The `ruRU` locale supplies `Нет данных` and `enUS` supplies `No data`. Missing
+fields fall back to `ruRU`. False, null, and the empty string hide the description without
 fallback. Zero renders as text and true keeps an empty description div, as in
 upstream. Strings are escaped. Generic locale.emptyText for Select and other
 components keeps its existing meaning and values.

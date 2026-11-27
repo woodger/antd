@@ -9,11 +9,11 @@
 
 <Badge count={unread}>
   {#snippet children({ descriptionId })}
-    <Button aria-describedby={descriptionId}>Уведомления</Button>
+    <Button aria-describedby={descriptionId}>Notifications</Button>
   {/snippet}
 </Badge>
 <Badge count={0} showZero size="small" />
-<Badge status="processing" text="Сервис работает" />
+<Badge status="processing" text="Service running" />
 ```
 
 Badge accepts `count` and an optional children Snippet. `count`
@@ -77,8 +77,8 @@ is `?fixture=badge-zoom`. [17 UMD sequences, 87 frames, and SSR](../../../tests/
   import { Badge, type BadgeCountContext } from '@woodger/antd';
 </script>
 
-{#snippet clock(attributes: BadgeCountContext)}<span {...attributes} aria-label="Ожидает ответа">◷</span>{/snippet}
-<Badge count={clock}><a href="/messages">Сообщения</a></Badge>
+{#snippet clock(attributes: BadgeCountContext)}<span {...attributes} aria-label="Waiting for a reply">◷</span>{/snippet}
+<Badge count={clock}><a href="/messages">Messages</a></Badge>
 ```
 
 A count Snippet receives `BadgeCountContext` with `class` and

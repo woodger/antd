@@ -27,13 +27,13 @@ SSR request its own state. The profile in these examples stores a name and city.
 import { createForm } from '@woodger/antd';
 
 const form = createForm({
-  initialValues: { profile: { name: 'Анна', city: 'Томск' } }
+  initialValues: { profile: { name: 'Anna', city: 'Tomsk' } }
 });
 
-form.setFieldValue(['profile', 'name'], 'Ирина');
-form.setFieldsValue({ profile: { city: 'Омск' } });
+form.setFieldValue(['profile', 'name'], 'Irina');
+form.setFieldsValue({ profile: { city: 'Omsk' } });
 
-form.getFieldValue('profile'); // { name: 'Ирина', city: 'Омск' }
+form.getFieldValue('profile'); // { name: 'Irina', city: 'Omsk' }
 ```
 
 `setFieldValue(name, value)` replaces the value at the specified path.
@@ -116,10 +116,10 @@ submission. A one-letter name produces a warning and still allows saving.
 ```svelte
 <FormItem
   name={['profile', 'name']}
-  label="Имя"
+  label="Name"
   rules={[
-    { required: true, message: 'Введите имя.' },
-    { min: 2, warningOnly: true, message: 'Проверьте написание короткого имени.' }
+    { required: true, message: 'Enter a name.' },
+    { min: 2, warningOnly: true, message: 'Check the spelling of this short name.' }
   ]}
 >
   <Input
@@ -229,11 +229,11 @@ To undo an edit to the name and keep the new city, pass a list with one path.
 The outer brackets describe the field list and the inner brackets the name path.
 
 ```ts
-form.setFieldsValue({ profile: { name: 'Ирина', city: 'Омск' } });
+form.setFieldsValue({ profile: { name: 'Irina', city: 'Omsk' } });
 
 form.resetFields([['profile', 'name']]);
 
-form.getFieldValue('profile'); // { name: 'Анна', city: 'Омск' }
+form.getFieldValue('profile'); // { name: 'Anna', city: 'Omsk' }
 ```
 
 That reset also clears touched state and errors for the name field.
@@ -278,18 +278,18 @@ wrapper and passes fields, operations, and list errors to children.
     <FormList name="users">
       {#snippet children(fields, { add, remove }, meta)}
         {#each fields as field (field.key)}
-          <FormItem name={[field.name, 'name']} label="Имя" rules={[{ required: true }]}>
+          <FormItem name={[field.name, 'name']} label="Name" rules={[{ required: true }]}>
             <Input
               value={form.getFieldValue(['users', field.name, 'name']) ?? ''}
               onValueChange={(value) => form.setFieldValue(['users', field.name, 'name'], value)}
             />
           </FormItem>
-          <button type="button" onclick={() => remove(field.name)}>Удалить</button>
+          <button type="button" onclick={() => remove(field.name)}>Delete</button>
         {/each}
         <div class="ant-form-item">
           <FormErrorList errors={meta.errors} warnings={meta.warnings} />
         </div>
-        <button type="button" onclick={() => add({ name: '' })}>Добавить</button>
+        <button type="button" onclick={() => add({ name: '' })}>Add</button>
       {/snippet}
     </FormList>
   </Form>
@@ -407,7 +407,7 @@ const form = createForm({
         const password = form.getFieldValue('password');
 
         return {
-          validator: (value) => value === password ? undefined : 'Пароли различаются.'
+          validator: (value) => value === password ? undefined : 'The passwords do not match.'
         };
       }
     ]
@@ -438,7 +438,7 @@ const form = createForm({
       {
         type: 'object',
         fields: {
-          name: { required: true, message: 'Введите имя.' }
+          name: { required: true, message: 'Enter a name.' }
         }
       }
     ]
@@ -486,9 +486,9 @@ Without FormItem, the path is the label.
 ```svelte
 <FormItem
   name="title"
-  label="Заголовок"
-  messageVariables={{ min: 'трёх' }}
-  rules={[{ min: 3, message: '${label}: минимум ${min} символа.' }]}
+  label="Title"
+  messageVariables={{ min: 'three' }}
+  rules={[{ min: 3, message: '${label} needs at least ${min} characters.' }]}
 >
   <Input
     value={form.values.title}
@@ -513,8 +513,8 @@ ConfigProvider's form setting, including {}, replaces the parent setting.
 Missing templates use the Russian defaults, including with built-in ruRU and enUS.
 
 ```svelte
-<Form {form} validateMessages={{ string: { min: '${label}: минимум ${min} символа.' } }}>
-  <FormItem name="title" label="Заголовок" rules={[{ min: 3 }]}>
+<Form {form} validateMessages={{ string: { min: '${label} needs at least ${min} characters.' } }}>
+  <FormItem name="title" label="Title" rules={[{ min: 3 }]}>
     <Input
       value={form.values.title}
       onValueChange={(value) => form.setFieldValue('title', value)}
@@ -636,8 +636,8 @@ validating flag. IsFieldValidating(name) checks one field.
 stores a name and city, and the page only renders the name field.
 
 ```ts
-form.getFieldsValue();     // { profile: { name: 'Ирина' } }
-form.getFieldsValue(true); // { profile: { name: 'Ирина', city: 'Омск' } }
+form.getFieldsValue();     // { profile: { name: 'Irina' } }
+form.getFieldsValue(true); // { profile: { name: 'Irina', city: 'Omsk' } }
 ```
 
 A list of paths selects those fields and their descendants.
@@ -671,7 +671,7 @@ that a profile name is taken, pass its message to the registered field. The
 entered name stays in the form for the user to fix.
 
 ```ts
-form.setFields([{ name: ['profile', 'name'], errors: ['Это имя уже занято.'] }]);
+form.setFields([{ name: ['profile', 'name'], errors: ['This name is already taken.'] }]);
 ```
 
 An empty message array or explicit undefined clears errors and warnings.

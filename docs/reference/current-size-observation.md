@@ -10,8 +10,8 @@ is larger than the adjacent field.
 </script>
 
 <ConfigProvider componentSize="small">
-  <Input aria-label="Название проекта" />
-  <Button size="large">Создать проект</Button>
+  <Input aria-label="Project name" />
+  <Button size="large">Create project</Button>
 </ConfigProvider>
 ```
 

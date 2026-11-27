@@ -13,7 +13,7 @@ Set the effect through `ConfigProvider.wave`. [WaveConfig and WaveEffectInfo](..
 </script>
 
 <ConfigProvider wave={{ triggerType: 'pointerdown' }}>
-  <Button type="primary">Действие</Button>
+  <Button type="primary">Do something</Button>
 </ConfigProvider>
 ```
 

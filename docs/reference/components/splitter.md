@@ -8,8 +8,8 @@ styling. [Props and callbacks](../../../src/lib/splitter/splitter.types.ts)
   import { Splitter } from '@woodger/antd';
 </script>
 
-{#snippet navigation()}<nav>Разделы</nav>{/snippet}
-{#snippet content()}<article>Содержимое</article>{/snippet}
+{#snippet navigation()}<nav>Sections</nav>{/snippet}
+{#snippet content()}<article>Content</article>{/snippet}
 
 <Splitter
   style="height:320px"

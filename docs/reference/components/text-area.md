@@ -28,7 +28,7 @@ clear use the upstream ant-input-affix-wrapper and ant-input-textarea-affix-wrap
   import { TextArea } from '@woodger/antd';
   let description = $state('');
 </script>
-<label for="description">Описание</label>
+<label for="description">Description</label>
 <TextArea id="description" name="description" rows={4} maxlength={2000} required bind:value={description} />
 ```
 

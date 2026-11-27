@@ -13,10 +13,10 @@ changes leave the callback untouched.
 </script>
 
 <Switch id="notifications" bind:checked={notifications} name="notifications">
-  {#snippet checkedChildren()}Вкл{/snippet}
-  {#snippet unCheckedChildren()}Выкл{/snippet}
+  {#snippet checkedChildren()}On{/snippet}
+  {#snippet unCheckedChildren()}Off{/snippet}
 </Switch>
-<label for="notifications">Уведомления</label>
+<label for="notifications">Notifications</label>
 ```
 
 Switch renders a button with type=button, role=switch, and aria-checked.

@@ -5,14 +5,14 @@
   import { AvatarGroup, type AvatarGroupItem } from '@woodger/antd';
 
   const members: AvatarGroupItem[] = [
-    { key: 'anna', label: 'Анна Новикова', text: 'АН', src: '/anna.jpg' },
-    { key: 'dmitry', label: 'Дмитрий Орлов', text: 'ДО' },
-    { key: 'vera', label: 'Вера Смирнова', text: 'ВС', size: 'small' }
+    { key: 'anna', label: 'Anna Novikova', text: 'AN', src: '/anna.jpg' },
+    { key: 'dmitry', label: 'Dmitry Orlov', text: 'DO' },
+    { key: 'vera', label: 'Vera Smirnova', text: 'VS', size: 'small' }
   ];
 </script>
 
 <AvatarGroup items={members} size="large" max={{ count: 2 }}
-  aria-label="Команда проекта" />
+  aria-label="Project team" />
 ```
 
 AvatarGroup is a separate Svelte export for `Avatar.Group`. `items`
@@ -97,17 +97,17 @@ in place. After a rejected open, the next click can request it again.
 
   let open = $state(false);
   const members = [
-    { key: 'anna', label: 'Анна', text: 'АН' },
-    { key: 'vera', label: 'Вера', text: 'ВС' }
+    { key: 'anna', label: 'Anna', text: 'AN' },
+    { key: 'vera', label: 'Vera', text: 'VS' }
   ];
 </script>
 
-{#snippet details()}<input aria-label="Комментарий команды" value="Черновик" />{/snippet}
+{#snippet details()}<input aria-label="Team comment" value="Draft" />{/snippet}
 
 <AvatarGroup items={members} max={{
   count: 1,
   popover: {
-    title: 'Команда',
+    title: 'Team',
     content: details,
     open,
     onOpenChange: next => { open = next; },
