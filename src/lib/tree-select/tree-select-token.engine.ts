@@ -1,0 +1,42 @@
+// Defines the search text TreeSelect after entering, paste and Enter. Breaking affects the opening
+// of the list. Ant Design 6.6.8 / @rc-component/select 1.10.1; MIT, vendor/LICENSE.rc-select.
+import { splitSelectTokens } from '../select/select-token.engine';
+import type { SelectTokenSeparators } from '../select/select.types';
+
+/** TreeSelect tokenization affects search and visibility; it does not select nodes. */
+export type TreeSelectTokenSeparators = SelectTokenSeparators;
+
+// Recognizes a string separator or custom function to which Enter is transferred.
+export function treeSelectTokenWithEnter(separators?: TreeSelectTokenSeparators) {
+  return typeof separators === 'function'
+    || Boolean(separators?.some(token => token === '\n' || token === '\r\n'));
+}
+
+/** Restores the browser-normalized pasted substring for newline tokenization. */
+export function treeSelectPastedSearch(
+  text: string,
+  pasted: string | undefined,
+  separators?: TreeSelectTokenSeparators
+) {
+  if (!pasted || !treeSelectTokenWithEnter(separators) || !/[\r\n]/.test(pasted)) {
+    return text;
+  }
+  const normalized = pasted.replace(/[\r\n]+$/, '').replace(/\r\n/g, ' ').replace(/[\r\n]/g, ' ');
+  return text.replace(normalized, pasted);
+}
+
+// Cleans the result when partitioned and informs whether a onSearch notification is required.
+export function treeSelectTokenSearch(text: string, options: {
+  previousSearch: string;
+  separators?: TreeSelectTokenSeparators;
+  composing?: boolean;
+  fromTyping?: boolean;
+}) {
+  const { previousSearch, separators, composing, fromTyping = true } = options;
+  // rc-tree-select consumes maxCount and does not forward it to BaseSelect search.
+  const words = composing ? null : splitSelectTokens(text, separators);
+  const split = words !== null;
+  const search = split ? '' : text;
+  return { search, notifySearch: search !== previousSearch, split,
+    open: split ? false : text && fromTyping ? true : undefined };
+}

@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import Input from '../input/Input.svelte';
   import InputNumber from '../input-number/InputNumber.svelte';
-  import Select from '../Select.svelte';
+  import Select from '../select/Select.svelte';
   import { toHexFormat, type AggregationColor } from '../color';
   import { generateColor, getColorAlpha, type ColorFormat } from './color-picker.engine';
 

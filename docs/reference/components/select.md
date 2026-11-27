@@ -509,7 +509,7 @@ input, content, prefix, suffix и clear не создаются, `components.inp
 Slot принимает строку тега, Snippet с `{ attributes, register }`, `{ render, props }`
 либо `{ element, props, ref }` для нативного элемента. Attributes используют имена
 Svelte DOM: `class`, `oninput`, `onkeydown`, `onfocusin`/`onfocusout` и строковый CSS style.
-Типы [SelectComponents, SelectRootContext и SelectInputContext](../../../src/lib/select-components.types.ts)
+Типы [SelectComponents, SelectRootContext и SelectInputContext](../../../src/lib/select/select-components.types.ts)
 экспортируются из пакета; DOM generics добавлены после прежних параметров типов.
 
 ```svelte

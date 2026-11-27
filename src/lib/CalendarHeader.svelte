@@ -1,6 +1,6 @@
 <script lang="ts" generics="DateType">
   import { tick } from 'svelte';
-  import Select from './Select.svelte';
+  import Select from './select/Select.svelte';
   import RadioButton from './radio/RadioButton.svelte';
   import RadioGroup from './radio/RadioGroup.svelte';
   import { provideFormField, useFormField } from './form/form-context';

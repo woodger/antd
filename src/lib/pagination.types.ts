@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { ComponentSize, PaginationLocale, SelectOption } from './types';
-import type { SelectProps } from './select.types';
+import type { SelectProps } from './select/select.types';
 
 export type PaginationItemType = 'page' | 'prev' | 'next' | 'jump-prev' | 'jump-next';
 export type PaginationContent = string | number | boolean | null | Snippet;

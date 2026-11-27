@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SelectConfig } from './select.types';
+  import type { SelectConfig } from './select/select.types';
   import type { UploadConfig } from './upload/upload.types';
   import type { FormConfig } from './form/form.types';
   import type { AppConfig } from './app.types';
@@ -7,7 +7,7 @@
   import type { TimelineConfig } from './timeline.types';
   import type { StepsConfig } from './steps.types';
   import type { LayoutConfig } from './layout.types';
-  import type { TreeSelectConfig } from './tree-select.types';
+  import type { TreeSelectConfig } from './tree-select/tree-select.types';
   import type { TreeConfig } from './tree.types';
   import type { DatePickerConfig } from './date-picker.types';
   import type { CardConfig, CardMetaConfig } from './card.types';
@@ -40,7 +40,7 @@
   import type { QRCodeConfig } from './qrcode.types';
   import type { CalendarConfig } from './calendar.types';
   import type { TimePickerConfig } from './time-picker.types';
-  import type { CascaderConfig } from './cascader.types';
+  import type { CascaderConfig } from './cascader/cascader.types';
   import type { TransferConfig } from './transfer/transfer.types';
   import type { PaginationComponentConfig } from './pagination.types';
   import type { TableConfig } from './table.types';

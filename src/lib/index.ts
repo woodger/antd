@@ -55,7 +55,7 @@ export type {
   MentionsPopupRender,
   MentionsPopupRenderInfo
 } from './mentions/mentions.types';
-export { default as AutoComplete } from './AutoComplete.svelte';
+export { default as AutoComplete } from './auto-complete/AutoComplete.svelte';
 export type {
   AutoCompleteProps,
   AutoCompleteRef,
@@ -67,7 +67,7 @@ export type {
   AutoCompleteClassNames,
   AutoCompleteStyles,
   AutoCompleteSemanticInfo
-} from './auto-complete.types';
+} from './auto-complete/auto-complete.types';
 export { default as Menu } from './Menu.svelte';
 export type {
   MenuProps,
@@ -99,13 +99,13 @@ export type {
   MenuSelectInfo
 } from './menu.types';
 export type { MenuMotion, MenuMotionEvent, MenuMotionStyle } from './menu-motion.types';
-export { default as TreeSelect } from './tree-select.component.js';
-export { default as TreeSelectTreeNode } from './TreeSelectTreeNode.svelte';
+export { default as TreeSelect } from './tree-select/tree-select.component.js';
+export { default as TreeSelectTreeNode } from './tree-select/TreeSelectTreeNode.svelte';
 export {
   TREE_SELECT_SHOW_ALL,
   TREE_SELECT_SHOW_PARENT,
   TREE_SELECT_SHOW_CHILD
-} from './tree-select.engine';
+} from './tree-select/tree-select.engine';
 export type {
   TreeSelectProps,
   TreeSelectPopupAlign,
@@ -135,7 +135,7 @@ export type {
   TreeSelectFieldNames,
   TreeSelectSimpleModeConfig,
   TreeSelectSimpleMode
-} from './tree-select.types';
+} from './tree-select/tree-select.types';
 export type {
   TreeSelectComponents,
   TreeSelectRootContext,
@@ -147,7 +147,7 @@ export type {
   TreeSelectEditorElement,
   TreeSelectRootAttributes,
   TreeSelectInputAttributes
-} from './tree-select-components.types';
+} from './tree-select/tree-select-components.types';
 export { default as Tree } from './Tree.svelte';
 export { default as DirectoryTree } from './DirectoryTree.svelte';
 export { createTree } from './tree-data-model';
@@ -520,7 +520,7 @@ export { default as RadioGroup } from './radio/RadioGroup.svelte';
 export { default as Switch } from './switch/Switch.svelte';
 export { default as Pagination } from './Pagination.svelte';
 export { default as Table } from './table.component';
-export { default as Select } from './Select.svelte';
+export { default as Select } from './select/Select.svelte';
 export { default as Modal } from './modal.component';
 export { default as Form } from './form/Form.svelte';
 export { default as FormItem } from './form/FormItem.svelte';
@@ -1022,9 +1022,9 @@ export type {
   SelectSemanticState,
   SelectSemanticInfo,
   SelectConfigSemanticInfo
-} from './select.types';
-export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
-export type { SelectComponents, SelectRootAttributes, SelectInputAttributes, SelectInputOwnProps, SelectRootRegistration, SelectInputRegistration, SelectRootContext, SelectInputContext, SelectRootComponent, SelectInputComponent } from './select-components.types';
+} from './select/select.types';
+export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select/select-icons.types';
+export type { SelectComponents, SelectRootAttributes, SelectInputAttributes, SelectInputOwnProps, SelectRootRegistration, SelectInputRegistration, SelectRootContext, SelectInputContext, SelectRootComponent, SelectInputComponent } from './select/select-components.types';
 export type {
   FormProps, FormConfig, FormScrollOptions, FormRequiredMark, FormRequiredMarkInfo, FormLocale,
   FormSemanticSlots, FormSemantic, FormTooltipProps, FormItemTooltip, FormFeedbackIcons, FormFeedbackInfo
@@ -1135,9 +1135,9 @@ export { default as QRCode } from './QRCode.svelte';
 export { default as RadioButton } from './radio/RadioButton.svelte';
 export type { RadioButtonProps } from './radio/radio.types';
 export { default as Calendar } from './Calendar.svelte';
-export { default as Cascader } from './Cascader.svelte';
-export { default as CascaderPanel } from './CascaderPanel.svelte';
-export { CASCADER_SHOW_PARENT, CASCADER_SHOW_CHILD } from './cascader.engine';
+export { default as Cascader } from './cascader/Cascader.svelte';
+export { default as CascaderPanel } from './cascader/CascaderPanel.svelte';
+export { CASCADER_SHOW_PARENT, CASCADER_SHOW_CHILD } from './cascader/cascader.engine';
 export type {
   CascaderProps,
   CascaderPanelProps,
@@ -1157,7 +1157,7 @@ export type {
   CascaderSemantic,
   CascaderSemanticValue,
   CascaderConfig
-} from './cascader.types';
+} from './cascader/cascader.types';
 export { default as Transfer } from './transfer/Transfer.svelte';
 export type {
   TransferProps,
@@ -1317,8 +1317,8 @@ export type {
   QRPropsSvg
 } from './qrcode.types';
 
-export type { SelectConfig } from './select.types';
-export type { TreeSelectConfig } from './tree-select.types';
+export type { SelectConfig } from './select/select.types';
+export type { TreeSelectConfig } from './tree-select/tree-select.types';
 export type { DatePickerConfig } from './date-picker.types';
 export type { CardConfig } from './card.types';
 export type { MentionsComponentConfig } from './mentions/mentions.types';

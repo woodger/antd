@@ -23,7 +23,7 @@
     PaginationSizeChangerProps
   } from './pagination.types';
   import PaginationControl from './PaginationControl.svelte';
-  import Select from './Select.svelte';
+  import Select from './select/Select.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getPaginationPrefixCss } from './pagination-prefix.engine';
 

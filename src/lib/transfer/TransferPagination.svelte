@@ -10,7 +10,7 @@
   import { transferPaginationItems } from './transfer.engine';
   import { ruRU } from '../types';
   import Icon from '../Icon.svelte';
-  import Select from '../Select.svelte';
+  import Select from '../select/Select.svelte';
 
   let { current, pageSize, total, simple, showSizeChanger, showLessItems, disabled, onChange,
     class: className = '' }: {
