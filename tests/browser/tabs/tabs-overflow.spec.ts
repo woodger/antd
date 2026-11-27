@@ -408,12 +408,16 @@ test('More leaves Escape to a nested Select before closing its own popup', async
   await more.hover();
   const menu = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
   const select = page.getByRole('combobox', { name: 'More nested Select', exact: true });
+  // Virtual Select renders visible rows separately from its accessible options.
+  const optionButton = page.getByRole('button', { name: 'Alpha option', exact: true });
   await select.click();
 
-  await expect(page.getByRole('option', { name: 'Alpha option', exact: true })).toBeVisible();
+  await expect(select).toHaveAttribute('aria-expanded', 'true');
+  await expect(optionButton).toBeVisible();
   await page.keyboard.press('Escape');
 
-  await expect(page.getByRole('option', { name: 'Alpha option', exact: true })).toBeHidden();
+  await expect(select).toHaveAttribute('aria-expanded', 'false');
+  await expect(optionButton).toBeHidden();
   await expect(menu).toBeVisible();
   await expect(select).toBeFocused();
   await page.keyboard.press('Escape');
