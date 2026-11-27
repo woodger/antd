@@ -7,6 +7,11 @@
 
 ## [Unreleased]
 
+## [0.1.0]
+
+Первый релиз пакета `@woodger/antd` для Svelte 5. Реализованные возможности и
+отличия от Ant Design перечислены в [сводке переноса](docs/reference/ant-design-porting/status.md).
+
 ### Fixed
 
 - `Form.getFieldsValue` различает полную форму и частичную выборку в TypeScript.
