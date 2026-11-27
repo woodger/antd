@@ -75,22 +75,22 @@ clears deferred focus, geometry animation frames, scroll timers, and observers.
 
 `components.input` provides editors for both endpoints. `components.button`
 renders OK for the active endpoint. StartInput and endInput retain
-HTMLInputElement types. [Editor and button context](date-picker.md#редактор-и-кнопка-подтверждения)
+HTMLInputElement types. [Editor and button context](date-picker.md#editor-and-confirmation-button)
 
 `components.time` replaces the active endpoint panel. Snippet actions affect
 that endpoint, and OK uses normal range confirmation. Other panel modes are
 reported in the onPanelChange pair. Use TimeRangePickerProps<DatePickerMode>
-for those panels. [Panel context](date-picker.md#пользовательские-панели)
+for those panels. [Panel context](date-picker.md#custom-panels)
 
 The popup inherits the shared DatePicker container API. It keeps the selector's
 minimum width and shifts a narrow time panel with an arrow under the active
 field. Set placement through popupAlign and builtinPlacements. RTL keeps the
 upstream hours, minutes, and seconds column order and changes direction inside
 the columns. Theme, compact, size, locale, and status use current library
-contexts. [Panel placement](./date-picker.md#положение-панели)
+contexts. [Panel placement](./date-picker.md#panel-placement)
 
 The fixture is `?fixture=time-range-picker`. [Engine](../../../src/lib/picker/time-range-picker.engine.test.ts) · [SSR](../../../src/lib/picker/time-range-picker.ssr.test.ts) ·
 [Public package](../../../tests/package/picker/time-range-picker.ssr.test.ts) · [Browser](../../../tests/browser/picker/time-range-picker.spec.ts)
 For a custom date type, use the DatePicker factory's RangePicker with
 `picker="time"`. The full mask, trigger, and token APIs and React diagnostics
-remain future work. V1-ready applies to the agreed scope. [DatePicker factory](./date-picker.md#свой-тип-даты)
+remain future work. V1-ready applies to the agreed scope. [DatePicker factory](./date-picker.md#custom-date-type)

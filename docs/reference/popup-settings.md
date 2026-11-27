@@ -39,4 +39,4 @@ the provider width and open inside the header. Pagination defaults its page-size
 selector to `false`. Pass `popupMatchSelectWidth` in the `showSizeChanger` object to
 choose a different width. The color format selector in `ColorPicker` has its own width.
 
-See how width changes interact with virtualization. [Select appearance and state](components/select.md#оформление-и-состояние)
+See how width changes interact with virtualization. [Select appearance and state](components/select.md#styling-and-state)

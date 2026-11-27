@@ -73,12 +73,12 @@ id, required, and FormItem work without a hidden ISO input. FormData contains
 the display string and the form model keeps Dayjs directly. [Types](../../../src/lib/picker/time-picker.types.ts)
 
 `components.input` replaces the time editor. `components.button` gets the OK
-label and normal confirmation attributes. [Editor and button context](date-picker.md#редактор-и-кнопка-подтверждения)
+label and normal confirmation attributes. [Editor and button context](date-picker.md#editor-and-confirmation-button)
 
 `components.time` replaces the columns and keeps ordinary drafts and
 confirmation. A panel can request a calendar mode through onModeChange.
 Use TimePickerProps<DatePickerMode> for an owner with those transitions.
-The default TimePickerProps mode type is 'time'. [Panel context](date-picker.md#пользовательские-панели)
+The default TimePickerProps mode type is 'time'. [Panel context](date-picker.md#custom-panels)
 
 The accessibility adaptation uses native unit buttons, arrows, Home and End,
 ArrowDown from input, Enter and Tab, and Escape with focus restoration.
@@ -96,15 +96,15 @@ The fixture is `?fixture=time-picker`. [Engine](../../../src/lib/picker/time-pic
 Set shared component tokens in components.DatePicker. The DatePicker reference
 covers token updates while the panel is open and the adapter for custom dates.
 Use DatePicker.generatePicker(adapter).TimePicker for a custom date type.
-[DatePicker reference](./date-picker.md#свой-тип-даты)
+[DatePicker reference](./date-picker.md#custom-date-type)
 
 Multiple is available on DatePicker.TimePicker and Picker.TimePicker from
 generatePicker. They take arrays of dates and confirm the set using the
-multiple selection rules. [Multiple selection](./date-picker.md#множественный-выбор)
+multiple selection rules. [Multiple selection](./date-picker.md#multiple-selection)
 
 Mask format, React diagnostics, and the full rc-trigger and motion API remain
 outside the port. Date and time pickers share popupAlign and builtinPlacements.
-[Panel placement](./date-picker.md#положение-панели)
+[Panel placement](./date-picker.md#panel-placement)
 
 Labels and time formats come from the ConfigProvider.locale dictionary.
 [Locale setup](../themes.md#interface-language)

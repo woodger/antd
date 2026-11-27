@@ -1,25 +1,28 @@
 # Select
 
-Без mode компонент сохраняет одиночный выбор; по умолчанию value скалярный. В
-`mode="multiple"` value и callback используют массивы; варианты выбираются
-из options, а выбранные элементы показываются с кнопками удаления.
-`SelectProps<Value>` описывает прежний одиночный API,
-`SelectProps<Value, 'multiple'>` — множественный. При использовании компонента
-типы значений и callback выводятся из options и mode. `SelectProps<Value, 'tags'>`
-принимает массив Value | string: свободный ввод создаёт строки, исходные числовые
-ключи сохраняются.
+Without `mode`, Select uses single selection and a scalar value.
+In `mode="multiple"`, the value and callback use arrays. Choices come
+from `options`, and selected items display remove buttons.
+`SelectProps<Value>` describes the existing single API, and
+`SelectProps<Value, 'multiple'>` describes multiple selection. The
+component infers value and callback types from `options` and
+`mode`. `SelectProps<Value, 'tags'>` accepts an array of
+`Value | string`. Free text creates strings and original numeric
+keys are preserved.
 
-## Данные options и fieldNames
+## Option data and fieldNames
 
-`SelectProps<Value, Mode, OptionType>` добавляет тип исходных записей третьим параметром;
-порядок Value/Mode сохранён. `AutoCompleteProps<OptionType>` параметризует raw данные,
-сохраняя строковое значение control. Для условных массивов flat/groups задавайте общий
-тип записей явно. Если TypeScript не выводит mixed Value из binding, укажите его в
-`Select<string | number>`.
+`SelectProps<Value, Mode, OptionType>` adds the source record type
+as the third parameter and preserves the order of `Value` and
+`Mode`. `AutoCompleteProps<OptionType>` types the raw data and
+keeps the control's string value. For conditional flat and grouped
+arrays, specify a common record type. If TypeScript cannot infer
+a mixed value type from binding, use `Select<string | number>`.
 
-FieldNames задаёт value, label, options и groupLabel. Пустые имена выбирают стандартные
-поля, groupLabel по умолчанию совпадает с итоговым label. Поддерживается один уровень
-групп: вложенная группа внутри children рассматривается как terminal option, как в Source.
+`fieldNames` sets `value`, `label`, `options`, and `groupLabel`.
+Empty names use standard fields. `groupLabel` defaults to the
+resolved `label`. Grouping has one level. A nested group within
+children acts as a terminal option, as upstream.
 
 ```svelte
 <script lang="ts">
@@ -42,70 +45,85 @@ FieldNames задаёт value, label, options и groupLabel. Пустые име
   fieldNames={{ value: 'uid', label: 'text', options: 'nodes', groupLabel: 'heading' }} />
 ```
 
-Значение и подпись читаются из mapped полей. Key строки независимо берётся из literal
-key, затем literal value, затем `rc-index-key-${index}`; bigint, 0 и пустой key сохраняются.
-Абсолютный index включает headers и отражает текущие filter/sort. Group metadata
-отделена от raw records. Title/className/CSS-object style и разрешённые DOM/data-/aria-*
-атрибуты options передаются в native button; mapped поля не попадают в DOM. Физический header
-использует только className/title и содержимое. Native CSS-строки и class alias сохранены.
+Value and label come from mapped fields. Row keys independently
+use literal `key`, then literal `value`, then
+`rc-index-key-${index}`. Bigint, 0, and the empty key are kept.
+Absolute index includes headings and follows current filter and sort.
+Group metadata is separate from raw records. Option `title`,
+`className`, CSS object `style`, and allowed DOM, data, and ARIA
+attributes pass to the native button. Mapped fields stay out
+of the DOM. The physical group heading uses only `className`,
+`title`, and content. Native CSS strings and the `class` alias
+are retained.
 
-OnChange вызывается при изменении последовательности values; onSelect — при каждом
-выборе, включая повторный single выбор; onDeselect — при удалении в multiple/tags.
-OnClear предшествует onChange и не создаёт onDeselect. Второй аргумент сохраняет raw поля:
-это shallow copy выбранного record, а для multiple — массив копий. При одинаковом value
-выбирается последний record из текущей карты данных. Вложенные объекты не клонируются;
-для свободного tag без исходного record callback получает пустой объект. В режиме
-`tags` типы `onChange`, `onSelect` и `onDeselect` учитывают этот случай.
-Проверка обязательного поля исходной опции, например `option.sku !== undefined`,
-позволяет TypeScript восстановить её полный тип. Bind:value и
-onValueChange сохраняются. Удалённый selected option остаётся в cache до снятия выбора.
-Без labelInValue selected value остаётся string/number или их массив.
+`onChange` runs when the sequence of values changes. `onSelect`
+runs on every selection, including repeated single selection.
+`onDeselect` runs on removal in multiple and tags modes.
+`onClear` precedes `onChange` and fires no `onDeselect`. The
+second argument preserves raw fields as a shallow copy of a
+selected record, or an array of copies in multiple mode. For
+duplicate values the last record in the current data map wins.
+Nested objects retain their identity. A free tag without a
+source record passes an empty object. `onChange`, `onSelect`,
+and `onDeselect` types account for this in tags mode. Checking
+a required option field, for example `option.sku !== undefined`,
+lets TypeScript narrow to the full option type. `bind:value`
+and `onValueChange` are preserved. A removed selected option
+stays cached until deselection. Without `labelInValue`, the selected
+value is a string or number, or an array of those values.
 
-Select запоминает подпись и исходные данные до передачи нового значения владельцу.
-Пункт сохраняет подпись и данные для `onDeselect`, даже если владелец принимает
-выбор и удаляет пункт из `options` одним обновлением. При сверке с принятым
-`value` кэш удаляет отклонённые записи. В повторённых замерах React 6.6.8
-одновременное обновление теряло подпись или данные option в зависимости от режима.
-[Замеры React](../../../tests/browser/fixtures/ant-design-select-immediate-cache-reference.json)
+Select caches the label and original data before passing a
+new value to the owner. The option keeps its label and
+`onDeselect` data even if the owner accepts selection and
+removes the option in one update. Reconciling with the
+accepted `value` evicts rejected entries. In repeated React
+6.6.8 measurements, the combined update lost the label or
+option data depending on mode. [React measurements](../../../tests/browser/fixtures/ant-design-select-immediate-cache-reference.json)
 
-Исходные [40 сценариев](../../../tests/browser/fixtures/ant-design-select-data-reference.json.gz),
-[40 SSR](../../../tests/browser/fixtures/ant-design-select-data-ssr-reference.json.gz),
-[атрибуты](../../../tests/browser/fixtures/ant-design-select-data-attributes-reference.json.gz) и
-[диагностика](../../../tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json.gz)
-сохранены независимо от реализации. Большой основной эталон хранится в gzip; загрузчик
-распаковывает его стандартным Node.js zlib и проверяет прежний SHA-256 исходных байтов.
-Native label/NFKD search и disabled cache проверяются
-с отдельными public Source owners
-([search](../../../tests/browser/fixtures/ant-design-select-data-label-native-reference.json.gz),
-[cache](../../../tests/browser/fixtures/ant-design-select-data-cache-native-reference.json));
-исходные ledgers не фильтруются. Virtual Source ошибочно
-теряет mapped aria-selected: [парное наблюдение](../../../tests/browser/fixtures/ant-design-select-data-aria-reference.json.gz)
-сохраняет этот результат, Native использует корректное mapped состояние. Multiple token
-lookup использует mapped value; Source при том же вводе читает literal value и теряет выбор.
-Полные [браузерные проверки](../../../tests/browser/select/select-data.spec.ts),
-[атрибуты](../../../tests/browser/select/select-data-attributes.spec.ts),
-[диагностические границы](../../../tests/browser/select/select-data-diagnostics.spec.ts),
-[SSR](../../../tests/package/select/select-data.ssr.test.ts) и
-[строгая hydration](../../../tests/browser/select/select-data-hydration.spec.ts) проверяют эти контракты.
+The original scenarios, SSR, attributes, and diagnostics
+are recorded independently of the implementation. The large
+main reference is stored in gzip. The loader uses standard
+Node.js zlib and checks the original byte SHA-256.
+[40 upstream scenarios](../../../tests/browser/fixtures/ant-design-select-data-reference.json.gz) · [40 SSR renders](../../../tests/browser/fixtures/ant-design-select-data-ssr-reference.json.gz)
+· [Attributes](../../../tests/browser/fixtures/ant-design-select-data-attributes-reference.json.gz) · [Diagnostics](../../../tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json.gz)
 
-## Выбранные labels и labelInValue
+Native label and NFKD search and disabled caching use separate
+public upstream owners for comparison. The original ledgers
+are unfiltered. [Search](../../../tests/browser/fixtures/ant-design-select-data-label-native-reference.json.gz) · [Cache](../../../tests/browser/fixtures/ant-design-select-data-cache-native-reference.json)
 
-`labelInValue={true}` меняет value/defaultValue и первый аргумент callbacks на
-`{ value, label }`; multiple/tags используют массив таких объектов. Верхний `null`
-очищает выбор и не подставляет defaultValue. Входной label может быть строкой, числом,
-boolean, массивом содержимого или Svelte Snippet. Явный label имеет приоритет;
-отсутствующий/undefined читается из `optionLabelProp` либо mapped label options.
+Virtual upstream Select loses the mapped `aria-selected`.
+Svelte uses the mapped state. Multiple token lookup uses
+mapped value. With the same input, upstream reads literal
+`value` and loses selection. [Paired observation](../../../tests/browser/fixtures/ant-design-select-data-aria-reference.json.gz)
 
-`SelectProps<Value, Mode, OptionType, LabelInValue>` сохраняет первые три параметра.
-Четвёртый по умолчанию false; boolean даёт объединение primitive/labeled значений.
-При явном `Select<number>` остальные параметры получают defaults: для labeled
-специализации задавайте все четыре, например `Select<number, undefined, Entry, true>`.
-Без явной специализации компонент выводит labeled domain из props.
+[Browser tests](../../../tests/browser/select/select-data.spec.ts) · [Attributes](../../../tests/browser/select/select-data-attributes.spec.ts) ·
+[Diagnostic boundaries](../../../tests/browser/select/select-data-diagnostics.spec.ts) · [SSR](../../../tests/package/select/select-data.ssr.test.ts) ·
+[Strict hydration](../../../tests/browser/select/select-data-hydration.spec.ts)
 
-`labelRender(info)` — обычный callback. Он получает label/value/key/disabled/title
-и возвращает содержимое, включая Snippet; key равен raw value. Результат null/undefined
-заменяется raw value, а false/пустая строка сохраняют пустой видимый label. Callback
-вызывается и при SSR, поэтому должен быть чистым.
+## Selected labels and labelInValue
+
+`labelInValue={true}` changes `value`, `defaultValue`, and the
+first callback argument to `{ value, label }`. Multiple and
+tags use an array of those objects. Top-level `null` clears
+selection without using `defaultValue`. The input label
+can be a string, number, boolean, content array, or Svelte
+Snippet. Explicit `label` takes precedence. A missing or
+undefined label uses `optionLabelProp` or the mapped option label.
+
+`SelectProps<Value, Mode, OptionType, LabelInValue>` preserves
+the first three parameters. The fourth defaults to `false`,
+and `boolean` gives a primitive or labeled union. With explicit
+`Select<number>`, the other parameters use defaults. For a
+labeled specialization, supply all four, for example
+`Select<number, undefined, Entry, true>`. Without explicit
+specialization, the component infers the labeled type from props.
+
+`labelRender(info)` is a callback receiving `label`, `value`,
+`key`, `disabled`, and `title` and returning content, including
+a Snippet. `key` equals the raw value. A result of `null` or
+`undefined` falls back to raw value. `false` or an empty
+string leaves the visible label empty. Keep the callback
+pure because it also runs during SSR.
 
 ```svelte
 <script lang="ts">
@@ -119,51 +137,61 @@ boolean, массивом содержимого или Svelte Snippet. Явны
   labelRender={() => selectedLabel} name="number" />
 ```
 
-OnChange получает labels текущего преобразования, а onSelect/onDeselect — mapped
-label исходного option независимо от optionLabelProp и labelRender. Удаление тега
-кнопкой или Backspace передаёт оставшиеся уже отрисованные labels через onChange,
-как в оригинале. Uncontrolled выбор сохраняет label после взаимодействия; controlled
-owner с raw value заново читает options. Single className/style/title берутся из
-первого совпадения текущей filtered/sorted выдачи, callback option — из последнего
-совпадения value. Rich labels сохраняются в tagRender и maxTagPlaceholder;
-maxTagTextLength усекает только строку/число. FormData по-прежнему содержит raw values.
+`onChange` receives labels from the current transformation.
+`onSelect` and `onDeselect` get the source option's mapped label,
+independent of `optionLabelProp` and `labelRender`. Removing a
+tag via its button or Backspace passes the remaining rendered
+labels through `onChange`, as upstream. Uncontrolled selection
+retains the label after interaction. A controlled owner
+with a raw value rereads options. Single `className`, `style`,
+and `title` come from the first match in current filtered and
+sorted results. The callback option comes from the last value
+match. Rich labels are retained in `tagRender` and
+`maxTagPlaceholder`. `maxTagTextLength` truncates only strings
+and numbers. FormData still contains raw values.
 
-[48 исходных сценариев / 278 действий](../../../tests/browser/fixtures/ant-design-select-value-reference.json.gz),
-[атомарные смены режима](../../../tests/browser/fixtures/ant-design-select-value-live-reference.json.gz),
-[SSR](../../../tests/browser/fixtures/ant-design-select-value-ssr-reference.json.gz) и
-[public owner disabled cache](../../../tests/browser/fixtures/ant-design-select-value-cache-native-reference.json)
-сохраняют независимые наблюдения оригинала. Проверки:
-[browser](../../../tests/browser/select/select-value.spec.ts), [hydration](../../../tests/browser/select/select-value-hydration.spec.ts),
-[SSR/type contracts](../../../tests/package/select/select-value.ssr.test.ts) и
-[фактическая прозрачность label](../../../tests/browser/select/select-value-opacity.spec.ts).
-Native сохраняет скалярный текст закрытого input и его caret, текущий query владельца,
-различие 0/"0" и disabled cache удалённого option. Searchable required проверяет наличие raw выбора, независимо от rich/пустой
-отрисованной подписи. Rich содержимое остаётся DOM/Snippet;
-оно не превращается в текст input. У оригинала после повторного открытия string "0"
-физический selected marker ошибочно остаётся у numeric 0; это наблюдение сохранено,
-Native следует raw value. AutoComplete не получает labelInValue/optionLabelProp.
+The references retain independent upstream observations.
+[48 upstream scenarios and 278 actions](../../../tests/browser/fixtures/ant-design-select-value-reference.json.gz) ·
+[Atomic mode transitions](../../../tests/browser/fixtures/ant-design-select-value-live-reference.json.gz) · [SSR](../../../tests/browser/fixtures/ant-design-select-value-ssr-reference.json.gz) ·
+[Public owner disabled cache](../../../tests/browser/fixtures/ant-design-select-value-cache-native-reference.json)
 
-## Оформление и состояние
+Svelte retains closed input scalar text and caret, the
+owner's query, the distinction between 0 and `"0"`, and the
+removed option's disabled cache. Searchable required checks
+raw selection regardless of rich or empty visible labels.
+Rich content remains DOM or Snippet content outside input
+text. Upstream can leave the physical selected marker on
+numeric 0 after reopening with string `"0"`. The observation
+is retained. Svelte follows the raw value. AutoComplete
+does not receive `labelInValue` or `optionLabelProp`.
+[Browser tests](../../../tests/browser/select/select-value.spec.ts) · [Hydration](../../../tests/browser/select/select-value-hydration.spec.ts) ·
+[SSR and types](../../../tests/package/select/select-value.ssr.test.ts) · [Label behavior](../../../tests/browser/select/select-value-opacity.spec.ts)
 
-Variant поддерживает outlined/filled/borderless/underlined в single/multiple/tags;
-по умолчанию outlined. Явный variant имеет приоритет над настройками Form и provider. Смена оформления сохраняет DOM,
-поисковый текст, выделение, фокус и выбранные значения формы. Классы и computed
-styles сверены с официальным UMD 6.6.8 в
-[браузерных проверках](../../../tests/browser/select/select-variants.spec.ts).
-Общие [ConfigProvider.variant/Form.variant и Select config](../control-variants.md)
-применяются после локальных props.
+## Styling and state
 
-Непустой `prefixCls` задаёт локальные классы control, tags и popup; пустой или
-undefined наследует `ConfigProvider.prefixCls`. CSS scope разделяет owner prefix
-и общий namespace служебных переменных, сохраняя canonical theme variables.
-Нынешние native wrapper, option buttons, FormData/reset и generated IDs сохранены.
-Смена префикса сохраняет открытый список, query, text selection, focus и keyed options;
-это действует также с локальным popup container и responsive tags.
-[26 UMD-конфигураций](../../../tests/browser/fixtures/ant-design-select-prefix-reference.json)
-в обычной, вложенной и reset областях сверяют single/multiple/tags, размеры,
-варианты, status, aliases и открытые options. Дополнительный native compact bridge
-сохраняет геометрию внешнего container. Проверки:
-[browser](../../../tests/browser/select/select-prefix.spec.ts), [SSR](../../../tests/package/select/select-prefix.ssr.test.ts).
+`variant` supports `outlined`, `filled`, `borderless`, and
+`underlined` in single, multiple, and tags modes. The default
+is `outlined`. Explicit variant overrides Form and provider
+settings. Style changes retain DOM, search text, selection,
+focus, and selected form values. Browser tests compare
+classes and computed styles with the official 6.6.8 UMD.
+Shared variant and Select settings apply after local props.
+[Browser tests](../../../tests/browser/select/select-variants.spec.ts) · [Provider and Form variants](../control-variants.md)
+
+A nonempty `prefixCls` sets local classes for control, tags,
+and popup. Empty or undefined values inherit
+`ConfigProvider.prefixCls`. CSS scopes separate the owner's
+prefix and shared internal variable namespace while retaining
+canonical theme variables. The native wrapper, option buttons,
+FormData and reset, and generated IDs are preserved. Changing
+the prefix keeps the list open and retains query, selection,
+focus, and keyed options, including with a local popup
+container and responsive tags. The comparisons cover single,
+multiple, tags, sizes, variants, status, aliases, and open
+options in normal, nested, and reset scopes. The additional
+native compact styling preserves outer container geometry.
+[26 UMD configurations](../../../tests/browser/fixtures/ant-design-select-prefix-reference.json) · [Browser tests](../../../tests/browser/select/select-prefix.spec.ts) ·
+[SSR tests](../../../tests/package/select/select-prefix.ssr.test.ts)
 
 ```svelte
 <script lang="ts">
@@ -181,111 +209,140 @@ undefined наследует `ConfigProvider.prefixCls`. CSS scope раздел�
 <Select id="teams" mode="multiple" {options} bind:value={teams} name="teams" allowClear />
 ```
 
-При source-настройках ConfigProvider Select применяет собственные tokens и aliases
-к selector и dropdown: размеры tags/options, padding, цвета, focus border/outline,
-стрелку и очистку. Поддерживаются component algorithm, custom CSS prefix, нули и
-явный undefined. Смена темы сохраняет DOM поля/списка, ввод, выделение, фокус и
-FormData. Native-only темы сохраняют прежнее оформление; style относится к внешней
-обёртке. Подробности — в [описании темы](../theme-context.md#select-tokens).
+With upstream ConfigProvider theme settings, Select applies
+its own tokens and aliases to selector and dropdown.
+These set tag and option metrics, padding, colors, focus
+border and outline, arrow, and clear. Component algorithms,
+custom CSS prefix, zero, and explicit `undefined` are supported.
+Theme changes preserve field and list DOM, input, selection,
+focus, and FormData. Native-only themes retain existing
+styles. `style` applies to the outer wrapper.
+[Theme reference](../theme-context.md#select-tokens)
 
-GetPopupContainer получает внутренний корень `.ant-select`. Локальная функция
-перекрывает ConfigProvider.getPopupContainer; undefined наследует provider.
-Список использует fixed native popover по умолчанию с шириной поля, обновлением положения,
-outside/Escape и сохранением фокуса. Без getter сохраняется прежний DOM parent.
-`placement` принимает bottomLeft/bottomRight/topLeft/topRight; по умолчанию
-bottomLeft либо bottomRight в RTL. Getter не вызывается при SSR и до первого открытия.
-ShadowRoot требует собственных стилей; смена функции с тем же контейнером
-сохраняет DOM списка, поиск и выделение. Закрытие Select удаляет его список;
-AutoComplete сохраняет смонтированный popup до unmount. Проверки обоих компонентов —
-[select-container](../../../tests/browser/select/select-container.spec.ts), `?fixture=select-container`;
-32 сценария сверены с официальным UMD Ant Design 6.6.8.
+`getPopupContainer` receives the inner `.ant-select` root.
+The local getter overrides `ConfigProvider.getPopupContainer`,
+and `undefined` inherits the provider. The list defaults to a
+fixed native popover with field width, position updates,
+outside and Escape dismissal, and focus retention. Without a
+getter it keeps the existing DOM parent. `placement` accepts
+`bottomLeft`, `bottomRight`, `topLeft`, and `topRight`. The
+default is `bottomLeft` or `bottomRight` in RTL. The getter
+is skipped during SSR and before first opening. ShadowRoot
+requires its own styles. Replacing the getter with the same
+container preserves list DOM, search, and selection. Closing
+Select removes its list. AutoComplete retains its mounted
+popup until unmount. `?fixture=select-container` compares 32
+official Ant Design 6.6.8 UMD scenarios for both components.
+[Container tests](../../../tests/browser/select/select-container.spec.ts)
 
-`popupMatchSelectWidth` выбирает ширину списка: `true` берёт ширину поля,
-`false` подстраивает список под содержимое с шириной поля в качестве минимума,
-число задаёт ширину в px с тем же минимумом. Отсутствующий prop и `undefined`
-наследуют `ConfigProvider.popupMatchSelectWidth`; без настройки используется `true`.
-Смена ширины сохраняет поле, выделение, фокус и выбранные значения формы.
-Невалидная числовая CSS-ширина сохраняет последнее принятое значение, как React,
-включая смену props закрытой посещённой панели и повторное открытие. До первого
-открытия скрытый измерительный DOM AutoComplete/TreeSelect не создаёт такую историю.
-ListHeight ограничивает внутренний viewport списка и по умолчанию равен 256 px;
-фактические padding и border добавляются снаружи. ListHeight=0 снимает ограничение.
-Virtual по умолчанию включён и наследует ConfigProvider.virtual. Собственный prop
-перекрывает provider: явно переданный undefined, как в исходном Select, включает
-default, даже если provider задаёт false. PopupMatchSelectWidth=false отключает
-виртуализацию, числовой 0 её не отключает. ListItemHeight задаёт оценку ещё не
-измеренных строк; default — token.controlHeight (обычно 32 px). Реальная высота
-каждой отрисованной строки, включая группы AutoComplete, измеряется отдельно.
-Нулевая оценка выключает окно, сохраняя исходный доступный listbox.
+`popupMatchSelectWidth` controls list width. `true` uses the
+field width, `false` sizes to content with field width as its
+minimum, and a number sets pixels with the same minimum.
+Omission and `undefined` inherit
+`ConfigProvider.popupMatchSelectWidth`, defaulting to `true`.
+Width changes preserve field, selection, focus, and selected
+form values. An invalid numeric CSS width keeps the last
+accepted value as in React, including after prop changes
+to a closed visited popup and reopening it. Hidden measuring
+DOM in AutoComplete and TreeSelect creates no such history
+before the first open.
 
-ShowScrollBar принимает true, false или 'optional'. Optional показывает полосу
-при прокрутке и обращении к scrollTo и скрывает через 3 секунды. OnPopupScroll
-получает native scroll event внутреннего holder; currentTarget и this — этот div.
-При virtual=true доступный listbox содержит соседей активного пункта, а видимое
-окно содержит измеренные строки. Virtual=false помещает все options в listbox.
+`listHeight` limits the inner list viewport and defaults to
+256px. Actual padding and border are outside that height.
+`listHeight=0` removes the limit. `virtual` defaults on and
+inherits `ConfigProvider.virtual`. An own prop overrides the
+provider. Explicit `undefined` selects the default even with
+provider `false`, as upstream. `popupMatchSelectWidth=false`
+disables virtualization, while numeric 0 leaves it on.
+`listItemHeight` estimates unmeasured rows and defaults to
+`token.controlHeight`, usually 32px. Actual heights of mounted
+rows, including AutoComplete groups, are measured individually.
+A zero estimate disables the window and retains the original
+accessible listbox.
 
-Bind:this предоставляет SelectRef/AutoCompleteRef с focus(FocusOptions), blur()
-и scrollTo(config). NativeElement и inputElement привязываются отдельно:
-bind:nativeElement указывает на div.ant-select, bind:inputElement — на редактор.
-ScrollTo(number) означает индекс; объект принимает index либо key, align
-('top'/'bottom'/'auto') и offset — число или функцию от измеренных getSize.
-Объект {top,left} задаёт позицию. Null/undefined показывают scrollbar без
-изменения позиции. До первого открытия прокрутка не выполняется; закрытые
-index/key-запросы игнорируются. Закрытая позиция {top,left} применяется после
-открытия к реальному viewport. Это сохраняет согласованность DOM и окна вместо
-воспроизведения ошибки rc-select 1.10.1 с разными offsets после reopen.
+`showScrollBar` accepts `true`, `false`, or `'optional'`.
+Optional shows the bar during scroll and calls to `scrollTo`
+and hides it after three seconds. `onPopupScroll` receives
+the inner holder's native scroll event, with its `div` as
+`currentTarget` and `this`. With `virtual=true`, the accessible
+listbox includes neighbors of the active option and the
+visible window contains measured rows. `virtual=false`
+puts every option in the listbox.
 
-OnActive(value|null) сообщает активный пункт; defaultActiveFirstOption=true
-в Select и false в AutoComplete. Несколько активаций за одну microtask оставляют
-последний callback; после unmount callback не вызывается. Существующие native
-значения, формы, controlled search при закрытии и синхронный blur сохраняются.
+`bind:this` exposes `SelectRef` or `AutoCompleteRef` with
+`focus(FocusOptions)`, `blur()`, and `scrollTo(config)`.
+`bind:nativeElement` points to `div.ant-select` and
+`bind:inputElement` to the editor. A number passed to
+`scrollTo` is an index. An object accepts `index` or `key`,
+`align` (`'top'`, `'bottom'`, or `'auto'`), and `offset` as a
+number or function of measured `getSize`. `{top,left}` sets
+the scroll position. `null` and `undefined` show the bar
+without changing position. Before first open, scrolling
+is skipped. Closed index and key requests are ignored.
+A closed `{top,left}` position applies to the viewport after
+opening. This keeps DOM and the virtual window consistent
+where rc-select 1.10.1 can reopen with different offsets.
 
-Поиск по умолчанию выключен в одиночном режиме и включён в multiple;
-`showSearch` переопределяет это в single/multiple; tags всегда разрешает поиск,
-включая `showSearch={false}`. Нажатие варианта во множественном режиме
-добавляет или удаляет его, очищает поисковый текст и сохраняет открытый список
-и фокус в поле. Дубликаты выбранных значений убираются при отображении,
-порядок первого появления и типы сохраняются: числовой `0` и строковый `"0"`
-различаются. Массив владельца при этом не переписывается.
+`onActive(value|null)` reports the active option.
+`defaultActiveFirstOption` defaults to `true` in Select and
+`false` in AutoComplete. Multiple activations in one
+microtask keep only the last callback. After unmount it is
+skipped. Existing native values, forms, controlled search on
+close, and synchronous blur are preserved.
 
-Удаление кнопкой или Backspace при пустом поиске снимает доступное выбранное
-значение; Backspace выбирает последнее доступное. Disabled options нельзя
-выбрать или удалить отдельно, включая уже выбранные. `allowClear` показывает
-общую очистку всех значений. После пользовательского изменения callback
-получает новый массив; изменение этого массива не меняет привязку. Внешние
-обновления value/options не вызывают onValueChange. Если выбранный option
-временно отсутствует, сохраняются последнее известное имя и disabled-состояние
-в single и multiple. При появлении option берутся актуальные label/disabled. Для
-значения, которого ещё не было в options, показывается String(value). Кэш содержит
-только выбранные значения; он очищается при снятии выбора.
+Search defaults off for single and on for multiple.
+`showSearch` overrides those defaults. Tags always allows
+search, including with `showSearch={false}`. Clicking an
+option in multiple mode adds or removes it, clears search,
+and preserves the open list and field focus. Display
+deduplicates selected values in first-occurrence order and
+keeps their types. Numeric `0` and string `"0"` are distinct.
+The owner's array is left intact.
 
-Для отдельного control `defaultValue` принимает readonly-массив и копируется
-один раз. При привязке задавайте начальное значение у владельца, без defaultValue;
-для очистки передавайте `[]`. Нативный reset формы в multiple восстанавливает
-defaultValue, а при его отсутствии — пустой массив, обновляет привязку и закрывает
-список без callbacks. Связь с внешней формой через атрибут form тоже учитывается.
-Отменённый reset не изменяет Select; Form модели сбрасывает значения через
-resetFields. Одиночный режим сохраняет прежнее управление сбросом владельцем.
+The remove button or Backspace with empty search removes an
+enabled selection. Backspace uses the last available selection.
+Disabled options cannot be selected or removed individually,
+even if already selected. `allowClear` shows a clear button for
+all values. A user change sends a new callback array. Mutating
+it leaves the binding intact. External value and option updates
+skip `onValueChange`. A temporarily missing selected option
+retains its last known label and disabled state in single
+and multiple. Its reappearance takes the current values.
+An option never present uses `String(value)`. The cache holds
+only current selections and clears entries on deselection.
 
-С name или FormItem.name каждое выбранное значение создаёт отдельное поле
-FormData под тем же именем. Используйте `new FormData(form).getAll('teams')`:
-результат содержит строки, например `['0', '1']`. Пустой выбор даёт `[]`,
-disabled control не передаёт значения. Поисковый текст в FormData не попадает.
-Нативный required в multiple проверяет наличие выбранных значений, включая 0,
-и не требует текста в поиске. Подпись удаления задаёт `locale.removeText`,
-сообщение нативного required — `locale.selectRequiredText`.
+For a standalone control, `defaultValue` accepts a readonly
+array copied once. With binding, set the initial value in
+the owner and omit `defaultValue`. Pass `[]` to clear.
+In multiple mode, native form reset restores `defaultValue`
+or an empty array, updates the binding, and closes without
+callbacks. The `form` attribute associates an external form.
+A canceled reset leaves Select intact. Form's model resets
+via `resetFields`. Single mode retains its owner-managed reset.
 
-В Form передавайте `value={form.values.teams}` и
-`onValueChange={(value) => form.setFieldValue('teams', value)}`. Задайте тип
-массива явно, например `createForm<{ teams: number[] }>({ initialValues: { teams: [] } })`.
-`required` отклоняет пустой массив, min/max ограничивают количество элементов.
+With `name` or `FormItem.name`, each selection contributes a
+FormData field of the same name. For example,
+`new FormData(form).getAll('teams')` returns strings such as
+`['0', '1']`. Empty selection gives `[]`, and disabled omits the
+values. Search text is excluded. Native `required` in multiple
+mode checks for selected values, including 0, and leaves
+search text optional. `locale.removeText` labels removal and
+`locale.selectRequiredText` sets the native required message.
 
-## Видимость списка Select
+In Form, pass `value={form.values.teams}` and
+`onValueChange={(value) => form.setFieldValue('teams', value)}`.
+Type the array explicitly, for example
+`createForm<{ teams: number[] }>({ initialValues: { teams: [] } })`.
+`required` rejects an empty array, and `min` and `max` bound the
+number of elements.
 
-DefaultOpen задаёт только начальную видимость. Open управляет видимостью;
-onOpenChange сообщает запрос, который владелец может принять либо отклонить.
-Для двустороннего состояния Svelte используется bind:open. Внешняя замена open
-и начальное открытие не вызывают onOpenChange и не переводят фокус в поле.
+## List visibility
+
+`defaultOpen` sets only initial visibility. `open` controls it.
+`onOpenChange` reports a request that the owner can accept or
+reject. Use `bind:open` for two-way Svelte state. External `open`
+changes and initial opening leave `onOpenChange` and field focus
+untouched.
 
 ```svelte
 <script lang="ts">
@@ -299,37 +356,45 @@ onOpenChange сообщает запрос, который владелец мо
 <Select {options} {open} onOpenChange={next => { open = next; }} />
 ```
 
-Open имеет приоритет над defaultOpen. Удаление controlled open возвращает закрытое
-uncontrolled состояние, как исходный useControlledState. Смена defaultOpen после
-mount не переоткрывает список. Disabled скрывает popup; uncontrolled состояние
-закрывается и не возвращается после enable, explicit open=true сохраняет запрос
-владельца и снова показывает popup после enable. Эти переходы не создают callbacks.
-Внешнее закрытие single очищает внутренний поиск; controlled search меняет владелец.
-Input DOM, выбранные values и focus сохраняются. Активный пункт при внешнем открытии
-учитывает выбранное single value; ArrowUp при пользовательском открытии сохраняет
-прежнее Native поведение перехода к последнему enabled option.
+`open` takes precedence over `defaultOpen`. Removing controlled
+`open` returns to closed uncontrolled state as with upstream
+`useControlledState`. Changing `defaultOpen` after mount does
+not reopen the list. Disabled hides the popup. Uncontrolled
+state closes and stays closed on re-enable. Explicit
+`open=true` preserves the owner's request and shows the popup
+when enabled again. These transitions produce no callbacks.
+External closing in single mode clears local search. The
+owner updates controlled search. Input DOM, selections, and
+focus remain. External opening accounts for the selected
+single value when choosing the active option. ArrowUp on
+user opening keeps the existing native behavior of moving
+to the last enabled option.
 
-При пустой выдаче notFoundContent=null/false/пустая строка скрывает popup, не сбрасывая
-raw open и ввод. После появления options он становится видимым. Число 0 остаётся
-видимым содержимым; исходный Select ошибочно скрывает его из-за проверки falsy.
-NotFoundContent принимает общий RenderEmptyContent, включая boolean и readonly arrays.
-Форма по-прежнему сбрасывает multiple/tags без callbacks; bind:open при этом закрывается.
-Явный controlled open продолжает принадлежать владельцу.
+With empty results, `notFoundContent=null`, `false`, or the empty
+string hides the popup and retains raw `open` and input. The
+popup returns when options appear. Numeric 0 is visible.
+Upstream Select hides it due to a falsy check.
+`notFoundContent` accepts shared `RenderEmptyContent`,
+including booleans and readonly arrays. The form still resets
+multiple and tags without callbacks and closes `bind:open`.
+Explicit controlled `open` remains with the owner.
 
-SSR всегда выводит aria-expanded=false без popup и без вызова optionRender/getter.
-После mount применяется актуальное состояние. Source React откладывает закрытие
-через MessageChannel; прежнее немедленное Native закрытие сохранено.
-Эталоны: [25 client/React SSR сценариев](../../../tests/browser/fixtures/ant-design-select-open-reference.json).
-Проверки: [браузер](../../../tests/browser/select/select-open.spec.ts),
-[SSR и публичные типы](../../../tests/package/select/select-open.ssr.test.ts).
+SSR always emits `aria-expanded=false` without a popup or
+calls to `optionRender` or the getter. Current state applies
+on mount. React defers closing through MessageChannel.
+Svelte retains immediate native closing.
+[25 client and React SSR scenarios](../../../tests/browser/fixtures/ant-design-select-open-reference.json) ·
+[Browser tests](../../../tests/browser/select/select-open.spec.ts) · [SSR and public types](../../../tests/package/select/select-open.ssr.test.ts)
 
-## Содержимое пунктов Select
+## Option content
 
-OptionRender задаёт пассивный Snippet внутри существующего native option button.
-Он получает `(option, { index })`: key/value/raw label, data с record текущей выдачи
-и groupOption=true у детей группы, false у плоских пунктов. Для header renderer не вызывается.
-Key следует правилам общего слоя данных. Дополнительные data-поля и mapped label
-имеют тип unknown, поэтому сложные значения требуют обычного TypeScript narrowing.
+`optionRender` supplies a passive Snippet inside the existing
+native option button. It receives `(option, { index })` with
+key, value, raw label, the current result record in `data`,
+and `groupOption=true` for group children or `false` for flat
+items. Group headings skip the renderer. Keys follow the
+shared data rules. Extra data fields and mapped labels are
+`unknown`, so narrow complex values in TypeScript.
 
 ```svelte
 <script lang="ts">
@@ -343,29 +408,34 @@ Key следует правилам общего слоя данных. Допо
 <Select {options} {optionRender} />
 ```
 
-Index относится к текущему порядку после фильтрации и сортировки. Обычный data сохраняет
-ссылку на исходный option; filter/sort могут создавать Source shallow copies групп.
-Key и дополнительные поля сохраняются; maxCount меняет
-доступность кнопки, но не raw disabled внутри data. Для synthetic tags и выбранных
-значений вне options передаётся соответствующий временный объект. Selected label,
-token matching, callbacks и FormData используют прежние данные, независимо от
-Snippet. Пустой renderer оставляет выбираемый пункт без содержимого. Вложенные
-интерактивные controls не допускаются семантикой native option button.
+The index follows the current order after filtering and
+sorting. Regular `data` retains the original option reference.
+Filter and sort can create upstream shallow group copies.
+Keys and extra fields are retained. `maxCount` affects
+button availability and leaves raw `disabled` in `data` intact.
+Synthetic tags and selected values outside options receive
+the corresponding temporary object. Selected labels, token
+matching, callbacks, and FormData use the existing data
+independently of the Snippet. An empty renderer leaves a
+selectable option without content. Native option buttons
+cannot contain nested interactive controls.
 
-Renderer и его отключение обновляются в открытом списке без потери input,
-query, selection и focus. В закрытом SSR optionRender не вызывается.
-Native value keys и оформление пунктов сохранены. Groups/fieldNames и raw option attrs
-подключены общим data pipeline; semantic slots описаны ниже.
-Основа — [16 исходных случаев](../../../tests/browser/fixtures/ant-design-select-option-render-reference.json),
-[браузерные проверки](../../../tests/browser/select/select-option-render.spec.ts) и
-[SSR/типизация](../../../tests/package/select/select-option-render.ssr.test.ts).
+Changing or removing the renderer in an open list preserves
+the input, query, selection, and focus. Closed SSR does
+not call `optionRender`. Native value keys and option
+styling are retained. Groups, `fieldNames`, and raw option
+attributes use the shared data pipeline. Semantic slots are
+described below. [16 upstream cases](../../../tests/browser/fixtures/ant-design-select-option-render-reference.json) ·
+[Browser tests](../../../tests/browser/select/select-option-render.spec.ts) · [SSR and types](../../../tests/package/select/select-option-render.ssr.test.ts)
 
-## Popup и семантическое оформление
+## Popup and semantic styling
 
-Вложенная панель наследует [слой владельца](../theme-context.md#layering-nested-panels).
+An embedded popup inherits its owner's layer.
+[Owner layer](../theme-context.md#layering-nested-panels)
 
-`popupRender` — обычная чистая функция, получающая origin-menu Snippet. Она
-может вернуть его, scalar/array или Snippet с origin-menu аргументом:
+`popupRender` is a pure function receiving the original menu
+Snippet. It can return that Snippet, a scalar or array, or a
+Snippet receiving the original menu as an argument.
 
 ```svelte
 <script lang="ts">
@@ -387,64 +457,84 @@ Native value keys и оформление пунктов сохранены. Gro
   styles={{ input: { color: 'navy' }, popup: { root: { maxHeight: 320 } } }} />
 ```
 
-Функция вызывается и при закрытой панели, включая SSR; возвращённый Snippet
-создаёт DOM после первого открытия и сохраняет своё состояние при закрытии.
-Смена или удаление renderer у закрытой посещённой панели применяется к её
-содержимому при следующем открытии. Snippet сохраняет обычную Svelte-реактивность.
-Null/undefined/false/пустая строка оставляют пустую пользовательскую панель,
-а не возвращают стандартное меню. Без origin-menu стрелки и Enter не выбирают
-пункты, Escape не закрывает эту панель; blur/outside сохраняют обычное поведение.
-Пользовательский popup сбрасывает FormItem status/feedback и Compact, сохраняя Form disabled/variant
-и содержимое errors/warnings.
-Стандартная панель Select сохраняет прежнее размонтирование при закрытии до
-первого использования пользовательского popup; затем сохраняется и при возврате
-к стандартному меню. AutoComplete сохраняет посещённую стандартную панель.
+The function runs even when closed, including during SSR.
+A returned Snippet creates DOM after first opening and
+retains state on close. Changing or clearing the renderer
+on a closed, previously visited popup updates its content on
+the next open. Snippets retain normal Svelte reactivity.
+`null`, `undefined`, `false`, and the empty string leave a
+custom popup empty. Without the original menu, arrows and
+Enter do not select options and Escape leaves the popup
+open. Blur and outside dismissal retain their normal
+behavior. Custom popup clears FormItem status and feedback
+and Compact while preserving Form disabled state, variant,
+errors, and warnings.
 
-`classNames` и `styles` принимают объект либо чистую функцию `({ props }) => map`.
-Metadata сохраняет заданные props с разрешёнными variant/status/disabled/size;
-функции работают и при SSR. Metadata Select не различает отсутствие `value`/`open`
-и явный `undefined`.
-Slots Select: root/prefix/suffix/input/placeholder/
-content/item/itemContent/itemRemove/clear и popup.root/list/listItem.
-`classNames.popup` также принимает строку. `prefix` — scalar/array/Snippet;
-falsy scalar, включая 0, не создаёт affix.
+Select's default panel unmounts on close until first use of
+a custom popup. After that it is retained even when switching
+back to the default menu. AutoComplete retains a visited
+default popup.
 
-CSS objects принимают camelCase свойства, числа и custom properties; собственный
-undefined удаляет ранее заданное свойство. Обновляются изменённые свойства,
-поэтому порядок shorthand/longhand и предыдущие записи сохраняют поведение
-React. В Select object style и semantic root оформляют сам control, прежние
-string style и class — внешний Native container; у AutoComplete это один root.
-RootClassName применяется к control и popup.
+`classNames` and `styles` take an object or pure function
+`({ props }) => map`. Metadata keeps supplied props with
+resolved variant, status, disabled state, and size. Functions
+also run during SSR. Select metadata treats omitted `value`
+or `open` the same as explicit `undefined`.
 
-В multiple/tags с семантическим оформлением ширина input пересчитывается при
-изменении поискового текста; смена одного fontSize не запускает измерение.
-Как в Ant Design, измерение очищает inline `styles.input.width`. Повторное
-задание того же width не восстанавливает его до следующего изменения значения
-этого свойства. SSR выводит заданную width без измерения.
+Select slots are `root`, `prefix`, `suffix`, `input`,
+`placeholder`, `content`, `item`, `itemContent`, `itemRemove`,
+`clear`, and `popup.root`, `popup.list`, and `popup.listItem`.
+`classNames.popup` also accepts a string. `prefix` is a scalar,
+array, or Snippet. A falsy scalar, including 0, leaves out the
+affix.
 
-`ConfigProvider.select` задаёт общие class/style, classNames/styles, variant,
-showSearch, иконки и boolean/object allowClear. Локальные значения перекрывают общие; вложенный
-явно заданный select record заменяет родительский. AutoComplete использует этот
-же config, сохраняя собственный allowClear=false по умолчанию.
+CSS objects accept camelCase properties, numbers, and custom
+properties. An own `undefined` clears a previously set property.
+Changed properties update individually so shorthand and
+longhand order and previous declarations follow React
+behavior. In Select, object `style` and semantic root style
+the control itself, while existing string `style` and
+`class` apply to the outer native container. AutoComplete
+has one root. `rootClassName` applies to control and popup.
 
-## Иконки и очистка Select
+In multiple and tags with semantic styling, input width
+is recalculated on search text changes. Changing only
+`fontSize` does not measure. As in Ant Design, measurement
+clears inline `styles.input.width`. Resupplying the same
+width leaves it cleared until that property's value changes.
+SSR renders the supplied width without measuring.
 
-Select и AutoComplete поддерживают `suffix`, `suffixIcon`, `loadingIcon`,
-`showSearch.searchIcon`, `menuItemSelectedIcon` и `allowClear={boolean | { clearIcon, label }}`.
-В multiple/tags Select также принимает `removeIcon`. Иконки, кроме `suffix`,
-наследуются из `ConfigProvider.select`; локальный prop имеет приоритет.
-Вложенный select record заменяет родительский целиком.
+`ConfigProvider.select` supplies shared `class`, `style`,
+`classNames`, `styles`, `variant`, `showSearch`, icons, and
+boolean or object `allowClear`. Local values take precedence.
+An explicit nested select record replaces the parent.
+AutoComplete uses the same settings and retains its
+`allowClear=false` default.
 
-`SuffixIcon` меняет стандартный значок. При отсутствии локального значения
-загрузка выбирает loadingIcon, открытый поиск — searchIcon, иначе используется
-provider suffixIcon или стрелка. Локальный `suffixIcon={null}` скрывает значок;
-при Form feedback обёртка остаётся для feedback. `Suffix` задаёт содержимое целиком,
-включая замену feedback. Его null/undefined возвращают стандартный выбор.
+## Icons and clearing
 
-`Suffix`, `menuItemSelectedIcon` и `removeIcon` принимают scalar/array либо чистую
-функцию, возвращающую scalar/array/Snippet. Статический Snippet в этих трёх props
-передавайте внутри массива или возвращайте из producer; функция считается producer.
-В остальных icon props Snippet передаётся напрямую.
+Select and AutoComplete support `suffix`, `suffixIcon`,
+`loadingIcon`, `showSearch.searchIcon`, `menuItemSelectedIcon`,
+and `allowClear={boolean | { clearIcon, label }}`. In multiple
+and tags, Select also accepts `removeIcon`. Icons except
+`suffix` inherit from `ConfigProvider.select`, with local
+props taking precedence. A nested select record replaces
+its parent in full.
+
+`suffixIcon` changes the default icon. Without a local
+value, loading uses `loadingIcon`, open search uses
+`searchIcon`, and the remaining cases use provider
+`suffixIcon` or the arrow. Local `suffixIcon={null}` hides
+the icon and retains its wrapper for Form feedback when
+present. `suffix` replaces all content including feedback.
+Its `null` or `undefined` returns to default resolution.
+
+`suffix`, `menuItemSelectedIcon`, and `removeIcon` accept a
+scalar, array, or pure function returning a scalar, array,
+or Snippet. For these three props, put a static Snippet in
+an array or return it from the producer. A function is
+treated as a producer. Other icon props take Snippets
+directly.
 
 ```svelte
 <script lang="ts">
@@ -457,60 +547,78 @@ provider suffixIcon или стрелка. Локальный `suffixIcon={null}
   allowClear={{ clearIcon: '×', label: 'Очистить выбор' }} aria-label="Значение" />
 ```
 
-Suffix producer получает один новый объект с собственными полями
-`{ searchValue, open, focused, showSearch, loading }`; отсутствующая loading остаётся
-undefined. Функция вызывается также при закрытом control и SSR, поэтому не должна
-изменять состояние. В AutoComplete searchValue — основное value, без временного
-backfill. Omitted suffixIcon у AutoComplete скрывает стандартную иконку, включая
-provider defaults; собственный `suffixIcon={undefined}` включает стандартный выбор.
-Собственный suffix и Form feedback работают при этом независимо.
+A suffix producer receives one new object with its own
+`{ searchValue, open, focused, showSearch, loading }` fields.
+Missing `loading` remains `undefined`. The function also
+runs on closed controls and during SSR, so keep it pure.
+In AutoComplete, `searchValue` is the main `value` without
+temporary backfill. Omitted `suffixIcon` hides the default
+icon, including provider defaults. Own
+`suffixIcon={undefined}` enables default selection. A custom
+suffix and Form feedback work independently.
 
-MenuItemSelectedIcon producer получает `{ value, disabled, isSelected }` для
-каждого leaf option; value учитывает fieldNames, disabled — состояние строки и
-maxCount. AutoComplete передаёт isSelected=false. Статическая truthy иконка видна
-только у выбранного пункта; возвращённый producer undefined использует исходный
-fallback. RemoveIcon producer вызывается с одним аргументом undefined только
-для кнопки удаления обычного closable tag; custom tagRender и сводный tag его не вызывают.
-Стандартные SVG, wrapper classes и обработка мыши следуют Ant Design 6.6.8.
+A `menuItemSelectedIcon` producer gets
+`{ value, disabled, isSelected }` for each leaf option.
+`value` honors `fieldNames`, and `disabled` reflects row
+state and `maxCount`. AutoComplete passes `isSelected=false`.
+A static truthy icon is shown only on a selected option.
+A producer returning `undefined` uses the upstream fallback.
+A `removeIcon` producer receives a single `undefined` argument
+only for a regular closable tag's remove button. Custom
+`tagRender` and the summary tag do not call it. Default
+SVGs, wrapper classes, and mouse handling follow Ant Design
+6.6.8.
 
-AllowClear object заменяет содержимое и доступное имя кнопки. Falsy clearIcon
-использует «×»; label='' сохраняет пустую строку, null/undefined используют 'Clear'.
-Boolean true сохраняет локализованное имя Native; прежний AutoComplete Snippet
-clearIcon без label также сохраняет его. При очистке multiple/tags, уже достигшего
-maxCount, очищается выбор, а старый поиск не сбрасывается и onSearch не вызывается.
-Controlled search меняет владелец. Прежний single Select с локальным управляемым
-поиском сохраняет query при очистке выбранного значения без дополнительного onSearch('');
-после закрытия этот скрытый query не оставляет видимой кнопку очистки.
-OnInputKeyDown получает input event после исходного prevention стрелок;
-его preventDefault не отменяет навигацию, а stopPropagation прекращает её
-в открытом списке. Нативный Select onkeydown по-прежнему может отменить обработку.
-Пользовательские иконки сохраняют mousedown/click и фокус editor при выборе;
-это также проверяется с обычными декларативными обработчиками Svelte.
+An `allowClear` object replaces the button's content and
+accessible name. Falsy `clearIcon` uses `×`. `label=''` preserves
+the empty string. `null` and `undefined` use `Clear`.
+Boolean `true` retains the native localized name, as does the
+existing AutoComplete `clearIcon` Snippet without a label.
+Clearing multiple or tags at `maxCount` clears selection
+and leaves the old search and `onSearch` untouched. The
+owner updates controlled search. Existing single Select
+with locally managed search retains the query when clearing
+a selection without an extra `onSearch('')`. After close, that
+hidden query does not keep the clear button visible.
 
-[Браузерная сверка](../../../tests/browser/select/select-icons.spec.ts) охватывает 15 React owners
-и 195 действий, [SSR](../../../tests/package/select/select-icons.ssr.test.ts) — 142 состояния.
-[Дополнительные проверки](../../../tests/browser/select/select-icons-edges.spec.ts) фиксируют
-closed tags submit, maxCount и keyboard hooks. Полные Original записи сохранены
-без потерь в gzip; [manifest](../../../tests/browser/fixtures/ant-design-select-icons-source-manifest.json)
-содержит хеши и независимые повторы, включая реальный дополнительный pure-menu pass.
-Согласованные Native editor/ref/buttons, локализованные имена и немедленное закрытие
-сохранены. [Отдельный manifest](../../../tests/browser/fixtures/ant-design-select-icons-boundary-source-manifest.json)
-описывает public React counterparts для простого empty и закрытия родителем;
-они не заменяют исходный корпус.
+`onInputKeyDown` receives the input event after upstream
+default prevention for arrow keys. Its `preventDefault`
+leaves navigation intact, and `stopPropagation` stops it
+in an open list. Native Select `onkeydown` can still cancel
+handling. Custom icons retain mousedown and click and editor
+focus on selection. This is also checked with standard
+declarative Svelte handlers.
 
-## Замена root и input Select
+The browser comparison covers 15 React owners and 195 actions,
+and SSR covers 142 states. Additional checks cover closed
+tags submission, `maxCount`, and keyboard hooks. Full original
+records are stored losslessly in gzip. The manifest lists
+hashes and independent runs, including an additional
+pure-menu run. Native editor, ref, buttons, localized names,
+and immediate closing are preserved. A separate manifest
+describes public React comparisons for plain empty content
+and parent-driven closing, alongside the original corpus.
+[Browser comparison](../../../tests/browser/select/select-icons.spec.ts) · [SSR](../../../tests/package/select/select-icons.ssr.test.ts) ·
+[Additional checks](../../../tests/browser/select/select-icons-edges.spec.ts) · [Manifest](../../../tests/browser/fixtures/ant-design-select-icons-source-manifest.json) ·
+[Public React comparisons](../../../tests/browser/fixtures/ant-design-select-icons-boundary-source-manifest.json)
 
-Select и AutoComplete принимают `components={{ root, input }}`. `input` заменяет
-редактор внутри стандартного поля. `root` заменяет поле целиком: стандартные
-input, content, prefix, suffix и clear не создаются, `components.input` не вызывается.
-Чистые `suffix`, semantic `classNames` и `styles` продолжают вычисляться, включая SSR.
-Ввод текста в custom root сам по себе не меняет поиск или выбранное значение.
+## Replacing the root and input
 
-Slot принимает строку тега, Snippet с `{ attributes, register }`, `{ render, props }`
-либо `{ element, props, ref }` для нативного элемента. Attributes используют имена
-Svelte DOM: `class`, `oninput`, `onkeydown`, `onfocusin`/`onfocusout` и строковый CSS style.
-Типы [SelectComponents, SelectRootContext и SelectInputContext](../../../src/lib/select/select-components.types.ts)
-экспортируются из пакета; DOM generics добавлены после прежних параметров типов.
+Select and AutoComplete accept `components={{ root, input }}`.
+`input` replaces the editor inside the default field. `root`
+replaces the entire field, omitting the default input, content,
+prefix, suffix, and clear and skipping `components.input`. Pure
+`suffix` and semantic `classNames` and `styles` still run, including
+in SSR. Typing in a custom root does not by itself change search
+or the selected value.
+
+A slot accepts a tag string, Snippet with `{ attributes, register }`,
+`{ render, props }`, or `{ element, props, ref }` for a native
+element. Attributes use Svelte DOM names such as `class`, `oninput`,
+`onkeydown`, `onfocusin`, and `onfocusout`, with CSS string style.
+`SelectComponents`, `SelectRootContext`, and `SelectInputContext`
+are exported. DOM type parameters follow the existing parameters.
+[Type declarations](../../../src/lib/select/select-components.types.ts)
 
 ```svelte
 <script lang="ts">
@@ -524,160 +632,216 @@ Svelte DOM: `class`, `oninput`, `onkeydown`, `onfocusin`/`onfocusout` и стр�
 <Select {options} components={{ input: editor }} aria-label="Значение" />
 ```
 
-Применяйте переданные attributes и регистрируйте реальный DOM через attachment.
-`register` возвращает cleanup; при SSR attachments не выполняются.
-Composite registration принимает `{ nativeElement, inputElement?, focus?, blur? }`.
-`nativeElement`/`inputElement` остаются публичными bindable props; методы доступны
-через `bind:this`. У composite без `focus`/`blur` соответствующий метод ничего не делает:
-автоматического вызова DOM-метода на `nativeElement` нет. Callback `ref` у element
-descriptor получает DOM при подключении и null при очистке; повторный React composeRef detach/attach
-при сохранённом DOM не воспроизводится.
+Apply the supplied attributes and register the actual DOM through
+an attachment. `register` returns cleanup. Attachments do not run
+in SSR. Composite registration accepts
+`{ nativeElement, inputElement?, focus?, blur? }`.
+`nativeElement` and `inputElement` remain public bindable props
+and methods are available through `bind:this`. On a composite
+without `focus` or `blur`, the corresponding method does nothing,
+with no DOM fallback on `nativeElement`. An element descriptor's
+`ref` callback gets DOM on attachment and `null` on cleanup.
+It skips React composeRef's repeated detach and attach for retained
+DOM.
 
-Generated attrs root перекрывают собственные `props`, внутренние callbacks идут
-перед собственными. Root не получает generated id/class/style/value/disabled/placeholder;
-нужные свойства полного replacement задаёт его renderer. У input собственные `props`
-перекрывают generated attrs, включая value/class/style, и собственные callbacks идут первыми.
-`SelectInputOwnProps` допускает `style: SelectStyle`: CSS object, строку или null.
-Передаваемый `context.attributes.style` остаётся CSS-строкой; own style root
-сохраняет прежний DOM-тип.
-Для AutoComplete существующий `children(control)` имеет приоритет над input slot;
-его прежний register action сохраняется.
+Generated root attributes override custom `props`, and internal
+callbacks run before custom ones. The root receives no generated
+ID, class, style, value, disabled state, or placeholder. The
+renderer supplies the replacement's attributes. For an input,
+custom `props` override generated attributes, including value,
+class, and style, and custom callbacks run first.
+`SelectInputOwnProps` allows `style: SelectStyle` as a CSS object,
+string, or `null`. `context.attributes.style` remains a CSS string
+and the root's own style retains its DOM type. AutoComplete's
+existing `children(control)` takes precedence over the input slot
+and keeps its register action.
 
-[Эталон и manifest](../../../tests/browser/fixtures/ant-design-select-components-source-manifest.json)
-содержат 13 независимо повторённых owners, 138 действий и 51 SSR-состояние
-для single Select и combobox. [Отдельная SSR→hydration сверка](../../../tests/browser/select/select-components-hydration.spec.ts)
-добавляет 6 owners и 34 действия: pre-hydration draft/caret, defaultValue,
-textarea/composite refs, DOM identity при hydrate и replacement, события и cleanup.
-[Original manifest](../../../tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json)
-сохраняет обе SSR-сериализации и независимый whole-byte-equal повтор.
-При замене input на root blur исчезающего default root не вызывается.
-При полном удалении сфокусированного AutoComplete сохранён прежний синхронный
-connected Native blur до DOM removal/onDestroy; Source не вызывает blur.
-Исходный поздний onOpenChange(false) после удаления сохранён raw; Native отменяет
-pending close и не вызывает поздние callbacks.
-[Отдельный Original-корпус multiple/tags](../../../tests/browser/fixtures/ant-design-select-components-modes-source-manifest.json)
-содержит 6 owners, 72 действия и 29 SSR-состояний с input/textarea и function/element slots.
-Native сохраняет раздельные значения и keys для `1` и `'1'`. Канонический Source tags
-после React key collision оставляет в popup дополнительную устаревшую строку `Number one`.
-[Парный Original с явными option.key](../../../tests/browser/fixtures/ant-design-select-components-modes-keyed-source-manifest.json)
-снят отдельно: 6 owners/72 действия/29 SSR, first/repeat побайтно совпадают.
-Он используется только для popup DOM после точного collision gate; root/editor/layout,
-model, events и producer ledgers сверяются с исходным Source. Обе полные raw версии
-сохраняются. Все 6 Source CSR diagnostics относятся к disabled и numeric tags.
-Измерение ширины зависит от входного value/syncWidth; обновление только own width
-применяет CSS без нового измерения. CSSOM сохраняет историю logical props отдельно
-от ширины, очищенной измерением. [Composite probe](../../../tests/browser/fixtures/ant-design-select-components-modes-composite-reference.json.gz)
-сохраняет отдельный Source CSR TypeError при чтении handle.style и одно успешное SSR-состояние.
-[Два Native safety-случая](../../../tests/browser/select/select-components-modes-composite-safe.spec.ts)
-измеряют физический typed textarea за composite handle без style/scrollWidth shim.
-[Original-корпус own style AutoComplete](../../../tests/browser/fixtures/ant-design-select-components-ac-style-source-manifest.json)
-содержит 2 owners, 20 действий и 16 SSR-состояний: при syncWidth=false own width
-сохраняется после ввода, disabled и clear. Без input slot сохраняется прежний
-Native путь стандартного редактора и тегов.
-[Корпус инициализации CSS-объектов](../../../tests/browser/fixtures/ant-design-select-components-own-style-init-source-manifest.json)
-содержит 2 intrinsic редактора, 8 клиентских путей и 96 действий, а также
-2 начальных SSR-состояния с обеими сериализациями React. Он охватывает CSR,
-обычную гидратацию, различающиеся CSS-объекты сервера и клиента и изменение
-DOM-стиля перед гидратацией. CSR применяет свойства в исходном порядке;
-гидратация сохраняет фактический CSSOM и исходный текст style до первого
-изменения стилей. Клиентские props отдельно задают историю последующих setter updates.
-Intrinsic INPUT/TEXTAREA при CSR используют динамические элементы Svelte.
-При гидратации публичный Svelte `createRawSnippet` получает исходный редактор
-непосредственно из текущего SSR-поддерева, сохраняя DOM, фокус и выделение.
-SSR разметку input/textarea по-прежнему создаёт компилятор Svelte. Прежние root-ветки,
-DOM-строка `context.attributes.style` и CSS-string API сохранены. Публичный ref
-видит начальные стили и textarea defaultValue до измерения ширины.
-Повторы CSR/гидратации отличаются только порядком computed custom properties,
-который [CSSOM не определяет](https://drafts.csswg.org/cssom/#dom-window-getcomputedstyle):
-все имена, значения и priorities проверяются, порядок обычных computed properties,
-авторских inline declarations и DOM-атрибутов остаётся строгим. Оба полных raw
-варианта сохранены. Прежние Native light scheme, private token aliases и
-[исключение deprecated seed vars](../design-tokens.md) учитываются отдельно.
-Отдельные минифицированные клиентская и SSR-сборки публичного пакета проверены
-на тех же 8 путях и 96 действиях. Два SSR-состояния не обращаются к DOM;
-после удаления и через 1000 ms все учитываемые observers, timers, frames и ports
-освобождены. [Проверка режима сборки](../../../tests/package/select/select-components-own-style-popup-build-mode.test.ts)
-явно различает фиксированные dev/prod hash-классы popup; остальные классы,
-их порядок, CSSOM и геометрия проверяются по прежнему эталону.
-[Отдельный корпус владения гидратацией](../../../tests/browser/fixtures/ant-design-select-components-hydration-ownership-source-manifest.json)
-проверяет независимые SSR-корни в одном документе и прямые targets в открытом
-и закрытом ShadowRoot без обязательного `idPrefix`. Он содержит 12 сценариев,
-16 гидратируемых корней и 60 действий; два полных Original-повтора побайтно совпадают.
-Проверяются исходный editor, первый authored ref, фокус, value/defaultValue,
-выделение и CSSOM, обновления, замена тега и независимая очистка корней.
-React layout commit и Svelte onMount, SyntheticEvent/native DOM event и deprecated
-getter свободной AutoComplete option сверяются через отдельные точные границы;
-оба полных raw снимка сохраняются.
-[20 Native-регрессий обновления редактора](../../../tests/browser/select/select-components-controlled-removal.spec.ts)
-проверяют own `undefined`/`null`, value/defaultValue, checked/defaultChecked и тело textarea.
-Начальная гидратация следует измеренной семантике React; последующие setters сохраняют
-прежнее поведение Svelte, включая отдельные правила defaults для CSR и гидратации.
-Общая гидратация family остаётся partial.
-[Отдельный responsive Original-корпус](../../../tests/browser/fixtures/ant-design-select-components-responsive-source-manifest.json)
-содержит 2 owners, 12 действий и 2 initial SSR-состояния; first/repeat побайтно совпадают.
-Он охватывает direct input и Fragment с live adornment: fitting измеряет весь suffix,
-сохраняет Source rest-width cache, offset и render cap. При SSR data tag wrappers
-не создаются, rest «+ 4 ...» скрыт, suffix имеет order 0. При initial open сначала
-публикуется измеренная ширина ещё закрытого input, затем открывается список.
-Сохраняются Native remove accessibility/inert и cleanup. В CSR позиция одного style-атрибута
-generated INPUT выделена как Blink lazy CSSOM boundary; в SSR отдельно учитывается
-Svelte style-attribute hoist у responsive wrappers. Две точные пустые Text anchors
-этих CSR snippets проверяются по compiler topology; authored text и SSR/hydration не затрагиваются.
-Остальные attrs, порядок/значения CSS declarations, CSSOM, boxes и полные raw остаются строгими.
-Сценарии custom editor сверяются с одним эталоном React на штатном Chromium.
-Для `input` сравниваются внешний прямоугольник, отступы и горизонтальное переполнение
-(`scrollWidth - clientWidth`). Так проверка учитывает, что движок по-разному
-включает отступы в оба измерения. В вычисленном `align-items` flex-контейнера
-`flex-start` и `flow-start` выражают одно выравнивание. Авторские декларации
-и их порядок сверяются по исходному CSSOM. [Проверки размеров и стилей](../../../tests/browser/select-components-layout-assertions.ts)
-[Корпус custom tagRender и leading prefix](../../../tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-source-manifest.json)
-добавляет 2 owners, 18 действий, 20 CSR-точек и 2 SSR-состояния с обеими
-сериализациями React. Измеряется весь Fragment-тег; ведущий prefix находится
-вне Overflow. Проверяются изменение ширины контейнера, prefix и тегов,
-поиск, восстановление prefix и реальное удаление тега. Все DOM/CSSOM/geometry
-снимки двух Source-повторов совпадают; повторные и переставленные эквивалентные
-вызовы render-функций и их исходные raw graphs сохранены отдельно.
-Аргумент tagRender сохраняет семь собственных полей в порядке Source;
-у rest value/index/onClose присутствуют со значением undefined.
-При components.input закрытие custom tag откладывается через MessageChannel,
-поэтому onOpenChange(false) следует после удаления. Оба ports закрываются
-после вызова или отмены; удаление компонента отменяет pending callback.
-[Три проверки ресурсов](../../../tests/browser/select/select-components-tag-close-safety.spec.ts)
-закрепляют обычное закрытие, отмену через Escape и немедленный unmount.
-[Отдельный Source counter](../../../tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-source-manifest.json)
-и [три клавиатурные регрессии](../../../tests/browser/select/select-components-tag-close-key.spec.ts)
-проверяют отмену pending close при уже открытом меню: ArrowDown отменяет задачу,
-ArrowUp и Ctrl+ArrowDown позволяют ей завершиться. Оба Source-повтора сохраняются
-полностью; совпадает измеренная key/open/event-name проекция, полное равенство
-хронологии render calls не заявляется.
-Отдельные минифицированные client/SSR-сборки публичного пакета проходят
-те же 18 действий, 20 CSR-сравнений и 2 SSR-состояния без DOM/resources.
-После удаления обоих owners и через 1000 ms нет учитываемых observers,
-mutations, frames, timers или открытых ports; callback- и ref-ledgers тихие.
-Общая responsive-матрица, disabled/stale custom callbacks и сложные сочетания
-style/hydration требуют дальнейшей сверки.
-[Source-корпус сохранённых onClose](../../../tests/browser/fixtures/ant-design-select-components-tag-close-handles-source-manifest.json)
-добавляет 2 owners, 12 действий, отдельное сохранение callback после initial settle
-и 2 initial SSR-состояния; CSR и SSR first/repeat совпали побайтно.
-При components.input callback сохраняет display-record, а удаление читает текущие
-records. Вызов для closable=false разрешён; устаревший callback сохраняет модель
-и отправляет onDeselect с текущей option. Отдельный cached-option counter сохраняет
-прежний payload после удаления option из options. Обычный Native remove и его
-disabled guards сохранены. Полные аргументы, descriptors, alias identities,
-события, DOM/CSSOM и все исходные diagnostics остаются в raw.
-При omitted maxTagCount Source создаёт неиспользуемый rest ReactElement через
-tagRender, но не монтирует его body/DOM. Неисполняемый Svelte Snippet не имитирует
-эти вызовы; Source-only rest records сохранены с точной проверкой семи полей
-и отсутствия body/DOM.
-[Browser](../../../tests/browser/select/select-components-tag-close-handles.spec.ts) и
-[SSR](../../../tests/package/select/select-components-tag-close-handles.ssr.test.ts) закрепляют этот объём;
-[negative guards](../../../tests/package/select/select-components-tag-close-handles-boundaries.test.ts)
-отклоняют потерянные поля, изменённые aliases и поддельные rest-вызовы.
-Прочие сочетания callbacks и renderer API остаются partial.
-[Browser](../../../tests/browser/select/select-components.spec.ts) и
-[SSR](../../../tests/package/select/select-components.ssr.test.ts) проверяют replacement DOM, события,
-полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete
-ещё не завершён: оставшиеся callback/search и motion возможности отмечены в реестре.
+The reference contains 13 independently repeated owners, 138
+actions, and 51 SSR states for single Select and combobox.
+The separate SSR-to-hydration comparison adds six owners and 34
+actions covering pre-hydration drafts and caret, `defaultValue`,
+textarea and composite refs, DOM identity on hydration and
+replacement, events, and cleanup. The original manifest stores
+both SSR serializations and a byte-identical independent repeat.
+[Reference and manifest](../../../tests/browser/fixtures/ant-design-select-components-source-manifest.json) · [SSR-to-hydration comparison](../../../tests/browser/select/select-components-hydration.spec.ts)
+· [Original manifest](../../../tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json)
+
+On input-to-root replacement, the disappearing default root's
+blur stays uncalled. Full removal of a focused AutoComplete
+retains the synchronous native blur while connected, before DOM
+removal and `onDestroy`. Upstream does not call blur. The late
+upstream `onOpenChange(false)` after removal is recorded raw.
+Svelte cancels pending close and prevents late callbacks.
+
+The separate multiple and tags reference has six owners, 72
+actions, and 29 SSR states with input and textarea and function
+and element slots. Svelte keeps distinct values and keys for
+`1` and `'1'`. After a React key collision, canonical upstream tags
+leaves a stale `Number one` row in the popup. A paired upstream run
+with explicit `option.key` was captured separately, also with six
+owners, 72 actions, and 29 SSR states. Its first and repeated
+runs match byte for byte. That comparison is used only for popup
+DOM after the exact collision check. Root, editor, layout, model,
+events, and producer logs use the original upstream run. Both raw
+versions are kept in full. All six upstream CSR diagnostics concern
+disabled and numeric tags. [Original multiple and tags reference](../../../tests/browser/fixtures/ant-design-select-components-modes-source-manifest.json)
+· [Paired run with explicit keys](../../../tests/browser/fixtures/ant-design-select-components-modes-keyed-source-manifest.json)
+
+Width measurement depends on input value and `syncWidth`. Updating
+only custom width applies CSS without measuring. CSSOM keeps
+logical property history independently of width cleared by measurement.
+The composite probe records a separate upstream CSR TypeError
+reading `handle.style` and one successful SSR state. Two Svelte
+cases measure the actual typed textarea behind a composite handle
+without a style or scrollWidth shim. The AutoComplete custom-style
+reference contains two owners, 20 actions, and 16 SSR states. With
+`syncWidth=false`, custom width survives typing, disabling, and
+clearing. Without an input slot, the existing native editor and
+tag path applies. [Composite probe](../../../tests/browser/fixtures/ant-design-select-components-modes-composite-reference.json.gz) ·
+[Two native safety cases](../../../tests/browser/select/select-components-modes-composite-safe.spec.ts) · [AutoComplete custom styles](../../../tests/browser/fixtures/ant-design-select-components-ac-style-source-manifest.json)
+
+The CSS object initialization reference contains two intrinsic
+editors, eight client paths, 96 actions, and two initial SSR states
+with both React serializations. It covers CSR, ordinary hydration,
+different server and client CSS objects, and pre-hydration DOM
+style changes. CSR applies properties in source order. Hydration
+preserves the actual CSSOM and initial style text until the first
+style update. Client props separately establish history for later
+setter updates. During CSR, intrinsic INPUT and TEXTAREA use
+Svelte dynamic elements. At hydration, public Svelte
+`createRawSnippet` takes the original editor directly from the
+current SSR subtree and preserves DOM, focus, and selection. The
+Svelte compiler still generates input and textarea SSR markup.
+Existing root branches, CSS string `context.attributes.style`, and
+the CSS-string API are preserved. The public ref sees initial
+styles and textarea `defaultValue` before width measurement.
+[CSS object initialization reference](../../../tests/browser/fixtures/ant-design-select-components-own-style-init-source-manifest.json)
+
+CSR and hydration repeats differ only in computed custom
+property order, which CSSOM leaves unspecified. All names,
+values, and priorities are checked, and order stays strict for
+ordinary computed properties, author inline declarations, and DOM
+attributes. Both raw variants are kept. Existing native light
+scheme, private token aliases, and the exclusion of deprecated seed
+variables are accounted for separately. [CSSOM specification](https://drafts.csswg.org/cssom/#dom-window-getcomputedstyle)
+· [Deprecated seed variable exclusion](../design-tokens.md)
+
+Separate minified client and SSR builds of the public package
+were checked on the same eight paths and 96 actions. Two SSR
+states avoid DOM access. Observers, timers, frames, and ports
+tracked by tests are released on removal and still clear after
+1000ms. The build-mode check distinguishes fixed dev and prod
+popup hash classes. Other classes and their order, CSSOM, and
+geometry use the existing reference. [Build-mode check](../../../tests/package/select/select-components-own-style-popup-build-mode.test.ts)
+
+The separate hydration ownership reference checks independent SSR
+roots in one document and direct targets in open and closed
+ShadowRoots without mandatory `idPrefix`. It has 12 scenarios,
+16 hydrated roots, and 60 actions. The full upstream repeats match
+byte for byte. Checks cover the original editor, first authored
+ref, focus, value and defaultValue, selection, CSSOM, updates,
+tag replacement, and independent root cleanup. React layout commit
+and Svelte onMount, synthetic and native events, and the deprecated
+getter for a free AutoComplete option have separate exact comparison
+rules. Both raw snapshots are retained.
+[Hydration ownership reference](../../../tests/browser/fixtures/ant-design-select-components-hydration-ownership-source-manifest.json)
+
+Twenty native editor update regressions check own `undefined`
+and `null`, value and defaultValue, checked and defaultChecked,
+and textarea content. Initial hydration follows measured React
+semantics. Later setters retain Svelte behavior, including distinct
+CSR and hydration defaults. Overall family hydration coverage
+remains partial. [20 native editor update regressions](../../../tests/browser/select/select-components-controlled-removal.spec.ts)
+
+The separate upstream responsive reference includes two owners,
+12 actions, and two initial SSR states. The first and repeated runs
+are byte-identical. It covers direct input and a Fragment with a
+live adornment. Fitting measures the entire suffix, preserving
+upstream summary width cache, offset, and render cap. During SSR,
+data tag wrappers are absent, the `+ 4 ...` summary is hidden, and
+suffix has order 0. On initial open, the measured width of the
+still-closed input is published first, then the list opens.
+Native remove accessibility, inert behavior, and cleanup remain.
+In CSR, the position of one generated INPUT style attribute is
+treated as a Blink lazy CSSOM difference. SSR accounts separately
+for Svelte hoisting a style attribute on responsive wrappers.
+Two exact empty Text anchors in the CSR Snippets are checked
+against compiler structure. Authored text, SSR, and hydration
+are unaffected. Other attributes, declaration order and values,
+CSSOM, boxes, and full raw snapshots remain strict.
+[Upstream responsive reference](../../../tests/browser/fixtures/ant-design-select-components-responsive-source-manifest.json)
+
+Custom editor scenarios compare with one React reference on
+the repository's standard Chromium. For `input`, compare outer
+bounds, padding, and horizontal overflow
+(`scrollWidth - clientWidth`) to account for how the engine includes
+padding differently in the two measurements. Computed flex
+`align-items` values `flex-start` and `flow-start` represent the same
+alignment. Author declarations and their order are compared
+against upstream CSSOM. [Size and style tests](../../../tests/browser/select-components-layout-assertions.ts)
+
+The custom `tagRender` and leading prefix reference adds two owners,
+18 actions, 20 CSR states, and two SSR states with both React
+serializations. It measures the entire Fragment tag. The leading
+prefix is outside Overflow. Tests cover container, prefix, and
+tag width changes, search, restoring the prefix, and actual tag
+removal. The two upstream runs have matching DOM, CSSOM, and
+geometry snapshots. Repeated and reordered equivalent render calls
+and original raw graphs stay separate. `tagRender` arguments keep
+seven own fields in upstream order. The summary has `value`, `index`,
+and `onClose` with `undefined`.
+[Custom tagRender and leading prefix reference](../../../tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-source-manifest.json)
+
+With `components.input`, custom tag closing is deferred through
+MessageChannel, so `onOpenChange(false)` follows removal. Both ports
+close after invocation or cancellation. Unmount cancels the
+pending callback. Three resource tests cover ordinary closing,
+cancellation by Escape, and immediate unmount.
+[Resource tests](../../../tests/browser/select/select-components-tag-close-safety.spec.ts)
+
+A separate upstream comparison and three keyboard regressions
+cover pending close cancellation on an already open menu.
+ArrowDown cancels the task. ArrowUp and Ctrl+ArrowDown let it
+finish. Both full upstream runs are retained. The measured
+projection of key, open state, and event name matches. Render
+call chronology is outside that comparison.
+[Upstream comparison](../../../tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-source-manifest.json) · [Three keyboard regressions](../../../tests/browser/select/select-components-tag-close-key.spec.ts)
+
+Separate minified client and SSR builds of the public package
+pass the same 18 actions, 20 CSR comparisons, and two SSR states
+without DOM or resources. After both owners are removed and after
+1000ms, no tracked observers, mutations, frames, timers, or open
+ports remain. Callback and ref logs remain quiet. The broader
+responsive matrix, disabled and stale custom callbacks, and
+complex style and hydration combinations need further comparison.
+
+The retained `onClose` reference adds two owners, 12 actions,
+a callback captured separately after initial settling, and two
+initial SSR states. CSR and SSR each match byte for byte between
+first and repeated runs. With `components.input`, the callback
+retains the display record, while removal reads current records.
+A call is allowed with `closable=false`. A stale callback leaves the
+model intact and sends `onDeselect` with the current option. A
+separate cached-option comparison retains the previous payload
+after removal from options. Ordinary native removal and its
+disabled guards are preserved. The raw data retain complete
+arguments, descriptors, alias identities, events, DOM, CSSOM, and
+original diagnostics. [Upstream retained onClose reference](../../../tests/browser/fixtures/ant-design-select-components-tag-close-handles-source-manifest.json)
+
+When `maxTagCount` is omitted, upstream creates an unused summary
+ReactElement through `tagRender` but never mounts its body or DOM.
+An unrendered Svelte Snippet does not simulate those calls. The
+upstream-only summary records retain the seven fields and absence
+of body and DOM. The negative checks reject missing fields,
+modified aliases, and fabricated summary calls. Other callback
+and renderer combinations remain partially covered.
+[Browser tests](../../../tests/browser/select/select-components-tag-close-handles.spec.ts) · [SSR tests](../../../tests/package/select/select-components-tag-close-handles.ssr.test.ts) ·
+[Negative checks](../../../tests/package/select/select-components-tag-close-handles-boundaries.test.ts)
+
+Replacement DOM, events, complete attributes and producer logs,
+refs, and cleanup are covered. The remaining Select and
+AutoComplete callback, search, and motion features are tracked
+in the registry. [Browser tests](../../../tests/browser/select/select-components.spec.ts) · [SSR tests](../../../tests/package/select/select-components.ssr.test.ts)
 
 ## Tags
 
@@ -690,55 +854,66 @@ tagRender, но не монтирует его body/DOM. Неисполняем�
 <Select mode="tags" options={[]} bind:value={tags} name="tags" allowClear />
 ```
 
-Tags сохраняет multiple UI, native FormData/required/reset, удаление, disabled,
-RTL и selected cache. Без options используется пустой массив; свободные строки
-дополняют его временными вариантами. Выбранные значения вне текущей выдачи доступны в списке
-с сохранёнными label/disabled. Число 0 и строка "0" остаются разными ключами.
-По умолчанию tags фильтрует value через uppercase substring, как source. Для
-поиска по подписи задайте showSearch.optionFilterProp="label"; string[] объединяет
-собственные поля через OR. В single/multiple без явных полей сохранён прежний
-label/NFKD поиск. Predicate filterOption перекрывает выбор полей.
+Tags mode retains multiple-selection UI, native FormData, required
+validation and reset, removal, disabled state, RTL, and the selected
+option cache. Omitted options use an empty array. Free strings add
+temporary options. Selected values outside current results remain in
+the list with their cached label and disabled state. Numeric 0 and
+string `"0"` remain distinct keys. By default, tags filters by an
+uppercase substring of `value`, as upstream. Set
+`showSearch.optionFilterProp="label"` to search labels. A string array
+matches any of the named own fields. Single and multiple without
+explicit fields retain label and NFKD search. A `filterOption` predicate
+overrides field selection.
 
-ShowSearch.filterSort сортирует результат фильтрации, включая выбранные отсутствующие
-options и synthetic tags. Comparator `(optionA, optionB, { searchValue }) => number`
-получает исходные объекты options и текущий поисковый текст; возвращаемое число
-следует правилам Array.sort. Равные элементы сохраняют исходный порядок, массив
-владельца не изменяется. Без comparator сохраняется прежний порядок. Смена callback,
-options и query отражается в открытом списке без пересоздания input или изменения
-выбранных значений. При controlled search comparator получает принятую владельцем
-строку. [Эталон порядка](../../../tests/browser/fixtures/ant-design-select-sort-reference.json)
-получен из официального UMD 6.6.8. Group sort повторяет Source: рекурсия обходит
-literal options, переименованное поле children этой рекурсией не используется.
+`showSearch.filterSort` sorts filtered results, including missing
+selected options and synthetic tags. The comparator
+`(optionA, optionB, { searchValue }) => number` gets original option
+objects and current search text. The result follows `Array.sort`.
+Equal items keep their order, and the owner's array stays intact.
+Without a comparator, prior order is preserved. Callback, option,
+and query updates affect the open list while preserving input DOM
+and selected values. With controlled search, the comparator receives
+the owner's accepted text. Group sorting follows upstream and
+recurses through literal `options`. A renamed children field is
+skipped by this recursion. [Official UMD 6.6.8 sort reference](../../../tests/browser/fixtures/ant-design-select-sort-reference.json)
 
-Enter выбирает активный вариант, включая новый. В неуправляемом закрытом списке
-сохраняется прежнее Native открытие и выбор первого варианта тем же Enter.
-При управляемом open закрытый Enter сначала отправляет непустой trimmed ввод,
-затем вызывает onInputKeyDown и запрашивает открытие, как исходный input submit.
-Повторный выбор активного выбранного варианта снимает его.
-Blur добавляет trimmed строку без дубликата; Escape закрывает
-список и сохраняет ввод. Source сохраняет пробелы в выбранном варианте списка,
-но обрезает их на blur; это различие сохранено. Новый whitespace-only вариант
-не создаётся: исходная ошибка записана в raw reference, явный option с таким value
-остаётся допустимым. Clear очищает также pending search и сообщает onSearch(''),
-кроме очистки уже достигнутого maxCount, не создавая tag; controlled search
-по-прежнему меняет владелец. React откладывает закрытие через MessageChannel:
-быстрый Escape/Enter может выбрать исходный вариант с пробелами, а Enter после
-завершения закрытия обрезает ввод. Native сохраняет немедленное закрытие и
-прежний выбор первого варианта в неуправляемом режиме; оба React наблюдения
-сохранены в manifest и проверках tags без замены старого raw reference.
+Enter selects the active option, including a new one. With an
+uncontrolled closed list, native behavior opens and selects the first
+option on the same Enter. With controlled `open`, Enter when closed
+first submits nonempty trimmed input, then calls `onInputKeyDown`
+and requests opening, as in upstream input submission. Selecting an
+already selected active option again deselects it.
 
-ShowSearch.autoClearSearchValue=false сохраняет поиск при выборе и Escape в
-multiple/tags. Blur multiple очищает локальный поиск без callback, blur tags
-завершает ввод. Остальные selection/blur/reset пути не вызывают onSearch.
+Blur adds the trimmed string without a duplicate. Escape closes
+the list and preserves input. Upstream preserves whitespace when
+selecting a list option and trims it on blur, and this distinction
+is retained. Whitespace-only implicit options are not created. The
+raw reference records the upstream issue. A supplied option with
+that value remains valid. Clear clears pending search and reports
+`onSearch('')`, except when clearing at `maxCount`, and creates no tag.
+The owner still controls search. React defers closing via MessageChannel.
+A quick Escape and Enter can select the original option with spaces.
+Enter after close completes trims input. Svelte retains immediate
+closing and first-option selection in uncontrolled mode. Both React
+observations are retained in the manifest and tags tests alongside
+the earlier raw reference.
 
-## Разделители ввода
+`showSearch.autoClearSearchValue=false` preserves search on selection
+and Escape in multiple and tags modes. Multiple blur clears local
+search without a callback. Tags blur finishes input. Other selection,
+blur, and reset paths skip `onSearch`.
 
-TokenSeparators работает в multiple/tags: readonly массив разделителей или функция
-`(input: string) => readonly string[]`. Найденный разделитель завершает все части
-строки, включая последнюю; значения дополняют выбор без дубликатов, popup закрывается.
-В tags части становятся string values, в multiple принимаются только существующие
-options с совпавшим label либо явно заданным showSearch.optionFilterProp. Числовой
-ключ не совпадает со строкой автоматически; raw пробелы непустых частей сохраняются.
+## Input separators
+
+`tokenSeparators` works in multiple and tags modes. It accepts a
+readonly array of separators or
+`(input: string) => readonly string[]`. A detected delimiter
+commits all parts, including the last. Values extend selection
+without duplicates and the popup closes. In tags, parts become
+string values. In multiple, only existing options with a matching
+label or explicit `showSearch.optionFilterProp` are accepted. Numeric
+keys are not coerced to strings. Whitespace in nonempty parts is kept.
 
 ```svelte
 <script lang="ts">
@@ -750,44 +925,46 @@ options с совпавшим label либо явно заданным showSearc
 <Select mode="tags" options={[]} bind:value={tags} tokenSeparators={[',', ';', '\n']} />
 ```
 
-Функция получает всю строку, включая восстановленные переносы вставленного текста.
-Пустой результат или единственная неизменённая строка оставляют обычный поиск.
-При IME разделение откладывается до compositionend. После разделения локальный
-поиск очищается независимо от autoClearSearchValue; controlled search меняет
-владелец. OnValueChange предшествует onSearch(''); последний вызывается, только
-если до ввода поисковая строка была непустой. Разделённый ввод не отправляет
-промежуточный onSearch с полной исходной строкой.
+The function gets the full string, including restored pasted line
+breaks. An empty result or a single unchanged string leaves regular
+search in place. IME defers splitting to `compositionend`. After
+splitting, local search clears independently of `autoClearSearchValue`.
+The owner controls controlled search. `onValueChange` precedes
+`onSearch('')`. The latter runs only if the previous search string
+was nonempty. Split input skips intermediate `onSearch` with the
+whole original string.
 
-Native paste/composition handlers сохраняют receiver input и preventDefault.
-[Raw наблюдения Source](../../../tests/browser/fixtures/ant-design-select-token-separators-reference.json)
-включают два намеренно исправленных случая: multiple не добавляет disabled option,
-а tags не создаёт неявный whitespace-only value. Уже выбранные disabled значения
-сохраняются, явный пробельный option допускается; дефекты upstream остаются в raw data
-для отдельного разбора.
+Native paste and composition handlers retain the input receiver and
+`preventDefault`. Svelte corrects two recorded upstream cases:
+multiple skips disabled options and tags skips implicit
+whitespace-only values. Existing disabled selections are preserved,
+and explicit whitespace options are valid. The upstream defects
+remain in raw data. [Raw upstream observations](../../../tests/browser/fixtures/ant-design-select-token-separators-reference.json)
 
-## Длина текста тегов
+## Tag text length
 
-MaxTagTextLength ограничивает только видимый текст multiple/tags и добавляет
-исходное `...` при усечении. Полные label/title, имена кнопок удаления и values
-сохраняются. Single игнорирует ограничение. Длина считается в UTF-16 units, как в
-rc-select; Native дополнительно не разрывает корректную surrogate pair. Усечённая
-половина emoji исключается целиком, сохраняя остальные правила slice, включая
-combining/ZWJ текст. Это не подсчёт grapheme clusters.
+`maxTagTextLength` limits only visible multiple and tags text and
+appends the original `...` on truncation. Full labels and titles,
+remove button names, and values are preserved. Single ignores the
+limit. Length uses UTF-16 code units as in rc-select. Svelte keeps
+valid surrogate pairs intact. A cut emoji half is removed while
+retaining other slice behavior, including combining and ZWJ text.
+Grapheme clusters can still be split.
+The shared reference contains the upstream broken-pair outputs.
+Changing length preserves input DOM and values without value
+callbacks. [Shared Select and Cascader references](../../../tests/browser/fixtures/ant-design-select-tag-text-reference.json)
 
-[Общие эталоны Select/Cascader](../../../tests/browser/fixtures/ant-design-select-tag-text-reference.json)
-включают исходные broken-pair результаты. Изменение длины не пересоздаёт input,
-не меняет выбранные значения и не вызывает value callbacks.
+## Visible tag count
 
-## Количество видимых тегов
-
-MaxTagCount ограничивает отображение multiple/tags числом либо значением responsive;
-остальные выбранные values остаются в FormData, reset, cache и Backspace.
-Сводный тег по умолчанию
-показывает `+ N ...` без кнопки удаления. MaxTagPlaceholder заменяет его строкой,
-числом, boolean либо Snippet со скрытыми SelectOmittedTag в исходном порядке.
-У записей сохраняются typed value/key, полный label и disabled. Null/undefined
-выбирают default; false оставляет пустой сводный тег. Scalar content задаёт title,
-Snippet управляет своим содержимым. Single игнорирует обе настройки.
+`maxTagCount` limits visible tags in multiple and tags modes to a
+number or `responsive`. Other selections remain in FormData, reset,
+cache, and Backspace. The summary tag defaults to `+ N ...` without
+a remove button. `maxTagPlaceholder` replaces it with a string,
+number, boolean, or Snippet receiving omitted `SelectOmittedTag`
+records in source order. Records preserve typed value and key,
+full label, and disabled state. `null` and `undefined` use the default.
+`false` leaves an empty summary. Scalar content sets a title, and
+a Snippet owns its content. Single ignores both settings.
 
 ```svelte
 <script lang="ts">
@@ -802,30 +979,34 @@ Snippet управляет своим содержимым. Single игнори�
   maxTagPlaceholder={omittedTags} />
 ```
 
-Числовое ограничение следует Array.slice Source, включая fractional/negative count;
-NaN сохраняет весь список вместо исходного исчезновения tags. Скрываемая native
-кнопка удаления передаёт фокус input, если владелец не выбрал другой control.
-[Эталоны](../../../tests/browser/fixtures/ant-design-select-tag-count-reference.json) сохраняют
-Source NaN и responsive observations.
+Numeric limits follow upstream `Array.slice`, including fractional
+and negative counts. `NaN` retains all tags where upstream hides
+them. A native remove button being hidden moves focus to the input
+unless the owner selected another control. The reference retains
+upstream NaN and responsive observations. [References](../../../tests/browser/fixtures/ant-design-select-tag-count-reference.json)
 
-MaxTagCount="responsive" измеряет доступную ширину, tags, сводный тег и текущий
-ввод через общий с Cascader ResizeObserver/RAF механизм. Скрытые tags остаются
-измеряемыми вне flow, с aria-hidden/inert; до браузерного измерения SSR показывает
-все выбранные значения. Смена ширины, текста и поиска не меняет values или DOM input;
-ресурсы очищаются при выходе из responsive/unmount.
-Измеряются только собственные элементы content; controls внутри maxTagPlaceholder
-не заменяют поисковое поле при расчёте ширины. Сначала проверяется, помещается
-ли весь список: длинный custom rest не скрывает теги, для которых хватает места.
-[Raw геометрия](../../../tests/browser/fixtures/ant-design-select-responsive-tags-reference.json)
-сохраняет это исключение upstream с отдельными замерами доступной и занятой ширины.
+`maxTagCount="responsive"` measures available width, tags, summary,
+and current input through the ResizeObserver and frame mechanism
+shared with Cascader. Hidden tags remain measurable out of flow
+with `aria-hidden` and `inert`. Before browser measurement, SSR shows
+all selections. Width, text, and search changes preserve values and
+input DOM. Resources are released on leaving responsive mode or
+unmounting. Measurement uses only the content's own elements.
+Controls inside `maxTagPlaceholder` do not replace the search field
+in width calculation. The full list is checked first. A long custom
+summary leaves tags visible when they all fit. The raw reference
+records the upstream exception and separate available and used
+widths. [Raw geometry](../../../tests/browser/fixtures/ant-design-select-responsive-tags-reference.json)
 
-## Пользовательский рендер тегов
+## Custom tag rendering
 
-TagRender — Svelte Snippet с SelectTagInfo. Обычный tag получает typed value,
-index, option disabled, closable и onClose(event?). Label — Snippet с уже усечённым
-текстом. Сводный tag получает isMaxTag=true, disabled=false, closable=false,
-с собственными value/index/onClose: undefined; его label использует maxTagPlaceholder. Single игнорирует
-renderer. Исходные selected values и поля формы сохраняются.
+`tagRender` is a Svelte Snippet with `SelectTagInfo`. A regular tag
+receives typed value, index, option disabled state, `closable`, and
+`onClose(event?)`. `label` is a Snippet with the truncated text.
+The summary receives `isMaxTag=true`, `disabled=false`,
+`closable=false`, and own `value`, `index`, and `onClose` fields set to
+`undefined`. Its label uses `maxTagPlaceholder`. Single ignores
+the renderer. Selected values and form fields remain.
 
 ```svelte
 <script lang="ts">
@@ -843,75 +1024,86 @@ renderer. Исходные selected values и поля формы сохраня
 <Select mode="tags" bind:value={values} tagRender={customTag} />
 ```
 
-Mousedown custom wrapper переключает popup без принудительного фокуса input;
-обработчик дочернего control может остановить его, как в примере. OnClose удаляет
-разрешённое значение, сохраняя текущий фокус; стандартные Native remove buttons
-по-прежнему возвращают фокус input. Renderer управляет собственными стилями,
-title и доступными controls. Numeric/responsive overflow и смена renderer после
-mount сохраняют поиск и DOM input.
+Mousedown on a custom wrapper toggles the popup without forcing
+input focus. A child control can stop it, as shown. `onClose`
+removes an enabled value and retains current focus. Native remove
+buttons still return focus to the input. The renderer owns styles,
+title, and accessible controls. Numeric and responsive overflow
+and renderer changes after mount preserve search and input DOM.
 
-[Raw metadata/events](../../../tests/browser/fixtures/ant-design-select-tag-render-reference.json)
-сохраняют source disabled-click, отправляющий onOpenChange(true) при закрытом popup.
-Native disabled не отправляет запрос открытия. Согласованный single label в input
-также сохраняется; React использует отдельный span.
+The raw reference records an upstream disabled click sending
+`onOpenChange(true)` with a closed popup. Svelte skips that request
+when disabled. The existing single label remains in the input,
+where React uses a separate span. [Raw metadata and events](../../../tests/browser/fixtures/ant-design-select-tag-render-reference.json)
 
-## Ограничение выбора
+## Selection limit
 
-MaxCount задаёт максимум выбранных значений в multiple/tags; single его игнорирует.
-На лимите новые варианты недоступны, выбранные enabled options можно снять,
-удаление и clear продолжают работать. Поисковый ввод на лимите не меняет query и
-не вызывает onSearch. Переданные value/defaultValue, включая значения сверх
-уменьшенного лимита, сохраняются. Смена лимита обновляет список без пересоздания
-input, сброса фокуса или выбранных полей формы.
+`maxCount` caps selected values in multiple and tags modes.
+Single ignores it. At the limit, new options are disabled, and
+selected enabled options can be deselected. Remove and clear
+still work. Search input at the limit leaves the query and
+`onSearch` untouched. Supplied values and defaults are retained,
+including values above a reduced limit. Limit changes update
+the list without replacing input or resetting focus or selected
+form fields.
 
-При tokenSeparators число сырых частей ограничивается оставшимися местами до
-lookup, disabled-проверки и удаления дубликатов, как в Source: повтор или неизвестная
-опция может оставить место незаполненным. Нулевой/отрицательный maxCount запрещает
-новые добавления; NaN и undefined не задают лимит, Infinity его не ограничивает.
+With `tokenSeparators`, the raw parts are capped by remaining
+slots before lookup, disabled checks, and deduplication, as
+upstream. A duplicate or unknown option can leave a slot
+unused. Zero or negative `maxCount` prevents new values. `NaN`
+and `undefined` set no limit, and infinity is unlimited.
 
-[Raw замеры](../../../tests/browser/fixtures/ant-design-select-max-count-reference.json)
-сохраняют исходный обход maxCount через controlled search на Enter/blur.
-Native не добавляет такие сверхлимитные tags; query по-прежнему меняет владелец.
+The raw measurements record bypassing `maxCount` via controlled
+search on Enter or blur. Svelte blocks those over-limit tags.
+The owner still updates the query. [Raw measurements](../../../tests/browser/fixtures/ant-design-select-max-count-reference.json)
 
-## Удалённый поиск
+## Remote search
 
-Select принимает loading, notFoundContent и onPopupScroll. Поиск настраивается
-через текущий API Ant Design 6.6.8: showSearch={{ searchValue, onSearch, filterOption }}.
-Одноимённые deprecated top-level props удалены. Boolean showSearch включает
-встроенный поиск. FilterOption=false
-полностью отключает локальную фильтрацию, true сохраняет прежний поиск по label;
-callback (search, option) позволяет собственную фильтрацию непустого запроса.
-Для явных Source fields используется optionFilterProp, для поведения при выборе —
-autoClearSearchValue в том же объекте showSearch.
+Select accepts `loading`, `notFoundContent`, and `onPopupScroll`.
+Configure search with the Ant Design 6.6.8 API
+`showSearch={{ searchValue, onSearch, filterOption }}`. Deprecated
+top-level props with those names are removed. Boolean `showSearch`
+enables built-in search. `filterOption=false` disables local
+filtering, and `true` retains label search. A
+`(search, option)` callback supplies custom filtering for a
+nonempty query. In the same `showSearch` object, set
+`optionFilterProp` for explicit upstream fields and
+`autoClearSearchValue` for selection behavior.
 
-SearchValue управляет текстом поиска, onSearch получает пользовательский ввод.
-Владелец может отклонить запрос, оставив searchValue прежним; внешняя замена текста
-не вызывает onSearch. Без searchValue используется внутренний текст. Выбор,
-закрытие и reset по умолчанию очищают внутренний поиск без onSearch; исключения
-tags/autoClearSearchValue описаны выше. При управляемом поиске
-владелец сам очищает searchValue, если это нужно. Поисковый текст не попадает в
-FormData и не меняет выбранные value. OnSearch не имеет встроенного debounce.
+`searchValue` controls the query, and `onSearch` receives user
+input. The owner can reject an update by keeping `searchValue`
+unchanged. External text changes skip `onSearch`. Without
+`searchValue`, text is local. Selection, closing, and reset clear
+local search by default without `onSearch`, subject to the tags
+and `autoClearSearchValue` rules above. The owner clears controlled
+search when needed. Search text is excluded from FormData and
+leaves selected values intact. `onSearch` has no built-in debounce.
 
-Loading показывает spinner и aria-busy, сохраняя доступность уже выданных options.
-При пустой выдаче по умолчанию выводится локализованный текст loading/empty;
-notFoundContent заменяет его общим RenderEmptyContent; null/false/пустая строка
-скрывает пустой popup, 0 остаётся видимым.
-При отсутствии local notFoundContent используется ConfigProvider.renderEmpty('Select');
-его falsy результат выбирает simple small Empty. Без callback сохраняется прежний
-локализованный текст. Остальные правила — в [общем справочнике](../render-empty.md).
-Ошибка не является отдельным upstream prop: используйте status="error" и
-notFoundContent, при необходимости внешний alert и кнопку повтора. Фокус в controls
-кастомного пустого содержимого сохраняет popup, выход наружу закрывает его.
-Native input blur-callback остаётся нативным. Для кнопки
-внутри popup предотвращайте pointerdown default, если нужно сохранить фокус поля;
-дублируйте действие вне popup для последовательной клавиатурной навигации.
-OnPopupScroll получает native scroll event с currentTarget=listbox; решение о
-следующей странице и объединение options остаются у потребителя.
+Loading shows a spinner and `aria-busy` while existing options
+remain available. Empty results default to localized loading or
+empty text. `notFoundContent` replaces it with shared
+`RenderEmptyContent`. `null`, `false`, and the empty string hide
+the empty popup, while 0 stays visible. Without local
+`notFoundContent`, Select uses
+`ConfigProvider.renderEmpty('Select')`. A falsy result uses the
+simple small Empty. Without that callback, the existing localized
+text is used. [Shared empty-state rules](../render-empty.md)
 
-Например, для поиска по справочнику сотрудников передайте введённую строку
-своему API. В этом примере `/api/members?q=…` возвращает массив объектов
-`{ value: string, label: string }`. При новом вводе или удалении компонента
-Svelte отменяет предыдущий запрос через `getAbortSignal()`.
+Upstream has no separate error prop. Use `status="error"` and
+`notFoundContent`, with an external alert and retry button when
+needed. Focus within custom empty-content controls keeps the popup
+open. Moving outside closes it. Input blur remains native. For
+a button inside the popup, prevent pointerdown default if field
+focus must stay in place. Provide the same action outside the
+popup for sequential keyboard navigation. `onPopupScroll` receives
+a native scroll event with the listbox as `currentTarget`. The
+consumer chooses when to fetch the next page and merge options.
+
+For an employee directory, send the query to your API. This
+example expects `/api/members?q=…` to return an array of
+`{ value: string, label: string }`. On new input or component
+removal, Svelte cancels the previous request through
+`getAbortSignal()`.
 
 ```svelte
 <script lang="ts">

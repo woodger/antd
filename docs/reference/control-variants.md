@@ -67,7 +67,7 @@ selection, selected values, and FormData. Change callbacks run for their normal
 triggers independently of the variant update. Native events, bindings, semantic
 styles, and theme tokens keep their contracts.
 
-`Select` and `AutoComplete` share provider settings. [Select appearance and state](components/select.md#оформление-и-состояние)
+`Select` and `AutoComplete` share provider settings. [Select appearance and state](components/select.md#styling-and-state)
 TreeSelect also supports `classNames`, `styles`, and `switcherIcon`. [TreeSelect](components/tree-select.md)
 Card and Meta also support class, style, and semantic configuration. [Card](components/card.md)
 `MentionsComponentConfig` belongs to the provider, and the existing `MentionsConfig`

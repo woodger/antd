@@ -8,7 +8,7 @@ shared variant, class, style, and separator. Local props take precedence.
 A nested provider object replaces the parent in full. RangePicker inherits
 semantic classes and styles, the suffix icon, and clear settings from
 `ConfigProvider.datePicker`. Local `prefix`, `classNames`, and `styles` follow the
-shared picker rules. [DatePicker rules](date-picker.md#семантическое-оформление-и-настройки-провайдера)
+shared picker rules. [DatePicker rules](date-picker.md#semantic-styling-and-provider-settings)
 
 ```svelte
 <script lang="ts">
@@ -73,13 +73,13 @@ event API remains outside the port.
 `components.input` receives `range: 'start' | 'end'` for each endpoint.
 Classes, mask, and form attributes go in attributes. StartInput and endInput
 bindings still expose HTMLInputElement. Connect a custom textarea through
-register. Replace OK through components.button. [Editor and button context](date-picker.md#редактор-и-кнопка-подтверждения)
+register. Replace OK through components.button. [Editor and button context](date-picker.md#editor-and-confirmation-button)
 
 Both range calendars use the snippet for the current mode. Range identifies the
 active endpoint. The second calendar's pickerValue is shifted to the next
 period, and its onPickerValueChange converts it back to the first calendar's date.
 HoverRangeValue contains the preview range. If highlighting only one candidate
-date, it is passed as hoverValue. [Panel context](date-picker.md#пользовательские-панели)
+date, it is passed as hoverValue. [Panel context](date-picker.md#custom-panels)
 
 Checks cover SSR without browser APIs, input, errors, clear, focus transitions,
 time confirmation, constraints and from, nullable endpoints, controlled

@@ -33,7 +33,7 @@ A nested panel inherits the owner layer. PopupRender, prefix, semantic className
 and styles, and shared ConfigProvider.select follow Select except for the
 suffix, item, itemContent, and itemRemove slots, which are absent in AutoComplete.
 Consumers own data loading, debounce, and stale-response protection.
-[Owner layer](../theme-context.md#layering-nested-panels) · [Select reference](select.md#popup-и-семантическое-оформление)
+[Owner layer](../theme-context.md#layering-nested-panels) · [Select reference](select.md#popup-and-semantic-styling)
 
 Open and defaultOpen control popup visibility. Without options or nonempty
 notFoundContent, it stays hidden even with open=true. SSR leaves it closed
@@ -108,7 +108,7 @@ headings and entries outside the virtual window. The renderer changes option
 content while preserving raw option, selected label, title, and filtering.
 After the list has been opened, a closed list applies a new renderer to cached
 options. Its next opening takes current options. SSR leaves optionRender
-inactive. [Shared option data](select.md#данные-options-и-fieldnames)
+inactive. [Shared option data](select.md#option-data-and-fieldnames)
 
 LabelRender is a pure function with Select metadata. Null and undefined fall
 back to raw value. It also works in SSR. The standard editor keeps a string
@@ -122,8 +122,8 @@ and allowClear follow the shared icon rules. Components.root and
 components.input follow the shared replacement API. Children(control) takes
 precedence over components.input. Components.root replaces the whole field
 and bypasses both editor renderers. Upstream motion and generic numeric
-and object values remain outside the port. [Icon settings](select.md#иконки-и-очистка-select) ·
-[Field replacement API](select.md#замена-root-и-input-select)
+and object values remain outside the port. [Icon settings](select.md#icons-and-clearing) ·
+[Field replacement API](select.md#replacing-the-root-and-input)
 
 With components.input, the editor wrapper keeps at least one text line of
 height after typing and for a nonempty initial value. Set styles.content.minHeight
