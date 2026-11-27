@@ -152,6 +152,17 @@
     return { classes, styles: slots };
   });
 
+  function stepColor(active: boolean, index: number): string {
+    if (!active) {
+      return railColor ?? '';
+    }
+    if (Array.isArray(strokeColor)) {
+      return strokeColor[index] ?? '';
+    }
+
+    return typeof strokeColor === 'string' ? strokeColor : '';
+  }
+
   onMount(() => {
     nativeElement = host;
     return () => { nativeElement = undefined; };
@@ -246,7 +257,7 @@
       {#each stepLayout.items as active, index}
         <div class={[`${prefix}-steps-item`, active && `${prefix}-steps-item-active`,
           semantics.classes.track]} data-ant-progress-part="step"
-          style={`background-color: ${active ? (Array.isArray(strokeColor) ? strokeColor[index] : typeof strokeColor === 'string' ? strokeColor : '') ?? '' : railColor ?? ''};`
+          style={`background-color: ${stepColor(active, index)};`
             + `width: ${stepLayout.width}px;`
             + `height: ${stepLayout.height}px;${semantics.styles.track ?? ''}`}></div>
       {/each}
