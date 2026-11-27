@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onDestroy, onMount, tick } from 'svelte';
-  import Icon from './Icon.svelte';
-  import { useConfig } from './config-context';
-  import { useComponentTheme } from './theme-component.svelte';
+  import Icon from '../Icon.svelte';
+  import { useConfig } from '../config-context';
+  import { useComponentTheme } from '../theme-component.svelte';
   import { getAlertPrefixCss } from './alert-prefix.engine';
   import { resolveAlertClose } from './alert.engine';
-  import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import RenderContent from './RenderContent.svelte';
+  import ThemeScopeStyle from '../ThemeScopeStyle.svelte';
+  import RenderContent from '../RenderContent.svelte';
   import { closeAlert, focusAfterAlert } from './alert.dom';
   import type { AlertContent, AlertProps, AlertSemanticSlots } from './alert.types';
 

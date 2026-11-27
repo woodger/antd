@@ -56,7 +56,7 @@
   import type { SkeletonConfig } from './skeleton.types';
   import type { EmptyConfig } from './empty.types';
   import type { ResultConfig } from './result.types';
-  import type { AlertConfig } from './alert.types';
+  import type { AlertConfig } from './alert/alert.types';
   import type { CollapseConfig } from './collapse.types';
   import type { SegmentedConfig } from './segmented.types';
   import type { SpaceConfig } from './space.types';

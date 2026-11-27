@@ -1,6 +1,6 @@
 <script lang="ts">
   import Alert from './Alert.svelte';
-  import RenderContent from './RenderContent.svelte';
+  import RenderContent from '../RenderContent.svelte';
   import type { AlertErrorBoundaryProps } from './alert-error-boundary.types';
 
   let {

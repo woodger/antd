@@ -1,4 +1,4 @@
-import template from './vendor/alert-prefix.css.js';
+import template from '../vendor/alert-prefix.css.js';
 
 const rootStates = new Set([
   '', '-success', '-info', '-warning', '-error', '-filled', '-outlined', '-with-description',

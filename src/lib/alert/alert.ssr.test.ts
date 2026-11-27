@@ -2,7 +2,7 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import Alert from './Alert.svelte';
-import Icon from './Icon.svelte';
+import Icon from '../Icon.svelte';
 
 const snippet = (html: string) => createRawSnippet(() => ({ render: () => html }));
 

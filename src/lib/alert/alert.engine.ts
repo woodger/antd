@@ -1,6 +1,6 @@
 // Resolves the close button settings used by Alert during SSR and client rendering.
 import type { AlertConfig, AlertProps } from './alert.types';
-import { pickCloseButtonAttributes } from './close-button-attributes';
+import { pickCloseButtonAttributes } from '../close-button-attributes';
 
 /** Uses local callbacks and resolves icon fallback independently of button attributes. */
 export function resolveAlertClose(props: AlertProps, config?: AlertConfig) {

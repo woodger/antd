@@ -23127,11 +23127,11 @@
       "priority": "p2",
       "effort": "M",
       "evidence": [
-        "src/lib/Alert.svelte",
-        "src/lib/alert.types.ts",
-        "src/lib/alert.engine.ts",
-        "src/lib/alert.engine.test.ts",
-        "src/lib/alert.ssr.test.ts",
+        "src/lib/alert/Alert.svelte",
+        "src/lib/alert/alert.types.ts",
+        "src/lib/alert/alert.engine.ts",
+        "src/lib/alert/alert.engine.test.ts",
+        "src/lib/alert/alert.ssr.test.ts",
         "tests/package/alert.ssr.test.ts",
         "tests/browser/alert.spec.ts",
         "tests/browser/alert-source.spec.ts",
@@ -23140,7 +23140,7 @@
         "tools/ant-design-css-recipes.json",
         "docs/reference/components/alert.md",
         "docs/reference/theme-context.md",
-        "src/lib/AlertErrorBoundary.svelte",
+        "src/lib/alert/AlertErrorBoundary.svelte",
         "tests/package/alert-boundary.ssr.test.ts",
         "tests/browser/alert-boundary.spec.ts",
         "tests/browser/alert-boundary-hydration.spec.ts",
@@ -23155,7 +23155,7 @@
           "state": "supported",
           "requiredForV1": true,
           "evidence": [
-            "src/lib/alert.ssr.test.ts",
+            "src/lib/alert/alert.ssr.test.ts",
             "tests/browser/alert.spec.ts"
           ],
           "note": "Четыре filled status icons, title/description/action, banner warning/showIcon defaults и local overrides. Native button, callback snapshot, inert/aria-hidden при уходе, WAAPI/reduced motion, afterClose после удаления, owner focus и ограничение dialog. Закрытый экземпляр не открывается props updates; unmount отменяет motion и afterClose."
@@ -23166,7 +23166,7 @@
           "state": "supported",
           "requiredForV1": false,
           "evidence": [
-            "src/lib/alert.engine.test.ts",
+            "src/lib/alert/alert.engine.test.ts",
             "tests/package/alert.ssr.test.ts",
             "tests/browser/fixtures/ant-design-alert-reference.json"
           ],
@@ -23178,7 +23178,7 @@
           "state": "supported",
           "requiredForV1": false,
           "evidence": [
-            "src/lib/Alert.svelte",
+            "src/lib/alert/Alert.svelte",
             "src/lib/ConfigProvider.svelte",
             "tests/browser/alert-source.spec.ts",
             "tests/package/alert.ssr.test.ts"
@@ -23218,9 +23218,9 @@
           "state": "supported",
           "requiredForV1": false,
           "evidence": [
-            "src/lib/AlertErrorBoundary.svelte",
-            "src/lib/alert.component.ts",
-            "src/lib/alert-error-boundary.types.ts",
+            "src/lib/alert/AlertErrorBoundary.svelte",
+            "src/lib/alert/alert.component.ts",
+            "src/lib/alert/alert-error-boundary.types.ts",
             "tests/package/alert-boundary.ssr.test.ts",
             "tests/browser/alert-boundary.spec.ts",
             "tests/browser/alert-boundary-hydration.spec.ts",
@@ -23252,7 +23252,7 @@
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
-            "src/lib/AlertErrorBoundary.svelte",
+            "src/lib/alert/AlertErrorBoundary.svelte",
             "tests/browser/fixtures/ant-design-alert-boundary-reference.json",
             "docs/reference/components/alert.md"
           ],
@@ -23264,7 +23264,7 @@
           "state": "supported",
           "requiredForV1": false,
           "evidence": [
-            "src/lib/Alert.svelte",
+            "src/lib/alert/Alert.svelte",
             "tests/browser/fixtures/StructurePrefixScope.svelte",
             "tests/browser/fixtures/StructurePrefixFixtures.svelte",
             "tests/browser/fixtures/StructurePrefixSSRFixtures.svelte",
@@ -27810,7 +27810,7 @@
           "requiredForV1": false,
           "evidence": [
             "src/lib/ConfigProvider.svelte",
-            "src/lib/alert.types.ts",
+            "src/lib/alert/alert.types.ts",
             "tests/browser/alert-source.spec.ts",
             "tests/browser/fixtures/ant-design-alert-reference.json"
           ],
