@@ -134,6 +134,14 @@
     render: Snippet<[FormItemRenderContext]>;
   }
 
+  // Share the attributes once so the emitted Svelte Component type can check the snippet union.
+  type ContentKeys = 'name' | 'children' | 'control' | 'render';
+  type FormItemComponentProps = Omit<FormItemProps, ContentKeys> & (
+    Pick<FormItemProps, ContentKeys>
+    | Pick<FormItemControlProps, ContentKeys>
+    | Pick<FormItemRenderProps, ContentKeys>
+  );
+
   let {
     name,
     initialValue,
@@ -174,7 +182,7 @@
     style,
     class: className = '',
     ...attributes
-  }: FormItemProps | FormItemControlProps | FormItemRenderProps = $props();
+  }: FormItemComponentProps = $props();
 
   const rowAttributes = $derived.by(() => {
     const row = { ...attributes };
